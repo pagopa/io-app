@@ -8,7 +8,11 @@
 	},
 	"dependencies": {
 		"react": "~15.4.0",
-		"react-native": "0.41.2"
+		"react-native": "0.41.2",
+		"react-redux": "^5.0.3",
+		"redux": "^3.6.0",
+		"redux-logger": "^2.8.2",
+		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
 		"babel-jest": "19.0.0",
