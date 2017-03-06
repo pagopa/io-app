@@ -48,9 +48,12 @@ const styles = StyleSheet.create({
 		resizeMode: 'cover',
 	},
 	container: {
-		padding: 40,
-		paddingTop: 70,
-		paddingBottom: 50,
+		margin: 20,
+		marginTop: 20,
+		marginBottom: 20,
+		padding: 30,
+		paddingTop: 40,
+		paddingBottom: 20,
 		backgroundColor: '#0066CCC0',
 	},
   titleContainer: {
@@ -120,7 +123,7 @@ class LoginScreen extends React.Component {
 							<H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
 						</Col>
 					</Row>
-					<Row size={6}>
+					<Row size={8}>
 						<Col>
 						<Row size={1} style={{justifyContent: 'center'}}>
 							<Text style={StyleSheet.flatten(styles.spidText)}>Scegli il tuo provider</Text>
