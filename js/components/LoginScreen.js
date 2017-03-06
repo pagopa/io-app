@@ -38,11 +38,20 @@ const {
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
+	backdrop: {
+		flex: 1,
+    width: undefined,
+    height: undefined,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+		resizeMode: 'cover',
+	},
 	container: {
 		padding: 40,
-		paddingTop: 100,
-		paddingBottom: 100,
-		backgroundColor: '#0066CC',
+		paddingTop: 70,
+		paddingBottom: 50,
+		backgroundColor: '#0066CCC0',
 	},
   titleContainer: {
     justifyContent: 'center',
@@ -103,23 +112,35 @@ class LoginScreen extends React.Component {
 
   render() {
     return(
-      <Grid style={styles.container}>
-				<Row size={2}>
-					<Col>
-					  <H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
-	          <H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
-		      </Col>
-				</Row>
-				<Row size={6}>
-					<Col>
-					<Row size={1} style={{justifyContent: 'center'}}>
-						<Text style={StyleSheet.flatten(styles.spidText)}>Scegli il tuo provider</Text>
-						<Image source={require('../../img/spid.png')} style={styles.spidLogo} />
+			<Image source={require('../../img/yoal-desurmont-90497.jpg')} resizeMode='contain' style={styles.backdrop}>
+				<Grid style={styles.container}>
+					<Row size={2}>
+						<Col>
+							<H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
+							<H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
+						</Col>
 					</Row>
-        	{this.createButtons()}
-					</Col>
-				</Row>
-			</Grid>
+					<Row size={6}>
+						<Col>
+						<Row size={1} style={{justifyContent: 'center'}}>
+							<Text style={StyleSheet.flatten(styles.spidText)}>Scegli il tuo provider</Text>
+							<Image source={require('../../img/spid.png')} style={styles.spidLogo} />
+						</Row>
+						{this.createButtons()}
+						</Col>
+					</Row>
+					<Row size={1}>
+					</Row>
+					<Row size={1}>
+						<Col>
+							<Button block style={{backgroundColor: '#013366'}}>
+								<Text>Non hai SPID?</Text>
+							</Button>
+						</Col>
+					</Row>
+				</Grid>
+
+			</Image>
     );
   }
 }
