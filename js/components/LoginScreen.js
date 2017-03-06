@@ -19,7 +19,7 @@ import {
   Content,
   Button,
   Text,
-  H1,
+  H1, H2, H3,
   List,
   ListItem,
   Right,
@@ -38,23 +38,42 @@ const {
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
+	container: {
+		padding: 40,
+		paddingTop: 100,
+		paddingBottom: 100,
+		backgroundColor: '#0066CC',
+	},
   titleContainer: {
-    flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#06F'
   },
   titleText: {
     fontFamily: 'Helvetica Neue',
-    fontWeight: '300',
+    fontWeight: '600',
     textAlign: 'center',
     color: '#ffffff',
   },
-  idpList: {
-    // padding: 20,
-  },
+	spidText: {
+		lineHeight: 50,
+		fontSize: 20,
+		// textAlign: 'right',
+		color: '#ffffff',
+	},
+	spidLogo: {
+		height: 54,
+		width: 70,
+		resizeMode: 'contain',
+	},
+	idpButton: {
+		backgroundColor: '#fff',
+		justifyContent: 'space-between',
+	},
+	idpName: {
+		color: '#0066CC',
+	},
   idpLogo: {
-    flex: 1,
-    height: 30,
+    width: 80,
+    height: 20,
     resizeMode: 'contain',
   }
 });
@@ -66,31 +85,41 @@ class LoginScreen extends React.Component {
 		dispatch: (action: Action) => void;
   };
 
+	createButtons() {
+		return this.props.idps.map((idp: IdentityProvider) => {
+			return (<Row key={idp.id} size={1}><Col>
+				<Button light block style={StyleSheet.flatten(styles.idpButton)} onPress={(e) => {
+					this.props.dispatch(loginWithIdp(idp));
+				}}>
+					<Image
+						source={idp.logo}
+						style={styles.idpLogo}
+					/>
+				<Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
+			</Button></Col></Row>
+			);
+		})
+	}
+
   render() {
     return(
-      <Grid>
-        <Row>
-          <View style={styles.titleContainer}>
-            <H1 style={StyleSheet.flatten(styles.titleText)}>CITTADINANZA</H1>
-            <H1 style={StyleSheet.flatten(styles.titleText)}>DIGITALE</H1>
-          </View>
-        </Row>
-        <Row style={{minHeight: 300}}>
-          <List dataArray={this.props.idps} renderRow={(idp) =>
-            <ListItem button onPress={(e) => {
-							this.props.dispatch(loginWithIdp(idp.id));
-						}}>
-              <Image
-                source={idp.logo}
-                style={styles.idpLogo}
-              ></Image>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-          }/>
-        </Row>
-      </Grid>
+      <Grid style={styles.container}>
+				<Row size={2}>
+					<Col>
+					  <H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
+	          <H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
+		      </Col>
+				</Row>
+				<Row size={6}>
+					<Col>
+					<Row size={1} style={{justifyContent: 'center'}}>
+						<Text style={StyleSheet.flatten(styles.spidText)}>Scegli il tuo provider</Text>
+						<Image source={require('../../img/spid.png')} style={styles.spidLogo} />
+					</Row>
+        	{this.createButtons()}
+					</Col>
+				</Row>
+			</Grid>
     );
   }
 }

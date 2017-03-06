@@ -6,5 +6,6 @@
 
 export type IdentityProvider = {
   id: string,
-  logo: mixed
+  logo: mixed,
+  name: string,
 };
