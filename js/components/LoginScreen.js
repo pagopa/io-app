@@ -12,6 +12,7 @@ import {
 	StyleSheet,
 	Image,
   View,
+	Platform,
 } from 'react-native';
 
 import {
@@ -60,15 +61,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleText: {
-    fontFamily: 'Helvetica Neue',
-    fontWeight: '600',
+    fontFamily: (Platform.OS === 'ios') ? 'Titillium Web' : 'Titillium Web_Regular',
+    // fontWeight: '600',
     textAlign: 'center',
     color: '#ffffff',
   },
 	spidText: {
 		lineHeight: 50,
 		fontSize: 20,
-		// textAlign: 'right',
+		textAlign: 'right',
 		color: '#ffffff',
 	},
 	spidLogo: {
