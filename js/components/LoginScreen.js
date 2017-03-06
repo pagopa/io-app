@@ -5,7 +5,8 @@
 
 'use strict';
 
-var React = require('React');
+const React = require('React');
+const { connect } = require('react-redux');
 
 import {
 	StyleSheet,
@@ -21,27 +22,18 @@ import {
   H1,
   List,
   ListItem,
+  Right,
+  Icon,
 } from 'native-base';
 
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-const idps = [
-  {
-    logo: require('./img/spid-idp-infocertid.png')
-  },
-  {
-    logo: require('./img/spid-idp-posteid.png'),
-  },
-  {
-    logo: require('./img/spid-idp-sielteid.png'),
-  },
-  {
-    logo: require('./img/spid-idp-timid.png'),
-  },
-  {
-    logo: require('./img/spid-idp-arubaid.png'),
-  },
-];
+import type { Action } from '../actions/types';
+import type { IdentityProvider } from '../types';
+
+const {
+	loginWithIdp,
+} = require('../actions');
 
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
@@ -52,7 +44,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#06F'
   },
   titleText: {
-    fontFamily: "HelveticaNeue-Light, Roboto",
+    fontFamily: 'Helvetica Neue',
+    fontWeight: '300',
     textAlign: 'center',
     color: '#ffffff',
   },
@@ -67,6 +60,12 @@ const styles = StyleSheet.create({
 });
 
 class LoginScreen extends React.Component {
+
+  props: {
+    idps: Array<IdentityProvider>,
+		dispatch: (action: Action) => void;
+  };
+
   render() {
     return(
       <Grid>
@@ -77,18 +76,23 @@ class LoginScreen extends React.Component {
           </View>
         </Row>
         <Row style={{minHeight: 300}}>
-          <List dataArray={idps} renderRow={(idp) =>
-            <ListItem>
+          <List dataArray={this.props.idps} renderRow={(idp) =>
+            <ListItem button onPress={(e) => {
+							this.props.dispatch(loginWithIdp(idp.id));
+						}}>
               <Image
                 source={idp.logo}
                 style={styles.idpLogo}
               ></Image>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
             </ListItem>
-          } />
+          }/>
         </Row>
       </Grid>
     );
   }
 }
 
-module.exports = LoginScreen;
+module.exports = connect()(LoginScreen);

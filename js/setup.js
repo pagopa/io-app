@@ -2,6 +2,8 @@
  * @flow
  */
 
+'use strict';
+
 import React from 'react';
 
 var configureStore = require('./store/configureStore');

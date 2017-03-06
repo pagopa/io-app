@@ -6,29 +6,32 @@
 
 import type {Action} from '../actions/types';
 
-export type State = {
+export type UserState = {
   isLoggedIn: boolean;
   id: ?string;
   name: ?string;
+  idpId: ?string;
 };
 
-const initialState = {
+const initialUserState = {
   isLoggedIn: false,
   id: null,
   name: null,
+  idpId: null,
 };
 
-function user(state: State = initialState, action: Action): State {
+function user(state: UserState = initialUserState, action: Action): UserState {
   if (action.type === 'LOGGED_IN') {
-    let {id, name} = action.data;
+    let {id, name, idpId} = action.data;
     return {
       isLoggedIn: true,
       id,
       name,
+      idpId,
     };
   }
   if (action.type === 'LOGGED_OUT') {
-    return initialState;
+    return initialUserState;
   }
   return state;
 }
