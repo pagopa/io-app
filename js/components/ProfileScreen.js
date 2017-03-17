@@ -8,22 +8,20 @@
 const React = require('React');
 const { connect } = require('react-redux');
 import {
-	StyleSheet,
-	Image,
-  View,
-	Platform,
+	StyleSheet, Platform,
 } from 'react-native';
 import {
   Container,
   Header,
+	Footer,
+	FooterTab,
+	Badge,
+	Right,
   Content,
   Button,
   Body,
 	Title,
   H1,
-  List,
-  ListItem,
-  Right,
   Icon,
 	Text,
 } from 'native-base';
@@ -35,33 +33,80 @@ const {
 	logOut,
 } = require('../actions');
 
-
-const titilliumFontFamily = (Platform.OS === 'ios') ? 'Titillium Web' : 'Titillium Web_Regular';
+import { TitilliumRegular } from './fonts';
+const ProfileComponent = require('./ProfileComponent');
+const PreferencesComponent = require('./PreferencesComponent');
 
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
 	header: {
-		fontSize: 25,
-		fontFamily: titilliumFontFamily,
-	},
-	listItemHeader: {
-		fontFamily: titilliumFontFamily,
-	},
-	listItem: {
-		color: '#06C',
-		fontWeight: 'bold',
-		fontFamily: titilliumFontFamily,
-		marginLeft: 20,
+		fontSize: 22,
+		fontFamily: TitilliumRegular,
 	},
 });
 
+type TabName = AlertsTab | ProfileTab | PreferencesTab;
+type AlertsTab = { name: 'alerts' };
+type ProfileTab = { name: 'profile' };
+type PreferencesTab = { name: 'preferences' };
+
 class ProfileScreen extends React.Component {
+	state: {
+		activeTab: TabName,
+	};
 
   props: {
     dispatch: (action: Action) => void;
     user: UserState;
   };
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			activeTab: { name: 'profile' },
+		};
+	}
+
+	toggleAlertsTab() {
+		this.setState({
+			activeTab: { name: 'alerts' },
+		});
+	}
+
+	isAlertsTabOn() {
+		return this.state.activeTab.name === "alerts";
+	}
+
+	toggleProfileTab() {
+		this.setState({
+			activeTab: { name: 'profile' },
+		});
+	}
+
+	isProfileTabOn() {
+		return this.state.activeTab.name === "profile";
+	}
+
+	togglePreferencesTab() {
+		this.setState({
+			activeTab: { name: 'preferences' },
+		});
+	}
+
+	isPreferencesTabOn() {
+		return this.state.activeTab.name === "preferences";
+	}
+
+	renderContent() {
+		if(this.isProfileTabOn()) {
+			return <ProfileComponent dispatch={this.props.dispatch} user={this.props.user} />;
+		} else if(this.isPreferencesTabOn()) {
+			return <PreferencesComponent  dispatch={this.props.dispatch} user={this.props.user} />;
+		} else {
+			return <Content padder />;
+		}
+	}
 
   render() {
     return(
@@ -70,28 +115,34 @@ class ProfileScreen extends React.Component {
 					<Body>
 						<Title style={StyleSheet.flatten(styles.header)}>{this.props.user.name}</Title>
 					</Body>
-			</Header>
-        <Content>
-					<ListItem itemHeader first>
-	            <Text style={StyleSheet.flatten(styles.listItemHeader)}>INFORMAZIONI PERSONALI</Text>
-	        </ListItem>
-	        <ListItem>
-	            <Text style={StyleSheet.flatten(styles.listItem)}>Domicilio e Residenza</Text>
-	        </ListItem>
-	        <ListItem>
-	            <Text style={StyleSheet.flatten(styles.listItem)}>Stato di Famiglia</Text>
-	        </ListItem>
-
-	        <ListItem itemHeader>
-	            <Text style={StyleSheet.flatten(styles.listItemHeader)}>AVVISI</Text>
-	        </ListItem>
-	        <ListItem>
-	            <Text style={StyleSheet.flatten(styles.listItem)}>Gestione Avvisi</Text>
-	        </ListItem>
-          <Button light onPress={() => this.props.dispatch(logOut()) }>
-            <Text>Logout</Text>
-          </Button>
-        </Content>
+				</Header>
+				{this.renderContent()}
+				<Footer >
+          <FooterTab>
+              <Button
+								active={this.isAlertsTabOn()}
+								onPress={() => this.toggleAlertsTab()}
+								badgeValue={2} badgeColor="blue"
+								>
+                  <Icon name="archive" active={this.isAlertsTabOn()} />
+                  <Text>Avvisi</Text>
+              </Button>
+              <Button
+								active={this.isProfileTabOn()}
+								onPress={() => this.toggleProfileTab()}
+								>
+                  <Icon name="person" active={this.isProfileTabOn()} />
+                  <Text>Profilo</Text>
+              </Button>
+							<Button
+								active={this.isPreferencesTabOn()}
+								onPress={() => this.togglePreferencesTab()}
+								>
+                  <Icon name="settings" active={this.isPreferencesTabOn()} />
+                  <Text>Preferenze</Text>
+              </Button>
+          </FooterTab>
+      </Footer>
       </Container>
     );
   }
