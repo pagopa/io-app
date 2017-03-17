@@ -19,6 +19,9 @@ import {
   ListItem,
   Icon,
 	Text,
+	Left,
+	Right,
+	Switch,
 } from 'native-base';
 import type { Action } from '../actions/types';
 import type { UserState } from '../reducers/user';
@@ -40,19 +43,40 @@ class PreferencesComponent extends React.Component {
     return(
       <Content padder>
         <ListItem itemHeader first>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>AVVISI</Text>
+            <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>RICEZIONE AVVISI</Text>
+        </ListItem>
+				<ListItem>
+					<Body>
+						<Text>Scadenze amministrative</Text>
+					</Body>
+					<Right>
+							<Switch value={false} />
+					</Right>
+        </ListItem>
+				<ListItem>
+					<Body>
+						<Text>Avvisi di pagamento</Text>
+					</Body>
+					<Right>
+							<Switch value={false} />
+					</Right>
         </ListItem>
         <ListItem>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>Gestione Avvisi</Text>
+					<Body>
+						<Text>Scadenze fiscali</Text>
+					</Body>
+					<Right>
+							<Switch value={false} />
+					</Right>
         </ListItem>
   			<ListItem itemHeader>
             <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>ESCI DALL'APPLICAZIONE</Text>
         </ListItem>
         <ListItem>
   				<Button
-  					light block
+  					warning block
   					onPress={() => this.props.dispatch(logOut()) }>
-  					<Text>Torna all'accesso SPID</Text>
+  					<Text>Torna allo schermo di Login</Text>
   				</Button>
   			</ListItem>
       </Content>

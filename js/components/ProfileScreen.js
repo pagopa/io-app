@@ -34,6 +34,8 @@ const {
 } = require('../actions');
 
 import { TitilliumRegular } from './fonts';
+
+const AlertsComponent = require('./AlertsComponent');
 const ProfileComponent = require('./ProfileComponent');
 const PreferencesComponent = require('./PreferencesComponent');
 
@@ -64,7 +66,7 @@ class ProfileScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeTab: { name: 'profile' },
+			activeTab: { name: 'alerts' },
 		};
 	}
 
@@ -102,7 +104,9 @@ class ProfileScreen extends React.Component {
 		if(this.isProfileTabOn()) {
 			return <ProfileComponent dispatch={this.props.dispatch} user={this.props.user} />;
 		} else if(this.isPreferencesTabOn()) {
-			return <PreferencesComponent  dispatch={this.props.dispatch} user={this.props.user} />;
+			return <PreferencesComponent dispatch={this.props.dispatch} user={this.props.user} />;
+		} else if(this.isAlertsTabOn()) {
+			return <AlertsComponent dispatch={this.props.dispatch} user={this.props.user} />;
 		} else {
 			return <Content padder />;
 		}
