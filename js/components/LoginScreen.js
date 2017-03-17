@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
 	},
 	idpName: {
 		color: '#0066CC',
+		fontSize: 15,
 	},
   idpLogo: {
     width: 80,
