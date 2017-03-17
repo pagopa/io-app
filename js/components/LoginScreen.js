@@ -39,23 +39,11 @@ const {
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
-	backdrop: {
-		flex: 1,
-    width: undefined,
-    height: undefined,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-		resizeMode: 'cover',
-	},
 	container: {
-		margin: 20,
-		marginTop: 20,
-		marginBottom: 20,
 		padding: 30,
 		paddingTop: 40,
 		paddingBottom: 20,
-		backgroundColor: '#0066CCC0',
+		backgroundColor: '#0066CC',
 	},
   titleContainer: {
     justifyContent: 'center',
@@ -117,7 +105,6 @@ class LoginScreen extends React.Component {
 
   render() {
     return(
-			<Image source={require('../../img/yoal-desurmont-90497.jpg')} resizeMode='contain' style={styles.backdrop}>
 				<Grid style={styles.container}>
 					<Row size={2}>
 						<Col>
@@ -138,14 +125,12 @@ class LoginScreen extends React.Component {
 					</Row>
 					<Row size={1}>
 						<Col>
-							<Button block style={{backgroundColor: '#013366'}}>
+							<Button block small style={{backgroundColor: '#013366'}}>
 								<Text>Non hai SPID?</Text>
 							</Button>
 						</Col>
 					</Row>
 				</Grid>
-
-			</Image>
     );
   }
 }
