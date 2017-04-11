@@ -48,6 +48,13 @@ class ProfileComponent extends React.Component {
         <ListItem>
             <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>Stato di Famiglia</Text>
         </ListItem>
+				<ListItem itemHeader first>
+            <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>DOMICILIO PEC</Text>
+        </ListItem>
+        <ListItem>
+            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>pinco@pec.italia.it</Text>
+        </ListItem>
+
       </Content>
     );
   }
