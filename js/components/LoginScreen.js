@@ -30,7 +30,10 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import type { Action } from '../actions/types';
-import type { IdentityProvider } from '../types';
+
+import { TitilliumRegular } from './fonts';
+
+import SpidLoginButton from './SpidLoginButton';
 
 const {
 	loginWithIdp,
@@ -43,65 +46,24 @@ const styles = StyleSheet.create({
 		padding: 30,
 		paddingTop: 40,
 		paddingBottom: 20,
-		backgroundColor: '#0066CC',
+		//backgroundColor: '#0066CC',
 	},
   titleContainer: {
     justifyContent: 'center',
   },
   titleText: {
-    fontFamily: (Platform.OS === 'ios') ? 'Titillium Web' : 'Titillium Web_Regular',
+    fontFamily: TitilliumRegular,
     // fontWeight: '600',
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#0066CC',
   },
-	spidText: {
-		lineHeight: 50,
-		fontSize: 20,
-		textAlign: 'right',
-		color: '#ffffff',
-	},
-	spidLogo: {
-		height: 54,
-		width: 70,
-		resizeMode: 'contain',
-	},
-	idpButton: {
-		backgroundColor: '#fff',
-		justifyContent: 'space-between',
-	},
-	idpName: {
-		color: '#0066CC',
-		fontSize: 15,
-	},
-  idpLogo: {
-    width: 80,
-    height: 20,
-    resizeMode: 'contain',
-  }
 });
 
 class LoginScreen extends React.Component {
 
   props: {
-    idps: Array<IdentityProvider>,
-		dispatch: (action: Action) => void;
+    dispatch: (action: Action) => void,
   };
-
-	createButtons() {
-		return this.props.idps.map((idp: IdentityProvider) => {
-			return (<Row key={idp.id} size={1}><Col>
-				<Button light block style={StyleSheet.flatten(styles.idpButton)} onPress={(e) => {
-					this.props.dispatch(loginWithIdp(idp));
-				}}>
-					<Image
-						source={idp.logo}
-						style={styles.idpLogo}
-					/>
-				<Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
-			</Button></Col></Row>
-			);
-		})
-	}
 
   render() {
     return(
@@ -112,16 +74,10 @@ class LoginScreen extends React.Component {
 							<H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
 						</Col>
 					</Row>
-					<Row size={8}>
-						<Col>
-						<Row size={1} style={{justifyContent: 'center'}}>
-							<Text style={StyleSheet.flatten(styles.spidText)}>Scegli il tuo provider</Text>
-							<Image source={require('../../img/spid.png')} style={styles.spidLogo} />
-						</Row>
-						{this.createButtons()}
-						</Col>
-					</Row>
 					<Row size={1}>
+						<Col>
+							<SpidLoginButton />
+						</Col>
 					</Row>
 					<Row size={1}>
 						<Col>
