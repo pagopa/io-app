@@ -7,12 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "native-base": "^2.0.12",
+    "native-base": "^2.1.2",
     "option": "^0.2.3",
-    "react": "~15.4.0",
-    "react-native": "0.41.2",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.43.3",
     "react-native-easy-grid": "^0.1.8",
-    "react-navigation": "^1.0.0-beta.7",
+    "react-navigation": "git+https://github.com/react-community/react-navigation.git",
     "react-redux": "^5.0.3",
     "reactotron-react-native": "^1.9.1",
     "redux": "^3.6.0",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
+    "babel-plugin-flow-react-proptypes": "^1.2.0",
     "babel-preset-react-native": "1.9.1",
     "jest": "19.0.2",
     "react-test-renderer": "~15.4.0"
