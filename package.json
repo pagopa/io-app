@@ -24,6 +24,7 @@
     "babel-jest": "19.0.0",
     "babel-plugin-flow-react-proptypes": "^1.2.0",
     "babel-preset-react-native": "1.9.1",
+    "flow-bin": "^0.44.2",
     "jest": "19.0.2",
     "react-test-renderer": "~15.4.0"
   },
