@@ -37,7 +37,7 @@ import { TitilliumRegular } from './fonts';
 import SpidLoginButton from './SpidLoginButton';
 
 const {
-	loginWithIdp,
+	logIn,
 } = require('../actions');
 
 // Per via di un bug, bisogna usare StyleSheet.flatten
@@ -78,7 +78,7 @@ class LoginScreen extends React.Component {
 					<Row size={1}>
 						<Col>
 							<SpidLoginButton onSpidLogin={(token) => {
-								console.log(`OK: ${token}`);
+								this.props.dispatch(logIn(token));
 							}} />
 						</Col>
 					</Row>
