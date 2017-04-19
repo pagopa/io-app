@@ -47,6 +47,9 @@ export type IdentityProvider = {
   entityID: string,
 };
 
+// prefix for recognizing auth token
+const TOKEN_PATH_PREFIX = '/app/token/get/';
+
 // TODO dynamically build this list
 const idps: Array<IdentityProvider> = [
   {
@@ -82,7 +85,7 @@ const idps: Array<IdentityProvider> = [
 ];
 
 const WEBVIEW_REF = 'webview';
-const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/headers&entityID=';
+const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID=';
 
 /**
  * Webview usata per la pagina di login dell'IdP
@@ -123,7 +126,6 @@ class SpidLoginWebview extends React.Component {
           javaScriptEnabled={true}
           startInLoadingState={true}
           onNavigationStateChange={this._onNavigationStateChange}
-          onMessage={this._onMessage}
         />
         <View style={StyleSheet.flatten(styles.statusBar)}>
           <Text style={StyleSheet.flatten(styles.statusBarText)}>{this.state.status}</Text>
@@ -133,23 +135,26 @@ class SpidLoginWebview extends React.Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.setState({
-      status: navState.title,
-      isLoading: navState.loading,
-    });
+    const url = navState.url;
+    console.log('Navigating to: ' + url);
+    const tokenPathPos = url.indexOf(TOKEN_PATH_PREFIX);
+    if(tokenPathPos == -1) {
+      this.setState({
+        status: navState.title,
+        isLoading: navState.loading,
+      });
+    } else {
+      const token = url.substr(tokenPathPos + TOKEN_PATH_PREFIX.length);
+      if(token && token.length > 0) {
+        console.log(`Received authorization token: ${token}`);
+        this.props.onSuccess(token);
+      } else {
+        console.log(`Authorization token is missing`);
+        this.props.onError('NO_AUTH_TOKEN');
+      }
+    }
     return(true);
   };
-
-  _onMessage = (e) => {
-    if(e.nativeEvent && e.nativeEvent.data && e.nativeEvent.data.token) {
-      const token = e.nativeEvent.data.token;
-      console.log(`Received authorization token: ${token}`);
-      this.props.onSuccess(token);
-    } else {
-      console.log(`Authorization token is missing`);
-      this.props.onError('NO_AUTH_TOKEN');
-    }
-  }
 
 }
 
@@ -157,7 +162,7 @@ class IdpSelectionScreen extends React.Component {
 
   props: {
     closeModal: () => void,
-    onSpidLogin: (token) => void,
+    onSpidLogin: (string) => void,
   };
 
   state: {
@@ -262,6 +267,10 @@ class IdpSelectionScreen extends React.Component {
 
 class SpidLoginButton extends React.Component {
 
+  props: {
+    onSpidLogin: (string) => void,
+  }
+
   state = {
     isModalVisible: false,
   }
@@ -280,7 +289,9 @@ class SpidLoginButton extends React.Component {
           transparent={false}
           visible={this.state.isModalVisible}
           >
-         <IdpSelectionScreen closeModal={() => {
+         <IdpSelectionScreen
+           onSpidLogin={this.props.onSpidLogin} 
+           closeModal={() => {
             this.setModalVisible(false);
          }}/>
         </Modal>

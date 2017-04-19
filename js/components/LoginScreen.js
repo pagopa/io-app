@@ -13,6 +13,7 @@ import {
 	Image,
   View,
 	Platform,
+	Alert,
 } from 'react-native';
 
 import {
@@ -76,7 +77,9 @@ class LoginScreen extends React.Component {
 					</Row>
 					<Row size={1}>
 						<Col>
-							<SpidLoginButton />
+							<SpidLoginButton onSpidLogin={(token) => {
+								console.log(`OK: ${token}`);
+							}} />
 						</Col>
 					</Row>
 					<Row size={1}>
