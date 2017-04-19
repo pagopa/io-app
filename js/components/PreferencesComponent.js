@@ -23,6 +23,11 @@ import {
 	Right,
 	Switch,
 } from 'native-base';
+
+import { NavigationActions } from 'react-navigation';
+
+import type { Navigator } from 'react-navigation';
+
 import type { Action } from '../actions/types';
 import type { UserState } from '../reducers/user';
 
@@ -32,11 +37,19 @@ const {
 	logOut,
 } = require('../actions');
 
+const resetNavigationAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'Home'})
+  ]
+});
+
 class PreferencesComponent extends React.Component {
 
   props: {
-    dispatch: (action: Action) => void;
-    user: UserState;
+		navigation: Navigator,
+    dispatch: (action: Action) => void,
+    user: UserState,
   };
 
   render() {
@@ -75,7 +88,10 @@ class PreferencesComponent extends React.Component {
         <ListItem>
   				<Button
   					warning block
-  					onPress={() => this.props.dispatch(logOut()) }>
+  					onPress={() => {
+							this.props.dispatch(logOut());
+							this.props.navigation.dispatch(resetNavigationAction);
+						}}>
   					<Text>Torna allo schermo di Login</Text>
   				</Button>
   			</ListItem>

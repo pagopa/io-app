@@ -285,12 +285,12 @@ class SpidLoginButton extends React.Component {
     return (
       <View>
         <Modal
-          animationType={"slide"}
+          animationType={"fade"}
           transparent={false}
           visible={this.state.isModalVisible}
           >
          <IdpSelectionScreen
-           onSpidLogin={this.props.onSpidLogin} 
+           onSpidLogin={this.props.onSpidLogin}
            closeModal={() => {
             this.setModalVisible(false);
          }}/>

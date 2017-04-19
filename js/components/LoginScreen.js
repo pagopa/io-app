@@ -26,9 +26,12 @@ import {
   ListItem,
   Right,
   Icon,
+	Grid,
+	Row,
+	Col,
 } from 'native-base';
 
-import { Col, Row, Grid } from "react-native-easy-grid";
+import type { Navigator } from 'react-navigation';
 
 import type { Action } from '../actions/types';
 
@@ -63,7 +66,8 @@ const styles = StyleSheet.create({
 class LoginScreen extends React.Component {
 
   props: {
-    dispatch: (action: Action) => void,
+		navigation: Navigator,
+		dispatch: (action: Action) => void,
   };
 
   render() {
@@ -79,6 +83,7 @@ class LoginScreen extends React.Component {
 						<Col>
 							<SpidLoginButton onSpidLogin={(token) => {
 								this.props.dispatch(logIn(token));
+								this.props.navigation.navigate('Profile');
 							}} />
 						</Col>
 					</Row>
