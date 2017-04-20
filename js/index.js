@@ -1,6 +1,7 @@
 /**
  * @flow
  */
+
 'use strict';
 
 const { AppRegistry } = require('react-native');

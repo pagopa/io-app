@@ -1,64 +1,67 @@
 /**
+ * Modulo principale di setup dell'applicazione.
+ *
+ * Questo modulo inizializza lo store e il navigator.
+ *
  * @flow
  */
 
 'use strict';
 
-// import './reactotron';
-
 import React from 'react';
 
+import { Provider } from 'react-redux';
 import { StackNavigator } from 'react-navigation';
 
-const configureStore = require('./store/configureStore');
-const { Provider } = require('react-redux');
+import configureStore from './store/configureStore';
+import LoginScreen from './components/LoginScreen';
+import ProfileScreen from './components/ProfileScreen';
 
-const LoginScreen = require('./components/LoginScreen');
-const ProfileScreen = require('./components/ProfileScreen');
+class Root extends React.Component {
 
-function setup(): ReactClass<{}> {
+  state: {
+    isLoading: boolean,
+    store: any,
+  };
 
-  class Root extends React.Component {
+  constructor() {
+    super();
 
-    state: {
-      isLoading: boolean;
-      store: any;
+    const store = configureStore(() => this.setState({
+      isLoading: false
+    }));
+
+    this.state = {
+      isLoading: true,
+      store: store,
     };
-
-    constructor() {
-      super();
-      this.state = {
-        isLoading: true,
-        store: configureStore(() => this.setState({ isLoading: false })),
-      };
-    }
-
-    render() {
-      if (this.state.isLoading) {
-        return null;
-      }
-
-      const App = StackNavigator({
-        Home: {
-          screen: LoginScreen,
-        },
-
-        Profile: {
-          screen: ProfileScreen,
-        }
-      }, {
-        headerMode: 'none'
-      });
-
-      return (
-        <Provider store={this.state.store}>
-          <App />
-        </Provider>
-      );
-    }
   }
 
-  return Root;
+  render() {
+    if (this.state.isLoading) {
+      return null;
+    }
+
+    // Usiamo un navigator a stack come default
+    const Navigator = StackNavigator({
+      Home: {
+        screen: LoginScreen,
+      },
+
+      Profile: {
+        screen: ProfileScreen,
+      }
+    }, {
+      // L'header viene gestito dagli screen
+      headerMode: 'none'
+    });
+
+    return (
+      <Provider store={this.state.store}>
+        <Navigator />
+      </Provider>
+    );
+  }
 }
 
-module.exports = setup;
+module.exports = () => Root;
