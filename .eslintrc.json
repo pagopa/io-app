@@ -15,6 +15,10 @@
     },
     "sourceType": "module"
   },
+  "globals": {
+    "__DEV__": true,
+    "__PROD__": true
+  },
   "plugins": [
     "react",
     "flowtype"

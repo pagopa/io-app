@@ -4,14 +4,18 @@
 
 'use strict'
 
-import type { Action } from './types'
+import type { Action, ThunkAction, Dispatch, GetState } from './types'
+import { requestUserProfile } from './user'
 
-function logIn(token: string): Action {
-  return {
-    type: 'LOGGED_IN',
-    data: {
-      token: token,
-    }
+function logIn(token: string): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    dispatch({
+      type: 'LOGGED_IN',
+      data: {
+        token: token,
+      }
+    })
+    requestUserProfile()(dispatch, getState)
   }
 }
 
