@@ -5,7 +5,7 @@
 'use strict';
 
 export type Action =
-  | { type: 'LOGGED_IN', data: { id: string; name: string; idpId: string;} }
+  | { type: 'LOGGED_IN', data: { token: string } }
   | { type: 'LOGGED_OUT' }
 ;
 

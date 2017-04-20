@@ -5,15 +5,12 @@
 'use strict';
 
 import type { Action } from './types';
-import type { IdentityProvider } from '../types';
 
-function loginWithIdp(idp: IdentityProvider): Action {
+function logIn(token: string): Action {
   return {
     type: 'LOGGED_IN',
     data: {
-      id: '12345',
-      name: 'Federico Feroldi',
-      idpId: 'poste',
+      token: token,
     }
   };
 }
@@ -25,6 +22,6 @@ function logOut(): Action {
 }
 
 module.exports = {
-  loginWithIdp,
+  logIn,
   logOut
 };

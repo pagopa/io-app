@@ -24,8 +24,13 @@ import {
   H1,
   Icon,
 	Text,
+	Col,
+	Row,
+	Grid,
 } from 'native-base';
-import { Col, Row, Grid } from "react-native-easy-grid";
+
+import type { Navigator } from 'react-navigation';
+
 import type { Action } from '../actions/types';
 import type { UserState } from '../reducers/user';
 
@@ -59,6 +64,7 @@ class ProfileScreen extends React.Component {
 	};
 
   props: {
+		navigation: Navigator,
     dispatch: (action: Action) => void;
     user: UserState;
   };
@@ -102,11 +108,20 @@ class ProfileScreen extends React.Component {
 
 	renderContent() {
 		if(this.isProfileTabOn()) {
-			return <ProfileComponent dispatch={this.props.dispatch} user={this.props.user} />;
+			return <ProfileComponent
+				navigation={this.props.navigation}
+				dispatch={this.props.dispatch}
+				user={this.props.user} />;
 		} else if(this.isPreferencesTabOn()) {
-			return <PreferencesComponent dispatch={this.props.dispatch} user={this.props.user} />;
+			return <PreferencesComponent
+				navigation={this.props.navigation}
+				dispatch={this.props.dispatch}
+				user={this.props.user} />;
 		} else if(this.isAlertsTabOn()) {
-			return <AlertsComponent dispatch={this.props.dispatch} user={this.props.user} />;
+			return <AlertsComponent
+				navigation={this.props.navigation}
+				dispatch={this.props.dispatch}
+				user={this.props.user} />;
 		} else {
 			return <Content padder />;
 		}

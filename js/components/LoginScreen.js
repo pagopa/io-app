@@ -13,6 +13,7 @@ import {
 	Image,
   View,
 	Platform,
+	Alert,
 } from 'react-native';
 
 import {
@@ -25,9 +26,12 @@ import {
   ListItem,
   Right,
   Icon,
+	Grid,
+	Row,
+	Col,
 } from 'native-base';
 
-import { Col, Row, Grid } from "react-native-easy-grid";
+import type { Navigator } from 'react-navigation';
 
 import type { Action } from '../actions/types';
 
@@ -36,7 +40,7 @@ import { TitilliumRegular } from './fonts';
 import SpidLoginButton from './SpidLoginButton';
 
 const {
-	loginWithIdp,
+	logIn,
 } = require('../actions');
 
 // Per via di un bug, bisogna usare StyleSheet.flatten
@@ -62,7 +66,8 @@ const styles = StyleSheet.create({
 class LoginScreen extends React.Component {
 
   props: {
-    dispatch: (action: Action) => void,
+		navigation: Navigator,
+		dispatch: (action: Action) => void,
   };
 
   render() {
@@ -76,7 +81,10 @@ class LoginScreen extends React.Component {
 					</Row>
 					<Row size={1}>
 						<Col>
-							<SpidLoginButton />
+							<SpidLoginButton onSpidLogin={(token) => {
+								this.props.dispatch(logIn(token));
+								this.props.navigation.navigate('Profile');
+							}} />
 						</Col>
 					</Row>
 					<Row size={1}>

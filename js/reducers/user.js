@@ -4,30 +4,26 @@
 
 'use strict';
 
-import type {Action} from '../actions/types';
+import type { Action } from '../actions/types';
 
 export type UserState = {
-  isLoggedIn: boolean;
-  id: ?string;
-  name: ?string;
-  idpId: ?string;
+  isLoggedIn: boolean,
+  token: ?string,
+  name?: ?string,
 };
 
 const initialUserState = {
   isLoggedIn: false,
-  id: null,
+  token: null,
   name: null,
-  idpId: null,
 };
 
 function user(state: UserState = initialUserState, action: Action): UserState {
   if (action.type === 'LOGGED_IN') {
-    let {id, name, idpId} = action.data;
+    let { token } = action.data;
     return {
       isLoggedIn: true,
-      id,
-      name,
-      idpId,
+      token,
     };
   }
   if (action.type === 'LOGGED_OUT') {

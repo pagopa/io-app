@@ -37,27 +37,28 @@ function setup(): ReactClass<{}> {
       if (this.state.isLoading) {
         return null;
       }
+
+      const App = StackNavigator({
+        Home: {
+          screen: LoginScreen,
+        },
+
+        Profile: {
+          screen: ProfileScreen,
+        }
+      }, {
+        headerMode: 'none'
+      });
+
       return (
         <Provider store={this.state.store}>
-          <LoginScreen navigation={this.props.navigation} />
+          <App />
         </Provider>
       );
     }
   }
 
-  const App = StackNavigator({
-    Home: {
-      screen: Root,
-    },
-
-    Profile: {
-      screen: ProfileScreen,
-    }
-  }, {
-    headerMode: 'none'
-  });
-
-  return App;
+  return Root;
 }
 
 module.exports = setup;
