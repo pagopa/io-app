@@ -4,9 +4,23 @@
 
 'use strict'
 
+export type ApiUserProfile = {
+  name?: ?string,
+  familyname?: ?string,
+  fiscalnumber?: ?string,
+  spidcode?: ?string,
+  gender?: ?string,
+  mobilephone?: ?string,
+  email?: ?string,
+  address?: ?string,
+  expirationdate?: ?string,
+  digitaladdress?: ?string,
+  'spid-idp'?: ?string,
+}
+
 async function getUserProfile(apiUrlPrefix: string, token: string) {
   try {
-    let response = await fetch(`${apiUrlPrefix}/api/headers`, {
+    let response = await fetch(`${apiUrlPrefix}/api/v1/user`, {
       method: 'get',
       headers: {
         'Authorization': `Bearer ${token}`,

@@ -9,15 +9,17 @@ import type { Action } from '../actions/types'
 export type UserState = {
   isLoggedIn: boolean,
   apiUrlPrefix: string,
-  token: ?string,
+  token?: ?string,
   name?: ?string,
+  familyname?: ?string,
+  fiscalnumber?: ?string,
+  spidcode?: ?string,
+  'spid-idp'?: ?string,
 };
 
 const initialUserState = {
   isLoggedIn: false,
   apiUrlPrefix: 'https://spid-test.spc-app1.teamdigitale.it',
-  token: null,
-  name: null,
 }
 
 function user(state: UserState = initialUserState, action: Action): UserState {
@@ -36,10 +38,14 @@ function user(state: UserState = initialUserState, action: Action): UserState {
   }
 
   if(action.type === 'RECEIVE_USER_PROFILE') {
-    let { name } = action.profile
+    let { name , familyname, fiscalnumber, spidcode } = action.profile
     return {
       ...state,
       name,
+      familyname,
+      fiscalnumber,
+      spidcode,
+      'spid-idp': action.profile['spid-idp'],
     }
   }
 
