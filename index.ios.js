@@ -1,6 +1,6 @@
 /**
  * @flow
  */
-'use strict';
+'use strict'
 
-require('./js/index');
+require('./js/index')

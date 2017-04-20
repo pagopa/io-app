@@ -6,16 +6,16 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-import React from 'react';
+import React from 'react'
 
-import { Provider } from 'react-redux';
-import { StackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux'
+import { StackNavigator } from 'react-navigation'
 
-import configureStore from './store/configureStore';
-import LoginScreen from './components/LoginScreen';
-import ProfileScreen from './components/ProfileScreen';
+import configureStore from './store/configureStore'
+import LoginScreen from './components/LoginScreen'
+import ProfileScreen from './components/ProfileScreen'
 
 class Root extends React.Component {
 
@@ -25,21 +25,21 @@ class Root extends React.Component {
   };
 
   constructor() {
-    super();
+    super()
 
     const store = configureStore(() => this.setState({
       isLoading: false
-    }));
+    }))
 
     this.state = {
       isLoading: true,
       store: store,
-    };
+    }
   }
 
   render() {
     if (this.state.isLoading) {
-      return null;
+      return null
     }
 
     // Usiamo un navigator a stack come default
@@ -54,14 +54,14 @@ class Root extends React.Component {
     }, {
       // L'header viene gestito dagli screen
       headerMode: 'none'
-    });
+    })
 
     return (
       <Provider store={this.state.store}>
         <Navigator />
       </Provider>
-    );
+    )
   }
 }
 
-module.exports = () => Root;
+module.exports = () => Root

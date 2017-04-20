@@ -3,55 +3,49 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const React = require('React');
-const { connect } = require('react-redux');
+const React = require('React')
+const { connect } = require('react-redux')
 import {
-	StyleSheet, Platform,
-} from 'react-native';
+	StyleSheet,
+} from 'react-native'
 import {
   Container,
   Header,
 	Footer,
 	FooterTab,
-	Badge,
-	Right,
-  Content,
+	Content,
   Button,
   Body,
 	Title,
-  H1,
   Icon,
 	Text,
-	Col,
-	Row,
-	Grid,
-} from 'native-base';
+} from 'native-base'
 
-import type { Navigator } from 'react-navigation';
+import type { Navigator } from 'react-navigation'
 
-import type { Action } from '../actions/types';
-import type { UserState } from '../reducers/user';
+import type { Action } from '../actions/types'
+import type { UserState } from '../reducers/user'
 
-const {
-	logOut,
-} = require('../actions');
+// const {
+// 	logOut,
+// } = require('../actions')
 
-import { TitilliumRegular } from './fonts';
+import { TitilliumRegular } from './fonts'
 
-const AlertsComponent = require('./AlertsComponent');
-const ProfileComponent = require('./ProfileComponent');
-const PreferencesComponent = require('./PreferencesComponent');
+const AlertsComponent = require('./AlertsComponent')
+const ProfileComponent = require('./ProfileComponent')
+const PreferencesComponent = require('./PreferencesComponent')
 
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
-	header: {
-		fontSize: 22,
-		fontFamily: TitilliumRegular,
-	},
-});
+  header: {
+    fontSize: 22,
+    fontFamily: TitilliumRegular,
+  },
+})
 
 type TabName = AlertsTab | ProfileTab | PreferencesTab;
 type AlertsTab = { name: 'alerts' };
@@ -59,7 +53,7 @@ type ProfileTab = { name: 'profile' };
 type PreferencesTab = { name: 'preferences' };
 
 class ProfileScreen extends React.Component {
-	state: {
+  state: {
 		activeTab: TabName,
 	};
 
@@ -69,63 +63,63 @@ class ProfileScreen extends React.Component {
     user: UserState;
   };
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			activeTab: { name: 'alerts' },
-		};
-	}
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeTab: { name: 'alerts' },
+    }
+  }
 
-	toggleAlertsTab() {
-		this.setState({
-			activeTab: { name: 'alerts' },
-		});
-	}
+  toggleAlertsTab() {
+    this.setState({
+      activeTab: { name: 'alerts' },
+    })
+  }
 
-	isAlertsTabOn() {
-		return this.state.activeTab.name === "alerts";
-	}
+  isAlertsTabOn() {
+    return this.state.activeTab.name === 'alerts'
+  }
 
-	toggleProfileTab() {
-		this.setState({
-			activeTab: { name: 'profile' },
-		});
-	}
+  toggleProfileTab() {
+    this.setState({
+      activeTab: { name: 'profile' },
+    })
+  }
 
-	isProfileTabOn() {
-		return this.state.activeTab.name === "profile";
-	}
+  isProfileTabOn() {
+    return this.state.activeTab.name === 'profile'
+  }
 
-	togglePreferencesTab() {
-		this.setState({
-			activeTab: { name: 'preferences' },
-		});
-	}
+  togglePreferencesTab() {
+    this.setState({
+      activeTab: { name: 'preferences' },
+    })
+  }
 
-	isPreferencesTabOn() {
-		return this.state.activeTab.name === "preferences";
-	}
+  isPreferencesTabOn() {
+    return this.state.activeTab.name === 'preferences'
+  }
 
-	renderContent() {
-		if(this.isProfileTabOn()) {
-			return <ProfileComponent
+  renderContent() {
+    if(this.isProfileTabOn()) {
+      return <ProfileComponent
 				navigation={this.props.navigation}
 				dispatch={this.props.dispatch}
-				user={this.props.user} />;
-		} else if(this.isPreferencesTabOn()) {
-			return <PreferencesComponent
+				user={this.props.user} />
+    } else if(this.isPreferencesTabOn()) {
+      return <PreferencesComponent
 				navigation={this.props.navigation}
 				dispatch={this.props.dispatch}
-				user={this.props.user} />;
-		} else if(this.isAlertsTabOn()) {
-			return <AlertsComponent
+				user={this.props.user} />
+    } else if(this.isAlertsTabOn()) {
+      return <AlertsComponent
 				navigation={this.props.navigation}
 				dispatch={this.props.dispatch}
-				user={this.props.user} />;
-		} else {
-			return <Content padder />;
-		}
-	}
+				user={this.props.user} />
+    } else {
+      return <Content padder />
+    }
+  }
 
   render() {
     return(
@@ -163,7 +157,7 @@ class ProfileScreen extends React.Component {
           </FooterTab>
       </Footer>
       </Container>
-    );
+    )
   }
 }
 
@@ -171,7 +165,7 @@ class ProfileScreen extends React.Component {
 function select(store) {
   return {
     user: store.user,
-  };
+  }
 }
 
-module.exports = connect(select)(ProfileScreen);
+module.exports = connect(select)(ProfileScreen)

@@ -2,9 +2,9 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-import type { Action } from '../actions/types';
+import type { Action } from '../actions/types'
 
 export type UserState = {
   isLoggedIn: boolean,
@@ -16,20 +16,20 @@ const initialUserState = {
   isLoggedIn: false,
   token: null,
   name: null,
-};
+}
 
 function user(state: UserState = initialUserState, action: Action): UserState {
   if (action.type === 'LOGGED_IN') {
-    let { token } = action.data;
+    let { token } = action.data
     return {
       isLoggedIn: true,
       token,
-    };
+    }
   }
   if (action.type === 'LOGGED_OUT') {
-    return initialUserState;
+    return initialUserState
   }
-  return state;
+  return state
 }
 
-module.exports = user;
+module.exports = user

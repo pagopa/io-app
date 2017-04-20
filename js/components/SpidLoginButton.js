@@ -3,24 +3,20 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const React = require('react');
-const ReactNative = require('react-native');
+const React = require('react')
+const ReactNative = require('react-native')
 const {
   StyleSheet,
   View,
   WebView,
   Image,
   Modal,
-  TouchableHighlight,
   Alert,
-} = ReactNative;
+} = ReactNative
 
 import {
-  Grid,
-  Row,
-  Col,
   Container,
   Header,
   Body,
@@ -28,17 +24,14 @@ import {
   Content,
   Button,
   Text,
-  H1, H2, H3,
-  List,
-  ListItem,
   Left,
   Right,
   Icon,
-} from 'native-base';
+} from 'native-base'
 
-import { some, none } from 'option';
+import { some, none } from 'option'
 
-import { TitilliumRegular } from './fonts';
+import { TitilliumRegular } from './fonts'
 
 export type IdentityProvider = {
   id: string,
@@ -48,7 +41,7 @@ export type IdentityProvider = {
 };
 
 // prefix for recognizing auth token
-const TOKEN_PATH_PREFIX = '/app/token/get/';
+const TOKEN_PATH_PREFIX = '/app/token/get/'
 
 // TODO dynamically build this list
 const idps: Array<IdentityProvider> = [
@@ -82,10 +75,10 @@ const idps: Array<IdentityProvider> = [
     logo: require('../../img/spid-idp-arubaid.png'),
     entityID: 'https://loginspid.aruba.it',
   },
-];
+]
 
-const WEBVIEW_REF = 'webview';
-const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID=';
+const WEBVIEW_REF = 'webview'
+const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID='
 
 /**
  * Webview usata per la pagina di login dell'IdP
@@ -107,13 +100,13 @@ class SpidLoginWebview extends React.Component {
   };
 
   constructor(props) {
-		super(props);
-		this.state = {
-			url: LOGIN_BASE_URL + this.props.idp.entityID,
+    super(props)
+    this.state = {
+      url: LOGIN_BASE_URL + this.props.idp.entityID,
       status: '',
       isLoading: true,
-		};
-	}
+    }
+  }
 
   render() {
 
@@ -131,29 +124,26 @@ class SpidLoginWebview extends React.Component {
           <Text style={StyleSheet.flatten(styles.statusBarText)}>{this.state.status}</Text>
         </View>
       </View>
-    );
+    )
   }
 
   _onNavigationStateChange = (navState) => {
-    const url = navState.url;
-    console.log('Navigating to: ' + url);
-    const tokenPathPos = url.indexOf(TOKEN_PATH_PREFIX);
+    const url = navState.url
+    const tokenPathPos = url.indexOf(TOKEN_PATH_PREFIX)
     if(tokenPathPos == -1) {
       this.setState({
         status: navState.title,
         isLoading: navState.loading,
-      });
+      })
     } else {
-      const token = url.substr(tokenPathPos + TOKEN_PATH_PREFIX.length);
+      const token = url.substr(tokenPathPos + TOKEN_PATH_PREFIX.length)
       if(token && token.length > 0) {
-        console.log(`Received authorization token: ${token}`);
-        this.props.onSuccess(token);
+        this.props.onSuccess(token)
       } else {
-        console.log(`Authorization token is missing`);
-        this.props.onError('NO_AUTH_TOKEN');
+        this.props.onError('NO_AUTH_TOKEN')
       }
     }
-    return(true);
+    return(true)
   };
 
 }
@@ -170,51 +160,51 @@ class IdpSelectionScreen extends React.Component {
   };
 
   constructor(props) {
-		super(props);
-		this.state = {
-			selectedIdp: none,
-		};
-	}
+    super(props)
+    this.state = {
+      selectedIdp: none,
+    }
+  }
 
   selectIdp(idp: IdentityProvider) {
     this.setState({
       selectedIdp: some(idp),
-    });
+    })
   }
 
   resetIdp() {
     this.setState({
       selectedIdp: none,
-    });
+    })
   }
 
-	createButtons() {
-		return idps.map((idp: IdentityProvider) => {
-			return (
-        <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={(e) => {
-					this.selectIdp(idp);
-				}}>
-  				<Image
-  					source={idp.logo}
-  					style={styles.idpLogo}
-  				/>
-  				<Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
+  createButtons() {
+    return idps.map((idp: IdentityProvider) => {
+      return (
+        <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
+          this.selectIdp(idp)
+        }}>
+          <Image
+            source={idp.logo}
+            style={styles.idpLogo}
+          />
+          <Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
           <Icon name='arrow-forward' />
         </Button>
-			);
-		})
-	}
+      )
+    })
+  }
 
-  // Handler per il bottone back dello schermo di selezione dell'IdP
+    // Handler per il bottone back dello schermo di selezione dell'IdP
   _handleBack() {
-    this.state.selectedIdp.map((idp) => {
-      // se è già stato scelto un IdP, torniamo alla scelta
-      this.resetIdp();
+    this.state.selectedIdp.map(() => {
+            // se è già stato scelto un IdP, torniamo alla scelta
+      this.resetIdp()
     }).valueOrElse(() => {
-      // se non è ancora stato scelto un IdP
-      // chiudiamo la modal di selezione
-      this.props.closeModal();
-    });
+            // se non è ancora stato scelto un IdP
+            // chiudiamo la modal di selezione
+      this.props.closeModal()
+    })
   }
 
   render() {
@@ -222,7 +212,7 @@ class IdpSelectionScreen extends React.Component {
 			<Container>
         <Header>
           <Left>
-              <Button transparent onPress={() => { this._handleBack(); }}>
+              <Button transparent onPress={() => { this._handleBack() }}>
                   <Icon name='arrow-back' />
               </Button>
           </Left>
@@ -233,34 +223,34 @@ class IdpSelectionScreen extends React.Component {
         </Header>
         {
           this.state.selectedIdp.map((selectedIdp) => {
-              return <SpidLoginWebview
+            return <SpidLoginWebview
                 idp={selectedIdp}
                 onSuccess={(token) => this._handleSpidSuccess(token)}
                 onError={(err) => this._handleSpidError(err)}
-                />;
+                />
           }).valueOrElse(() => {
-              return <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
+            return <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
                        {this.createButtons()}
-                     </Content>;
+                     </Content>
           })
         }
 
 			</Container>
-    );
+    )
   }
 
   _handleSpidSuccess(token) {
-    this.props.closeModal();
-    this.props.onSpidLogin(token);
+    this.props.closeModal()
+    this.props.onSpidLogin(token)
   }
 
-  _handleSpidError(err) {
+  _handleSpidError() {
     Alert.alert(
-      "Errore login",
-      "Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?",
-      { text: 'OK' },
-    )
-    this.resetIdp();
+          'Errore login',
+          'Mi spiace, si è verificato un errore durante l\'accesso, potresti riprovare?',
+          { text: 'OK' },
+        )
+    this.resetIdp()
   }
 
 }
@@ -278,36 +268,36 @@ class SpidLoginButton extends React.Component {
   setModalVisible(isVisible: boolean) {
     this.setState({
       isModalVisible: isVisible
-    });
+    })
   }
 
   render() {
     return (
       <View>
         <Modal
-          animationType={"fade"}
+          animationType={'fade'}
           transparent={false}
           visible={this.state.isModalVisible}
           >
          <IdpSelectionScreen
            onSpidLogin={this.props.onSpidLogin}
            closeModal={() => {
-            this.setModalVisible(false);
-         }}/>
+             this.setModalVisible(false)
+           }}/>
         </Modal>
 
         <Button
           block
           style={{backgroundColor: '#0066CC'}}
           onPress={() => {
-            this.setModalVisible(true);
+            this.setModalVisible(true)
           }}
         >
           <Text>ENTRA CON</Text>
           <Image source={require('../../img/spid.png')} style={styles.spidLogo} />
         </Button>
       </View>
-    );
+    )
   }
 
 }
@@ -362,6 +352,6 @@ const styles = StyleSheet.create({
     width: 20,
     marginRight: 6,
   },
-});
+})
 
-module.exports = SpidLoginButton;
+module.exports = SpidLoginButton

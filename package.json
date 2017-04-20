@@ -20,10 +20,18 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.2",
     "babel-jest": "19.0.0",
     "babel-plugin-flow-react-proptypes": "^2.0.0",
     "babel-preset-react-native": "1.9.1",
-    "flow-bin": "^0.44.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "flow-bin": "0.44.0",
     "jest": "19.0.2",
     "react-test-renderer": "^15.5.4"
   },

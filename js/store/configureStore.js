@@ -4,30 +4,30 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-import { AsyncStorage } from 'react-native';
-import { applyMiddleware, createStore } from 'redux';
-import { persistStore, autoRehydrate } from 'redux-persist';
-import { createLogger } from 'redux-logger';
+import { AsyncStorage } from 'react-native'
+import { createStore } from 'redux'
+import { persistStore, autoRehydrate } from 'redux-persist'
+// import { createLogger } from 'redux-logger'
 
-import reducers from '../reducers';
+import reducers from '../reducers'
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+// const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 
-const logger = createLogger({
-  predicate: (getState, action) => isDebuggingInChrome,
-  collapsed: true,
-  duration: true,
-});
+// const logger = createLogger({
+//     predicate: (getState, action) => isDebuggingInChrome,
+//     collapsed: true,
+//     duration: true,
+// })
 
 function configureStore(onComplete: ?() => void) {
-  const store = autoRehydrate()(createStore)(reducers);
-  persistStore(store, { storage: AsyncStorage }, onComplete);
-  if (isDebuggingInChrome) {
-    window.store = store;
-  }
-  return store;
+  const store = autoRehydrate()(createStore)(reducers)
+  persistStore(store, { storage: AsyncStorage }, onComplete)
+    // if (isDebuggingInChrome) {
+    //     window.store = store
+    // }
+  return store
 }
 
-module.exports = configureStore;
+module.exports = configureStore

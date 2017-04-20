@@ -2,7 +2,7 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
 export type Action =
   | { type: 'LOGGED_IN', data: { token: string } }

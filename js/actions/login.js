@@ -2,9 +2,9 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-import type { Action } from './types';
+import type { Action } from './types'
 
 function logIn(token: string): Action {
   return {
@@ -12,16 +12,16 @@ function logIn(token: string): Action {
     data: {
       token: token,
     }
-  };
+  }
 }
 
 function logOut(): Action {
   return {
     type: 'LOGGED_OUT',
-  };
+  }
 }
 
 module.exports = {
   logIn,
   logOut
-};
+}

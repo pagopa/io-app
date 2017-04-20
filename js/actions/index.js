@@ -2,10 +2,10 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const loginActions = require('./login');
+const loginActions = require('./login')
 
 module.exports = {
   ...loginActions,
-};
+}

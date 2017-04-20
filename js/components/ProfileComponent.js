@@ -3,31 +3,25 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const React = require('React');
+const React = require('React')
 import {
 	StyleSheet
-} from 'react-native';
+} from 'react-native'
 import {
   Content,
-  Button,
-  Body,
-	Title,
-  H1,
-  List,
   ListItem,
-  Icon,
-	Text,
-} from 'native-base';
-import type { Action } from '../actions/types';
-import type { UserState } from '../reducers/user';
+  Text,
+} from 'native-base'
+import type { Action } from '../actions/types'
+import type { UserState } from '../reducers/user'
 
-import { ProfileStyles } from './styles';
+import { ProfileStyles } from './styles'
 
-const {
-	logOut,
-} = require('../actions');
+// const {
+// 	logOut,
+// } = require('../actions')
 
 class ProfileComponent extends React.Component {
 
@@ -39,7 +33,7 @@ class ProfileComponent extends React.Component {
   render() {
     return(
       <Content padder>
-  			<ListItem itemHeader first>
+				<ListItem itemHeader first>
             <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>INFORMAZIONI PERSONALI</Text>
         </ListItem>
         <ListItem>
@@ -56,8 +50,8 @@ class ProfileComponent extends React.Component {
         </ListItem>
 
       </Content>
-    );
+    )
   }
 }
 
-module.exports = ProfileComponent;
+module.exports = ProfileComponent

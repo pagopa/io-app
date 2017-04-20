@@ -3,31 +3,19 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const React = require('React');
-import {
-	StyleSheet
-} from 'react-native';
+const React = require('React')
 import {
   Content,
   Button,
   Body,
-	Title,
-  H1,
-  List,
-  ListItem,
-  Icon,
 	Text,
-	Left,
-	Right,
 	Card,
   CardItem,
-} from 'native-base';
-import type { Action } from '../actions/types';
-import type { UserState } from '../reducers/user';
-
-import { ProfileStyles } from './styles';
+} from 'native-base'
+import type { Action } from '../actions/types'
+import type { UserState } from '../reducers/user'
 
 // const {
 // } = require('../actions');
@@ -97,8 +85,8 @@ class AlertsComponent extends React.Component {
         </Card>
 
       </Content>
-    );
+    )
   }
 }
 
-module.exports = AlertsComponent;
+module.exports = AlertsComponent

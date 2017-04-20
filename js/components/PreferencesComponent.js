@@ -3,46 +3,41 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const React = require('React');
+const React = require('React')
 import {
 	StyleSheet
-} from 'react-native';
+} from 'react-native'
 import {
   Content,
   Button,
   Body,
-	Title,
-  H1,
-  List,
-  ListItem,
-  Icon,
-	Text,
-	Left,
+	ListItem,
+  Text,
 	Right,
 	Switch,
-} from 'native-base';
+} from 'native-base'
 
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation'
 
-import type { Navigator } from 'react-navigation';
+import type { Navigator } from 'react-navigation'
 
-import type { Action } from '../actions/types';
-import type { UserState } from '../reducers/user';
+import type { Action } from '../actions/types'
+import type { UserState } from '../reducers/user'
 
-import { ProfileStyles } from './styles';
+import { ProfileStyles } from './styles'
 
 const {
 	logOut,
-} = require('../actions');
+} = require('../actions')
 
 const resetNavigationAction = NavigationActions.reset({
   index: 0,
   actions: [
     NavigationActions.navigate({ routeName: 'Home'})
   ]
-});
+})
 
 class PreferencesComponent extends React.Component {
 
@@ -82,22 +77,22 @@ class PreferencesComponent extends React.Component {
 							<Switch value={false} />
 					</Right>
         </ListItem>
-  			<ListItem itemHeader>
+				<ListItem itemHeader>
             <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>ESCI DALL'APPLICAZIONE</Text>
         </ListItem>
         <ListItem>
-  				<Button
-  					warning block
-  					onPress={() => {
-							this.props.dispatch(logOut());
-							this.props.navigation.dispatch(resetNavigationAction);
-						}}>
-  					<Text>Torna allo schermo di Login</Text>
-  				</Button>
-  			</ListItem>
+					<Button
+						warning block
+						onPress={() => {
+  this.props.dispatch(logOut())
+  this.props.navigation.dispatch(resetNavigationAction)
+}}>
+						<Text>Torna allo schermo di Login</Text>
+					</Button>
+				</ListItem>
       </Content>
-    );
+    )
   }
 }
 
-module.exports = PreferencesComponent;
+module.exports = PreferencesComponent

@@ -3,55 +3,45 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const React = require('React');
-const { connect } = require('react-redux');
+const React = require('React')
+const { connect } = require('react-redux')
 
 import {
 	StyleSheet,
-	Image,
-  View,
-	Platform,
-	Alert,
-} from 'react-native';
+} from 'react-native'
 
 import {
-  Container,
-  Content,
   Button,
   Text,
-  H1, H2, H3,
-  List,
-  ListItem,
-  Right,
-  Icon,
+  H1, H2,
 	Grid,
 	Row,
 	Col,
-} from 'native-base';
+} from 'native-base'
 
-import type { Navigator } from 'react-navigation';
+import type { Navigator } from 'react-navigation'
 
-import type { Action } from '../actions/types';
+import type { Action } from '../actions/types'
 
-import { TitilliumRegular } from './fonts';
+import { TitilliumRegular } from './fonts'
 
-import SpidLoginButton from './SpidLoginButton';
+import SpidLoginButton from './SpidLoginButton'
 
 const {
 	logIn,
-} = require('../actions');
+} = require('../actions')
 
 // Per via di un bug, bisogna usare StyleSheet.flatten
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
-	container: {
-		padding: 30,
-		paddingTop: 40,
-		paddingBottom: 20,
+  container: {
+    padding: 30,
+    paddingTop: 40,
+    paddingBottom: 20,
 		//backgroundColor: '#0066CC',
-	},
+  },
   titleContainer: {
     justifyContent: 'center',
   },
@@ -61,7 +51,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#0066CC',
   },
-});
+})
 
 class LoginScreen extends React.Component {
 
@@ -82,9 +72,9 @@ class LoginScreen extends React.Component {
 					<Row size={1}>
 						<Col>
 							<SpidLoginButton onSpidLogin={(token) => {
-								this.props.dispatch(logIn(token));
-								this.props.navigation.navigate('Profile');
-							}} />
+  this.props.dispatch(logIn(token))
+  this.props.navigation.navigate('Profile')
+}} />
 						</Col>
 					</Row>
 					<Row size={1}>
@@ -95,8 +85,8 @@ class LoginScreen extends React.Component {
 						</Col>
 					</Row>
 				</Grid>
-    );
+    )
   }
 }
 
-module.exports = connect()(LoginScreen);
+module.exports = connect()(LoginScreen)
