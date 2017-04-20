@@ -4,8 +4,10 @@
 
 'use strict'
 
-const loginActions = require('./login')
+import loginActions from './login'
+import userActions from './user'
 
 module.exports = {
   ...loginActions,
+  ...userActions,
 }

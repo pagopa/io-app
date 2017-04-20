@@ -4,11 +4,10 @@
 
 'use strict'
 
-var { combineReducers } = require('redux')
+import { combineReducers } from 'redux'
+
+import userReducer from './user'
 
 module.exports = combineReducers({
-  // config: require('./config'),
-  // notifications: require('./notifications'),
-  user: require('./user'),
-  // navigation: require('./navigation'),
+  user: userReducer,
 })
