@@ -9,7 +9,7 @@
 import { AsyncStorage } from 'react-native';
 import { applyMiddleware, createStore } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import reducers from '../reducers';
 
