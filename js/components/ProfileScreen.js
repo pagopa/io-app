@@ -32,7 +32,7 @@ import type { UserState } from '../reducers/user'
 // 	logOut,
 // } = require('../actions')
 
-import { CommonStyles } from './styles'
+import { CommonStyles, ProfileStyles } from './styles'
 
 const AlertsComponent = require('./AlertsComponent')
 const ProfileComponent = require('./ProfileComponent')
@@ -124,21 +124,21 @@ class ProfileScreen extends React.Component {
 								badgeValue={2} badgeColor="blue"
 								>
                   <Icon name="archive" active={this.isAlertsTabOn()} />
-                  <Text>Avvisi</Text>
+                  <Text style={StyleSheet.flatten(ProfileStyles.tabLabel)}>Avvisi</Text>
               </Button>
               <Button
 								active={this.isProfileTabOn()}
 								onPress={() => this.toggleProfileTab()}
 								>
-                  <Icon name="person" active={this.isProfileTabOn()} />
-                  <Text>Profilo</Text>
+                  <Icon name="contact" active={this.isProfileTabOn()} />
+                  <Text style={StyleSheet.flatten(ProfileStyles.tabLabel)}>Profilo</Text>
               </Button>
 							<Button
 								active={this.isPreferencesTabOn()}
 								onPress={() => this.togglePreferencesTab()}
 								>
                   <Icon name="settings" active={this.isPreferencesTabOn()} />
-                  <Text>Preferenze</Text>
+                  <Text style={StyleSheet.flatten(ProfileStyles.tabLabel)}>Preferenze</Text>
               </Button>
           </FooterTab>
       </Footer>

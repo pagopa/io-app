@@ -25,6 +25,10 @@ const CommonStyles = StyleSheet.create({
 })
 
 const ProfileStyles = StyleSheet.create({
+  tabLabel: {
+    fontFamily: TitilliumRegular,
+    fontSize: 12,
+  },
   listItemHeader: {
     fontFamily: TitilliumRegular,
   },
