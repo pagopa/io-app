@@ -32,20 +32,11 @@ import type { UserState } from '../reducers/user'
 // 	logOut,
 // } = require('../actions')
 
-import { TitilliumRegular } from './fonts'
+import { CommonStyles } from './styles'
 
 const AlertsComponent = require('./AlertsComponent')
 const ProfileComponent = require('./ProfileComponent')
 const PreferencesComponent = require('./PreferencesComponent')
-
-// Per via di un bug, bisogna usare StyleSheet.flatten
-// https://github.com/shoutem/ui/issues/51
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 22,
-    fontFamily: TitilliumRegular,
-  },
-})
 
 type TabName = AlertsTab | ProfileTab | PreferencesTab;
 type AlertsTab = { name: 'alerts' };
@@ -122,14 +113,8 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
-    const profile = this.props.user.profile
     return(
-      <Container>
-        <Header>
-					<Body>
-						<Title style={StyleSheet.flatten(styles.header)}>{profile ? profile.name : '-'}</Title>
-					</Body>
-				</Header>
+      <Container style={StyleSheet.flatten(CommonStyles.fullContainer)}>
 				{this.renderContent()}
 				<Footer >
           <FooterTab>
