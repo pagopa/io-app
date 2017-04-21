@@ -35,7 +35,7 @@ async function getUserProfile(apiUrlPrefix: string, token: string) {
     let responseJson = await response.json()
     return responseJson
   } catch(error) {
-    console.error(error)
+    // console.error(error)
   }
 }
 

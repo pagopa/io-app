@@ -13,6 +13,10 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { StackNavigator } from 'react-navigation'
 
+import { StyleProvider } from 'native-base'
+import getTheme from '../native-base-theme/components'
+import commonColors from '../native-base-theme/variables/commonColor'
+
 import configureStore from './store/configureStore'
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
@@ -59,9 +63,11 @@ class Root extends React.Component {
     })
 
     return (
-      <Provider store={this.state.store}>
-        <Navigator />
-      </Provider>
+      <StyleProvider style={getTheme(commonColors)}>
+        <Provider store={this.state.store}>
+          <Navigator />
+        </Provider>
+      </StyleProvider>
     )
   }
 }

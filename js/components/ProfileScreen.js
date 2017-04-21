@@ -123,22 +123,22 @@ class ProfileScreen extends React.Component {
 								onPress={() => this.toggleAlertsTab()}
 								badgeValue={2} badgeColor="blue"
 								>
-                  <Icon name="archive" active={this.isAlertsTabOn()} />
-                  <Text style={StyleSheet.flatten(ProfileStyles.tabLabel)}>Avvisi</Text>
+                  <Icon name="notification" active={this.isAlertsTabOn()} />
+                  <Text>Avvisi</Text>
               </Button>
               <Button
 								active={this.isProfileTabOn()}
 								onPress={() => this.toggleProfileTab()}
 								>
-                  <Icon name="contact" active={this.isProfileTabOn()} />
-                  <Text style={StyleSheet.flatten(ProfileStyles.tabLabel)}>Profilo</Text>
+                  <Icon name="user" active={this.isProfileTabOn()} />
+                  <Text>Profilo</Text>
               </Button>
 							<Button
 								active={this.isPreferencesTabOn()}
 								onPress={() => this.togglePreferencesTab()}
 								>
-                  <Icon name="settings" active={this.isPreferencesTabOn()} />
-                  <Text style={StyleSheet.flatten(ProfileStyles.tabLabel)}>Preferenze</Text>
+                  <Icon name="cog" active={this.isPreferencesTabOn()} />
+                  <Text>Preferenze</Text>
               </Button>
           </FooterTab>
       </Footer>

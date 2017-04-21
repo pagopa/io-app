@@ -31,8 +31,6 @@ import {
 
 import { some, none } from 'option'
 
-import { TitilliumRegular } from './fonts'
-
 export type IdentityProvider = {
   id: string,
   logo: mixed,
@@ -217,7 +215,7 @@ class IdpSelectionScreen extends React.Component {
               </Button>
           </Left>
           <Body>
-            <Title style={{fontFamily: TitilliumRegular}}>ACCEDI</Title>
+            <Title>ACCEDI</Title>
           </Body>
           <Right />
         </Header>
@@ -323,7 +321,6 @@ const styles = StyleSheet.create({
   idpName: {
     color: '#0066CC',
     fontSize: 15,
-    fontFamily: TitilliumRegular,
   },
   idpLogo: {
     width: 80,

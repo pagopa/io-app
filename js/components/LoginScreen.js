@@ -25,8 +25,6 @@ import type { Navigator } from 'react-navigation'
 
 import type { Action } from '../actions/types'
 
-import { TitilliumRegular } from './fonts'
-
 import SpidLoginButton from './SpidLoginButton'
 
 const {
@@ -46,7 +44,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleText: {
-    fontFamily: TitilliumRegular,
     // fontWeight: '600',
     textAlign: 'center',
     color: '#0066CC',
