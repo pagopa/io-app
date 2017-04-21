@@ -122,11 +122,12 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
+    const profile = this.props.user.profile
     return(
       <Container>
         <Header>
 					<Body>
-						<Title style={StyleSheet.flatten(styles.header)}>{this.props.user.name}</Title>
+						<Title style={StyleSheet.flatten(styles.header)}>{profile ? profile.name : '-'}</Title>
 					</Body>
 				</Header>
 				{this.renderContent()}

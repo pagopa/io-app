@@ -31,13 +31,14 @@ class ProfileComponent extends React.Component {
   };
 
   render() {
+    const profile = this.props.user.profile
     return(
       <Content padder>
 				<ListItem itemHeader first>
             <Text style={StyleSheet.flatten(ProfileStyles.listItemHeader)}>INFORMAZIONI PERSONALI</Text>
         </ListItem>
 				<ListItem>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ this.props.user.name } { this.props.user.familyname }</Text>
+            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ profile ? profile.name : '-' } { profile ? profile.familyname : '-' }</Text>
         </ListItem>
         <ListItem>
             <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>Domicilio e Residenza</Text>

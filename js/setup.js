@@ -52,7 +52,7 @@ class Root extends React.Component {
         screen: ProfileScreen,
       }
     }, {
-      initialRouteName: this.state.store.getState().user.name ? 'Profile' : 'Home',
+      initialRouteName: this.state.store.getState().user.profile ? 'Profile' : 'Home',
 
       // L'header viene gestito dagli screen
       headerMode: 'none'
