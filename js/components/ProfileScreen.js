@@ -32,11 +32,10 @@ import type { UserState } from '../reducers/user'
 // 	logOut,
 // } = require('../actions')
 
-import { CommonStyles, ProfileStyles } from './styles'
+import { CommonStyles } from './styles'
 
 const AlertsComponent = require('./AlertsComponent')
 const ProfileComponent = require('./ProfileComponent')
-const PreferencesComponent = require('./PreferencesComponent')
 
 type TabName = AlertsTab | ProfileTab | PreferencesTab;
 type AlertsTab = { name: 'alerts' };
@@ -97,11 +96,6 @@ class ProfileScreen extends React.Component {
 				navigation={this.props.navigation}
 				dispatch={this.props.dispatch}
 				user={this.props.user} />
-    } else if(this.isPreferencesTabOn()) {
-      return <PreferencesComponent
-				navigation={this.props.navigation}
-				dispatch={this.props.dispatch}
-				user={this.props.user} />
     } else if(this.isAlertsTabOn()) {
       return <AlertsComponent
 				navigation={this.props.navigation}
@@ -127,18 +121,18 @@ class ProfileScreen extends React.Component {
                   <Text>Avvisi</Text>
               </Button>
               <Button
+								active={false}
+								onPress={() => {}}
+								>
+                  <Icon name="calendar" active={false} />
+                  <Text>Scadenze</Text>
+              </Button>
+              <Button
 								active={this.isProfileTabOn()}
 								onPress={() => this.toggleProfileTab()}
 								>
                   <Icon name="user" active={this.isProfileTabOn()} />
                   <Text>Profilo</Text>
-              </Button>
-							<Button
-								active={this.isPreferencesTabOn()}
-								onPress={() => this.togglePreferencesTab()}
-								>
-                  <Icon name="cog" active={this.isPreferencesTabOn()} />
-                  <Text>Preferenze</Text>
               </Button>
           </FooterTab>
       </Footer>

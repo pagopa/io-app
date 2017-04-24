@@ -10,6 +10,7 @@ const { connect } = require('react-redux')
 
 import {
 	StyleSheet,
+  Image,
 } from 'react-native'
 
 import {
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingTop: 40,
     paddingBottom: 20,
-		//backgroundColor: '#0066CC',
+    backgroundColor: '#0066CC',
   },
   titleContainer: {
     justifyContent: 'center',
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   titleText: {
     // fontWeight: '600',
     textAlign: 'center',
-    color: '#0066CC',
+    color: '#fff',
   },
 })
 
@@ -60,8 +61,14 @@ class LoginScreen extends React.Component {
   render() {
     return(
 				<Grid style={styles.container}>
-					<Row size={2}>
+					<Row size={1}>
 						<Col>
+              <Image source={require('../../img/logo-it.png')} style={{
+                width: '100%',
+                height: 100,
+                marginBottom: 20,
+                resizeMode: 'contain',
+              }}/>
 							<H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
 							<H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
 						</Col>
@@ -72,13 +79,9 @@ class LoginScreen extends React.Component {
   this.props.dispatch(logIn(token))
   this.props.navigation.navigate('Profile')
 }} />
-						</Col>
-					</Row>
-					<Row size={1}>
-						<Col>
-							<Button block small style={{backgroundColor: '#013366'}}>
-								<Text>Non hai SPID?</Text>
-							</Button>
+              <Button small transparent>
+                <Text style={{fontSize: 15, color: '#b6d4f2', marginTop: 10}}>Non hai ancora SPID?</Text>
+              </Button>
 						</Col>
 					</Row>
 				</Grid>

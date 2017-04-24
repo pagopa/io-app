@@ -187,7 +187,7 @@ class IdpSelectionScreen extends React.Component {
             style={styles.idpLogo}
           />
           <Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
-          <Icon name='arrow-forward' />
+          <Icon name='chevron-right' />
         </Button>
       )
     })
@@ -211,7 +211,7 @@ class IdpSelectionScreen extends React.Component {
         <Header>
           <Left>
               <Button transparent onPress={() => { this._handleBack() }}>
-                  <Icon name='arrow-back' />
+                  <Icon name='chevron-left' />
               </Button>
           </Left>
           <Body>
@@ -285,7 +285,7 @@ class SpidLoginButton extends React.Component {
         </Modal>
 
         <Button
-          block
+          block light bordered
           style={{backgroundColor: '#0066CC'}}
           onPress={() => {
             this.setModalVisible(true)
