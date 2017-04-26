@@ -1,4 +1,4 @@
-// flow-typed signature: e59e7c99f87ed13eaa02a1870dc090e6
+// flow-typed signature: 8e91b3dcbc270481f79a71530062ae22
 // flow-typed version: <<STUB>>/react-navigation_vgit+https://github.com/react-community/react-navigation.git/flow_v0.44.2
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
@@ -22,26 +22,6 @@ declare module 'react-navigation' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module 'react-navigation/examples/LinkingExample/__tests__/index.android' {
-  declare module.exports: any;
-}
-
-declare module 'react-navigation/examples/LinkingExample/__tests__/index.ios' {
-  declare module.exports: any;
-}
-
-declare module 'react-navigation/examples/LinkingExample/App' {
-  declare module.exports: any;
-}
-
-declare module 'react-navigation/examples/LinkingExample/index.android' {
-  declare module.exports: any;
-}
-
-declare module 'react-navigation/examples/LinkingExample/index.ios' {
-  declare module.exports: any;
-}
-
 declare module 'react-navigation/examples/NavigationPlayground/__exponent/index.exp' {
   declare module.exports: any;
 }
@@ -51,6 +31,10 @@ declare module 'react-navigation/examples/NavigationPlayground/__exponent/rn-cli
 }
 
 declare module 'react-navigation/examples/NavigationPlayground/__exponent/transformer' {
+  declare module.exports: any;
+}
+
+declare module 'react-navigation/examples/NavigationPlayground/__tests__/index.test' {
   declare module.exports: any;
 }
 
@@ -102,11 +86,7 @@ declare module 'react-navigation/examples/NavigationPlayground/js/TabsInDrawer' 
   declare module.exports: any;
 }
 
-declare module 'react-navigation/examples/ReduxExample/__tests__/index.android' {
-  declare module.exports: any;
-}
-
-declare module 'react-navigation/examples/ReduxExample/__tests__/index.ios' {
+declare module 'react-navigation/examples/ReduxExample/__tests__/index.test' {
   declare module.exports: any;
 }
 
@@ -547,21 +527,6 @@ declare module 'react-navigation/website/src/Server' {
 }
 
 // Filename aliases
-declare module 'react-navigation/examples/LinkingExample/__tests__/index.android.js' {
-  declare module.exports: $Exports<'react-navigation/examples/LinkingExample/__tests__/index.android'>;
-}
-declare module 'react-navigation/examples/LinkingExample/__tests__/index.ios.js' {
-  declare module.exports: $Exports<'react-navigation/examples/LinkingExample/__tests__/index.ios'>;
-}
-declare module 'react-navigation/examples/LinkingExample/App.js' {
-  declare module.exports: $Exports<'react-navigation/examples/LinkingExample/App'>;
-}
-declare module 'react-navigation/examples/LinkingExample/index.android.js' {
-  declare module.exports: $Exports<'react-navigation/examples/LinkingExample/index.android'>;
-}
-declare module 'react-navigation/examples/LinkingExample/index.ios.js' {
-  declare module.exports: $Exports<'react-navigation/examples/LinkingExample/index.ios'>;
-}
 declare module 'react-navigation/examples/NavigationPlayground/__exponent/index.exp.js' {
   declare module.exports: $Exports<'react-navigation/examples/NavigationPlayground/__exponent/index.exp'>;
 }
@@ -570,6 +535,9 @@ declare module 'react-navigation/examples/NavigationPlayground/__exponent/rn-cli
 }
 declare module 'react-navigation/examples/NavigationPlayground/__exponent/transformer.js' {
   declare module.exports: $Exports<'react-navigation/examples/NavigationPlayground/__exponent/transformer'>;
+}
+declare module 'react-navigation/examples/NavigationPlayground/__tests__/index.test.js' {
+  declare module.exports: $Exports<'react-navigation/examples/NavigationPlayground/__tests__/index.test'>;
 }
 declare module 'react-navigation/examples/NavigationPlayground/index.js' {
   declare module.exports: $Exports<'react-navigation/examples/NavigationPlayground/index'>;
@@ -607,11 +575,8 @@ declare module 'react-navigation/examples/NavigationPlayground/js/StacksOverTabs
 declare module 'react-navigation/examples/NavigationPlayground/js/TabsInDrawer.js' {
   declare module.exports: $Exports<'react-navigation/examples/NavigationPlayground/js/TabsInDrawer'>;
 }
-declare module 'react-navigation/examples/ReduxExample/__tests__/index.android.js' {
-  declare module.exports: $Exports<'react-navigation/examples/ReduxExample/__tests__/index.android'>;
-}
-declare module 'react-navigation/examples/ReduxExample/__tests__/index.ios.js' {
-  declare module.exports: $Exports<'react-navigation/examples/ReduxExample/__tests__/index.ios'>;
+declare module 'react-navigation/examples/ReduxExample/__tests__/index.test.js' {
+  declare module.exports: $Exports<'react-navigation/examples/ReduxExample/__tests__/index.test'>;
 }
 declare module 'react-navigation/examples/ReduxExample/index.js' {
   declare module.exports: $Exports<'react-navigation/examples/ReduxExample/index'>;

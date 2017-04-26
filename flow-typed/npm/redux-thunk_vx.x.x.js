@@ -1,4 +1,4 @@
-// flow-typed signature: 94e812360f3f3f4a16e35501a28ce5c2
+// flow-typed signature: f85cb840da4b4e2c36ed7b357d4b9934
 // flow-typed version: <<STUB>>/redux-thunk_v^2.2.0/flow_v0.44.2
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
