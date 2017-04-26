@@ -10,9 +10,8 @@
     "native-base": "^2.1.2",
     "option": "^0.2.3",
     "react": "16.0.0-alpha.6",
-    "react-native": "0.43.3",
-    "react-native-easy-grid": "^0.1.8",
-    "react-navigation": "^1.0.0-beta.8",
+    "react-native": "0.43.4",
+    "react-navigation": "git+https://github.com/react-community/react-navigation.git",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
@@ -20,20 +19,11 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.2",
     "babel-jest": "19.0.0",
-    "babel-plugin-flow-react-proptypes": "^2.0.0",
     "babel-preset-react-native": "1.9.1",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-config-google": "^0.7.1",
-    "eslint-plugin-flowtype": "^2.32.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "flow-bin": "0.44.0",
+    "flow-bin": "^0.44.2",
     "jest": "19.0.2",
-    "react-test-renderer": "^15.5.4"
+    "react-test-renderer": "16.0.0-alpha.6"
   },
   "jest": {
     "preset": "react-native"
