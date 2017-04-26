@@ -78,3 +78,7 @@ $ react-native run-ios
 ```
 react-native run-ios --configuration Release --device 'device name'
 ```
+
+### Aggiornare icone dell'applicazione
+
+Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
