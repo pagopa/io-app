@@ -228,8 +228,9 @@ class IdpSelectionScreen extends React.Component {
                 />
           }).valueOrElse(() => {
             return <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
-                       {this.createButtons()}
-                     </Content>
+                      <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>Per procedere all'accesso, seleziona il gestione della tua identità SPID</Text>
+                      {this.createButtons()}
+                    </Content>
           })
         }
 
@@ -306,7 +307,13 @@ const styles = StyleSheet.create({
   },
   selectIdpContainer: {
     backgroundColor: '#0066CC',
-    padding: 40,
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
+  selectIdpHelpText: {
+    marginTop: 20,
+    marginBottom: 20,
+    color: '#fff',
   },
   spidLogo: {
     height: 54,

@@ -21,6 +21,7 @@ import {
 	Title,
   Icon,
 	Text,
+  Badge,
 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
@@ -35,12 +36,13 @@ import type { UserState } from '../reducers/user'
 import { CommonStyles } from './styles'
 
 const AlertsComponent = require('./AlertsComponent')
+const CalendarComponent = require('./CalendarComponent')
 const ProfileComponent = require('./ProfileComponent')
 
-type TabName = AlertsTab | ProfileTab | PreferencesTab;
+type TabName = AlertsTab | CalendarTab | ProfileTab;
 type AlertsTab = { name: 'alerts' };
+type CalendarTab = { name: 'calendar' };
 type ProfileTab = { name: 'profile' };
-type PreferencesTab = { name: 'preferences' };
 
 class ProfileScreen extends React.Component {
   state: {
@@ -70,6 +72,16 @@ class ProfileScreen extends React.Component {
     return this.state.activeTab.name === 'alerts'
   }
 
+  toggleCalendarTab() {
+    this.setState({
+      activeTab: { name: 'calendar' },
+    })
+  }
+
+  isCalendarTabOn() {
+    return this.state.activeTab.name === 'calendar'
+  }
+
   toggleProfileTab() {
     this.setState({
       activeTab: { name: 'profile' },
@@ -80,16 +92,6 @@ class ProfileScreen extends React.Component {
     return this.state.activeTab.name === 'profile'
   }
 
-  togglePreferencesTab() {
-    this.setState({
-      activeTab: { name: 'preferences' },
-    })
-  }
-
-  isPreferencesTabOn() {
-    return this.state.activeTab.name === 'preferences'
-  }
-
   renderContent() {
     if(this.isProfileTabOn()) {
       return <ProfileComponent
@@ -98,6 +100,11 @@ class ProfileScreen extends React.Component {
 				user={this.props.user} />
     } else if(this.isAlertsTabOn()) {
       return <AlertsComponent
+				navigation={this.props.navigation}
+				dispatch={this.props.dispatch}
+				user={this.props.user} />
+    } else if(this.isCalendarTabOn()) {
+      return <CalendarComponent
 				navigation={this.props.navigation}
 				dispatch={this.props.dispatch}
 				user={this.props.user} />
@@ -113,18 +120,21 @@ class ProfileScreen extends React.Component {
 				<Footer >
           <FooterTab>
               <Button
+                badge
 								active={this.isAlertsTabOn()}
 								onPress={() => this.toggleAlertsTab()}
-								badgeValue={2} badgeColor="blue"
 								>
+                  <Badge><Text>23</Text></Badge>
                   <Icon name="notification" active={this.isAlertsTabOn()} />
                   <Text>Avvisi</Text>
               </Button>
               <Button
-								active={false}
-								onPress={() => {}}
+                badge
+								active={this.isCalendarTabOn()}
+								onPress={() => this.toggleCalendarTab()}
 								>
-                  <Icon name="calendar" active={false} />
+                  <Badge><Text>1</Text></Badge>
+                  <Icon name="calendar" active={this.isCalendarTabOn()} />
                   <Text>Scadenze</Text>
               </Button>
               <Button
