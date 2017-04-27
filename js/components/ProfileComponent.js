@@ -90,9 +90,7 @@ class ProfileComponent extends React.Component {
         <ListItem>
           <Body><Text>pinco@pec.italia.it</Text></Body>
           <Right>
-            <Button transparent iconRight dark>
-              <Icon active name="chevron-right" />
-            </Button>
+            <Icon active name="chevron-right" />
           </Right>
         </ListItem>
 
@@ -100,38 +98,31 @@ class ProfileComponent extends React.Component {
 
         <ListItem itemHeader first icon>
           <Left><Icon name="notification" /></Left>
-          <Body><Text>RICEZIONE AVVISI</Text></Body>
+          <Body><Text>AVVISI E SCADENZE</Text></Body>
         </ListItem>
-        <ListItem>
+        <ListItem icon>
+          <Left></Left>
 					<Body>
 						<Text>Enti abilitati</Text>
 					</Body>
 					<Right>
-						<Button transparent iconRight dark>
-              <Text>5</Text>
-              <Icon active name="chevron-right" />
-            </Button>
+            <Text>5</Text>
+            <Icon name="chevron-right" />
 					</Right>
         </ListItem>
-				<ListItem>
+        <ListItem icon>
+          <Left></Left>
 					<Body>
-						<Text>Scadenze amministrative</Text>
+						<Text>Tipologie</Text>
 					</Body>
 					<Right>
-						<Switch value={true} />
-					</Right>
-        </ListItem>
-				<ListItem>
-					<Body>
-						<Text>Avvisi di pagamento</Text>
-					</Body>
-					<Right>
-						<Switch value={true} />
+            <Text>6</Text>
+            <Icon name="chevron-right" />
 					</Right>
         </ListItem>
         <ListItem>
 					<Body>
-						<Text>Scadenze fiscali</Text>
+						<Text>Aggiungi al calendario</Text>
 					</Body>
 					<Right>
 						<Switch value={true} />
@@ -140,17 +131,16 @@ class ProfileComponent extends React.Component {
 
         <ListItem itemDivider />
 
-          <ListItem itemHeader first icon>
-            <Left><Icon name="log-out" /></Left>
-            <Body><Text>ESCI</Text></Body>
-          </ListItem>
-          <ListItem>
-<Button warning block onPress={() => {
+        <ListItem>
+          <Body>
+<Button iconRight danger block onPress={() => {
   this.props.dispatch(logOut())
   this.props.navigation.dispatch(resetNavigationAction)
 }}>
-            <Text>Torna alla Login SPID</Text>
-          </Button>
+              <Text>Esci da questa identità SPID</Text>
+              <Icon name="log-out" />
+            </Button>
+          </Body>
         </ListItem>
       </Content>
     )
