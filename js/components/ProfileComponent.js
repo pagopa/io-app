@@ -6,28 +6,31 @@
 'use strict'
 
 const React = require('React')
+
 import {
-	StyleSheet
+	StyleSheet,
+  Linking,
 } from 'react-native'
+
 import {
   Content,
   ListItem,
   Text,
   Left, Right,
-  H1, H2, H3,
   Icon,
   Button,
   Body,
   Switch,
-  Badge,
 } from 'native-base'
 
 import { NavigationActions } from 'react-navigation'
 
-import type { Action } from '../actions/types'
-import type { UserState } from '../reducers/user'
+import type { Dispatch } from '../actions/types'
+import type { LoggedInUserState } from '../reducers/user'
 
 import { ProfileStyles } from './styles'
+
+import { getIdpInfo } from './SpidLoginButton'
 
 const {
 	logOut,
@@ -40,16 +43,25 @@ const resetNavigationAction = NavigationActions.reset({
   ]
 })
 
+const openIdpProfile = function (idpUrl: string) {
+  Linking.openURL(idpUrl).catch(err => {
+    // TODO handle error
+  })
+}
+
 class ProfileComponent extends React.Component {
 
   props: {
     navigation: Navigator,
-    dispatch: (action: Action) => void;
-    user: UserState;
+    dispatch: Dispatch,
+    user: LoggedInUserState,
   };
 
   render() {
     const profile = this.props.user.profile
+    const idpId = this.props.user.idpId
+    const idpInfo = getIdpInfo(idpId)
+
     return(
       <Content>
         <ListItem itemDivider />
@@ -60,11 +72,15 @@ class ProfileComponent extends React.Component {
             <Body>
               <Text>PROFILO SPID</Text>
             </Body>
-            <Right>
-              <Button transparent dark iconRight>
-                <Icon name="cog" style={{fontSize: 18}}/>
-              </Button>
-            </Right>
+            { idpInfo && idpInfo.profileUrl != undefined &&
+              <Right>
+                <Button transparent dark iconRight onPress={() => {
+                  openIdpProfile(idpInfo.profileUrl)
+                }}>
+                  <Icon name="cog" style={{fontSize: 18}}/>
+                </Button>
+              </Right>
+            }
         </ListItem>
 				<ListItem>
             <Left><Text>Nome</Text></Left>
@@ -81,6 +97,10 @@ class ProfileComponent extends React.Component {
         <ListItem>
             <Left><Text>Cellulare</Text></Left>
             <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ profile ? profile.mobilephone : '-' }</Text>
+        </ListItem>
+        <ListItem>
+            <Left><Text>Gestore</Text></Left>
+            <Text>{ idpInfo ? idpInfo.name : '-' }</Text>
         </ListItem>
         <ListItem itemDivider />
 				<ListItem itemHeader first icon>

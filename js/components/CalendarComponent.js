@@ -34,7 +34,7 @@ import type { UserState } from '../reducers/user'
 class CalendarItemComponent extends React.Component {
 
   props: {
-    last: boolean,
+    last?: boolean,
     date: string,
     title: string,
     amount: string,

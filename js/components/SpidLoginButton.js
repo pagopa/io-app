@@ -29,13 +29,12 @@ import {
   Icon,
 } from 'native-base'
 
-import { some, none } from 'option'
-
 export type IdentityProvider = {
   id: string,
   logo: mixed,
   name: string,
   entityID: string,
+  profileUrl?: string,
 };
 
 // prefix for recognizing auth token
@@ -54,29 +53,43 @@ const idps: Array<IdentityProvider> = [
     name: 'Poste Italiane',
     logo: require('../../img/spid-idp-posteid.png'),
     entityID: 'https://posteid.poste.it',
+    profileUrl: 'https://posteid.poste.it/private/cruscotto.shtml',
   },
   {
     id: 'sielte',
     name: 'Sielte',
     logo: require('../../img/spid-idp-sielteid.png'),
     entityID: 'https://identity.sieltecloud.it',
+    profileUrl: 'https://myid.sieltecloud.it/profile/',
   },
   {
     id: 'tim',
     name: 'Telecom Italia',
     logo: require('../../img/spid-idp-timid.png'),
     entityID: 'https://login.id.tim.it/affwebservices/public/saml2sso',
+    profileUrl: 'https://id.tim.it/identity/private/',
   },
   {
     id: 'aruba',
     name: 'Aruba.it',
     logo: require('../../img/spid-idp-arubaid.png'),
     entityID: 'https://loginspid.aruba.it',
+    profileUrl: 'http://selfcarespid.aruba.it',
   },
 ]
 
 const WEBVIEW_REF = 'webview'
 const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID='
+
+/**
+ * Restituisce le proprietà dell'IdP associato all'identificativo
+ * idpId. Restituisce undefined in caso non esista nessun IdP
+ * con quell'identificativo.
+ * @param {string} idpId - L'identificativo dell'IdP
+ */
+export function getIdpInfo(idpId: string): ?IdentityProvider {
+  return idps.find((idp) => idp.id === idpId)
+}
 
 /**
  * Webview usata per la pagina di login dell'IdP
@@ -128,7 +141,7 @@ class SpidLoginWebview extends React.Component {
   _onNavigationStateChange = (navState) => {
     const url = navState.url
     const tokenPathPos = url.indexOf(TOKEN_PATH_PREFIX)
-    if(tokenPathPos == -1) {
+    if(tokenPathPos === -1) {
       this.setState({
         status: navState.title,
         isLoading: navState.loading,
@@ -146,33 +159,36 @@ class SpidLoginWebview extends React.Component {
 
 }
 
+/**
+ * Schermata di selezione dell'Identiry Provider SPID
+ */
 class IdpSelectionScreen extends React.Component {
 
   props: {
     closeModal: () => void,
-    onSpidLogin: (string) => void,
-  };
+    onSpidLogin: (string, string) => void,
+  }
 
   state: {
-    selectedIdp: some | none,
-  };
+    selectedIdp: ?IdentityProvider,
+  }
 
   constructor(props) {
     super(props)
     this.state = {
-      selectedIdp: none,
+      selectedIdp: null,
     }
   }
 
   selectIdp(idp: IdentityProvider) {
     this.setState({
-      selectedIdp: some(idp),
+      selectedIdp: idp,
     })
   }
 
   resetIdp() {
     this.setState({
-      selectedIdp: none,
+      selectedIdp: null,
     })
   }
 
@@ -195,17 +211,18 @@ class IdpSelectionScreen extends React.Component {
 
     // Handler per il bottone back dello schermo di selezione dell'IdP
   _handleBack() {
-    this.state.selectedIdp.map(() => {
-            // se è già stato scelto un IdP, torniamo alla scelta
+    if(this.state.selectedIdp != null) {
+      // se è già stato scelto un IdP, torniamo alla scelta
       this.resetIdp()
-    }).valueOrElse(() => {
-            // se non è ancora stato scelto un IdP
-            // chiudiamo la modal di selezione
+    } else {
+      // se non è ancora stato scelto un IdP
+      // chiudiamo la modal di selezione
       this.props.closeModal()
-    })
+    }
   }
 
   render() {
+    const { selectedIdp } = this.state
     return(
 			<Container>
         <Header>
@@ -220,27 +237,29 @@ class IdpSelectionScreen extends React.Component {
           <Right />
         </Header>
         {
-          this.state.selectedIdp.map((selectedIdp) => {
-            return <SpidLoginWebview
-                idp={selectedIdp}
-                onSuccess={(token) => this._handleSpidSuccess(token)}
-                onError={(err) => this._handleSpidError(err)}
-                />
-          }).valueOrElse(() => {
-            return <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
-                      <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>Per procedere all'accesso, seleziona il gestione della tua identità SPID</Text>
-                      {this.createButtons()}
-                    </Content>
-          })
+          selectedIdp != null ?
+            <SpidLoginWebview
+              idp={selectedIdp}
+              onSuccess={(token) => this._handleSpidSuccess(token)}
+              onError={(err) => this._handleSpidError(err)}
+              />
+            : <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
+                <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>Per procedere all'accesso, seleziona il gestione della tua identità SPID</Text>
+                {this.createButtons()}
+              </Content>
         }
-
 			</Container>
     )
   }
 
   _handleSpidSuccess(token) {
-    this.props.closeModal()
-    this.props.onSpidLogin(token)
+    const selectedIdp = this.state.selectedIdp
+    if(selectedIdp != null) {
+      this.props.closeModal()
+      // ad autenticazione avvenuta, viene chiamata onSpidLogin
+      // passando il token di sessione e l'idendificativo dell'IdP
+      this.props.onSpidLogin(token, selectedIdp.id)
+    }
   }
 
   _handleSpidError() {
@@ -254,10 +273,14 @@ class IdpSelectionScreen extends React.Component {
 
 }
 
-class SpidLoginButton extends React.Component {
+
+/**
+ * Bottone di login SPID.
+ */
+export class SpidLoginButton extends React.Component {
 
   props: {
-    onSpidLogin: (string) => void,
+    onSpidLogin: (string, string) => void,
   }
 
   state = {
@@ -357,5 +380,3 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
 })
-
-module.exports = SpidLoginButton

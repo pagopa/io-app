@@ -26,8 +26,8 @@ import {
 
 import type { Navigator } from 'react-navigation'
 
-import type { Action } from '../actions/types'
-import type { UserState } from '../reducers/user'
+import type { Dispatch } from '../actions/types'
+import type { LoggedInUserState } from '../reducers/user'
 
 // const {
 // 	logOut,
@@ -51,8 +51,8 @@ class ProfileScreen extends React.Component {
 
   props: {
 		navigation: Navigator,
-    dispatch: (action: Action) => void;
-    user: UserState;
+    dispatch: Dispatch,
+    user: LoggedInUserState,
   };
 
   constructor(props) {

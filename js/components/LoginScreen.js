@@ -24,9 +24,9 @@ import {
 
 import type { Navigator } from 'react-navigation'
 
-import type { Action } from '../actions/types'
+import type { Dispatch } from '../actions/types'
 
-import SpidLoginButton from './SpidLoginButton'
+import { SpidLoginButton } from './SpidLoginButton'
 
 const {
 	logIn,
@@ -55,7 +55,7 @@ class LoginScreen extends React.Component {
 
   props: {
 		navigation: Navigator,
-		dispatch: (action: Action) => void,
+		dispatch: Dispatch,
   };
 
   render() {
@@ -75,8 +75,8 @@ class LoginScreen extends React.Component {
 					</Row>
 					<Row size={1}>
 						<Col>
-							<SpidLoginButton onSpidLogin={(token) => {
-  this.props.dispatch(logIn(token))
+							<SpidLoginButton onSpidLogin={(token, idpId) => {
+  this.props.dispatch(logIn(token, idpId))
   this.props.navigation.navigate('Profile')
 }} />
               <Button small transparent>
