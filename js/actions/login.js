@@ -7,12 +7,13 @@
 import type { Action, ThunkAction, Dispatch, GetState } from './types'
 import { requestUserProfile } from './user'
 
-function logIn(token: string): ThunkAction {
+function logIn(token: string, idpId: string): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch({
       type: 'LOGGED_IN',
       data: {
-        token: token,
+        token,
+        idpId,
       }
     })
     requestUserProfile()(dispatch, getState)
