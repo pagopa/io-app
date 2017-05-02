@@ -47,6 +47,7 @@ const idps: Array<IdentityProvider> = [
     name: 'Infocert',
     logo: require('../../img/spid-idp-infocertid.png'),
     entityID: 'https://identity.infocert.it',
+    profileUrl: 'https://my.infocert.it/selfcare',
   },
   {
     id: 'poste',
