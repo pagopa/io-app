@@ -1,4 +1,6 @@
 /**
+ * Implements the SPID Login button
+ *
  * @providesModule SpidLoginButton
  * @flow
  */
@@ -34,7 +36,7 @@ export type IdentityProvider = {
   logo: mixed,
   name: string,
   entityID: string,
-  profileUrl?: string,
+  profileUrl: string,
 };
 
 // prefix for recognizing auth token

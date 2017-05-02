@@ -1,4 +1,6 @@
 /**
+ * Aggregates all defined reducers
+ * 
  * @flow
  */
 

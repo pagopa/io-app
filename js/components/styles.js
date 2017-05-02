@@ -1,5 +1,7 @@
 
 /**
+ * Common styles used across the components
+ *
  * @flow
  */
 
@@ -13,7 +15,8 @@ const { StatusBarManager } = NativeModules
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 
-// Per via di un bug, bisogna usare StyleSheet.flatten
+// Due to a bug, the following style must be wrapped
+// with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
 
 const CommonStyles = StyleSheet.create({

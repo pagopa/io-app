@@ -1,4 +1,6 @@
 /**
+ * Implements the content of the user profile tab.
+ *
  * @providesModule ProfileComponent
  * @flow
  */
@@ -25,7 +27,8 @@ import {
 
 import { NavigationActions } from 'react-navigation'
 
-import type { Dispatch } from '../actions/types'
+import type { NavigationProp } from 'react-navigation/src/TypeDefinition'
+import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
 import { ProfileStyles } from './styles'
@@ -36,6 +39,9 @@ const {
 	logOut,
 } = require('../actions')
 
+/**
+ * Resets the main navigation to the Home screen
+ */
 const resetNavigationAction = NavigationActions.reset({
   index: 0,
   actions: [
@@ -43,19 +49,26 @@ const resetNavigationAction = NavigationActions.reset({
   ]
 })
 
+/**
+ * Opens the IdP profile page as an external link.
+ *
+ * This usually triggers the switch to the web browser
+ * configured on the os.
+ * TODO handle the error thrown by openURL
+ * TODO we could check whether a specific IdP app is installed
+ *      and switch to that.
+ */
 const openIdpProfile = function (idpUrl: string) {
-  Linking.openURL(idpUrl).catch(err => {
-    // TODO handle error
-  })
+  Linking.openURL(idpUrl) //.catch(err => { })
 }
 
 class ProfileComponent extends React.Component {
 
   props: {
-    navigation: Navigator,
+    navigation: NavigationProp<*,AnyAction>,
     dispatch: Dispatch,
     user: LoggedInUserState,
-  };
+  }
 
   render() {
     const profile = this.props.user.profile
@@ -66,21 +79,22 @@ class ProfileComponent extends React.Component {
       <Content>
         <ListItem itemDivider />
         <ListItem itemHeader icon>
-            <Left>
-              <Icon name="user" />
-            </Left>
-            <Body>
-              <Text>PROFILO SPID</Text>
-            </Body>
-            { idpInfo && idpInfo.profileUrl != undefined &&
-              <Right>
+          <Left>
+            <Icon name="user" />
+          </Left>
+          <Body>
+            <Text>PROFILO SPID</Text>
+          </Body>
+          <Right>
+            {
+              idpInfo != null &&
                 <Button transparent dark iconRight onPress={() => {
                   openIdpProfile(idpInfo.profileUrl)
                 }}>
                   <Icon name="cog" style={{fontSize: 18}}/>
                 </Button>
-              </Right>
             }
+          </Right>
         </ListItem>
 				<ListItem>
             <Left><Text>Nome</Text></Left>
@@ -100,7 +114,7 @@ class ProfileComponent extends React.Component {
         </ListItem>
         <ListItem>
             <Left><Text>Gestore</Text></Left>
-            <Text>{ idpInfo ? idpInfo.name : '-' }</Text>
+            <Text>{ idpInfo ? idpInfo.name : 'SCONOSCIUTO' }</Text>
         </ListItem>
         <ListItem itemDivider />
 				<ListItem itemHeader first icon>

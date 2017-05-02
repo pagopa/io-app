@@ -1,4 +1,6 @@
 /**
+ * Defines Flow types for the available actions.
+ *
  * @flow
  */
 
@@ -16,6 +18,8 @@ export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
 
 export type PromiseAction = Promise<Action>
 
-export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any
+export type AnyAction = Action | ThunkAction | PromiseAction | Array<Action>
+
+export type Dispatch = (action: AnyAction) => any
 
 export type GetState = () => Object

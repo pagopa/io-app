@@ -1,4 +1,6 @@
 /**
+ * Implements the main user screen
+ * 
  * @providesModule ProfileScreen
  * @flow
  */
@@ -7,18 +9,17 @@
 
 const React = require('React')
 const { connect } = require('react-redux')
+
 import {
 	StyleSheet,
 } from 'react-native'
+
 import {
   Container,
-  Header,
 	Footer,
 	FooterTab,
 	Content,
   Button,
-  Body,
-	Title,
   Icon,
 	Text,
   Badge,
@@ -29,31 +30,27 @@ import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
-// const {
-// 	logOut,
-// } = require('../actions')
-
 import { CommonStyles } from './styles'
 
-const AlertsComponent = require('./AlertsComponent')
-const CalendarComponent = require('./CalendarComponent')
-const ProfileComponent = require('./ProfileComponent')
+import AlertsComponent from './AlertsComponent'
+import CalendarComponent from './CalendarComponent'
+import ProfileComponent from './ProfileComponent'
 
-type TabName = AlertsTab | CalendarTab | ProfileTab;
-type AlertsTab = { name: 'alerts' };
-type CalendarTab = { name: 'calendar' };
-type ProfileTab = { name: 'profile' };
+type TabName = AlertsTab | CalendarTab | ProfileTab
+type AlertsTab = { name: 'alerts' }
+type CalendarTab = { name: 'calendar' }
+type ProfileTab = { name: 'profile' }
 
 class ProfileScreen extends React.Component {
   state: {
 		activeTab: TabName,
-	};
+	}
 
   props: {
 		navigation: Navigator,
     dispatch: Dispatch,
     user: LoggedInUserState,
-  };
+  }
 
   constructor(props) {
     super(props)
@@ -150,7 +147,6 @@ class ProfileScreen extends React.Component {
     )
   }
 }
-
 
 function select(store) {
   return {

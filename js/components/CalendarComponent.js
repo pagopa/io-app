@@ -1,4 +1,6 @@
 /**
+ * Implements the content of the "Calendar" tab
+ *
  * @providesModule CalendarComponent
  * @flow
  */
@@ -6,30 +8,20 @@
 'use strict'
 
 const React = require('React')
-import { StyleSheet } from 'react-native'
+
 import {
   Content,
-  Button,
-  Body,
 	Text,
-	Card,
-  CardItem,
   Separator,
   ListItem,
-  H1,
   List,
-  Left,
-  Right,
-  Icon,
   Grid,
   Row,
   Col,
 } from 'native-base'
-import type { Action } from '../actions/types'
-import type { UserState } from '../reducers/user'
 
-// const {
-// } = require('../actions');
+import type { Dispatch } from '../actions/types'
+import type { UserState } from '../reducers/user'
 
 class CalendarItemComponent extends React.Component {
 
@@ -64,11 +56,11 @@ class CalendarItemComponent extends React.Component {
 
 }
 
-class CalendarComponent extends React.Component {
+export default class CalendarComponent extends React.Component {
 
   props: {
-    dispatch: (action: Action) => void,
-    user: UserState
+    dispatch: Dispatch,
+    user: UserState,
   };
 
   render() {
@@ -95,13 +87,3 @@ class CalendarComponent extends React.Component {
     )
   }
 }
-
-// Per via di un bug, bisogna usare StyleSheet.flatten
-// https://github.com/shoutem/ui/issues/51
-const styles = StyleSheet.create({
-  itemIcon: {
-    fontSize: 15,
-  },
-})
-
-module.exports = CalendarComponent

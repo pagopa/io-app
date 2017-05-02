@@ -1,4 +1,6 @@
 /**
+ * Implements the login screen
+ *
  * @providesModule LoginScreen
  * @flow
  */
@@ -23,7 +25,6 @@ import {
 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
-
 import type { Dispatch } from '../actions/types'
 
 import { SpidLoginButton } from './SpidLoginButton'
@@ -32,7 +33,8 @@ const {
 	logIn,
 } = require('../actions')
 
-// Per via di un bug, bisogna usare StyleSheet.flatten
+// Due to a bug, the following style must be wrapped
+// with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
   container: {

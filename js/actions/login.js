@@ -1,4 +1,6 @@
 /**
+ * Implements login/logout actions.
+ *
  * @flow
  */
 
@@ -7,6 +9,9 @@
 import type { Action, ThunkAction, Dispatch, GetState } from './types'
 import { requestUserProfile } from './user'
 
+/**
+ * Logs the user in, setting the provided auth token and SPID IdP
+ */
 function logIn(token: string, idpId: string): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch({
@@ -20,6 +25,9 @@ function logIn(token: string, idpId: string): ThunkAction {
   }
 }
 
+/**
+ * Logs the user out
+ */
 function logOut(): Action {
   return {
     type: 'LOGGED_OUT',

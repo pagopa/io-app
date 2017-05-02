@@ -1,7 +1,5 @@
 /**
- * Modulo principale di setup dell'applicazione.
- *
- * Questo modulo inizializza lo store e il navigator.
+ * Sets up store, navigation and initial app screen.
  *
  * @flow
  */
@@ -46,7 +44,7 @@ class Root extends React.Component {
       return null
     }
 
-    // Usiamo un navigator a stack come default
+    // Initialize the stack navigator
     const Navigator = StackNavigator({
       Home: {
         screen: LoginScreen,
@@ -58,7 +56,7 @@ class Root extends React.Component {
     }, {
       initialRouteName: this.state.store.getState().user.profile ? 'Profile' : 'Home',
 
-      // L'header viene gestito dagli screen
+      // Let each screen handle the header and navigation 
       headerMode: 'none'
     })
 

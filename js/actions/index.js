@@ -1,4 +1,6 @@
 /**
+ * Aggregates all the actions available to components.
+ *  
  * @flow
  */
 

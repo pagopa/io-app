@@ -1,5 +1,5 @@
 /**
- * Configura lo store dello stato dell'applicazione
+ * Configures the Redux store
  *
  * @flow
  */
@@ -17,12 +17,12 @@ import reducers from '../reducers'
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 
 const logger = createLogger({
-  predicate: (getState, action) => isDebuggingInChrome,
+  predicate: () => isDebuggingInChrome,
   collapsed: true,
   duration: true,
 })
 
-function configureStore(onComplete: ?() => void) {
+export default function configureStore(onComplete: ?() => void) {
 
   const store = createStore(
     reducers,
@@ -41,5 +41,3 @@ function configureStore(onComplete: ?() => void) {
 
   return store
 }
-
-module.exports = configureStore

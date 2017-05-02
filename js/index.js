@@ -1,4 +1,6 @@
 /**
+ * Main app entrypoint
+ * 
  * @flow
  */
 

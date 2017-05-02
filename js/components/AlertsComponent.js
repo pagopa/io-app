@@ -1,4 +1,6 @@
 /**
+ * Implements content of the "Alerts" tab
+ *
  * @providesModule AlertsComponent
  * @flow
  */
@@ -6,6 +8,7 @@
 'use strict'
 
 const React = require('React')
+
 import {
   Content,
   Button,
@@ -14,17 +17,15 @@ import {
 	Card,
   CardItem,
 } from 'native-base'
-import type { Action } from '../actions/types'
+
+import type { Dispatch } from '../actions/types'
 import type { UserState } from '../reducers/user'
 
-// const {
-// } = require('../actions');
-
-class AlertsComponent extends React.Component {
+export default class AlertsComponent extends React.Component {
 
   props: {
-    dispatch: (action: Action) => void;
-    user: UserState;
+    dispatch: Dispatch,
+    user: UserState,
   };
 
   render() {
@@ -88,5 +89,3 @@ class AlertsComponent extends React.Component {
     )
   }
 }
-
-module.exports = AlertsComponent
