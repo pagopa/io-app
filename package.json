@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "email-validator": "^1.0.7",
     "native-base": "^2.1.2",
     "option": "^0.2.3",
     "react": "16.0.0-alpha.6",
