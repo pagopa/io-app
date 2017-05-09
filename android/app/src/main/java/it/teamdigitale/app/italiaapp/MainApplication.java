@@ -1,4 +1,4 @@
-package com.italiaapp;
+package it.teamdigitale.app.italiaapp;
 
 import android.app.Application;
 

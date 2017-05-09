@@ -52,7 +52,7 @@ Seguire [il tutorial](https://facebook.github.io/react-native/docs/getting-start
 
 Se si dispone di un sistema macOS è possibile seguire sia il tutorial per iOS che per Android. Se invece si dispone di un sistema Linux o Windows sarà possibile instalalre solo l'ambiente di sviluppo per Android.
 
-### Compilazione
+### Compilazione (dev)
 
 Per prima cosa installiamo le librerie usate dal progetto:
 
@@ -73,8 +73,20 @@ Oppure su iOS:
 $ react-native run-ios
 ```
 
+### Compilazione (release)
+
+#### iOS
+
+#### Android
+
+Vedere tutorial su [Generating Signed APK](https://facebook.github.io/react-native/docs/signed-apk-android.html#setting-up-gradle-variables).
+
 ### Installazione su device
 
 ```
 react-native run-ios --configuration Release --device 'device name'
 ```
+
+### Aggiornare icone dell'applicazione
+
+Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
