@@ -1,6 +1,6 @@
 /**
  * Implements the main user screen
- * 
+ *
  * @providesModule ProfileScreen
  * @flow
  */
@@ -55,7 +55,7 @@ class ProfileScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: { name: 'alerts' },
+      activeTab: { name: 'profile' },
     }
   }
 

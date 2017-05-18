@@ -27,6 +27,32 @@ const CommonStyles = StyleSheet.create({
 })
 
 const ProfileStyles = StyleSheet.create({
+  profileHeader: {
+    backgroundColor: '#0066CC',
+  },
+  profileHeaderText: {
+    fontSize: 22,
+    color: '#fff',
+  },
+  profileRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileRowIcon: {
+    marginLeft: 10,
+    fontSize: 13,
+    color: '#b2d0ed',
+  },
+  profileRowText: {
+    fontSize: 15,
+    color: '#b2d0ed',
+  },
+  preferenceHeaderText: {
+    fontWeight: 'bold',
+    color: '#555',
+    fontSize: 15,
+    marginTop: 10,
+  },
   listItem: {
     color: '#06C',
     fontWeight: 'bold',

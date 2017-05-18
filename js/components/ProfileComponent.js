@@ -23,6 +23,9 @@ import {
   Button,
   Body,
   Switch,
+  Grid,
+  Row,
+  Col,
 } from 'native-base'
 
 import { NavigationActions } from 'react-navigation'
@@ -75,53 +78,67 @@ class ProfileComponent extends React.Component {
     const idpId = this.props.user.idpId
     const idpInfo = getIdpInfo(idpId)
 
+    const name = profile && profile.name ? profile.name : ''
+    const familyName = profile && profile.familyname ? profile.familyname : '-'
+    const fullName = `${name} ${familyName}`
+    const fiscalNumber = profile && profile.fiscalnumber ? profile.fiscalnumber.replace('TINIT-', '') : '-'
+    const email = profile && profile.email ? profile.email : '-'
+    const mobilePhone = profile && profile.mobilephone ? profile.mobilephone : '-'
+
     return(
       <Content>
-        <ListItem itemDivider />
-        <ListItem itemHeader icon>
-          <Left>
-            <Icon name="user" />
-          </Left>
+        <ListItem first last style={StyleSheet.flatten(ProfileStyles.profileHeader)}>
           <Body>
-            <Text>PROFILO SPID</Text>
+            <Grid>
+              <Row height={50}>
+                <Col><Text style={StyleSheet.flatten(ProfileStyles.profileHeaderText)}>{ fullName.toUpperCase() }</Text></Col>
+              </Row>
+              <Row>
+                <Col style={StyleSheet.flatten(ProfileStyles.profileRow)}>
+                  <Icon name="user" style={StyleSheet.flatten(ProfileStyles.profileRowIcon)}/>
+                  <Text style={StyleSheet.flatten(ProfileStyles.profileRowText)}>{ fiscalNumber }</Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={StyleSheet.flatten(ProfileStyles.profileRow)}>
+                  <Icon name="email" style={StyleSheet.flatten(ProfileStyles.profileRowIcon)}/>
+                  <Text style={StyleSheet.flatten(ProfileStyles.profileRowText)}>{ email }</Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={StyleSheet.flatten(ProfileStyles.profileRow)}>
+                  <Icon name="mobile" style={StyleSheet.flatten(ProfileStyles.profileRowIcon)}/>
+                  <Text style={StyleSheet.flatten(ProfileStyles.profileRowText)}>{ mobilePhone }</Text>
+                </Col>
+              </Row>
+            </Grid>
+          </Body>
+        </ListItem>
+
+        <ListItem itemDivider />
+
+        <ListItem itemHeader first>
+          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>PROFILO SPID</Text>
+        </ListItem>
+        <ListItem icon last onPress={() => {
+          if(idpInfo && idpInfo.profileUrl) {
+            openIdpProfile(idpInfo.profileUrl)
+          }
+        }}>
+          <Body>
+            <Text>{ idpInfo ? idpInfo.name : 'SCONOSCIUTO' }</Text>
           </Body>
           <Right>
-            {
-              idpInfo != null &&
-                <Button transparent dark iconRight onPress={() => {
-                  openIdpProfile(idpInfo.profileUrl)
-                }}>
-                  <Icon name="cog" style={{fontSize: 18}}/>
-                </Button>
-            }
+            <Icon name="chevron-right" style={{fontSize: 18}}/>
           </Right>
         </ListItem>
-				<ListItem>
-            <Left><Text>Nome</Text></Left>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ profile ? profile.name : '-' } { profile ? profile.familyname : '-' }</Text>
-        </ListItem>
-        <ListItem>
-            <Left><Text>CF</Text></Left>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ profile ? profile.fiscalnumber : '-' }</Text>
-        </ListItem>
-        <ListItem>
-            <Left><Text>Email</Text></Left>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ profile ? profile.email : '-' }</Text>
-        </ListItem>
-        <ListItem>
-            <Left><Text>Cellulare</Text></Left>
-            <Text style={StyleSheet.flatten(ProfileStyles.listItem)}>{ profile ? profile.mobilephone : '-' }</Text>
-        </ListItem>
-        <ListItem>
-            <Left><Text>Gestore</Text></Left>
-            <Text>{ idpInfo ? idpInfo.name : 'SCONOSCIUTO' }</Text>
-        </ListItem>
+
         <ListItem itemDivider />
-				<ListItem itemHeader first icon>
-          <Left><Icon name="newsletter" /></Left>
-          <Body><Text>DOMICILIO PEC</Text></Body>
+
+				<ListItem itemHeader first>
+          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>DOMICILIO PEC</Text>
         </ListItem>
-        <ListItem>
+        <ListItem icon last>
           <Body><Text>pinco@pec.italia.it</Text></Body>
           <Right>
             <Icon active name="chevron-right" />
@@ -130,13 +147,11 @@ class ProfileComponent extends React.Component {
 
         <ListItem itemDivider />
 
-        <ListItem itemHeader first icon>
-          <Left><Icon name="notification" /></Left>
-          <Body><Text>AVVISI E SCADENZE</Text></Body>
+        <ListItem itemHeader first>
+          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>AVVISI E SCADENZE</Text>
         </ListItem>
         <ListItem icon>
-          <Left></Left>
-					<Body>
+          <Body>
 						<Text>Enti abilitati</Text>
 					</Body>
 					<Right>
@@ -145,8 +160,7 @@ class ProfileComponent extends React.Component {
 					</Right>
         </ListItem>
         <ListItem icon>
-          <Left></Left>
-					<Body>
+          <Body>
 						<Text>Tipologie</Text>
 					</Body>
 					<Right>
@@ -154,7 +168,7 @@ class ProfileComponent extends React.Component {
             <Icon name="chevron-right" />
 					</Right>
         </ListItem>
-        <ListItem>
+        <ListItem icon last>
 					<Body>
 						<Text>Aggiungi al calendario</Text>
 					</Body>
@@ -165,16 +179,16 @@ class ProfileComponent extends React.Component {
 
         <ListItem itemDivider />
 
-        <ListItem>
+        <ListItem first last icon onPress={() => {
+          this.props.dispatch(logOut())
+          this.props.navigation.dispatch(resetNavigationAction)
+        }}>
           <Body>
-<Button iconRight danger block onPress={() => {
-  this.props.dispatch(logOut())
-  this.props.navigation.dispatch(resetNavigationAction)
-}}>
-              <Text>Esci da questa identità SPID</Text>
-              <Icon name="log-out" />
-            </Button>
+            <Text style={{color: '#e00'}}>Esci da questa identità SPID</Text>
           </Body>
+          <Right>
+            <Icon style={{color: '#e99'}} name="log-out" />
+          </Right>
         </ListItem>
       </Content>
     )
