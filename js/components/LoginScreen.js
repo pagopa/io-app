@@ -1,5 +1,5 @@
 /**
- * Implements the login screen
+ * Implements the login screen.
  *
  * @providesModule LoginScreen
  * @flow
@@ -12,22 +12,21 @@ const { connect } = require('react-redux')
 
 import {
 	StyleSheet,
-  Image,
+  View,
+  KeyboardAvoidingView,
+  Keyboard,
+  Animated,
 } from 'react-native'
 
 import {
-  Button,
-  Text,
   H1, H2,
-	Grid,
-	Row,
-	Col,
 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
 
 import { SpidLoginButton } from './SpidLoginButton'
+import SpidSubscribeComponent from './SpidSubscribeComponent'
 
 const {
 	logIn,
@@ -38,55 +37,99 @@ const {
 // https://github.com/shoutem/ui/issues/51
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 30,
-    paddingTop: 40,
-    paddingBottom: 20,
     backgroundColor: '#0066CC',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   titleContainer: {
+    flex: 1,
     justifyContent: 'center',
   },
   titleText: {
-    // fontWeight: '600',
     textAlign: 'center',
     color: '#fff',
   },
 })
 
+// height of the logo at start and end of the animation
+// that makes space for the keyboard when inputing the
+// user email
+const ANIMATION_START_LOGO_HEIGHT = 70
+const ANIMATION_END_LOGO_HEIGHT = 0
+
 class LoginScreen extends React.Component {
+
+  // called when keyboard appears
+  keyboardWillShowSub: (any) => void
+  // called when keyboard disappears
+  keyboardWillHideSub: (any) => void
 
   props: {
 		navigation: Navigator,
 		dispatch: Dispatch,
-  };
+  }
+
+  state: {
+    imageHeight: any,
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      imageHeight: new Animated.Value(ANIMATION_START_LOGO_HEIGHT)
+    }
+  }
+
+  componentWillMount () {
+    // setup keyboard event handlers
+    this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
+    this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
+  }
+
+  componentWillUnmount() {
+    // remove keyboard event handlers
+    this.keyboardWillShowSub.remove()
+    this.keyboardWillHideSub.remove()
+  }
+
+  // when keyboard appears, we shrink the logo
+  keyboardWillShow = (event) => {
+    Animated.timing(this.state.imageHeight, {
+      duration: event.duration,
+      toValue: ANIMATION_END_LOGO_HEIGHT,
+    }).start()
+  }
+
+  // when keyboard disappears we expand the logo to original size
+  keyboardWillHide = (event) => {
+    Animated.timing(this.state.imageHeight, {
+      duration: event.duration,
+      toValue: ANIMATION_START_LOGO_HEIGHT,
+    }).start()
+  }
 
   render() {
     return(
-				<Grid style={styles.container}>
-					<Row size={1}>
-						<Col>
-              <Image source={require('../../img/logo-it.png')} style={{
-                width: '100%',
-                height: 100,
-                marginBottom: 20,
-                resizeMode: 'contain',
-              }}/>
-							<H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
-							<H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
-						</Col>
-					</Row>
-					<Row size={1}>
-						<Col>
-							<SpidLoginButton onSpidLogin={(token, idpId) => {
-  this.props.dispatch(logIn(token, idpId))
-  this.props.navigation.navigate('Profile')
-}} />
-              <Button small transparent>
-                <Text style={{fontSize: 15, color: '#b6d4f2', marginTop: 10}}>Non hai ancora SPID?</Text>
-              </Button>
-						</Col>
-					</Row>
-				</Grid>
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
+          <View style={{ height: 20 }} />
+          <Animated.Image source={require('../../img/logo-it.png')} style={[{
+            resizeMode: 'contain',
+          }, {height: this.state.imageHeight}]}/>
+        <View style={{ height: 100, paddingTop: 20, }}>
+            <H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
+            <H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
+          </View>
+          <SpidLoginButton onSpidLogin={(token, idpId) => {
+            this.props.dispatch(logIn(token, idpId))
+            this.props.navigation.navigate('Profile')
+          }} />
+          <View style={{ height: 10 }} />
+          <SpidSubscribeComponent />
+          <View style={{ height: 60 }} />
+				</KeyboardAvoidingView>
+
     )
   }
 }

@@ -1439,6 +1439,10 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
+email-validator@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/email-validator/-/email-validator-1.0.7.tgz#4621ca32fc741eb833ac98d5fb55670b7e056c95"
+
 emoji-regex@^6.1.0:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.4.2.tgz#a30b6fee353d406d96cfb9fa765bdc82897eff6e"
@@ -3587,6 +3591,10 @@ react-native-easy-grid@0.1.7:
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.7.tgz#44205cc39adff32a8a20efa8451d76a4499f0a3f"
   dependencies:
     lodash "^4.11.1"
+
+react-native-expandableview@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-expandableview/-/react-native-expandableview-1.0.1.tgz#a3d2da41e687155419334b8cda33a53a3dd2f124"
 
 react-native-keyboard-aware-scroll-view@0.2.7:
   version "0.2.7"
