@@ -18,6 +18,7 @@ import commonColors from '../native-base-theme/variables/commonColor'
 import configureStore from './store/configureStore'
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
+import DigitalAddressScreen from './components/DigitalAddressScreen'
 
 class Root extends React.Component {
 
@@ -52,11 +53,15 @@ class Root extends React.Component {
 
       Profile: {
         screen: ProfileScreen,
+      },
+
+      DigitalAddress: {
+        screen: DigitalAddressScreen,
       }
     }, {
       initialRouteName: this.state.store.getState().user.profile ? 'Profile' : 'Home',
 
-      // Let each screen handle the header and navigation 
+      // Let each screen handle the header and navigation
       headerMode: 'none'
     })
 

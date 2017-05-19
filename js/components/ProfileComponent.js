@@ -30,7 +30,7 @@ import {
 
 import { NavigationActions } from 'react-navigation'
 
-import type { NavigationProp } from 'react-navigation/src/TypeDefinition'
+import type { NavigationScreenProp } from 'react-navigation/src/TypeDefinition'
 import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
@@ -68,7 +68,7 @@ const openIdpProfile = function (idpUrl: string) {
 class ProfileComponent extends React.Component {
 
   props: {
-    navigation: NavigationProp<*,AnyAction>,
+    navigation: NavigationScreenProp<*,AnyAction>,
     dispatch: Dispatch,
     user: LoggedInUserState,
   }
@@ -138,7 +138,9 @@ class ProfileComponent extends React.Component {
 				<ListItem itemHeader first>
           <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>DOMICILIO PEC</Text>
         </ListItem>
-        <ListItem icon last>
+        <ListItem icon last onPress={() => {
+          this.props.navigation.navigate('DigitalAddress')
+        }}>
           <Body><Text>pinco@pec.italia.it</Text></Body>
           <Right>
             <Icon active name="chevron-right" />
