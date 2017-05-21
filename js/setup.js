@@ -19,6 +19,7 @@ import configureStore from './store/configureStore'
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
 import DigitalAddressScreen from './components/DigitalAddressScreen'
+import TopicsSelectionScreen from './components/TopicsSelectionScreen'
 
 class Root extends React.Component {
 
@@ -57,6 +58,10 @@ class Root extends React.Component {
 
       DigitalAddress: {
         screen: DigitalAddressScreen,
+      },
+
+      TopicsSelection: {
+        screen: TopicsSelectionScreen,
       }
     }, {
       initialRouteName: this.state.store.getState().user.profile ? 'Profile' : 'Home',

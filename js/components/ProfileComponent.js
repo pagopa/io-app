@@ -152,7 +152,9 @@ class ProfileComponent extends React.Component {
         <ListItem itemHeader first>
           <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>AVVISI E SCADENZE</Text>
         </ListItem>
-        <ListItem icon>
+        <ListItem icon onPress={() => {
+          this.props.navigation.navigate('SenderSelection')
+        }}>
           <Body>
 						<Text>Enti abilitati</Text>
 					</Body>
@@ -161,7 +163,9 @@ class ProfileComponent extends React.Component {
             <Icon name="chevron-right" />
 					</Right>
         </ListItem>
-        <ListItem icon>
+        <ListItem icon onPress={() => {
+          this.props.navigation.navigate('TopicsSelection')
+        }}>
           <Body>
 						<Text>Tipologie</Text>
 					</Body>

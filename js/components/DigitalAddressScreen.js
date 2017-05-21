@@ -1,5 +1,5 @@
 /**
- * Implements the content of the user profile tab.
+ * Implements the screen for setting the Digital Address.
  *
  * @providesModule DigitalAddressScreen
  * @flow
@@ -18,6 +18,7 @@ import {
 } from 'react-native'
 
 import {
+  Container,
   Content,
   Header,
   Text,
@@ -69,7 +70,7 @@ class DigitalAddressScreen extends React.Component {
 
   render() {
     return(
-      <Content style={{backgroundColor: '#fff'}}>
+      <Container style={{backgroundColor: '#fff'}}>
         <Header style={{alignItems: 'center'}}>
           <Left>
             <Button transparent onPress={() => {
@@ -85,7 +86,7 @@ class DigitalAddressScreen extends React.Component {
             </Button>
           </Right>
         </Header>
-        <Body style={{padding: 10}}>
+        <Content style={{padding: 10}}>
           <Item fixedLabel style={{marginTop: 10}}>
             <Input
               placeholder={DEFAULT_EMAIL_PLACEHOLDER}
@@ -110,8 +111,8 @@ class DigitalAddressScreen extends React.Component {
             comunque continuare a ricevere le comunicazioni
             per via cartacea.
           </Text>
-        </Body>
-      </Content>
+        </Content>
+      </Container>
     )
   }
 
