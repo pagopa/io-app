@@ -9,16 +9,8 @@ GEM
     coderay (1.1.1)
     colored (1.2)
     colored2 (3.1.2)
-    commander (4.4.3)
-      highline (~> 1.7.2)
     commander-fastlane (4.4.4)
       highline (~> 1.7.2)
-    credentials_manager (1.0.0)
-      colored
-      commander (>= 4.3.5)
-      fastlane (>= 2.0.0, < 3.0.0)
-      highline (>= 1.7.1)
-      security
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.2.1)
@@ -31,7 +23,7 @@ GEM
     faraday_middleware (0.11.0.1)
       faraday (>= 0.7.4, < 1.0)
     fastimage (2.1.0)
-    fastlane (2.31.0)
+    fastlane (2.35.1)
       CFPropertyList (>= 2.3, < 3.0.0)
       addressable (>= 2.3, < 3.0.0)
       babosa (>= 1.0.2, < 2.0.0)
@@ -81,13 +73,6 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    gym (2.0.0)
-      colored
-      fastlane (>= 2.0.0, < 3.0.0)
-      plist (>= 3.1.0, < 4.0.0)
-      rubyzip (>= 1.1.7)
-      terminal-table (>= 1.4.5, < 2.0.0)
-      xcpretty (>= 0.2.4, < 1.0.0)
     highline (1.7.8)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -110,9 +95,6 @@ GEM
     multipart-post (2.0.0)
     nanaimo (0.2.3)
     os (0.9.6)
-    pilot (2.0.0)
-      fastlane (>= 2.0.0, < 3.0.0)
-      terminal-table (>= 1.4.5, < 2.0.0)
     plist (3.3.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -132,20 +114,6 @@ GEM
       multi_json (~> 1.10)
     slack-notifier (1.5.1)
     slop (3.6.0)
-    spaceship (1.0.0)
-      babosa (= 1.0.2)
-      colored
-      credentials_manager (>= 0.16.0)
-      faraday (~> 0.9)
-      faraday-cookie_jar (~> 0.0.6)
-      faraday_middleware (~> 0.9)
-      fastimage (>= 1.6)
-      multi_xml (~> 0.5)
-      plist (>= 3.1.0, < 4.0.0)
-    supply (1.0.0)
-      colored
-      fastlane (>= 2.0.0, < 3.0.0)
-      google-api-client (~> 0.9.1)
     terminal-notifier (1.8.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
@@ -171,11 +139,7 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane
-  gym
-  pilot
   pry
-  spaceship
-  supply
 
 BUNDLED WITH
    1.14.6
