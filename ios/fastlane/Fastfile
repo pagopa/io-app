@@ -33,6 +33,7 @@ platform :ios do
     gym(
       scheme: "ItaliaApp",
       clean: true,
+      export_method: "development",
       # sdk: "iphoneos8.4",
     )
     # pilot
