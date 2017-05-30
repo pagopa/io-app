@@ -75,6 +75,9 @@ platform :ios do
     # generate the changelog based on last commits
     changelog_from_git_commits
 
+    git_add(path: '.')
+    git_commit(message: 'New beta build')
+
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
     # add_git_tag

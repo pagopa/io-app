@@ -45,11 +45,11 @@ Register new device
 fastlane ios refresh_profiles
 ```
 
-### ios alpha
+### ios beta
 ```
-fastlane ios alpha
+fastlane ios beta
 ```
-Submit a new Alpha Build to HockeyApp
+Submit a new Beta Build to HockeyApp
 
 This will also make sure the profile is up to date
 ### ios release
