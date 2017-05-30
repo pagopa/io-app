@@ -51,15 +51,37 @@ platform :ios do
   desc "Submit a new Beta Build to HockeyApp"
   desc "This will also make sure the profile is up to date"
   lane :beta do |options|
-    match(type: "adhoc") # more information: https://codesigning.guide
-    efresh_profiles
-    # increment_build_number_in_plist
+    # Ensure that your git status is not dirty
+    ensure_git_status_clean
+
+    # Increment the build number
+    increment_build_number
+
+    # make sure to update the provisioning profile if necessary
+    # more information: https://codesigning.guide
+    match(
+      force_for_new_devices: true,
+      type: "adhoc"
+    )
+
+    # build the app
     gym(
       scheme: "ItaliaApp",
       clean: true,
       export_method: "ad-hoc",
       # sdk: "iphoneos8.4",
     )
+
+    # generate the changelog based on last commits
+    changelog_from_git_commits
+
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    # add_git_tag
+
+    # Push the new commit and tag back to your git remote
+    push_to_git_remote
+
     # upload to HockeyApp
     hockey(
       api_token: HOCKEYAPP_ALPHA_TOKEN
