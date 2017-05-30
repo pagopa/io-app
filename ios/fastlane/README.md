@@ -35,6 +35,16 @@ xcode-select --install
 fastlane ios test
 ```
 Runs all the tests
+### ios register_new_device
+```
+fastlane ios register_new_device
+```
+Register new device
+### ios refresh_profiles
+```
+fastlane ios refresh_profiles
+```
+
 ### ios alpha
 ```
 fastlane ios alpha
