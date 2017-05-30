@@ -48,18 +48,18 @@ platform :ios do
       force: true)
   end
 
-  desc "Submit a new Alpha Build to HockeyApp"
+  desc "Submit a new Beta Build to HockeyApp"
   desc "This will also make sure the profile is up to date"
-  lane :alpha do |options|
+  lane :beta do |options|
     match(type: "adhoc") # more information: https://codesigning.guide
-    refresh_profiles
+    efresh_profiles
+    # increment_build_number_in_plist
     gym(
       scheme: "ItaliaApp",
       clean: true,
-      export_method: "development",
+      export_method: "ad-hoc",
       # sdk: "iphoneos8.4",
     )
-    # pilot
     # upload to HockeyApp
     hockey(
       api_token: HOCKEYAPP_ALPHA_TOKEN
@@ -68,7 +68,7 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :release do
-    # match(type: "appstore")
+    match(type: "appstore")
     # snapshot
     gym # Build your app - more options available
     deliver(force: true)
