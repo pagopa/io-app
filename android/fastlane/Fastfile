@@ -27,23 +27,21 @@ platform :android do
 
   desc "Deploy a new alpha version to the Google Play Store"
   lane :alpha do
+    # Ensure that your git status is not dirty
+    ensure_git_status_clean
+    
     gradle(
       task: "assemble",
       build_type: "Release"
     )
+
+    # Generate the changelog based on commit messages since your last tag
+    changelog_from_git_commits
+
     supply(
       track: "alpha",
       apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
     )
-  end
-
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "assembleRelease")
-    crashlytics
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
   end
 
   desc "Deploy a new version to the Google Play"
