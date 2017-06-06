@@ -81,7 +81,7 @@ platform :ios do
       "ItaliaAppTests/Info.plist"
     ]
     git_add(path: versioning_paths)
-    git_commit(path: versioning_paths, message: "New beta build")
+    git_commit(path: versioning_paths, message: "New iOS beta build")
 
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
