@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+'use strict'
+const React = require('React');
 
 import { createTemplate } from './Calendar.template';
 import type { Dispatch } from '../actions/types'
