@@ -1,3 +1,5 @@
+import React, {Component} from 'react';
+
 import { createTemplate } from './Calendar.template';
 import type { Dispatch } from '../actions/types'
 import type { UserState } from '../reducers/user'

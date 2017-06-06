@@ -1,3 +1,5 @@
+import React, {Component} from 'react';
+
 import createTemplate from './CalendarItem.template';
 
 class CalendarItem extends React.Component {
