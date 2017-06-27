@@ -1,8 +1,42 @@
-# PoC app Cittadinanza Digitale
+# L'app mobile della Cittadinanza Digitale
 
-## Cos'è?
+## FAQ
 
-È un applicazione mobile per iOS e Android che usiamo come banco di prova per le integrazioni con le componenti di piattaforma del sistema operativo del Paese.
+### Cos'è la Cittadinanza Digitale?
+
+La Cittadinanza Digitale ha l'obiettivo di portare il cittadino al centro dei servizi erogati dalle pubbliche amministrazioni italiane.
+
+Il progetto si estende su due linee:
+
+* la costruzione di una piattaforma di componenti che abilitano lo sviluppo di servizi digitali incentrati sul cittadino
+* un'interfaccia del cittadino per gestire i propri dati e il proprio profilo di cittadino digitale
+
+### Cos'è l'app mobile della Cittadinanza Digitale?
+
+L'app mobile della Cittadinanza Digitale è un'applicazione mobile nativa per iOS e Android con duplice scopo:
+
+* essere un interfaccia per il cittadino verso i propri dati e il proprio profilo di cittadino digitale
+* fungere da _reference implementation_ delle integrazioni con la piattaforma di Cittadinanza Digitale
+
+### Chi sviluppa l'app?
+
+Lo sviluppo dell'app è portato avanti da diversi _contributors_: [L'Agenzia per l'Italia Digitale](http://www.agid.gov.it/), [il Team per la Trasformazione Digitale](https://teamdigitale.governo.it/) e volontari indipendenti che credono nel progetto.
+
+### Posso usare l'app?
+
+Per ora l'app non è ancora stata pubblicata sugli app store per cui non è possibile installarla tramite i meccanismi abituali.
+
+Se sei uno sviluppatore puoi invece compilare l'app sul tuo computer e installarla manualmente sul tuo device.
+
+### Quando sarà pubblicata l'app?
+
+Quando l'app avrà raggiunto un livello di qualità e di utilità che ci soddisfa, la renderemo disponibile a tutti i cittadini.
+
+### Come posso darvi una mano?
+
+Segnalazione di bug, bugfix ed in genere qualsiasi miglioramento è il benvenuto! Mandaci una Pull Request!
+
+Se invece hai un po' di tempo da dedicarci e vuoi essere coinvolto in modo continuativo, [mandaci una mail](mailto:federico@teamdigitale.governo.it).
 
 ## Tecnologie usate
 
@@ -15,7 +49,7 @@
 
 ### Autenticazione SPID
 
-L'applicazione si appoggia ad un backend web per l'autenticazione a SPID. Il backend implementa un Service Provider SAML2 che si occupa dell'autenticazione dell'utente sugli Identity Provider SPID.
+L'applicazione si appoggia ad un [backend web](https://github.com/teamdigitale/ItaliaApp-backend) per l'autenticazione a SPID. Il backend implementa un Service Provider SAML2 ([tramite Shibboleth](https://github.com/italia/spid-sp-playbook/)) che si occupa dell'autenticazione dell'utente sugli Identity Provider SPID.
 
 L'autenticazione tra l'applicazione e il backend avviene tramite un token di sessione, generato dal backend al momento dell'autenticazione sull'IdP SPID.
 
@@ -73,18 +107,40 @@ Oppure su iOS:
 $ react-native run-ios
 ```
 
-### Compilazione (release)
+### Release
+
+Per il rilascio dell'app sugli store usiamo Fastlane.
 
 #### iOS
 
+La distribuzione della beta viene fatta con il modello ad-hoc.
+
+Per rilasciare una nuova beta:
+
+```
+$ bundle exec fastlane beta
+```
+
+Per aggiungere un nuovo device alla distribuzione ad-hoc:
+
+```
+$ bundle exec fastlane register_new_device
+```
+
 #### Android
 
-Vedere tutorial su [Generating Signed APK](https://facebook.github.io/react-native/docs/signed-apk-android.html#setting-up-gradle-variables).
+Per rilasciare una nuova alpha:
+
+```
+$ bundle exec fastlane alpha
+```
 
 ### Installazione su device
 
+#### iOS
+
 ```
-react-native run-ios --configuration Release --device 'device name'
+react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
 ```
 
 ### Aggiornare icone dell'applicazione
