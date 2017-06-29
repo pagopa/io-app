@@ -80,11 +80,15 @@ La versione di node usata nel progetto [è questa](https://github.com/teamdigita
 
 Per la gestione delle dipendenze usiamo [Yarn](https://yarnpkg.com/lang/en/).
 
+#### rbenv
+
+Alcune dipendenze (es. CocoaPods) sono installate tramite [rbenv](https://github.com/rbenv/rbenv).
+
 #### React Native
 
-Seguire [il tutorial](https://facebook.github.io/react-native/docs/getting-started.html) per il proprio sistema operativo.
+Seguire [il tutorial (Building Projects with Native Code)](https://facebook.github.io/react-native/docs/getting-started.html) per il proprio sistema operativo.
 
-Se si dispone di un sistema macOS è possibile seguire sia il tutorial per iOS che per Android. Se invece si dispone di un sistema Linux o Windows sarà possibile instalalre solo l'ambiente di sviluppo per Android.
+Se si dispone di un sistema macOS è possibile seguire sia il tutorial per iOS che per Android. Se invece si dispone di un sistema Linux o Windows sarà possibile installare solo l'ambiente di sviluppo per Android.
 
 ### Compilazione (dev)
 
@@ -92,6 +96,12 @@ Per prima cosa installiamo le librerie usate dal progetto:
 
 ```
 $ cd ItaliaApp
+
+$ nodenv install
+$ rbenv install
+$ gem install bundler
+$ bundle install
+
 $ yarn
 ```
 
@@ -107,7 +117,15 @@ Oppure su iOS:
 $ react-native run-ios
 ```
 
-### Release
+Nota: L'app utilizza [CocoaPods](https://cocoapods.org/), il progetto da eseguire è quindi `ItaliaApp.xcworkspace` anzichè `ItaliaApp.xcodeproj` (`run-ios` lo rileva automaticamente)
+
+### Configurazione
+```
+$ cp js/config.example.js js/config.js
+```
+Inseriamo il MixPanel token
+
+### Compilazione (release)
 
 Per il rilascio dell'app sugli store usiamo Fastlane.
 

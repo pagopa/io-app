@@ -3592,15 +3592,15 @@ react-native-easy-grid@0.1.7:
   dependencies:
     lodash "^4.11.1"
 
-react-native-expandableview@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-expandableview/-/react-native-expandableview-1.0.1.tgz#a3d2da41e687155419334b8cda33a53a3dd2f124"
-
 react-native-keyboard-aware-scroll-view@0.2.7:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.7.tgz#dd344cec25284b6314f1cc9d1b75ba267483c6b6"
   dependencies:
     react-timer-mixin "^0.13.3"
+
+react-native-mixpanel@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-0.0.15.tgz#02c10ea7a4317f893685c62ebb09c82a2bab3db8"
 
 react-native-scrollable-tab-view@^0.7.1:
   version "0.7.4"
@@ -3608,6 +3608,10 @@ react-native-scrollable-tab-view@^0.7.1:
   dependencies:
     react-static-container "^1.0.1"
     react-timer-mixin "^0.13.3"
+
+react-native-sha256@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.0.1.tgz#40446acb36c583318ee58bb10cb70c6d2951f061"
 
 react-native-tab-view@^0.0.61:
   version "0.0.61"
