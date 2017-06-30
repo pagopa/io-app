@@ -18,9 +18,8 @@ import {
   Content,
   ListItem,
   Text,
-  Left, Right,
+  Right,
   Icon,
-  Button,
   Body,
   Switch,
   Grid,
@@ -33,6 +32,8 @@ import { NavigationActions } from 'react-navigation'
 import type { NavigationScreenProp } from 'react-navigation/src/TypeDefinition'
 import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
+
+import { ROUTES } from '../utils/constants'
 
 import { ProfileStyles } from './styles'
 
@@ -48,7 +49,7 @@ const {
 const resetNavigationAction = NavigationActions.reset({
   index: 0,
   actions: [
-    NavigationActions.navigate({ routeName: 'Home'})
+    NavigationActions.navigate({ routeName: ROUTES.HOME})
   ]
 })
 
@@ -139,7 +140,7 @@ class ProfileComponent extends React.Component {
           <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>DOMICILIO PEC</Text>
         </ListItem>
         <ListItem icon last onPress={() => {
-          this.props.navigation.navigate('DigitalAddress')
+          this.props.navigation.navigate(ROUTES.DIGITALADDRESS)
         }}>
           <Body><Text>pinco@pec.italia.it</Text></Body>
           <Right>
@@ -153,7 +154,7 @@ class ProfileComponent extends React.Component {
           <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>AVVISI E SCADENZE</Text>
         </ListItem>
         <ListItem icon onPress={() => {
-          this.props.navigation.navigate('SenderSelection')
+          this.props.navigation.navigate(ROUTES.SENDERSELECTION)
         }}>
           <Body>
 						<Text>Enti abilitati</Text>
@@ -164,7 +165,7 @@ class ProfileComponent extends React.Component {
 					</Right>
         </ListItem>
         <ListItem icon onPress={() => {
-          this.props.navigation.navigate('TopicsSelection')
+          this.props.navigation.navigate(ROUTES.TOPICSSELECTION)
         }}>
           <Body>
 						<Text>Tipologie</Text>

@@ -5,13 +5,15 @@ import ProfileScreen from './components/ProfileScreen'
 import DigitalAddressScreen from './components/DigitalAddressScreen'
 import TopicsSelectionScreen from './components/TopicsSelectionScreen'
 
+import { ROUTES } from './utils/constants'
+
 // Initialize the stack navigator
 const HomeRoutes = {
-  Home: {
+  [ROUTES.HOME]: {
     screen: LoginScreen,
   },
 
-  Profile: {
+  [ROUTES.PROFILE]: {
     screen: ProfileScreen,
   },
 }
@@ -19,7 +21,7 @@ const HomeRoutes = {
 const HomeNavigator = StackNavigator({
   ...HomeRoutes,
 }, {
-  initialRouteName: 'Home',
+  initialRouteName: ROUTES.HOME,
 
   // Let each screen handle the header and navigation
   headerMode: 'none'
@@ -28,15 +30,15 @@ const HomeNavigator = StackNavigator({
 const ProfileNavigator = StackNavigator({
   ...HomeRoutes,
 
-  DigitalAddress: {
+  [ROUTES.DIGITALADDRESS]: {
     screen: DigitalAddressScreen,
   },
 
-  TopicsSelection: {
+  [ROUTES.TOPICSSELECTION]: {
     screen: TopicsSelectionScreen,
   }
 }, {
-  initialRouteName: 'Profile',
+  initialRouteName: ROUTES.PROFILE,
 
   // Let each screen handle the header and navigation
   headerMode: 'none',

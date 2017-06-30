@@ -1,1 +1,0 @@
-../../../Mixpanel/Mixpanel/MPObjectSerializerConfig.h

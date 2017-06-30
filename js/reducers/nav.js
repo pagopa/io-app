@@ -1,10 +1,11 @@
 import { ProfileNavigator, HomeNavigator } from '../routes'
+import { ROUTES } from '../utils/constants'
 
 const loggedOutInitialState = HomeNavigator.router.getStateForAction(
-  HomeNavigator.router.getActionForPathAndParams('Home')
+  HomeNavigator.router.getActionForPathAndParams(ROUTES.HOME)
 )
 const loggedInInitialState = ProfileNavigator.router.getStateForAction(
-  ProfileNavigator.router.getActionForPathAndParams('Profile')
+  ProfileNavigator.router.getActionForPathAndParams(ROUTES.PROFILE)
 )
 
 const navReducer = (state = loggedOutInitialState, action) => {

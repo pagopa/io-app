@@ -1,1 +1,0 @@
-../../../Mixpanel/Mixpanel/UIApplication+AutomaticTracks.h

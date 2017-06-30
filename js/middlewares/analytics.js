@@ -5,6 +5,10 @@ import { sha256 } from 'react-native-sha256'
 
 import * as persist from 'redux-persist/constants'
 
+/*
+  The middleware injects the `getState` method (from the store) into the action
+  `getState` is later exposed on the action i.e. while working on reducers
+*/
 const injectGetState = ({ getState }) => (next) => (action) => {
   next({
     ...action,
@@ -12,6 +16,9 @@ const injectGetState = ({ getState }) => (next) => (action) => {
   })
 }
 
+/*
+  The middleware acts as a general hook in order to track any meaningful action
+*/
 const actionTracking = (store) => (next) => (action) => {
   let result = next(action)
   switch (action.type) {
@@ -22,14 +29,15 @@ const actionTracking = (store) => (next) => (action) => {
       sha256(fiscalnumber).then((hash) => {
         Mixpanel.identify(hash)
         Mixpanel.set({
-          '$email': hash,
           'fiscalnumber': hash,
         })
       })
       break
     }
+    default: {
+      return result
+    }
   }
-  return result
 }
 
 // gets the current screen from navigation state
@@ -45,6 +53,10 @@ function getCurrentRouteName(navigationState) {
   return route.routeName
 }
 
+/*
+  The middleware acts as a general hook in order to track any meaningful navigation action
+  https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
+*/
 const screenTracking = ({ getState }) => (next) => (action) => {
   if (
     action.type !== NavigationActions.NAVIGATE
@@ -60,7 +72,7 @@ const screenTracking = ({ getState }) => (next) => (action) => {
   if (nextScreen !== currentScreen) {
     Mixpanel.track(nextScreen)
     //Track event with properties
-    // Mixpanel.trackWithProperties('Click Button', {button_type: 'yellow button', button_text: 'magic button'})
+    // Mixpanel.trackWithProperties(nextScreen, { button_type: 'yellow button', button_text: 'magic button' })
   }
   return result
 }

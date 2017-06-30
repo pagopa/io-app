@@ -99,8 +99,10 @@ $ cd ItaliaApp
 
 $ nodenv install
 $ rbenv install
+
 $ gem install bundler
 $ bundle install
+$ pod install
 
 $ yarn
 ```
