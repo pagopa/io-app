@@ -7,6 +7,7 @@
 'use strict'
 
 import React from 'react'
+import { AppState } from 'react-native'
 
 import { Provider, connect } from 'react-redux'
 import { addNavigationHelpers } from 'react-navigation'
@@ -19,6 +20,8 @@ import commonColors from '../native-base-theme/variables/commonColor'
 import configureStore from './store/configureStore'
 import { ProfileNavigator, HomeNavigator } from './routes'
 
+import { appStateChange } from './actions'
+
 import config from './config'
 
 Mixpanel.sharedInstanceWithToken(config.mixPanelToken)
@@ -26,6 +29,18 @@ Mixpanel.sharedInstanceWithToken(config.mixPanelToken)
 const theme = getTheme(commonColors)
 
 class AppNavigation extends React.Component {
+  constructor(props) {
+    super(props)
+
+    AppState.addEventListener('change', this.handleAppStateChange)
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    this.props.dispatch(
+      appStateChange(nextAppState)
+    )
+  }
+
   render() {
     const profile = this.props.store.getState().user.profile
     const Navigator = profile ? ProfileNavigator : HomeNavigator

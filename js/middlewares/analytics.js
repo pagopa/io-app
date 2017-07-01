@@ -3,6 +3,7 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
+import { APPSTATE_CHANGE } from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -21,7 +22,12 @@ const injectGetState = ({ getState }) => (next) => (action) => {
 */
 const actionTracking = (store) => (next) => (action) => {
   let result = next(action)
+
   switch (action.type) {
+    case APPSTATE_CHANGE: {
+      Mixpanel.track(result.data)
+      break
+    }
     case persist.REHYDRATE: {
       if (!has(result, 'payload.user.profile.fiscalnumber')) break
 
