@@ -8,7 +8,7 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
-import { APPLICATION_STATE_CHANGE_ACTION } from '../actions'
+import { APPLICATION_STATE_CHANGE_ACTION, LOGIN_INTENT, LOGIN_PROVIDER, LOGIN } from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -32,6 +32,25 @@ const actionTracking = (store) => (next) => (action) => {
     case APPLICATION_STATE_CHANGE_ACTION: {
       Mixpanel.trackWithProperties('application_state_change', {
         'application_state_name': result.name,
+      })
+      break
+    }
+    case LOGIN_INTENT: {
+      Mixpanel.track('Login')
+      break
+    }
+    case LOGIN_PROVIDER: {
+      const { id, name } = result.data
+      Mixpanel.trackWithProperties('Provider', {
+        id,
+        name,
+      })
+      break
+    }
+    case LOGIN: {
+      const { idpId } = result.data
+      Mixpanel.trackWithProperties('Login Success', {
+        idpId,
       })
       break
     }
