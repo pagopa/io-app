@@ -169,7 +169,9 @@ class IdpSelectionScreen extends React.Component {
 
   props: {
     closeModal: () => void,
+    onSelectIdp: (Object) => void,
     onSpidLogin: (string, string) => void,
+    onSpidLoginError: (string) => void,
   }
 
   state: {
@@ -178,6 +180,9 @@ class IdpSelectionScreen extends React.Component {
 
   constructor(props) {
     super(props)
+
+    this.createButtons = this.createButtons.bind(this)
+
     this.state = {
       selectedIdp: null,
     }
@@ -199,6 +204,7 @@ class IdpSelectionScreen extends React.Component {
     return idps.map((idp: IdentityProvider) => {
       return (
         <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
+          this.props.onSelectIdp(idp)
           this.selectIdp(idp)
         }}>
           <Image
@@ -265,12 +271,13 @@ class IdpSelectionScreen extends React.Component {
     }
   }
 
-  _handleSpidError() {
+  _handleSpidError(err) {
     Alert.alert(
           'Errore login',
           'Mi spiace, si è verificato un errore durante l\'accesso, potresti riprovare?',
           { text: 'OK' },
         )
+    this.props.onSpidLoginError(err)
     this.resetIdp()
   }
 
@@ -283,7 +290,10 @@ class IdpSelectionScreen extends React.Component {
 export class SpidLoginButton extends React.Component {
 
   props: {
+    onSpidLoginIntent: () => void,
+    onSelectIdp: (Object) => void,
     onSpidLogin: (string, string) => void,
+    onSpidLoginError: (string) => void,
   }
 
   state = {
@@ -305,7 +315,9 @@ export class SpidLoginButton extends React.Component {
           visible={this.state.isModalVisible}
           >
          <IdpSelectionScreen
+           onSelectIdp={this.props.onSelectIdp}
            onSpidLogin={this.props.onSpidLogin}
+           onSpidLoginError={this.props.onSpidLoginError}
            closeModal={() => {
              this.setModalVisible(false)
            }}/>
@@ -315,6 +327,7 @@ export class SpidLoginButton extends React.Component {
           block light bordered
           style={{backgroundColor: '#0066CC'}}
           onPress={() => {
+            this.props.onSpidLoginIntent()
             this.setModalVisible(true)
           }}
         >
