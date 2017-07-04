@@ -3,7 +3,7 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
-import { APPSTATE_CHANGE } from '../actions'
+import { APPSTATE_CHANGE, LOGIN_INTENT, LOGIN_PROVIDER, LOGIN } from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -24,6 +24,25 @@ const actionTracking = (store) => (next) => (action) => {
   let result = next(action)
 
   switch (action.type) {
+    case LOGIN_INTENT: {
+      Mixpanel.track('Login')
+      break
+    }
+    case LOGIN_PROVIDER: {
+      const { id, name } = result.data
+      Mixpanel.trackWithProperties('Provider', {
+        id,
+        name,
+      })
+      break
+    }
+    case LOGIN: {
+      const { idpId } = result.data
+      Mixpanel.trackWithProperties('Login Success', {
+        idpId,
+      })
+      break
+    }
     case APPSTATE_CHANGE: {
       Mixpanel.track(result.data)
       break
@@ -77,7 +96,7 @@ const screenTracking = ({ getState }) => (next) => (action) => {
 
   if (nextScreen !== currentScreen) {
     Mixpanel.track(nextScreen)
-    //Track event with properties
+    // Track event with properties
     // Mixpanel.trackWithProperties(nextScreen, { button_type: 'yellow button', button_text: 'magic button' })
   }
   return result

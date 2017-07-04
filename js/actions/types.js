@@ -9,7 +9,10 @@
 import type { ApiUserProfile } from '../utils/api'
 
 export type Action =
+  | { type: 'LOG_IN_INTENT' }
+  | { type: 'LOG_IN_PROVIDER', data: { idp: Object } }
   | { type: 'LOGGED_IN', data: { token: string, idpId: string } }
+  | { type: 'LOG_IN_ERROR', data: { error: string } }
   | { type: 'LOGGED_OUT' }
   | { type: 'REQUEST_USER_PROFILE' }
   | { type: 'RECEIVE_USER_PROFILE', profile: ApiUserProfile, receivedAt: number }
