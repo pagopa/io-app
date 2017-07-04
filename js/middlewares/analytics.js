@@ -1,5 +1,6 @@
 /**
- * Implements a Redux middleware that translates actions into Mixpanel events.
+ * Implements Redux middlewares (functions executed on every action)
+ * focused on analytics
  *
  */
 
@@ -8,7 +9,7 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
-import { APPLICATION_STATE_CHANGE_ACTION, LOGIN_INTENT, LOGIN_PROVIDER, LOGIN } from '../actions'
+import { APPLICATION_STATE_CHANGE_ACTION, LOG_IN_INTENT, SPID_PROVIDER, LOGGED_IN } from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -35,21 +36,21 @@ const actionTracking = (store) => (next) => (action) => {
       })
       break
     }
-    case LOGIN_INTENT: {
-      Mixpanel.track('Login')
+    case LOG_IN_INTENT: {
+      Mixpanel.track('LoginStarted')
       break
     }
-    case LOGIN_PROVIDER: {
+    case SPID_PROVIDER: {
       const { id, name } = result.data
-      Mixpanel.trackWithProperties('Provider', {
+      Mixpanel.trackWithProperties('SelectedSpidProvider', {
         id,
         name,
       })
       break
     }
-    case LOGIN: {
+    case LOGGED_IN: {
       const { idpId } = result.data
-      Mixpanel.trackWithProperties('Login Success', {
+      Mixpanel.trackWithProperties('LoginSucceeded', {
         idpId,
       })
       break

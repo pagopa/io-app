@@ -28,7 +28,7 @@ import type { Dispatch } from '../actions/types'
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
 
-import { logInIntent, selectIdpidp, logIn, logInError } from '../actions'
+import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
 import { ROUTES } from '../utils/constants'
 
@@ -122,7 +122,7 @@ class LoginScreen extends React.Component {
             <H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
           </View>
           <SpidLoginButton
-						onSelectIdp={(idp) => this.props.dispatch(selectIdpidp(idp))}
+						onSelectIdp={(idp) => this.props.dispatch(selectIdp(idp))}
 						onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
 						onSpidLogin={(token, idpId) => {
 							this.props.dispatch(logIn(token, idpId))

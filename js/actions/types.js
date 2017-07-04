@@ -6,11 +6,11 @@
 
 'use strict'
 
-import type { ApiUserProfile } from '../utils/api'
+import type { ApiUserProfile, IdentityProvider } from '../utils/api'
 
 export type Action =
   | { type: 'LOG_IN_INTENT' }
-  | { type: 'LOG_IN_PROVIDER', data: { idp: Object } }
+  | { type: 'SPID_PROVIDER', data: { idp: IdentityProvider } }
   | { type: 'LOGGED_IN', data: { token: string, idpId: string } }
   | { type: 'LOG_IN_ERROR', data: { error: string } }
   | { type: 'LOGGED_OUT' }

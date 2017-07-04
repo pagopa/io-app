@@ -31,13 +31,7 @@ import {
   Icon,
 } from 'native-base'
 
-export type IdentityProvider = {
-  id: string,
-  logo: mixed,
-  name: string,
-  entityID: string,
-  profileUrl: string,
-};
+import type { IdentityProvider } from '../utils/api'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/app/token/get/'

@@ -8,7 +8,7 @@
 
 /**
  * The user profile
- */ 
+ */
 export type ApiUserProfile = {
   created_at: number,
   token: string,
@@ -44,6 +44,17 @@ async function getUserProfile(apiUrlPrefix: string, token: string): Promise<?Api
     // console.error(error)
   }
 }
+
+/**
+ * The SPID Provider data
+ */
+export type IdentityProvider = {
+  id: string,
+  logo: mixed,
+  name: string,
+  entityID: string,
+  profileUrl: string,
+};
 
 module.exports = {
   getUserProfile
