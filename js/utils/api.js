@@ -46,7 +46,7 @@ async function getUserProfile(apiUrlPrefix: string, token: string): Promise<?Api
 }
 
 /**
- * The SPID Provider data
+ * Describes a SPID Identity Provider
  */
 export type IdentityProvider = {
   id: string,

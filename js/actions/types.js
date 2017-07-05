@@ -9,11 +9,11 @@
 import type { ApiUserProfile, IdentityProvider } from '../utils/api'
 
 export type Action =
-  | { type: 'LOG_IN_INTENT' }
-  | { type: 'SPID_PROVIDER', data: { idp: IdentityProvider } }
-  | { type: 'LOGGED_IN', data: { token: string, idpId: string } }
-  | { type: 'LOG_IN_ERROR', data: { error: string } }
-  | { type: 'LOGGED_OUT' }
+  | { type: 'USER_WILL_LOGIN_ACTION' }
+  | { type: 'USER_SELECTED_SPID_PROVIDER_ACTION', data: { idp: IdentityProvider } }
+  | { type: 'USER_LOGGED_IN_ACTION', data: { token: string, idpId: string } }
+  | { type: 'USER_LOGIN_ERROR_ACTION', data: { error: string } }
+  | { type: 'USER_LOGGED_OUT_ACTION' }
   | { type: 'REQUEST_USER_PROFILE' }
   | { type: 'RECEIVE_USER_PROFILE', profile: ApiUserProfile, receivedAt: number }
 

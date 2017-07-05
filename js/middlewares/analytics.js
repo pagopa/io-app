@@ -1,6 +1,5 @@
 /**
- * Implements Redux middlewares (functions executed on every action)
- * focused on analytics
+ * Implements a Redux middleware that translates actions into Mixpanel events
  *
  */
 
@@ -9,7 +8,13 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
-import { APPLICATION_STATE_CHANGE_ACTION, LOG_IN_INTENT, SPID_PROVIDER, LOGGED_IN } from '../actions'
+import {
+  APPLICATION_STATE_CHANGE_ACTION,
+  USER_WILL_LOGIN_ACTION,
+  USER_SELECTED_SPID_PROVIDER_ACTION,
+  USER_LOGGED_IN_ACTION,
+  USER_LOGIN_ERROR_ACTION
+} from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -36,22 +41,29 @@ const actionTracking = (store) => (next) => (action) => {
       })
       break
     }
-    case LOG_IN_INTENT: {
-      Mixpanel.track('LoginStarted')
+    case USER_WILL_LOGIN_ACTION: {
+      Mixpanel.track('UserWillLogin')
       break
     }
-    case SPID_PROVIDER: {
-      const { id, name } = result.data
-      Mixpanel.trackWithProperties('SelectedSpidProvider', {
+    case USER_SELECTED_SPID_PROVIDER_ACTION: {
+      const { id, name } = result.data.idp
+      Mixpanel.trackWithProperties('UserSelectedSpidProvider', {
         id,
         name,
       })
       break
     }
-    case LOGGED_IN: {
+    case USER_LOGGED_IN_ACTION: {
       const { idpId } = result.data
-      Mixpanel.trackWithProperties('LoginSucceeded', {
+      Mixpanel.trackWithProperties('UserLoggedIn', {
         idpId,
+      })
+      break
+    }
+    case USER_LOGIN_ERROR_ACTION: {
+      const { error } = result.data
+      Mixpanel.trackWithProperties('UserLoginError', {
+        error,
       })
       break
     }

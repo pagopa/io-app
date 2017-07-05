@@ -163,7 +163,7 @@ class IdpSelectionScreen extends React.Component {
 
   props: {
     closeModal: () => void,
-    onSelectIdp: (Object) => void,
+    onSelectIdp: (IdentityProvider) => void,
     onSpidLogin: (string, string) => void,
     onSpidLoginError: (string) => void,
   }
@@ -285,7 +285,7 @@ export class SpidLoginButton extends React.Component {
 
   props: {
     onSpidLoginIntent: () => void,
-    onSelectIdp: (Object) => void,
+    onSelectIdp: (IdentityProvider) => void,
     onSpidLogin: (string, string) => void,
     onSpidLoginError: (string) => void,
   }

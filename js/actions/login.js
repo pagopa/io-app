@@ -7,23 +7,24 @@
 'use strict'
 
 import type { Action, ThunkAction, Dispatch, GetState } from './types'
+import type { IdentityProvider } from '../utils/api'
 import { requestUserProfile } from './user'
 
 // The User is about to Login (taps on the SPID Login button)
-const LOG_IN_INTENT = 'LOG_IN_INTENT'
+const USER_WILL_LOGIN_ACTION = 'USER_WILL_LOGIN_ACTION'
 // The User selects the SPID Provider from the list
-const SPID_PROVIDER = 'SPID_PROVIDER'
+const USER_SELECTED_SPID_PROVIDER_ACTION = 'USER_SELECTED_SPID_PROVIDER_ACTION'
 // The User successfully performs a proper Login
-const LOGGED_IN = 'LOGGED_IN'
+const USER_LOGGED_IN_ACTION = 'USER_LOGGED_IN_ACTION'
 // An error is returned from the Login Webview
-const LOG_IN_ERROR = 'LOG_IN_ERROR'
+const USER_LOGIN_ERROR_ACTION = 'USER_LOGIN_ERROR_ACTION'
 
 /**
  * Dispatched when the user taps on SPID Login
  */
 function logInIntent(): Action {
   return {
-    type: LOG_IN_INTENT,
+    type: USER_WILL_LOGIN_ACTION,
   }
 }
 
@@ -32,8 +33,10 @@ function logInIntent(): Action {
  */
 function selectIdp(idp: IdentityProvider): Action {
   return {
-    type: SPID_PROVIDER,
-    data: idp
+    type: USER_SELECTED_SPID_PROVIDER_ACTION,
+    data: {
+      idp
+    }
   }
 }
 
@@ -43,7 +46,7 @@ function selectIdp(idp: IdentityProvider): Action {
 function logIn(token: string, idpId: string): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch({
-      type: LOGGED_IN,
+      type: USER_LOGGED_IN_ACTION,
       data: {
         token,
         idpId,
@@ -55,7 +58,7 @@ function logIn(token: string, idpId: string): ThunkAction {
 
 function logInError(error: string): Action {
   return {
-    type: LOG_IN_ERROR,
+    type: USER_LOGIN_ERROR_ACTION,
     data: {
       error,
     }
@@ -67,7 +70,7 @@ function logInError(error: string): Action {
  */
 function logOut(): Action {
   return {
-    type: 'LOGGED_OUT',
+    type: 'USER_LOGGED_OUT_ACTION',
   }
 }
 
@@ -78,8 +81,8 @@ module.exports = {
   logInError,
   logOut,
 
-  LOG_IN_INTENT,
-  SPID_PROVIDER,
-  LOGGED_IN,
-  LOG_IN_ERROR,
+  USER_WILL_LOGIN_ACTION,
+  USER_SELECTED_SPID_PROVIDER_ACTION,
+  USER_LOGGED_IN_ACTION,
+  USER_LOGIN_ERROR_ACTION,
 }
