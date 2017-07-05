@@ -1,10 +1,21 @@
-const APPSTATE_CHANGE = 'APPSTATE'
+/**
+ * Defines actions related to React Native's `AppState` changes.
+ *
+ * @flow
+ */
 
-exports.APPSTATE_CHANGE = APPSTATE_CHANGE
+import type { ApplicationState, ApplicationStateAction } from './types'
 
-exports.appStateChange = function(appState) {
+const APPLICATION_STATE_CHANGE_ACTION = 'APPLICATION_STATE_CHANGE_ACTION'
+
+function appStateChange(appState: ApplicationState): ApplicationStateAction {
   return {
-    type: APPSTATE_CHANGE,
-    data: appState,
+    type: APPLICATION_STATE_CHANGE_ACTION,
+    name: appState,
   }
+}
+
+module.exports = {
+  APPLICATION_STATE_CHANGE_ACTION,
+  appStateChange,
 }

@@ -1,9 +1,14 @@
+/**
+ * Implements a Redux middleware that translates actions into Mixpanel events.
+ *
+ */
+
 import { NavigationActions } from 'react-navigation'
 import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
-import { APPSTATE_CHANGE } from '../actions'
+import { APPLICATION_STATE_CHANGE_ACTION } from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -24,9 +29,9 @@ const actionTracking = (store) => (next) => (action) => {
   let result = next(action)
 
   switch (action.type) {
-    case APPSTATE_CHANGE: {
-      Mixpanel.trackWithProperties('status_change', {
-        'status_name': result.data,
+    case APPLICATION_STATE_CHANGE_ACTION: {
+      Mixpanel.trackWithProperties('application_state_change', {
+        'application_state_name': result.name,
       })
       break
     }
@@ -42,10 +47,9 @@ const actionTracking = (store) => (next) => (action) => {
       })
       break
     }
-    default: {
-      return result
-    }
   }
+
+  return result
 }
 
 // gets the current screen from navigation state

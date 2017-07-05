@@ -14,6 +14,11 @@ export type Action =
   | { type: 'REQUEST_USER_PROFILE' }
   | { type: 'RECEIVE_USER_PROFILE', profile: ApiUserProfile, receivedAt: number }
 
+export type ApplicationState = 'background' | 'inactive' | 'active'
+
+export type ApplicationStateAction =
+  { type: 'APPLICATION_STATE_CHANGE_ACTION', name: ApplicationState }
+
 export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
 
 export type PromiseAction = Promise<Action>
