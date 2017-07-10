@@ -14,6 +14,8 @@ import { createLogger } from 'redux-logger'
 
 import reducers from '../reducers'
 
+import { analytics } from '../middlewares'
+
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 
 const logger = createLogger({
@@ -28,7 +30,12 @@ export default function configureStore(onComplete: ?() => void) {
     reducers,
     undefined,
     compose(
-      applyMiddleware(thunk, logger),
+      applyMiddleware(
+        thunk,
+        logger,
+        analytics.actionTracking,
+        analytics.screenTracking
+      ),
       autoRehydrate()
     )
   )

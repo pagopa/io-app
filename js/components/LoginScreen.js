@@ -32,6 +32,8 @@ const {
 	logIn,
 } = require('../actions')
 
+import { ROUTES } from '../utils/constants'
+
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
@@ -123,7 +125,7 @@ class LoginScreen extends React.Component {
           </View>
           <SpidLoginButton onSpidLogin={(token, idpId) => {
             this.props.dispatch(logIn(token, idpId))
-            this.props.navigation.navigate('Profile')
+            this.props.navigation.navigate(ROUTES.PROFILE)
           }} />
           <View style={{ height: 10 }} />
           <SpidSubscribeComponent />

@@ -11,6 +11,8 @@
 import type { Action } from '../actions/types'
 import type { ApiUserProfile } from '../utils/api'
 
+import config from '../config'
+
 // user state when logged out
 export type LoggedOutUserState = {
   isLoggedIn: false,
@@ -33,7 +35,7 @@ export type UserState = LoggedOutUserState | LoggedInUserState
 const initialUserState: LoggedOutUserState = {
   isLoggedIn: false,
   // TODO move URL to config js
-  apiUrlPrefix: 'https://spid-test.spc-app1.teamdigitale.it',
+  apiUrlPrefix: config.apiUrlPrefix,
 }
 
 /**
