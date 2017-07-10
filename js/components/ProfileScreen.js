@@ -33,7 +33,7 @@ import type { LoggedInUserState } from '../reducers/user'
 import { CommonStyles } from './styles'
 
 import AlertsComponent from './AlertsComponent'
-import CalendarComponent from './CalendarComponent'
+import CalendarComponent from './calendar/Calendar.component'
 import ProfileComponent from './ProfileComponent'
 
 type TabName = AlertsTab | CalendarTab | ProfileTab
