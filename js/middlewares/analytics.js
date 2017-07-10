@@ -1,8 +1,14 @@
+/**
+ * Implements a Redux middleware that translates actions into Mixpanel events.
+ *
+ */
+
 import { NavigationActions } from 'react-navigation'
 import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
+import { APPLICATION_STATE_CHANGE_ACTION } from '../actions'
 import * as persist from 'redux-persist/constants'
 
 /*
@@ -21,7 +27,14 @@ const injectGetState = ({ getState }) => (next) => (action) => {
 */
 const actionTracking = (store) => (next) => (action) => {
   let result = next(action)
+
   switch (action.type) {
+    case APPLICATION_STATE_CHANGE_ACTION: {
+      Mixpanel.trackWithProperties('application_state_change', {
+        'application_state_name': result.name,
+      })
+      break
+    }
     case persist.REHYDRATE: {
       if (!has(result, 'payload.user.profile.fiscalnumber')) break
 
@@ -34,10 +47,9 @@ const actionTracking = (store) => (next) => (action) => {
       })
       break
     }
-    default: {
-      return result
-    }
   }
+
+  return result
 }
 
 // gets the current screen from navigation state
@@ -70,9 +82,9 @@ const screenTracking = ({ getState }) => (next) => (action) => {
   const nextScreen = getCurrentRouteName(getState().nav)
 
   if (nextScreen !== currentScreen) {
-    Mixpanel.track(nextScreen)
-    //Track event with properties
-    // Mixpanel.trackWithProperties(nextScreen, { button_type: 'yellow button', button_text: 'magic button' })
+    Mixpanel.trackWithProperties('screen_change', {
+      'screen_name': nextScreen,
+    })
   }
   return result
 }
