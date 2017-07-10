@@ -7,12 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "color": "^2.0.0",
     "email-validator": "^1.0.7",
     "lodash": "^4.17.4",
-    "native-base": "^2.1.2",
+    "native-base": "^2.2.1",
     "option": "^0.2.3",
-    "react": "16.0.0-alpha.6",
-    "react-native": "0.43.4",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.46.1",
     "react-native-mixpanel": "^0.0.15",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "git+https://github.com/react-community/react-navigation.git",
