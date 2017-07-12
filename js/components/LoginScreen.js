@@ -124,13 +124,13 @@ class LoginScreen extends React.Component {
           <SpidLoginButton
 						onSelectIdp={(idp) => this.props.dispatch(selectIdp(idp))}
 						onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
-						onSpidLogin={(token, idpId) => {
-							this.props.dispatch(logIn(token, idpId))
-							this.props.navigation.navigate(ROUTES.PROFILE)
-						}}
-						onSpidLoginError={(error) => {
-							this.props.dispatch(logInError(error))
-						}}
+            onSpidLogin={(token, idpId) => {
+              this.props.dispatch(logIn(token, idpId))
+              this.props.navigation.navigate(ROUTES.PROFILE)
+            }}
+            onSpidLoginError={(error) => {
+              this.props.dispatch(logInError(error))
+            }}
 					/>
           <View style={{ height: 10 }} />
           <SpidSubscribeComponent />
