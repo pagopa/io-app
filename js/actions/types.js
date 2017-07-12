@@ -14,8 +14,8 @@ export type Action =
   | { type: 'USER_LOGGED_IN_ACTION', data: { token: string, idpId: string } }
   | { type: 'USER_LOGIN_ERROR_ACTION', data: { error: string } }
   | { type: 'USER_LOGGED_OUT_ACTION' }
-  | { type: 'REQUEST_USER_PROFILE' }
-  | { type: 'RECEIVE_USER_PROFILE', profile: ApiUserProfile, receivedAt: number }
+  | { type: 'REQUEST_USER_PROFILE_ACTION' }
+  | { type: 'RECEIVE_USER_PROFILE_ACTION', profile: ApiUserProfile, receivedAt: number }
 
 export type ApplicationState = 'background' | 'inactive' | 'active'
 

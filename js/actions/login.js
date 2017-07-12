@@ -18,6 +18,8 @@ const USER_SELECTED_SPID_PROVIDER_ACTION = 'USER_SELECTED_SPID_PROVIDER_ACTION'
 const USER_LOGGED_IN_ACTION = 'USER_LOGGED_IN_ACTION'
 // An error is returned from the Login Webview
 const USER_LOGIN_ERROR_ACTION = 'USER_LOGIN_ERROR_ACTION'
+// The User successfully performs a proper Logout
+const USER_LOGGED_OUT_ACTION = 'USER_LOGGED_OUT_ACTION'
 
 /**
  * Dispatched when the user taps on SPID Login
@@ -70,7 +72,7 @@ function logInError(error: string): Action {
  */
 function logOut(): Action {
   return {
-    type: 'USER_LOGGED_OUT_ACTION',
+    type: USER_LOGGED_OUT_ACTION,
   }
 }
 

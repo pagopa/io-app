@@ -37,8 +37,7 @@ const actionTracking = (store) => (next) => (action) => {
   switch (action.type) {
     case APPLICATION_STATE_CHANGE_ACTION: {
       Mixpanel.trackWithProperties('APPLICATION_STATE_CHANGE', {
-        'APPLICATION_STATE_NAME': result.name,
-      })
+        'APPLICATION_STATE_NAME': result.namebreak})
       break
     }
     case USER_WILL_LOGIN_ACTION: {
@@ -68,7 +67,9 @@ const actionTracking = (store) => (next) => (action) => {
       break
     }
     case persist.REHYDRATE: {
-      if (!has(result, 'payload.user.profile.fiscalnumber')) break
+      if (!has(result, 'payload.user.profile.fiscalnumber')) {
+        break
+      }
 
       const { fiscalnumber } = result.payload.user.profile
       sha256(fiscalnumber).then((hash) => {
@@ -77,6 +78,9 @@ const actionTracking = (store) => (next) => (action) => {
           'fiscalnumber': hash,
         })
       })
+      break
+    }
+    default: {
       break
     }
   }
