@@ -30,11 +30,11 @@ const HomeNavigator = StackNavigator({
 const ProfileNavigator = StackNavigator({
   ...HomeRoutes,
 
-  [ROUTES.DIGITALADDRESS]: {
+  [ROUTES.DIGITAL_ADDRESS]: {
     screen: DigitalAddressScreen,
   },
 
-  [ROUTES.TOPICSSELECTION]: {
+  [ROUTES.TOPICS_SELECTION]: {
     screen: TopicsSelectionScreen,
   }
 }, {
