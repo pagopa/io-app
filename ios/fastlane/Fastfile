@@ -48,6 +48,21 @@ platform :ios do
       force: true)
   end
 
+  # Builds the app
+  lane :do_build do
+    # Install pods
+    cocoapods
+
+    # build the app
+    gym(
+      scheme: "ItaliaApp",
+      clean: true,
+      export_method: "ad-hoc",
+      workspace: "ItaliaApp.xcworkspace",
+      # sdk: "iphoneos8.4",
+    )
+  end
+
   desc "Submit a new Beta Build to HockeyApp"
   desc "This will also make sure the profile is up to date"
   lane :beta do |options|
@@ -64,17 +79,7 @@ platform :ios do
       type: "adhoc"
     )
 
-    # Install pods
-    cocoapods
-
-    # build the app
-    gym(
-      scheme: "ItaliaApp",
-      clean: true,
-      export_method: "ad-hoc",
-      workspace: "ItaliaApp.xcworkspace",
-      # sdk: "iphoneos8.4",
-    )
+    do_build
 
     # generate the changelog based on last commits
     changelog_from_git_commits
