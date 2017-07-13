@@ -21,7 +21,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-persist": "^4.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "stacktrace-js": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

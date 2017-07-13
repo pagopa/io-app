@@ -8,7 +8,6 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
-
 import {
   APPLICATION_STATE_CHANGE_ACTION,
   USER_WILL_LOGIN_ACTION,
@@ -39,7 +38,8 @@ const actionTracking = (store) => (next) => (action) => {
   switch (action.type) {
     case APPLICATION_STATE_CHANGE_ACTION: {
       Mixpanel.trackWithProperties('APPLICATION_STATE_CHANGE', {
-        'APPLICATION_STATE_NAME': result.namebreak})
+        'APPLICATION_STATE_NAME': result.name
+      })
       break
     }
     case USER_WILL_LOGIN_ACTION: {

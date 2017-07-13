@@ -22,7 +22,11 @@ import { ProfileNavigator, HomeNavigator } from './routes'
 
 import { appStateChange } from './actions'
 
+import configureErrorHandler from './utils/configureErrorHandler'
+
 import config from './config'
+
+configureErrorHandler()
 
 Mixpanel.sharedInstanceWithToken(config.mixPanelToken)
 

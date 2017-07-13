@@ -102,9 +102,11 @@ $ rbenv install
 
 $ gem install bundler
 $ bundle install
-$ pod install
 
 $ yarn
+
+$ cd ios
+$ pod install
 ```
 
 E poi compiliamo e lanciamo l'app su Android:
