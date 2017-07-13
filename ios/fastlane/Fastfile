@@ -64,11 +64,15 @@ platform :ios do
       type: "adhoc"
     )
 
+    # Install pods
+    cocoapods
+
     # build the app
     gym(
       scheme: "ItaliaApp",
       clean: true,
       export_method: "ad-hoc",
+      workspace: "ItaliaApp.xcworkspace",
       # sdk: "iphoneos8.4",
     )
 
