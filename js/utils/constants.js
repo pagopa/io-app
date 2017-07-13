@@ -1,9 +1,9 @@
 const ROUTES = {
-  HOME: 'Home',
-  PROFILE: 'Profile',
-  DIGITALADDRESS: 'DigitalAddress',
-  TOPICSSELECTION: 'TopicsSelection',
-  SENDERSELECTION: 'SenderSelection',
+  HOME: 'HOME',
+  PROFILE: 'PROFILE',
+  DIGITAL_ADDRESS: 'DIGITAL_ADDRESS',
+  TOPICS_SELECTION: 'TOPICS_SELECTION',
+  SENDER_SELECTION: 'SENDER_SELECTION',
 }
 
 module.exports = {

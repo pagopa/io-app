@@ -140,7 +140,7 @@ class ProfileComponent extends React.Component {
           <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>DOMICILIO PEC</Text>
         </ListItem>
         <ListItem icon last onPress={() => {
-          this.props.navigation.navigate(ROUTES.DIGITALADDRESS)
+          this.props.navigation.navigate(ROUTES.DIGITAL_ADDRESS)
         }}>
           <Body><Text>pinco@pec.italia.it</Text></Body>
           <Right>
@@ -154,7 +154,7 @@ class ProfileComponent extends React.Component {
           <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>AVVISI E SCADENZE</Text>
         </ListItem>
         <ListItem icon onPress={() => {
-          this.props.navigation.navigate(ROUTES.SENDERSELECTION)
+          this.props.navigation.navigate(ROUTES.SENDER_SELECTION)
         }}>
           <Body>
 						<Text>Enti abilitati</Text>
@@ -165,7 +165,7 @@ class ProfileComponent extends React.Component {
 					</Right>
         </ListItem>
         <ListItem icon onPress={() => {
-          this.props.navigation.navigate(ROUTES.TOPICSSELECTION)
+          this.props.navigation.navigate(ROUTES.TOPICS_SELECTION)
         }}>
           <Body>
 						<Text>Tipologie</Text>

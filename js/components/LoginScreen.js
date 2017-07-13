@@ -28,9 +28,9 @@ import type { Dispatch } from '../actions/types'
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
 
-const {
-	logIn,
-} = require('../actions')
+import { logInIntent, selectIdp, logIn, logInError } from '../actions'
+
+import { ROUTES } from '../utils/constants'
 
 import { ROUTES } from '../utils/constants'
 
@@ -123,10 +123,17 @@ class LoginScreen extends React.Component {
             <H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
             <H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
           </View>
-          <SpidLoginButton onSpidLogin={(token, idpId) => {
-            this.props.dispatch(logIn(token, idpId))
-            this.props.navigation.navigate(ROUTES.PROFILE)
-          }} />
+          <SpidLoginButton
+						onSelectIdp={(idp) => this.props.dispatch(selectIdp(idp))}
+						onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
+            onSpidLogin={(token, idpId) => {
+              this.props.dispatch(logIn(token, idpId))
+              this.props.navigation.navigate(ROUTES.PROFILE)
+            }}
+            onSpidLoginError={(error) => {
+              this.props.dispatch(logInError(error))
+            }}
+					/>
           <View style={{ height: 10 }} />
           <SpidSubscribeComponent />
           <View style={{ height: 60 }} />

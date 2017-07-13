@@ -9,6 +9,11 @@
 'use strict'
 
 import type { Action } from '../actions/types'
+import {
+  USER_LOGGED_IN_ACTION,
+  USER_LOGGED_OUT_ACTION,
+  RECEIVE_USER_PROFILE_ACTION,
+} from '../actions'
 import type { ApiUserProfile } from '../utils/api'
 
 import config from '../config'
@@ -44,7 +49,7 @@ const initialUserState: LoggedOutUserState = {
 export default function user(state: UserState = initialUserState, action: Action): UserState {
 
   // on login, save token and IdP
-  if (action.type === 'LOGGED_IN' && state.isLoggedIn === false) {
+  if (action.type === USER_LOGGED_IN_ACTION && state.isLoggedIn === false) {
     return {
       isLoggedIn: true,
       apiUrlPrefix: state.apiUrlPrefix,
@@ -54,12 +59,12 @@ export default function user(state: UserState = initialUserState, action: Action
   }
 
   // on logout, reset state
-  if (action.type === 'LOGGED_OUT' && state.isLoggedIn === true) {
+  if (action.type === USER_LOGGED_OUT_ACTION && state.isLoggedIn === true) {
     return initialUserState
   }
 
   // on receive of user profile data, save in the use state
-  if(action.type === 'RECEIVE_USER_PROFILE' && state.isLoggedIn === true) {
+  if(action.type === RECEIVE_USER_PROFILE_ACTION && state.isLoggedIn === true) {
     return {
       isLoggedIn: true,
       apiUrlPrefix: state.apiUrlPrefix,
