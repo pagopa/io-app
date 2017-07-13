@@ -8,6 +8,7 @@ import Mixpanel from 'react-native-mixpanel'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 
+
 import {
   APPLICATION_STATE_CHANGE_ACTION,
   USER_WILL_LOGIN_ACTION,
@@ -15,6 +16,7 @@ import {
   USER_LOGGED_IN_ACTION,
   USER_LOGIN_ERROR_ACTION
 } from '../actions'
+
 import * as persist from 'redux-persist/constants'
 
 /*

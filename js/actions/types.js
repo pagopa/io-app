@@ -22,6 +22,11 @@ export type ApplicationState = 'background' | 'inactive' | 'active'
 export type ApplicationStateAction =
   { type: 'APPLICATION_STATE_CHANGE_ACTION', name: ApplicationState }
 
+export type ApplicationState = 'background' | 'inactive' | 'active'
+
+export type ApplicationStateAction =
+  { type: 'APPLICATION_STATE_CHANGE_ACTION', name: ApplicationState }
+
 export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
 
 export type PromiseAction = Promise<Action>

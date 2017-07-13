@@ -32,6 +32,8 @@ import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
 import { ROUTES } from '../utils/constants'
 
+import { ROUTES } from '../utils/constants'
+
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
