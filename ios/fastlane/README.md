@@ -45,6 +45,11 @@ Register new device
 fastlane ios refresh_profiles
 ```
 
+### ios do_build
+```
+fastlane ios do_build
+```
+
 ### ios beta
 ```
 fastlane ios beta
