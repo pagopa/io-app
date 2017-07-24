@@ -85,7 +85,9 @@ platform :ios do
     do_build
 
     # generate the changelog based on last commits
-    changelog = changelog_from_git_commits
+    changelog = changelog_from_git_commits(
+      tag_match_pattern: "ios/beta/*"
+    )
 
     versioning_paths = [
       "ItaliaApp.xcodeproj/project.pbxproj",
@@ -105,8 +107,7 @@ platform :ios do
     # upload to HockeyApp
     hockey(
       api_token: HOCKEYAPP_ALPHA_TOKEN,
-      notes: changelog,
-      tag_match_pattern: "ios/beta/*"
+      notes: changelog
     )
   end
 
