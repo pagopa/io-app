@@ -39,7 +39,7 @@ platform :ios do
   end
 
   # A helper lane for refreshing provisioning profiles.
-  lane :refresh_profiles do
+  private_lane :refresh_profiles do
     match(
       type: "development",
       force: true)
@@ -71,7 +71,15 @@ platform :ios do
 
     # Increment the build number
     build_number = increment_build_number
+
+    # Get the current version from the project
     version_number = get_version_number
+
+    # Generate custom badge for app
+    badge(
+      shield: "#{version_number}/#{build_number}",
+      alpha: true
+    )
 
     # make sure to update the provisioning profile if necessary
     # more information: https://codesigning.guide
