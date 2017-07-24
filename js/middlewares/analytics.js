@@ -49,15 +49,15 @@ const actionTracking = (store) => (next) => (action) => {
     case USER_SELECTED_SPID_PROVIDER_ACTION: {
       const { id, name } = result.data.idp
       Mixpanel.trackWithProperties('USER_SELECTED_SPID_PROVIDER', {
-        id,
-        name,
+        'SPID_IDP_ID': id,
+        'SPID_IDP_NAME': name,
       })
       break
     }
     case USER_LOGGED_IN_ACTION: {
       const { idpId } = result.data
       Mixpanel.trackWithProperties('USER_LOGGED_IN', {
-        idpId,
+        'SPID_IDP_ID': idpId,
       })
       break
     }
