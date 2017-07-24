@@ -97,7 +97,7 @@ android {
         applicationId "it.teamdigitale.app.italiaapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
