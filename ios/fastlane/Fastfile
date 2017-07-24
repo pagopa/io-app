@@ -71,6 +71,7 @@ platform :ios do
 
     # Increment the build number
     build_number = increment_build_number
+    version_number = get_version_number
 
     # make sure to update the provisioning profile if necessary
     # more information: https://codesigning.guide
