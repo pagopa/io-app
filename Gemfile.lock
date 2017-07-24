@@ -10,6 +10,11 @@ GEM
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     babosa (1.0.2)
+    badge (0.8.4)
+      curb (~> 0.9)
+      fastimage (>= 1.6)
+      fastlane (>= 2.0)
+      mini_magick (>= 4.5)
     claide (1.0.2)
     cocoapods (1.2.1)
       activesupport (>= 4.0.2, < 5)
@@ -49,6 +54,7 @@ GEM
     colored2 (3.1.2)
     commander-fastlane (4.4.5)
       highline (~> 1.7.2)
+    curb (0.9.3)
     declarative (0.0.9)
     declarative-option (0.1.0)
     domain_name (0.5.20170404)
@@ -189,6 +195,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  badge
   cocoapods
   fastlane
   pry
