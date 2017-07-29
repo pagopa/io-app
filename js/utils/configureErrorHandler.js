@@ -2,52 +2,39 @@
  * Implements a custom generic error handler that keeps track of JavaScript exceptions
  */
 
-/* eslint no-console: ["error", { allow: ["log"] }] */
+/* eslint no-console: [{ allow: ["error"] }] */
 
 import Mixpanel from 'react-native-mixpanel'
-import StackTrace from 'stacktrace-js'
+import { initSourceMaps, getStackTrace } from '../react-native-source-maps'
 
 import { Alert } from 'react-native'
 
 const isDev = __DEV__
 
-const customErrorHandler = (error, isFatal) => {
+const customErrorHandler = async (error, isFatal) => {
   if (isFatal) {
+    error.stack = await getStackTrace(error)
     // Send a remote event that contains the error stack trace
-
-    // https://gist.github.com/tianjianchn/af8bdbdf4c19135f505a59d0d637745b
-    StackTrace.fromError(error, { offline: true })
-      .then((stack) => {
-        return stack.map(row => {
-          let { source, lineNumber } = row
-          if (!lineNumber) {
-            lineNumber = parseInt(source.split(':').slice(-2, -1)) || 0
-          }
-          return { fileName: error.message, lineNumber, functionName: source }
-        })
-      })
-      .then((stack) => {
-        Mixpanel.trackWithProperties('APPLICATION_ERROR', {
-          'stack': stack
-        })
-      })
+    Mixpanel.trackWithProperties('APPLICATION_ERROR', {
+      'ERROR': JSON.stringify(error),
+      'ERROR_STACK_TRACE': JSON.stringify(error.stack)
+    })
 
     // Inform the user about the unfortunate event
     Alert.alert(
       'Unexpected error occurred',
-      `
-      We have reported this to our team! Please close the app and start again!
-      `
+      'We have reported this to our team! Please close the app and start again!'
     )
   } else {
-    // Preserve logging to the device console (i.e. ADB)
-    console.log(error)
+    // Preserve logging to the device's console (i.e. ADB)
+    console.error(error)
   }
 }
 
 
 const configureErrorHandler = () => {
   if (!isDev) {
+    initSourceMaps({ sourceMapBundle: 'main.jsbundle.map' })
     // Overrides the default error handler in BUNDLED MODE
     global.ErrorUtils.setGlobalHandler(customErrorHandler)
   }
