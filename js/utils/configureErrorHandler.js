@@ -6,10 +6,12 @@
 
 import Mixpanel from 'react-native-mixpanel'
 import { initSourceMaps, getStackTrace } from '../react-native-source-maps'
+import DeviceInfo from 'react-native-device-info';
 
 import { Alert } from 'react-native'
 
 const isDev = __DEV__
+const version = DeviceInfo.getReadableVersion()
 
 const customErrorHandler = async (error, isFatal) => {
   if (isFatal) {
@@ -17,7 +19,8 @@ const customErrorHandler = async (error, isFatal) => {
     // Send a remote event that contains the error stack trace
     Mixpanel.trackWithProperties('APPLICATION_ERROR', {
       'ERROR': JSON.stringify(error),
-      'ERROR_STACK_TRACE': JSON.stringify(error.stack)
+      'ERROR_STACK_TRACE': JSON.stringify(error.stack),
+      'APP_VERSION': version
     })
 
     // Inform the user about the unfortunate event
