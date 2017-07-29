@@ -7,6 +7,7 @@
 import RNFS from "react-native-fs"
 import SourceMap from "source-map"
 import StackTrace from "stacktrace-js"
+import { Platform } from 'react-native'
 
 let sourceMapper = undefined
 let options = undefined
@@ -56,13 +57,14 @@ export const getStackTrace = async error => {
 }
 
 const createSourceMapper = async () => {
-	const path = `${RNFS.MainBundlePath}/${options.sourceMapBundle}`
+  const bundlePath = (Platform.OS === 'ios') ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath
+	const path = `${bundlePath}/${options.sourceMapBundle}`
 	try {
 		const fileExists = await RNFS.exists(path)
 		if (!fileExists) {
 			throw new Error(__DEV__ ?
 				'Unable to read source maps in DEV mode' :
-				`Unable to read source maps, possibly invalid sourceMapBundle file, please check that it exists here: ${RNFS.MainBundlePath}/${options.sourceMapBundle}`
+				`Unable to read source maps, possibly invalid sourceMapBundle file, please check that it exists here: ${bundlePath}/${options.sourceMapBundle}`
 			)
 		}
 
