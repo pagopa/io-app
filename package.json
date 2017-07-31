@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "chmod +x ./add-ios-source-maps.sh && ./add-ios-source-maps.sh",
+    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh",
     "test": "jest"
   },
   "dependencies": {
