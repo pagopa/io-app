@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# This script patches the original bundle script found at
+# https://github.com/facebook/react-native/blob/master/scripts/react-native-xcode.sh
+# and inside `./node_modules/react-native/scripts/` after each successful install
+# in order to append the sourcemaps generation argument
+# `  --sourcemap-output "$BUNDLE_FILE.map"`
+# after the line
+# `  --bundle-output "$BUNDLE_FILE" \`
+# This script is ran on each `yarn install` (or `npm install`)
+# with a `postinstall` script found in `package.json`
+
 # Original target script that is invoked as part of Xcode build process
 ORIGINAL_BUILD_SCRIPT=./node_modules/react-native/scripts/react-native-xcode.sh
 # A local backup of the same script, also serving as lock file

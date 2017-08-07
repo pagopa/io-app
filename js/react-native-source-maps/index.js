@@ -1,7 +1,9 @@
 /*
   Imported from
   https://github.com/philipshurpik/react-native-source-maps/blob/master/index.js
-  due to dependecies' errors
+  - `react-native-fs`, a native dependency, was throwing errors about its API on invocation
+  - `createSourceMapper` method was customized in order to add support for Android
+  we could either fork or merge back once we're positive about our solution
 */
 
 import RNFS from "react-native-fs"
