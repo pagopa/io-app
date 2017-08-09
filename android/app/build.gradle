@@ -72,6 +72,10 @@ import com.android.build.OutputFile
  * ]
  */
 
+project.ext.react = [
+  extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/main.jsbundle.map")]
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -144,6 +148,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
+    compile project(':react-native-fs')
     compile project(':react-native-sha256')
     compile project(':react-native-mixpanel')
     compile fileTree(dir: "libs", include: ["*.jar"])
