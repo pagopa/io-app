@@ -13,6 +13,7 @@ const { connect } = require('react-redux')
 import {
 	StyleSheet,
   View,
+  Text,
   KeyboardAvoidingView,
   Keyboard,
   Animated,
@@ -30,7 +31,7 @@ import SpidSubscribeComponent from './SpidSubscribeComponent'
 
 import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
-import { ROUTES } from '../utils/constants'
+import { ROUTES, VERSION } from '../utils/constants'
 
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
@@ -51,7 +52,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
   },
+  version: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10
+  },
 })
+
+const titleTextStyles = StyleSheet.flatten(styles.titleText)
 
 // height of the logo at start and end of the animation
 // that makes space for the keyboard when inputing the
@@ -118,8 +126,8 @@ class LoginScreen extends React.Component {
             resizeMode: 'contain',
           }, {height: this.state.imageHeight}]}/>
         <View style={{ height: 100, paddingTop: 20, }}>
-            <H2 style={StyleSheet.flatten(styles.titleText)}>benvenuto nella tua</H2>
-            <H1 style={StyleSheet.flatten(styles.titleText)}>Cittadinanza Digitale</H1>
+            <H2 style={titleTextStyles}>benvenuto nella tua</H2>
+            <H1 style={titleTextStyles}>Cittadinanza Digitale</H1>
           </View>
           <SpidLoginButton
 						onSelectIdp={(idp) => this.props.dispatch(selectIdp(idp))}
@@ -135,8 +143,10 @@ class LoginScreen extends React.Component {
           <View style={{ height: 10 }} />
           <SpidSubscribeComponent />
           <View style={{ height: 60 }} />
+          <View style={styles.version}>
+            <Text style={titleTextStyles}>Version {VERSION}</Text>
+          </View>
 				</KeyboardAvoidingView>
-
     )
   }
 }

@@ -1,3 +1,5 @@
+import DeviceInfo from 'react-native-device-info'
+
 const ROUTES = {
   HOME: 'HOME',
   PROFILE: 'PROFILE',
@@ -7,5 +9,6 @@ const ROUTES = {
 }
 
 module.exports = {
-  ROUTES
+  ROUTES,
+  VERSION: DeviceInfo.getReadableVersion(),
 }

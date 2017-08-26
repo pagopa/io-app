@@ -58,6 +58,9 @@ const ProfileStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 20,
   },
+  version: {
+    textAlign: 'right',
+  },
 })
 
 module.exports = {

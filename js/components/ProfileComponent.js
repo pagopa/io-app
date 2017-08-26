@@ -17,6 +17,7 @@ import {
 import {
   Content,
   ListItem,
+  View,
   Text,
   Right,
   Icon,
@@ -33,11 +34,18 @@ import type { NavigationScreenProp } from 'react-navigation/src/TypeDefinition'
 import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
-import { ROUTES } from '../utils/constants'
+import { ROUTES, VERSION } from '../utils/constants'
 
 import { ProfileStyles } from './styles'
 
 import { getIdpInfo } from './SpidLoginButton'
+
+const profileRowStyles =  StyleSheet.flatten(ProfileStyles.profileRow)
+const profileHeaderStyles = StyleSheet.flatten(ProfileStyles.profileHeader)
+const profileHeaderTextStyles = StyleSheet.flatten(ProfileStyles.profileHeaderText)
+const preferenceHeaderTextStyles = StyleSheet.flatten(ProfileStyles.preferenceHeaderText)
+const profileRowIconStyles = StyleSheet.flatten(ProfileStyles.profileRowIcon)
+const profileRowTextStyles = StyleSheet.flatten(ProfileStyles.profileRowText)
 
 const {
 	logOut,
@@ -88,28 +96,28 @@ class ProfileComponent extends React.Component {
 
     return(
       <Content>
-        <ListItem first last style={StyleSheet.flatten(ProfileStyles.profileHeader)}>
+        <ListItem first last style={profileHeaderStyles}>
           <Body>
             <Grid>
               <Row height={50}>
-                <Col><Text style={StyleSheet.flatten(ProfileStyles.profileHeaderText)}>{ fullName.toUpperCase() }</Text></Col>
+                <Col><Text style={profileHeaderTextStyles}>{ fullName.toUpperCase() }</Text></Col>
               </Row>
               <Row>
-                <Col style={StyleSheet.flatten(ProfileStyles.profileRow)}>
-                  <Icon name="user" style={StyleSheet.flatten(ProfileStyles.profileRowIcon)}/>
-                  <Text style={StyleSheet.flatten(ProfileStyles.profileRowText)}>{ fiscalNumber }</Text>
+                <Col style={profileRowStyles}>
+                  <Icon name="user" style={profileRowIconStyles}/>
+                  <Text style={profileRowTextStyles}>{ fiscalNumber }</Text>
                 </Col>
               </Row>
               <Row>
-                <Col style={StyleSheet.flatten(ProfileStyles.profileRow)}>
-                  <Icon name="email" style={StyleSheet.flatten(ProfileStyles.profileRowIcon)}/>
-                  <Text style={StyleSheet.flatten(ProfileStyles.profileRowText)}>{ email }</Text>
+                <Col style={profileRowStyles}>
+                  <Icon name="email" style={profileRowIconStyles}/>
+                  <Text style={profileRowTextStyles}>{ email }</Text>
                 </Col>
               </Row>
               <Row>
-                <Col style={StyleSheet.flatten(ProfileStyles.profileRow)}>
-                  <Icon name="mobile" style={StyleSheet.flatten(ProfileStyles.profileRowIcon)}/>
-                  <Text style={StyleSheet.flatten(ProfileStyles.profileRowText)}>{ mobilePhone }</Text>
+                <Col style={profileRowStyles}>
+                  <Icon name="mobile" style={profileRowIconStyles}/>
+                  <Text style={profileRowTextStyles}>{ mobilePhone }</Text>
                 </Col>
               </Row>
             </Grid>
@@ -119,7 +127,7 @@ class ProfileComponent extends React.Component {
         <ListItem itemDivider />
 
         <ListItem itemHeader first>
-          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>PROFILO SPID</Text>
+          <Text style={preferenceHeaderTextStyles}>PROFILO SPID</Text>
         </ListItem>
         <ListItem icon last onPress={() => {
           if(idpInfo && idpInfo.profileUrl) {
@@ -137,7 +145,7 @@ class ProfileComponent extends React.Component {
         <ListItem itemDivider />
 
 				<ListItem itemHeader first>
-          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>DOMICILIO PEC</Text>
+          <Text style={preferenceHeaderTextStyles}>DOMICILIO PEC</Text>
         </ListItem>
         <ListItem icon last onPress={() => {
           this.props.navigation.navigate(ROUTES.DIGITAL_ADDRESS)
@@ -151,7 +159,7 @@ class ProfileComponent extends React.Component {
         <ListItem itemDivider />
 
         <ListItem itemHeader first>
-          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>AVVISI E SCADENZE</Text>
+          <Text style={preferenceHeaderTextStyles}>AVVISI E SCADENZE</Text>
         </ListItem>
         <ListItem icon onPress={() => {
           this.props.navigation.navigate(ROUTES.SENDER_SELECTION)
@@ -196,6 +204,14 @@ class ProfileComponent extends React.Component {
           <Right>
             <Icon style={{color: '#e99'}} name="log-out" />
           </Right>
+        </ListItem>
+
+        <ListItem itemDivider />
+
+        <ListItem last>
+          <Body>
+            <Text style={ProfileStyles.version}>Version {VERSION}</Text>
+          </Body>
         </ListItem>
       </Content>
     )
