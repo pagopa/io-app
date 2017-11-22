@@ -33,6 +33,11 @@ public class MainApplication extends Application implements ReactApplication {
             new RNMixpanel()
       );
     }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
+    }
   };
 
   @Override

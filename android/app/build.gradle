@@ -73,6 +73,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
+  entryFile: "index.js",
+  // TODO: Check if we still need this
   extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/main.jsbundle.map")]
 ]
 
