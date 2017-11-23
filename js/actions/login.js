@@ -7,8 +7,8 @@
 'use strict'
 
 import type { Action, ThunkAction, Dispatch, GetState } from './types'
-import type { IdentityProvider, ApiUserProfile } from '../utils/api'
-import { requestUserProfile, receiveUserProfile } from './user'
+import type { IdentityProvider } from '../utils/api'
+import { requestUserProfile } from './user'
 
 // The User is about to Login (taps on the SPID Login button)
 const USER_WILL_LOGIN_ACTION = 'USER_WILL_LOGIN_ACTION'
@@ -43,18 +43,6 @@ function selectIdp(idp: IdentityProvider): Action {
 }
 
 /**
- * Dispatched when the user selects the SPID demo provider
- */
-function selectDemo(idp: IdentityProvider): Action {
-  return {
-    type: USER_SELECTED_SPID_PROVIDER_ACTION,
-    data: {
-      idp
-    }
-  }
-}
-
-/**
  * Logs the user in, setting the provided auth token and SPID IdP
  */
 function logIn(token: string, idpId: string): ThunkAction {
@@ -67,22 +55,6 @@ function logIn(token: string, idpId: string): ThunkAction {
       }
     })
     requestUserProfile()(dispatch, getState)
-  }
-}
-
-/**
- * Logs the user with 'demo' profile
- */
-function logInDemo(profile: ApiUserProfile): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
-    dispatch({
-      type: USER_LOGGED_IN_ACTION,
-      data: {
-        token: profile.token,
-        idpId: profile.spid_idp,
-      }
-    })
-    receiveUserProfile(profile)(dispatch, getState)
   }
 }
 
@@ -107,9 +79,7 @@ function logOut(): Action {
 module.exports = {
   logInIntent,
   selectIdp,
-  selectDemo,
   logIn,
-  logInDemo,
   logInError,
   logOut,
 
