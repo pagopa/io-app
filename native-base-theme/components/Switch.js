@@ -1,12 +1,9 @@
 import variable from "./../variables/platform";
 
 export default (variables = variable) => {
-  const labelTheme = {
-    ".focused": {
-      width: 0
-    },
-    fontSize: 17
+  const switchTheme = {
+    marginVertical: -5,
   };
 
-  return labelTheme;
+  return switchTheme;
 };
