@@ -11,7 +11,7 @@
     "color": "^2.0.0",
     "email-validator": "^1.0.7",
     "lodash": "^4.17.4",
-    "native-base": "^2.2.1",
+    "native-base": "^2.3.3",
     "option": "^0.2.3",
     "react": "16.0.0",
     "react-native": "0.50.0",
