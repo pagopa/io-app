@@ -46,6 +46,7 @@ function receiveUserProfile(profile: ApiUserProfile): ThunkAction {
 
 module.exports = {
   requestUserProfile,
+  receiveUserProfile,
   REQUEST_USER_PROFILE_ACTION,
   RECEIVE_USER_PROFILE_ACTION
 }

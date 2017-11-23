@@ -31,6 +31,8 @@ import {
   Icon,
 } from 'native-base'
 
+import LoginDemoComponent from './LoginDemoComponent'
+
 import type { IdentityProvider } from '../utils/api'
 
 // prefix for recognizing auth token
@@ -164,8 +166,11 @@ class IdpSelectionScreen extends React.Component {
   props: {
     closeModal: () => void,
     onSelectIdp: (IdentityProvider) => void,
+    onSelectDemo: (IdentityProvider) => void,
     onSpidLogin: (string, string) => void,
     onSpidLoginError: (string) => void,
+    onProceedSpidLoginDemo: () => void,
+    onCancelSpidLoginDemo: () => void,
   }
 
   state: {
@@ -175,6 +180,7 @@ class IdpSelectionScreen extends React.Component {
   constructor(props) {
     super(props)
 
+    this.createDemoButton = this.createDemoButton.bind(this)
     this.createButtons = this.createButtons.bind(this)
 
     this.state = {
@@ -192,6 +198,25 @@ class IdpSelectionScreen extends React.Component {
     this.setState({
       selectedIdp: null,
     })
+  }
+
+  createDemoButton() {
+    const demo = {
+      id: 'demo',
+      name: 'demo',
+      entityID: 'demo',
+    };
+
+    return (
+      <Button iconRight light block style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
+        this.props.onSelectDemo(demo)
+        this.selectIdp(demo)
+      }}>
+        <Image source={require('../../img/spid.png')} style={styles.spidLogo} />
+        <Text style={StyleSheet.flatten(styles.idpName)}>Demo</Text>
+        <Icon name='chevron-right' />
+      </Button>
+    )
   }
 
   createButtons() {
@@ -239,18 +264,49 @@ class IdpSelectionScreen extends React.Component {
           </Body>
           <Right />
         </Header>
-        {
-          selectedIdp != null ?
-            <SpidLoginWebview
-              idp={selectedIdp}
-              onSuccess={(token) => this._handleSpidSuccess(token)}
-              onError={(err) => this._handleSpidError(err)}
+        {(() => {
+          if (selectedIdp) {
+            if (selectedIdp.id === 'demo') {
+              return (
+                <LoginDemoComponent
+                  onProceedSpidLoginDemo={() => {
+                    this.props.closeModal()
+                    this.props.onProceedSpidLoginDemo()
+                  }}
+                  onCancelSpidLoginDemo={() => {
+                    this.resetIdp()
+                    this.props.onCancelSpidLoginDemo()
+                  }}
+                />
+              )  
+            }
+
+            return (
+              <SpidLoginWebview
+                idp={selectedIdp}
+                onSuccess={(token) => this._handleSpidSuccess(token)}
+                onError={(err) => this._handleSpidError(err)}
               />
-            : <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
-                <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>Per procedere all'accesso, seleziona il gestione della tua identità SPID</Text>
+            )
+          }
+
+          return (
+            <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
+              <Content>
+                <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
+                  Se non possiedi ancora una tua identità SPID, naviga l'app in modalità demo
+                </Text>
+                {this.createDemoButton()}
+              </Content>
+              <Content>
+                <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
+                  Per procedere all'accesso, seleziona il gestore della tua identità SPID
+              </Text>
                 {this.createButtons()}
               </Content>
-        }
+            </Content>
+          )
+        })()}
 			</Container>
     )
   }
@@ -286,8 +342,11 @@ export class SpidLoginButton extends React.Component {
   props: {
     onSpidLoginIntent: () => void,
     onSelectIdp: (IdentityProvider) => void,
+    onSelectDemo: (IdentityProvider) => void,
     onSpidLogin: (string, string) => void,
     onSpidLoginError: (string) => void,
+    onProceedSpidLoginDemo: () => void,
+    onCancelSpidLoginDemo: () => void,
   }
 
   state = {
@@ -307,11 +366,17 @@ export class SpidLoginButton extends React.Component {
           animationType={'fade'}
           transparent={false}
           visible={this.state.isModalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(false)
+          }}
           >
          <IdpSelectionScreen
            onSelectIdp={this.props.onSelectIdp}
+           onSelectDemo={this.props.onSelectDemo}
            onSpidLogin={this.props.onSpidLogin}
            onSpidLoginError={this.props.onSpidLoginError}
+           onProceedSpidLoginDemo={this.props.onProceedSpidLoginDemo}
+           onCancelSpidLoginDemo={this.props.onCancelSpidLoginDemo}
            closeModal={() => {
              this.setModalVisible(false)
            }}/>
