@@ -15,7 +15,7 @@ import Mixpanel from 'react-native-mixpanel'
 
 import { StyleProvider } from 'native-base'
 import getTheme from '../native-base-theme/components'
-import commonColors from '../native-base-theme/variables/commonColor'
+import material from '../native-base-theme/variables/material'
 
 import configureStore from './store/configureStore'
 import { ProfileNavigator, HomeNavigator } from './routes'
@@ -30,7 +30,7 @@ configureErrorHandler()
 
 Mixpanel.sharedInstanceWithToken(config.mixPanelToken)
 
-const theme = getTheme(commonColors)
+const theme = getTheme(material)
 
 class AppNavigation extends React.Component {
   constructor(props) {
