@@ -23,7 +23,7 @@ export default {
   badgePadding: platform === "ios" ? 3 : 0,
 
   // Button
-  btnFontFamily: platform === "ios" ? "Roboto" : "Roboto_medium",
+  btnFontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
   btnDisabledBg: "#b5b5b5",
   btnDisabledClr: "#f1f1f1",
 
@@ -119,7 +119,7 @@ export default {
   brandLight: "#f4f4f4",
 
   // Font
-  fontFamily: "Roboto",
+  fontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
   fontSizeBase: 15,
 
   get fontSizeH1() {
@@ -172,7 +172,7 @@ export default {
   },
 
   // Icon
-  iconFamily: "Ionicons",
+  iconFamily: "Entypo",
   iconFontSize: platform === "ios" ? 30 : 28,
   iconMargin: 7,
   iconHeaderSize: platform === "ios" ? 29 : 24,
@@ -256,7 +256,7 @@ export default {
   noteFontSize: 14,
 
   // Title
-  titleFontfamily: platform === "ios" ? "Roboto" : "Roboto_medium",
+  titleFontfamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
   titleFontSize: 19,
   subTitleFontSize: 14,
   subtitleColor: "#FFF",
