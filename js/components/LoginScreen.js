@@ -24,12 +24,13 @@ import {
 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
+
 import type { Dispatch } from '../actions/types'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
 
-import { logInIntent, selectIdp, logIn, logInError } from '../actions'
+import { logInIntent, selectIdp, selectDemo, logIn, logInDemo, logInError } from '../actions'
 
 import { ROUTES, VERSION } from '../utils/constants'
 
@@ -131,6 +132,7 @@ class LoginScreen extends React.Component {
           </View>
           <SpidLoginButton
 						onSelectIdp={(idp) => this.props.dispatch(selectIdp(idp))}
+            onSelectDemo={(idp) => this.props.dispatch(selectDemo(idp))}
 						onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
             onSpidLogin={(token, idpId) => {
               this.props.dispatch(logIn(token, idpId))
@@ -138,6 +140,23 @@ class LoginScreen extends React.Component {
             }}
             onSpidLoginError={(error) => {
               this.props.dispatch(logInError(error))
+            }}
+            onProceedSpidLoginDemo={() => {
+              this.props.dispatch(
+                logInDemo({
+                  token: 'demo',
+                  spid_idp: 'demo',
+                  name: 'utente',
+                  familyname: 'demo',
+                  fiscalnumber: 'TNTDME00A01H501K',
+                  mobilephone: '06852641',
+                  email: 'demo@gestorespid.it',
+                })
+              )
+              this.props.navigation.navigate(ROUTES.PROFILE)
+            }}
+            onCancelSpidLoginDemo={() => {
+              this.props.navigation.navigate(ROUTES.HOME)
             }}
 					/>
           <View style={{ height: 10 }} />
