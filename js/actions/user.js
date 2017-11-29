@@ -22,15 +22,29 @@ function requestUserProfile(): ThunkAction {
     dispatch({
       type: REQUEST_USER_PROFILE_ACTION,
     })
-    // then we make the API call to the backend
-    const { apiUrlPrefix, token } = getState().user
-    getUserProfile(apiUrlPrefix, token).then((profile) => {
-      // once we get back the user profile, we trigger the receive action
-      // TODO handle unsuccessful retrieval of profile
-      if(profile != null) {
-        receiveUserProfile(profile)(dispatch, getState)
-      }
-    })
+    const { apiUrlPrefix, token, idpId } = getState().user
+
+    // if the idp is the demo one do not call the backend
+    if(idpId === 'demo') {
+      receiveUserProfile({
+        token: 'demo',
+        spid_idp: 'demo',
+        name: 'utente',
+        familyname: 'demo',
+        fiscalnumber: 'TNTDME00A01H501K',
+        mobilephone: '06852641',
+        email: 'demo@gestorespid.it',
+      })(dispatch, getState)
+    }else {
+      // else make the API call to the backend
+      getUserProfile(apiUrlPrefix, token).then((profile) => {
+        // once we get back the user profile, we trigger the receive action
+        // TODO handle unsuccessful retrieval of profile
+        if(profile != null) {
+          receiveUserProfile(profile)(dispatch, getState)
+        }
+      })
+    }
   }
 }
 
@@ -46,6 +60,7 @@ function receiveUserProfile(profile: ApiUserProfile): ThunkAction {
 
 module.exports = {
   requestUserProfile,
+  receiveUserProfile,
   REQUEST_USER_PROFILE_ACTION,
   RECEIVE_USER_PROFILE_ACTION
 }

@@ -75,6 +75,14 @@ const idps: Array<IdentityProvider> = [
   },
 ]
 
+const demoIdp: IdentityProvider = {
+  id: 'demo',
+  name: 'Demo',
+  logo: require('../../img/spid.png'),
+  entityID: '',
+  profileUrl: '',
+}
+
 const WEBVIEW_REF = 'webview'
 const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID='
 
@@ -212,6 +220,21 @@ class IdpSelectionScreen extends React.Component {
     })
   }
 
+  createDemoButton() {
+    return (
+      <Button iconRight light block key={demoIdp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
+        this.props.onSelectIdp(demoIdp)
+      }}>
+        <Image
+          source={demoIdp.logo}
+          style={styles.idpLogo}
+        />
+        <Text style={StyleSheet.flatten(styles.idpName)}>{demoIdp.name}</Text>
+        <Icon name='chevron-right' />
+      </Button>
+    )
+  }
+
     // Handler per il bottone back dello schermo di selezione dell'IdP
   _handleBack() {
     if(this.state.selectedIdp != null) {
@@ -249,6 +272,8 @@ class IdpSelectionScreen extends React.Component {
             : <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
                 <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>Per procedere all'accesso, seleziona il gestione della tua identità SPID</Text>
                 {this.createButtons()}
+                <Text style={StyleSheet.flatten(styles.selectDemoHelpText)}>Se non possiedi ancora una tua identità SPID, naviga l'app in modalità demo</Text>
+                {this.createDemoButton()}
               </Content>
         }
 			</Container>
@@ -300,6 +325,13 @@ export class SpidLoginButton extends React.Component {
     })
   }
 
+  handleSelectIdp = (idp) => {
+    if(idp.id == 'demo') {
+      this.setModalVisible(false)
+    }
+    this.props.onSelectIdp(idp)
+  }
+
   render() {
     return (
       <View>
@@ -309,7 +341,7 @@ export class SpidLoginButton extends React.Component {
           visible={this.state.isModalVisible}
           >
          <IdpSelectionScreen
-           onSelectIdp={this.props.onSelectIdp}
+           onSelectIdp={this.handleSelectIdp}
            onSpidLogin={this.props.onSpidLogin}
            onSpidLoginError={this.props.onSpidLoginError}
            closeModal={() => {
@@ -345,6 +377,11 @@ const styles = StyleSheet.create({
   },
   selectIdpHelpText: {
     marginTop: 20,
+    marginBottom: 20,
+    color: '#fff',
+  },
+  selectDemoHelpText: {
+    marginTop: 30,
     marginBottom: 20,
     color: '#fff',
   },
