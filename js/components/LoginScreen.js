@@ -33,6 +33,8 @@ import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
 import { ROUTES, VERSION } from '../utils/constants'
 
+import { isDemoIdp } from '../utils/api'
+
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
@@ -118,6 +120,17 @@ class LoginScreen extends React.Component {
     }).start()
   }
 
+  handleIpdSelection = (idp) => {
+    // if the selected idp is the demo one simulate a sucessfull login
+    if(isDemoIdp(idp)) {
+      this.props.dispatch(selectIdp(idp))
+      this.props.dispatch(logIn('demo', idp.id))
+      this.props.navigation.navigate(ROUTES.PROFILE)
+    } else {
+      this.props.dispatch(selectIdp(idp))
+    }
+  }
+
   render() {
     return(
         <KeyboardAvoidingView style={styles.container} behavior='padding'>
@@ -130,7 +143,7 @@ class LoginScreen extends React.Component {
             <H1 style={titleTextStyles}>Cittadinanza Digitale</H1>
           </View>
           <SpidLoginButton
-						onSelectIdp={(idp) => this.props.dispatch(selectIdp(idp))}
+            onSelectIdp={(idp) => this.handleIpdSelection(idp)}
 						onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
             onSpidLogin={(token, idpId) => {
               this.props.dispatch(logIn(token, idpId))

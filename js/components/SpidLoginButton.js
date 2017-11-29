@@ -32,6 +32,7 @@ import {
 } from 'native-base'
 
 import type { IdentityProvider } from '../utils/api'
+import { isDemoIdp } from '../utils/api'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/app/token/get/'
@@ -74,6 +75,14 @@ const idps: Array<IdentityProvider> = [
     profileUrl: 'http://selfcarespid.aruba.it',
   },
 ]
+
+const demoIdp: IdentityProvider = {
+  id: 'demo',
+  name: 'Demo',
+  logo: require('../../img/spid.png'),
+  entityID: '',
+  profileUrl: '',
+}
 
 const WEBVIEW_REF = 'webview'
 const LOGIN_BASE_URL = 'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID='
@@ -194,21 +203,31 @@ class IdpSelectionScreen extends React.Component {
     })
   }
 
+  createButton(idp: IdentityProvider, onPress: () => any) {
+    return(
+      <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={onPress}>
+        <Image
+          source={idp.logo}
+          style={styles.idpLogo}
+        />
+        <Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
+        <Icon name='chevron-right' />
+      </Button>
+    )
+  }
+
   createButtons() {
-    return idps.map((idp: IdentityProvider) => {
-      return (
-        <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
-          this.props.onSelectIdp(idp)
-          this.selectIdp(idp)
-        }}>
-          <Image
-            source={idp.logo}
-            style={styles.idpLogo}
-          />
-          <Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
-          <Icon name='chevron-right' />
-        </Button>
-      )
+    return idps.map((idp: IdentityProvider) => 
+      this.createButton(idp, () => {
+        this.props.onSelectIdp(idp)
+        this.selectIdp(idp)
+      })
+    )
+  }
+
+  createDemoButton() {
+    return this.createButton(demoIdp, () => {
+      this.props.onSelectIdp(demoIdp)
     })
   }
 
@@ -240,7 +259,7 @@ class IdpSelectionScreen extends React.Component {
           <Right />
         </Header>
         {
-          selectedIdp != null ?
+          selectedIdp !== null ?
             <SpidLoginWebview
               idp={selectedIdp}
               onSuccess={(token) => this._handleSpidSuccess(token)}
@@ -249,6 +268,8 @@ class IdpSelectionScreen extends React.Component {
             : <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
                 <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>Per procedere all'accesso, seleziona il gestione della tua identità SPID</Text>
                 {this.createButtons()}
+                <Text style={StyleSheet.flatten(styles.selectDemoHelpText)}>Se non possiedi ancora una tua identità SPID, naviga l'app in modalità demo</Text>
+                {this.createDemoButton()}
               </Content>
         }
 			</Container>
@@ -257,7 +278,7 @@ class IdpSelectionScreen extends React.Component {
 
   _handleSpidSuccess(token) {
     const selectedIdp = this.state.selectedIdp
-    if(selectedIdp != null) {
+    if(selectedIdp !== null) {
       this.props.closeModal()
       // ad autenticazione avvenuta, viene chiamata onSpidLogin
       // passando il token di sessione e l'idendificativo dell'IdP
@@ -300,6 +321,13 @@ export class SpidLoginButton extends React.Component {
     })
   }
 
+  handleSelectIdp = (idp) => {
+    if(isDemoIdp(idp)) {
+      this.setModalVisible(false)
+    }
+    this.props.onSelectIdp(idp)
+  }
+
   render() {
     return (
       <View>
@@ -309,7 +337,7 @@ export class SpidLoginButton extends React.Component {
           visible={this.state.isModalVisible}
           >
          <IdpSelectionScreen
-           onSelectIdp={this.props.onSelectIdp}
+           onSelectIdp={this.handleSelectIdp}
            onSpidLogin={this.props.onSpidLogin}
            onSpidLoginError={this.props.onSpidLoginError}
            closeModal={() => {
@@ -345,6 +373,11 @@ const styles = StyleSheet.create({
   },
   selectIdpHelpText: {
     marginTop: 20,
+    marginBottom: 20,
+    color: '#fff',
+  },
+  selectDemoHelpText: {
+    marginTop: 30,
     marginBottom: 20,
     color: '#fff',
   },
