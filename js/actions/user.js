@@ -20,12 +20,12 @@ function requestUserProfile(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     // first we dispatch the request action
     dispatch({
-      type: REQUEST_USER_PROFILE_ACTION,
+      type: REQUEST_USER_PROFILE_ACTION
     })
     const { apiUrlPrefix, token, idpId } = getState().user
 
     // if the idp is the demo one do not call the backend
-    if(idpId === 'demo') {
+    if (idpId === 'demo') {
       receiveUserProfile({
         token: 'demo',
         spid_idp: 'demo',
@@ -33,15 +33,15 @@ function requestUserProfile(): ThunkAction {
         familyname: 'demo',
         fiscalnumber: 'TNTDME00A01H501K',
         mobilephone: '06852641',
-        email: 'demo@gestorespid.it',
+        email: 'demo@gestorespid.it'
       })(dispatch, getState)
     } else {
       // else make the API call to the backend
-      getUserProfile(apiUrlPrefix, token).then((profile) => {
+      getUserProfile(apiUrlPrefix, token).then(profile => {
         // once we get back the user profile, we trigger the receive action
         // TODO handle unsuccessful retrieval of profile
         // @see https://www.pivotaltracker.com/story/show/153245807
-        if(profile !== null) {
+        if (profile !== null) {
           receiveUserProfile(profile)(dispatch, getState)
         }
       })
@@ -54,7 +54,7 @@ function receiveUserProfile(profile: ApiUserProfile): ThunkAction {
     dispatch({
       type: RECEIVE_USER_PROFILE_ACTION,
       profile: profile,
-      receivedAt: Date.now(),
+      receivedAt: Date.now()
     })
   }
 }

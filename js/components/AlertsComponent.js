@@ -9,61 +9,49 @@
 
 const React = require('React')
 
-import {
-  Content,
-  Button,
-  Body,
-	Text,
-	Card,
-  CardItem,
-} from 'native-base'
+import { Content, Button, Body, Text, Card, CardItem } from 'native-base'
 
 import type { Dispatch } from '../actions/types'
 import type { UserState } from '../reducers/user'
 
 export default class AlertsComponent extends React.Component {
-
   props: {
     dispatch: Dispatch,
-    user: UserState,
-  };
+    user: UserState
+  }
 
   render() {
-    return(
+    return (
       <Content padder>
         <Card>
           <CardItem header>
-              <Text>Comune di Milano</Text>
+            <Text>Comune di Milano</Text>
           </CardItem>
           <CardItem>
-              <Body>
-                  <Text>
-                      La tua carta di identità sta per scadere.
-                  </Text>
-              </Body>
+            <Body>
+              <Text>La tua carta di identità sta per scadere.</Text>
+            </Body>
           </CardItem>
           <CardItem footer>
-              <Button light small>
-                <Text>Richiedi il rinnovo</Text>
-              </Button>
+            <Button light small>
+              <Text>Richiedi il rinnovo</Text>
+            </Button>
           </CardItem>
         </Card>
 
         <Card>
           <CardItem header>
-              <Text>Agenzie delle Entrate</Text>
+            <Text>Agenzie delle Entrate</Text>
           </CardItem>
           <CardItem>
-              <Body>
-                  <Text>
-                    La tua posizione pensionistica è stata aggiornata.
-                  </Text>
-              </Body>
+            <Body>
+              <Text>La tua posizione pensionistica è stata aggiornata.</Text>
+            </Body>
           </CardItem>
           <CardItem footer>
-              <Button light small>
-                <Text>Visualizza</Text>
-              </Button>
+            <Button light small>
+              <Text>Visualizza</Text>
+            </Button>
           </CardItem>
         </Card>
 
@@ -73,9 +61,7 @@ export default class AlertsComponent extends React.Component {
           </CardItem>
           <CardItem>
             <Body>
-              <Text>
-                Sono aperte le iscrizioni per la scuola elementare.
-              </Text>
+              <Text>Sono aperte le iscrizioni per la scuola elementare.</Text>
             </Body>
           </CardItem>
           <CardItem footer>
@@ -84,7 +70,6 @@ export default class AlertsComponent extends React.Component {
             </Button>
           </CardItem>
         </Card>
-
       </Content>
     )
   }

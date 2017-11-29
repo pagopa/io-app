@@ -26,7 +26,7 @@ const USER_LOGGED_OUT_ACTION = 'USER_LOGGED_OUT_ACTION'
  */
 function logInIntent(): Action {
   return {
-    type: USER_WILL_LOGIN_ACTION,
+    type: USER_WILL_LOGIN_ACTION
   }
 }
 
@@ -51,7 +51,7 @@ function logIn(token: string, idpId: string): ThunkAction {
       type: USER_LOGGED_IN_ACTION,
       data: {
         token,
-        idpId,
+        idpId
       }
     })
     requestUserProfile()(dispatch, getState)
@@ -62,7 +62,7 @@ function logInError(error: string): Action {
   return {
     type: USER_LOGIN_ERROR_ACTION,
     data: {
-      error,
+      error
     }
   }
 }
@@ -72,7 +72,7 @@ function logInError(error: string): Action {
  */
 function logOut(): Action {
   return {
-    type: USER_LOGGED_OUT_ACTION,
+    type: USER_LOGGED_OUT_ACTION
   }
 }
 
@@ -86,5 +86,5 @@ module.exports = {
   USER_WILL_LOGIN_ACTION,
   USER_SELECTED_SPID_PROVIDER_ACTION,
   USER_LOGGED_IN_ACTION,
-  USER_LOGIN_ERROR_ACTION,
+  USER_LOGIN_ERROR_ACTION
 }

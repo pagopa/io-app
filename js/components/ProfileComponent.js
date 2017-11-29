@@ -9,10 +9,7 @@
 
 const React = require('React')
 
-import {
-	StyleSheet,
-  Linking,
-} from 'react-native'
+import { StyleSheet, Linking } from 'react-native'
 
 import {
   Content,
@@ -25,7 +22,7 @@ import {
   Switch,
   Grid,
   Row,
-  Col,
+  Col
 } from 'native-base'
 
 import { NavigationActions } from 'react-navigation'
@@ -40,25 +37,25 @@ import { ProfileStyles } from './styles'
 
 import { getIdpInfo } from './SpidLoginButton'
 
-const profileRowStyles =  StyleSheet.flatten(ProfileStyles.profileRow)
+const profileRowStyles = StyleSheet.flatten(ProfileStyles.profileRow)
 const profileHeaderStyles = StyleSheet.flatten(ProfileStyles.profileHeader)
-const profileHeaderTextStyles = StyleSheet.flatten(ProfileStyles.profileHeaderText)
-const preferenceHeaderTextStyles = StyleSheet.flatten(ProfileStyles.preferenceHeaderText)
+const profileHeaderTextStyles = StyleSheet.flatten(
+  ProfileStyles.profileHeaderText
+)
+const preferenceHeaderTextStyles = StyleSheet.flatten(
+  ProfileStyles.preferenceHeaderText
+)
 const profileRowIconStyles = StyleSheet.flatten(ProfileStyles.profileRowIcon)
 const profileRowTextStyles = StyleSheet.flatten(ProfileStyles.profileRowText)
 
-const {
-	logOut,
-} = require('../actions')
+const { logOut } = require('../actions')
 
 /**
  * Resets the main navigation to the Home screen
  */
 const resetNavigationAction = NavigationActions.reset({
   index: 0,
-  actions: [
-    NavigationActions.navigate({ routeName: ROUTES.HOME})
-  ]
+  actions: [NavigationActions.navigate({ routeName: ROUTES.HOME })]
 })
 
 /**
@@ -70,16 +67,15 @@ const resetNavigationAction = NavigationActions.reset({
  * TODO we could check whether a specific IdP app is installed
  *      and switch to that.
  */
-const openIdpProfile = function (idpUrl: string) {
+const openIdpProfile = function(idpUrl: string) {
   Linking.openURL(idpUrl) //.catch(err => { })
 }
 
 class ProfileComponent extends React.Component {
-
   props: {
-    navigation: NavigationScreenProp<*,AnyAction>,
+    navigation: NavigationScreenProp<*, AnyAction>,
     dispatch: Dispatch,
-    user: LoggedInUserState,
+    user: LoggedInUserState
   }
 
   render() {
@@ -90,34 +86,42 @@ class ProfileComponent extends React.Component {
     const name = profile && profile.name ? profile.name : ''
     const familyName = profile && profile.familyname ? profile.familyname : '-'
     const fullName = `${name} ${familyName}`
-    const fiscalNumber = profile && profile.fiscalnumber ? profile.fiscalnumber.replace('TINIT-', '') : '-'
+    const fiscalNumber =
+      profile && profile.fiscalnumber
+        ? profile.fiscalnumber.replace('TINIT-', '')
+        : '-'
     const email = profile && profile.email ? profile.email : '-'
-    const mobilePhone = profile && profile.mobilephone ? profile.mobilephone : '-'
+    const mobilePhone =
+      profile && profile.mobilephone ? profile.mobilephone : '-'
 
-    return(
+    return (
       <Content>
         <ListItem first last style={profileHeaderStyles}>
           <Body>
             <Grid>
               <Row height={50}>
-                <Col><Text style={profileHeaderTextStyles}>{ fullName.toUpperCase() }</Text></Col>
-              </Row>
-              <Row>
-                <Col style={profileRowStyles}>
-                  <Icon name="user" style={profileRowIconStyles}/>
-                  <Text style={profileRowTextStyles}>{ fiscalNumber }</Text>
+                <Col>
+                  <Text style={profileHeaderTextStyles}>
+                    {fullName.toUpperCase()}
+                  </Text>
                 </Col>
               </Row>
               <Row>
                 <Col style={profileRowStyles}>
-                  <Icon name="email" style={profileRowIconStyles}/>
-                  <Text style={profileRowTextStyles}>{ email }</Text>
+                  <Icon name="user" style={profileRowIconStyles} />
+                  <Text style={profileRowTextStyles}>{fiscalNumber}</Text>
                 </Col>
               </Row>
               <Row>
                 <Col style={profileRowStyles}>
-                  <Icon name="mobile" style={profileRowIconStyles}/>
-                  <Text style={profileRowTextStyles}>{ mobilePhone }</Text>
+                  <Icon name="email" style={profileRowIconStyles} />
+                  <Text style={profileRowTextStyles}>{email}</Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={profileRowStyles}>
+                  <Icon name="mobile" style={profileRowIconStyles} />
+                  <Text style={profileRowTextStyles}>{mobilePhone}</Text>
                 </Col>
               </Row>
             </Grid>
@@ -129,28 +133,38 @@ class ProfileComponent extends React.Component {
         <ListItem itemHeader first>
           <Text style={preferenceHeaderTextStyles}>PROFILO SPID</Text>
         </ListItem>
-        <ListItem icon last onPress={() => {
-          if(idpInfo && idpInfo.profileUrl) {
-            openIdpProfile(idpInfo.profileUrl)
-          }
-        }}>
+        <ListItem
+          icon
+          last
+          onPress={() => {
+            if (idpInfo && idpInfo.profileUrl) {
+              openIdpProfile(idpInfo.profileUrl)
+            }
+          }}
+        >
           <Body>
-            <Text>{ idpInfo ? idpInfo.name : 'SCONOSCIUTO' }</Text>
+            <Text>{idpInfo ? idpInfo.name : 'SCONOSCIUTO'}</Text>
           </Body>
           <Right>
-            <Icon name="chevron-right" style={{fontSize: 18}}/>
+            <Icon name="chevron-right" style={{ fontSize: 18 }} />
           </Right>
         </ListItem>
 
         <ListItem itemDivider />
 
-				<ListItem itemHeader first>
+        <ListItem itemHeader first>
           <Text style={preferenceHeaderTextStyles}>DOMICILIO PEC</Text>
         </ListItem>
-        <ListItem icon last onPress={() => {
-          this.props.navigation.navigate(ROUTES.DIGITAL_ADDRESS)
-        }}>
-          <Body><Text>pinco@pec.italia.it</Text></Body>
+        <ListItem
+          icon
+          last
+          onPress={() => {
+            this.props.navigation.navigate(ROUTES.DIGITAL_ADDRESS)
+          }}
+        >
+          <Body>
+            <Text>pinco@pec.italia.it</Text>
+          </Body>
           <Right>
             <Icon active name="chevron-right" />
           </Right>
@@ -161,48 +175,59 @@ class ProfileComponent extends React.Component {
         <ListItem itemHeader first>
           <Text style={preferenceHeaderTextStyles}>AVVISI E SCADENZE</Text>
         </ListItem>
-        <ListItem icon onPress={() => {
-          this.props.navigation.navigate(ROUTES.SENDER_SELECTION)
-        }}>
+        <ListItem
+          icon
+          onPress={() => {
+            this.props.navigation.navigate(ROUTES.SENDER_SELECTION)
+          }}
+        >
           <Body>
-						<Text>Enti abilitati</Text>
-					</Body>
-					<Right>
+            <Text>Enti abilitati</Text>
+          </Body>
+          <Right>
             <Text>5</Text>
             <Icon name="chevron-right" />
-					</Right>
+          </Right>
         </ListItem>
-        <ListItem icon onPress={() => {
-          this.props.navigation.navigate(ROUTES.TOPICS_SELECTION)
-        }}>
+        <ListItem
+          icon
+          onPress={() => {
+            this.props.navigation.navigate(ROUTES.TOPICS_SELECTION)
+          }}
+        >
           <Body>
-						<Text>Tipologie</Text>
-					</Body>
-					<Right>
+            <Text>Tipologie</Text>
+          </Body>
+          <Right>
             <Text>6</Text>
             <Icon name="chevron-right" />
-					</Right>
+          </Right>
         </ListItem>
         <ListItem icon last>
-					<Body>
-						<Text>Aggiungi al calendario</Text>
-					</Body>
-					<Right>
-						<Switch value={true} />
-					</Right>
+          <Body>
+            <Text>Aggiungi al calendario</Text>
+          </Body>
+          <Right>
+            <Switch value={true} />
+          </Right>
         </ListItem>
 
         <ListItem itemDivider />
 
-        <ListItem first last icon onPress={() => {
-          this.props.dispatch(logOut())
-          this.props.navigation.dispatch(resetNavigationAction)
-        }}>
+        <ListItem
+          first
+          last
+          icon
+          onPress={() => {
+            this.props.dispatch(logOut())
+            this.props.navigation.dispatch(resetNavigationAction)
+          }}
+        >
           <Body>
-            <Text style={{color: '#e00'}}>Esci da questa identità SPID</Text>
+            <Text style={{ color: '#e00' }}>Esci da questa identità SPID</Text>
           </Body>
           <Right>
-            <Icon style={{color: '#e99'}} name="log-out" />
+            <Icon style={{ color: '#e99' }} name="log-out" />
           </Right>
         </ListItem>
 

@@ -39,10 +39,8 @@ class AppNavigation extends React.Component {
     AppState.addEventListener('change', this.handleAppStateChange)
   }
 
-  handleAppStateChange = (nextAppState) => {
-    this.props.dispatch(
-      appStateChange(nextAppState)
-    )
+  handleAppStateChange = nextAppState => {
+    this.props.dispatch(appStateChange(nextAppState))
   }
 
   render() {
@@ -50,39 +48,41 @@ class AppNavigation extends React.Component {
     const Navigator = profile ? ProfileNavigator : HomeNavigator
 
     return (
-      <Navigator navigation={addNavigationHelpers({
-        dispatch: this.props.dispatch,
-        state: this.props.nav,
-      })} />
+      <Navigator
+        navigation={addNavigationHelpers({
+          dispatch: this.props.dispatch,
+          state: this.props.nav
+        })}
+      />
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  nav: state.nav,
+const mapStateToProps = state => ({
+  nav: state.nav
 })
 
 const AppWithNavigationState = connect(mapStateToProps)(AppNavigation)
 
 class Root extends React.Component {
-
   state: {
     isLoading: boolean,
-    store: any,
-  };
+    store: any
+  }
 
   constructor() {
     super()
 
-    const store = configureStore(() => this.setState({
-      isLoading: false
-    }))
+    const store = configureStore(() =>
+      this.setState({
+        isLoading: false
+      })
+    )
 
     this.state = {
       isLoading: true,
-      store: store,
+      store: store
     }
-
   }
 
   render() {

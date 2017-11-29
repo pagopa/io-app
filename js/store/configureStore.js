@@ -21,11 +21,10 @@ const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 const logger = createLogger({
   predicate: () => isDebuggingInChrome,
   collapsed: true,
-  duration: true,
+  duration: true
 })
 
 export default function configureStore(onComplete: ?() => void) {
-
   const store = createStore(
     reducers,
     undefined,

@@ -5,10 +5,10 @@ const ROUTES = {
   PROFILE: 'PROFILE',
   DIGITAL_ADDRESS: 'DIGITAL_ADDRESS',
   TOPICS_SELECTION: 'TOPICS_SELECTION',
-  SENDER_SELECTION: 'SENDER_SELECTION',
+  SENDER_SELECTION: 'SENDER_SELECTION'
 }
 
 module.exports = {
   ROUTES,
-  VERSION: DeviceInfo.getReadableVersion(),
+  VERSION: DeviceInfo.getReadableVersion()
 }

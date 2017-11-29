@@ -13,5 +13,5 @@ import appStateActions from './appState'
 module.exports = {
   ...loginActions,
   ...userActions,
-  ...appStateActions,
+  ...appStateActions
 }

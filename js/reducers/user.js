@@ -12,7 +12,7 @@ import type { Action } from '../actions/types'
 import {
   USER_LOGGED_IN_ACTION,
   USER_LOGGED_OUT_ACTION,
-  RECEIVE_USER_PROFILE_ACTION,
+  RECEIVE_USER_PROFILE_ACTION
 } from '../actions'
 import type { ApiUserProfile } from '../utils/api'
 
@@ -21,7 +21,7 @@ import config from '../config'
 // user state when logged out
 export type LoggedOutUserState = {
   isLoggedIn: false,
-  apiUrlPrefix: string,
+  apiUrlPrefix: string
 }
 
 // user state when logged in
@@ -30,7 +30,7 @@ export type LoggedInUserState = {
   apiUrlPrefix: string,
   token: string,
   idpId: string,
-  profile?: ApiUserProfile,
+  profile?: ApiUserProfile
 }
 
 // combined user state
@@ -40,21 +40,23 @@ export type UserState = LoggedOutUserState | LoggedInUserState
 const initialUserState: LoggedOutUserState = {
   isLoggedIn: false,
   // TODO move URL to config js
-  apiUrlPrefix: config.apiUrlPrefix,
+  apiUrlPrefix: config.apiUrlPrefix
 }
 
 /**
  * Reducer for the user state
  */
-export default function user(state: UserState = initialUserState, action: Action): UserState {
-
+export default function user(
+  state: UserState = initialUserState,
+  action: Action
+): UserState {
   // on login, save token and IdP
   if (action.type === USER_LOGGED_IN_ACTION && state.isLoggedIn === false) {
     return {
       isLoggedIn: true,
       apiUrlPrefix: state.apiUrlPrefix,
       token: action.data.token,
-      idpId: action.data.idpId,
+      idpId: action.data.idpId
     }
   }
 
@@ -64,13 +66,16 @@ export default function user(state: UserState = initialUserState, action: Action
   }
 
   // on receive of user profile data, save in the use state
-  if(action.type === RECEIVE_USER_PROFILE_ACTION && state.isLoggedIn === true) {
+  if (
+    action.type === RECEIVE_USER_PROFILE_ACTION &&
+    state.isLoggedIn === true
+  ) {
     return {
       isLoggedIn: true,
       apiUrlPrefix: state.apiUrlPrefix,
       token: state.token,
       idpId: state.idpId,
-      profile: action.profile,
+      profile: action.profile
     }
   }
 
