@@ -56,6 +56,11 @@ export type IdentityProvider = {
   profileUrl: string,
 };
 
+function isDemoIdp(idp: IdentityProvider): boolean {
+  return idp.id === 'demo'
+}
+
 module.exports = {
-  getUserProfile
+  getUserProfile,
+  isDemoIdp
 }

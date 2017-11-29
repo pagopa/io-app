@@ -35,12 +35,13 @@ function requestUserProfile(): ThunkAction {
         mobilephone: '06852641',
         email: 'demo@gestorespid.it',
       })(dispatch, getState)
-    }else {
+    } else {
       // else make the API call to the backend
       getUserProfile(apiUrlPrefix, token).then((profile) => {
         // once we get back the user profile, we trigger the receive action
         // TODO handle unsuccessful retrieval of profile
-        if(profile != null) {
+        // @see https://www.pivotaltracker.com/story/show/153245807
+        if(profile !== null) {
           receiveUserProfile(profile)(dispatch, getState)
         }
       })

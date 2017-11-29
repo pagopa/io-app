@@ -32,6 +32,7 @@ import {
 } from 'native-base'
 
 import type { IdentityProvider } from '../utils/api'
+import { isDemoIdp } from '../utils/api'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/app/token/get/'
@@ -202,37 +203,32 @@ class IdpSelectionScreen extends React.Component {
     })
   }
 
-  createButtons() {
-    return idps.map((idp: IdentityProvider) => {
-      return (
-        <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
-          this.props.onSelectIdp(idp)
-          this.selectIdp(idp)
-        }}>
-          <Image
-            source={idp.logo}
-            style={styles.idpLogo}
-          />
-          <Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
-          <Icon name='chevron-right' />
-        </Button>
-      )
-    })
-  }
-
-  createDemoButton() {
-    return (
-      <Button iconRight light block key={demoIdp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={() => {
-        this.props.onSelectIdp(demoIdp)
-      }}>
+  createButton(idp: IdentityProvider, onPress: () => any) {
+    return(
+      <Button iconRight light block key={idp.id} style={StyleSheet.flatten(styles.idpButton)} onPress={onPress}>
         <Image
-          source={demoIdp.logo}
+          source={idp.logo}
           style={styles.idpLogo}
         />
-        <Text style={StyleSheet.flatten(styles.idpName)}>{demoIdp.name}</Text>
+        <Text style={StyleSheet.flatten(styles.idpName)}>{idp.name}</Text>
         <Icon name='chevron-right' />
       </Button>
     )
+  }
+
+  createButtons() {
+    return idps.map((idp: IdentityProvider) => 
+      this.createButton(idp, () => {
+        this.props.onSelectIdp(idp)
+        this.selectIdp(idp)
+      })
+    )
+  }
+
+  createDemoButton() {
+    return this.createButton(demoIdp, () => {
+      this.props.onSelectIdp(demoIdp)
+    })
   }
 
     // Handler per il bottone back dello schermo di selezione dell'IdP
@@ -263,7 +259,7 @@ class IdpSelectionScreen extends React.Component {
           <Right />
         </Header>
         {
-          selectedIdp != null ?
+          selectedIdp !== null ?
             <SpidLoginWebview
               idp={selectedIdp}
               onSuccess={(token) => this._handleSpidSuccess(token)}
@@ -282,7 +278,7 @@ class IdpSelectionScreen extends React.Component {
 
   _handleSpidSuccess(token) {
     const selectedIdp = this.state.selectedIdp
-    if(selectedIdp != null) {
+    if(selectedIdp !== null) {
       this.props.closeModal()
       // ad autenticazione avvenuta, viene chiamata onSpidLogin
       // passando il token di sessione e l'idendificativo dell'IdP
@@ -326,7 +322,7 @@ export class SpidLoginButton extends React.Component {
   }
 
   handleSelectIdp = (idp) => {
-    if(idp.id == 'demo') {
+    if(isDemoIdp(idp)) {
       this.setModalVisible(false)
     }
     this.props.onSelectIdp(idp)
