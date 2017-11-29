@@ -10,41 +10,47 @@ import { ROUTES } from './utils/constants'
 // Initialize the stack navigator
 const HomeRoutes = {
   [ROUTES.HOME]: {
-    screen: LoginScreen,
+    screen: LoginScreen
   },
 
   [ROUTES.PROFILE]: {
-    screen: ProfileScreen,
-  },
+    screen: ProfileScreen
+  }
 }
 
-const HomeNavigator = StackNavigator({
-  ...HomeRoutes,
-}, {
-  initialRouteName: ROUTES.HOME,
-
-  // Let each screen handle the header and navigation
-  headerMode: 'none'
-})
-
-const ProfileNavigator = StackNavigator({
-  ...HomeRoutes,
-
-  [ROUTES.DIGITAL_ADDRESS]: {
-    screen: DigitalAddressScreen,
+const HomeNavigator = StackNavigator(
+  {
+    ...HomeRoutes
   },
+  {
+    initialRouteName: ROUTES.HOME,
 
-  [ROUTES.TOPICS_SELECTION]: {
-    screen: TopicsSelectionScreen,
+    // Let each screen handle the header and navigation
+    headerMode: 'none'
   }
-}, {
-  initialRouteName: ROUTES.PROFILE,
+)
 
-  // Let each screen handle the header and navigation
-  headerMode: 'none',
-})
+const ProfileNavigator = StackNavigator(
+  {
+    ...HomeRoutes,
+
+    [ROUTES.DIGITAL_ADDRESS]: {
+      screen: DigitalAddressScreen
+    },
+
+    [ROUTES.TOPICS_SELECTION]: {
+      screen: TopicsSelectionScreen
+    }
+  },
+  {
+    initialRouteName: ROUTES.PROFILE,
+
+    // Let each screen handle the header and navigation
+    headerMode: 'none'
+  }
+)
 
 module.exports = {
   HomeNavigator,
-  ProfileNavigator,
+  ProfileNavigator
 }

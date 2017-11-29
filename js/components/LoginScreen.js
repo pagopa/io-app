@@ -11,17 +11,15 @@ const React = require('React')
 const { connect } = require('react-redux')
 
 import {
-	StyleSheet,
+  StyleSheet,
   View,
   Text,
   KeyboardAvoidingView,
   Keyboard,
-  Animated,
+  Animated
 } from 'react-native'
 
-import {
-  H1, H2,
-} from 'native-base'
+import { H1, H2 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
@@ -44,21 +42,21 @@ const styles = StyleSheet.create({
     padding: 30,
     backgroundColor: '#0066CC',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   titleContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   titleText: {
     textAlign: 'center',
-    color: '#fff',
+    color: '#fff'
   },
   version: {
     position: 'absolute',
     bottom: 10,
     right: 10
-  },
+  }
 })
 
 const titleTextStyles = StyleSheet.flatten(styles.titleText)
@@ -70,19 +68,18 @@ const ANIMATION_START_LOGO_HEIGHT = 70
 const ANIMATION_END_LOGO_HEIGHT = 0
 
 class LoginScreen extends React.Component {
-
   // called when keyboard appears
-  keyboardWillShowSub: (any) => void
+  keyboardWillShowSub: any => void
   // called when keyboard disappears
-  keyboardWillHideSub: (any) => void
+  keyboardWillHideSub: any => void
 
   props: {
-		navigation: Navigator,
-		dispatch: Dispatch,
+    navigation: Navigator,
+    dispatch: Dispatch
   }
 
   state: {
-    imageHeight: any,
+    imageHeight: any
   }
 
   constructor(props) {
@@ -92,10 +89,16 @@ class LoginScreen extends React.Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     // setup keyboard event handlers
-    this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
-    this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
+    this.keyboardWillShowSub = Keyboard.addListener(
+      'keyboardWillShow',
+      this.keyboardWillShow
+    )
+    this.keyboardWillHideSub = Keyboard.addListener(
+      'keyboardWillHide',
+      this.keyboardWillHide
+    )
   }
 
   componentWillUnmount() {
@@ -105,24 +108,24 @@ class LoginScreen extends React.Component {
   }
 
   // when keyboard appears, we shrink the logo
-  keyboardWillShow = (event) => {
+  keyboardWillShow = event => {
     Animated.timing(this.state.imageHeight, {
       duration: event.duration,
-      toValue: ANIMATION_END_LOGO_HEIGHT,
+      toValue: ANIMATION_END_LOGO_HEIGHT
     }).start()
   }
 
   // when keyboard disappears we expand the logo to original size
-  keyboardWillHide = (event) => {
+  keyboardWillHide = event => {
     Animated.timing(this.state.imageHeight, {
       duration: event.duration,
-      toValue: ANIMATION_START_LOGO_HEIGHT,
+      toValue: ANIMATION_START_LOGO_HEIGHT
     }).start()
   }
 
-  handleIpdSelection = (idp) => {
+  handleIpdSelection = idp => {
     // if the selected idp is the demo one simulate a sucessfull login
-    if(isDemoIdp(idp)) {
+    if (isDemoIdp(idp)) {
       this.props.dispatch(selectIdp(idp))
       this.props.dispatch(logIn('demo', idp.id))
       this.props.navigation.navigate(ROUTES.PROFILE)
@@ -132,34 +135,40 @@ class LoginScreen extends React.Component {
   }
 
   render() {
-    return(
-        <KeyboardAvoidingView style={styles.container} behavior='padding'>
-          <View style={{ height: 20 }} />
-          <Animated.Image source={require('../../img/logo-it.png')} style={[{
-            resizeMode: 'contain',
-          }, {height: this.state.imageHeight}]}/>
-        <View style={{ height: 100, paddingTop: 20, }}>
-            <H2 style={titleTextStyles}>benvenuto nella tua</H2>
-            <H1 style={titleTextStyles}>Cittadinanza Digitale</H1>
-          </View>
-          <SpidLoginButton
-            onSelectIdp={(idp) => this.handleIpdSelection(idp)}
-						onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
-            onSpidLogin={(token, idpId) => {
-              this.props.dispatch(logIn(token, idpId))
-              this.props.navigation.navigate(ROUTES.PROFILE)
-            }}
-            onSpidLoginError={(error) => {
-              this.props.dispatch(logInError(error))
-            }}
-					/>
-          <View style={{ height: 10 }} />
-          <SpidSubscribeComponent />
-          <View style={{ height: 60 }} />
-          <View style={styles.version}>
-            <Text style={titleTextStyles}>Version {VERSION}</Text>
-          </View>
-				</KeyboardAvoidingView>
+    return (
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={{ height: 20 }} />
+        <Animated.Image
+          source={require('../../img/logo-it.png')}
+          style={[
+            {
+              resizeMode: 'contain'
+            },
+            { height: this.state.imageHeight }
+          ]}
+        />
+        <View style={{ height: 100, paddingTop: 20 }}>
+          <H2 style={titleTextStyles}>benvenuto nella tua</H2>
+          <H1 style={titleTextStyles}>Cittadinanza Digitale</H1>
+        </View>
+        <SpidLoginButton
+          onSelectIdp={idp => this.handleIpdSelection(idp)}
+          onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
+          onSpidLogin={(token, idpId) => {
+            this.props.dispatch(logIn(token, idpId))
+            this.props.navigation.navigate(ROUTES.PROFILE)
+          }}
+          onSpidLoginError={error => {
+            this.props.dispatch(logInError(error))
+          }}
+        />
+        <View style={{ height: 10 }} />
+        <SpidSubscribeComponent />
+        <View style={{ height: 60 }} />
+        <View style={styles.version}>
+          <Text style={titleTextStyles}>Version {VERSION}</Text>
+        </View>
+      </KeyboardAvoidingView>
     )
   }
 }

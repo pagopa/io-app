@@ -21,7 +21,8 @@
   },
   "plugins": [
     "react",
-    "flowtype"
+    "flowtype",
+    "prettier"
   ],
   "rules": {
     "indent": [
@@ -40,6 +41,7 @@
       "error",
       "never"
     ],
-    "react/jsx-uses-vars": 1
+    "react/jsx-uses-vars": 1,
+    "prettier/prettier": "error"
   }
 }

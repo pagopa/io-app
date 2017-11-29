@@ -15,5 +15,5 @@ import appStateReducer from './appState'
 module.exports = combineReducers({
   nav: navReducer,
   user: userReducer,
-  appState: appStateReducer,
+  appState: appStateReducer
 })

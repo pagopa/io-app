@@ -26,20 +26,23 @@ export type ApiUserProfile = {
   countyofbirth?: string,
   dateofbirth?: string,
   idcard?: string,
-  placeofbirth?: string,
+  placeofbirth?: string
 }
 
-async function getUserProfile(apiUrlPrefix: string, token: string): Promise<?ApiUserProfile> {
+async function getUserProfile(
+  apiUrlPrefix: string,
+  token: string
+): Promise<?ApiUserProfile> {
   try {
     let response = await fetch(`${apiUrlPrefix}/api/v1/user`, {
       method: 'get',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       }
     })
     let responseJson: ApiUserProfile = await response.json()
     return responseJson
-  } catch(error) {
+  } catch (error) {
     // TODO handle error
     // console.error(error)
   }
@@ -53,8 +56,8 @@ export type IdentityProvider = {
   logo: mixed,
   name: string,
   entityID: string,
-  profileUrl: string,
-};
+  profileUrl: string
+}
 
 function isDemoIdp(idp: IdentityProvider): boolean {
   return idp.id === 'demo'

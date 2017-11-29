@@ -1,9 +1,9 @@
 /**
-  * Implements the AppState reducers.
-  *
-  * Handles React Native's AppState changes.
-  *
-  * @flow
+ * Implements the AppState reducers.
+ *
+ * Handles React Native's AppState changes.
+ *
+ * @flow
  */
 
 import { APPLICATION_STATE_CHANGE_ACTION } from '../actions'
@@ -14,14 +14,17 @@ export type InitialAppState = {
 }
 
 const initialAppState: InitialAppState = {
-  appState: 'background',
+  appState: 'background'
 }
 
-export default function appState(state: InitialAppState = initialAppState, action: ApplicationStateAction) {
+export default function appState(
+  state: InitialAppState = initialAppState,
+  action: ApplicationStateAction
+) {
   if (action.type === APPLICATION_STATE_CHANGE_ACTION) {
     return {
       ...state,
-      appState: action.name,
+      appState: action.name
     }
   }
   return state

@@ -10,16 +10,15 @@
 
 const React = require('React')
 
-import {
-	StyleSheet,
-} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import {
   Container,
   Content,
   Header,
   Text,
-  Left, Right,
+  Left,
+  Right,
   Icon,
   Button,
   Body,
@@ -27,7 +26,7 @@ import {
   Input,
   ListItem,
   CheckBox,
-  Switch,
+  Switch
 } from 'native-base'
 
 import type { NavigationScreenProp } from 'react-navigation/src/TypeDefinition'
@@ -38,13 +37,13 @@ import { ProfileStyles } from './styles'
 
 type Topic = {
   name: string,
-  label: string,
+  label: string
 }
 
 type TopicCategory = {
   name: string,
   label: string,
-  topics: Array<TopicType>,
+  topics: Array<TopicType>
 }
 
 const categories: Array<TopicCategory> = [
@@ -54,16 +53,16 @@ const categories: Array<TopicCategory> = [
     topics: [
       {
         name: 'fiscali',
-        label: 'Fiscali',
+        label: 'Fiscali'
       },
       {
         name: 'amministrative',
-        label: 'Amministrative',
+        label: 'Amministrative'
       },
       {
         name: 'altro',
-        label: 'Altro',
-      },
+        label: 'Altro'
+      }
     ]
   },
   {
@@ -72,34 +71,33 @@ const categories: Array<TopicCategory> = [
     topics: [
       {
         name: 'fiscali',
-        label: 'Fiscali',
+        label: 'Fiscali'
       },
       {
         name: 'amministrativi',
-        label: 'Amministrativi',
+        label: 'Amministrativi'
       },
       {
         name: 'circolazione',
-        label: 'Circolazione',
+        label: 'Circolazione'
       },
       {
         name: 'eventi',
-        label: 'Eventi',
+        label: 'Eventi'
       },
       {
         name: 'altro',
-        label: 'Altro',
-      },
+        label: 'Altro'
+      }
     ]
   }
 ]
 
 class TopicsSelectionScreen extends React.Component {
-
   props: {
-    navigation: NavigationScreenProp<*,AnyAction>,
+    navigation: NavigationScreenProp<*, AnyAction>,
     dispatch: Dispatch,
-    user: LoggedInUserState,
+    user: LoggedInUserState
   }
 
   state: {
@@ -109,20 +107,20 @@ class TopicsSelectionScreen extends React.Component {
   constructor(props: any) {
     super(props)
     this.state = {
-      isSelectionChanged: false,
+      isSelectionChanged: false
     }
   }
 
   renderTopicElements(categories: Array<TopicCategory>) {
     return categories.map((category, categoryIdx) => {
       const isFirstCategory = categoryIdx == 0
-      const isLastCategory = categoryIdx == (categories.length - 1)
+      const isLastCategory = categoryIdx == categories.length - 1
       const topicElements = category.topics.map((topic, topicIdx, topics) => {
-        const isLastTopic = topicIdx == (topics.length - 1)
-        return(
+        const isLastTopic = topicIdx == topics.length - 1
+        return (
           <ListItem icon last={isLastCategory && isLastTopic}>
             <Body>
-              <Text onPress={() => { }}>{topic.label}</Text>
+              <Text onPress={() => {}}>{topic.label}</Text>
             </Body>
             <Right>
               <Switch value={true} />
@@ -130,36 +128,39 @@ class TopicsSelectionScreen extends React.Component {
           </ListItem>
         )
       })
-      return ([
+      return [
         <ListItem itemHeader first={isFirstCategory}>
-          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>{category.label}</Text>
+          <Text style={StyleSheet.flatten(ProfileStyles.preferenceHeaderText)}>
+            {category.label}
+          </Text>
         </ListItem>
-      ].concat(topicElements))
+      ].concat(topicElements)
     })
   }
 
   render() {
-    return(
+    return (
       <Container>
-        <Header style={{alignItems: 'center'}}>
+        <Header style={{ alignItems: 'center' }}>
           <Left>
-            <Button transparent onPress={() => {
-              this.props.navigation.goBack()
-            }}>
-            <Icon name="chevron-left" />
+            <Button
+              transparent
+              onPress={() => {
+                this.props.navigation.goBack()
+              }}
+            >
+              <Icon name="chevron-left" />
             </Button>
           </Left>
-          <Text style={{color: '#fff', fontSize: 20}}>AVVISI E SCADENZE</Text>
-          <Right>
-          </Right>
+          <Text style={{ color: '#fff', fontSize: 20 }}>AVVISI E SCADENZE</Text>
+          <Right />
         </Header>
-        <Content style={{backgroundColor: '#fff'}}>
-          { this.renderTopicElements(categories) }
+        <Content style={{ backgroundColor: '#fff' }}>
+          {this.renderTopicElements(categories)}
         </Content>
       </Container>
     )
   }
-
 }
 
 module.exports = TopicsSelectionScreen

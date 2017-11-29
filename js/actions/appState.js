@@ -11,11 +11,11 @@ const APPLICATION_STATE_CHANGE_ACTION = 'APPLICATION_STATE_CHANGE_ACTION'
 function appStateChange(appState: ApplicationState): ApplicationStateAction {
   return {
     type: APPLICATION_STATE_CHANGE_ACTION,
-    name: (appState).toUpperCase(),
+    name: appState.toUpperCase()
   }
 }
 
 module.exports = {
   APPLICATION_STATE_CHANGE_ACTION,
-  appStateChange,
+  appStateChange
 }

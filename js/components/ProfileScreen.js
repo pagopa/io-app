@@ -10,19 +10,17 @@
 const React = require('React')
 const { connect } = require('react-redux')
 
-import {
-	StyleSheet,
-} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import {
   Container,
-	Footer,
-	FooterTab,
-	Content,
+  Footer,
+  FooterTab,
+  Content,
   Button,
   Icon,
-	Text,
-  Badge,
+  Text,
+  Badge
 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
@@ -43,25 +41,25 @@ type ProfileTab = { name: 'profile' }
 
 class ProfileScreen extends React.Component {
   state: {
-		activeTab: TabName,
-	}
+    activeTab: TabName
+  }
 
   props: {
-		navigation: Navigator,
+    navigation: Navigator,
     dispatch: Dispatch,
-    user: LoggedInUserState,
+    user: LoggedInUserState
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: { name: 'profile' },
+      activeTab: { name: 'profile' }
     }
   }
 
   toggleAlertsTab() {
     this.setState({
-      activeTab: { name: 'alerts' },
+      activeTab: { name: 'alerts' }
     })
   }
 
@@ -71,7 +69,7 @@ class ProfileScreen extends React.Component {
 
   toggleCalendarTab() {
     this.setState({
-      activeTab: { name: 'calendar' },
+      activeTab: { name: 'calendar' }
     })
   }
 
@@ -81,7 +79,7 @@ class ProfileScreen extends React.Component {
 
   toggleProfileTab() {
     this.setState({
-      activeTab: { name: 'profile' },
+      activeTab: { name: 'profile' }
     })
   }
 
@@ -90,59 +88,72 @@ class ProfileScreen extends React.Component {
   }
 
   renderContent() {
-    if(this.isProfileTabOn()) {
-      return <ProfileComponent
-				navigation={this.props.navigation}
-				dispatch={this.props.dispatch}
-				user={this.props.user} />
-    } else if(this.isAlertsTabOn()) {
-      return <AlertsComponent
-				navigation={this.props.navigation}
-				dispatch={this.props.dispatch}
-				user={this.props.user} />
-    } else if(this.isCalendarTabOn()) {
-      return <CalendarComponent
-				navigation={this.props.navigation}
-				dispatch={this.props.dispatch}
-				user={this.props.user} />
+    if (this.isProfileTabOn()) {
+      return (
+        <ProfileComponent
+          navigation={this.props.navigation}
+          dispatch={this.props.dispatch}
+          user={this.props.user}
+        />
+      )
+    } else if (this.isAlertsTabOn()) {
+      return (
+        <AlertsComponent
+          navigation={this.props.navigation}
+          dispatch={this.props.dispatch}
+          user={this.props.user}
+        />
+      )
+    } else if (this.isCalendarTabOn()) {
+      return (
+        <CalendarComponent
+          navigation={this.props.navigation}
+          dispatch={this.props.dispatch}
+          user={this.props.user}
+        />
+      )
     } else {
       return <Content padder />
     }
   }
 
   render() {
-    return(
+    return (
       <Container style={StyleSheet.flatten(CommonStyles.fullContainer)}>
-				{this.renderContent()}
-				<Footer >
+        {this.renderContent()}
+        <Footer>
           <FooterTab>
-              <Button
-                badge
-								active={this.isAlertsTabOn()}
-								onPress={() => this.toggleAlertsTab()}
-								>
-                  <Badge><Text>23</Text></Badge>
-                  <Icon name="notification" active={this.isAlertsTabOn()} />
-                  <Text>Avvisi</Text>
-              </Button>
-              <Button
-                badge
-								active={this.isCalendarTabOn()}
-								onPress={() => this.toggleCalendarTab()}
-								>
-                  <Badge><Text>1</Text></Badge>
-                  <Icon name="calendar" active={this.isCalendarTabOn()} />
-                  <Text>Scadenze</Text>
-              </Button>
-              <Button
-								active={this.isProfileTabOn()}
-								onPress={() => this.toggleProfileTab()}
-								>
-                  <Icon name="user" active={this.isProfileTabOn()} />
-                  <Text>Profilo</Text>
-              </Button>
+            <Button
+              badge
+              active={this.isAlertsTabOn()}
+              onPress={() => this.toggleAlertsTab()}
+            >
+              <Badge>
+                <Text>23</Text>
+              </Badge>
+              <Icon name="notification" active={this.isAlertsTabOn()} />
+              <Text>Avvisi</Text>
+            </Button>
+            <Button
+              badge
+              active={this.isCalendarTabOn()}
+              onPress={() => this.toggleCalendarTab()}
+            >
+              <Badge>
+                <Text>1</Text>
+              </Badge>
+              <Icon name="calendar" active={this.isCalendarTabOn()} />
+              <Text>Scadenze</Text>
+            </Button>
+            <Button
+              active={this.isProfileTabOn()}
+              onPress={() => this.toggleProfileTab()}
+            >
+              <Icon name="user" active={this.isProfileTabOn()} />
+              <Text>Profilo</Text>
+            </Button>
           </FooterTab>
-      </Footer>
+        </Footer>
       </Container>
     )
   }
@@ -150,7 +161,7 @@ class ProfileScreen extends React.Component {
 
 function select(store) {
   return {
-    user: store.user,
+    user: store.user
   }
 }
 
