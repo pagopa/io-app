@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh",
-    "test": "jest"
+    "test": "jest",
+    "prettify": "prettier 'js/**/*.js'",
+    "lint": "eslint 'js/**/*.js'"
   },
   "dependencies": {
     "color": "^2.0.0",
@@ -38,9 +40,11 @@
     "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.44.2",
     "jest": "19.0.2",
+    "prettier": "1.8.2",
     "react-test-renderer": "16.0.0-alpha.6"
   },
   "jest": {
