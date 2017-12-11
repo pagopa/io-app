@@ -1,4 +1,9 @@
+project.ext.envConfigFiles = [
+  release: ".env.production"
+]
+
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -150,6 +155,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-config')
     compile project(':react-native-device-info')
     compile project(':react-native-fs')
     compile project(':react-native-sha256')

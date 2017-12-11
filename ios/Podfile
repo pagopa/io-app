@@ -1,3 +1,5 @@
 target 'ItaliaApp' do
   pod 'Mixpanel'
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
 end

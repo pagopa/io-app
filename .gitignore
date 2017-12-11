@@ -46,7 +46,7 @@ npm-debug.log
 yarn-error.log
 
 # App Config
-js/config.js
+.env
 
 # BUCK
 buck-out/
