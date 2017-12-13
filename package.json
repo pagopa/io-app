@@ -7,7 +7,8 @@
     "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh",
     "test": "jest",
     "prettify": "prettier --write 'js/**/*.js'",
-    "lint": "eslint 'js/**/*.js'"
+    "lint": "eslint 'js/**/*.js'",
+    "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*"
   },
   "dependencies": {
     "color": "^2.0.0",

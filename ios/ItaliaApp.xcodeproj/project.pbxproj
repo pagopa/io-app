@@ -49,6 +49,7 @@
 		EBC721433CAF4DB4BEF5FF2D /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 113AB84EBCC249D4891E88DA /* Roboto.ttf */; };
 		FA8448E9E98F466C8BCEEA2D /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2572F7D5410C4CFEB1EB0EAB /* Entypo.ttf */; };
 		FC6BBB79F5E84BA6BCA7A29C /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 629702ABB4FC4FCEA5C29455 /* Roboto_medium.ttf */; };
+		BCC6A5BE7EA743388104A040 /* libreact-native-sha256.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7BF3EEAED4436F8DD575A5 /* libreact-native-sha256.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,6 +323,8 @@
 		BEB90DCEBDEADAD0062F2238 /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D22C5B01ED4649B08F590828 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		EEA222FBF70B4D0385257B7E /* TitilliumWeb-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		4B2174CC664E41728331AB0D /* react-native-sha256.xcodeproj */ = {isa = PBXFileReference; name = "react-native-sha256.xcodeproj"; path = "../node_modules/react-native-sha256/ios/react-native-sha256.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CF7BF3EEAED4436F8DD575A5 /* libreact-native-sha256.a */ = {isa = PBXFileReference; name = "libreact-native-sha256.a"; path = "libreact-native-sha256.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -351,6 +354,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5F80C0C2BA7C7139E0A5497D /* libPods-ItaliaApp.a in Frameworks */,
+				BCC6A5BE7EA743388104A040 /* libreact-native-sha256.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +543,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				4B2174CC664E41728331AB0D /* react-native-sha256.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1125,12 +1130,14 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-sha256/ios",
 				);
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1149,12 +1156,14 @@
 				DEVELOPMENT_TEAM = QWLSX4D6KP;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-sha256/ios",
 				);
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1177,11 +1186,12 @@
 				DEVELOPMENT_TEAM = 4RV73SN38W;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-sha256/ios",
 				);
 				INFOPLIST_FILE = ItaliaApp/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
-				INFOPLIST_PREPROCESS = YES;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1207,11 +1217,12 @@
 				DEVELOPMENT_TEAM = 4RV73SN38W;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-sha256/ios",
 				);
 				INFOPLIST_FILE = ItaliaApp/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
-				INFOPLIST_PREPROCESS = YES;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
