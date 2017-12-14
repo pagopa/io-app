@@ -1,4 +1,9 @@
+// Main config file. Mostly read the configuration from .env files
+
+import Config from 'react-native-config'
+
 module.exports = {
-  apiUrlPrefix: 'https://spid-test.spc-app1.teamdigitale.it',
-  mixPanelToken: 'b5c28d653684157f831d6b604d5e1956'
+  environment: Config.ENVIRONMENT,
+  apiUrlPrefix: Config.API_URL_PREFIX,
+  mixpanelToken: Config.MIXPANEL_TOKEN
 }

@@ -129,7 +129,7 @@ Nota: L'app utilizza [CocoaPods](https://cocoapods.org/), il progetto da eseguir
 
 ### Configurazione
 ```
-$ cp js/config.example.js js/config.js
+$ cp .env.example .env
 ```
 Inseriamo il MixPanel token
 

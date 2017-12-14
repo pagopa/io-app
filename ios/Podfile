@@ -1,3 +1,48 @@
 target 'ItaliaApp' do
-  pod 'Mixpanel'
+
+  pod 'React', :path => "../node_modules/react-native", :subspecs => [
+    "Core",
+    "ART",
+    "RCTActionSheet",
+    "RCTAnimation",
+    "RCTCameraRoll",
+    "RCTGeolocation",
+    "RCTImage",
+    "RCTNetwork",
+    "RCTText",
+    "RCTVibration",
+    "RCTWebSocket",
+    "DevSupport",
+    "BatchedBridge"
+  ]
+
+  # Explicitly include Yoga if you are using RN >= 0.42.0
+  pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+  pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
+
+end
+
+# Fix a open bug in react-native-config
+# @see https://github.com/luggit/react-native-config/issues/125
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-config'
+      phase = target.project.new(Xcodeproj::Project::Object::PBXShellScriptBuildPhase)
+      phase.shell_script = "cd ../../"\
+                           " && RNC_ROOT=./node_modules/react-native-config/"\
+                           " && export SYMROOT=$RNC_ROOT/ios/ReactNativeConfig"\
+                           " && export BUILD_DIR=$RNC_ROOT/ios/ReactNativeConfig"\
+                           " && ruby $RNC_ROOT/ios/ReactNativeConfig/BuildDotenvConfig.ruby"
+
+      target.build_phases << phase
+      target.build_phases.move(phase,0)
+    end
+  end
 end

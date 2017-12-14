@@ -37,6 +37,8 @@ import { ProfileStyles } from './styles'
 
 import { getIdpInfo } from './SpidLoginButton'
 
+import config from '../config'
+
 const profileRowStyles = StyleSheet.flatten(ProfileStyles.profileRow)
 const profileHeaderStyles = StyleSheet.flatten(ProfileStyles.profileHeader)
 const profileHeaderTextStyles = StyleSheet.flatten(
@@ -235,7 +237,9 @@ class ProfileComponent extends React.Component {
 
         <ListItem last>
           <Body>
-            <Text style={ProfileStyles.version}>Version {VERSION}</Text>
+            <Text style={ProfileStyles.version}>
+              Version {VERSION} ({config.environment})
+            </Text>
           </Body>
         </ListItem>
       </Content>

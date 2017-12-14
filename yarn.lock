@@ -3953,9 +3953,13 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-device-info@^0.11:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.11.0.tgz#e96dd0e3f8a7d7e3022c1f441f51fa912fdc7444"
+react-native-config@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.2.tgz#654621832f927ad075fb189eadf0469f627467aa"
+
+react-native-device-info@^0.13:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.13.0.tgz#81051eebd3db6959e4f1d2cb0ae8df74105040cf"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
@@ -3986,9 +3990,9 @@ react-native-easy-grid@0.1.15:
   dependencies:
     lodash "^4.11.1"
 
-react-native-fs@^2.5:
-  version "2.8.5"
-  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.8.5.tgz#f4c6d32bdd636079675f6b5585a23227acaca2ba"
+react-native-fs@^2.9:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.9.2.tgz#1ce447537074bd9e1bf15e468ed85c348455b805"
   dependencies:
     base-64 "^0.1.0"
     utf8 "^2.1.1"

@@ -28,7 +28,7 @@ import config from './config'
 
 configureErrorHandler()
 
-Mixpanel.sharedInstanceWithToken(config.mixPanelToken)
+Mixpanel.sharedInstanceWithToken(config.mixpanelToken)
 
 const theme = getTheme(material)
 
