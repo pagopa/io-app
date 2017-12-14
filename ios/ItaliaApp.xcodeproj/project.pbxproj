@@ -286,7 +286,7 @@
 		113AB84EBCC249D4891E88DA /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* ItaliaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ItaliaApp.app; path = Italia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* ItaliaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ItaliaApp.app; path = ItaliaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ItaliaApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ItaliaApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -1199,9 +1199,9 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "it.teamdigitale.app.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Italia;
+				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "67aaa377-e4ae-42d2-979e-1469db19db6c";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.Italia";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.ItaliaApp";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1230,9 +1230,9 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "it.teamdigitale.app.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Italia;
+				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "67aaa377-e4ae-42d2-979e-1469db19db6c";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.Italia";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.ItaliaApp";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
