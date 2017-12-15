@@ -2,6 +2,8 @@
 
 [![dependencies](https://david-dm.org/teamdigitale/italia-app/status.svg)](https://david-dm.org/teamdigitale/italia-app)
 
+[![CircleCI](https://circleci.com/gh/teamdigitale/italia-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/italia-app)
+
 # L'app mobile della Cittadinanza Digitale
 
 ## FAQ
