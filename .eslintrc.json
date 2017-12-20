@@ -22,7 +22,8 @@
   "plugins": [
     "react",
     "flowtype",
-    "prettier"
+    "prettier",
+    "jest"
   ],
   "rules": {
     "indent": [
