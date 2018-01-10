@@ -23,21 +23,21 @@
     "react-native-device-info": "^0.13",
     "react-native-fs": "^2.9",
     "react-native-i18n": "^2.0.10",
-    "react-native-mixpanel": "^0.0.15",
+    "react-native-mixpanel": "^0.0.16",
     "react-native-sha256": "^1.0.1",
-    "react-navigation": "git+https://github.com/react-community/react-navigation.git",
+    "react-navigation": "^1.0.0-beta.23",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-persist": "^4.6.0",
     "redux-thunk": "^2.2.0",
-    "source-map": "^0.5.6",
+    "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "babel-jest": "19.0.0",
-    "babel-preset-react-native": "1.9.1",
+    "babel-jest": "22.0.4",
+    "babel-preset-react-native": "4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-google": "^0.7.1",
@@ -48,9 +48,9 @@
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.44.2",
-    "jest": "^22.0.3",
+    "jest": "^22.0.5",
     "prettier": "1.8.2",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-test-renderer": "16.0.0"
   },
   "jest": {
     "preset": "react-native"
