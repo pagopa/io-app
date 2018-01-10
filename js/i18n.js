@@ -13,9 +13,4 @@ I18n.translations = {
   it
 }
 
-// The method we'll use instead of a regular string
-export function strings(name, params = {}) {
-  return I18n.t(name, params)
-}
-
 export default I18n

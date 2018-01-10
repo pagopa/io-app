@@ -19,7 +19,7 @@ import {
   Animated
 } from 'react-native'
 
-import { strings } from '../i18n'
+import I18n from '../i18n'
 
 import { H1, H2 } from 'native-base'
 
@@ -150,8 +150,8 @@ class LoginScreen extends React.Component {
           ]}
         />
         <View style={{ height: 100, paddingTop: 20 }}>
-          <H2 style={titleTextStyles}>{strings('login.welcome2')}</H2>
-          <H1 style={titleTextStyles}>{strings('login.welcome1')}</H1>
+          <H2 style={titleTextStyles}>{I18n.t('login.welcome.line1')}</H2>
+          <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
           onSelectIdp={idp => this.handleIpdSelection(idp)}

@@ -1,6 +1,8 @@
 {
   "login": {
-    "welcome1": "Cittadinanza Digitale",
-    "welcome2": "benvenuto nella tua"
+    "welcome": {
+      "line1": "benvenuto nella tua",
+      "line2": "Cittadinanza Digitale"
+    }
   }
 }

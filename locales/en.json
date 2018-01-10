@@ -1,6 +1,8 @@
 {
   "login": {
-    "welcome1": "Digital Citizenship",
-    "welcome2": "welcome in your"
+    "welcome": {
+      "line1": "welcome in your",
+      "line2": "Digital Citizenship"
+    }
   }
 }
