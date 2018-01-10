@@ -174,3 +174,15 @@ react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
 ### Aggiornare icone dell'applicazione
 
 Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
+
+
+### Internazionalizzazione
+
+L'applicazione utilizza [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) per il supporto multilingua.
+
+Per aggiungere una nuova lingua è necessario:
+
+1. Creare un nuovo file all'interno della directory `locales` usando come nome `<langcode>.json` (Es: `es.json`)
+2. Copiare il contenuto di uno degli altri file `.json` già presenti
+3. Procedere con la traduzione
+4. Modificare il file `js/i18n.js` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua 

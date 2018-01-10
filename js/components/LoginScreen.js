@@ -19,6 +19,8 @@ import {
   Animated
 } from 'react-native'
 
+import I18n from '../i18n'
+
 import { H1, H2 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
@@ -148,8 +150,8 @@ class LoginScreen extends React.Component {
           ]}
         />
         <View style={{ height: 100, paddingTop: 20 }}>
-          <H2 style={titleTextStyles}>benvenuto nella tua</H2>
-          <H1 style={titleTextStyles}>Cittadinanza Digitale</H1>
+          <H2 style={titleTextStyles}>{I18n.t('login.welcome.line1')}</H2>
+          <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
           onSelectIdp={idp => this.handleIpdSelection(idp)}
