@@ -22,6 +22,7 @@
     "react-native-config": "^0.11.2",
     "react-native-device-info": "^0.13",
     "react-native-fs": "^2.9",
+    "react-native-i18n": "^2.0.10",
     "react-native-mixpanel": "^0.0.15",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "git+https://github.com/react-community/react-navigation.git",

@@ -3,6 +3,7 @@ package it.teamdigitale.app.italiaapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.rnfs.RNFSPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNI18nPackage(),
             new Sha256Package(),
             new RNMixpanel(),
             new RNFSPackage(),

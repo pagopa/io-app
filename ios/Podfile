@@ -27,6 +27,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
 
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
 end
 
 # Fix a open bug in react-native-config
