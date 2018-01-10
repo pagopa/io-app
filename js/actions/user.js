@@ -31,7 +31,7 @@ function requestUserProfile(): ThunkAction {
         spid_idp: 'demo',
         name: 'utente',
         familyname: 'demo',
-        fiscalnumber: 'TNTDME00A01H501K',
+        fiscal_code: 'TNTDME00A01H501K',
         mobilephone: '06852641',
         email: 'demo@gestorespid.it'
       })(dispatch, getState)

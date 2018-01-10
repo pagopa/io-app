@@ -11,6 +11,8 @@ const React = require('react')
 const ReactNative = require('react-native')
 const { StyleSheet, View, WebView, Image, Modal, Alert } = ReactNative
 
+import config from '../config'
+
 import {
   Container,
   Header,
@@ -28,10 +30,10 @@ import type { IdentityProvider } from '../utils/api'
 import { isDemoIdp } from '../utils/api'
 
 // prefix for recognizing auth token
-const TOKEN_PATH_PREFIX = '/app/token/get/'
+const TOKEN_PATH_PREFIX = '/profile.html?token='
 
 // TODO dynamically build this list
-const idps: Array<IdentityProvider> = [
+let idps: Array<IdentityProvider> = [
   {
     id: 'infocert',
     name: 'Infocert',
@@ -69,6 +71,16 @@ const idps: Array<IdentityProvider> = [
   }
 ]
 
+if (config.enableTestIdp) {
+  idps.push({
+    id: 'test',
+    name: 'Test',
+    logo: require('../../img/spid.png'),
+    entityID: 'spid-testenv-identityserver',
+    profileUrl: 'https://italia-backend/profile'
+  })
+}
+
 const demoIdp: IdentityProvider = {
   id: 'demo',
   name: 'Demo',
@@ -78,8 +90,7 @@ const demoIdp: IdentityProvider = {
 }
 
 const WEBVIEW_REF = 'webview'
-const LOGIN_BASE_URL =
-  'https://spid-test.spc-app1.teamdigitale.it/saml/Login?target=/app/token/new&entityID='
+const LOGIN_BASE_URL = `${config.apiUrlPrefix}/saml/Login?target=/sso&entityID=`
 
 /**
  * Restituisce le proprietà dell'IdP associato all'identificativo
