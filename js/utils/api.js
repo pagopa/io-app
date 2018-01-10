@@ -15,7 +15,7 @@ export type ApiUserProfile = {
   spid_idp: string,
   name?: string,
   familyname?: string,
-  fiscalnumber?: string,
+  fiscal_code?: string,
   spidcode?: string,
   gender?: string,
   mobilephone?: string,
@@ -34,7 +34,7 @@ async function getUserProfile(
   token: string
 ): Promise<?ApiUserProfile> {
   try {
-    let response = await fetch(`${apiUrlPrefix}/api/v1/user`, {
+    let response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`

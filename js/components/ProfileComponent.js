@@ -89,8 +89,8 @@ class ProfileComponent extends React.Component {
     const familyName = profile && profile.familyname ? profile.familyname : '-'
     const fullName = `${name} ${familyName}`
     const fiscalNumber =
-      profile && profile.fiscalnumber
-        ? profile.fiscalnumber.replace('TINIT-', '')
+      profile && profile.fiscal_code
+        ? profile.fiscal_code.replace('TINIT-', '')
         : '-'
     const email = profile && profile.email ? profile.email : '-'
     const mobilePhone =

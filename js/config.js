@@ -5,5 +5,6 @@ import Config from 'react-native-config'
 module.exports = {
   environment: Config.ENVIRONMENT,
   apiUrlPrefix: Config.API_URL_PREFIX,
-  mixpanelToken: Config.MIXPANEL_TOKEN
+  mixpanelToken: Config.MIXPANEL_TOKEN,
+  enableTestIdp: Config.ENABLE_TEST_IDP === 'YES'
 }
