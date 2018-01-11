@@ -10,9 +10,12 @@ import DeviceInfo from 'react-native-device-info'
 
 import { Alert } from 'react-native'
 
+import I18n from '../i18n'
+
 const isDev = __DEV__
 const version = DeviceInfo.getReadableVersion()
 
+// Custom error handler for unhandled js exceptions
 const customErrorHandler = async (error, isFatal) => {
   if (isFatal) {
     error.stack = await getStackTrace(error)
@@ -25,8 +28,8 @@ const customErrorHandler = async (error, isFatal) => {
 
     // Inform the user about the unfortunate event
     Alert.alert(
-      'Unexpected error occurred',
-      'We have reported this to our team! Please close the app and start again!'
+      I18n.t('global.jserror.title'),
+      I18n.t('global.jserror.message')
     )
   } else {
     // Preserve logging to the device's console (i.e. ADB)
