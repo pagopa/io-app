@@ -17,14 +17,11 @@ import {
   Left,
   Footer,
   Body,
-  Right,
   Title,
   Content,
   Icon,
   Text,
   Button,
-  Image,
-  Item,
   View
 } from 'native-base'
 
@@ -73,6 +70,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  footerButton: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  modalText: {
+    position: 'relative',
+    left: 0
+  },
+  marginModal: {
+    marginTop: 5
+  },
+  paddingModal: {
+    paddingTop: 15
   }
 })
 
@@ -153,13 +164,13 @@ class NotSpidScreen extends React.Component {
 
           <SpidUpdateNotification />
 
-          <View style={{ paddingTop: 15 }}>
-            <View style={{ marginTop: 5 }}>
+          <View style={styles.paddingModal}>
+            <View style={styles.marginModal}>
               <Text style={styles.text}>
                 Proseguendo dichiari di accettare le{' '}
               </Text>
             </View>
-            <View style={{ position: 'relative', left: 0 }}>
+            <View style={styles.modalText}>
               <Text
                 style={styles.textLink}
                 onPress={() => {
@@ -172,7 +183,7 @@ class NotSpidScreen extends React.Component {
           </View>
         </Content>
         <Footer style={styles.footer}>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <View style={styles.footerButton}>
             <Button
               style={styles.buttonNextPage}
               onPress={() =>

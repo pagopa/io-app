@@ -12,9 +12,20 @@ const React = require('React')
 
 import { StyleSheet } from 'react-native'
 
-import { Button, Text, View, Item, Input } from 'native-base'
+import { Text, View, Item, Input } from 'native-base'
 
 import EmailValidator from 'email-validator'
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 16,
+    marginTop: 20,
+    color: '#4A5B6F'
+  },
+  button: {
+    borderBottomWidth: 1
+  }
+})
 
 export default class SpidUpdateNotification extends React.Component {
   state: {
@@ -28,7 +39,7 @@ export default class SpidUpdateNotification extends React.Component {
     }
   }
 
-  _onEmailChange(text: string) {
+  _onEmailChange = text => {
     this.setState({
       isEmailValid: EmailValidator.validate(text)
     })
@@ -37,26 +48,20 @@ export default class SpidUpdateNotification extends React.Component {
   render() {
     return (
       <View>
-        <Text
-          style={{
-            fontSize: 16,
-            marginTop: 20,
-            color: '#4A5B6F'
-          }}
-        >
+        <Text style={styles.text}>
           Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria e
           aggiornamenti su questa app
         </Text>
         <Item fixedLabel>
           <Input
-            style={{ borderBottomWidth: 1 }}
+            style={styles.button}
             placeholderTextColor="#4A5B6F"
             placeholder="   indirizzo email"
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"
             returnKeyLabel="send"
-            onChangeText={this._onEmailChange.bind(this)}
+            onChangeText={() => this._onEmailChange.bind(this)}
           />
         </Item>
       </View>

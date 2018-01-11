@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10
+  },
+  paddingButton: {
+    height: 30
   }
 })
 
@@ -166,15 +169,14 @@ class LoginScreen extends React.Component {
         />
         <View style={{ height: 10 }} />
         <SpidSubscribeComponent />
-        <View style={{ height: 30 }} />
-        <View style={{ justifyContent: 'center' }}>
-          <Button
-            transparent
-            onPress={() => this.props.navigation.navigate(ROUTES.NOT_SPID)}
-          >
-            <Text style={{ color: 'white', fontSize: 16 }}>Non hai Spid?</Text>
-          </Button>
-        </View>
+        <View style={styles.paddingButton} />
+        <Button
+          transparent
+          block
+          onPress={() => this.props.navigation.navigate(ROUTES.NO_SPID)}
+        >
+          <Text style={{ color: 'white', fontSize: 16 }}>Non hai Spid?</Text>
+        </Button>
         <View style={{ height: 60 }} />
         <View style={styles.version}>
           <Text style={titleTextStyles}>Version {VERSION}</Text>

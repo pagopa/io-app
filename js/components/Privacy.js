@@ -9,9 +9,7 @@
 
 const React = require('React')
 
-import { StyleSheet, View, Text, Icon } from 'react-native'
-
-import { H1, H2 } from 'native-base'
+import { StyleSheet, View, Text } from 'react-native'
 
 const styles = StyleSheet.create({
   content: {

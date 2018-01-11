@@ -1,4 +1,4 @@
-import { StackNavigator, HeaderBackButton } from 'react-navigation'
+import { StackNavigator } from 'react-navigation'
 
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
@@ -18,7 +18,7 @@ const HomeRoutes = {
     screen: ProfileScreen
   },
 
-  [ROUTES.NOT_SPID]: {
+  [ROUTES.NO_SPID]: {
     screen: NoSpidScreen
   }
 }
@@ -55,20 +55,7 @@ const ProfileNavigator = StackNavigator(
   }
 )
 
-const NoSpidNavigator = StackNavigator(
-  {
-    ...HomeRoutes
-  },
-  {
-    initialRouteName: ROUTES.NOT_SPID,
-
-    // Let each screen handle the header and navigation
-    headerMode: 'none'
-  }
-)
-
 module.exports = {
   HomeNavigator,
-  ProfileNavigator,
-  NoSpidNavigator
+  ProfileNavigator
 }
