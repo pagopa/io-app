@@ -16,7 +16,8 @@ import {
   Text,
   KeyboardAvoidingView,
   Keyboard,
-  Animated
+  Animated,
+  Button
 } from 'react-native'
 
 import I18n from '../i18n'
@@ -166,6 +167,13 @@ class LoginScreen extends React.Component {
         />
         <View style={{ height: 10 }} />
         <SpidSubscribeComponent />
+        <View style={{ height: 30 }} />
+        <Button
+          transparent
+          title="Non Hai Spid?"
+          color="white"
+          onPress={() => this.props.navigation.navigate(ROUTES.NOT_SPID)}
+        />
         <View style={{ height: 60 }} />
         <View style={styles.version}>
           <Text style={titleTextStyles}>Version {VERSION}</Text>

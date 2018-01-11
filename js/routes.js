@@ -1,9 +1,10 @@
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, HeaderBackButton } from 'react-navigation'
 
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
 import DigitalAddressScreen from './components/DigitalAddressScreen'
 import TopicsSelectionScreen from './components/TopicsSelectionScreen'
+import NotSpidScreen from './components/NotSpidScreen'
 
 import { ROUTES } from './utils/constants'
 
@@ -15,6 +16,10 @@ const HomeRoutes = {
 
   [ROUTES.PROFILE]: {
     screen: ProfileScreen
+  },
+
+  [ROUTES.NOT_SPID]: {
+    screen: NotSpidScreen
   }
 }
 
@@ -50,7 +55,20 @@ const ProfileNavigator = StackNavigator(
   }
 )
 
+const NotSpidNavigator = StackNavigator(
+  {
+    ...HomeRoutes
+  },
+  {
+    initialRouteName: ROUTES.NOT_SPID,
+
+    // Let each screen handle the header and navigation
+    headerMode: 'none'
+  }
+)
+
 module.exports = {
   HomeNavigator,
-  ProfileNavigator
+  ProfileNavigator,
+  NotSpidNavigator
 }
