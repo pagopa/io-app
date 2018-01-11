@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export class PersonalData extends React.Component {
+export class Privacy extends React.Component {
   props: {
     closeModal: () => void
   }
