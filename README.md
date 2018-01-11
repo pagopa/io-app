@@ -186,3 +186,8 @@ Per aggiungere una nuova lingua è necessario:
 2. Copiare il contenuto di uno degli altri file `.json` già presenti
 3. Procedere con la traduzione
 4. Modificare il file `js/i18n.js` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua 
+
+
+### Gestione degli errori
+
+L'applicazione utilizza un custom handler per intercettare e notificare errori javascript causati da eccezioni non gestite. Il codice del custom handler e visibile nel file `js/utils/configureErrorHandler.js`
