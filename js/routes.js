@@ -4,7 +4,7 @@ import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
 import DigitalAddressScreen from './components/DigitalAddressScreen'
 import TopicsSelectionScreen from './components/TopicsSelectionScreen'
-import NotSpidScreen from './components/NotSpidScreen'
+import NoSpidScreen from './components/NoSpidScreen'
 
 import { ROUTES } from './utils/constants'
 
@@ -19,7 +19,7 @@ const HomeRoutes = {
   },
 
   [ROUTES.NOT_SPID]: {
-    screen: NotSpidScreen
+    screen: NoSpidScreen
   }
 }
 
@@ -55,7 +55,7 @@ const ProfileNavigator = StackNavigator(
   }
 )
 
-const NotSpidNavigator = StackNavigator(
+const NoSpidNavigator = StackNavigator(
   {
     ...HomeRoutes
   },
@@ -70,5 +70,5 @@ const NotSpidNavigator = StackNavigator(
 module.exports = {
   HomeNavigator,
   ProfileNavigator,
-  NotSpidNavigator
+  NoSpidNavigator
 }

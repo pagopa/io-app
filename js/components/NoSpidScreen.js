@@ -1,7 +1,7 @@
 /**
- * Implements the Not Spid Screen
+ * Implements the No Spid Screen
  *
- * @providesModule NotSpidScreen
+ * @providesModule NoSpidScreen
  * @flow
  */
 
@@ -31,7 +31,7 @@ import {
 import type { Navigator } from 'react-navigation'
 import SpidUpdateNotification from './SpidUpdateNotification'
 import { ROUTES } from '../utils/constants'
-import { PersonalData } from './PersonalData'
+import { PersonalData } from './Privacy'
 
 const styles = StyleSheet.create({
   content: {

@@ -1,7 +1,7 @@
 /**
- * Implements the personal data rules.
+ * Implements the Privacy rules.
  *
- * @providesModule PersonalData
+ * @providesModule Provacy
  * @flow
  */
 
