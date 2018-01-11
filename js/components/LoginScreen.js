@@ -16,13 +16,12 @@ import {
   Text,
   KeyboardAvoidingView,
   Keyboard,
-  Animated,
-  Button
+  Animated
 } from 'react-native'
 
 import I18n from '../i18n'
 
-import { H1, H2 } from 'native-base'
+import { H1, H2, Button } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
@@ -168,12 +167,14 @@ class LoginScreen extends React.Component {
         <View style={{ height: 10 }} />
         <SpidSubscribeComponent />
         <View style={{ height: 30 }} />
-        <Button
-          transparent
-          title="Non Hai Spid?"
-          color="white"
-          onPress={() => this.props.navigation.navigate(ROUTES.NOT_SPID)}
-        />
+        <View style={{ justifyContent: 'center' }}>
+          <Button
+            transparent
+            onPress={() => this.props.navigation.navigate(ROUTES.NOT_SPID)}
+          >
+            <Text style={{ color: 'white', fontSize: 16 }}>Non hai Spid?</Text>
+          </Button>
+        </View>
         <View style={{ height: 60 }} />
         <View style={styles.version}>
           <Text style={titleTextStyles}>Version {VERSION}</Text>
