@@ -76,8 +76,8 @@ if (config.enableTestIdp) {
     id: 'test',
     name: 'Test',
     logo: require('../../img/spid.png'),
-    entityID: 'spid-testenv-identityserver',
-    profileUrl: 'https://italia-backend/profile'
+    entityID: 'testid',
+    profileUrl: 'https://italia-backend/profile.html'
   })
 }
 
@@ -90,7 +90,7 @@ const demoIdp: IdentityProvider = {
 }
 
 const WEBVIEW_REF = 'webview'
-const LOGIN_BASE_URL = `${config.apiUrlPrefix}/saml/Login?target=/sso&entityID=`
+const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`
 
 /**
  * Restituisce le proprietà dell'IdP associato all'identificativo
