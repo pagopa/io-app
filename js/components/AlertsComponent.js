@@ -106,7 +106,6 @@ export default class AlertsComponent extends React.Component {
           <View>
             <Text>Abilita l'inbox per visualizzare i messaggi</Text>
             <Button
-              style={{ backgroundColor: 'red' }}
               onPress={() => {
                 this.props.dispatch(
                   requestUpdateUserProfile({
