@@ -48,6 +48,37 @@ async function getUserProfile(
   }
 }
 
+async function setUserProfile(
+  apiUrlPrefix: string,
+  token: string,
+  newProfile: object
+) {
+  try {
+    let response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: newProfile.email,
+        is_inbox_enabled: newProfile.is_inbox_enabled,
+        version: newProfile.version
+      })
+    })
+
+    if (response.status == 500) {
+      return response.status
+    } else {
+      let responseJson = await response.json()
+      return responseJson
+    }
+  } catch (error) {
+    // TODO handle error
+    //console.error(error)
+  }
+}
+
 /**
  * Describes a SPID Identity Provider
  */
@@ -65,5 +96,6 @@ function isDemoIdp(idp: IdentityProvider): boolean {
 
 module.exports = {
   getUserProfile,
+  setUserProfile,
   isDemoIdp
 }

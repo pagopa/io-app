@@ -71,15 +71,15 @@ let idps: Array<IdentityProvider> = [
   }
 ]
 
-if (config.enableTestIdp) {
-  idps.push({
-    id: 'test',
-    name: 'Test',
-    logo: require('../../img/spid.png'),
-    entityID: 'testid',
-    profileUrl: 'https://italia-backend/profile.html'
-  })
-}
+//if (config.enableTestIdp) {
+idps.push({
+  id: 'test',
+  name: 'Test',
+  logo: require('../../img/spid.png'),
+  entityID: 'testid',
+  profileUrl: 'https://italia-backend/profile.html'
+})
+//}
 
 const demoIdp: IdentityProvider = {
   id: 'demo',

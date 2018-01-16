@@ -6,12 +6,16 @@
 
 'use strict'
 
-import type { ThunkAction, Dispatch, GetState } from './types'
+import type { ThunkAction, Dispatch, GetState, Action } from './types'
 import type { ApiUserProfile } from '../utils/api'
 import { getUserProfile } from '../utils/api'
+import { setUserProfile } from '../utils/api'
 
 const REQUEST_USER_PROFILE_ACTION = 'REQUEST_USER_PROFILE_ACTION'
 const RECEIVE_USER_PROFILE_ACTION = 'RECEIVE_USER_PROFILE_ACTION'
+const REQUEST_UPDATE_USER_PROFILE_ACTION = 'REQUEST_UPDATE_USER_PROFILE_ACTION'
+const UPDATE_USER_PROFILE_ERROR_ACTION =
+  'REQUEST_UPDATE_USER_PROFILE_ERROR_ACTION'
 
 /**
  * Begins an API requests for the user profile to the backend.
@@ -59,9 +63,43 @@ function receiveUserProfile(profile: ApiUserProfile): ThunkAction {
   }
 }
 
+/**
+ * Begins an API requests update inbox for the user profile to the backend.
+ */
+function requestUpdateUserProfile(newProfile: object): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    // first we dispatch the request action
+    dispatch({
+      type: REQUEST_UPDATE_USER_PROFILE_ACTION
+    })
+    const { apiUrlPrefix, token } = getState().user
+    setUserProfile(apiUrlPrefix, token, newProfile).then(payload => {
+      if (payload == 500) {
+        updateUserProfileError(payload)
+      } else {
+        receiveUserProfile(payload)(dispatch, getState)
+      }
+    })
+  }
+}
+
+function updateUserProfileError(error): Action {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: UPDATE_USER_PROFILE_ERROR_ACTION,
+      error: error
+    })
+  }
+}
+
 module.exports = {
   requestUserProfile,
   receiveUserProfile,
+  requestUpdateUserProfile,
+  updateUserProfileError,
+
   REQUEST_USER_PROFILE_ACTION,
-  RECEIVE_USER_PROFILE_ACTION
+  RECEIVE_USER_PROFILE_ACTION,
+  REQUEST_UPDATE_USER_PROFILE_ACTION,
+  UPDATE_USER_PROFILE_ERROR_ACTION
 }

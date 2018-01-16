@@ -7,22 +7,21 @@
 
 'use strict'
 
+import { getIdpInfo } from './SpidLoginButton'
+
 const React = require('React')
 
-import { Content, Button, Body, Text, Card, CardItem } from 'native-base'
+import { Content, Button, Body, Text, Card, CardItem, View } from 'native-base'
 
 import type { Dispatch } from '../actions/types'
 import type { UserState } from '../reducers/user'
 
-export default class AlertsComponent extends React.Component {
-  props: {
-    dispatch: Dispatch,
-    user: UserState
-  }
+import { requestUpdateUserProfile } from '../actions'
 
+class MessageBoxComponent extends React.Component {
   render() {
     return (
-      <Content padder>
+      <View>
         <Card>
           <CardItem header>
             <Text>Comune di Milano</Text>
@@ -54,7 +53,6 @@ export default class AlertsComponent extends React.Component {
             </Button>
           </CardItem>
         </Card>
-
         <Card>
           <CardItem header>
             <Text>Ministero dell'Istruzione</Text>
@@ -70,6 +68,59 @@ export default class AlertsComponent extends React.Component {
             </Button>
           </CardItem>
         </Card>
+      </View>
+    )
+  }
+}
+
+export default class AlertsComponent extends React.Component {
+  props: {
+    dispatch: Dispatch,
+    user: UserState
+  }
+
+  render() {
+    const user = this.props.user
+    const profile = user.profile
+
+    return (
+      <Content padder>
+        {profile.is_inbox_enabled ? (
+          <View>
+            <Button
+              onPress={() => {
+                this.props.dispatch(
+                  requestUpdateUserProfile({
+                    email: profile.email,
+                    is_inbox_enabled: !profile.is_inbox_enabled,
+                    version: profile.version
+                  })
+                )
+              }}
+            >
+              <Text>Disabilita Inbox</Text>
+            </Button>
+            <MessageBoxComponent />
+          </View>
+        ) : (
+          <View>
+            <Text>Abilita l'inbox per visualizzare i messaggi</Text>
+            <Button
+              style={{ backgroundColor: 'red' }}
+              onPress={() => {
+                this.props.dispatch(
+                  requestUpdateUserProfile({
+                    email: profile.email,
+                    is_inbox_enabled: !profile.is_inbox_enabled,
+                    version: profile.version
+                  })
+                )
+              }}
+            >
+              <Text>Abilita Inbox</Text>
+            </Button>
+          </View>
+        )}
       </Content>
     )
   }
