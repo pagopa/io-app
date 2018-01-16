@@ -11,6 +11,10 @@ const React = require('React')
 
 import { StyleSheet, View, Text } from 'react-native'
 
+import { CommonStyles } from './styles'
+
+import I18n from '../i18n'
+
 const styles = StyleSheet.create({
   content: {
     backgroundColor: '#D8D8D8',
@@ -26,18 +30,10 @@ const styles = StyleSheet.create({
     color: '#17324D'
   },
   title: {
-    paddingTop: 50,
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#132535',
-    fontFamily: 'Titillium Web'
+    paddingTop: 50
   },
   mainText: {
-    paddingTop: 15,
-    color: '#4a5b6f',
-    fontFamily: 'Titillium Web',
-    fontSize: 16,
-    lineHeight: 24
+    paddingTop: 15
   }
 })
 
@@ -61,10 +57,14 @@ export class Privacy extends React.Component {
           X{' '}
         </Text>
 
-        <Text style={styles.title}>
-          Regole sul trattamento dei dati personali
+        <Text
+          style={[styles.title, StyleSheet.flatten(CommonStyles.titleFont)]}
+        >
+          {I18n.t('privacy.title')}
         </Text>
-        <Text style={styles.mainText}>
+        <Text
+          style={[styles.mainText, StyleSheet.flatten(CommonStyles.textFont)]}
+        >
           M. Brutus Athenis philosophiam, Rhodi eloquentiam didicit. Eius pater,
           Sullae inimicus, iussu Pompeii necatus erat, quare Brutus cum eo
           graves simultates habuerat. Bello tamen civili Pompeio favit er

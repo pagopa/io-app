@@ -16,10 +16,31 @@ const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
 
+const fontFamily = 'Titillium Web'
+
 const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
     backgroundColor: '#fafafa'
+  },
+  titleFont: {
+    fontFamily: fontFamily,
+    fontSize: 36,
+    color: '#13253C',
+    fontWeight: 'bold'
+  },
+  textFont: {
+    fontFamily: fontFamily,
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#4A5B6F'
+  },
+  textLink: {
+    fontFamily: fontFamily,
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#004BC4',
+    fontWeight: 'bold'
   }
 })
 

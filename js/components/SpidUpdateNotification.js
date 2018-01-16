@@ -16,11 +16,13 @@ import { Text, View, Item, Input } from 'native-base'
 
 import EmailValidator from 'email-validator'
 
+import { CommonStyles } from './styles'
+
+import I18n from '../i18n'
+
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
-    marginTop: 20,
-    color: '#4A5B6F'
+    marginTop: 20
   },
   button: {
     borderBottomWidth: 1
@@ -48,15 +50,14 @@ export default class SpidUpdateNotification extends React.Component {
   render() {
     return (
       <View>
-        <Text style={styles.text}>
-          Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria e
-          aggiornamenti su questa app
+        <Text style={[styles.text, StyleSheet.flatten(CommonStyles.textFont)]}>
+          {I18n.t('spidUpdateNotification.line1')}
         </Text>
         <Item fixedLabel>
           <Input
             style={styles.button}
             placeholderTextColor="#4A5B6F"
-            placeholder="   indirizzo email"
+            placeholder={I18n.t('spidUpdateNotification.line2')}
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"

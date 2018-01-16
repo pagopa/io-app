@@ -256,13 +256,13 @@ export default {
   noteFontSize: 14,
 
   // Title
-  titleFontfamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
-  titleFontSize: 19,
+  titleFontfamily: platform === "ios" ? "Titillium Web" : "Titillium Web",
+  titleFontSize: 14,
   subTitleFontSize: 14,
   subtitleColor: "#FFF",
 
   // New Variable
-  titleFontColor: "#FFF",
+  titleFontColor: "#13253C",
 
   // Other
   borderRadiusBase: 2,

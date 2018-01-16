@@ -30,6 +30,10 @@ import SpidUpdateNotification from './SpidUpdateNotification'
 import { ROUTES } from '../utils/constants'
 import { Privacy } from './Privacy'
 
+import { CommonStyles } from './styles'
+
+import I18n from '../i18n'
+
 const styles = StyleSheet.create({
   content: {
     backgroundColor: '#D8D8D8',
@@ -37,26 +41,9 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingRight: 24
   },
-  title: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#13253C',
-    fontFamily: 'Titillium Web'
-  },
-  text: {
-    fontFamily: 'Titillium Web',
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#4A5B6F'
-  },
   textLink: {
     position: 'relative',
-    left: 0,
-    fontFamily: 'Titillium Web',
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#004BC4',
-    fontWeight: 'bold'
+    left: 0
   },
   buttonNextPage: {
     justifyContent: 'center',
@@ -121,7 +108,7 @@ class NotSpidScreen extends React.Component {
           <Body style={{ flex: 7 }}>
             <Title style={{ color: '#13253C' }}>
               {' '}
-              Inserisci indirizzo email
+              {I18n.t('noSpidScreen.header.line1')}
             </Title>
           </Body>
         </Header>
@@ -129,23 +116,27 @@ class NotSpidScreen extends React.Component {
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
-            <Text style={styles.title}>Non hai SPID?</Text>
+            <Text
+              style={[styles.title, StyleSheet.flatten(CommonStyles.titleFont)]}
+            >
+              {I18n.t('noSpidScreen.header.title')}
+            </Text>
             <Text style={{ backgroundColor: 'gray', width: 50 }} />
           </View>
           <View style={{ paddingTop: 10 }}>
-            <Text style={styles.text}>
-              SPID, il Sistema Pubblico di Identità Digitale, ti permette di
-              accedere a tutti i servizi della Pubblica Amministrazione con
-              un'unica identità Digitale (username e password).
+            <Text
+              style={[styles.text, StyleSheet.flatten(CommonStyles.textFont)]}
+            >
+              {I18n.t('noSpidScreen.content.line1')}
             </Text>
           </View>
           <Text
-            style={styles.textLink}
+            style={[styles.textLink, StyleSheet.flatten(CommonStyles.textLink)]}
             onPress={() => {
               this.props.navigation.goBack(null)
             }}
           >
-            Per Saperne di più{' '}
+            {I18n.t('noSpidScreen.content.line2')}{' '}
           </Text>
 
           <View>
@@ -166,18 +157,23 @@ class NotSpidScreen extends React.Component {
 
           <View style={styles.paddingModal}>
             <View style={styles.marginModal}>
-              <Text style={styles.text}>
-                Proseguendo dichiari di accettare le{' '}
+              <Text
+                style={[styles.text, StyleSheet.flatten(CommonStyles.textFont)]}
+              >
+                {I18n.t('noSpidScreen.content.line3')}{' '}
               </Text>
             </View>
             <View style={styles.modalText}>
               <Text
-                style={styles.textLink}
+                style={[
+                  styles.textLink,
+                  StyleSheet.flatten(CommonStyles.textLink)
+                ]}
                 onPress={() => {
                   this.setModalVisible(true)
                 }}
               >
-                regole sul trattamento dei dati personali
+                {I18n.t('noSpidScreen.content.line4')}{' '}
               </Text>
             </View>
           </View>
@@ -190,7 +186,7 @@ class NotSpidScreen extends React.Component {
                 this.props.navigation.navigate(ROUTES.INFO_REGISTRATION)
               }
             >
-              <Text> Continua</Text>
+              <Text> {I18n.t('noSpidScreen.footer.line1')} </Text>
             </Button>
           </View>
         </Footer>

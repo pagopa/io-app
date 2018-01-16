@@ -10,5 +10,28 @@
       "line1": "welcome in your",
       "line2": "Digital Citizenship"
     }
+  },
+  "noSpidScreen" : {
+    "header" : {
+      "title": "Don't you have SPID?",
+      "line1": "Insert mail address"
+    },
+    "content": {
+      "line1": "SPID, the Public System of Digital Identity, allows you to access at all the services of the Public Administration with a single Digital identity (username and password)",
+      "line2": "To Learn more",
+      "line3": "Continuing declaring to accept the",
+      "line4": "rules on the processing of personal data"
+    },
+    "footer": {
+      "line1": "Next"
+    }
+  },
+  "spidUpdateNotification": {
+    "line1": "If you like, leave us your email address to receive reminders and updates on this app",
+    "line2": "  mail address"
+  },
+  "privacy": {
+    "title": "Processing personal data rules",
+    "line1": ""
   }
 }
