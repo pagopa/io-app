@@ -25,6 +25,7 @@ import { H1, H2 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
+import type { LoggedInUserError } from '../reducers/user'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
@@ -77,7 +78,8 @@ class LoginScreen extends React.Component {
 
   props: {
     navigation: Navigator,
-    dispatch: Dispatch
+    dispatch: Dispatch,
+    userState: LoggedInUserError
   }
 
   state: {
@@ -154,6 +156,7 @@ class LoginScreen extends React.Component {
           <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
+          userState={this.props.userState}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
           onSpidLogin={(token, idpId) => {
@@ -175,4 +178,10 @@ class LoginScreen extends React.Component {
   }
 }
 
-module.exports = connect()(LoginScreen)
+function select(store) {
+  return {
+    userState: store.user
+  }
+}
+
+module.exports = connect(select)(LoginScreen)

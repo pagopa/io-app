@@ -9,6 +9,7 @@
     "welcome": {
       "line1": "welcome in your",
       "line2": "Digital Citizenship"
-    }
+    },
+    "errorMissingToken": "There was an error in the login, repeat the procedure."
   }
 }

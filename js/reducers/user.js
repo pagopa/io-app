@@ -12,7 +12,8 @@ import type { Action } from '../actions/types'
 import {
   USER_LOGGED_IN_ACTION,
   USER_LOGGED_OUT_ACTION,
-  RECEIVE_USER_PROFILE_ACTION
+  RECEIVE_USER_PROFILE_ACTION,
+  USER_LOGIN_ERROR_ACTION
 } from '../actions'
 import type { ApiUserProfile } from '../utils/api'
 
@@ -33,12 +34,21 @@ export type LoggedInUserState = {
   profile?: ApiUserProfile
 }
 
+//user state when error logged in
+export type LoggedInUserError = {
+  isLoggedError: false
+}
+
 // combined user state
-export type UserState = LoggedOutUserState | LoggedInUserState
+export type UserState =
+  | LoggedOutUserState
+  | LoggedInUserState
+  | LoggedInUserError
 
 // initial user state
 const initialUserState: LoggedOutUserState = {
   isLoggedIn: false,
+  isLoggedError: false,
   // TODO move URL to config js
   apiUrlPrefix: config.apiUrlPrefix
 }
@@ -54,6 +64,7 @@ export default function user(
   if (action.type === USER_LOGGED_IN_ACTION && state.isLoggedIn === false) {
     return {
       isLoggedIn: true,
+      isLoggedError: false,
       apiUrlPrefix: state.apiUrlPrefix,
       token: action.data.token,
       idpId: action.data.idpId
@@ -76,6 +87,12 @@ export default function user(
       token: state.token,
       idpId: state.idpId,
       profile: action.profile
+    }
+  }
+
+  if (action.type === USER_LOGIN_ERROR_ACTION && state.isLoggedIn === false) {
+    return {
+      isLoggedError: true
     }
   }
 
