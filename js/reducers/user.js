@@ -22,6 +22,7 @@ import config from '../config'
 // user state when logged out
 export type LoggedOutUserState = {
   isLoggedIn: false,
+  loginError?: boolean,
   apiUrlPrefix: string
 }
 
@@ -34,21 +35,13 @@ export type LoggedInUserState = {
   profile?: ApiUserProfile
 }
 
-//user state when error logged in
-export type LoggedInUserError = {
-  isLoggedError: false
-}
-
 // combined user state
-export type UserState =
-  | LoggedOutUserState
-  | LoggedInUserState
-  | LoggedInUserError
+export type UserState = LoggedOutUserState | LoggedInUserState
 
 // initial user state
 const initialUserState: LoggedOutUserState = {
   isLoggedIn: false,
-  isLoggedError: false,
+  loginError: false,
   // TODO move URL to config js
   apiUrlPrefix: config.apiUrlPrefix
 }
@@ -64,7 +57,7 @@ export default function user(
   if (action.type === USER_LOGGED_IN_ACTION && state.isLoggedIn === false) {
     return {
       isLoggedIn: true,
-      isLoggedError: false,
+      loginError: false,
       apiUrlPrefix: state.apiUrlPrefix,
       token: action.data.token,
       idpId: action.data.idpId
@@ -92,7 +85,7 @@ export default function user(
 
   if (action.type === USER_LOGIN_ERROR_ACTION && state.isLoggedIn === false) {
     return {
-      isLoggedError: true
+      loginError: true
     }
   }
 

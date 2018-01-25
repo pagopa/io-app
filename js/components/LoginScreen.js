@@ -25,7 +25,7 @@ import { H1, H2 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
-import type { LoggedInUserError } from '../reducers/user'
+import type { LoggedOutUserState } from '../reducers/user'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
@@ -79,7 +79,7 @@ class LoginScreen extends React.Component {
   props: {
     navigation: Navigator,
     dispatch: Dispatch,
-    userState: LoggedInUserError
+    userState: LoggedOutUserState
   }
 
   state: {
@@ -178,10 +178,10 @@ class LoginScreen extends React.Component {
   }
 }
 
-function select(store) {
+function mapStateToProps(store) {
   return {
     userState: store.user
   }
 }
 
-module.exports = connect(select)(LoginScreen)
+module.exports = connect(mapStateToProps)(LoginScreen)

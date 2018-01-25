@@ -5,11 +5,13 @@
       "message": "We have reported this to our team! Please close the app and start again!"
     }
   },
+  "errors": {
+    "loginError": "There was an error in the login, repeat the procedure."
+  },
   "login": {
     "welcome": {
       "line1": "welcome in your",
       "line2": "Digital Citizenship"
-    },
-    "errorMissingToken": "There was an error in the login, repeat the procedure."
+    }
   }
 }

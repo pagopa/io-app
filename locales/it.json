@@ -5,12 +5,13 @@
       "message": "Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!"
     }
   },
+  "errors": {
+    "loginError": "C'è stato un errore in fase di login, ripetere la procedura."
+  },
   "login": {
     "welcome": {
       "line1": "benvenuto nella tua",
       "line2": "Cittadinanza Digitale"
-    },
-    "errorMissingToken": "C'è stato un errore in fase di login, ripetere la procedura."
-
+    }
   }
 }

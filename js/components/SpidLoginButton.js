@@ -242,11 +242,11 @@ class IdpSelectionScreen extends React.Component {
   }
 
   createErrorMessage = () => {
-    if (this.props.userState.isLoggedError === true) {
+    if (this.props.userState.loginError === true) {
       return (
         <View style={{ paddingTop: 10 }}>
           <Text style={StyleSheet.flatten(styles.errorMissingToken)}>
-            {I18n.t('login.errorMissingToken')}
+            {I18n.t('errors.loginError')}
           </Text>
         </View>
       )
