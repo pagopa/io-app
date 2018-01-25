@@ -8,6 +8,7 @@
 'use strict'
 
 import I18n from '../i18n'
+import { CommonStyles } from './styles'
 
 const React = require('react')
 const ReactNative = require('react-native')
@@ -242,10 +243,10 @@ class IdpSelectionScreen extends React.Component {
   }
 
   createErrorMessage = () => {
-    if (this.props.userState.loginError === true) {
+    if (this.props.userState.isError === true) {
       return (
         <View style={{ paddingTop: 10 }}>
-          <Text style={StyleSheet.flatten(styles.errorMissingToken)}>
+          <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
             {I18n.t('errors.loginError')}
           </Text>
         </View>
@@ -454,12 +455,5 @@ const styles = StyleSheet.create({
   spinner: {
     width: 20,
     marginRight: 6
-  },
-  errorMissingToken: {
-    padding: 5,
-    backgroundColor: '#F23333',
-    borderRadius: 4,
-    color: '#eee',
-    fontSize: 15
   }
 })
