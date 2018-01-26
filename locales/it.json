@@ -10,5 +10,11 @@
       "line1": "benvenuto nella tua",
       "line2": "Cittadinanza Digitale"
     }
+  },
+  "inbox": {
+    "enableButton": "Abilita Inbox",
+    "disableButton": "Disabilita Inbox",
+    "enableCallToActionDescription": "Abilita l'inbox per visualizzare i messaggi"
   }
+
 }

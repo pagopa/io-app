@@ -10,5 +10,10 @@
       "line1": "welcome in your",
       "line2": "Digital Citizenship"
     }
+  },
+  "inbox": {
+    "enableButton": "Enable Inbox",
+    "disableButton": "Disable Inbox",
+    "enableCallToActionDescription": "Enable the inbox to view messages"
   }
 }
