@@ -18,6 +18,8 @@ import type { UserState } from '../reducers/user'
 
 import { requestUpdateUserProfile } from '../actions'
 
+import I18n from '../i18n'
+
 class MessageBoxComponent extends React.Component {
   render() {
     return (
@@ -98,13 +100,13 @@ export default class AlertsComponent extends React.Component {
                 )
               }}
             >
-              <Text>Disabilita Inbox</Text>
+              <Text>{I18n.t('inbox.enableButton')}</Text>
             </Button>
             <MessageBoxComponent />
           </View>
         ) : (
           <View>
-            <Text>Abilita l'inbox per visualizzare i messaggi</Text>
+            <Text>{I18n.t('inbox.line1')}</Text>
             <Button
               onPress={() => {
                 this.props.dispatch(
@@ -116,7 +118,7 @@ export default class AlertsComponent extends React.Component {
                 )
               }}
             >
-              <Text>Abilita Inbox</Text>
+              <Text>{I18n.t('inbox.disableButton')}</Text>
             </Button>
           </View>
         )}

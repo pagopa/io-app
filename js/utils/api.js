@@ -74,8 +74,10 @@ async function setUserProfile(
       return responseJson
     }
   } catch (error) {
-    // TODO handle error
-    //console.error(error)
+    // if the proxy is not reacheable
+    // TODO handle unsuccessful fetch
+    // @see https://www.pivotaltracker.com/story/show/154661120
+    console.error(error)
   }
 }
 

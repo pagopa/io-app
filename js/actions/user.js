@@ -14,8 +14,7 @@ import { setUserProfile } from '../utils/api'
 const REQUEST_USER_PROFILE_ACTION = 'REQUEST_USER_PROFILE_ACTION'
 const RECEIVE_USER_PROFILE_ACTION = 'RECEIVE_USER_PROFILE_ACTION'
 const REQUEST_UPDATE_USER_PROFILE_ACTION = 'REQUEST_UPDATE_USER_PROFILE_ACTION'
-const UPDATE_USER_PROFILE_ERROR_ACTION =
-  'UPDATE_USER_PROFILE_ERROR_ACTION'
+const UPDATE_USER_PROFILE_ERROR_ACTION = 'UPDATE_USER_PROFILE_ERROR_ACTION'
 
 /**
  * Begins an API requests for the user profile to the backend.
@@ -75,7 +74,7 @@ function requestUpdateUserProfile(newProfile: object): ThunkAction {
     const { apiUrlPrefix, token } = getState().user
     setUserProfile(apiUrlPrefix, token, newProfile).then(payload => {
       if (payload == 500) {
-        updateUserProfileError(payload)
+        updateUserProfileError(payload)(dispatch)
       } else {
         receiveUserProfile(payload)(dispatch, getState)
       }
