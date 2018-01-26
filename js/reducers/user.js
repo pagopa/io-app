@@ -28,7 +28,7 @@ export type DefaultLoggedOutUserState = {
 // user state when there is an error, tracing by isError=true
 export type ErrorLoggedOutUserState = {
   isLoggedIn: false,
-  isError: boolean,
+  isError: true,
   apiUrlPrefix: string
 }
 
