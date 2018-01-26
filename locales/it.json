@@ -14,7 +14,7 @@
   "inbox": {
     "enableButton": "Abilita Inbox",
     "disableButton": "Disabilita Inbox",
-    "line1": "Abilita l'inbox per visualizzare i messaggi"
+    "enableCallToActionDescription": "Abilita l'inbox per visualizzare i messaggi"
   }
 
 }

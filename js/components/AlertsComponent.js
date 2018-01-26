@@ -106,7 +106,7 @@ export default class AlertsComponent extends React.Component {
           </View>
         ) : (
           <View>
-            <Text>{I18n.t('inbox.line1')}</Text>
+            <Text>{I18n.t('inbox.enableCallToActionDescription')}</Text>
             <Button
               onPress={() => {
                 this.props.dispatch(
