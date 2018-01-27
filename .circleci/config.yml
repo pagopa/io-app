@@ -1,11 +1,13 @@
+defaults: &defaults
+  working_directory: ~/italia-app
+  docker:
+    - image: circleci/node:8
+
 version: 2
 jobs:
   # Runs JavaScript tests on Node 8
   test-js-node-8:
-    docker:
-      - image: circleci/node:8
-
-    working_directory: ~/italia-app
+    <<: *defaults
 
     steps:
       - checkout
@@ -17,47 +19,40 @@ jobs:
           - v1-dependencies-
 
       # Install node dependencies
-      - run: npm install --no-package-lock --no-spin --no-progress
+      - run: yarn install --frozen-lockfile --no-progress --non-interactive
 
       # Save node cache
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-        
+
+      # Run ESLint
+      - run: yarn lint
+
       # Run tests
-      - run: npm test
+      - run: yarn test
 
-  # Build js bundle
-  build-js-bundle:
-    docker:
-      - image: circleci/node:8
+      # Save workspace for next jobs in the workflow
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - italia-app
 
-    working_directory: ~/italia-app
+  # Build Android bundle
+  build-android-bundle:
+    <<: *defaults
 
     steps:
-      - checkout
-
-      # Restore dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
-
-      # Install node dependencies
-      - run: npm install --no-package-lock --no-spin --no-progress
-
-      # Save node cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
 
       # Create bundles dir
-      - run: mkdir ./bundles
+      - run: mkdir -p ./bundles
 
       # Run bundle command for android platform
-      - run: npm run bundle:android
+      - run: yarn bundle:android
 
       - persist_to_workspace:
           root: bundles
@@ -68,10 +63,10 @@ jobs:
 
   # Run test on android
   test-android:
+    <<: *defaults
+
     docker:
       - image: circleci/android:api-27-node8-alpha
-
-    working_directory: ~/italia-app
 
     environment:
       - TERM: "dumb"
@@ -79,22 +74,9 @@ jobs:
       - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
 
     steps:
-      - checkout
-
-      # Restore dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
-
-      # Install node dependencies
-      - run: npm install --no-package-lock --no-spin --no-progress
-
-      # Save node cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
 
       # Restore sdk cache
       - restore_cache:
@@ -102,8 +84,7 @@ jobs:
             - v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
             - v1-android-sdkmanager-packages-
 
-
-      # Install sdk stuff
+      # Install Android SDK
       - run:
           command: ./scripts/circleci-android-setup.sh
 
@@ -125,15 +106,17 @@ jobs:
 
 workflows:
   version: 2
-
   build:
     jobs:
-
-      # Test Javascript
+      # Lint ant test Javascript
       - test-js-node-8
 
+      # Build Android bundle
+      - build-android-bundle:
+          requires:
+            - test-js-node-8
+
       # Test Android
-      - build-js-bundle
       - test-android:
           requires:
-            - build-js-bundle
+            - build-android-bundle
