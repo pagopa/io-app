@@ -2,8 +2,6 @@
  * Implements a custom generic error handler that keeps track of JavaScript exceptions
  */
 
-/* eslint no-console: [{ allow: ["error"] }] */
-
 import Mixpanel from 'react-native-mixpanel'
 import { initSourceMaps, getStackTrace } from '../react-native-source-maps'
 import DeviceInfo from 'react-native-device-info'
