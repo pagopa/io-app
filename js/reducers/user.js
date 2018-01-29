@@ -22,6 +22,7 @@ import config from '../config'
 // user state when logged out
 export type DefaultLoggedOutUserState = {
   isLoggedIn: false,
+  isError: false,
   apiUrlPrefix: string
 }
 
