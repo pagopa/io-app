@@ -7,8 +7,6 @@
 
 'use strict'
 
-import { getIdpInfo } from './SpidLoginButton'
-
 const React = require('React')
 
 import { Content, Button, Body, Text, Card, CardItem, View } from 'native-base'

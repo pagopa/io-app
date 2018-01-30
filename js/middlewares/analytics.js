@@ -32,7 +32,7 @@ const injectGetState = ({ getState }) => next => action => {
 /*
   The middleware acts as a general hook in order to track any meaningful action
 */
-const actionTracking = store => next => action => {
+const actionTracking = () => next => action => {
   let result = next(action)
 
   switch (action.type) {

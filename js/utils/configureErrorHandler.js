@@ -29,9 +29,6 @@ const customErrorHandler = async (error, isFatal) => {
       I18n.t('global.jserror.title'),
       I18n.t('global.jserror.message')
     )
-  } else {
-    // Preserve logging to the device's console (i.e. ADB)
-    console.error(error)
   }
 }
 

@@ -10,21 +10,7 @@
 
 const React = require('React')
 
-import { StyleSheet, Image } from 'react-native'
-
-import {
-  Button,
-  Text,
-  H1,
-  H2,
-  Grid,
-  Row,
-  Col,
-  Icon,
-  View,
-  Item,
-  Input
-} from 'native-base'
+import { Text, Icon, View, Item, Input } from 'native-base'
 
 import EmailValidator from 'email-validator'
 

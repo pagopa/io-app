@@ -14,7 +14,6 @@ import { StyleSheet, Linking } from 'react-native'
 import {
   Content,
   ListItem,
-  View,
   Text,
   Right,
   Icon,
