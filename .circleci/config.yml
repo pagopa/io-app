@@ -1,5 +1,8 @@
 defaults: &defaults
   working_directory: ~/italia-app
+
+defaults_js: &defaults_js
+  <<: *defaults
   docker:
     - image: circleci/node:8
 
@@ -7,7 +10,7 @@ version: 2
 jobs:
   # Runs JavaScript tests on Node 8
   test-js-node-8:
-    <<: *defaults
+    <<: *defaults_js
 
     steps:
       - checkout
@@ -41,7 +44,7 @@ jobs:
 
   # Build Android bundle
   build-android-bundle:
-    <<: *defaults
+    <<: *defaults_js
 
     steps:
       # Restore workflow workspace
