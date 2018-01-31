@@ -22,10 +22,7 @@ import {
   Icon,
   Button,
   Body,
-  Item,
-  Input,
   ListItem,
-  CheckBox,
   Switch
 } from 'native-base'
 
@@ -34,11 +31,6 @@ import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
 import { ProfileStyles } from './styles'
-
-type Topic = {
-  name: string,
-  label: string
-}
 
 type TopicCategory = {
   name: string,

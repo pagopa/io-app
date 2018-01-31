@@ -25,7 +25,6 @@ import {
   Right,
   Icon,
   Button,
-  Body,
   Item,
   Input
 } from 'native-base'
