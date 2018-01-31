@@ -12,8 +12,9 @@ import type { Action } from '../actions/types'
 import {
   USER_LOGGED_IN_ACTION,
   USER_LOGGED_OUT_ACTION,
-  RECEIVE_USER_PROFILE_ACTION,
-  USER_LOGIN_ERROR_ACTION
+  USER_LOGIN_ERROR_ACTION,
+  RECEIVE_USER_PROFILE_ACTION
+
 } from '../actions'
 import type { ApiUserProfile } from '../utils/api'
 

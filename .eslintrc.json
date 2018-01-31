@@ -6,7 +6,10 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,28 +23,12 @@
     "__PROD__": true
   },
   "plugins": [
-    "react",
     "flowtype",
+    "react",
     "prettier",
     "jest"
   ],
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "never"
-    ],
     "react/jsx-uses-vars": 1,
     "prettier/prettier": "error"
   }
