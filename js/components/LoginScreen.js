@@ -25,10 +25,7 @@ import { H1, H2 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
-import type {
-  DefaultLoggedOutUserState,
-  LoggedOutUserState
-} from '../reducers/user'
+import type { DefaultLoggedOutUserState } from '../reducers/user'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
