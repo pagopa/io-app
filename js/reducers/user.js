@@ -14,7 +14,6 @@ import {
   USER_LOGGED_OUT_ACTION,
   USER_LOGIN_ERROR_ACTION,
   RECEIVE_USER_PROFILE_ACTION
-
 } from '../actions'
 import type { ApiUserProfile } from '../utils/api'
 
