@@ -1,10 +1,21 @@
+/**
+ * Implements a component that show a message when there is no network connection
+ *
+ * @providesModule ConnectionBar
+ * @flow
+ */
+
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import I18n from '../i18n'
 
-class ConnectionBar extends React.Component {
+type Props = {
+  isConnected: boolean
+}
+
+class ConnectionBar extends React.PureComponent<Props> {
   render() {
     const { isConnected } = this.props
     if (isConnected) return null
