@@ -35,6 +35,17 @@ Mixpanel.sharedInstanceWithToken(config.mixpanelToken)
 
 const theme = getTheme(material)
 
+// Parameters used by the withNetworkConnectivity HOC of react-native-offline.
+// We use `withRedux: true` to store the network status in the redux store.
+// More info at https://github.com/rauliyohmc/react-native-offline#withnetworkconnectivity
+const connectionMonitorParameters = {
+  withRedux: true,
+  timeout: 5000,
+  pingServerUrl: 'https://google.com',
+  withExtraHeadRequest: true,
+  checkConnectionInterval: 2500
+}
+
 class AppNavigation extends React.Component {
   constructor(props) {
     super(props)
@@ -69,13 +80,8 @@ const mapStateToProps = state => ({
 })
 
 // This add a connectivity listener
-// Using the parameter `withRedux: true` we save the network state into the store
 const AppWithConnectivity = withNetworkConnectivity({
-  withRedux: true,
-  timeout: 5000,
-  pingServerUrl: 'https://google.com',
-  withExtraHeadRequest: true,
-  checkConnectionInterval: 2500
+  connectionMonitorParameters
 })(AppNavigation)
 
 const AppWithNavigationStateAndConnectivity = connect(mapStateToProps)(
