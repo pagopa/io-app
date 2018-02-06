@@ -2,8 +2,6 @@
  * Implements a custom generic error handler that keeps track of JavaScript exceptions
  */
 
-/* eslint no-console: [{ allow: ["error"] }] */
-
 import Mixpanel from 'react-native-mixpanel'
 import { initSourceMaps, getStackTrace } from '../react-native-source-maps'
 import DeviceInfo from 'react-native-device-info'
@@ -31,9 +29,6 @@ const customErrorHandler = async (error, isFatal) => {
       I18n.t('global.jserror.title'),
       I18n.t('global.jserror.message')
     )
-  } else {
-    // Preserve logging to the device's console (i.e. ADB)
-    console.error(error)
   }
 }
 

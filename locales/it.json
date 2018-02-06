@@ -33,5 +33,10 @@
   "privacy": {
     "title": "Regole sul trattamento dei dati personali",
     "line1": ""
+  },
+  "inbox": {
+    "enableButton": "Abilita Inbox",
+    "disableButton": "Disabilita Inbox",
+    "enableCallToActionDescription": "Abilita l'inbox per visualizzare i messaggi"
   }
 }

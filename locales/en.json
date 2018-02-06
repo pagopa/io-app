@@ -33,5 +33,10 @@
   "privacy": {
     "title": "Processing personal data rules",
     "line1": ""
+  },
+  "inbox": {
+    "enableButton": "Enable Inbox",
+    "disableButton": "Disable Inbox",
+    "enableCallToActionDescription": "Enable the inbox to view messages"
   }
 }
