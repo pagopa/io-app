@@ -195,4 +195,4 @@ L'applicazione utilizza un custom handler per intercettare e notificare errori j
 
 ### Monitoring della connessione
 
-L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connesione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
+L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
