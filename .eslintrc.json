@@ -42,6 +42,7 @@
           "ArrowFunctionExpression": false,
           "FunctionExpression": false
       }
-  }]
+    }],
+    "prefer-const": "error"
   }
 }
