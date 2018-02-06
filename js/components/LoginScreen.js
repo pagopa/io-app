@@ -77,7 +77,8 @@ class LoginScreen extends React.Component {
 
   props: {
     navigation: Navigator,
-    dispatch: Dispatch
+    dispatch: Dispatch,
+    isConnected: boolean
   }
 
   state: {
@@ -137,6 +138,8 @@ class LoginScreen extends React.Component {
   }
 
   render() {
+    // When we have no connectivity disable the SpidLoginButton
+    const { isConnected } = this.props
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={{ height: 20 }} />
@@ -154,6 +157,7 @@ class LoginScreen extends React.Component {
           <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
+          disabled={!isConnected}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
           onSpidLogin={(token, idpId) => {
@@ -175,4 +179,8 @@ class LoginScreen extends React.Component {
   }
 }
 
-module.exports = connect()(LoginScreen)
+const mapStateToProps = state => ({
+  isConnected: state.network.isConnected
+})
+
+module.exports = connect(mapStateToProps)(LoginScreen)

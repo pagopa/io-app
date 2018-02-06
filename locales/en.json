@@ -5,6 +5,11 @@
       "message": "We have reported this to our team! Please close the app and start again!"
     }
   },
+  "connection": {
+    "status": {
+      "offline": "You are offline!"
+    }
+  },
   "login": {
     "welcome": {
       "line1": "welcome in your",

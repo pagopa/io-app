@@ -13,16 +13,19 @@ import { Provider, connect } from 'react-redux'
 import { addNavigationHelpers } from 'react-navigation'
 import Mixpanel from 'react-native-mixpanel'
 
-import { StyleProvider } from 'native-base'
+import { StyleProvider, Root as NBRoot } from 'native-base'
 import getTheme from '../native-base-theme/components'
 import material from '../native-base-theme/variables/material'
 
 import configureStore from './store/configureStore'
+import { withNetworkConnectivity } from 'react-native-offline'
 import { ProfileNavigator, HomeNavigator } from './routes'
 
 import { appStateChange } from './actions'
 
 import configureErrorHandler from './utils/configureErrorHandler'
+
+import ConnectionBar from './components/ConnectionBar'
 
 import config from './config'
 
@@ -48,12 +51,15 @@ class AppNavigation extends React.Component {
     const Navigator = profile ? ProfileNavigator : HomeNavigator
 
     return (
-      <Navigator
-        navigation={addNavigationHelpers({
-          dispatch: this.props.dispatch,
-          state: this.props.nav
-        })}
-      />
+      <NBRoot>
+        <ConnectionBar />
+        <Navigator
+          navigation={addNavigationHelpers({
+            dispatch: this.props.dispatch,
+            state: this.props.nav
+          })}
+        />
+      </NBRoot>
     )
   }
 }
@@ -62,7 +68,19 @@ const mapStateToProps = state => ({
   nav: state.nav
 })
 
-const AppWithNavigationState = connect(mapStateToProps)(AppNavigation)
+// This add a connectivity listener
+// Using the parameter `withRedux: true` we save the network state into the store
+const AppWithConnectivity = withNetworkConnectivity({
+  withRedux: true,
+  timeout: 5000,
+  pingServerUrl: 'https://google.com',
+  withExtraHeadRequest: true,
+  checkConnectionInterval: 2500
+})(AppNavigation)
+
+const AppWithNavigationStateAndConnectivity = connect(mapStateToProps)(
+  AppWithConnectivity
+)
 
 class Root extends React.Component {
   state: {
@@ -95,7 +113,7 @@ class Root extends React.Component {
     return (
       <StyleProvider style={theme}>
         <Provider store={store}>
-          <AppWithNavigationState store={store} />
+          <AppWithNavigationStateAndConnectivity store={store} />
         </Provider>
       </StyleProvider>
     )

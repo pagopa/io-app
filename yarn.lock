@@ -2402,7 +2402,7 @@ hoek@4.x.x:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
 
-hoist-non-react-statics@^1.0.5:
+hoist-non-react-statics@^1.0.5, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -4148,6 +4148,14 @@ react-native-mixpanel@^0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-0.0.16.tgz#1c98e61c07c375efd96b8300ec5813fc5966b9df"
 
+react-native-offline@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-3.7.2.tgz#1e6208ecd62bd861c2f3cdc157e3b94683a858fc"
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+    lodash "^4.17.4"
+    redux-saga "^0.16.0"
+
 react-native-sha256@^1.0.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.1.1.tgz#3598dba556b0bbcd12618bd101c10d130c217fc3"
@@ -4357,6 +4365,10 @@ redux-persist@^4.6.0:
     json-stringify-safe "^5.0.1"
     lodash "^4.17.4"
     lodash-es "^4.17.4"
+
+redux-saga@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

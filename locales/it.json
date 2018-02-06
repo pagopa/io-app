@@ -5,6 +5,11 @@
       "message": "Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!"
     }
   },
+  "connection": {
+    "status": {
+      "offline": "Connessione assente!"
+    }
+  },
   "login": {
     "welcome": {
       "line1": "benvenuto nella tua",
