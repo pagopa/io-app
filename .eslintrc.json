@@ -8,6 +8,7 @@
     "eslint:recommended",
     "plugin:flowtype/recommended",
     "plugin:react/recommended",
+    "plugin:jest/recommended",
     "prettier",
     "prettier/flowtype",
     "prettier/react"
