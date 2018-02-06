@@ -13,7 +13,7 @@ export type InitialAppState = {
   appState: ApplicationState
 }
 
-const initialAppState: InitialAppState = {
+export const initialAppState: InitialAppState = {
   appState: 'background'
 }
 
