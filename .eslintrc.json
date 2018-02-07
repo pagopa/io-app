@@ -43,6 +43,7 @@
           "FunctionExpression": false
       }
     }],
-    "prefer-const": "error"
+    "prefer-const": "error",
+    "jsx-no-literals": [{"noStrings": true}]
   }
 }
