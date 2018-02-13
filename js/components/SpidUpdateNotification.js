@@ -60,8 +60,8 @@ export default class SpidUpdateNotification extends React.Component {
             placeholder={I18n.t('spidUpdateNotification.line2')}
             autoCapitalize="none"
             autoCorrect={false}
-            keyboardType="email-address"
-            returnKeyLabel="send"
+            keyboardType={I18n.t('spidUpdateNotification.keyboardType')}
+            returnKeyLabel={I18n.t('spidUpdateNotification.returnKeyLabel')}
             onChangeText={() => this._onEmailChange.bind(this)}
           />
         </Item>

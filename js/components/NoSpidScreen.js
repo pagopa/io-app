@@ -9,7 +9,7 @@
 
 const React = require('React')
 const ReactNative = require('react-native')
-const { StyleSheet, Modal } = ReactNative
+const { StyleSheet } = ReactNative
 
 import {
   Container,
@@ -31,7 +31,7 @@ import { ROUTES } from '../utils/constants'
 import { Privacy } from './Privacy'
 
 import { CommonStyles } from './styles'
-
+import Modal from 'react-native-modal'
 import I18n from '../i18n'
 
 const styles = StyleSheet.create({
@@ -107,7 +107,6 @@ class NotSpidScreen extends React.Component {
           </Left>
           <Body style={{ flex: 7 }}>
             <Title style={{ color: '#13253C' }}>
-              {' '}
               {I18n.t('noSpidScreen.header.line1')}
             </Title>
           </Body>
@@ -140,11 +139,7 @@ class NotSpidScreen extends React.Component {
           </Text>
 
           <View>
-            <Modal
-              animationType={'slide'}
-              transparent={false}
-              visible={this.state.isModalVisible}
-            >
+            <Modal isVisible={this.state.isModalVisible}>
               <Privacy
                 closeModal={() => {
                   this.setModalVisible(false)

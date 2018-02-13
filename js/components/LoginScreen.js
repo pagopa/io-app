@@ -29,6 +29,8 @@ import type { Dispatch } from '../actions/types'
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
 
+import { CommonStyles } from './styles'
+
 import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
 import { ROUTES, VERSION } from '../utils/constants'
@@ -175,7 +177,9 @@ class LoginScreen extends React.Component {
           block
           onPress={() => this.props.navigation.navigate(ROUTES.NO_SPID)}
         >
-          <Text style={{ color: 'white', fontSize: 16 }}>Non hai Spid?</Text>
+          <Text style={StyleSheet.flatten(CommonStyles.textButton)}>
+            {I18n.t('login.spidInfoButton')}
+          </Text>
         </Button>
         <View style={{ height: 60 }} />
         <View style={styles.version}>

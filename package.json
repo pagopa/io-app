@@ -24,6 +24,7 @@
     "react-native-fs": "^2.9",
     "react-native-i18n": "^2.0.10",
     "react-native-mixpanel": "^0.0.16",
+    "react-native-modal": "^5.0.0",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "^1.0.0-beta.23",
     "react-redux": "^5.0.4",
