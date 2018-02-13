@@ -46,5 +46,9 @@ post_install do |installer|
       target.build_phases << phase
       target.build_phases.move(phase,0)
     end
+
+    if target.name == "React"
+      target.remove_from_project
+    end
   end
 end
