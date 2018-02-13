@@ -1,7 +1,4 @@
 /**
- * Implements a component that show a message when there is no network connection
- *
- * @providesModule ConnectionBar
  * @flow
  */
 
@@ -15,6 +12,9 @@ type Props = {
   isConnected: boolean
 }
 
+/**
+ * Implements a component that show a message when there is no network connection
+ */
 class ConnectionBar extends React.PureComponent<Props> {
   render() {
     const { isConnected } = this.props
