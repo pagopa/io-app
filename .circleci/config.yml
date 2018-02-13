@@ -119,6 +119,9 @@ jobs:
     steps:
       - checkout
 
+      # Set Ruby Version for chruby
+      - run: echo "ruby-2.4.1" > ~/.ruby-version
+
       # Install bundles
       - run: bundle install
       
