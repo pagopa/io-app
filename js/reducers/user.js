@@ -30,7 +30,8 @@ export type DefaultLoggedOutUserState = {
 export type ErrorLoggedOutUserState = {
   isLoggedIn: false,
   isError: true,
-  apiUrlPrefix: string
+  apiUrlPrefix: string,
+  errorMessage: string
 }
 
 // user state when logged in
@@ -51,6 +52,7 @@ export type UserState =
 // initial user state
 export const initialUserState: DefaultLoggedOutUserState = {
   isLoggedIn: false,
+  isError: false,
   // TODO move URL to config js
   apiUrlPrefix: config.apiUrlPrefix
 }
@@ -66,7 +68,6 @@ export default function user(
   if (action.type === USER_LOGGED_IN_ACTION && state.isLoggedIn === false) {
     return {
       isLoggedIn: true,
-      isError: false,
       apiUrlPrefix: state.apiUrlPrefix,
       token: action.data.token,
       idpId: action.data.idpId
@@ -96,7 +97,8 @@ export default function user(
     return {
       isLoggedIn: false,
       isError: true,
-      errorMessage: action.data.error
+      errorMessage: action.data.error,
+      apiUrlPrefix: state.apiUrlPrefix
     }
   }
 

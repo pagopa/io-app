@@ -31,6 +31,7 @@ import {
 
 import type { IdentityProvider } from '../utils/api'
 import { isDemoIdp } from '../utils/api'
+import type { UserState } from '../reducers/user'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/profile.html?token='
@@ -181,7 +182,7 @@ class IdpSelectionScreen extends React.Component {
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
     onSpidLoginError: string => void,
-    userState: any
+    userState: UserState
   }
 
   state: {
@@ -243,15 +244,13 @@ class IdpSelectionScreen extends React.Component {
   }
 
   createErrorMessage = () => {
-    if (this.props.userState.isError === true) {
-      return (
-        <View style={{ paddingTop: 10 }}>
-          <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
-            {I18n.t('errors.loginError')}
-          </Text>
-        </View>
-      )
-    }
+    return (
+      <View style={{ paddingTop: 10 }}>
+        <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
+          {I18n.t('errors.loginError')}
+        </Text>
+      </View>
+    )
   }
 
   // Handler per il bottone back dello schermo di selezione dell'IdP
@@ -294,7 +293,7 @@ class IdpSelectionScreen extends React.Component {
           />
         ) : (
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
-            {this.createErrorMessage()}
+            {this.props.userState.isError && this.createErrorMessage()}
             <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
               {I18n.t('spid.selectIdp')}
             </Text>
@@ -334,7 +333,7 @@ export class SpidLoginButton extends React.Component {
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
     onSpidLoginError: string => void,
-    userState: any
+    userState: UserState
   }
 
   state = {
