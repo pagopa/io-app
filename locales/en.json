@@ -8,6 +8,9 @@
       "version": "Version"
     }
   },
+  "errors": {
+    "loginError": "There was an error in the login, repeat the procedure."
+  },
   "login": {
     "welcome": {
       "line1": "welcome in your",

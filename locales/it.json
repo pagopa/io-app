@@ -8,6 +8,9 @@
       "version": "Versione"
     }
   },
+  "errors": {
+    "loginError": "C'è stato un errore in fase di login, ripetere la procedura."
+  },
   "login": {
     "welcome": {
       "line1": "benvenuto nella tua",

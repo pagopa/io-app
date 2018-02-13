@@ -7,9 +7,11 @@
 
 'use strict'
 
+import { CommonStyles } from './styles'
+
 const React = require('react')
 const ReactNative = require('react-native')
-const { StyleSheet, View, WebView, Image, Modal, Alert } = ReactNative
+const { StyleSheet, View, WebView, Image, Modal } = ReactNative
 
 import config from '../config'
 import I18n from '../i18n'
@@ -29,6 +31,7 @@ import {
 
 import type { IdentityProvider } from '../utils/api'
 import { isDemoIdp } from '../utils/api'
+import type { UserState } from '../reducers/user'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/profile.html?token='
@@ -178,7 +181,8 @@ class IdpSelectionScreen extends React.Component {
     closeModal: () => void,
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
-    onSpidLoginError: string => void
+    onSpidLoginError: string => void,
+    userState: UserState
   }
 
   state: {
@@ -239,6 +243,16 @@ class IdpSelectionScreen extends React.Component {
     })
   }
 
+  createErrorMessage = () => {
+    return (
+      <View style={{ paddingTop: 10 }}>
+        <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
+          {I18n.t('errors.loginError')}
+        </Text>
+      </View>
+    )
+  }
+
   // Handler per il bottone back dello schermo di selezione dell'IdP
   _handleBack() {
     if (this.state.selectedIdp != null) {
@@ -279,6 +293,7 @@ class IdpSelectionScreen extends React.Component {
           />
         ) : (
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
+            {this.props.userState.isError && this.createErrorMessage()}
             <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
               {I18n.t('spid.selectIdp')}
             </Text>
@@ -304,11 +319,6 @@ class IdpSelectionScreen extends React.Component {
   }
 
   _handleSpidError(err) {
-    Alert.alert(
-      I18n.t('spid.loginErrorAlert.title'),
-      I18n.t('spid.loginErrorAlert.message'),
-      { text: I18n.t('spid.loginErrorAlert.okButton') }
-    )
     this.props.onSpidLoginError(err)
     this.resetIdp()
   }
@@ -322,7 +332,8 @@ export class SpidLoginButton extends React.Component {
     onSpidLoginIntent: () => void,
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
-    onSpidLoginError: string => void
+    onSpidLoginError: string => void,
+    userState: UserState
   }
 
   state = {
@@ -357,6 +368,7 @@ export class SpidLoginButton extends React.Component {
             closeModal={() => {
               this.setModalVisible(false)
             }}
+            userState={this.props.userState}
           />
         </Modal>
 
