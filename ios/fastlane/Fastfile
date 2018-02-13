@@ -50,6 +50,10 @@ platform :ios do
 
   # Builds the app without signing
   lane :test_build do |options|
+    # Install pods
+    cocoapods
+
+    # Build the app
     xcodebuild(
       workspace: "ItaliaApp.xcworkspace",
       scheme: "ItaliaApp",
