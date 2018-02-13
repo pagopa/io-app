@@ -2,17 +2,9 @@
 # yarn lockfile v1
 
 
-"@babel/code-frame@7.0.0-beta.36":
+"@babel/code-frame@7.0.0-beta.36", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.36.tgz#2349d7ec04b3a06945ae173280ef8579b63728e4"
-  dependencies:
-    chalk "^2.0.0"
-    esutils "^2.0.2"
-    js-tokens "^3.0.0"
-
-"@babel/code-frame@^7.0.0-beta.35":
-  version "7.0.0-beta.38"
-  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.38.tgz#c0af5930617e55e050336838e3a3670983b0b2b2"
   dependencies:
     chalk "^2.0.0"
     esutils "^2.0.2"

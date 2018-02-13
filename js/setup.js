@@ -25,6 +25,7 @@ import { appStateChange } from './actions'
 import configureErrorHandler from './utils/configureErrorHandler'
 
 import config from './config'
+import type { NavigationState } from 'react-navigation/src/TypeDefinition'
 
 configureErrorHandler()
 
@@ -32,7 +33,16 @@ Mixpanel.sharedInstanceWithToken(config.mixpanelToken)
 
 const theme = getTheme(material)
 
+/**
+ * Implements the main app navigator
+ */
 class AppNavigation extends React.Component {
+  props: {
+    nav: NavigationState,
+    dispatch: Dispatch,
+    store: any
+  }
+
   constructor(props) {
     super(props)
 
@@ -64,6 +74,9 @@ const mapStateToProps = state => ({
 
 const AppWithNavigationState = connect(mapStateToProps)(AppNavigation)
 
+/**
+ * Root component of the application
+ */
 class Root extends React.Component {
   state: {
     isLoading: boolean,

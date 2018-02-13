@@ -7,11 +7,14 @@
 
 'use strict'
 
+import { CommonStyles } from './styles'
+
 const React = require('react')
 const ReactNative = require('react-native')
-const { StyleSheet, View, WebView, Image, Modal, Alert } = ReactNative
+const { StyleSheet, View, WebView, Image, Modal } = ReactNative
 
 import config from '../config'
+import I18n from '../i18n'
 
 import {
   Container,
@@ -28,12 +31,13 @@ import {
 
 import type { IdentityProvider } from '../utils/api'
 import { isDemoIdp } from '../utils/api'
+import type { UserState } from '../reducers/user'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/profile.html?token='
 
 // TODO dynamically build this list
-let idps: Array<IdentityProvider> = [
+const idps: Array<IdentityProvider> = [
   {
     id: 'infocert',
     name: 'Infocert',
@@ -177,7 +181,8 @@ class IdpSelectionScreen extends React.Component {
     closeModal: () => void,
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
-    onSpidLoginError: string => void
+    onSpidLoginError: string => void,
+    userState: UserState
   }
 
   state: {
@@ -238,6 +243,16 @@ class IdpSelectionScreen extends React.Component {
     })
   }
 
+  createErrorMessage = () => {
+    return (
+      <View style={{ paddingTop: 10 }}>
+        <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
+          {I18n.t('errors.loginError')}
+        </Text>
+      </View>
+    )
+  }
+
   // Handler per il bottone back dello schermo di selezione dell'IdP
   _handleBack() {
     if (this.state.selectedIdp != null) {
@@ -266,7 +281,7 @@ class IdpSelectionScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>ACCEDI</Title>
+            <Title>{I18n.t('spid.login')}</Title>
           </Body>
           <Right />
         </Header>
@@ -278,14 +293,13 @@ class IdpSelectionScreen extends React.Component {
           />
         ) : (
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
+            {this.props.userState.isError && this.createErrorMessage()}
             <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
-              Per procedere all'accesso, seleziona il gestione della tua
-              identità SPID
+              {I18n.t('spid.selectIdp')}
             </Text>
             {this.createButtons()}
             <Text style={StyleSheet.flatten(styles.selectDemoHelpText)}>
-              Se non possiedi ancora una tua identità SPID, naviga l'app in
-              modalità demo
+              {I18n.t('spid.selectDemoIdp')}
             </Text>
             {this.createDemoButton()}
           </Content>
@@ -305,11 +319,6 @@ class IdpSelectionScreen extends React.Component {
   }
 
   _handleSpidError(err) {
-    Alert.alert(
-      'Errore login',
-      "Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?",
-      { text: 'OK' }
-    )
     this.props.onSpidLoginError(err)
     this.resetIdp()
   }
@@ -323,7 +332,8 @@ export class SpidLoginButton extends React.Component {
     onSpidLoginIntent: () => void,
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
-    onSpidLoginError: string => void
+    onSpidLoginError: string => void,
+    userState: UserState
   }
 
   state = {
@@ -358,6 +368,7 @@ export class SpidLoginButton extends React.Component {
             closeModal={() => {
               this.setModalVisible(false)
             }}
+            userState={this.props.userState}
           />
         </Modal>
 
@@ -371,7 +382,7 @@ export class SpidLoginButton extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Text>ENTRA CON</Text>
+          <Text>{I18n.t('spid.loginButton')}</Text>
           <Image
             source={require('../../img/spid.png')}
             style={styles.spidLogo}

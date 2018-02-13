@@ -73,7 +73,9 @@ const styles = StyleSheet.create({
     paddingTop: 15
   }
 })
-
+/**
+ * Implements the screen called when the user click on don't you have spid?.
+ */
 class NotSpidScreen extends React.Component {
   props: {
     navigation: Navigator

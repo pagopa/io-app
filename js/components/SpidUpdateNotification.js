@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
   }
 })
 
+/**
+ * Implements the component that allows to insert a mail for update notification about SPID.
+ */
 export default class SpidUpdateNotification extends React.Component {
   state: {
     isEmailValid: boolean

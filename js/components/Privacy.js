@@ -16,6 +16,10 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import I18n from '../i18n'
 import { PrivacyStyle } from './styles'
 import { CommonStyles } from './styles'
+
+/**
+ * Implements the content of modal that contains the privacy policy information.
+ */
 export class Privacy extends React.Component {
   props: {
     closeModal: () => void

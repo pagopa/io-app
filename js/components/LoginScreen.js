@@ -1,7 +1,5 @@
 /**
- * Implements the login screen.
- *
- * @providesModule LoginScreen
+
  * @flow
  */
 
@@ -25,6 +23,7 @@ import { H1, H2, Button } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
+import type { DefaultLoggedOutUserState } from '../reducers/user'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
@@ -74,6 +73,9 @@ const titleTextStyles = StyleSheet.flatten(styles.titleText)
 const ANIMATION_START_LOGO_HEIGHT = 70
 const ANIMATION_END_LOGO_HEIGHT = 0
 
+/**
+ * Implements the login screen.
+ */
 class LoginScreen extends React.Component {
   // called when keyboard appears
   keyboardWillShowSub: any => void
@@ -82,7 +84,8 @@ class LoginScreen extends React.Component {
 
   props: {
     navigation: Navigator,
-    dispatch: Dispatch
+    dispatch: Dispatch,
+    userState: DefaultLoggedOutUserState
   }
 
   state: {
@@ -159,6 +162,7 @@ class LoginScreen extends React.Component {
           <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
+          userState={this.props.userState}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
           onSpidLogin={(token, idpId) => {
@@ -183,11 +187,19 @@ class LoginScreen extends React.Component {
         </Button>
         <View style={{ height: 60 }} />
         <View style={styles.version}>
-          <Text style={titleTextStyles}>Version {VERSION}</Text>
+          <Text style={titleTextStyles}>
+            {I18n.t('global.app.version')} {VERSION}
+          </Text>
         </View>
       </KeyboardAvoidingView>
     )
   }
 }
 
-module.exports = connect()(LoginScreen)
+function mapStateToProps(store) {
+  return {
+    userState: store.user
+  }
+}
+
+module.exports = connect(mapStateToProps)(LoginScreen)

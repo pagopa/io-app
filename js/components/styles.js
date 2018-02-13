@@ -41,6 +41,13 @@ const CommonStyles = StyleSheet.create({
     lineHeight: 24,
     color: '#004BC4',
     fontWeight: 'bold'
+  },
+  errorContainer: {
+    padding: 5,
+    backgroundColor: '#F23333',
+    borderRadius: 4,
+    color: '#eee',
+    fontSize: 15
   }
 })
 
