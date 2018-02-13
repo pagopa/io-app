@@ -117,10 +117,6 @@ jobs:
     shell: /bin/bash --login -o pipefail
 
     steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
-
       # Install bundles
       - run: bundle install
       
