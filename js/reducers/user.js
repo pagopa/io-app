@@ -49,7 +49,7 @@ export type UserState =
   | ErrorLoggedOutUserState
 
 // initial user state
-const initialUserState: DefaultLoggedOutUserState = {
+export const initialUserState: DefaultLoggedOutUserState = {
   isLoggedIn: false,
   // TODO move URL to config js
   apiUrlPrefix: config.apiUrlPrefix
