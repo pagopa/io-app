@@ -2,11 +2,14 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
     "prettier",
     "prettier/flowtype",
     "prettier/react"
@@ -29,7 +32,20 @@
     "jest"
   ],
   "rules": {
+    "flowtype/no-weak-types": 1,
     "react/jsx-uses-vars": 1,
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-trailing-spaces": "error",
+    "require-jsdoc": ["error", {
+      "require": {
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+      }
+    }],
+    "prefer-const": "error",
+    "react/jsx-no-literals": "error"
   }
 }

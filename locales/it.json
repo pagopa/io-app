@@ -3,6 +3,9 @@
     "jserror": {
       "title": "Si è verificato un errore imprevisto",
       "message": "Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!"
+    },
+    "app":  {
+      "version": "Versione"
     }
   },
   "connection": {
@@ -20,6 +23,32 @@
     "enableButton": "Abilita Inbox",
     "disableButton": "Disabilita Inbox",
     "enableCallToActionDescription": "Abilita l'inbox per visualizzare i messaggi"
+  },
+  "profile": {
+    "sections": {
+      "spid": "PROFILO SPID"
+    },
+    "unknown": "SCONOSCIUTO",
+    "logout": "Esci da questa identità SPID"
+  },
+  "navigation": {
+    "messages": "Messaggi",
+    "profile": "Profilo"
+  },
+  "spid": {
+    "login": "ACCEDI",
+    "loginButton": "ENTRA CON",
+    "selectIdp": "Per procedere all'accesso, seleziona il gestione della tua identità SPID",
+    "selectDemoIdp": "Se non possiedi ancora una tua identità SPID, naviga l'app in modalità demo",
+    "loginErrorAlert": {
+      "title": "Errore login",
+      "message": "Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?",
+      "okLabel": "Ok"
+    },
+    "subscription": {
+      "line1": "SPID è l'identità digitale per accedere ai servizi online della Pubblica Amministrazione Italiana.",
+      "line2": "Inserisci la tua e-mail per attivarla."
+    }
   }
 
 }

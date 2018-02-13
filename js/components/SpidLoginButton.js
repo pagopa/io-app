@@ -12,6 +12,7 @@ const ReactNative = require('react-native')
 const { StyleSheet, View, WebView, Image, Modal, Alert } = ReactNative
 
 import config from '../config'
+import I18n from '../i18n'
 
 import {
   Container,
@@ -33,7 +34,7 @@ import { isDemoIdp } from '../utils/api'
 const TOKEN_PATH_PREFIX = '/profile.html?token='
 
 // TODO dynamically build this list
-let idps: Array<IdentityProvider> = [
+const idps: Array<IdentityProvider> = [
   {
     id: 'infocert',
     name: 'Infocert',
@@ -266,7 +267,7 @@ class IdpSelectionScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>ACCEDI</Title>
+            <Title>{I18n.t('spid.login')}</Title>
           </Body>
           <Right />
         </Header>
@@ -279,13 +280,11 @@ class IdpSelectionScreen extends React.Component {
         ) : (
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
             <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
-              Per procedere all'accesso, seleziona il gestione della tua
-              identità SPID
+              {I18n.t('spid.selectIdp')}
             </Text>
             {this.createButtons()}
             <Text style={StyleSheet.flatten(styles.selectDemoHelpText)}>
-              Se non possiedi ancora una tua identità SPID, naviga l'app in
-              modalità demo
+              {I18n.t('spid.selectDemoIdp')}
             </Text>
             {this.createDemoButton()}
           </Content>
@@ -306,9 +305,9 @@ class IdpSelectionScreen extends React.Component {
 
   _handleSpidError(err) {
     Alert.alert(
-      'Errore login',
-      "Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?",
-      { text: 'OK' }
+      I18n.t('spid.loginErrorAlert.title'),
+      I18n.t('spid.loginErrorAlert.message'),
+      { text: I18n.t('spid.loginErrorAlert.okButton') }
     )
     this.props.onSpidLoginError(err)
     this.resetIdp()
@@ -373,7 +372,7 @@ export class SpidLoginButton extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Text>ENTRA CON</Text>
+          <Text>{I18n.t('spid.loginButton')}</Text>
           <Image
             source={require('../../img/spid.png')}
             style={styles.spidLogo}

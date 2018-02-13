@@ -3,6 +3,9 @@
     "jserror": {
       "title": "Unexpected error occurred",
       "message": "We have reported this to our team! Please close the app and start again!"
+    },
+    "app":  {
+      "version": "Version"
     }
   },
   "connection": {
@@ -20,5 +23,31 @@
     "enableButton": "Enable Inbox",
     "disableButton": "Disable Inbox",
     "enableCallToActionDescription": "Enable the inbox to view messages"
+  },
+  "profile": {
+    "sections": {
+      "spid": "SPID PROFILE"
+    },
+    "unknown": "UNKNOWN",
+    "logout": "Logout from this SPID identity"
+  },
+  "navigation": {
+    "messages": "Messages",
+    "profile": "Profile"
+  },
+  "spid": {
+    "login": "LOGIN",
+    "loginButton": "LOGIN WITH",
+    "selectIdp": "To continue to login, select your SPID identity provider",
+    "selectDemoIdp": "If you do not have your own SPID identity yet, browse the app in demo mode",
+    "loginErrorAlert": {
+      "title": "Login error",
+      "message": "Sorry, there was an error while logging in, could you try again?",
+      "okLabel": "Ok"
+    },
+    "subscription": {
+      "line1": "SPID è l'identità digitale per accedere ai servizi online della Pubblica Amministrazione Italiana.",
+      "line2": "Inserisci la tua e-mail per attivarla."
+    }
   }
 }

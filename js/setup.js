@@ -28,6 +28,7 @@ import configureErrorHandler from './utils/configureErrorHandler'
 import ConnectionBar from './components/ConnectionBar'
 
 import config from './config'
+import type { NavigationState } from 'react-navigation/src/TypeDefinition'
 
 configureErrorHandler()
 
@@ -46,7 +47,16 @@ const connectionMonitorParameters = {
   checkConnectionInterval: 2500
 }
 
+/**
+ * Implements the main app navigator
+ */
 class AppNavigation extends React.Component {
+  props: {
+    nav: NavigationState,
+    dispatch: Dispatch,
+    store: any
+  }
+
   constructor(props) {
     super(props)
 
@@ -88,6 +98,9 @@ const AppWithNavigationStateAndConnectivity = connect(mapStateToProps)(
   AppWithConnectivity
 )
 
+/**
+ * Root component of the application
+ */
 class Root extends React.Component {
   state: {
     isLoading: boolean,

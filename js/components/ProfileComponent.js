@@ -1,7 +1,4 @@
 /**
- * Implements the content of the user profile tab.
- *
- * @providesModule ProfileComponent
  * @flow
  */
 
@@ -18,11 +15,12 @@ import {
   Right,
   Icon,
   Body,
-  Switch,
   Grid,
   Row,
   Col
 } from 'native-base'
+
+import I18n from '../i18n'
 
 import { NavigationActions } from 'react-navigation'
 
@@ -72,6 +70,9 @@ const openIdpProfile = function(idpUrl: string) {
   Linking.openURL(idpUrl) //.catch(err => { })
 }
 
+/**
+ * Implements the content of the user profile tab.
+ */
 class ProfileComponent extends React.Component {
   props: {
     navigation: NavigationScreenProp<*, AnyAction>,
@@ -132,7 +133,9 @@ class ProfileComponent extends React.Component {
         <ListItem itemDivider />
 
         <ListItem itemHeader first>
-          <Text style={preferenceHeaderTextStyles}>PROFILO SPID</Text>
+          <Text style={preferenceHeaderTextStyles}>
+            {I18n.t('profile.sections.spid')}
+          </Text>
         </ListItem>
         <ListItem
           icon
@@ -144,72 +147,10 @@ class ProfileComponent extends React.Component {
           }}
         >
           <Body>
-            <Text>{idpInfo ? idpInfo.name : 'SCONOSCIUTO'}</Text>
+            <Text>{idpInfo ? idpInfo.name : I18n.t('profile.unknown')}</Text>
           </Body>
           <Right>
             <Icon name="chevron-right" style={{ fontSize: 18 }} />
-          </Right>
-        </ListItem>
-
-        <ListItem itemDivider />
-
-        <ListItem itemHeader first>
-          <Text style={preferenceHeaderTextStyles}>DOMICILIO PEC</Text>
-        </ListItem>
-        <ListItem
-          icon
-          last
-          onPress={() => {
-            this.props.navigation.navigate(ROUTES.DIGITAL_ADDRESS)
-          }}
-        >
-          <Body>
-            <Text>pinco@pec.italia.it</Text>
-          </Body>
-          <Right>
-            <Icon active name="chevron-right" />
-          </Right>
-        </ListItem>
-
-        <ListItem itemDivider />
-
-        <ListItem itemHeader first>
-          <Text style={preferenceHeaderTextStyles}>AVVISI E SCADENZE</Text>
-        </ListItem>
-        <ListItem
-          icon
-          onPress={() => {
-            this.props.navigation.navigate(ROUTES.SENDER_SELECTION)
-          }}
-        >
-          <Body>
-            <Text>Enti abilitati</Text>
-          </Body>
-          <Right>
-            <Text>5</Text>
-            <Icon name="chevron-right" />
-          </Right>
-        </ListItem>
-        <ListItem
-          icon
-          onPress={() => {
-            this.props.navigation.navigate(ROUTES.TOPICS_SELECTION)
-          }}
-        >
-          <Body>
-            <Text>Tipologie</Text>
-          </Body>
-          <Right>
-            <Text>6</Text>
-            <Icon name="chevron-right" />
-          </Right>
-        </ListItem>
-        <ListItem icon last>
-          <Body>
-            <Text>Aggiungi al calendario</Text>
-          </Body>
-          <Right>
-            <Switch value={true} />
           </Right>
         </ListItem>
 
@@ -225,7 +166,7 @@ class ProfileComponent extends React.Component {
           }}
         >
           <Body>
-            <Text style={{ color: '#e00' }}>Esci da questa identità SPID</Text>
+            <Text style={{ color: '#e00' }}>{I18n.t('profile.logout')}</Text>
           </Body>
           <Right>
             <Icon style={{ color: '#e99' }} name="log-out" />
@@ -237,7 +178,9 @@ class ProfileComponent extends React.Component {
         <ListItem last>
           <Body>
             <Text style={ProfileStyles.version}>
-              Version {VERSION} ({config.environment})
+              {`${I18n.t('global.app.version')} ${VERSION} (${
+                config.environment
+              })`}
             </Text>
           </Body>
         </ListItem>
