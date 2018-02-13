@@ -7,7 +7,7 @@
 
 'use strict'
 
-import I18n from '../i18n'
+
 import { CommonStyles } from './styles'
 
 const React = require('react')
@@ -15,6 +15,7 @@ const ReactNative = require('react-native')
 const { StyleSheet, View, WebView, Image, Modal } = ReactNative
 
 import config from '../config'
+import I18n from '../i18n'
 
 import {
   Container,
@@ -36,7 +37,7 @@ import { isDemoIdp } from '../utils/api'
 const TOKEN_PATH_PREFIX = '/profile.html?token='
 
 // TODO dynamically build this list
-let idps: Array<IdentityProvider> = [
+const idps: Array<IdentityProvider> = [
   {
     id: 'infocert',
     name: 'Infocert',
@@ -74,7 +75,7 @@ let idps: Array<IdentityProvider> = [
   }
 ]
 
-if (config.enableTestIdp) {
+//if (config.enableTestIdp) {
   idps.push({
     id: 'test',
     name: 'Test',
@@ -82,7 +83,7 @@ if (config.enableTestIdp) {
     entityID: 'testid',
     profileUrl: 'https://italia-backend/profile.html'
   })
-}
+//}
 
 const demoIdp: IdentityProvider = {
   id: 'demo',
@@ -282,7 +283,7 @@ class IdpSelectionScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>ACCEDI</Title>
+            <Title>{I18n.t('spid.login')}</Title>
           </Body>
           <Right />
         </Header>
@@ -296,13 +297,11 @@ class IdpSelectionScreen extends React.Component {
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
             {this.createErrorMessage()}
             <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
-              Per procedere all'accesso, seleziona il gestione della tua
-              identità SPID
+              {I18n.t('spid.selectIdp')}
             </Text>
             {this.createButtons()}
             <Text style={StyleSheet.flatten(styles.selectDemoHelpText)}>
-              Se non possiedi ancora una tua identità SPID, naviga l'app in
-              modalità demo
+              {I18n.t('spid.selectDemoIdp')}
             </Text>
             {this.createDemoButton()}
           </Content>
@@ -385,7 +384,7 @@ export class SpidLoginButton extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Text>ENTRA CON</Text>
+          <Text>{I18n.t('spid.loginButton')}</Text>
           <Image
             source={require('../../img/spid.png')}
             style={styles.spidLogo}

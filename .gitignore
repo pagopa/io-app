@@ -45,6 +45,9 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# Test js
+/coverage
+
 # App Config
 .env
 
