@@ -119,7 +119,7 @@ jobs:
     steps:
       # Restore workflow workspace
       - attach_workspace:
-        at: /home/circleci
+          at: /home/circleci
 
       # Install bundles
       - run: bundle install
