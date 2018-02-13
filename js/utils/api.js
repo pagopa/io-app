@@ -34,13 +34,13 @@ async function getUserProfile(
   token: string
 ): Promise<?ApiUserProfile> {
   try {
-    let response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
+    const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    let responseJson: ApiUserProfile = await response.json()
+    const responseJson: ApiUserProfile = await response.json()
     return responseJson
   } catch (error) {
     // TODO handle error
@@ -51,10 +51,10 @@ async function getUserProfile(
 async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
-  newProfile: object
+  newProfile: Object
 ) {
   try {
-    let response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
+    const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: 'post',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ async function setUserProfile(
     if (response.status == 500) {
       return response.status
     } else {
-      let responseJson = await response.json()
+      const responseJson = await response.json()
       return responseJson
     }
   } catch (error) {

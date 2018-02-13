@@ -2,8 +2,6 @@ import { StackNavigator } from 'react-navigation'
 
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
-import DigitalAddressScreen from './components/DigitalAddressScreen'
-import TopicsSelectionScreen from './components/TopicsSelectionScreen'
 
 import { ROUTES } from './utils/constants'
 
@@ -32,15 +30,7 @@ const HomeNavigator = StackNavigator(
 
 const ProfileNavigator = StackNavigator(
   {
-    ...HomeRoutes,
-
-    [ROUTES.DIGITAL_ADDRESS]: {
-      screen: DigitalAddressScreen
-    },
-
-    [ROUTES.TOPICS_SELECTION]: {
-      screen: TopicsSelectionScreen
-    }
+    ...HomeRoutes
   },
   {
     initialRouteName: ROUTES.PROFILE,
