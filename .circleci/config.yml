@@ -117,6 +117,8 @@ jobs:
     shell: /bin/bash --login -o pipefail
 
     steps:
+      - checkout
+
       # Install bundles
       - run: bundle install
       
