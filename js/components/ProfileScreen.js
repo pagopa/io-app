@@ -1,7 +1,4 @@
 /**
- * Implements the main user screen
- *
- * @providesModule ProfileScreen
  * @flow
  */
 
@@ -23,6 +20,8 @@ import {
   Badge
 } from 'native-base'
 
+import I18n from '../i18n'
+
 import type { Navigator } from 'react-navigation'
 
 import type { Dispatch } from '../actions/types'
@@ -31,7 +30,6 @@ import type { LoggedInUserState } from '../reducers/user'
 import { CommonStyles } from './styles'
 
 import AlertsComponent from './AlertsComponent'
-import CalendarComponent from './CalendarComponent'
 import ProfileComponent from './ProfileComponent'
 
 type TabName = AlertsTab | CalendarTab | ProfileTab
@@ -39,6 +37,9 @@ type AlertsTab = { name: 'alerts' }
 type CalendarTab = { name: 'calendar' }
 type ProfileTab = { name: 'profile' }
 
+/**
+ * Implements the main user screen
+ */
 class ProfileScreen extends React.Component {
   state: {
     activeTab: TabName
@@ -65,16 +66,6 @@ class ProfileScreen extends React.Component {
 
   isAlertsTabOn() {
     return this.state.activeTab.name === 'alerts'
-  }
-
-  toggleCalendarTab() {
-    this.setState({
-      activeTab: { name: 'calendar' }
-    })
-  }
-
-  isCalendarTabOn() {
-    return this.state.activeTab.name === 'calendar'
   }
 
   toggleProfileTab() {
@@ -104,14 +95,6 @@ class ProfileScreen extends React.Component {
           user={this.props.user}
         />
       )
-    } else if (this.isCalendarTabOn()) {
-      return (
-        <CalendarComponent
-          navigation={this.props.navigation}
-          dispatch={this.props.dispatch}
-          user={this.props.user}
-        />
-      )
     } else {
       return <Content padder />
     }
@@ -129,28 +112,17 @@ class ProfileScreen extends React.Component {
               onPress={() => this.toggleAlertsTab()}
             >
               <Badge>
-                <Text>23</Text>
+                <Text>{'23'}</Text>
               </Badge>
               <Icon name="notification" active={this.isAlertsTabOn()} />
-              <Text>Avvisi</Text>
-            </Button>
-            <Button
-              badge
-              active={this.isCalendarTabOn()}
-              onPress={() => this.toggleCalendarTab()}
-            >
-              <Badge>
-                <Text>1</Text>
-              </Badge>
-              <Icon name="calendar" active={this.isCalendarTabOn()} />
-              <Text>Scadenze</Text>
+              <Text>{I18n.t('navigation.messages')}</Text>
             </Button>
             <Button
               active={this.isProfileTabOn()}
               onPress={() => this.toggleProfileTab()}
             >
               <Icon name="user" active={this.isProfileTabOn()} />
-              <Text>Profilo</Text>
+              <Text>{I18n.t('navigation.profile')}</Text>
             </Button>
           </FooterTab>
         </Footer>

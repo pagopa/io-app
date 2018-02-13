@@ -44,6 +44,6 @@
       }
     }],
     "prefer-const": "error",
-    "jsx-no-literals": [{"noStrings": true}]
+    "react/jsx-no-literals": "error"
   }
 }

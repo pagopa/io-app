@@ -1,7 +1,4 @@
 /**
- * Implements the component for helping the user
- * to subscribe to SPID.
- *
  * @providesModule SpidSubscribeComponent
  * @flow
  */
@@ -14,6 +11,11 @@ import { Text, Icon, View, Item, Input } from 'native-base'
 
 import EmailValidator from 'email-validator'
 
+import I18n from '../i18n'
+
+/**
+ * Implements the component for helping the user to subscribe to SPID.
+ */
 export default class SpidSubscribeComponent extends React.Component {
   state: {
     isEmailValid: boolean
@@ -36,11 +38,10 @@ export default class SpidSubscribeComponent extends React.Component {
     return (
       <View>
         <Text style={{ fontSize: 16, color: '#d4e4fb', marginTop: 5 }}>
-          SPID è l'identità digitale per accedere ai servizi online della
-          Pubblica Amministrazione Italiana.
+          {I18n.t('spid.subscription.line1')}
         </Text>
         <Text style={{ fontSize: 16, color: '#fff', marginTop: 10 }}>
-          Inserisci la tua e-mail per attivarla.
+          {I18n.t('spid.subscription.line2')}
         </Text>
         <Item fixedLabel>
           <Input

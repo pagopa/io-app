@@ -1,7 +1,5 @@
 /**
- * Implements the login screen.
- *
- * @providesModule LoginScreen
+
  * @flow
  */
 
@@ -69,6 +67,9 @@ const titleTextStyles = StyleSheet.flatten(styles.titleText)
 const ANIMATION_START_LOGO_HEIGHT = 70
 const ANIMATION_END_LOGO_HEIGHT = 0
 
+/**
+ * Implements the login screen.
+ */
 class LoginScreen extends React.Component {
   // called when keyboard appears
   keyboardWillShowSub: any => void
@@ -168,7 +169,9 @@ class LoginScreen extends React.Component {
         <SpidSubscribeComponent />
         <View style={{ height: 60 }} />
         <View style={styles.version}>
-          <Text style={titleTextStyles}>Version {VERSION}</Text>
+          <Text style={titleTextStyles}>
+            {I18n.t('global.app.version')} {VERSION}
+          </Text>
         </View>
       </KeyboardAvoidingView>
     )
