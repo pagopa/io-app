@@ -7,7 +7,6 @@
 
 'use strict'
 
-
 import { CommonStyles } from './styles'
 
 const React = require('react')
@@ -75,7 +74,7 @@ const idps: Array<IdentityProvider> = [
   }
 ]
 
-//if (config.enableTestIdp) {
+if (config.enableTestIdp) {
   idps.push({
     id: 'test',
     name: 'Test',
@@ -83,7 +82,7 @@ const idps: Array<IdentityProvider> = [
     entityID: 'testid',
     profileUrl: 'https://italia-backend/profile.html'
   })
-//}
+}
 
 const demoIdp: IdentityProvider = {
   id: 'demo',
