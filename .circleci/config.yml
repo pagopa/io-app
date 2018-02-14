@@ -118,6 +118,9 @@ jobs:
 
     steps:
       - checkout
+      
+      # Download node packages
+      - run: yarn install
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
