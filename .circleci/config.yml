@@ -127,9 +127,12 @@ jobs:
 
       # Install bundles
       - run: bundle install
+
+      # Fetch CocoaPods specs
+      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
       
       # Move to the ios project directory
-      - run: cd ios
+      - run: cd ~/italia-app/ios
 
       # Run the test_build lane
       - run: bundle exec fastlane test_build        
