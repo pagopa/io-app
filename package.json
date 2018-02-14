@@ -8,6 +8,7 @@
     "test": "jest",
     "prettify": "prettier --write 'js/**/*.js'",
     "lint": "eslint 'js/**/*.js'",
+    "flow": "flow check",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle"
   },
