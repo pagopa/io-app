@@ -49,6 +49,7 @@
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.6.0",
     "flow-bin": "^0.56.0",
+    "flow-typed": "^2.3.0",
     "jest": "^22.0.5",
     "prettier": "1.8.2",
     "react-test-renderer": "16.0.0"
