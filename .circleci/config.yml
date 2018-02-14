@@ -134,6 +134,9 @@ jobs:
       # Move to the ios project directory
       - run: cd ios
 
+      # Test the current directory
+      - run: pwd
+
       # Run the test_build lane
       - run: bundle exec fastlane test_build        
 
