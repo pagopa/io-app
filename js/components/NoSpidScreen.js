@@ -18,6 +18,7 @@ import {
   Footer,
   Body,
   Title,
+  Subtitle,
   Content,
   Icon,
   Text,
@@ -31,48 +32,14 @@ import { ROUTES } from '../utils/constants'
 import { Privacy } from './Privacy'
 
 import { CommonStyles } from './styles'
+import { NoSpidScreenStyle } from './styles'
 import Modal from 'react-native-modal'
 import I18n from '../i18n'
 
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: '#D8D8D8',
-    paddingTop: 65,
-    paddingLeft: 24,
-    paddingRight: 24
-  },
-  textLink: {
-    position: 'relative',
-    left: 0
-  },
-  buttonNextPage: {
-    justifyContent: 'center',
-    height: 40,
-    width: 300,
-    borderRadius: 4,
-    backgroundColor: '#0073e6'
-  },
-  footer: {
-    height: 72,
-    backgroundColor: '#FFFFFF',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  },
-  footerButton: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  modalText: {
-    position: 'relative',
-    left: 0
-  },
-  marginModal: {
-    marginTop: 5
-  },
-  paddingModal: {
-    paddingTop: 15
-  }
+
 })
+
 /**
  * Implements the screen called when the user click on don't you have spid?.
  */
@@ -94,45 +61,34 @@ class NotSpidScreen extends React.Component {
   render() {
     return (
       <Container>
-        <Header
-          style={{ backgroundColor: '#FFFFFF', borderBottomColor: '#D8D8D8' }}
-        >
-          <Left style={{ flex: 1 }}>
+        <Header style={StyleSheet.flatten(CommonStyles.header)}>
+          <Left style={StyleSheet.flatten(CommonStyles.leftHeader)}>
             <Button
               transparent
               onPress={() => {
                 this.props.navigation.goBack(null)
               }}
             >
-              <Icon name="chevron-left" style={{ color: '#17324D' }} />
+              <Icon name="chevron-left" style={StyleSheet.flatten(CommonStyles.iconChevronLeft)} />
             </Button>
           </Left>
           <Body style={{ flex: 7 }}>
-            <Title style={{ color: '#13253C' }}>
+            <Title style={StyleSheet.flatten(CommonStyles.titleFont)}>
               {I18n.t('noSpidScreen.header.line1')}
             </Title>
           </Body>
         </Header>
-        <Content style={styles.content}>
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
-          >
-            <Text
-              style={[styles.title, StyleSheet.flatten(CommonStyles.titleFont)]}
-            >
+        <Content style={StyleSheet.flatten(CommonStyles.pageContent)}>
+            <Title style={StyleSheet.flatten(CommonStyles.mainTitlteFont)}>
               {I18n.t('noSpidScreen.header.title')}
-            </Text>
-            <Text style={{ backgroundColor: 'gray', width: 50 }} />
-          </View>
-          <View style={{ paddingTop: 10 }}>
-            <Text
-              style={[styles.text, StyleSheet.flatten(CommonStyles.textFont)]}
-            >
+            </Title>
+          <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingSubtitle)}>
+            <Text>
               {I18n.t('noSpidScreen.content.line1')}
             </Text>
           </View>
           <Text
-            style={[styles.textLink, StyleSheet.flatten(CommonStyles.textLink)]}
+            style={[ StyleSheet.flatten(NoSpidScreenStyle.textLink), StyleSheet.flatten(CommonStyles.textLink)]}
             onPress={() => {
               this.props.navigation.goBack(null)
             }}
@@ -152,20 +108,15 @@ class NotSpidScreen extends React.Component {
 
           <SpidUpdateNotification />
 
-          <View style={styles.paddingModal}>
-            <View style={styles.marginModal}>
-              <Text
-                style={[styles.text, StyleSheet.flatten(CommonStyles.textFont)]}
-              >
+          <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingModal)}>
+            <View style={StyleSheet.flatten(NoSpidScreenStyle.marginModal)}>
+              <Text>
                 {I18n.t('noSpidScreen.content.line3')}{' '}
               </Text>
             </View>
-            <View style={styles.modalText}>
+            <View style={StyleSheet.flatten(NoSpidScreenStyle.modalText)}>
               <Text
-                style={[
-                  styles.textLink,
-                  StyleSheet.flatten(CommonStyles.textLink)
-                ]}
+                style={StyleSheet.flatten(CommonStyles.textLink)}
                 onPress={() => {
                   this.setModalVisible(true)
                 }}
@@ -175,10 +126,10 @@ class NotSpidScreen extends React.Component {
             </View>
           </View>
         </Content>
-        <Footer style={styles.footer}>
-          <View style={styles.footerButton}>
+        <Footer style={StyleSheet.flatten(CommonStyles.footer)}>
+          <View style={StyleSheet.flatten(CommonStyles.buttonFooterContainer)}>
             <Button
-              style={styles.buttonNextPage}
+              style={StyleSheet.flatten(CommonStyles.buttonFooter)}
               onPress={() =>
                 this.props.navigation.navigate(ROUTES.INFO_REGISTRATION)
               }

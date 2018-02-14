@@ -12,6 +12,8 @@ const { StatusBarManager } = NativeModules
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 
+import variables from '../../style/variables/agidStyle'
+
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
@@ -21,26 +23,42 @@ const CommonStyles = StyleSheet.create({
     marginTop: STATUSBAR_HEIGHT,
     backgroundColor: '#fafafa'
   },
-  titleFont: {
-    fontSize: 36,
-    color: '#13253C',
-    fontWeight: 'bold'
+  header: {
+    backgroundColor: variables.headerBackgroundColor,
+    borderBottomColor: variables.headerBorderButtomColor
   },
-  textFont: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#4A5B6F'
+  leftHeader: {
+    flex: variables.leftFlexValue
+  },
+  iconChevronLeft: {
+    color: variables.iconChevronLeftColor
+  },
+  pageContent: {
+    paddingTop: variables.contentPaddingTop,
+    paddingLeft: variables.contentPaddingLeft,
+    paddingRight: variables.contentPaddingRigth,
+    backgroundColor: variables.contentBackgroudColor
+  },
+  titleFont: {
+    textAlign: variables.titleAlign,
+    fontWeight: variables.titleFontWeight
+  },
+  mainTitlteFont: {
+    fontSize: variables.mainTitleFontSize,
+    color: variables.mainTitleFontColor,
+    fontWeight: variables.mainTitleFontWeight,
+    textAlign: variables.mainTitleFontAlign
   },
   textButton: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: 'white'
+    fontSize: variables.buttonTextFontSize,
+    lineHeight: variables.buttonTextLineHeight,
+    color: variables.buttonTextColor
   },
   textLink: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#004BC4',
-    fontWeight: 'bold'
+    fontSize: variables.linkTextFontSize,
+    lineHeight: variables.linkTextLineHeight,
+    color: variables.linkTextColor,
+    fontWeight: variables.linkTextFontWeight
   },
   errorContainer: {
     padding: 5,
@@ -48,6 +66,23 @@ const CommonStyles = StyleSheet.create({
     borderRadius: 4,
     color: '#eee',
     fontSize: 15
+  },
+  buttonFooter: {
+    justifyContent: 'center',
+    height: 40,
+    width: 300,
+    borderRadius: 4,
+    backgroundColor: '#0073e6'
+  },
+  buttonFooterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  footer: {
+    height: variables.footerHeight,
+    backgroundColor: variables.footerBackgroundColor,
+    flexDirection: 'column',
+    justifyContent: 'center'
   }
 })
 
@@ -109,8 +144,33 @@ const PrivacyStyle = StyleSheet.create({
   }
 })
 
+const NoSpidScreenStyle = StyleSheet.create({
+  contentFirstView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  textLink: {
+    position: 'relative',
+    left: 0
+  },
+  modalText: {
+    position: 'relative',
+    left: 0
+  },
+  marginModal: {
+    marginTop: 5
+  },
+  paddingModal: {
+    paddingTop: 15
+  },
+  paddingSubtitle: {
+    paddingTop: 10
+  }
+})
+
 module.exports = {
   CommonStyles,
   ProfileStyles,
-  PrivacyStyle
+  PrivacyStyle,
+  NoSpidScreenStyle
 }

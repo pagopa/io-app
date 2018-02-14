@@ -39,10 +39,9 @@ export class Privacy extends React.Component {
         />
 
         <Text
-          style={[
-            StyleSheet.flatten(PrivacyStyle.title),
-            StyleSheet.flatten(CommonStyles.titleFont)
-          ]}
+          style={
+            StyleSheet.flatten(PrivacyStyle.title)
+          }
         >
           {I18n.t('privacy.title')}
         </Text>

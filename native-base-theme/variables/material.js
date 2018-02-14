@@ -120,7 +120,7 @@ export default {
 
   // Font
   fontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web",
-  fontSizeBase: 15,
+  fontSizeBase: 16,
 
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
@@ -251,18 +251,22 @@ export default {
   tabTextColor: "#222222",
 
   // Text
-  textColor: "#000",
+  textColor: "#5C6F82",
   inverseTextColor: "#fff",
   noteFontSize: 14,
 
-  // Title
-  titleFontfamily: platform === "ios" ? "Titillium Web" : "Titillium Web",
-  titleFontSize: 14,
+// Title
+  titleFontfamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
+  titleFontSize: 19,
   subTitleFontSize: 14,
   subtitleColor: "#FFF",
 
   // New Variable
-  titleFontColor: "#13253C",
+  titleFontColor: "#FFF",
+
+  //New Variable
+  subtitleAlign: 'left',
+  subtitleFontWeight:'bold',
 
   // Other
   borderRadiusBase: 2,

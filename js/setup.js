@@ -15,7 +15,7 @@ import Mixpanel from 'react-native-mixpanel'
 
 import { StyleProvider } from 'native-base'
 import getTheme from '../native-base-theme/components'
-import material from '../native-base-theme/variables/material'
+import material from '../style/variables/agidStyle'
 
 import configureStore from './store/configureStore'
 import { ProfileNavigator, HomeNavigator } from './routes'
