@@ -105,7 +105,7 @@ jobs:
 
       # Run gradle assembleDebug
       - run:
-          command: cd android && ./gradlew assembleDebug -p
+          command: cd android && ./gradlew assembleDebug
 
   # Test ios build
   test-ios:
