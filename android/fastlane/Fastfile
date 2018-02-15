@@ -25,7 +25,7 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Build the app in release mode"
+  desc "Build the app in debug mode"
   lane :test_build do
     gradle(
       task: 'assemble',
