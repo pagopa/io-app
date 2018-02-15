@@ -21,7 +21,7 @@ import variables from '../../style/variables/agidStyle'
 const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
-    backgroundColor: '#fafafa'
+    backgroundColor: variables.fullContainerBackgroundColor
   },
   header: {
     backgroundColor: variables.headerBackgroundColor,
@@ -49,6 +49,10 @@ const CommonStyles = StyleSheet.create({
     fontWeight: variables.mainTitleFontWeight,
     textAlign: variables.mainTitleFontAlign
   },
+  mainText: {
+    fontSize: variables.textFontSize,
+    color: variables.textColor
+  },
   textButton: {
     fontSize: variables.buttonTextFontSize,
     lineHeight: variables.buttonTextLineHeight,
@@ -61,18 +65,18 @@ const CommonStyles = StyleSheet.create({
     fontWeight: variables.linkTextFontWeight
   },
   errorContainer: {
-    padding: 5,
-    backgroundColor: '#F23333',
-    borderRadius: 4,
-    color: '#eee',
-    fontSize: 15
+    padding: variables.errorContainerPadding,
+    backgroundColor: variables.errorContainerBackgroundColor,
+    borderRadius: variables.errorContainerBorderRadius,
+    color: variables.errorContainerFontColor,
+    fontSize: variables.errorContainerFontSize
   },
   buttonFooter: {
     justifyContent: 'center',
-    height: 40,
-    width: 300,
-    borderRadius: 4,
-    backgroundColor: '#0073e6'
+    height: variables.footerButtonHeight,
+    width: variables.footerButtonWidth,
+    borderRadius: variables.footerButtonBorderRadius,
+    backgroundColor: variables.footerButtonBackgroundColor
   },
   buttonFooterContainer: {
     flexDirection: 'row',
@@ -125,22 +129,22 @@ const ProfileStyles = StyleSheet.create({
 
 const PrivacyStyle = StyleSheet.create({
   content: {
-    backgroundColor: '#D8D8D8',
+    backgroundColor: variables.contentBackgroudColor,
     flex: 1,
-    paddingLeft: 24,
-    paddingRight: 24
+    paddingLeft: variables.contentPaddingLeft,
+    paddingRight: variables.contentPaddingRigth
   },
   closeModal: {
-    fontSize: 30,
+    fontSize: variables.privacyCloseModalFontSize,
     textAlign: 'right',
-    paddingTop: 40,
-    color: '#17324D'
+    paddingTop: variables.privacyCloseModalPaddingTop,
+    color: variables.privacyCloseModalFontColor
   },
   title: {
-    paddingTop: 50
+    paddingTop: variables.privacyTitlePaddingTop
   },
   mainText: {
-    paddingTop: 15
+    paddingTop: variables.privacyMainTextPaddingTop
   }
 })
 
@@ -149,22 +153,8 @@ const NoSpidScreenStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  textLink: {
-    position: 'relative',
-    left: 0
-  },
-  modalText: {
-    position: 'relative',
-    left: 0
-  },
-  marginModal: {
-    marginTop: 5
-  },
-  paddingModal: {
-    paddingTop: 15
-  },
-  paddingSubtitle: {
-    paddingTop: 10
+  paddingMainTitle: {
+    paddingTop: variables.noSpeedScreenPaddingMainTitle
   }
 })
 

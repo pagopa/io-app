@@ -18,7 +18,6 @@ import {
   Footer,
   Body,
   Title,
-  Subtitle,
   Content,
   Icon,
   Text,
@@ -35,10 +34,6 @@ import { CommonStyles } from './styles'
 import { NoSpidScreenStyle } from './styles'
 import Modal from 'react-native-modal'
 import I18n from '../i18n'
-
-const styles = StyleSheet.create({
-
-})
 
 /**
  * Implements the screen called when the user click on don't you have spid?.
@@ -69,7 +64,10 @@ class NotSpidScreen extends React.Component {
                 this.props.navigation.goBack(null)
               }}
             >
-              <Icon name="chevron-left" style={StyleSheet.flatten(CommonStyles.iconChevronLeft)} />
+              <Icon
+                name="chevron-left"
+                style={StyleSheet.flatten(CommonStyles.iconChevronLeft)}
+              />
             </Button>
           </Left>
           <Body style={{ flex: 7 }}>
@@ -79,16 +77,14 @@ class NotSpidScreen extends React.Component {
           </Body>
         </Header>
         <Content style={StyleSheet.flatten(CommonStyles.pageContent)}>
-            <Title style={StyleSheet.flatten(CommonStyles.mainTitlteFont)}>
-              {I18n.t('noSpidScreen.header.title')}
-            </Title>
-          <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingSubtitle)}>
-            <Text>
-              {I18n.t('noSpidScreen.content.line1')}
-            </Text>
+          <Title style={StyleSheet.flatten(CommonStyles.mainTitlteFont)}>
+            {I18n.t('noSpidScreen.header.title')}
+          </Title>
+          <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingMainTitle)}>
+            <Text>{I18n.t('noSpidScreen.content.line1')}</Text>
           </View>
           <Text
-            style={[ StyleSheet.flatten(NoSpidScreenStyle.textLink), StyleSheet.flatten(CommonStyles.textLink)]}
+            style={StyleSheet.flatten(CommonStyles.textLink)}
             onPress={() => {
               this.props.navigation.goBack(null)
             }}
@@ -110,11 +106,9 @@ class NotSpidScreen extends React.Component {
 
           <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingModal)}>
             <View style={StyleSheet.flatten(NoSpidScreenStyle.marginModal)}>
-              <Text>
-                {I18n.t('noSpidScreen.content.line3')}{' '}
-              </Text>
+              <Text>{I18n.t('noSpidScreen.content.line3')} </Text>
             </View>
-            <View style={StyleSheet.flatten(NoSpidScreenStyle.modalText)}>
+            <View>
               <Text
                 style={StyleSheet.flatten(CommonStyles.textLink)}
                 onPress={() => {
