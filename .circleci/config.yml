@@ -103,9 +103,9 @@ jobs:
             - /opt/android/sdk/add-ons/addon-google_apis-google-2
           key: v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
 
-      # Run gradle tests
+      # Run gradle assembleDebug
       - run:
-          command: cd android && ./gradlew test
+          command: cd android && ./gradlew assembleDebug -p
 
   # Test ios build
   test-ios:
