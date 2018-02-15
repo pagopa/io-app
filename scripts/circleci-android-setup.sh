@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Installing build SDK for Android API level $ANDROID_SDK_BUILD_API_LEVEL..."
 sdkmanager "platforms;android-$ANDROID_SDK_BUILD_API_LEVEL"
 echo "Installing SDK build tools, revision $ANDROID_SDK_BUILD_TOOLS_REVISION..."

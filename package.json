@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh",
+    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest",
     "prettify": "prettier --write 'js/**/*.js'",
     "lint": "eslint 'js/**/*.js'",

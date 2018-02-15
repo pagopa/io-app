@@ -80,7 +80,8 @@ import com.android.build.OutputFile
 project.ext.react = [
   entryFile: "index.js",
   // TODO: Check if we still need this
-  extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/main.jsbundle.map")]
+  extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/main.jsbundle.map")],
+  inputExcludes: ["ios/**", "__tests__/**", "bundle_out/**"]
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
