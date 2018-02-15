@@ -23,6 +23,7 @@ import { H1, H2 } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
+import type { DefaultLoggedOutUserState } from '../reducers/user'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
@@ -79,7 +80,8 @@ class LoginScreen extends React.Component {
   props: {
     navigation: Navigator,
     dispatch: Dispatch,
-    isConnected: boolean
+    isConnected: boolean,
+    userState: DefaultLoggedOutUserState
   }
 
   state: {
@@ -159,6 +161,7 @@ class LoginScreen extends React.Component {
         </View>
         <SpidLoginButton
           disabled={!isConnected}
+          userState={this.props.userState}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
           onSpidLogin={(token, idpId) => {
@@ -183,7 +186,8 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isConnected: state.network.isConnected
+  isConnected: state.network.isConnected,
+  userState: state.user
 })
 
 module.exports = connect(mapStateToProps)(LoginScreen)

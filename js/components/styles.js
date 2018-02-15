@@ -20,6 +20,13 @@ const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
     backgroundColor: '#fafafa'
+  },
+  errorContainer: {
+    padding: 5,
+    backgroundColor: '#F23333',
+    borderRadius: 4,
+    color: '#eee',
+    fontSize: 15
   }
 })
 
