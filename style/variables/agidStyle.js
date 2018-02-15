@@ -78,10 +78,11 @@ const style = {
   privacyCloseModalPaddingTop: 40,
 
   //NoSpidScreen Screen
-  noSpeedScreenPaddingMainTitle: 10
+  noSpeedScreenPaddingMainTitle: 10,
 
-
-
+  //SpidUpdateNotification Component
+  spidUpdateNotificationTextMargin: 20,
+  spidUpdateNotificationBottom: 1
 }
 
 export default style

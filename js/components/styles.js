@@ -158,9 +158,19 @@ const NoSpidScreenStyle = StyleSheet.create({
   }
 })
 
+const SpidUpdateNotificationStyle = StyleSheet.create({
+  text: {
+    marginTop: variables.spidUpdateNotificationTextMargin
+  },
+  bottom: {
+    borderBottomWidth: variables.spidUpdateNotificationBottom
+  }
+})
+
 module.exports = {
   CommonStyles,
   ProfileStyles,
   PrivacyStyle,
-  NoSpidScreenStyle
+  NoSpidScreenStyle,
+  SpidUpdateNotificationStyle
 }

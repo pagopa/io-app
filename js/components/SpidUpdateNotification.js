@@ -16,18 +16,9 @@ import { Text, View, Item, Input } from 'native-base'
 
 import EmailValidator from 'email-validator'
 
-import { CommonStyles } from './styles'
+import { SpidUpdateNotificationStyle } from './styles'
 
 import I18n from '../i18n'
-
-const styles = StyleSheet.create({
-  text: {
-    marginTop: 20
-  },
-  button: {
-    borderBottomWidth: 1
-  }
-})
 
 /**
  * Implements the component that allows to insert a mail for update notification about SPID.
@@ -53,13 +44,12 @@ export default class SpidUpdateNotification extends React.Component {
   render() {
     return (
       <View>
-        <Text style={[styles.text, StyleSheet.flatten(CommonStyles.textFont)]}>
+        <Text style={StyleSheet.flatten(SpidUpdateNotificationStyle.text)}>
           {I18n.t('spidUpdateNotification.line1')}
         </Text>
         <Item fixedLabel>
           <Input
-            style={styles.button}
-            placeholderTextColor="#4A5B6F"
+            style={StyleSheet.flatten(SpidUpdateNotificationStyle.bottom)}
             placeholder={I18n.t('spidUpdateNotification.line2')}
             autoCapitalize="none"
             autoCorrect={false}
