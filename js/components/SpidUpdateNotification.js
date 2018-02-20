@@ -16,8 +16,6 @@ import { Text, View, Item, Input } from 'native-base'
 
 import EmailValidator from 'email-validator'
 
-import { SpidUpdateNotificationStyle } from './styles'
-
 import I18n from '../i18n'
 
 /**
@@ -44,7 +42,7 @@ export default class SpidUpdateNotification extends React.Component {
   render() {
     return (
       <View>
-        <Text style={StyleSheet.flatten(SpidUpdateNotificationStyle.text)}>
+        <Text style={SpidUpdateNotificationStyle.text}>
           {I18n.t('spidUpdateNotification.line1')}
         </Text>
         <Item fixedLabel>
@@ -62,3 +60,12 @@ export default class SpidUpdateNotification extends React.Component {
     )
   }
 }
+
+const SpidUpdateNotificationStyle = StyleSheet.create({
+  text: {
+    marginTop: 20
+  },
+  bottom: {
+    borderBottomWidth: 1
+  }
+})

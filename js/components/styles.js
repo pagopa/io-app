@@ -31,7 +31,7 @@ const CommonStyles = StyleSheet.create({
     flex: variables.leftFlexValue
   },
   iconChevronLeft: {
-    color: variables.iconChevronLeftColor
+    color: variables.iconColor
   },
   pageContent: {
     paddingTop: variables.contentPaddingTop,
@@ -64,12 +64,18 @@ const CommonStyles = StyleSheet.create({
     color: variables.linkTextColor,
     fontWeight: variables.linkTextFontWeight
   },
+  // Global style for the container used to show errors in the app
   errorContainer: {
     padding: variables.errorContainerPadding,
     backgroundColor: variables.errorContainerBackgroundColor,
     borderRadius: variables.errorContainerBorderRadius,
     color: variables.errorContainerFontColor,
     fontSize: variables.errorContainerFontSize
+  },
+  // Global style for the icon for close the modal
+  icon: {
+    fontSize: variables.iconFontSize,
+    color: variables.iconColor
   },
   buttonFooter: {
     justifyContent: 'center',
@@ -127,50 +133,7 @@ const ProfileStyles = StyleSheet.create({
   }
 })
 
-const PrivacyStyle = StyleSheet.create({
-  content: {
-    backgroundColor: variables.contentBackgroudColor,
-    flex: 1,
-    paddingLeft: variables.contentPaddingLeft,
-    paddingRight: variables.contentPaddingRigth
-  },
-  closeModal: {
-    fontSize: variables.privacyCloseModalFontSize,
-    textAlign: 'right',
-    paddingTop: variables.privacyCloseModalPaddingTop,
-    color: variables.privacyCloseModalFontColor
-  },
-  title: {
-    paddingTop: variables.privacyTitlePaddingTop
-  },
-  mainText: {
-    paddingTop: variables.privacyMainTextPaddingTop
-  }
-})
-
-const NoSpidScreenStyle = StyleSheet.create({
-  contentFirstView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  paddingMainTitle: {
-    paddingTop: variables.noSpeedScreenPaddingMainTitle
-  }
-})
-
-const SpidUpdateNotificationStyle = StyleSheet.create({
-  text: {
-    marginTop: variables.spidUpdateNotificationTextMargin
-  },
-  bottom: {
-    borderBottomWidth: variables.spidUpdateNotificationBottom
-  }
-})
-
 module.exports = {
   CommonStyles,
-  ProfileStyles,
-  PrivacyStyle,
-  NoSpidScreenStyle,
-  SpidUpdateNotificationStyle
+  ProfileStyles
 }

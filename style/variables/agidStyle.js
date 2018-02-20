@@ -14,7 +14,8 @@ const style = {
   leftFlexValue: 1,
 
   //Icon style
-  iconChevronLeftColor: '#17324D',
+  iconColor: '#17324D',
+  iconFontSize: 30,
 
   //Title style
   titleFontColor: '#5C6F82',
@@ -54,6 +55,7 @@ const style = {
   footerBackgroundColor: '#FFFFFF',
 
   //Error Container
+  // Global variables style for the container used to show errors in the app
   errorContainerBackgroundColor: '#F23333',
   errorContainerFontColor: '#EEEEEE',
   errorContainerPadding: 5,
@@ -64,25 +66,7 @@ const style = {
   footerButtonHeight: 40,
   footerButtonWidth: 300,
   footerButtonBorderRadius: 4,
-  footerButtonBackgroundColor: '#0073E6',
-
-  //Privacy Component
-
-  //Title
-  privacyTitlePaddingTop: 50,
-  privacyMainTextPaddingTop: 15,
-
-  //Close Modal Icon
-  privacyCloseModalFontSize: 30,
-  privacyCloseModalFontColor: '#17324D',
-  privacyCloseModalPaddingTop: 40,
-
-  //NoSpidScreen Screen
-  noSpeedScreenPaddingMainTitle: 10,
-
-  //SpidUpdateNotification Component
-  spidUpdateNotificationTextMargin: 20,
-  spidUpdateNotificationBottom: 1
+  footerButtonBackgroundColor: '#0073E6'
 }
 
 export default style

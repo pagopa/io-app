@@ -31,14 +31,13 @@ import { ROUTES } from '../utils/constants'
 import { Privacy } from './Privacy'
 
 import { CommonStyles } from './styles'
-import { NoSpidScreenStyle } from './styles'
 import Modal from 'react-native-modal'
 import I18n from '../i18n'
 
 /**
  * Implements the screen called when the user click on don't you have spid?.
  */
-class NotSpidScreen extends React.Component {
+class NoSpidScreen extends React.Component {
   props: {
     navigation: Navigator
   }
@@ -80,7 +79,7 @@ class NotSpidScreen extends React.Component {
           <Title style={StyleSheet.flatten(CommonStyles.mainTitlteFont)}>
             {I18n.t('noSpidScreen.header.title')}
           </Title>
-          <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingMainTitle)}>
+          <View>
             <Text>{I18n.t('noSpidScreen.content.line1')}</Text>
           </View>
           <Text
@@ -104,8 +103,8 @@ class NotSpidScreen extends React.Component {
 
           <SpidUpdateNotification />
 
-          <View style={StyleSheet.flatten(NoSpidScreenStyle.paddingModal)}>
-            <View style={StyleSheet.flatten(NoSpidScreenStyle.marginModal)}>
+          <View style={NoSpidScreenStyle.paddingModal}>
+            <View style={NoSpidScreenStyle.marginModal}>
               <Text>{I18n.t('noSpidScreen.content.line3')} </Text>
             </View>
             <View>
@@ -137,4 +136,11 @@ class NotSpidScreen extends React.Component {
   }
 }
 
-module.exports = NotSpidScreen
+module.exports = NoSpidScreen
+
+const NoSpidScreenStyle = StyleSheet.create({
+  contentFirstView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+})

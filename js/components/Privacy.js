@@ -7,6 +7,8 @@
 
 'use strict'
 
+import variables from '../../style/variables/agidStyle'
+
 const React = require('React')
 
 import { StyleSheet, View, Text } from 'react-native'
@@ -14,7 +16,6 @@ import { StyleSheet, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import I18n from '../i18n'
-import { PrivacyStyle } from './styles'
 import { CommonStyles } from './styles'
 
 /**
@@ -29,10 +30,13 @@ export class Privacy extends React.Component {
   }
   render() {
     return (
-      <View style={StyleSheet.flatten(PrivacyStyle.content)}>
+      <View style={PrivacyStyle.content}>
         <Icon
           name="md-close"
-          style={StyleSheet.flatten(PrivacyStyle.closeModal)}
+          style={[
+            PrivacyStyle.closeModal,
+            StyleSheet.flatten(CommonStyles.icon)
+          ]}
           onPress={() => {
             this._handleBack()
           }}
@@ -41,14 +45,14 @@ export class Privacy extends React.Component {
         <Text
           style={[
             StyleSheet.flatten(CommonStyles.mainTitlteFont),
-            StyleSheet.flatten(PrivacyStyle.title)
+            PrivacyStyle.title
           ]}
         >
           {I18n.t('privacy.title')}
         </Text>
         <Text
           style={[
-            StyleSheet.flatten(PrivacyStyle.mainText),
+            PrivacyStyle.mainText,
             StyleSheet.flatten(CommonStyles.mainText)
           ]}
         >
@@ -58,3 +62,22 @@ export class Privacy extends React.Component {
     )
   }
 }
+
+const PrivacyStyle = StyleSheet.create({
+  content: {
+    backgroundColor: variables.contentBackgroudColor,
+    flex: 1,
+    paddingLeft: variables.contentPaddingLeft,
+    paddingRight: variables.contentPaddingRigth
+  },
+  closeModal: {
+    textAlign: 'right',
+    paddingTop: 15
+  },
+  title: {
+    paddingTop: 50
+  },
+  mainText: {
+    paddingTop: 15
+  }
+})

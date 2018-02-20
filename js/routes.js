@@ -15,7 +15,6 @@ const HomeRoutes = {
   [ROUTES.PROFILE]: {
     screen: ProfileScreen
   },
-
   [ROUTES.NO_SPID]: {
     screen: NoSpidScreen
   }
@@ -23,7 +22,7 @@ const HomeRoutes = {
 
 const HomeNavigator = StackNavigator(
   {
-    ...HomeRoutes
+    ...HomeRoutes,
   },
   {
     initialRouteName: ROUTES.HOME,

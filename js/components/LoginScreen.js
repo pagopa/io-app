@@ -59,9 +59,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10
-  },
-  paddingButton: {
-    height: 30
   }
 })
 
@@ -175,7 +172,7 @@ class LoginScreen extends React.Component {
         />
         <View style={{ height: 10 }} />
         <SpidSubscribeComponent />
-        <View style={styles.paddingButton} />
+        <View style={{ height: 30 }} />
         <Button
           transparent
           block
