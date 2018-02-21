@@ -251,11 +251,11 @@ export default {
   tabTextColor: "#222222",
 
   // Text
-  textColor: "#000",
+  textColor: "#5C6F82",
   inverseTextColor: "#fff",
   noteFontSize: 14,
 
-  // Title
+// Title
   titleFontfamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
   titleFontSize: 19,
   subTitleFontSize: 14,
@@ -263,6 +263,10 @@ export default {
 
   // New Variable
   titleFontColor: "#FFF",
+
+  //New Variable
+  subtitleAlign: 'left',
+  subtitleFontWeight:'bold',
 
   // Other
   borderRadiusBase: 2,

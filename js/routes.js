@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation'
 
 import LoginScreen from './components/LoginScreen'
 import ProfileScreen from './components/ProfileScreen'
+import NoSpidScreen from './components/NoSpidScreen'
 
 import { ROUTES } from './utils/constants'
 
@@ -13,6 +14,9 @@ const HomeRoutes = {
 
   [ROUTES.PROFILE]: {
     screen: ProfileScreen
+  },
+  [ROUTES.NO_SPID]: {
+    screen: NoSpidScreen
   }
 }
 

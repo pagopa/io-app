@@ -19,7 +19,7 @@ import {
 
 import I18n from '../i18n'
 
-import { H1, H2 } from 'native-base'
+import { H1, H2, Button } from 'native-base'
 
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
@@ -27,6 +27,8 @@ import type { DefaultLoggedOutUserState } from '../reducers/user'
 
 import { SpidLoginButton } from './SpidLoginButton'
 import SpidSubscribeComponent from './SpidSubscribeComponent'
+
+import { CommonStyles } from './styles'
 
 import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
@@ -174,6 +176,16 @@ class LoginScreen extends React.Component {
         />
         <View style={{ height: 10 }} />
         <SpidSubscribeComponent />
+        <View style={{ height: 30 }} />
+        <Button
+          transparent
+          block
+          onPress={() => this.props.navigation.navigate(ROUTES.NO_SPID)}
+        >
+          <Text style={StyleSheet.flatten(CommonStyles.textButton)}>
+            {I18n.t('login.spidInfoButton')}
+          </Text>
+        </Button>
         <View style={{ height: 60 }} />
         <View style={styles.version}>
           <Text style={titleTextStyles}>

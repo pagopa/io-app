@@ -20,7 +20,33 @@
     "welcome": {
       "line1": "welcome in your",
       "line2": "Digital Citizenship"
+    },
+    "spidInfoButton": "Do you not have Spid?"
+  },
+  "noSpidScreen" : {
+    "header" : {
+      "title": "Don't you have SPID?",
+      "line1": "Insert mail address"
+    },
+    "content": {
+      "line1": "SPID, the Public System of Digital Identity, allows you to access at all the services of the Public Administration with a single Digital identity (username and password)",
+      "line2": "To Learn more",
+      "line3": "Continuing declaring to accept the",
+      "line4": "rules on the processing of personal data"
+    },
+    "footer": {
+      "line1": "Next"
     }
+  },
+  "spidUpdateNotification": {
+    "line1": "If you like, leave us your email address to receive reminders and updates on this app",
+    "line2": "email address",
+    "keyboardType": "email-address",
+    "returnKeyLabel": "send"
+  },
+  "privacy": {
+    "title": "Processing personal data rules",
+    "line1": "M. Brutus Athenis philosophiam, Rhodi eloquentiam didicit. Eius pater, Sullae inimicus, iussu Pompeii necatus erat, quare Brutus cum eograves simultates habuerat. Bello tamen civili Pompeio favit er dolorem suum rei publicae utilitati postposuit. Cum Pompeius profligatus esset, Brutus a Caesare servatus est, pro filio ductus est, et idem praetor creatus est. Postea cum Caesar senatum contemneret et regnum peteret, Brutus cum Cassio et aliis civibusconspiravit adversus eum. Cum Caesar in Curia vulneratus est, inter coniuratos Brutum vidit maestusque ei dixit :\"Tu quoque, Brute, filimi ?\""
   },
   "inbox": {
     "enableButton": "Enable Inbox",

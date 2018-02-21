@@ -80,8 +80,8 @@ if (config.enableTestIdp) {
     id: 'test',
     name: 'Test',
     logo: require('../../img/spid.png'),
-    entityID: 'testid',
-    profileUrl: 'https://italia-backend/profile.html'
+    entityID: 'spid-testenv-identityserver',
+    profileUrl: 'http://italia-backend/profile.html'
   })
 }
 

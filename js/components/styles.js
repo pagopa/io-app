@@ -12,6 +12,8 @@ const { StatusBarManager } = NativeModules
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 
+import variables from '../../style/variables/agidStyle'
+
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
@@ -19,14 +21,78 @@ const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
-    backgroundColor: '#fafafa'
+    backgroundColor: variables.fullContainerBackgroundColor
   },
+  header: {
+    backgroundColor: variables.headerBackgroundColor,
+    borderBottomColor: variables.headerBorderBottomColor
+  },
+  leftHeader: {
+    flex: variables.leftFlexValue
+  },
+  iconChevronLeft: {
+    color: variables.iconColor
+  },
+  pageContent: {
+    paddingTop: variables.contentPaddingTop,
+    paddingLeft: variables.contentPaddingLeft,
+    paddingRight: variables.contentPaddingRight,
+    backgroundColor: variables.contentBackgroudColor
+  },
+  titleFont: {
+    textAlign: variables.titleAlign,
+    fontWeight: variables.titleFontWeight
+  },
+  mainTitleFont: {
+    fontSize: variables.mainTitleFontSize,
+    color: variables.mainTitleFontColor,
+    fontWeight: variables.mainTitleFontWeight,
+    textAlign: variables.mainTitleFontAlign
+  },
+  mainText: {
+    fontSize: variables.textFontSize,
+    color: variables.textColor
+  },
+  textButton: {
+    fontSize: variables.buttonTextFontSize,
+    lineHeight: variables.buttonTextLineHeight,
+    color: variables.buttonTextColor
+  },
+  textLink: {
+    fontSize: variables.linkTextFontSize,
+    lineHeight: variables.linkTextLineHeight,
+    color: variables.linkTextColor,
+    fontWeight: variables.linkTextFontWeight
+  },
+  // Global style for the container used to show errors in the app
   errorContainer: {
-    padding: 5,
-    backgroundColor: '#F23333',
-    borderRadius: 4,
-    color: '#eee',
-    fontSize: 15
+    padding: variables.errorContainerPadding,
+    backgroundColor: variables.errorContainerBackgroundColor,
+    borderRadius: variables.errorContainerBorderRadius,
+    color: variables.errorContainerFontColor,
+    fontSize: variables.errorContainerFontSize
+  },
+  // Global style for the icon for close the modal
+  icon: {
+    fontSize: variables.iconFontSize,
+    color: variables.iconColor
+  },
+  buttonFooter: {
+    justifyContent: 'center',
+    height: variables.footerButtonHeight,
+    width: variables.footerButtonWidth,
+    borderRadius: variables.footerButtonBorderRadius,
+    backgroundColor: variables.footerButtonBackgroundColor
+  },
+  buttonFooterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  footer: {
+    height: variables.footerHeight,
+    backgroundColor: variables.footerBackgroundColor,
+    flexDirection: 'column',
+    justifyContent: 'center'
   }
 })
 
