@@ -44,7 +44,7 @@ export class Privacy extends React.Component {
 
         <Text
           style={[
-            StyleSheet.flatten(CommonStyles.mainTitlteFont),
+            StyleSheet.flatten(CommonStyles.mainTitleFont),
             PrivacyStyle.title
           ]}
         >
@@ -68,7 +68,7 @@ const PrivacyStyle = StyleSheet.create({
     backgroundColor: variables.contentBackgroudColor,
     flex: 1,
     paddingLeft: variables.contentPaddingLeft,
-    paddingRight: variables.contentPaddingRigth
+    paddingRight: variables.contentPaddingRight
   },
   closeModal: {
     textAlign: 'right',

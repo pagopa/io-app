@@ -25,7 +25,7 @@ const CommonStyles = StyleSheet.create({
   },
   header: {
     backgroundColor: variables.headerBackgroundColor,
-    borderBottomColor: variables.headerBorderButtomColor
+    borderBottomColor: variables.headerBorderBottomColor
   },
   leftHeader: {
     flex: variables.leftFlexValue
@@ -36,14 +36,14 @@ const CommonStyles = StyleSheet.create({
   pageContent: {
     paddingTop: variables.contentPaddingTop,
     paddingLeft: variables.contentPaddingLeft,
-    paddingRight: variables.contentPaddingRigth,
+    paddingRight: variables.contentPaddingRight,
     backgroundColor: variables.contentBackgroudColor
   },
   titleFont: {
     textAlign: variables.titleAlign,
     fontWeight: variables.titleFontWeight
   },
-  mainTitlteFont: {
+  mainTitleFont: {
     fontSize: variables.mainTitleFontSize,
     color: variables.mainTitleFontColor,
     fontWeight: variables.mainTitleFontWeight,

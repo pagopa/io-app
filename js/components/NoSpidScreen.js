@@ -76,7 +76,7 @@ class NoSpidScreen extends React.Component {
           </Body>
         </Header>
         <Content style={StyleSheet.flatten(CommonStyles.pageContent)}>
-          <Title style={StyleSheet.flatten(CommonStyles.mainTitlteFont)}>
+          <Title style={StyleSheet.flatten(CommonStyles.mainTitleFont)}>
             {I18n.t('noSpidScreen.header.title')}
           </Title>
           <View>

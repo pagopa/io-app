@@ -8,7 +8,7 @@ const style = {
 
   //Header style
   headerBackgroundColor: '#FFFFFF',
-  headerBorderButtomColor: '#FFFFFF',
+  headerBorderBottomColor: '#FFFFFF',
 
   //Left style
   leftFlexValue: 1,
@@ -32,7 +32,7 @@ const style = {
   //Content style
   contentPaddingTop: 60,
   contentPaddingLeft:24,
-  contentPaddingRigth:24,
+  contentPaddingRight:24,
   contentBackgroudColor: '#FFFFFF',
 
   //Text Style
