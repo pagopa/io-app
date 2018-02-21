@@ -22,7 +22,7 @@ const HomeRoutes = {
 
 const HomeNavigator = StackNavigator(
   {
-    ...HomeRoutes,
+    ...HomeRoutes
   },
   {
     initialRouteName: ROUTES.HOME,
