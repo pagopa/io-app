@@ -8,6 +8,11 @@
       "version": "Version"
     }
   },
+  "connection": {
+    "status": {
+      "offline": "You are offline!"
+    }
+  },
   "errors": {
     "loginError": "There was an error in the login, repeat the procedure."
   },

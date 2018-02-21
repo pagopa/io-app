@@ -329,6 +329,7 @@ class IdpSelectionScreen extends React.Component {
  */
 export class SpidLoginButton extends React.Component {
   props: {
+    disabled: boolean,
     onSpidLoginIntent: () => void,
     onSelectIdp: IdentityProvider => void,
     onSpidLogin: (string, string) => void,
@@ -373,6 +374,7 @@ export class SpidLoginButton extends React.Component {
         </Modal>
 
         <Button
+          disabled={this.props.disabled}
           block
           light
           bordered
