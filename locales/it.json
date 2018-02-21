@@ -40,7 +40,7 @@
   },
   "spidUpdateNotification": {
     "line1": "Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria e aggiornamenti su questa app",
-    "line2": "  indirizzo mail",
+    "line2": "indirizzo email",
     "keyboardType": "email-address",
     "returnKeyLabel": "send"
   },
