@@ -23,7 +23,7 @@ export default {
   badgePadding: platform === "ios" ? 3 : 0,
 
   // Button
-  btnFontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web",
+  btnFontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
   btnDisabledBg: "#b5b5b5",
   btnDisabledClr: "#f1f1f1",
 
@@ -119,8 +119,8 @@ export default {
   brandLight: "#f4f4f4",
 
   // Font
-  fontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web",
-  fontSizeBase: 16,
+  fontFamily: platform === "ios" ? "Titillium Web" : "Titillium Web_Regular",
+  fontSizeBase: 15,
 
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
