@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import type { MapStateToProps } from 'react-redux'
 
 import {
   StyleSheet,
@@ -182,7 +183,7 @@ class LoginScreen extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   userState: state.user
 })
 

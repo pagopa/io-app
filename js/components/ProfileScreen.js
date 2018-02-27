@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import type { MapStateToProps } from 'react-redux'
 
 import { StyleSheet } from 'react-native'
 
@@ -131,10 +132,8 @@ class ProfileScreen extends Component<Props, State> {
   }
 }
 
-function select(store) {
-  return {
-    user: store.user
-  }
-}
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+  user: state.user
+})
 
-module.exports = connect(select)(ProfileScreen)
+module.exports = connect(mapStateToProps)(ProfileScreen)

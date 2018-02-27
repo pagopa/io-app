@@ -10,6 +10,7 @@ import React from 'react'
 import { AppState } from 'react-native'
 
 import { Provider, connect } from 'react-redux'
+import type { MapStateToProps } from 'react-redux'
 import { addNavigationHelpers } from 'react-navigation'
 import Mixpanel from 'react-native-mixpanel'
 
@@ -68,7 +69,7 @@ class AppNavigation extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   nav: state.nav
 })
 
