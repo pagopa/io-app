@@ -7,7 +7,7 @@
 'use strict'
 
 import type { ThunkAction, Dispatch, GetState, Action } from './types'
-import type { ApiUserProfile } from '../utils/api'
+import type { ApiUserProfile, ApiNewUserProfile } from '../utils/api'
 import { getUserProfile } from '../utils/api'
 import { setUserProfile } from '../utils/api'
 
@@ -33,13 +33,11 @@ function requestUserProfile(): ThunkAction {
     if (idpId === 'demo') {
       dispatch(
         receiveUserProfile({
-          token: 'demo',
-          spid_idp: 'demo',
-          name: 'utente',
-          familyname: 'demo',
+          family_name: 'demo',
           fiscal_code: 'TNTDME00A01H501K',
-          mobilephone: '06852641',
-          email: 'demo@gestorespid.it'
+          has_profile: false,
+          name: 'demo',
+          version: 0
         })
       )
     } else {
@@ -59,7 +57,7 @@ function requestUserProfile(): ThunkAction {
 /**
  * Begins an API requests update inbox for the user profile to the backend.
  */
-function updateUserProfile(newProfile: ApiUserProfile): ThunkAction {
+function updateUserProfile(newProfile: ApiNewUserProfile): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     // first we dispatch the request action
     dispatch({

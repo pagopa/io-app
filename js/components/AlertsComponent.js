@@ -26,43 +26,48 @@ type Props = {
 export default class AlertsComponent extends Component<Props> {
   render() {
     const user = this.props.user
+
+    if (!user.profile) {
+      return (
+        <Content padder>
+          <View />
+        </Content>
+      )
+    }
+
     const profile = user.profile
 
     return (
       <Content padder>
-        {!profile || !profile.is_inbox_enabled ? (
-          <View>
-            <Button
-              onPress={() => {
-                this.props.dispatch(
-                  updateUserProfile({
-                    token: profile.token,
-                    spid_ipd: profile.spid_ipd,
-                    email: profile.email,
-                    is_inbox_enabled: !profile.is_inbox_enabled,
-                    version: profile.version
-                  })
-                )
-              }}
-            >
-              <Text>{I18n.t('inbox.disableButton')}</Text>
-            </Button>
-          </View>
-        ) : (
+        {!profile.is_inbox_enabled ? (
           <View>
             <Text>{I18n.t('inbox.enableCallToActionDescription')}</Text>
             <Button
               onPress={() => {
                 this.props.dispatch(
                   updateUserProfile({
-                    email: profile.email,
-                    is_inbox_enabled: !profile.is_inbox_enabled,
+                    is_inbox_enabled: true,
                     version: profile.version
                   })
                 )
               }}
             >
               <Text>{I18n.t('inbox.enableButton')}</Text>
+            </Button>
+          </View>
+        ) : (
+          <View>
+            <Button
+              onPress={() => {
+                this.props.dispatch(
+                  updateUserProfile({
+                    is_inbox_enabled: false,
+                    version: profile.version
+                  })
+                )
+              }}
+            >
+              <Text>{I18n.t('inbox.disableButton')}</Text>
             </Button>
           </View>
         )}

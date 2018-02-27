@@ -10,24 +10,23 @@
  * The user profile
  */
 export type ApiUserProfile = {
-  token: string,
-  spid_idp: string,
-  name?: string,
-  familyname?: string,
-  fiscal_code?: string,
-  spidcode?: string,
-  gender?: string,
-  mobilephone?: string,
-  email?: string,
-  address?: string,
-  expirationdate?: string,
-  digitaladdress?: string,
-  countyofbirth?: string,
-  dateofbirth?: string,
-  idcard?: string,
-  placeofbirth?: string,
+  family_name: string,
+  fiscal_code: string,
+  has_profile: boolean,
   is_inbox_enabled?: boolean,
-  version?: number
+  name: string,
+  version: number
+}
+
+/**
+ * A type used for all the update operations
+ */
+export type ApiNewUserProfile = {
+  family_name?: string,
+  fiscal_code?: string,
+  is_inbox_enabled?: boolean,
+  name?: string,
+  version: number
 }
 
 async function getUserProfile(
@@ -52,7 +51,7 @@ async function getUserProfile(
 async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
-  newProfile: ApiUserProfile
+  newProfile: ApiNewUserProfile
 ): Promise<?ApiUserProfile | number> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
@@ -61,11 +60,7 @@ async function setUserProfile(
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        email: newProfile.email,
-        is_inbox_enabled: newProfile.is_inbox_enabled,
-        version: newProfile.version
-      })
+      body: JSON.stringify(newProfile)
     })
 
     if (response.status == 500) {

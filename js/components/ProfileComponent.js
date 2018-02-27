@@ -86,13 +86,15 @@ class ProfileComponent extends Component<Props> {
     const idpInfo = getIdpInfo(idpId)
 
     const name = profile && profile.name ? profile.name : ''
-    const familyName = profile && profile.familyname ? profile.familyname : '-'
+    const familyName =
+      profile && profile.family_name ? profile.family_name : '-'
     const fullName = `${name} ${familyName}`
     const fiscalNumber =
       profile && profile.fiscal_code
         ? profile.fiscal_code.replace('TINIT-', '')
         : '-'
-    const email = profile && profile.email ? profile.email : '-'
+    const preferred_email =
+      profile && profile.preferred_email ? profile.preferred_email : '-'
     const mobilePhone =
       profile && profile.mobilephone ? profile.mobilephone : '-'
 
@@ -117,7 +119,7 @@ class ProfileComponent extends Component<Props> {
               <Row>
                 <Col style={profileRowStyles}>
                   <Icon name="email" style={profileRowIconStyles} />
-                  <Text style={profileRowTextStyles}>{email}</Text>
+                  <Text style={profileRowTextStyles}>{preferred_email}</Text>
                 </Col>
               </Row>
               <Row>
