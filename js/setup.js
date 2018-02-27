@@ -6,7 +6,7 @@
 
 'use strict'
 
-import React from 'react'
+import React, { Component } from 'react'
 import { AppState } from 'react-native'
 
 import { Provider, connect } from 'react-redux'
@@ -34,16 +34,16 @@ Mixpanel.sharedInstanceWithToken(config.mixpanelToken)
 
 const theme = getTheme(material)
 
+type AppNavigationProps = {
+  nav: NavigationState,
+  dispatch: Dispatch,
+  store: Object
+}
+
 /**
  * Implements the main app navigator
  */
-class AppNavigation extends React.Component {
-  props: {
-    nav: NavigationState,
-    dispatch: Dispatch,
-    store: any
-  }
-
+class AppNavigation extends Component<AppNavigationProps> {
   constructor(props) {
     super(props)
 
@@ -75,15 +75,17 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
 
 const AppWithNavigationState = connect(mapStateToProps)(AppNavigation)
 
+type RootProps = {}
+
+type RootState = {
+  isLoading: boolean,
+  store: Object
+}
+
 /**
  * Root component of the application
  */
-class Root extends React.Component {
-  state: {
-    isLoading: boolean,
-    store: any
-  }
-
+class Root extends Component<RootProps, RootState> {
   constructor() {
     super()
 
