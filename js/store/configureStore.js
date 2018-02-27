@@ -24,7 +24,7 @@ const logger = createLogger({
   duration: true
 })
 
-export default function configureStore(onComplete: ?() => void) {
+export default function configureStore(onComplete?: () => void) {
   const store = createStore(
     reducers,
     undefined,
