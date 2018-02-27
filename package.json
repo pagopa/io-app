@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh",
+    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest",
     "prettify": "prettier --write 'js/**/*.js'",
     "lint": "eslint 'js/**/*.js'",
@@ -25,6 +25,7 @@
     "react-native-fs": "^2.9",
     "react-native-i18n": "^2.0.10",
     "react-native-mixpanel": "^0.0.16",
+    "react-native-offline": "^3.7.2",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "^1.0.0-beta.23",
     "react-redux": "^5.0.4",

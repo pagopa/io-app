@@ -2,7 +2,7 @@ PODS:
   - Mixpanel (3.2.3)
   - React (0.50.0):
     - React/Core (= 0.50.0)
-  - react-native-config (0.11.2):
+  - react-native-config (0.11.5):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
@@ -47,9 +47,9 @@ PODS:
     - React/RCTBlob
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFS (2.9.2):
+  - RNFS (2.9.7):
     - React
-  - RNI18n (2.0.10):
+  - RNI18n (2.0.11):
     - React
   - yoga (0.50.0.React)
 
@@ -93,13 +93,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
   React: a699ffba5161ee79517e9eed0a417d157013567d
-  react-native-config: 438c5f9279694b32c5b1ab3f448f62d4af417dae
+  react-native-config: 11b925080b49cb18299840dd084fc47709306313
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
-  RNFS: 82f4d03d1a36bc2d9968defc3587bbb06ccccf69
-  RNI18n: cd4ddd958e326a2427b70f5474b3fb04aea793b2
+  RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
+  RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
   yoga: 66e85d2f10e1069dcfeb7b7223ac2b41d9465df2
 
-PODFILE CHECKSUM: 252a84512634231480d7e0abd15b512a72d1b9cf
+PODFILE CHECKSUM: 4f71d5674cd38cd4649f6a60a330414792371830
 
 COCOAPODS: 1.3.1

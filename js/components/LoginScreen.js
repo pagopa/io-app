@@ -73,6 +73,7 @@ const ANIMATION_END_LOGO_HEIGHT = 0
 type Props = {
   navigation: Navigator,
   dispatch: Dispatch,
+  isConnected: boolean,
   userState: DefaultLoggedOutUserState
 }
 
@@ -142,6 +143,8 @@ class LoginScreen extends Component<Props, State> {
   }
 
   render() {
+    // When we have no connectivity disable the SpidLoginButton
+    const { isConnected } = this.props
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={{ height: 20 }} />
@@ -159,6 +162,7 @@ class LoginScreen extends Component<Props, State> {
           <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
+          disabled={!isConnected}
           userState={this.props.userState}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
@@ -184,6 +188,7 @@ class LoginScreen extends Component<Props, State> {
 }
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+  isConnected: state.network.isConnected,
   userState: state.user
 })
 
