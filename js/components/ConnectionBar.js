@@ -5,6 +5,7 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { connect } from 'react-redux'
+import type { MapStateToProps } from 'react-redux'
 
 import I18n from '../i18n'
 
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = state => ({
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   isConnected: state.network.isConnected
 })
 

@@ -20,6 +20,7 @@
 .*/node_modules/react-navigation/*
 .*/react-native-keyboard-aware-scroll-view/*
 .*/react-native-sha256/*
+.*/react-native-offline/*
 
 [include]
 
