@@ -13,8 +13,10 @@ import { setUserProfile } from '../utils/api'
 
 const REQUEST_USER_PROFILE_ACTION = 'REQUEST_USER_PROFILE_ACTION'
 const RECEIVE_USER_PROFILE_ACTION = 'RECEIVE_USER_PROFILE_ACTION'
-const REQUEST_UPDATE_USER_PROFILE_ACTION = 'REQUEST_UPDATE_USER_PROFILE_ACTION'
+const UPDATE_USER_PROFILE_REQUEST_ACTION = 'UPDATE_USER_PROFILE_REQUEST_ACTION'
 const UPDATE_USER_PROFILE_ERROR_ACTION = 'UPDATE_USER_PROFILE_ERROR_ACTION'
+
+import I18n from '../i18n'
 
 /**
  * Begins an API requests for the user profile to the backend.
@@ -46,11 +48,33 @@ function requestUserProfile(): ThunkAction {
         // once we get back the user profile, we trigger the receive action
         // TODO handle unsuccessful retrieval of profile
         // @see https://www.pivotaltracker.com/story/show/153245807
-        if (profile !== null) {
+        if (profile) {
           dispatch(receiveUserProfile(profile))
         }
       })
     }
+  }
+}
+
+/**
+ * Begins an API requests update inbox for the user profile to the backend.
+ */
+function updateUserProfile(newProfile: ApiUserProfile): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    // first we dispatch the request action
+    dispatch({
+      type: UPDATE_USER_PROFILE_REQUEST_ACTION
+    })
+    const { apiUrlPrefix, token } = getState().user
+    setUserProfile(apiUrlPrefix, token, newProfile).then(profile => {
+      if (profile) {
+        if (typeof profile === 'number') {
+          dispatch(updateUserProfileError())
+        } else {
+          dispatch(receiveUserProfile(profile))
+        }
+      }
+    })
   }
 }
 
@@ -62,43 +86,23 @@ function receiveUserProfile(profile: ApiUserProfile): Action {
   }
 }
 
-/**
- * Begins an API requests update inbox for the user profile to the backend.
- */
-function requestUpdateUserProfile(newProfile: object): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
-    // first we dispatch the request action
-    dispatch({
-      type: REQUEST_UPDATE_USER_PROFILE_ACTION
-    })
-    const { apiUrlPrefix, token } = getState().user
-    setUserProfile(apiUrlPrefix, token, newProfile).then(payload => {
-      if (payload == 500) {
-        updateUserProfileError(payload)(dispatch)
-      } else {
-        receiveUserProfile(payload)(dispatch, getState)
-      }
-    })
-  }
-}
-
-function updateUserProfileError(error): Action {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: UPDATE_USER_PROFILE_ERROR_ACTION,
-      error: error
-    })
+function updateUserProfileError(): Action {
+  return {
+    type: UPDATE_USER_PROFILE_ERROR_ACTION,
+    data: {
+      error: I18n.t('errors.profileUpdateError')
+    }
   }
 }
 
 module.exports = {
   requestUserProfile,
+  updateUserProfile,
   receiveUserProfile,
-  requestUpdateUserProfile,
   updateUserProfileError,
 
   REQUEST_USER_PROFILE_ACTION,
   RECEIVE_USER_PROFILE_ACTION,
-  REQUEST_UPDATE_USER_PROFILE_ACTION,
+  UPDATE_USER_PROFILE_REQUEST_ACTION,
   UPDATE_USER_PROFILE_ERROR_ACTION
 }

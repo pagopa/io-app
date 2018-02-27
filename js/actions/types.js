@@ -23,6 +23,8 @@ export type Action =
       profile: ApiUserProfile,
       receivedAt: number
     }
+  | { type: 'UPDATE_USER_PROFILE_REQUEST_ACTION' }
+  | { type: 'UPDATE_USER_PROFILE_ERROR_ACTION', data: { error: string } }
 
 export type ApplicationState = 'background' | 'inactive' | 'active'
 

@@ -4,7 +4,7 @@
 
 'use strict'
 
-const React = require('React')
+import React, { Component } from 'react'
 
 import { StyleSheet, Linking } from 'react-native'
 
@@ -70,16 +70,16 @@ const openIdpProfile = function(idpUrl: string) {
   Linking.openURL(idpUrl) //.catch(err => { })
 }
 
+type Props = {
+  navigation: NavigationScreenProp<*, AnyAction>,
+  dispatch: Dispatch,
+  user: LoggedInUserState
+}
+
 /**
  * Implements the content of the user profile tab.
  */
-class ProfileComponent extends React.Component {
-  props: {
-    navigation: NavigationScreenProp<*, AnyAction>,
-    dispatch: Dispatch,
-    user: LoggedInUserState
-  }
-
+class ProfileComponent extends Component<Props> {
   render() {
     const profile = this.props.user.profile
     const idpId = this.props.user.idpId

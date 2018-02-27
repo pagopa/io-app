@@ -5,8 +5,8 @@
 
 'use strict'
 
-const React = require('React')
-const { connect } = require('react-redux')
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import {
   StyleSheet,
@@ -21,6 +21,7 @@ import I18n from '../i18n'
 
 import { H1, H2 } from 'native-base'
 
+import type EmitterSubscription from 'EmitterSubscription'
 import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
 import type { DefaultLoggedOutUserState } from '../reducers/user'
@@ -68,24 +69,24 @@ const titleTextStyles = StyleSheet.flatten(styles.titleText)
 const ANIMATION_START_LOGO_HEIGHT = 70
 const ANIMATION_END_LOGO_HEIGHT = 0
 
+type Props = {
+  navigation: Navigator,
+  dispatch: Dispatch,
+  userState: DefaultLoggedOutUserState
+}
+
+type State = {
+  imageHeight: Animated.Value
+}
+
 /**
  * Implements the login screen.
  */
-class LoginScreen extends React.Component {
+class LoginScreen extends Component<Props, State> {
   // called when keyboard appears
-  keyboardWillShowSub: any => void
+  keyboardWillShowSub: EmitterSubscription
   // called when keyboard disappears
-  keyboardWillHideSub: any => void
-
-  props: {
-    navigation: Navigator,
-    dispatch: Dispatch,
-    userState: DefaultLoggedOutUserState
-  }
-
-  state: {
-    imageHeight: any
-  }
+  keyboardWillHideSub: EmitterSubscription
 
   constructor(props) {
     super(props)
@@ -181,10 +182,8 @@ class LoginScreen extends React.Component {
   }
 }
 
-function mapStateToProps(store) {
-  return {
-    userState: store.user
-  }
-}
+const mapStateToProps = (state: Object) => ({
+  userState: state.user
+})
 
 module.exports = connect(mapStateToProps)(LoginScreen)

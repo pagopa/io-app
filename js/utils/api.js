@@ -10,7 +10,6 @@
  * The user profile
  */
 export type ApiUserProfile = {
-  created_at: number,
   token: string,
   spid_idp: string,
   name?: string,
@@ -26,7 +25,9 @@ export type ApiUserProfile = {
   countyofbirth?: string,
   dateofbirth?: string,
   idcard?: string,
-  placeofbirth?: string
+  placeofbirth?: string,
+  is_inbox_enabled?: boolean,
+  version?: number
 }
 
 async function getUserProfile(
@@ -51,8 +52,8 @@ async function getUserProfile(
 async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
-  newProfile: Object
-) {
+  newProfile: ApiUserProfile
+): Promise<?ApiUserProfile | number> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: 'post',
@@ -70,7 +71,7 @@ async function setUserProfile(
     if (response.status == 500) {
       return response.status
     } else {
-      const responseJson = await response.json()
+      const responseJson: ApiUserProfile = await response.json()
       return responseJson
     }
   } catch (error) {
