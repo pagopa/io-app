@@ -18,9 +18,9 @@
 
 ; Ignore libraries with errors
 .*/node_modules/react-navigation/*
-.*/react-native-keyboard-aware-scroll-view/*
-.*/react-native-sha256/*
-.*/react-native-offline/*
+.*/node_modules/react-native-keyboard-aware-scroll-view/*
+.*/node_modules/react-native-sha256/*
+.*/node_modules/react-native-offline/*
 
 [include]
 
