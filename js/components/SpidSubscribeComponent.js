@@ -5,7 +5,7 @@
 
 'use strict'
 
-const React = require('React')
+import React, { Component } from 'react'
 
 import { Text, Icon, View, Item, Input } from 'native-base'
 
@@ -13,15 +13,17 @@ import EmailValidator from 'email-validator'
 
 import I18n from '../i18n'
 
+type State = {
+  isEmailValid: boolean
+}
+
+type Props = {}
+
 /**
  * Implements the component for helping the user to subscribe to SPID.
  */
-export default class SpidSubscribeComponent extends React.Component {
-  state: {
-    isEmailValid: boolean
-  }
-
-  constructor(props) {
+export default class SpidSubscribeComponent extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       isEmailValid: false

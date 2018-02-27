@@ -1,10 +1,9 @@
-// flow-typed signature: 0ed284c5a2e97a9e3c0e87af3dedc09d
-// flow-typed version: bdf1e66252/react-redux_v5.x.x/flow_>=v0.30.x
+// flow-typed signature: 59b0c4be0e1408f21e2446be96c79804
+// flow-typed version: 9092387fd2/react-redux_v5.x.x/flow_>=v0.54.x
 
-import type { Dispatch, Store } from 'redux'
+import type { Dispatch, Store } from "redux";
 
-declare module 'react-redux' {
-
+declare module "react-redux" {
   /*
 
     S = State
@@ -15,30 +14,68 @@ declare module 'react-redux' {
 
   */
 
-  declare type MapStateToProps<S, OP: Object, SP: Object> = (state: S, ownProps: OP) => SP | MapStateToProps<S, OP, SP>;
+  declare type MapStateToProps<S, OP: Object, SP: Object> = (
+    state: S,
+    ownProps: OP
+  ) => ((state: S, ownProps: OP) => SP) | SP;
 
-  declare type MapDispatchToProps<A, OP: Object, DP: Object> = ((dispatch: Dispatch<A>, ownProps: OP) => DP) | DP;
+  declare type MapDispatchToProps<A, OP: Object, DP: Object> =
+    | ((dispatch: Dispatch<A>, ownProps: OP) => DP)
+    | DP;
 
-  declare type MergeProps<SP, DP: Object, OP: Object, P: Object> = (stateProps: SP, dispatchProps: DP, ownProps: OP) => P;
+  declare type MergeProps<SP, DP: Object, OP: Object, P: Object> = (
+    stateProps: SP,
+    dispatchProps: DP,
+    ownProps: OP
+  ) => P;
 
-  declare type StatelessComponent<P> = (props: P) => ?React$Element<any>;
+  declare type Context = { store: Store<*, *> };
 
-  declare class ConnectedComponent<OP, P, Def, St> extends React$Component<void, OP, void> {
-    static WrappedComponent: Class<React$Component<Def, P, St>>;
-    getWrappedInstance(): React$Component<Def, P, St>;
-    static defaultProps: void;
-    props: OP;
-    state: void;
+  declare type ComponentWithDefaultProps<DP: {}, P: {}, CP: P> = Class<
+    React$Component<CP>
+  > & { defaultProps: DP };
+
+  declare class ConnectedComponentWithDefaultProps<
+    OP,
+    DP,
+    CP
+  > extends React$Component<OP> {
+    static defaultProps: DP, // <= workaround for https://github.com/facebook/flow/issues/4644
+    static WrappedComponent: Class<React$Component<CP>>,
+    getWrappedInstance(): React$Component<CP>,
+    props: OP,
+    state: void
   }
 
-  declare type ConnectedComponentClass<OP, P, Def, St> = Class<ConnectedComponent<OP, P, Def, St>>;
+  declare class ConnectedComponent<OP, P> extends React$Component<OP> {
+    static WrappedComponent: Class<React$Component<P>>,
+    getWrappedInstance(): React$Component<P>,
+    props: OP,
+    state: void
+  }
 
-  declare type Connector<OP, P> = {
-    (component: StatelessComponent<P>): ConnectedComponentClass<OP, P, void, void>;
-    <Def, St>(component: Class<React$Component<Def, P, St>>): ConnectedComponentClass<OP, P, Def, St>;
-  };
+  declare type ConnectedComponentWithDefaultPropsClass<OP, DP, CP> = Class<
+    ConnectedComponentWithDefaultProps<OP, DP, CP>
+  >;
 
-  declare class Provider<S, A> extends React$Component<void, { store: Store<S, A>, children?: any }, void> { }
+  declare type ConnectedComponentClass<OP, P> = Class<
+    ConnectedComponent<OP, P>
+  >;
+
+  declare type Connector<OP, P> = (<DP: {}, CP: {}>(
+    component: ComponentWithDefaultProps<DP, P, CP>
+  ) => ConnectedComponentWithDefaultPropsClass<OP, DP, CP>) &
+    ((component: React$ComponentType<P>) => ConnectedComponentClass<OP, P>);
+
+  declare class Provider<S, A> extends React$Component<{
+    store: Store<S, A>,
+    children?: any
+  }> {}
+
+  declare function createProvider(
+    storeKey?: string,
+    subKey?: string
+  ): Provider<*, *>;
 
   declare type ConnectOptions = {
     pure?: boolean,
@@ -81,9 +118,15 @@ declare module 'react-redux' {
 
   declare function connect<S, A, OP, SP, DP, P>(
     mapStateToProps: MapStateToProps<S, OP, SP>,
-    mapDispatchToProps: MapDispatchToProps<A, OP, DP>,
+    mapDispatchToProps: Null,
     mergeProps: MergeProps<SP, DP, OP, P>,
     options?: ConnectOptions
   ): Connector<OP, P>;
 
+  declare function connect<S, A, OP, SP, DP, P>(
+    mapStateToProps: MapStateToProps<S, OP, SP>,
+    mapDispatchToProps: MapDispatchToProps<A, OP, DP>,
+    mergeProps: MergeProps<SP, DP, OP, P>,
+    options?: ConnectOptions
+  ): Connector<OP, P>;
 }

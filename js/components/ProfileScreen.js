@@ -4,8 +4,9 @@
 
 'use strict'
 
-const React = require('React')
-const { connect } = require('react-redux')
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import type { MapStateToProps } from 'react-redux'
 
 import { StyleSheet } from 'react-native'
 
@@ -37,20 +38,20 @@ type AlertsTab = { name: 'alerts' }
 type CalendarTab = { name: 'calendar' }
 type ProfileTab = { name: 'profile' }
 
+type Props = {
+  navigation: Navigator,
+  dispatch: Dispatch,
+  user: LoggedInUserState
+}
+
+type State = {
+  activeTab: TabName
+}
+
 /**
  * Implements the main user screen
  */
-class ProfileScreen extends React.Component {
-  state: {
-    activeTab: TabName
-  }
-
-  props: {
-    navigation: Navigator,
-    dispatch: Dispatch,
-    user: LoggedInUserState
-  }
-
+class ProfileScreen extends Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
@@ -131,10 +132,8 @@ class ProfileScreen extends React.Component {
   }
 }
 
-function select(store) {
-  return {
-    user: store.user
-  }
-}
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+  user: state.user
+})
 
-module.exports = connect(select)(ProfileScreen)
+module.exports = connect(mapStateToProps)(ProfileScreen)

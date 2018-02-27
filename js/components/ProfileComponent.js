@@ -4,7 +4,7 @@
 
 'use strict'
 
-const React = require('React')
+import React, { Component } from 'react'
 
 import { StyleSheet, Linking } from 'react-native'
 
@@ -70,29 +70,31 @@ const openIdpProfile = function(idpUrl: string) {
   Linking.openURL(idpUrl) //.catch(err => { })
 }
 
+type Props = {
+  navigation: NavigationScreenProp<*, AnyAction>,
+  dispatch: Dispatch,
+  user: LoggedInUserState
+}
+
 /**
  * Implements the content of the user profile tab.
  */
-class ProfileComponent extends React.Component {
-  props: {
-    navigation: NavigationScreenProp<*, AnyAction>,
-    dispatch: Dispatch,
-    user: LoggedInUserState
-  }
-
+class ProfileComponent extends Component<Props> {
   render() {
     const profile = this.props.user.profile
     const idpId = this.props.user.idpId
     const idpInfo = getIdpInfo(idpId)
 
     const name = profile && profile.name ? profile.name : ''
-    const familyName = profile && profile.familyname ? profile.familyname : '-'
+    const familyName =
+      profile && profile.family_name ? profile.family_name : '-'
     const fullName = `${name} ${familyName}`
     const fiscalNumber =
       profile && profile.fiscal_code
         ? profile.fiscal_code.replace('TINIT-', '')
         : '-'
-    const email = profile && profile.email ? profile.email : '-'
+    const preferred_email =
+      profile && profile.preferred_email ? profile.preferred_email : '-'
     const mobilePhone =
       profile && profile.mobilephone ? profile.mobilephone : '-'
 
@@ -117,7 +119,7 @@ class ProfileComponent extends React.Component {
               <Row>
                 <Col style={profileRowStyles}>
                   <Icon name="email" style={profileRowIconStyles} />
-                  <Text style={profileRowTextStyles}>{email}</Text>
+                  <Text style={profileRowTextStyles}>{preferred_email}</Text>
                 </Col>
               </Row>
               <Row>

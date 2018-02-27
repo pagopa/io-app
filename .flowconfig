@@ -16,6 +16,12 @@
 ; Ignore polyfills
 .*/Libraries/polyfills/.*
 
+; Ignore libraries with errors
+.*/node_modules/react-navigation/*
+.*/node_modules/react-native-keyboard-aware-scroll-view/*
+.*/node_modules/react-native-sha256/*
+.*/node_modules/react-native-offline/*
+
 [include]
 
 [libs]

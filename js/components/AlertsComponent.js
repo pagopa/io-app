@@ -4,40 +4,49 @@
 
 'use strict'
 
-const React = require('React')
+import React, { Component } from 'react'
 
 import { Content, Button, Text, View } from 'native-base'
 
 import type { Dispatch } from '../actions/types'
-import type { UserState } from '../reducers/user'
+import type { LoggedInUserState } from '../reducers/user'
 
-import { requestUpdateUserProfile } from '../actions'
+import { updateUserProfile } from '../actions'
 
 import I18n from '../i18n'
+
+type Props = {
+  dispatch: Dispatch,
+  user: LoggedInUserState
+}
 
 /**
  * Implements content of the "Alerts" tab
  */
-export default class AlertsComponent extends React.Component {
-  props: {
-    dispatch: Dispatch,
-    user: UserState
-  }
-
+export default class AlertsComponent extends Component<Props> {
   render() {
     const user = this.props.user
+
+    if (!user.profile) {
+      return (
+        <Content padder>
+          <View />
+        </Content>
+      )
+    }
+
     const profile = user.profile
 
     return (
       <Content padder>
-        {profile.is_inbox_enabled ? (
+        {!profile.is_inbox_enabled ? (
           <View>
+            <Text>{I18n.t('inbox.enableCallToActionDescription')}</Text>
             <Button
               onPress={() => {
                 this.props.dispatch(
-                  requestUpdateUserProfile({
-                    email: profile.email,
-                    is_inbox_enabled: !profile.is_inbox_enabled,
+                  updateUserProfile({
+                    is_inbox_enabled: true,
                     version: profile.version
                   })
                 )
@@ -48,13 +57,11 @@ export default class AlertsComponent extends React.Component {
           </View>
         ) : (
           <View>
-            <Text>{I18n.t('inbox.enableCallToActionDescription')}</Text>
             <Button
               onPress={() => {
                 this.props.dispatch(
-                  requestUpdateUserProfile({
-                    email: profile.email,
-                    is_inbox_enabled: !profile.is_inbox_enabled,
+                  updateUserProfile({
+                    is_inbox_enabled: false,
                     version: profile.version
                   })
                 )

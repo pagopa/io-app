@@ -8,7 +8,7 @@ describe('appState reducer', () => {
 
   it('should handle APPLICATION_STATE_CHANGE_ACTION', () => {
     expect(appState(undefined, appStateChange('inactive'))).toEqual({
-      appState: 'INACTIVE'
+      appState: 'inactive'
     })
   })
 })

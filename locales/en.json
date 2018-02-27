@@ -14,7 +14,8 @@
     }
   },
   "errors": {
-    "loginError": "There was an error in the login, repeat the procedure."
+    "loginError": "There was an error in the login, repeat the procedure.",
+    "profileUpdateError": "An error occurred while updating your profile."
   },
   "login": {
     "welcome": {

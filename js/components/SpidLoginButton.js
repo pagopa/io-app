@@ -9,9 +9,8 @@
 
 import { CommonStyles } from './styles'
 
-const React = require('react')
-const ReactNative = require('react-native')
-const { StyleSheet, View, WebView, Image, Modal } = ReactNative
+import React, { Component } from 'react'
+import { StyleSheet, View, WebView, Image, Modal } from 'react-native'
 
 import config from '../config'
 import I18n from '../i18n'
@@ -80,7 +79,7 @@ if (config.enableTestIdp) {
     id: 'test',
     name: 'Test',
     logo: require('../../img/spid.png'),
-    entityID: 'testid',
+    entityID: 'spid-testenv-identityserver',
     profileUrl: 'https://italia-backend/profile.html'
   })
 }
@@ -106,24 +105,27 @@ export function getIdpInfo(idpId: string): ?IdentityProvider {
   return idps.find(idp => idp.id === idpId)
 }
 
+type SpidLoginWebviewProps = {
+  idp: IdentityProvider,
+  onSuccess: (token: string) => void,
+  onError: (err: string) => void
+}
+
+type SpidLoginWebviewState = {
+  url: string,
+  status: string,
+  isLoading: boolean
+}
+
 /**
  * Webview usata per la pagina di login dell'IdP
  *
  * TODO aggiungere animazione di loading
  */
-class SpidLoginWebview extends React.Component {
-  props: {
-    idp: IdentityProvider,
-    onSuccess: (token: string) => void,
-    onError: (err: string) => void
-  }
-
-  state: {
-    url: string,
-    status: string,
-    isLoading: boolean
-  }
-
+class SpidLoginWebview extends Component<
+  SpidLoginWebviewProps,
+  SpidLoginWebviewState
+> {
   constructor(props) {
     super(props)
     this.state = {
@@ -173,26 +175,27 @@ class SpidLoginWebview extends React.Component {
   }
 }
 
+type IdpSelectionScreenProps = {
+  closeModal: () => void,
+  onSelectIdp: IdentityProvider => void,
+  onSpidLogin: (string, string) => void,
+  onSpidLoginError: string => void,
+  userState: UserState
+}
+
+type IdpSelectionScreenState = {
+  selectedIdp: ?IdentityProvider
+}
+
 /**
  * Schermata di selezione dell'Identiry Provider SPID
  */
-class IdpSelectionScreen extends React.Component {
-  props: {
-    closeModal: () => void,
-    onSelectIdp: IdentityProvider => void,
-    onSpidLogin: (string, string) => void,
-    onSpidLoginError: string => void,
-    userState: UserState
-  }
-
-  state: {
-    selectedIdp: ?IdentityProvider
-  }
-
+class IdpSelectionScreen extends Component<
+  IdpSelectionScreenProps,
+  IdpSelectionScreenState
+> {
   constructor(props) {
     super(props)
-
-    this.createButtons = this.createButtons.bind(this)
 
     this.state = {
       selectedIdp: null
@@ -211,7 +214,7 @@ class IdpSelectionScreen extends React.Component {
     })
   }
 
-  createButton(idp: IdentityProvider, onPress: () => any) {
+  createButton = (idp: IdentityProvider, onPress: () => any) => {
     return (
       <Button
         iconRight
@@ -228,7 +231,7 @@ class IdpSelectionScreen extends React.Component {
     )
   }
 
-  createButtons() {
+  createButtons = () => {
     return idps.map((idp: IdentityProvider) =>
       this.createButton(idp, () => {
         this.props.onSelectIdp(idp)
@@ -285,7 +288,7 @@ class IdpSelectionScreen extends React.Component {
           </Body>
           <Right />
         </Header>
-        {selectedIdp !== null ? (
+        {selectedIdp ? (
           <SpidLoginWebview
             idp={selectedIdp}
             onSuccess={token => this._handleSpidSuccess(token)}
@@ -310,7 +313,7 @@ class IdpSelectionScreen extends React.Component {
 
   _handleSpidSuccess(token) {
     const selectedIdp = this.state.selectedIdp
-    if (selectedIdp !== null) {
+    if (selectedIdp) {
       this.props.closeModal()
       // ad autenticazione avvenuta, viene chiamata onSpidLogin
       // passando il token di sessione e l'idendificativo dell'IdP
@@ -324,19 +327,26 @@ class IdpSelectionScreen extends React.Component {
   }
 }
 
+type SpidLoginButtonProps = {
+  disabled: boolean,
+  onSpidLoginIntent: () => void,
+  onSelectIdp: IdentityProvider => void,
+  onSpidLogin: (string, string) => void,
+  onSpidLoginError: string => void,
+  userState: UserState
+}
+
+type SpidLoginButtonState = {
+  isModalVisible: boolean
+}
+
 /**
  * Bottone di login SPID.
  */
-export class SpidLoginButton extends React.Component {
-  props: {
-    disabled: boolean,
-    onSpidLoginIntent: () => void,
-    onSelectIdp: IdentityProvider => void,
-    onSpidLogin: (string, string) => void,
-    onSpidLoginError: string => void,
-    userState: UserState
-  }
-
+export class SpidLoginButton extends Component<
+  SpidLoginButtonProps,
+  SpidLoginButtonState
+> {
   state = {
     isModalVisible: false
   }
@@ -347,7 +357,7 @@ export class SpidLoginButton extends React.Component {
     })
   }
 
-  handleSelectIdp = idp => {
+  handleSelectIdp = (idp: IdentityProvider) => {
     if (isDemoIdp(idp)) {
       this.setModalVisible(false)
     }
