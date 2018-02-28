@@ -1,13 +1,14 @@
 /**
  * Implements a custom generic error handler that keeps track of JavaScript exceptions
+ *
+ * TODO: Improve this using external libraries @https://www.pivotaltracker.com/story/show/155392873
  */
 
+import { Alert } from 'react-native'
 import Mixpanel from 'react-native-mixpanel'
-import { initSourceMaps, getStackTrace } from '../react-native-source-maps'
 import DeviceInfo from 'react-native-device-info'
 
-import { Alert } from 'react-native'
-
+import { initSourceMaps, getStackTrace } from '../react-native-source-maps'
 import I18n from '../i18n'
 
 const isDev = __DEV__

@@ -1,5 +1,5 @@
-import { ProfileNavigator, HomeNavigator } from '../routes'
-import { ROUTES } from '../utils/constants'
+import { ProfileNavigator, HomeNavigator } from '../navigation'
+import ROUTES from '../navigation/routes'
 
 const loggedOutInitialState = HomeNavigator.router.getStateForAction(
   HomeNavigator.router.getActionForPathAndParams(ROUTES.HOME)

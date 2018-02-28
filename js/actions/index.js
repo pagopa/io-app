@@ -8,10 +8,8 @@
 
 import loginActions from './login'
 import userActions from './user'
-import appStateActions from './appState'
 
 module.exports = {
   ...loginActions,
-  ...userActions,
-  ...appStateActions
+  ...userActions
 }

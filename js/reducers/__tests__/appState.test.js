@@ -1,5 +1,5 @@
 import appState, { initialAppState } from '../appState'
-import { appStateChange } from '../../actions'
+import { APP_STATE_CHANGE_ACTION } from '../../enhancers/applyAppStateListener'
 
 describe('appState reducer', () => {
   it('should have a valid initial state', () => {
@@ -7,7 +7,11 @@ describe('appState reducer', () => {
   })
 
   it('should handle APPLICATION_STATE_CHANGE_ACTION', () => {
-    expect(appState(undefined, appStateChange('inactive'))).toEqual({
+    const action = {
+      type: APP_STATE_CHANGE_ACTION,
+      payload: 'inactive'
+    }
+    expect(appState(undefined, action)).toEqual({
       appState: 'inactive'
     })
   })

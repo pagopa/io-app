@@ -32,7 +32,8 @@ import SpidSubscribeComponent from './SpidSubscribeComponent'
 
 import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
-import { ROUTES, VERSION } from '../utils/constants'
+import { VERSION } from '../utils/constants'
+import ROUTES from '../navigation/routes'
 
 import { isDemoIdp } from '../utils/api'
 

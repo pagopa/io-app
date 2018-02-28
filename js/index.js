@@ -6,8 +6,7 @@
 
 'use strict'
 
-const { AppRegistry } = require('react-native')
+import { AppRegistry } from 'react-native'
+import App from './App'
 
-const setup = require('./setup')
-
-AppRegistry.registerComponent('ItaliaApp', setup)
+AppRegistry.registerComponent('ItaliaApp', () => App)

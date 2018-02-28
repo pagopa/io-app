@@ -1,5 +1,5 @@
-// flow-typed signature: 8cfd8555501c152cb770f913e5d69906
-// flow-typed version: a7fde2f5d1/lodash_v4.x.x/flow_>=v0.55.x <=v0.62.x
+// flow-typed signature: 2aa4c73f85e9dfa81f161e7edb6e4d6e
+// flow-typed version: 8c150a1c24/lodash_v4.x.x/flow_>=v0.55.x <=v0.62.x
 
 declare module "lodash" {
   declare type __CurriedFunction1<A, R, AA: A> = (...r: [AA]) => R;
@@ -1369,10 +1369,8 @@ declare module "lodash" {
     // NaN is a number instead of its own type, otherwise it would behave like null/void
     defaultTo<T1: number, T2>(value: T1, defaultValue: T2): T1 | T2;
     defaultTo<T1: void | null, T2>(value: T1, defaultValue: T2): T2;
-    flow: $ComposeReverse;
-    flow(funcs?: Array<Function>): Function;
-    flowRight: $Compose;
-    flowRight(funcs?: Array<Function>): Function;
+    flow: ($ComposeReverse & (funcs: Array<Function>) => Function);
+    flowRight: ($Compose & (funcs: Array<Function>) => Function);
     identity<T>(value: T): T;
     iteratee(func?: any): Function;
     matches(source?: ?Object): Function;
@@ -3120,14 +3118,10 @@ declare module "lodash/fp" {
     defaultTo<T1: number, T2>(defaultValue: T2, value: T1): T1 | T2;
     defaultTo<T1: void | null, T2>(defaultValue: T2): (value: T1) => T2;
     defaultTo<T1: void | null, T2>(defaultValue: T2, value: T1): T2;
-    flow: $ComposeReverse;
-    flow(funcs: Array<Function>): Function;
-    pipe: $ComposeReverse;
-    pipe(funcs: Array<Function>): Function;
-    flowRight: $Compose;
-    flowRight(funcs: Array<Function>): Function;
-    compose: $Compose;
-    compose(funcs: Array<Function>): Function;
+    flow: ($ComposeReverse & (funcs: Array<Function>) => Function);
+    pipe: ($ComposeReverse & (funcs: Array<Function>) => Function);
+    flowRight: ($Compose & (funcs: Array<Function>) => Function);
+    compose: ($Compose & (funcs: Array<Function>) => Function);
     identity<T>(value: T): T;
     iteratee(func: any): Function;
     matches(source: Object): (object: Object) => boolean;

@@ -28,7 +28,8 @@ import type { NavigationScreenProp } from 'react-navigation/src/TypeDefinition'
 import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
-import { ROUTES, VERSION } from '../utils/constants'
+import { VERSION } from '../utils/constants'
+import ROUTES from '../navigation/routes'
 
 import { ProfileStyles } from './styles'
 

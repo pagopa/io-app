@@ -29,8 +29,8 @@ export type Action =
 export type ApplicationState = 'background' | 'inactive' | 'active'
 
 export type ApplicationStateAction = {
-  type: 'APPLICATION_STATE_CHANGE_ACTION',
-  name: ApplicationState
+  type: 'APP_STATE_CHANGE_ACTION',
+  payload: ApplicationState
 }
 
 export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
