@@ -1,3 +1,7 @@
+/**
+ * A store enhancer that listen on application state changes and dispatch proper actions
+ */
+
 import { AppState } from 'react-native'
 
 export const APP_STATE_CHANGE_ACTION = 'APP_STATE_CHANGE_ACTION'
