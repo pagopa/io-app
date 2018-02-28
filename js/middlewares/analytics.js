@@ -3,20 +3,19 @@
  *
  */
 
-import { NavigationActions } from 'react-navigation'
 import Mixpanel from 'react-native-mixpanel'
+import { NavigationActions } from 'react-navigation'
 import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
+import { REHYDRATE } from 'redux-persist/lib/constants'
 
 import {
-  APPLICATION_STATE_CHANGE_ACTION,
   USER_WILL_LOGIN_ACTION,
   USER_SELECTED_SPID_PROVIDER_ACTION,
   USER_LOGGED_IN_ACTION,
   USER_LOGIN_ERROR_ACTION
 } from '../actions'
-
-import * as persist from 'redux-persist/constants'
+import { APP_STATE_CHANGE_ACTION } from '../enhancers/applyAppStateListener'
 
 /*
   The middleware injects the `getState` method (from the store) into the action
@@ -34,11 +33,12 @@ const injectGetState = ({ getState }) => next => action => {
 */
 const actionTracking = () => next => action => {
   const result = next(action)
+  console.log('actionTracking', result)
 
   switch (action.type) {
-    case APPLICATION_STATE_CHANGE_ACTION: {
-      Mixpanel.trackWithProperties('APPLICATION_STATE_CHANGE', {
-        APPLICATION_STATE_NAME: result.name
+    case APP_STATE_CHANGE_ACTION: {
+      Mixpanel.trackWithProperties('APP_STATE_CHANGE', {
+        APPLICATION_STATE_NAME: result.payload
       })
       break
     }
@@ -68,7 +68,7 @@ const actionTracking = () => next => action => {
       })
       break
     }
-    case persist.REHYDRATE: {
+    case REHYDRATE: {
       if (!has(result, 'payload.user.profile.fiscalnumber')) {
         break
       }
