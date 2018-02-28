@@ -33,7 +33,6 @@ const injectGetState = ({ getState }) => next => action => {
 */
 const actionTracking = () => next => action => {
   const result = next(action)
-  console.log('actionTracking', result)
 
   switch (action.type) {
     case APP_STATE_CHANGE_ACTION: {
