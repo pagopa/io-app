@@ -4,6 +4,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import { createLogger } from 'redux-logger'
 import { analytics } from '../middlewares'
+import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
@@ -26,18 +27,24 @@ const logger = createLogger({
   duration: true
 })
 
+const navigation = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.navigation
+)
+
 const configureStoreAndPersistor = () => {
   const enhancer = compose(
     applyAppStateListener(),
     applyMiddleware(
       thunk,
       logger,
+      navigation,
       analytics.actionTracking,
       analytics.screenTracking
     )
   )
 
-  const store = createStore(persistedReducer, undefined, enhancer)
+  const store = createStore(persistedReducer, {}, enhancer)
   const persistor = persistStore(store)
 
   if (isDebuggingInChrome) {

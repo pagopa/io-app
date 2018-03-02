@@ -16,14 +16,15 @@ import { updateUserProfile } from '../actions'
 import I18n from '../i18n'
 
 type Props = {
-  dispatch: Dispatch,
-  user: LoggedInUserState
+  user: LoggedInUserState,
+  dispatch: Dispatch
 }
 
 /**
- * Implements content of the "Alerts" tab
+ * A component to show the Messages of the logged user.
+ * If the user inbox is still not enabled a CTA button is rendered to enable it.
  */
-export default class AlertsComponent extends Component<Props> {
+export default class MessagesComponent extends Component<Props> {
   render() {
     const user = this.props.user
 

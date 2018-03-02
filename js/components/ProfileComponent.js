@@ -24,7 +24,7 @@ import I18n from '../i18n'
 
 import { NavigationActions } from 'react-navigation'
 
-import type { NavigationScreenProp } from 'react-navigation/src/TypeDefinition'
+import type { NavigationScreenProp } from 'react-navigation'
 import type { Dispatch, AnyAction } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
@@ -51,11 +51,11 @@ const profileRowTextStyles = StyleSheet.flatten(ProfileStyles.profileRowText)
 const { logOut } = require('../actions')
 
 /**
- * Resets the main navigation to the Home screen
+ * Resets the main navigation to the LoginScreen
  */
 const resetNavigationAction = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: ROUTES.HOME })]
+  actions: [NavigationActions.navigate({ routeName: ROUTES.LOGIN })]
 })
 
 /**
@@ -78,7 +78,7 @@ type Props = {
 }
 
 /**
- * Implements the content of the user profile tab.
+ * Implements the content of the user profile screen.
  */
 class ProfileComponent extends Component<Props> {
   render() {
@@ -165,7 +165,7 @@ class ProfileComponent extends Component<Props> {
           icon
           onPress={() => {
             this.props.dispatch(logOut())
-            this.props.navigation.dispatch(resetNavigationAction)
+            this.props.dispatch(resetNavigationAction)
           }}
         >
           <Body>
