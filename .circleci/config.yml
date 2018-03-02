@@ -39,6 +39,9 @@ jobs:
       # Run tests
       - run: yarn test
 
+      # Run DangerJS
+      - run: yarn danger ci
+
       # Save workspace for next jobs in the workflow
       - persist_to_workspace:
           root: /home/circleci
