@@ -13,6 +13,10 @@ import MainNavigator from './MainNavigator'
 
 import type { Dispatch } from '../actions/types'
 
+/**
+ * A listener of the new react-navigation redux middleware.
+ * The parameter must be the same used in createReactNavigationReduxMiddleware function.
+ */
 const addListener = createReduxBoundAddListener('root')
 
 type Props = {
@@ -25,18 +29,25 @@ type Props = {
  */
 class Navigation extends Component<Props> {
   componentDidMount() {
+    // Add an handler for the hardware back button in Android
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
 
   componentWillUnmount() {
+    // Remove handler for the hardware back button in Android
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
   }
 
-  onBackPress = () => {
+  /**
+   * Handle the hardware back button in Android.
+   * It returns a boolean that if true avoid invoking the default back button
+   * functionality to exit the app.
+   */
+  onBackPress = (): boolean => {
     const { dispatch, navigation } = this.props
-    if (navigation.index <= 1) {
-      BackHandler.exitApp()
-      return
+    // If we are on the first screen of the stack we can exit from the application
+    if (navigation.index === 0) {
+      return false
     }
     dispatch(NavigationActions.back())
     return true

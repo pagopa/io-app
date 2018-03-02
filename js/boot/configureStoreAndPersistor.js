@@ -27,8 +27,17 @@ const logger = createLogger({
   duration: true
 })
 
+/**
+ * The new react-navigation if integrated with redux need a middleware
+ * so that any events that mutate the navigation state properly trigger
+ * the event listeners.
+ * For details check @https://github.com/react-navigation/react-navigation/issues/3438.
+ */
 const navigation = createReactNavigationReduxMiddleware(
+  // This is just a key to identify the Set of the listeners.
+  // The same key will be used by the createReduxBoundAddListener function
   'root',
+  // This is a selector to get the navigation state from the global state
   state => state.navigation
 )
 

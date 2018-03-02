@@ -6,6 +6,7 @@ import { StyleSheet, ActivityIndicator } from 'react-native'
 import { NavigationActions, type NavigationScreenProp } from 'react-navigation'
 
 import { Container } from 'native-base'
+import material from '../../native-base-theme/variables/material'
 
 import ROUTES from '../navigation/routes'
 import type { Dispatch, AnyAction } from '../actions/types'
@@ -23,17 +24,17 @@ type Props = {
 class IngressScreen extends Component<Props> {
   componentWillMount() {
     const { user, dispatch } = this.props
-    if (!user.isLoggedIn) {
-      dispatch(this.navigate(ROUTES.LOGIN))
-    } else {
+    if (user.isLoggedIn) {
       dispatch(this.navigate(ROUTES.HOME))
+    } else {
+      dispatch(this.navigate(ROUTES.LOGIN))
     }
   }
 
   render() {
     return (
       <Container style={styles.container}>
-        <ActivityIndicator color={'blue'} />
+        <ActivityIndicator color={material.brandPrimary} />
       </Container>
     )
   }
@@ -63,6 +64,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue'
+    backgroundColor: material.brandLight
   }
 })
