@@ -1492,9 +1492,11 @@ damerau-levenshtein@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.4.tgz#03191c432cb6eea168bb77f3a55ffdccb8978514"
 
-"danger-plugin-digitalcitizenship@https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.1":
+"danger-plugin-digitalcitizenship@https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.2":
   version "0.0.1"
-  resolved "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#78eaf579808495af56b652bc361adbd2f5e77c46"
+  resolved "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#e0ec127cde017b9e9a86308985aeb0adb7c93bd9"
+  dependencies:
+    pivotaljs "^1.0.3"
 
 danger@^3.1.7:
   version "3.1.7"
@@ -4261,6 +4263,13 @@ pinpoint@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pinpoint/-/pinpoint-1.1.0.tgz#0cf7757a6977f1bf7f6a32207b709e377388e874"
 
+pivotaljs@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/pivotaljs/-/pivotaljs-1.0.3.tgz#fafd4bac7bb921ca4509e6e768f3c10772a1f34f"
+  dependencies:
+    request latest
+    underscore latest
+
 pkg-dir@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-1.0.0.tgz#7a4b508a8d5bb2d629d447056ff4e9c9314cf3d4"
@@ -4871,7 +4880,7 @@ request@2.81.0:
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
-request@^2.79.0, request@^2.83.0:
+request@^2.79.0, request@^2.83.0, request@latest:
   version "2.83.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.83.0.tgz#ca0b65da02ed62935887808e6f510381034e3356"
   dependencies:
@@ -5581,6 +5590,10 @@ ultron@~1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.1.tgz#9fe1536a10a664a65266a1e3ccf85fd36302bc9c"
 
+underscore@latest:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+
 universalify@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.1.tgz#fa71badd4437af4c148841e3b3b165f9e9e590b7"
@@ -5676,7 +5689,7 @@ vinyl@^0.5.0:
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
 
-"vm2@github:patriksimek/vm2#custom_files":
+vm2@patriksimek/vm2#custom_files:
   version "3.5.0"
   resolved "https://codeload.github.com/patriksimek/vm2/tar.gz/7e82f90ac705fc44fad044147cb0df09b4c79a57"
 
