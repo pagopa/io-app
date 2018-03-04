@@ -40,6 +40,8 @@
     "babel-eslint": "^8.1.1",
     "babel-jest": "22.0.4",
     "babel-preset-react-native": "4.0.0",
+    "danger": "^3.1.7",
+    "danger-plugin-digitalcitizenship": "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.2",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-google": "^0.9.1",
@@ -55,11 +57,18 @@
     "jest": "^22.0.5",
     "prettier": "1.8.2",
     "react-test-renderer": "16.0.0",
-    "danger": "^3.1.7",
-    "danger-plugin-digitalcitizenship": "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.2"
+    "ts-jest": "^22.0.5",
+    "typescript": "^2.7.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    }
   },
   "rnpm": {
     "assets": [
