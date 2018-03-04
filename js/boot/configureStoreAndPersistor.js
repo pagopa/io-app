@@ -8,6 +8,7 @@ import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-hel
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
+import { navigationMiddlewareListenersKey } from '../navigation'
 import applyAppStateListener from '../enhancers/applyAppStateListener'
 import rootReducer from '../reducers'
 
@@ -36,7 +37,7 @@ const logger = createLogger({
 const navigation = createReactNavigationReduxMiddleware(
   // This is just a key to identify the Set of the listeners.
   // The same key will be used by the createReduxBoundAddListener function
-  'root',
+  navigationMiddlewareListenersKey,
   // This is a selector to get the navigation state from the global state
   state => state.navigation
 )

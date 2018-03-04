@@ -13,11 +13,16 @@ import MainNavigator from './MainNavigator'
 
 import type { Dispatch } from '../actions/types'
 
+// A key to identify the Set of the listeners of the navigtion middleware.
+export const navigationMiddlewareListenersKey = 'root'
+
 /**
  * A listener of the new react-navigation redux middleware.
  * The parameter must be the same used in createReactNavigationReduxMiddleware function.
  */
-const addListener = createReduxBoundAddListener('root')
+const addListener = createReduxBoundAddListener(
+  navigationMiddlewareListenersKey
+)
 
 type Props = {
   navigation: NavigationState,
