@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "strict": true
+  },
+  "include": [
+    "Dangerfile.ts"
+  ]
+}
