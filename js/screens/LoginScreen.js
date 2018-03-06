@@ -27,8 +27,8 @@ import type { Navigator } from 'react-navigation'
 import type { Dispatch } from '../actions/types'
 import type { DefaultLoggedOutUserState } from '../reducers/user'
 
-import { SpidLoginButton } from './SpidLoginButton'
-import SpidSubscribeComponent from './SpidSubscribeComponent'
+import { SpidLoginButton } from '../components/SpidLoginButton'
+import SpidSubscribeComponent from '../components/SpidSubscribeComponent'
 
 import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 
@@ -137,7 +137,7 @@ class LoginScreen extends Component<Props, State> {
     if (isDemoIdp(idp)) {
       this.props.dispatch(selectIdp(idp))
       this.props.dispatch(logIn('demo', idp.id))
-      this.props.navigation.navigate(ROUTES.PROFILE)
+      this.props.navigation.navigate(ROUTES.HOME)
     } else {
       this.props.dispatch(selectIdp(idp))
     }
@@ -169,7 +169,7 @@ class LoginScreen extends Component<Props, State> {
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
           onSpidLogin={(token, idpId) => {
             this.props.dispatch(logIn(token, idpId))
-            this.props.navigation.navigate(ROUTES.PROFILE)
+            this.props.navigation.navigate(ROUTES.HOME)
           }}
           onSpidLoginError={error => {
             this.props.dispatch(logInError(error))

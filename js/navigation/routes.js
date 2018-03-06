@@ -1,9 +1,14 @@
 const ROUTES = {
+  // Ingress
+  INGRESS: 'INGRESS',
+
+  // Unhautenticated
+  LOGIN: 'LOGIN',
+
+  // Authenticated
   HOME: 'HOME',
-  PROFILE: 'PROFILE',
-  DIGITAL_ADDRESS: 'DIGITAL_ADDRESS',
-  TOPICS_SELECTION: 'TOPICS_SELECTION',
-  SENDER_SELECTION: 'SENDER_SELECTION'
+  MESSAGES: 'MESSAGES',
+  PROFILE: 'PROFILE'
 }
 
 export default ROUTES

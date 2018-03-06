@@ -4,9 +4,11 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import { createLogger } from 'redux-logger'
 import { analytics } from '../middlewares'
+import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
 import applyAppStateListener from '../enhancers/applyAppStateListener'
 import rootReducer from '../reducers'
 
@@ -26,18 +28,33 @@ const logger = createLogger({
   duration: true
 })
 
+/**
+ * The new react-navigation if integrated with redux need a middleware
+ * so that any events that mutate the navigation state properly trigger
+ * the event listeners.
+ * For details check @https://github.com/react-navigation/react-navigation/issues/3438.
+ */
+const navigation = createReactNavigationReduxMiddleware(
+  // This is just a key to identify the Set of the listeners.
+  // The same key will be used by the createReduxBoundAddListener function
+  NAVIGATION_MIDDLEWARE_LISTENERS_KEY,
+  // This is a selector to get the navigation state from the global state
+  state => state.navigation
+)
+
 const configureStoreAndPersistor = () => {
   const enhancer = compose(
     applyAppStateListener(),
     applyMiddleware(
       thunk,
       logger,
+      navigation,
       analytics.actionTracking,
       analytics.screenTracking
     )
   )
 
-  const store = createStore(persistedReducer, undefined, enhancer)
+  const store = createStore(persistedReducer, {}, enhancer)
   const persistor = persistStore(store)
 
   if (isDebuggingInChrome) {

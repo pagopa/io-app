@@ -1,57 +1,29 @@
 // @flow
 
 import React, { Component } from 'react'
+import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
-import { StackNavigator, addNavigationHelpers } from 'react-navigation'
+import { addNavigationHelpers, NavigationActions } from 'react-navigation'
+import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 
 import type { MapStateToProps } from 'react-redux'
-import type { NavigationState } from 'react-navigation/src/TypeDefinition'
+import type { NavigationState } from 'react-navigation'
 
-import ROUTES from './routes'
-import LoginScreen from '../components/LoginScreen'
-import ProfileScreen from '../components/ProfileScreen'
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
+import MainNavigator from './MainNavigator'
 
-import type { ApiUserProfile } from '../utils/api'
 import type { Dispatch } from '../actions/types'
 
-// Initialize the stack navigator
-const HomeRoutes = {
-  [ROUTES.HOME]: {
-    screen: LoginScreen
-  },
-
-  [ROUTES.PROFILE]: {
-    screen: ProfileScreen
-  }
-}
-
-export const HomeNavigator = StackNavigator(
-  {
-    ...HomeRoutes
-  },
-  {
-    initialRouteName: ROUTES.HOME,
-
-    // Let each screen handle the header and navigation
-    headerMode: 'none'
-  }
-)
-
-export const ProfileNavigator = StackNavigator(
-  {
-    ...HomeRoutes
-  },
-  {
-    initialRouteName: ROUTES.PROFILE,
-
-    // Let each screen handle the header and navigation
-    headerMode: 'none'
-  }
+/**
+ * A listener of the new react-navigation redux middleware.
+ * The parameter must be the same used in createReactNavigationReduxMiddleware function.
+ */
+const addListener = createReduxBoundAddListener(
+  NAVIGATION_MIDDLEWARE_LISTENERS_KEY
 )
 
 type Props = {
-  profile: ApiUserProfile,
-  nav: NavigationState,
+  navigation: NavigationState,
   dispatch: Dispatch
 }
 
@@ -59,15 +31,38 @@ type Props = {
  * Main app navigator.
  */
 class Navigation extends Component<Props> {
-  render() {
-    const { profile } = this.props
-    const Navigator = profile ? ProfileNavigator : HomeNavigator
+  componentDidMount() {
+    // Add an handler for the hardware back button in Android
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+  }
 
+  componentWillUnmount() {
+    // Remove handler for the hardware back button in Android
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
+  }
+
+  /**
+   * Handle the hardware back button in Android.
+   * It returns a boolean that if true avoid invoking the default back button
+   * functionality to exit the app.
+   */
+  onBackPress = (): boolean => {
+    const { dispatch, navigation } = this.props
+    // If we are on the first screen of the stack we can exit from the application
+    if (navigation.index === 0) {
+      return false
+    }
+    dispatch(NavigationActions.back())
+    return true
+  }
+
+  render() {
     return (
-      <Navigator
+      <MainNavigator
         navigation={addNavigationHelpers({
           dispatch: this.props.dispatch,
-          state: this.props.nav
+          state: this.props.navigation,
+          addListener
         })}
       />
     )
@@ -75,8 +70,7 @@ class Navigation extends Component<Props> {
 }
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  profile: state.user.profile,
-  nav: state.nav
+  navigation: state.navigation
 })
 
 export default connect(mapStateToProps)(Navigation)
