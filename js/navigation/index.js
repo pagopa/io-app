@@ -9,19 +9,17 @@ import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import type { MapStateToProps } from 'react-redux'
 import type { NavigationState } from 'react-navigation'
 
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
 import MainNavigator from './MainNavigator'
 
 import type { Dispatch } from '../actions/types'
-
-// A key to identify the Set of the listeners of the navigtion middleware.
-export const navigationMiddlewareListenersKey = 'root'
 
 /**
  * A listener of the new react-navigation redux middleware.
  * The parameter must be the same used in createReactNavigationReduxMiddleware function.
  */
 const addListener = createReduxBoundAddListener(
-  navigationMiddlewareListenersKey
+  NAVIGATION_MIDDLEWARE_LISTENERS_KEY
 )
 
 type Props = {
