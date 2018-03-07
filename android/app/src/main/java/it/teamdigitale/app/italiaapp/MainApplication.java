@@ -2,13 +2,13 @@ package it.teamdigitale.app.italiaapp;
 
 import android.app.Application;
 
-import com.facebook.react.ReactApplication;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;

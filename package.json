@@ -18,8 +18,8 @@
     "lodash": "^4.17.4",
     "native-base": "^2.3.3",
     "option": "^0.2.3",
-    "react": "16.0.0",
-    "react-native": "0.50.0",
+    "react": "16.3.0-alpha.1",
+    "react-native": "0.54.0",
     "react-native-config": "^0.11.2",
     "react-native-device-info": "^0.13",
     "react-native-fs": "^2.9",
@@ -39,8 +39,10 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.1.1",
-    "babel-jest": "22.0.4",
+    "babel-jest": "22.4.1",
     "babel-preset-react-native": "4.0.0",
+    "danger": "^3.1.7",
+    "danger-plugin-digitalcitizenship": "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.2",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-google": "^0.9.1",
@@ -51,13 +53,11 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.6.0",
-    "flow-bin": "^0.56.0",
+    "flow-bin": "0.65.0",
     "flow-typed": "^2.3.0",
-    "jest": "^22.0.5",
+    "jest": "22.4.2",
     "prettier": "1.8.2",
-    "react-test-renderer": "16.0.0",
-    "danger": "^3.1.7",
-    "danger-plugin-digitalcitizenship": "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.2"
+    "react-test-renderer": "16.3.0-alpha.1"
   },
   "jest": {
     "preset": "react-native"
