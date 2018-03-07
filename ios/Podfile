@@ -12,8 +12,7 @@ target 'ItaliaApp' do
     "RCTText",
     "RCTVibration",
     "RCTWebSocket",
-    "DevSupport",
-    "BatchedBridge"
+    "DevSupport"
   ]
 
   # Explicitly include Yoga if you are using RN >= 0.42.0
