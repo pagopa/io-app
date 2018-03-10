@@ -7,18 +7,21 @@
  */
 
 import { APP_STATE_CHANGE_ACTION } from '../enhancers/applyAppStateListener'
-import type { ApplicationStateAction, ApplicationState } from '../actions/types'
+import {
+  type ApplicationStateAction,
+  type ApplicationState
+} from '../actions/types'
 
-export type InitialAppState = {
+export type AppState = {
   appState: ApplicationState
 }
 
-export const initialAppState: InitialAppState = {
+export const initialAppState: AppState = {
   appState: 'background'
 }
 
 export default function appState(
-  state: InitialAppState = initialAppState,
+  state: AppState = initialAppState,
   action: ApplicationStateAction
 ) {
   if (action.type === APP_STATE_CHANGE_ACTION) {

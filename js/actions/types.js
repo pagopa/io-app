@@ -1,12 +1,21 @@
 /**
- * Defines Flow types for the available actions.
+ * Defines Flow types for the available actions and store related stuff.
  *
  * @flow
  */
 
-'use strict'
+import { type Store as ReduxStore } from 'redux'
+import { type NavigationAction } from 'react-navigation'
 
-import type { ApiUserProfile, IdentityProvider } from '../utils/api'
+import { type GlobalState } from '../reducers/types'
+import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
+
+export type ApplicationState = 'background' | 'inactive' | 'active'
+
+export type ApplicationStateAction = {
+  type: 'APP_STATE_CHANGE_ACTION',
+  payload: ApplicationState
+}
 
 export type Action =
   | { type: 'USER_WILL_LOGIN_ACTION' }
@@ -25,20 +34,22 @@ export type Action =
     }
   | { type: 'UPDATE_USER_PROFILE_REQUEST_ACTION' }
   | { type: 'UPDATE_USER_PROFILE_ERROR_ACTION', data: { error: string } }
+  | ApplicationStateAction
+  | NavigationAction
 
-export type ApplicationState = 'background' | 'inactive' | 'active'
-
-export type ApplicationStateAction = {
-  type: 'APP_STATE_CHANGE_ACTION',
-  payload: ApplicationState
-}
-
-export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
+export type GetState = () => GlobalState
 
 export type PromiseAction = Promise<Action>
 
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
+
 export type AnyAction = Action | ThunkAction | PromiseAction | Array<Action>
+
+export type Store = ReduxStore<GlobalState, AnyAction>
 
 export type Dispatch = (action: AnyAction) => any
 
-export type GetState = () => Object
+// Props injected by react-redux connect() function
+export type ReduxProps = {
+  dispatch: Dispatch
+}

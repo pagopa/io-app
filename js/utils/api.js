@@ -29,7 +29,7 @@ export type ApiNewUserProfile = {
   version: number
 }
 
-async function getUserProfile(
+export async function getUserProfile(
   apiUrlPrefix: string,
   token: string
 ): Promise<?ApiUserProfile> {
@@ -48,7 +48,7 @@ async function getUserProfile(
   }
 }
 
-async function setUserProfile(
+export async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
   newProfile: ApiNewUserProfile
@@ -87,12 +87,6 @@ export type IdentityProvider = {
   profileUrl: string
 }
 
-function isDemoIdp(idp: IdentityProvider): boolean {
+export function isDemoIdp(idp: IdentityProvider): boolean {
   return idp.id === 'demo'
-}
-
-module.exports = {
-  getUserProfile,
-  setUserProfile,
-  isDemoIdp
 }

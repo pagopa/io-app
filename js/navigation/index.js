@@ -3,16 +3,17 @@
 import React, { Component } from 'react'
 import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
-import { addNavigationHelpers, NavigationActions } from 'react-navigation'
+import {
+  type NavigationState,
+  addNavigationHelpers,
+  NavigationActions
+} from 'react-navigation'
 import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 
-import type { MapStateToProps } from 'react-redux'
-import type { NavigationState } from 'react-navigation'
-
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
+import { type ReduxProps } from '../actions/types'
+import { type GlobalState } from '../reducers/types'
 import MainNavigator from './MainNavigator'
-
-import type { Dispatch } from '../actions/types'
 
 /**
  * A listener of the new react-navigation redux middleware.
@@ -22,10 +23,13 @@ const addListener = createReduxBoundAddListener(
   NAVIGATION_MIDDLEWARE_LISTENERS_KEY
 )
 
-type Props = {
-  navigation: NavigationState,
-  dispatch: Dispatch
+type ReduxMappedProps = {
+  nav: NavigationState
 }
+
+type OwnProps = {}
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
  * Main app navigator.
@@ -47,9 +51,9 @@ class Navigation extends Component<Props> {
    * functionality to exit the app.
    */
   onBackPress = (): boolean => {
-    const { dispatch, navigation } = this.props
+    const { dispatch, nav } = this.props
     // If we are on the first screen of the stack we can exit from the application
-    if (navigation.index === 0) {
+    if (nav.index === 0) {
       return false
     }
     dispatch(NavigationActions.back())
@@ -61,7 +65,7 @@ class Navigation extends Component<Props> {
       <MainNavigator
         navigation={addNavigationHelpers({
           dispatch: this.props.dispatch,
-          state: this.props.navigation,
+          state: this.props.nav,
           addListener
         })}
       />
@@ -69,8 +73,8 @@ class Navigation extends Component<Props> {
   }
 }
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  navigation: state.navigation
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  nav: state.navigation
 })
 
 export default connect(mapStateToProps)(Navigation)
