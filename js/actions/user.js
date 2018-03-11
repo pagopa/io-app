@@ -4,30 +4,37 @@
  * @flow
  */
 
-'use strict'
-
-import type { ThunkAction, Dispatch, GetState, Action } from './types'
-import type { ApiUserProfile, ApiNewUserProfile } from '../utils/api'
+import {
+  type ThunkAction,
+  type Dispatch,
+  type GetState,
+  type Action
+} from './types'
+import { type ApiUserProfile, type ApiNewUserProfile } from '../utils/api'
 import { getUserProfile } from '../utils/api'
 import { setUserProfile } from '../utils/api'
+
+import I18n from '../i18n'
 
 const REQUEST_USER_PROFILE_ACTION = 'REQUEST_USER_PROFILE_ACTION'
 const RECEIVE_USER_PROFILE_ACTION = 'RECEIVE_USER_PROFILE_ACTION'
 const UPDATE_USER_PROFILE_REQUEST_ACTION = 'UPDATE_USER_PROFILE_REQUEST_ACTION'
 const UPDATE_USER_PROFILE_ERROR_ACTION = 'UPDATE_USER_PROFILE_ERROR_ACTION'
 
-import I18n from '../i18n'
-
 /**
  * Begins an API requests for the user profile to the backend.
  */
 function requestUserProfile(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    // first we dispatch the request action
+    const user = getState().user
+    // If the user is not logged in we can't request the profile
+    if (!user.isLoggedIn) return
+
+    // First we dispatch the request action
     dispatch({
       type: REQUEST_USER_PROFILE_ACTION
     })
-    const { apiUrlPrefix, token, idpId } = getState().user
+    const { apiUrlPrefix, token, idpId } = user
 
     // if the idp is the demo one do not call the backend
     if (idpId === 'demo') {
@@ -59,11 +66,15 @@ function requestUserProfile(): ThunkAction {
  */
 function updateUserProfile(newProfile: ApiNewUserProfile): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    // first we dispatch the request action
+    const user = getState().user
+    // If the user is not logged in we can't request the profile
+    if (!user.isLoggedIn) return
+
+    // First we dispatch the request action
     dispatch({
       type: UPDATE_USER_PROFILE_REQUEST_ACTION
     })
-    const { apiUrlPrefix, token } = getState().user
+    const { apiUrlPrefix, token } = user
     setUserProfile(apiUrlPrefix, token, newProfile).then(profile => {
       if (profile) {
         if (typeof profile === 'number') {

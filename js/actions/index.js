@@ -6,10 +6,5 @@
 
 'use strict'
 
-import loginActions from './login'
-import userActions from './user'
-
-module.exports = {
-  ...loginActions,
-  ...userActions
-}
+export * from './login'
+export * from './user'

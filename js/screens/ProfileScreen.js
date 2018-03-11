@@ -1,20 +1,28 @@
 // @flow
 
 import React, { Component } from 'react'
-import { connect, type MapStateToProps } from 'react-redux'
-import { type NavigationScreenProp } from 'react-navigation'
+import { connect } from 'react-redux'
+import {
+  type NavigationScreenProp,
+  type NavigationState
+} from 'react-navigation'
 
 import { Container } from 'native-base'
 
-import type { Dispatch, AnyAction } from '../actions/types'
-import type { LoggedInUserState } from '../reducers/user'
+import { type GlobalState } from '../reducers/types'
+import { type ReduxProps } from '../actions/types'
+import { type UserState } from '../reducers/user'
 import ProfileComponent from '../components/ProfileComponent'
 
-type Props = {
-  user: LoggedInUserState,
-  navigation: NavigationScreenProp<*, AnyAction>,
-  dispatch: Dispatch
+type ReduxMappedProps = {
+  user: UserState
 }
+
+type OwnProps = {
+  navigation: NavigationScreenProp<NavigationState>
+}
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
  * This screen show the profile to the authenticated user.
@@ -22,6 +30,8 @@ type Props = {
 class ProfileScreen extends Component<Props> {
   render() {
     const { user, navigation, dispatch } = this.props
+
+    if (!user.isLoggedIn) return null
 
     return (
       <Container>
@@ -35,9 +45,9 @@ class ProfileScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   user: state.user,
   navigation: state.navigation
 })
 
-module.exports = connect(mapStateToProps)(ProfileScreen)
+export default connect(mapStateToProps)(ProfileScreen)

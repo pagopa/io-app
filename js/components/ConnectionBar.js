@@ -5,13 +5,19 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import type { MapStateToProps } from 'react-redux'
 
 import I18n from '../i18n'
 
-type Props = {
+import { type ReduxProps } from '../actions/types'
+import { type GlobalState } from '../reducers/types'
+
+type ReduxMappedProps = {
   isConnected: boolean
 }
+
+type OwnProps = {}
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
  * Implements a component that show a message when there is no network connection
@@ -37,8 +43,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isConnected: state.network.isConnected
 })
 
-module.exports = connect(mapStateToProps)(ConnectionBar)
+export default connect(mapStateToProps)(ConnectionBar)
