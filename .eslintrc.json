@@ -55,7 +55,9 @@
         "FunctionExpression": false
       }
     }],
+    "flowtype/no-mutable-array": 2,
     "flowtype/no-weak-types": 2,
+    "flowtype/require-return-type": 2,
     "react/jsx-uses-vars": 2,
     "react/jsx-no-literals": 2,
     "prettier/prettier": 2
