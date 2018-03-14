@@ -19,6 +19,9 @@ const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 const persistConfig = {
   key: 'root',
   storage,
+  /**
+   * Sections of the store that must not be persisted and rehydrated.
+   */
   blacklist: ['navigation', 'loading', 'error']
 }
 
@@ -47,6 +50,10 @@ const navigation = createReactNavigationReduxMiddleware(
 )
 
 const configureStoreAndPersistor = () => {
+  /**
+   * If available use redux-devtool version of the compose function that allow
+   * the inspection of the store from the devtool.
+   */
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   const enhancer = composeEnhancers(

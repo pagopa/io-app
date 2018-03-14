@@ -22,11 +22,11 @@ export const INITIAL_STATE = {}
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
-export const createLoadingSelector = (actions: Array<string>) => (
+export const createLoadingSelector = (actions: $ReadOnlyArray<string>) => (
   state: GlobalState
-) => {
+): boolean => {
   // Returns true only when all actions are not loading
-  return _(actions).some(action => _.get(state, `loading.${action}`))
+  return actions.some(action => _.get(state, `loading.${action}`))
 }
 
 // Listen for _REQUEST|_SUCCESS|_FAILURE actions and set/remove loading state.

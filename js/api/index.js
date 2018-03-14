@@ -1,5 +1,5 @@
 /**
- * A new version of the functions to interact with the Proxy API.
+ * This file collect all the functions/types required to interact with the Proxy API.
  *
  * @flow
  */
@@ -24,16 +24,15 @@ export type Versionable = {
 }
 
 /**
- * A type that make alla fields of T optional than add `version` as the only
+ * A type that makes all fields of type T optional, then adds `version` as the only
  * required field. This type is used mostly to update an API entity.
  */
 export type WithOnlyVersionRequired<T> = $Shape<T> & Versionable
 
 // A type to store all the properties of the user Profile
 export type ApiProfile = {
-  is_inbox_enabled: boolean,
-  version: number
-}
+  is_inbox_enabled: boolean
+} & Versionable
 
 // Fetch the profile from the Proxy
 export const fetchProfile = async (
@@ -42,7 +41,8 @@ export const fetchProfile = async (
   const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
     method: 'get',
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   })
   if (response.ok) {

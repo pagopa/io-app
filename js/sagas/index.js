@@ -1,5 +1,5 @@
 /**
- * The root saga that fork and includes all the other sagas.
+ * The root saga that forks and includes all the other sagas.
  *
  * @flow
  */

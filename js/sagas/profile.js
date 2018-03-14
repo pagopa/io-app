@@ -34,16 +34,22 @@ function* loadProfile(): Saga<void> {
   try {
     // Get the token from the state
     const token: string = yield select(getToken)
+
+    // Fetch the profile from the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(fetchProfile, token)
+
     if (response.isError) {
+      // If the api response is an error then dispatch the PROFILE_LOAD_FAILURE action.
       yield put({
         type: PROFILE_LOAD_FAILURE,
         payload: response.error
       })
     } else {
+      // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
       yield put({ type: PROFILE_LOAD_SUCCESS, payload: response.result })
     }
   } catch (error) {
+    // If the api request raise an exception then dispatch the PROFILE_LOAD_FAILURE action.
     yield put({ type: PROFILE_LOAD_FAILURE, payload: error })
   }
 }
@@ -51,22 +57,30 @@ function* loadProfile(): Saga<void> {
 // A saga to update the Profile.
 function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
   try {
+    // Get the new Profile from the action payload
     const newProfile = action.payload
+
+    // Get the token from the state
     const token: string = yield select(getToken)
+
+    // Post the new Profile to the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(
       postProfile,
       token,
       newProfile
     )
     if (response.isError) {
+      // If the api response is an error then dispatch the PROFILE_UPDATE_FAILURE action.
       yield put({
         type: PROFILE_LOAD_FAILURE,
         payload: response.error
       })
     } else {
+      // If the api returns a valid Profile then dispatch the PROFILE_UPDATE_SUCCESS action.
       yield put({ type: PROFILE_UPDATE_SUCCESS, payload: response.result })
     }
   } catch (error) {
+    // If the api request raise an exception then dispatch the PROFILE_UPDATE_FAILURE action.
     yield put({
       type: PROFILE_UPDATE_FAILURE,
       payload: error

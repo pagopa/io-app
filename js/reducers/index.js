@@ -18,9 +18,10 @@ import profileReducer from '../store/reducers/profile'
 
 /**
  * Here we combine all the reducers.
- * We try to separate UI state from the DATA state.
+ * We use the best practice of separating UI state from the DATA state.
  * UI state is mostly used to check what to show hide in the screens (ex. errors/spinners).
  * DATA state is where we store real data fetched from the API (ex. profile/messages).
+ * More at @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
 module.exports = combineReducers({
   appState: appStateReducer,

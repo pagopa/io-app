@@ -22,20 +22,17 @@ export const INITIAL_STATE = {}
  *
  * USAGE: `createErrorSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
-export const createErrorSelector = (actions: Array<string>) => (
+export const createErrorSelector = (actions: $ReadOnlyArray<string>) => (
   state: GlobalState
-) => {
-  // Returns first error found
-  return (
-    _(actions)
-      .map(action => _.get(state, `error.${action}`))
-      .compact()
-      .first() || ''
-  )
+): ?string => {
+  // Returns first error message found if any
+  return actions
+    .map(action => _.get(state, `error.${action}`))
+    .filter(message => !!message)[0]
 }
 
 // Listen for _REQUEST|_FAILURE actions and set/remove error message.
-const reducer = (state: ErrorState = INITIAL_STATE, action: Action) => {
+const reducer = (state: ErrorState = INITIAL_STATE, action: Action): Object => {
   const { type } = action
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
 
@@ -43,13 +40,17 @@ const reducer = (state: ErrorState = INITIAL_STATE, action: Action) => {
   if (!matches) return state
 
   const [, requestName, requestState] = matches
-  return {
-    ...state,
-    // Store error message
-    [requestName]:
-      requestState === 'FAILURE'
-        ? action.payload ? action.payload : 'Generic error'
-        : ''
+  if (requestState === 'FAILURE') {
+    // We need to set the error message
+    return {
+      ...state,
+      [requestName]: action.payload ? action.payload : 'Generic error'
+    }
+  } else {
+    // We need to remove the error message
+    const { ...newState } = state
+    delete newState[requestName]
+    return newState
   }
 }
 
