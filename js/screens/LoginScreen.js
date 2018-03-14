@@ -171,7 +171,7 @@ class LoginScreen extends Component<Props, State> {
           <H1 style={titleTextStyles}>{I18n.t('login.welcome.line2')}</H1>
         </View>
         <SpidLoginButton
-          disabled={!isConnected}
+          disabled={false}
           userState={this.props.user}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}

@@ -72,7 +72,7 @@ function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
     if (response.isError) {
       // If the api response is an error then dispatch the PROFILE_UPDATE_FAILURE action.
       yield put({
-        type: PROFILE_LOAD_FAILURE,
+        type: PROFILE_UPDATE_FAILURE,
         payload: response.error
       })
     } else {
