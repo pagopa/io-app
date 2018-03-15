@@ -1,28 +1,33 @@
 // @flow
 
 import React, { Component } from 'react'
-import { connect, type MapStateToProps } from 'react-redux'
+import { connect } from 'react-redux'
 import { StyleSheet, ActivityIndicator } from 'react-native'
-import { NavigationActions, type NavigationScreenProp } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 
 import { Container } from 'native-base'
 import material from '../../native-base-theme/variables/material'
 
 import ROUTES from '../navigation/routes'
-import type { Dispatch, AnyAction } from '../actions/types'
-import type { UserState } from '../reducers/user'
+import { type ReduxProps } from '../actions/types'
+import { type UserState } from '../reducers/user'
 
-type Props = {
-  user: UserState,
-  navigation: NavigationScreenProp<*, AnyAction>,
-  dispatch: Dispatch
+import { type GlobalState } from '../reducers/types'
+
+type ReduxMappedProps = {
+  user: UserState
 }
+
+type OwnProps = {}
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 class IngressScreen extends Component<Props> {
-  componentWillMount() {
+  // Check the user state in the store and navigate to the proper screen
+  componentDidMount() {
     const { user, dispatch } = this.props
     if (user.isLoggedIn) {
       dispatch(this.navigate(ROUTES.HOME))
@@ -52,9 +57,8 @@ class IngressScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  user: state.user,
-  navigation: state.navigation
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  user: state.user
 })
 
 export default connect(mapStateToProps)(IngressScreen)

@@ -7,7 +7,6 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import type { MapStateToProps } from 'react-redux'
 
 import {
   StyleSheet,
@@ -23,9 +22,10 @@ import I18n from '../i18n'
 import { H1, H2 } from 'native-base'
 
 import type EmitterSubscription from 'EmitterSubscription'
-import type { Navigator } from 'react-navigation'
-import type { Dispatch } from '../actions/types'
-import type { DefaultLoggedOutUserState } from '../reducers/user'
+import {
+  type NavigationScreenProp,
+  type NavigationState
+} from 'react-navigation'
 
 import { SpidLoginButton } from '../components/SpidLoginButton'
 import SpidSubscribeComponent from '../components/SpidSubscribeComponent'
@@ -36,6 +36,10 @@ import { VERSION } from '../utils/constants'
 import ROUTES from '../navigation/routes'
 
 import { isDemoIdp } from '../utils/api'
+
+import { type ReduxProps } from '../actions/types'
+import { type GlobalState } from '../reducers/types'
+import { type UserState } from '../reducers/user'
 
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
@@ -71,12 +75,16 @@ const titleTextStyles = StyleSheet.flatten(styles.titleText)
 const ANIMATION_START_LOGO_HEIGHT = 70
 const ANIMATION_END_LOGO_HEIGHT = 0
 
-type Props = {
-  navigation: Navigator,
-  dispatch: Dispatch,
+type ReduxMappedProps = {
   isConnected: boolean,
-  userState: DefaultLoggedOutUserState
+  user: UserState
 }
+
+type OwnProps = {
+  navigation: NavigationScreenProp<NavigationState>
+}
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 type State = {
   imageHeight: Animated.Value
@@ -164,7 +172,7 @@ class LoginScreen extends Component<Props, State> {
         </View>
         <SpidLoginButton
           disabled={!isConnected}
-          userState={this.props.userState}
+          userState={this.props.user}
           onSelectIdp={idp => this.handleIpdSelection(idp)}
           onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
           onSpidLogin={(token, idpId) => {
@@ -188,9 +196,9 @@ class LoginScreen extends Component<Props, State> {
   }
 }
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isConnected: state.network.isConnected,
-  userState: state.user
+  user: state.user
 })
 
 module.exports = connect(mapStateToProps)(LoginScreen)

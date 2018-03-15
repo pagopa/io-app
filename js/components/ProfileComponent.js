@@ -24,9 +24,12 @@ import I18n from '../i18n'
 
 import { NavigationActions } from 'react-navigation'
 
-import type { NavigationScreenProp } from 'react-navigation'
-import type { Dispatch, AnyAction } from '../actions/types'
-import type { LoggedInUserState } from '../reducers/user'
+import {
+  type NavigationScreenProp,
+  type NavigationState
+} from 'react-navigation'
+import { type Dispatch } from '../actions/types'
+import { type LoggedInUserState } from '../reducers/user'
 
 import { VERSION } from '../utils/constants'
 import ROUTES from '../navigation/routes'
@@ -72,7 +75,7 @@ const openIdpProfile = function(idpUrl: string) {
 }
 
 type Props = {
-  navigation: NavigationScreenProp<*, AnyAction>,
+  navigation: NavigationScreenProp<NavigationState>,
   dispatch: Dispatch,
   user: LoggedInUserState
 }
