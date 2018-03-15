@@ -1,5 +1,5 @@
 /**
- * This file collect all the functions/types required to interact with the Proxy API.
+ * This file collects all the functions/types required to interact with the Proxy API.
  *
  * @flow
  */
