@@ -18,3 +18,12 @@ export const PROFILE_UPDATE_SUCCESS: 'PROFILE_UPDATE_SUCCESS' =
   'PROFILE_UPDATE_SUCCESS'
 export const PROFILE_UPDATE_FAILURE: 'PROFILE_UPDATE_FAILURE' =
   'PROFILE_UPDATE_FAILURE'
+
+// Costants for actions that need UI state reducers
+export const FetchRequestActions = {
+  PROFILE_LOAD: 'PROFILE_LOAD',
+  PROFILE_UPDATE: 'PROFILE_UPDATE'
+}
+
+// Extract keys from object and create a new union type
+export type FetchRequestActionsType = $Keys<typeof FetchRequestActions>

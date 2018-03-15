@@ -11,20 +11,22 @@ import _ from 'lodash'
 
 import { type GlobalState } from '../../reducers/types'
 import { type Action } from '../../actions/types'
+import { type FetchRequestActionsType } from '../actions/constants'
 
-// TODO: Check if is possible to add a better typing for this (don't think so)
-export type ErrorState = Object
+export type ErrorState = {
+  [key: FetchRequestActionsType]: string
+}
 
-export const INITIAL_STATE = {}
+export const INITIAL_STATE: ErrorState = {}
 
 /**
  * Create a selector that return the first error found if any of the actions passed as parameter is in error.
  *
  * USAGE: `createErrorSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
-export const createErrorSelector = (actions: $ReadOnlyArray<string>) => (
-  state: GlobalState
-): ?string => {
+export const createErrorSelector = (
+  actions: $ReadOnlyArray<FetchRequestActionsType>
+) => (state: GlobalState): ?string => {
   // Returns first error message found if any
   return actions
     .map(action => _.get(state, `error.${action}`))
@@ -32,7 +34,10 @@ export const createErrorSelector = (actions: $ReadOnlyArray<string>) => (
 }
 
 // Listen for _REQUEST|_FAILURE actions and set/remove error message.
-const reducer = (state: ErrorState = INITIAL_STATE, action: Action): Object => {
+const reducer = (
+  state: ErrorState = INITIAL_STATE,
+  action: Action
+): ErrorState => {
   const { type } = action
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
 
