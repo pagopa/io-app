@@ -11,26 +11,31 @@ import _ from 'lodash'
 
 import { type GlobalState } from '../../reducers/types'
 import { type Action } from '../../actions/types'
+import { type FetchRequestActionsType } from '../actions/constants'
 
-// TODO: Check if is possible to add a better typing for this (don't think so)
-export type LoadingState = Object
+export type LoadingState = {
+  [key: FetchRequestActionsType]: boolean
+}
 
-export const INITIAL_STATE = {}
+export const INITIAL_STATE: LoadingState = {}
 
 /**
  * Create a selector that return true only if all the actions passed as parameter are not in loading state.
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
-export const createLoadingSelector = (actions: $ReadOnlyArray<string>) => (
-  state: GlobalState
-): boolean => {
+export const createLoadingSelector = (
+  actions: $ReadOnlyArray<FetchRequestActionsType>
+) => (state: GlobalState): boolean => {
   // Returns true only when all actions are not loading
   return actions.some(action => _.get(state, `loading.${action}`))
 }
 
 // Listen for _REQUEST|_SUCCESS|_FAILURE actions and set/remove loading state.
-const reducer = (state: LoadingState = INITIAL_STATE, action: Action) => {
+const reducer = (
+  state: LoadingState = INITIAL_STATE,
+  action: Action
+): LoadingState => {
   const { type } = action
   const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type)
 
