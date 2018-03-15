@@ -9,6 +9,7 @@ import { type NavigationAction } from 'react-navigation'
 
 import { type GlobalState } from '../reducers/types'
 import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
+import { type ProfileActions } from '../store/actions/profile'
 
 export type ApplicationState = 'background' | 'inactive' | 'active'
 
@@ -36,6 +37,7 @@ export type Action =
   | { type: 'UPDATE_USER_PROFILE_ERROR_ACTION', data: { error: string } }
   | ApplicationStateAction
   | NavigationAction
+  | ProfileActions
 
 export type GetState = () => GlobalState
 

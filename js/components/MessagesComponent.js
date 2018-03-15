@@ -12,6 +12,7 @@ import type { Dispatch } from '../actions/types'
 import type { LoggedInUserState } from '../reducers/user'
 
 import { updateUserProfile } from '../actions'
+import { updateProfile } from '../store/actions/profile'
 
 import I18n from '../i18n'
 
@@ -47,6 +48,13 @@ export default class MessagesComponent extends Component<Props> {
               onPress={() => {
                 this.props.dispatch(
                   updateUserProfile({
+                    is_inbox_enabled: true,
+                    version: profile.version
+                  })
+                )
+                // TODO: Saga test: remove this before merging into master
+                this.props.dispatch(
+                  updateProfile({
                     is_inbox_enabled: true,
                     version: profile.version
                   })

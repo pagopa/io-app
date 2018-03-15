@@ -9,6 +9,7 @@
 import type { Action, ThunkAction, Dispatch, GetState } from './types'
 import type { IdentityProvider } from '../utils/api'
 import { requestUserProfile } from './user'
+import { loadProfile } from '../store/actions/profile'
 
 // The User is about to Login (taps on the SPID Login button)
 const USER_WILL_LOGIN_ACTION = 'USER_WILL_LOGIN_ACTION'
@@ -55,6 +56,8 @@ function logIn(token: string, idpId: string): ThunkAction {
       }
     })
     requestUserProfile()(dispatch, getState)
+    // TODO: Saga test: remove this before merging into master
+    dispatch(loadProfile())
   }
 }
 
