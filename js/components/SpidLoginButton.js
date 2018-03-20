@@ -9,7 +9,7 @@
 
 import { CommonStyles } from './styles'
 
-import React, { Component } from 'react'
+import * as React from 'react'
 import { StyleSheet, View, WebView, Image, Modal } from 'react-native'
 
 import config from '../config'
@@ -185,7 +185,7 @@ type SpidLoginWebviewState = {
  *
  * TODO aggiungere animazione di loading
  */
-class SpidLoginWebview extends Component<
+class SpidLoginWebview extends React.Component<
   SpidLoginWebviewProps,
   SpidLoginWebviewState
 > {
@@ -198,7 +198,7 @@ class SpidLoginWebview extends Component<
     }
   }
 
-  render(): React$Element<*> {
+  render(): React.Node {
     return (
       <View style={StyleSheet.flatten(styles.webViewContainer)}>
         <WebView
@@ -255,7 +255,7 @@ type IdpSelectionScreenState = {
 /**
  * Schermata di selezione dell'Identiry Provider SPID
  */
-class IdpSelectionScreen extends Component<
+class IdpSelectionScreen extends React.Component<
   IdpSelectionScreenProps,
   IdpSelectionScreenState
 > {
@@ -279,10 +279,7 @@ class IdpSelectionScreen extends Component<
     })
   }
 
-  createButton = (
-    idp: IdentityProvider,
-    onPress: () => void
-  ): React$Element<*> => {
+  createButton = (idp: IdentityProvider, onPress: () => void): React.Node => {
     return (
       <Button
         iconRight
@@ -299,8 +296,8 @@ class IdpSelectionScreen extends Component<
     )
   }
 
-  createButtons = (): $ReadOnlyArray<React$Element<*>> => {
-    return idps.map((idp: IdentityProvider): React$Element<*> =>
+  createButtons = (): $ReadOnlyArray<React.Node> => {
+    return idps.map((idp: IdentityProvider): React.Node =>
       this.createButton(idp, () => {
         this.props.onSelectIdp(idp)
         this.selectIdp(idp)
@@ -308,13 +305,13 @@ class IdpSelectionScreen extends Component<
     )
   }
 
-  createDemoButton(): React$Element<*> {
+  createDemoButton(): React.Node {
     return this.createButton(demoIdp, () => {
       this.props.onSelectIdp(demoIdp)
     })
   }
 
-  createErrorMessage = (): React$Element<*> => {
+  createErrorMessage = (): React.Node => {
     return (
       <View style={{ paddingTop: 10 }}>
         <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
@@ -336,7 +333,7 @@ class IdpSelectionScreen extends Component<
     }
   }
 
-  render(): React$Element<*> {
+  render(): React.Node {
     const { selectedIdp } = this.state
     return (
       <Container>
@@ -411,7 +408,7 @@ type SpidLoginButtonState = {
 /**
  * Bottone di login SPID.
  */
-export class SpidLoginButton extends Component<
+export class SpidLoginButton extends React.Component<
   SpidLoginButtonProps,
   SpidLoginButtonState
 > {
@@ -432,7 +429,7 @@ export class SpidLoginButton extends Component<
     this.props.onSelectIdp(idp)
   }
 
-  render(): React$Element<*> {
+  render(): React.Node {
     return (
       <View>
         <Modal

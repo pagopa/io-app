@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import * as React from 'react'
 import { AppState } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -20,7 +20,7 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
 /**
  * The main container of the application with the ConnectionBar and the Navigator
  */
-class RootContainer extends Component<Props> {
+class RootContainer extends React.Component<Props> {
   componentDidMount() {
     AppState.addEventListener('change', this._onApplicationActivityChange)
   }
@@ -29,7 +29,7 @@ class RootContainer extends Component<Props> {
     AppState.removeEventListener('change', this._onApplicationActivityChange)
   }
 
-  render(): React$Element<*> {
+  render(): React.Node {
     return (
       <Root>
         <ConnectionBar />

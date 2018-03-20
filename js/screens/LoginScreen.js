@@ -5,7 +5,7 @@
 
 'use strict'
 
-import React, { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 
 import {
@@ -93,7 +93,7 @@ type State = {
 /**
  * Implements the login screen.
  */
-class LoginScreen extends Component<Props, State> {
+class LoginScreen extends React.Component<Props, State> {
   // called when keyboard appears
   keyboardWillShowSub: EmitterSubscription
   // called when keyboard disappears
@@ -155,7 +155,7 @@ class LoginScreen extends Component<Props, State> {
     this.props.dispatch(logInIntent())
   }
 
-  render(): React$Element<*> {
+  render(): React.Node {
     // When we have no connectivity disable the SpidLoginButton
     const { isConnected } = this.props
     return (

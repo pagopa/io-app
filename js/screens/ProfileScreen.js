@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import {
   type NavigationScreenProp,
@@ -27,8 +27,8 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
 /**
  * This screen show the profile to the authenticated user.
  */
-class ProfileScreen extends Component<Props> {
-  render(): ?React$Element<*> {
+class ProfileScreen extends React.Component<Props> {
+  render(): React.Node {
     const { user, navigation, dispatch } = this.props
 
     if (!user.isLoggedIn) {

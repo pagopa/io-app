@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import * as React from 'react'
 import { BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import {
@@ -34,7 +34,7 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
 /**
  * Main app navigator.
  */
-class Navigation extends Component<Props> {
+class Navigation extends React.Component<Props> {
   componentDidMount() {
     // Add an handler for the hardware back button in Android
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
@@ -61,7 +61,7 @@ class Navigation extends Component<Props> {
     return true
   }
 
-  render(): React$Element<*> {
+  render(): React.Node {
     return (
       <MainNavigator
         navigation={addNavigationHelpers({

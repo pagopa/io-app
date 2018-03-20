@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React from 'react'
+import * as React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
  * Implements a component that show a message when there is no network connection
  */
 class ConnectionBar extends React.PureComponent<Props> {
-  render(): ?React$Element<*> {
+  render(): React.Node {
     const { isConnected } = this.props
     if (isConnected) {
       return null
