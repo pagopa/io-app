@@ -36,8 +36,7 @@ import type { UserState } from '../reducers/user'
 const TOKEN_PATH_PREFIX = '/profile.html?token='
 
 // TODO dynamically build this list
-// eslint-disable-next-line flowtype/no-mutable-array
-const idps: Array<IdentityProvider> = [
+const idps: $ReadOnlyArray<IdentityProvider> = [
   {
     id: 'infocert',
     name: 'Infocert',
@@ -75,15 +74,15 @@ const idps: Array<IdentityProvider> = [
   }
 ]
 
-if (config.enableTestIdp) {
-  idps.push({
-    id: 'test',
-    name: 'Test',
-    logo: require('../../img/spid.png'),
-    entityID: 'spid-testenv-identityserver',
-    profileUrl: 'https://italia-backend/profile.html'
-  })
+const testIdp = {
+  id: 'test',
+  name: 'Test',
+  logo: require('../../img/spid.png'),
+  entityID: 'spid-testenv-identityserver',
+  profileUrl: 'https://italia-backend/profile.html'
 }
+
+const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps
 
 const demoIdp: IdentityProvider = {
   id: 'demo',
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
  * @param {string} idpId - L'identificativo dell'IdP
  */
 export function getIdpInfo(idpId: string): ?IdentityProvider {
-  return idps.find((idp: IdentityProvider): boolean => idp.id === idpId)
+  return enabledIdps.find((idp: IdentityProvider): boolean => idp.id === idpId)
 }
 
 type SpidLoginWebviewProps = {
@@ -297,7 +296,7 @@ class IdpSelectionScreen extends React.Component<
   }
 
   createButtons = (): $ReadOnlyArray<React.Node> => {
-    return idps.map((idp: IdentityProvider): React.Node =>
+    return enabledIdps.map((idp: IdentityProvider): React.Node =>
       this.createButton(idp, () => {
         this.props.onSelectIdp(idp)
         this.selectIdp(idp)
