@@ -4,6 +4,10 @@
  * @flow
  */
 
+// Application
+export const APP_STATE_CHANGE_ACTION: 'APP_STATE_CHANGE_ACTION' =
+  'APP_STATE_CHANGE_ACTION'
+
 // Profile
 export const PROFILE_LOAD_REQUEST: 'PROFILE_LOAD_REQUEST' =
   'PROFILE_LOAD_REQUEST'

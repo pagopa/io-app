@@ -84,7 +84,7 @@ type Props = {
  * Implements the content of the user profile screen.
  */
 class ProfileComponent extends Component<Props> {
-  render() {
+  render(): ?React$Element<*> {
     const profile = this.props.user.profile
     const idpId = this.props.user.idpId
     const idpInfo = getIdpInfo(idpId)

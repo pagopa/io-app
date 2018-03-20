@@ -26,7 +26,7 @@ type Props = {
  * If the user inbox is still not enabled a CTA button is rendered to enable it.
  */
 export default class MessagesComponent extends Component<Props> {
-  render() {
+  render(): ?React$Element<*> {
     const user = this.props.user
 
     if (!user.profile) {

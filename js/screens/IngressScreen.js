@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, ActivityIndicator } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { type NavigationAction, NavigationActions } from 'react-navigation'
 
 import { Container } from 'native-base'
 import material from '../../native-base-theme/variables/material'
@@ -22,6 +22,15 @@ type OwnProps = {}
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: material.brandLight
+  }
+})
+
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
@@ -36,7 +45,7 @@ class IngressScreen extends Component<Props> {
     }
   }
 
-  render() {
+  render(): React$Element<*> {
     return (
       <Container style={styles.container}>
         <ActivityIndicator color={material.brandPrimary} />
@@ -44,7 +53,7 @@ class IngressScreen extends Component<Props> {
     )
   }
 
-  navigate = (route: string) => {
+  navigate = (route: string): NavigationAction => {
     return NavigationActions.reset({
       index: 0,
       key: null,
@@ -62,12 +71,3 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
 })
 
 export default connect(mapStateToProps)(IngressScreen)
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: material.brandLight
-  }
-})

@@ -53,6 +53,7 @@ class Navigation extends Component<Props> {
   onBackPress = (): boolean => {
     const { dispatch, nav } = this.props
     // If we are on the first screen of the stack we can exit from the application
+    // eslint-disable-next-line no-magic-numbers
     if (nav.index === 0) {
       return false
     }
@@ -60,7 +61,7 @@ class Navigation extends Component<Props> {
     return true
   }
 
-  render() {
+  render(): React$Element<*> {
     return (
       <MainNavigator
         navigation={addNavigationHelpers({

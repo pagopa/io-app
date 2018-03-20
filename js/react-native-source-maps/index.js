@@ -6,6 +6,9 @@
   we could either fork or merge back once we're positive about our solution
 */
 
+// Temporary disable eslint for this file
+/* eslint-disable */
+
 import RNFS from 'react-native-fs'
 import SourceMap from 'source-map'
 import StackTrace from 'stacktrace-js'
@@ -27,6 +30,37 @@ export const initSourceMaps = async opts => {
     throw new Error('Please specify sourceMapBundle option parameter')
   }
   options = opts
+}
+
+const createSourceMapper = async () => {
+  const bundlePath =
+    Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath
+  const path = `${bundlePath}/${options.sourceMapBundle}`
+  try {
+    const fileExists = await RNFS.exists(path)
+    if (!fileExists) {
+      throw new Error(
+        __DEV__
+          ? 'Unable to read source maps in DEV mode'
+          : `Unable to read source maps, possibly invalid sourceMapBundle file, please check that it exists here: ${
+              bundlePath
+            }/${options.sourceMapBundle}`
+      )
+    }
+
+    const mapContents = await RNFS.readFile(path, 'utf8')
+    const sourceMaps = JSON.parse(mapContents)
+    const mapConsumer = new SourceMap.SourceMapConsumer(sourceMaps)
+
+    return (sourceMapper = row => {
+      return mapConsumer.originalPositionFor({
+        line: row.lineNumber,
+        column: row.columnNumber
+      })
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 export const getStackTrace = async error => {
@@ -56,37 +90,6 @@ export const getStackTrace = async error => {
     return options.collapseInLine
       ? stackTrace.map(i => i.position).join('\n')
       : stackTrace
-  } catch (error) {
-    throw error
-  }
-}
-
-const createSourceMapper = async () => {
-  const bundlePath =
-    Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath
-  const path = `${bundlePath}/${options.sourceMapBundle}`
-  try {
-    const fileExists = await RNFS.exists(path)
-    if (!fileExists) {
-      throw new Error(
-        __DEV__
-          ? 'Unable to read source maps in DEV mode'
-          : `Unable to read source maps, possibly invalid sourceMapBundle file, please check that it exists here: ${
-              bundlePath
-            }/${options.sourceMapBundle}`
-      )
-    }
-
-    const mapContents = await RNFS.readFile(path, 'utf8')
-    const sourceMaps = JSON.parse(mapContents)
-    const mapConsumer = new SourceMap.SourceMapConsumer(sourceMaps)
-
-    return (sourceMapper = row => {
-      return mapConsumer.originalPositionFor({
-        line: row.lineNumber,
-        column: row.columnNumber
-      })
-    })
   } catch (error) {
     throw error
   }

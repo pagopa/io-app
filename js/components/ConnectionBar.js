@@ -19,21 +19,6 @@ type OwnProps = {}
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
-/**
- * Implements a component that show a message when there is no network connection
- */
-class ConnectionBar extends React.PureComponent<Props> {
-  render() {
-    const { isConnected } = this.props
-    if (isConnected) return null
-    return (
-      <View style={styles.container}>
-        <Text>{I18n.t('connection.status.offline')}</Text>
-      </View>
-    )
-  }
-}
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -42,6 +27,23 @@ const styles = StyleSheet.create({
     paddingLeft: 20
   }
 })
+
+/**
+ * Implements a component that show a message when there is no network connection
+ */
+class ConnectionBar extends React.PureComponent<Props> {
+  render(): ?React$Element<*> {
+    const { isConnected } = this.props
+    if (isConnected) {
+      return null
+    }
+    return (
+      <View style={styles.container}>
+        <Text>{I18n.t('connection.status.offline')}</Text>
+      </View>
+    )
+  }
+}
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isConnected: state.network.isConnected

@@ -6,7 +6,7 @@
 
 'use strict'
 
-import type { Action, ThunkAction, Dispatch, GetState } from './types'
+import type { Action, Thunk, Dispatch, GetState } from './types'
 import type { IdentityProvider } from '../utils/api'
 import { requestUserProfile } from './user'
 import { loadProfile } from '../store/actions/profile'
@@ -46,7 +46,7 @@ function selectIdp(idp: IdentityProvider): Action {
 /**
  * Logs the user in, setting the provided auth token and SPID IdP
  */
-function logIn(token: string, idpId: string): ThunkAction {
+function logIn(token: string, idpId: string): Thunk {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch({
       type: USER_LOGGED_IN_ACTION,

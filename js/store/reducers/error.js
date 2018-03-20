@@ -7,7 +7,7 @@
  * @flow
  */
 
-import _ from 'lodash'
+import get from 'lodash/get'
 
 import { type GlobalState } from '../../reducers/types'
 import { type Action } from '../../actions/types'
@@ -26,11 +26,16 @@ export const INITIAL_STATE: ErrorState = {}
  */
 export const createErrorSelector = (
   actions: $ReadOnlyArray<FetchRequestActionsType>
-) => (state: GlobalState): ?string => {
+): (GlobalState => ?string) => (state: GlobalState): ?string => {
   // Returns first error message found if any
-  return actions
-    .map(action => _.get(state, `error.${action}`))
-    .filter(message => !!message)[0]
+  return (
+    actions
+      .map((action: FetchRequestActionsType): string =>
+        get(state, `error.${action}`)
+      )
+      // eslint-disable-next-line no-magic-numbers
+      .filter((message: ?string): boolean => !!message)[0]
+  )
 }
 
 // Listen for _REQUEST|_FAILURE actions and set/remove error message.
@@ -42,7 +47,9 @@ const reducer = (
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
 
   // Not a *_REQUEST /  *_FAILURE actions, so we ignore them
-  if (!matches) return state
+  if (!matches) {
+    return state
+  }
 
   const [, requestName, requestState] = matches
   if (requestState === 'FAILURE') {

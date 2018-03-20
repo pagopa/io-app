@@ -28,10 +28,12 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
  * This screen show the profile to the authenticated user.
  */
 class ProfileScreen extends Component<Props> {
-  render() {
+  render(): ?React$Element<*> {
     const { user, navigation, dispatch } = this.props
 
-    if (!user.isLoggedIn) return null
+    if (!user.isLoggedIn) {
+      return null
+    }
 
     return (
       <Container>

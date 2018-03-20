@@ -43,6 +43,7 @@ export async function getUserProfile(
     const responseJson: ApiUserProfile = await response.json()
     return responseJson
   } catch (error) {
+    return null
     // TODO handle error
     // console.error(error)
   }
@@ -63,13 +64,15 @@ export async function setUserProfile(
       body: JSON.stringify(newProfile)
     })
 
-    if (response.status == 500) {
+    // eslint-disable-next-line no-magic-numbers
+    if (response.status === 500) {
       return response.status
     } else {
       const responseJson: ApiUserProfile = await response.json()
       return responseJson
     }
   } catch (error) {
+    return null
     // if the proxy is not reacheable
     // TODO handle unsuccessful fetch
     // @see https://www.pivotaltracker.com/story/show/154661120

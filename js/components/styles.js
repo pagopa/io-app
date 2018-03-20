@@ -10,6 +10,7 @@ import { Platform, NativeModules, StyleSheet } from 'react-native'
 
 const { StatusBarManager } = NativeModules
 
+// eslint-disable-next-line no-magic-numbers
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 
 // Due to a bug, the following style must be wrapped

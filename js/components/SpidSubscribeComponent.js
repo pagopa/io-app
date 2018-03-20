@@ -36,7 +36,7 @@ export default class SpidSubscribeComponent extends Component<Props, State> {
     })
   }
 
-  render() {
+  render(): React$Element<*> {
     return (
       <View>
         <Text style={{ fontSize: 16, color: '#d4e4fb', marginTop: 5 }}>

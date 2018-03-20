@@ -36,6 +36,7 @@ import type { UserState } from '../reducers/user'
 const TOKEN_PATH_PREFIX = '/profile.html?token='
 
 // TODO dynamically build this list
+// eslint-disable-next-line flowtype/no-mutable-array
 const idps: Array<IdentityProvider> = [
   {
     id: 'infocert',
@@ -95,6 +96,68 @@ const demoIdp: IdentityProvider = {
 const WEBVIEW_REF = 'webview'
 const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  selectIdpContainer: {
+    backgroundColor: '#0066CC',
+    paddingLeft: 40,
+    paddingRight: 40
+  },
+  selectIdpHelpText: {
+    marginTop: 20,
+    marginBottom: 20,
+    color: '#fff'
+  },
+  selectDemoHelpText: {
+    marginTop: 30,
+    marginBottom: 20,
+    color: '#fff'
+  },
+  spidLogo: {
+    height: 54,
+    width: 70,
+    resizeMode: 'contain'
+  },
+  idpButton: {
+    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+    marginBottom: 10
+  },
+  idpName: {
+    color: '#0066CC',
+    fontSize: 15
+  },
+  idpLogo: {
+    width: 80,
+    height: 20,
+    resizeMode: 'contain'
+  },
+  webViewContainer: {
+    flex: 1
+  },
+  webView: {
+    flex: 1,
+    backgroundColor: 'rgba(255,255,255,0.8)'
+  },
+  statusBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 5,
+    height: 40,
+    backgroundColor: '#ccc'
+  },
+  statusBarText: {
+    color: '#eee',
+    fontSize: 13
+  },
+  spinner: {
+    width: 20,
+    marginRight: 6
+  }
+})
+
 /**
  * Restituisce le proprietà dell'IdP associato all'identificativo
  * idpId. Restituisce undefined in caso non esista nessun IdP
@@ -102,7 +165,7 @@ const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`
  * @param {string} idpId - L'identificativo dell'IdP
  */
 export function getIdpInfo(idpId: string): ?IdentityProvider {
-  return idps.find(idp => idp.id === idpId)
+  return idps.find((idp: IdentityProvider): boolean => idp.id === idpId)
 }
 
 type SpidLoginWebviewProps = {
@@ -135,7 +198,7 @@ class SpidLoginWebview extends Component<
     }
   }
 
-  render() {
+  render(): React$Element<*> {
     return (
       <View style={StyleSheet.flatten(styles.webViewContainer)}>
         <WebView
@@ -155,9 +218,10 @@ class SpidLoginWebview extends Component<
     )
   }
 
-  _onNavigationStateChange = navState => {
+  _onNavigationStateChange = (navState): boolean => {
     const url = navState.url
     const tokenPathPos = url.indexOf(TOKEN_PATH_PREFIX)
+    // eslint-disable-next-line no-magic-numbers
     if (tokenPathPos === -1) {
       this.setState({
         status: navState.title,
@@ -165,6 +229,7 @@ class SpidLoginWebview extends Component<
       })
     } else {
       const token = url.substr(tokenPathPos + TOKEN_PATH_PREFIX.length)
+      // eslint-disable-next-line no-magic-numbers
       if (token && token.length > 0) {
         this.props.onSuccess(token)
       } else {
@@ -214,7 +279,10 @@ class IdpSelectionScreen extends Component<
     })
   }
 
-  createButton = (idp: IdentityProvider, onPress: () => any) => {
+  createButton = (
+    idp: IdentityProvider,
+    onPress: () => void
+  ): React$Element<*> => {
     return (
       <Button
         iconRight
@@ -231,8 +299,8 @@ class IdpSelectionScreen extends Component<
     )
   }
 
-  createButtons = () => {
-    return idps.map((idp: IdentityProvider) =>
+  createButtons = (): $ReadOnlyArray<React$Element<*>> => {
+    return idps.map((idp: IdentityProvider): React$Element<*> =>
       this.createButton(idp, () => {
         this.props.onSelectIdp(idp)
         this.selectIdp(idp)
@@ -240,13 +308,13 @@ class IdpSelectionScreen extends Component<
     )
   }
 
-  createDemoButton() {
+  createDemoButton(): React$Element<*> {
     return this.createButton(demoIdp, () => {
       this.props.onSelectIdp(demoIdp)
     })
   }
 
-  createErrorMessage = () => {
+  createErrorMessage = (): React$Element<*> => {
     return (
       <View style={{ paddingTop: 10 }}>
         <Text style={StyleSheet.flatten(CommonStyles.errorContainer)}>
@@ -258,7 +326,7 @@ class IdpSelectionScreen extends Component<
 
   // Handler per il bottone back dello schermo di selezione dell'IdP
   _handleBack() {
-    if (this.state.selectedIdp != null) {
+    if (this.state.selectedIdp !== null) {
       // se è già stato scelto un IdP, torniamo alla scelta
       this.resetIdp()
     } else {
@@ -268,7 +336,7 @@ class IdpSelectionScreen extends Component<
     }
   }
 
-  render() {
+  render(): React$Element<*> {
     const { selectedIdp } = this.state
     return (
       <Container>
@@ -291,8 +359,8 @@ class IdpSelectionScreen extends Component<
         {selectedIdp ? (
           <SpidLoginWebview
             idp={selectedIdp}
-            onSuccess={token => this._handleSpidSuccess(token)}
-            onError={err => this._handleSpidError(err)}
+            onSuccess={(token: string): void => this._handleSpidSuccess(token)}
+            onError={(err: string): void => this._handleSpidError(err)}
           />
         ) : (
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
@@ -364,7 +432,7 @@ export class SpidLoginButton extends Component<
     this.props.onSelectIdp(idp)
   }
 
-  render() {
+  render(): React$Element<*> {
     return (
       <View>
         <Modal
@@ -404,65 +472,3 @@ export class SpidLoginButton extends Component<
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  selectIdpContainer: {
-    backgroundColor: '#0066CC',
-    paddingLeft: 40,
-    paddingRight: 40
-  },
-  selectIdpHelpText: {
-    marginTop: 20,
-    marginBottom: 20,
-    color: '#fff'
-  },
-  selectDemoHelpText: {
-    marginTop: 30,
-    marginBottom: 20,
-    color: '#fff'
-  },
-  spidLogo: {
-    height: 54,
-    width: 70,
-    resizeMode: 'contain'
-  },
-  idpButton: {
-    backgroundColor: '#fff',
-    justifyContent: 'space-between',
-    marginBottom: 10
-  },
-  idpName: {
-    color: '#0066CC',
-    fontSize: 15
-  },
-  idpLogo: {
-    width: 80,
-    height: 20,
-    resizeMode: 'contain'
-  },
-  webViewContainer: {
-    flex: 1
-  },
-  webView: {
-    flex: 1,
-    backgroundColor: 'rgba(255,255,255,0.8)'
-  },
-  statusBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 5,
-    height: 40,
-    backgroundColor: '#ccc'
-  },
-  statusBarText: {
-    color: '#eee',
-    fontSize: 13
-  },
-  spinner: {
-    width: 20,
-    marginRight: 6
-  }
-})

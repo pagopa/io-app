@@ -2,6 +2,8 @@
  * Implements a custom generic error handler that keeps track of JavaScript exceptions
  *
  * TODO: Improve this using external libraries @https://www.pivotaltracker.com/story/show/155392873
+ *
+ * @flow
  */
 
 import { Alert } from 'react-native'
@@ -15,7 +17,7 @@ const isDev = __DEV__
 const version = DeviceInfo.getReadableVersion()
 
 // Custom error handler for unhandled js exceptions
-const customErrorHandler = async (error, isFatal) => {
+const customErrorHandler = async (error, isFatal): Promise<void> => {
   if (isFatal) {
     error.stack = await getStackTrace(error)
     // Send a remote event that contains the error stack trace

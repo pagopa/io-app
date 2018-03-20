@@ -33,10 +33,12 @@ class MessagesScreen extends Component<Props> {
     super(props)
   }
 
-  render() {
+  render(): ?React$Element<*> {
     const { user, navigation, dispatch } = this.props
 
-    if (!user.isLoggedIn) return null
+    if (!user.isLoggedIn) {
+      return null
+    }
 
     return (
       <Container>

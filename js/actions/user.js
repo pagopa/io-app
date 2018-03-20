@@ -4,12 +4,7 @@
  * @flow
  */
 
-import {
-  type ThunkAction,
-  type Dispatch,
-  type GetState,
-  type Action
-} from './types'
+import { type GetState, type Dispatch, type Action, type Thunk } from './types'
 import { type ApiUserProfile, type ApiNewUserProfile } from '../utils/api'
 import { getUserProfile } from '../utils/api'
 import { setUserProfile } from '../utils/api'
@@ -21,14 +16,34 @@ const RECEIVE_USER_PROFILE_ACTION = 'RECEIVE_USER_PROFILE_ACTION'
 const UPDATE_USER_PROFILE_REQUEST_ACTION = 'UPDATE_USER_PROFILE_REQUEST_ACTION'
 const UPDATE_USER_PROFILE_ERROR_ACTION = 'UPDATE_USER_PROFILE_ERROR_ACTION'
 
+// Creators
+function receiveUserProfile(profile: ApiUserProfile): Action {
+  return {
+    type: RECEIVE_USER_PROFILE_ACTION,
+    profile: profile,
+    receivedAt: Date.now()
+  }
+}
+
+function updateUserProfileError(): Action {
+  return {
+    type: UPDATE_USER_PROFILE_ERROR_ACTION,
+    data: {
+      error: I18n.t('errors.profileUpdateError')
+    }
+  }
+}
+
 /**
  * Begins an API requests for the user profile to the backend.
  */
-function requestUserProfile(): ThunkAction {
+function requestUserProfile(): Thunk {
   return (dispatch: Dispatch, getState: GetState) => {
     const user = getState().user
     // If the user is not logged in we can't request the profile
-    if (!user.isLoggedIn) return
+    if (!user.isLoggedIn) {
+      return
+    }
 
     // First we dispatch the request action
     dispatch({
@@ -64,11 +79,13 @@ function requestUserProfile(): ThunkAction {
 /**
  * Begins an API requests update inbox for the user profile to the backend.
  */
-function updateUserProfile(newProfile: ApiNewUserProfile): ThunkAction {
+function updateUserProfile(newProfile: ApiNewUserProfile): Thunk {
   return (dispatch: Dispatch, getState: GetState) => {
     const user = getState().user
     // If the user is not logged in we can't request the profile
-    if (!user.isLoggedIn) return
+    if (!user.isLoggedIn) {
+      return
+    }
 
     // First we dispatch the request action
     dispatch({
@@ -84,23 +101,6 @@ function updateUserProfile(newProfile: ApiNewUserProfile): ThunkAction {
         }
       }
     })
-  }
-}
-
-function receiveUserProfile(profile: ApiUserProfile): Action {
-  return {
-    type: RECEIVE_USER_PROFILE_ACTION,
-    profile: profile,
-    receivedAt: Date.now()
-  }
-}
-
-function updateUserProfileError(): Action {
-  return {
-    type: UPDATE_USER_PROFILE_ERROR_ACTION,
-    data: {
-      error: I18n.t('errors.profileUpdateError')
-    }
   }
 }
 

@@ -1,6 +1,7 @@
 /**
  * Implements a Redux middleware that translates actions into Mixpanel events
  *
+ * @flow
  */
 
 import Mixpanel from 'react-native-mixpanel'
@@ -15,26 +16,28 @@ import {
   USER_LOGGED_IN_ACTION,
   USER_LOGIN_ERROR_ACTION
 } from '../actions'
-import { APP_STATE_CHANGE_ACTION } from '../enhancers/applyAppStateListener'
-
-/*
-  The middleware injects the `getState` method (from the store) into the action
-  `getState` is later exposed on the action i.e. while working on reducers
-*/
-const injectGetState = ({ getState }) => next => action => {
-  next({
-    ...action,
-    getState: getState
-  })
-}
+import {
+  type MiddlewareAPI,
+  type Action,
+  type AnyAction,
+  type Thunk,
+  type Dispatch
+} from '../actions/types'
+import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
 /*
   The middleware acts as a general hook in order to track any meaningful action
 */
-const actionTracking = () => next => action => {
-  const result = next(action)
+const actionTracking = (): (Dispatch => AnyAction => AnyAction) => (
+  next: Dispatch
+): (AnyAction => AnyAction) => (action: AnyAction): AnyAction => {
+  const result: Action | Thunk = next(action)
 
-  switch (action.type) {
+  if (typeof action === 'function') {
+    return result
+  }
+
+  switch (result.type) {
     case APP_STATE_CHANGE_ACTION: {
       Mixpanel.trackWithProperties('APP_STATE_CHANGE', {
         APPLICATION_STATE_NAME: result.payload
@@ -90,10 +93,12 @@ const actionTracking = () => next => action => {
 }
 
 // gets the current screen from navigation state
-function getCurrentRouteName(navigationState) {
+// TODO: Need to be fixed
+function getCurrentRouteName(navigationState): ?string {
   if (!navigationState) {
     return null
   }
+  // $FlowFixMe
   const route = navigationState.routes[navigationState.index]
   // dive into nested navigators
   if (route.routes) {
@@ -106,7 +111,11 @@ function getCurrentRouteName(navigationState) {
   The middleware acts as a general hook in order to track any meaningful navigation action
   https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
 */
-const screenTracking = ({ getState }) => next => action => {
+const screenTracking = (
+  store: MiddlewareAPI
+): (Dispatch => AnyAction => AnyAction) => (
+  next: Dispatch
+): (AnyAction => AnyAction) => (action: AnyAction): AnyAction => {
   if (
     action.type !== NavigationActions.NAVIGATE &&
     action.type !== NavigationActions.BACK
@@ -114,9 +123,9 @@ const screenTracking = ({ getState }) => next => action => {
     return next(action)
   }
 
-  const currentScreen = getCurrentRouteName(getState().nav)
+  const currentScreen = getCurrentRouteName(store.getState().navigation)
   const result = next(action)
-  const nextScreen = getCurrentRouteName(getState().nav)
+  const nextScreen = getCurrentRouteName(store.getState().navigation)
 
   if (nextScreen !== currentScreen) {
     Mixpanel.trackWithProperties('SCREEN_CHANGE', {
@@ -127,7 +136,6 @@ const screenTracking = ({ getState }) => next => action => {
 }
 
 module.exports = {
-  injectGetState,
   actionTracking,
   screenTracking
 }

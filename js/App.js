@@ -25,7 +25,7 @@ const { store, persistor } = configureStoreAndPersistor()
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-const App = () => {
+const App = (): React$Element<*> => {
   return (
     <StyleProvider style={getTheme(material)}>
       <Provider store={store}>

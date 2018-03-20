@@ -35,7 +35,7 @@ import { logInIntent, selectIdp, logIn, logInError } from '../actions'
 import { VERSION } from '../utils/constants'
 import ROUTES from '../navigation/routes'
 
-import { isDemoIdp } from '../utils/api'
+import { type IdentityProvider, isDemoIdp } from '../utils/api'
 
 import { type ReduxProps } from '../actions/types'
 import { type GlobalState } from '../reducers/types'
@@ -140,7 +140,7 @@ class LoginScreen extends Component<Props, State> {
     }).start()
   }
 
-  handleIpdSelection = idp => {
+  handleIpdSelection = (idp: IdentityProvider) => {
     // if the selected idp is the demo one simulate a sucessfull login
     if (isDemoIdp(idp)) {
       this.props.dispatch(selectIdp(idp))
@@ -151,7 +151,11 @@ class LoginScreen extends Component<Props, State> {
     }
   }
 
-  render() {
+  handleLoginIntent = () => {
+    this.props.dispatch(logInIntent())
+  }
+
+  render(): React$Element<*> {
     // When we have no connectivity disable the SpidLoginButton
     const { isConnected } = this.props
     return (
@@ -173,8 +177,10 @@ class LoginScreen extends Component<Props, State> {
         <SpidLoginButton
           disabled={!isConnected}
           userState={this.props.user}
-          onSelectIdp={idp => this.handleIpdSelection(idp)}
-          onSpidLoginIntent={() => this.props.dispatch(logInIntent())}
+          onSelectIdp={(idp: IdentityProvider): void =>
+            this.handleIpdSelection(idp)
+          }
+          onSpidLoginIntent={(): void => this.handleLoginIntent()}
           onSpidLogin={(token, idpId) => {
             this.props.dispatch(logIn(token, idpId))
             this.props.navigation.navigate(ROUTES.HOME)
