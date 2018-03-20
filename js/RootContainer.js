@@ -22,11 +22,11 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
  */
 class RootContainer extends React.Component<Props> {
   componentDidMount() {
-    AppState.addEventListener('change', this._onApplicationActivityChange)
+    AppState.addEventListener('change', this.onApplicationActivityChange)
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this._onApplicationActivityChange)
+    AppState.removeEventListener('change', this.onApplicationActivityChange)
   }
 
   render(): React.Node {
@@ -38,7 +38,7 @@ class RootContainer extends React.Component<Props> {
     )
   }
 
-  _onApplicationActivityChange = (activity: ApplicationState) => {
+  onApplicationActivityChange = (activity: ApplicationState) => {
     this.props.dispatch({
       type: APP_STATE_CHANGE_ACTION,
       payload: activity
