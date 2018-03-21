@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import * as React from 'react'
 import { Provider } from 'react-redux'
 import { StyleProvider } from 'native-base'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -25,7 +25,7 @@ const { store, persistor } = configureStoreAndPersistor()
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-const App = () => {
+const App = (): React.Node => {
   return (
     <StyleProvider style={getTheme(material)}>
       <Provider store={store}>

@@ -4,7 +4,5 @@
  * @flow
  */
 
-'use strict'
-
 export * from './login'
 export * from './user'

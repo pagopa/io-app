@@ -4,7 +4,10 @@ import type { NavigationState, NavigationAction } from 'react-navigation'
 
 import MainNavigator from '../navigation/MainNavigator'
 
-const reducer = (state: NavigationState, action: NavigationAction) => {
+const reducer = (
+  state: NavigationState,
+  action: NavigationAction
+): NavigationState => {
   const nextState = MainNavigator.router.getStateForAction(action, state)
 
   return nextState || state

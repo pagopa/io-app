@@ -2,9 +2,7 @@
  * @flow
  */
 
-'use strict'
-
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import { StyleSheet, Linking } from 'react-native'
 
@@ -83,8 +81,8 @@ type Props = {
 /**
  * Implements the content of the user profile screen.
  */
-class ProfileComponent extends Component<Props> {
-  render() {
+class ProfileComponent extends React.Component<Props> {
+  render(): React.Node {
     const profile = this.props.user.profile
     const idpId = this.props.user.idpId
     const idpInfo = getIdpInfo(idpId)

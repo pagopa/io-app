@@ -26,7 +26,7 @@ import { type GlobalState } from '../reducers/types'
 
 // A selector to get the token from the state
 // TODO: Move this in external file before merging into master
-const getToken = (state: GlobalState) =>
+const getToken = (state: GlobalState): ?string =>
   state.user.isLoggedIn ? state.user.token : null
 
 // A saga to load the Profile.

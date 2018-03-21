@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import {
   type NavigationScreenProp,
@@ -28,15 +28,17 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
 /**
  * This screen show the messages to the authenticated user.
  */
-class MessagesScreen extends Component<Props> {
+class MessagesScreen extends React.Component<Props> {
   constructor(props) {
     super(props)
   }
 
-  render() {
+  render(): React.Node {
     const { user, navigation, dispatch } = this.props
 
-    if (!user.isLoggedIn) return null
+    if (!user.isLoggedIn) {
+      return null
+    }
 
     return (
       <Container>

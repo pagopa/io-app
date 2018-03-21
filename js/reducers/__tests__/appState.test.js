@@ -1,5 +1,5 @@
 import appState, { initialAppState } from '../appState'
-import { APP_STATE_CHANGE_ACTION } from '../../enhancers/applyAppStateListener'
+import { APP_STATE_CHANGE_ACTION } from '../../store/actions/constants'
 
 describe('appState reducer', () => {
   it('should have a valid initial state', () => {

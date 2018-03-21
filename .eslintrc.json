@@ -32,20 +32,35 @@
     "jest"
   ],
   "rules": {
-    "flowtype/no-weak-types": 1,
-    "react/jsx-uses-vars": 1,
-    "prettier/prettier": "error",
-    "no-trailing-spaces": "error",
-    "require-jsdoc": ["error", {
+    "eqeqeq": 2,
+    "consistent-return": 2,
+    "curly": 2,
+    "strict": 2,
+    "handle-callback-err": 1,
+    "id-length": [2, {"min": 2}],
+    "no-eval": 2,
+    "no-magic-numbers": 2,
+    "no-param-reassign": 1,
+    "no-trailing-spaces": 2,
+    "no-unused-expressions": 2,
+    "no-use-before-define": 2,
+    "no-var": 2,
+    "prefer-arrow-callback": 2,
+    "prefer-const": 2,
+    "require-jsdoc": [2, {
       "require": {
-          "FunctionDeclaration": false,
-          "MethodDefinition": false,
-          "ClassDeclaration": true,
-          "ArrowFunctionExpression": false,
-          "FunctionExpression": false
+        "FunctionDeclaration": false,
+        "MethodDefinition": false,
+        "ClassDeclaration": true,
+        "ArrowFunctionExpression": false,
+        "FunctionExpression": false
       }
     }],
-    "prefer-const": "error",
-    "react/jsx-no-literals": "error"
+    "flowtype/no-mutable-array": 2,
+    "flowtype/no-weak-types": 2,
+    "flowtype/require-return-type": 2,
+    "react/jsx-uses-vars": 2,
+    "react/jsx-no-literals": 2,
+    "prettier/prettier": 2
   }
 }

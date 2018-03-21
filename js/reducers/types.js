@@ -2,7 +2,7 @@
 
 import { type NavigationState } from 'react-navigation'
 
-import { type AnyAction } from '../actions/types'
+import { type Action } from '../actions/types'
 import { type AppState } from './appState'
 import { type UserState } from './user'
 import { type LoadingState } from '../store/reducers/loading'
@@ -11,7 +11,7 @@ import { type ProfileState } from '../store/reducers/profile'
 
 export type NetworkState = {
   isConnected: boolean,
-  actionQueue: Array<AnyAction>
+  actionQueue: $ReadOnlyArray<Action>
 }
 
 export type GlobalState = {

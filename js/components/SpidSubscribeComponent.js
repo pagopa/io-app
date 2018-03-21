@@ -3,9 +3,7 @@
  * @flow
  */
 
-'use strict'
-
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import { Text, Icon, View, Item, Input } from 'native-base'
 
@@ -22,7 +20,10 @@ type Props = {}
 /**
  * Implements the component for helping the user to subscribe to SPID.
  */
-export default class SpidSubscribeComponent extends Component<Props, State> {
+export default class SpidSubscribeComponent extends React.Component<
+  Props,
+  State
+> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -36,7 +37,7 @@ export default class SpidSubscribeComponent extends Component<Props, State> {
     })
   }
 
-  render() {
+  render(): React.Node {
     return (
       <View>
         <Text style={{ fontSize: 16, color: '#d4e4fb', marginTop: 5 }}>

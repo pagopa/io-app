@@ -7,7 +7,7 @@
  * @flow
  */
 
-import _ from 'lodash'
+import get from 'lodash/get'
 
 import { type GlobalState } from '../../reducers/types'
 import { type Action } from '../../actions/types'
@@ -26,9 +26,11 @@ export const INITIAL_STATE: LoadingState = {}
  */
 export const createLoadingSelector = (
   actions: $ReadOnlyArray<FetchRequestActionsType>
-) => (state: GlobalState): boolean => {
+): (GlobalState => ?boolean) => (state: GlobalState): boolean => {
   // Returns true only when all actions are not loading
-  return actions.some(action => _.get(state, `loading.${action}`))
+  return actions.some((action: FetchRequestActionsType): boolean =>
+    get(state, `loading.${action}`)
+  )
 }
 
 // Listen for _REQUEST|_SUCCESS|_FAILURE actions and set/remove loading state.
@@ -40,7 +42,9 @@ const reducer = (
   const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type)
 
   // Not a *_REQUEST / *_SUCCESS /  *_FAILURE actions, so we ignore them
-  if (!matches) return state
+  if (!matches) {
+    return state
+  }
 
   const [, requestName, requestState] = matches
   return {

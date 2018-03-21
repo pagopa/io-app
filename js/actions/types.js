@@ -4,17 +4,23 @@
  * @flow
  */
 
-import { type Store as ReduxStore } from 'redux'
+import {
+  type Store as ReduxStore,
+  type DispatchAPI,
+  type MiddlewareAPI as ReduxMiddlewareAPI,
+  type StoreEnhancer as ReduxStoreEnhancer
+} from 'redux'
 import { type NavigationAction } from 'react-navigation'
 
 import { type GlobalState } from '../reducers/types'
 import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
 import { type ProfileActions } from '../store/actions/profile'
+import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
 export type ApplicationState = 'background' | 'inactive' | 'active'
 
 export type ApplicationStateAction = {
-  type: 'APP_STATE_CHANGE_ACTION',
+  type: typeof APP_STATE_CHANGE_ACTION,
   payload: ApplicationState
 }
 
@@ -39,17 +45,21 @@ export type Action =
   | NavigationAction
   | ProfileActions
 
+/* eslint-disable no-use-before-define */
+// We need to disable the eslint rule because of a problem described here @https://github.com/babel/babel-eslint/issues/485
 export type GetState = () => GlobalState
 
-export type PromiseAction = Promise<Action>
+export type Thunk = (dispatch: Dispatch, getState: GetState) => void
 
-export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
+export type AnyAction = Action | Thunk
 
-export type AnyAction = Action | ThunkAction | PromiseAction | Array<Action>
+export type Dispatch = DispatchAPI<AnyAction>
 
-export type Store = ReduxStore<GlobalState, AnyAction>
+export type Store = ReduxStore<GlobalState, Action, Dispatch>
 
-export type Dispatch = (action: AnyAction) => any
+export type StoreEnhancer = ReduxStoreEnhancer<GlobalState, Action, Dispatch>
+
+export type MiddlewareAPI = ReduxMiddlewareAPI<GlobalState, Action, Dispatch>
 
 // Props injected by react-redux connect() function
 export type ReduxProps = {

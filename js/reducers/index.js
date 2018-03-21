@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict'
-
 import { combineReducers } from 'redux'
 import { reducer as network } from 'react-native-offline'
 
@@ -23,7 +21,7 @@ import profileReducer from '../store/reducers/profile'
  * DATA state is where we store real data fetched from the API (ex. profile/messages).
  * More at @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-module.exports = combineReducers({
+export default combineReducers({
   appState: appStateReducer,
   network,
   navigation: navigationReducer,

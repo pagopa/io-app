@@ -2,9 +2,7 @@
  * @flow
  */
 
-'use strict'
-
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import { Content, Button, Text, View } from 'native-base'
 
@@ -25,8 +23,8 @@ type Props = {
  * A component to show the Messages of the logged user.
  * If the user inbox is still not enabled a CTA button is rendered to enable it.
  */
-export default class MessagesComponent extends Component<Props> {
-  render() {
+export default class MessagesComponent extends React.Component<Props> {
+  render(): React.Node {
     const user = this.props.user
 
     if (!user.profile) {

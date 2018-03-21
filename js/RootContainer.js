@@ -1,33 +1,49 @@
-import React from 'react'
-import { withNetworkConnectivity } from 'react-native-offline'
+// @flow
+
+import * as React from 'react'
+import { AppState } from 'react-native'
+import { connect } from 'react-redux'
+
 import { Root } from 'native-base'
 
+import { type ReduxProps, type ApplicationState } from './actions/types'
+import { APP_STATE_CHANGE_ACTION } from './store/actions/constants'
 import ConnectionBar from './components/ConnectionBar'
 import Navigation from './navigation'
 
-// Parameters used by the withNetworkConnectivity HOC of react-native-offline.
-// We use `withRedux: true` to store the network status in the redux store.
-// More info at https://github.com/rauliyohmc/react-native-offline#withnetworkconnectivity
-const connectionMonitorParameters = {
-  withRedux: true,
-  timeout: 5000,
-  pingServerUrl: 'https://google.com',
-  withExtraHeadRequest: true,
-  checkConnectionInterval: 2500
-}
+type ReduxMappedProps = {}
+
+type OwnProps = {}
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
  */
-const RootContainer = () => {
-  return (
-    <Root>
-      <ConnectionBar />
-      <Navigation />
-    </Root>
-  )
+class RootContainer extends React.Component<Props> {
+  componentDidMount() {
+    AppState.addEventListener('change', this.onApplicationActivityChange)
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.onApplicationActivityChange)
+  }
+
+  render(): React.Node {
+    return (
+      <Root>
+        <ConnectionBar />
+        <Navigation />
+      </Root>
+    )
+  }
+
+  onApplicationActivityChange = (activity: ApplicationState) => {
+    this.props.dispatch({
+      type: APP_STATE_CHANGE_ACTION,
+      payload: activity
+    })
+  }
 }
 
-export default withNetworkConnectivity(connectionMonitorParameters)(
-  RootContainer
-)
+export default connect()(RootContainer)
