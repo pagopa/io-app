@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict'
-
 import { combineReducers } from 'redux'
 import { reducer as network } from 'react-native-offline'
 

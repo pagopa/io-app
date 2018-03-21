@@ -5,8 +5,6 @@
  * @flow
  */
 
-'use strict'
-
 import { CommonStyles } from './styles'
 
 import * as React from 'react'

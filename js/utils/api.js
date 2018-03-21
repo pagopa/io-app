@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict'
-
 /**
  * The user profile
  */

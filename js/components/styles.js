@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict'
-
 import { Platform, NativeModules, StyleSheet } from 'react-native'
 
 const { StatusBarManager } = NativeModules

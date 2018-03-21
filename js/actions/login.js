@@ -4,8 +4,6 @@
  * @flow
  */
 
-'use strict'
-
 import type { Action, Thunk, Dispatch, GetState } from './types'
 import type { IdentityProvider } from '../utils/api'
 import { requestUserProfile } from './user'

@@ -2,8 +2,6 @@
  * @flow
  */
 
-'use strict'
-
 import * as React from 'react'
 
 import { StyleSheet, Linking } from 'react-native'
