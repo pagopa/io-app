@@ -114,7 +114,6 @@ function getCurrentRouteName(
 
   // navNode is a NavigationState
   // eslint-disable-next-line flowtype/no-weak-types
-  const x = 'ciao'
   const navState = ((navNode: any): NavigationState)
   const route = navState.routes[navState.index]
   return getCurrentRouteName(route)
