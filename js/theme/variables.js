@@ -30,6 +30,7 @@ const customVariables = Object.assign(materialVariables, {
   iconFamily: 'Entypo',
 
   // Content
+  contentPadding: 24,
   contentBackground: '#FFFFFF',
 
   // Footer

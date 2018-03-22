@@ -5,7 +5,7 @@ import variables from '../variables'
 
 export default (): Theme => {
   const theme = {
-    padding: 24,
+    padding: variables.contentPadding,
     backgroundColor: variables.contentBackground
   }
 
