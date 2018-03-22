@@ -9,10 +9,11 @@ import {
 
 import { Container } from 'native-base'
 
-import { type GlobalState } from '../reducers/types'
-import { type ReduxProps } from '../actions/types'
-import { type UserState } from '../reducers/user'
-import ProfileComponent from '../components/ProfileComponent'
+import { type ReduxProps } from '../../actions/types'
+import { type UserState } from '../../reducers/user'
+import MessagesComponent from '../../components/MessagesComponent'
+
+import { type GlobalState } from '../../reducers/types'
 
 type ReduxMappedProps = {
   user: UserState
@@ -25,9 +26,13 @@ type OwnProps = {
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
- * This screen show the profile to the authenticated user.
+ * This screen show the messages to the authenticated user.
  */
-class ProfileScreen extends React.Component<Props> {
+class MessagesScreen extends React.Component<Props> {
+  constructor(props) {
+    super(props)
+  }
+
   render(): React.Node {
     const { user, navigation, dispatch } = this.props
 
@@ -37,7 +42,7 @@ class ProfileScreen extends React.Component<Props> {
 
     return (
       <Container>
-        <ProfileComponent
+        <MessagesComponent
           user={user}
           navigation={navigation}
           dispatch={dispatch}
@@ -52,4 +57,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   navigation: state.navigation
 })
 
-export default connect(mapStateToProps)(ProfileScreen)
+export default connect(mapStateToProps)(MessagesScreen)

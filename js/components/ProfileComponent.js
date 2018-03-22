@@ -20,8 +20,6 @@ import {
 
 import I18n from '../i18n'
 
-import { NavigationActions } from 'react-navigation'
-
 import {
   type NavigationScreenProp,
   type NavigationState
@@ -30,7 +28,6 @@ import { type Dispatch } from '../actions/types'
 import { type LoggedInUserState } from '../reducers/user'
 
 import { VERSION } from '../utils/constants'
-import ROUTES from '../navigation/routes'
 
 import { ProfileStyles } from './styles'
 
@@ -50,14 +47,6 @@ const profileRowIconStyles = StyleSheet.flatten(ProfileStyles.profileRowIcon)
 const profileRowTextStyles = StyleSheet.flatten(ProfileStyles.profileRowText)
 
 const { logOut } = require('../actions')
-
-/**
- * Resets the main navigation to the LoginScreen
- */
-const resetNavigationAction = NavigationActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: ROUTES.LOGIN })]
-})
 
 /**
  * Opens the IdP profile page as an external link.
@@ -166,7 +155,6 @@ class ProfileComponent extends React.Component<Props> {
           icon
           onPress={() => {
             this.props.dispatch(logOut())
-            this.props.dispatch(resetNavigationAction)
           }}
         >
           <Body>

@@ -1,0 +1,28 @@
+// @flow
+
+import { type Theme } from '../types'
+import variables from '../variables'
+
+export default (): Theme => {
+  const theme = {
+    '.spacer': {
+      '.large': {
+        height: variables.spacerLargeHeight
+      },
+
+      height: variables.spacerHeight
+    },
+
+    '.footer': {
+      paddingTop: variables.footerPaddingTop,
+      paddingLeft: variables.footerPaddingLeft,
+      paddingBottom: variables.footerPaddingBottom,
+      paddingRight: variables.footerPaddingRight,
+      backgroundColor: variables.footerBackground,
+      borderTopWidth: variables.footerShadowWidth,
+      borderColor: variables.footerShadowColor
+    }
+  }
+
+  return theme
+}

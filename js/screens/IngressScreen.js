@@ -3,10 +3,13 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, ActivityIndicator } from 'react-native'
-import { type NavigationAction, NavigationActions } from 'react-navigation'
+import {
+  type NavigationScreenProp,
+  type NavigationState
+} from 'react-navigation'
 
 import { Container } from 'native-base'
-import material from '../../native-base-theme/variables/material'
+import variables from '../theme/variables'
 
 import ROUTES from '../navigation/routes'
 import { type ReduxProps } from '../actions/types'
@@ -18,7 +21,9 @@ type ReduxMappedProps = {
   user: UserState
 }
 
-type OwnProps = {}
+type OwnProps = {
+  navigation: NavigationScreenProp<NavigationState>
+}
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
@@ -27,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: material.brandLight
+    backgroundColor: variables.brandPrimary
   }
 })
 
@@ -37,32 +42,20 @@ const styles = StyleSheet.create({
 class IngressScreen extends React.Component<Props> {
   // Check the user state in the store and navigate to the proper screen
   componentDidMount() {
-    const { user, dispatch } = this.props
+    const { user } = this.props
     if (user.isLoggedIn) {
-      dispatch(this.navigate(ROUTES.HOME))
+      this.props.navigation.navigate(ROUTES.MAIN)
     } else {
-      dispatch(this.navigate(ROUTES.LOGIN))
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION)
     }
   }
 
   render(): React.Node {
     return (
       <Container style={styles.container}>
-        <ActivityIndicator color={material.brandPrimary} />
+        <ActivityIndicator color={variables.brandPrimaryInverted} />
       </Container>
     )
-  }
-
-  navigate = (route: string): NavigationAction => {
-    return NavigationActions.reset({
-      index: 0,
-      key: null,
-      actions: [
-        NavigationActions.navigate({
-          routeName: route
-        })
-      ]
-    })
   }
 }
 
