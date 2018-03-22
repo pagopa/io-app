@@ -16,6 +16,7 @@ const customVariables = Object.assign(materialVariables, {
   btnFontFamily: 'Titillium Web',
   btnTextFontWeight: '600',
   btnHeight: 48,
+  btnSmallHeight: 39,
 
   // Color
   brandPrimary: '#0066CC',
