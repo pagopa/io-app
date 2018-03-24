@@ -214,7 +214,7 @@ Per definire nuove variabili da utilizzare nel tema dei componenti è necessario
 
 ##### Tema dei Componenti
 
-La libreria native-base definisce il tema di ogni singolo componente in un file .js separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo a componente `Button` ha come nome `Button.js`.
+La libreria native-base definisce il tema di ogni singolo componente in un file .js separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.js`.
 Per ridefinire il tema dei componenti di native-base è necesario creare/modificare i file presenti nella directory `/js/theme/components`. Ogni file presente in questa directory deve esportare un oggetto che definisce il tema del componente. Prendiamo come esempio il file `Content.js`:
 
 ```javascript
@@ -231,7 +231,7 @@ export default (): Theme => {
 }
 ```
 
-In questo file è possibile notare come vengono ridefiniti due attributi (`padding` e `backgroundColor`) utilizzando come valori quanto presente nelle relative variabili. L'oggetto restituito sarà utilizzato nel file `/js/theme/index` per associarlo ad uno specifico tipo di componente (in questo caso `NativeBase.Component`).
+In questo file è possibile notare come vengono ridefiniti due attributi (`padding` e `backgroundColor`) utilizzando come valori quanto presente nelle relative variabili. L'oggetto restituito sarà utilizzato nel file `/js/theme/index.js` per associarlo ad uno specifico tipo di componente (in questo caso `NativeBase.Component`).
 
 Un esempio più complesso permette di utilizzare le funzioni avanzate del layer di theming di native-base.
 
@@ -264,14 +264,16 @@ export default (): Theme => {
 }
 ```
 
-All'interno del file del tema di un singolo componente è possibile infatti definire degli attributi specifici che verranno utilizzati sono nel caso il componente in questione abbia una specifica prop.
-Definendo nell'oggetto di tema qualcosa come
+All'interno del file del tema di un singolo componente è possibile infatti definire degli attributi specifici che verranno utilizzati solo nel caso in cui il componente in questione abbia una specifica proprietà.
+Definendo nell'oggetto di tema qualcosa come:
+
 ```javascript
 '.footer': {
-      paddingTop: variables.footerPaddingTop
-    }
+  paddingTop: variables.footerPaddingTop
+}
 ```
-sarà possibile quando necessario utilizzare il componente associandogli la property `footer` nel seguente modo `<Component footer />` ed automaticamente il sistema di theming applicherà al componente gli attributi definiti (`paddingTop: variables.footerPaddingTop`).
+
+se necessario, sarà possibile utilizzare il componente associandogli la proprietà `footer` nel seguente modo `<Component footer />` ed automaticamente il sistema di theming applicherà al componente gli attributi definiti (`paddingTop: variables.footerPaddingTop`).
 
 Altra funzione avanzata è quella che permette di definire il tema dei componenti figli a partire dal componente padre.
 Prediamo come esempio il seguente frammento di codice di un generico componente:
@@ -290,9 +292,9 @@ render() {
 ...
 ```
 
-La libreria native-base permette di definire l'aspetto del componente figlio `Text` presente all'interno del componente padre `Button`. Ad esempio per definire la dimensione del testo all'interno di tutti i bottoni presenti nell'applicazione è possibile all'interno del file `/js/theme/components/Button.js` il seguente codice:
+La libreria native-base permette di definire l'aspetto del componente figlio `Text` presente all'interno del componente padre `Button`. Ad esempio per definire la dimensione del testo in tutti i bottoni presenti nell'applicazione, è sufficiente inserire il seguente codice all'interno del file `/js/theme/components/Button.js`:
 
-```javasscript
+```javascript
 import variables from '../variables'
 
 export default (): Theme => {
@@ -306,9 +308,9 @@ export default (): Theme => {
 }
 ```
 
-è possibile spingersi ancora oltre e combinare le due funzionalità viste in precedenza.
+È possibile spingersi ancora oltre e combinare le due funzionalità viste in precedenza:
 
-```javasscript
+```javascript
 import variables from '../variables'
 
 export default (): Theme => {
@@ -324,4 +326,4 @@ export default (): Theme => {
 }
 ```
 
-I questo caso quanto definito per all'interno dell'attributo `NativeBase.Text` sarà utilizzato solo nel caso il bottone abbia associata una props dal nome `small`.
+In questo caso quanto definito all'interno dell'attributo `NativeBase.Text` sarà utilizzato solo nel caso in cui il bottone abbia associata una proprietà dal nome `small`.

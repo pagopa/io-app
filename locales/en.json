@@ -57,7 +57,7 @@
   "authentication": {
     "landing": {
       "login": "Login with SPID",
-      "nospid": "No SPID?"
+      "nospid": "Don't have SPID?"
     }
   }
 }

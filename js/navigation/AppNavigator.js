@@ -9,18 +9,22 @@ import MainNavigator from './MainNavigator'
 
 /**
  * The main stack of screens of the application.
- * SwitchNavigator is very usefull here because it automatically
- * reset the state on navigation
+ * SwitchNavigator is very useful here because it automatically
+ * resets the state on navigation
  */
 const navigator = SwitchNavigator({
   [ROUTES.INGRESS]: {
-    screen: IngressScreen // The screen that choose the real inital screen of the App
+    // This screen check if the user is authenticated than perform a redirect to
+    // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
+    screen: IngressScreen
   },
   [ROUTES.AUTHENTICATION]: {
-    screen: AuthenticationNavigator // The navigator used for unautenticated users
+    // The navigator used for unauthenticated users
+    screen: AuthenticationNavigator
   },
   [ROUTES.MAIN]: {
-    screen: MainNavigator // The navigator used for authenticated users
+    // The navigator used for authenticated users
+    screen: MainNavigator
   }
 })
 

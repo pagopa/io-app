@@ -21,8 +21,7 @@ type OwnProps = {
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
- * A screen where the user can choose to login with SPID or get for
- * informations.
+ * A screen where the user can choose to login with SPID or get more informations.
  */
 class LandingScreen extends React.Component<Props> {
   render(): React.Node {

@@ -13,7 +13,6 @@ import buttonTheme from './components/Button'
 import contentTheme from './components/Content'
 import viewTheme from './components/View'
 
-// eslint-disable-next-line flowtype/no-weak-types
 const theme = (): Theme => {
   const nbTheme = getTheme(variables)
   const overrides = {
