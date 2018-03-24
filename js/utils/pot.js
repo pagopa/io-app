@@ -18,8 +18,12 @@ type PotState = 'EMPTY' | 'UNAVAILABLE' | 'READY' | 'PENDING' | 'FAILED'
 /**
  * A Pot<A> represents potential data that may exist in seven different states.
  */
-export class Pot<A> {
+export class Pot<E, A> {
+  _error: E
+
+  // The state of this Pot (empty, unavailable, ready, pending, failed)
   state: PotState
+
   isEmpty = false
   isPending = false
   isFailed = false
@@ -41,20 +45,6 @@ export class Pot<A> {
   }
 
   /**
-   * Whether this Pot is ready
-   */
-  ready(value: A): Ready<A> {
-    return new Ready(value)
-  }
-
-  /**
-   * Whether this Pot is unavailable
-   */
-  unavailable(): Unavailable<A> {
-    return new Unavailable()
-  }
-
-  /**
    * Returns the value of this Pot if it's non empty, or else returns `value`
    */
   getOrElse<B: A>(value: () => B): A {
@@ -65,48 +55,46 @@ export class Pot<A> {
 /**
  * An empty Pot (no value yet), similar to a None Option
  */
-export class Empty<A> extends Pot<A> {
+export class Empty<E, A> extends Pot<E, A> {
   state = 'EMPTY'
   isEmpty = true
 
-  pending(startTime: Date): Pending<A> {
-    return new Pending(startTime)
+  /**
+   * Transition this Pot to the Ready state
+   */
+  ready(value: A): Ready<E, A> {
+    return new Ready(value)
   }
 
-  fail<E>(error: E): Failed<E, A> {
-    return new Failed(error)
+  /**
+   * Transition this Pot to the Pending state
+   */
+  pending(startTime: Date): Pending<E, A> {
+    return new Pending(startTime)
   }
 }
 
 /**
  * Returns a new Empty Pot
  */
-export function empty<A>(): Empty<A> {
+export function empty<E, A>(): Empty<E, A> {
   return new Empty()
 }
 
 /**
  * A Pot that cannot get a value and should be disabled
  */
-export class Unavailable<A> extends Pot<A> {
+export class Unavailable<E, A> extends Pot<E, A> {
   state = 'UNAVAILABLE'
   isEmpty = true
   isFailed = true
   isUnavailable = true
-
-  pending(startTime: Date): Pending<A> {
-    return new Pending(startTime)
-  }
-
-  fail<E>(error: E): Failed<E, A> {
-    return new Failed(error)
-  }
 }
 
 /**
  * A Pot with a valid value
  */
-export class Ready<A> extends Pot<A> {
+export class Ready<E, A> extends Pot<E, A> {
   state = 'READY'
   value: A
 
@@ -115,14 +103,16 @@ export class Ready<A> extends Pot<A> {
     this.value = value
   }
 
-  pending(startTime: Date): PendingStale<A> {
+  /**
+   * Transition this Pot to the PendingStale state
+   */
+  pending(startTime: Date): PendingStale<E, A> {
     return new PendingStale(this.value, startTime)
   }
 
-  fail<E>(error: E): FailedStale<E, A> {
-    return new FailedStale(this.value, error)
-  }
-
+  /**
+   * {@inheritDoc}
+   */
   // eslint-disable-next-line no-unused-vars
   getOrElse<B: A>(value: () => B): A {
     return this.value
@@ -132,16 +122,23 @@ export class Ready<A> extends Pot<A> {
 /**
  * Base class for pending Pots
  */
-class PendingBase<A> extends Pot<A> {
+class PendingBase<E, A> extends Pot<E, A> {
   state = 'PENDING'
   isPending = true
   startTime: Date
+
+  /**
+   * Transition this Pot to the Ready state
+   */
+  ready(value: A): Ready<E, A> {
+    return new Ready(value)
+  }
 }
 
 /**
  * A Pot that is about to get a value
  */
-export class Pending<A> extends PendingBase<A> {
+export class Pending<E, A> extends PendingBase<E, A> {
   isEmpty = true
 
   constructor(startTime: Date) {
@@ -149,19 +146,32 @@ export class Pending<A> extends PendingBase<A> {
     this.startTime = startTime
   }
 
-  pending(startTime: Date): Pending<A> {
+  /**
+   * Keep this Pot in the Pending state and update the startTime
+   */
+  pending(startTime: Date): Pending<E, A> {
     return new Pending(startTime)
   }
 
+  /**
+   * Transition this Pot to the Failed state
+   */
   fail<E>(error: E): Failed<E, A> {
     return new Failed(error)
+  }
+
+  /**
+   * Transition this Pot to the Unavailable state
+   */
+  unavailable(): Unavailable<E, A> {
+    return new Unavailable()
   }
 }
 
 /**
  * A Pot that is about to refresh its value
  */
-export class PendingStale<A> extends PendingBase<A> {
+export class PendingStale<E, A> extends PendingBase<E, A> {
   isStale = true
   value: A
 
@@ -171,14 +181,23 @@ export class PendingStale<A> extends PendingBase<A> {
     this.startTime = startTime
   }
 
-  pending(startTime: Date): PendingStale<A> {
+  /**
+   * Transition this Pot to the PendingStale state
+   */
+  pending(startTime: Date): PendingStale<E, A> {
     return new PendingStale(this.value, startTime)
   }
 
+  /**
+   * Transition this Pot to the FailedStale state
+   */
   fail<E>(error: E): FailedStale<E, A> {
     return new FailedStale(this.value, error)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   // eslint-disable-next-line no-unused-vars
   getOrElse<B: A>(value: () => B): A {
     return this.value
@@ -188,7 +207,7 @@ export class PendingStale<A> extends PendingBase<A> {
 /**
  * Base class for failed Pots
  */
-class FailedBase<E, A> extends Pot<A> {
+class FailedBase<E, A> extends Pot<E, A> {
   state = 'FAILED'
   isFailed = true
   error: E
@@ -205,12 +224,11 @@ export class Failed<E, A> extends FailedBase<E, A> {
     this.error = error
   }
 
-  pending(startTime: Date): Pending<A> {
+  /**
+   * Transition this Pot to the Pending state
+   */
+  pending(startTime: Date): Pending<E, A> {
     return new Pending(startTime)
-  }
-
-  fail<E>(error: E): Failed<E, A> {
-    return new Failed(error)
   }
 }
 
@@ -227,14 +245,16 @@ export class FailedStale<E, A> extends FailedBase<E, A> {
     this.error = startTime
   }
 
-  pending(startTime: Date): PendingStale<A> {
+  /**
+   * Transition this Pot to the PendingStale state
+   */
+  pending(startTime: Date): PendingStale<E, A> {
     return new PendingStale(this.value, startTime)
   }
 
-  fail<E>(error: E): FailedStale<E, A> {
-    return new FailedStale(this.value, error)
-  }
-
+  /**
+   * {@inheritDoc}
+   */
   // eslint-disable-next-line no-unused-vars
   getOrElse<B: A>(value: () => B): A {
     return this.value
