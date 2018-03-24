@@ -49,7 +49,7 @@ class ProfileScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   user: state.user,
-  navigation: state.navigation
+  navigation: state.navigation // FIXME: this is missing from ReduxMappedProps
 })
 
 export default connect(mapStateToProps)(ProfileScreen)
