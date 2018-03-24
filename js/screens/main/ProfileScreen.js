@@ -9,13 +9,15 @@ import {
 
 import { Container } from 'native-base'
 
-import { type GlobalState } from '../../reducers/types'
-import { type ReduxProps } from '../../actions/types'
-import { type UserState } from '../../reducers/user'
-import ProfileComponent from '../../components/ProfileComponent'
+import { type GlobalState } from '../reducers/types'
+import { type ReduxProps } from '../actions/types'
+import { type UserState } from '../reducers/user'
+import { type ProfileState } from '../store/reducers/profile'
+import ProfileComponent from '../components/ProfileComponent'
 
 type ReduxMappedProps = {
-  user: UserState
+  user: UserState,
+  preferences: ProfileState
 }
 
 type OwnProps = {
@@ -29,7 +31,7 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
  */
 class ProfileScreen extends React.Component<Props> {
   render(): React.Node {
-    const { user, navigation, dispatch } = this.props
+    const { user, preferences, navigation, dispatch } = this.props
 
     if (!user.isLoggedIn) {
       return null
@@ -39,6 +41,7 @@ class ProfileScreen extends React.Component<Props> {
       <Container>
         <ProfileComponent
           user={user}
+          preferences={preferences}
           navigation={navigation}
           dispatch={dispatch}
         />
@@ -49,7 +52,8 @@ class ProfileScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   user: state.user,
-  navigation: state.navigation
+  navigation: state.navigation,
+  preferences: state.profile
 })
 
 export default connect(mapStateToProps)(ProfileScreen)

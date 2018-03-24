@@ -13,36 +13,20 @@
 
 /* eslint-disable no-use-before-define */
 
-type PotState = 'EMPTY' | 'UNAVAILABLE' | 'READY' | 'PENDING' | 'FAILED'
+export type Pot<E, A> =
+  | Empty<E, A>
+  | Unavailable<E, A>
+  | Ready<E, A>
+  | Pending<E, A>
+  | Failed<E, A>
+  | PendingStale<E, A>
+  | FailedStale<E, A>
 
 /**
  * A Pot<A> represents potential data that may exist in seven different states.
  */
-export class Pot<E, A> {
+class PotBase<E, A> {
   _error: E
-
-  // The state of this Pot (empty, unavailable, ready, pending, failed)
-  state: PotState
-
-  isEmpty = false
-  isPending = false
-  isFailed = false
-  isStale = false
-  isUnavailable = false
-
-  /**
-   * Whether this Pot contains a fresh value
-   */
-  isReady(): boolean {
-    return !this.isEmpty && !this.isStale
-  }
-
-  /**
-   * Whether this Pot is non empty
-   */
-  nonEmpty(): boolean {
-    return !this.isEmpty
-  }
 
   /**
    * Returns the value of this Pot if it's non empty, or else returns `value`
@@ -50,15 +34,49 @@ export class Pot<E, A> {
   getOrElse<B: A>(value: () => B): A {
     return value()
   }
+
+  /**
+   * Maps this Pot to a value that depends on the Pot state
+   */
+  fold<TE, TR, TP, TF, TPS, TFS, TU>(
+    fEmpty: () => TE,
+    fReady: (value: A) => TR,
+    fPending: (startTime: Date) => TP,
+    fFailed: (error: E) => TF,
+    fPendingStale: (value: A, startTime: Date) => TPS,
+    fFailedStale: (value: A, error: E) => TFS,
+    fUnavailable: () => TU
+  ): null | TE | TR | TP {
+    if (this instanceof Empty) {
+      return fEmpty()
+    }
+    if (this instanceof Ready) {
+      return fReady(this.value)
+    }
+    if (this instanceof Pending) {
+      return fPending(this.startTime)
+    }
+    if (this instanceof Failed) {
+      return fFailed(this.error)
+    }
+    if (this instanceof PendingStale) {
+      return fPendingStale(this.value, this.startTime)
+    }
+    if (this instanceof FailedStale) {
+      return fFailedStale(this.value, this.error)
+    }
+    if (this instanceof Unavailable) {
+      return fUnavailable()
+    }
+    // flow should never reach this point
+    return null
+  }
 }
 
 /**
  * An empty Pot (no value yet), similar to a None Option
  */
-export class Empty<E, A> extends Pot<E, A> {
-  state = 'EMPTY'
-  isEmpty = true
-
+export class Empty<E, A> extends PotBase<E, A> {
   /**
    * Transition this Pot to the Ready state
    */
@@ -72,6 +90,11 @@ export class Empty<E, A> extends Pot<E, A> {
   pending(startTime: Date): Pending<E, A> {
     return new Pending(startTime)
   }
+
+  // eslint-disable-next-line no-unused-vars
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return empty()
+  }
 }
 
 /**
@@ -84,18 +107,17 @@ export function empty<E, A>(): Empty<E, A> {
 /**
  * A Pot that cannot get a value and should be disabled
  */
-export class Unavailable<E, A> extends Pot<E, A> {
-  state = 'UNAVAILABLE'
-  isEmpty = true
-  isFailed = true
-  isUnavailable = true
+export class Unavailable<E, A> extends PotBase<E, A> {
+  // eslint-disable-next-line no-unused-vars
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return new Unavailable()
+  }
 }
 
 /**
  * A Pot with a valid value
  */
-export class Ready<E, A> extends Pot<E, A> {
-  state = 'READY'
+export class Ready<E, A> extends PotBase<E, A> {
   value: A
 
   constructor(value: A) {
@@ -117,14 +139,16 @@ export class Ready<E, A> extends Pot<E, A> {
   getOrElse<B: A>(value: () => B): A {
     return this.value
   }
+
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return new Ready(app(this.value))
+  }
 }
 
 /**
  * Base class for pending Pots
  */
-class PendingBase<E, A> extends Pot<E, A> {
-  state = 'PENDING'
-  isPending = true
+class PendingBase<E, A> extends PotBase<E, A> {
   startTime: Date
 
   /**
@@ -139,8 +163,6 @@ class PendingBase<E, A> extends Pot<E, A> {
  * A Pot that is about to get a value
  */
 export class Pending<E, A> extends PendingBase<E, A> {
-  isEmpty = true
-
   constructor(startTime: Date) {
     super()
     this.startTime = startTime
@@ -166,13 +188,17 @@ export class Pending<E, A> extends PendingBase<E, A> {
   unavailable(): Unavailable<E, A> {
     return new Unavailable()
   }
+
+  // eslint-disable-next-line no-unused-vars
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return new Pending(this.startTime)
+  }
 }
 
 /**
  * A Pot that is about to refresh its value
  */
 export class PendingStale<E, A> extends PendingBase<E, A> {
-  isStale = true
   value: A
 
   constructor(value: A, startTime: Date) {
@@ -202,14 +228,16 @@ export class PendingStale<E, A> extends PendingBase<E, A> {
   getOrElse<B: A>(value: () => B): A {
     return this.value
   }
+
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return new PendingStale(app(this.value), this.startTime)
+  }
 }
 
 /**
  * Base class for failed Pots
  */
-class FailedBase<E, A> extends Pot<E, A> {
-  state = 'FAILED'
-  isFailed = true
+class FailedBase<E, A> extends PotBase<E, A> {
   error: E
 }
 
@@ -217,8 +245,6 @@ class FailedBase<E, A> extends Pot<E, A> {
  * A Pot that failed to get a value
  */
 export class Failed<E, A> extends FailedBase<E, A> {
-  isEmpty = true
-
   constructor(error: E) {
     super()
     this.error = error
@@ -230,19 +256,23 @@ export class Failed<E, A> extends FailedBase<E, A> {
   pending(startTime: Date): Pending<E, A> {
     return new Pending(startTime)
   }
+
+  // eslint-disable-next-line no-unused-vars
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return new Failed(this.error)
+  }
 }
 
 /**
  * A Pot that failed to refresh a value
  */
 export class FailedStale<E, A> extends FailedBase<E, A> {
-  isStale = true
   value: A
 
-  constructor(value: A, startTime: E) {
+  constructor(value: A, error: E) {
     super()
     this.value = value
-    this.error = startTime
+    this.error = error
   }
 
   /**
@@ -258,5 +288,9 @@ export class FailedStale<E, A> extends FailedBase<E, A> {
   // eslint-disable-next-line no-unused-vars
   getOrElse<B: A>(value: () => B): A {
     return this.value
+  }
+
+  map<B>(app: (value: A) => B): Pot<E, B> {
+    return new FailedStale(app(this.value), this.error)
   }
 }
