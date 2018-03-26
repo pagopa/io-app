@@ -23,6 +23,30 @@ export type Pot<E, A> =
   | FailedStale<E, A>
 
 /**
+ * Functions that can handle the Pot states
+ */
+type EmptyF<T> = () => T | null
+type ReadyF<A, T> = (value: A) => T | null
+type PendingF<T> = (startTime: Date) => T | null
+type FailedF<E, T> = (error: E) => T | null
+type PendingStaleF<A, T> = (value: A, startTime: Date) => T | null
+type FailedStaleF<A, E, T> = (value: A, error: E) => T | null
+type UnavailableF<T> = () => T | null
+
+/**
+ * An object that provides applicative functions for each state
+ */
+type StateF<E, A, TE, TR, TP, TF, TPS, TFS, TU> = {
+  empty?: EmptyF<TE>,
+  ready?: ReadyF<A, TR>,
+  pending?: PendingF<TP>,
+  failed?: FailedF<E, TF>,
+  pendingStale?: PendingStaleF<A, TPS>,
+  failedStale?: FailedStaleF<A, E, TFS>,
+  unavailable?: UnavailableF<TU>
+}
+
+/**
  * A Pot<A> represents potential data that may exist in seven different states.
  */
 class PotBase<E, A> {
@@ -39,14 +63,14 @@ class PotBase<E, A> {
    * Maps this Pot to a value that depends on the Pot state
    */
   fold<TE, TR, TP, TF, TPS, TFS, TU>(
-    fEmpty: () => TE,
-    fReady: (value: A) => TR,
-    fPending: (startTime: Date) => TP,
-    fFailed: (error: E) => TF,
-    fPendingStale: (value: A, startTime: Date) => TPS,
-    fFailedStale: (value: A, error: E) => TFS,
-    fUnavailable: () => TU
-  ): null | TE | TR | TP {
+    fEmpty: EmptyF<TE>,
+    fReady: ReadyF<A, TR>,
+    fPending: PendingF<TP>,
+    fFailed: FailedF<E, TF>,
+    fPendingStale: PendingStaleF<A, TPS>,
+    fFailedStale: FailedStaleF<A, E, TFS>,
+    fUnavailable: UnavailableF<TU>
+  ): null | TE | TR | TP | TF | TPS | TFS | TU {
     if (this instanceof Empty) {
       return fEmpty()
     }
@@ -70,6 +94,24 @@ class PotBase<E, A> {
     }
     // flow should never reach this point
     return null
+  }
+
+  /**
+   * Like `fold`but only maps states that have an associated fold function,
+   * all other states map to `null`
+   */
+  partialFold<TE, TR, TP, TF, TPS, TFS, TU>(
+    folders: StateF<E, A, TE, TR, TP, TF, TPS, TFS, TU>
+  ): null | TE | TR | TP | TF | TPS | TFS | TU {
+    return this.fold(
+      folders.empty ? folders.empty : (): null => null,
+      folders.ready ? folders.ready : (): null => null,
+      folders.pending ? folders.pending : (): null => null,
+      folders.failed ? folders.failed : (): null => null,
+      folders.pendingStale ? folders.pendingStale : (): null => null,
+      folders.failedStale ? folders.failedStale : (): null => null,
+      folders.unavailable ? folders.unavailable : (): null => null
+    )
   }
 }
 
