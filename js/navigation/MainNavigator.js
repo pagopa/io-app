@@ -1,31 +1,27 @@
 // @flow
 
-import { StackNavigator } from 'react-navigation'
+import { TabNavigator } from 'react-navigation'
 
 import ROUTES from './routes'
-import IngressScreen from '../screens/IngressScreen'
-import LoginScreen from '../screens/LoginScreen'
-import HomeNavigator from './HomeNavigator'
+import MessagesScreen from '../screens/main/MessagesScreen'
+import ProfileScreen from '../screens/main/ProfileScreen'
 
 /**
- * The main stack of screens of the application.
+ * A navigator for all the screens used when the user is authenticated.
  */
-const navigator = StackNavigator(
+const navigation = TabNavigator(
   {
-    [ROUTES.INGRESS]: {
-      screen: IngressScreen
+    [ROUTES.MAIN_MESSAGES]: {
+      screen: MessagesScreen
     },
-    [ROUTES.LOGIN]: {
-      screen: LoginScreen
-    },
-    [ROUTES.HOME]: {
-      screen: HomeNavigator
+    [ROUTES.MAIN_PROFILE]: {
+      screen: ProfileScreen
     }
   },
   {
-    // Let each screen handle the header and navigation
-    headerMode: 'none'
+    initialRouteName: ROUTES.MAIN_MESSAGES,
+    tabBarPosition: 'bottom'
   }
 )
 
-export default navigator
+export default navigation

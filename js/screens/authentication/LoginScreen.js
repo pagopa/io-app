@@ -15,7 +15,7 @@ import {
   Animated
 } from 'react-native'
 
-import I18n from '../i18n'
+import I18n from '../../i18n'
 
 import { H1, H2 } from 'native-base'
 
@@ -25,19 +25,18 @@ import {
   type NavigationState
 } from 'react-navigation'
 
-import { SpidLoginButton } from '../components/SpidLoginButton'
-import SpidSubscribeComponent from '../components/SpidSubscribeComponent'
+import { SpidLoginButton } from '../../components/SpidLoginButton'
+import SpidSubscribeComponent from '../../components/SpidSubscribeComponent'
 
-import { logInIntent, selectIdp, logIn, logInError } from '../actions'
+import { logInIntent, selectIdp, logIn, logInError } from '../../actions'
 
-import { VERSION } from '../utils/constants'
-import ROUTES from '../navigation/routes'
+import { VERSION } from '../../utils/constants'
 
-import { type IdentityProvider, isDemoIdp } from '../utils/api'
+import { type IdentityProvider, isDemoIdp } from '../../utils/api'
 
-import { type ReduxProps } from '../actions/types'
-import { type GlobalState } from '../reducers/types'
-import { type UserState } from '../reducers/user'
+import { type ReduxProps } from '../../actions/types'
+import { type GlobalState } from '../../reducers/types'
+import { type UserState } from '../../reducers/user'
 
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
@@ -143,7 +142,6 @@ class LoginScreen extends React.Component<Props, State> {
     if (isDemoIdp(idp)) {
       this.props.dispatch(selectIdp(idp))
       this.props.dispatch(logIn('demo', idp.id))
-      this.props.navigation.navigate(ROUTES.HOME)
     } else {
       this.props.dispatch(selectIdp(idp))
     }
@@ -160,7 +158,7 @@ class LoginScreen extends React.Component<Props, State> {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={{ height: 20 }} />
         <Animated.Image
-          source={require('../../img/logo-it.png')}
+          source={require('../../../img/logo-it.png')}
           style={[
             {
               resizeMode: 'contain'
@@ -181,7 +179,6 @@ class LoginScreen extends React.Component<Props, State> {
           onSpidLoginIntent={(): void => this.handleLoginIntent()}
           onSpidLogin={(token, idpId) => {
             this.props.dispatch(logIn(token, idpId))
-            this.props.navigation.navigate(ROUTES.HOME)
           }}
           onSpidLoginError={error => {
             this.props.dispatch(logInError(error))

@@ -198,3 +198,132 @@ L'applicazione utilizza un custom handler per intercettare e notificare errori j
 ### Monitoring della connessione
 
 L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
+
+
+### Theming
+
+L'applicazione utilizza [native-base](https://nativebase.io/) e i suo componenti per la realizzazione dell'interfaccia grafica. In particolare è stato scelto di utilizzare come base il tema `material` previsto dalla libreria. Sebbene native-base permetta attraverso l'uso di variabili di personalizzare parte del tema è stato comunque necessario implementare delle funzioni ad-hoc che consentano di andare a modificare il tema dei singoli componenti.
+
+#### Estensione di native-base
+
+Nella directory `/js/theme` sono presenti alcuni file che consentono di gestire il tema in modo più flessibile rispetto a quanto permesso nativamente da native-base.
+
+##### Variabili
+
+Per definire nuove variabili da utilizzare nel tema dei componenti è necessario modificare il file `/js/theme/variables.js`. Tale file si occupa di importare le variabili di base definite dal tema `material` di native-base e permette di sovrascrivere/definire il valore di nuove variabili.
+
+##### Tema dei Componenti
+
+La libreria native-base definisce il tema di ogni singolo componente in un file .js separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.js`.
+Per ridefinire il tema dei componenti di native-base è necesario creare/modificare i file presenti nella directory `/js/theme/components`. Ogni file presente in questa directory deve esportare un oggetto che definisce il tema del componente. Prendiamo come esempio il file `Content.js`:
+
+```javascript
+import { type Theme } from '../types'
+import variables from '../variables'
+
+export default (): Theme => {
+  const theme = {
+    padding: variables.contentPadding,
+    backgroundColor: variables.contentBackground
+  }
+
+  return theme
+}
+```
+
+In questo file è possibile notare come vengono ridefiniti due attributi (`padding` e `backgroundColor`) utilizzando come valori quanto presente nelle relative variabili. L'oggetto restituito sarà utilizzato nel file `/js/theme/index.js` per associarlo ad uno specifico tipo di componente (in questo caso `NativeBase.Component`).
+
+Un esempio più complesso permette di utilizzare le funzioni avanzate del layer di theming di native-base.
+
+```javascript
+import { type Theme } from '../types'
+import variables from '../variables'
+
+export default (): Theme => {
+  const theme = {
+    '.spacer': {
+      '.large': {
+        height: variables.spacerLargeHeight
+      },
+
+      height: variables.spacerHeight
+    },
+
+    '.footer': {
+      paddingTop: variables.footerPaddingTop,
+      paddingLeft: variables.footerPaddingLeft,
+      paddingBottom: variables.footerPaddingBottom,
+      paddingRight: variables.footerPaddingRight,
+      backgroundColor: variables.footerBackground,
+      borderTopWidth: variables.footerShadowWidth,
+      borderColor: variables.footerShadowColor
+    }
+  }
+
+  return theme
+}
+```
+
+All'interno del file del tema di un singolo componente è possibile infatti definire degli attributi specifici che verranno utilizzati solo nel caso in cui il componente in questione abbia una specifica proprietà.
+Definendo nell'oggetto di tema qualcosa come:
+
+```javascript
+'.footer': {
+  paddingTop: variables.footerPaddingTop
+}
+```
+
+se necessario, sarà possibile utilizzare il componente associandogli la proprietà `footer` nel seguente modo `<Component footer />` ed automaticamente il sistema di theming applicherà al componente gli attributi definiti (`paddingTop: variables.footerPaddingTop`).
+
+Altra funzione avanzata è quella che permette di definire il tema dei componenti figli a partire dal componente padre.
+Prediamo come esempio il seguente frammento di codice di un generico componente:
+
+```javascript
+...
+render() {
+  return(
+    <Content>
+      <Button>
+        <Text>My button</Text>
+      </Button>
+    </Content>
+  )
+}
+...
+```
+
+La libreria native-base permette di definire l'aspetto del componente figlio `Text` presente all'interno del componente padre `Button`. Ad esempio per definire la dimensione del testo in tutti i bottoni presenti nell'applicazione, è sufficiente inserire il seguente codice all'interno del file `/js/theme/components/Button.js`:
+
+```javascript
+import variables from '../variables'
+
+export default (): Theme => {
+  const theme = {
+    'NativeBase.Text': {
+      fontSize: variables.btnTextFontSize
+    }
+  }
+
+  return theme
+}
+```
+
+È possibile spingersi ancora oltre e combinare le due funzionalità viste in precedenza:
+
+```javascript
+import variables from '../variables'
+
+export default (): Theme => {
+  const theme = {
+    '.small': {
+      'NativeBase.Text': {
+        fontSize: variables.btnTextFontSize
+      }
+    }
+  }
+
+  return theme
+}
+```
+
+In questo caso quanto definito all'interno dell'attributo `NativeBase.Text` sarà utilizzato solo nel caso in cui il bottone abbia associata una proprietà dal nome `small`.

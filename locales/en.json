@@ -53,5 +53,11 @@
       "line1": "SPID è l'identità digitale per accedere ai servizi online della Pubblica Amministrazione Italiana.",
       "line2": "Inserisci la tua e-mail per attivarla."
     }
+  },
+  "authentication": {
+    "landing": {
+      "login": "Login with SPID",
+      "nospid": "Don't have SPID?"
+    }
   }
 }

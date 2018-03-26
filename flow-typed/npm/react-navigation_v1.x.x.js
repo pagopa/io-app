@@ -262,6 +262,8 @@ declare module 'react-navigation' {
      */
     getStateForAction: (action: NavigationAction, lastState: ?State) => ?State,
 
+    getInitialState: () => any,
+
     /**
      * Maps a URI-like string to an action. This can be mapped to a state
      * using `getStateForAction`.
@@ -420,6 +422,20 @@ declare module 'react-navigation' {
   |};
 
   /**
+   * Switch Navigator
+   */
+
+  declare export type NavigationSwitchRouterConfig = {|
+    initialRouteName?: string,
+    initialRouteParams?: NavigationParams,
+    paths?: NavigationPathsConfig,
+    navigationOptions?: NavigationScreenConfig<*>,
+    order?: Array<string>,
+    backBehavior?: 'none' | 'initialRoute', // defaults to `'none'`
+    resetOnBlur?: boolean, // defaults to `true`
+  |};
+
+  /**
    * Tab Navigator
    */
 
@@ -430,7 +446,6 @@ declare module 'react-navigation' {
     navigationOptions?: NavigationScreenConfig<*>,
     // todo: type these as the real route names rather than 'string'
     order?: Array<string>,
-
     // Does the back button cause the router to switch to the initial tab
     backBehavior?: 'none' | 'initialRoute', // defaults `initialRoute`
   |};
@@ -498,7 +513,7 @@ declare module 'react-navigation' {
     type: EventType,
     action: NavigationAction,
     state: NavigationState,
-    lastState: NavigationState,
+    lastState: ?NavigationState,
   };
 
   declare export type NavigationEventCallback = (
@@ -846,6 +861,17 @@ declare module 'react-navigation' {
   declare export function TabNavigator(
     routeConfigs: NavigationRouteConfigMap,
     config?: _TabNavigatorConfig
+  ): NavigationContainer<*, *, *>;
+  declare type _SwitchNavigatorConfig = {|
+    ...NavigationSwitchRouterConfig,
+  |};
+  declare export function SwitchNavigator(
+    routeConfigs: NavigationRouteConfigMap,
+    config?: _SwitchNavigatorConfig
+  ): NavigationContainer<*, *, *>;
+  declare export function createSwitchNavigator(
+    routeConfigs: NavigationRouteConfigMap,
+    config?: _SwitchNavigatorConfig
   ): NavigationContainer<*, *, *>;
 
   declare type _DrawerViewConfig = {|

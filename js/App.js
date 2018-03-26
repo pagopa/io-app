@@ -6,8 +6,7 @@ import { StyleProvider } from 'native-base'
 import { PersistGate } from 'redux-persist/integration/react'
 import Mixpanel from 'react-native-mixpanel'
 
-import getTheme from '../native-base-theme/components'
-import material from '../native-base-theme/variables/material'
+import theme from './theme'
 
 import config from './config'
 import configureErrorHandler from './boot/configureErrorHandler'
@@ -27,7 +26,7 @@ const { store, persistor } = configureStoreAndPersistor()
  */
 const App = (): React.Node => {
   return (
-    <StyleProvider style={getTheme(material)}>
+    <StyleProvider style={theme()}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <RootContainer />

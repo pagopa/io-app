@@ -13,7 +13,7 @@ import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
 import { type ReduxProps } from '../actions/types'
 import { type GlobalState } from '../reducers/types'
-import MainNavigator from './MainNavigator'
+import AppNavigator from './AppNavigator'
 
 /**
  * A listener of the new react-navigation redux middleware.
@@ -63,7 +63,7 @@ class Navigation extends React.Component<Props> {
 
   render(): React.Node {
     return (
-      <MainNavigator
+      <AppNavigator
         navigation={addNavigationHelpers({
           dispatch: this.props.dispatch,
           state: this.props.nav,
