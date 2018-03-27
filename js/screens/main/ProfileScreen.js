@@ -9,11 +9,11 @@ import {
 
 import { Container } from 'native-base'
 
-import { type GlobalState } from '../reducers/types'
-import { type ReduxProps } from '../actions/types'
-import { type UserState } from '../reducers/user'
-import { type ProfileState } from '../store/reducers/profile'
-import ProfileComponent from '../components/ProfileComponent'
+import { type GlobalState } from '../../reducers/types'
+import { type ReduxProps } from '../../actions/types'
+import { type UserState } from '../../reducers/user'
+import { type ProfileState } from '../../store/reducers/profile'
+import ProfileComponent from '../../components/ProfileComponent'
 
 type ReduxMappedProps = {
   user: UserState,
