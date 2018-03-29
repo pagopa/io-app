@@ -11,6 +11,8 @@ import { type Theme } from './types'
 import variables from './variables'
 import buttonTheme from './components/Button'
 import contentTheme from './components/Content'
+import h1Theme from './components/H1'
+import headerTheme from './components/Header'
 import viewTheme from './components/View'
 
 const theme = (): Theme => {
@@ -21,6 +23,12 @@ const theme = (): Theme => {
     },
     'NativeBase.Content': {
       ...contentTheme()
+    },
+    'NativeBase.H1': {
+      ...h1Theme()
+    },
+    'NativeBase.Header': {
+      ...headerTheme()
     },
     'NativeBase.ViewNB': {
       ...viewTheme()

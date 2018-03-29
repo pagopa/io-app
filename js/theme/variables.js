@@ -8,6 +8,8 @@
 
 import materialVariables from 'native-base/src/theme/variables/material'
 
+import { type ThemeSimpleValue } from './types'
+
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
@@ -17,10 +19,16 @@ const customVariables = Object.assign(materialVariables, {
   btnTextFontWeight: '600',
   btnHeight: 48,
   btnSmallHeight: 39,
+  get btnLightTextColor(): ThemeSimpleValue {
+    return this.textColor
+  },
+  btnLightBorderColor: '#E6E9F2',
 
   // Color
   brandPrimary: '#0066CC',
   brandPrimaryInverted: '#FFFFFF',
+  brandGray: '#F5F6F7',
+  brandLight: '#FCFDFF',
 
   // Font
   fontFamily: 'Titillium Web',
@@ -32,6 +40,9 @@ const customVariables = Object.assign(materialVariables, {
   // Content
   contentPadding: 24,
   contentBackground: '#FFFFFF',
+  get contentInvertedBackground(): ThemeSimpleValue {
+    return this.brandGray
+  },
 
   // Footer
   footerBackground: '#FFFFFF',
@@ -41,6 +52,21 @@ const customVariables = Object.assign(materialVariables, {
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
+
+  // H1
+  h1FontWeight: '600',
+
+  // Header
+  toolbarDefaultBg: '#FFFFFF',
+  get toolbarTextColor(): ThemeSimpleValue {
+    return this.textColor
+  },
+  get toolbarBtnColor(): ThemeSimpleValue {
+    return this.textColor
+  },
+
+  // Text
+  textColor: '#5C6F82',
 
   // Spacer
   spacerHeight: 16,

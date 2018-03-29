@@ -32,6 +32,22 @@ export default (): Theme => {
       height: variables.btnSmallHeight
     },
 
+    '.light': {
+      '.bordered': {
+        'NativeBase.Text': {
+          color: variables.btnLightTextColor
+        },
+
+        borderWidth: 1,
+        borderColor: variables.btnLightBorderColor,
+        backgroundColor: variables.brandLight
+      }
+    },
+
+    '.white': {
+      backgroundColor: '#FFFFFF'
+    },
+
     'NativeBase.Text': {
       fontWeight: variables.btnTextFontWeight
     },

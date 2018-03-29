@@ -58,6 +58,11 @@
     "landing": {
       "login": "Entra con SPID",
       "nospid": "Non hai SPID?"
+    },
+    "idp_selection": {
+      "headerTitle": "Home",
+      "contentTitle": "Scegli il tuo Identity Provider",
+      "cancel": "Annulla"
     }
   }
 

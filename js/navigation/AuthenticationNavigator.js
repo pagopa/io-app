@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation'
 
 import ROUTES from './routes'
 import LandingScreen from '../screens/authentication/LandingScreen'
+import IdpSelectionScreen from '../screens/authentication/IdpSelectionScreen'
 import LoginScreen from '../screens/authentication/LoginScreen'
 
 /**
@@ -13,6 +14,9 @@ const navigator = StackNavigator(
   {
     [ROUTES.AUTHENTICATION_LANDING]: {
       screen: LandingScreen
+    },
+    [ROUTES.AUTHENTICATION_IPD_SELECTION]: {
+      screen: IdpSelectionScreen
     },
     [ROUTES.AUTHENTICATION_LOGIN]: {
       screen: LoginScreen
