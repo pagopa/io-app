@@ -14,6 +14,7 @@ import { type NavigationAction } from 'react-navigation'
 
 import { type GlobalState } from '../reducers/types'
 import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
+import { type SessionActions } from '../store/actions/session'
 import { type ProfileActions } from '../store/actions/profile'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
@@ -43,6 +44,7 @@ export type Action =
   | { type: 'UPDATE_USER_PROFILE_ERROR_ACTION', data: { error: string } }
   | ApplicationStateAction
   | NavigationAction
+  | SessionActions
   | ProfileActions
 
 /* eslint-disable no-use-before-define */

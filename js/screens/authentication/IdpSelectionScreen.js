@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from 'react'
+import { connect } from 'react-redux'
 import {
   type NavigationScreenProp,
   type NavigationState
@@ -24,6 +25,7 @@ import { type IdentityProvider } from '../../utils/api'
 import config from '../../config'
 import I18n from '../../i18n'
 import IdpsGrid from '../../components/IdpsGrid'
+import { selectIdp } from '../../store/actions/session'
 
 type ReduxMappedProps = {}
 
@@ -35,35 +37,35 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 const idps: $ReadOnlyArray<IdentityProvider> = [
   {
-    id: 'infocert',
+    id: 'infocertid',
     name: 'Infocert',
     logo: require('../../../img/spid-idp-infocertid.png'),
     entityID: 'https://identity.infocert.it',
     profileUrl: 'https://my.infocert.it/selfcare'
   },
   {
-    id: 'poste',
+    id: 'posteid',
     name: 'Poste Italiane',
     logo: require('../../../img/spid-idp-posteid.png'),
     entityID: 'https://posteid.poste.it',
     profileUrl: 'https://posteid.poste.it/private/cruscotto.shtml'
   },
   {
-    id: 'sielte',
+    id: 'sielteid',
     name: 'Sielte',
     logo: require('../../../img/spid-idp-sielteid.png'),
     entityID: 'https://identity.sieltecloud.it',
     profileUrl: 'https://myid.sieltecloud.it/profile/'
   },
   {
-    id: 'tim',
+    id: 'timid',
     name: 'Telecom Italia',
     logo: require('../../../img/spid-idp-timid.png'),
     entityID: 'https://login.id.tim.it/affwebservices/public/saml2sso',
     profileUrl: 'https://id.tim.it/identity/private/'
   },
   {
-    id: 'aruba',
+    id: 'arubaid',
     name: 'Aruba.it',
     logo: require('../../../img/spid-idp-arubaid.png'),
     entityID: 'https://loginspid.aruba.it',
@@ -121,7 +123,12 @@ class IdpSelectionScreen extends React.Component<Props> {
           <H1>{I18n.t('authentication.idp_selection.contentTitle')}</H1>
         </View>
         <Content alternative>
-          <IdpsGrid idps={enabledIdps} onIdpSelected={() => {}} />
+          <IdpsGrid
+            idps={enabledIdps}
+            onIdpSelected={(idp: IdentityProvider) => {
+              this.props.dispatch(selectIdp(idp))
+            }}
+          />
           <View spacer />
           <Button
             block
@@ -142,4 +149,4 @@ class IdpSelectionScreen extends React.Component<Props> {
   }
 }
 
-export default IdpSelectionScreen
+export default connect()(IdpSelectionScreen)

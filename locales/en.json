@@ -63,6 +63,9 @@
       "headerTitle": "Home",
       "contentTitle": "Select your Identity Provider",
       "cancel": "Cancel"
+    },
+    "idp_login": {
+      "headerTitle": "Login"
     }
   }
 }

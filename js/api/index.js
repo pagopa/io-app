@@ -6,6 +6,17 @@
 
 import { apiUrlPrefix } from '../config'
 
+/**
+ * Describes a SPID Identity Provider
+ */
+export type IdentityProvider = {
+  id: string,
+  logo: mixed,
+  name: string,
+  entityID: string,
+  profileUrl: string
+}
+
 export type ApiFetchSuccess<T> = {
   isError: false,
   result: T
@@ -33,6 +44,53 @@ export type WithOnlyVersionRequired<T> = $Shape<T> & Versionable
 export type ApiProfile = {
   is_inbox_enabled: boolean
 } & Versionable
+
+export type LoginSuccess = {
+  success: true,
+  token: string
+}
+
+export type LoginFailure = {
+  success: false
+}
+
+export type LoginResult = LoginSuccess | LoginFailure
+
+// Prefixes for LOGIN SUCCESS/ERROR
+const LOGIN_SUCCESS_PREFIX = '/profile.html?token='
+const LOGIN_FAILURE_PREFIX = '/error.html'
+
+export const extractLoginResult = (url: string): ?LoginResult => {
+  // Check for LOGIN_SUCCESS
+  let tokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX)
+  // eslint-disable-next-line no-magic-numbers
+  if (tokenPathPos !== -1) {
+    const token = url.substr(tokenPathPos + LOGIN_SUCCESS_PREFIX.length)
+    // eslint-disable-next-line no-magic-numbers
+    if (token && token.length > 0) {
+      return {
+        success: true,
+        token: token
+      }
+    } else {
+      return {
+        success: false
+      }
+    }
+  }
+
+  // Check for LOGIN_FAILURE
+  tokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX)
+  // eslint-disable-next-line no-magic-numbers
+  if (tokenPathPos !== -1) {
+    return {
+      success: false
+    }
+  }
+
+  // Url is not LOGIN related
+  return null
+}
 
 // Fetch the profile from the Proxy
 export const fetchProfile = async (
