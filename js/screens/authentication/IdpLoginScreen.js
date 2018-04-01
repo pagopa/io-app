@@ -66,19 +66,22 @@ class IdpLoginScreen extends React.Component<Props> {
     )
   }
 
-  onNavigationStateChange = (navState): boolean => {
+  onNavigationStateChange = navState => {
     const url = navState.url
 
+    // Extract the login result from the url.
+    // If the url is not related to login this will be `null`
     const loginResult = extractLoginResult(url)
 
     if (loginResult) {
       if (loginResult.success) {
+        // In case of successful login
         this.props.dispatch(loginSuccess(loginResult.token))
       } else {
+        // In case of login failure
         this.props.dispatch(loginFailure())
       }
     }
-    return true
   }
 }
 

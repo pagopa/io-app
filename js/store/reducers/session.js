@@ -8,10 +8,18 @@ import { type IdentityProvider } from '../../api'
 import { type Action } from '../../actions/types'
 import { IDP_SELECTED, LOGIN_SUCCESS } from '../actions/constants'
 
-export type UnauthenticatedSessionState = {
+export type UnauthenticatedWithoutIdpSessionState = {|
+  isAuthenticated: false
+|}
+
+export type UnauthenticatedWithIdpSessionState = {
   isAuthenticated: false,
-  idp?: IdentityProvider
+  idp: IdentityProvider
 }
+
+export type UnauthenticatedSessionState =
+  | UnauthenticatedWithoutIdpSessionState
+  | UnauthenticatedWithIdpSessionState
 
 export type AuthenticatedSessionState = {
   isAuthenticated: true,
@@ -24,7 +32,7 @@ export type SessionState =
   | UnauthenticatedSessionState
   | AuthenticatedSessionState
 
-export const INITIAL_STATE: UnauthenticatedSessionState = {
+export const INITIAL_STATE: UnauthenticatedWithoutIdpSessionState = {
   isAuthenticated: false
 }
 

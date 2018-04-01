@@ -53,6 +53,9 @@ const customVariables = Object.assign(materialVariables, {
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
 
+  // Grid
+  gridGutter: 10,
+
   // H1
   h1FontWeight: '600',
 

@@ -18,9 +18,9 @@ type OwnProps = {
 
 type Props = OwnProps
 
-const { width } = Dimensions.get('window')
+const { width: windowWidth } = Dimensions.get('window')
 
-const GRID_GUTTER = 10
+const GRID_GUTTER = variables.gridGutter
 
 /**
  * To create a space within items in the same row we use the bootstrap method of adding a negative margin
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     padding: GRID_GUTTER,
     // Calculate the real width of each item
     // eslint-disable-next-line no-magic-numbers
-    width: (width - (2 * variables.contentPadding - 2 * GRID_GUTTER)) / 2
+    width: (windowWidth - (2 * variables.contentPadding - 2 * GRID_GUTTER)) / 2
   },
   idpLogo: {
     width: 120,
