@@ -61,6 +61,11 @@
     },
     "spid_information_request": {
       "headerTitle": "Insert email address",
+      "contentTitle": "Don't have SPID?",
+      "paragraph1": "SPID, the Public System of Digital Identity, allows you to access all the services of the Public Administration with a single Digital Identity (username and password).",
+      "paragraph2": "If you like, leave us your email address to receive reminders and updates on this app",
+      "moreLinkText": "To know more",
+      "tosLinkText": "rules on the processing of personal data",
       "continue": "Continue"
     },
     "idp_selection": {
@@ -70,6 +75,23 @@
     },
     "idp_login": {
       "headerTitle": "Login"
+    },
+    "personal_data_processing": {
+      "title": "Rules on the processing of personal data",
+      "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
+    },
+    "forms": {
+      "validators": {
+        "required": "Required value",
+        "email": "Invalid email address"
+      },
+      "spidInformation": {
+        "fields": {
+          "email": {
+            "placeholder": "email address"
+          }
+        }      
+      }
     }
   }
 }

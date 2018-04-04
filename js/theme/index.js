@@ -13,6 +13,8 @@ import buttonTheme from './components/Button'
 import contentTheme from './components/Content'
 import h1Theme from './components/H1'
 import headerTheme from './components/Header'
+import modalTheme from './components/Modal'
+import textTheme from './components/Text'
 import viewTheme from './components/View'
 
 const theme = (): Theme => {
@@ -29,6 +31,12 @@ const theme = (): Theme => {
     },
     'NativeBase.Header': {
       ...headerTheme()
+    },
+    'UIComponents.Modal': {
+      ...modalTheme()
+    },
+    'NativeBase.Text': {
+      ...textTheme()
     },
     'NativeBase.ViewNB': {
       ...viewTheme()

@@ -13,6 +13,11 @@ export default (): Theme => {
       height: variables.spacerHeight
     },
 
+    '.modal': {
+      flex: 1,
+      backgroundColor: variables.contentBackground
+    },
+
     '.footer': {
       paddingTop: variables.footerPaddingTop,
       paddingLeft: variables.footerPaddingLeft,

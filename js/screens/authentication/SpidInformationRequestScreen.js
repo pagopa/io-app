@@ -1,6 +1,8 @@
 // @flow
 
 import * as React from 'react'
+import { connect } from 'react-redux'
+import { isValid } from 'redux-form'
 import {
   type NavigationScreenProp,
   type NavigationState
@@ -14,12 +16,20 @@ import {
   Icon,
   Header,
   Left,
-  Body
+  Body,
+  H1
 } from 'native-base'
 
+import { type GlobalState } from '../../reducers/types'
 import I18n from '../../i18n'
+import Modal from '../../components/ui/Modal'
+import SpidInformationForm, {
+  FORM_NAME
+} from '../../components/forms/SpidInformationForm'
 
-type ReduxMappedProps = {}
+type ReduxMappedProps = {
+  isFormValid: boolean
+}
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>
@@ -27,10 +37,19 @@ type OwnProps = {
 
 type Props = ReduxMappedProps & OwnProps
 
+type State = {
+  isTosModalVisible: boolean
+}
+
 /**
  * A screen where the user can insert an email to receive information about SPID.
  */
-class SpidInformationRequestScreen extends React.Component<Props> {
+class SpidInformationRequestScreen extends React.Component<Props, State> {
+  state: State = {
+    isFormValid: false,
+    isTosModalVisible: false
+  }
+
   render(): React.Node {
     return (
       <Container>
@@ -49,17 +68,64 @@ class SpidInformationRequestScreen extends React.Component<Props> {
             </Text>
           </Body>
         </Header>
-        <Content />
+        <Content>
+          <H1>
+            {I18n.t('authentication.spid_information_request.contentTitle')}
+          </H1>
+          <Text>
+            {I18n.t('authentication.spid_information_request.paragraph1')}
+          </Text>
+          <Text link>
+            {I18n.t('authentication.spid_information_request.moreLinkText')}
+          </Text>
+          <View spacer large />
+          <Text>
+            {I18n.t('authentication.spid_information_request.paragraph2')}
+          </Text>
+          <View spacer />
+          <SpidInformationForm />
+          <View spacer />
+          <Text>
+            {I18n.t('authentication.spid_information_request.paragraph3')}
+          </Text>
+          <Text
+            link
+            onPress={(): void => this.setState({ isTosModalVisible: true })}
+          >
+            {I18n.t('authentication.spid_information_request.tosLinkText')}
+          </Text>
+        </Content>
         <View footer>
-          <Button block primary>
+          <Button block primary disabled={!this.props.isFormValid}>
             <Text>
               {I18n.t('authentication.spid_information_request.continue')}
             </Text>
           </Button>
         </View>
+        <Modal isVisible={this.state.isTosModalVisible} fullscreen>
+          <View header>
+            <Icon
+              name="cross"
+              onPress={(): void => this.setState({ isTosModalVisible: false })}
+            />
+          </View>
+          <Content>
+            <H1>{I18n.t('personal_data_processing.title')}</H1>
+            <View spacer large />
+            <Text>{I18n.t('personal_data_processing.content')}</Text>
+          </Content>
+        </Modal>
       </Container>
     )
   }
 }
 
-export default SpidInformationRequestScreen
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  /**
+   * Our form submit button is outside the `Form` itself so we need to use
+   * this selector to check if the form is valid or not.
+   */
+  isFormValid: isValid(FORM_NAME)(state)
+})
+
+export default connect(mapStateToProps)(SpidInformationRequestScreen)

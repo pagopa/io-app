@@ -33,6 +33,7 @@ const customVariables = Object.assign(materialVariables, {
   // Font
   fontFamily: 'Titillium Web',
   fontSizeBase: 16,
+  lineHeight: 30,
 
   // Icon
   iconFamily: 'Entypo',
@@ -68,8 +69,14 @@ const customVariables = Object.assign(materialVariables, {
     return this.textColor
   },
 
+  // Modal
+  modalMargin: 0,
+  modalPadding: 24,
+  modalHeaderHeight: 75,
+
   // Text
   textColor: '#5C6F82',
+  textLinkColor: '#0063CF',
 
   // Spacer
   spacerHeight: 16,
