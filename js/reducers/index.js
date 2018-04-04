@@ -12,6 +12,7 @@ import navigationReducer from './navigation'
 import userReducer from './user'
 import loadingReducer from '../store/reducers/loading'
 import errorReducer from '../store/reducers/error'
+import sessionReducer from '../store/reducers/session'
 import profileReducer from '../store/reducers/profile'
 
 /**
@@ -32,5 +33,6 @@ export default combineReducers({
   error: errorReducer,
 
   // DATA
+  session: sessionReducer,
   profile: profileReducer
 })

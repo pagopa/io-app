@@ -34,7 +34,9 @@ class LandingScreen extends React.Component<Props> {
             primary
             iconVeryLeft
             onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.AUTHENTICATION_LOGIN)
+              this.props.navigation.navigate(
+                ROUTES.AUTHENTICATION_IDP_SELECTION
+              )
             }
           >
             <Icon name="user" />

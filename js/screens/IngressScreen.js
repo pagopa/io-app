@@ -13,12 +13,11 @@ import variables from '../theme/variables'
 
 import ROUTES from '../navigation/routes'
 import { type ReduxProps } from '../actions/types'
-import { type UserState } from '../reducers/user'
-
 import { type GlobalState } from '../reducers/types'
+import { type SessionState } from '../store/reducers/session'
 
 type ReduxMappedProps = {
-  user: UserState
+  session: SessionState
 }
 
 type OwnProps = {
@@ -40,10 +39,10 @@ const styles = StyleSheet.create({
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 class IngressScreen extends React.Component<Props> {
-  // Check the user state in the store and navigate to the proper screen
+  // Check if there is a valid session
   componentDidMount() {
-    const { user } = this.props
-    if (user.isLoggedIn) {
+    const { session } = this.props
+    if (session.isAuthenticated) {
       this.props.navigation.navigate(ROUTES.MAIN)
     } else {
       this.props.navigation.navigate(ROUTES.AUTHENTICATION)
@@ -60,7 +59,7 @@ class IngressScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  user: state.user
+  session: state.session
 })
 
 export default connect(mapStateToProps)(IngressScreen)

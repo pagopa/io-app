@@ -262,7 +262,7 @@ declare module 'react-navigation' {
      */
     getStateForAction: (action: NavigationAction, lastState: ?State) => ?State,
 
-    getInitialState: () => any,
+    getInitialState: () => State,
 
     /**
      * Maps a URI-like string to an action. This can be mapped to a state

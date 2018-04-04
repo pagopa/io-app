@@ -25,15 +25,14 @@ import {
 import { type GlobalState } from '../reducers/types'
 
 // A selector to get the token from the state
-// TODO: Move this in external file before merging into master
-const getToken = (state: GlobalState): ?string =>
-  state.user.isLoggedIn ? state.user.token : null
+const getSessionToken = (state: GlobalState): ?string =>
+  state.session.isAuthenticated ? state.session.token : null
 
 // A saga to load the Profile.
 function* loadProfile(): Saga<void> {
   try {
     // Get the token from the state
-    const token: string = yield select(getToken)
+    const token: string = yield select(getSessionToken)
 
     // Fetch the profile from the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(fetchProfile, token)
@@ -61,7 +60,7 @@ function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
     const newProfile = action.payload
 
     // Get the token from the state
-    const token: string = yield select(getToken)
+    const token: string = yield select(getSessionToken)
 
     // Post the new Profile to the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(
@@ -88,7 +87,7 @@ function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
   }
 }
 
-// This function listen for Profile related request and call the nedded saga.
+// This function listens for Profile related requests and calls the needed saga.
 export default function* root(): Saga<void> {
   yield takeLatest(PROFILE_LOAD_REQUEST, loadProfile)
   yield takeLatest(PROFILE_UPDATE_REQUEST, updateProfile)
