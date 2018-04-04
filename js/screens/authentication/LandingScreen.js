@@ -43,7 +43,16 @@ class LandingScreen extends React.Component<Props> {
             <Text>{I18n.t('authentication.landing.login')}</Text>
           </Button>
           <View spacer />
-          <Button block small transparent>
+          <Button
+            block
+            small
+            transparent
+            onPress={(): boolean =>
+              this.props.navigation.navigate(
+                ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
+              )
+            }
+          >
             <Text>{I18n.t('authentication.landing.nospid')}</Text>
           </Button>
         </View>

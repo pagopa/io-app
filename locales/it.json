@@ -59,6 +59,10 @@
       "login": "Entra con SPID",
       "nospid": "Non hai SPID?"
     },
+    "spid_information_request": {
+      "headerTitle": "Inserisci indirizzo email",
+      "continue": "Continua"
+    },
     "idp_selection": {
       "headerTitle": "Home",
       "contentTitle": "Scegli il tuo Identity Provider",

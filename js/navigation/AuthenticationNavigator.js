@@ -7,6 +7,7 @@ import LandingScreen from '../screens/authentication/LandingScreen'
 import IdpSelectionScreen from '../screens/authentication/IdpSelectionScreen'
 import IdpLoginScreen from '../screens/authentication/IdpLoginScreen'
 import LoginScreen from '../screens/authentication/LoginScreen'
+import SpidInformationRequestScreen from '../screens/authentication/SpidInformationRequestScreen'
 
 /**
  * The authentication related stack of screens of the application.
@@ -24,6 +25,9 @@ const navigator = StackNavigator(
     },
     [ROUTES.AUTHENTICATION_LOGIN]: {
       screen: LoginScreen
+    },
+    [ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST]: {
+      screen: SpidInformationRequestScreen
     }
   },
   {
