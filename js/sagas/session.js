@@ -28,7 +28,7 @@ function* loginSaga(): Saga<void> {
   yield put(loadProfile())
 }
 
-// This function listen for Session related requests and call the needed saga.
+// This function listens for Session related requests and calls the needed saga.
 export default function* root(): Saga<void> {
   yield takeLatest(IDP_SELECTED, loginSaga)
 }

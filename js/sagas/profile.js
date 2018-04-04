@@ -87,7 +87,7 @@ function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
   }
 }
 
-// This function listen for Profile related requests and call the needed saga.
+// This function listens for Profile related requests and calls the needed saga.
 export default function* root(): Saga<void> {
   yield takeLatest(PROFILE_LOAD_REQUEST, loadProfile)
   yield takeLatest(PROFILE_UPDATE_REQUEST, updateProfile)
