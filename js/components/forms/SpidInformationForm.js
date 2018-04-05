@@ -15,7 +15,7 @@ export const FORM_NAME = 'spidInformation'
 const getCurrentFormFieldProperty = getFormFieldProperty(FORM_NAME)
 
 /**
- * A form with an TextInput to insert an email
+ * A form to collect the user email address
  */
 class SpidInformationForm extends React.Component<Props> {
   render(): React.Node {

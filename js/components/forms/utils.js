@@ -23,7 +23,7 @@ const email = (value: string): ?string =>
     : undefined
 
 /**
- * A function that return the translated value for a property of a form field
+ * A utility function that return the translated value for a property of a form field.
  */
 export const getFormFieldProperty = (
   formId: string
@@ -34,7 +34,7 @@ export const getFormFieldProperty = (
 }
 
 /**
- * Methods used to validate redux-form `Field`
+ * Methods used to validate redux-form `Field` components.
  */
 export const validators = {
   required,
@@ -42,8 +42,8 @@ export const validators = {
 }
 
 /**
- * This method is used by redux-form `Field` component.
- * It takes as input the field properties and return a native-base `Input`
+ * This method is used by redux-form `Field` components.
+ * It takes as input the field properties and return a native-base `Input`.
  */
 export const renderNBInput = ({
   input,

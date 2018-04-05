@@ -9,8 +9,7 @@ type Props = ModalProps
 
 /**
  * A customized react-native-modal component.
- * The class is connected with the native-base StyleProvider using
- * the`connectStyle(...)` method.
+ * The class is connected with the native-base StyleProvider using the `connectStyle(...)` method.
  */
 class Modal extends React.Component<Props> {
   render(): React.Node {
