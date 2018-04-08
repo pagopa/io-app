@@ -9,16 +9,18 @@
 import materialVariables from 'native-base/src/theme/variables/material'
 
 import { type ThemeSimpleValue } from './types'
+import { makeFontStyleObject } from './fonts'
 
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
 
   // Button
-  btnFontFamily: 'Titillium Web',
   btnTextFontWeight: '600',
   btnHeight: 48,
+  btnFontSize: 16,
   btnSmallHeight: 39,
+  btnSmallFontSize: 16,
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor
   },
@@ -31,7 +33,7 @@ const customVariables = Object.assign(materialVariables, {
   brandLight: '#FCFDFF',
 
   // Font
-  fontFamily: 'Titillium Web',
+  ...makeFontStyleObject(),
   fontSizeBase: 16,
   lineHeight: 30,
 
@@ -58,9 +60,14 @@ const customVariables = Object.assign(materialVariables, {
   gridGutter: 10,
 
   // H1
+  h1Color: '#17324D',
   h1FontWeight: '600',
 
   // Header
+  headerPaddingHorizontal: 24,
+  headerBorderBottomWidth: 0,
+  headerBodyFontSize: 14,
+  headerBodyFontWeight: '600',
   toolbarDefaultBg: '#FFFFFF',
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor

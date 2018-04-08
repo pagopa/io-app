@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react'
-import { AppState } from 'react-native'
+import { AppState, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Root } from 'native-base'
@@ -32,6 +32,7 @@ class RootContainer extends React.Component<Props> {
   render(): React.Node {
     return (
       <Root>
+        <StatusBar barStyle="dark-content" />
         <ConnectionBar />
         <Navigation />
       </Root>

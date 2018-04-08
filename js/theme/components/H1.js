@@ -2,10 +2,12 @@
 
 import { type Theme } from '../types'
 import variables from '../variables'
+import { makeFontStyleObject } from '../fonts'
 
 export default (): Theme => {
   const theme = {
-    fontWeight: variables.h1FontWeight
+    color: variables.h1Color,
+    ...makeFontStyleObject(variables.h1FontWeight)
   }
 
   return theme

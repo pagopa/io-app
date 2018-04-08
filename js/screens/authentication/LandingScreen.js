@@ -6,7 +6,16 @@ import {
   type NavigationScreenProp,
   type NavigationState
 } from 'react-navigation'
-import { Container, Content, Text, View, Button, Icon } from 'native-base'
+import {
+  Container,
+  Content,
+  Text,
+  View,
+  Button,
+  Icon,
+  Header,
+  Body
+} from 'native-base'
 
 import { type ReduxProps } from '../../actions/types'
 import ROUTES from '../../navigation/routes'
@@ -27,12 +36,17 @@ class LandingScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
+        <Header>
+          <Body>
+            <Text>{I18n.t('authentication.landing.headerTitle')}</Text>
+          </Body>
+        </Header>
         <Content />
         <View footer>
           <Button
             block
             primary
-            iconVeryLeft
+            iconLeft
             onPress={(): boolean =>
               this.props.navigation.navigate(
                 ROUTES.AUTHENTICATION_IDP_SELECTION
