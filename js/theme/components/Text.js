@@ -9,7 +9,7 @@ import { makeFontStyleObject } from '../fonts'
 export default (): Theme => {
   const theme = {
     '.link': {
-      ...makeFontStyleObject(Platform.OS, variables.textLinkWeight),
+      ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor
     },
 

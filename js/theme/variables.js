@@ -34,7 +34,7 @@ const customVariables = Object.assign(materialVariables, {
   brandLight: '#FCFDFF',
 
   // Font
-  ...makeFontStyleObject(Platform.OS),
+  ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
   lineHeight: 24,
 

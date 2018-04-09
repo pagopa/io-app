@@ -56,7 +56,7 @@ export default (): Theme => {
     },
 
     'NativeBase.Text': {
-      ...makeFontStyleObject(Platform.OS, variables.btnTextFontWeight),
+      ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize
     },
 

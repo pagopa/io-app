@@ -33,7 +33,7 @@ export type FontStyleObject = {
  * Get the correct fontFamily name on both Android and iOS
  */
 export const makeFontFamilyName = (
-  osSelect: (PlatformSelectSpec<string, string>) => string,
+  osSelect: <A, I>(spec: PlatformSelectSpec<A, I>) => A | I,
   weight?: FontWeight = '400',
   isItalic?: boolean = false
 ): string =>
@@ -47,19 +47,17 @@ export const makeFontFamilyName = (
  * a Font correctly on both Android and iOS.
  */
 export const makeFontStyleObject = (
-  os: string,
+  osSelect: <A, I>(spec: PlatformSelectSpec<A, I>) => A | I,
   weight?: FontWeight = '400',
   isItalic?: boolean = false
-): FontStyleObject => {
-  if (os === 'android') {
-    return {
-      fontFamily: makeFontFamilyName(Platform.select, weight, isItalic)
-    }
-  } else {
-    return {
-      fontFamily: makeFontFamilyName(Platform.select, weight, isItalic),
+): FontStyleObject =>
+  osSelect({
+    android: {
+      fontFamily: makeFontFamilyName(osSelect, weight, isItalic)
+    },
+    ios: {
+      fontFamily: makeFontFamilyName(osSelect, weight, isItalic),
       fontWeight: weight,
       fontStyle: isItalic ? 'italic' : 'normal'
     }
-  }
-}
+  })

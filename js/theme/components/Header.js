@@ -13,7 +13,7 @@ export default (): Theme => {
     },
     'NativeBase.Body': {
       'NativeBase.Text': {
-        ...makeFontStyleObject(Platform.OS, variables.headerBodyFontWeight),
+        ...makeFontStyleObject(Platform.select, variables.headerBodyFontWeight),
         backgroundColor: 'transparent',
         color: variables.toolbarTextColor,
         fontSize: variables.headerBodyFontSize
