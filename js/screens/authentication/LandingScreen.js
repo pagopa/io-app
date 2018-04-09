@@ -36,7 +36,7 @@ class LandingScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header>
+        <Header iosBarStyle="dark-content">
           <Body>
             <Text>{I18n.t('authentication.landing.headerTitle')}</Text>
           </Body>

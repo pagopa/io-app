@@ -101,7 +101,7 @@ class IdpSelectionScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header>
+        <Header iosBarStyle="dark-content">
           <Left>
             <Button
               transparent

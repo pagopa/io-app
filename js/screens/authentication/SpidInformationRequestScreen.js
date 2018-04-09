@@ -53,7 +53,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
   render(): React.Node {
     return (
       <Container>
-        <Header>
+        <Header iosBarStyle="dark-content">
           <Left>
             <Button
               transparent

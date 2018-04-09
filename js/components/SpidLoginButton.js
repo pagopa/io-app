@@ -334,7 +334,7 @@ class IdpSelectionScreen extends React.Component<
     const { selectedIdp } = this.state
     return (
       <Container>
-        <Header>
+        <Header iosBarStyle="dark-content">
           <Left>
             <Button
               transparent
