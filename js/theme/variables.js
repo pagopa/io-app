@@ -36,7 +36,7 @@ const customVariables = Object.assign(materialVariables, {
   // Font
   ...makeFontStyleObject(Platform.OS),
   fontSizeBase: 16,
-  lineHeight: 30,
+  lineHeight: 24,
 
   // Icon
   iconFamily: 'Entypo',
@@ -44,9 +44,7 @@ const customVariables = Object.assign(materialVariables, {
   // Content
   contentPadding: 24,
   contentBackground: '#FFFFFF',
-  get contentInvertedBackground(): ThemeSimpleValue {
-    return this.brandGray
-  },
+  contentAlternativeBackground: '#F5F6F7',
 
   // Footer
   footerBackground: '#FFFFFF',
