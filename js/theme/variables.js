@@ -6,6 +6,7 @@
  * @flow
  */
 
+import { Platform } from 'react-native'
 import materialVariables from 'native-base/src/theme/variables/material'
 
 import { type ThemeSimpleValue } from './types'
@@ -33,7 +34,7 @@ const customVariables = Object.assign(materialVariables, {
   brandLight: '#FCFDFF',
 
   // Font
-  ...makeFontStyleObject(),
+  ...makeFontStyleObject(Platform.OS),
   fontSizeBase: 16,
   lineHeight: 30,
 

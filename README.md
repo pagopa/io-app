@@ -200,6 +200,29 @@ L'applicazione utilizza un custom handler per intercettare e notificare errori j
 L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
 
 
+### Fonts
+
+L'applicazione utilizza il font `Titillium Web`. I fonts vengono gestiti in modo differente da Android e iOS. Per utilizzare il font `TitilliumWeb-SemiBoldItalic` ad esempio è necessario applicare le seguenti proprietà per Android:
+
+```
+{
+  fontFamily: 'TitilliumWeb-SemiBoldItalic'
+}
+```
+
+mentre in iOS il codice da applicare è:
+
+```
+{
+  fontFamily: 'Titillium Web',
+  fontWeight: '600',
+  fontStyle: 'italic'
+}
+```
+
+Per rendere la gestione dei font e delle varianti più sempice sono state create delle funzioni di utilità all'interno del file `js/theme/fonts.js`
+
+
 ### Theming
 
 L'applicazione utilizza [native-base](https://nativebase.io/) e i suo componenti per la realizzazione dell'interfaccia grafica. In particolare è stato scelto di utilizzare come base il tema `material` previsto dalla libreria. Sebbene native-base permetta attraverso l'uso di variabili di personalizzare parte del tema è stato comunque necessario implementare delle funzioni ad-hoc che consentano di andare a modificare il tema dei singoli componenti.

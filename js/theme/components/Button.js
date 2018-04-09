@@ -1,5 +1,7 @@
 // @flow
 
+import { Platform } from 'react-native'
+
 import { type Theme } from '../types'
 import variables from '../variables'
 import { makeFontStyleObject } from '../fonts'
@@ -54,7 +56,7 @@ export default (): Theme => {
     },
 
     'NativeBase.Text': {
-      ...makeFontStyleObject(variables.btnTextFontWeight),
+      ...makeFontStyleObject(Platform.OS, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize
     },
 
