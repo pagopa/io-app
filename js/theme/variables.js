@@ -17,7 +17,7 @@ const customVariables = Object.assign(materialVariables, {
   btnUppercaseAndroidText: false,
 
   // Button
-  btnTextFontWeight: '600',
+  btnTextFontWeight: '700',
   btnHeight: 48,
   btnFontSize: 16,
   btnSmallHeight: 39,
@@ -62,7 +62,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // H1
   h1Color: '#17324D',
-  h1FontWeight: '600',
+  h1FontWeight: '700',
 
   // Header
   headerPaddingHorizontal: 24,
