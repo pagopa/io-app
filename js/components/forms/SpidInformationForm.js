@@ -4,7 +4,11 @@ import * as React from 'react'
 import { type FormProps, reduxForm, Field } from 'redux-form'
 import { Form } from 'native-base'
 
-import { renderNBInput, validators, getFormFieldProperty } from './utils'
+import {
+  renderNativeBaseInput,
+  validators,
+  getTraslatedFormFieldPropertyValue
+} from './utils'
 
 type OwnProps = {}
 
@@ -12,7 +16,9 @@ type Props = FormProps & OwnProps
 
 export const FORM_NAME = 'spidInformation'
 
-const getCurrentFormFieldProperty = getFormFieldProperty(FORM_NAME)
+const getCurrentFormFieldProperty = getTraslatedFormFieldPropertyValue(
+  FORM_NAME
+)
 
 /**
  * A form to collect the user email address
@@ -23,7 +29,7 @@ class SpidInformationForm extends React.Component<Props> {
       <Form>
         <Field
           name="email"
-          component={renderNBInput}
+          component={renderNativeBaseInput}
           placeholder={getCurrentFormFieldProperty('email')('placeholder')}
           validate={[validators.required, validators.email]}
           showError

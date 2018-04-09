@@ -38,7 +38,8 @@
     "redux-saga": "^0.16.0",
     "redux-thunk": "2.2.0",
     "source-map": "^0.6.1",
-    "stacktrace-js": "^2.0.0"
+    "stacktrace-js": "^2.0.0",
+    "validator": "^9.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.1",

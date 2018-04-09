@@ -58,7 +58,7 @@
     "landing": {
       "headerTitle": "ItaliaApp",
       "login": "Login with SPID",
-      "nospid": "Don't have SPID?"
+      "nospid": "Don't have SPID? Find out more"
     },
     "spid_information_request": {
       "headerTitle": "Insert email address",

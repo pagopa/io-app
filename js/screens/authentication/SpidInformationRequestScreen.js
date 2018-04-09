@@ -24,7 +24,7 @@ import { type GlobalState } from '../../reducers/types'
 import I18n from '../../i18n'
 import Modal from '../../components/ui/Modal'
 import SpidInformationForm, {
-  FORM_NAME
+  FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from '../../components/forms/SpidInformationForm'
 
 type ReduxMappedProps = {
@@ -46,7 +46,6 @@ type State = {
  */
 class SpidInformationRequestScreen extends React.Component<Props, State> {
   state: State = {
-    isFormValid: false,
     isTosModalVisible: false
   }
 
@@ -125,7 +124,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
    * Our form submit button is outside the `Form` itself so we need to use
    * this selector to check if the form is valid or not.
    */
-  isFormValid: isValid(FORM_NAME)(state)
+  isFormValid: isValid(SPID_INFORMATION_FORM_NAME)(state)
 })
 
 export default connect(mapStateToProps)(SpidInformationRequestScreen)

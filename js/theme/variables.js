@@ -83,6 +83,7 @@ const customVariables = Object.assign(materialVariables, {
   // Text
   textColor: '#5C6F82',
   textLinkColor: '#0063CF',
+  textLinkWeight: '600',
 
   // Spacer
   spacerHeight: 16,

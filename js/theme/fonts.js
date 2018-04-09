@@ -7,8 +7,12 @@
  */
 
 import { Platform } from 'react-native'
+import { type PlatformSelectSpec } from 'PlatformOS'
 
-const font = Platform.OS === 'android' ? 'TitilliumWeb' : 'Titillium Web'
+const font = Platform.select({
+  android: 'TitilliumWeb',
+  ios: 'Titillium Web'
+})
 
 const fontWeights = {
   '300': 'Light',
@@ -29,16 +33,14 @@ export type FontStyleObject = {
  * Get the correct fontFamily name on both Android and iOS
  */
 export const makeFontFamilyName = (
-  os: string,
+  osSelect: (PlatformSelectSpec<string, string>) => string,
   weight?: FontWeight = '400',
   isItalic?: boolean = false
-): string => {
-  if (os === 'android') {
-    return `${font}-${fontWeights[weight]}${isItalic ? 'Italic' : ''}`
-  } else {
-    return font
-  }
-}
+): string =>
+  osSelect({
+    android: `${font}-${fontWeights[weight]}${isItalic ? 'Italic' : ''}`,
+    ios: font
+  })
 
 /**
  * This function returns an object containing all the properties needed to use
@@ -51,11 +53,11 @@ export const makeFontStyleObject = (
 ): FontStyleObject => {
   if (os === 'android') {
     return {
-      fontFamily: makeFontFamilyName(os, weight, isItalic)
+      fontFamily: makeFontFamilyName(Platform.select, weight, isItalic)
     }
   } else {
     return {
-      fontFamily: makeFontFamilyName(os, weight, isItalic),
+      fontFamily: makeFontFamilyName(Platform.select, weight, isItalic),
       fontWeight: weight,
       fontStyle: isItalic ? 'italic' : 'normal'
     }

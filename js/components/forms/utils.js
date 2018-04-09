@@ -7,6 +7,7 @@
 import * as React from 'react'
 import { type FieldProps } from 'redux-form'
 import { Item, Input, View, Text } from 'native-base'
+import { isEmail } from 'validator'
 
 import I18n from '../../i18n'
 
@@ -18,14 +19,12 @@ const required = (value: string): ?string =>
   value ? undefined : getValidatorMessage('required')
 
 const email = (value: string): ?string =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? getValidatorMessage('email')
-    : undefined
+  value && !isEmail(value) ? getValidatorMessage('email') : undefined
 
 /**
  * A utility function that return the translated value for a property of a form field.
  */
-export const getFormFieldProperty = (
+export const getTraslatedFormFieldPropertyValue = (
   formId: string
 ): (string => string => string) => (fieldId: string): (string => string) => (
   propertyId: string
@@ -35,6 +34,8 @@ export const getFormFieldProperty = (
 
 /**
  * Methods used to validate redux-form `Field` components.
+ * All methods takes a string, which represents the field value, as argument and returns
+ * a error message if the validation is not fulfilled.
  */
 export const validators = {
   required,
@@ -45,7 +46,7 @@ export const validators = {
  * This method is used by redux-form `Field` components.
  * It takes as input the field properties and return a native-base `Input`.
  */
-export const renderNBInput = ({
+export const renderNativeBaseInput = ({
   input,
   meta: { touched, error },
   ...rest
