@@ -31,7 +31,7 @@ class SpidInformationForm extends React.Component<Props> {
           name="email"
           component={renderNativeBaseInput}
           placeholder={getCurrentFormFieldProperty('email')('placeholder')}
-          validate={[validators.required, validators.email]}
+          validate={[validators.email]}
           showError
         />
       </Form>
