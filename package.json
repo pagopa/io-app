@@ -25,18 +25,21 @@
     "react-native-fs": "^2.9",
     "react-native-i18n": "^2.0.10",
     "react-native-mixpanel": "^0.0.16",
+    "react-native-modal": "^5.4.0",
     "react-native-offline": "^3.7.2",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "^1.5.8",
     "react-navigation-redux-helpers": "^1.0.3",
     "react-redux": "5.0.7",
     "redux": "3.7.2",
+    "redux-form": "^7.3.0",
     "redux-logger": "3.0.6",
     "redux-persist": "5.9.1",
     "redux-saga": "^0.16.0",
     "redux-thunk": "2.2.0",
     "source-map": "^0.6.1",
-    "stacktrace-js": "^2.0.0"
+    "stacktrace-js": "^2.0.0",
+    "validator": "^9.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.1",

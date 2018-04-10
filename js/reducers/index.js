@@ -6,6 +6,7 @@
 
 import { combineReducers } from 'redux'
 import { reducer as network } from 'react-native-offline'
+import { reducer as formReducer } from 'redux-form'
 
 import appStateReducer from './appState'
 import navigationReducer from './navigation'
@@ -31,6 +32,9 @@ export default combineReducers({
   // UI
   loading: loadingReducer,
   error: errorReducer,
+
+  // FORM
+  form: formReducer,
 
   // DATA
   session: sessionReducer,

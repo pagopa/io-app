@@ -6,19 +6,22 @@
  * @flow
  */
 
+import { Platform } from 'react-native'
 import materialVariables from 'native-base/src/theme/variables/material'
 
 import { type ThemeSimpleValue } from './types'
+import { makeFontStyleObject } from './fonts'
 
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
 
   // Button
-  btnFontFamily: 'Titillium Web',
-  btnTextFontWeight: '600',
+  btnTextFontWeight: '700',
   btnHeight: 48,
+  btnFontSize: 16,
   btnSmallHeight: 39,
+  btnSmallFontSize: 16,
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor
   },
@@ -31,8 +34,9 @@ const customVariables = Object.assign(materialVariables, {
   brandLight: '#FCFDFF',
 
   // Font
-  fontFamily: 'Titillium Web',
+  ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
+  lineHeight: 24,
 
   // Icon
   iconFamily: 'Entypo',
@@ -40,9 +44,7 @@ const customVariables = Object.assign(materialVariables, {
   // Content
   contentPadding: 24,
   contentBackground: '#FFFFFF',
-  get contentInvertedBackground(): ThemeSimpleValue {
-    return this.brandGray
-  },
+  contentAlternativeBackground: '#F5F6F7',
 
   // Footer
   footerBackground: '#FFFFFF',
@@ -57,9 +59,14 @@ const customVariables = Object.assign(materialVariables, {
   gridGutter: 10,
 
   // H1
-  h1FontWeight: '600',
+  h1Color: '#17324D',
+  h1FontWeight: '700',
 
   // Header
+  headerPaddingHorizontal: 24,
+  headerBorderBottomWidth: 0,
+  headerBodyFontSize: 14,
+  headerBodyFontWeight: '600',
   toolbarDefaultBg: '#FFFFFF',
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor
@@ -68,8 +75,15 @@ const customVariables = Object.assign(materialVariables, {
     return this.textColor
   },
 
+  // Modal
+  modalMargin: 0,
+  modalPadding: 24,
+  modalHeaderHeight: 75,
+
   // Text
   textColor: '#5C6F82',
+  textLinkColor: '#0063CF',
+  textLinkWeight: '600',
 
   // Spacer
   spacerHeight: 16,

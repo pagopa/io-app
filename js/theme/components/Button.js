@@ -1,7 +1,10 @@
 // @flow
 
+import { Platform } from 'react-native'
+
 import { type Theme } from '../types'
 import variables from '../variables'
+import { makeFontStyleObject } from '../fonts'
 
 export default (): Theme => {
   const theme = {
@@ -29,7 +32,11 @@ export default (): Theme => {
     },
 
     '.small': {
-      height: variables.btnSmallHeight
+      height: variables.btnSmallHeight,
+
+      'NativeBase.Text': {
+        fontSize: variables.btnSmallFontSize
+      }
     },
 
     '.light': {
@@ -49,7 +56,8 @@ export default (): Theme => {
     },
 
     'NativeBase.Text': {
-      fontWeight: variables.btnTextFontWeight
+      ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
+      fontSize: variables.btnFontSize
     },
 
     borderRadius: variables.borderRadiusBase,

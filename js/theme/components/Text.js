@@ -8,8 +8,12 @@ import { makeFontStyleObject } from '../fonts'
 
 export default (): Theme => {
   const theme = {
-    color: variables.h1Color,
-    ...makeFontStyleObject(Platform.select, variables.h1FontWeight)
+    '.link': {
+      ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
+      color: variables.textLinkColor
+    },
+
+    lineHeight: variables.lineHeight
   }
 
   return theme

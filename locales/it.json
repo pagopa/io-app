@@ -57,7 +57,17 @@
   "authentication": {
     "landing": {
       "login": "Entra con SPID",
-      "nospid": "Non hai SPID?"
+      "nospid": "Non hai SPID? Scopri di più"
+    },
+    "spid_information_request": {
+      "headerTitle": "Inserisci indirizzo email",
+      "contentTitle": "Non hai SPID?",
+      "paragraph1": "SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale (username e password).",
+      "paragraph2": "Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria e aggiornamenti su questa app",
+      "paragraph3": "Proseguendo dichiari di accettare le",
+      "moreLinkText": "Per saperne di più",
+      "tosLinkText": "regole sul trattamento dei dati personali",
+      "continue": "Continua"
     },
     "idp_selection": {
       "headerTitle": "Home",
@@ -66,6 +76,23 @@
     },
     "idp_login": {
       "headerTitle": "Accedi"
+    }
+  },
+  "personal_data_processing": {
+    "title": "Regole sul trattamento dei dati personali",
+    "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
+  },
+  "forms": {
+    "validators": {
+      "required": "Valore richiesto",
+      "email": "Indirizzo email non valido"
+    },
+    "spidInformation": {
+      "fields": {
+        "email": {
+          "placeholder": "indirizzo email"
+        }
+      }      
     }
   }
 

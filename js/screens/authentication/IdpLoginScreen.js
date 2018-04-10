@@ -43,7 +43,7 @@ class IdpLoginScreen extends React.Component<Props> {
     const loginUri = LOGIN_BASE_URL + session.idp.entityID
     return (
       <Container>
-        <Header>
+        <Header iosBarStyle="dark-content">
           <Left>
             <Button
               transparent
