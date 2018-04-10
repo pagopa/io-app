@@ -48,12 +48,12 @@ export const validators = {
  */
 export const renderNativeBaseInput = ({
   input,
-  meta: { touched, error },
+  meta: { touched, error, active },
   ...rest
 }: FieldProps): React.Node => {
   return (
     <View>
-      <Item error={error && touched}>
+      <Item error={error && touched} active={active}>
         <Input {...input} {...rest} />
       </Item>
       {rest.showError && error && touched && <Text>{error}</Text>}
