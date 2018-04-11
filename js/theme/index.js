@@ -12,6 +12,7 @@ import variables from './variables'
 import buttonTheme from './components/Button'
 import contentTheme from './components/Content'
 import h1Theme from './components/H1'
+import h3Theme from './components/H3'
 import headerTheme from './components/Header'
 import itemTheme from './components/Item'
 import modalTheme from './components/Modal'
@@ -29,6 +30,9 @@ const theme = (): Theme => {
     },
     'NativeBase.H1': {
       ...h1Theme()
+    },
+    'NativeBase.H3': {
+      ...h3Theme()
     },
     'NativeBase.Header': {
       ...headerTheme()

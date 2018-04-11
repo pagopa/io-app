@@ -9,7 +9,7 @@ import { makeFontStyleObject } from '../fonts'
 export default (): Theme => {
   const theme = {
     'NativeBase.Left': {
-      flex: 0.1
+      flex: 0.2
     },
     'NativeBase.Body': {
       'NativeBase.Text': {

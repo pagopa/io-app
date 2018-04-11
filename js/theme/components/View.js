@@ -10,6 +10,10 @@ export default (): Theme => {
         height: variables.spacerLargeHeight
       },
 
+      '.extralarge': {
+        height: variables.spacerExtralargeHeight
+      },
+
       height: variables.spacerHeight
     },
 

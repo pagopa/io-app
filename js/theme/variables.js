@@ -62,6 +62,10 @@ const customVariables = Object.assign(materialVariables, {
   h1Color: '#17324D',
   h1FontWeight: '700',
 
+  // H3
+  h3Color: '#17324D',
+  h3FontWeight: '600',
+
   // Header
   headerPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
@@ -88,6 +92,7 @@ const customVariables = Object.assign(materialVariables, {
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
+  spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
 })

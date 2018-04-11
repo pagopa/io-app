@@ -11,10 +11,10 @@ import {
 import { Container } from 'native-base'
 import variables from '../theme/variables'
 
-import ROUTES from '../navigation/routes'
 import { type ReduxProps } from '../actions/types'
 import { type GlobalState } from '../reducers/types'
 import { type SessionState } from '../store/reducers/session'
+import { applicationInitialized } from '../store/actions/application'
 
 type ReduxMappedProps = {
   session: SessionState
@@ -39,14 +39,9 @@ const styles = StyleSheet.create({
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 class IngressScreen extends React.Component<Props> {
-  // Check if there is a valid session
   componentDidMount() {
-    const { session } = this.props
-    if (session.isAuthenticated) {
-      this.props.navigation.navigate(ROUTES.MAIN)
-    } else {
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION)
-    }
+    // Dispatch APPLICATION_INITIALIZED to start the Autentication saga
+    this.props.dispatch(applicationInitialized())
   }
 
   render(): React.Node {
