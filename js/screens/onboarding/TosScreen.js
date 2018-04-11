@@ -22,6 +22,7 @@ import {
 
 import { type ReduxProps } from '../../actions/types'
 import I18n from '../../i18n'
+import variables from '../../theme/variables'
 import { acceptTos } from '../../store/actions/onboarding'
 
 type ReduxMappedProps = {}
@@ -43,7 +44,10 @@ class TosScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header>
+        <Header
+          androidStatusBarColor={variables.statusBarColor}
+          iosBarStyle="dark-content"
+        >
           <Left>
             <Button
               transparent
