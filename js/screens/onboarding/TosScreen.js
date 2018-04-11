@@ -45,7 +45,7 @@ class TosScreen extends React.Component<Props> {
     return (
       <Container>
         <Header
-          androidStatusBarColor={variables.statusBarColor}
+          androidStatusBarColor={variables.androidStatusBarColor}
           iosBarStyle="dark-content"
         >
           <Left>

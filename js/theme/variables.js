@@ -78,7 +78,7 @@ const customVariables = Object.assign(materialVariables, {
   get toolbarBtnColor(): ThemeSimpleValue {
     return this.textColor
   },
-  statusBarColor: '#FFFFFF',
+  androidStatusBarColor: '#FFFFFF',
 
   // Modal
   modalMargin: 0,

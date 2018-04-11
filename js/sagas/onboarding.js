@@ -20,12 +20,12 @@ import ROUTES from '../navigation/routes'
 // The Pin step of the Onboarding
 function* pinStep(): Saga<void> {
   // From the state check ir the user already created a Pin
-  const pinCreated: boolean = yield select(
+  const isPinCreated: boolean = yield select(
     (state: GlobalState): boolean => state.onboarding.isPinCreated
   )
 
-  if (!pinCreated) {
-    // If the Pin has not benn created yet we must show the user the PinScreen
+  if (!isPinCreated) {
+    // If the Pin has not been created yet we must show the user the PinScreen
     const navigateAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -42,7 +42,7 @@ function* pinStep(): Saga<void> {
 
 // The ToS step of the Onboarding
 function* tosStep(): Saga<void> {
-  // From the state we check if the user already acceppted
+  // From the state we check if the user already accepted
   const isTosAccepted: boolean = yield select(
     (state: GlobalState): boolean => state.onboarding.isTosAccepted
   )
@@ -65,6 +65,9 @@ function* tosStep(): Saga<void> {
     yield put({
       type: TOS_ACCEPT_SUCCESS
     })
+
+    // Go to the next step
+    yield call(pinStep)
   } else {
     // Is the ToS is already accepted continue to the Pin step of the Onboarding
     yield call(pinStep)
