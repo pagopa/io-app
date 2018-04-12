@@ -24,6 +24,7 @@ import { type ReduxProps } from '../../actions/types'
 import { type IdentityProvider } from '../../utils/api'
 import config from '../../config'
 import I18n from '../../i18n'
+import variables from '../../theme/variables'
 import IdpsGrid from '../../components/IdpsGrid'
 import { selectIdp } from '../../store/actions/session'
 
@@ -101,7 +102,7 @@ class IdpSelectionScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <Header androidStatusBarColor={variables.androidStatusBarColor} iosBarStyle="dark-content">
           <Left>
             <Button
               transparent

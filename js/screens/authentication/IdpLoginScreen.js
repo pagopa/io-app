@@ -14,6 +14,7 @@ import { type GlobalState } from '../../reducers/types'
 import { type SessionState } from '../../store/reducers/session'
 import config from '../../config'
 import I18n from '../../i18n'
+import variables from '../../theme/variables'
 import { extractLoginResult } from '../../api'
 import { loginSuccess, loginFailure } from '../../store/actions/session'
 
@@ -43,7 +44,10 @@ class IdpLoginScreen extends React.Component<Props> {
     const loginUri = LOGIN_BASE_URL + session.idp.entityID
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <Header
+          androidStatusBarColor={variables.androidStatusBarColor}
+          iosBarStyle="dark-content"
+        >
           <Left>
             <Button
               transparent

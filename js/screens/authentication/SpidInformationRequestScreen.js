@@ -22,6 +22,7 @@ import {
 
 import { type GlobalState } from '../../reducers/types'
 import I18n from '../../i18n'
+import variables from '../../theme/variables'
 import Modal from '../../components/ui/Modal'
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
@@ -52,7 +53,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
   render(): React.Node {
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <Header androidStatusBarColor={variables.androidStatusBarColor} iosBarStyle="dark-content">
           <Left>
             <Button
               transparent
