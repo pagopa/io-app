@@ -37,7 +37,10 @@ class LandingScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header androidStatusBarColor={variables.androidStatusBarColor} iosBarStyle="dark-content">
+        <Header
+          androidStatusBarColor={variables.androidStatusBarColor}
+          iosBarStyle="dark-content"
+        >
           <Body>
             <Text>{I18n.t('authentication.landing.headerTitle')}</Text>
           </Body>

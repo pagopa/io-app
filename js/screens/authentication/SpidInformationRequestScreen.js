@@ -53,7 +53,10 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
   render(): React.Node {
     return (
       <Container>
-        <Header androidStatusBarColor={variables.androidStatusBarColor} iosBarStyle="dark-content">
+        <Header
+          androidStatusBarColor={variables.androidStatusBarColor}
+          iosBarStyle="dark-content"
+        >
           <Left>
             <Button
               transparent
