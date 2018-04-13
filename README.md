@@ -173,6 +173,54 @@ $ bundle exec fastlane alpha
 react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
 ```
 
+### Sviluppo con App Backend e IDP di test in locale
+
+Per sviluppare l'applicazione utilizzando in locale l'App Backend e un IDP di test, è necessario seguire alcuni step aggiuntivi descritti di seguito.
+
+#### Installazione di App Backend e IDP di test
+
+Seguire la documentazione del repository [italia-backend](https://github.com/teamdigitale/italia-backend).
+
+#### WebView, HTTPS e ceriticati autofirmati
+
+Allo stato attuale react-native non consente di aprire WebView su url HTTPS con certificato autofirmato. L'IDP di test però fa utilizzo di HTTPS e di un certificato autofirmato. Per ovviare a questo problema è possibile installare in locale un Proxy che faccia da proxy-pass verso l'App Backend e l'IDP.
+
+##### Installazione di mitmproxy
+
+Un proxy semplice da utilizzare e addatto al nostro scopo è [mitmproxy](https://mitmproxy.org/). Per l'installazione seguire la [pagina di documentazione](https://docs.mitmproxy.org/stable/overview-installation/) del sito sito ufficiale.
+
+Una volta terminata l'installazione creare un file chiamato `mitmproxy_metro_bundler.py` con il seguente contenuto:
+
+```
+# This script is used during development to allow mitmproxy to intercept request on specific ports and make a proxy-pass on localhost
+# Usage: mitmweb --listen-port 9060 --web-port 9061 --ssl-insecure -s mitmproxy_metro_bundler.py
+from mitmproxy import ctx
+
+def request(flow):
+    if flow.request.host == "[SIMULATOR_HOST_IP]" and (flow.request.port == 8081 or flow.request.port == 8082 or flow.request.port == 8097):
+      flow.request.host = "127.0.0.1"
+```
+
+Inserire al posto di `[SIMULATOR_HOST_IP]`:
+* `10.0.2.2` (Standard Android Emulator)
+* `10.0.3.2` (Genymotion Android Emulator)
+
+Avviare il Proxy con il seguente comando:
+
+```
+mitmweb --listen-port 9060 --web-port 9061 --ssl-insecure -s mitmproxy_metro_bundler.py
+```
+
+##### Installazione del certificato di mitmproxy all'interno dell'emulatore Android
+
+Installare il certifcato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale. 
+
+#### Impostare il proxy per la connessione nell'emulatore Android
+
+Nella configurazione della connessione inserire:
+* IP Proxy: `10.0.2.2` (o `10.0.3.2` nel caso si utilizzi Genymotion)
+* Porta Proxy: `9060`
+
 ### Aggiornare icone dell'applicazione
 
 Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
