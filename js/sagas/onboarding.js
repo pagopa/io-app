@@ -1,62 +1,73 @@
 /**
  * A saga that manages the Onboarding.
  *
+ * For a detailed view of the flow check @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
+ *
  * @flow
  */
 
 import { type Saga } from 'redux-saga'
-import { takeLatest, select, take, call, put } from 'redux-saga/effects'
+import { takeLatest, fork, take, select, put } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 
-import { type GlobalState } from '../reducers/types'
 import {
   SESSION_INITIALIZE_SUCCESS,
+  ONBOARDING_CHECK_TOS,
+  ONBOARDING_CHECK_PIN,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS,
-  PIN_CREATED_REQUEST
+  PIN_CREATE_REQUEST
 } from '../store/actions/constants'
 import ROUTES from '../navigation/routes'
+import {
+  isTosAcceptedSelector,
+  isPinCreatedSelector
+} from '../store/reducers/onboarding'
 
-// The Pin step of the Onboarding
-function* pinStep(): Saga<void> {
-  // From the state check ir the user already created a Pin
-  const isPinCreated: boolean = yield select(
-    (state: GlobalState): boolean => state.onboarding.isPinCreated
-  )
+/**
+ * The PIN step of the Onboarding
+ */
+function* pinCheckSaga(): Saga<void> {
+  yield take(ONBOARDING_CHECK_PIN)
+
+  // From the state we check whether the user has already created a PIN
+  const isPinCreated: boolean = yield select(isPinCreatedSelector)
 
   if (!isPinCreated) {
-    // If the Pin has not been created yet we must show the user the PinScreen
-    const navigateAction = NavigationActions.reset({
+    // Navigate to the PinScreen
+    const navigateToOnboardingPinScreenAction = NavigationActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
       ],
       key: ROUTES.ONBOARDING
     })
-    yield put(navigateAction)
+    yield put(navigateToOnboardingPinScreenAction)
 
-    // Here we wait the user to create a Pin
-    yield take(PIN_CREATED_REQUEST)
+    // Here we wait the user to create a PIN
+    yield take(PIN_CREATE_REQUEST)
   }
 }
 
-// The ToS step of the Onboarding
-function* tosStep(): Saga<void> {
-  // From the state we check if the user already accepted
-  const isTosAccepted: boolean = yield select(
-    (state: GlobalState): boolean => state.onboarding.isTosAccepted
-  )
+/**
+ * The ToS step of the Onboarding
+ */
+function* tosCheckSaga(): Saga<void> {
+  yield take(ONBOARDING_CHECK_TOS)
+
+  // From the state we check whether the user has already accepted the ToS
+  const isTosAccepted: boolean = yield select(isTosAcceptedSelector)
 
   if (!isTosAccepted) {
-    // If the ToS is not accepted we must to show the user the TosScreen
-    const navigateAction = NavigationActions.reset({
+    // Navigate to the TosScreen
+    const navigateToOnboardingTosScreenAction = NavigationActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
       ],
       key: ROUTES.ONBOARDING
     })
-    yield put(navigateAction)
+    yield put(navigateToOnboardingTosScreenAction)
 
     // Here we wait the user accept the ToS
     yield take(TOS_ACCEPT_REQUEST)
@@ -65,13 +76,21 @@ function* tosStep(): Saga<void> {
     yield put({
       type: TOS_ACCEPT_SUCCESS
     })
-
-    // Go to the next step
-    yield call(pinStep)
-  } else {
-    // Is the ToS is already accepted continue to the Pin step of the Onboarding
-    yield call(pinStep)
   }
+
+  // Dispatch an action to start the next step
+  yield put({
+    type: ONBOARDING_CHECK_PIN
+  })
+}
+
+function* onboardingSaga(): Saga<void> {
+  yield fork(tosCheckSaga)
+  yield fork(pinCheckSaga)
+
+  yield put({
+    type: ONBOARDING_CHECK_TOS
+  })
 }
 
 export default function* root(): Saga<void> {
@@ -79,5 +98,5 @@ export default function* root(): Saga<void> {
    * The Onboarding saga need to be started only after the Session saga is fully finished.
    * The SESSION_INITIALIZE_SUCCESS action is dispatched only when the Session is established and valid.
    */
-  yield takeLatest(SESSION_INITIALIZE_SUCCESS, tosStep)
+  yield takeLatest(SESSION_INITIALIZE_SUCCESS, onboardingSaga)
 }

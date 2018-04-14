@@ -41,7 +41,7 @@ function* idpSelectionStep(): Saga<void> {
   yield takeLatest(LOGIN_SUCCESS, loginStep)
 }
 
-function* landigStep(): Saga<void> {
+function* landingStep(): Saga<void> {
   // We must show the LandingScreen to the user
   const navigateAction = NavigationActions.reset({
     index: 0,
@@ -64,7 +64,7 @@ function* sessionSaga(): Saga<void> {
 
   if (!isAuthenticated) {
     // If the session is not established we continue to the landing step
-    yield call(landigStep)
+    yield call(landingStep)
   } else {
     /**
      * If the session is established we can dispatch SESSION_INITIALIZE_SUCCESS.
@@ -80,7 +80,7 @@ function* sessionSaga(): Saga<void> {
 
 export default function* root(): Saga<void> {
   /**
-   * The Session sage is the first started on application startup.
+   * The Session saga is the first started on application startup.
    * The APPLICATION_INITIALIZED action is dispatched by the IngressScreen.
    */
   yield takeLatest(APPLICATION_INITIALIZED, sessionSaga)

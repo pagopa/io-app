@@ -10,11 +10,11 @@ import { TOS_ACCEPT_REQUEST, TOS_ACCEPT_SUCCESS } from './constants'
 export type TosAcceptRequest = {
   type: typeof TOS_ACCEPT_REQUEST
 }
-export type TosAcceptSucces = {
+export type TosAcceptSuccess = {
   type: typeof TOS_ACCEPT_SUCCESS
 }
 
-export type OnboardingActions = TosAcceptRequest | TosAcceptSucces
+export type OnboardingActions = TosAcceptRequest | TosAcceptSuccess
 
 // Creators
 export const acceptTos = (): TosAcceptRequest => ({

@@ -13,7 +13,6 @@ import {
   View,
   Button,
   Icon,
-  Header,
   Left,
   Body,
   H1,
@@ -22,7 +21,7 @@ import {
 
 import { type ReduxProps } from '../../actions/types'
 import I18n from '../../i18n'
-import variables from '../../theme/variables'
+import AppHeader from '../../components/ui/AppHeader'
 import { acceptTos } from '../../store/actions/onboarding'
 
 type ReduxMappedProps = {}
@@ -44,10 +43,7 @@ class TosScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header
-          androidStatusBarColor={variables.androidStatusBarColor}
-          iosBarStyle="dark-content"
-        >
+        <AppHeader>
           <Left>
             <Button
               transparent
@@ -59,7 +55,7 @@ class TosScreen extends React.Component<Props> {
           <Body>
             <Text>{I18n.t('onboarding.tos.headerTitle')}</Text>
           </Body>
-        </Header>
+        </AppHeader>
         <Content>
           <H1>{I18n.t('onboarding.tos.contentTitle')}</H1>
           <View spacer extralarge />

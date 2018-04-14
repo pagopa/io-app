@@ -9,7 +9,6 @@ import {
 import { StyleSheet, Image } from 'react-native'
 import {
   Container,
-  Header,
   Body,
   Content,
   Text,
@@ -25,6 +24,7 @@ import { type IdentityProvider } from '../../utils/api'
 import config from '../../config'
 import I18n from '../../i18n'
 import variables from '../../theme/variables'
+import AppHeader from '../../components/ui/AppHeader'
 import IdpsGrid from '../../components/IdpsGrid'
 import { selectIdp } from '../../store/actions/session'
 
@@ -102,7 +102,7 @@ class IdpSelectionScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header
+        <AppHeader
           androidStatusBarColor={variables.androidStatusBarColor}
           iosBarStyle="dark-content"
         >
@@ -117,7 +117,7 @@ class IdpSelectionScreen extends React.Component<Props> {
           <Body>
             <Text>{I18n.t('authentication.idp_selection.headerTitle')}</Text>
           </Body>
-        </Header>
+        </AppHeader>
         <View style={styles.subheader}>
           <Image
             source={require('../../../img/spid.png')}

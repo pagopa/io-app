@@ -19,7 +19,7 @@ type OwnProps = {
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
 /**
- * A screen that allow the user to se the Pin.
+ * A screen that allows the user to set the PIN.
  *
  * NOTE: Currently an empty screen just to test the navigation.
  */
