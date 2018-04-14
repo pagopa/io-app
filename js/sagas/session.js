@@ -16,7 +16,7 @@ import {
 } from '../store/actions/constants'
 import { loadProfile } from '../store/actions/profile'
 import ROUTES from '../navigation/routes'
-import { type GlobalState } from '../reducers/types'
+import { isAuthenticatedSelector } from '../store/reducers/session'
 
 function* loginStep(): Saga<void> {
   // The user loggedin successfully
@@ -58,9 +58,7 @@ function* landingStep(): Saga<void> {
 
 function* sessionSaga(): Saga<void> {
   // From the state we check if the session is already established
-  const isAuthenticated: boolean = yield select(
-    (state: GlobalState): boolean => state.session.isAuthenticated
-  )
+  const isAuthenticated: boolean = yield select(isAuthenticatedSelector)
 
   if (!isAuthenticated) {
     // If the session is not established we continue to the landing step
