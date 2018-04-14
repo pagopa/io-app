@@ -41,35 +41,35 @@ const idps: $ReadOnlyArray<IdentityProvider> = [
     id: 'infocertid',
     name: 'Infocert',
     logo: require('../../../img/spid-idp-infocertid.png'),
-    entityID: 'https://identity.infocert.it',
+    entityID: 'infocertid',
     profileUrl: 'https://my.infocert.it/selfcare'
   },
   {
     id: 'posteid',
     name: 'Poste Italiane',
     logo: require('../../../img/spid-idp-posteid.png'),
-    entityID: 'https://posteid.poste.it',
+    entityID: 'posteid',
     profileUrl: 'https://posteid.poste.it/private/cruscotto.shtml'
   },
   {
     id: 'sielteid',
     name: 'Sielte',
     logo: require('../../../img/spid-idp-sielteid.png'),
-    entityID: 'https://identity.sieltecloud.it',
+    entityID: 'sielteid',
     profileUrl: 'https://myid.sieltecloud.it/profile/'
   },
   {
     id: 'timid',
     name: 'Telecom Italia',
     logo: require('../../../img/spid-idp-timid.png'),
-    entityID: 'https://login.id.tim.it/affwebservices/public/saml2sso',
+    entityID: 'timid',
     profileUrl: 'https://id.tim.it/identity/private/'
   },
   {
     id: 'arubaid',
     name: 'Aruba.it',
     logo: require('../../../img/spid-idp-arubaid.png'),
-    entityID: 'https://loginspid.aruba.it',
+    entityID: 'arubaid',
     profileUrl: 'http://selfcarespid.aruba.it'
   }
 ]
