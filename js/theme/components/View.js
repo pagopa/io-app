@@ -23,13 +23,21 @@ export default (): Theme => {
     },
 
     '.footer': {
-      paddingTop: variables.footerPaddingTop,
-      paddingLeft: variables.footerPaddingLeft,
-      paddingBottom: variables.footerPaddingBottom,
-      paddingRight: variables.footerPaddingRight,
       backgroundColor: variables.footerBackground,
-      borderTopWidth: variables.footerShadowWidth,
-      borderColor: variables.footerShadowColor
+      paddingBottom: variables.footerPaddingBottom,
+      paddingLeft: variables.footerPaddingLeft,
+      paddingRight: variables.footerPaddingRight,
+      paddingTop: variables.footerPaddingTop,
+      // iOS shadow
+      shadowColor: variables.footerShadowColor,
+      shadowOffset: {
+        width: variables.footerShadowOffsetWidth,
+        height: variables.footerShadowOffsetHeight
+      },
+      shadowOpacity: variables.footerShadowOpacity,
+      shadowRadius: variables.footerShadowRadius,
+      // Android shadow
+      elevation: variables.footerElevation
     }
   }
 
