@@ -48,12 +48,16 @@ const customVariables = Object.assign(materialVariables, {
 
   // Footer
   footerBackground: '#FFFFFF',
-  footerShadowWidth: 1,
-  footerShadowColor: '#D8D8D8',
+  footerElevation: 50,
   footerPaddingTop: 24,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
+  footerShadowColor: '#000000',
+  footerShadowOffsetWidth: 0,
+  footerShadowOffsetHeight: 50,
+  footerShadowOpacity: 0.3,
+  footerShadowRadius: 50,
 
   // Grid
   gridGutter: 10,
@@ -61,6 +65,10 @@ const customVariables = Object.assign(materialVariables, {
   // H1
   h1Color: '#17324D',
   h1FontWeight: '700',
+
+  // H3
+  h3Color: '#17324D',
+  h3FontWeight: '600',
 
   // Header
   headerPaddingHorizontal: 24,
@@ -74,6 +82,7 @@ const customVariables = Object.assign(materialVariables, {
   get toolbarBtnColor(): ThemeSimpleValue {
     return this.textColor
   },
+  androidStatusBarColor: '#FFFFFF',
 
   // Modal
   modalMargin: 0,
@@ -88,6 +97,7 @@ const customVariables = Object.assign(materialVariables, {
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
+  spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
 })

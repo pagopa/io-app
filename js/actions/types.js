@@ -15,6 +15,7 @@ import { type NavigationAction } from 'react-navigation'
 import { type GlobalState } from '../reducers/types'
 import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
 import { type SessionActions } from '../store/actions/session'
+import { type OnboardingActions } from '../store/actions/onboarding'
 import { type ProfileActions } from '../store/actions/profile'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
@@ -45,6 +46,7 @@ export type Action =
   | ApplicationStateAction
   | NavigationAction
   | SessionActions
+  | OnboardingActions
   | ProfileActions
 
 /* eslint-disable no-use-before-define */

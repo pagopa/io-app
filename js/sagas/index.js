@@ -9,6 +9,7 @@ import { all, fork } from 'redux-saga/effects'
 import { networkEventsListenerSaga } from 'react-native-offline'
 
 import sessionSaga from './session'
+import onboardingSaga from './onboarding'
 import profileSaga from './profile'
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
@@ -25,6 +26,7 @@ const connectionMonitorParameters = {
 export default function* root(): Saga<void> {
   yield all([
     fork(sessionSaga),
+    fork(onboardingSaga),
     fork(profileSaga),
     fork(networkEventsListenerSaga, connectionMonitorParameters)
   ])
