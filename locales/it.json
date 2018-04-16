@@ -84,7 +84,16 @@
       "contentTitle": "Condizioni d'uso e dati personali",
       "section1": "Termini e condizioni d’uso del servizio",
       "section2": "Regole sul trattamento dei dati personali",
-      "continue": "Continue"
+      "continue": "Continua"
+    },
+    "pin": {
+      "headerTitle": "Attivazione",
+      "contentTitle": "Scegli un codice PIN",
+      "contentTitleConfirm": "Digita ancora il PIN",
+      "pinInfo": "Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere oprazioni dispositive. Deve essere composto di 5 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento entrando con SPID.",
+      "moreLinkText": "Per saperne di più.",
+      "continue": "Continua",
+      "reset": "Modifica il codice"
     }
   },
   "personal_data_processing": {

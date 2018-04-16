@@ -7,22 +7,27 @@
  */
 
 import { type Saga } from 'redux-saga'
-import { takeLatest, fork, take, select, put } from 'redux-saga/effects'
+import { takeLatest, fork, take, select, call, put } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 
+import { type PinCreateRequest } from '../store/actions/onboarding'
 import {
   SESSION_INITIALIZE_SUCCESS,
   ONBOARDING_CHECK_TOS,
   ONBOARDING_CHECK_PIN,
+  ONBOARDING_CHECK_BIOMETRIC,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS,
-  PIN_CREATE_REQUEST
+  PIN_CREATE_REQUEST,
+  PIN_CREATE_SUCCESS
 } from '../store/actions/constants'
 import ROUTES from '../navigation/routes'
 import {
   isTosAcceptedSelector,
-  isPinCreatedSelector
+  isPinCreatedSelector,
+  isBiometricSettedSelector
 } from '../store/reducers/onboarding'
+import { setPin } from '../utils/keychain'
 
 /**
  * The PIN step of the Onboarding
@@ -45,7 +50,42 @@ function* pinCheckSaga(): Saga<void> {
     yield put(navigateToOnboardingPinScreenAction)
 
     // Here we wait the user to create a PIN
-    yield take(PIN_CREATE_REQUEST)
+    const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST)
+
+    try {
+      yield call(setPin, action.payload)
+
+      // Dispatch the action that sets isTosAccepted to true into the store
+      yield put({
+        type: PIN_CREATE_SUCCESS
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Dispatch an action to start the next step
+  yield put({
+    type: ONBOARDING_CHECK_BIOMETRIC
+  })
+}
+
+function* biometricCheckSaga(): Saga<void> {
+  yield take(ONBOARDING_CHECK_BIOMETRIC)
+
+  // From the state we check whether the user has already setted the Biometric preference
+  const isBiometricSetted: boolean = yield select(isBiometricSettedSelector)
+
+  if (!isBiometricSetted) {
+    // Navigate to the BiometricScreen
+    const navigateToOnboardingBiometricScreenAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_BIOMETRIC })
+      ],
+      key: ROUTES.ONBOARDING
+    })
+    yield put(navigateToOnboardingBiometricScreenAction)
   }
 }
 
@@ -87,6 +127,7 @@ function* tosCheckSaga(): Saga<void> {
 function* onboardingSaga(): Saga<void> {
   yield fork(tosCheckSaga)
   yield fork(pinCheckSaga)
+  yield fork(biometricCheckSaga)
 
   yield put({
     type: ONBOARDING_CHECK_TOS
