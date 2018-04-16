@@ -1734,9 +1734,9 @@ damerau-levenshtein@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.4.tgz#03191c432cb6eea168bb77f3a55ffdccb8978514"
 
-"danger-plugin-digitalcitizenship@https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.0.4":
-  version "0.0.1"
-  resolved "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#5c48e7a74fc67a36f7b4d02f64b10b3692c7ac7b"
+"danger-plugin-digitalcitizenship@https://github.com/teamdigitale/danger-plugin-digitalcitizenship#v0.1.0":
+  version "0.1.0"
+  resolved "https://github.com/teamdigitale/danger-plugin-digitalcitizenship#7eee9fec9e12ed369f783c2c66a69a5470a067f4"
   dependencies:
     pivotaljs "^1.0.3"
 
@@ -4035,27 +4035,17 @@ mime-db@~1.23.0:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.23.0.tgz#a31b4070adaea27d732ea333740a64d0ec9a6659"
 
-mime-db@~1.30.0:
-  version "1.30.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.30.0.tgz#74c643da2dd9d6a45399963465b26d5ca7d71f01"
-
 mime-types@2.1.11:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.11.tgz#c259c471bda808a85d6cd193b430a5fae4473b3c"
   dependencies:
     mime-db "~1.23.0"
 
-mime-types@^2.1.12, mime-types@~2.1.18, mime-types@~2.1.7:
+mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
   version "2.1.18"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
   dependencies:
     mime-db "~1.33.0"
-
-mime-types@~2.1.17:
-  version "2.1.17"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.17.tgz#09d7a393f03e995a79f8af857b70a9e0ab16557a"
-  dependencies:
-    mime-db "~1.30.0"
 
 mime@1.4.1:
   version "1.4.1"
