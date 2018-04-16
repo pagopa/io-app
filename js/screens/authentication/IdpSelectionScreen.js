@@ -102,10 +102,7 @@ class IdpSelectionScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <AppHeader
-          androidStatusBarColor={variables.androidStatusBarColor}
-          iosBarStyle="dark-content"
-        >
+        <AppHeader>
           <Left>
             <Button
               transparent
