@@ -11,7 +11,7 @@ import get from 'lodash/get'
 
 import { type GlobalState } from '../../reducers/types'
 import { type Action } from '../../actions/types'
-import { type FetchRequestActionsType } from '../actions/constants'
+import { type FetchRequestActionsType, ERROR_CLEAR } from '../actions/constants'
 
 export type ErrorState = {
   [key: FetchRequestActionsType]: string
@@ -38,12 +38,20 @@ export const createErrorSelector = (
   )
 }
 
-// Listen for _REQUEST|_FAILURE actions and set/remove error message.
+// Listen for ERROR_CLEAR|*_REQUEST|*_FAILURE actions and set/remove error message.
 const reducer = (
   state: ErrorState = INITIAL_STATE,
   action: Action
 ): ErrorState => {
   const { type } = action
+
+  // Clear ERROR explicitly
+  if (action.type === ERROR_CLEAR) {
+    const newState = Object.assign({}, state)
+    delete newState[action.payload]
+    return newState
+  }
+
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
 
   // Not a *_REQUEST /  *_FAILURE actions, so we ignore them

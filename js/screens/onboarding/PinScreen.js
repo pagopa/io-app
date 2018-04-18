@@ -20,12 +20,16 @@ import {
 import CodeInput from 'react-native-confirmation-code-input'
 
 import { type ReduxProps } from '../../actions/types'
+import { type GlobalState } from '../../reducers/types'
 import I18n from '../../i18n'
 import AppHeader from '../../components/ui/AppHeader'
 import TextWithIcon from '../../components/ui/TextWithIcon'
 import { createPin } from '../../store/actions/onboarding'
+import { createErrorSelector } from '../../store/reducers/error'
 
-type ReduxMappedProps = {}
+type ReduxMappedProps = {
+  pinSaveError: ?string
+}
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>
@@ -264,10 +268,6 @@ class PinScreen extends React.Component<Props, State> {
   render(): React.Node {
     const { pinState } = this.state
 
-    if (this.state.pinState.state === 'InvalidState') {
-      return null
-    }
-
     return (
       <Container>
         <AppHeader>
@@ -290,4 +290,8 @@ class PinScreen extends React.Component<Props, State> {
   }
 }
 
-export default connect()(PinScreen)
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  pinSaveError: createErrorSelector(['PIN_CREATE'])(state)
+})
+
+export default connect(mapStateToProps)(PinScreen)

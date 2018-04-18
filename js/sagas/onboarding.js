@@ -19,7 +19,8 @@ import {
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS,
   PIN_CREATE_REQUEST,
-  PIN_CREATE_SUCCESS
+  PIN_CREATE_SUCCESS,
+  PIN_CREATE_FAILURE
 } from '../store/actions/constants'
 import ROUTES from '../navigation/routes'
 import {
@@ -49,18 +50,27 @@ function* pinCheckSaga(): Saga<void> {
     })
     yield put(navigateToOnboardingPinScreenAction)
 
-    // Here we wait the user to create a PIN
-    const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST)
+    let isPinSaved = false
 
-    try {
-      yield call(setPin, action.payload)
+    // Loop until PIN successfully saved in the Keystore
+    while (!isPinSaved) {
+      // Here we wait the user to create a PIN
+      const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST)
 
-      // Dispatch the action that sets isTosAccepted to true into the store
-      yield put({
-        type: PIN_CREATE_SUCCESS
-      })
-    } catch (error) {
-      console.log(error)
+      try {
+        yield call(setPin, action.payload)
+
+        // Dispatch the action that sets isPinCreated to true into the store
+        yield put({
+          type: PIN_CREATE_SUCCESS
+        })
+
+        isPinSaved = true
+      } catch (error) {
+        yield put({
+          type: PIN_CREATE_FAILURE
+        })
+      }
     }
   }
 
