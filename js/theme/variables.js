@@ -32,7 +32,8 @@ const customVariables = Object.assign(materialVariables, {
   brandPrimaryInverted: '#FFFFFF',
   brandGray: '#F5F6F7',
   brandLight: '#FCFDFF',
-  brandSuccess: '#00C5CA',
+  brandSuccess: '#007005',
+  brandDanger: '#CC3333',
 
   // Font
   ...makeFontStyleObject(Platform.select),

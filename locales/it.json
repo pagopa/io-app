@@ -93,7 +93,10 @@
       "pinInfo": "Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere oprazioni dispositive. Deve essere composto di 5 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento entrando con SPID.",
       "moreLinkText": "Per saperne di più.",
       "continue": "Continua",
-      "reset": "Modifica il codice"
+      "reset": "Modifica il codice",
+      "confirmValid": "grazie, puoi continuare",
+      "confirmInvalid": "i due pin non coincidono"
+
     }
   },
   "personal_data_processing": {

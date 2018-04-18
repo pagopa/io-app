@@ -22,6 +22,7 @@ import CodeInput from 'react-native-confirmation-code-input'
 import { type ReduxProps } from '../../actions/types'
 import I18n from '../../i18n'
 import AppHeader from '../../components/ui/AppHeader'
+import TextWithIcon from '../../components/ui/TextWithIcon'
 import { createPin } from '../../store/actions/onboarding'
 
 type ReduxMappedProps = {}
@@ -32,9 +33,27 @@ type OwnProps = {
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps
 
+type PinUnselected = {
+  state: 'PinUnselected'
+}
+
+type PinSelected = {
+  state: 'PinSelected',
+  // User selected PIN
+  pin: string
+}
+
+type PinConfirmed = {
+  state: 'PinConfirmed',
+  pin: string,
+  // True if the confirmation PIN do not match
+  hasError: boolean
+}
+
+type PinState = PinUnselected | PinSelected | PinConfirmed
+
 type State = {
-  pin?: string,
-  isPinConfirmed: boolean
+  pinState: PinState
 }
 
 /**
@@ -44,28 +63,39 @@ class PinScreen extends React.Component<Props, State> {
   pinComponent: React.ElementRef<typeof CodeInput>
   pinConfirmComponent: React.ElementRef<typeof CodeInput>
 
+  // Initial state with PinUnselected
   state = {
-    pin: undefined,
-    isPinConfirmed: false
+    pinState: {
+      state: 'PinUnselected'
+    }
   }
 
+  // Method called when the first CodeInput is filled
   onPinFulfill = (code: string) => {
     if (this.pinComponent) {
       this.pinComponent.clear()
     }
     this.setState({
-      pin: code
+      pinState: {
+        state: 'PinSelected',
+        pin: code
+      }
     })
   }
 
-  onPinConfirmFulfill = (isValid: boolean) => {
+  // Method called when the confirmation CodeInput is filled
+  onPinConfirmFulfill = (isValid: boolean, code: string) => {
     if (!isValid) {
       if (this.pinConfirmComponent) {
         this.pinConfirmComponent.clear()
       }
     }
     this.setState({
-      isPinConfirmed: isValid
+      pinState: {
+        state: 'PinConfirmed',
+        pin: code,
+        hasError: !isValid
+      }
     })
   }
 
@@ -74,58 +104,170 @@ class PinScreen extends React.Component<Props, State> {
       this.pinConfirmComponent.clear()
     }
     this.setState({
-      pin: undefined,
-      isPinConfirmed: false
+      pinState: {
+        state: 'PinUnselected'
+      }
     })
   }
 
+  // Dispatch the Action that save the PIn in the Keychain
   createPin = (pin: string) => {
     this.props.dispatch(createPin(pin))
   }
 
-  renderPINComponent = (): React.Node => {
+  renderContentHeader = (pinState: PinState): React.Node => {
+    if (pinState.state === 'PinUnselected') {
+      return <H1>{I18n.t('onboarding.pin.contentTitle')}</H1>
+    } else {
+      return <H1>{I18n.t('onboarding.pin.contentTitleConfirm')}</H1>
+    }
+  }
+
+  renderCodeInputConfirmValidation = (pinState: PinConfirmed): React.Node => {
+    const validationMessage = pinState.hasError ? (
+      <TextWithIcon error>
+        <Icon name={'cross'} />
+        <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
+      </TextWithIcon>
+    ) : (
+      <TextWithIcon success>
+        <Icon name={'check'} />
+        <Text>{I18n.t('onboarding.pin.confirmValid')}</Text>
+      </TextWithIcon>
+    )
     return (
-      <CodeInput
-        ref={(el: React.ElementRef<typeof CodeInput>): void =>
-          (this.pinComponent = el)
-        }
-        secureTextEntry
-        keyboardType="numeric"
-        autoFocus
-        className="border-b"
-        codeLength={5}
-        cellBorderWidth={2}
-        inactiveColor={'rgba(92,111,130,0.5)'}
-        activeColor={'rgba(23,50,77,1)'}
-        onFulfill={this.onPinFulfill}
-        codeInputStyle={{ fontSize: 24, height: 56 }}
-      />
+      <React.Fragment>
+        <View spacer extralarge />
+        {validationMessage}
+      </React.Fragment>
     )
   }
 
-  renderPINConfirmComponent = (pin: string): React.Node => {
+  renderCodeInput = (pinState: PinState): React.Node => {
+    if (pinState.state === 'PinUnselected') {
+      /**
+       * The CodeInput component where the user SELECT the PIN.
+       *
+       * autofucus={false}
+       * onFulfill={this.onPinFulfill}
+       */
+      return (
+        <CodeInput
+          ref={(el: React.ElementRef<typeof CodeInput>): void =>
+            (this.pinComponent = el)
+          }
+          secureTextEntry
+          keyboardType="numeric"
+          autoFocus={false}
+          className="border-b"
+          codeLength={5}
+          cellBorderWidth={2}
+          inactiveColor={'rgba(92,111,130,0.5)'}
+          activeColor={'rgba(23,50,77,1)'}
+          onFulfill={this.onPinFulfill}
+          codeInputStyle={{ fontSize: 24, height: 56 }}
+        />
+      )
+    } else {
+      /**
+       * The CodeInput component where the user CONFIRM the PIN.
+       *
+       * autofucus={true}
+       * compareWithCode={pinState.pin}
+       * onFulfill={this.onPinConfirmFulfill}
+       * */
+      return (
+        <React.Fragment>
+          <CodeInput
+            ref={(el: React.ElementRef<typeof CodeInput>): void =>
+              (this.pinConfirmComponent = el)
+            }
+            secureTextEntry
+            keyboardType="numeric"
+            autoFocus
+            compareWithCode={pinState.pin}
+            className="border-b"
+            codeLength={5}
+            cellBorderWidth={2}
+            inactiveColor={'rgba(92,111,130,0.5)'}
+            activeColor={'rgba(23,50,77,1)'}
+            onFulfill={this.onPinConfirmFulfill}
+            codeInputStyle={{ fontSize: 24, height: 56 }}
+          />
+
+          {pinState.state === 'PinConfirmed' &&
+            this.renderCodeInputConfirmValidation(pinState)}
+        </React.Fragment>
+      )
+    }
+  }
+
+  // The Content of the Screen
+  renderContent = (pinState: PinState): React.Node => {
     return (
-      <CodeInput
-        ref={(el: React.ElementRef<typeof CodeInput>): void =>
-          (this.pinConfirmComponent = el)
-        }
-        secureTextEntry
-        keyboardType="numeric"
-        autoFocus
-        compareWithCode={pin}
-        className="border-b"
-        codeLength={5}
-        cellBorderWidth={2}
-        inactiveColor={'rgba(92,111,130,0.5)'}
-        activeColor={'rgba(23,50,77,1)'}
-        onFulfill={this.onPinConfirmFulfill}
-        codeInputStyle={{ fontSize: 24, height: 56 }}
-      />
+      <Content>
+        {this.renderContentHeader(pinState)}
+
+        <View spacer extralarge />
+
+        {this.renderCodeInput(pinState)}
+
+        <View spacer extralarge />
+
+        <Text>{I18n.t('onboarding.pin.pinInfo')}</Text>
+        <Text link>{I18n.t('onboarding.pin.moreLinkText')}</Text>
+      </Content>
+    )
+  }
+
+  renderContinueButton = (pinState: PinState): React.Node => {
+    if (pinState.state === 'PinConfirmed') {
+      const { pin, hasError } = pinState
+      return (
+        <Button
+          block
+          primary
+          disabled={hasError}
+          onPress={(): void => this.createPin(pin)}
+        >
+          <Text>{I18n.t('onboarding.pin.continue')}</Text>
+        </Button>
+      )
+    } else {
+      return (
+        <Button block primary disabled>
+          <Text>{I18n.t('onboarding.pin.continue')}</Text>
+        </Button>
+      )
+    }
+  }
+
+  // The Footer of the Screen
+  renderFooter = (pinState: PinState): React.Node => {
+    return (
+      <View footer>
+        {this.renderContinueButton(pinState)}
+
+        {pinState.state !== 'PinUnselected' && (
+          <React.Fragment>
+            <View spacer />
+
+            <Button block bordered onPress={this.onPinReset}>
+              <Text>{I18n.t('onboarding.pin.reset')}</Text>
+            </Button>
+          </React.Fragment>
+        )}
+      </View>
     )
   }
 
   render(): React.Node {
-    const { pin, isPinConfirmed } = this.state
+    const { pinState } = this.state
+
+    if (this.state.pinState.state === 'InvalidState') {
+      return null
+    }
+
     return (
       <Container>
         <AppHeader>
@@ -141,47 +283,8 @@ class PinScreen extends React.Component<Props, State> {
             <Text>{I18n.t('onboarding.tos.headerTitle')}</Text>
           </Body>
         </AppHeader>
-        <Content>
-          <H1>
-            {I18n.t(
-              pin
-                ? 'onboarding.pin.contentTitleConfirm'
-                : 'onboarding.pin.contentTitle'
-            )}
-          </H1>
-          <View spacer extralarge />
-          {pin
-            ? this.renderPINConfirmComponent(pin)
-            : this.renderPINComponent()}
-
-          <View spacer extralarge />
-          <View spacer large />
-
-          <View centered>
-            {isPinConfirmed && <Icon name={'check'} big success />}
-          </View>
-
-          <View spacer extralarge />
-
-          <Text>{I18n.t('onboarding.pin.pinInfo')}</Text>
-          <Text link>{I18n.t('onboarding.pin.moreLinkText')}</Text>
-        </Content>
-        <View footer>
-          <Button
-            block
-            primary
-            disabled={!isPinConfirmed}
-            onPress={() => this.createPin(this.state.pin)}
-          >
-            <Text>{I18n.t('onboarding.pin.continue')}</Text>
-          </Button>
-          {pin && <View spacer />}
-          {pin && (
-            <Button block bordered onPress={this.onPinReset}>
-              <Text>{I18n.t('onboarding.pin.reset')}</Text>
-            </Button>
-          )}
-        </View>
+        {this.renderContent(pinState)}
+        {this.renderFooter(pinState)}
       </Container>
     )
   }
