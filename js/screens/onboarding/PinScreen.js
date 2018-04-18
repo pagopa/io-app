@@ -119,6 +119,7 @@ class PinScreen extends React.Component<Props, State> {
     this.props.dispatch(createPin(pin))
   }
 
+  // Render a different header when the user need to confirm the PIN
   renderContentHeader = (pinState: PinState): React.Node => {
     if (pinState.state === 'PinUnselected') {
       return <H1>{I18n.t('onboarding.pin.contentTitle')}</H1>
@@ -127,6 +128,7 @@ class PinScreen extends React.Component<Props, State> {
     }
   }
 
+  // Render the PIN match/doesn't match feedback message
   renderCodeInputConfirmValidation = (pinState: PinConfirmed): React.Node => {
     const validationMessage = pinState.hasError ? (
       <TextWithIcon error>
@@ -147,6 +149,7 @@ class PinScreen extends React.Component<Props, State> {
     )
   }
 
+  // Render select/confirm CodeInput component
   renderCodeInput = (pinState: PinState): React.Node => {
     if (pinState.state === 'PinUnselected') {
       /**
@@ -291,6 +294,7 @@ class PinScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  // Check from the store is there was an error creating the PIN (saving into the Keystore)
   pinSaveError: createErrorSelector(['PIN_CREATE'])(state)
 })
 
