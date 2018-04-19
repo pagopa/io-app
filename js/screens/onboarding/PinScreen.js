@@ -18,10 +18,12 @@ import {
   H1
 } from 'native-base'
 import CodeInput from 'react-native-confirmation-code-input'
+import color from 'color'
 
 import { type ReduxProps } from '../../actions/types'
 import { type GlobalState } from '../../reducers/types'
 import I18n from '../../i18n'
+import variables from '../../theme/variables'
 import AppHeader from '../../components/ui/AppHeader'
 import TextWithIcon from '../../components/ui/TextWithIcon'
 import { createPin } from '../../store/actions/onboarding'
@@ -169,8 +171,12 @@ class PinScreen extends React.Component<Props, State> {
           className="border-b"
           codeLength={5}
           cellBorderWidth={2}
-          inactiveColor={'rgba(92,111,130,0.5)'}
-          activeColor={'rgba(23,50,77,1)'}
+          inactiveColor={color(variables.brandLightGray)
+            .rgb()
+            .string()}
+          activeColor={color(variables.brandDarkGray)
+            .rgb()
+            .string()}
           onFulfill={this.onPinFulfill}
           codeInputStyle={{ fontSize: 24, height: 56 }}
         />
@@ -196,8 +202,12 @@ class PinScreen extends React.Component<Props, State> {
             className="border-b"
             codeLength={5}
             cellBorderWidth={2}
-            inactiveColor={'rgba(92,111,130,0.5)'}
-            activeColor={'rgba(23,50,77,1)'}
+            inactiveColor={color(variables.brandLightGray)
+              .rgb()
+              .string()}
+            activeColor={color(variables.brandDarkGray)
+              .rgb()
+              .string()}
             onFulfill={this.onPinConfirmFulfill}
             codeInputStyle={{ fontSize: 24, height: 56 }}
           />
