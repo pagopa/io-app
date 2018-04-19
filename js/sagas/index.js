@@ -10,6 +10,7 @@ import { networkEventsListenerSaga } from 'react-native-offline'
 
 import sessionSaga from './session'
 import onboardingSaga from './onboarding'
+import mainSaga from './main'
 import profileSaga from './profile'
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
@@ -27,6 +28,7 @@ export default function* root(): Saga<void> {
   yield all([
     fork(sessionSaga),
     fork(onboardingSaga),
+    fork(mainSaga),
     fork(profileSaga),
     fork(networkEventsListenerSaga, connectionMonitorParameters)
   ])

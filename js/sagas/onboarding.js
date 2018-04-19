@@ -16,6 +16,7 @@ import {
   ONBOARDING_CHECK_TOS,
   ONBOARDING_CHECK_PIN,
   ONBOARDING_CHECK_BIOMETRIC,
+  ONBOARDING_CHECK_COMPLETE,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS,
   PIN_CREATE_REQUEST,
@@ -76,7 +77,7 @@ function* pinCheckSaga(): Saga<void> {
 
   // Dispatch an action to start the next step
   yield put({
-    type: ONBOARDING_CHECK_BIOMETRIC
+    type: ONBOARDING_CHECK_COMPLETE
   })
 }
 
