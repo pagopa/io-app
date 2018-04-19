@@ -294,7 +294,7 @@ class PinScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  // Check from the store is there was an error creating the PIN (saving into the Keystore)
+  // Checks from the store whether there was an error while creating the PIN (e.g. saving into the Keystore)
   pinSaveError: createErrorSelector(['PIN_CREATE'])(state)
 })
 
