@@ -40,6 +40,26 @@ const customVariables = Object.assign(materialVariables, {
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
+  get fontSize1(): ThemeSimpleValue {
+    // eslint-disable-next-line no-magic-numbers
+    return this.fontSizeBase * 0.75
+  },
+  get fontSize2(): ThemeSimpleValue {
+    // eslint-disable-next-line no-magic-numbers
+    return this.fontSizeBase * 0.875
+  },
+  get fontSize3(): ThemeSimpleValue {
+    // eslint-disable-next-line no-magic-numbers
+    return this.fontSizeBase * 1
+  },
+  get fontSize4(): ThemeSimpleValue {
+    // eslint-disable-next-line no-magic-numbers
+    return this.fontSizeBase * 1.125
+  },
+  get fontSize5(): ThemeSimpleValue {
+    // eslint-disable-next-line no-magic-numbers
+    return this.fontSizeBase * 1.5
+  },
   lineHeight: 24,
 
   // Icon

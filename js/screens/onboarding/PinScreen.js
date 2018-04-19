@@ -133,7 +133,7 @@ class PinScreen extends React.Component<Props, State> {
   // Render the PIN match/doesn't match feedback message
   renderCodeInputConfirmValidation = (pinState: PinConfirmed): React.Node => {
     const validationMessage = pinState.hasError ? (
-      <TextWithIcon error>
+      <TextWithIcon danger>
         <Icon name={'cross'} />
         <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
       </TextWithIcon>
@@ -178,7 +178,7 @@ class PinScreen extends React.Component<Props, State> {
             .rgb()
             .string()}
           onFulfill={this.onPinFulfill}
-          codeInputStyle={{ fontSize: 24, height: 56 }}
+          codeInputStyle={{ fontSize: variables.fontSize5, height: 56 }}
         />
       )
     } else {
@@ -209,7 +209,7 @@ class PinScreen extends React.Component<Props, State> {
               .rgb()
               .string()}
             onFulfill={this.onPinConfirmFulfill}
-            codeInputStyle={{ fontSize: 24, height: 56 }}
+            codeInputStyle={{ fontSize: variables.fontSize5, height: 56 }}
           />
 
           {pinState.state === 'PinConfirmed' &&
