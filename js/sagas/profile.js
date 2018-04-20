@@ -34,9 +34,6 @@ function* loadProfile(): Saga<void> {
     // Get the token from the state
     const token: string = yield select(getSessionToken)
 
-    // Signal the loading of a new profile
-    yield put({ type: PROFILE_LOAD_REQUEST })
-
     // Fetch the profile from the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(fetchProfile, token)
 
@@ -64,9 +61,6 @@ function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
 
     // Get the token from the state
     const token: string = yield select(getSessionToken)
-
-    // Signal the updating of a the profile
-    yield put({ type: PROFILE_UPDATE_REQUEST })
 
     // Post the new Profile to the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(
