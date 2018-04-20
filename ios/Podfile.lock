@@ -1,51 +1,51 @@
 PODS:
   - Mixpanel (3.2.3)
-  - React (0.54.0):
-    - React/Core (= 0.54.0)
+  - React (0.54.2):
+    - React/Core (= 0.54.2)
   - react-native-config (0.11.5):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
-  - React/ART (0.54.0):
+  - React/ART (0.54.2):
     - React/Core
-  - React/Core (0.54.0):
-    - yoga (= 0.54.0.React)
-  - React/DevSupport (0.54.0):
+  - React/Core (0.54.2):
+    - yoga (= 0.54.2.React)
+  - React/DevSupport (0.54.2):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.54.0)
-  - React/RCTActionSheet (0.54.0):
+  - React/fishhook (0.54.2)
+  - React/RCTActionSheet (0.54.2):
     - React/Core
-  - React/RCTAnimation (0.54.0):
+  - React/RCTAnimation (0.54.2):
     - React/Core
-  - React/RCTBlob (0.54.0):
+  - React/RCTBlob (0.54.2):
     - React/Core
-  - React/RCTCameraRoll (0.54.0):
+  - React/RCTCameraRoll (0.54.2):
     - React/Core
     - React/RCTImage
-  - React/RCTGeolocation (0.54.0):
+  - React/RCTGeolocation (0.54.2):
     - React/Core
-  - React/RCTImage (0.54.0):
+  - React/RCTImage (0.54.2):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.54.0):
+  - React/RCTNetwork (0.54.2):
     - React/Core
-  - React/RCTText (0.54.0):
+  - React/RCTText (0.54.2):
     - React/Core
-  - React/RCTVibration (0.54.0):
+  - React/RCTVibration (0.54.2):
     - React/Core
-  - React/RCTWebSocket (0.54.0):
+  - React/RCTWebSocket (0.54.2):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFS (2.9.7):
+  - RNFS (2.9.12):
     - React
   - RNI18n (2.0.11):
     - React
-  - yoga (0.54.0.React)
+  - yoga (0.54.2.React)
 
 DEPENDENCIES:
   - react-native-config (from `../node_modules/react-native-config`)
@@ -85,13 +85,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
-  React: a662c315de87b99370cb76450dcc0d54e606b295
+  React: 87cb66e255b02cae031f82a5d3e7c70c639957fc
   react-native-config: 11b925080b49cb18299840dd084fc47709306313
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
-  RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
+  RNFS: fc366d28239541a692155a94ea26928815831295
   RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
-  yoga: a46e9437bebc95a5b774a12780cb34eae7d26d83
+  yoga: de5853128c499decde39904270f22f75d36d7668
 
 PODFILE CHECKSUM: e9ef97765d4029495a468229a9aefca4796ed283
 
