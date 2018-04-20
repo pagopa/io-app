@@ -18,7 +18,7 @@
     "lodash": "^4.17.4",
     "native-base": "^2.4.2",
     "option": "^0.2.3",
-    "react": "16.3.0-alpha.1",
+    "react": "16.4.0-alpha.7926752",
     "react-native": "0.54.2",
     "react-native-config": "^0.11.2",
     "react-native-device-info": "^0.13",
