@@ -26,7 +26,7 @@
     "react-native-i18n": "^2.0.10",
     "react-native-mixpanel": "^0.0.16",
     "react-native-modal": "^5.4.0",
-    "react-native-offline": "^3.7.2",
+    "react-native-offline": "^3.7.3",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "^1.5.8",
     "react-navigation-redux-helpers": "^1.0.3",
