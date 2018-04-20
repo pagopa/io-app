@@ -59,7 +59,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/stacktrace-js": "^0.0.32",
     "@types/validator": "^9.4.1",
-    "babel-jest": "22.4.1",
+    "babel-jest": "22.4.3",
     "babel-preset-react-native": "4.0.0",
     "danger": "^3.5.1",
     "danger-plugin-digitalcitizenship": "^0.2.0",
