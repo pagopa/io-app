@@ -10,13 +10,13 @@ import { type GlobalState } from '../../reducers/types'
 export type OnboardingState = {
   isTosAccepted: boolean,
   isPinCreated: boolean,
-  isBiometricSetted: boolean
+  isBiometricSet: boolean
 }
 
 export const INITIAL_STATE: OnboardingState = {
   isTosAccepted: false,
   isPinCreated: false,
-  isBiometricSetted: false
+  isBiometricSet: false
 }
 
 // Selectors
@@ -26,8 +26,8 @@ export const isTosAcceptedSelector = (state: GlobalState): boolean =>
 export const isPinCreatedSelector = (state: GlobalState): boolean =>
   state.onboarding.isPinCreated
 
-export const isBiometricSettedSelector = (state: GlobalState): boolean =>
-  state.onboarding.isBiometricSetted
+export const isBiometricSetSelector = (state: GlobalState): boolean =>
+  state.onboarding.isBiometricSet
 
 const reducer = (
   state: OnboardingState = INITIAL_STATE,

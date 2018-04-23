@@ -27,7 +27,7 @@ import ROUTES from '../navigation/routes'
 import {
   isTosAcceptedSelector,
   isPinCreatedSelector,
-  isBiometricSettedSelector
+  isBiometricSetSelector
 } from '../store/reducers/onboarding'
 import { setPin } from '../utils/keychain'
 
@@ -85,7 +85,7 @@ function* biometricCheckSaga(): Saga<void> {
   yield take(ONBOARDING_CHECK_BIOMETRIC)
 
   // From the state we check whether the user has already setted the Biometric preference
-  const isBiometricSetted: boolean = yield select(isBiometricSettedSelector)
+  const isBiometricSetted: boolean = yield select(isBiometricSetSelector)
 
   if (!isBiometricSetted) {
     // Navigate to the BiometricScreen
