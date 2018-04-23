@@ -6,6 +6,7 @@
 
 import { type IdentityProvider } from '../../api'
 import { type Action } from '../../actions/types'
+import { type GlobalState } from '../../reducers/types'
 import { IDP_SELECTED, LOGIN_SUCCESS } from '../actions/constants'
 
 export type UnauthenticatedWithoutIdpSessionState = {|
@@ -35,6 +36,10 @@ export type SessionState =
 export const INITIAL_STATE: UnauthenticatedWithoutIdpSessionState = {
   isAuthenticated: false
 }
+
+// Selectors
+export const isAuthenticatedSelector = (state: GlobalState): boolean =>
+  state.session.isAuthenticated
 
 const reducer = (
   state: SessionState = INITIAL_STATE,

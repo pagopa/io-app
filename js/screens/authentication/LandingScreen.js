@@ -6,20 +6,12 @@ import {
   type NavigationScreenProp,
   type NavigationState
 } from 'react-navigation'
-import {
-  Container,
-  Content,
-  Text,
-  View,
-  Button,
-  Icon,
-  Header,
-  Body
-} from 'native-base'
+import { Container, Content, Text, View, Button, Icon, Body } from 'native-base'
 
 import { type ReduxProps } from '../../actions/types'
 import ROUTES from '../../navigation/routes'
 import I18n from '../../i18n'
+import AppHeader from '../../components/ui/AppHeader'
 
 type ReduxMappedProps = {}
 
@@ -36,11 +28,11 @@ class LandingScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <AppHeader>
           <Body>
             <Text>{I18n.t('authentication.landing.headerTitle')}</Text>
           </Body>
-        </Header>
+        </AppHeader>
         <Content />
         <View footer>
           <Button

@@ -14,7 +14,6 @@ import {
   View,
   Button,
   Icon,
-  Header,
   Left,
   Body,
   H1
@@ -22,6 +21,7 @@ import {
 
 import { type GlobalState } from '../../reducers/types'
 import I18n from '../../i18n'
+import AppHeader from '../../components/ui/AppHeader'
 import Modal from '../../components/ui/Modal'
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
@@ -52,7 +52,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
   render(): React.Node {
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <AppHeader>
           <Left>
             <Button
               transparent
@@ -66,7 +66,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
               {I18n.t('authentication.spid_information_request.headerTitle')}
             </Text>
           </Body>
-        </Header>
+        </AppHeader>
         <Content>
           <H1>
             {I18n.t('authentication.spid_information_request.contentTitle')}

@@ -9,7 +9,6 @@ import {
 import { StyleSheet, Image } from 'react-native'
 import {
   Container,
-  Header,
   Body,
   Content,
   Text,
@@ -24,6 +23,7 @@ import { type ReduxProps } from '../../actions/types'
 import { type IdentityProvider } from '../../utils/api'
 import config from '../../config'
 import I18n from '../../i18n'
+import AppHeader from '../../components/ui/AppHeader'
 import IdpsGrid from '../../components/IdpsGrid'
 import { selectIdp } from '../../store/actions/session'
 
@@ -40,35 +40,35 @@ const idps: $ReadOnlyArray<IdentityProvider> = [
     id: 'infocertid',
     name: 'Infocert',
     logo: require('../../../img/spid-idp-infocertid.png'),
-    entityID: 'https://identity.infocert.it',
+    entityID: 'infocertid',
     profileUrl: 'https://my.infocert.it/selfcare'
   },
   {
     id: 'posteid',
     name: 'Poste Italiane',
     logo: require('../../../img/spid-idp-posteid.png'),
-    entityID: 'https://posteid.poste.it',
+    entityID: 'posteid',
     profileUrl: 'https://posteid.poste.it/private/cruscotto.shtml'
   },
   {
     id: 'sielteid',
     name: 'Sielte',
     logo: require('../../../img/spid-idp-sielteid.png'),
-    entityID: 'https://identity.sieltecloud.it',
+    entityID: 'sielteid',
     profileUrl: 'https://myid.sieltecloud.it/profile/'
   },
   {
     id: 'timid',
     name: 'Telecom Italia',
     logo: require('../../../img/spid-idp-timid.png'),
-    entityID: 'https://login.id.tim.it/affwebservices/public/saml2sso',
+    entityID: 'timid',
     profileUrl: 'https://id.tim.it/identity/private/'
   },
   {
     id: 'arubaid',
     name: 'Aruba.it',
     logo: require('../../../img/spid-idp-arubaid.png'),
-    entityID: 'https://loginspid.aruba.it',
+    entityID: 'arubaid',
     profileUrl: 'http://selfcarespid.aruba.it'
   }
 ]
@@ -101,7 +101,7 @@ class IdpSelectionScreen extends React.Component<Props> {
   render(): React.Node {
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <AppHeader>
           <Left>
             <Button
               transparent
@@ -113,7 +113,7 @@ class IdpSelectionScreen extends React.Component<Props> {
           <Body>
             <Text>{I18n.t('authentication.idp_selection.headerTitle')}</Text>
           </Body>
-        </Header>
+        </AppHeader>
         <View style={styles.subheader}>
           <Image
             source={require('../../../img/spid.png')}

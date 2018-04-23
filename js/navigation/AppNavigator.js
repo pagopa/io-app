@@ -5,6 +5,7 @@ import { SwitchNavigator } from 'react-navigation'
 import ROUTES from './routes'
 import IngressScreen from '../screens/IngressScreen'
 import AuthenticationNavigator from './AuthenticationNavigator'
+import OnboardingNavigator from './OnboardingNavigator'
 import MainNavigator from './MainNavigator'
 
 /**
@@ -21,6 +22,9 @@ const navigator = SwitchNavigator({
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users
     screen: AuthenticationNavigator
+  },
+  [ROUTES.ONBOARDING]: {
+    screen: OnboardingNavigator
   },
   [ROUTES.MAIN]: {
     // The navigator used for authenticated users

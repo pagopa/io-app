@@ -7,13 +7,14 @@ import {
   type NavigationState
 } from 'react-navigation'
 import { WebView } from 'react-native'
-import { Container, Header, Left, Button, Icon, Text, Body } from 'native-base'
+import { Container, Left, Button, Icon, Text, Body } from 'native-base'
 
 import { type ReduxProps } from '../../actions/types'
 import { type GlobalState } from '../../reducers/types'
 import { type SessionState } from '../../store/reducers/session'
 import config from '../../config'
 import I18n from '../../i18n'
+import AppHeader from '../../components/ui/AppHeader'
 import { extractLoginResult } from '../../api'
 import { loginSuccess, loginFailure } from '../../store/actions/session'
 
@@ -43,7 +44,7 @@ class IdpLoginScreen extends React.Component<Props> {
     const loginUri = LOGIN_BASE_URL + session.idp.entityID
     return (
       <Container>
-        <Header iosBarStyle="dark-content">
+        <AppHeader>
           <Left>
             <Button
               transparent
@@ -55,7 +56,7 @@ class IdpLoginScreen extends React.Component<Props> {
           <Body>
             <Text>{I18n.t('authentication.idp_login.headerTitle')}</Text>
           </Body>
-        </Header>
+        </AppHeader>
         <WebView
           source={{ uri: loginUri }}
           javaScriptEnabled={true}
