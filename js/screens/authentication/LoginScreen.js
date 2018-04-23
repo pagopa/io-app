@@ -30,7 +30,7 @@ import SpidSubscribeComponent from '../../components/SpidSubscribeComponent'
 
 import { logInIntent, selectIdp, logIn, logInError } from '../../actions'
 
-import { VERSION } from '../../utils/constants'
+import { VERSION } from '../../../ts-js/utils/constants'
 
 import { type IdentityProvider, isDemoIdp } from '../../utils/api'
 

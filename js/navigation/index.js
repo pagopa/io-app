@@ -10,7 +10,7 @@ import {
 } from 'react-navigation'
 import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 
-import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../../ts-js/utils/constants'
 import { type ReduxProps } from '../actions/types'
 import { type GlobalState } from '../reducers/types'
 import AppNavigator from './AppNavigator'

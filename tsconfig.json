@@ -11,6 +11,7 @@
     "preserveConstEnums": true,
     "allowJs": false,
     "sourceMap": true,
+    "declaration": true,
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,

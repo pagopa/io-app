@@ -27,7 +27,7 @@ import {
 import { type Dispatch } from '../actions/types'
 import { type LoggedInUserState } from '../reducers/user'
 
-import { VERSION } from '../utils/constants'
+import { VERSION } from '../../ts-js/utils/constants'
 
 import { ProfileStyles } from './styles'
 
