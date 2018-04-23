@@ -16,7 +16,9 @@ import {
   Text,
   View,
   Left,
-  Right, Button, Icon
+  Right,
+  Button,
+  Icon
 } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 import { PortfolioStyles } from '../../components/styles'
@@ -28,29 +30,28 @@ import ROUTES from '../../navigation/routes'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>
-};
+}
 
 /**
  * Portfolio Home Screen
  */
-class PortfolioHomeScreen extends React.Component<Props>
-{
+class PortfolioHomeScreen extends React.Component<Props> {
   static navigationOptions = {
     title: I18n.t('portfolio.portfolio'),
     headerBackTitle: null
   }
 
-  constructor(props: Props)
-  {
+  constructor(props: Props) {
     super(props)
   }
 
-  render(): React.Node
-  {
+  render(): React.Node {
     const { navigate } = this.props.navigation
     const TITLE = I18n.t('portfolio.portfolio')
     const cardsImage = require('../../../img/creditcards.jpg')
-    const latestOperations: $ReadOnlyArray<Operation> = PortfolioAPI.getLatestOperations()
+    const latestOperations: $ReadOnlyArray<
+      Operation
+    > = PortfolioAPI.getLatestOperations()
 
     return (
       <Container>
@@ -61,7 +62,9 @@ class PortfolioHomeScreen extends React.Component<Props>
             </Row>
             <Row style={{ marginTop: 5 }}>
               <Left>
-                <Text style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.paymentMethods')}</Text>
+                <Text style={PortfolioStyles.titleStyle}>
+                  {I18n.t('portfolio.paymentMethods')}
+                </Text>
               </Left>
               <Right>
                 <Text>{I18n.t('portfolio.add')}</Text>
@@ -69,9 +72,12 @@ class PortfolioHomeScreen extends React.Component<Props>
             </Row>
             <Row style={{ marginTop: 20 }}>
               <View style={PortfolioStyles.container}>
-                <TouchableHighlight onPress={(): boolean => navigate(ROUTES.PORTFOLIO_CREDITCARDS)}>
-                  <Image style={PortfolioStyles.image}
-                         source={cardsImage}/>
+                <TouchableHighlight
+                  onPress={(): boolean =>
+                    navigate(ROUTES.PORTFOLIO_CREDITCARDS)
+                  }
+                >
+                  <Image style={PortfolioStyles.image} source={cardsImage} />
                 </TouchableHighlight>
               </View>
             </Row>
@@ -79,11 +85,12 @@ class PortfolioHomeScreen extends React.Component<Props>
               <OperationsList
                 parent={I18n.t('portfolio.portfolio')}
                 operations={latestOperations}
-                navigation={this.props.navigation}/>
+                navigation={this.props.navigation}
+              />
             </Row>
           </Grid>
           <Button block>
-            <Icon type="FontAwesome" name="qrcode"/>
+            <Icon type="FontAwesome" name="qrcode" />
             <Text>{I18n.t('portfolio.payNotice')}</Text>
           </Button>
         </Content>

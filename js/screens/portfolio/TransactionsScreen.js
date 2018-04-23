@@ -16,7 +16,8 @@ import {
   Left,
   Right,
   Row,
-  Text } from 'native-base'
+  Text
+} from 'native-base'
 import { PortfolioStyles } from '../../components/styles'
 import { UNKNOWN_CARD } from '../../lib/portfolio/unknowns'
 import PortfolioAPI from '../../lib/portfolio/portfolio-api'
@@ -28,41 +29,39 @@ import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 type Props = {
   navigation: NavigationScreenProp<NavigationState>,
   card: CreditCard
-};
-
+}
 
 /**
  * Show credit card transactions
  */
-class TransactionsScreen extends React.Component<Props>
-{
+class TransactionsScreen extends React.Component<Props> {
   static navigationOptions = {
-      title: I18n.t('portfolio.transactions'),
-      headerBackTitle: null
+    title: I18n.t('portfolio.transactions'),
+    headerBackTitle: null
   }
 
-  constructor(props: Props)
-  {
+  constructor(props: Props) {
     super(props)
   }
 
-  render(): React.Node
-  {
+  render(): React.Node {
     // $FlowFixMe
-    const { params } = this.props.navigation.state;
+    const { params } = this.props.navigation.state
     //      ^^^^^^ https://github.com/react-navigation/react-navigation/issues/1237
-    const card: CreditCard = params ? params.card : UNKNOWN_CARD;
-    const operations: $ReadOnlyArray<Operation> = PortfolioAPI.getOperations(card.id);
-    const TITLE: string = I18n.t('portfolio.transactions');
+    const card: CreditCard = params ? params.card : UNKNOWN_CARD
+    const operations: $ReadOnlyArray<Operation> = PortfolioAPI.getOperations(
+      card.id
+    )
+    const TITLE: string = I18n.t('portfolio.transactions')
 
     return (
       <Container>
         <Content>
           <Grid>
             <Row>
-              <Text note>{card.brand +' - '+ card.number}</Text>
+              <Text note>{card.brand + ' - ' + card.number}</Text>
             </Row>
-            <Row style={{marginTop: 5}}>
+            <Row style={{ marginTop: 5 }}>
               <Left>
                 <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
               </Left>
@@ -70,11 +69,12 @@ class TransactionsScreen extends React.Component<Props>
                 <Text note>{I18n.t('portfolio.total')}</Text>
               </Right>
             </Row>
-            <Row style={{marginTop: 10}}>
-                <OperationsList
-                  parent={I18n.t('portfolio.transactions')}
-                  operations={operations}
-                  navigation={this.props.navigation}/>
+            <Row style={{ marginTop: 10 }}>
+              <OperationsList
+                parent={I18n.t('portfolio.transactions')}
+                operations={operations}
+                navigation={this.props.navigation}
+              />
             </Row>
           </Grid>
         </Content>

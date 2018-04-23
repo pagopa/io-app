@@ -34,31 +34,31 @@ const navigation = TabNavigator(
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
-        const { routeName } = navigation.state;
-        let iconName;
+        const { routeName } = navigation.state
+        let iconName
         if (routeName === ROUTES.MAIN_MESSAGES) {
-          iconName = "mail"
+          iconName = 'mail'
         } else if (routeName === ROUTES.PORTFOLIO_HOME) {
-          iconName = "wallet"
+          iconName = 'wallet'
         } else if (routeName === ROUTES.DOCUMENTS_HOME) {
-          iconName = "document"
+          iconName = 'document'
         } else if (routeName === ROUTES.PREFERENCES_HOME) {
-          iconName = "cog"
+          iconName = 'cog'
         } else if (routeName === ROUTES.MAIN_PROFILE) {
-          iconName = "user"
+          iconName = 'user'
         }
-        return <Icon name={iconName} active={focused} />;
-      },
+        return <Icon name={iconName} active={focused} />
+      }
     }),
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: 'black',
-      inactiveTintColor: 'gray',
+      inactiveTintColor: 'gray'
     },
     animationEnabled: true,
     swipeEnabled: false,
-    initialRouteName: ROUTES.MAIN_MESSAGES,
+    initialRouteName: ROUTES.MAIN_MESSAGES
   }
 )
 
