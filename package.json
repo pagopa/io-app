@@ -42,7 +42,7 @@
     "validator": "^9.4.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.1.1",
+    "babel-eslint": "^8.2.3",
     "babel-jest": "22.4.1",
     "babel-preset-react-native": "4.0.0",
     "danger": "^3.5.1",
@@ -53,14 +53,14 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-flowtype": "^2.42.0",
     "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jest": "^21.7.0",
+    "eslint-plugin-jest": "^21.15.1",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "0.65.0",
     "flow-typed": "^2.3.0",
     "jest": "22.4.2",
-    "prettier": "1.8.2",
+    "prettier": "1.12.1",
     "react-test-renderer": "16.3.0-alpha.1"
   },
   "jest": {
