@@ -17,6 +17,7 @@ import headerTheme from './components/Header'
 import itemTheme from './components/Item'
 import modalTheme from './components/Modal'
 import textTheme from './components/Text'
+import textWithIconTheme from './components/TextWithIcon'
 import viewTheme from './components/View'
 
 const theme = (): Theme => {
@@ -45,6 +46,9 @@ const theme = (): Theme => {
     },
     'NativeBase.Text': {
       ...textTheme()
+    },
+    'UIComponents.TextWithIcon': {
+      ...textWithIconTheme()
     },
     'NativeBase.ViewNB': {
       ...viewTheme()

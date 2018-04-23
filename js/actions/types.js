@@ -17,6 +17,7 @@ import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
 import { type SessionActions } from '../store/actions/session'
 import { type OnboardingActions } from '../store/actions/onboarding'
 import { type ProfileActions } from '../store/actions/profile'
+import { type ErrorActions } from '../store/actions/error'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
 export type ApplicationState = 'background' | 'inactive' | 'active'
@@ -48,6 +49,7 @@ export type Action =
   | SessionActions
   | OnboardingActions
   | ProfileActions
+  | ErrorActions
 
 /* eslint-disable no-use-before-define */
 // We need to disable the eslint rule because of a problem described here @https://github.com/babel/babel-eslint/issues/485
