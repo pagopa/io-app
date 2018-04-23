@@ -56,7 +56,6 @@ class CreditCardsScreen extends React.Component<Props>
   {
     const { navigate } = this.props.navigation
     return (
-
       <Container>
         <Content>
           <H2 style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.creditcards')}</H2>
@@ -91,7 +90,6 @@ class CreditCardsScreen extends React.Component<Props>
           </View>
         </Content>
       </Container>
-
     )
   }
 }

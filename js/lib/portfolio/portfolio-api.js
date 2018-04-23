@@ -5,38 +5,48 @@
  * @flow
  */
 
+import I18n from '../../i18n'
+
+const lastUsage = I18n.t('portfolio.lastUsage');
+const yesterday = I18n.t('portfolio.yesterday');
+const today = I18n.t('portfolio.today');
+const noNew = I18n.t('portfolio.noNewTransactions');
+
+const todayAt = lastUsage+today;
+const yesterdayAt = lastUsage+yesterday;
+
 import type {
   CreditCard,
   Operation,
   PaymentMethod
-} from "../../lib/portfolio/portfolio-api";
+} from "types";
 
 const cards: ReadonlyArray<CreditCard> = [
     {
         id: 1,
         brand: 'American Express',
-        lastUsage: 'Ultimo utilizzo ieri alle 07:34',
+        lastUsage: todayAt+'07:34',
         number: '3759 876543 21001',
         image: require('../../../img/amex-cc.jpg')
     },
     {
         id: 2,
         brand: 'VISA',
-        lastUsage: 'Ultimo utilizzo ieri alle 10:20',
+        lastUsage: yesterdayAt+' 10:20',
         number: '4000 1234 5678 9010',
         image: require('../../../img/visa-cc.jpg')
     },
     {
         id: 3,
         brand: 'Mastercard',
-        lastUsage: 'Non ci sono nuove transazioni',
+        lastUsage: noNew,
         number: '5412 7556 7890 0000',
         image: require('../../../img/mastercard-cc.png')
     },
     {
         id: 4,
         brand: 'RedCard',
-        lastUsage: 'Ultimo utilizzo oggi alle 09:03',
+        lastUsage: todayAt+ '09:03',
         number: '4000 1234 5678 9010',
         image: require('../../../img/simple-cc.png')
     }

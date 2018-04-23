@@ -53,7 +53,6 @@ class PortfolioHomeScreen extends React.Component<Props>
     const latestOperations: ReadonlyArray<Operation> = PortfolioAPI.getLatestOperations();
 
     return (
-
       <Container>
         <Content>
           <Grid style={{ marginTop: 100 }}>
@@ -82,7 +81,6 @@ class PortfolioHomeScreen extends React.Component<Props>
           </Grid>
         </Content>
       </Container>
-
     )
   }
 }

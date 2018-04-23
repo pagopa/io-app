@@ -41,6 +41,11 @@ class TransactionsScreen extends React.Component<Props>
       headerBackTitle: null
   }
 
+  constructor(props: Props)
+  {
+    super(props)
+  }
+
   render(): React.Node
   {
     const { params } = this.props.navigation.state;
@@ -49,14 +54,13 @@ class TransactionsScreen extends React.Component<Props>
     const TITLE: string = I18n.t('portfolio.transactions');
 
     return (
-
       <Container>
         <Content>
           <Grid>
-            <Row size={1}>
+            <Row>
               <Text note>{card.brand +' - '+ card.number}</Text>
             </Row>
-            <Row style={{marginTop: 5}} size={1}>
+            <Row style={{marginTop: 5}}>
               <Left>
                 <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
               </Left>
@@ -70,7 +74,6 @@ class TransactionsScreen extends React.Component<Props>
           </Grid>
         </Content>
       </Container>
-
     )
   }
 }

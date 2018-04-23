@@ -124,6 +124,10 @@
     "receipt": "Ricevuta",
     "seeReceipt": "Vedi la ricevuta",
     "transactions": "Operazioni",
-    "noTransactions": "Non ci sono operazioni."
+    "noTransactions": "Non ci sono operazioni.",
+    "noNewTransactions": "Non ci sono nuove operazioni.",
+    "lastUsage": "Ultimo utilizzo ",
+    "yesterday": "ieri alle ",
+    "today": "oggi alle "
   }
 }
