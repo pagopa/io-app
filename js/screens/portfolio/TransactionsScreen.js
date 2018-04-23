@@ -7,6 +7,7 @@
 
 import * as React from 'react'
 
+import I18n from '../../i18n'
 import {
   Container,
   Content,
@@ -36,7 +37,7 @@ type Props = {
 class TransactionsScreen extends React.Component<Props>
 {
   static navigationOptions = {
-      title: 'Transactions'
+      title: I18n.t('portfolio.transactions')
   }
 
   render(): React.Node
@@ -44,7 +45,7 @@ class TransactionsScreen extends React.Component<Props>
     const { params } = this.props.navigation.state;
     const card: CreditCard = params ? params.card : UNKNOWN_CARD;
     const operations: ReadonlyArray<Operation> = PortfolioAPI.getOperations(card.id);
-    const TITLE: string = 'OPERAZIONI';
+    const TITLE: string = I18n.t('portfolio.transactions');
 
     return (
 
@@ -59,11 +60,11 @@ class TransactionsScreen extends React.Component<Props>
                 <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
               </Left>
               <Right>
-                <Text note>{'Totale'}</Text>
+                <Text note>{I18n.t('portfolio.total')}</Text>
               </Right>
             </Row>
             <Row>
-              <OperationsList parent='Transactions' operations={operations}/>
+              <OperationsList parent={I18n.t('portfolio.transactions')} operations={operations}/>
             </Row>
           </Grid>
         </Content>

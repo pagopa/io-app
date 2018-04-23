@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react'
+
 import { Image } from 'react-native'
 import {
   Body,
@@ -26,6 +27,7 @@ import PortfolioAPI from '../../lib/portfolio/portfolio-api'
 
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 import ROUTES from '../../navigation/routes'
+import I18n from '../../i18n'
 
 const Content = require('native-base').Content
 
@@ -41,7 +43,7 @@ const cards = PortfolioAPI.getCreditCards()
 class CreditCardsScreen extends React.Component<Props>
 {
   static navigationOptions = {
-    title: 'Credit Cards'
+    title: I18n.t('portfolio.creditcards')
   }
 
   constructor(props: Props)
@@ -56,8 +58,8 @@ class CreditCardsScreen extends React.Component<Props>
 
       <Container>
         <Content>
-          <H2 style={PortfolioStyles.titleStyle}>{'Carte di Credito / Debito'}</H2>
-          <Text style={PortfolioStyles.titleStyle}>{'Metodi di pagamento'}</Text>
+          <H2 style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.creditcards')}</H2>
+          <Text style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.paymentMethods')}</Text>
           <View style={{ minHeight: 400 }}>
             <DeckSwiper
               dataSource={cards}

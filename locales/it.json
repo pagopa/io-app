@@ -101,10 +101,28 @@
         "email": {
           "placeholder": "indirizzo email"
         }
-      }      
+      }
     }
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "portfolio": {
+    "portfolio": "Portafoglio",
+    "creditcards": "Carte di Credito",
+    "paymentMethods": "Metodi di Pagamento",
+    "add": "aggiungi",
+    "operationsDetails": "Dettaglio delle Operazioni",
+    "total": "Totale",
+    "payAmount": "Importo da pagare",
+    "transactionFee": "Costo transazione",
+    "why": "Perché?",
+    "causal": "Causale",
+    "recipient": "Destinatario",
+    "date": "Data",
+    "hour": "Ora",
+    "receipt": "Ricevuta",
+    "seeReceipt": "Vedi la ricevuta",
+    "transactions": "Operazioni"
   }
 }

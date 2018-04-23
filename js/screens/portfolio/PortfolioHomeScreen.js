@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react'
+import I18n from '../../i18n'
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 import { Image, TouchableHighlight } from 'react-native'
 import {
@@ -35,7 +36,7 @@ type Props = {
 class PortfolioHomeScreen extends React.Component<Props>
 {
   static navigationOptions = {
-    title: 'Portafoglio'
+    title: I18n.t('portfolio.portfolio')
   }
 
   constructor(props: Props)
@@ -46,7 +47,7 @@ class PortfolioHomeScreen extends React.Component<Props>
   render(): React.Node
   {
     const { navigate } = this.props.navigation;
-    const TITLE = 'Portafoglio';
+    const TITLE = I18n.t('portfolio.portfolio');
     const cardsImage = require('../../../img/creditcards.jpg');
     const latestOperations: ReadonlyArray<Operation> = PortfolioAPI.getLatestOperations();
 
@@ -60,10 +61,10 @@ class PortfolioHomeScreen extends React.Component<Props>
             </Row>
             <Row style={{ marginTop: 5 }}>
               <Left>
-                <Text style={PortfolioStyles.titleStyle}>{'Metodi di pagamento'}</Text>
+                <Text style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.paymentMethods')}</Text>
               </Left>
               <Right>
-                <Text>{'aggiungi'}</Text>
+                <Text>{I18n.t('portfolio.add')}</Text>
               </Right>
             </Row>
             <Row style={{ marginTop: 20 }}>
@@ -75,7 +76,7 @@ class PortfolioHomeScreen extends React.Component<Props>
               </View>
             </Row>
             <Row>
-              <OperationsList parent='Portfolio' operations={latestOperations}/>
+              <OperationsList parent={I18n.t('portfolio.portfolio')} operations={latestOperations}/>
             </Row>
           </Grid>
         </Content>

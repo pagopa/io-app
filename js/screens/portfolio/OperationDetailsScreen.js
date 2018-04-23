@@ -7,6 +7,7 @@
 
 import * as React from 'react'
 
+import I18n from '../../i18n'
 import { PortfolioStyles } from '../../components/styles'
 import {
   Button,
@@ -35,7 +36,7 @@ type Props = {
 class OperationDetailsScreen extends React.Component<Props>
 {
   static navigationOptions = {
-    title: 'Operations Details'
+    title: I18n.t('portfolio.operationsDetails')
   }
 
   constructor(props: Props)
@@ -46,7 +47,7 @@ class OperationDetailsScreen extends React.Component<Props>
   render(): React.Node
   {
     const { navigate } = this.props.navigation;
-    const TITLE: string = 'Dettagli dell\'operazione';
+    const TITLE: string = I18n.t('portfolio.operationsDetails')
     const { params } = this.props.navigation.state;
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION;
     return (
@@ -54,37 +55,38 @@ class OperationDetailsScreen extends React.Component<Props>
         <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
         <Grid style={{ marginTop: 50 }}>
           <Row>
-            <Left><Text>{'Totale ' + operation.currency}</Text></Left>
+            <Left><Text>{I18n.t('portfolio.total') + ' ' + operation.currency}</Text></Left>
             <Right><Text style={PortfolioStyles.boldStyle}>{operation.amount}</Text></Right>
           </Row>
           <Row>
-            <Left><Text note>{'Importo da pagare'}</Text></Left>
+            <Left><Text note>{I18n.t('portfolio.payAmount')}</Text></Left>
             <Right><Text>{operation.amount}</Text></Right>
           </Row>
           <Row>
-            <Left><Text note>{'Costo transazione'}</Text>
-              <Button transparent>{'Perché?'}</Button></Left>
+            <Left><Text note>{I18n.t('portfolio.transactionFee')}</Text>
+              <Button transparent>{I18n.t('portfolio.why')}</Button></Left>
             <Right><Text>{operation.transactionCost}</Text></Right>
           </Row>
           <Row>
-            <Left><Text note>{'Causale'}</Text></Left>
+            <Left><Text note>{I18n.t('portfolio.causal')}</Text></Left>
             <Right><Text style={PortfolioStyles.boldStyle}>{operation.subject}</Text></Right>
           </Row>
           <Row>
-            <Left><Text note>{'Destinatario'}</Text></Left>
+            <Left><Text note>{I18n.t('portfolio.recipient')}</Text></Left>
             <Right><Text style={PortfolioStyles.boldStyle}>{operation.recipient}</Text></Right>
           </Row>
           <Row>
-            <Left><Text note>{'Data'}</Text></Left>
+            <Left><Text note>{I18n.t('portfolio.date')}</Text></Left>
             <Right><Text>{operation.date}</Text></Right>
           </Row>
           <Row>
-            <Left><Text note>{'Ora'}</Text></Left>
+            <Left><Text note>{I18n.t('portfolio.hour')}</Text></Left>
             <Right><Text>{operation.time}</Text></Right>
           </Row>
           <Row>
-            <Button style={{ marginTop: 40 }} block success title="Receipt" onPress={(): boolean => navigate('Login')}>
-              <Text>{'Vedi la ricevuta'}</Text>
+            <Button style={{ marginTop: 40 }} block success title={I18n.t('portfolio.receipt')} onPress=
+              {(): boolean => navigate('Login')}>
+              <Text>{I18n.t('portfolio.seeReceipt')}</Text>
             </Button>
           </Row>
         </Grid>
