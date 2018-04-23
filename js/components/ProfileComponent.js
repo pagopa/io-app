@@ -26,6 +26,7 @@ import {
 } from 'react-navigation'
 import { type Dispatch } from '../actions/types'
 import { type LoggedInUserState } from '../reducers/user'
+import { type ProfileState } from '../store/reducers/profile'
 
 import { VERSION } from '../utils/constants'
 
@@ -34,6 +35,7 @@ import { ProfileStyles } from './styles'
 import { getIdpInfo } from './SpidLoginButton'
 
 import config from '../config'
+import { type ApiProfile } from '../api'
 
 const profileRowStyles = StyleSheet.flatten(ProfileStyles.profileRow)
 const profileHeaderStyles = StyleSheet.flatten(ProfileStyles.profileHeader)
@@ -64,7 +66,8 @@ const openIdpProfile = function(idpUrl: string) {
 type Props = {
   navigation: NavigationScreenProp<NavigationState>,
   dispatch: Dispatch,
-  user: LoggedInUserState
+  user: LoggedInUserState,
+  preferences: ProfileState
 }
 
 /**
@@ -72,9 +75,14 @@ type Props = {
  */
 class ProfileComponent extends React.Component<Props> {
   render(): React.Node {
+    const preferencesPot = this.props.preferences
     const profile = this.props.user.profile
     const idpId = this.props.user.idpId
     const idpInfo = getIdpInfo(idpId)
+
+    const isInboxEnabledPot = preferencesPot.map(
+      (prefs: ApiProfile): boolean => prefs.is_inbox_enabled
+    )
 
     const name = profile && profile.name ? profile.name : ''
     const familyName =
@@ -118,6 +126,22 @@ class ProfileComponent extends React.Component<Props> {
                   <Icon name="mobile" style={profileRowIconStyles} />
                   <Text style={profileRowTextStyles}>{mobilePhone}</Text>
                 </Col>
+              </Row>
+              <Row>
+                <Text>
+                  {isInboxEnabledPot.fold(
+                    (): string => 'empty',
+                    (value: boolean): string => `${value.toString()}`,
+                    (startTime: Date): string =>
+                      `Loading since ${startTime.toString()}`,
+                    (error: string): string => `Error: ${error}`,
+                    (value: boolean, startTime: Date): string =>
+                      `(${value.toString()}) Refreshing since ${startTime.toString()}`,
+                    (value: boolean, error: string): string =>
+                      `(${value.toString()}) Refresh error: ${error}`,
+                    (): string => 'Unavailable'
+                  )}
+                </Text>
               </Row>
             </Grid>
           </Body>

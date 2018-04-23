@@ -72,7 +72,7 @@ Il flusso di autenticazione è il seguente:
 3. Shibboleth prende in carico il processo di autenticazione verso l'IdP
 4. Ad autenticazione avvenuta, viene fatto un redirect dall'IdP all'endpoint del backend che si occupa della generazione di un nuovo token di sessione.
 5. L'endpoint di generazione di un nuovo token riceve via header HTTP gli attributi SPID, poi genera un nuovo token di sessione (es. `123456789`) e restituisce alla webview un HTTP redirect verso un URL _well known_, contenente il token di sessione (es. `/api/token/123456789`)
-6. L'app, che controlla la webview, intercetta questo URL prima che venga effettuata la richiesta HTTP, ne estrae il token di sessione e termina il flusso di autenticazione chiudendo la webview.  
+6. L'app, che controlla la webview, intercetta questo URL prima che venga effettuata la richiesta HTTP, ne estrae il token di sessione e termina il flusso di autenticazione chiudendo la webview.
 
 Successivamente il token di sessione viene usato dall'app per effettuare le chiamate all'API di backend (es. per ottenere gli attributi SPID).
 
@@ -189,7 +189,7 @@ Per aggiungere una nuova lingua è necessario:
 1. Creare un nuovo file all'interno della directory `locales` usando come nome `<langcode>.json` (Es: `es.json`)
 2. Copiare il contenuto di uno degli altri file `.json` già presenti
 3. Procedere con la traduzione
-4. Modificare il file `js/i18n.js` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua 
+4. Modificare il file `js/i18n.js` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua
 
 
 ### Gestione degli errori
@@ -201,6 +201,34 @@ L'applicazione utilizza un custom handler per intercettare e notificare errori j
 
 L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
 
+### Gestione dei dati remoti
+
+Per gestire i diversi stati in cui si può trovare un dato sincronizzato con un
+sistema remoto (es. le preferenze dell'utente), è stata creato un tipo algebrico
+`Pot<E, A>` che incapsula dati di tipo `A`, con la gestione di errori di tipo
+`E` (ispirato dal progetto [Diode](https://diode.suzaku.io/advanced/Pot.html)).
+
+I sotto tipi di `Pot` sono:
+
+* `Empty`: non ancora disponibile
+* `Unavailable`: permanentemente non disponibile
+* `Pending`: in attesa di un valore (caricamento da sorgente remota)
+* `Ready`: disponibile
+* `Failed`: caricamento fallito
+* `PendingStale`: disponibile, ma in fase di sincronizzazione con sorgente remota
+* `FailedStale`: disponibile, ma sincronizzazione fallita
+
+Sono possibili delle transizioni tra i sotto tipi di `Pot<E, A>`:
+
+|from\to|Empty|Unavailable|Pending|Ready|Failed|PendingStale|FailedStale|
+|-|-|-|-|-|-|-|-|
+|Empty|◦|◦|●|●|◦|◦|◦|
+|Unavailable|◦|◦|◦|◦|◦|◦|◦|
+|Pending|◦|●|●|●|●|◦|◦|
+|Ready|◦|◦|◦|◦|◦|●|◦|
+|Failed|◦|◦|●|◦|◦|◦|◦|
+|PendingStale|◦|◦|◦|●|◦|●|●|
+|FailedStale|◦|◦|◦|◦|◦|●|◦|
 
 ### Fonts
 
