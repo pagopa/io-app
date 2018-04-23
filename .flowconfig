@@ -24,6 +24,7 @@
 .*/node_modules/react-native-sha256/*
 .*/node_modules/react-native-offline/*
 .*/node_modules/redux-persist/*
+.*/node_modules/config-chain/*
 
 [include]
 
