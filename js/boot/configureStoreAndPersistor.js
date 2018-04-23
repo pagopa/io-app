@@ -9,7 +9,7 @@ import createSagaMiddleware from 'redux-saga'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
-import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../../ts-js/utils/constants'
 import rootReducer from '../reducers'
 import rootSaga from '../sagas'
 import { type Store, type StoreEnhancer } from '../actions/types'
