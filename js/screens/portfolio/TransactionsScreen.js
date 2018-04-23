@@ -69,7 +69,7 @@ class TransactionsScreen extends React.Component<Props>
               </Right>
             </Row>
             <Row style={{marginTop: 10}}>
-              <OperationsList parent={I18n.t('portfolio.transactions')} operations={operations}/>
+                <OperationsList parent={I18n.t('portfolio.transactions')} operations={operations}/>
             </Row>
           </Grid>
         </Content>

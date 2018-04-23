@@ -7,7 +7,7 @@
 
 import * as React from 'react'
 import I18n from '../../i18n'
-import {Body, Grid, Icon, Left, List, ListItem, Right, Row, Text} from "native-base";
+import { Body, Grid, Icon, Left, List, ListItem, Right, Row, Text } from 'native-base'
 import type {NavigationScreenProp, NavigationState} from "react-navigation";
 import type {CreditCard, Operation} from "../../lib/portfolio/types"
 import PortfolioAPI from "../../lib/portfolio/portfolio-api"
@@ -28,6 +28,7 @@ class OperationsList extends React.Component<Props>
     constructor(props: Props)
     {
         super(props);
+        this.state = { data: Array.from(props.operations) }
     }
 
     renderDate(operation: Operation): React.Node
@@ -54,7 +55,7 @@ class OperationsList extends React.Component<Props>
     render(): React.Node
     {
         const {navigate} = this.props.navigation;
-        const ops = this.props.operations;
+        const ops = this.state.data;
 
         if (ops === null || ops === undefined)
         {
@@ -67,7 +68,7 @@ class OperationsList extends React.Component<Props>
         }
 
         return (
-            <List dataArray={ops} renderRow={ (item): boolean =>
+            <List removeClippedSubviews={false} dataArray={ops} renderRow={ (item): boolean =>
 
                 <ListItem onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS, {
                     parent: this.props.parent,
@@ -92,6 +93,7 @@ class OperationsList extends React.Component<Props>
                 </ListItem>
             }
             />
+
         )
     }
 }
