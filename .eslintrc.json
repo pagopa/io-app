@@ -9,10 +9,10 @@
     "eslint:recommended",
     "plugin:flowtype/recommended",
     "plugin:react/recommended",
-    "plugin:jest/recommended",
-    "prettier",
-    "prettier/flowtype",
-    "prettier/react"
+    "plugin:jest/recommended"
+    //"prettier",
+    //"prettier/flowtype",
+    //"prettier/react"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -28,7 +28,7 @@
   "plugins": [
     "flowtype",
     "react",
-    "prettier",
+    //"prettier",
     "jest"
   ],
   "rules": {
@@ -60,7 +60,7 @@
     "flowtype/no-weak-types": 2,
     "flowtype/require-return-type": 2,
     "react/jsx-uses-vars": 2,
-    "react/jsx-no-literals": 2,
-    "prettier/prettier": 2
+    "react/jsx-no-literals": 2
+    //"prettier/prettier": 2
   }
 }

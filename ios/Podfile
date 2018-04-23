@@ -28,6 +28,8 @@ target 'ItaliaApp' do
 
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end
 
 # Fix a open bug in react-native-config
