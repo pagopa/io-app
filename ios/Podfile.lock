@@ -41,12 +41,15 @@ PODS:
     - React/RCTBlob
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFS (2.9.7):
+  - RNFS (2.9.12):
     - React
   - RNI18n (2.0.11):
     - React
+<<<<<<< HEAD
   - RNKeychain (3.0.0-rc.3):
     - React
+=======
+>>>>>>> origin/master
   - yoga (0.54.2.React)
 
 DEPENDENCIES:
@@ -94,9 +97,12 @@ SPEC CHECKSUMS:
   react-native-config: 11b925080b49cb18299840dd084fc47709306313
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
-  RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
+  RNFS: fc366d28239541a692155a94ea26928815831295
   RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
+<<<<<<< HEAD
   RNKeychain: 216f37338fcb9e5c3a2530f1e3295f737a690cb1
+=======
+>>>>>>> origin/master
   yoga: de5853128c499decde39904270f22f75d36d7668
 
 PODFILE CHECKSUM: 90125cfa5cc3d6e61eb3aa2e542197873193855d
