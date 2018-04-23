@@ -48,7 +48,9 @@ class OperationDetailsScreen extends React.Component<Props>
   {
     const { navigate } = this.props.navigation;
     const TITLE: string = I18n.t('portfolio.operationsDetails')
+    // $FlowFixMe
     const { params } = this.props.navigation.state;
+    //      ^^^^^^ https://github.com/react-navigation/react-navigation/issues/1237
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION;
     return (
       <Container>

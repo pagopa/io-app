@@ -5,8 +5,6 @@
  * @flow
  */
 
-
-
 export type PaymentMethod = {
     id: number,
     type: string

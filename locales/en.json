@@ -129,6 +129,7 @@
     "noNewTransactions": "There are no new transactions.",
     "lastUsage": "Last usage ",
     "yesterday": "yesterday at ",
-    "today": "today at "
+    "today": "today at ",
+    "payNotice": "Pay Notice"
   }
 }

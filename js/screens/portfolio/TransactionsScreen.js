@@ -48,9 +48,11 @@ class TransactionsScreen extends React.Component<Props>
 
   render(): React.Node
   {
+    // $FlowFixMe
     const { params } = this.props.navigation.state;
+    //      ^^^^^^ https://github.com/react-navigation/react-navigation/issues/1237
     const card: CreditCard = params ? params.card : UNKNOWN_CARD;
-    const operations: ReadonlyArray<Operation> = PortfolioAPI.getOperations(card.id);
+    const operations: $ReadOnlyArray<Operation> = PortfolioAPI.getOperations(card.id);
     const TITLE: string = I18n.t('portfolio.transactions');
 
     return (
@@ -69,7 +71,10 @@ class TransactionsScreen extends React.Component<Props>
               </Right>
             </Row>
             <Row style={{marginTop: 10}}>
-                <OperationsList parent={I18n.t('portfolio.transactions')} operations={operations}/>
+                <OperationsList
+                  parent={I18n.t('portfolio.transactions')}
+                  operations={operations}
+                  navigation={this.props.navigation}/>
             </Row>
           </Grid>
         </Content>

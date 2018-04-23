@@ -26,12 +26,6 @@ const PortfolioNavigator = StackNavigator(
     [ROUTES.PORTFOLIO_CARDS_OPERATIONS]: {
       screen: TransactionsScreen
     }
-  },
-  {
-    tabBarOptions: {
-      showLabel: false,
-      showIcon: true
-    }
   }
 );
 

@@ -17,13 +17,17 @@ import ROUTES from '../../navigation/routes'
 type Props = {
     parent: string,
     navigation: NavigationScreenProp<NavigationState>,
-    operations: ReadonlyArray<Operation>
+    operations: $ReadOnlyArray<Operation>
+};
+
+type State = {
+  data: $ReadOnlyArray<Operation>
 };
 
 /**
  * Operations' List component
  */
-class OperationsList extends React.Component<Props>
+class OperationsList extends React.Component<Props, State>
 {
     constructor(props: Props)
     {
@@ -68,8 +72,7 @@ class OperationsList extends React.Component<Props>
         }
 
         return (
-            <List removeClippedSubviews={false} dataArray={ops} renderRow={ (item): boolean =>
-
+            <List removeClippedSubviews={false} dataArray={ops} renderRow={ (item): React.Element<*> =>
                 <ListItem onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS, {
                     parent: this.props.parent,
                     operation: item,

@@ -17,7 +17,7 @@ import {
   DeckSwiper,
   H2,
   Icon,
-  Left,
+  Left, List,
   Text,
   Thumbnail,
   View
@@ -61,10 +61,11 @@ class CreditCardsScreen extends React.Component<Props>
           <H2 style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.creditcards')}</H2>
           <Text style={PortfolioStyles.titleStyle}>{I18n.t('portfolio.paymentMethods')}</Text>
           <View style={{ minHeight: 400 }}>
-            <DeckSwiper
-              dataSource={cards}
-              renderItem={ item =>
-                <Card style={{ elevation: 3 }}>
+            <List
+              removeClippedSubviews={false}
+              dataArray={cards}
+              renderRow={ item =>
+                <Card style={{ elevation: 3, marginTop: 5 }}>
                   <CardItem>
                     <Left>
                       <Thumbnail source={item.image}/>

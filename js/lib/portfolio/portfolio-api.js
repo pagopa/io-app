@@ -19,9 +19,9 @@ import type {
   CreditCard,
   Operation,
   PaymentMethod
-} from "types";
+} from "./types";
 
-const cards: ReadonlyArray<CreditCard> = [
+const cards: $ReadOnlyArray<CreditCard> = [
     {
         id: 1,
         brand: 'American Express',
@@ -52,7 +52,7 @@ const cards: ReadonlyArray<CreditCard> = [
     }
 ];
 
-const operations: ReadonlyArray<Operation> = [
+const operations: $ReadOnlyArray<Operation> = [
     {
         cardId: 1,
         date: '17/04/2018',
@@ -162,7 +162,7 @@ const operations: ReadonlyArray<Operation> = [
 class PortfolioAPI
 {
 
-    static getPaymentMethods(): ReadonlyArray<PaymentMethod>
+    static getPaymentMethods(): $ReadOnlyArray<PaymentMethod>
     {
         return [
             {
@@ -180,22 +180,22 @@ class PortfolioAPI
         ]
     }
 
-    static getCreditCards(): ReadonlyArray<CreditCard>
+    static getCreditCards(): $ReadOnlyArray<CreditCard>
     {
         return cards;
     }
 
     static getCreditCard(creditCardId: number): ?CreditCard
     {
-        return cards.find( card => card.id === creditCardId);
+        return cards.find( (card): boolean => card.id === creditCardId);
     }
 
-    static getOperations(cardId: number): ReadonlyArray<Operation>
+    static getOperations(cardId: number): $ReadOnlyArray<Operation>
     {
-        return operations.filter( operation => operation.cardId === cardId );
+        return operations.filter( (operation): boolean => operation.cardId === cardId );
     }
 
-    static getLatestOperations(): ReadonlyArray<Operation>
+    static getLatestOperations(): $ReadOnlyArray<Operation>
     {
         return operations.slice(1, 5); // eslint-disable-line no-magic-numbers
     }

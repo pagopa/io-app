@@ -13,12 +13,12 @@ import {
   Container,
   Content,
   H2,
-  Row,
   Text,
   View,
   Left,
-  Right } from 'native-base'
-import { Grid } from 'react-native-easy-grid'
+  Right, Button, Icon
+} from 'native-base'
+import { Grid, Row } from 'react-native-easy-grid'
 import { PortfolioStyles } from '../../components/styles'
 import OperationsList from '../../components/portfolio/OperationsComponent'
 import PortfolioAPI from '../../lib/portfolio/portfolio-api'
@@ -47,10 +47,10 @@ class PortfolioHomeScreen extends React.Component<Props>
 
   render(): React.Node
   {
-    const { navigate } = this.props.navigation;
-    const TITLE = I18n.t('portfolio.portfolio');
-    const cardsImage = require('../../../img/creditcards.jpg');
-    const latestOperations: ReadonlyArray<Operation> = PortfolioAPI.getLatestOperations();
+    const { navigate } = this.props.navigation
+    const TITLE = I18n.t('portfolio.portfolio')
+    const cardsImage = require('../../../img/creditcards.jpg')
+    const latestOperations: $ReadOnlyArray<Operation> = PortfolioAPI.getLatestOperations()
 
     return (
       <Container>
@@ -76,9 +76,16 @@ class PortfolioHomeScreen extends React.Component<Props>
               </View>
             </Row>
             <Row>
-              <OperationsList parent={I18n.t('portfolio.portfolio')} operations={latestOperations}/>
+              <OperationsList
+                parent={I18n.t('portfolio.portfolio')}
+                operations={latestOperations}
+                navigation={this.props.navigation}/>
             </Row>
           </Grid>
+          <Button block>
+            <Icon type="FontAwesome" name="qrcode"/>
+            <Text>{I18n.t('portfolio.payNotice')}</Text>
+          </Button>
         </Content>
       </Container>
     )

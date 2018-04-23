@@ -128,6 +128,7 @@
     "noNewTransactions": "Non ci sono nuove operazioni.",
     "lastUsage": "Ultimo utilizzo ",
     "yesterday": "ieri alle ",
-    "today": "oggi alle "
+    "today": "oggi alle ",
+    "payNotice": "Paga un avviso"
   }
 }
