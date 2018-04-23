@@ -76,9 +76,6 @@ class PinScreen extends React.Component<Props, State> {
 
   // Method called when the first CodeInput is filled
   onPinFulfill = (code: string) => {
-    if (this.pinComponent) {
-      this.pinComponent.clear()
-    }
     this.setState({
       pinState: {
         state: 'PinSelected',
@@ -131,15 +128,15 @@ class PinScreen extends React.Component<Props, State> {
 
   // Render the PIN match/doesn't match feedback message
   renderCodeInputConfirmValidation = (pinState: PinConfirmed): React.Node => {
-    const validationMessage = pinState.hasError ? (
-      <TextWithIcon danger>
-        <Icon name={'cross'} />
-        <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
-      </TextWithIcon>
-    ) : (
+    const validationMessage = pinState.isConfirmationPinMatch ? (
       <TextWithIcon success>
         <Icon name={'check'} />
         <Text>{I18n.t('onboarding.pin.confirmValid')}</Text>
+      </TextWithIcon>
+    ) : (
+      <TextWithIcon danger>
+        <Icon name={'cross'} />
+        <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
       </TextWithIcon>
     )
     return (
