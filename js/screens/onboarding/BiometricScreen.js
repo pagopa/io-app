@@ -22,6 +22,7 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps
  * A screen that allows the user to set the Biometric.
  *
  * NOTE: Currently an empty screen just to test the navigation.
+ * @https://www.pivotaltracker.com/story/show/156990825
  */
 class BiometricScreen extends React.Component<Props> {
   render(): React.Node {
