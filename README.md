@@ -350,3 +350,21 @@ export default (): Theme => {
 ```
 
 In questo caso quanto definito all'interno dell'attributo `NativeBase.Text` sarà utilizzato solo nel caso in cui il bottone abbia associata una proprietà dal nome `small`.
+
+
+### Custom UI components
+
+#### TextWithIcon
+
+A simple wrapper where you can put an Icon and a Text components that will be rendered side-by-side.
+
+Example usage:
+
+```
+<TextWithIcon danger>
+  <Icon name={'cross'} />
+  <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
+</TextWithIcon>
+```
+
+To change the theme of the wrapper, the Icon and the Text check the `js/theme/components/TextWithIcon.js` file.

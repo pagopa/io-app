@@ -9,7 +9,9 @@ import { connectStyle } from 'native-base-shoutem-theme'
 type Props = ViewProps
 
 /**
- * A simple component to display an Icon and a Text side-by-side
+ * A simple wrapper where you can put an Icon and a Text components that will be rendered side-by-side.
+ *
+ * More @https://github.com/teamdigitale/italia-app#textwithicon
  */
 class TextWithIcon extends React.Component<Props> {
   render(): React.Node {
