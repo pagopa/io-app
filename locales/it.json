@@ -123,6 +123,7 @@
     "hour": "Ora",
     "receipt": "Ricevuta",
     "seeReceipt": "Vedi la ricevuta",
-    "transactions": "Operazioni"
+    "transactions": "Operazioni",
+    "noTransactions": "Non ci sono operazioni."
   }
 }

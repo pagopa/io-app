@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react'
+import I18n from '../../i18n'
 import {Body, Grid, Icon, Left, List, ListItem, Right, Row, Text} from "native-base";
 import type {NavigationScreenProp, NavigationState} from "react-navigation";
 import type {CreditCard, Operation} from "../../lib/portfolio/types"
@@ -57,16 +58,16 @@ class OperationsList extends React.Component<Props>
 
         if (ops === null || ops === undefined)
         {
-            return <Text>{'Operations non definito.'}</Text>
+            return <Text>{'Operations null.'}</Text>
         }
 
         if (!Array.isArray(ops) || !ops.length)
         {
-            return <Text>{'Non ci sono operazioni.'}</Text>
+            return <Text>{I18n.t('portfolio.noTransactions')}</Text>
         }
 
         return (
-            <List style={{marginTop: 20}} dataArray={ops} renderRow={ (item): boolean =>
+            <List dataArray={ops} renderRow={ (item): boolean =>
 
                 <ListItem onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS, {
                     parent: this.props.parent,

@@ -10,7 +10,7 @@ import * as React from 'react'
 import I18n from '../../i18n'
 import { PortfolioStyles } from '../../components/styles'
 import {
-  Button,
+  Button, Content,
   Grid,
   H2,
   Left,
@@ -52,7 +52,7 @@ class OperationDetailsScreen extends React.Component<Props>
     const { params } = this.props.navigation.state;
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION;
     return (
-      <View>
+      <Content>
         <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
         <Grid style={{ marginTop: 50 }}>
           <Row>
@@ -91,7 +91,7 @@ class OperationDetailsScreen extends React.Component<Props>
             </Button>
           </Row>
         </Grid>
-      </View>
+      </Content>
     )
   }
 }

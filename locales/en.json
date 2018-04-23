@@ -124,7 +124,8 @@
     "hour": "Hour",
     "receipt": "Receipt",
     "seeReceipt": "See Receipt",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "noTransactions": "There are no transactions."
 
   }
 }
