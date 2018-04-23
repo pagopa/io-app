@@ -36,7 +36,8 @@ type Props = {
 class PortfolioHomeScreen extends React.Component<Props>
 {
   static navigationOptions = {
-    title: I18n.t('portfolio.portfolio')
+    title: I18n.t('portfolio.portfolio'),
+    headerBackTitle: null
   }
 
   constructor(props: Props)

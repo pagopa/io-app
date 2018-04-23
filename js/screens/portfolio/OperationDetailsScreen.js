@@ -17,7 +17,7 @@ import {
   Right,
   Row,
   Text,
-  Content
+  View
 } from 'native-base'
 import type { Operation, CreditCard } from '../../lib/portfolio/types'
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
@@ -36,7 +36,8 @@ type Props = {
 class OperationDetailsScreen extends React.Component<Props>
 {
   static navigationOptions = {
-    title: I18n.t('portfolio.operationsDetails')
+    title: I18n.t('portfolio.operationsDetails'),
+    headerBackTitle: null
   }
 
   constructor(props: Props)
@@ -51,7 +52,7 @@ class OperationDetailsScreen extends React.Component<Props>
     const { params } = this.props.navigation.state;
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION;
     return (
-      <Content>
+      <View>
         <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
         <Grid style={{ marginTop: 50 }}>
           <Row>
@@ -90,7 +91,7 @@ class OperationDetailsScreen extends React.Component<Props>
             </Button>
           </Row>
         </Grid>
-      </Content>
+      </View>
     )
   }
 }

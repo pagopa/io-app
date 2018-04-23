@@ -37,7 +37,8 @@ type Props = {
 class TransactionsScreen extends React.Component<Props>
 {
   static navigationOptions = {
-      title: I18n.t('portfolio.transactions')
+      title: I18n.t('portfolio.transactions'),
+      headerBackTitle: null
   }
 
   render(): React.Node
@@ -53,9 +54,9 @@ class TransactionsScreen extends React.Component<Props>
         <Content>
           <Grid>
             <Row size={1}>
-              <Text note>{card.brand} - {card.number}</Text>
+              <Text note>{card.brand +' - '+ card.number}</Text>
             </Row>
-            <Row size={1}>
+            <Row style={{marginTop: 5}} size={1}>
               <Left>
                 <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
               </Left>
@@ -63,7 +64,7 @@ class TransactionsScreen extends React.Component<Props>
                 <Text note>{I18n.t('portfolio.total')}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={{marginTop: 10}}>
               <OperationsList parent={I18n.t('portfolio.transactions')} operations={operations}/>
             </Row>
           </Grid>
