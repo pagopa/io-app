@@ -22,7 +22,7 @@ const { store, persistor } = configureStoreAndPersistor()
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-const App = (): React.ReactNode => {
+export default function App(): React.ReactNode {
   return (
     <StyleProvider style={theme()}>
       <Provider store={store}>
@@ -33,5 +33,3 @@ const App = (): React.ReactNode => {
     </StyleProvider>
   )
 }
-
-export default App
