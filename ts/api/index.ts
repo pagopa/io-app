@@ -27,6 +27,12 @@ export type ApiFetchFailure = {
 
 export type ApiFetchResult<T> = ApiFetchSuccess<T> | ApiFetchFailure
 
+export function isApiFetchFailure<T>(
+  r: ApiFetchResult<T>
+): r is ApiFetchFailure {
+  return r.isError
+}
+
 // Utility type to add a required version property
 export type Versionable = {
   version: number
