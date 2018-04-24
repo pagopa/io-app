@@ -4,7 +4,6 @@ import ROUTES from './routes'
 import LandingScreen from '../screens/authentication/LandingScreen'
 import IdpSelectionScreen from '../screens/authentication/IdpSelectionScreen'
 import IdpLoginScreen from '../screens/authentication/IdpLoginScreen'
-import LoginScreen from '../screens/authentication/LoginScreen'
 import SpidInformationRequestScreen from '../screens/authentication/SpidInformationRequestScreen'
 
 /**
@@ -20,9 +19,6 @@ const navigator = StackNavigator(
     },
     [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
       screen: IdpLoginScreen
-    },
-    [ROUTES.AUTHENTICATION_LOGIN]: {
-      screen: LoginScreen
     },
     [ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST]: {
       screen: SpidInformationRequestScreen
