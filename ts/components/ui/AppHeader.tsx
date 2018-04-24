@@ -1,13 +1,8 @@
 import * as React from 'react'
-import { ViewProps } from 'ViewPropTypes'
 import variables from '../../theme/variables'
-import { Header } from 'native-base'
-// Mapped from PropTypes @https://github.com/GeekyAnts/NativeBase/blob/master/src/basic/Header.js
-export type OwnProps = {
-  searchBar: boolean,
-  rounded: boolean
-}
-export type Props = ViewProps | OwnProps
+import { Header, NativeBase } from 'native-base'
+
+export type Props = NativeBase.Header
 /**
  * A customized Header component.
  */
