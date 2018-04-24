@@ -8,7 +8,6 @@ import { reducer as formReducer } from 'redux-form'
 
 import appStateReducer from './appState'
 import navigationReducer from './navigation'
-import userReducer from './user'
 import loadingReducer from '../store/reducers/loading'
 import errorReducer from '../store/reducers/error'
 import sessionReducer from '../store/reducers/session'
@@ -28,7 +27,6 @@ export default combineReducers<GlobalState>({
   appState: appStateReducer,
   network,
   navigation: navigationReducer,
-  user: userReducer,
 
   // UI
   loading: loadingReducer,

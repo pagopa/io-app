@@ -1,4 +1,4 @@
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, NavigationContainer } from 'react-navigation'
 
 import ROUTES from './routes'
 import LandingScreen from '../screens/authentication/LandingScreen'
