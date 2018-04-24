@@ -13,7 +13,13 @@ import {
   PROFILE_UPDATE_SUCCESS
 } from '../store/actions/constants'
 import { ProfileUpdateRequest } from '../store/actions/profile'
-import { ApiFetchResult, ApiProfile, fetchProfile, postProfile } from '../api'
+import {
+  ApiFetchResult,
+  ApiProfile,
+  fetchProfile,
+  postProfile,
+  isApiFetchFailure
+} from '../api'
 import { GlobalState } from '../reducers/types'
 
 // A selector to get the token from the state
@@ -29,13 +35,13 @@ function* loadProfile(): Iterator<Effect> {
     // Fetch the profile from the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(fetchProfile, token)
 
-    if (response.isError) {
+    if (isApiFetchFailure(response)) {
       // If the api response is an error then dispatch the PROFILE_LOAD_FAILURE action.
       yield put({
         type: PROFILE_LOAD_FAILURE,
         payload: response.error
       })
-    } else if (!response.isError) {
+    } else {
       // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
       yield put({ type: PROFILE_LOAD_SUCCESS, payload: response.result })
     }
