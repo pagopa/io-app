@@ -13,9 +13,7 @@ import {
   Button,
   Card,
   CardItem,
-  Container,
-  DeckSwiper,
-  H2,
+  Content,
   Icon,
   Left,
   List,
@@ -25,12 +23,11 @@ import {
 } from 'native-base'
 import { PortfolioStyles } from '../../components/styles'
 import PortfolioAPI from '../../lib/portfolio/portfolio-api'
-
-import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 import ROUTES from '../../navigation/routes'
 import I18n from '../../i18n'
+import PayLayout from '../../components/portfolio/PayLayout'
 
-const Content = require('native-base').Content
+import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>
@@ -54,19 +51,16 @@ class CreditCardsScreen extends React.Component<Props> {
   render(): React.Node {
     const { navigate } = this.props.navigation
     return (
-      <Container>
-        <Content>
-          <H2 style={PortfolioStyles.titleStyle}>
-            {I18n.t('portfolio.creditcards')}
-          </H2>
-          <Text style={PortfolioStyles.titleStyle}>
-            {I18n.t('portfolio.paymentMethods')}
-          </Text>
+      <PayLayout
+        title={I18n.t('portfolio.creditcards')}
+        subtitleLeft={I18n.t('portfolio.paymentMethods')}
+      >
+        <Content style={PortfolioStyles.pfback}>
           <View style={{ minHeight: 400 }}>
             <List
               removeClippedSubviews={false}
               dataArray={cards}
-              renderRow={item => (
+              renderRow={(item): React.Element<*> => (
                 <Card style={{ elevation: 3, marginTop: 5 }}>
                   <CardItem>
                     <Left>
@@ -102,7 +96,7 @@ class CreditCardsScreen extends React.Component<Props> {
             />
           </View>
         </Content>
-      </Container>
+      </PayLayout>
     )
   }
 }

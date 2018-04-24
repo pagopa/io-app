@@ -119,7 +119,7 @@
     "transactionFee": "Transaction fee",
     "why": "Why?",
     "causal": "Causal",
-    "recipient": "Recipien",
+    "recipient": "Recipient",
     "date": "Date",
     "hour": "Hour",
     "receipt": "Receipt",
@@ -130,6 +130,9 @@
     "lastUsage": "Last usage ",
     "yesterday": "yesterday at ",
     "today": "today at ",
-    "payNotice": "Pay Notice"
+    "payNotice": "Pay Notice",
+    "lastOperations": "Latest operations",
+    "operations": "Operations",
+    "creditDebtCards": "Credit/Debt Cards"
   }
 }

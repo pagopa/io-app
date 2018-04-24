@@ -1,6 +1,6 @@
 /**
  * CITTADINANZA DIGITALE
- * io.italia.it
+ * Operations' list component
  *
  * @flow
  */
@@ -20,12 +20,15 @@ import {
 } from 'native-base'
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 import type { CreditCard, Operation } from '../../lib/portfolio/types'
+import { PortfolioStyles } from '../../components/styles'
 import PortfolioAPI from '../../lib/portfolio/portfolio-api'
 import { withNavigation } from 'react-navigation'
 import ROUTES from '../../navigation/routes'
 
 type Props = {
   parent: string,
+  title: string,
+  totalAmount: string,
   navigation: NavigationScreenProp<NavigationState>,
   operations: $ReadOnlyArray<Operation>
 }
@@ -45,7 +48,8 @@ class OperationsList extends React.Component<Props, State> {
 
   renderDate(operation: Operation): React.Node {
     const datetime: string = `${operation.date} - ${operation.time}`
-    if (operation.isNew) {
+    if (operation.isNew)
+    {
       return (
         <Row>
           <Icon
@@ -82,40 +86,52 @@ class OperationsList extends React.Component<Props, State> {
     }
 
     return (
-      <List
-        removeClippedSubviews={false}
-        dataArray={ops}
-        renderRow={(item): React.Element<*> => (
-          <ListItem
-            onPress={(): boolean =>
-              navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS, {
-                parent: this.props.parent,
-                operation: item,
-                card: this.getCard(item)
-              })
-            }
-          >
-            <Body>
-              <Grid>
-                {this.renderDate(item)}
-                <Row>
-                  <Left>
-                    <Text>{item.subject}</Text>
-                  </Left>
-                  <Right>
-                    <Text>
-                      {item.amount} {item.currency}
-                    </Text>
-                  </Right>
-                </Row>
-                <Row>
-                  <Text note>{item.location}</Text>
-                </Row>
-              </Grid>
-            </Body>
-          </ListItem>
-        )}
-      />
+      <Grid>
+        <Row>
+          <Left>
+            <Text style={PortfolioStyles.pfbold}>{this.props.title}</Text>
+          </Left>
+          <Right>
+            <Text>{this.props.totalAmount}</Text>
+          </Right>
+        </Row>
+        <Row>
+          <List
+            removeClippedSubviews={false}
+            dataArray={ops}
+            renderRow={(item): React.Element<*> => (
+              <ListItem
+                onPress={(): boolean =>
+                  navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS, {
+                    parent: this.props.parent,
+                    operation: item,
+                    card: this.getCard(item)
+                  })
+                }
+              >
+                <Body>
+                  <Grid>
+                    {this.renderDate(item)}
+                    <Row>
+                      <Left>
+                        <Text>{item.subject}</Text>
+                      </Left>
+                      <Right>
+                        <Text>
+                          {item.amount} {item.currency}
+                        </Text>
+                      </Right>
+                    </Row>
+                    <Row>
+                      <Text note>{item.location}</Text>
+                    </Row>
+                  </Grid>
+                </Body>
+              </ListItem>
+            )}
+          />
+        </Row>
+      </Grid>
     )
   }
 }

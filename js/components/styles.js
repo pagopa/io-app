@@ -67,24 +67,55 @@ const ProfileStyles = StyleSheet.create({
 })
 
 const PortfolioStyles = StyleSheet.create({
-  titleStyle: {
+  pftext: {
+    fontFamily: 'Titillium Web',
+    color: '#fafafa'
+  },
+  pftitle: {
     fontFamily: 'Titillium Web',
     fontWeight: 'bold',
-    color: 'rgb(150,150,150)'
+    fontSize: 30,
+    color: '#fafafa'
   },
-  boldStyle: {
+  pfsubtitle: {
+    fontFamily: 'Titillium Web',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#fafafa'
+  },
+  pfbold: {
     fontFamily: 'Titillium Web',
     fontWeight: 'bold',
     color: 'rgb(30,30,30)'
   },
-  container: {
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+  pfwhy: {
+    fontFamily: 'Titillium Web',
+    fontWeight: 'bold',
+    color: '#3a3bfa'
   },
-  image: {
-    height: 150,
-    marginLeft: -120,
+  pfback: {
+    backgroundColor: '#4a5761'
+  },
+  pfwhite: {
+    backgroundColor: '#fafafa'
+  },
+  container: {
+    flex: 1
+  },
+  pfcards: {
+    height: 120,
+    marginLeft: -200,
+    resizeMode: 'contain'
+  },
+  pftabcard: {
+    height: 120,
+    marginLeft: -170,
+    resizeMode: 'contain'
+  },
+  pfsingle: {
+    height: 60,
+    marginLeft: -190,
+    marginTop: 45,
     resizeMode: 'contain'
   }
 })

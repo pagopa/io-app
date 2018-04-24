@@ -6,27 +6,19 @@
  */
 
 import * as React from 'react'
+import ROUTES from '../../navigation/routes'
 import I18n from '../../i18n'
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
 import { Image, TouchableHighlight } from 'react-native'
-import {
-  Container,
-  Content,
-  H2,
-  Text,
-  View,
-  Left,
-  Right,
-  Button,
-  Icon
-} from 'native-base'
-import { Grid, Row } from 'react-native-easy-grid'
+import { Content, View } from 'native-base'
 import { PortfolioStyles } from '../../components/styles'
 import OperationsList from '../../components/portfolio/OperationsComponent'
 import PortfolioAPI from '../../lib/portfolio/portfolio-api'
-
 import type { Operation } from '../../lib/portfolio/types'
-import ROUTES from '../../navigation/routes'
+import PayLayout from '../../components/portfolio/PayLayout'
+
+// Images
+import cardsImage from '../../../img/portfolio/creditcards.jpg'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>
@@ -45,56 +37,43 @@ class PortfolioHomeScreen extends React.Component<Props> {
     super(props)
   }
 
-  render(): React.Node {
+  touchableContent(): React.Node {
     const { navigate } = this.props.navigation
+    return (
+      <View style={PortfolioStyles.container}>
+        <TouchableHighlight
+          onPress={(): boolean =>
+            navigate(ROUTES.PORTFOLIO_CREDITCARDS)
+          }
+        >
+          <Image style={PortfolioStyles.pfcards} source={cardsImage} />
+        </TouchableHighlight>
+      </View>
+    )
+  }
+
+  render(): React.Node {
     const TITLE = I18n.t('portfolio.portfolio')
-    const cardsImage = require('../../../img/creditcards.jpg')
     const latestOperations: $ReadOnlyArray<
       Operation
     > = PortfolioAPI.getLatestOperations()
-
     return (
-      <Container>
-        <Content>
-          <Grid style={{ marginTop: 100 }}>
-            <Row>
-              <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
-            </Row>
-            <Row style={{ marginTop: 5 }}>
-              <Left>
-                <Text style={PortfolioStyles.titleStyle}>
-                  {I18n.t('portfolio.paymentMethods')}
-                </Text>
-              </Left>
-              <Right>
-                <Text>{I18n.t('portfolio.add')}</Text>
-              </Right>
-            </Row>
-            <Row style={{ marginTop: 20 }}>
-              <View style={PortfolioStyles.container}>
-                <TouchableHighlight
-                  onPress={(): boolean =>
-                    navigate(ROUTES.PORTFOLIO_CREDITCARDS)
-                  }
-                >
-                  <Image style={PortfolioStyles.image} source={cardsImage} />
-                </TouchableHighlight>
-              </View>
-            </Row>
-            <Row>
-              <OperationsList
-                parent={I18n.t('portfolio.portfolio')}
-                operations={latestOperations}
-                navigation={this.props.navigation}
-              />
-            </Row>
-          </Grid>
-          <Button block>
-            <Icon type="FontAwesome" name="qrcode" />
-            <Text>{I18n.t('portfolio.payNotice')}</Text>
-          </Button>
+      <PayLayout
+        title={TITLE}
+        subtitleLeft={I18n.t('portfolio.paymentMethods')}
+        subtitleRight={I18n.t('portfolio.add')}
+        touchableContent={this.touchableContent()}
+      >
+        <Content style={PortfolioStyles.pfwhite}>
+          <OperationsList
+            parent={I18n.t('portfolio.portfolio')}
+            title={I18n.t('portfolio.lastOperations')}
+            totalAmount={I18n.t('portfolio.total')}
+            operations={latestOperations}
+            navigation={this.props.navigation}
+          />
         </Content>
-      </Container>
+      </PayLayout>
     )
   }
 }

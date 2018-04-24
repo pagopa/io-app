@@ -129,6 +129,9 @@
     "lastUsage": "Ultimo utilizzo ",
     "yesterday": "ieri alle ",
     "today": "oggi alle ",
-    "payNotice": "Paga un avviso"
+    "payNotice": "Paga un avviso",
+    "lastOperations": "Ultime Operazioni",
+    "operations": "Operazioni",
+    "creditDebtCards": "Carte di Credito/Debito"
   }
 }

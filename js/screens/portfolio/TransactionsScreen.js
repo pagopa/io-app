@@ -8,23 +8,20 @@
 import * as React from 'react'
 
 import I18n from '../../i18n'
-import {
-  Container,
-  Content,
-  Grid,
-  H2,
-  Left,
-  Right,
-  Row,
-  Text
-} from 'native-base'
+import { Content, View } from 'native-base'
 import { PortfolioStyles } from '../../components/styles'
 import { UNKNOWN_CARD } from '../../lib/portfolio/unknowns'
 import PortfolioAPI from '../../lib/portfolio/portfolio-api'
 import OperationsList from '../../components/portfolio/OperationsComponent'
+import ROUTES from '../../navigation/routes'
+import { Image, TouchableHighlight } from 'react-native'
+import SimpleLayout from '../../components/portfolio/SimpleLayout'
 
 import type { Operation, CreditCard } from '../../lib/portfolio/types'
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
+
+// Images
+import cardsImage from '../../../img/portfolio/card-tab.png'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>,
@@ -44,41 +41,40 @@ class TransactionsScreen extends React.Component<Props> {
     super(props)
   }
 
+  touchableContent(): React.Node {
+    const { navigate } = this.props.navigation
+    return (
+      <View style={PortfolioStyles.container}>
+        <TouchableHighlight
+          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
+        >
+          <Image style={PortfolioStyles.pftabcard} source={cardsImage} />
+        </TouchableHighlight>
+      </View>
+    )
+  }
+
   render(): React.Node {
     // $FlowFixMe
     const { params } = this.props.navigation.state
-    //      ^^^^^^ https://github.com/react-navigation/react-navigation/issues/1237
     const card: CreditCard = params ? params.card : UNKNOWN_CARD
     const operations: $ReadOnlyArray<Operation> = PortfolioAPI.getOperations(
       card.id
     )
-    const TITLE: string = I18n.t('portfolio.transactions')
+    const TITLE = I18n.t('portfolio.creditDebtCards')
 
     return (
-      <Container>
-        <Content>
-          <Grid>
-            <Row>
-              <Text note>{card.brand + ' - ' + card.number}</Text>
-            </Row>
-            <Row style={{ marginTop: 5 }}>
-              <Left>
-                <H2 style={PortfolioStyles.titleStyle}>{TITLE}</H2>
-              </Left>
-              <Right>
-                <Text note>{I18n.t('portfolio.total')}</Text>
-              </Right>
-            </Row>
-            <Row style={{ marginTop: 10 }}>
-              <OperationsList
-                parent={I18n.t('portfolio.transactions')}
-                operations={operations}
-                navigation={this.props.navigation}
-              />
-            </Row>
-          </Grid>
+      <SimpleLayout title={TITLE} touchableContent={this.touchableContent()}>
+        <Content style={PortfolioStyles.pfwhite}>
+          <OperationsList
+            parent={I18n.t('portfolio.transactions')}
+            title={I18n.t('portfolio.operations')}
+            totalAmount={I18n.t('portfolio.total')}
+            operations={operations}
+            navigation={this.props.navigation}
+          />
         </Content>
-      </Container>
+      </SimpleLayout>
     )
   }
 }
