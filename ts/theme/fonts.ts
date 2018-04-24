@@ -4,13 +4,9 @@
  * README file included in this repository.
  */
 
-import { Platform, PlatformOSType } from 'react-native'
+import { Platform, PlatformOSType, PlatformStatic } from 'react-native'
 
-type PlatformSelectType<T> = <T>(
-  specifics: { [platform in PlatformOSType | 'default']?: T }
-) => T
-
-type PlatformSelectSpec<T> = { [platform in PlatformOSType | 'default']?: T }
+type PlatformSelectType = PlatformStatic['select']
 
 const font = Platform.select({
   android: 'TitilliumWeb',
@@ -36,7 +32,7 @@ export type FontStyleObject = {
  * Get the correct fontFamily name on both Android and iOS
  */
 export const makeFontFamilyName = (
-  osSelect: PlatformSelectType<string>,
+  osSelect: PlatformSelectType,
   weight: FontWeight | null = '400',
   isItalic: boolean | null = false
 ): string =>
@@ -50,7 +46,7 @@ export const makeFontFamilyName = (
  * a Font correctly on both Android and iOS.
  */
 export const makeFontStyleObject = (
-  osSelect: PlatformSelectType<string | FontStyleObject>,
+  osSelect: PlatformSelectType,
   weight: FontWeight | null = '400',
   isItalic: boolean | null = false
 ): FontStyleObject =>
