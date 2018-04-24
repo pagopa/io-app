@@ -22,14 +22,16 @@ const { store, persistor } = configureStoreAndPersistor()
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-export default function App(): React.ReactNode {
-  return (
-    <StyleProvider style={theme()}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <RootContainer />
-        </PersistGate>
-      </Provider>
-    </StyleProvider>
-  )
+export default class App extends React.Component<never, never> {
+  render() {
+    return (
+      <StyleProvider style={theme()}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <RootContainer />
+          </PersistGate>
+        </Provider>
+      </StyleProvider>
+    )
+  }
 }
