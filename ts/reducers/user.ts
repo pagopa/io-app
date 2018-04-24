@@ -13,29 +13,29 @@ import {
 import { Action } from '../actions/types'
 import { ApiUserProfile } from '../utils/api'
 
-import config from '../config'
+import * as config from '../config'
 
 // user state when logged out
 export type DefaultLoggedOutUserState = {
-  isLoggedIn: false,
-  isError: false,
+  isLoggedIn: false
+  isError: false
   apiUrlPrefix: string
 }
 
 // user state when there is an error, tracing by isError=true
 export type ErrorLoggedOutUserState = {
-  isLoggedIn: false,
-  isError: true,
-  apiUrlPrefix: string,
+  isLoggedIn: false
+  isError: true
+  apiUrlPrefix: string
   errorMessage: string
 }
 
 // user state when logged in
 export type LoggedInUserState = {
-  isLoggedIn: true,
-  apiUrlPrefix: string,
-  token: string,
-  idpId: string,
+  isLoggedIn: true
+  apiUrlPrefix: string
+  token: string
+  idpId: string
   profile?: ApiUserProfile
 }
 

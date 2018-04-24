@@ -9,7 +9,7 @@ import { CommonStyles } from './styles'
 import * as React from 'react'
 import { StyleSheet, View, WebView, Image, Modal } from 'react-native'
 
-import config from '../config'
+import * as config from '../config'
 import I18n from '../i18n'
 
 import {
