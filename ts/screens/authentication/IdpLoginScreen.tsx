@@ -5,7 +5,10 @@ import { WebView } from 'react-native'
 import { Container, Left, Button, Icon, Text, Body } from 'native-base'
 import { ReduxProps } from '../../actions/types'
 import { GlobalState } from '../../reducers/types'
-import { SessionState } from '../../store/reducers/session'
+import {
+  SessionState,
+  isUnauthenticatedWithoutIdpSessionState
+} from '../../store/reducers/session'
 import * as config from '../../config'
 import I18n from '../../i18n'
 import AppHeader from '../../components/ui/AppHeader'
@@ -26,7 +29,7 @@ const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`
 class IdpLoginScreen extends React.Component<Props, never> {
   render() {
     const { session } = this.props
-    if (!session.idp) {
+    if (isUnauthenticatedWithoutIdpSessionState(session)) {
       return null
     }
     const loginUri = LOGIN_BASE_URL + session.idp.entityID

@@ -36,10 +36,16 @@ export const INITIAL_STATE: UnauthenticatedWithoutIdpSessionState = {
 }
 
 // Type guards
-function isUnauthenticatedWithIdpSessionState(
+export function isUnauthenticatedWithIdpSessionState(
   state: any
 ): state is UnauthenticatedWithIdpSessionState {
   return !state.isAuthenticated && state.idp
+}
+
+export function isUnauthenticatedWithoutIdpSessionState(
+  state: any
+): state is UnauthenticatedWithoutIdpSessionState {
+  return !state.isAuthenticated && !state.idp
 }
 
 // Selectors
