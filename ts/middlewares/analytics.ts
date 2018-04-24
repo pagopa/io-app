@@ -13,16 +13,8 @@ import { sha256 } from 'react-native-sha256'
 import { REHYDRATE } from 'redux-persist/lib/constants'
 
 import {
-  USER_WILL_LOGIN_ACTION,
-  USER_SELECTED_SPID_PROVIDER_ACTION,
-  USER_LOGGED_IN_ACTION,
-  USER_LOGIN_ERROR_ACTION
-} from '../actions'
-import {
   MiddlewareAPI,
   Action,
-  AnyAction,
-  Thunk,
   Dispatch
 } from '../actions/types'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
@@ -30,14 +22,10 @@ import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export function actionTracking(): (Dispatch) => (AnyAction) => AnyAction {
-  return (next: Dispatch): ((AnyAction) => AnyAction) => {
-    return (action: AnyAction): AnyAction => {
-      const result: Action | Thunk = next(action)
-
-      if (typeof action === 'function') {
-        return result
-      }
+export function actionTracking(): (Dispatch) => (Action) => Action {
+  return (next: Dispatch): ((Action) => Action) => {
+    return (action: Action): Action => {
+      const result: Action = next(action)
 
       switch (result.type) {
         case APP_STATE_CHANGE_ACTION: {
@@ -46,6 +34,8 @@ export function actionTracking(): (Dispatch) => (AnyAction) => AnyAction {
           })
           break
         }
+
+        /*
         case USER_WILL_LOGIN_ACTION: {
           Mixpanel.track('USER_WILL_LOGIN')
           break
@@ -86,6 +76,8 @@ export function actionTracking(): (Dispatch) => (AnyAction) => AnyAction {
           })
           break
         }
+        */
+
         default: {
           break
         }
@@ -99,21 +91,21 @@ export function actionTracking(): (Dispatch) => (AnyAction) => AnyAction {
 // gets the current screen from navigation state
 // TODO: Need to be fixed
 export function getCurrentRouteName(
-  navNode: NavigationState | NavigationLeafRoute
+  navNode: NavigationState | NavigationLeafRoute<any>
 ): string | null {
   if (!navNode) {
     return null
   }
 
-  if (typeof navNode.routeName === 'string') {
+  if (navNode.routeName && typeof navNode.routeName === 'string') {
     // navNode is a NavigationLeafRoute
     return navNode.routeName
   }
 
   // navNode is a NavigationState
   // eslint-disable-next-line flowtype/no-weak-types
-  const navState = (navNode as any) as NavigationState
-  const route = navState.routes[navState.index]
+  //const navState = (navNode as any) as NavigationState
+  const route = navNode.routes[navNode.index]
   return getCurrentRouteName(route)
 }
 
@@ -123,9 +115,9 @@ export function getCurrentRouteName(
 */
 export function screenTracking(
   store: MiddlewareAPI
-): (Dispatch) => (AnyAction) => AnyAction {
-  return (next: Dispatch): ((AnyAction) => AnyAction) => {
-    return (action: AnyAction): AnyAction => {
+): (Dispatch) => (AnyAction) => Action {
+  return (next: Dispatch): ((Action) => Action) => {
+    return (action: Action): Action => {
       if (
         action.type !== NavigationActions.NAVIGATE &&
         action.type !== NavigationActions.BACK

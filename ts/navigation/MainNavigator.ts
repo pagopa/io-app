@@ -1,4 +1,4 @@
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, NavigationContainer } from 'react-navigation'
 
 import ROUTES from './routes'
 import MessagesScreen from '../screens/main/MessagesScreen'
