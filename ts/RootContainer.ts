@@ -1,12 +1,10 @@
-// @flow
-
 import * as React from 'react'
 import { AppState, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Root } from 'native-base'
 
-import { type ReduxProps, type ApplicationState } from './actions/types'
+import { ReduxProps, ApplicationState } from './actions/types'
 import { APP_STATE_CHANGE_ACTION } from './store/actions/constants'
 import ConnectionBar from './components/ConnectionBar'
 import Navigation from './navigation'
@@ -29,7 +27,7 @@ class RootContainer extends React.Component<Props> {
     AppState.removeEventListener('change', this.onApplicationActivityChange)
   }
 
-  render(): React.Node {
+  render(): React.ReactNode {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />

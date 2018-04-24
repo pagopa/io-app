@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { StyleProvider } from 'native-base'
@@ -24,7 +22,7 @@ const { store, persistor } = configureStoreAndPersistor()
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-const App = (): React.Node => {
+const App = (): React.ReactNode => {
   return (
     <StyleProvider style={theme()}>
       <Provider store={store}>
