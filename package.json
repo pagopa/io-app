@@ -10,7 +10,9 @@
     "lint": "eslint 'js/**/*.js'",
     "flow": "flow check",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
-    "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle"
+    "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle",
+    "runandroid": "react-native run-android",
+    "runios": "react-native run-ios"
   },
   "dependencies": {
     "color": "^2.0.0",
@@ -22,9 +24,10 @@
     "react-native": "0.54.2",
     "react-native-config": "^0.11.2",
     "react-native-device-info": "^0.13",
-    "react-native-fs": "2.9.12",
+    "react-native-fs": "^2.9.12",
     "react-native-i18n": "^2.0.10",
     "react-native-mixpanel": "^0.0.16",
+    "react-native-easy-grid": "^0.1.17",
     "react-native-modal": "^5.4.0",
     "react-native-offline": "^3.7.3",
     "react-native-sha256": "^1.0.1",

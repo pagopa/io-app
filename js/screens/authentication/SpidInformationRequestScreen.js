@@ -26,6 +26,7 @@ import Modal from '../../components/ui/Modal'
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from '../../components/forms/SpidInformationForm'
+import ROUTES from '../../navigation/routes'
 
 type ReduxMappedProps = {
   isFormValid: boolean
@@ -95,7 +96,14 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           </Text>
         </Content>
         <View footer>
-          <Button block primary disabled={!this.props.isFormValid}>
+          <Button
+            block
+            primary
+            disabled={!this.props.isFormValid}
+            onPress={(): boolean =>
+              this.props.navigation.navigate(ROUTES.PORTFOLIO_HOME)
+            }
+          >
             <Text>
               {I18n.t('authentication.spid_information_request.continue')}
             </Text>

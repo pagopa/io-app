@@ -24,6 +24,9 @@
 .*/node_modules/react-native-sha256/*
 .*/node_modules/react-native-offline/*
 .*/node_modules/redux-persist/*
+.*/node_modules/react-native/Libraries/Lists/SectionList.js
+.*/node_modules/react-native/Libraries/react-native/react-native-implementation.js
+.*/js/theme/*
 
 [include]
 
