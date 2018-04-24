@@ -12,14 +12,14 @@ import {
   Text,
   KeyboardAvoidingView,
   Keyboard,
-  Animated
+  Animated,
+  EmitterSubscription
 } from 'react-native'
 
 import I18n from '../../i18n'
 
 import { H1, H2 } from 'native-base'
 
-import EmitterSubscription from 'EmitterSubscription'
 import { NavigationScreenProp, NavigationState } from 'react-navigation'
 
 import { SpidLoginButton } from '../../components/SpidLoginButton'
@@ -70,7 +70,7 @@ const ANIMATION_START_LOGO_HEIGHT = 70
 const ANIMATION_END_LOGO_HEIGHT = 0
 
 type ReduxMappedProps = {
-  isConnected: boolean,
+  isConnected: boolean
   user: UserState
 }
 
