@@ -15,7 +15,7 @@ import {
 } from 'native-base'
 import { ReduxProps } from '../../actions/types'
 import { IdentityProvider } from '../../../ts-js/utils/api'
-import config from '../../config'
+import * as config from '../../config'
 import I18n from '../../i18n'
 import AppHeader from '../../components/ui/AppHeader'
 import IdpsGrid from '../../components/IdpsGrid'

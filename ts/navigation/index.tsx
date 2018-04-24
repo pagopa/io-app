@@ -59,7 +59,7 @@ class Navigation extends React.Component<Props> {
     return true
   }
 
-  render(): React.Node {
+  render() {
     return (
       <AppNavigator
         navigation={addNavigationHelpers({
