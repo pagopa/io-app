@@ -11,6 +11,7 @@ declare module 'native-base' {
       extralarge?: boolean
       modal?: boolean
       footer?: boolean
+      header?: boolean
     }
   }
 }
