@@ -7,7 +7,7 @@ import * as ReactNative from 'react-native'
 
 declare module 'native-base' {
   namespace NativeBase {
-    interface View extends ReactNative.TouchableOpacityProperties, BsStyle {
+    interface Button extends ReactNative.TouchableOpacityProperties, BsStyle {
       white?: boolean
     }
   }
