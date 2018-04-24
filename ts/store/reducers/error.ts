@@ -52,7 +52,7 @@ const reducer = (
     // We need to set the error message
     return {
       ...state,
-      [requestName]: action.payload ? action.payload : 'Generic error'
+      [requestName]: (action as any).payload || 'Generic error'
     }
   } else {
     // We need to remove the error message

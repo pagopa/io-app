@@ -12,11 +12,7 @@ import { has } from 'lodash'
 import { sha256 } from 'react-native-sha256'
 import { REHYDRATE } from 'redux-persist/lib/constants'
 
-import {
-  MiddlewareAPI,
-  Action,
-  Dispatch
-} from '../actions/types'
+import { MiddlewareAPI, Action, Dispatch } from '../actions/types'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
 /*
@@ -90,9 +86,7 @@ export function actionTracking(): (Dispatch) => (Action) => Action {
 
 // gets the current screen from navigation state
 // TODO: Need to be fixed
-export function getCurrentRouteName(
-  navNode: NavigationState | NavigationLeafRoute<any>
-): string | null {
+export function getCurrentRouteName(navNode: any): string | null {
   if (!navNode) {
     return null
   }
@@ -102,11 +96,12 @@ export function getCurrentRouteName(
     return navNode.routeName
   }
 
-  // navNode is a NavigationState
-  // eslint-disable-next-line flowtype/no-weak-types
-  //const navState = (navNode as any) as NavigationState
-  const route = navNode.routes[navNode.index]
-  return getCurrentRouteName(route)
+  if (navNode.routes && navNode.index && navNode.routes[navNode.index]) {
+    const route = navNode.routes[navNode.index]
+    return getCurrentRouteName(route)
+  }
+
+  return null
 }
 
 /*

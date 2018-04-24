@@ -3,9 +3,14 @@ import { NavigationState, NavigationActions } from 'react-navigation'
 import { Action } from '../actions/types'
 import AppNavigator from '../navigation/AppNavigator'
 
-const INITIAL_STATE: NavigationState = AppNavigator.router.getInitialState()
+const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
+  NavigationActions.init()
+)
 
-function nextState(state: NavigationState, action: Action): NavigationState | null {
+function nextState(
+  state: NavigationState,
+  action: Action
+): NavigationState | null {
   switch (action.type) {
     /**
      * The getStateForAction method only accepts NavigationActions so we need to
