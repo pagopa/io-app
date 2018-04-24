@@ -4,6 +4,16 @@ import { Theme } from '../types'
 import variables from '../variables'
 import { makeFontStyleObject } from '../fonts'
 
+import * as ReactNative from 'react-native'
+
+declare module 'native-base' {
+  namespace NativeBase {
+    interface Text extends ReactNative.TextProperties {
+      link?: boolean
+    }
+  }
+}
+
 export default (): Theme => {
   const theme = {
     '.link': {

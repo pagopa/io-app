@@ -60,7 +60,6 @@ class IdpsGrid extends React.Component<Props> {
         data={idps}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
-        onPress
       />
     )
   }
