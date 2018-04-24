@@ -2,7 +2,7 @@
  * Aggregates all defined reducers
  */
 
-import { combineReducers } from 'redux'
+import { combineReducers, AnyAction } from 'redux'
 import { reducer as network } from 'react-native-offline'
 import { reducer as formReducer } from 'redux-form'
 
@@ -14,7 +14,9 @@ import errorReducer from '../store/reducers/error'
 import sessionReducer from '../store/reducers/session'
 import onboardingReducer from '../store/reducers/onboarding'
 import profileReducer from '../store/reducers/profile'
+import { GlobalState } from './types'
 
+export { AnyAction }
 /**
  * Here we combine all the reducers.
  * We use the best practice of separating UI state from the DATA state.
@@ -22,7 +24,7 @@ import profileReducer from '../store/reducers/profile'
  * DATA state is where we store real data fetched from the API (ex. profile/messages).
  * More at @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-export default combineReducers({
+export default combineReducers<GlobalState>({
   appState: appStateReducer,
   network,
   navigation: navigationReducer,

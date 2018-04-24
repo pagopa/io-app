@@ -7,12 +7,13 @@ import createSagaMiddleware from 'redux-saga'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
-import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../../ts-js/utils/constants'
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
 import rootReducer from '../reducers'
 import rootSaga from '../sagas'
 import { Store, StoreEnhancer } from '../actions/types'
 import { GlobalState } from '../reducers/types'
 import { NavigationState } from 'react-navigation'
+import { AnyAction } from 'redux'
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 
@@ -25,7 +26,10 @@ const persistConfig = {
   blacklist: ['navigation', 'loading', 'error']
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer<GlobalState, AnyAction>(
+  persistConfig,
+  rootReducer
+)
 
 const logger = createLogger({
   predicate: (): boolean => isDebuggingInChrome,
@@ -49,16 +53,16 @@ const navigation = createReactNavigationReduxMiddleware(
   (state: GlobalState): NavigationState => state.navigation
 )
 
-const configureStoreAndPersistor = (): {
-  store: Store,
+function configureStoreAndPersistor(): {
+  store: Store
   persistor: Persistor
-} => {
+} {
   /**
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.
    */
   const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   const enhancer: StoreEnhancer = composeEnhancers(
     applyMiddleware(
       thunk,
@@ -70,11 +74,11 @@ const configureStoreAndPersistor = (): {
     )
   )
 
-  const store: Store = createStore(persistedReducer, enhancer)
+  const store: Store = createStore<GlobalState>(persistedReducer, enhancer)
   const persistor = persistStore(store)
 
   if (isDebuggingInChrome) {
-    window.store = store
+    ;(window as any).store = store
   }
 
   // Run the main saga
