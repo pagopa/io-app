@@ -53,6 +53,13 @@ export const initialUserState: DefaultLoggedOutUserState = {
   apiUrlPrefix: config.apiUrlPrefix
 }
 
+// Type guard
+export function isErrorLoggedOutUserState(
+  state: any
+): state is ErrorLoggedOutUserState {
+  return state.isError === true && state.isLoggedIn === false
+}
+
 /**
  * Reducer for the user state
  */
