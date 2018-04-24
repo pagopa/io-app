@@ -35,7 +35,7 @@ function* loadProfile(): Iterator<Effect> {
         type: PROFILE_LOAD_FAILURE,
         payload: response.error
       })
-    } else {
+    } else if (!response.isError) {
       // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
       yield put({ type: PROFILE_LOAD_SUCCESS, payload: response.result })
     }

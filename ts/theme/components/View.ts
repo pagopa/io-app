@@ -1,6 +1,20 @@
 import { Theme } from '../types'
 import variables from '../variables'
 
+import * as ReactNative from 'react-native'
+
+declare module 'native-base' {
+  namespace NativeBase {
+    interface View extends ReactNative.ViewProperties {
+      spacer?: boolean
+      large?: boolean
+      extralarge?: boolean
+      modal?: boolean
+      footer?: boolean
+    }
+  }
+}
+
 export default (): Theme => {
   const theme = {
     '.spacer': {

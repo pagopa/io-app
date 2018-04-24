@@ -11,9 +11,7 @@ import { GlobalState } from '../../reducers/types'
 import { Action } from '../../actions/types'
 import { FetchRequestActionsType } from '../actions/constants'
 
-export type LoadingState = {
-  [key: FetchRequestActionsType]: boolean
-}
+export type LoadingState = { [key in FetchRequestActionsType]?: boolean }
 
 export const INITIAL_STATE: LoadingState = {}
 

@@ -8,20 +8,20 @@ import { apiUrlPrefix } from '../config'
  * Describes a SPID Identity Provider
  */
 export type IdentityProvider = {
-  id: string,
-  logo: any,
-  name: string,
-  entityID: string,
+  id: string
+  logo: any
+  name: string
+  entityID: string
   profileUrl: string
 }
 
 export type ApiFetchSuccess<T> = {
-  isError: false,
+  isError: false
   result: T
 }
 
 export type ApiFetchFailure = {
-  isError: true,
+  isError: true
   error: Error
 }
 
@@ -44,7 +44,7 @@ export type ApiProfile = {
 } & Versionable
 
 export type LoginSuccess = {
-  success: true,
+  success: true
   token: string
 }
 

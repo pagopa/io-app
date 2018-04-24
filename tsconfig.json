@@ -12,10 +12,10 @@
     "allowJs": false,
     "sourceMap": true,
     "declaration": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true
+    "strict": false,
+    "noImplicitReturns": false,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false
   },
   "types": [
     "react",

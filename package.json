@@ -47,6 +47,7 @@
     "@types/react": "^16.3.0-alpha",
     "@types/react-native": "^0.55.0",
     "@types/react-native-i18n": "^2.0.0",
+    "@types/react-redux": "^5.0.16",
     "babel-eslint": "^8.2.3",
     "babel-jest": "22.4.1",
     "babel-preset-react-native": "4.0.0",

@@ -11,9 +11,7 @@ import { GlobalState } from '../../reducers/types'
 import { Action } from '../../actions/types'
 import { FetchRequestActionsType } from '../actions/constants'
 
-export type ErrorState = {
-  [key: FetchRequestActionsType]: string
-}
+export type ErrorState = { [key in FetchRequestActionsType]?: string }
 
 export const INITIAL_STATE: ErrorState = {}
 
