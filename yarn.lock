@@ -440,11 +440,18 @@
   dependencies:
     "@types/i18n-js" "*"
 
-"@types/react-native@^0.55.0":
+"@types/react-native@*", "@types/react-native@^0.55.0":
   version "0.55.4"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.4.tgz#866005d86490e2fd60543b143b2a5ac208aa925b"
   dependencies:
     "@types/react" "*"
+
+"@types/react-navigation@^1.5.7":
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-1.5.7.tgz#58acf549a65ec5d5c50602dcf705358c257251b2"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
 
 "@types/react-redux@^5.0.16":
   version "5.0.16"
