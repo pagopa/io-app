@@ -4,7 +4,6 @@ import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import { Container } from 'native-base'
 import { GlobalState } from '../../reducers/types'
 import { ReduxProps } from '../../actions/types'
-import { UserState } from '../../reducers/user'
 
 export type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>
