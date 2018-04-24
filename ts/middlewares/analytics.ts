@@ -28,10 +28,10 @@ import {
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
 /*
-  The middleware acts as a general hook in order to track any meaningful action
-*/
-function actionTracking(): Dispatch => AnyAction => AnyAction {
-  return (next: Dispatch): (AnyAction => AnyAction) => {
+ * The middleware acts as a general hook in order to track any meaningful action
+ */
+function actionTracking(): (Dispatch) => (AnyAction) => AnyAction {
+  return (next: Dispatch): ((AnyAction) => AnyAction) => {
     return (action: AnyAction): AnyAction => {
       const result: Action | Thunk = next(action)
 
@@ -100,7 +100,7 @@ function actionTracking(): Dispatch => AnyAction => AnyAction {
 // TODO: Need to be fixed
 export function getCurrentRouteName(
   navNode: NavigationState | NavigationLeafRoute
-): ?string {
+): string | null {
   if (!navNode) {
     return null
   }
@@ -112,7 +112,7 @@ export function getCurrentRouteName(
 
   // navNode is a NavigationState
   // eslint-disable-next-line flowtype/no-weak-types
-  const navState = ((navNode: any): NavigationState)
+  const navState = (navNode as any) as NavigationState
   const route = navState.routes[navState.index]
   return getCurrentRouteName(route)
 }
@@ -123,8 +123,8 @@ export function getCurrentRouteName(
 */
 export function screenTracking(
   store: MiddlewareAPI
-): Dispatch => AnyAction => AnyAction {
-  return (next: Dispatch): (AnyAction => AnyAction) => {
+): (Dispatch) => (AnyAction) => AnyAction {
+  return (next: Dispatch): ((AnyAction) => AnyAction) => {
     return (action: AnyAction): AnyAction => {
       if (
         action.type !== NavigationActions.NAVIGATE &&

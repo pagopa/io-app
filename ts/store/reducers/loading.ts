@@ -24,7 +24,7 @@ export const INITIAL_STATE: LoadingState = {}
  */
 export const createLoadingSelector = (
   actions: ReadonlyArray<FetchRequestActionsType>
-): (GlobalState => ?boolean) => (state: GlobalState): boolean => {
+): ((GlobalState) => boolean | null) => (state: GlobalState): boolean => {
   // Returns true only when all actions are not loading
   return actions.some((action: FetchRequestActionsType): boolean =>
     get(state, `loading.${action}`)

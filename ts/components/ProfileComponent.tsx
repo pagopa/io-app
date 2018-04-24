@@ -18,7 +18,7 @@ import { LoggedInUserState } from '../reducers/user'
 import { VERSION } from '../../ts-js/utils/constants'
 import { ProfileStyles } from './styles'
 import { getIdpInfo } from './SpidLoginButton'
-import config from '../config'
+import * as config from '../config'
 const profileRowStyles = StyleSheet.flatten(ProfileStyles.profileRow)
 const profileHeaderStyles = StyleSheet.flatten(ProfileStyles.profileHeader)
 const profileHeaderTextStyles = StyleSheet.flatten(
@@ -43,14 +43,14 @@ const openIdpProfile = function(idpUrl: string) {
   Linking.openURL(idpUrl) //.catch(err => { })
 }
 export type Props = {
-  navigation: NavigationScreenProp<NavigationState>,
-  dispatch: Dispatch,
+  navigation: NavigationScreenProp<NavigationState>
+  dispatch: Dispatch
   user: LoggedInUserState
 }
 /**
  * Implements the content of the user profile screen.
  */
-export class ProfileComponent extends React.Component<Props, never> {
+export default class ProfileComponent extends React.Component<Props, never> {
   render(): React.ReactNode {
     const profile = this.props.user.profile
     const idpId = this.props.user.idpId

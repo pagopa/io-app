@@ -14,9 +14,9 @@ import variables from '../theme/variables'
 
 export type OwnProps = {
   // Array of Identity Provider to show in the grid.
-  idps: ReadonlyArray<IdentityProvider>,
+  idps: ReadonlyArray<IdentityProvider>
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: IdentityProvider => void
+  onIdpSelected: (IdentityProvider) => void
 }
 
 export type Props = OwnProps
@@ -72,7 +72,7 @@ class IdpsGrid extends React.Component<Props> {
   /* eslint-disable flowtype/no-weak-types */
   renderItem = (
     info: ListRenderItemInfo<IdentityProvider>
-  ): ?React.ReactElement<any> => {
+  ): React.ReactElement<any> => {
     const { onIdpSelected } = this.props
     const idp = info.item
     return (

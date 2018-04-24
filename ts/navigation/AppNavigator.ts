@@ -11,7 +11,7 @@ import MainNavigator from './MainNavigator'
  * SwitchNavigator is very useful here because it automatically
  * resets the state on navigation
  */
-const navigator = SwitchNavigator({
+export default SwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
@@ -29,5 +29,3 @@ const navigator = SwitchNavigator({
     screen: MainNavigator
   }
 })
-
-export default navigator

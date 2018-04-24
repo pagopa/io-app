@@ -165,14 +165,14 @@ export function getIdpInfo(idpId: string): IdentityProvider | undefined {
 }
 
 type SpidLoginWebviewProps = {
-  idp: IdentityProvider,
-  onSuccess: (token: string) => void,
+  idp: IdentityProvider
+  onSuccess: (token: string) => void
   onError: (err: string) => void
 }
 
 type SpidLoginWebviewState = {
-  url: string,
-  status: string,
+  url: string
+  status: string
   isLoading: boolean
 }
 
@@ -237,15 +237,15 @@ class SpidLoginWebview extends React.Component<
 }
 
 export type IdpSelectionScreenProps = {
-  closeModal: () => void,
-  onSelectIdp: IdentityProvider => void,
-  onSpidLogin: (a: string, b: string) => void,
-  onSpidLoginError: string => void,
+  closeModal: () => void
+  onSelectIdp: (IdentityProvider) => void
+  onSpidLogin: (a: string, b: string) => void
+  onSpidLoginError: (string) => void
   userState: UserState
 }
 
 export type IdpSelectionScreenState = {
-  selectedIdp: ?IdentityProvider
+  selectedIdp: IdentityProvider | null
 }
 
 /**
@@ -275,7 +275,10 @@ class IdpSelectionScreen extends React.Component<
     })
   }
 
-  createButton = (idp: IdentityProvider, onPress: () => void): React.Node => {
+  createButton = (
+    idp: IdentityProvider,
+    onPress: () => void
+  ): React.ReactNode => {
     return (
       <Button
         iconRight
@@ -389,11 +392,11 @@ class IdpSelectionScreen extends React.Component<
 }
 
 export type SpidLoginButtonProps = {
-  disabled: boolean,
-  onSpidLoginIntent: () => void,
-  onSelectIdp: IdentityProvider => void,
-  onSpidLogin: (string, string) => void,
-  onSpidLoginError: string => void,
+  disabled: boolean
+  onSpidLoginIntent: () => void
+  onSelectIdp: (IdentityProvider) => void
+  onSpidLogin: (_: string, __: string) => void
+  onSpidLoginError: (string) => void
   userState: UserState
 }
 

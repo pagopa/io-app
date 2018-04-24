@@ -1,7 +1,5 @@
 /**
  * Useful methods to interact with redux-form
- *
- * @flow
  */
 
 import * as React from 'react'
@@ -26,9 +24,9 @@ const email = (value: string): string | undefined =>
  */
 export const getTraslatedFormFieldPropertyValue = (
   formId: string
-): (string => string => string) => (fieldId: string): (string => string) => (
-  propertyId: string
-): string => {
+): ((string) => (string) => string) => (
+  fieldId: string
+): ((string) => string) => (propertyId: string): string => {
   return I18n.t(`forms.${formId}.fields.${fieldId}.${propertyId}`)
 }
 
