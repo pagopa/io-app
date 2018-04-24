@@ -1,11 +1,8 @@
 /**
  * The root saga that forks and includes all the other sagas.
- *
- * @flow
  */
 
-import { type Saga } from 'redux-saga'
-import { all, fork } from 'redux-saga/effects'
+import { all, fork, Effect } from 'redux-saga/effects'
 import { networkEventsListenerSaga } from 'react-native-offline'
 
 import sessionSaga from './session'
@@ -23,7 +20,7 @@ const connectionMonitorParameters = {
   checkConnectionInterval: 2500
 }
 
-export default function* root(): Saga<void> {
+export default function* root(): Iterator<Effect> {
   yield all([
     fork(sessionSaga),
     fork(onboardingSaga),

@@ -2,12 +2,9 @@
  * A saga that manages the Onboarding.
  *
  * For a detailed view of the flow check @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
- *
- * @flow
  */
 
-import { type Saga } from 'redux-saga'
-import { takeLatest, fork, take, select, put } from 'redux-saga/effects'
+import { takeLatest, fork, take, select, put, Effect } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 
 import {
@@ -27,7 +24,7 @@ import {
 /**
  * The PIN step of the Onboarding
  */
-function* pinCheckSaga(): Saga<void> {
+function* pinCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_PIN)
 
   // From the state we check whether the user has already created a PIN
@@ -52,7 +49,7 @@ function* pinCheckSaga(): Saga<void> {
 /**
  * The ToS step of the Onboarding
  */
-function* tosCheckSaga(): Saga<void> {
+function* tosCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_TOS)
 
   // From the state we check whether the user has already accepted the ToS
@@ -84,7 +81,7 @@ function* tosCheckSaga(): Saga<void> {
   })
 }
 
-function* onboardingSaga(): Saga<void> {
+function* onboardingSaga(): Iterator<Effect> {
   yield fork(tosCheckSaga)
   yield fork(pinCheckSaga)
 
@@ -93,7 +90,7 @@ function* onboardingSaga(): Saga<void> {
   })
 }
 
-export default function* root(): Saga<void> {
+export default function* root(): Iterator<Effect> {
   /**
    * The Onboarding saga need to be started only after the Session saga is fully finished.
    * The SESSION_INITIALIZE_SUCCESS action is dispatched only when the Session is established and valid.

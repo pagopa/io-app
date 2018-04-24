@@ -1,11 +1,8 @@
 /**
  * A saga that manages the Session.
- *
- * @flow
  */
 
-import { type Saga } from 'redux-saga'
-import { takeLatest, put, select, call } from 'redux-saga/effects'
+import { takeLatest, put, select, call, Effect } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 
 import {
@@ -18,7 +15,7 @@ import { loadProfile } from '../store/actions/profile'
 import ROUTES from '../navigation/routes'
 import { isAuthenticatedSelector } from '../store/reducers/session'
 
-function* loginStep(): Saga<void> {
+function* loginStep(): Iterator<Effect> {
   // The user loggedin successfully
 
   // Fetch the Profile
@@ -30,7 +27,7 @@ function* loginStep(): Saga<void> {
   })
 }
 
-function* idpSelectionStep(): Saga<void> {
+function* idpSelectionStep(): Iterator<Effect> {
   // When the IDP is selected we must show the user the IdpLoginScreen
   const navigateAction = NavigationActions.navigate({
     routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
@@ -41,7 +38,7 @@ function* idpSelectionStep(): Saga<void> {
   yield takeLatest(LOGIN_SUCCESS, loginStep)
 }
 
-function* landingStep(): Saga<void> {
+function* landingStep(): Iterator<Effect> {
   // We must show the LandingScreen to the user
   const navigateAction = NavigationActions.reset({
     index: 0,
@@ -56,7 +53,7 @@ function* landingStep(): Saga<void> {
   yield takeLatest(IDP_SELECTED, idpSelectionStep)
 }
 
-function* sessionSaga(): Saga<void> {
+function* sessionSaga(): Iterator<Effect> {
   // From the state we check if the session is already established
   const isAuthenticated: boolean = yield select(isAuthenticatedSelector)
 
@@ -76,7 +73,7 @@ function* sessionSaga(): Saga<void> {
   }
 }
 
-export default function* root(): Saga<void> {
+export default function* root(): Iterator<Effect> {
   /**
    * The Session saga is the first started on application startup.
    * The APPLICATION_INITIALIZED action is dispatched by the IngressScreen.

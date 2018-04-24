@@ -1,11 +1,8 @@
 /**
  * A saga that manages the Profile.
- *
- * @flow
  */
 
-import { type Saga } from 'redux-saga'
-import { takeLatest, call, put, select } from 'redux-saga/effects'
+import { takeLatest, call, put, select, Effect } from 'redux-saga/effects'
 
 import {
   PROFILE_LOAD_REQUEST,
@@ -15,21 +12,16 @@ import {
   PROFILE_UPDATE_FAILURE,
   PROFILE_UPDATE_SUCCESS
 } from '../store/actions/constants'
-import { type ProfileUpdateRequest } from '../store/actions/profile'
-import {
-  type ApiFetchResult,
-  type ApiProfile,
-  fetchProfile,
-  postProfile
-} from '../api'
-import { type GlobalState } from '../reducers/types'
+import { ProfileUpdateRequest } from '../store/actions/profile'
+import { ApiFetchResult, ApiProfile, fetchProfile, postProfile } from '../api'
+import { GlobalState } from '../reducers/types'
 
 // A selector to get the token from the state
-const getSessionToken = (state: GlobalState): ?string =>
+const getSessionToken = (state: GlobalState): string | null =>
   state.session.isAuthenticated ? state.session.token : null
 
 // A saga to load the Profile.
-function* loadProfile(): Saga<void> {
+function* loadProfile(): Iterator<Effect> {
   try {
     // Get the token from the state
     const token: string = yield select(getSessionToken)
@@ -54,7 +46,7 @@ function* loadProfile(): Saga<void> {
 }
 
 // A saga to update the Profile.
-function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
+function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
   try {
     // Get the new Profile from the action payload
     const newProfile = action.payload
@@ -88,7 +80,7 @@ function* updateProfile(action: ProfileUpdateRequest): Saga<void> {
 }
 
 // This function listens for Profile related requests and calls the needed saga.
-export default function* root(): Saga<void> {
+export default function* root(): Iterator<Effect> {
   yield takeLatest(PROFILE_LOAD_REQUEST, loadProfile)
   yield takeLatest(PROFILE_UPDATE_REQUEST, updateProfile)
 }
