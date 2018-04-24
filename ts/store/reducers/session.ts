@@ -12,7 +12,7 @@ export type UnauthenticatedWithoutIdpSessionState = {
 }
 
 export type UnauthenticatedWithIdpSessionState = {
-  isAuthenticated: false,
+  isAuthenticated: false
   idp: IdentityProvider
 }
 
@@ -21,9 +21,9 @@ export type UnauthenticatedSessionState =
   | UnauthenticatedWithIdpSessionState
 
 export type AuthenticatedSessionState = {
-  isAuthenticated: true,
-  idp: IdentityProvider,
-  token: string,
+  isAuthenticated: true
+  idp: IdentityProvider
+  token: string
   expiredAt?: number
 }
 
@@ -33,6 +33,13 @@ export type SessionState =
 
 export const INITIAL_STATE: UnauthenticatedWithoutIdpSessionState = {
   isAuthenticated: false
+}
+
+// Type guards
+function isUnauthenticatedWithIdpSessionState(
+  state: any
+): state is UnauthenticatedWithIdpSessionState {
+  return !state.isAuthenticated && state.idp
 }
 
 // Selectors
@@ -47,7 +54,10 @@ const reducer = (
     return { ...state, idp: action.payload }
   }
 
-  if (action.type === LOGIN_SUCCESS && !state.isAuthenticated && state.idp) {
+  if (
+    action.type === LOGIN_SUCCESS &&
+    isUnauthenticatedWithIdpSessionState(state)
+  ) {
     return {
       isAuthenticated: true,
       idp: state.idp,
