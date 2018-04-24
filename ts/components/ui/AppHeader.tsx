@@ -3,10 +3,11 @@ import variables from '../../theme/variables'
 import { Header, NativeBase } from 'native-base'
 
 export type Props = NativeBase.Header
+
 /**
  * A customized Header component.
  */
-export default function AppHeader(props: Props): React.ReactNode {
+const AppHeader: React.SFC<Props> = (props) => {
   return (
     <Header
       androidStatusBarColor={variables.androidStatusBarColor}
@@ -15,3 +16,5 @@ export default function AppHeader(props: Props): React.ReactNode {
     />
   )
 }
+
+export default AppHeader
