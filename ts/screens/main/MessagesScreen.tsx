@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import { Container } from 'native-base'
 import { ReduxProps } from '../../actions/types'
-import { UserState } from '../../reducers/user'
 import { GlobalState } from '../../reducers/types'
 
 export type OwnProps = {
