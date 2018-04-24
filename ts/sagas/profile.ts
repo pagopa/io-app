@@ -66,7 +66,7 @@ function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
       token,
       newProfile
     )
-    if (response.isError) {
+    if (isApiFetchFailure(response)) {
       // If the api response is an error then dispatch the PROFILE_UPDATE_FAILURE action.
       yield put({
         type: PROFILE_UPDATE_FAILURE,
