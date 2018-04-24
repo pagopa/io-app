@@ -15,7 +15,8 @@
     "strict": false,
     "noImplicitReturns": false,
     "noUnusedParameters": false,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "skipLibCheck": true
   },
   "types": [
     "react",

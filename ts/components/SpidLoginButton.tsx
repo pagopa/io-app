@@ -27,7 +27,7 @@ import {
 
 import { IdentityProvider } from '../utils/api'
 import { isDemoIdp } from '../utils/api'
-import { UserState } from '../reducers/user'
+import { UserState, isErrorLoggedOutUserState } from '../reducers/user'
 
 // prefix for recognizing auth token
 const TOKEN_PATH_PREFIX = '/profile.html?token='
@@ -360,7 +360,8 @@ class IdpSelectionScreen extends React.Component<
           />
         ) : (
           <Content style={StyleSheet.flatten(styles.selectIdpContainer)}>
-            {this.props.userState.isError && this.createErrorMessage()}
+            {isErrorLoggedOutUserState(this.props.userState) &&
+              this.createErrorMessage()}
             <Text style={StyleSheet.flatten(styles.selectIdpHelpText)}>
               {I18n.t('spid.selectIdp')}
             </Text>

@@ -37,7 +37,7 @@ const configureErrorHandler = () => {
   if (!isDev) {
     initSourceMaps({ sourceMapBundle: 'main.jsbundle.map' })
     // Overrides the default error handler in BUNDLED MODE
-    global.ErrorUtils.setGlobalHandler(customErrorHandler)
+    ErrorUtils.setGlobalHandler(customErrorHandler)
   }
 }
 
