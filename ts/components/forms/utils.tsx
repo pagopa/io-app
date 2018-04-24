@@ -15,10 +15,10 @@ const getValidatorMessage = (validatorId: string): string => {
   return I18n.t(`forms.validators.${validatorId}`)
 }
 
-const required = (value: string): ?string =>
+const required = (value: string): string | undefined =>
   value ? undefined : getValidatorMessage('required')
 
-const email = (value: string): ?string =>
+const email = (value: string): string | undefined =>
   value && !isEmail(value) ? getValidatorMessage('email') : undefined
 
 /**
