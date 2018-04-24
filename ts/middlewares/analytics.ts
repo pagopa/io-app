@@ -1,13 +1,11 @@
 /**
  * Implements a Redux middleware that translates actions into Mixpanel events
- *
- * @flow
  */
 
 import Mixpanel from 'react-native-mixpanel'
 import {
-  type NavigationState,
-  type NavigationLeafRoute,
+  NavigationState,
+  NavigationLeafRoute,
   NavigationActions
 } from 'react-navigation'
 import { has } from 'lodash'
@@ -21,11 +19,11 @@ import {
   USER_LOGIN_ERROR_ACTION
 } from '../actions'
 import {
-  type MiddlewareAPI,
-  type Action,
-  type AnyAction,
-  type Thunk,
-  type Dispatch
+  MiddlewareAPI,
+  Action,
+  AnyAction,
+  Thunk,
+  Dispatch
 } from '../actions/types'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
@@ -100,7 +98,7 @@ function actionTracking(): Dispatch => AnyAction => AnyAction {
 
 // gets the current screen from navigation state
 // TODO: Need to be fixed
-function getCurrentRouteName(
+export function getCurrentRouteName(
   navNode: NavigationState | NavigationLeafRoute
 ): ?string {
   if (!navNode) {
@@ -123,7 +121,7 @@ function getCurrentRouteName(
   The middleware acts as a general hook in order to track any meaningful navigation action
   https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
 */
-function screenTracking(
+export function screenTracking(
   store: MiddlewareAPI
 ): Dispatch => AnyAction => AnyAction {
   return (next: Dispatch): (AnyAction => AnyAction) => {
@@ -147,9 +145,4 @@ function screenTracking(
       return result
     }
   }
-}
-
-module.exports = {
-  actionTracking,
-  screenTracking
 }

@@ -1,7 +1,5 @@
-// @flow
-
 import { applyMiddleware, compose, createStore } from 'redux'
-import { type Persistor, persistStore, persistReducer } from 'redux-persist'
+import { Persistor, persistStore, persistReducer } from 'redux-persist'
 import { createLogger } from 'redux-logger'
 import { analytics } from '../middlewares'
 import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
@@ -12,9 +10,9 @@ import thunk from 'redux-thunk'
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../../ts-js/utils/constants'
 import rootReducer from '../reducers'
 import rootSaga from '../sagas'
-import { type Store, type StoreEnhancer } from '../actions/types'
-import { type GlobalState } from '../reducers/types'
-import { type NavigationState } from 'react-navigation'
+import { Store, StoreEnhancer } from '../actions/types'
+import { GlobalState } from '../reducers/types'
+import { NavigationState } from 'react-navigation'
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
 

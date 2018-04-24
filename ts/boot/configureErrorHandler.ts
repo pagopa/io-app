@@ -2,8 +2,6 @@
  * Implements a custom generic error handler that keeps track of JavaScript exceptions
  *
  * TODO: Improve this using external libraries @https://www.pivotaltracker.com/story/show/155392873
- *
- * @flow
  */
 
 import { Alert } from 'react-native'
