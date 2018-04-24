@@ -4,15 +4,14 @@ import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import { Container } from 'native-base'
 import { ReduxProps } from '../../actions/types'
 import { UserState } from '../../reducers/user'
-import MessagesComponent from '../../components/MessagesComponent'
 import { GlobalState } from '../../reducers/types'
-type ReduxMappedProps = {
-  user: UserState
-}
-type OwnProps = {
+
+export type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>
 }
-type Props = ReduxMappedProps & ReduxProps & OwnProps
+
+export type Props = OwnProps
+
 /**
  * This screen show the messages to the authenticated user.
  */
@@ -20,24 +19,10 @@ class MessagesScreen extends React.Component<Props, never> {
   constructor(props) {
     super(props)
   }
+
   render() {
-    const { user, navigation, dispatch } = this.props
-    if (!user.isLoggedIn) {
-      return null
-    }
-    return (
-      <Container>
-        <MessagesComponent
-          user={user}
-          navigation={navigation}
-          dispatch={dispatch}
-        />
-      </Container>
-    )
+    return <Container />
   }
 }
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  user: state.user,
-  navigation: state.navigation
-})
-export default connect(mapStateToProps)(MessagesScreen)
+
+export default MessagesScreen
