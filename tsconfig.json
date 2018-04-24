@@ -17,14 +17,14 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true
   },
-  "filesGlob": [
-    "ts/**/*.ts",
-    "ts/**/*.tsx"
-  ],
   "types": [
     "react",
     "react-native",
     "jest"
+  ],
+  "include": [
+    "ts/**/*.ts",
+    "ts/**/*.tsx"
   ],
   "exclude": [
     "android",

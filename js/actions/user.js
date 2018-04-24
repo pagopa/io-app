@@ -5,9 +5,9 @@
  */
 
 import { type GetState, type Dispatch, type Action, type Thunk } from './types'
-import { type ApiUserProfile, type ApiNewUserProfile } from '../utils/api'
-import { getUserProfile } from '../utils/api'
-import { setUserProfile } from '../utils/api'
+import { type ApiUserProfile, type ApiNewUserProfile } from '../../ts-js/utils/api'
+import { getUserProfile } from '../../ts-js/utils/api'
+import { setUserProfile } from '../../ts-js/utils/api'
 
 import I18n from '../i18n'
 

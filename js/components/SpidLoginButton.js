@@ -26,8 +26,8 @@ import {
   Icon
 } from 'native-base'
 
-import type { IdentityProvider } from '../utils/api'
-import { isDemoIdp } from '../utils/api'
+import type { IdentityProvider } from '../../ts-js/utils/api'
+import { isDemoIdp } from '../../ts-js/utils/api'
 import type { UserState } from '../reducers/user'
 
 // prefix for recognizing auth token

@@ -20,7 +20,7 @@ import {
 } from 'native-base'
 
 import { type ReduxProps } from '../../actions/types'
-import { type IdentityProvider } from '../../utils/api'
+import { type IdentityProvider } from '../../../ts-js/utils/api'
 import config from '../../config'
 import I18n from '../../i18n'
 import AppHeader from '../../components/ui/AppHeader'
