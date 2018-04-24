@@ -5,7 +5,7 @@
  */
 
 import type { Action, Thunk, Dispatch, GetState } from './types'
-import type { IdentityProvider } from '../utils/api'
+import type { IdentityProvider } from '../../ts-js/utils/api'
 import { requestUserProfile } from './user'
 import { loadProfile } from '../store/actions/profile'
 

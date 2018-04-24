@@ -32,7 +32,7 @@ import { logInIntent, selectIdp, logIn, logInError } from '../../actions'
 
 import { VERSION } from '../../../ts-js/utils/constants'
 
-import { type IdentityProvider, isDemoIdp } from '../../utils/api'
+import { type IdentityProvider, isDemoIdp } from '../../../ts-js/utils/api'
 
 import { type ReduxProps } from '../../actions/types'
 import { type GlobalState } from '../../reducers/types'

@@ -13,7 +13,7 @@ import {
   RECEIVE_USER_PROFILE_ACTION
 } from '../actions'
 import { type Action } from '../actions/types'
-import { type ApiUserProfile } from '../utils/api'
+import { type ApiUserProfile } from '../../ts-js/utils/api'
 
 import config from '../config'
 

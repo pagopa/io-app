@@ -13,7 +13,7 @@ import {
 import { type NavigationAction } from 'react-navigation'
 
 import { type GlobalState } from '../reducers/types'
-import { type ApiUserProfile, type IdentityProvider } from '../utils/api'
+import { type ApiUserProfile, type IdentityProvider } from '../../ts-js/utils/api'
 import { type SessionActions } from '../store/actions/session'
 import { type OnboardingActions } from '../store/actions/onboarding'
 import { type ProfileActions } from '../store/actions/profile'

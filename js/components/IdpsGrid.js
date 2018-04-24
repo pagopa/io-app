@@ -6,7 +6,7 @@ import { Dimensions, StyleSheet, FlatList, Image } from 'react-native'
 import { View, Button } from 'native-base'
 
 import { type ListRenderItemInfo } from '../lib/react-native/types'
-import { type IdentityProvider } from '../utils/api'
+import { type IdentityProvider } from '../../ts-js/utils/api'
 import variables from '../theme/variables'
 
 type OwnProps = {

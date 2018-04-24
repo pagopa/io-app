@@ -1,7 +1,5 @@
 /**
  * Implements the APIs to interact with the backend.
- *
- * @flow
  */
 
 /**
@@ -30,7 +28,7 @@ export type ApiNewUserProfile = {
 export async function getUserProfile(
   apiUrlPrefix: string,
   token: string
-): Promise<?ApiUserProfile> {
+): Promise<ApiUserProfile | null> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: 'get',
@@ -51,7 +49,7 @@ export async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
   newProfile: ApiNewUserProfile
-): Promise<?ApiUserProfile | number> {
+): Promise<ApiUserProfile | number | null> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: 'post',
@@ -82,7 +80,7 @@ export async function setUserProfile(
  */
 export type IdentityProvider = {
   id: string,
-  logo: mixed,
+  logo: any,
   name: string,
   entityID: string,
   profileUrl: string
