@@ -74,7 +74,10 @@ function configureStoreAndPersistor(): {
     )
   )
 
-  const store: Store = createStore<GlobalState>(persistedReducer, enhancer)
+  const store: Store = createStore<GlobalState, AnyAction, {}, {}>(
+    persistedReducer,
+    enhancer
+  )
   const persistor = persistStore(store)
 
   if (isDebuggingInChrome) {
