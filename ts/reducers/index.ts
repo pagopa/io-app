@@ -33,7 +33,7 @@ export default combineReducers<GlobalState>({
   error: errorReducer,
 
   // FORM
-  form: formReducer,
+  // form: formReducer,
 
   // DATA
   session: sessionReducer,
