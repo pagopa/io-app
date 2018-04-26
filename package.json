@@ -62,6 +62,16 @@
   "jest": {
     "preset": "react-native",
     "modulePaths": ["<rootDir>"],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.ts"
+    ],
     "collectCoverage": true
   },
   "rnpm": {
