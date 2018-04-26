@@ -14,7 +14,7 @@ declare module 'native-base' {
 }
 
 export default (): Theme => {
-  const theme = {
+  return {
     '.block': {
       '.iconVeryLeft': {
         'NativeBase.Icon': {
@@ -66,5 +66,4 @@ export default (): Theme => {
     shadowRadius: null,
     shadowOpacity: null
   }
-  return theme
 }

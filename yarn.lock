@@ -426,6 +426,22 @@
     node-fetch "^2.1.1"
     url-template "^2.0.8"
 
+"@types/color-convert@*":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@types/color-convert/-/color-convert-1.9.0.tgz#bfa8203e41e7c65471e9841d7e306a7cd8b5172d"
+  dependencies:
+    "@types/color-name" "*"
+
+"@types/color-name@*":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.0.tgz#926f76f7e66f49cc59ad880bb15b030abbf0b66d"
+
+"@types/color@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/color/-/color-3.0.0.tgz#40f8a6bf2fd86e969876b339a837d8ff1b0a6e30"
+  dependencies:
+    "@types/color-convert" "*"
+
 "@types/i18n-js@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.0.tgz#48a6be13cbe0e56904b301d1f58ce8847f731c44"
@@ -434,11 +450,25 @@
   version "22.2.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
 
+"@types/lodash@^4.14.108":
+  version "4.14.108"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.108.tgz#02656af3add2e5b3174f830862c47421c00ef817"
+
+"@types/react-native-fs@^2.8.1":
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-fs/-/react-native-fs-2.8.1.tgz#cbe5d5b733490fd75b96b9733dbbc37479b91c23"
+  dependencies:
+    "@types/react-native" "*"
+
 "@types/react-native-i18n@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-i18n/-/react-native-i18n-2.0.0.tgz#2df92b3392d813b39530bd126aad429eedc9c3de"
   dependencies:
     "@types/i18n-js" "*"
+
+"@types/react-native-mixpanel@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-mixpanel/-/react-native-mixpanel-0.1.0.tgz#6726c38ca6e11b798e1b5ac146da362baaec7024"
 
 "@types/react-native@*", "@types/react-native@^0.55.0":
   version "0.55.4"
@@ -473,11 +503,25 @@
     "@types/react" "*"
     redux "^3.6.0"
 
+"@types/redux-logger@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.6.tgz#4cf9d5b596b576b030a4bb671547f0ab63f81a73"
+  dependencies:
+    redux "^3.6.0"
+
 "@types/redux-saga@^0.10.5":
   version "0.10.5"
   resolved "https://registry.yarnpkg.com/@types/redux-saga/-/redux-saga-0.10.5.tgz#80bf21078379ebc97387dbe56e44467b5677fa85"
   dependencies:
     redux-saga "*"
+
+"@types/stacktrace-js@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/stacktrace-js/-/stacktrace-js-0.0.32.tgz#d23e4a36a5073d39487fbea8234cc6186862d389"
+
+"@types/validator@^9.4.1":
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-9.4.1.tgz#bea5a290e61f1cbf12af3fd878706aeec2ba0087"
 
 abab@^1.0.0, abab@^1.0.4:
   version "1.0.4"
@@ -4869,9 +4913,9 @@ react-native@0.54.2:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation-redux-helpers@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-navigation-redux-helpers/-/react-navigation-redux-helpers-1.0.3.tgz#46dd9f83bf4ba74ca43d346575c169137f2eaac9"
+react-navigation-redux-helpers@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-navigation-redux-helpers/-/react-navigation-redux-helpers-1.0.5.tgz#b4b3ddeccf9f996f305a1b2e5475065c2b3e6c56"
   dependencies:
     invariant "^2.2.2"
 

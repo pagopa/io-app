@@ -15,7 +15,7 @@ export type Props = OwnProps
  * This screen show the messages to the authenticated user.
  */
 class MessagesScreen extends React.Component<Props, never> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
   }
 

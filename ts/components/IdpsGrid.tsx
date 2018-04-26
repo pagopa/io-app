@@ -16,7 +16,7 @@ export type OwnProps = {
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<IdentityProvider>
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: (IdentityProvider) => void
+  onIdpSelected: (_: IdentityProvider) => void
 }
 
 export type Props = OwnProps

@@ -22,7 +22,7 @@ export const INITIAL_STATE: ErrorState = {}
  */
 export const createErrorSelector = (
   actions: ReadonlyArray<FetchRequestActionsType>
-): ((GlobalState) => string) => (state: GlobalState): string => {
+): ((_: GlobalState) => string) => (state: GlobalState): string => {
   // Returns first error message found if any
   return (
     actions
