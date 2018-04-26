@@ -2,22 +2,21 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "es2015",
-    "moduleResolution": "node",
     "jsx": "react",
-    "outDir": "ts-js",
+    "noEmit": true,
+    "moduleResolution": "node",
     "rootDir": "ts",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "preserveConstEnums": true,
     "allowJs": false,
-    "sourceMap": true,
-    "declaration": true,
     "strict": false,
     "noImplicitReturns": false,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
     "skipLibCheck": true
   },
+  "lib": [ "dom", "es2015", "es2016" ],
   "include": [
     "ts/**/*.ts",
     "ts/**/*.tsx"
@@ -25,7 +24,6 @@
   "exclude": [
     "android",
     "ios",
-    "build",
     "node_modules"
   ]
 }
