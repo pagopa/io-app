@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "jsx": "react",
+    "noEmit": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "allowJs": false,
+    "strict": false,
+    "noImplicitReturns": false,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "skipLibCheck": true
+  },
+  "lib": [ "dom", "es2015", "es2016" ],
+  "exclude": [
+    "android",
+    "ios",
+    "node_modules"
+  ]
+}
