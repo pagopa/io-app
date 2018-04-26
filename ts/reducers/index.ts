@@ -3,7 +3,7 @@
  */
 
 import { combineReducers, AnyAction } from 'redux'
-import { reducer as network } from 'react-native-offline'
+import { reducer as networkReducer } from 'react-native-offline'
 import { reducer as formReducer } from 'redux-form'
 
 import appStateReducer from './appState'
@@ -25,7 +25,7 @@ export { AnyAction }
  */
 export default combineReducers<GlobalState>({
   appState: appStateReducer,
-  network,
+  network: networkReducer,
   navigation: navigationReducer,
 
   // UI
@@ -33,7 +33,7 @@ export default combineReducers<GlobalState>({
   error: errorReducer,
 
   // FORM
-  // form: formReducer,
+  form: formReducer,
 
   // DATA
   session: sessionReducer,

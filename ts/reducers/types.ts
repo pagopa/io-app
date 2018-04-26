@@ -1,4 +1,5 @@
 import { NavigationState } from 'react-navigation'
+import { FormStateMap } from 'redux-form';
 
 import { Action } from '../actions/types'
 import { AppState } from './appState'
@@ -19,6 +20,7 @@ export type GlobalState = {
   navigation: NavigationState,
   loading: LoadingState,
   error: ErrorState,
+  form: FormStateMap
   session: SessionState,
   onboarding: OnboardingState,
   profile: ProfileState
