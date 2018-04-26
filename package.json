@@ -61,6 +61,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "modulePaths": ["<rootDir>"],
     "collectCoverage": true
   },
   "rnpm": {
