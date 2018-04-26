@@ -438,6 +438,12 @@
   version "4.14.108"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.108.tgz#02656af3add2e5b3174f830862c47421c00ef817"
 
+"@types/react-native-fs@^2.8.1":
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-fs/-/react-native-fs-2.8.1.tgz#cbe5d5b733490fd75b96b9733dbbc37479b91c23"
+  dependencies:
+    "@types/react-native" "*"
+
 "@types/react-native-i18n@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-i18n/-/react-native-i18n-2.0.0.tgz#2df92b3392d813b39530bd126aad429eedc9c3de"
