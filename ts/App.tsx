@@ -6,7 +6,7 @@ import Mixpanel from 'react-native-mixpanel'
 
 import theme from './theme'
 
-import config from '../ts-js/config'
+import * as config from './config'
 import configureErrorHandler from './boot/configureErrorHandler'
 import configureStoreAndPersistor from './boot/configureStoreAndPersistor'
 import RootContainer from './RootContainer'
