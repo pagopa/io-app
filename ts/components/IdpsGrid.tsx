@@ -9,7 +9,7 @@ import {
 
 import { View, Button } from 'native-base'
 
-import { IdentityProvider } from '../../ts-js/utils/api'
+import { IdentityProvider } from '../utils/api'
 import variables from '../theme/variables'
 
 export type OwnProps = {

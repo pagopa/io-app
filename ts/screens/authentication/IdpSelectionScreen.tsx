@@ -14,7 +14,7 @@ import {
   Icon
 } from 'native-base'
 import { ReduxProps } from '../../actions/types'
-import { IdentityProvider } from '../../../ts-js/utils/api'
+import { IdentityProvider } from '../../utils/api'
 import * as config from '../../config'
 import I18n from '../../i18n'
 import AppHeader from '../../components/ui/AppHeader'
