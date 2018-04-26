@@ -15,7 +15,10 @@ const isDev = __DEV__
 const version = DeviceInfo.getReadableVersion()
 
 // Custom error handler for unhandled js exceptions
-const customErrorHandler = async (error, isFatal): Promise<void> => {
+const customErrorHandler = async (
+  error: any,
+  isFatal: boolean
+): Promise<void> => {
   if (isFatal) {
     error.stack = await getStackTrace(error)
     // Send a remote event that contains the error stack trace

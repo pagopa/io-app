@@ -15,7 +15,7 @@ import { ApiProfile } from '../../api'
 
 export type ProfileState = ApiProfile | null
 
-export const INITIAL_STATE = null
+export const INITIAL_STATE: ProfileState = null
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,

@@ -18,8 +18,8 @@ import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export function actionTracking(): (Dispatch) => (Action) => Action {
-  return (next: Dispatch): ((Action) => Action) => {
+export function actionTracking(): (_: Dispatch) => (Action) => Action {
+  return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
       const result: Action = next(action)
 

@@ -57,7 +57,7 @@ class IdpLoginScreen extends React.Component<Props, never> {
       </Container>
     )
   }
-  onNavigationStateChange = navState => {
+  onNavigationStateChange = (navState: any) => {
     const url = navState.url
     // Extract the login result from the url.
     // If the url is not related to login this will be `null`

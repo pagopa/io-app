@@ -24,9 +24,9 @@ const email = (value: string): string | undefined =>
  */
 export const getTraslatedFormFieldPropertyValue = (
   formId: string
-): ((string) => (string) => string) => (
+): ((_: string) => (_: string) => string) => (
   fieldId: string
-): ((string) => string) => (propertyId: string): string => {
+): ((_: string) => string) => (propertyId: string): string => {
   return I18n.t(`forms.${formId}.fields.${fieldId}.${propertyId}`)
 }
 
