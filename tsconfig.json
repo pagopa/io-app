@@ -5,6 +5,7 @@
     "jsx": "react",
     "noEmit": true,
     "moduleResolution": "node",
+    "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "preserveConstEnums": true,

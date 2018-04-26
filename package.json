@@ -38,6 +38,7 @@
     "redux-thunk": "2.2.0",
     "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0",
+    "tslib": "^1.9.0",
     "validator": "^9.4.1"
   },
   "devDependencies": {
@@ -61,7 +62,9 @@
   },
   "jest": {
     "preset": "react-native",
-    "modulePaths": ["<rootDir>"],
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "moduleFileExtensions": [
       "ts",
       "js"
