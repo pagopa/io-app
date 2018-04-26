@@ -30,7 +30,7 @@
     "react-native-offline": "^3.7.3",
     "react-native-sha256": "^1.0.1",
     "react-navigation": "^1.5.11",
-    "react-navigation-redux-helpers": "^1.0.3",
+    "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "5.0.7",
     "redux": "4.0.0",
     "redux-form": "^7.3.0",
@@ -44,6 +44,7 @@
     "validator": "^9.4.1"
   },
   "devDependencies": {
+    "@types/color": "^3.0.0",
     "@types/jest": "^22.2.3",
     "@types/lodash": "^4.14.108",
     "@types/react": "^16.3.0-alpha",
