@@ -4,22 +4,27 @@
  * For a detailed view of the flow check @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
  */
 
-import { takeLatest, fork, take, select, put, Effect } from 'redux-saga/effects'
+import { takeLatest, fork, take, select, put, call, Effect } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 
+import { PinCreateRequest } from '../store/actions/onboarding'
 import {
   SESSION_INITIALIZE_SUCCESS,
   ONBOARDING_CHECK_TOS,
   ONBOARDING_CHECK_PIN,
+  ONBOARDING_CHECK_COMPLETE,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS,
-  PIN_CREATE_REQUEST
+  PIN_CREATE_REQUEST,
+  PIN_CREATE_SUCCESS,
+  PIN_CREATE_FAILURE
 } from '../store/actions/constants'
 import ROUTES from '../navigation/routes'
 import {
   isTosAcceptedSelector,
-  isPinCreatedSelector
+  isPinCreatedSelector,
 } from '../store/reducers/onboarding'
+import { setPin } from '../utils/keychain'
 
 /**
  * The PIN step of the Onboarding
@@ -41,9 +46,34 @@ function* pinCheckSaga(): Iterator<Effect> {
     })
     yield put(navigateToOnboardingPinScreenAction)
 
-    // Here we wait the user to create a PIN
-    yield take(PIN_CREATE_REQUEST)
+    let isPinSaved = false
+
+    // Loop until PIN successfully saved in the Keystore
+    while (!isPinSaved) {
+      // Here we wait the user to create a PIN
+      const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST)
+
+      try {
+        yield call(setPin, action.payload)
+
+        // Dispatch the action that sets isPinCreated to true into the store
+        yield put({
+          type: PIN_CREATE_SUCCESS
+        })
+
+        isPinSaved = true
+      } catch (error) {
+        yield put({
+          type: PIN_CREATE_FAILURE
+        })
+      }
+    }
   }
+
+  // Dispatch an action to start the next step
+  yield put({
+    type: ONBOARDING_CHECK_COMPLETE
+  })
 }
 
 /**
