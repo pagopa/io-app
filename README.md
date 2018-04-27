@@ -175,6 +175,43 @@ $ bundle exec fastlane alpha
 react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
 ```
 
+### Sviluppo con App Backend e IDP di test in locale
+
+Per sviluppare l'applicazione utilizzando in locale l'App Backend e un IDP di test, è necessario seguire alcuni step aggiuntivi descritti di seguito.
+
+#### Installazione di App Backend e IDP di test
+
+Seguire la documentazione del repository [italia-backend](https://github.com/teamdigitale/italia-backend).
+
+#### WebView, HTTPS e certificati autofirmati
+
+Allo stato attuale react-native non consente di aprire WebView su url HTTPS con certificato autofirmato. L'IDP di test però fa utilizzo di HTTPS e di un certificato autofirmato. Per ovviare a questo problema è possibile installare in locale un Proxy che faccia da proxy-pass verso l'App Backend e l'IDP.
+
+##### Installazione di mitmproxy
+
+Un proxy semplice da utilizzare e addatto al nostro scopo è [mitmproxy](https://mitmproxy.org/). Per l'installazione seguire la [pagina di documentazione](https://docs.mitmproxy.org/stable/overview-installation/) del sito ufficiale.
+
+All'interno del repository è presente il file `scripts/mitmproxy_metro_bundler.py` che permette al proxy di intercettare le richieste verso il Simulatore e, solo in caso di porte specifiche, effettuare il proxy-pass verso localhost.
+Avviare il Proxy con il seguente comando:
+
+```
+SIMULATOR_HOST_IP=XXXXX mitmweb --listen-port 9060 --web-port 9061 --ssl-insecure -s scripts/mitmproxy_metro_bundler.py
+```
+
+Inserire al posto di `XXXXX`:
+* `10.0.2.2` (Standard Android Emulator)
+* `10.0.3.2` (Genymotion Android Emulator)
+
+##### Installazione del certificato di mitmproxy all'interno dell'emulatore Android
+
+Installare il certificato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale. 
+
+#### Impostare il proxy per la connessione nell'emulatore Android
+
+Nella configurazione della connessione inserire:
+* IP Proxy: `10.0.2.2` (o `10.0.3.2` nel caso si utilizzi Genymotion)
+* Porta Proxy: `9060`
+
 ### Aggiornare icone dell'applicazione
 
 Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
