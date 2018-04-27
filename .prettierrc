@@ -1,5 +1,3 @@
 {
-  "parser": "flow",
-  "singleQuote": true,
-  "semi": false
+  "parser": "typescript"
 }
