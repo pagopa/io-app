@@ -183,7 +183,7 @@ Per sviluppare l'applicazione utilizzando in locale l'App Backend e un IDP di te
 
 Seguire la documentazione del repository [italia-backend](https://github.com/teamdigitale/italia-backend).
 
-#### WebView, HTTPS e ceriticati autofirmati
+#### WebView, HTTPS e certificati autofirmati
 
 Allo stato attuale react-native non consente di aprire WebView su url HTTPS con certificato autofirmato. L'IDP di test però fa utilizzo di HTTPS e di un certificato autofirmato. Per ovviare a questo problema è possibile installare in locale un Proxy che faccia da proxy-pass verso l'App Backend e l'IDP.
 
@@ -204,7 +204,7 @@ Inserire al posto di `XXXXX`:
 
 ##### Installazione del certificato di mitmproxy all'interno dell'emulatore Android
 
-Installare il certifcato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale. 
+Installare il certificato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale. 
 
 #### Impostare il proxy per la connessione nell'emulatore Android
 
