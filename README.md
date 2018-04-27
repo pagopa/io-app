@@ -231,7 +231,7 @@ Per aggiungere una nuova lingua è necessario:
 
 ### Gestione degli errori
 
-L'applicazione utilizza un custom handler per intercettare e notificare errori javascript causati da eccezioni non gestite. Il codice del custom handler e visibile nel file `ts/utils/configureErrorHandler.ts`
+L'applicazione utilizza un custom handler per intercettare e notificare errori javascript causati da eccezioni non gestite. Il codice del custom handler è visibile nel file `ts/utils/configureErrorHandler.ts`
 
 
 ### Monitoring della connessione
@@ -276,7 +276,7 @@ Per definire nuove variabili da utilizzare nel tema dei componenti è necessario
 
 ##### Tema dei Componenti
 
-La libreria native-base definisce il tema di ogni singolo componente in un file .js separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.ts`.
+La libreria native-base definisce il tema di ogni singolo componente in un file .ts separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.ts`.
 Per ridefinire il tema dei componenti di native-base è necesario creare/modificare i file presenti nella directory `/ts/theme/components`. Ogni file presente in questa directory deve esportare un oggetto che definisce il tema del componente. Prendiamo come esempio il file `Content.ts`:
 
 ```javascript
@@ -394,9 +394,9 @@ In questo caso quanto definito all'interno dell'attributo `NativeBase.Text` sar�
 
 #### TextWithIcon
 
-A simple wrapper where you can put an Icon and a Text components that will be rendered side-by-side.
+Un semplice wrapper in cui è possibile inserire un'icona ed un testo che verranno renderizzati uno di fianco all'altro.
 
-Example usage:
+Esempio di utilizzo:
 
 ```javascript
 <TextWithIcon danger>
@@ -405,4 +405,4 @@ Example usage:
 </TextWithIcon>
 ```
 
-To change the theme of the wrapper, the Icon and the Text check the `ts/theme/components/TextWithIcon.ts` file.
+Per cambiare il tema del wrapper, dell'icona o del testo modificare il file `ts/theme/components/TextWithIcon.ts`.
