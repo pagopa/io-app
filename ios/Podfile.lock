@@ -45,6 +45,8 @@ PODS:
     - React
   - RNI18n (2.0.11):
     - React
+  - RNKeychain (3.0.0-rc.3):
+    - React
   - yoga (0.54.2.React)
 
 DEPENDENCIES:
@@ -65,6 +67,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNI18n (from `../node_modules/react-native-i18n`)
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
@@ -80,6 +83,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-fs
   RNI18n:
     :path: ../node_modules/react-native-i18n
+  RNKeychain:
+    :path: ../node_modules/react-native-keychain
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
@@ -91,8 +96,9 @@ SPEC CHECKSUMS:
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNFS: fc366d28239541a692155a94ea26928815831295
   RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
+  RNKeychain: 216f37338fcb9e5c3a2530f1e3295f737a690cb1
   yoga: de5853128c499decde39904270f22f75d36d7668
 
-PODFILE CHECKSUM: e9ef97765d4029495a468229a9aefca4796ed283
+PODFILE CHECKSUM: 90125cfa5cc3d6e61eb3aa2e542197873193855d
 
 COCOAPODS: 1.3.1
