@@ -14,7 +14,7 @@
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix"
   },
   "dependencies": {
-    "color": "^2.0.0",
+    "color": "^3.0.0",
     "email-validator": "^1.0.7",
     "lodash": "^4.17.4",
     "native-base": "^2.4.2",
