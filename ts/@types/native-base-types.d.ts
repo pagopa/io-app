@@ -25,3 +25,7 @@ declare module "native-base/src/theme/components" {
   type Theme = {};
   export default function(variables: Variables): Theme;
 }
+
+declare module "native-base/src/theme/variables/material" {
+  export default {};
+}
