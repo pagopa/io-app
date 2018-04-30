@@ -24,7 +24,7 @@ import { createPin } from "../../store/actions/onboarding";
 import { createErrorSelector } from "../../store/reducers/error";
 
 type ReduxMappedProps = {
-  pinSaveError: string | null;
+  pinSaveError: string | undefined;
 };
 
 type OwnProps = {

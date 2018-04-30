@@ -5,40 +5,40 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
-import get from "lodash/get";
-
 import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
 
-export type ErrorState = { [key in FetchRequestActionsType]?: string };
+export type ErrorState = Readonly<
+  Partial<{ [key in FetchRequestActionsType]: string }>
+>;
 
 export const INITIAL_STATE: ErrorState = {};
 
 /**
- * Create a selector that return the first error found if any of the actions passed as parameter is in error.
+ * Create a selector that returns the first error found if any of the actions
+ * passed as parameter is in error.
+ * Returns undefined if no action is in error.
  *
  * USAGE: `createErrorSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
-export const createErrorSelector = (
+export function createErrorSelector(
   actions: ReadonlyArray<FetchRequestActionsType>
-): ((_: GlobalState) => string) => (state: GlobalState): string => {
-  // Returns first error message found if any
-  return (
-    actions
-      .map((action: FetchRequestActionsType): string =>
-        get(state, `error.${action}`)
-      )
-      // eslint-disable-next-line no-magic-numbers
-      .filter((message: string): boolean => !!message)[0]
-  );
-};
+): (_: GlobalState) => string | undefined {
+  return state => {
+    // Returns first error message found if any
+    const errors = actions
+      .map(action => state.error[action])
+      .filter(message => message !== undefined);
+    return errors[0];
+  };
+}
 
 // Listen for ERROR_CLEAR|*_REQUEST|*_FAILURE actions and set/remove error message.
-const reducer = (
+function reducer(
   state: ErrorState = INITIAL_STATE,
   action: Action
-): ErrorState => {
+): ErrorState {
   const { type } = action;
 
   // Clear ERROR explicitly
@@ -64,10 +64,10 @@ const reducer = (
     };
   } else {
     // We need to remove the error message
-    const { ...newState } = state;
+    const newState = Object.assign({}, state);
     delete newState[requestName];
     return newState;
   }
-};
+}
 
 export default reducer;
