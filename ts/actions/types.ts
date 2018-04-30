@@ -16,6 +16,7 @@ import { ApplicationActions } from '../store/actions/application'
 import { SessionActions } from '../store/actions/session'
 import { OnboardingActions } from '../store/actions/onboarding'
 import { ProfileActions } from '../store/actions/profile'
+import { MessagesActions } from '../store/actions/messages'
 import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
 
 export type ApplicationState = 'background' | 'inactive' | 'active'
@@ -32,6 +33,7 @@ export type Action =
   | SessionActions
   | OnboardingActions
   | ProfileActions
+  | MessagesActions
 
 /* eslint-disable no-use-before-define */
 // We need to disable the eslint rule because of a problem described here @https://github.com/babel/babel-eslint/issues/485

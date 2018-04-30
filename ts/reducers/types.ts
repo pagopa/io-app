@@ -8,6 +8,7 @@ import { ErrorState } from '../store/reducers/error'
 import { SessionState } from '../store/reducers/session'
 import { OnboardingState } from '../store/reducers/onboarding'
 import { ProfileState } from '../store/reducers/profile'
+import { MessagesState} from "../store/reducers/messages";
 
 export type NetworkState = {
   isConnected: boolean,
@@ -23,5 +24,6 @@ export type GlobalState = {
   form: FormStateMap
   session: SessionState,
   onboarding: OnboardingState,
-  profile: ProfileState
+  profile: ProfileState,
+  messages: MessagesState
 }

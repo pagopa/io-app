@@ -8,6 +8,7 @@ import { networkEventsListenerSaga } from 'react-native-offline'
 import sessionSaga from './session'
 import onboardingSaga from './onboarding'
 import profileSaga from './profile'
+import messagesSaga from './messages'
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
 // We use `withRedux: true` to store the network status in the redux store.
@@ -17,7 +18,7 @@ const connectionMonitorParameters = {
   timeout: 5000,
   pingServerUrl: 'https://google.com',
   withExtraHeadRequest: true,
-  checkConnectionInterval: 2500
+  checkConnectionInterval: 2500 * 600
 }
 
 export default function* root(): Iterator<Effect> {
@@ -25,6 +26,7 @@ export default function* root(): Iterator<Effect> {
     fork(sessionSaga),
     fork(onboardingSaga),
     fork(profileSaga),
+    fork(messagesSaga),
     fork(networkEventsListenerSaga, connectionMonitorParameters)
   ])
 }

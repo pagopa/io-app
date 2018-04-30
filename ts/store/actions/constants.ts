@@ -47,3 +47,13 @@ export const FetchRequestActions = {
 
 // Extract keys from object and create a new union type
 export type FetchRequestActionsType = keyof typeof FetchRequestActions
+
+// Messages
+
+export const MESSAGES_LOAD_REQUEST: 'MESSAGES_LOAD_REQUEST' =
+  'MESSAGES_LOAD_REQUEST'
+export const MESSAGES_LOAD_SUCCESS: 'MESSAGES_LOAD_SUCCESS' =
+  'MESSAGES_LOAD_SUCCESS'
+export const MESSAGES_LOAD_FAILURE: 'MESSAGES_LOAD_FAILURE' =
+  'MESSAGES_LOAD_FAILURE'
+

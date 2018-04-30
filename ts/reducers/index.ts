@@ -13,6 +13,7 @@ import errorReducer from '../store/reducers/error'
 import sessionReducer from '../store/reducers/session'
 import onboardingReducer from '../store/reducers/onboarding'
 import profileReducer from '../store/reducers/profile'
+import messagesReducer from '../store/reducers/messages'
 import { GlobalState } from './types'
 
 export { AnyAction }
@@ -38,5 +39,6 @@ export default combineReducers<GlobalState>({
   // DATA
   session: sessionReducer,
   onboarding: onboardingReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  messages: messagesReducer
 })
