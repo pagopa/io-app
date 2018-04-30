@@ -2,12 +2,12 @@
  * Common styles used across the components
  */
 
-import { Platform, NativeModules, StyleSheet } from 'react-native'
+import { NativeModules, Platform, StyleSheet } from "react-native";
 
-const { StatusBarManager } = NativeModules
+const { StatusBarManager } = NativeModules;
 
 // eslint-disable-next-line no-magic-numbers
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
+const STATUSBAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBarManager.HEIGHT;
 
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
@@ -16,50 +16,50 @@ const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT
 export const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
-    backgroundColor: '#fafafa'
+    backgroundColor: "#fafafa"
   },
   errorContainer: {
     padding: 5,
-    backgroundColor: '#F23333',
+    backgroundColor: "#F23333",
     borderRadius: 4,
-    color: '#eee',
+    color: "#eee",
     fontSize: 15
   }
-})
+});
 
 export const ProfileStyles = StyleSheet.create({
   profileHeader: {
-    backgroundColor: '#0066CC'
+    backgroundColor: "#0066CC"
   },
   profileHeaderText: {
     fontSize: 22,
-    color: '#fff'
+    color: "#fff"
   },
   profileRow: {
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center"
   },
   profileRowIcon: {
     marginLeft: 10,
     fontSize: 13,
-    color: '#b2d0ed'
+    color: "#b2d0ed"
   },
   profileRowText: {
     fontSize: 15,
-    color: '#b2d0ed'
+    color: "#b2d0ed"
   },
   preferenceHeaderText: {
-    fontWeight: 'bold',
-    color: '#555',
+    fontWeight: "bold",
+    color: "#555",
     fontSize: 15,
     marginTop: 10
   },
   listItem: {
-    color: '#06C',
-    fontWeight: 'bold',
+    color: "#06C",
+    fontWeight: "bold",
     marginLeft: 20
   },
   version: {
-    textAlign: 'right'
+    textAlign: "right"
   }
-})
+});

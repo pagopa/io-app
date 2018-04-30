@@ -6,16 +6,16 @@
  * @flow
  */
 
+import { Action } from "../../actions/types";
+import { ApiProfile } from "../../api";
 import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPDATE_SUCCESS
-} from '../actions/constants'
-import { Action } from '../../actions/types'
-import { ApiProfile } from '../../api'
+} from "../actions/constants";
 
-export type ProfileState = ApiProfile | null
+export type ProfileState = ApiProfile | null;
 
-export const INITIAL_STATE: ProfileState = null
+export const INITIAL_STATE: ProfileState = null;
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,
@@ -23,14 +23,14 @@ const reducer = (
 ): ProfileState => {
   switch (action.type) {
     case PROFILE_LOAD_SUCCESS:
-      return action.payload
+      return action.payload;
 
     case PROFILE_UPDATE_SUCCESS:
-      return action.payload
+      return action.payload;
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default reducer
+export default reducer;

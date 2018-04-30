@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { View, ViewProperties } from 'react-native'
-import mapPropsToStyleNames from 'native-base/src/Utils/mapPropsToStyleNames.js'
-import { connectStyle } from 'native-base-shoutem-theme'
+import { connectStyle } from "native-base-shoutem-theme";
+import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames.js";
+import * as React from "react";
+import { View, ViewProperties } from "react-native";
 
-type Props = ViewProperties
+type Props = ViewProperties;
 
 /**
  * A simple wrapper where you can put an Icon and a Text components that will be rendered side-by-side.
@@ -11,15 +11,15 @@ type Props = ViewProperties
  * More @https://github.com/teamdigitale/italia-app#textwithicon
  */
 class TextWithIcon extends React.Component<Props> {
-  render() {
-    return <View {...this.props} />
+  public render() {
+    return <View {...this.props} />;
   }
 }
 
 const StyledTextWithIcon = connectStyle(
-  'UIComponents.TextWithIcon',
+  "UIComponents.TextWithIcon",
   {},
   mapPropsToStyleNames
-)(TextWithIcon)
+)(TextWithIcon);
 
-export default StyledTextWithIcon
+export default StyledTextWithIcon;

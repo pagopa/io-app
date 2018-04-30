@@ -1,27 +1,27 @@
-import { NavigationState } from 'react-navigation'
-import { FormStateMap } from 'redux-form';
+import { NavigationState } from "react-navigation";
+import { FormStateMap } from "redux-form";
 
-import { Action } from '../actions/types'
-import { AppState } from './appState'
-import { LoadingState } from '../store/reducers/loading'
-import { ErrorState } from '../store/reducers/error'
-import { SessionState } from '../store/reducers/session'
-import { OnboardingState } from '../store/reducers/onboarding'
-import { ProfileState } from '../store/reducers/profile'
+import { Action } from "../actions/types";
+import { ErrorState } from "../store/reducers/error";
+import { LoadingState } from "../store/reducers/loading";
+import { OnboardingState } from "../store/reducers/onboarding";
+import { ProfileState } from "../store/reducers/profile";
+import { SessionState } from "../store/reducers/session";
+import { AppState } from "./appState";
 
 export type NetworkState = {
-  isConnected: boolean,
-  actionQueue: ReadonlyArray<Action>
-}
+  isConnected: boolean;
+  actionQueue: ReadonlyArray<Action>;
+};
 
 export type GlobalState = {
-  appState: AppState,
-  network: NetworkState,
-  navigation: NavigationState,
-  loading: LoadingState,
-  error: ErrorState,
-  form: FormStateMap
-  session: SessionState,
-  onboarding: OnboardingState,
-  profile: ProfileState
-}
+  appState: AppState;
+  network: NetworkState;
+  navigation: NavigationState;
+  loading: LoadingState;
+  error: ErrorState;
+  form: FormStateMap;
+  session: SessionState;
+  onboarding: OnboardingState;
+  profile: ProfileState;
+};

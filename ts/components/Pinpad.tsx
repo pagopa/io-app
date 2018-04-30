@@ -1,25 +1,25 @@
-import * as React from 'react'
-import CodeInput from 'react-native-confirmation-code-input'
-import color from 'color'
+import color from "color";
+import * as React from "react";
+import CodeInput from "react-native-confirmation-code-input";
 
-import { PIN_LENGTH } from '../utils/constants'
-import variables from '../theme/variables'
+import variables from "../theme/variables";
+import { PIN_LENGTH } from "../utils/constants";
 
 type OwnProps = {
-  autofocus: boolean,
-  compareWithCode?: string,
+  autofocus: boolean;
+  compareWithCode?: string;
   onFulfill:
     | ((code: string) => void)
-    | ((isValid: boolean, code: string) => void)
-}
+    | ((isValid: boolean, code: string) => void);
+};
 
-type Props = OwnProps
+type Props = OwnProps;
 
 /**
  * A customized CodeInput component.
  */
-const Pinpad: React.SFC<Props> = (props) => {
-  const { autofocus, compareWithCode, onFulfill } = props
+const Pinpad: React.SFC<Props> = props => {
+  const { autofocus, compareWithCode, onFulfill } = props;
   return (
     <CodeInput
       secureTextEntry
@@ -27,7 +27,7 @@ const Pinpad: React.SFC<Props> = (props) => {
       autoFocus={autofocus}
       className="border-b"
       codeLength={PIN_LENGTH}
-      compareWithCode={compareWithCode || ''}
+      compareWithCode={compareWithCode || ""}
       cellBorderWidth={2}
       inactiveColor={color(variables.brandLightGray)
         .rgb()
@@ -38,7 +38,7 @@ const Pinpad: React.SFC<Props> = (props) => {
       onFulfill={onFulfill}
       codeInputStyle={{ fontSize: variables.fontSize5, height: 56 }}
     />
-  )
-}
+  );
+};
 
-export default Pinpad
+export default Pinpad;

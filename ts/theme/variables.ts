@@ -4,78 +4,78 @@
  * exported to be used in our components theme files (check `./components` directory).
  */
 
-import { Platform } from 'react-native'
-import materialVariables from 'native-base/src/theme/variables/material'
+import materialVariables from "native-base/src/theme/variables/material";
+import { Platform } from "react-native";
 
-import { ThemeSimpleValue } from './types'
-import { makeFontStyleObject } from './fonts'
+import { makeFontStyleObject } from "./fonts";
+import { ThemeSimpleValue } from "./types";
 
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
 
   // Button
-  btnTextFontWeight: '700',
+  btnTextFontWeight: "700",
   btnHeight: 48,
   btnFontSize: 16,
   btnSmallHeight: 39,
   btnSmallFontSize: 16,
   get btnLightTextColor(): ThemeSimpleValue {
-    return this.textColor
+    return this.textColor;
   },
-  btnLightBorderColor: '#E6E9F2',
+  btnLightBorderColor: "#E6E9F2",
 
   // Color
-  brandPrimary: '#0066CC',
-  brandPrimaryInverted: '#FFFFFF',
-  brandGray: '#F5F6F7',
-  brandLight: '#FCFDFF',
-  brandSuccess: '#007005',
-  brandDanger: '#CC3333',
-  brandLightGray: '#E6E9F2',
-  brandDarkGray: '#5C6F82',
+  brandPrimary: "#0066CC",
+  brandPrimaryInverted: "#FFFFFF",
+  brandGray: "#F5F6F7",
+  brandLight: "#FCFDFF",
+  brandSuccess: "#007005",
+  brandDanger: "#CC3333",
+  brandLightGray: "#E6E9F2",
+  brandDarkGray: "#5C6F82",
 
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
   get fontSize1(): ThemeSimpleValue {
     // eslint-disable-next-line no-magic-numbers
-    return this.fontSizeBase * 0.75
+    return this.fontSizeBase * 0.75;
   },
   get fontSize2(): ThemeSimpleValue {
     // eslint-disable-next-line no-magic-numbers
-    return this.fontSizeBase * 0.875
+    return this.fontSizeBase * 0.875;
   },
   get fontSize3(): ThemeSimpleValue {
     // eslint-disable-next-line no-magic-numbers
-    return this.fontSizeBase * 1
+    return this.fontSizeBase * 1;
   },
   get fontSize4(): ThemeSimpleValue {
     // eslint-disable-next-line no-magic-numbers
-    return this.fontSizeBase * 1.125
+    return this.fontSizeBase * 1.125;
   },
   get fontSize5(): ThemeSimpleValue {
     // eslint-disable-next-line no-magic-numbers
-    return this.fontSizeBase * 1.5
+    return this.fontSizeBase * 1.5;
   },
   lineHeight: 24,
 
   // Icon
-  iconFamily: 'Entypo',
+  iconFamily: "Entypo",
 
   // Content
   contentPadding: 24,
-  contentBackground: '#FFFFFF',
-  contentAlternativeBackground: '#F5F6F7',
+  contentBackground: "#FFFFFF",
+  contentAlternativeBackground: "#F5F6F7",
 
   // Footer
-  footerBackground: '#FFFFFF',
+  footerBackground: "#FFFFFF",
   footerElevation: 50,
   footerPaddingTop: 24,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
-  footerShadowColor: '#000000',
+  footerShadowColor: "#000000",
   footerShadowOffsetWidth: 0,
   footerShadowOffsetHeight: 50,
   footerShadowOpacity: 0.3,
@@ -85,26 +85,26 @@ const customVariables = Object.assign(materialVariables, {
   gridGutter: 10,
 
   // H1
-  h1Color: '#17324D',
-  h1FontWeight: '700',
+  h1Color: "#17324D",
+  h1FontWeight: "700",
 
   // H3
-  h3Color: '#17324D',
-  h3FontWeight: '600',
+  h3Color: "#17324D",
+  h3FontWeight: "600",
 
   // Header
   headerPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
-  headerBodyFontWeight: '600',
-  toolbarDefaultBg: '#FFFFFF',
+  headerBodyFontWeight: "600",
+  toolbarDefaultBg: "#FFFFFF",
   get toolbarTextColor(): ThemeSimpleValue {
-    return this.textColor
+    return this.textColor;
   },
   get toolbarBtnColor(): ThemeSimpleValue {
-    return this.textColor
+    return this.textColor;
   },
-  androidStatusBarColor: '#FFFFFF',
+  androidStatusBarColor: "#FFFFFF",
 
   // Modal
   modalMargin: 0,
@@ -112,9 +112,9 @@ const customVariables = Object.assign(materialVariables, {
   modalHeaderHeight: 75,
 
   // Text
-  textColor: '#5C6F82',
-  textLinkColor: '#0063CF',
-  textLinkWeight: '600',
+  textColor: "#5C6F82",
+  textLinkColor: "#0063CF",
+  textLinkWeight: "600",
 
   // Spacer
   spacerHeight: 16,
@@ -122,6 +122,6 @@ const customVariables = Object.assign(materialVariables, {
   spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
-})
+});
 
-export default customVariables
+export default customVariables;

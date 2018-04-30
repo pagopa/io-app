@@ -1,17 +1,17 @@
-import * as React from 'react'
-import { BackHandler } from 'react-native'
-import { connect } from 'react-redux'
+import * as React from "react";
+import { BackHandler } from "react-native";
 import {
-  NavigationState,
   addNavigationHelpers,
-  NavigationActions
-} from 'react-navigation'
-import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
+  NavigationActions,
+  NavigationState
+} from "react-navigation";
+import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
+import { connect } from "react-redux";
 
-import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
-import { ReduxProps } from '../actions/types'
-import { GlobalState } from '../reducers/types'
-import AppNavigator from './AppNavigator'
+import { ReduxProps } from "../actions/types";
+import { GlobalState } from "../reducers/types";
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+import AppNavigator from "./AppNavigator";
 
 /**
  * A listener of the new react-navigation redux middleware.
@@ -19,28 +19,28 @@ import AppNavigator from './AppNavigator'
  */
 const addListener = createReduxBoundAddListener(
   NAVIGATION_MIDDLEWARE_LISTENERS_KEY
-)
+);
 
 type ReduxMappedProps = {
-  nav: NavigationState
-}
+  nav: NavigationState;
+};
 
-type OwnProps = {}
+type OwnProps = {};
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * Main app navigator.
  */
 class Navigation extends React.Component<Props> {
-  componentDidMount() {
+  public componentDidMount() {
     // Add an handler for the hardware back button in Android
-    BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     // Remove handler for the hardware back button in Android
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 
   /**
@@ -48,18 +48,18 @@ class Navigation extends React.Component<Props> {
    * It returns a boolean that if true avoid invoking the default back button
    * functionality to exit the app.
    */
-  onBackPress = (): boolean => {
-    const { dispatch, nav } = this.props
+  public onBackPress = (): boolean => {
+    const { dispatch, nav } = this.props;
     // If we are on the first screen of the stack we can exit from the application
     // eslint-disable-next-line no-magic-numbers
     if (nav.index === 0) {
-      return false
+      return false;
     }
-    dispatch(NavigationActions.back())
-    return true
-  }
+    dispatch(NavigationActions.back());
+    return true;
+  };
 
-  render() {
+  public render() {
     return (
       <AppNavigator
         navigation={addNavigationHelpers({
@@ -68,12 +68,12 @@ class Navigation extends React.Component<Props> {
           addListener
         })}
       />
-    )
+    );
   }
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   nav: state.navigation
-})
+});
 
-export default connect(mapStateToProps)(Navigation)
+export default connect(mapStateToProps)(Navigation);

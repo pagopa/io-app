@@ -3,59 +3,59 @@
  * It takes our custom variables and mixes them with each defined component theme.
  */
 
-import merge from 'lodash/merge'
+import merge from "lodash/merge";
 
-import getTheme from 'native-base/src/theme/components'
-import { Theme } from './types'
-import variables from './variables'
-import buttonTheme from './components/Button'
-import contentTheme from './components/Content'
-import h1Theme from './components/H1'
-import h3Theme from './components/H3'
-import headerTheme from './components/Header'
-import itemTheme from './components/Item'
-import modalTheme from './components/Modal'
-import textTheme from './components/Text'
-import textWithIconTheme from './components/TextWithIcon'
-import viewTheme from './components/View'
+import getTheme from "native-base/src/theme/components";
+import buttonTheme from "./components/Button";
+import contentTheme from "./components/Content";
+import h1Theme from "./components/H1";
+import h3Theme from "./components/H3";
+import headerTheme from "./components/Header";
+import itemTheme from "./components/Item";
+import modalTheme from "./components/Modal";
+import textTheme from "./components/Text";
+import textWithIconTheme from "./components/TextWithIcon";
+import viewTheme from "./components/View";
+import { Theme } from "./types";
+import variables from "./variables";
 
 const theme = (): Theme => {
-  const nbTheme = getTheme(variables)
+  const nbTheme = getTheme(variables);
   const overrides = {
-    'NativeBase.Button': {
+    "NativeBase.Button": {
       ...buttonTheme()
     },
-    'NativeBase.Content': {
+    "NativeBase.Content": {
       ...contentTheme()
     },
-    'NativeBase.H1': {
+    "NativeBase.H1": {
       ...h1Theme()
     },
-    'NativeBase.H3': {
+    "NativeBase.H3": {
       ...h3Theme()
     },
-    'NativeBase.Header': {
+    "NativeBase.Header": {
       ...headerTheme()
     },
-    'NativeBase.Item': {
+    "NativeBase.Item": {
       ...itemTheme()
     },
-    'UIComponents.Modal': {
+    "UIComponents.Modal": {
       ...modalTheme()
     },
-    'NativeBase.Text': {
+    "NativeBase.Text": {
       ...textTheme()
     },
-    'UIComponents.TextWithIcon': {
+    "UIComponents.TextWithIcon": {
       ...textWithIconTheme()
     },
-    'NativeBase.ViewNB': {
+    "NativeBase.ViewNB": {
       ...viewTheme()
     }
-  }
+  };
 
   // We need ad deep merge
-  return merge(nbTheme, overrides)
-}
+  return merge(nbTheme, overrides);
+};
 
-export default theme
+export default theme;

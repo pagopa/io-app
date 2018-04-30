@@ -1,3 +1,5 @@
-describe('Index', () => {
-  it('should allow jest tests', () => {})
-})
+describe("Index", () => {
+  it("should allow jest tests", () => {
+    expect(true).toBeTruthy();
+  });
+});

@@ -2,20 +2,20 @@
  * Aggregates all defined reducers
  */
 
-import { combineReducers, AnyAction } from 'redux'
-import { reducer as networkReducer } from 'react-native-offline'
-import { reducer as formReducer } from 'redux-form'
+import { reducer as networkReducer } from "react-native-offline";
+import { AnyAction, combineReducers } from "redux";
+import { reducer as formReducer } from "redux-form";
 
-import appStateReducer from './appState'
-import navigationReducer from './navigation'
-import loadingReducer from '../store/reducers/loading'
-import errorReducer from '../store/reducers/error'
-import sessionReducer from '../store/reducers/session'
-import onboardingReducer from '../store/reducers/onboarding'
-import profileReducer from '../store/reducers/profile'
-import { GlobalState } from './types'
+import errorReducer from "../store/reducers/error";
+import loadingReducer from "../store/reducers/loading";
+import onboardingReducer from "../store/reducers/onboarding";
+import profileReducer from "../store/reducers/profile";
+import sessionReducer from "../store/reducers/session";
+import appStateReducer from "./appState";
+import navigationReducer from "./navigation";
+import { GlobalState } from "./types";
 
-export { AnyAction }
+export { AnyAction };
 /**
  * Here we combine all the reducers.
  * We use the best practice of separating UI state from the DATA state.
@@ -39,4 +39,4 @@ export default combineReducers<GlobalState>({
   session: sessionReducer,
   onboarding: onboardingReducer,
   profile: profileReducer
-})
+});

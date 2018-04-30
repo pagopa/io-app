@@ -5,15 +5,15 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
-import get from 'lodash/get'
+import get from "lodash/get";
 
-import { GlobalState } from '../../reducers/types'
-import { Action } from '../../actions/types'
-import { FetchRequestActionsType, ERROR_CLEAR } from '../actions/constants'
+import { Action } from "../../actions/types";
+import { GlobalState } from "../../reducers/types";
+import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
 
-export type ErrorState = { [key in FetchRequestActionsType]?: string }
+export type ErrorState = { [key in FetchRequestActionsType]?: string };
 
-export const INITIAL_STATE: ErrorState = {}
+export const INITIAL_STATE: ErrorState = {};
 
 /**
  * Create a selector that return the first error found if any of the actions passed as parameter is in error.
@@ -31,43 +31,43 @@ export const createErrorSelector = (
       )
       // eslint-disable-next-line no-magic-numbers
       .filter((message: string): boolean => !!message)[0]
-  )
-}
+  );
+};
 
 // Listen for ERROR_CLEAR|*_REQUEST|*_FAILURE actions and set/remove error message.
 const reducer = (
   state: ErrorState = INITIAL_STATE,
   action: Action
 ): ErrorState => {
-  const { type } = action
+  const { type } = action;
 
   // Clear ERROR explicitly
   if (action.type === ERROR_CLEAR) {
-    const newState = Object.assign({}, state)
-    delete newState[action.payload]
-    return newState
+    const newState = Object.assign({}, state);
+    delete newState[action.payload];
+    return newState;
   }
 
-  const matches = /(.*)_(REQUEST|FAILURE)/.exec(type)
+  const matches = /(.*)_(REQUEST|FAILURE)/.exec(type);
 
   // Not a *_REQUEST /  *_FAILURE actions, so we ignore them
   if (!matches) {
-    return state
+    return state;
   }
 
-  const [, requestName, requestState] = matches
-  if (requestState === 'FAILURE') {
+  const [, requestName, requestState] = matches;
+  if (requestState === "FAILURE") {
     // We need to set the error message
     return {
       ...state,
-      [requestName]: (action as any).payload || 'Generic error'
-    }
+      [requestName]: (action as any).payload || "Generic error"
+    };
   } else {
     // We need to remove the error message
-    const { ...newState } = state
-    delete newState[requestName]
-    return newState
+    const { ...newState } = state;
+    delete newState[requestName];
+    return newState;
   }
-}
+};
 
-export default reducer
+export default reducer;

@@ -1,43 +1,43 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import { isValid } from 'redux-form'
-import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import {
+  Body,
+  Button,
   Container,
   Content,
-  Text,
-  View,
-  Button,
+  H1,
   Icon,
   Left,
-  Body,
-  H1
-} from 'native-base'
-import { GlobalState } from '../../reducers/types'
-import I18n from '../../i18n'
-import AppHeader from '../../components/ui/AppHeader'
-import Modal from '../../components/ui/Modal'
+  Text,
+  View
+} from "native-base";
+import * as React from "react";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+import { isValid } from "redux-form";
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
-} from '../../components/forms/SpidInformationForm'
+} from "../../components/forms/SpidInformationForm";
+import AppHeader from "../../components/ui/AppHeader";
+import Modal from "../../components/ui/Modal";
+import I18n from "../../i18n";
+import { GlobalState } from "../../reducers/types";
 type ReduxMappedProps = {
-  isFormValid: boolean
-}
+  isFormValid: boolean;
+};
 type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>
-}
-type Props = ReduxMappedProps & OwnProps
+  navigation: NavigationScreenProp<NavigationState>;
+};
+type Props = ReduxMappedProps & OwnProps;
 type State = {
-  isTosModalVisible: boolean
-}
+  isTosModalVisible: boolean;
+};
 /**
  * A screen where the user can insert an email to receive information about SPID.
  */
 class SpidInformationRequestScreen extends React.Component<Props, State> {
-  state: State = {
+  public state: State = {
     isTosModalVisible: false
-  }
-  render() {
+  };
+  public render() {
     return (
       <Container>
         <AppHeader>
@@ -51,41 +51,41 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           </Left>
           <Body>
             <Text>
-              {I18n.t('authentication.spid_information_request.headerTitle')}
+              {I18n.t("authentication.spid_information_request.headerTitle")}
             </Text>
           </Body>
         </AppHeader>
         <Content>
           <H1>
-            {I18n.t('authentication.spid_information_request.contentTitle')}
+            {I18n.t("authentication.spid_information_request.contentTitle")}
           </H1>
           <Text>
-            {I18n.t('authentication.spid_information_request.paragraph1')}
+            {I18n.t("authentication.spid_information_request.paragraph1")}
           </Text>
           <Text link>
-            {I18n.t('authentication.spid_information_request.moreLinkText')}
+            {I18n.t("authentication.spid_information_request.moreLinkText")}
           </Text>
           <View spacer large />
           <Text>
-            {I18n.t('authentication.spid_information_request.paragraph2')}
+            {I18n.t("authentication.spid_information_request.paragraph2")}
           </Text>
           <View spacer />
           <SpidInformationForm />
           <View spacer />
           <Text>
-            {I18n.t('authentication.spid_information_request.paragraph3')}
+            {I18n.t("authentication.spid_information_request.paragraph3")}
           </Text>
           <Text
             link
             onPress={(): void => this.setState({ isTosModalVisible: true })}
           >
-            {I18n.t('authentication.spid_information_request.tosLinkText')}
+            {I18n.t("authentication.spid_information_request.tosLinkText")}
           </Text>
         </Content>
         <View footer>
           <Button block primary disabled={!this.props.isFormValid}>
             <Text>
-              {I18n.t('authentication.spid_information_request.continue')}
+              {I18n.t("authentication.spid_information_request.continue")}
             </Text>
           </Button>
         </View>
@@ -97,13 +97,13 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
             />
           </View>
           <Content>
-            <H1>{I18n.t('personal_data_processing.title')}</H1>
+            <H1>{I18n.t("personal_data_processing.title")}</H1>
             <View spacer large />
-            <Text>{I18n.t('personal_data_processing.content')}</Text>
+            <Text>{I18n.t("personal_data_processing.content")}</Text>
           </Content>
         </Modal>
       </Container>
-    )
+    );
   }
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
@@ -112,5 +112,5 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
    * this selector to check if the form is valid or not.
    */
   isFormValid: isValid(SPID_INFORMATION_FORM_NAME)(state)
-})
-export default connect(mapStateToProps)(SpidInformationRequestScreen)
+});
+export default connect(mapStateToProps)(SpidInformationRequestScreen);

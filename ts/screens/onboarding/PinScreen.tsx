@@ -1,25 +1,25 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import {
+  Body,
+  Button,
   Container,
   Content,
-  Text,
-  View,
-  Button,
+  H1,
   Icon,
   Left,
-  Body,
-  H1
+  Text,
+  View
 } from "native-base";
-import CodeInput from 'react-native-confirmation-code-input'
+import * as React from "react";
+import CodeInput from "react-native-confirmation-code-input";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 
 import { ReduxProps } from "../../actions/types";
-import { GlobalState } from "../../reducers/types";
-import I18n from "../../i18n";
+import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
 import TextWithIcon from "../../components/ui/TextWithIcon";
-import Pinpad from "../../components/Pinpad";
+import I18n from "../../i18n";
+import { GlobalState } from "../../reducers/types";
 import { createPin } from "../../store/actions/onboarding";
 import { createErrorSelector } from "../../store/reducers/error";
 
@@ -60,8 +60,8 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  pinComponent: CodeInput;
-  pinConfirmComponent: CodeInput;
+  public pinComponent: CodeInput;
+  public pinConfirmComponent: CodeInput;
 
   constructor(props) {
     super(props);
@@ -75,7 +75,7 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the first CodeInput is filled
-  onPinFulfill = (code: string) => {
+  public onPinFulfill = (code: string) => {
     this.setState({
       pinState: {
         state: "PinSelected",
@@ -85,7 +85,7 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   // Method called when the confirmation CodeInput is filled
-  onPinConfirmFulfill = (isValid: boolean, code: string) => {
+  public onPinConfirmFulfill = (isValid: boolean, code: string) => {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid) {
       if (this.pinConfirmComponent) {
@@ -101,7 +101,7 @@ class PinScreen extends React.Component<Props, State> {
     });
   };
 
-  onPinReset = () => {
+  public onPinReset = () => {
     if (this.pinConfirmComponent) {
       this.pinConfirmComponent.clear();
     }
@@ -113,12 +113,12 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   // Dispatch the Action that save the PIN in the Keychain
-  createPin = (pin: string) => {
+  public createPin = (pin: string) => {
     this.props.dispatch(createPin(pin));
   };
 
   // Render a different header when the user need to confirm the PIN
-  renderContentHeader = (pinState: PinState) => {
+  public renderContentHeader = (pinState: PinState) => {
     if (pinState.state === "PinUnselected") {
       return <H1>{I18n.t("onboarding.pin.contentTitle")}</H1>;
     } else {
@@ -127,7 +127,7 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   // Render the PIN match/doesn't match feedback message
-  renderCodeInputConfirmValidation = (pinState: PinConfirmed) => {
+  public renderCodeInputConfirmValidation = (pinState: PinConfirmed) => {
     const validationMessage = pinState.isConfirmationPinMatch ? (
       <TextWithIcon success>
         <Icon name={"check"} />
@@ -148,7 +148,7 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   // Render select/confirm Pinpad component
-  renderCodeInput = (pinState: PinState) => {
+  public renderCodeInput = (pinState: PinState) => {
     if (pinState.state === "PinUnselected") {
       /**
        * The component that allows the user to SELECT the PIN.
@@ -157,7 +157,7 @@ class PinScreen extends React.Component<Props, State> {
     } else {
       /**
        * The component that allows the user to CONFIRM the PIN.
-       * */
+       */
       return (
         <React.Fragment>
           <Pinpad
@@ -174,7 +174,7 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   // The Content of the Screen
-  renderContent = (pinState: PinState) => {
+  public renderContent = (pinState: PinState) => {
     return (
       <Content>
         {this.renderContentHeader(pinState)}
@@ -191,7 +191,7 @@ class PinScreen extends React.Component<Props, State> {
     );
   };
 
-  renderContinueButton = (pinState: PinState) => {
+  public renderContinueButton = (pinState: PinState) => {
     if (pinState.state === "PinConfirmed") {
       const { pin, isConfirmationPinMatch } = pinState;
       return (
@@ -214,7 +214,7 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   // The Footer of the Screen
-  renderFooter = (pinState: PinState) => {
+  public renderFooter = (pinState: PinState) => {
     return (
       <View footer>
         {this.renderContinueButton(pinState)}
@@ -232,7 +232,7 @@ class PinScreen extends React.Component<Props, State> {
     );
   };
 
-  render() {
+  public render() {
     const { pinState } = this.state;
 
     return (
