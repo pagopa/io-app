@@ -133,7 +133,41 @@
     "payNotice": "Pay Notice",
     "lastOperations": "Latest operations",
     "operations": "Operations",
-    "creditDebtCards": "Credit/Debt Cards"
+    "creditDebtCards": "Credit/Debt Cards",
+    "addPaymentMethodTitle": "Add payment method",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "methods": {
+      "card": {
+        "name": "Credit/debit card",
+        "maxFee": "Maximum fee of 0.50€"
+      },
+      "bank": {
+        "name": "Bank account",
+        "maxFee": "Maximum fee of 0.50€"
+      },
+      "mobile": {
+        "name": "Other payment methods",
+        "maxFee": "Maximum fee of 0.50€"
+      }
+    },
+    "addCardTitle": "Card details",
+    "dummyCard": {
+      "labels": {
+        "name": "Card owner",
+        "number": "Card number",
+        "expires": "Expiration date",
+        "csc": "Card security code"
+      },
+      "values": {
+        "name": "John Doe",
+        "number": "0000 0000 0000 0000",
+        "expires": "12/22",
+        "csc": "1234"
+      }
+    },
+    "acceptedCards": "Accepted cards",
+    "whyFee": "Why a fee?"
   },
   "saveCard": {
     "saveCard":"Save the card",

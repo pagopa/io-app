@@ -132,7 +132,41 @@
     "payNotice": "Paga un avviso",
     "lastOperations": "Ultime Operazioni",
     "operations": "Operazioni",
-    "creditDebtCards": "Carte di Credito/Debito"
+    "creditDebtCards": "Carte di Credito/Debito",
+    "addPaymentMethodTitle": "Aggiungi metodo di pagamento",
+    "cancel": "Annulla",
+    "continue": "Continua",
+    "methods": {
+      "card": {
+        "name": "Carta di credito/debito",
+        "maxFee": "Commissione massima 0.50€"
+      },
+      "bank": {
+        "name": "Conto corrente",
+        "maxFee": "Commissione massima 0.50€"
+      },
+      "mobile": {
+        "name": "Altri metodi di pagamento",
+        "maxFee": "Commissione massima 0.50€"
+      }
+    },
+    "addCardTitle": "Dati carta",
+    "dummyCard": {
+      "labels": {
+        "name": "Titolare",
+        "number": "Numero della carta",
+        "expires": "Data di scadenza",
+        "csc": "Codice di sicurezza"
+      },
+      "values": {
+        "name": "Mario Rossi",
+        "number": "0000 0000 0000 0000",
+        "expires": "12/22",
+        "csc": "1234"
+      }
+    },
+    "acceptedCards": "Carte accettate",
+    "whyFee": "Perchè la commissione?"
   },
   "saveCard": {
     "saveCard":"Salva la carta",

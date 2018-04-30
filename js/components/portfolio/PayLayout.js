@@ -74,7 +74,7 @@ class PayLayout extends React.Component<Props> {
                     </Text>
                   </Left>
                   <Right>
-                    <Text style={PortfolioStyles.pftext}>
+                    <Text style={PortfolioStyles.pftext} onPress={() => this.props.navigation.navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)}>
                       {this.props.subtitleRight}
                     </Text>
                   </Right>
