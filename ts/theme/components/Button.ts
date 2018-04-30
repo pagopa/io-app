@@ -61,9 +61,9 @@ export default (): Theme => {
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,
     elevation: 0,
-    shadowColor: null,
-    shadowOffset: null,
-    shadowRadius: null,
-    shadowOpacity: null
+    shadowColor: undefined,
+    shadowOffset: undefined,
+    shadowRadius: undefined,
+    shadowOpacity: undefined
   };
 };

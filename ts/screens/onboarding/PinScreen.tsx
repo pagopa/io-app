@@ -60,8 +60,8 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  public pinComponent: CodeInput;
-  public pinConfirmComponent: CodeInput;
+  public pinComponent: CodeInput | null = null;
+  public pinConfirmComponent: CodeInput | null = null;
 
   constructor(props) {
     super(props);
