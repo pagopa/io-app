@@ -176,8 +176,8 @@ jobs:
       # Fetch CocoaPods specs
       - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
-      # Setup react-native-config
-      - run: ./bin/add-ios-env-config.sh
+      # Re-run postinstall scripts (setup of react-native libs)
+      - run: npm run postinstall
 
       # Move to the ios project directory and run the test_build lane
       - run: cd ios && bundle exec fastlane test_build
