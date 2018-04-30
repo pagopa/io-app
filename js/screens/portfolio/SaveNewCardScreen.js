@@ -6,12 +6,11 @@
  */
 
 import * as React from 'react'
-import {Container, Grid, Col,H1} from 'native-base'
-import {Switch, Text} from 'react-native'
+import {Container, Grid, Col,H1, View, Button,Text} from 'native-base'
+import {Switch} from 'react-native'
 import ROUTES from '../../navigation/routes'
 import I18n from '../../i18n'
 import type { NavigationScreenProp, NavigationState } from 'react-navigation'
-
 
 
 type Props = {
@@ -38,8 +37,7 @@ class SaveNewCardScreen extends React.Component<Props,State> {
     }
     
     onValueChange(){
-        this.setState({isPreferredCard: !this.state.isPreferredCard})
-        
+        this.setState({isPreferredCard: !this.state.isPreferredCard})  
     }
 
     constructor(props: Props) {
@@ -66,6 +64,23 @@ class SaveNewCardScreen extends React.Component<Props,State> {
                             onValueChange={this.onValueChange.bind(this)}/>
                     </Col>
                 </Grid>
+
+                <View footer>
+                    <Button block primary onPress={(): boolean=>this.props.navigation.navigate(ROUTES.PORTFOLIO_HOME)}>
+                        <Text>
+                        {I18n.t('saveCard.saveCard')}
+                        </Text>
+                    </Button>
+
+                    <Button block light style={{backgroundColor:"#5C6F82", marginTop: 5 }} onPress={(): boolean=>this.props.navigation.navigate(ROUTES.PORTFOLIO_HOME)}>
+                        <Text style={{color:"white"}}>
+                        {I18n.t('saveCard.cancel')}
+                        </Text>
+                    </Button>
+                </View>
+
+
+
             </Container>
         )
     }

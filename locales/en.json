@@ -162,15 +162,17 @@
       "values": {
         "name": "John Doe",
         "number": "0000 0000 0000 0000",
-        "expires": "12/22",
-        "csc": "1234"
+        "expires": "mm/aa",
+        "csc": "●●●"
       }
     },
     "acceptedCards": "Accepted cards",
-    "whyFee": "Why a fee?"
+    "whyFee": "Why a fee?",
+    "chooseMethod":"Choose your favourite method"
   },
   "saveCard": {
     "saveCard":"Save the card",
+    "cancel":"Cancel",
     "header":"Do you whant to save this card?",
     "favoriteTitle":"Set the cart as favourite payment method",
     "favoriteText":"This payment method will be automatically proposed for the next payment"

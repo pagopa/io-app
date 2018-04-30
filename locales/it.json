@@ -161,15 +161,17 @@
       "values": {
         "name": "Mario Rossi",
         "number": "0000 0000 0000 0000",
-        "expires": "12/22",
-        "csc": "1234"
+        "expires": "mm/aa",
+        "csc": "●●●"
       }
     },
     "acceptedCards": "Carte accettate",
-    "whyFee": "Perchè la commissione?"
+    "whyFee": "Perchè la commissione?",
+    "chooseMethod":"Scegli il metodo che preferisci"
   },
   "saveCard": {
     "saveCard":"Salva la carta",
+    "cancel":"Annulla",
     "header":"Vuoi salvare questa carta?",
     "favoriteTitle":"Imposta la carta come metodo di pagamento preferito",
     "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
