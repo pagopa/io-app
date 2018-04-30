@@ -1,21 +1,21 @@
-import * as React from 'react'
-import { Provider } from 'react-redux'
-import { StyleProvider } from 'native-base'
-import { PersistGate } from 'redux-persist/integration/react'
-import Mixpanel from 'react-native-mixpanel'
+import { StyleProvider } from "native-base";
+import * as React from "react";
+import Mixpanel from "react-native-mixpanel";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-import theme from './theme'
+import theme from "./theme";
 
-import * as config from './config'
-import configureErrorHandler from './boot/configureErrorHandler'
-import configureStoreAndPersistor from './boot/configureStoreAndPersistor'
-import RootContainer from './RootContainer'
+import configureErrorHandler from "./boot/configureErrorHandler";
+import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
+import * as config from "./config";
+import RootContainer from "./RootContainer";
 
 // Inizialize Mixpanel and configure the global js error handler
-Mixpanel.sharedInstanceWithToken(config.mixpanelToken)
-configureErrorHandler()
+Mixpanel.sharedInstanceWithToken(config.mixpanelToken);
+configureErrorHandler();
 
-const { store, persistor } = configureStoreAndPersistor()
+const { store, persistor } = configureStoreAndPersistor();
 
 /**
  * Main component of the application
@@ -23,7 +23,7 @@ const { store, persistor } = configureStoreAndPersistor()
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
 export default class App extends React.Component<never, never> {
-  render() {
+  public render() {
     return (
       <StyleProvider style={theme()}>
         <Provider store={store}>
@@ -32,6 +32,6 @@ export default class App extends React.Component<never, never> {
           </PersistGate>
         </Provider>
       </StyleProvider>
-    )
+    );
   }
 }
