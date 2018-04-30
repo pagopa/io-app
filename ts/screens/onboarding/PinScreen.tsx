@@ -63,7 +63,7 @@ class PinScreen extends React.Component<Props, State> {
   public pinComponent: CodeInput | null = null;
   public pinConfirmComponent: CodeInput | null = null;
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     // Initial state with PinUnselected
