@@ -20,6 +20,9 @@ import {
 } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 import { PortfolioStyles } from '../../components/styles'
+import ROUTES from '../../navigation/routes'
+import { withNavigation } from 'react-navigation';
+
 
 type Props = {
   title: string,
@@ -66,7 +69,7 @@ class PayLayout extends React.Component<Props> {
                     </Text>
                   </Left>
                   <Right>
-                    <Text style={PortfolioStyles.pftext}>
+                    <Text style={PortfolioStyles.pftext} onPress={() => this.props.navigation.navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)}>
                       {this.props.subtitleRight}
                     </Text>
                   </Right>
@@ -90,4 +93,4 @@ class PayLayout extends React.Component<Props> {
   }
 }
 
-export default PayLayout
+export default withNavigation(PayLayout)
