@@ -64,7 +64,10 @@ function reducer(
     };
   } else {
     // We need to remove the error message
-    const newState = Object.assign({}, state);
+    const newState: Partial<{ [key: string]: string }> = Object.assign(
+      {},
+      state
+    );
     delete newState[requestName];
     return newState;
   }
