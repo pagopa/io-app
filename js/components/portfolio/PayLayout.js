@@ -20,20 +20,28 @@ import {
 } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 import { PortfolioStyles } from '../../components/styles'
+import {
+  type NavigationScreenProp,
+  type NavigationState
+} from 'react-navigation'
+import { type ReduxProps } from '../../actions/types'
+import ROUTES from '../../navigation/routes'
+import { withNavigation } from 'react-navigation'
 
 type Props = {
   title: string,
   subtitleLeft: string,
   subtitleRight?: string,
   touchableContent?: React.Node,
-  children?: React.Node
+  children?: React.Node,
+  navigation: NavigationScreenProp<NavigationState>
 }
 
 /**
  * Pay layout component
  */
 class PayLayout extends React.Component<Props> {
-
+  
   rowSize(rowIndex: number) : $ReadOnlyArray<number> {
     const buttonRowSize = 3
     let titleRowSize = 6
@@ -47,7 +55,7 @@ class PayLayout extends React.Component<Props> {
     const rowSizes = [titleRowSize, contentRowSize, buttonRowSize]
     return rowSizes[rowIndex]
   }
-
+  
   render(): React.Node {
     return (
       <Container>
@@ -78,7 +86,13 @@ class PayLayout extends React.Component<Props> {
           <Row size={this.rowSize(1)}>{this.props.children}</Row>
           <Row size={this.rowSize(2)}>
             <Content>
-              <Button block>
+              <Button block 
+                onPress={(): boolean =>
+                  this.props.navigation.navigate(
+                    ROUTES.PORTFOLIO_SAVE_CARD
+                  )
+                }
+              >
                 <Icon type="FontAwesome" name="qrcode" />
                 <Text>{I18n.t('portfolio.payNotice')}</Text>
               </Button>
@@ -90,4 +104,4 @@ class PayLayout extends React.Component<Props> {
   }
 }
 
-export default PayLayout
+export default withNavigation(PayLayout)

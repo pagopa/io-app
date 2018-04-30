@@ -134,5 +134,11 @@
     "lastOperations": "Latest operations",
     "operations": "Operations",
     "creditDebtCards": "Credit/Debt Cards"
+  },
+  "saveCard": {
+    "saveCard":"Save the card",
+    "header":"Do you whant to save this card?",
+    "favoriteTitle":"Set the cart as favourite payment method",
+    "favoriteText":"This payment method will be automatically proposed for the next payment"
   }
 }

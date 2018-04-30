@@ -11,6 +11,7 @@ import PortfolioHomeScreen from '../screens/portfolio/PortfolioHomeScreen'
 import OperationDetailsScreen from '../screens/portfolio/OperationDetailsScreen'
 import CreditCardsScreen from '../screens/portfolio/CreditCardsScreen'
 import TransactionsScreen from '../screens/portfolio/TransactionsScreen'
+import SaveNewCardScreen from '../screens/portfolio/SaveNewCardScreen'
 
 const PortfolioNavigator = StackNavigator({
   [ROUTES.PORTFOLIO_HOME]: {
@@ -24,6 +25,9 @@ const PortfolioNavigator = StackNavigator({
   },
   [ROUTES.PORTFOLIO_CARDS_OPERATIONS]: {
     screen: TransactionsScreen
+  },
+  [ROUTES.PORTFOLIO_SAVE_CARD]: {
+    screen: SaveNewCardScreen
   }
 })
 
