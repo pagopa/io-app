@@ -3,7 +3,7 @@
  * @flow
  */
 
-import { TOS_ACCEPT_SUCCESS } from '../actions/constants'
+import { TOS_ACCEPT_SUCCESS, PIN_CREATE_SUCCESS } from '../actions/constants'
 import { Action } from '../../actions/types'
 import { GlobalState } from '../../reducers/types'
 
@@ -33,6 +33,12 @@ const reducer = (
       return {
         ...state,
         isTosAccepted: true
+      }
+
+    case PIN_CREATE_SUCCESS:
+      return {
+        ...state,
+        isPinCreated: true
       }
 
     default:

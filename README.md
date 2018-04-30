@@ -226,12 +226,12 @@ Per aggiungere una nuova lingua è necessario:
 1. Creare un nuovo file all'interno della directory `locales` usando come nome `<langcode>.json` (Es: `es.json`)
 2. Copiare il contenuto di uno degli altri file `.json` già presenti
 3. Procedere con la traduzione
-4. Modificare il file `js/i18n.js` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua 
+4. Modificare il file `ts/i18n.ts` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua 
 
 
 ### Gestione degli errori
 
-L'applicazione utilizza un custom handler per intercettare e notificare errori javascript causati da eccezioni non gestite. Il codice del custom handler e visibile nel file `js/utils/configureErrorHandler.js`
+L'applicazione utilizza un custom handler per intercettare e notificare errori javascript causati da eccezioni non gestite. Il codice del custom handler è visibile nel file `ts/utils/configureErrorHandler.ts`
 
 
 ### Monitoring della connessione
@@ -259,7 +259,7 @@ mentre in iOS il codice da applicare è:
 }
 ```
 
-Per rendere la gestione dei font e delle varianti più sempice sono state create delle funzioni di utilità all'interno del file `js/theme/fonts.js`
+Per rendere la gestione dei font e delle varianti più sempice sono state create delle funzioni di utilità all'interno del file `ts/theme/fonts.ts`
 
 
 ### Theming
@@ -268,16 +268,16 @@ L'applicazione utilizza [native-base](https://nativebase.io/) e i suo componenti
 
 #### Estensione di native-base
 
-Nella directory `/js/theme` sono presenti alcuni file che consentono di gestire il tema in modo più flessibile rispetto a quanto permesso nativamente da native-base.
+Nella directory `/ts/theme` sono presenti alcuni file che consentono di gestire il tema in modo più flessibile rispetto a quanto permesso nativamente da native-base.
 
 ##### Variabili
 
-Per definire nuove variabili da utilizzare nel tema dei componenti è necessario modificare il file `/js/theme/variables.js`. Tale file si occupa di importare le variabili di base definite dal tema `material` di native-base e permette di sovrascrivere/definire il valore di nuove variabili.
+Per definire nuove variabili da utilizzare nel tema dei componenti è necessario modificare il file `/ts/theme/variables.ts`. Tale file si occupa di importare le variabili di base definite dal tema `material` di native-base e permette di sovrascrivere/definire il valore di nuove variabili.
 
 ##### Tema dei Componenti
 
-La libreria native-base definisce il tema di ogni singolo componente in un file .js separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.js`.
-Per ridefinire il tema dei componenti di native-base è necesario creare/modificare i file presenti nella directory `/js/theme/components`. Ogni file presente in questa directory deve esportare un oggetto che definisce il tema del componente. Prendiamo come esempio il file `Content.js`:
+La libreria native-base definisce il tema di ogni singolo componente in un file .ts separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.ts`.
+Per ridefinire il tema dei componenti di native-base è necesario creare/modificare i file presenti nella directory `/ts/theme/components`. Ogni file presente in questa directory deve esportare un oggetto che definisce il tema del componente. Prendiamo come esempio il file `Content.ts`:
 
 ```javascript
 import { type Theme } from '../types'
@@ -293,7 +293,7 @@ export default (): Theme => {
 }
 ```
 
-In questo file è possibile notare come vengono ridefiniti due attributi (`padding` e `backgroundColor`) utilizzando come valori quanto presente nelle relative variabili. L'oggetto restituito sarà utilizzato nel file `/js/theme/index.js` per associarlo ad uno specifico tipo di componente (in questo caso `NativeBase.Component`).
+In questo file è possibile notare come vengono ridefiniti due attributi (`padding` e `backgroundColor`) utilizzando come valori quanto presente nelle relative variabili. L'oggetto restituito sarà utilizzato nel file `/ts/theme/index.ts` per associarlo ad uno specifico tipo di componente (in questo caso `NativeBase.Component`).
 
 Un esempio più complesso permette di utilizzare le funzioni avanzate del layer di theming di native-base.
 
@@ -354,7 +354,7 @@ render() {
 ...
 ```
 
-La libreria native-base permette di definire l'aspetto del componente figlio `Text` presente all'interno del componente padre `Button`. Ad esempio per definire la dimensione del testo in tutti i bottoni presenti nell'applicazione, è sufficiente inserire il seguente codice all'interno del file `/js/theme/components/Button.js`:
+La libreria native-base permette di definire l'aspetto del componente figlio `Text` presente all'interno del componente padre `Button`. Ad esempio per definire la dimensione del testo in tutti i bottoni presenti nell'applicazione, è sufficiente inserire il seguente codice all'interno del file `/ts/theme/components/Button.ts`:
 
 ```javascript
 import variables from '../variables'
@@ -389,3 +389,20 @@ export default (): Theme => {
 ```
 
 In questo caso quanto definito all'interno dell'attributo `NativeBase.Text` sarà utilizzato solo nel caso in cui il bottone abbia associata una proprietà dal nome `small`.
+
+### Custom UI components
+
+#### TextWithIcon
+
+Un semplice wrapper in cui è possibile inserire un'icona ed un testo che verranno renderizzati uno di fianco all'altro.
+
+Esempio di utilizzo:
+
+```javascript
+<TextWithIcon danger>
+  <Icon name={'cross'} />
+  <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
+</TextWithIcon>
+```
+
+Per cambiare il tema del wrapper, dell'icona o del testo modificare il file `ts/theme/components/TextWithIcon.ts`.
