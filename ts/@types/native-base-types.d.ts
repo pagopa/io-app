@@ -1,3 +1,9 @@
+/**
+ * Declare some types for native-base related modules.
+ * Note: these declarations are quite incomplete, right now we just have
+ * types that make the build pass.
+ */
+
 declare module "native-base-shoutem-theme" {
   export interface IConnectStyleOptions {
     withRef?: boolean;
@@ -27,5 +33,8 @@ declare module "native-base/src/theme/components" {
 }
 
 declare module "native-base/src/theme/variables/material" {
-  export default {};
+  export default {
+    borderWidth: number,
+    inputBorderColor: string
+  };
 }

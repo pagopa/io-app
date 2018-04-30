@@ -14,6 +14,7 @@ import sessionReducer from "../store/reducers/session";
 import appStateReducer from "./appState";
 import navigationReducer from "./navigation";
 import { GlobalState } from "./types";
+import { Action } from "../actions/types";
 
 export { AnyAction };
 /**
@@ -23,7 +24,7 @@ export { AnyAction };
  * DATA state is where we store real data fetched from the API (ex. profile/messages).
  * More at @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-export default combineReducers<GlobalState>({
+export default combineReducers<GlobalState, Action>({
   appState: appStateReducer,
   network: networkReducer,
   navigation: navigationReducer,
