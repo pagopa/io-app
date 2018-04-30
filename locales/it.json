@@ -112,10 +112,77 @@
         "email": {
           "placeholder": "indirizzo email"
         }
-      }      
+      }
     }
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "portfolio": {
+    "portfolio": "Portafoglio",
+    "creditcards": "Carte di Credito",
+    "paymentMethods": "Metodi di Pagamento",
+    "add": "aggiungi",
+    "operationsDetails": "Dettaglio delle Operazioni",
+    "total": "Totale",
+    "payAmount": "Importo da pagare",
+    "transactionFee": "Costo transazione",
+    "why": "Perché?",
+    "causal": "Causale",
+    "recipient": "Destinatario",
+    "date": "Data",
+    "hour": "Ora",
+    "receipt": "Ricevuta",
+    "seeReceipt": "Vedi la ricevuta",
+    "transactions": "Operazioni",
+    "noTransactions": "Non ci sono operazioni.",
+    "noNewTransactions": "Non ci sono nuove operazioni.",
+    "lastUsage": "Ultimo utilizzo ",
+    "yesterday": "ieri alle ",
+    "today": "oggi alle ",
+    "payNotice": "Paga un avviso",
+    "lastOperations": "Ultime Operazioni",
+    "operations": "Operazioni",
+    "creditDebtCards": "Carte di Credito/Debito",
+    "addPaymentMethodTitle": "Aggiungi metodo di pagamento",
+    "cancel": "Annulla",
+    "continue": "Continua",
+    "methods": {
+      "card": {
+        "name": "Carta di credito/debito",
+        "maxFee": "Commissione massima 0.50€"
+      },
+      "bank": {
+        "name": "Conto corrente",
+        "maxFee": "Commissione massima 0.50€"
+      },
+      "mobile": {
+        "name": "Altri metodi di pagamento",
+        "maxFee": "Commissione massima 0.50€"
+      }
+    },
+    "addCardTitle": "Dati carta",
+    "dummyCard": {
+      "labels": {
+        "name": "Titolare",
+        "number": "Numero della carta",
+        "expires": "Data di scadenza",
+        "csc": "Codice di sicurezza"
+      },
+      "values": {
+        "name": "Mario Rossi",
+        "number": "0000 0000 0000 0000",
+        "expires": "12/22",
+        "csc": "1234"
+      }
+    },
+    "acceptedCards": "Carte accettate",
+    "whyFee": "Perchè la commissione?"
+  },
+  "saveCard": {
+    "saveCard":"Salva la carta",
+    "header":"Vuoi salvare questa carta?",
+    "favoriteTitle":"Imposta la carta come metodo di pagamento preferito",
+    "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
   }
 }
