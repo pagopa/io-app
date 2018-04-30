@@ -53,7 +53,6 @@ export const renderNativeBaseInput = (
   props: WrappedFieldProps & BaseFieldProps & NativeBaseInputProps
 ) => {
   const {
-    input,
     meta: { touched, error, active },
     placeholder,
     showError

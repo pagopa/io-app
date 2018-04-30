@@ -1,4 +1,4 @@
-import { NavigationContainer, SwitchNavigator } from "react-navigation";
+import { SwitchNavigator } from "react-navigation";
 
 import IngressScreen from "../screens/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";

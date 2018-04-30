@@ -1,16 +1,5 @@
-/**
- * Implements a Redux middleware that translates actions into Mixpanel events
- */
-
-import { has } from "lodash";
 import Mixpanel from "react-native-mixpanel";
-import { sha256 } from "react-native-sha256";
-import {
-  NavigationActions,
-  NavigationLeafRoute,
-  NavigationState
-} from "react-navigation";
-import { REHYDRATE } from "redux-persist/lib/constants";
+import { NavigationActions } from "react-navigation";
 
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";

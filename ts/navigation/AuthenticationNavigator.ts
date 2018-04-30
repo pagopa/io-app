@@ -1,4 +1,4 @@
-import { NavigationContainer, StackNavigator } from "react-navigation";
+import { StackNavigator } from "react-navigation";
 
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";

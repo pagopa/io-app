@@ -1,4 +1,4 @@
-import { NavigationContainer, TabNavigator } from "react-navigation";
+import { TabNavigator } from "react-navigation";
 
 import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";

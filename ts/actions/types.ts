@@ -17,7 +17,6 @@ import { ErrorActions } from "../store/actions/error";
 import { OnboardingActions } from "../store/actions/onboarding";
 import { ProfileActions } from "../store/actions/profile";
 import { SessionActions } from "../store/actions/session";
-import { ApiUserProfile, IdentityProvider } from "../utils/api";
 
 export type ApplicationState = "background" | "inactive" | "active";
 

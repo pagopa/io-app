@@ -4,7 +4,7 @@
  * README file included in this repository.
  */
 
-import { Platform, PlatformOSType, PlatformStatic } from "react-native";
+import { Platform, PlatformStatic } from "react-native";
 
 type PlatformSelectType = PlatformStatic["select"];
 
