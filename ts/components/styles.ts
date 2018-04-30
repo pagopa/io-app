@@ -63,3 +63,94 @@ export const ProfileStyles = StyleSheet.create({
     textAlign: "right"
   }
 });
+
+export const PortfolioStyles = StyleSheet.create({
+  pftext: {
+    fontFamily: 'Titillium Web',
+    color: '#fafafa'
+  },
+  pftitle: {
+    fontFamily: 'Titillium Web',
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: '#fafafa'
+  },
+  pfsubtitle: {
+    fontFamily: 'Titillium Web',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#fafafa'
+  },
+  pfbold: {
+    fontFamily: 'Titillium Web',
+    fontWeight: 'bold',
+    color: 'rgb(30,30,30)'
+  },
+  pfwhy: {
+    fontFamily: 'Titillium Web',
+    fontWeight: 'bold',
+    color: '#3a3bfa'
+  },
+  pfback: {
+    backgroundColor: '#4a5761'
+  },
+  pfwhite: {
+    backgroundColor: '#fafafa'
+  },
+  pfcards: {
+    height: 120,
+    marginLeft: -200,
+    resizeMode: 'contain'
+  },
+  pftabcard: {
+    height: 120,
+    marginLeft: -170,
+    resizeMode: 'contain'
+  },
+  pfsingle: {
+    height: 60,
+    marginLeft: -190,
+    marginTop: 45,
+    resizeMode: 'contain'
+  },
+  titleStyle: {
+    fontFamily: "Titillium Web",
+    fontWeight: "bold",
+    color: "rgb(150,150,150)"
+  },
+  boldStyle: {
+    fontFamily: "Titillium Web",
+    fontWeight: "bold",
+    color: "rgb(30,30,30)"
+  },
+  container: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  image: {
+    height: 150,
+    marginLeft: -120,
+    resizeMode: 'contain'
+  },
+  payBoldStyle: {
+    fontFamily: "Titillium Web",
+    fontWeight: "bold",
+    color: "rgb(30,30,30)"
+  },
+  payLightStyle: {
+    fontFamily: "Titillium Web",
+    fontSize: 12 ,
+    color: "rgb(166, 166, 166)"
+  },
+  linkStyle: {
+    marginTop:20,
+    marginBottom:40,
+    marginLeft:10,
+    marginRight:10,
+    fontFamily: "Titillium Web",
+    fontWeight: "bold",
+    color: "rgb(0, 0, 255)"
+  }
+})
+
