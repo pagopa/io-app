@@ -31,8 +31,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      # Run TSLint
-      # - run: yarn lint
+      # Run linter
+      - run: yarn lint
 
       # Build app
       - run: yarn tsc:noemit
