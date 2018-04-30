@@ -169,4 +169,7 @@ workflows:
             - build-android-bundle
 
       # Test iOS
-      - test-ios
+      - test-ios:
+          requires:
+            - test-js-node-8
+
