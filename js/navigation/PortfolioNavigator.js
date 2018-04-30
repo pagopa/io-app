@@ -28,16 +28,14 @@ const PortfolioNavigator = StackNavigator({
   [ROUTES.PORTFOLIO_CARDS_OPERATIONS]: {
     screen: TransactionsScreen
   },
-<<<<<<< HEAD
   [ROUTES.PORTFOLIO_SAVE_CARD]: {
     screen: SaveNewCardScreen
-=======
+  },
   [ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD]: {
     screen: AddPaymentMethodScreen
   },
   [ROUTES.PORTFOLIO_ADD_CARD]: {
     screen: AddCardScreen
->>>>>>> 1d255b00ee2e532e4d9c71553b764eef74971639
   }
 })
 
