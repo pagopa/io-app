@@ -69,3 +69,6 @@ buck-out/
 
 # Visual Studio Code settings
 .vscode
+
+# Bundler
+vendor
