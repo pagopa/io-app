@@ -5,21 +5,29 @@ import ROUTES from "./routes"
 import MessagesScreen from "../screens/main/MessagesScreen"
 import ProfileScreen from "../screens/main/ProfileScreen"
 import PortfolioNavigator from "./PortfolioNavigator"
-import { Icon } from "native-base"
+import { Icon, Text } from 'native-base'
 
-interface IRouteIcons
+interface IRouteIcon
 {
   routeName: string,
   routeIcon: string
 }
 
-const ROUTE_ICON: ReadonlyArray<IRouteIcons> = [
+const ROUTE_ICON: ReadonlyArray<IRouteIcon> = [
   { routeName: ROUTES.MAIN_MESSAGES, routeIcon: "mail" },
   { routeName: ROUTES.PORTFOLIO_HOME, routeIcon: "wallet" },
   { routeName: ROUTES.DOCUMENTS_HOME, routeIcon: "document" },
   { routeName: ROUTES.PREFERENCES_HOME, routeIcon: "cog" },
   { routeName: ROUTES.MAIN_PROFILE, routeIcon: "user" }
 ]
+
+const getIcon = function (routeName: string) {
+  for (let route of ROUTE_ICON) if (route.routeName === routeName)
+  {
+    return route.routeIcon;
+  }
+  return "???"
+}
 
 /**
  * A navigator for all the screens used when the user is authenticated.
@@ -46,7 +54,8 @@ const navigation = TabNavigator(
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state
-        return <Icon name={ROUTE_ICON[routeName]} active={focused} />
+        const iconName: string = getIcon(routeName)
+        return <Icon name={iconName} active={focused} />
       }
     }),
     tabBarComponent: TabBarBottom,

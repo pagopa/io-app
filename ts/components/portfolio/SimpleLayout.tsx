@@ -16,7 +16,7 @@ type Props = {
 /**
  * Simple layout component
  */
-class SimpleLayout extends React.Component<Props, never> {
+export class SimpleLayout extends React.Component<Props, never> {
 
   render(): React.ReactNode {
     return (
