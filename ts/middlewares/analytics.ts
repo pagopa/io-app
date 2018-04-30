@@ -3,11 +3,12 @@ import { NavigationActions } from "react-navigation";
 
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
+import { AnyAction } from "redux";
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export function actionTracking(): (_: Dispatch) => (Action) => Action {
+export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
   return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
       const result: Action = next(action);
@@ -99,8 +100,8 @@ export function getCurrentRouteName(navNode: any): string | null {
 */
 export function screenTracking(
   store: MiddlewareAPI
-): (Dispatch) => (AnyAction) => Action {
-  return (next: Dispatch): ((Action) => Action) => {
+): (_: Dispatch) => (__: AnyAction) => Action {
+  return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
       if (
         action.type !== NavigationActions.NAVIGATE &&
