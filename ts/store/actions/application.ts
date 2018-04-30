@@ -1,4 +1,4 @@
-import { APPLICATION_INITIALIZED } from './constants'
+import { APPLICATION_INITIALIZED } from "./constants";
 
 /**
  * Action types and action creator related to the Application.
@@ -6,12 +6,12 @@ import { APPLICATION_INITIALIZED } from './constants'
 
 // Actions
 export type ApplicationInitialized = {
-  type: typeof APPLICATION_INITIALIZED
-}
+  type: typeof APPLICATION_INITIALIZED;
+};
 
 // Creators
 export const applicationInitialized = (): ApplicationInitialized => ({
   type: APPLICATION_INITIALIZED
-})
+});
 
-export type ApplicationActions = ApplicationInitialized
+export type ApplicationActions = ApplicationInitialized;

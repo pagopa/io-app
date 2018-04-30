@@ -1,6 +1,6 @@
-export type ThemeSimpleValue = null | number | string
+export type ThemeSimpleValue = null | number | string;
 
 // A generic recursive type for the theme
 export type Theme = {
-  [key: string]: ThemeSimpleValue | Theme
-}
+  [key: string]: ThemeSimpleValue | Theme;
+};

@@ -1,23 +1,22 @@
-import { Theme } from '../types'
-import variables from '../variables'
+import { Theme } from "../types";
+import variables from "../variables";
 
-
-declare module 'native-base' {
+declare module "native-base" {
   namespace NativeBase {
     interface Content {
-      alternative?: boolean
+      alternative?: boolean;
     }
   }
 }
 
 export default (): Theme => {
   const theme = {
-    '.alternative': {
+    ".alternative": {
       backgroundColor: variables.contentAlternativeBackground
     },
     padding: variables.contentPadding,
     backgroundColor: variables.contentBackground
-  }
+  };
 
-  return theme
-}
+  return theme;
+};

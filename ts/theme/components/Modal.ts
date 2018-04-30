@@ -1,27 +1,27 @@
-import { Theme } from '../types'
-import variables from '../variables'
+import { Theme } from "../types";
+import variables from "../variables";
 
 export default (): Theme => {
   const theme = {
-    'NativeBase.ViewNB': {
-      '.header': {
+    "NativeBase.ViewNB": {
+      ".header": {
         height: variables.modalHeaderHeight,
-        alignSelf: 'flex-end'
+        alignSelf: "flex-end"
       }
     },
 
-    'NativeBase.Content': {
+    "NativeBase.Content": {
       padding: 0
     },
 
-    '.fullscreen': {
+    ".fullscreen": {
       margin: variables.modalMargin
     },
 
     padding: variables.modalPadding,
     paddingBottom: 0,
     backgroundColor: variables.contentBackground
-  }
+  };
 
-  return theme
-}
+  return theme;
+};
