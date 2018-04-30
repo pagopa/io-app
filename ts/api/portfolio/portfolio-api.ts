@@ -9,7 +9,7 @@ const yesterdayAt = lastUsage + yesterday
 
 import { CreditCard, Operation, PaymentMethod } from '../../types/portfolio/types'
 
-const cards: ReadonlyArray<CreditCard> = [
+const cards: CreditCard[] = [
   {
     id: 1,
     brand: 'American Express',
@@ -40,7 +40,7 @@ const cards: ReadonlyArray<CreditCard> = [
   }
 ]
 
-const operations: ReadonlyArray<Operation> = [
+const operations: Operation[] = [
   {
     cardId: 1,
     date: '17/04/2018',
@@ -163,7 +163,7 @@ export class PortfolioAPI {
     ]
   }
 
-  static getCreditCards(): ReadonlyArray<CreditCard> {
+  static getCreditCards(): CreditCard[] {
     return cards
   }
 
@@ -171,13 +171,13 @@ export class PortfolioAPI {
     return cards.find((card): boolean => card.id === creditCardId)
   }
 
-  static getOperations(cardId: number): ReadonlyArray<Operation> {
+  static getOperations(cardId: number): Operation[] {
     return operations.filter(
       (operation): boolean => operation.cardId === cardId
     )
   }
 
-  static getLatestOperations(): ReadonlyArray<Operation> {
+  static getLatestOperations(): Operation[] {
     return operations.slice(1, 5) // eslint-disable-line no-magic-numbers
   }
 }

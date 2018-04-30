@@ -44,7 +44,7 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
     )
   }
 
-  render(): React.ReactElement<any> {
+  render(): React.ReactNode {
     const TITLE = I18n.t("portfolio.portfolio")
     const latestOperations: ReadonlyArray<
       Operation

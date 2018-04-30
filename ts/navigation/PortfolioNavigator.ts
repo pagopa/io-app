@@ -1,22 +1,15 @@
 import { StackNavigator } from 'react-navigation'
 import ROUTES from './routes'
 import { PortfolioHomeScreen } from '../screens/portfolio/PortfolioHomeScreen'
+import { CreditCardsScreen } from '../screens/portfolio/CreditCardsScreen'
+import { OperationDetailsScreen } from '../screens/portfolio/OperationDetailsScreen'
+import { TransactionsScreen } from '../screens/portfolio/TransactionsScreen'
 
-/*
-import OperationDetailsScreen from '../screens/portfolio/OperationDetailsScreen'
-import CreditCardsScreen from '../screens/portfolio/CreditCardsScreen'
-import TransactionsScreen from '../screens/portfolio/TransactionsScreen'
-import SaveNewCardScreen from '../screens/portfolio/SaveNewCardScreen'
-import AddPaymentMethodScreen from '../screens/portfolio/AddPaymentMethodScreen';
-import AddCardScreen from '../screens/portfolio/AddCardScreen';
-*/
 
 const PortfolioNavigator = StackNavigator({
   [ROUTES.PORTFOLIO_HOME]: {
     screen: PortfolioHomeScreen
-  }
-  /*
-  ,
+  },
   [ROUTES.PORTFOLIO_OPERATION_DETAILS]: {
     screen: OperationDetailsScreen
   },
@@ -26,6 +19,8 @@ const PortfolioNavigator = StackNavigator({
   [ROUTES.PORTFOLIO_CARDS_OPERATIONS]: {
     screen: TransactionsScreen
   },
+
+  /*
   [ROUTES.PORTFOLIO_SAVE_CARD]: {
     screen: SaveNewCardScreen
   },
