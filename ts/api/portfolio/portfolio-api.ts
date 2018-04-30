@@ -146,7 +146,7 @@ const operations: Operation[] = [
  * Mocked Portfolio Data
  */
 export class PortfolioAPI {
-  static getPaymentMethods(): ReadonlyArray<PaymentMethod> {
+  public static getPaymentMethods(): ReadonlyArray<PaymentMethod> {
     return [
       {
         id: 0,
@@ -163,21 +163,21 @@ export class PortfolioAPI {
     ]
   }
 
-  static getCreditCards(): CreditCard[] {
+  public static getCreditCards(): CreditCard[] {
     return cards
   }
 
-  static getCreditCard(creditCardId: number): CreditCard {
+  public static getCreditCard(creditCardId: number): CreditCard {
     return cards.find((card): boolean => card.id === creditCardId)
   }
 
-  static getOperations(cardId: number): Operation[] {
+  public static getOperations(cardId: number): Operation[] {
     return operations.filter(
       (operation): boolean => operation.cardId === cardId
     )
   }
 
-  static getLatestOperations(): Operation[] {
+  public static getLatestOperations(): Operation[] {
     return operations.slice(1, 5) // eslint-disable-line no-magic-numbers
   }
 }

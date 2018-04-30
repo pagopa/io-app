@@ -1,11 +1,7 @@
-import * as React from "react"
-import {
-  Container,
-  Content,
-  H1
-} from "native-base"
-import { Grid, Row } from "react-native-easy-grid"
-import { PortfolioStyles } from "../styles"
+import * as React from 'react'
+import { Container, Content, H1 } from 'native-base'
+import { Grid, Row } from 'react-native-easy-grid'
+import { PortfolioStyles } from '../styles'
 
 type Props = {
   title: string,
@@ -18,7 +14,7 @@ type Props = {
  */
 export class SimpleLayout extends React.Component<Props, never> {
 
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     return (
       <Container>
         <Grid>
