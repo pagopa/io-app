@@ -16,6 +16,9 @@ jobs:
     steps:
       - checkout
 
+      # Creates test .env file
+      - run: cp .env.example .env
+
       # Restore dependencies
       - restore_cache:
           keys:
