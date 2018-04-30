@@ -138,7 +138,13 @@ jobs:
     working_directory: /Users/distiller/italia-app
 
     environment:
+      # Fastlane requires locale set to UTF-8
+      # see https://docs.fastlane.tools/getting-started/ios/setup/#set-up-environment-variables
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      # Set Fastlane output dir
       FL_OUTPUT_DIR: output
+      # Make Ruby bundler a little faster
       BUNDLE_JOBS: 3
       BUNDLE_RETRY: 3
       BUNDLE_PATH: vendor/bundle
