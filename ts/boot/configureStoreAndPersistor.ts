@@ -1,43 +1,43 @@
-import { applyMiddleware, compose, createStore } from 'redux'
-import { Persistor, persistStore, persistReducer } from 'redux-persist'
-import { createLogger } from 'redux-logger'
-import { analytics } from '../middlewares'
-import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
-import createSagaMiddleware from 'redux-saga'
-import storage from 'redux-persist/lib/storage'
-import thunk from 'redux-thunk'
+import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
+import { applyMiddleware, compose, createStore } from "redux";
+import { createLogger } from "redux-logger";
+import { Persistor, persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import createSagaMiddleware from "redux-saga";
+import thunk from "redux-thunk";
+import { analytics } from "../middlewares";
 
-import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from '../utils/constants'
-import rootReducer from '../reducers'
-import rootSaga from '../sagas'
-import { Store, StoreEnhancer } from '../actions/types'
-import { GlobalState } from '../reducers/types'
-import { NavigationState } from 'react-navigation'
-import { AnyAction } from 'redux'
+import { NavigationState } from "react-navigation";
+import { AnyAction } from "redux";
+import { Store, StoreEnhancer } from "../actions/types";
+import rootReducer from "../reducers";
+import { GlobalState } from "../reducers/types";
+import rootSaga from "../sagas";
+import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent
+const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
   /**
    * Sections of the store that must not be persisted and rehydrated.
    */
-  blacklist: ['navigation', 'loading', 'error']
-}
+  blacklist: ["navigation", "loading", "error"]
+};
 
 const persistedReducer = persistReducer<GlobalState, AnyAction>(
   persistConfig,
   rootReducer
-)
+);
 
 const logger = createLogger({
   predicate: (): boolean => isDebuggingInChrome,
   collapsed: true,
   duration: true
-})
+});
 
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
 /**
  * The new react-navigation if integrated with redux need a middleware
@@ -51,18 +51,18 @@ const navigation = createReactNavigationReduxMiddleware(
   NAVIGATION_MIDDLEWARE_LISTENERS_KEY,
   // This is a selector to get the navigation state from the global state
   (state: GlobalState): NavigationState => state.navigation
-)
+);
 
 function configureStoreAndPersistor(): {
-  store: Store
-  persistor: Persistor
+  store: Store;
+  persistor: Persistor;
 } {
   /**
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.
    */
   const composeEnhancers =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const enhancer: StoreEnhancer = composeEnhancers(
     applyMiddleware(
       thunk,
@@ -72,22 +72,22 @@ function configureStoreAndPersistor(): {
       analytics.actionTracking,
       analytics.screenTracking
     )
-  )
+  );
 
   const store: Store = createStore<GlobalState, AnyAction, {}, {}>(
     persistedReducer,
     enhancer
-  )
-  const persistor = persistStore(store)
+  );
+  const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
-    ;(window as any).store = store
+    (window as any).store = store;
   }
 
   // Run the main saga
-  sagaMiddleware.run(rootSaga)
+  sagaMiddleware.run(rootSaga);
 
-  return { store, persistor }
+  return { store, persistor };
 }
 
-export default configureStoreAndPersistor
+export default configureStoreAndPersistor;

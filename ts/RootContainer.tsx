@@ -1,49 +1,49 @@
-import * as React from 'react'
-import { AppState, StatusBar } from 'react-native'
-import { connect } from 'react-redux'
+import * as React from "react";
+import { AppState, StatusBar } from "react-native";
+import { connect } from "react-redux";
 
-import { Root } from 'native-base'
+import { Root } from "native-base";
 
-import ConnectionBar from './components/ConnectionBar'
+import ConnectionBar from "./components/ConnectionBar";
 
-import { ReduxProps, ApplicationState } from './actions/types'
-import { APP_STATE_CHANGE_ACTION } from './store/actions/constants'
-import Navigation from './navigation'
+import { ApplicationState, ReduxProps } from "./actions/types";
+import Navigation from "./navigation";
+import { APP_STATE_CHANGE_ACTION } from "./store/actions/constants";
 
-type ReduxMappedProps = {}
+interface ReduxMappedProps {}
 
-type OwnProps = {}
+interface OwnProps {}
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
  */
 class RootContainer extends React.Component<Props> {
-  componentDidMount() {
-    AppState.addEventListener('change', this.onApplicationActivityChange)
+  public componentDidMount() {
+    AppState.addEventListener("change", this.onApplicationActivityChange);
   }
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.onApplicationActivityChange)
+  public componentWillUnmount() {
+    AppState.removeEventListener("change", this.onApplicationActivityChange);
   }
 
-  render() {
+  public render() {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
         <ConnectionBar />
         <Navigation />
       </Root>
-    )
+    );
   }
 
-  onApplicationActivityChange = (activity: ApplicationState) => {
+  public onApplicationActivityChange = (activity: ApplicationState) => {
     this.props.dispatch({
       type: APP_STATE_CHANGE_ACTION,
       payload: activity
-    })
-  }
+    });
+  };
 }
 
-export default connect()(RootContainer)
+export default connect()(RootContainer);

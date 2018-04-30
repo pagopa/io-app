@@ -1,16 +1,22 @@
 {
   "defaultSeverity": "warning",
   "extends": [
-    "tslint:recommended"
+    "tslint:recommended",
     // "typestrict",
     // "tslint-react",
     // "tslint-sonarts",
     // "tslint-immutable",
-    // "tslint-plugin-prettier",
-    // "tslint-config-prettier"
+    "tslint-plugin-prettier",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "rules": {
+    "interface-name": false,
+    "no-empty-interface": false,
+    "object-literal-sort-keys": false,
+    "interface-over-type-literal": false
+
+
     // Disallows use of the null keyword literal.
     // "no-null-keyword": true,
     // Disallows usages of any as a type declaration.
