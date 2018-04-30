@@ -2049,9 +2049,9 @@ danger-plugin-yarn@^1.2.1:
   optionalDependencies:
     esdoc "^0.5.2"
 
-danger@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/danger/-/danger-3.5.1.tgz#1f63cb6a86fd581436d240a297cbc337ffe4c362"
+danger@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/danger/-/danger-3.6.0.tgz#14ee47cf26edf43fda8e2fc3cb9c9441feba079c"
   dependencies:
     "@octokit/rest" "^15.2.6"
     babel-polyfill "^6.23.0"
@@ -2078,7 +2078,7 @@ danger@^3.5.1:
     require-from-string "^2.0.1"
     rfc6902 "^2.2.2"
     supports-hyperlinks "^1.0.1"
-    vm2 patriksimek/vm2#custom_files
+    vm2 "github:patriksimek/vm2#custom_files"
     voca "^1.4.0"
 
 dashdash@^1.12.0:
@@ -6538,8 +6538,9 @@ vinyl@^0.5.0:
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
 
-vm2@patriksimek/vm2#custom_files:
+"vm2@github:patriksimek/vm2#custom_files":
   version "3.5.0"
+  uid "7e82f90ac705fc44fad044147cb0df09b4c79a57"
   resolved "https://codeload.github.com/patriksimek/vm2/tar.gz/7e82f90ac705fc44fad044147cb0df09b4c79a57"
 
 voca@^1.4.0:
