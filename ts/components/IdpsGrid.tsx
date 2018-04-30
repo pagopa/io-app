@@ -1,29 +1,30 @@
-import * as React from 'react'
+import * as React from "react";
 import {
   Dimensions,
-  StyleSheet,
   FlatList,
   Image,
-  ListRenderItemInfo
-} from 'react-native'
+  ListRenderItemInfo,
+  StyleSheet
+} from "react-native";
 
-import { View, Button } from 'native-base'
+import { Button, View } from "native-base";
 
-import { IdentityProvider } from '../utils/api'
-import variables from '../theme/variables'
+import { IdentityProvider } from "../utils/api";
+
+import variables from "../theme/variables";
 
 export type OwnProps = {
   // Array of Identity Provider to show in the grid.
-  idps: ReadonlyArray<IdentityProvider>
+  idps: ReadonlyArray<IdentityProvider>;
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: (_: IdentityProvider) => void
-}
+  onIdpSelected: (_: IdentityProvider) => void;
+};
 
-export type Props = OwnProps
+export type Props = OwnProps;
 
-const { width: windowWidth } = Dimensions.get('window')
+const { width: windowWidth } = Dimensions.get("window");
 
-const GRID_GUTTER = variables.gridGutter
+const GRID_GUTTER = variables.gridGutter;
 
 /**
  * To create a space within items in the same row we use the bootstrap method of adding a negative margin
@@ -42,17 +43,17 @@ const styles = StyleSheet.create({
   idpLogo: {
     width: 120,
     height: 30,
-    resizeMode: 'contain'
+    resizeMode: "contain"
   }
-})
+});
 
 /**
  * A component that show a Grid with every Identity Provider passed in the idps
  * array property. When an Identity Provider is selected a callback function is called.
  */
 class IdpsGrid extends React.Component<Props> {
-  render() {
-    const { idps } = this.props
+  public render() {
+    const { idps } = this.props;
     return (
       <FlatList
         style={styles.gridContainer}
@@ -61,27 +62,27 @@ class IdpsGrid extends React.Component<Props> {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
       />
-    )
+    );
   }
 
-  keyExtractor = (idp: IdentityProvider): string => {
-    return idp.id
-  }
+  public keyExtractor = (idp: IdentityProvider): string => {
+    return idp.id;
+  };
 
   /* eslint-disable flowtype/no-weak-types */
-  renderItem = (
+  public renderItem = (
     info: ListRenderItemInfo<IdentityProvider>
   ): React.ReactElement<any> => {
-    const { onIdpSelected } = this.props
-    const idp = info.item
+    const { onIdpSelected } = this.props;
+    const idp = info.item;
     return (
       <View style={styles.gridItem}>
         <Button block white onPress={(): void => onIdpSelected(idp)}>
           <Image source={idp.logo} style={styles.idpLogo} />
         </Button>
       </View>
-    )
-  }
+    );
+  };
 }
 
-export default IdpsGrid
+export default IdpsGrid;
