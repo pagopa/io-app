@@ -3,6 +3,7 @@ defaults: &defaults
 
 defaults_js: &defaults_js
   <<: *defaults
+  parallelism: 2
   docker:
     - image: circleci/node:8
 
@@ -131,12 +132,20 @@ jobs:
     macos:
       xcode: "9.0"
 
+    working_directory: /Users/distiller/italia-app
+
+    environment:
+      FL_OUTPUT_DIR: output
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+
     shell: /bin/bash --login -o pipefail
 
     steps:
       # Restore workflow workspace
       - attach_workspace:
-          at: /home/circleci
+          at: /Users/distiller
 
       # Restore bundle cache
       - restore_cache:
