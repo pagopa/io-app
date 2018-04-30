@@ -3,20 +3,10 @@ import * as React from 'react'
 import I18n from '../../i18n'
 import ROUTES from '../../navigation/routes'
 import { PortfolioStyles } from '../../components/styles'
-import {
-  Text,
-  Left,
-  Right,
-  Button,
-  View,
-  Content
-} from 'native-base'
+import { Button, Content, Left, Right, Text, View } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
-import { Operation, CreditCard, UNKNOWN_OPERATION, UNKNOWN_CARD } from '../../types/portfolio/types'
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState } from 'react-navigation'
+import { CreditCard, Operation, UNKNOWN_OPERATION } from '../../types/portfolio/types'
+import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from 'react-navigation'
 import { SimpleLayout } from '../../components/portfolio/SimpleLayout'
 import { Image, TouchableHighlight } from 'react-native'
 
@@ -53,20 +43,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
     super(props)
   }
 
-  touchableContent(): React.ReactNode {
-    const { navigate } = this.props.navigation
-    return (
-      <View style={PortfolioStyles.container}>
-        <TouchableHighlight
-          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
-        >
-          <Image style={PortfolioStyles.pfsingle} source={cardsImage} />
-        </TouchableHighlight>
-      </View>
-    )
-  }
-
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
     const TITLE: string = I18n.t('portfolio.operationsDetails')
@@ -158,4 +135,19 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
       </SimpleLayout>
     )
   }
+
+  private touchableContent(): React.ReactNode {
+    const { navigate } = this.props.navigation
+    return (
+      <View style={PortfolioStyles.container}>
+        <TouchableHighlight
+          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
+        >
+          <Image style={PortfolioStyles.pfsingle} source={cardsImage} />
+        </TouchableHighlight>
+      </View>
+    )
+  }
+
+
 }

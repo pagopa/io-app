@@ -1,12 +1,12 @@
-import * as React from "react"
+import * as React from 'react'
 import I18n from '../../i18n'
 import ROUTES from '../../navigation/routes'
 
 import { Content, View } from 'native-base'
 import { PortfolioStyles } from '../../components/styles'
-import { Operation, CreditCard, UNKNOWN_OPERATION, UNKNOWN_CARD } from '../../types/portfolio/types'
-import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
-import { OperationsList } from "../../components/portfolio/OperationsComponent"
+import { CreditCard, Operation, UNKNOWN_CARD } from '../../types/portfolio/types'
+import { PortfolioAPI } from '../../api/portfolio/portfolio-api'
+import { OperationsList } from '../../components/portfolio/OperationsComponent'
 import { Image, TouchableHighlight } from 'react-native'
 import { SimpleLayout } from '../../components/portfolio/SimpleLayout'
 import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from 'react-navigation'
@@ -42,7 +42,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
     super(props)
   }
 
-  touchableContent(): React.ReactElement<any> {
+  private touchableContent(): React.ReactElement<any> {
     const { navigate } = this.props.navigation
     return (
       <View style={PortfolioStyles.container}>
@@ -55,7 +55,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
     )
   }
 
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
 
     const { params } = this.props.navigation.state
     const card: CreditCard = params ? params.card : UNKNOWN_CARD

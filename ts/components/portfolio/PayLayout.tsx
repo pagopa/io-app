@@ -1,19 +1,9 @@
-
 import * as React from 'react'
 import I18n from '../../i18n'
-import {
-  Container,
-  Content,
-  H1,
-  Text,
-  Left,
-  Right,
-  Button,
-  Icon
-} from 'native-base'
+import { Button, Container, Content, H1, Icon, Left, Right, Text } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
-import { PortfolioStyles } from "../styles"
-import { NavigationScreenProp, NavigationState} from 'react-navigation'
+import { PortfolioStyles } from '../styles'
+import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import ROUTES from '../../navigation/routes'
 
 type Props = {
@@ -30,19 +20,7 @@ type Props = {
  */
 export class PayLayout extends React.Component<Props, never> {
 
-  rowSize(rowIndex: number) : number {
-    const buttonRowSize = 3
-    let titleRowSize = 6
-    let contentRowSize = 8
-    if (this.props.touchableContent) {
-      titleRowSize = 10
-      contentRowSize = 6
-    }
-    const rowSizes = [titleRowSize, contentRowSize, buttonRowSize]
-    return rowSizes[rowIndex]
-  }
-
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     return (
       <Container>
         <Grid>
@@ -88,6 +66,20 @@ export class PayLayout extends React.Component<Props, never> {
       </Container>
     )
   }
+
+  private rowSize(rowIndex: number) : number {
+    const buttonRowSize = 3
+    let titleRowSize = 6
+    let contentRowSize = 8
+    if (this.props.touchableContent) {
+      titleRowSize = 10
+      contentRowSize = 6
+    }
+    const rowSizes = [titleRowSize, contentRowSize, buttonRowSize]
+    return rowSizes[rowIndex]
+  }
+
+
 }
 
 

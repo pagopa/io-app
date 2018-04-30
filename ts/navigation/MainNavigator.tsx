@@ -1,11 +1,11 @@
-import * as React from "react"
-import { TabBarBottom, TabNavigator, NavigationStackScreenOptions } from "react-navigation"
+import * as React from 'react'
+import ROUTES from './routes'
 
-import ROUTES from "./routes"
-import MessagesScreen from "../screens/main/MessagesScreen"
-import ProfileScreen from "../screens/main/ProfileScreen"
-import PortfolioNavigator from "./PortfolioNavigator"
-import { Icon, Text } from 'native-base'
+import MessagesScreen from '../screens/main/MessagesScreen'
+import ProfileScreen from '../screens/main/ProfileScreen'
+import PortfolioNavigator from './PortfolioNavigator'
+import { Icon } from 'native-base'
+import { TabBarBottom, TabNavigator } from 'react-navigation'
 
 interface IRouteIcon
 {
@@ -21,8 +21,8 @@ const ROUTE_ICON: ReadonlyArray<IRouteIcon> = [
   { routeName: ROUTES.MAIN_PROFILE, routeIcon: "user" }
 ]
 
-const getIcon = function (routeName: string) {
-  for (let route of ROUTE_ICON) if (route.routeName === routeName)
+const getIcon = (routeName: string) => {
+  for (const route of ROUTE_ICON) if (route.routeName === routeName)
   {
     return route.routeIcon;
   }

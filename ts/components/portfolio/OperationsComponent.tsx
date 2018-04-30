@@ -1,21 +1,11 @@
-import * as React from "react"
-import I18n from "../../i18n"
-import {
-  Body,
-  Grid,
-  Icon,
-  Left,
-  List,
-  ListItem,
-  Right,
-  Row,
-  Text
-} from "native-base"
-import { NavigationScreenProp, NavigationState } from "react-navigation"
-import { CreditCard, Operation } from "../../types/portfolio/types"
-import { PortfolioStyles } from "../styles"
-import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
-import ROUTES from "../../navigation/routes"
+import * as React from 'react'
+import I18n from '../../i18n'
+import { Body, Grid, Icon, Left, List, ListItem, Right, Row, Text } from 'native-base'
+import { NavigationScreenProp, NavigationState } from 'react-navigation'
+import { CreditCard, Operation } from '../../types/portfolio/types'
+import { PortfolioStyles } from '../styles'
+import { PortfolioAPI } from '../../api/portfolio/portfolio-api'
+import ROUTES from '../../navigation/routes'
 
 type Props = {
   parent: string,
@@ -38,34 +28,7 @@ export class OperationsList extends React.Component<Props, State> {
     this.state = { data: Array.from(props.operations) }
   }
 
-  renderDate(operation: Operation) {
-    const datetime: string = `${operation.date} - ${operation.time}`
-    if (operation.isNew)
-    {
-      return (
-        <Row>
-          <Icon
-            type="FontAwesome"
-            name="circle"
-            active
-            style={{ marginTop: 6, fontSize: 10, color: "#0066CC" }}
-          />
-          <Text note>{datetime}</Text>
-        </Row>
-      )
-    }
-    return (
-      <Row>
-        <Text note>{datetime}</Text>
-      </Row>
-    )
-  }
-
-  getCard(operation: Operation): CreditCard {
-    return PortfolioAPI.getCreditCard(operation.cardId)
-  }
-
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { navigate } = this.props.navigation
     const ops = this.state.data
 
@@ -126,6 +89,34 @@ export class OperationsList extends React.Component<Props, State> {
       </Grid>
     )
   }
+
+  private renderDate(operation: Operation) {
+    const datetime: string = `${operation.date} - ${operation.time}`
+    if (operation.isNew)
+    {
+      return (
+        <Row>
+          <Icon
+            type="FontAwesome"
+            name="circle"
+            active
+            style={{ marginTop: 6, fontSize: 10, color: "#0066CC" }}
+          />
+          <Text note>{datetime}</Text>
+        </Row>
+      )
+    }
+    return (
+      <Row>
+        <Text note>{datetime}</Text>
+      </Row>
+    )
+  }
+
+  private getCard(operation: Operation): CreditCard {
+    return PortfolioAPI.getCreditCard(operation.cardId)
+  }
+
 }
 
 
