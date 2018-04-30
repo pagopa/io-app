@@ -53,9 +53,9 @@ class SaveNewCardScreen extends React.Component<Props,State> {
         const TEXT = I18n.t('saveCard.favoriteText')
 
         return (
-            <Container>
-                <H1>{HEADER}</H1>
-                <Grid style={{display: 'flex'}}>
+            <Container style={{backgroundColor: 'white'}}>
+                <H1 style={{margin:15}}>{HEADER}</H1>
+                <Grid  style={{display: 'flex', margin:15}}>
                     <Col style={{flex: 5}}>
                         <Text  style={{fontWeight: 'bold',}}>{TITLE}</Text>
                         <Text>{TEXT}</Text>

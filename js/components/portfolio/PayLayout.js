@@ -20,10 +20,7 @@ import {
 } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 import { PortfolioStyles } from '../../components/styles'
-import {
-  type NavigationScreenProp,
-  type NavigationState
-} from 'react-navigation'
+import {type NavigationScreenProp, type NavigationState} from 'react-navigation'
 import { type ReduxProps } from '../../actions/types'
 import ROUTES from '../../navigation/routes'
 import { withNavigation } from 'react-navigation'

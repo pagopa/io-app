@@ -28,6 +28,8 @@ import type { NavigationScreenProp, NavigationState} from "react-navigation";
 // import AweTabsLayout from "../components/tabslayout";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../../i18n'
+import ROUTES from '../../navigation/routes'
+import { withNavigation } from 'react-navigation'
 
 
 type Props = {
@@ -110,7 +112,8 @@ class AddCardScreen extends React.Component<Props>
             />
             </Item>
 
-            <Button  block title={I18n.t('portfolio.continue')}  onPress={() => navigate('Portfolio')}>
+            <Button  block title={I18n.t('portfolio.continue')}  
+                onPress={(): boolean => this.props.navigation.navigate(ROUTES.PORTFOLIO_SAVE_CARD)}>
                 <Text>{I18n.t('portfolio.continue')}</Text>
             </Button> 
             <Button light block title={I18n.t('portfolio.cancel')}  onPress={() => this.props.navigation.goBack() }>
