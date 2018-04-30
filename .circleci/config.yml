@@ -134,16 +134,29 @@ jobs:
     shell: /bin/bash --login -o pipefail
 
     steps:
-      - checkout
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
 
-      # Download node packages
-      - run: yarn install
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - ruby-{{ checksum "Gemfile.lock" }}
+            - ruby-
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
 
-      # Install bundles
-      - run: bundle install
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: ruby-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
 
       # Fetch CocoaPods specs
       - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
