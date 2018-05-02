@@ -3,13 +3,13 @@ import I18n from "../../i18n"
 import ROUTES from "../../navigation/routes"
 
 import { Content, View } from "native-base"
-import { PortfolioStyles } from "../../components/styles"
-import { CreditCard, Operation, UNKNOWN_CARD } from "../../types/portfolio/types"
+import { Image, TouchableHighlight } from "react-native"
+import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from "react-navigation"
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
 import { OperationsList } from "../../components/portfolio/OperationsComponent"
-import { Image, TouchableHighlight } from "react-native"
 import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
-import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from "react-navigation"
+import { PortfolioStyles } from "../../components/styles"
+import { CreditCard, Operation, UNKNOWN_CARD } from "../../types/portfolio/types"
 
 // Images
 const cardsImage = require("../../../img/portfolio/card-tab.png")
@@ -34,7 +34,7 @@ type Props = OwnProps & NavigationInjectedProps;
  */
 export class TransactionsScreen extends React.Component<Props, never> {
 
-  static navigationOptions = {
+  public static navigationOptions = {
     title: I18n.t("portfolio.transactions"),
     headerBackTitle: null
   }

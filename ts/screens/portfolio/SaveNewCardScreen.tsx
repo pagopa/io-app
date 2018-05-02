@@ -1,7 +1,7 @@
 import * as React from "react"
 import I18n from "../../i18n"
 
-import {Container, Grid, Col,H1, View, Button,Text} from "native-base"
+import {Button, Col, Container,Grid, H1, Text,View} from "native-base"
 import {Switch} from "react-native"
 import { NavigationScreenProp, NavigationState } from "react-navigation"
 
@@ -23,7 +23,7 @@ type State = {
  */
 export class SaveNewCardScreen extends React.Component<Props,State> {
 
-  static navigationOptions = {
+  public static navigationOptions = {
     title: I18n.t("saveCard.saveCard"),
     headerBackTitle: null
   }

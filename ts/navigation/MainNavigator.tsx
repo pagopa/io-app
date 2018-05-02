@@ -1,11 +1,11 @@
 import * as React from 'react'
 import ROUTES from './routes'
 
+import { Icon } from 'native-base'
+import { TabBarBottom, TabNavigator } from 'react-navigation'
 import MessagesScreen from '../screens/main/MessagesScreen'
 import ProfileScreen from '../screens/main/ProfileScreen'
 import PortfolioNavigator from './PortfolioNavigator'
-import { Icon } from 'native-base'
-import { TabBarBottom, TabNavigator } from 'react-navigation'
 
 interface IRouteIcon
 {

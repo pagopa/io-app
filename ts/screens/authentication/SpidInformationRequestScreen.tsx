@@ -1,26 +1,26 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import { isValid } from 'redux-form'
-import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import {
+  Body,
+  Button,
   Container,
   Content,
-  Text,
-  View,
-  Button,
+  H1,
   Icon,
   Left,
-  Body,
-  H1
+  Text,
+  View
 } from 'native-base'
-import { GlobalState } from '../../reducers/types'
-import I18n from '../../i18n'
-import AppHeader from '../../components/ui/AppHeader'
-import Modal from '../../components/ui/Modal'
+import * as React from 'react'
+import { NavigationScreenProp, NavigationState } from 'react-navigation'
+import { connect } from 'react-redux'
+import { isValid } from 'redux-form'
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from '../../components/forms/SpidInformationForm'
+import AppHeader from '../../components/ui/AppHeader'
+import Modal from '../../components/ui/Modal'
+import I18n from '../../i18n'
 import ROUTES from '../../navigation/routes'
+import { GlobalState } from '../../reducers/types'
 
 type ReduxMappedProps = {
   isFormValid: boolean
@@ -38,11 +38,11 @@ type State = {
  */
 class SpidInformationRequestScreen extends React.Component<Props, State>
 {
-  state: State = {
+  public state: State = {
     isTosModalVisible: false
   }
 
-  render()
+  public render()
   {
     return (
       <Container>

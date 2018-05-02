@@ -1,10 +1,10 @@
-import * as React from 'react'
-import I18n from '../../i18n'
 import { Button, Container, Content, H1, Icon, Left, Right, Text } from 'native-base'
+import * as React from 'react'
 import { Grid, Row } from 'react-native-easy-grid'
-import { PortfolioStyles } from '../styles'
 import { NavigationScreenProp, NavigationState } from 'react-navigation'
+import I18n from '../../i18n'
 import ROUTES from '../../navigation/routes'
+import { PortfolioStyles } from '../styles'
 
 type Props = {
   title: string,

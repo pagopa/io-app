@@ -1,14 +1,14 @@
 import * as React from "react"
 
-import I18n from "../../i18n"
-import ROUTES from "../../navigation/routes"
-import { PortfolioStyles } from "../../components/styles"
 import { Button, Content, Left, Right, Text, View } from "native-base"
+import { Image, TouchableHighlight } from "react-native"
 import { Grid, Row } from "react-native-easy-grid"
-import { CreditCard, Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
 import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from "react-navigation"
 import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
-import { Image, TouchableHighlight } from "react-native"
+import { PortfolioStyles } from "../../components/styles"
+import I18n from "../../i18n"
+import ROUTES from "../../navigation/routes"
+import { CreditCard, Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
 
 // Images
 const cardsImage = require("../../../img/portfolio/single-tab.png")
@@ -35,7 +35,7 @@ type Props = OwnProps & NavigationInjectedProps;
  */
 export class OperationDetailsScreen extends React.Component<Props, never> {
 
-  static navigationOptions = {
+  public static navigationOptions = {
     title: I18n.t("portfolio.operationsDetails"),
     headerBackTitle: null
   }
