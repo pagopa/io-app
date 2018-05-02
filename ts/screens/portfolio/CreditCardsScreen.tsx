@@ -21,7 +21,7 @@ const cards = PortfolioAPI.getCreditCards()
  */
 export class CreditCardsScreen extends React.Component<Props, never> {
 
-  private static navigationOptions = {
+  static navigationOptions = {
     title: I18n.t("portfolio.creditcards"),
     headerBackTitle: null
   }

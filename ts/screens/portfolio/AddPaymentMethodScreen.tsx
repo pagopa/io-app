@@ -56,7 +56,7 @@ const paymentMethods = [
 
 export class AddPaymentMethodScreen extends React.Component<Props,State> {
 
-  private static navigationOptions = {
+  static navigationOptions = {
       title: I18n.t("portfolio.addPaymentMethodTitle"),
       headerBackTitle: null
   }

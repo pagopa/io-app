@@ -34,7 +34,7 @@ type Props = OwnProps & NavigationInjectedProps;
  */
 export class TransactionsScreen extends React.Component<Props, never> {
 
-  private static navigationOptions = {
+  static navigationOptions = {
     title: I18n.t("portfolio.transactions"),
     headerBackTitle: null
   }

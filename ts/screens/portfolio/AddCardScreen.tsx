@@ -32,7 +32,7 @@ type State = {
 
 export class AddCardScreen extends React.Component<Props, State> {
 
-  private static navigationOptions = {
+  static navigationOptions = {
       title: I18n.t("portfolio.addCardTitle"),
       headerBackTitle: null
   }

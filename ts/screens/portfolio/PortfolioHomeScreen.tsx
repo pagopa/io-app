@@ -10,16 +10,21 @@ import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
 import { Operation } from "../../types/portfolio/types"
 import { PayLayout } from "../../components/portfolio/PayLayout"
 
-type Props = {
-  navigation: NavigationScreenProp<NavigationState>
+type ScreenProps = {
 }
+
+type OwnProps = {
+  navigation: NavigationScreenProp<NavigationState>
+};
+
+type Props = ScreenProps & OwnProps;
 
 /**
  * Portfolio Home Screen
  */
 export class PortfolioHomeScreen extends React.Component<Props, never> {
 
-  private static navigationOptions = {
+  static navigationOptions = {
     title: I18n.t("portfolio.portfolio"),
     headerBackTitle: null
   }

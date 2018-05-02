@@ -21,7 +21,7 @@ interface StateParams extends NavigationState {
   params: ParamType;
 }
 
-interface OwnProps {
+type OwnProps = {
   navigation: NavigationScreenProp<StateParams>,
   operation: Operation,
   parent: string,
@@ -35,7 +35,7 @@ type Props = OwnProps & NavigationInjectedProps;
  */
 export class OperationDetailsScreen extends React.Component<Props, never> {
 
-  private static navigationOptions = {
+  static navigationOptions = {
     title: I18n.t("portfolio.operationsDetails"),
     headerBackTitle: null
   }
