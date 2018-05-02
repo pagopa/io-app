@@ -4,6 +4,9 @@ import { PortfolioHomeScreen } from '../screens/portfolio/PortfolioHomeScreen'
 import { CreditCardsScreen } from '../screens/portfolio/CreditCardsScreen'
 import { OperationDetailsScreen } from '../screens/portfolio/OperationDetailsScreen'
 import { TransactionsScreen } from '../screens/portfolio/TransactionsScreen'
+import { SaveNewCardScreen } from '../screens/portfolio/SaveNewCardScreen'
+import { AddPaymentMethodScreen } from '../screens/portfolio/AddPaymentMethodScreen'
+import { AddCardScreen } from '../screens/portfolio/AddCardScreen'
 
 
 const PortfolioNavigator = StackNavigator({
@@ -19,8 +22,6 @@ const PortfolioNavigator = StackNavigator({
   [ROUTES.PORTFOLIO_CARDS_OPERATIONS]: {
     screen: TransactionsScreen
   },
-
-  /*
   [ROUTES.PORTFOLIO_SAVE_CARD]: {
     screen: SaveNewCardScreen
   },
@@ -30,7 +31,6 @@ const PortfolioNavigator = StackNavigator({
   [ROUTES.PORTFOLIO_ADD_CARD]: {
     screen: AddCardScreen
   }
-  */
 })
 
 export default PortfolioNavigator
