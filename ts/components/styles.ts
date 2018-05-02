@@ -25,7 +25,7 @@ export const CommonStyles = StyleSheet.create({
     color: "#eee",
     fontSize: 15
   }
-});
+})
 
 export const ProfileStyles = StyleSheet.create({
   profileHeader: {
