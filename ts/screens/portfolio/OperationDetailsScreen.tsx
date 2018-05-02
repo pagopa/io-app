@@ -1,17 +1,17 @@
-import * as React from 'react'
+import * as React from "react"
 
-import I18n from '../../i18n'
-import ROUTES from '../../navigation/routes'
-import { PortfolioStyles } from '../../components/styles'
-import { Button, Content, Left, Right, Text, View } from 'native-base'
-import { Grid, Row } from 'react-native-easy-grid'
-import { CreditCard, Operation, UNKNOWN_OPERATION } from '../../types/portfolio/types'
-import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from 'react-navigation'
-import { SimpleLayout } from '../../components/portfolio/SimpleLayout'
-import { Image, TouchableHighlight } from 'react-native'
+import I18n from "../../i18n"
+import ROUTES from "../../navigation/routes"
+import { PortfolioStyles } from "../../components/styles"
+import { Button, Content, Left, Right, Text, View } from "native-base"
+import { Grid, Row } from "react-native-easy-grid"
+import { CreditCard, Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
+import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from "react-navigation"
+import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
+import { Image, TouchableHighlight } from "react-native"
 
 // Images
-const cardsImage = require('../../../img/portfolio/single-tab.png')
+const cardsImage = require("../../../img/portfolio/single-tab.png")
 
 interface ParamType {
   operation: Operation;
@@ -34,8 +34,9 @@ type Props = OwnProps & NavigationInjectedProps;
  * Details of transaction
  */
 export class OperationDetailsScreen extends React.Component<Props, never> {
-  static navigationOptions = {
-    title: I18n.t('portfolio.operationsDetails'),
+
+  private static navigationOptions = {
+    title: I18n.t("portfolio.operationsDetails"),
     headerBackTitle: null
   }
 
@@ -46,7 +47,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-    const TITLE: string = I18n.t('portfolio.operationsDetails')
+    const TITLE: string = I18n.t("portfolio.operationsDetails")
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION
     return (
       <SimpleLayout title={TITLE} touchableContent={this.touchableContent()}>
@@ -55,7 +56,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             <Row>
               <Left>
                 <Text>
-                  {I18n.t('portfolio.total') + ' ' + operation.currency}
+                  {I18n.t("portfolio.total") + " " + operation.currency}
                 </Text>
               </Left>
               <Right>
@@ -66,7 +67,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t('portfolio.payAmount')}</Text>
+                <Text note>{I18n.t("portfolio.payAmount")}</Text>
               </Left>
               <Right>
                 <Text>{operation.amount}</Text>
@@ -75,9 +76,9 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             <Row>
               <Left>
                 <Text>
-                  <Text note>{I18n.t('portfolio.transactionFee')}</Text>
+                  <Text note>{I18n.t("portfolio.transactionFee")}</Text>
                   <Text note>&nbsp;</Text>
-                  <Text note style={PortfolioStyles.pfwhy}>{I18n.t('portfolio.why')}</Text>
+                  <Text note style={PortfolioStyles.pfwhy}>{I18n.t("portfolio.why")}</Text>
                 </Text>
               </Left>
               <Right>
@@ -86,7 +87,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t('portfolio.causal')}</Text>
+                <Text note>{I18n.t("portfolio.causal")}</Text>
               </Left>
               <Right>
                 <Text style={PortfolioStyles.boldStyle}>
@@ -96,7 +97,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t('portfolio.recipient')}</Text>
+                <Text note>{I18n.t("portfolio.recipient")}</Text>
               </Left>
               <Right>
                 <Text style={PortfolioStyles.boldStyle}>
@@ -106,7 +107,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t('portfolio.date')}</Text>
+                <Text note>{I18n.t("portfolio.date")}</Text>
               </Left>
               <Right>
                 <Text>{operation.date}</Text>
@@ -114,7 +115,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t('portfolio.hour')}</Text>
+                <Text note>{I18n.t("portfolio.hour")}</Text>
               </Left>
               <Right>
                 <Text>{operation.time}</Text>
@@ -125,9 +126,9 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
                 style={{ marginTop: 20 }}
                 block
                 success
-                onPress={(): boolean => navigate('Login')}
+                onPress={(): boolean => navigate("Login")}
               >
-                <Text>{I18n.t('portfolio.seeReceipt')}</Text>
+                <Text>{I18n.t("portfolio.seeReceipt")}</Text>
               </Button>
             </Row>
           </Grid>

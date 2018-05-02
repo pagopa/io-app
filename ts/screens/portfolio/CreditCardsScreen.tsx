@@ -1,14 +1,14 @@
-import * as React from 'react'
+import * as React from "react"
 
-import I18n from '../../i18n'
-import ROUTES from '../../navigation/routes'
-import { Image } from 'react-native'
-import { Body, Button, Card, CardItem, Content, Icon, Left, List, Text, Thumbnail, View } from 'native-base'
-import { PortfolioStyles } from '../../components/styles'
-import { PortfolioAPI } from '../../api/portfolio/portfolio-api'
-import { PayLayout } from '../../components/portfolio/PayLayout'
+import I18n from "../../i18n"
+import ROUTES from "../../navigation/routes"
+import { Image } from "react-native"
+import { Body, Button, Card, CardItem, Content, Icon, Left, List, Text, Thumbnail, View } from "native-base"
+import { PortfolioStyles } from "../../components/styles"
+import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
+import { PayLayout } from "../../components/portfolio/PayLayout"
 
-import { NavigationScreenProp, NavigationState } from 'react-navigation'
+import { NavigationScreenProp, NavigationState } from "react-navigation"
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>
@@ -19,8 +19,9 @@ const cards = PortfolioAPI.getCreditCards()
 /**
  * Select Credit Card
  */
-export class CreditCardsScreen extends React.Component<Props> {
-  static navigationOptions = {
+export class CreditCardsScreen extends React.Component<Props, never> {
+
+  private static navigationOptions = {
     title: I18n.t("portfolio.creditcards"),
     headerBackTitle: null
   }

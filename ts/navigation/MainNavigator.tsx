@@ -22,9 +22,11 @@ const ROUTE_ICON: ReadonlyArray<IRouteIcon> = [
 ]
 
 const getIcon = (routeName: string) => {
-  for (const route of ROUTE_ICON) if (route.routeName === routeName)
-  {
-    return route.routeIcon;
+  for (const route of ROUTE_ICON) {
+    if (route.routeName === routeName)
+    {
+      return route.routeIcon;
+    }
   }
   return "???"
 }
