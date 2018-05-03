@@ -8,19 +8,19 @@ import { IdentityProvider } from "../../api";
 import { IDP_SELECTED, LOGIN_FAILURE, LOGIN_SUCCESS } from "./constants";
 
 // Actions
-export type IdpSelected = {
+export type IdpSelected = Readonly<{
   type: typeof IDP_SELECTED;
   payload: IdentityProvider;
-};
+}>;
 
-export type LoginSuccess = {
+export type LoginSuccess = Readonly<{
   type: typeof LOGIN_SUCCESS;
   payload: string;
-};
+}>;
 
-export type LoginFailure = {
+export type LoginFailure = Readonly<{
   type: typeof LOGIN_FAILURE;
-};
+}>;
 
 export type SessionActions = IdpSelected | LoginSuccess | LoginFailure;
 

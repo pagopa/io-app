@@ -20,10 +20,10 @@ import { SessionActions } from "../store/actions/session";
 
 export type ApplicationState = "background" | "inactive" | "active";
 
-export type ApplicationStateAction = {
+export type ApplicationStateAction = Readonly<{
   type: typeof APP_STATE_CHANGE_ACTION;
   payload: ApplicationState;
-};
+}>;
 
 export type Action =
   | ApplicationActions
@@ -48,6 +48,6 @@ export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;
 export type MiddlewareAPI = ReduxMiddlewareAPI<Dispatch, GlobalState>;
 
 // Props injected by react-redux connect() function
-export type ReduxProps = {
+export type ReduxProps = Readonly<{
   dispatch: Dispatch;
-};
+}>;

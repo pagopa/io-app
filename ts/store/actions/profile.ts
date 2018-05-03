@@ -13,34 +13,34 @@ import {
 } from "./constants";
 
 // Actions
-export type ProfileLoadRequest = {
+export type ProfileLoadRequest = Readonly<{
   type: typeof PROFILE_LOAD_REQUEST;
-};
+}>;
 
-export type ProfileLoadSuccess = {
+export type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
   payload: ApiProfile;
-};
+}>;
 
-export type ProfileLoadFailure = {
+export type ProfileLoadFailure = Readonly<{
   type: typeof PROFILE_LOAD_FAILURE;
   payload: string;
-};
+}>;
 
-export type ProfileUpdateRequest = {
+export type ProfileUpdateRequest = Readonly<{
   type: typeof PROFILE_UPDATE_REQUEST;
   payload: WithOnlyVersionRequired<ApiProfile>;
-};
+}>;
 
-export type ProfileUpdateSuccess = {
+export type ProfileUpdateSuccess = Readonly<{
   type: typeof PROFILE_UPDATE_SUCCESS;
   payload: ApiProfile;
-};
+}>;
 
-export type ProfileUpdateFailure = {
+export type ProfileUpdateFailure = Readonly<{
   type: typeof PROFILE_UPDATE_FAILURE;
   payload: string;
-};
+}>;
 
 export type ProfileActions =
   | ProfileLoadRequest
