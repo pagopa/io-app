@@ -3,7 +3,7 @@
  */
 
 import { reducer as networkReducer } from "react-native-offline";
-import { AnyAction, combineReducers } from "redux";
+import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
 
 import { Action } from "../actions/types";
@@ -16,7 +16,6 @@ import appStateReducer from "./appState";
 import navigationReducer from "./navigation";
 import { GlobalState } from "./types";
 
-export { AnyAction };
 /**
  * Here we combine all the reducers.
  * We use the best practice of separating UI state from the DATA state.

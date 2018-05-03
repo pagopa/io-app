@@ -8,8 +8,7 @@ import thunk from "redux-thunk";
 import { analytics } from "../middlewares";
 
 import { NavigationState } from "react-navigation";
-import { AnyAction } from "redux";
-import { Store, StoreEnhancer } from "../actions/types";
+import { Action, Store, StoreEnhancer } from "../actions/types";
 import rootReducer from "../reducers";
 import { GlobalState } from "../reducers/types";
 import rootSaga from "../sagas";
@@ -26,7 +25,7 @@ const persistConfig = {
   blacklist: ["navigation", "loading", "error"]
 };
 
-const persistedReducer = persistReducer<GlobalState, AnyAction>(
+const persistedReducer = persistReducer<GlobalState, Action>(
   persistConfig,
   rootReducer
 );
@@ -74,7 +73,7 @@ function configureStoreAndPersistor(): {
     )
   );
 
-  const store: Store = createStore<GlobalState, AnyAction, {}, {}>(
+  const store: Store = createStore<GlobalState, Action, {}, {}>(
     persistedReducer,
     enhancer
   );
