@@ -14,6 +14,7 @@ import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { Option } from "fp-ts/lib/Option";
 import { ReduxProps } from "../../actions/types";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
@@ -24,7 +25,7 @@ import { createPin } from "../../store/actions/onboarding";
 import { createErrorSelector } from "../../store/reducers/error";
 
 type ReduxMappedProps = {
-  pinSaveError: string | undefined;
+  pinSaveError: Option<string>;
 };
 
 type OwnProps = {

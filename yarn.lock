@@ -2785,6 +2785,10 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
+fp-ts@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.4.0.tgz#6a00905164de75c64f71f1cc036bfa8d1644276c"
+
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
@@ -5071,10 +5075,6 @@ optimist@^0.6.1:
   dependencies:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
-
-option@^0.2.3:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/option/-/option-0.2.4.tgz#fd475cdf98dcabb3cb397a3ba5284feb45edbfe4"
 
 optionator@^0.8.1:
   version "0.8.2"
