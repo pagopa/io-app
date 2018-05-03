@@ -9,12 +9,12 @@ import { ProfileState } from "../store/reducers/profile";
 import { SessionState } from "../store/reducers/session";
 import { AppState } from "./appState";
 
-export type NetworkState = {
+export type NetworkState = Readonly<{
   isConnected: boolean;
   actionQueue: ReadonlyArray<Action>;
-};
+}>;
 
-export type GlobalState = {
+export type GlobalState = Readonly<{
   appState: AppState;
   network: NetworkState;
   navigation: NavigationState;
@@ -24,4 +24,4 @@ export type GlobalState = {
   session: SessionState;
   onboarding: OnboardingState;
   profile: ProfileState;
-};
+}>;

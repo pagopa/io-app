@@ -5,15 +5,20 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
+import { isSome, none, Option } from "fp-ts/lib/Option";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
 
 export type ErrorState = Readonly<
-  Partial<{ [key in FetchRequestActionsType]: string }>
+  { [key in FetchRequestActionsType]: Option<string> }
 >;
 
-export const INITIAL_STATE: ErrorState = {};
+export const INITIAL_STATE: ErrorState = {
+  PIN_CREATE: none,
+  PROFILE_LOAD: none,
+  PROFILE_UPDATE: none
+};
 
 /**
  * Create a selector that returns the first error found if any of the actions
@@ -24,13 +29,11 @@ export const INITIAL_STATE: ErrorState = {};
  */
 export function createErrorSelector(
   actions: ReadonlyArray<FetchRequestActionsType>
-): (_: GlobalState) => string | undefined {
+): (_: GlobalState) => Option<string> {
   return state => {
     // Returns first error message found if any
-    const errors = actions
-      .map(action => state.error[action])
-      .filter(message => message !== undefined);
-    return errors[0];
+    const errors = actions.map(action => state.error[action]).filter(isSome);
+    return errors.length > 0 ? errors[0] : none;
   };
 }
 
@@ -43,8 +46,10 @@ function reducer(
 
   // Clear ERROR explicitly
   if (action.type === ERROR_CLEAR) {
-    const newState = Object.assign({}, state);
-    delete newState[action.payload];
+    const newState = {
+      ...state,
+      [action.payload]: none
+    };
     return newState;
   }
 
@@ -64,8 +69,10 @@ function reducer(
     };
   } else {
     // We need to remove the error message
-    const newState: ErrorState = Object.assign({}, state);
-    delete newState[requestName];
+    const newState = {
+      ...state,
+      [requestName]: none
+    };
     return newState;
   }
 }
