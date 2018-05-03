@@ -1,24 +1,24 @@
 import * as React from "react";
 import I18n from "../../i18n"
 
-import { View, Button } from "native-base";
+import { Button, View } from "native-base";
 import {
   Container,
-  H1,
-  Grid,
-  Row,
   Content,
-  List,
-  ListItem,
-  Text,
+  Grid,
+  H1,
   Icon,
   Left,
-  Right } from "native-base";
+  List,
+  ListItem,
+  Right,
+  Row,
+  Text } from "native-base";
 import { Image } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { PortfolioStyles } from "../../components/styles"
-import ROUTES from "../../navigation/routes"
 import Modal from "../../components/ui/Modal"
+import ROUTES from "../../navigation/routes"
 
 // Images
 const bankLogo = require("../../../img/portfolio/add-method/bank.png")
@@ -56,7 +56,7 @@ const paymentMethods = [
 
 export class AddPaymentMethodScreen extends React.Component<Props,State> {
 
-  private static navigationOptions = {
+  public static navigationOptions = {
       title: I18n.t("portfolio.addPaymentMethodTitle"),
       headerBackTitle: null
   }

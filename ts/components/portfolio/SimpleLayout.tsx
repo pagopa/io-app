@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { Container, Content, H1 } from 'native-base'
+import * as React from 'react'
 import { Grid, Row } from 'react-native-easy-grid'
 import { PortfolioStyles } from '../styles'
 

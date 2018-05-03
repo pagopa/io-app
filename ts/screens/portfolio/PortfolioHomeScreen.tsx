@@ -1,25 +1,30 @@
-import * as React from "react"
-import ROUTES from "../../navigation/routes"
-import I18n from "../../i18n"
-import { NavigationScreenProp, NavigationState } from "react-navigation"
-import { Image, TouchableHighlight } from "react-native"
 import { Content, View } from "native-base"
-import { PortfolioStyles } from "../../components/styles"
-import { OperationsList } from "../../components/portfolio/OperationsComponent"
+import * as React from "react"
+import { Image, TouchableHighlight } from "react-native"
+import { NavigationScreenProp, NavigationState } from "react-navigation"
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
-import { Operation } from "../../types/portfolio/types"
+import { OperationsList } from "../../components/portfolio/OperationsComponent"
 import { PayLayout } from "../../components/portfolio/PayLayout"
+import { PortfolioStyles } from "../../components/styles"
+import I18n from "../../i18n"
+import ROUTES from "../../navigation/routes"
+import { Operation } from "../../types/portfolio/types"
 
-type Props = {
-  navigation: NavigationScreenProp<NavigationState>
+type ScreenProps = {
 }
+
+type OwnProps = {
+  navigation: NavigationScreenProp<NavigationState>
+};
+
+type Props = ScreenProps & OwnProps;
 
 /**
  * Portfolio Home Screen
  */
 export class PortfolioHomeScreen extends React.Component<Props, never> {
 
-  private static navigationOptions = {
+  public static navigationOptions = {
     title: I18n.t("portfolio.portfolio"),
     headerBackTitle: null
   }

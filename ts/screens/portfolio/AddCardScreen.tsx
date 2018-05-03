@@ -1,14 +1,14 @@
-import * as React from "react";
 import {
     Button,
+    Col,
     Content,
     Grid,
-    Col,
-    Text,
-    Item,
+    Icon,
     Input,
-    Icon
+    Item,
+    Text
 } from "native-base";
+import * as React from "react";
 import {
   FlatList,
   Image,
@@ -32,7 +32,7 @@ type State = {
 
 export class AddCardScreen extends React.Component<Props, State> {
 
-  private static navigationOptions = {
+  public static navigationOptions = {
       title: I18n.t("portfolio.addCardTitle"),
       headerBackTitle: null
   }
