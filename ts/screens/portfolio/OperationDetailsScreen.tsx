@@ -8,7 +8,8 @@ import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
 import { PortfolioStyles } from "../../components/styles"
 import I18n from "../../i18n"
 import ROUTES from "../../navigation/routes"
-import { CreditCard, Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
+import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
+import { CreditCard} from '../../types/portfolio/CreditCard'
 
 // Images
 const cardsImage = require("../../../img/portfolio/single-tab.png")

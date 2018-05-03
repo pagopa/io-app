@@ -4,7 +4,8 @@ import { NavigationScreenProp, NavigationState } from 'react-navigation'
 import { PortfolioAPI } from '../../api/portfolio/portfolio-api'
 import I18n from '../../i18n'
 import ROUTES from '../../navigation/routes'
-import { CreditCard, Operation } from '../../types/portfolio/types'
+import { Operation } from '../../types/portfolio/types'
+import { CreditCard } from '../../types/portfolio/CreditCard'
 import { PortfolioStyles } from '../styles'
 
 type Props = {

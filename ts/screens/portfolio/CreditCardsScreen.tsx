@@ -1,33 +1,24 @@
 import * as React from "react";
 
 import {
-  Body,
-  Button,
-  Card,
-  CardItem,
   Content,
-  Icon,
-  Left,
   List,
-  Text,
-  Thumbnail,
   View
 } from "native-base";
-import { Image } from "react-native";
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
 import { PayLayout } from "../../components/portfolio/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from '../../components/portfolio/CreditCardComponent';
+import { CreditCard } from '../../types/portfolio/CreditCard'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>
 }
 
-const cards = PortfolioAPI.getCreditCards()
+const cards: CreditCard[] = PortfolioAPI.getCreditCards()
 
 /**
  * Select Credit Card

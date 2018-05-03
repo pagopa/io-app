@@ -3,16 +3,6 @@ export type PaymentMethod = {
   type: string;
 };
 
-export type CreditCard = {
-  id: number;
-  brand: string;
-  lastUsage: string;
-  number: string;
-  image: any; // eslint-disable-line flowtype/no-weak-types
-  owner: string, 
-  expires: string
-};
-
 export type Operation = {
   cardId: number;
   date: string;
@@ -23,16 +13,6 @@ export type Operation = {
   currency: string;
   transactionCost: number;
   isNew: boolean;
-};
-
-export const UNKNOWN_CARD: CreditCard = {
-  id: -1,
-  brand: "Unknows",
-  lastUsage: "???",
-  number: "0",
-  image: null,
-  owner: "???",
-  expires: "???"
 };
 
 export const UNKNOWN_OPERATION: Operation = {

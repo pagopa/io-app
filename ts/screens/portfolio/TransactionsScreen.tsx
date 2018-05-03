@@ -9,7 +9,8 @@ import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
 import { OperationsList } from "../../components/portfolio/OperationsComponent"
 import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
 import { PortfolioStyles } from "../../components/styles"
-import { CreditCard, Operation, UNKNOWN_CARD } from "../../types/portfolio/types"
+import { Operation } from "../../types/portfolio/types"
+import { CreditCard, UNKNOWN_CARD } from '../../types/portfolio/CreditCard'
 
 // Images
 const cardsImage = require("../../../img/portfolio/card-tab.png")

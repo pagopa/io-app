@@ -7,43 +7,37 @@ const noNew = I18n.t("portfolio.noNewTransactions");
 const todayAt = lastUsage + today;
 const yesterdayAt = lastUsage + yesterday;
 
-import {
-  CreditCard,
-  Operation,
-  PaymentMethod
-} from "../../types/portfolio/types";
+import { Operation, PaymentMethod } from "../../types/portfolio/types";
+
+import { CreditCard } from "../../types/portfolio/CreditCard";
 
 const cards: CreditCard[] = [
   {
     id: 1,
-    brand: "American Express",
     lastUsage: todayAt + "07:34",
-    number: "3759 876543 21001",
+    number: "3759 876543 02001",
     image: require("../../../img/portfolio/amex-cc.jpg"),
     owner: "Mario Rossi",
     expires: "10/20"
   },
   {
     id: 2,
-    brand: "VISA",
     lastUsage: yesterdayAt + " 10:20",
-    number: "4000 1234 5678 9010",
+    number: "4324 5201 6988 0454",
     image: require("../../../img/portfolio/visa-cc.jpg"),
     owner: "John Doe",
     expires: "11/21"
   },
   {
     id: 3,
-    brand: "Mastercard",
     lastUsage: noNew,
-    number: "5412 7556 7890 0000",
+    number: "5400 4708 6234 2849",
     image: require("../../../img/portfolio/mastercard-cc.png"),
     owner: "Mario Bianchi",
     expires: "12/22"
   },
   {
     id: 4,
-    brand: "RedCard",
     lastUsage: todayAt + "09:03",
     number: "4000 1234 5678 9010",
     image: require("../../../img/portfolio/simple-cc.png"),

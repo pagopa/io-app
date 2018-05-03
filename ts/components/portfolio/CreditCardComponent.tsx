@@ -2,34 +2,33 @@ import * as React from "react"
 
 import {
   Body,
-  Button,
   Card,
-  CardItem,
-  Content,
   Icon,
-  Left,
-  List,
-  Right,
   Text,
-  Thumbnail,
-  View
 } from "native-base";
-import { Image } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { Image } from "react-native"
+import { Col, Grid, Row } from "react-native-easy-grid"
+import { NavigationScreenProp, NavigationState } from "react-navigation"
 
-import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
+import I18n from "../../i18n"
+import ROUTES from "../../navigation/routes"
 
-import { CreditCard } from "../../types/portfolio/types";
-
-import { CreditCardStyle } from "../../components/styles";
-
+import { CreditCard } from "../../types/portfolio/CreditCard"
+import { CreditCardType } from "../../types/portfolio/CreditCardType"
+import { CreditCardStyle } from '../styles'
 
 type Props = {
   item: CreditCard,
   navigation: NavigationScreenProp<NavigationState>
 }
+
+// Images
+const imgMastercard = require("../../../img/portfolio/issuers/mastercard.png")
+const imgVisa = require("../../../img/portfolio/cards-icons/visa.png")
+const imgAmex = require("../../../img/portfolio/cards-icons/amex.png")
+const imgDiners = require("../../../img/portfolio/cards-icons/amex.png")
+const imgMaestro = require("../../../img/portfolio/cards-icons/amex.png")
+const imgElectron = require("../../../img/portfolio/cards-icons/visa-electron.png")
 
 /**
  * Credit card component
@@ -83,8 +82,9 @@ export default class CreditCardComponent extends React.Component<Props> {
             <Col size={2}>
               <Image
                 style = {CreditCardStyle.issuerLogo}
-                source={require("../../../img/portfolio/issuers/mastercard.png")}/>
+                source= { this.getCreditCardImage(item.number) }/>
             </Col>
+            <Col size={1}>&nbsp;</Col>
           </Row>
           <Row style = {CreditCardStyle.rowStyle} size={2}>
             <Col size={8}>
@@ -106,4 +106,30 @@ export default class CreditCardComponent extends React.Component<Props> {
     </Card>
     )
   }
+
+  private getCreditCardImage: any = (creditCardNumber: string) => {
+
+    const creditCardType: CreditCardType =
+      CreditCard.getCardType(creditCardNumber)
+
+    switch (creditCardType) {
+      case CreditCardType.VISA:
+        return imgVisa
+      case CreditCardType.MASTERCARD:
+        return imgMastercard
+      case CreditCardType.DINERS:
+        return imgDiners
+      case CreditCardType.AMEX:
+        return imgAmex
+      case CreditCardType.MAESTRO:
+        return imgMaestro
+      case CreditCardType.VISAELECTRON:
+        return imgElectron
+      default:
+        return imgMastercard
+    }
+
+  }
+
+
 }

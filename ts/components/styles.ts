@@ -160,7 +160,7 @@ export const CreditCardStyle = StyleSheet.create({
     fontFamily: "Roboto Mono"
   },
   rowStyle: {
-    alignItems: 'center'
+    alignItems: "center"
   },
   textStyle: {
     marginLeft: 15,
@@ -182,7 +182,7 @@ export const CreditCardStyle = StyleSheet.create({
     color: "rgb(0,86,234)",
     paddingLeft: 10
   },
-  whiteBarStyle: { 
+  whiteBarStyle: {
     borderWidth: 0,
     borderBottomColor: "white",
     borderBottomWidth: 2,
@@ -190,8 +190,7 @@ export const CreditCardStyle = StyleSheet.create({
     width: "100%"
   },
   issuerLogo: {
-    width:"100%",
-    resizeMode:"contain"
+    width: "100%",
+    resizeMode: "contain"
   }
-
 });
