@@ -88,7 +88,10 @@ export default class CreditCardComponent extends React.Component<Props> {
           </Row>
           <Row style = {CreditCardStyle.rowStyle} size={2}>
             <Col size={8}>
-              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] }>
+              <Text
+                style={ [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] }
+                onPress = {() => navigate(ROUTES.PORTFOLIO_CARDS_OPERATIONS, { card: item }) }
+              >
                 {item.lastUsage}
               </Text>
             </Col>

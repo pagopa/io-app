@@ -27,11 +27,11 @@ export class PayLayout extends React.Component<Props, never> {
           <Row size={this.rowSize(0)}>
             <Content style={PortfolioStyles.pfback}>
               <Grid>
-                <Row style={{ marginTop: 95 }} />
-                <Row>
+                <Row size={1} style={{marginTop: 70}}><Text>&nbsp;</Text></Row>
+                <Row size={2}>
                   <H1 style={PortfolioStyles.pftitle}>{this.props.title}</H1>
                 </Row>
-                <Row>
+                <Row size={4}>
                   <Left>
                     <Text style={PortfolioStyles.pfsubtitle}>
                       {this.props.subtitleLeft}
@@ -43,7 +43,7 @@ export class PayLayout extends React.Component<Props, never> {
                     </Text>
                   </Right>
                 </Row>
-                <Row>{this.props.touchableContent}</Row>
+                <Row size={3}>{this.props.touchableContent}</Row>
               </Grid>
             </Content>
           </Row>

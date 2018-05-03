@@ -75,7 +75,11 @@ export class TransactionsScreen extends React.Component<Props, never> {
         <TouchableHighlight
           onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
         >
-          <Image style={PortfolioStyles.pftabcard} source={cardsImage} />
+          <Image
+            style={PortfolioStyles.pftabcard}
+            source={cardsImage}
+            resizeMode="contain"
+          />
         </TouchableHighlight>
       </View>
     )

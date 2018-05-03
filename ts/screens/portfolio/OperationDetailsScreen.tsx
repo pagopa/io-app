@@ -9,7 +9,7 @@ import { PortfolioStyles } from "../../components/styles"
 import I18n from "../../i18n"
 import ROUTES from "../../navigation/routes"
 import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
-import { CreditCard} from '../../types/portfolio/CreditCard'
+import { CreditCard } from '../../types/portfolio/CreditCard'
 
 // Images
 const cardsImage = require("../../../img/portfolio/single-tab.png")
@@ -145,7 +145,9 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
         <TouchableHighlight
           onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
         >
-          <Image style={PortfolioStyles.pfsingle} source={cardsImage} />
+          <Image style={PortfolioStyles.pfsingle}
+                 source={cardsImage}
+                 resizeMode="contain" />
         </TouchableHighlight>
       </View>
     )
