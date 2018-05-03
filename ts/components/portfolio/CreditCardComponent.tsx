@@ -84,7 +84,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                 style = {CreditCardStyle.issuerLogo}
                 source= { this.getCreditCardImage(item.number) }/>
             </Col>
-            <Col size={1}>&nbsp;</Col>
+            <Col size={1}><Text>&nbsp;</Text></Col>
           </Row>
           <Row style = {CreditCardStyle.rowStyle} size={2}>
             <Col size={8}>
