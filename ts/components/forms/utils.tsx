@@ -4,7 +4,7 @@
 
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
-import { BaseFieldProps, WrappedFieldProps } from "redux-form";
+import { WrappedFieldProps } from "redux-form";
 import { isEmail } from "validator";
 
 import I18n from "../../i18n";
@@ -41,6 +41,7 @@ export const validators = {
 };
 
 export interface NativeBaseInputProps {
+  name?: string;
   placeholder?: string;
   showError?: boolean;
 }
@@ -49,20 +50,13 @@ export interface NativeBaseInputProps {
  * This method is used by redux-form `Field` components.
  * It takes as input the field properties and return a native-base `Input`.
  */
-export const renderNativeBaseInput = (
-  props: WrappedFieldProps & BaseFieldProps & NativeBaseInputProps
-) => {
-  const {
-    meta: { touched, error, active },
-    placeholder,
-    showError
-  } = props;
-  return (
-    <View>
-      <Item error={error && touched} active={active}>
-        <Input placeholder={placeholder} />
-      </Item>
-      {showError && error && touched && <Text>{error}</Text>}
-    </View>
-  );
-};
+export const renderNativeBaseInput: React.SFC<
+  WrappedFieldProps & NativeBaseInputProps
+> = ({ meta: { touched, error, active }, placeholder, showError }) => (
+  <View>
+    <Item error={error && touched} active={active}>
+      <Input placeholder={placeholder} />
+    </Item>
+    {showError && error && touched && <Text>{error}</Text>}
+  </View>
+);

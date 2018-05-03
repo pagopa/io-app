@@ -14,10 +14,7 @@
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "noImplicitThis": true,
-    "strictFunctionTypes": false,
-    "strictPropertyInitialization": true,
-    "strictNullChecks": true,
+    "strictFunctionTypes": true,
     "skipLibCheck": true
   },
   "lib": [ "dom", "es2015", "es2016" ],

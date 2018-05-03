@@ -1,10 +1,5 @@
 declare module "react-native-offline" {
-  export type NetworkState = {
-    isConnected: boolean;
-    actionQueue: Array<any>;
-  };
-
-  export function reducer(state: NetworkState, action: any): NetworkState;
+  export function reducer<T>(state: T | undefined, action: any): T;
 
   interface NetworkEventsListenerSagaArguments {
     timeout?: number;
