@@ -3,9 +3,10 @@
  */
 
 import { reducer as networkReducer } from "react-native-offline";
-import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
+import { FormStateMap, reducer as formReducer } from "redux-form";
 
+import { ReducersMapObject } from "redux";
+import { Reducer } from "redux";
 import { Action } from "../actions/types";
 import errorReducer from "../store/reducers/error";
 import loadingReducer from "../store/reducers/loading";
@@ -23,7 +24,7 @@ import { GlobalState } from "./types";
  * DATA state is where we store real data fetched from the API (ex. profile/messages).
  * More at @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-export default combineReducers<GlobalState, Action>({
+const reducers: ReducersMapObject<GlobalState, Action> = {
   appState: appStateReducer,
   network: networkReducer,
   navigation: navigationReducer,
@@ -33,10 +34,12 @@ export default combineReducers<GlobalState, Action>({
   error: errorReducer,
 
   // FORM
-  form: formReducer,
+  form: formReducer as Reducer<FormStateMap, Action>,
 
   // DATA
   session: sessionReducer,
   onboarding: onboardingReducer,
   profile: profileReducer
-});
+};
+
+export default reducers;

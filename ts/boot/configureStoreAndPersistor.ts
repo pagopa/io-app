@@ -1,13 +1,14 @@
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore } from "redux";
 import { createLogger } from "redux-logger";
-import { Persistor, persistReducer, persistStore } from "redux-persist";
+import { persistCombineReducers, Persistor, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
 import thunk from "redux-thunk";
 import { analytics } from "../middlewares";
 
 import { NavigationState } from "react-navigation";
+import { Reducer } from "redux";
 import { Action, Store, StoreEnhancer } from "../actions/types";
 import rootReducer from "../reducers";
 import { GlobalState } from "../reducers/types";
@@ -25,10 +26,9 @@ const persistConfig = {
   blacklist: ["navigation", "loading", "error"]
 };
 
-const persistedReducer = persistReducer<GlobalState, Action>(
-  persistConfig,
-  rootReducer
-);
+const persistedReducer: Reducer<GlobalState, Action> = persistCombineReducers<
+  GlobalState
+>(persistConfig, rootReducer);
 
 const logger = createLogger({
   predicate: (): boolean => isDebuggingInChrome,
