@@ -186,5 +186,8 @@
     "header":"Vuoi salvare questa carta?",
     "favoriteTitle":"Imposta la carta come metodo di pagamento preferito",
     "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
+  },
+  "creditCardComponent": {
+    "validUntil": "Valida fino al "
   }
 }

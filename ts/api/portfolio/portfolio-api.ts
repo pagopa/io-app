@@ -19,28 +19,36 @@ const cards: CreditCard[] = [
     brand: "American Express",
     lastUsage: todayAt + "07:34",
     number: "3759 876543 21001",
-    image: require("../../../img/portfolio/amex-cc.jpg")
+    image: require("../../../img/portfolio/amex-cc.jpg"),
+    owner: "Mario Rossi",
+    expires: "10/20"
   },
   {
     id: 2,
     brand: "VISA",
     lastUsage: yesterdayAt + " 10:20",
     number: "4000 1234 5678 9010",
-    image: require("../../../img/portfolio/visa-cc.jpg")
+    image: require("../../../img/portfolio/visa-cc.jpg"),
+    owner: "John Doe",
+    expires: "11/21"
   },
   {
     id: 3,
     brand: "Mastercard",
     lastUsage: noNew,
     number: "5412 7556 7890 0000",
-    image: require("../../../img/portfolio/mastercard-cc.png")
+    image: require("../../../img/portfolio/mastercard-cc.png"),
+    owner: "Mario Bianchi",
+    expires: "12/22"
   },
   {
     id: 4,
     brand: "RedCard",
     lastUsage: todayAt + "09:03",
     number: "4000 1234 5678 9010",
-    image: require("../../../img/portfolio/simple-cc.png")
+    image: require("../../../img/portfolio/simple-cc.png"),
+    owner: "John Smith",
+    expires: "09/19"
   }
 ];
 

@@ -153,3 +153,41 @@ export const PortfolioStyles = StyleSheet.create({
     color: "rgb(0, 0, 255)"
   }
 });
+
+export const CreditCardStyle = StyleSheet.create({
+  largeTextStyle: {
+    fontSize: 20,
+    fontFamily: "Roboto Mono"
+  },
+  rowStyle: {
+    alignItems: 'center'
+  },
+  textStyle: {
+    marginLeft: 15,
+    color: "rgb(13, 37, 62)",
+    fontFamily: "Titillium Web"
+  },
+  cardStyle: {
+    backgroundColor: "rgb(242,242,242)",
+    borderRadius: 10,
+    marginTop: 10,
+    height: 200
+  },
+  smallTextStyle: {
+    fontSize: 14,
+    color: "rgb(70,92,113)"
+  },
+  iconStyle: {
+    fontSize: 22,
+    color: "rgb(0,86,234)",
+    paddingLeft: 10
+  },
+  whiteBarStyle: { 
+    borderWidth: 0,
+    borderBottomColor: "white",
+    borderBottomWidth: 2,
+    paddingBottom: 15,
+    width: "100%"
+  }
+
+});

@@ -9,6 +9,8 @@ export type CreditCard = {
   lastUsage: string;
   number: string;
   image: any; // eslint-disable-line flowtype/no-weak-types
+  owner: string, 
+  expires: string
 };
 
 export type Operation = {
@@ -28,7 +30,9 @@ export const UNKNOWN_CARD: CreditCard = {
   brand: "Unknows",
   lastUsage: "???",
   number: "0",
-  image: null
+  image: null,
+  owner: "???",
+  expires: "???"
 };
 
 export const UNKNOWN_OPERATION: Operation = {

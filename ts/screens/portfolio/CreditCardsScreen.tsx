@@ -9,6 +9,7 @@ import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
 import { PayLayout } from "../../components/portfolio/PayLayout"
 
 import { NavigationScreenProp, NavigationState } from "react-navigation"
+import CreditCardComponent from '../../components/portfolio/CreditCardComponent';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>
@@ -44,36 +45,10 @@ export class CreditCardsScreen extends React.Component<Props, never> {
               removeClippedSubviews={false}
               dataArray={cards}
               renderRow={(item): React.ReactElement<any> => (
-                <Card style={{ elevation: 3, marginTop: 5 }}>
-                  <CardItem>
-                    <Left>
-                      <Thumbnail source={item.image} />
-                      <Body>
-                        <Text>{item.brand}</Text>
-                        <Text note>{item.number}</Text>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                  <CardItem cardBody>
-                    <Image
-                      style={{ height: 200, flex: 1 }}
-                      source={item.image}
-                    />
-                  </CardItem>
-                  <CardItem>
-                    <Icon name="arrow-right" style={{ color: "#0066CC" }} />
-                    <Button
-                      transparent
-                      onPress={(): boolean =>
-                        navigate(ROUTES.PORTFOLIO_CARDS_OPERATIONS, {
-                          card: item
-                        })
-                      }
-                    >
-                      <Text>{item.lastUsage}</Text>
-                    </Button>
-                  </CardItem>
-                </Card>
+                <CreditCardComponent
+                  navigation={this.props.navigation}
+                  item={item}
+                />
               )}
             />
           </View>

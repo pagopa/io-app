@@ -101,7 +101,8 @@
   },
   "rnpm": {
     "assets": [
-      "./assets/fonts/TitilliumWeb"
+      "./assets/fonts/TitilliumWeb",
+      "./assets/fonts/RobotoMono"
     ]
   }
 }

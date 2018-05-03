@@ -47,6 +47,8 @@ PODS:
     - React
   - RNKeychain (3.0.0-rc.3):
     - React
+  - RNVectorIcons (4.6.0):
+    - React
   - yoga (0.54.2.React)
 
 DEPENDENCIES:
@@ -68,29 +70,28 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
-
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Mixpanel
 
 EXTERNAL SOURCES:
   React:
-    :path: "../node_modules/react-native"
+    :path: ../node_modules/react-native
   react-native-config:
-    :path: "../node_modules/react-native-config"
+    :path: ../node_modules/react-native-config
   react-native-mixpanel:
-    :path: "../node_modules/react-native-mixpanel"
+    :path: ../node_modules/react-native-mixpanel
   RNDeviceInfo:
-    :path: "../node_modules/react-native-device-info"
+    :path: ../node_modules/react-native-device-info
   RNFS:
-    :path: "../node_modules/react-native-fs"
+    :path: ../node_modules/react-native-fs
   RNI18n:
-    :path: "../node_modules/react-native-i18n"
+    :path: ../node_modules/react-native-i18n
   RNKeychain:
-    :path: "../node_modules/react-native-keychain"
+    :path: ../node_modules/react-native-keychain
+  RNVectorIcons:
+    :path: ../node_modules/react-native-vector-icons
   yoga:
-    :path: "../node_modules/react-native/ReactCommon/yoga"
+    :path: ../node_modules/react-native/ReactCommon/yoga
 
 SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
@@ -101,8 +102,9 @@ SPEC CHECKSUMS:
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNI18n: db9be06a40336f04d136f24dd5de3f5eb9f3207c
   RNKeychain: 627c6095cef215dd3d9804a9a9cf45ab96aa3997
+  RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 90125cfa5cc3d6e61eb3aa2e542197873193855d
+PODFILE CHECKSUM: dd3a259a04739c52418242caaeacc7b45a63d2e4
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.4.0
