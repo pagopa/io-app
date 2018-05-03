@@ -43,7 +43,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
         <AppHeader>
           <Left>
             <Button
-              transparent
+              transparent={true}
               onPress={(): boolean => this.props.navigation.goBack()}
             >
               <Icon name="chevron-left" />
@@ -62,35 +62,39 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph1")}
           </Text>
-          <Text link>
+          <Text link={true}>
             {I18n.t("authentication.spid_information_request.moreLinkText")}
           </Text>
-          <View spacer large />
+          <View spacer={true} large={true} />
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph2")}
           </Text>
-          <View spacer />
+          <View spacer={true} />
           <SpidInformationForm />
-          <View spacer />
+          <View spacer={true} />
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph3")}
           </Text>
           <Text
-            link
+            link={true}
             onPress={(): void => this.setState({ isTosModalVisible: true })}
           >
             {I18n.t("authentication.spid_information_request.tosLinkText")}
           </Text>
         </Content>
-        <View footer>
-          <Button block primary disabled={!this.props.isFormValid}>
+        <View footer={true}>
+          <Button
+            block={true}
+            primary={true}
+            disabled={!this.props.isFormValid}
+          >
             <Text>
               {I18n.t("authentication.spid_information_request.continue")}
             </Text>
           </Button>
         </View>
-        <Modal isVisible={this.state.isTosModalVisible} fullscreen>
-          <View header>
+        <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+          <View header={true}>
             <Icon
               name="cross"
               onPress={(): void => this.setState({ isTosModalVisible: false })}
@@ -98,7 +102,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           </View>
           <Content>
             <H1>{I18n.t("personal_data_processing.title")}</H1>
-            <View spacer large />
+            <View spacer={true} large={true} />
             <Text>{I18n.t("personal_data_processing.content")}</Text>
           </Content>
         </Modal>

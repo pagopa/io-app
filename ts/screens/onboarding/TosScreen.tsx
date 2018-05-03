@@ -35,7 +35,7 @@ class TosScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button
-              transparent
+              transparent={true}
               onPress={(): boolean => this.props.navigation.goBack()}
             >
               <Icon name="chevron-left" />
@@ -47,17 +47,17 @@ class TosScreen extends React.Component<Props, never> {
         </AppHeader>
         <Content>
           <H1>{I18n.t("onboarding.tos.contentTitle")}</H1>
-          <View spacer extralarge />
+          <View spacer={true} extralarge={true} />
           <H3>{I18n.t("onboarding.tos.section1")}</H3>
-          <View spacer />
+          <View spacer={true} />
           <Text>{I18n.t("lipsum.medium")}</Text>
-          <View spacer extralarge />
+          <View spacer={true} extralarge={true} />
           <H3>{I18n.t("onboarding.tos.section2")}</H3>
-          <View spacer />
+          <View spacer={true} />
           <Text>{I18n.t("lipsum.medium")}</Text>
         </Content>
-        <View footer>
-          <Button block primary onPress={this.acceptTos}>
+        <View footer={true}>
+          <Button block={true} primary={true} onPress={this.acceptTos}>
             <Text>{I18n.t("onboarding.tos.continue")}</Text>
           </Button>
         </View>

@@ -32,11 +32,11 @@ class LandingScreen extends React.Component<Props, never> {
           </Body>
         </AppHeader>
         <Content />
-        <View footer>
+        <View footer={true}>
           <Button
-            block
-            primary
-            iconLeft
+            block={true}
+            primary={true}
+            iconLeft={true}
             onPress={(): boolean =>
               this.props.navigation.navigate(
                 ROUTES.AUTHENTICATION_IDP_SELECTION
@@ -46,11 +46,11 @@ class LandingScreen extends React.Component<Props, never> {
             <Icon name="user" />
             <Text>{I18n.t("authentication.landing.login")}</Text>
           </Button>
-          <View spacer />
+          <View spacer={true} />
           <Button
-            block
-            small
-            transparent
+            block={true}
+            small={true}
+            transparent={true}
             onPress={(): boolean =>
               this.props.navigation.navigate(
                 ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST

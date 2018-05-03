@@ -38,7 +38,7 @@ class IdpLoginScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button
-              transparent
+              transparent={true}
               onPress={(): boolean => this.props.navigation.goBack()}
             >
               <Icon name="chevron-left" />
