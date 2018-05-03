@@ -6,6 +6,7 @@ import { reducer as networkReducer } from "react-native-offline";
 import { AnyAction, combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
 
+import { Action } from "../actions/types";
 import errorReducer from "../store/reducers/error";
 import loadingReducer from "../store/reducers/loading";
 import onboardingReducer from "../store/reducers/onboarding";
@@ -14,7 +15,6 @@ import sessionReducer from "../store/reducers/session";
 import appStateReducer from "./appState";
 import navigationReducer from "./navigation";
 import { GlobalState } from "./types";
-import { Action } from "../actions/types";
 
 export { AnyAction };
 /**
