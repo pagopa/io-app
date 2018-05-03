@@ -4,7 +4,7 @@
 
 import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
-import { debugRemotePushNotification } from "../config";
+import { debugRemotePushNotification, gcmSenderId } from "../config";
 
 function configurePushNotifications() {
   PushNotification.configure({
@@ -20,7 +20,7 @@ function configurePushNotifications() {
     },
 
     // GCM Sender ID
-    senderID: "317157111831"
+    senderID: gcmSenderId
   });
 }
 
