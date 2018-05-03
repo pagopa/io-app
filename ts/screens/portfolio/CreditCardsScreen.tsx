@@ -1,14 +1,26 @@
-import * as React from "react"
+import * as React from "react";
 
-import { Body, Button, Card, CardItem, Content, Icon, Left, List, Text, Thumbnail, View } from "native-base"
-import { Image } from "react-native"
-import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
-import { PayLayout } from "../../components/portfolio/PayLayout"
-import { PortfolioStyles } from "../../components/styles"
-import I18n from "../../i18n"
-import ROUTES from "../../navigation/routes"
+import {
+  Body,
+  Button,
+  Card,
+  CardItem,
+  Content,
+  Icon,
+  Left,
+  List,
+  Text,
+  Thumbnail,
+  View
+} from "native-base";
+import { Image } from "react-native";
+import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
+import { PayLayout } from "../../components/portfolio/PayLayout";
+import { PortfolioStyles } from "../../components/styles";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 
-import { NavigationScreenProp, NavigationState } from "react-navigation"
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from '../../components/portfolio/CreditCardComponent';
 
 type Props = {
@@ -32,7 +44,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation;
     return (
       <PayLayout
         navigation={this.props.navigation}

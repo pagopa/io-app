@@ -188,6 +188,10 @@ export const CreditCardStyle = StyleSheet.create({
     borderBottomWidth: 2,
     paddingBottom: 15,
     width: "100%"
+  },
+  issuerLogo: {
+    width:"100%",
+    resizeMode:"contain"
   }
 
 });

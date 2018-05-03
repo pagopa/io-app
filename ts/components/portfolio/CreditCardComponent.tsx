@@ -1,23 +1,28 @@
 import * as React from "react"
-import { Image } from "react-native";
-import I18n from "../../i18n";
+
 import {
   Body,
   Button,
   Card,
   CardItem,
   Content,
+  Icon,
   Left,
   List,
+  Right,
   Text,
   Thumbnail,
-  View, Right, Icon
+  View
 } from "native-base";
-import { PortfolioStyles } from "../../components/styles";
-import ROUTES from "../../navigation/routes";
+import { Image } from "react-native";
+import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+
 import { CreditCard } from "../../types/portfolio/types";
-import { Grid, Row, Col } from "react-native-easy-grid";
+
 import { CreditCardStyle } from "../../components/styles";
 
 
@@ -41,27 +46,51 @@ export default class CreditCardComponent extends React.Component<Props> {
         <Grid>
           <Row size={2} style = {CreditCardStyle.rowStyle}>
             <Col size={7}>
-              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.largeTextStyle] } >{("\u25cf".repeat(4) + " ").repeat(3) + item.number.slice(-4)}</Text>
+              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.largeTextStyle] } >
+                {("\u25cf".repeat(4) + " ").repeat(3) + item.number.slice(-4)}
+              </Text>
             </Col>
-            <Col size={1}><Icon type = "MaterialIcons" active={false} style={CreditCardStyle.iconStyle} name="star-border"/></Col>
-            <Col size={1}><Icon type = "MaterialIcons" active={true} style={CreditCardStyle.iconStyle} name="more-vert" /></Col>
+            <Col size={1}>
+              <Icon
+                type = "MaterialIcons"
+                active={false}
+                style={CreditCardStyle.iconStyle}
+                name="star-border"
+              />
+            </Col>
+            <Col size={1}>
+              <Icon
+                type = "MaterialIcons"
+                active={true}
+                style={CreditCardStyle.iconStyle}
+                name="more-vert"
+              />
+            </Col>
           </Row>
           <Row size={1} style = {CreditCardStyle.rowStyle}>
             <Col>
-              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] } >{I18n.t('creditCardComponent.validUntil') + item.expires}</Text>
+              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] } >
+                {I18n.t('creditCardComponent.validUntil') + item.expires}
+              </Text>
             </Col>
           </Row>
           <Row size={2} style = {[CreditCardStyle.rowStyle, CreditCardStyle.whiteBarStyle]}>
             <Col size={7}>
-              <Text style = { CreditCardStyle.textStyle }>{item.owner.toUpperCase()}</Text>
+              <Text style = { CreditCardStyle.textStyle }>
+                {item.owner.toUpperCase()}
+              </Text>
             </Col>
             <Col size={2}>
-              <Image style = {{width:"100%",resizeMode:"contain"}} source={require("../../../img/portfolio/issuers/mastercard.png")}/>
+              <Image
+                style = {CreditCardStyle.issuerLogo}
+                source={require("../../../img/portfolio/issuers/mastercard.png")}/>
             </Col>
           </Row>
           <Row style = {CreditCardStyle.rowStyle} size={2}>
             <Col size={8}>
-              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] }>{item.lastUsage}</Text>
+              <Text style = { [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] }>
+                {item.lastUsage}
+              </Text>
             </Col>
             <Col size={1}>
               <Icon
