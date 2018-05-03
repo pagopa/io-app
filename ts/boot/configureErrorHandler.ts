@@ -9,18 +9,28 @@ import DeviceInfo from "react-native-device-info";
 import Mixpanel from "react-native-mixpanel";
 
 import I18n from "../i18n";
-import { getStackTrace, initSourceMaps } from "../react-native-source-maps";
+import {
+  createSourceMapper,
+  getStackTrace,
+  ISourceMapsOptions,
+  SourceMapper
+} from "../react-native-source-maps";
 
 const isDev = __DEV__;
 const version = DeviceInfo.getReadableVersion();
+const souceMapperOptions: ISourceMapsOptions = {
+  sourceMapBundle: "main.jsbundle.map"
+};
 
 // Custom error handler for unhandled js exceptions
-const customErrorHandler = async (
-  error: any,
-  isFatal: boolean
-): Promise<void> => {
+async function customErrorHandler(
+  sourceMapper: SourceMapper,
+  options: ISourceMapsOptions,
+  error: Error,
+  isFatal?: boolean
+): Promise<void> {
   if (isFatal) {
-    error.stack = await getStackTrace(error);
+    error.stack = await getStackTrace(sourceMapper, options, error);
     // Send a remote event that contains the error stack trace
     Mixpanel.trackWithProperties("APPLICATION_ERROR", {
       ERROR: JSON.stringify(error),
@@ -34,14 +44,19 @@ const customErrorHandler = async (
       I18n.t("global.jserror.message")
     );
   }
-};
+}
 
-const configureErrorHandler = () => {
+export default async function configureErrorHandler(): Promise<void> {
   if (!isDev) {
-    initSourceMaps({ sourceMapBundle: "main.jsbundle.map" });
+    const sourceMapper = await createSourceMapper(souceMapperOptions);
     // Overrides the default error handler in BUNDLED MODE
-    ErrorUtils.setGlobalHandler(customErrorHandler);
+    ErrorUtils.setGlobalHandler(async (error, isFatal?) => {
+      await customErrorHandler(
+        sourceMapper,
+        souceMapperOptions,
+        error,
+        isFatal
+      );
+    });
   }
-};
-
-export default configureErrorHandler;
+}

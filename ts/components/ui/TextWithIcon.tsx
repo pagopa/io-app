@@ -1,5 +1,5 @@
 import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames.js";
+import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
 import * as React from "react";
 import { View, ViewProperties } from "react-native";
 

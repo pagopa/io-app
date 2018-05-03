@@ -11,28 +11,28 @@
 
 import { Platform } from "react-native";
 import RNFS from "react-native-fs";
-import SourceMap from "source-map";
+import SourceMap, { MappedPosition } from "source-map";
 import StackTrace from "stacktrace-js";
 
-let sourceMapper;
-let options;
+export interface ISourceMapsOptions {
+  sourceMapBundle: string;
+  projectPath?: string;
+  collapseInLine?: boolean;
+}
+
+interface ISourcePosition {
+  lineNumber: number;
+  columnNumber: number;
+}
+
+export type SourceMapper = (row: ISourcePosition) => MappedPosition;
 
 /**
- * Init Source mapper with options
- * Required:
- * @param {String} [opts.sourceMapBundle] - source map bundle, for example "main.jsbundle.map"
- * Optional:
- * @param {String} [opts.projectPath] - project path to remove from files path
- * @param {Boolean} [opts.collapseInLine] — Will collapse all stack trace in one line, otherwise return lines array
+ * Creates a SourceMapper from the provided options
  */
-export const initSourceMaps = async opts => {
-  if (!opts || !opts.sourceMapBundle) {
-    throw new Error("Please specify sourceMapBundle option parameter");
-  }
-  options = opts;
-};
-
-const createSourceMapper = async () => {
+export async function createSourceMapper(
+  options: ISourceMapsOptions
+): Promise<SourceMapper> {
   const bundlePath =
     Platform.OS === "ios" ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
   const path = `${bundlePath}/${options.sourceMapBundle}`;
@@ -51,21 +51,21 @@ const createSourceMapper = async () => {
   const sourceMaps = JSON.parse(mapContents);
   const mapConsumer = new SourceMap.SourceMapConsumer(sourceMaps);
 
-  return (sourceMapper = row => {
+  function mapper(row: ISourcePosition): MappedPosition {
     return mapConsumer.originalPositionFor({
       line: row.lineNumber,
       column: row.columnNumber
     });
-  });
-};
+  }
 
-export const getStackTrace = async error => {
-  if (!options) {
-    throw new Error("Please firstly call initSourceMaps with options");
-  }
-  if (!sourceMapper) {
-    sourceMapper = await createSourceMapper();
-  }
+  return mapper;
+}
+
+export async function getStackTrace(
+  sourceMapper: SourceMapper,
+  options: ISourceMapsOptions,
+  error: Error
+): Promise<string> {
   const minStackTrace = await StackTrace.fromError(error);
   const stackTrace = minStackTrace.map(row => {
     const mapped = sourceMapper(row);
@@ -84,5 +84,5 @@ export const getStackTrace = async error => {
   });
   return options.collapseInLine
     ? stackTrace.map(i => i.position).join("\n")
-    : stackTrace;
-};
+    : `${stackTrace}`;
+}

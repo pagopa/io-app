@@ -24,7 +24,7 @@ import { createPin } from "../../store/actions/onboarding";
 import { createErrorSelector } from "../../store/reducers/error";
 
 type ReduxMappedProps = {
-  pinSaveError: string | null;
+  pinSaveError: string | undefined;
 };
 
 type OwnProps = {
@@ -60,10 +60,10 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  public pinComponent: CodeInput;
-  public pinConfirmComponent: CodeInput;
+  public pinComponent: CodeInput | null = null;
+  public pinConfirmComponent: CodeInput | null = null;
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     // Initial state with PinUnselected
