@@ -86,12 +86,16 @@ export default class CreditCardComponent extends React.Component<Props> {
             </Col>
             <Col size={1}><Text>&nbsp;</Text></Col>
           </Row>
-          <Row style = {CreditCardStyle.rowStyle} size={2}>
+          {/* onPress supported by row, but not recognized by typescript
+            * (https://github.com/GeekyAnts/react-native-easy-grid/blob/master/Components/Row.js#L29)
+            */}
+          <Row
+            style = {CreditCardStyle.rowStyle}
+            size={2}
+            {...{onPress: (): boolean => navigate(ROUTES.PORTFOLIO_CARDS_OPERATIONS, { card: item }) } }
+          >
             <Col size={8}>
-              <Text
-                style={ [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] }
-                onPress = {() => navigate(ROUTES.PORTFOLIO_CARDS_OPERATIONS, { card: item }) }
-              >
+              <Text style={ [CreditCardStyle.textStyle, CreditCardStyle.smallTextStyle] }>
                 {item.lastUsage}
               </Text>
             </Col>
@@ -100,7 +104,6 @@ export default class CreditCardComponent extends React.Component<Props> {
                 type = "MaterialIcons"
                 style={CreditCardStyle.iconStyle}
                 name="keyboard-arrow-right"
-                onPress = {() => navigate(ROUTES.PORTFOLIO_CARDS_OPERATIONS, { card: item }) }
               />
             </Col>
           </Row>
