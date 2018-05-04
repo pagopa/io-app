@@ -13,7 +13,6 @@ import {
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
 import { OperationsList } from "../../components/portfolio/OperationsComponent";
 import { PayLayout } from "../../components/portfolio/PayLayout";
-import { SimpleLayout } from "../../components/portfolio/SimpleLayout";
 import { PortfolioStyles } from "../../components/styles";
 import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";

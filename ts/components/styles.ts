@@ -16,7 +16,7 @@ const STATUSBAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBarManager.HEIGHT;
 
 const blackIshColor = "rgb(30,30,30)";
 const whiteIshColor = "rgb(250,250,250)";
-const blueIshColor = "rgb(66,86,104)";
+const blueIshColor = "rgb(70,92,112)";
 
 export const CommonStyles = StyleSheet.create({
   fullContainer: {

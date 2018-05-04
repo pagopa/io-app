@@ -17,7 +17,6 @@ import {
 } from "react-navigation";
 
 import { PayLayout } from "../../components/portfolio/PayLayout";
-import { SimpleLayout } from "../../components/portfolio/SimpleLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
