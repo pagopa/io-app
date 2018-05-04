@@ -9,7 +9,7 @@ import {
   Text
 } from "native-base";
 import * as React from "react";
-import { Image, ScrollView } from "react-native";
+import { Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
@@ -38,7 +38,7 @@ enum PLC {
   MAIN_SCREEN, // main screen, divided in two parts
   TOP_PART, // top part of the main screen (title, some actions)
   BOTTOM_PART, // bottom part of the main screen (contents e.g. transactions list)
-  TITLE_ROW, // title in the top part 
+  TITLE_ROW, // title in the top part
   SUBTITLE_ROW, // subtitle in top part
   TOUCHABLE_ROW, // touchable content in top part
 }
@@ -84,33 +84,33 @@ export class PayLayout extends React.Component<Props, never> {
         <Row size = {this.rowSize(PLC.TOP_PART)}>
           { this.topPortfolioLayout() }
         </Row>
-
-        <Row size = {this.rowSize(PLC.BOTTOM_PART)}>{this.props.children}</Row>
+        <Row size = {this.rowSize(PLC.BOTTOM_PART)}>
+          { this.props.children }
+        </Row>
       </Grid>
     );
   }
 
   private topPortfolioLayout(): React.ReactNode {
     return (
-      <Grid style={PortfolioStyles.topContainer}>>
-        <Col size={1}/>
-        <Col size={14}>
-          { this.topPortfolioTitle ()}
+      <Grid style={PortfolioStyles.topContainer}>
+        <Col size={1} />
+        <Col size={14} >
+          { this.topPortfolioTitle() }
           { this.topPortfolioSubtitle() }
           { this.getTouchableContent() }
         </Col>
-        <Col size={1}/>
+        <Col size={1} />
       </Grid>
     );
   }
 
   private topPortfolioTitle(): React.ReactNode {
-
     return (
       <Row size={this.rowSize(PLC.TITLE_ROW)}>
         <Grid>
           <Col size={2}>
-            <Row size = {1}/>
+            <Row size={1}/>
             <Row size={1}>
               <H1 style={PortfolioStyles.pftitle}>{this.props.title}</H1>
             </Row>
@@ -168,8 +168,7 @@ export class PayLayout extends React.Component<Props, never> {
                     <Text
                       style={PortfolioStyles.pfText}
                       onPress={() =>
-                        // TODO: change to touchableContent
-                        this.props.navigation.navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD) 
+                        this.props.navigation.navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)
                       }
                     >
                       {this.props.subtitleRight}
@@ -195,7 +194,7 @@ export class PayLayout extends React.Component<Props, never> {
     }
     return null;
   }
-  
+
   private rowSize(rowIdentifier: PLC) : number {
     const payNoticeButton = 3;
     const mainScreen = 14;
@@ -207,14 +206,14 @@ export class PayLayout extends React.Component<Props, never> {
       [PLC.SUBTITLE_ROW]: 2,
       [PLC.TOUCHABLE_ROW]: 2
     }
-  
-    const hasSubtitles = () => 
+
+    const hasSubtitles = () =>
       this.props.subtitle !== undefined ||
       this.props.subtitleLeft !== undefined ||
       this.props.subtitleLeft !== undefined;
-    
+
     const hasTouchable = () => this.props.touchableContent !== undefined;
-  
+
     switch (rowIdentifier) {
       case PLC.PAY_NOTICE_BUTTON: {
         if (this.props.showPayNoticeButton === false) {

@@ -86,9 +86,6 @@ export default class CreditCardComponent extends React.Component<Props> {
             </Col>
             <Col size={1}><Text>&nbsp;</Text></Col>
           </Row>
-          {/* onPress supported by row, but not recognized by typescript
-            * (https://github.com/GeekyAnts/react-native-easy-grid/blob/master/Components/Row.js#L29)
-            */}
           <Row
             style = {CreditCardStyle.rowStyle}
             size={2}
