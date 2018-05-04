@@ -10,13 +10,11 @@ declare module "native-base" {
 }
 
 export default (): Theme => {
-  const theme = {
+  return {
     ".alternative": {
       backgroundColor: variables.contentAlternativeBackground
     },
     padding: variables.contentPadding,
     backgroundColor: variables.contentBackground
   };
-
-  return theme;
 };

@@ -64,12 +64,12 @@ export type LoginResult = LoginSuccess | LoginFailure;
 const LOGIN_SUCCESS_PREFIX = "/profile.html?token=";
 const LOGIN_FAILURE_PREFIX = "/error.html";
 
-export const extractLoginResult = (url: string): LoginResult | null => {
+export const extractLoginResult = (url: string): LoginResult | undefined => {
   // Check for LOGIN_SUCCESS
-  let tokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX);
+  const successTokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX);
   // eslint-disable-next-line no-magic-numbers
-  if (tokenPathPos !== -1) {
-    const token = url.substr(tokenPathPos + LOGIN_SUCCESS_PREFIX.length);
+  if (successTokenPathPos !== -1) {
+    const token = url.substr(successTokenPathPos + LOGIN_SUCCESS_PREFIX.length);
     // eslint-disable-next-line no-magic-numbers
     if (token && token.length > 0) {
       return {
@@ -84,16 +84,16 @@ export const extractLoginResult = (url: string): LoginResult | null => {
   }
 
   // Check for LOGIN_FAILURE
-  tokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
+  const failureTokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
   // eslint-disable-next-line no-magic-numbers
-  if (tokenPathPos !== -1) {
+  if (failureTokenPathPos !== -1) {
     return {
       success: false
     };
   }
 
   // Url is not LOGIN related
-  return null;
+  return undefined;
 };
 
 // Fetch the profile from the Proxy

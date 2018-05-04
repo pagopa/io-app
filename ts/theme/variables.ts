@@ -4,6 +4,8 @@
  * exported to be used in our components theme files (check `./components` directory).
  */
 
+// tslint:disable:no-invalid-this
+
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 

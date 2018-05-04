@@ -89,10 +89,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -105,33 +102,36 @@ class IdpSelectionScreen extends React.Component<Props, never> {
             source={require("../../../img/spid.png")}
             style={styles.spidLogo}
           />
-          <View spacer />
+          <View spacer={true} />
           <H1>{I18n.t("authentication.idp_selection.contentTitle")}</H1>
         </View>
-        <Content alternative>
-          <IdpsGrid
-            idps={enabledIdps}
-            onIdpSelected={(idp: IdentityProvider) => {
-              this.props.dispatch(selectIdp(idp));
-            }}
-          />
-          <View spacer />
+        <Content alternative={true}>
+          <IdpsGrid idps={enabledIdps} onIdpSelected={this.onIdpSelect} />
+          <View spacer={true} />
           <Button
-            block
-            light
-            bordered
-            onPress={(): boolean => this.props.navigation.goBack()}
+            block={true}
+            light={true}
+            bordered={true}
+            onPress={this.goBack}
           >
             <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
           </Button>
         </Content>
-        <View footer>
-          <Button block transparent>
+        <View footer={true}>
+          <Button block={true} transparent={true}>
             <Text>{I18n.t("authentication.landing.nospid")}</Text>
           </Button>
         </View>
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
+  private onIdpSelect(idp: IdentityProvider) {
+    this.props.dispatch(selectIdp(idp));
   }
 }
 export default connect()(IdpSelectionScreen);

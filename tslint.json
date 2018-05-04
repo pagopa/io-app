@@ -1,43 +1,52 @@
 {
-  "defaultSeverity": "warning",
+  "defaultSeverity": "error",
   "extends": [
     "tslint:recommended",
-    // "typestrict",
-    // "tslint-react",
-    // "tslint-sonarts",
-    // "tslint-immutable",
+    "typestrict",
+    "tslint-react",
+    "tslint-sonarts",
+    "tslint-immutable",
     "tslint-plugin-prettier",
     "tslint-config-prettier"
   ],
   "jsRules": {},
   "rules": {
+    // disabled temporarily
     "interface-name": false,
     "no-empty-interface": false,
     "object-literal-sort-keys": false,
-    "interface-over-type-literal": false
+    "interface-over-type-literal": false,
+    "no-var-requires": false,
 
+    // disabled for making our life easier
+    "no-duplicate-string": false,
+    "no-small-switch": false,
+    "no-useless-intersection": false,
+
+    // custom rules
+    "prettier": true,
 
     // Disallows use of the null keyword literal.
-    // "no-null-keyword": true,
+    "no-null-keyword": true,
     // Disallows usages of any as a type declaration.
     // "no-any": true,
 
     // tslint-immutable: Recommended built-in rules
-    // "no-var-keyword": true,
+    "no-var-keyword": true,
     // "typedef": [true, "call-signature"],
 
     // tslint-immutable: Immutability rules
     // "readonly-keyword": true,
-    // "readonly-array": true,
-    // "no-let": true,
-//    "no-object-mutation": true,
-//    "no-method-signature": true,
+    "readonly-array": true,
+    "no-let": true,
+    "no-object-mutation": true,
+    "no-method-signature": true,
 
     // tslint-immutable: Functional style rules
     // "no-this": true,
     // "no-class": true,
     // "no-mixed-interface": false,
-    // "no-import-side-effect": true,
-    // "prettier": true
+    // "no-import-side-effect": true
+    "": false
   }
 }

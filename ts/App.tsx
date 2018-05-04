@@ -14,7 +14,12 @@ import RootContainer from "./RootContainer";
 
 // Inizialize Mixpanel and configure the global js error handler
 Mixpanel.sharedInstanceWithToken(config.mixpanelToken);
-configureErrorHandler();
+configureErrorHandler()
+  // tslint:disable-next-line:no-empty
+  .then(() => {})
+  // tslint:disable-next-line:no-empty
+  .catch(() => {});
+
 configurePushNotifications();
 
 const { store, persistor } = configureStoreAndPersistor();
@@ -29,7 +34,7 @@ export default class App extends React.Component<never, never> {
     return (
       <StyleProvider style={theme()}>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={undefined} persistor={persistor}>
             <RootContainer />
           </PersistGate>
         </Provider>

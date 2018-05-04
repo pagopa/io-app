@@ -13,9 +13,9 @@ import {
   PROFILE_UPDATE_SUCCESS
 } from "../actions/constants";
 
-export type ProfileState = ApiProfile | null;
+export type ProfileState = ApiProfile | undefined;
 
-export const INITIAL_STATE: ProfileState = null;
+export const INITIAL_STATE: ProfileState = undefined;
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,

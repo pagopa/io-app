@@ -24,7 +24,7 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
           component={renderNativeBaseInput}
           placeholder={getCurrentFormFieldProperty("email")("placeholder")}
           validate={[validators.email]}
-          showError
+          showError={true}
         />
       </Form>
     );

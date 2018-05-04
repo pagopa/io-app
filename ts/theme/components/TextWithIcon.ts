@@ -2,7 +2,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 export default (): Theme => {
-  const theme = {
+  return {
     ".danger": {
       "NativeBase.Text": {
         color: variables.brandDanger
@@ -31,6 +31,4 @@ export default (): Theme => {
     justifyContent: "center",
     alignSelf: "center"
   };
-
-  return theme;
 };

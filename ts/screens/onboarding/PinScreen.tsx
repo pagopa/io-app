@@ -61,8 +61,8 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  public pinComponent: CodeInput | null = null;
-  public pinConfirmComponent: CodeInput | null = null;
+  public pinComponent: CodeInput | undefined = undefined;
+  public pinConfirmComponent: CodeInput | undefined = undefined;
 
   constructor(props: Props) {
     super(props);
@@ -130,19 +130,19 @@ class PinScreen extends React.Component<Props, State> {
   // Render the PIN match/doesn't match feedback message
   public renderCodeInputConfirmValidation = (pinState: PinConfirmed) => {
     const validationMessage = pinState.isConfirmationPinMatch ? (
-      <TextWithIcon success>
+      <TextWithIcon success={true}>
         <Icon name={"check"} />
         <Text>{I18n.t("onboarding.pin.confirmValid")}</Text>
       </TextWithIcon>
     ) : (
-      <TextWithIcon danger>
+      <TextWithIcon danger={true}>
         <Icon name={"cross"} />
         <Text>{I18n.t("onboarding.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );
     return (
       <React.Fragment>
-        <View spacer extralarge />
+        <View spacer={true} extralarge={true} />
         {validationMessage}
       </React.Fragment>
     );
@@ -180,14 +180,14 @@ class PinScreen extends React.Component<Props, State> {
       <Content>
         {this.renderContentHeader(pinState)}
 
-        <View spacer extralarge />
+        <View spacer={true} extralarge={true} />
 
         {this.renderCodeInput(pinState)}
 
-        <View spacer extralarge />
+        <View spacer={true} extralarge={true} />
 
         <Text>{I18n.t("onboarding.pin.pinInfo")}</Text>
-        <Text link>{I18n.t("onboarding.pin.moreLinkText")}</Text>
+        <Text link={true}>{I18n.t("onboarding.pin.moreLinkText")}</Text>
       </Content>
     );
   };
@@ -195,19 +195,20 @@ class PinScreen extends React.Component<Props, State> {
   public renderContinueButton = (pinState: PinState) => {
     if (pinState.state === "PinConfirmed") {
       const { pin, isConfirmationPinMatch } = pinState;
+      const onPress = () => this.createPin(pin);
       return (
         <Button
-          block
-          primary
+          block={true}
+          primary={true}
           disabled={!isConfirmationPinMatch}
-          onPress={(): void => this.createPin(pin)}
+          onPress={onPress}
         >
           <Text>{I18n.t("onboarding.pin.continue")}</Text>
         </Button>
       );
     } else {
       return (
-        <Button block primary disabled>
+        <Button block={true} primary={true} disabled={true}>
           <Text>{I18n.t("onboarding.pin.continue")}</Text>
         </Button>
       );
@@ -217,14 +218,14 @@ class PinScreen extends React.Component<Props, State> {
   // The Footer of the Screen
   public renderFooter = (pinState: PinState) => {
     return (
-      <View footer>
+      <View footer={true}>
         {this.renderContinueButton(pinState)}
 
         {pinState.state !== "PinUnselected" && (
           <React.Fragment>
-            <View spacer />
+            <View spacer={true} />
 
-            <Button block bordered onPress={this.onPinReset}>
+            <Button block={true} bordered={true} onPress={this.onPinReset}>
               <Text>{I18n.t("onboarding.pin.reset")}</Text>
             </Button>
           </React.Fragment>
@@ -240,10 +241,7 @@ class PinScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -255,6 +253,10 @@ class PinScreen extends React.Component<Props, State> {
         {this.renderFooter(pinState)}
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
   }
 }
 

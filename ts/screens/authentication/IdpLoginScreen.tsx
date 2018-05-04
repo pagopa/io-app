@@ -30,17 +30,15 @@ class IdpLoginScreen extends React.Component<Props, never> {
   public render() {
     const { session } = this.props;
     if (isUnauthenticatedWithoutIdpSessionState(session)) {
-      return null;
+      return undefined;
     }
     const loginUri = LOGIN_BASE_URL + session.idp.entityID;
+    const onPress = () => this.props.navigation.goBack();
     return (
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={onPress}>
               <Icon name="chevron-left" />
             </Button>
           </Left>

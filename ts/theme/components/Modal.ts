@@ -2,7 +2,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 export default (): Theme => {
-  const theme = {
+  return {
     "NativeBase.ViewNB": {
       ".header": {
         height: variables.modalHeaderHeight,
@@ -22,6 +22,4 @@ export default (): Theme => {
     paddingBottom: 0,
     backgroundColor: variables.contentBackground
   };
-
-  return theme;
 };

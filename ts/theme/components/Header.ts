@@ -5,7 +5,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 export default (): Theme => {
-  const theme = {
+  return {
     "NativeBase.Left": {
       flex: 0.2
     },
@@ -26,6 +26,4 @@ export default (): Theme => {
     shadowOpacity: undefined,
     shadowRadius: undefined
   };
-
-  return theme;
 };

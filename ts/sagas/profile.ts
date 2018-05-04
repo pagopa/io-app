@@ -23,8 +23,8 @@ import {
 import { ProfileUpdateRequest } from "../store/actions/profile";
 
 // A selector to get the token from the state
-const getSessionToken = (state: GlobalState): string | null =>
-  state.session.isAuthenticated ? state.session.token : null;
+const getSessionToken = (state: GlobalState): string | undefined =>
+  state.session.isAuthenticated ? state.session.token : undefined;
 
 // A saga to load the Profile.
 function* loadProfile(): Iterator<Effect> {

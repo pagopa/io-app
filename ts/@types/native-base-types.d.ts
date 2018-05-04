@@ -27,8 +27,8 @@ declare module "native-base/src/Utils/mapPropsToStyleNames" {
 }
 
 declare module "native-base/src/theme/components" {
-  type Variables = {};
-  type Theme = {};
+  type Variables = any;
+  type Theme = any;
   export default function(variables: Variables): Theme;
 }
 

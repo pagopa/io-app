@@ -42,10 +42,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -62,48 +59,58 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph1")}
           </Text>
-          <Text link>
+          <Text link={true}>
             {I18n.t("authentication.spid_information_request.moreLinkText")}
           </Text>
-          <View spacer large />
+          <View spacer={true} large={true} />
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph2")}
           </Text>
-          <View spacer />
+          <View spacer={true} />
           <SpidInformationForm />
-          <View spacer />
+          <View spacer={true} />
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph3")}
           </Text>
-          <Text
-            link
-            onPress={(): void => this.setState({ isTosModalVisible: true })}
-          >
+          <Text link={true} onPress={this.showModal}>
             {I18n.t("authentication.spid_information_request.tosLinkText")}
           </Text>
         </Content>
-        <View footer>
-          <Button block primary disabled={!this.props.isFormValid}>
+        <View footer={true}>
+          <Button
+            block={true}
+            primary={true}
+            disabled={!this.props.isFormValid}
+          >
             <Text>
               {I18n.t("authentication.spid_information_request.continue")}
             </Text>
           </Button>
         </View>
-        <Modal isVisible={this.state.isTosModalVisible} fullscreen>
-          <View header>
-            <Icon
-              name="cross"
-              onPress={(): void => this.setState({ isTosModalVisible: false })}
-            />
+        <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+          <View header={true}>
+            <Icon name="cross" onPress={this.hideModal} />
           </View>
           <Content>
             <H1>{I18n.t("personal_data_processing.title")}</H1>
-            <View spacer large />
+            <View spacer={true} large={true} />
             <Text>{I18n.t("personal_data_processing.content")}</Text>
           </Content>
         </Modal>
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
+  private showModal() {
+    this.setState({ isTosModalVisible: true });
+  }
+
+  private hideModal() {
+    this.setState({ isTosModalVisible: false });
   }
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
