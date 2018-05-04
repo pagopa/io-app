@@ -12,6 +12,7 @@ target 'ItaliaApp' do
     "RCTText",
     "RCTVibration",
     "RCTWebSocket",
+    "RCTPushNotification",
     "DevSupport"
   ]
 

@@ -484,6 +484,10 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-mixpanel/-/react-native-mixpanel-0.1.0.tgz#6726c38ca6e11b798e1b5ac146da362baaec7024"
 
+"@types/react-native-push-notification@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#ab732ada08b18e060e3a53c6ecf67dc9258edfea"
+
 "@types/react-native@*", "@types/react-native@^0.55.0":
   version "0.55.4"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.4.tgz#866005d86490e2fd60543b143b2a5ac208aa925b"
@@ -5543,6 +5547,10 @@ react-native-offline@^3.7.3:
     hoist-non-react-statics "^1.2.0"
     lodash "^4.17.4"
     redux-saga "^0.16.0"
+
+react-native-push-notification@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"

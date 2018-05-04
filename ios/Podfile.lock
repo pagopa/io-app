@@ -31,6 +31,8 @@ PODS:
     - React/RCTNetwork
   - React/RCTNetwork (0.54.2):
     - React/Core
+  - React/RCTPushNotification (0.54.2):
+    - React/Core
   - React/RCTText (0.54.2):
     - React/Core
   - React/RCTVibration (0.54.2):
@@ -43,7 +45,7 @@ PODS:
     - React
   - RNFS (2.9.12):
     - React
-  - RNI18n (2.0.11):
+  - RNI18n (2.0.12):
     - React
   - RNKeychain (3.0.0-rc.3):
     - React
@@ -61,6 +63,7 @@ DEPENDENCIES:
   - React/RCTGeolocation (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTPushNotification (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
@@ -95,10 +98,10 @@ SPEC CHECKSUMS:
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNFS: fc366d28239541a692155a94ea26928815831295
-  RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
+  RNI18n: ee831694f1eaa69b270d345e4617f70735d4cdb9
   RNKeychain: 216f37338fcb9e5c3a2530f1e3295f737a690cb1
   yoga: de5853128c499decde39904270f22f75d36d7668
 
-PODFILE CHECKSUM: 90125cfa5cc3d6e61eb3aa2e542197873193855d
+PODFILE CHECKSUM: abdcce670d44c74fcb2c560d8e27c0b01be1427b
 
 COCOAPODS: 1.3.1
