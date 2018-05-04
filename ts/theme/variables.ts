@@ -1,7 +1,8 @@
 /**
  * This file imports all the variables defined inside the native-base material
  * theme than overwrites or add more variables. The combined variables are
- * exported to be used in our components theme files (check `./components` directory).
+ * exported to be used in our components theme files (check `./components`
+ * directory).
  */
 
 // tslint:disable:no-invalid-this
@@ -12,7 +13,8 @@ import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
-const customVariables = Object.assign(materialVariables as any, {
+const customVariables = {
+  ...materialVariables,
   // Android
   btnUppercaseAndroidText: false,
 
@@ -41,23 +43,18 @@ const customVariables = Object.assign(materialVariables as any, {
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
   get fontSize1(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 0.75;
   },
   get fontSize2(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 0.875;
   },
   get fontSize3(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 1;
   },
   get fontSize4(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 1.125;
   },
   get fontSize5(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 1.5;
   },
   lineHeight: 24,
@@ -124,6 +121,6 @@ const customVariables = Object.assign(materialVariables as any, {
   spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
-});
+};
 
 export default customVariables;

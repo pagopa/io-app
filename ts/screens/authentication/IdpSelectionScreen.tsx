@@ -84,6 +84,13 @@ const styles = StyleSheet.create({
  * A screen where the user choose the SPID IPD to login with.
  */
 class IdpSelectionScreen extends React.Component<Props, never> {
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
+  private onIdpSelect(idp: IdentityProvider) {
+    this.props.dispatch(selectIdp(idp));
+  }
   public render() {
     return (
       <Container>
@@ -124,14 +131,6 @@ class IdpSelectionScreen extends React.Component<Props, never> {
         </View>
       </Container>
     );
-  }
-
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
-  private onIdpSelect(idp: IdentityProvider) {
-    this.props.dispatch(selectIdp(idp));
   }
 }
 export default connect()(IdpSelectionScreen);
