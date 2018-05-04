@@ -28,7 +28,7 @@ export type ApiNewUserProfile = {
 export async function getUserProfile(
   apiUrlPrefix: string,
   token: string
-): Promise<ApiUserProfile | null> {
+): Promise<ApiUserProfile | undefined> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: "get",
@@ -38,7 +38,7 @@ export async function getUserProfile(
     });
     return await response.json();
   } catch (error) {
-    return null;
+    return undefined;
     // TODO handle error
     // console.error(error)
   }
@@ -48,7 +48,7 @@ export async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
   newProfile: ApiNewUserProfile
-): Promise<ApiUserProfile | number | null> {
+): Promise<ApiUserProfile | number | undefined> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: "post",
@@ -66,7 +66,7 @@ export async function setUserProfile(
       return await response.json();
     }
   } catch (error) {
-    return null;
+    return undefined;
     // if the proxy is not reacheable
     // TODO handle unsuccessful fetch
     // @see https://www.pivotaltracker.com/story/show/154661120

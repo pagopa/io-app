@@ -80,6 +80,7 @@ function configureStoreAndPersistor(): {
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
+    // tslint:disable-next-line:no-object-mutation
     (window as any).store = store;
   }
 

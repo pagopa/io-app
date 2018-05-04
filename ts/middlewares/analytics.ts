@@ -75,9 +75,9 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
 
 // gets the current screen from navigation state
 // TODO: Need to be fixed
-export function getCurrentRouteName(navNode: any): string | null {
+export function getCurrentRouteName(navNode: any): string | undefined {
   if (!navNode) {
-    return null;
+    return undefined;
   }
 
   if (navNode.routeName && typeof navNode.routeName === "string") {
@@ -90,7 +90,7 @@ export function getCurrentRouteName(navNode: any): string | null {
     return getCurrentRouteName(route);
   }
 
-  return null;
+  return undefined;
 }
 
 /*

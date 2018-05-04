@@ -24,7 +24,7 @@ class ConnectionBar extends React.PureComponent<Props, never> {
   public render() {
     const { isConnected } = this.props;
     if (isConnected) {
-      return null;
+      return undefined;
     }
     return (
       <View style={styles.container}>

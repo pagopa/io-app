@@ -34,7 +34,7 @@ export default class App extends React.Component<never, never> {
     return (
       <StyleProvider style={theme()}>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={undefined} persistor={persistor}>
             <RootContainer />
           </PersistGate>
         </Provider>

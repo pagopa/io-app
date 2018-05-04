@@ -54,10 +54,8 @@ function* pinCheckSaga(): Iterator<Effect> {
     });
     yield put(navigateToOnboardingPinScreenAction);
 
-    let isPinSaved = false;
-
     // Loop until PIN successfully saved in the Keystore
-    while (!isPinSaved) {
+    while (true) {
       // Here we wait the user to create a PIN
       const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST);
 
@@ -69,7 +67,7 @@ function* pinCheckSaga(): Iterator<Effect> {
           type: PIN_CREATE_SUCCESS
         });
 
-        isPinSaved = true;
+        break;
       } catch (error) {
         yield put({
           type: PIN_CREATE_FAILURE

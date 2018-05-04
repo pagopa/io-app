@@ -30,11 +30,14 @@ async function customErrorHandler(
   isFatal?: boolean
 ): Promise<void> {
   if (isFatal) {
-    error.stack = await getStackTrace(sourceMapper, options, error);
+    const errorWithStack = {
+      ...error,
+      stack: await getStackTrace(sourceMapper, options, error)
+    };
     // Send a remote event that contains the error stack trace
     Mixpanel.trackWithProperties("APPLICATION_ERROR", {
-      ERROR: JSON.stringify(error),
-      ERROR_STACK_TRACE: JSON.stringify(error.stack),
+      ERROR: JSON.stringify(errorWithStack),
+      ERROR_STACK_TRACE: JSON.stringify(errorWithStack.stack),
       APP_VERSION: version
     });
 
