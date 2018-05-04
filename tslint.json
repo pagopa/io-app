@@ -1,9 +1,9 @@
 {
-  "defaultSeverity": "warning",
+  "defaultSeverity": "error",
   "extends": [
     "tslint:recommended",
-    // "typestrict",
-    // "tslint-react",
+    "typestrict",
+    "tslint-react",
     // "tslint-sonarts",
     // "tslint-immutable",
     "tslint-plugin-prettier",
@@ -11,11 +11,15 @@
   ],
   "jsRules": {},
   "rules": {
+    // disabled temporarily
     "interface-name": false,
     "no-empty-interface": false,
     "object-literal-sort-keys": false,
-    "interface-over-type-literal": false
+    "interface-over-type-literal": false,
+    "no-var-requires": false,
 
+    // custom rules
+    "prettier": true
 
     // Disallows use of the null keyword literal.
     // "no-null-keyword": true,
@@ -37,7 +41,6 @@
     // "no-this": true,
     // "no-class": true,
     // "no-mixed-interface": false,
-    // "no-import-side-effect": true,
-    // "prettier": true
+    // "no-import-side-effect": true
   }
 }

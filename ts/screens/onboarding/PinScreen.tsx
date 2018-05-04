@@ -195,12 +195,13 @@ class PinScreen extends React.Component<Props, State> {
   public renderContinueButton = (pinState: PinState) => {
     if (pinState.state === "PinConfirmed") {
       const { pin, isConfirmationPinMatch } = pinState;
+      const onPress = () => this.createPin(pin);
       return (
         <Button
           block={true}
           primary={true}
           disabled={!isConfirmationPinMatch}
-          onPress={(): void => this.createPin(pin)}
+          onPress={onPress}
         >
           <Text>{I18n.t("onboarding.pin.continue")}</Text>
         </Button>
@@ -240,10 +241,7 @@ class PinScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -255,6 +253,10 @@ class PinScreen extends React.Component<Props, State> {
         {this.renderFooter(pinState)}
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
   }
 }
 

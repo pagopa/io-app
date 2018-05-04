@@ -89,10 +89,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -109,18 +106,13 @@ class IdpSelectionScreen extends React.Component<Props, never> {
           <H1>{I18n.t("authentication.idp_selection.contentTitle")}</H1>
         </View>
         <Content alternative={true}>
-          <IdpsGrid
-            idps={enabledIdps}
-            onIdpSelected={(idp: IdentityProvider) => {
-              this.props.dispatch(selectIdp(idp));
-            }}
-          />
+          <IdpsGrid idps={enabledIdps} onIdpSelected={this.onIdpSelect} />
           <View spacer={true} />
           <Button
             block={true}
             light={true}
             bordered={true}
-            onPress={(): boolean => this.props.navigation.goBack()}
+            onPress={this.goBack}
           >
             <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
           </Button>
@@ -132,6 +124,14 @@ class IdpSelectionScreen extends React.Component<Props, never> {
         </View>
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
+  private onIdpSelect(idp: IdentityProvider) {
+    this.props.dispatch(selectIdp(idp));
   }
 }
 export default connect()(IdpSelectionScreen);

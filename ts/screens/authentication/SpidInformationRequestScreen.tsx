@@ -42,10 +42,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -75,10 +72,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph3")}
           </Text>
-          <Text
-            link={true}
-            onPress={(): void => this.setState({ isTosModalVisible: true })}
-          >
+          <Text link={true} onPress={this.showModal}>
             {I18n.t("authentication.spid_information_request.tosLinkText")}
           </Text>
         </Content>
@@ -95,10 +89,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
         </View>
         <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
           <View header={true}>
-            <Icon
-              name="cross"
-              onPress={(): void => this.setState({ isTosModalVisible: false })}
-            />
+            <Icon name="cross" onPress={this.hideModal} />
           </View>
           <Content>
             <H1>{I18n.t("personal_data_processing.title")}</H1>
@@ -108,6 +99,18 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
         </Modal>
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
+  private showModal() {
+    this.setState({ isTosModalVisible: true });
+  }
+
+  private hideModal() {
+    this.setState({ isTosModalVisible: false });
   }
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({

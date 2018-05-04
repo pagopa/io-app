@@ -34,10 +34,7 @@ class TosScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={this.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -63,6 +60,10 @@ class TosScreen extends React.Component<Props, never> {
         </View>
       </Container>
     );
+  }
+
+  private goBack() {
+    this.props.navigation.goBack();
   }
 }
 export default connect()(TosScreen);

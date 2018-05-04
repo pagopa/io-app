@@ -37,11 +37,7 @@ class LandingScreen extends React.Component<Props, never> {
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={(): boolean =>
-              this.props.navigation.navigate(
-                ROUTES.AUTHENTICATION_IDP_SELECTION
-              )
-            }
+            onPress={this.navigateToIdpSelection}
           >
             <Icon name="user" />
             <Text>{I18n.t("authentication.landing.login")}</Text>
@@ -51,16 +47,22 @@ class LandingScreen extends React.Component<Props, never> {
             block={true}
             small={true}
             transparent={true}
-            onPress={(): boolean =>
-              this.props.navigation.navigate(
-                ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
-              )
-            }
+            onPress={this.navigateToSpidInformationRequest}
           >
             <Text>{I18n.t("authentication.landing.nospid")}</Text>
           </Button>
         </View>
       </Container>
+    );
+  }
+
+  private navigateToIdpSelection() {
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+  }
+
+  private navigateToSpidInformationRequest() {
+    this.props.navigation.navigate(
+      ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
     );
   }
 }
