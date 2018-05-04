@@ -17,7 +17,7 @@ declare module "native-base" {
 }
 
 export default (): Theme => {
-  const theme = {
+  return {
     ".spacer": {
       ".large": {
         height: variables.spacerLargeHeight
@@ -53,6 +53,4 @@ export default (): Theme => {
       elevation: variables.footerElevation
     }
   };
-
-  return theme;
 };

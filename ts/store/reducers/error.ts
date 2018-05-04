@@ -46,11 +46,10 @@ function reducer(
 
   // Clear ERROR explicitly
   if (action.type === ERROR_CLEAR) {
-    const newState = {
+    return {
       ...state,
       [action.payload]: none
     };
-    return newState;
   }
 
   const matches = /(.*)_(REQUEST|FAILURE)/.exec(type);
@@ -69,11 +68,10 @@ function reducer(
     };
   } else {
     // We need to remove the error message
-    const newState = {
+    return {
       ...state,
       [requestName]: none
     };
-    return newState;
   }
 }
 

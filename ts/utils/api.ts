@@ -36,8 +36,7 @@ export async function getUserProfile(
         Authorization: `Bearer ${token}`
       }
     });
-    const responseJson: ApiUserProfile = await response.json();
-    return responseJson;
+    return await response.json();
   } catch (error) {
     return null;
     // TODO handle error
@@ -64,8 +63,7 @@ export async function setUserProfile(
     if (response.status === 500) {
       return response.status;
     } else {
-      const responseJson: ApiUserProfile = await response.json();
-      return responseJson;
+      return await response.json();
     }
   } catch (error) {
     return null;

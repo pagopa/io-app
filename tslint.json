@@ -4,7 +4,7 @@
     "tslint:recommended",
     "typestrict",
     "tslint-react",
-    // "tslint-sonarts",
+    "tslint-sonarts",
     // "tslint-immutable",
     "tslint-plugin-prettier",
     "tslint-config-prettier"
@@ -17,6 +17,11 @@
     "object-literal-sort-keys": false,
     "interface-over-type-literal": false,
     "no-var-requires": false,
+
+    // disabled for making our life easier
+    "no-duplicate-string": false,
+    "no-small-switch": false,
+    "no-useless-intersection": false,
 
     // custom rules
     "prettier": true

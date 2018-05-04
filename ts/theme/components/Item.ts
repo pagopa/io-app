@@ -12,7 +12,7 @@ declare module "native-base" {
 }
 
 export default (): Theme => {
-  const theme = {
+  return {
     ".active": {
       // eslint-disable-next-line no-magic-numbers
       borderBottomWidth: variables.borderWidth * 4,
@@ -22,6 +22,4 @@ export default (): Theme => {
         .hex()
     }
   };
-
-  return theme;
 };

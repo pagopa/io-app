@@ -15,7 +15,7 @@ declare module "native-base" {
 }
 
 export default (): Theme => {
-  const theme = {
+  return {
     ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor
@@ -23,6 +23,4 @@ export default (): Theme => {
 
     lineHeight: variables.lineHeight
   };
-
-  return theme;
 };
