@@ -1,7 +1,8 @@
 /**
  * A saga that manages the Onboarding.
  *
- * For a detailed view of the flow check @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
+ * For a detailed view of the flow check
+ * @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
  */
 
 import { NavigationActions } from "react-navigation";
@@ -55,6 +56,7 @@ function* pinCheckSaga(): Iterator<Effect> {
     yield put(navigateToOnboardingPinScreenAction);
 
     // Loop until PIN successfully saved in the Keystore
+    // tslint:disable-next-line:no-constant-condition
     while (true) {
       // Here we wait the user to create a PIN
       const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST);
@@ -63,23 +65,17 @@ function* pinCheckSaga(): Iterator<Effect> {
         yield call(setPin, action.payload);
 
         // Dispatch the action that sets isPinCreated to true into the store
-        yield put({
-          type: PIN_CREATE_SUCCESS
-        });
+        yield put({ type: PIN_CREATE_SUCCESS });
 
         break;
       } catch (error) {
-        yield put({
-          type: PIN_CREATE_FAILURE
-        });
+        yield put({ type: PIN_CREATE_FAILURE });
       }
     }
   }
 
   // Dispatch an action to start the next step
-  yield put({
-    type: ONBOARDING_CHECK_COMPLETE
-  });
+  yield put({ type: ONBOARDING_CHECK_COMPLETE });
 }
 
 /**
@@ -106,30 +102,26 @@ function* tosCheckSaga(): Iterator<Effect> {
     yield take(TOS_ACCEPT_REQUEST);
 
     // Dispatch the action that sets isTosAccepted to true into the store
-    yield put({
-      type: TOS_ACCEPT_SUCCESS
-    });
+    yield put({ type: TOS_ACCEPT_SUCCESS });
   }
 
   // Dispatch an action to start the next step
-  yield put({
-    type: ONBOARDING_CHECK_PIN
-  });
+  yield put({ type: ONBOARDING_CHECK_PIN });
 }
 
 function* onboardingSaga(): Iterator<Effect> {
   yield fork(tosCheckSaga);
   yield fork(pinCheckSaga);
 
-  yield put({
-    type: ONBOARDING_CHECK_TOS
-  });
+  yield put({ type: ONBOARDING_CHECK_TOS });
 }
 
 export default function* root(): Iterator<Effect> {
   /**
-   * The Onboarding saga need to be started only after the Session saga is fully finished.
-   * The SESSION_INITIALIZE_SUCCESS action is dispatched only when the Session is established and valid.
+   * The Onboarding saga need to be started only after the Session saga is fully
+   * finished.
+   * The SESSION_INITIALIZE_SUCCESS action is dispatched only when the Session
+   * is established and valid.
    */
   yield takeLatest(SESSION_INITIALIZE_SUCCESS, onboardingSaga);
 }

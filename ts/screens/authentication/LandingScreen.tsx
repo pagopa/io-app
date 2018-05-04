@@ -23,6 +23,15 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * A screen where the user can choose to login with SPID or get more informations.
  */
 class LandingScreen extends React.Component<Props, never> {
+  private navigateToIdpSelection() {
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+  }
+
+  private navigateToSpidInformationRequest() {
+    this.props.navigation.navigate(
+      ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
+    );
+  }
   public render() {
     return (
       <Container>
@@ -53,16 +62,6 @@ class LandingScreen extends React.Component<Props, never> {
           </Button>
         </View>
       </Container>
-    );
-  }
-
-  private navigateToIdpSelection() {
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
-  }
-
-  private navigateToSpidInformationRequest() {
-    this.props.navigation.navigate(
-      ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
     );
   }
 }

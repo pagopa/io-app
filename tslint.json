@@ -2,8 +2,10 @@
   "defaultSeverity": "error",
   "extends": [
     "tslint:recommended",
+    "tslint-eslint-rules",
     "typestrict",
     "tslint-react",
+    "tslint-react-recommended",
     "tslint-sonarts",
     "tslint-immutable",
     "tslint-plugin-prettier",
@@ -22,6 +24,7 @@
     "no-duplicate-string": false,
     "no-small-switch": false,
     "no-useless-intersection": false,
+    "no-submodule-imports": false,
 
     // custom rules
     "prettier": true,

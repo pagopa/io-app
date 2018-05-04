@@ -75,6 +75,10 @@ class PinScreen extends React.Component<Props, State> {
     };
   }
 
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
   // Method called when the first CodeInput is filled
   public onPinFulfill = (code: string) => {
     this.setState({
@@ -253,10 +257,6 @@ class PinScreen extends React.Component<Props, State> {
         {this.renderFooter(pinState)}
       </Container>
     );
-  }
-
-  private goBack() {
-    this.props.navigation.goBack();
   }
 }
 
