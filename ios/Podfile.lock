@@ -73,29 +73,25 @@ DEPENDENCIES:
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Mixpanel
-
 EXTERNAL SOURCES:
   React:
-    :path: "../node_modules/react-native"
+    :path: ../node_modules/react-native
   react-native-config:
-    :path: "../node_modules/react-native-config"
+    :path: ../node_modules/react-native-config
   react-native-mixpanel:
-    :path: "../node_modules/react-native-mixpanel"
+    :path: ../node_modules/react-native-mixpanel
   RNDeviceInfo:
-    :path: "../node_modules/react-native-device-info"
+    :path: ../node_modules/react-native-device-info
   RNFS:
-    :path: "../node_modules/react-native-fs"
+    :path: ../node_modules/react-native-fs
   RNI18n:
-    :path: "../node_modules/react-native-i18n"
+    :path: ../node_modules/react-native-i18n
   RNKeychain:
-    :path: "../node_modules/react-native-keychain"
+    :path: ../node_modules/react-native-keychain
   RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
+    :path: ../node_modules/react-native-vector-icons
   yoga:
-    :path: "../node_modules/react-native/ReactCommon/yoga"
+    :path: ../node_modules/react-native/ReactCommon/yoga
 
 SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
@@ -111,4 +107,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: dd3a259a04739c52418242caaeacc7b45a63d2e4
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.4.0

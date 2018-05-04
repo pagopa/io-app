@@ -3,6 +3,7 @@
  */
 
 import { NativeModules, Platform, StyleSheet } from "react-native";
+import { blue } from 'color-name';
 
 const { StatusBarManager } = NativeModules;
 
@@ -13,10 +14,14 @@ const STATUSBAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBarManager.HEIGHT;
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
 
+const blackIshColor = "rgb(30,30,30)";
+const whiteIshColor = "rgb(250,250,250)";
+const blueIshColor = "rgb(66,86,104)";
+
 export const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
-    backgroundColor: "#fafafa"
+    backgroundColor: whiteIshColor
   },
   errorContainer: {
     padding: 5,
@@ -65,26 +70,27 @@ export const ProfileStyles = StyleSheet.create({
 });
 
 export const PortfolioStyles = StyleSheet.create({
-  pftext: {
+  pfText: {
     fontFamily: "Titillium Web",
-    color: "#fafafa"
+    color: whiteIshColor
   },
   pftitle: {
     fontFamily: "Titillium Web",
     fontWeight: "bold",
     fontSize: 30,
-    color: "#fafafa"
+    color: whiteIshColor
   },
-  pfsubtitle: {
+  pfSubtitleLeft: {
     fontFamily: "Titillium Web",
     fontWeight: "bold",
     fontSize: 18,
-    color: "#fafafa"
+    color: whiteIshColor
   },
+
   pfbold: {
     fontFamily: "Titillium Web",
     fontWeight: "bold",
-    color: "rgb(30,30,30)"
+    color: blackIshColor
   },
   pfwhy: {
     fontFamily: "Titillium Web",
@@ -92,10 +98,16 @@ export const PortfolioStyles = StyleSheet.create({
     color: "#3a3bfa"
   },
   pfback: {
-    backgroundColor: "#4a5761"
+    backgroundColor: blueIshColor
   },
   pfwhite: {
-    backgroundColor: "#fafafa"
+    backgroundColor: whiteIshColor,
+    flex: 1
+  },
+  pfImage: {
+    height: "100%",
+    width: "100%",
+    resizeMode: "contain"
   },
   pfcards: {
     height: 120,
@@ -121,12 +133,13 @@ export const PortfolioStyles = StyleSheet.create({
   boldStyle: {
     fontFamily: "Titillium Web",
     fontWeight: "bold",
-    color: "rgb(30,30,30)"
+    color: blackIshColor
   },
   container: {
     flex: 1,
     alignItems: "flex-start",
-    justifyContent: "flex-start"
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0)"
   },
   image: {
     height: 150,
@@ -136,7 +149,7 @@ export const PortfolioStyles = StyleSheet.create({
   payBoldStyle: {
     fontFamily: "Titillium Web",
     fontWeight: "bold",
-    color: "rgb(30,30,30)"
+    color: blackIshColor
   },
   payLightStyle: {
     fontFamily: "Titillium Web",
@@ -151,6 +164,16 @@ export const PortfolioStyles = StyleSheet.create({
     fontFamily: "Titillium Web",
     fontWeight: "bold",
     color: "rgb(0, 0, 255)"
+  },
+  addPaymentMethodButton: {
+    borderColor: whiteIshColor
+  },
+  addPaymentMethodText: {
+    fontWeight: "bold",
+    color: whiteIshColor
+  },
+  topContainer: {
+    backgroundColor: blueIshColor
   }
 });
 

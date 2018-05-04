@@ -1,10 +1,10 @@
-import { Content, View } from "native-base"
+import { Button, Content, View } from "native-base"
 import * as React from "react"
-import { Image, TouchableHighlight } from "react-native"
+import { Image, Text, TouchableHighlight } from "react-native"
 import { NavigationScreenProp, NavigationState } from "react-navigation"
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
 import { OperationsList } from "../../components/portfolio/OperationsComponent"
-import { PayLayout } from "../../components/portfolio/PayLayout"
+import { ImageType, PayLayout } from "../../components/portfolio/PayLayout"
 import { PortfolioStyles } from "../../components/styles"
 import I18n from "../../i18n"
 import ROUTES from "../../navigation/routes"
@@ -37,14 +37,18 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
     const TITLE = I18n.t("portfolio.portfolio")
     const latestOperations: ReadonlyArray<
       Operation
-    > = PortfolioAPI.getLatestOperations()
+    > = PortfolioAPI.getLatestOperations();
+    const subtitles = (PortfolioAPI.getCreditCards().length > 0) ?
+      { subtitleLeft: I18n.t("portfolio.paymentMethods"), 
+        subtitleRight: I18n.t("portfolio.newPaymentMethod.add") } :
+      { subtitle: I18n.t("portfolio.newPaymentMethod.addDescription") };
     return (
       <PayLayout
         navigation={this.props.navigation}
         title={TITLE}
-        subtitleLeft={I18n.t("portfolio.paymentMethods")}
-        subtitleRight={I18n.t("portfolio.add")}
+        {...subtitles}
         touchableContent={this.touchableContent()}
+        rightImage={ImageType.BANK_IMAGE}
       >
         <Content style={PortfolioStyles.pfwhite}>
           <OperationsList
@@ -60,18 +64,38 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
   }
 
   private touchableContent(): React.ReactElement<any> {
-    const { navigate } = this.props.navigation
-    return (
-      <View style={PortfolioStyles.container}>
-        <TouchableHighlight
-          onPress={(): boolean =>
-            navigate(ROUTES.PORTFOLIO_CREDITCARDS)
-          }
-        >
-          <Image style={PortfolioStyles.pfcards}
-                 source={require("../../../img/portfolio/creditcards.jpg")} />
-        </TouchableHighlight>
-      </View>
-    )
+    const { navigate } = this.props.navigation;
+    if (PortfolioAPI.getCreditCards().length > 0) {
+      return (
+        <View style={PortfolioStyles.container}>
+          <TouchableHighlight
+            onPress={(): boolean =>
+              navigate(ROUTES.PORTFOLIO_CREDITCARDS)
+            }
+          >
+            <Image style={PortfolioStyles.pfcards}
+                  source={require("../../../img/portfolio/creditcards.jpg")} />
+          </TouchableHighlight>
+        </View>
+      );
+    }
+    else {
+      return (
+        <View style={PortfolioStyles.container}>
+          <Button
+            bordered
+            block
+            style={PortfolioStyles.addPaymentMethodButton}
+            onPress = { (): boolean => 
+              navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)
+            }  
+          >
+            <Text style={PortfolioStyles.addPaymentMethodText}>
+              {I18n.t("portfolio.newPaymentMethod.addButton")}
+            </Text>
+          </Button>
+        </View>
+      );
+    }
   }
 }

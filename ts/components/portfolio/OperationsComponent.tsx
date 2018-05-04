@@ -1,12 +1,23 @@
-import { Body, Grid, Icon, Left, List, ListItem, Right, Row, Text } from 'native-base'
-import * as React from 'react'
-import { NavigationScreenProp, NavigationState } from 'react-navigation'
-import { PortfolioAPI } from '../../api/portfolio/portfolio-api'
-import I18n from '../../i18n'
-import ROUTES from '../../navigation/routes'
-import { Operation } from '../../types/portfolio/types'
-import { CreditCard } from '../../types/portfolio/CreditCard'
-import { PortfolioStyles } from '../styles'
+import {
+  Body,
+  Grid,
+  Icon,
+  Left,
+  List,
+  ListItem,
+  Right,
+  Row,
+  Text
+} from "native-base";
+import * as React from "react";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+
+import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+import { CreditCard } from "../../types/portfolio/CreditCard";
+import { Operation } from "../../types/portfolio/types";
+import { PortfolioStyles } from "../styles";
 
 type Props = {
   parent: string,

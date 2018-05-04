@@ -40,7 +40,6 @@ export class CreditCardsScreen extends React.Component<Props, never> {
       <PayLayout
         navigation={this.props.navigation}
         title={I18n.t("portfolio.creditcards")}
-        subtitleLeft={I18n.t("portfolio.paymentMethods")}
       >
         <Content style={PortfolioStyles.pfback}>
           <View style={{ minHeight: 400 }}>

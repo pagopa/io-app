@@ -1,16 +1,22 @@
-import * as React from "react"
-import I18n from "../../i18n"
-import ROUTES from "../../navigation/routes"
+import * as React from "react";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 
-import { Content, View } from "native-base"
-import { Image, TouchableHighlight } from "react-native"
-import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from "react-navigation"
-import { PortfolioAPI } from "../../api/portfolio/portfolio-api"
-import { OperationsList } from "../../components/portfolio/OperationsComponent"
-import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
-import { PortfolioStyles } from "../../components/styles"
-import { Operation } from "../../types/portfolio/types"
-import { CreditCard, UNKNOWN_CARD } from '../../types/portfolio/CreditCard'
+import { Content, View } from "native-base";
+import { Image, TouchableHighlight } from "react-native";
+import {
+  NavigationInjectedProps,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
+
+import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
+import { OperationsList } from "../../components/portfolio/OperationsComponent";
+import { PayLayout } from "../../components/portfolio/PayLayout";
+import { SimpleLayout } from "../../components/portfolio/SimpleLayout";
+import { PortfolioStyles } from "../../components/styles";
+import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
+import { Operation } from "../../types/portfolio/types";
 
 // Images
 const cardsImage = require("../../../img/portfolio/card-tab.png")
@@ -54,7 +60,11 @@ export class TransactionsScreen extends React.Component<Props, never> {
     const TITLE = I18n.t("portfolio.creditDebtCards")
 
     return (
-      <SimpleLayout title={TITLE} touchableContent={this.touchableContent()}>
+      <PayLayout
+        navigation={this.props.navigation}
+        title={TITLE}
+        touchableContent={this.touchableContent()}
+      >
         <Content style={PortfolioStyles.pfwhite}>
           <OperationsList
             parent={I18n.t("portfolio.transactions")}
@@ -64,7 +74,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
             navigation={this.props.navigation}
           />
         </Content>
-      </SimpleLayout>
+      </PayLayout>
     )
   }
 
@@ -72,15 +82,11 @@ export class TransactionsScreen extends React.Component<Props, never> {
     const { navigate } = this.props.navigation
     return (
       <View style={PortfolioStyles.container}>
-        <TouchableHighlight
-          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
-        >
-          <Image
-            style={PortfolioStyles.pftabcard}
-            source={cardsImage}
-            resizeMode="contain"
-          />
-        </TouchableHighlight>
+        <Image
+          style={PortfolioStyles.pftabcard}
+          source={cardsImage}
+          resizeMode="contain"
+        />
       </View>
     )
   }

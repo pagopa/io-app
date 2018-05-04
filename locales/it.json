@@ -122,7 +122,11 @@
     "portfolio": "Portafoglio",
     "creditcards": "Carte di Credito",
     "paymentMethods": "Metodi di Pagamento",
-    "add": "aggiungi",
+    "newPaymentMethod": {
+      "add": "aggiungi",
+      "addButton": "Aggiungi un metodo di pagamento",
+      "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
+    },
     "operationsDetails": "Dettaglio delle Operazioni",
     "total": "Totale",
     "payAmount": "Importo da pagare",

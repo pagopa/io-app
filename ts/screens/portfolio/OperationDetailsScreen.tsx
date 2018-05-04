@@ -1,15 +1,28 @@
 import * as React from "react"
 
-import { Button, Content, Left, Right, Text, View } from "native-base"
-import { Image, TouchableHighlight } from "react-native"
-import { Grid, Row } from "react-native-easy-grid"
-import { NavigationInjectedProps, NavigationScreenProp, NavigationState } from "react-navigation"
-import { SimpleLayout } from "../../components/portfolio/SimpleLayout"
-import { PortfolioStyles } from "../../components/styles"
-import I18n from "../../i18n"
-import ROUTES from "../../navigation/routes"
-import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types"
-import { CreditCard } from '../../types/portfolio/CreditCard'
+import {
+  Button,
+  Content,
+  Left,
+  Right,
+  Text,
+  View
+} from "native-base";
+import { Image, TouchableHighlight } from "react-native";
+import { Grid, Row } from "react-native-easy-grid";
+import {
+  NavigationInjectedProps,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
+
+import { PayLayout } from "../../components/portfolio/PayLayout";
+import { SimpleLayout } from "../../components/portfolio/SimpleLayout";
+import { PortfolioStyles } from "../../components/styles";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+import { CreditCard } from "../../types/portfolio/CreditCard";
+import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types";
 
 // Images
 const cardsImage = require("../../../img/portfolio/single-tab.png")
@@ -51,7 +64,11 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
     const TITLE: string = I18n.t("portfolio.operationsDetails")
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION
     return (
-      <SimpleLayout title={TITLE} touchableContent={this.touchableContent()}>
+      <PayLayout
+        navigation={this.props.navigation}
+        title={TITLE}
+        touchableContent={this.touchableContent()}
+      >
         <Content style={PortfolioStyles.pfwhite}>
           <Grid>
             <Row>
@@ -134,21 +151,19 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
           </Grid>
         </Content>
-      </SimpleLayout>
+      </PayLayout>
     )
   }
 
-  private touchableContent(): React.ReactNode {
+  private touchableContent(): React.ReactElement<any> {
     const { navigate } = this.props.navigation
     return (
       <View style={PortfolioStyles.container}>
-        <TouchableHighlight
-          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_OPERATION_DETAILS)}
-        >
-          <Image style={PortfolioStyles.pfsingle}
-                 source={cardsImage}
-                 resizeMode="contain" />
-        </TouchableHighlight>
+        <Image
+          style={PortfolioStyles.pfsingle}
+          source={cardsImage}
+          resizeMode="contain"
+        />
       </View>
     )
   }
