@@ -17,6 +17,7 @@ import itemTheme from './components/Item'
 import modalTheme from './components/Modal'
 import textTheme from './components/Text'
 import viewTheme from './components/View'
+import messageComponent from './components/MessageComponent'
 
 const theme = (): Theme => {
   const nbTheme = getTheme(variables)
@@ -47,7 +48,10 @@ const theme = (): Theme => {
     },
     'NativeBase.ViewNB': {
       ...viewTheme()
-    }
+    },
+    'NativeBase.MessageComponent': {
+      ...messageComponent()
+    },
   }
 
   // We need ad deep merge

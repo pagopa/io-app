@@ -15,6 +15,8 @@ export type NetworkState = {
   actionQueue: ReadonlyArray<Action>
 }
 
+
+
 export type GlobalState = {
   appState: AppState,
   network: NetworkState,

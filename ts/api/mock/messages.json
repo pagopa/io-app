@@ -1,0 +1,24 @@
+{
+  "messages": [
+    {
+      "id": "mess1",
+      "date": "22/04/2018",
+      "content": {
+        "subject": "soggetto del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto",
+        "markdown": "Testo del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto"
+      },
+      "sender_service_id": "Pinco Pallo"
+    },
+    {
+      "id": "mess2",
+      "date": "23/04/2018",
+      "content": {
+        "subject": "soggetto del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto",
+        "markdown": "Testo del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto"
+      },
+      "sender_service_id": "Well Test"
+    }
+  ],
+  "page_size": 2,
+  "next": "/page/2"
+}

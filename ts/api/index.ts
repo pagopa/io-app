@@ -3,7 +3,7 @@
  */
 
 import { apiUrlPrefix } from '../config'
-import messages from '../../messages.json'
+
 
 /**
  * Describes a SPID Identity Provider
@@ -149,8 +149,9 @@ export const postProfile = async (
   }
 }
 
-export type Message = {
+export type ApiMessage = {
   id: string,
+  date: string,
   content: {
     subject: string,
     markdown: string
@@ -160,7 +161,7 @@ export type Message = {
 
 // A type to store all the messages of the user
 export type ApiMessages = {
-  messages: ReadonlyArray<Message>,
+  messages: ReadonlyArray<ApiMessage>,
   page_size: number,
   next: string
 }
@@ -169,8 +170,8 @@ export type ApiMessages = {
 export const fetchMessages = async (
   token: string
 ): Promise<ApiFetchResult<ApiMessages>> => {
-  //#ToDO change the fetch URL with  ${apiUrlPrefix}/api/v1/message
-  const response = await fetch('http://localhost:8081/messages.json', {
+  // TODO: change the fetch URL with  ${apiUrlPrefix}/api/v1/message
+  const response = await fetch('http://localhost:8081/ts/api/mock/messages.json', {
     method: 'get',
     headers: {
       Authorization: `Bearer ${token}`,

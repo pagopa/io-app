@@ -38,6 +38,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Icon
   iconFamily: 'Entypo',
+  iconRightColor:'#0073E6' ,
 
   // Content
   contentPadding: 24,
@@ -68,6 +69,8 @@ const customVariables = Object.assign(materialVariables, {
   h3Color: '#17324D',
   h3FontWeight: '600',
 
+
+
   // Header
   headerPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
@@ -91,6 +94,12 @@ const customVariables = Object.assign(materialVariables, {
   textColor: '#5C6F82',
   textLinkColor: '#0063CF',
   textLinkWeight: '600',
+  textBoldWeight: '600',
+  textBoldLineHeight: 18,
+  dateTextFontSize: 14,
+
+  //Item
+  itemPaddingTopSpacer: 20,
 
   // Spacer
   spacerHeight: 16,

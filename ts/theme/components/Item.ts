@@ -6,7 +6,8 @@ import variables from '../variables'
 declare module 'native-base' {
   namespace NativeBase {
     interface Item {
-      active?: boolean
+      active?: boolean,
+      spacer?: boolean
     }
   }
 }
@@ -20,6 +21,9 @@ export default (): Theme => {
         // eslint-disable-next-line no-magic-numbers
         .darken(0.2)
         .hex()
+    },
+    '.spacer': {
+      paddingTop: variables.itemPaddingTopSpacer
     }
   }
 

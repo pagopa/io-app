@@ -2,7 +2,7 @@
  * Action types and action creator related to the Messages.
  */
 
-import { ApiMessages } from '../../api'
+import { NormalizedMessages } from '../reducers/messages'
 import {
   MESSAGES_LOAD_REQUEST,
   MESSAGES_LOAD_SUCCESS,
@@ -16,7 +16,7 @@ export type MessagesLoadRequest = {
 
 export type MessagesLoadSuccess = {
   type: typeof MESSAGES_LOAD_SUCCESS,
-  payload: ApiMessages
+  payload: NormalizedMessages
 }
 
 export type MessagesLoadFailure = {

@@ -11,11 +11,31 @@ import {
 } from '../actions/constants'
 
 import { Action } from '../../actions/types'
-import { ApiMessages } from '../../api'
 
-export type MessagesState = ApiMessages | null
+export type ObjectListOfNormalizedMessages = {
+  [id: string] : {
+        id: string,
+        date: string,
+        content: { subject: string, markdown: string},
+        sender_service_id: string
+      }
+  }
+// A type to store single message of the user
+export type ListMessages = {
+  byId:  ObjectListOfNormalizedMessages,
+  allIds: ReadonlyArray<string>
+}
+// A type to store all the messages of the user
+export type NormalizedMessages = {
+  messages?: ListMessages,
+  page_size?: number,
+  next?: string
+}
 
-export const INITIAL_STATE = null
+
+export type MessagesState = NormalizedMessages | null
+
+export const INITIAL_STATE = {}
 
 // To normalize
 const reducer = (
@@ -28,6 +48,13 @@ const reducer = (
     default:
       return state
   }
+}
+
+export function getAllMessagesById(state: MessagesState ) : ObjectListOfNormalizedMessages | MessagesState {
+  if (Object.keys(state).length !== 0 ) {
+  return state.messages.byId
+  }
+  else return state
 }
 
 export default reducer
