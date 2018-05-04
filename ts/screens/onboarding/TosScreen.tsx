@@ -26,6 +26,9 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * A screen to show the ToS to the user.
  */
 class TosScreen extends React.Component<Props, never> {
+  private goBack() {
+    this.props.navigation.goBack();
+  }
   public acceptTos = () => {
     this.props.dispatch(acceptTos());
   };
@@ -60,10 +63,6 @@ class TosScreen extends React.Component<Props, never> {
         </View>
       </Container>
     );
-  }
-
-  private goBack() {
-    this.props.navigation.goBack();
   }
 }
 export default connect()(TosScreen);

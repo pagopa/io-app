@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   gridItem: {
     padding: GRID_GUTTER,
     // Calculate the real width of each item
-    // eslint-disable-next-line no-magic-numbers
+
     width: (windowWidth - (2 * variables.contentPadding - 2 * GRID_GUTTER)) / 2
   },
   idpLogo: {

@@ -8,7 +8,7 @@ export default (): Theme => {
   return {
     ...makeFontStyleObject(Platform.select, variables.h3FontWeight),
     color: variables.h3Color,
-    // eslint-disable-next-line no-magic-numbers
+
     fontSize: variables.fontSizeBase * 1.25
   };
 };

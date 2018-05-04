@@ -32,9 +32,7 @@ export async function getUserProfile(
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     });
     return await response.json();
   } catch (error) {
@@ -59,7 +57,6 @@ export async function setUserProfile(
       body: JSON.stringify(newProfile)
     });
 
-    // eslint-disable-next-line no-magic-numbers
     if (response.status === 500) {
       return response.status;
     } else {

@@ -37,6 +37,18 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
   public state: State = {
     isTosModalVisible: false
   };
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
+  private showModal() {
+    this.setState({ isTosModalVisible: true });
+  }
+
+  private hideModal() {
+    this.setState({ isTosModalVisible: false });
+  }
+
   public render() {
     return (
       <Container>
@@ -99,18 +111,6 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
         </Modal>
       </Container>
     );
-  }
-
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
-  private showModal() {
-    this.setState({ isTosModalVisible: true });
-  }
-
-  private hideModal() {
-    this.setState({ isTosModalVisible: false });
   }
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
