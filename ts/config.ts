@@ -7,4 +7,5 @@ export const apiUrlPrefix = Config.API_URL_PREFIX;
 export const mixpanelToken = Config.MIXPANEL_TOKEN;
 export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId = Config.GCM_SENDER_ID;
-export const debugRemotePushNotification = Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
+export const debugRemotePushNotification =
+  Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";

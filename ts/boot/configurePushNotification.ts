@@ -8,7 +8,6 @@ import { debugRemotePushNotification, gcmSenderId } from "../config";
 
 function configurePushNotifications() {
   PushNotification.configure({
-
     // Called when a remote or local notification is opened or received
     onNotification: notification => {
       if (debugRemotePushNotification) {
