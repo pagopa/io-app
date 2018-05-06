@@ -29,7 +29,7 @@ const { store, persistor } = configureStoreAndPersistor();
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-export default class App extends React.Component<never, never> {
+export default class App extends React.Component<{}, never> {
   public render() {
     return (
       <StyleProvider style={theme()}>
