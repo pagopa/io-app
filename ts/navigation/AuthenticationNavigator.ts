@@ -1,10 +1,10 @@
-import { StackNavigator, NavigationContainer } from 'react-navigation'
+import { StackNavigator } from "react-navigation";
 
-import ROUTES from './routes'
-import LandingScreen from '../screens/authentication/LandingScreen'
-import IdpSelectionScreen from '../screens/authentication/IdpSelectionScreen'
-import IdpLoginScreen from '../screens/authentication/IdpLoginScreen'
-import SpidInformationRequestScreen from '../screens/authentication/SpidInformationRequestScreen'
+import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
+import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
+import LandingScreen from "../screens/authentication/LandingScreen";
+import SpidInformationRequestScreen from "../screens/authentication/SpidInformationRequestScreen";
+import ROUTES from "./routes";
 
 /**
  * The authentication related stack of screens of the application.
@@ -26,8 +26,8 @@ const navigator = StackNavigator(
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: 'none'
+    headerMode: "none"
   }
-)
+);
 
-export default navigator
+export default navigator;

@@ -1,58 +1,82 @@
 /**
  * This file imports all the variables defined inside the native-base material
  * theme than overwrites or add more variables. The combined variables are
- * exported to be used in our components theme files (check `./components` directory).
+ * exported to be used in our components theme files (check `./components`
+ * directory).
  */
 
-import { Platform } from 'react-native'
-import materialVariables from 'native-base/src/theme/variables/material'
+// tslint:disable:no-invalid-this
 
-import { ThemeSimpleValue } from './types'
-import { makeFontStyleObject } from './fonts'
+import materialVariables from "native-base/src/theme/variables/material";
+import { Platform } from "react-native";
 
-const customVariables = Object.assign(materialVariables, {
+import { FontWeight, makeFontStyleObject } from "./fonts";
+import { ThemeSimpleValue } from "./types";
+
+const customVariables = {
+  ...materialVariables,
   // Android
   btnUppercaseAndroidText: false,
 
   // Button
-  btnTextFontWeight: '700',
+  btnTextFontWeight: "700" as FontWeight,
   btnHeight: 48,
   btnFontSize: 16,
   btnSmallHeight: 39,
   btnSmallFontSize: 16,
   get btnLightTextColor(): ThemeSimpleValue {
-    return this.textColor
+    return this.textColor;
   },
-  btnLightBorderColor: '#E6E9F2',
+  btnLightBorderColor: "#E6E9F2",
 
   // Color
-  brandPrimary: '#0066CC',
-  brandPrimaryInverted: '#FFFFFF',
-  brandGray: '#F5F6F7',
-  brandLight: '#FCFDFF',
+  brandPrimary: "#0066CC",
+  brandPrimaryInverted: "#FFFFFF",
+  brandGray: "#F5F6F7",
+  brandLight: "#FCFDFF",
+  brandSuccess: "#007005",
+  brandDanger: "#CC3333",
+  brandLightGray: "#E6E9F2",
+  brandDarkGray: "#5C6F82",
 
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
+  get fontSize1(): ThemeSimpleValue {
+    return this.fontSizeBase * 0.75;
+  },
+  get fontSize2(): ThemeSimpleValue {
+    return this.fontSizeBase * 0.875;
+  },
+  get fontSize3(): ThemeSimpleValue {
+    return this.fontSizeBase * 1;
+  },
+  get fontSize4(): ThemeSimpleValue {
+    return this.fontSizeBase * 1.125;
+  },
+  get fontSize5(): ThemeSimpleValue {
+    return this.fontSizeBase * 1.5;
+  },
   lineHeight: 24,
 
   // Icon
   iconFamily: 'Entypo',
   iconRightColor:'#0073E6' ,
 
+
   // Content
   contentPadding: 24,
-  contentBackground: '#FFFFFF',
-  contentAlternativeBackground: '#F5F6F7',
+  contentBackground: "#FFFFFF",
+  contentAlternativeBackground: "#F5F6F7",
 
   // Footer
-  footerBackground: '#FFFFFF',
+  footerBackground: "#FFFFFF",
   footerElevation: 50,
   footerPaddingTop: 24,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
-  footerShadowColor: '#000000',
+  footerShadowColor: "#000000",
   footerShadowOffsetWidth: 0,
   footerShadowOffsetHeight: 50,
   footerShadowOpacity: 0.3,
@@ -62,12 +86,12 @@ const customVariables = Object.assign(materialVariables, {
   gridGutter: 10,
 
   // H1
-  h1Color: '#17324D',
-  h1FontWeight: '700',
+  h1Color: "#17324D",
+  h1FontWeight: "700" as FontWeight,
 
   // H3
-  h3Color: '#17324D',
-  h3FontWeight: '600',
+  h3Color: "#17324D",
+  h3FontWeight: "600" as FontWeight,
 
 
 
@@ -75,15 +99,15 @@ const customVariables = Object.assign(materialVariables, {
   headerPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
-  headerBodyFontWeight: '600',
-  toolbarDefaultBg: '#FFFFFF',
+  headerBodyFontWeight: "600" as FontWeight,
+  toolbarDefaultBg: "#FFFFFF",
   get toolbarTextColor(): ThemeSimpleValue {
-    return this.textColor
+    return this.textColor;
   },
   get toolbarBtnColor(): ThemeSimpleValue {
-    return this.textColor
+    return this.textColor;
   },
-  androidStatusBarColor: '#FFFFFF',
+  androidStatusBarColor: "#FFFFFF",
 
   // Modal
   modalMargin: 0,
@@ -101,12 +125,13 @@ const customVariables = Object.assign(materialVariables, {
   //Item
   itemPaddingTopSpacer: 20,
 
+
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
-})
+};
 
-export default customVariables
+export default customVariables;

@@ -1,34 +1,23 @@
-/**
- * Implements a Redux middleware that translates actions into Mixpanel events
- */
+import Mixpanel from "react-native-mixpanel";
+import { NavigationActions } from "react-navigation";
 
-import Mixpanel from 'react-native-mixpanel'
-import {
-  NavigationState,
-  NavigationLeafRoute,
-  NavigationActions
-} from 'react-navigation'
-import { has } from 'lodash'
-import { sha256 } from 'react-native-sha256'
-import { REHYDRATE } from 'redux-persist/lib/constants'
-
-import { MiddlewareAPI, Action, Dispatch } from '../actions/types'
-import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
+import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
+import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export function actionTracking(): (_: Dispatch) => (Action) => Action {
+export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
   return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
-      const result: Action = next(action)
+      const result: Action = next(action);
 
       switch (result.type) {
         case APP_STATE_CHANGE_ACTION: {
-          Mixpanel.trackWithProperties('APP_STATE_CHANGE', {
+          Mixpanel.trackWithProperties("APP_STATE_CHANGE", {
             APPLICATION_STATE_NAME: result.payload
-          })
-          break
+          });
+          break;
         }
 
         /*
@@ -75,33 +64,33 @@ export function actionTracking(): (_: Dispatch) => (Action) => Action {
         */
 
         default: {
-          break
+          break;
         }
       }
 
-      return result
-    }
-  }
+      return result;
+    };
+  };
 }
 
 // gets the current screen from navigation state
 // TODO: Need to be fixed
-export function getCurrentRouteName(navNode: any): string | null {
+export function getCurrentRouteName(navNode: any): string | undefined {
   if (!navNode) {
-    return null
+    return undefined;
   }
 
-  if (navNode.routeName && typeof navNode.routeName === 'string') {
+  if (navNode.routeName && typeof navNode.routeName === "string") {
     // navNode is a NavigationLeafRoute
-    return navNode.routeName
+    return navNode.routeName;
   }
 
   if (navNode.routes && navNode.index && navNode.routes[navNode.index]) {
-    const route = navNode.routes[navNode.index]
-    return getCurrentRouteName(route)
+    const route = navNode.routes[navNode.index];
+    return getCurrentRouteName(route);
   }
 
-  return null
+  return undefined;
 }
 
 /*
@@ -110,26 +99,26 @@ export function getCurrentRouteName(navNode: any): string | null {
 */
 export function screenTracking(
   store: MiddlewareAPI
-): (Dispatch) => (AnyAction) => Action {
-  return (next: Dispatch): ((Action) => Action) => {
+): (_: Dispatch) => (__: Action) => Action {
+  return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
       if (
         action.type !== NavigationActions.NAVIGATE &&
         action.type !== NavigationActions.BACK
       ) {
-        return next(action)
+        return next(action);
       }
 
-      const currentScreen = getCurrentRouteName(store.getState().navigation)
-      const result = next(action)
-      const nextScreen = getCurrentRouteName(store.getState().navigation)
+      const currentScreen = getCurrentRouteName(store.getState().navigation);
+      const result = next(action);
+      const nextScreen = getCurrentRouteName(store.getState().navigation);
 
       if (nextScreen !== currentScreen) {
-        Mixpanel.trackWithProperties('SCREEN_CHANGE', {
+        Mixpanel.trackWithProperties("SCREEN_CHANGE", {
           SCREEN_NAME: nextScreen
-        })
+        });
       }
-      return result
-    }
-  }
+      return result;
+    };
+  };
 }

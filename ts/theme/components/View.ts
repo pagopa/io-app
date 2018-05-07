@@ -1,41 +1,41 @@
-import { Theme } from '../types'
-import variables from '../variables'
+import { Theme } from "../types";
+import variables from "../variables";
 
-import * as ReactNative from 'react-native'
+import * as ReactNative from "react-native";
 
-declare module 'native-base' {
+declare module "native-base" {
   namespace NativeBase {
     interface View extends ReactNative.ViewProperties {
-      spacer?: boolean
-      large?: boolean
-      extralarge?: boolean
-      modal?: boolean
-      footer?: boolean
-      header?: boolean
+      spacer?: boolean;
+      large?: boolean;
+      extralarge?: boolean;
+      modal?: boolean;
+      footer?: boolean;
+      header?: boolean;
     }
   }
 }
 
 export default (): Theme => {
-  const theme = {
-    '.spacer': {
-      '.large': {
+  return {
+    ".spacer": {
+      ".large": {
         height: variables.spacerLargeHeight
       },
 
-      '.extralarge': {
+      ".extralarge": {
         height: variables.spacerExtralargeHeight
       },
 
       height: variables.spacerHeight
     },
 
-    '.modal': {
+    ".modal": {
       flex: 1,
       backgroundColor: variables.contentBackground
     },
 
-    '.footer': {
+    ".footer": {
       backgroundColor: variables.footerBackground,
       paddingBottom: variables.footerPaddingBottom,
       paddingLeft: variables.footerPaddingLeft,
@@ -52,7 +52,5 @@ export default (): Theme => {
       // Android shadow
       elevation: variables.footerElevation
     }
-  }
-
-  return theme
-}
+  };
+};

@@ -86,6 +86,17 @@
       "section1": "Terms and conditions of use of the service",
       "section2": "Rules on the processing of personal data",
       "continue": "Continue"
+    },
+    "pin": {
+      "headerTitle": "Activation",
+      "contentTitle": "Choose a PIN code",
+      "contentTitleConfirm": "Insert your PIN again",
+      "pinInfo": "This code will be requested each time you open the app and when you need to view sensitive data or make disposable transactions. It must be composed of 5 digits. Remember it carefully. You can change it at any time by entering with SPID.",
+      "moreLinkText": "Get more info",
+      "continue": "Continue",
+      "reset": "Change the code",
+      "confirmValid": "thanks, you can continue",
+      "confirmInvalid": "the two pins do not match"
     }
   },
   "personal_data_processing": {

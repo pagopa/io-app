@@ -1,33 +1,36 @@
-import * as React from 'react'
-import {connect} from 'react-redux'
-import {NavigationScreenProp, NavigationState} from 'react-navigation'
-import {Container, Content, Text, Body, H1, Item, View} from 'native-base'
-import {ReduxProps} from '../../actions/types'
-import AppHeader from '../../components/ui/AppHeader'
+import * as React from "react";
+import {connect} from "react-redux";
+import {NavigationScreenProp, NavigationState} from "react-navigation";
+import {Container, Content, Text, Body, H1, View} from "native-base";
+import {ReduxProps} from "../../actions/types";
+import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
-import {GlobalState} from "../../reducers/types"
-import {MessagesState} from "../../store/reducers/messages"
-import {getAllMessagesById} from "../../store/reducers/messages"
-import {ObjectListOfNormalizedMessages} from "../../store/reducers/messages"
-import MessageComponent from "../../components/MessageComponent"
+import {GlobalState} from "../../reducers/types";
+import {MessagesState} from "../../store/reducers/messages";
+import {getAllMessagesById} from "../../store/reducers/messages";
+import {ObjectListOfNormalizedMessages} from "../../store/reducers/messages";
+import MessageComponent from "../../components/MessageComponent";
+
 
 type ReduxMappedProps = {
-  messagesById: ObjectListOfNormalizedMessages | MessagesState
-}
+  messagesById: ObjectListOfNormalizedMessages | MessagesState ;
+};
+
 export type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>
-}
-type Props = ReduxMappedProps & ReduxProps & OwnProps
+  navigation: NavigationScreenProp<NavigationState>;
+};
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps ;
 
 /**
  * This screen show the messages to the authenticated user.
  */
 class MessagesScreen extends React.Component<Props, never> {
   constructor(props: Props) {
-    super(props)
+    super(props);
   }
 
-  renderMessageList(list) {
+  renderMessageList = (list) => {
     return Object.keys(list).map((key) => {
       console.log(list[key]);
         return (
@@ -35,8 +38,7 @@ class MessagesScreen extends React.Component<Props, never> {
         )
       }
     )
-
-  }
+  };
 
   componentDidMount() {
     this.props.dispatch({
@@ -45,10 +47,7 @@ class MessagesScreen extends React.Component<Props, never> {
   }
 
   render() {
-
     const {messagesById} = this.props;
-
-
     return (
       <Container>
         <AppHeader>
@@ -76,3 +75,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
 })
 
 export default connect(mapStateToProps)(MessagesScreen)
+

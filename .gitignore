@@ -1,6 +1,7 @@
 # OSX
 #
 .DS_Store
+*.log
 
 # Xcode
 #
@@ -69,3 +70,6 @@ buck-out/
 
 # Visual Studio Code settings
 .vscode
+
+# Bundler
+vendor

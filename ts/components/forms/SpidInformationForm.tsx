@@ -1,47 +1,35 @@
-import * as React from 'react'
+import { Form } from "native-base";
+import * as React from "react";
+import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import {
-  reduxForm,
-  Field,
-  FormProps,
-  FormErrors,
-  WrappedFieldProps,
-  BaseFieldsProps,
-  BaseFieldProps,
-  InjectedFormProps
-} from 'redux-form'
-import { Form } from 'native-base'
-import {
+  getTraslatedFormFieldPropertyValue,
   renderNativeBaseInput,
-  validators,
-  getTraslatedFormFieldPropertyValue
-} from './utils'
-import { Dispatch, ReduxProps } from '../../actions/types'
-import { connect } from 'react-redux'
-import IdpSelectionScreen from '../../screens/authentication/IdpSelectionScreen'
+  validators
+} from "./utils";
 
-export const FORM_NAME = 'spidInformation'
+export const FORM_NAME = "spidInformation";
 const getCurrentFormFieldProperty = getTraslatedFormFieldPropertyValue(
   FORM_NAME
-)
+);
 
 /**
  * A form to collect the user email address
  */
 class SpidInformationForm extends React.Component<InjectedFormProps, never> {
-  render() {
+  public render() {
     return (
       <Form>
         <Field
           name="email"
           component={renderNativeBaseInput}
-          placeholder={getCurrentFormFieldProperty('email')('placeholder')}
+          placeholder={getCurrentFormFieldProperty("email")("placeholder")}
           validate={[validators.email]}
-          showError
+          showError={true}
         />
       </Form>
-    )
+    );
   }
 }
 export default reduxForm({
   form: FORM_NAME
-})(SpidInformationForm)
+})(SpidInformationForm);

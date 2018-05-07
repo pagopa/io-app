@@ -4,29 +4,26 @@
  * Handles React Native's AppState changes.
  */
 
-import {
-  ApplicationStateAction,
-  ApplicationState
-} from '../actions/types'
-import { APP_STATE_CHANGE_ACTION } from '../store/actions/constants'
+import { Action, ApplicationState } from "../actions/types";
+import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
 
-export type AppState = {
-  appState: ApplicationState
-}
+export type AppState = Readonly<{
+  appState: ApplicationState;
+}>;
 
 export const initialAppState: AppState = {
-  appState: 'background'
-}
+  appState: "background"
+};
 
 export default function appState(
   state: AppState = initialAppState,
-  action: ApplicationStateAction
+  action: Action
 ): AppState {
   if (action.type === APP_STATE_CHANGE_ACTION) {
     return {
       ...state,
       appState: action.payload
-    }
+    };
   }
-  return state
+  return state;
 }

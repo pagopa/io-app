@@ -1,8 +1,8 @@
-import { StackNavigator, NavigationContainer } from 'react-navigation'
+import { StackNavigator } from "react-navigation";
 
-import ROUTES from './routes'
-import TosScreen from '../screens/onboarding/TosScreen'
-import PinScreen from '../screens/onboarding/PinScreen'
+import PinScreen from "../screens/onboarding/PinScreen";
+import TosScreen from "../screens/onboarding/TosScreen";
+import ROUTES from "./routes";
 
 /**
  * The onboarding related stack of screens of the application.
@@ -18,8 +18,8 @@ const navigator = StackNavigator(
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: 'none'
+    headerMode: "none"
   }
-)
+);
 
-export default navigator
+export default navigator;

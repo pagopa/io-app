@@ -1,14 +1,13 @@
-import { Platform } from 'react-native'
+import { makeFontStyleObject } from "../fonts";
+import { Theme } from "../types";
+import variables from "../variables";
 
-import { Theme } from '../types'
-import variables from '../variables'
-import { makeFontStyleObject } from '../fonts'
 
-import * as ReactNative from 'react-native'
+import { Platform, TextProperties } from "react-native";
 
-declare module 'native-base' {
+declare module "native-base" {
   namespace NativeBase {
-    interface Text extends ReactNative.TextProperties {
+    interface Text extends TextProperties {
       link?: boolean,
       item?: boolean,
       bold?: boolean,
@@ -18,8 +17,8 @@ declare module 'native-base' {
 }
 
 export default (): Theme => {
-  const theme = {
-    '.link': {
+  return {
+    ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor
     },
@@ -34,7 +33,5 @@ export default (): Theme => {
     },
 
     lineHeight: variables.lineHeight
-  }
-
-  return theme
-}
+  };
+};

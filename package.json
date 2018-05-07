@@ -14,22 +14,26 @@
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix"
   },
   "dependencies": {
-    "color": "^2.0.0",
+    "color": "^3.0.0",
     "email-validator": "^1.0.7",
+    "fp-ts": "^1.4.0",
     "lodash": "^4.17.4",
     "native-base": "^2.4.2",
-    "option": "^0.2.3",
+    "native-base-shoutem-theme": "^0.2.2",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.2",
     "react-native-config": "^0.11.2",
+    "react-native-confirmation-code-input": "git://github.com/teamdigitale/react-native-confirmation-code-input.git#550ad82",
     "react-native-device-info": "^0.13",
     "react-native-fs": "2.9.12",
-    "react-native-i18n": "^2.0.10",
+    "react-native-i18n": "^2.0.12",
+    "react-native-keychain": "^3.0.0-rc.3",
     "react-native-mixpanel": "^0.0.16",
-    "react-native-modal": "^5.4.0",
-    "react-native-offline": "^3.7.3",
+    "react-native-offline": "^3.7.4",
+    "react-native-modal": "^6.0.0",
+    "react-native-push-notification": "^3.0.2",
     "react-native-sha256": "^1.0.1",
-    "react-navigation": "^1.5.11",
+    "react-navigation": "^1.5.12",
     "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "5.0.7",
     "redux": "4.0.0",
@@ -52,8 +56,10 @@
     "@types/react-native-fs": "^2.8.1",
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-mixpanel": "^0.1.0",
-    "@types/react-navigation": "^1.5.7",
+    "@types/react-native-push-notification": "^3.0.2",
+    "@types/react-navigation": "^1.5.10",
     "@types/react-redux": "^5.0.18",
+    "@types/react-test-renderer": "^16.0.1",
     "@types/redux-form": "^7.2.4",
     "@types/redux-logger": "^3.0.6",
     "@types/redux-saga": "^0.10.5",
@@ -61,20 +67,23 @@
     "@types/validator": "^9.4.1",
     "babel-jest": "22.4.3",
     "babel-preset-react-native": "4.0.0",
-    "danger": "^3.5.1",
+    "danger": "^3.6.0",
     "danger-plugin-digitalcitizenship": "^0.2.0",
-    "jest": "22.4.2",
+    "jest": "22.4.3",
     "prettier": "1.12.1",
     "react-native-typescript-transformer": "^1.2.5",
     "react-test-renderer": "16.3.0-alpha.1",
     "ts-jest": "^22.4.4",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.12.0",
+    "tslint-eslint-rules": "^5.1.0",
     "tslint-immutable": "^4.5.4",
     "tslint-plugin-prettier": "^1.3.0",
     "tslint-react": "^3.5.1",
+    "tslint-react-recommended": "^1.0.15",
     "tslint-sonarts": "^1.6.0",
-    "typescript": "^2.8.3"
+    "typescript": "^2.8.3",
+    "typestrict": "^0.0.8"
   },
   "jest": {
     "preset": "react-native",
@@ -83,13 +92,17 @@
     ],
     "moduleFileExtensions": [
       "ts",
+      "tsx",
       "js"
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "**/__tests__/*.ts"
+      "**/__tests__/*.ts?(x)"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
     ],
     "collectCoverage": true
   },

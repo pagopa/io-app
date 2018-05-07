@@ -12,6 +12,7 @@ target 'ItaliaApp' do
     "RCTText",
     "RCTVibration",
     "RCTWebSocket",
+    "RCTPushNotification",
     "DevSupport"
   ]
 
@@ -27,6 +28,8 @@ target 'ItaliaApp' do
   pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
 
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
+  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
 end
 

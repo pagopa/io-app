@@ -3,6 +3,7 @@ defaults: &defaults
 
 defaults_js: &defaults_js
   <<: *defaults
+  parallelism: 2
   docker:
     - image: circleci/node:8
 
@@ -30,8 +31,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      # Run TSLint
-      # - run: yarn lint
+      # Run linter
+      - run: yarn lint
 
       # Build app
       - run: yarn tsc:noemit
@@ -131,22 +132,52 @@ jobs:
     macos:
       xcode: "9.0"
 
+    working_directory: /Users/distiller/italia-app
+
+    environment:
+      # Fastlane requires locale set to UTF-8
+      # see https://docs.fastlane.tools/getting-started/ios/setup/#set-up-environment-variables
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      # Set Fastlane output dir
+      FL_OUTPUT_DIR: output
+      # Make Ruby bundler a little faster
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+
     shell: /bin/bash --login -o pipefail
 
     steps:
-      - checkout
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /Users/distiller
 
-      # Download node packages
-      - run: yarn install
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - ruby-{{ checksum "Gemfile.lock" }}
+            - ruby-
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
 
-      # Install bundles
-      - run: bundle install
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: ruby-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
 
       # Fetch CocoaPods specs
       - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+
+      # Re-run postinstall scripts (setup of react-native libs)
+      - run: npm run postinstall
 
       # Move to the ios project directory and run the test_build lane
       - run: cd ios && bundle exec fastlane test_build
@@ -169,4 +200,7 @@ workflows:
             - build-android-bundle
 
       # Test iOS
-      - test-ios
+      - test-ios:
+          requires:
+            - test-js-node-8
+

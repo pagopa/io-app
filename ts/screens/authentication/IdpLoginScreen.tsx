@@ -1,51 +1,49 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import { NavigationScreenProp, NavigationState } from 'react-navigation'
-import { WebView } from 'react-native'
-import { Container, Left, Button, Icon, Text, Body } from 'native-base'
-import { ReduxProps } from '../../actions/types'
-import { GlobalState } from '../../reducers/types'
+import { Body, Button, Container, Icon, Left, Text } from "native-base";
+import * as React from "react";
+import { WebView } from "react-native";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+import { ReduxProps } from "../../actions/types";
+import { extractLoginResult } from "../../api";
+import AppHeader from "../../components/ui/AppHeader";
+import * as config from "../../config";
+import I18n from "../../i18n";
+import { GlobalState } from "../../reducers/types";
+import { loginFailure, loginSuccess } from "../../store/actions/session";
 import {
-  SessionState,
-  isUnauthenticatedWithoutIdpSessionState
-} from '../../store/reducers/session'
-import * as config from '../../config'
-import I18n from '../../i18n'
-import AppHeader from '../../components/ui/AppHeader'
-import { extractLoginResult } from '../../api'
-import { loginSuccess, loginFailure } from '../../store/actions/session'
+  isUnauthenticatedWithoutIdpSessionState,
+  SessionState
+} from "../../store/reducers/session";
 type ReduxMappedProps = {
-  session: SessionState
-}
+  session: SessionState;
+};
 type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>
-}
-type Props = ReduxMappedProps & ReduxProps & OwnProps
-const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`
+  navigation: NavigationScreenProp<NavigationState>;
+};
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
+const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`;
 /**
  * A screen that allow the user to login with an IDP.
  * The IDP page is opened in a WebView
  */
 class IdpLoginScreen extends React.Component<Props, never> {
-  render() {
-    const { session } = this.props
+  public render() {
+    const { session } = this.props;
     if (isUnauthenticatedWithoutIdpSessionState(session)) {
-      return null
+      return null;
     }
-    const loginUri = LOGIN_BASE_URL + session.idp.entityID
+    const loginUri = LOGIN_BASE_URL + session.idp.entityID;
+    const onPress = () => this.props.navigation.goBack();
     return (
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={onPress}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
           <Body>
-            <Text>{I18n.t('authentication.idp_login.headerTitle')}</Text>
+            <Text>{I18n.t("authentication.idp_login.headerTitle")}</Text>
           </Body>
         </AppHeader>
         <WebView
@@ -55,25 +53,25 @@ class IdpLoginScreen extends React.Component<Props, never> {
           onNavigationStateChange={this.onNavigationStateChange}
         />
       </Container>
-    )
+    );
   }
-  onNavigationStateChange = (navState: any) => {
-    const url = navState.url
+  public onNavigationStateChange = (navState: any) => {
+    const url = navState.url;
     // Extract the login result from the url.
     // If the url is not related to login this will be `null`
-    const loginResult = extractLoginResult(url)
+    const loginResult = extractLoginResult(url);
     if (loginResult) {
       if (loginResult.success) {
         // In case of successful login
-        this.props.dispatch(loginSuccess(loginResult.token))
+        this.props.dispatch(loginSuccess(loginResult.token));
       } else {
         // In case of login failure
-        this.props.dispatch(loginFailure())
+        this.props.dispatch(loginFailure());
       }
     }
-  }
+  };
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   session: state.session
-})
-export default connect(mapStateToProps)(IdpLoginScreen)
+});
+export default connect(mapStateToProps)(IdpLoginScreen);

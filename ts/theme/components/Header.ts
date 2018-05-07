@@ -1,18 +1,18 @@
-import { Platform } from 'react-native'
+import { Platform } from "react-native";
 
-import { Theme } from '../types'
-import variables from '../variables'
-import { makeFontStyleObject } from '../fonts'
+import { makeFontStyleObject } from "../fonts";
+import { Theme } from "../types";
+import variables from "../variables";
 
 export default (): Theme => {
-  const theme = {
-    'NativeBase.Left': {
+  return {
+    "NativeBase.Left": {
       flex: 0.2
     },
-    'NativeBase.Body': {
-      'NativeBase.Text': {
+    "NativeBase.Body": {
+      "NativeBase.Text": {
         ...makeFontStyleObject(Platform.select, variables.headerBodyFontWeight),
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         color: variables.toolbarTextColor,
         fontSize: variables.headerBodyFontSize
       }
@@ -21,11 +21,9 @@ export default (): Theme => {
     borderBottomWidth: variables.headerBorderBottomWidth,
     elevation: 0,
     paddingHorizontal: variables.headerPaddingHorizontal,
-    shadowColor: null,
-    shadowOffset: null,
-    shadowOpacity: null,
-    shadowRadius: null
-  }
-
-  return theme
-}
+    shadowColor: undefined,
+    shadowOffset: undefined,
+    shadowOpacity: undefined,
+    shadowRadius: undefined
+  };
+};

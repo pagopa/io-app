@@ -5,18 +5,25 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
-import get from 'lodash/get'
+import get from "lodash/get";
 
-import { GlobalState } from '../../reducers/types'
-import { Action } from '../../actions/types'
-import { FetchRequestActionsType } from '../actions/constants'
+import { Action } from "../../actions/types";
+import { GlobalState } from "../../reducers/types";
+import { FetchRequestActionsType } from "../actions/constants";
 
-export type LoadingState = { [key in FetchRequestActionsType]?: boolean }
+export type LoadingState = Readonly<
+  { [key in FetchRequestActionsType]: boolean }
+>;
 
-export const INITIAL_STATE: LoadingState = {}
+export const INITIAL_STATE: LoadingState = {
+  PIN_CREATE: false,
+  PROFILE_LOAD: false,
+  PROFILE_UPDATE: false
+};
 
 /**
- * Create a selector that return true only if all the actions passed as parameter are not in loading state.
+ * Create a selector that return true only if all the actions passed as
+ * parameter are not in loading state.
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
@@ -26,28 +33,28 @@ export const createLoadingSelector = (
   // Returns true only when all actions are not loading
   return actions.some((action: FetchRequestActionsType): boolean =>
     get(state, `loading.${action}`)
-  )
-}
+  );
+};
 
 // Listen for _REQUEST|_SUCCESS|_FAILURE actions and set/remove loading state.
 const reducer = (
   state: LoadingState = INITIAL_STATE,
   action: Action
 ): LoadingState => {
-  const { type } = action
-  const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type)
+  const { type } = action;
+  const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type);
 
   // Not a *_REQUEST / *_SUCCESS /  *_FAILURE actions, so we ignore them
   if (!matches) {
-    return state
+    return state;
   }
 
-  const [, requestName, requestState] = matches
+  const [, requestName, requestState] = matches;
   return {
     ...state,
     // Store whether a request is happening at the moment or not
-    [requestName]: requestState === 'REQUEST'
-  }
-}
+    [requestName]: requestState === "REQUEST"
+  };
+};
 
-export default reducer
+export default reducer;

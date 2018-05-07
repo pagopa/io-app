@@ -1,9 +1,9 @@
-import color from 'color'
+import color from "color";
 
-import { Theme } from '../types'
-import variables from '../variables'
+import { Theme } from "../types";
+import variables from "../variables";
 
-declare module 'native-base' {
+declare module "native-base" {
   namespace NativeBase {
     interface Item {
       active?: boolean,
@@ -13,19 +13,15 @@ declare module 'native-base' {
 }
 
 export default (): Theme => {
-  const theme = {
-    '.active': {
-      //eslint-disable-next-line no-magic-numbers
+  return {
+    ".active": {
       borderBottomWidth: variables.borderWidth * 4,
       borderColor: color(variables.inputBorderColor)
-        // eslint-disable-next-line no-magic-numbers
         .darken(0.2)
         .hex()
     },
     '.spacer': {
       paddingTop: variables.itemPaddingTopSpacer
     }
-  }
-
-  return theme
-}
+  };
+};

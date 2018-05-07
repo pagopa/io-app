@@ -1,8 +1,8 @@
-import { TabNavigator, NavigationContainer } from 'react-navigation'
+import { TabNavigator } from "react-navigation";
 
-import ROUTES from './routes'
-import MessagesScreen from '../screens/main/MessagesScreen'
-import ProfileScreen from '../screens/main/ProfileScreen'
+import MessagesScreen from "../screens/main/MessagesScreen";
+import ProfileScreen from "../screens/main/ProfileScreen";
+import ROUTES from "./routes";
 
 /**
  * A navigator for all the screens used when the user is authenticated.
@@ -18,8 +18,8 @@ const navigation = TabNavigator(
   },
   {
     initialRouteName: ROUTES.MAIN_MESSAGES,
-    tabBarPosition: 'bottom'
+    tabBarPosition: "bottom"
   }
-)
+);
 
-export default navigation
+export default navigation;

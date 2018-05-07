@@ -1,10 +1,10 @@
-import { SwitchNavigator, NavigationContainer } from 'react-navigation'
+import { SwitchNavigator } from "react-navigation";
 
-import ROUTES from './routes'
-import IngressScreen from '../screens/IngressScreen'
-import AuthenticationNavigator from './AuthenticationNavigator'
-import OnboardingNavigator from './OnboardingNavigator'
-import MainNavigator from './MainNavigator'
+import IngressScreen from "../screens/IngressScreen";
+import AuthenticationNavigator from "./AuthenticationNavigator";
+import MainNavigator from "./MainNavigator";
+import OnboardingNavigator from "./OnboardingNavigator";
+import ROUTES from "./routes";
 
 /**
  * The main stack of screens of the application.
@@ -28,6 +28,6 @@ const navigator = SwitchNavigator({
     // The navigator used for authenticated users
     screen: MainNavigator
   }
-})
+});
 
-export default navigator
+export default navigator;
