@@ -59,6 +59,7 @@
     "@types/react-native-push-notification": "^3.0.2",
     "@types/react-navigation": "^1.5.10",
     "@types/react-redux": "^5.0.18",
+    "@types/react-test-renderer": "^16.0.1",
     "@types/redux-form": "^7.2.4",
     "@types/redux-logger": "^3.0.6",
     "@types/redux-saga": "^0.10.5",
@@ -91,13 +92,17 @@
     ],
     "moduleFileExtensions": [
       "ts",
+      "tsx",
       "js"
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "**/__tests__/*.ts"
+      "**/__tests__/*.ts?(x)"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
     ],
     "collectCoverage": true
   },

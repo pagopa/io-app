@@ -30,7 +30,7 @@ class IdpLoginScreen extends React.Component<Props, never> {
   public render() {
     const { session } = this.props;
     if (isUnauthenticatedWithoutIdpSessionState(session)) {
-      return undefined;
+      return null;
     }
     const loginUri = LOGIN_BASE_URL + session.idp.entityID;
     const onPress = () => this.props.navigation.goBack();

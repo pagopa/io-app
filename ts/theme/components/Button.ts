@@ -2,11 +2,11 @@ import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
 
-import * as ReactNative from "react-native";
+import { Platform, TouchableOpacityProperties } from "react-native";
 
 declare module "native-base" {
   namespace NativeBase {
-    interface Button extends ReactNative.TouchableOpacityProperties, BsStyle {
+    interface Button extends TouchableOpacityProperties, BsStyle {
       white?: boolean;
     }
   }
@@ -45,10 +45,7 @@ export default (): Theme => {
     },
     ".white": { backgroundColor: "#FFFFFF" },
     "NativeBase.Text": {
-      ...makeFontStyleObject(
-        ReactNative.Platform.select,
-        variables.btnTextFontWeight
-      ),
+      ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize
     },
     borderRadius: variables.borderRadiusBase,

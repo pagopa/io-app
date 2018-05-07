@@ -12,13 +12,18 @@ import { GlobalState } from "../../reducers/types";
 import { FetchRequestActionsType } from "../actions/constants";
 
 export type LoadingState = Readonly<
-  { [key in FetchRequestActionsType]?: boolean }
+  { [key in FetchRequestActionsType]: boolean }
 >;
 
-export const INITIAL_STATE: LoadingState = {};
+export const INITIAL_STATE: LoadingState = {
+  PIN_CREATE: false,
+  PROFILE_LOAD: false,
+  PROFILE_UPDATE: false
+};
 
 /**
- * Create a selector that return true only if all the actions passed as parameter are not in loading state.
+ * Create a selector that return true only if all the actions passed as
+ * parameter are not in loading state.
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */

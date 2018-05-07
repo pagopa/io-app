@@ -64,11 +64,7 @@ const reducer = (
     action.type === LOGIN_SUCCESS &&
     isUnauthenticatedWithIdpSessionState(state)
   ) {
-    return {
-      isAuthenticated: true,
-      idp: state.idp,
-      token: action.payload
-    };
+    return { isAuthenticated: true, idp: state.idp, token: action.payload };
   }
 
   return state;
