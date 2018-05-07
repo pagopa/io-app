@@ -1,4 +1,4 @@
-import { ApplicationState, ApplicationStateAction } from "../../actions/types";
+import { ApplicationStateAction } from "../../actions/types";
 import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
 import appState, { initialAppState } from "../appState";
 

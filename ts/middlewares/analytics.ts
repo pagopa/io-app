@@ -1,16 +1,5 @@
-/**
- * Implements a Redux middleware that translates actions into Mixpanel events
- */
-
-import { has } from "lodash";
 import Mixpanel from "react-native-mixpanel";
-import { sha256 } from "react-native-sha256";
-import {
-  NavigationActions,
-  NavigationLeafRoute,
-  NavigationState
-} from "react-navigation";
-import { REHYDRATE } from "redux-persist/lib/constants";
+import { NavigationActions } from "react-navigation";
 
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
@@ -18,7 +7,7 @@ import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export function actionTracking(): (_: Dispatch) => (Action) => Action {
+export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
   return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
       const result: Action = next(action);
@@ -86,9 +75,9 @@ export function actionTracking(): (_: Dispatch) => (Action) => Action {
 
 // gets the current screen from navigation state
 // TODO: Need to be fixed
-export function getCurrentRouteName(navNode: any): string | null {
+export function getCurrentRouteName(navNode: any): string | undefined {
   if (!navNode) {
-    return null;
+    return undefined;
   }
 
   if (navNode.routeName && typeof navNode.routeName === "string") {
@@ -101,7 +90,7 @@ export function getCurrentRouteName(navNode: any): string | null {
     return getCurrentRouteName(route);
   }
 
-  return null;
+  return undefined;
 }
 
 /*
@@ -110,8 +99,8 @@ export function getCurrentRouteName(navNode: any): string | null {
 */
 export function screenTracking(
   store: MiddlewareAPI
-): (Dispatch) => (AnyAction) => Action {
-  return (next: Dispatch): ((Action) => Action) => {
+): (_: Dispatch) => (__: Action) => Action {
+  return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
       if (
         action.type !== NavigationActions.NAVIGATE &&

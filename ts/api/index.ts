@@ -1,5 +1,6 @@
 /**
- * This file collects all the functions/types required to interact with the Proxy API.
+ * This file collects all the functions/types required to interact with the
+ * Proxy API.
  */
 
 import { apiUrlPrefix } from "../config";
@@ -39,7 +40,8 @@ export type Versionable = {
 };
 
 /**
- * A type that makes all fields of type T optional, then adds `version` as the only
+ * A type that makes all fields of type T optional, then adds `version` as the
+ * only
  * required field. This type is used mostly to update an API entity.
  */
 export type WithOnlyVersionRequired<T> = Partial<T> & Versionable;
@@ -64,36 +66,29 @@ export type LoginResult = LoginSuccess | LoginFailure;
 const LOGIN_SUCCESS_PREFIX = "/profile.html?token=";
 const LOGIN_FAILURE_PREFIX = "/error.html";
 
-export const extractLoginResult = (url: string): LoginResult | null => {
+export const extractLoginResult = (url: string): LoginResult | undefined => {
   // Check for LOGIN_SUCCESS
-  let tokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX);
-  // eslint-disable-next-line no-magic-numbers
-  if (tokenPathPos !== -1) {
-    const token = url.substr(tokenPathPos + LOGIN_SUCCESS_PREFIX.length);
-    // eslint-disable-next-line no-magic-numbers
+  const successTokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX);
+
+  if (successTokenPathPos !== -1) {
+    const token = url.substr(successTokenPathPos + LOGIN_SUCCESS_PREFIX.length);
+
     if (token && token.length > 0) {
-      return {
-        success: true,
-        token
-      };
+      return { success: true, token };
     } else {
-      return {
-        success: false
-      };
+      return { success: false };
     }
   }
 
   // Check for LOGIN_FAILURE
-  tokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
-  // eslint-disable-next-line no-magic-numbers
-  if (tokenPathPos !== -1) {
-    return {
-      success: false
-    };
+  const failureTokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
+
+  if (failureTokenPathPos !== -1) {
+    return { success: false };
   }
 
   // Url is not LOGIN related
-  return null;
+  return undefined;
 };
 
 // Fetch the profile from the Proxy
@@ -109,15 +104,9 @@ export const fetchProfile = async (
   });
   if (response.ok) {
     const profile = await response.json();
-    return {
-      isError: false,
-      result: profile
-    };
+    return { isError: false, result: profile };
   } else {
-    return {
-      isError: true,
-      error: new Error("Error fetching profile")
-    };
+    return { isError: true, error: new Error("Error fetching profile") };
   }
 };
 
@@ -136,14 +125,8 @@ export const postProfile = async (
   });
   if (response.ok) {
     const profile = await response.json();
-    return {
-      isError: false,
-      result: profile
-    };
+    return { isError: false, result: profile };
   } else {
-    return {
-      isError: true,
-      error: new Error("Error posting profile")
-    };
+    return { isError: true, error: new Error("Error posting profile") };
   }
 };

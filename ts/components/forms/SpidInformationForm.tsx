@@ -1,18 +1,6 @@
 import { Form } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import {
-  BaseFieldProps,
-  BaseFieldsProps,
-  Field,
-  FormErrors,
-  FormProps,
-  InjectedFormProps,
-  reduxForm,
-  WrappedFieldProps
-} from "redux-form";
-import { Dispatch, ReduxProps } from "../../actions/types";
-import IdpSelectionScreen from "../../screens/authentication/IdpSelectionScreen";
+import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import {
   getTraslatedFormFieldPropertyValue,
   renderNativeBaseInput,
@@ -36,7 +24,7 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
           component={renderNativeBaseInput}
           placeholder={getCurrentFormFieldProperty("email")("placeholder")}
           validate={[validators.email]}
-          showError
+          showError={true}
         />
       </Form>
     );

@@ -4,7 +4,7 @@
  * README file included in this repository.
  */
 
-import { Platform, PlatformOSType, PlatformStatic } from "react-native";
+import { Platform, PlatformStatic } from "react-native";
 
 type PlatformSelectType = PlatformStatic["select"];
 
@@ -33,11 +33,13 @@ export type FontStyleObject = {
  */
 export const makeFontFamilyName = (
   osSelect: PlatformSelectType,
-  weight: FontWeight | null = "400",
-  isItalic: boolean | null = false
+  weight: FontWeight | undefined,
+  isItalic: boolean | undefined
 ): string =>
   osSelect({
-    android: `${font}-${fontWeights[weight]}${isItalic ? "Italic" : ""}`,
+    android: `${font}-${fontWeights[weight || "400"]}${
+      isItalic ? "Italic" : ""
+    }`,
     ios: font
   });
 
@@ -47,8 +49,8 @@ export const makeFontFamilyName = (
  */
 export const makeFontStyleObject = (
   osSelect: PlatformSelectType,
-  weight: FontWeight | null = "400",
-  isItalic: boolean | null = false
+  weight: FontWeight | undefined = undefined,
+  isItalic: boolean | undefined = false
 ): FontStyleObject =>
   osSelect({
     android: {

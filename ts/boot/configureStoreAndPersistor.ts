@@ -1,15 +1,14 @@
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import { applyMiddleware, compose, createStore } from "redux";
+import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
-import { Persistor, persistReducer, persistStore } from "redux-persist";
+import { persistCombineReducers, Persistor, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
 import thunk from "redux-thunk";
 import { analytics } from "../middlewares";
 
 import { NavigationState } from "react-navigation";
-import { AnyAction } from "redux";
-import { Store, StoreEnhancer } from "../actions/types";
+import { Action, Store, StoreEnhancer } from "../actions/types";
 import rootReducer from "../reducers";
 import { GlobalState } from "../reducers/types";
 import rootSaga from "../sagas";
@@ -26,10 +25,9 @@ const persistConfig = {
   blacklist: ["navigation", "loading", "error"]
 };
 
-const persistedReducer = persistReducer<GlobalState, AnyAction>(
-  persistConfig,
-  rootReducer
-);
+const persistedReducer: Reducer<GlobalState, Action> = persistCombineReducers<
+  GlobalState
+>(persistConfig, rootReducer);
 
 const logger = createLogger({
   predicate: (): boolean => isDebuggingInChrome,
@@ -43,7 +41,8 @@ const sagaMiddleware = createSagaMiddleware();
  * The new react-navigation if integrated with redux need a middleware
  * so that any events that mutate the navigation state properly trigger
  * the event listeners.
- * For details check @https://github.com/react-navigation/react-navigation/issues/3438.
+ * For details check
+ * @https://github.com/react-navigation/react-navigation/issues/3438.
  */
 const navigation = createReactNavigationReduxMiddleware(
   // This is just a key to identify the Set of the listeners.
@@ -53,10 +52,7 @@ const navigation = createReactNavigationReduxMiddleware(
   (state: GlobalState): NavigationState => state.navigation
 );
 
-function configureStoreAndPersistor(): {
-  store: Store;
-  persistor: Persistor;
-} {
+function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   /**
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.
@@ -74,13 +70,14 @@ function configureStoreAndPersistor(): {
     )
   );
 
-  const store: Store = createStore<GlobalState, AnyAction, {}, {}>(
+  const store: Store = createStore<GlobalState, Action, {}, {}>(
     persistedReducer,
     enhancer
   );
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
+    // tslint:disable-next-line:no-object-mutation
     (window as any).store = store;
   }
 

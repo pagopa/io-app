@@ -12,16 +12,12 @@ declare module "native-base" {
 }
 
 export default (): Theme => {
-  const theme = {
+  return {
     ".active": {
-      // eslint-disable-next-line no-magic-numbers
       borderBottomWidth: variables.borderWidth * 4,
       borderColor: color(variables.inputBorderColor)
-        // eslint-disable-next-line no-magic-numbers
         .darken(0.2)
         .hex()
     }
   };
-
-  return theme;
 };

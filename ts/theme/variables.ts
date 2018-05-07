@@ -1,21 +1,25 @@
 /**
  * This file imports all the variables defined inside the native-base material
  * theme than overwrites or add more variables. The combined variables are
- * exported to be used in our components theme files (check `./components` directory).
+ * exported to be used in our components theme files (check `./components`
+ * directory).
  */
+
+// tslint:disable:no-invalid-this
 
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 
-import { makeFontStyleObject } from "./fonts";
+import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
-const customVariables = Object.assign(materialVariables, {
+const customVariables = {
+  ...materialVariables,
   // Android
   btnUppercaseAndroidText: false,
 
   // Button
-  btnTextFontWeight: "700",
+  btnTextFontWeight: "700" as FontWeight,
   btnHeight: 48,
   btnFontSize: 16,
   btnSmallHeight: 39,
@@ -39,23 +43,18 @@ const customVariables = Object.assign(materialVariables, {
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
   get fontSize1(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 0.75;
   },
   get fontSize2(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 0.875;
   },
   get fontSize3(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 1;
   },
   get fontSize4(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 1.125;
   },
   get fontSize5(): ThemeSimpleValue {
-    // eslint-disable-next-line no-magic-numbers
     return this.fontSizeBase * 1.5;
   },
   lineHeight: 24,
@@ -86,17 +85,17 @@ const customVariables = Object.assign(materialVariables, {
 
   // H1
   h1Color: "#17324D",
-  h1FontWeight: "700",
+  h1FontWeight: "700" as FontWeight,
 
   // H3
   h3Color: "#17324D",
-  h3FontWeight: "600",
+  h3FontWeight: "600" as FontWeight,
 
   // Header
   headerPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
-  headerBodyFontWeight: "600",
+  headerBodyFontWeight: "600" as FontWeight,
   toolbarDefaultBg: "#FFFFFF",
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor;
@@ -114,7 +113,7 @@ const customVariables = Object.assign(materialVariables, {
   // Text
   textColor: "#5C6F82",
   textLinkColor: "#0063CF",
-  textLinkWeight: "600",
+  textLinkWeight: "600" as FontWeight,
 
   // Spacer
   spacerHeight: 16,
@@ -122,6 +121,6 @@ const customVariables = Object.assign(materialVariables, {
   spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
-});
+};
 
 export default customVariables;

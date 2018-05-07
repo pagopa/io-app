@@ -7,7 +7,6 @@ import { blue } from 'color-name';
 
 const { StatusBarManager } = NativeModules;
 
-// eslint-disable-next-line no-magic-numbers
 const STATUSBAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBarManager.HEIGHT;
 
 // Due to a bug, the following style must be wrapped
@@ -33,40 +32,19 @@ export const CommonStyles = StyleSheet.create({
 });
 
 export const ProfileStyles = StyleSheet.create({
-  profileHeader: {
-    backgroundColor: "#0066CC"
-  },
-  profileHeaderText: {
-    fontSize: 22,
-    color: "#fff"
-  },
-  profileRow: {
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  profileRowIcon: {
-    marginLeft: 10,
-    fontSize: 13,
-    color: "#b2d0ed"
-  },
-  profileRowText: {
-    fontSize: 15,
-    color: "#b2d0ed"
-  },
+  profileHeader: { backgroundColor: "#0066CC" },
+  profileHeaderText: { fontSize: 22, color: "#fff" },
+  profileRow: { flexDirection: "row", alignItems: "center" },
+  profileRowIcon: { marginLeft: 10, fontSize: 13, color: "#b2d0ed" },
+  profileRowText: { fontSize: 15, color: "#b2d0ed" },
   preferenceHeaderText: {
     fontWeight: "bold",
     color: "#555",
     fontSize: 15,
     marginTop: 10
   },
-  listItem: {
-    color: "#06C",
-    fontWeight: "bold",
-    marginLeft: 20
-  },
-  version: {
-    textAlign: "right"
-  }
+  listItem: { color: "#06C", fontWeight: "bold", marginLeft: 20 },
+  version: { textAlign: "right" }
 });
 
 export const PortfolioStyles = StyleSheet.create({

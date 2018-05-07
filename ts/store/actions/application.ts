@@ -5,9 +5,9 @@ import { APPLICATION_INITIALIZED } from "./constants";
  */
 
 // Actions
-export type ApplicationInitialized = {
+export type ApplicationInitialized = Readonly<{
   type: typeof APPLICATION_INITIALIZED;
-};
+}>;
 
 // Creators
 export const applicationInitialized = (): ApplicationInitialized => ({

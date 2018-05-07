@@ -7,10 +7,10 @@ import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { PIN_CREATE_SUCCESS, TOS_ACCEPT_SUCCESS } from "../actions/constants";
 
-export type OnboardingState = {
+export type OnboardingState = Readonly<{
   isTosAccepted: boolean;
   isPinCreated: boolean;
-};
+}>;
 
 export const INITIAL_STATE: OnboardingState = {
   isTosAccepted: false,

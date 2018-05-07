@@ -23,6 +23,15 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * A screen where the user can choose to login with SPID or get more informations.
  */
 class LandingScreen extends React.Component<Props, never> {
+  private navigateToIdpSelection() {
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+  }
+
+  private navigateToSpidInformationRequest() {
+    this.props.navigation.navigate(
+      ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
+    );
+  }
   public render() {
     return (
       <Container>
@@ -32,30 +41,22 @@ class LandingScreen extends React.Component<Props, never> {
           </Body>
         </AppHeader>
         <Content />
-        <View footer>
+        <View footer={true}>
           <Button
-            block
-            primary
-            iconLeft
-            onPress={(): boolean =>
-              this.props.navigation.navigate(
-                ROUTES.AUTHENTICATION_IDP_SELECTION
-              )
-            }
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={_ => this.navigateToIdpSelection()}
           >
             <Icon name="user" />
             <Text>{I18n.t("authentication.landing.login")}</Text>
           </Button>
-          <View spacer />
+          <View spacer={true} />
           <Button
-            block
-            small
-            transparent
-            onPress={(): boolean =>
-              this.props.navigation.navigate(
-                ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
-              )
-            }
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={_ => this.navigateToSpidInformationRequest()}
           >
             <Text>{I18n.t("authentication.landing.nospid")}</Text>
           </Button>

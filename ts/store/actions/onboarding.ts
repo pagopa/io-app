@@ -10,23 +10,23 @@ import {
 } from "./constants";
 
 // Actions
-export type TosAcceptRequest = {
+export type TosAcceptRequest = Readonly<{
   type: typeof TOS_ACCEPT_REQUEST;
-};
+}>;
 
-export type TosAcceptSuccess = {
+export type TosAcceptSuccess = Readonly<{
   type: typeof TOS_ACCEPT_SUCCESS;
-};
+}>;
 
-export type PinCreateRequest = {
+export type PinCreateRequest = Readonly<{
   type: typeof PIN_CREATE_REQUEST;
   // The selected PIN
   payload: string;
-};
+}>;
 
-export type PinCreateSuccess = {
+export type PinCreateSuccess = Readonly<{
   type: typeof PIN_CREATE_SUCCESS;
-};
+}>;
 
 export type OnboardingActions =
   | TosAcceptRequest

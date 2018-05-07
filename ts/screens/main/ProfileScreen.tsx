@@ -1,9 +1,6 @@
 import { Container } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
-import { ReduxProps } from "../../actions/types";
-import { GlobalState } from "../../reducers/types";
 
 export type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

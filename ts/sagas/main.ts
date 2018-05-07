@@ -8,7 +8,7 @@ function* mainSaga(): Iterator<Effect> {
   // Navigate to the MainNavigator
   const navigateToMainNavigatorAction = NavigationActions.navigate({
     routeName: ROUTES.MAIN,
-    key: null
+    key: undefined
   });
   yield put(navigateToMainNavigatorAction);
 }

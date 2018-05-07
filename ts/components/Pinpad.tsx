@@ -22,7 +22,7 @@ const Pinpad: React.SFC<Props> = props => {
   const { autofocus, compareWithCode, onFulfill } = props;
   return (
     <CodeInput
-      secureTextEntry
+      secureTextEntry={true}
       keyboardType="numeric"
       autoFocus={autofocus}
       className="border-b"

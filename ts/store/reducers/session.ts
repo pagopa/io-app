@@ -7,25 +7,25 @@ import { IdentityProvider } from "../../api";
 import { GlobalState } from "../../reducers/types";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
 
-export type UnauthenticatedWithoutIdpSessionState = {
+export type UnauthenticatedWithoutIdpSessionState = Readonly<{
   isAuthenticated: false;
-};
+}>;
 
-export type UnauthenticatedWithIdpSessionState = {
+export type UnauthenticatedWithIdpSessionState = Readonly<{
   isAuthenticated: false;
   idp: IdentityProvider;
-};
+}>;
 
 export type UnauthenticatedSessionState =
   | UnauthenticatedWithoutIdpSessionState
   | UnauthenticatedWithIdpSessionState;
 
-export type AuthenticatedSessionState = {
+export type AuthenticatedSessionState = Readonly<{
   isAuthenticated: true;
   idp: IdentityProvider;
   token: string;
   expiredAt?: number;
-};
+}>;
 
 export type SessionState =
   | UnauthenticatedSessionState
@@ -64,11 +64,7 @@ const reducer = (
     action.type === LOGIN_SUCCESS &&
     isUnauthenticatedWithIdpSessionState(state)
   ) {
-    return {
-      isAuthenticated: true,
-      idp: state.idp,
-      token: action.payload
-    };
+    return { isAuthenticated: true, idp: state.idp, token: action.payload };
   }
 
   return state;

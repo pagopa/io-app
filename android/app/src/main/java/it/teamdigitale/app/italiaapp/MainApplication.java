@@ -10,6 +10,7 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
+            new ReactNativePushNotificationPackage(),
             new KeychainPackage(),
             new RNI18nPackage(),
             new Sha256Package(),

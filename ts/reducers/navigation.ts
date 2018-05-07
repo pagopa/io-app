@@ -7,10 +7,7 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
 
-function nextState(
-  state: NavigationState,
-  action: Action
-): NavigationState | null {
+function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
     /**
      * The getStateForAction method only accepts NavigationActions so we need to
@@ -24,7 +21,7 @@ function nextState(
       return AppNavigator.router.getStateForAction(action, state);
 
     default:
-      return null;
+      return state;
   }
 }
 

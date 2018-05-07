@@ -5,7 +5,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 export default (): Theme => {
-  const theme = {
+  return {
     "NativeBase.Left": {
       flex: 0.2
     },
@@ -21,11 +21,9 @@ export default (): Theme => {
     borderBottomWidth: variables.headerBorderBottomWidth,
     elevation: 0,
     paddingHorizontal: variables.headerPaddingHorizontal,
-    shadowColor: null,
-    shadowOffset: null,
-    shadowOpacity: null,
-    shadowRadius: null
+    shadowColor: undefined,
+    shadowOffset: undefined,
+    shadowOpacity: undefined,
+    shadowRadius: undefined
   };
-
-  return theme;
 };

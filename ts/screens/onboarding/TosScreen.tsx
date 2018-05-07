@@ -26,6 +26,9 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * A screen to show the ToS to the user.
  */
 class TosScreen extends React.Component<Props, never> {
+  private goBack() {
+    this.props.navigation.goBack();
+  }
   public acceptTos = () => {
     this.props.dispatch(acceptTos());
   };
@@ -34,10 +37,7 @@ class TosScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent
-              onPress={(): boolean => this.props.navigation.goBack()}
-            >
+            <Button transparent={true} onPress={_ => this.goBack()}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -47,17 +47,17 @@ class TosScreen extends React.Component<Props, never> {
         </AppHeader>
         <Content>
           <H1>{I18n.t("onboarding.tos.contentTitle")}</H1>
-          <View spacer extralarge />
+          <View spacer={true} extralarge={true} />
           <H3>{I18n.t("onboarding.tos.section1")}</H3>
-          <View spacer />
+          <View spacer={true} />
           <Text>{I18n.t("lipsum.medium")}</Text>
-          <View spacer extralarge />
+          <View spacer={true} extralarge={true} />
           <H3>{I18n.t("onboarding.tos.section2")}</H3>
-          <View spacer />
+          <View spacer={true} />
           <Text>{I18n.t("lipsum.medium")}</Text>
         </Content>
-        <View footer>
-          <Button block primary onPress={this.acceptTos}>
+        <View footer={true}>
+          <Button block={true} primary={true} onPress={_ => this.acceptTos()}>
             <Text>{I18n.t("onboarding.tos.continue")}</Text>
           </Button>
         </View>

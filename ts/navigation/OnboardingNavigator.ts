@@ -1,4 +1,4 @@
-import { NavigationContainer, StackNavigator } from "react-navigation";
+import { StackNavigator } from "react-navigation";
 
 import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
