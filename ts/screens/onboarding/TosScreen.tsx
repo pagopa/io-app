@@ -37,7 +37,7 @@ class TosScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={this.goBack}>
+            <Button transparent={true} onPress={_ => this.goBack()}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -57,7 +57,7 @@ class TosScreen extends React.Component<Props, never> {
           <Text>{I18n.t("lipsum.medium")}</Text>
         </Content>
         <View footer={true}>
-          <Button block={true} primary={true} onPress={this.acceptTos}>
+          <Button block={true} primary={true} onPress={_ => this.acceptTos()}>
             <Text>{I18n.t("onboarding.tos.continue")}</Text>
           </Button>
         </View>
