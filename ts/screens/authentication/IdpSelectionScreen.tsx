@@ -125,6 +125,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
             <IdpsGrid
               idps={enabledIdps}
               onIdpSelected={idp => this.onIdpSelected(idp)}
+              testID="idps-grid"
             />
             <View spacer={true} />
             <Button

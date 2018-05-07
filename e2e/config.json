@@ -1,0 +1,7 @@
+{
+  "transform": {
+    "^.+\\.(ts|tsx)$": "../node_modules/ts-jest/preprocessor.js"
+  },
+  "forceExit": true,
+  "verbose": true
+}
