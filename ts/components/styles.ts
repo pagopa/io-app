@@ -3,7 +3,7 @@
  */
 
 import { NativeModules, Platform, StyleSheet } from "react-native";
-import { blue } from 'color-name';
+import { blue } from "color-name";
 
 const { StatusBarManager } = NativeModules;
 

@@ -1,14 +1,7 @@
-import * as React from "react"
+import * as React from "react";
 
-import {
-  Button,
-  Content,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
-import { Image, TouchableHighlight } from "react-native";
+import { Button, Content, Left, Right, Text, View } from "native-base";
+import { Image } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationInjectedProps,
@@ -24,7 +17,7 @@ import { CreditCard } from "../../types/portfolio/CreditCard";
 import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types";
 
 // Images
-const cardsImage = require("../../../img/portfolio/single-tab.png")
+const cardsImage = require("../../../img/portfolio/single-tab.png");
 
 interface ParamType {
   operation: Operation;
@@ -35,11 +28,11 @@ interface StateParams extends NavigationState {
 }
 
 type OwnProps = {
-  navigation: NavigationScreenProp<StateParams>,
-  operation: Operation,
-  parent: string,
-  card: CreditCard
-}
+  navigation: NavigationScreenProp<StateParams>;
+  operation: Operation;
+  parent: string;
+  card: CreditCard;
+};
 
 type Props = OwnProps & NavigationInjectedProps;
 
@@ -47,21 +40,20 @@ type Props = OwnProps & NavigationInjectedProps;
  * Details of transaction
  */
 export class OperationDetailsScreen extends React.Component<Props, never> {
-
   public static navigationOptions = {
     title: I18n.t("portfolio.operationsDetails"),
     headerBackTitle: null
-  }
+  };
 
   constructor(props: Props) {
-    super(props)
+    super(props);
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation
-    const { params } = this.props.navigation.state
-    const TITLE: string = I18n.t("portfolio.operationsDetails")
-    const operation: Operation = params ? params.operation : UNKNOWN_OPERATION
+    const { navigate } = this.props.navigation;
+    const { params } = this.props.navigation.state;
+    const TITLE: string = I18n.t("portfolio.operationsDetails");
+    const operation: Operation = params ? params.operation : UNKNOWN_OPERATION;
     return (
       <PayLayout
         navigation={this.props.navigation}
@@ -95,7 +87,9 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
                 <Text>
                   <Text note>{I18n.t("portfolio.transactionFee")}</Text>
                   <Text note>&nbsp;</Text>
-                  <Text note style={PortfolioStyles.pfwhy}>{I18n.t("portfolio.why")}</Text>
+                  <Text note style={PortfolioStyles.pfwhy}>
+                    {I18n.t("portfolio.why")}
+                  </Text>
                 </Text>
               </Left>
               <Right>
@@ -151,11 +145,11 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
           </Grid>
         </Content>
       </PayLayout>
-    )
+    );
   }
 
   private touchableContent(): React.ReactElement<any> {
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation;
     return (
       <View style={PortfolioStyles.container}>
         <Image
@@ -164,8 +158,6 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
           resizeMode="contain"
         />
       </View>
-    )
+    );
   }
-
-
 }

@@ -18,19 +18,19 @@ import { PortfolioStyles } from "../styles";
 
 export enum ImageType {
   BANK_IMAGE
-};
+}
 
 type Props = {
-  title: string,
-  subtitleLeft?: string,
-  subtitleRight?: string,
-  subtitle?: string,
-  touchableContent?: React.ReactElement<any>,
-  children?: React.ReactElement<any>,
-  rightImage?: ImageType,
-  navigation: NavigationScreenProp<NavigationState>
-  showPayNoticeButton?: boolean
-}
+  title: string;
+  subtitleLeft?: string;
+  subtitleRight?: string;
+  subtitle?: string;
+  touchableContent?: React.ReactElement<any>;
+  children?: React.ReactElement<any>;
+  rightImage?: ImageType;
+  navigation: NavigationScreenProp<NavigationState>;
+  showPayNoticeButton?: boolean;
+};
 
 // PayLayoutComponents
 enum PLC {
@@ -40,23 +40,21 @@ enum PLC {
   BOTTOM_PART, // bottom part of the main screen (contents e.g. transactions list)
   TITLE_ROW, // title in the top part
   SUBTITLE_ROW, // subtitle in top part
-  TOUCHABLE_ROW, // touchable content in top part
+  TOUCHABLE_ROW // touchable content in top part
 }
-
 
 /**
  * Pay layout component
  */
 export class PayLayout extends React.Component<Props, never> {
-
   public render(): React.ReactNode {
     return (
       <Container>
         <Grid>
           <Row size={this.rowSize(PLC.MAIN_SCREEN)}>
-            { this.twoPartsPortfolioLayout() }
+            {this.twoPartsPortfolioLayout()}
           </Row>
-          { this.payNoticeButton() }
+          {this.payNoticeButton()}
         </Grid>
       </Container>
     );
@@ -69,7 +67,7 @@ export class PayLayout extends React.Component<Props, never> {
           <Content>
             <Button block>
               <Icon type="FontAwesome" name="qrcode" />
-              <Text>{I18n.t('portfolio.payNotice')}</Text>
+              <Text>{I18n.t("portfolio.payNotice")}</Text>
             </Button>
           </Content>
         </Row>
@@ -81,12 +79,8 @@ export class PayLayout extends React.Component<Props, never> {
   private twoPartsPortfolioLayout(): React.ReactNode {
     return (
       <Grid>
-        <Row size = {this.rowSize(PLC.TOP_PART)}>
-          { this.topPortfolioLayout() }
-        </Row>
-        <Row size = {this.rowSize(PLC.BOTTOM_PART)}>
-          { this.props.children }
-        </Row>
+        <Row size={this.rowSize(PLC.TOP_PART)}>{this.topPortfolioLayout()}</Row>
+        <Row size={this.rowSize(PLC.BOTTOM_PART)}>{this.props.children}</Row>
       </Grid>
     );
   }
@@ -95,10 +89,10 @@ export class PayLayout extends React.Component<Props, never> {
     return (
       <Grid style={PortfolioStyles.topContainer}>
         <Col size={1} />
-        <Col size={14} >
-          { this.topPortfolioTitle() }
-          { this.topPortfolioSubtitle() }
-          { this.getTouchableContent() }
+        <Col size={14}>
+          {this.topPortfolioTitle()}
+          {this.topPortfolioSubtitle()}
+          {this.getTouchableContent()}
         </Col>
         <Col size={1} />
       </Grid>
@@ -110,12 +104,12 @@ export class PayLayout extends React.Component<Props, never> {
       <Row size={this.rowSize(PLC.TITLE_ROW)}>
         <Grid>
           <Col size={2}>
-            <Row size={1}/>
+            <Row size={1} />
             <Row size={1}>
               <H1 style={PortfolioStyles.pftitle}>{this.props.title}</H1>
             </Row>
           </Col>
-          { this.optionalRightImage() }
+          {this.optionalRightImage()}
         </Grid>
       </Row>
     );
@@ -146,19 +140,24 @@ export class PayLayout extends React.Component<Props, never> {
         return (
           <Row size={this.rowSize(PLC.SUBTITLE_ROW)}>
             <Grid>
-              <Row><Text style={PortfolioStyles.pfText}>{this.props.subtitle}</Text></Row>
+              <Row>
+                <Text style={PortfolioStyles.pfText}>
+                  {this.props.subtitle}
+                </Text>
+              </Row>
             </Grid>
           </Row>
         );
-      }
-      else if (this.props.subtitleLeft || this.props.subtitleRight) {
+      } else if (this.props.subtitleLeft || this.props.subtitleRight) {
         return (
           <Row size={this.rowSize(PLC.SUBTITLE_ROW)}>
             <Grid>
               <Col size={1}>
                 <Row>
                   <Left>
-                    <Text style={PortfolioStyles.pfSubtitleLeft}>{this.props.subtitleLeft}</Text>
+                    <Text style={PortfolioStyles.pfSubtitleLeft}>
+                      {this.props.subtitleLeft}
+                    </Text>
                   </Left>
                 </Row>
               </Col>
@@ -168,7 +167,9 @@ export class PayLayout extends React.Component<Props, never> {
                     <Text
                       style={PortfolioStyles.pfText}
                       onPress={() =>
-                        this.props.navigation.navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)
+                        this.props.navigation.navigate(
+                          ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD
+                        )
                       }
                     >
                       {this.props.subtitleRight}
@@ -195,7 +196,7 @@ export class PayLayout extends React.Component<Props, never> {
     return null;
   }
 
-  private rowSize(rowIdentifier: PLC) : number {
+  private rowSize(rowIdentifier: PLC): number {
     const payNoticeButton = 3;
     const mainScreen = 14;
     const sizes = {
@@ -205,7 +206,7 @@ export class PayLayout extends React.Component<Props, never> {
       [PLC.TITLE_ROW]: 3,
       [PLC.SUBTITLE_ROW]: 2,
       [PLC.TOUCHABLE_ROW]: 2
-    }
+    };
 
     const hasSubtitles = () =>
       this.props.subtitle !== undefined ||
@@ -222,14 +223,18 @@ export class PayLayout extends React.Component<Props, never> {
         break;
       }
       case PLC.TOP_PART: {
-        return sizes[PLC.TITLE_ROW] +
+        return (
+          sizes[PLC.TITLE_ROW] +
           (hasSubtitles() ? sizes[PLC.SUBTITLE_ROW] : 0) +
-          (hasTouchable() ? sizes[PLC.TOUCHABLE_ROW] : 0);
+          (hasTouchable() ? sizes[PLC.TOUCHABLE_ROW] : 0)
+        );
       }
       case PLC.BOTTOM_PART: {
-        return sizes[PLC.BOTTOM_PART] +
+        return (
+          sizes[PLC.BOTTOM_PART] +
           (hasSubtitles() ? 0 : sizes[PLC.SUBTITLE_ROW]) +
-          (hasTouchable() ? 0 : sizes[PLC.TOUCHABLE_ROW]);
+          (hasTouchable() ? 0 : sizes[PLC.TOUCHABLE_ROW])
+        );
       }
       case PLC.SUBTITLE_ROW: {
         if (!hasSubtitles()) {

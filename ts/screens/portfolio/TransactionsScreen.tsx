@@ -3,7 +3,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
 import { Content, View } from "native-base";
-import { Image, TouchableHighlight } from "react-native";
+import { Image } from "react-native";
 import {
   NavigationInjectedProps,
   NavigationScreenProp,
@@ -18,7 +18,7 @@ import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";
 
 // Images
-const cardsImage = require("../../../img/portfolio/card-tab.png")
+const cardsImage = require("../../../img/portfolio/card-tab.png");
 
 interface ParamType {
   card: CreditCard;
@@ -29,8 +29,8 @@ interface StateParams extends NavigationState {
 }
 
 interface OwnProps {
-  navigation: NavigationScreenProp<StateParams>,
-  card: CreditCard
+  navigation: NavigationScreenProp<StateParams>;
+  card: CreditCard;
 }
 
 type Props = OwnProps & NavigationInjectedProps;
@@ -39,24 +39,22 @@ type Props = OwnProps & NavigationInjectedProps;
  * Show credit card transactions
  */
 export class TransactionsScreen extends React.Component<Props, never> {
-
   public static navigationOptions = {
     title: I18n.t("portfolio.transactions"),
     headerBackTitle: null
-  }
+  };
 
   constructor(props: Props) {
-    super(props)
+    super(props);
   }
 
   public render(): React.ReactNode {
-
-    const { params } = this.props.navigation.state
-    const card: CreditCard = params ? params.card : UNKNOWN_CARD
-    const operations: Operation[] = PortfolioAPI.getOperations(
+    const { params } = this.props.navigation.state;
+    const card: CreditCard = params ? params.card : UNKNOWN_CARD;
+    const operations: ReadonlyArray<Operation> = PortfolioAPI.getOperations(
       card.id
-    )
-    const TITLE = I18n.t("portfolio.creditDebtCards")
+    );
+    const TITLE = I18n.t("portfolio.creditDebtCards");
 
     return (
       <PayLayout
@@ -74,11 +72,11 @@ export class TransactionsScreen extends React.Component<Props, never> {
           />
         </Content>
       </PayLayout>
-    )
+    );
   }
 
   private touchableContent(): React.ReactElement<any> {
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation;
     return (
       <View style={PortfolioStyles.container}>
         <Image
@@ -87,10 +85,6 @@ export class TransactionsScreen extends React.Component<Props, never> {
           resizeMode="contain"
         />
       </View>
-    )
+    );
   }
-
-
-
-
 }

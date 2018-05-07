@@ -20,36 +20,36 @@ import { Operation } from "../../types/portfolio/types";
 import { PortfolioStyles } from "../styles";
 
 type Props = {
-  parent: string,
-  title: string,
-  totalAmount: string,
-  navigation: NavigationScreenProp<NavigationState>,
-  operations: ReadonlyArray<Operation>
-}
+  parent: string;
+  title: string;
+  totalAmount: string;
+  navigation: NavigationScreenProp<NavigationState>;
+  operations: ReadonlyArray<Operation>;
+};
 
 type State = {
-  data: ReadonlyArray<Operation>
-}
+  data: ReadonlyArray<Operation>;
+};
 
 /**
  * Operations" List component
  */
 export class OperationsList extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props)
-    this.state = { data: Array.from(props.operations) }
+    super(props);
+    this.state = { data: Array.from(props.operations) };
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation
-    const ops = this.state.data
+    const { navigate } = this.props.navigation;
+    const ops = this.state.data;
 
     if (ops === null || ops === undefined) {
-      return <Text>{"Operations null."}</Text>
+      return <Text>{"Operations null."}</Text>;
     }
 
     if (!Array.isArray(ops) || !ops.length) {
-      return <Text>{I18n.t("portfolio.noTransactions")}</Text>
+      return <Text>{I18n.t("portfolio.noTransactions")}</Text>;
     }
 
     return (
@@ -99,13 +99,12 @@ export class OperationsList extends React.Component<Props, State> {
           />
         </Row>
       </Grid>
-    )
+    );
   }
 
   private renderDate(operation: Operation) {
-    const datetime: string = `${operation.date} - ${operation.time}`
-    if (operation.isNew)
-    {
+    const datetime: string = `${operation.date} - ${operation.time}`;
+    if (operation.isNew) {
       return (
         <Row>
           <Icon
@@ -116,19 +115,16 @@ export class OperationsList extends React.Component<Props, State> {
           />
           <Text note>{datetime}</Text>
         </Row>
-      )
+      );
     }
     return (
       <Row>
         <Text note>{datetime}</Text>
       </Row>
-    )
+    );
   }
 
   private getCard(operation: Operation): CreditCard {
-    return PortfolioAPI.getCreditCard(operation.cardId)
+    return PortfolioAPI.getCreditCard(operation.cardId);
   }
-
 }
-
-

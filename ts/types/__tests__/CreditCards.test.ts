@@ -3,7 +3,7 @@ import { CreditCard } from "../portfolio/CreditCard";
 import { CreditCardType } from "../portfolio/CreditCardType";
 
 describe("Credit Cards", () => {
-  const cards: CreditCard[] = PortfolioAPI.getCreditCards();
+  const cards: ReadonlyArray<CreditCard> = PortfolioAPI.getCreditCards();
 
   test("Amex Number should be recognized", () => {
     expect(cards[0].number).toBe("3759 876543 02001");
@@ -29,7 +29,7 @@ describe("Credit Cards", () => {
       cards[1].number
     );
 
-    let type = "?";
+    const type = "?";
 
     switch (creditCardType) {
       case CreditCardType.VISA:

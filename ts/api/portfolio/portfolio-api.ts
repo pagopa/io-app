@@ -11,7 +11,7 @@ import { Operation, PaymentMethod } from "../../types/portfolio/types";
 
 import { CreditCard } from "../../types/portfolio/CreditCard";
 
-const cards: CreditCard[] = [
+const cards: ReadonlyArray<CreditCard> = [
   {
     id: 1,
     lastUsage: todayAt + "07:34",
@@ -46,7 +46,7 @@ const cards: CreditCard[] = [
   }
 ];
 
-const operations: Operation[] = [
+const operations: ReadonlyArray<Operation> = [
   {
     cardId: 1,
     date: "17/04/2018",
@@ -169,7 +169,7 @@ export class PortfolioAPI {
     ];
   }
 
-  public static getCreditCards(): CreditCard[] {
+  public static getCreditCards(): ReadonlyArray<CreditCard> {
     return cards;
   }
 
@@ -177,13 +177,13 @@ export class PortfolioAPI {
     return cards.find((card): boolean => card.id === creditCardId);
   }
 
-  public static getOperations(cardId: number): Operation[] {
+  public static getOperations(cardId: number): ReadonlyArray<Operation> {
     return operations.filter(
       (operation): boolean => operation.cardId === cardId
     );
   }
 
-  public static getLatestOperations(): Operation[] {
+  public static getLatestOperations(): ReadonlyArray<Operation> {
     return operations.slice(1, 5); // eslint-disable-line no-magic-numbers
   }
 }
