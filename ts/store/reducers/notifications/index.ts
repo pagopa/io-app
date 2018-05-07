@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
 import { Action } from "../../../actions/types";
-import tokenReducer, { TokenState } from "./token";
+import installationReducer, { InstallationState } from "./installation";
 
 export type NotificationsState = {
-  token: TokenState;
+  installation: InstallationState;
 };
 
 const reducer = combineReducers<NotificationsState, Action>({
-  token: tokenReducer
+  installation: installationReducer
 });
 
 export default reducer;

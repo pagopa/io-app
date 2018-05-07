@@ -46,6 +46,7 @@
     "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0",
     "tslib": "^1.9.0",
+    "uuid": "^3.2.1",
     "validator": "^9.4.1"
   },
   "devDependencies": {
@@ -66,6 +67,7 @@
     "@types/redux-logger": "^3.0.6",
     "@types/redux-saga": "^0.10.5",
     "@types/stacktrace-js": "^0.0.32",
+    "@types/uuid": "^3.4.3",
     "@types/validator": "^9.4.1",
     "babel-jest": "22.4.3",
     "babel-preset-react-native": "4.0.0",
