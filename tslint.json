@@ -43,13 +43,12 @@
     "readonly-array": true,
     "no-let": true,
     "no-object-mutation": true,
-    "no-method-signature": true,
+    "no-method-signature": true
 
     // tslint-immutable: Functional style rules
     // "no-this": true,
     // "no-class": true,
     // "no-mixed-interface": false,
     // "no-import-side-effect": true
-    "": false
   }
 }
