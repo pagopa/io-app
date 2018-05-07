@@ -8,4 +8,12 @@ export type NotificationsTokenUpdate = Readonly<{
   payload: string;
 }>;
 
-export type NotificationsActions = NotificationsTokenUpdate
+// Creators
+export const updateNotificationsToken = (
+  token: string
+): NotificationsTokenUpdate => ({
+  type: NOTIFICATIONS_TOKEN_UPDATE,
+  payload: token
+});
+
+export type NotificationsActions = NotificationsTokenUpdate;

@@ -14,15 +14,19 @@ import RootContainer from "./RootContainer";
 
 // Inizialize Mixpanel and configure the global js error handler
 Mixpanel.sharedInstanceWithToken(config.mixpanelToken);
+
+// Configure the global error handler
 configureErrorHandler()
   // tslint:disable-next-line:no-empty
   .then(() => {})
   // tslint:disable-next-line:no-empty
   .catch(() => {});
 
-configurePushNotifications();
-
+// Create store and persistor
 const { store, persistor } = configureStoreAndPersistor();
+
+// Configure the application to receive push notification
+configurePushNotifications(store);
 
 /**
  * Main component of the application

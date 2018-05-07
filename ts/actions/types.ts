@@ -43,7 +43,7 @@ export type GetState = () => GlobalState;
 
 export type Dispatch = DispatchAPI<Action, GlobalState>;
 
-export type Store = ReduxStore<GlobalState>;
+export type Store = ReduxStore<GlobalState, Action>;
 
 export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;
 
