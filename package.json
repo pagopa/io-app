@@ -57,7 +57,7 @@
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-mixpanel": "^0.1.0",
     "@types/react-native-push-notification": "^3.0.2",
-    "@types/react-navigation": "^1.5.7",
+    "@types/react-navigation": "^1.5.10",
     "@types/react-redux": "^5.0.18",
     "@types/redux-form": "^7.2.4",
     "@types/redux-logger": "^3.0.6",
