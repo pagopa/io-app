@@ -61,8 +61,7 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  public pinComponent: CodeInput | undefined = undefined;
-  public pinConfirmComponent: CodeInput | undefined = undefined;
+  private pinConfirmComponent: CodeInput | null = null;
 
   constructor(props: Props) {
     super(props);
@@ -158,7 +157,12 @@ class PinScreen extends React.Component<Props, State> {
       /**
        * The component that allows the user to SELECT the PIN.
        */
-      return <Pinpad autofocus={false} onFulfill={this.onPinFulfill} />;
+      return (
+        <Pinpad
+          autofocus={false}
+          onFulfill={(code: string) => this.onPinFulfill(code)}
+        />
+      );
     } else {
       /**
        * The component that allows the user to CONFIRM the PIN.
@@ -168,7 +172,9 @@ class PinScreen extends React.Component<Props, State> {
           <Pinpad
             autofocus={true}
             compareWithCode={pinState.pin}
-            onFulfill={this.onPinConfirmFulfill}
+            onFulfill={(isValid, code) =>
+              this.onPinConfirmFulfill(isValid, code)
+            }
           />
 
           {pinState.state === "PinConfirmed" &&
@@ -229,7 +235,11 @@ class PinScreen extends React.Component<Props, State> {
           <React.Fragment>
             <View spacer={true} />
 
-            <Button block={true} bordered={true} onPress={this.onPinReset}>
+            <Button
+              block={true}
+              bordered={true}
+              onPress={_ => this.onPinReset()}
+            >
               <Text>{I18n.t("onboarding.pin.reset")}</Text>
             </Button>
           </React.Fragment>
