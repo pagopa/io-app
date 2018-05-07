@@ -101,6 +101,9 @@
     "testMatch": [
       "**/__tests__/*.ts?(x)"
     ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
+    ],
     "collectCoverage": true
   },
   "rnpm": {

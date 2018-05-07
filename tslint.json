@@ -30,7 +30,7 @@
     "prettier": true,
 
     // Disallows use of the null keyword literal.
-    "no-null-keyword": true,
+    // "no-null-keyword": true,
     // Disallows usages of any as a type declaration.
     // "no-any": true,
 
