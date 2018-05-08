@@ -7,14 +7,14 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import ROUTES from "../../navigation/routes";
 
-type Props = {
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   HEADER: string;
-};
+}>;
 
-type State = {
+type State = Readonly<{
   isPreferredCard: boolean;
-};
+}>;
 
 /**
  * Reasume data about the new card added

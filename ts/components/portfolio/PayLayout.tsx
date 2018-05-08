@@ -20,7 +20,7 @@ export enum ImageType {
   BANK_IMAGE
 }
 
-type Props = {
+type Props = Readonly<{
   title: string;
   subtitleLeft?: string;
   subtitleRight?: string;
@@ -30,7 +30,7 @@ type Props = {
   rightImage?: ImageType;
   navigation: NavigationScreenProp<NavigationState>;
   showPayNoticeButton?: boolean;
-};
+}>;
 
 // PayLayoutComponents
 enum PLC {

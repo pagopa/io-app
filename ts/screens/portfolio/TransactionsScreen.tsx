@@ -20,16 +20,16 @@ import { Operation } from "../../types/portfolio/types";
 const cardsImage = require("../../../img/portfolio/card-tab.png");
 
 interface ParamType {
-  card: CreditCard;
+  readonly card: CreditCard;
 }
 
 interface StateParams extends NavigationState {
-  params: ParamType;
+  readonly params: ParamType;
 }
 
 interface OwnProps {
-  navigation: NavigationScreenProp<StateParams>;
-  card: CreditCard;
+  readonly navigation: NavigationScreenProp<StateParams>;
+  readonly card: CreditCard;
 }
 
 type Props = OwnProps & NavigationInjectedProps;

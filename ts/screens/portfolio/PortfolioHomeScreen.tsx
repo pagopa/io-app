@@ -12,9 +12,9 @@ import { Operation } from "../../types/portfolio/types";
 
 type ScreenProps = {};
 
-type OwnProps = {
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-};
+}>;
 
 type Props = ScreenProps & OwnProps;
 

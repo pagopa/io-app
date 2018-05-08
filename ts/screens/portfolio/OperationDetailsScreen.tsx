@@ -19,19 +19,19 @@ import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types";
 const cardsImage = require("../../../img/portfolio/single-tab.png");
 
 interface ParamType {
-  operation: Operation;
+  readonly operation: Operation;
 }
 
 interface StateParams extends NavigationState {
-  params: ParamType;
+  readonly params: ParamType;
 }
 
-type OwnProps = {
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<StateParams>;
   operation: Operation;
   parent: string;
   card: CreditCard;
-};
+}>;
 
 type Props = OwnProps & NavigationInjectedProps;
 

@@ -19,20 +19,20 @@ import { CreditCard } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";
 import { PortfolioStyles } from "../styles";
 
-type Props = {
+type Props = Readonly<{
   parent: string;
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;
   operations: ReadonlyArray<Operation>;
-};
+}>;
 
-type State = {
+type State = Readonly<{
   data: ReadonlyArray<Operation>;
-};
+}>;
 
 /**
- * Operations" List component
+ * Operations' List component
  */
 export class OperationsList extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -70,11 +70,7 @@ export class OperationsList extends React.Component<Props, State> {
     const { navigate } = this.props.navigation;
     const ops = this.state.data;
 
-    if (ops === null || ops === undefined) {
-      return <Text>{"Operations null."}</Text>;
-    }
-
-    if (!Array.isArray(ops) || !ops.length) {
+    if (ops.length === 0) {
       return <Text>{I18n.t("portfolio.noTransactions")}</Text>;
     }
 
@@ -91,7 +87,7 @@ export class OperationsList extends React.Component<Props, State> {
         <Row>
           <List
             removeClippedSubviews={false}
-            dataArray={ops}
+            dataArray={ops as any[]}
             renderRow={(item): React.ReactElement<any> => (
               <ListItem
                 onPress={(): boolean =>

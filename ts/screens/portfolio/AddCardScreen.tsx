@@ -15,16 +15,16 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
-type Props = {
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-};
+}>;
 
-type State = {
+type State = Readonly<{
   cardNumber: string;
   expireDate: string;
   secureCode: string;
   cardHolder: string;
-};
+}>;
 
 export class AddCardScreen extends React.Component<Props, State> {
   public static navigationOptions = {

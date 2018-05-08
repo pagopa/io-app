@@ -8,8 +8,8 @@ import ProfileScreen from "../screens/main/ProfileScreen";
 import PortfolioNavigator from "./PortfolioNavigator";
 
 interface IRouteIcon {
-  routeName: string;
-  routeIcon: string;
+  readonly routeName: string;
+  readonly routeIcon: string;
 }
 
 const ROUTE_ICON: ReadonlyArray<IRouteIcon> = [

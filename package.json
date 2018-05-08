@@ -12,8 +12,8 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "runandroid": "react-native run-android",
-    "runios": "react-native run-ios"
+    "run:android": "react-native run-android",
+    "run:ios": "react-native run-ios"
   },
   "dependencies": {
     "color": "^3.0.0",

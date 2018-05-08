@@ -12,10 +12,10 @@ import { CreditCard } from "../../types/portfolio/CreditCard";
 import { CreditCardType } from "../../types/portfolio/CreditCardType";
 import { CreditCardStyle } from "../styles";
 
-type Props = {
+type Props = Readonly<{
   item: CreditCard;
   navigation: NavigationScreenProp<NavigationState>;
-};
+}>;
 
 // Images
 const imgMastercard = require("../../../img/portfolio/issuers/mastercard.png");

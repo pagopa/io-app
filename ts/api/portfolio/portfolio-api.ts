@@ -1,4 +1,9 @@
+/* Required to build user-displayable contents (e.g. "last used ...") */
 import I18n from "../../i18n";
+
+import { Operation } from "../../types/portfolio/types";
+
+import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
 
 const lastUsage = I18n.t("portfolio.lastUsage");
 const yesterday = I18n.t("portfolio.yesterday");
@@ -6,10 +11,6 @@ const today = I18n.t("portfolio.today");
 const noNew = I18n.t("portfolio.noNewTransactions");
 const todayAt = lastUsage + today;
 const yesterdayAt = lastUsage + yesterday;
-
-import { Operation, PaymentMethod } from "../../types/portfolio/types";
-
-import { CreditCard } from "../../types/portfolio/CreditCard";
 
 const cards: ReadonlyArray<CreditCard> = [
   {
@@ -152,29 +153,18 @@ const operations: ReadonlyArray<Operation> = [
  * Mocked Portfolio Data
  */
 export class PortfolioAPI {
-  public static getPaymentMethods(): ReadonlyArray<PaymentMethod> {
-    return [
-      {
-        id: 0,
-        type: "Credit Card"
-      },
-      {
-        id: 1,
-        type: "Bank Account"
-      },
-      {
-        id: 2,
-        type: "Other"
-      }
-    ];
-  }
+  public static readonly MAX_OPERATIONS = 5;
 
   public static getCreditCards(): ReadonlyArray<CreditCard> {
     return cards;
   }
 
   public static getCreditCard(creditCardId: number): CreditCard {
-    return cards.find((card): boolean => card.id === creditCardId);
+    const card = cards.find((c): boolean => c.id === creditCardId);
+    if (card === undefined) {
+      return UNKNOWN_CARD;
+    }
+    return card;
   }
 
   public static getOperations(cardId: number): ReadonlyArray<Operation> {
@@ -183,7 +173,7 @@ export class PortfolioAPI {
     );
   }
 
-  public static getLatestOperations(): ReadonlyArray<Operation> {
-    return operations.slice(1, 5); // eslint-disable-line no-magic-numbers
+  public static getLatestOperations(maxOps: number = PortfolioAPI.MAX_OPERATIONS): ReadonlyArray<Operation> {
+    return operations.slice(0, maxOps); // eslint-disable-line no-magic-numbers
   }
 }

@@ -27,13 +27,13 @@ const bankLogo = require("../../../img/portfolio/add-method/bank.png");
 const creditCardLogo = require("../../../img/portfolio/add-method/creditcard.png");
 const mobileLogo = require("../../../img/portfolio/add-method/mobile.png");
 
-type Props = {
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-};
+}>;
 
-type State = {
+type State = Readonly<{
   isTosModalVisible: boolean;
-};
+}>;
 
 const paymentMethods: ReadonlyArray<any> = [
   {

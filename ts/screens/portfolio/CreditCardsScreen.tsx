@@ -10,9 +10,9 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from "../../components/portfolio/CreditCardComponent";
 import { CreditCard } from "../../types/portfolio/CreditCard";
 
-type Props = {
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-};
+}>;
 
 const cards: ReadonlyArray<CreditCard> = PortfolioAPI.getCreditCards();
 
