@@ -15,6 +15,8 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
+import { CreditCardIcons, CreditCardType } from "../../types/portfolio/CreditCardType";
+
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -43,35 +45,14 @@ export class AddCardScreen extends React.Component<Props, State> {
   }
 
   public render(): React.ReactNode {
-    const cardItems: ReadonlyArray<any> = [
-      {
-        name: "amexIcon",
-        source: require("../../../img/portfolio/cards-icons/amex.png")
-      },
-      {
-        name: "dinersIcon",
-        source: require("../../../img/portfolio/cards-icons/diners.png")
-      },
-      {
-        name: "maestroIcon",
-        source: require("../../../img/portfolio/cards-icons/maestro.png")
-      },
-      {
-        name: "mastercardIcon",
-        source: require("../../../img/portfolio/cards-icons/mastercard.png")
-      },
-      {
-        name: "postepayIcon",
-        source: require("../../../img/portfolio/cards-icons/postepay.png")
-      },
-      {
-        name: "visaIcon",
-        source: require("../../../img/portfolio/cards-icons/visa.png")
-      },
-      {
-        name: "visaEIcon",
-        source: require("../../../img/portfolio/cards-icons/visa-electron.png")
-      }
+    const displayedCards: ReadonlyArray<CreditCardType> = [
+      CreditCardType.MASTERCARD,
+      CreditCardType.MAESTRO,
+      CreditCardType.VISA,
+      CreditCardType.VISAELECTRON,
+      CreditCardType.AMEX,
+      CreditCardType.POSTEPAY,
+      CreditCardType.DINERS
     ];
 
     return (
@@ -222,7 +203,7 @@ export class AddCardScreen extends React.Component<Props, State> {
         >
           <FlatList
             style={{ alignSelf: "center" }}
-            data={cardItems}
+            data={displayedCards}
             numColumns={4}
             renderItem={({ item }) => (
               <Image
@@ -232,10 +213,10 @@ export class AddCardScreen extends React.Component<Props, State> {
                   resizeMode: "contain",
                   margin: 5
                 }}
-                source={item.source}
+                source={CreditCardIcons[item]}
               />
             )}
-            keyExtractor={item => item.name}
+            keyExtractor={item => item}
           />
         </Item>
 

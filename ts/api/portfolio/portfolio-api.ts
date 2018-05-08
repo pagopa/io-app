@@ -173,7 +173,9 @@ export class PortfolioAPI {
     );
   }
 
-  public static getLatestOperations(maxOps: number = PortfolioAPI.MAX_OPERATIONS): ReadonlyArray<Operation> {
+  public static getLatestOperations(
+    maxOps: number = PortfolioAPI.MAX_OPERATIONS
+  ): ReadonlyArray<Operation> {
     return operations.slice(0, maxOps); // eslint-disable-line no-magic-numbers
   }
 }

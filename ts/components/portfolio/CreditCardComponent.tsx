@@ -9,7 +9,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
 import { CreditCard } from "../../types/portfolio/CreditCard";
-import { CreditCardType } from "../../types/portfolio/CreditCardType";
+import { CreditCardIcons } from "../../types/portfolio/CreditCardType";
 import { CreditCardStyle } from "../styles";
 
 type Props = Readonly<{
@@ -17,40 +17,10 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-// Images
-const imgMastercard = require("../../../img/portfolio/issuers/mastercard.png");
-const imgVisa = require("../../../img/portfolio/cards-icons/visa.png");
-const imgAmex = require("../../../img/portfolio/cards-icons/amex.png");
-const imgDiners = require("../../../img/portfolio/cards-icons/amex.png");
-const imgMaestro = require("../../../img/portfolio/cards-icons/amex.png");
-const imgElectron = require("../../../img/portfolio/cards-icons/visa-electron.png");
-
 /**
  * Credit card component
  */
 export default class CreditCardComponent extends React.Component<Props> {
-  private getCreditCardImage: any = (creditCardNumber: string) => {
-    const creditCardType: CreditCardType = CreditCard.getCardType(
-      creditCardNumber
-    );
-
-    switch (creditCardType) {
-      case CreditCardType.VISA:
-        return imgVisa;
-      case CreditCardType.MASTERCARD:
-        return imgMastercard;
-      case CreditCardType.DINERS:
-        return imgDiners;
-      case CreditCardType.AMEX:
-        return imgAmex;
-      case CreditCardType.MAESTRO:
-        return imgMaestro;
-      case CreditCardType.VISAELECTRON:
-        return imgElectron;
-      default:
-        return imgMastercard;
-    }
-  };
 
   public render(): React.ReactNode {
     const { item } = this.props;
@@ -111,7 +81,7 @@ export default class CreditCardComponent extends React.Component<Props> {
               <Col size={2}>
                 <Image
                   style={CreditCardStyle.issuerLogo}
-                  source={this.getCreditCardImage(item.number)}
+                  source={CreditCardIcons[CreditCard.getCardType(item.number)]}
                 />
               </Col>
               <Col size={1}>
