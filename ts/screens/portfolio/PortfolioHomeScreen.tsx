@@ -31,39 +31,6 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  public render(): React.ReactNode {
-    const TITLE = I18n.t("portfolio.portfolio");
-    const latestOperations: ReadonlyArray<
-      Operation
-    > = PortfolioAPI.getLatestOperations();
-    const subtitles =
-      PortfolioAPI.getCreditCards().length > 0
-        ? {
-            subtitleLeft: I18n.t("portfolio.paymentMethods"),
-            subtitleRight: I18n.t("portfolio.newPaymentMethod.add")
-          }
-        : { subtitle: I18n.t("portfolio.newPaymentMethod.addDescription") };
-    return (
-      <PayLayout
-        navigation={this.props.navigation}
-        title={TITLE}
-        {...subtitles}
-        touchableContent={this.touchableContent()}
-        rightImage={ImageType.BANK_IMAGE}
-      >
-        <Content style={PortfolioStyles.pfwhite}>
-          <OperationsList
-            parent={I18n.t("portfolio.portfolio")}
-            title={I18n.t("portfolio.lastOperations")}
-            totalAmount={I18n.t("portfolio.total")}
-            operations={latestOperations}
-            navigation={this.props.navigation}
-          />
-        </Content>
-      </PayLayout>
-    );
-  }
-
   private touchableContent(): React.ReactElement<any> {
     const { navigate } = this.props.navigation;
     if (PortfolioAPI.getCreditCards().length > 0) {
@@ -97,5 +64,38 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
         </View>
       );
     }
+  }
+
+  public render(): React.ReactNode {
+    const TITLE = I18n.t("portfolio.portfolio");
+    const latestOperations: ReadonlyArray<
+      Operation
+    > = PortfolioAPI.getLatestOperations();
+    const subtitles =
+      PortfolioAPI.getCreditCards().length > 0
+        ? {
+            subtitleLeft: I18n.t("portfolio.paymentMethods"),
+            subtitleRight: I18n.t("portfolio.newPaymentMethod.add")
+          }
+        : { subtitle: I18n.t("portfolio.newPaymentMethod.addDescription") };
+    return (
+      <PayLayout
+        navigation={this.props.navigation}
+        title={TITLE}
+        {...subtitles}
+        touchableContent={this.touchableContent()}
+        rightImage={ImageType.BANK_IMAGE}
+      >
+        <Content style={PortfolioStyles.pfwhite}>
+          <OperationsList
+            parent={I18n.t("portfolio.portfolio")}
+            title={I18n.t("portfolio.lastOperations")}
+            totalAmount={I18n.t("portfolio.total")}
+            operations={latestOperations}
+            navigation={this.props.navigation}
+          />
+        </Content>
+      </PayLayout>
+    );
   }
 }

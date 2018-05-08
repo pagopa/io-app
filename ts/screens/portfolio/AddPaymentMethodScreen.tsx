@@ -1,8 +1,8 @@
 import * as React from "react";
 import I18n from "../../i18n";
 
-import { Button, View } from "native-base";
 import {
+  Button,
   Container,
   Content,
   Grid,
@@ -13,7 +13,8 @@ import {
   ListItem,
   Right,
   Row,
-  Text
+  Text,
+  View
 } from "native-base";
 import { Image } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -80,7 +81,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           <List
             style={{ padding: 0, margin: 0 }}
             removeClippedSubviews={false}
-            dataArray={paymentMethods}
+            dataArray={paymentMethods as any[]}
             renderRow={item => (
               <ListItem
                 style={{ marginLeft: 0, flex: 1, paddingRight: 0 }}

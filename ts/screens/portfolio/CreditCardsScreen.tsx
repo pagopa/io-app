@@ -30,7 +30,6 @@ export class CreditCardsScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
     return (
       <PayLayout
         navigation={this.props.navigation}
@@ -40,7 +39,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
           <View style={{ minHeight: 400 }}>
             <List
               removeClippedSubviews={false}
-              dataArray={cards}
+              dataArray={cards as any[]}
               renderRow={(item): React.ReactElement<any> => (
                 <CreditCardComponent
                   navigation={this.props.navigation}

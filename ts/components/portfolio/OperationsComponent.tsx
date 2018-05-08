@@ -40,6 +40,32 @@ export class OperationsList extends React.Component<Props, State> {
     this.state = { data: Array.from(props.operations) };
   }
 
+  private renderDate(operation: Operation) {
+    const datetime: string = `${operation.date} - ${operation.time}`;
+    if (operation.isNew) {
+      return (
+        <Row>
+          <Icon
+            type="FontAwesome"
+            name="circle"
+            active
+            style={{ marginTop: 6, fontSize: 10, color: "#0066CC" }}
+          />
+          <Text note>{datetime}</Text>
+        </Row>
+      );
+    }
+    return (
+      <Row>
+        <Text note>{datetime}</Text>
+      </Row>
+    );
+  }
+
+  private getCard(operation: Operation): CreditCard {
+    return PortfolioAPI.getCreditCard(operation.cardId);
+  }
+
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
     const ops = this.state.data;
@@ -100,31 +126,5 @@ export class OperationsList extends React.Component<Props, State> {
         </Row>
       </Grid>
     );
-  }
-
-  private renderDate(operation: Operation) {
-    const datetime: string = `${operation.date} - ${operation.time}`;
-    if (operation.isNew) {
-      return (
-        <Row>
-          <Icon
-            type="FontAwesome"
-            name="circle"
-            active
-            style={{ marginTop: 6, fontSize: 10, color: "#0066CC" }}
-          />
-          <Text note>{datetime}</Text>
-        </Row>
-      );
-    }
-    return (
-      <Row>
-        <Text note>{datetime}</Text>
-      </Row>
-    );
-  }
-
-  private getCard(operation: Operation): CreditCard {
-    return PortfolioAPI.getCreditCard(operation.cardId);
   }
 }

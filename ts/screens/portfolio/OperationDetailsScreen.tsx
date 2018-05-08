@@ -12,7 +12,6 @@ import {
 import { PayLayout } from "../../components/portfolio/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/portfolio/CreditCard";
 import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types";
 
@@ -49,6 +48,18 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
     super(props);
   }
 
+  private touchableContent(): React.ReactElement<any> {
+    return (
+      <View style={PortfolioStyles.container}>
+        <Image
+          style={PortfolioStyles.pfsingle}
+          source={cardsImage}
+          resizeMode="contain"
+        />
+      </View>
+    );
+  }
+
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
@@ -65,7 +76,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             <Row>
               <Left>
                 <Text>
-                  {I18n.t("portfolio.total") + " " + operation.currency}
+                  {`${I18n.t("portfolio.total")} ${operation.currency}`}
                 </Text>
               </Left>
               <Right>
@@ -145,19 +156,6 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
           </Grid>
         </Content>
       </PayLayout>
-    );
-  }
-
-  private touchableContent(): React.ReactElement<any> {
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={PortfolioStyles.container}>
-        <Image
-          style={PortfolioStyles.pfsingle}
-          source={cardsImage}
-          resizeMode="contain"
-        />
-      </View>
     );
   }
 }

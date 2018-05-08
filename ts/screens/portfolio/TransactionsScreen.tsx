@@ -1,6 +1,5 @@
 import * as React from "react";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 
 import { Content, View } from "native-base";
 import { Image } from "react-native";
@@ -48,6 +47,18 @@ export class TransactionsScreen extends React.Component<Props, never> {
     super(props);
   }
 
+  private touchableContent(): React.ReactElement<any> {
+    return (
+      <View style={PortfolioStyles.container}>
+        <Image
+          style={PortfolioStyles.pftabcard}
+          source={cardsImage}
+          resizeMode="contain"
+        />
+      </View>
+    );
+  }
+
   public render(): React.ReactNode {
     const { params } = this.props.navigation.state;
     const card: CreditCard = params ? params.card : UNKNOWN_CARD;
@@ -72,19 +83,6 @@ export class TransactionsScreen extends React.Component<Props, never> {
           />
         </Content>
       </PayLayout>
-    );
-  }
-
-  private touchableContent(): React.ReactElement<any> {
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={PortfolioStyles.container}>
-        <Image
-          style={PortfolioStyles.pftabcard}
-          source={cardsImage}
-          resizeMode="contain"
-        />
-      </View>
     );
   }
 }

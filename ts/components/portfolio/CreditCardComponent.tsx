@@ -29,6 +29,29 @@ const imgElectron = require("../../../img/portfolio/cards-icons/visa-electron.pn
  * Credit card component
  */
 export default class CreditCardComponent extends React.Component<Props> {
+  private getCreditCardImage: any = (creditCardNumber: string) => {
+    const creditCardType: CreditCardType = CreditCard.getCardType(
+      creditCardNumber
+    );
+
+    switch (creditCardType) {
+      case CreditCardType.VISA:
+        return imgVisa;
+      case CreditCardType.MASTERCARD:
+        return imgMastercard;
+      case CreditCardType.DINERS:
+        return imgDiners;
+      case CreditCardType.AMEX:
+        return imgAmex;
+      case CreditCardType.MAESTRO:
+        return imgMaestro;
+      case CreditCardType.VISAELECTRON:
+        return imgElectron;
+      default:
+        return imgMastercard;
+    }
+  };
+
   public render(): React.ReactNode {
     const { item } = this.props;
     const { navigate } = this.props.navigation;
@@ -126,27 +149,4 @@ export default class CreditCardComponent extends React.Component<Props> {
       </Card>
     );
   }
-
-  private getCreditCardImage: any = (creditCardNumber: string) => {
-    const creditCardType: CreditCardType = CreditCard.getCardType(
-      creditCardNumber
-    );
-
-    switch (creditCardType) {
-      case CreditCardType.VISA:
-        return imgVisa;
-      case CreditCardType.MASTERCARD:
-        return imgMastercard;
-      case CreditCardType.DINERS:
-        return imgDiners;
-      case CreditCardType.AMEX:
-        return imgAmex;
-      case CreditCardType.MAESTRO:
-        return imgMaestro;
-      case CreditCardType.VISAELECTRON:
-        return imgElectron;
-      default:
-        return imgMastercard;
-    }
-  };
 }

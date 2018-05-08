@@ -29,32 +29,6 @@ describe("Credit Cards", () => {
       cards[1].number
     );
 
-    const type = "?";
-
-    switch (creditCardType) {
-      case CreditCardType.VISA:
-        type = "xVisa";
-        break;
-      case CreditCardType.MASTERCARD:
-        type = "x";
-        break;
-      case CreditCardType.DINERS:
-        type = "x";
-        break;
-      case CreditCardType.AMEX:
-        type = "x";
-        break;
-      case CreditCardType.MAESTRO:
-        type = "x";
-        break;
-      case CreditCardType.VISAELECTRON:
-        type = "x";
-        break;
-      default:
-        type = "default";
-        break;
-    }
-
-    expect(type).toBe("xVisa");
+    expect(creditCardType).toBe(CreditCardType.VISA);
   });
 });

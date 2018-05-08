@@ -47,19 +47,6 @@ enum PLC {
  * Pay layout component
  */
 export class PayLayout extends React.Component<Props, never> {
-  public render(): React.ReactNode {
-    return (
-      <Container>
-        <Grid>
-          <Row size={this.rowSize(PLC.MAIN_SCREEN)}>
-            {this.twoPartsPortfolioLayout()}
-          </Row>
-          {this.payNoticeButton()}
-        </Grid>
-      </Container>
-    );
-  }
-
   private payNoticeButton(): React.ReactNode {
     if (this.rowSize(PLC.PAY_NOTICE_BUTTON) > 0) {
       return (
@@ -197,8 +184,6 @@ export class PayLayout extends React.Component<Props, never> {
   }
 
   private rowSize(rowIdentifier: PLC): number {
-    const payNoticeButton = 3;
-    const mainScreen = 14;
     const sizes = {
       [PLC.PAY_NOTICE_BUTTON]: 3,
       [PLC.MAIN_SCREEN]: 14,
@@ -215,6 +200,13 @@ export class PayLayout extends React.Component<Props, never> {
 
     const hasTouchable = () => this.props.touchableContent !== undefined;
 
+    const maxTopSize =
+      sizes[PLC.TITLE_ROW] + sizes[PLC.SUBTITLE_ROW] + sizes[PLC.TOUCHABLE_ROW];
+    const topSize =
+      sizes[PLC.TITLE_ROW] +
+      (hasSubtitles() ? sizes[PLC.SUBTITLE_ROW] : 0) +
+      (hasTouchable() ? sizes[PLC.TOUCHABLE_ROW] : 0);
+
     switch (rowIdentifier) {
       case PLC.PAY_NOTICE_BUTTON: {
         if (this.props.showPayNoticeButton === false) {
@@ -223,18 +215,10 @@ export class PayLayout extends React.Component<Props, never> {
         break;
       }
       case PLC.TOP_PART: {
-        return (
-          sizes[PLC.TITLE_ROW] +
-          (hasSubtitles() ? sizes[PLC.SUBTITLE_ROW] : 0) +
-          (hasTouchable() ? sizes[PLC.TOUCHABLE_ROW] : 0)
-        );
+        return topSize;
       }
       case PLC.BOTTOM_PART: {
-        return (
-          sizes[PLC.BOTTOM_PART] +
-          (hasSubtitles() ? 0 : sizes[PLC.SUBTITLE_ROW]) +
-          (hasTouchable() ? 0 : sizes[PLC.TOUCHABLE_ROW])
-        );
+        return sizes[PLC.BOTTOM_PART] + (maxTopSize - topSize);
       }
       case PLC.SUBTITLE_ROW: {
         if (!hasSubtitles()) {
@@ -251,5 +235,18 @@ export class PayLayout extends React.Component<Props, never> {
       }
     }
     return sizes[rowIdentifier];
+  }
+
+  public render(): React.ReactNode {
+    return (
+      <Container>
+        <Grid>
+          <Row size={this.rowSize(PLC.MAIN_SCREEN)}>
+            {this.twoPartsPortfolioLayout()}
+          </Row>
+          {this.payNoticeButton()}
+        </Grid>
+      </Container>
+    );
   }
 }
