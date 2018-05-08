@@ -111,10 +111,7 @@
       "pinforgot": "Non ricordi il PIN",
       "confirmValid": "grazie, pin corretto",
       "confirmInvalid": "PIN non valido"
-    },
-    "forgot":{
-      "forgotInfo":"Tutte le informazioni su cosa fare quando l'itente dimentica il PIN"
-    }
+    }   
   },
   "personal_data_processing": {
     "title": "Regole sul trattamento dei dati personali",

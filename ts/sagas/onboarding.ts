@@ -41,11 +41,9 @@ import { setPin } from "../utils/keychain";
  */
 function* pinCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_PIN);
-console.log("pinCHECK");
   // From the state we check whether the user has already created a PIN
   const isPinCreated: boolean = yield select(isPinCreatedSelector);
-  
-console.log("isPinCreated: "+isPinCreated);
+
   if (!isPinCreated) {
     // Navigate to the PinScreen
     const navigateToOnboardingPinScreenAction = NavigationActions.reset({
@@ -56,8 +54,6 @@ console.log("isPinCreated: "+isPinCreated);
       key: ROUTES.ONBOARDING
     });
     yield put(navigateToOnboardingPinScreenAction);
-
-    console.log("isPinNotCreated: ");
     // Loop until PIN successfully saved in the Keystore
     // tslint:disable-next-line:no-constant-condition
     while (true) {

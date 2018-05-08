@@ -31,7 +31,6 @@ class PinLoginScreen extends React.Component<Props> {
     super(props);
   }
 
-
   // Method called when the CodeInput is filled
   public onPinFulfill = (code: string) => {
     this.props.dispatch(validatePin(code));
@@ -90,7 +89,7 @@ class PinLoginScreen extends React.Component<Props> {
   // Render the forgot PIN button
   public renderForgotButton = () => {
     return (
-      <Button block primary >
+      <Button block primary>
         <Text>{I18n.t("pinlogin.pin.pinforgot")}</Text>
       </Button>
     );

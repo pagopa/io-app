@@ -112,10 +112,7 @@
       "pinforgot": "I do not remember the pin",
       "confirmValid": "Corret PIN",
       "confirmInvalid": "Invalid PIN"
-    },
-    "forgot":{
-      "forgotInfo":"Every information about what to do when user forgot e PIN"
-    }
+    } 
   },
   "personal_data_processing": {
     "title": "Rules on the processing of personal data",

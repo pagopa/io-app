@@ -49,7 +49,6 @@ function* validatePinSaga(action: PinValidateRequest): Iterator<Effect> {
   }
 }
 
-
 export default function* root(): Iterator<Effect> {
   yield takeLatest(PIN_LOGIN_INITIALIZE, pinloginSaga);
   yield takeLatest(PIN_LOGIN_VALIDATE_REQUEST, validatePinSaga);
