@@ -87,7 +87,7 @@ export class OperationsList extends React.Component<Props, State> {
         <Row>
           <List
             removeClippedSubviews={false}
-            dataArray={ops as any[]}
+            dataArray={ops as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
               <ListItem
                 onPress={(): boolean =>

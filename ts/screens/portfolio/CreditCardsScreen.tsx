@@ -39,7 +39,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
           <View style={{ minHeight: 400 }}>
             <List
               removeClippedSubviews={false}
-              dataArray={cards as any[]}
+              dataArray={cards as any[]} // tslint:disable-line
               renderRow={(item): React.ReactElement<any> => (
                 <CreditCardComponent
                   navigation={this.props.navigation}

@@ -8,7 +8,7 @@ export class CreditCard {
 
     const shortCardNumber = cardNumber.replace(/\s/g, "");
 
-    const regexps: { [ key: string]: RegExp } = {
+    const regexps: { [key: string]: RegExp } = {
       electron: /^(4026|417500|4405|4508|4844|4913|4917)\d+$/,
       maestro: /^(5018|5020|5038|5612|5893|6304|6759|6761|6762|6763|0604|6390)\d+$/,
       unionpay: /^(62|88)\d+$/,
@@ -52,14 +52,15 @@ export class CreditCard {
 
   public readonly brand: CreditCardType;
   constructor(
-    public id: number,  
+    public id: number,
     public lastUsage: string,
     public number: string,
     public image: any,
     public owner: string,
-    public expires: string) {
-      this.brand = CreditCard.getCardType(this.number);
-    }
+    public expires: string
+  ) {
+    this.brand = CreditCard.getCardType(this.number);
+  }
 }
 
 export const UNKNOWN_CARD: CreditCard = {

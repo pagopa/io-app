@@ -81,7 +81,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           <List
             style={{ padding: 0, margin: 0 }}
             removeClippedSubviews={false}
-            dataArray={paymentMethods as any[]}
+            dataArray={paymentMethods as any[]} // tslint:disable-line
             renderRow={item => (
               <ListItem
                 style={{ marginLeft: 0, flex: 1, paddingRight: 0 }}
