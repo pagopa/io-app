@@ -50,13 +50,16 @@ export class CreditCard {
     return CreditCardType.UNKNOWN;
   }
 
-  public id: number;
-  public brand?: CreditCardType;
-  public lastUsage: string;
-  public number: string;
-  public image: any;
-  public owner: string;
-  public expires: string;
+  public readonly brand: CreditCardType;
+  constructor(
+    public id: number,  
+    public lastUsage: string,
+    public number: string,
+    public image: any,
+    public owner: string,
+    public expires: string) {
+      this.brand = CreditCard.getCardType(this.number);
+    }
 }
 
 export const UNKNOWN_CARD: CreditCard = {

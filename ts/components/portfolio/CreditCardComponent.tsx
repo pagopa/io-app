@@ -21,7 +21,6 @@ type Props = Readonly<{
  * Credit card component
  */
 export default class CreditCardComponent extends React.Component<Props> {
-
   public render(): React.ReactNode {
     const { item } = this.props;
     const { navigate } = this.props.navigation;

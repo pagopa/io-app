@@ -1,4 +1,3 @@
-
 export enum CreditCardType {
   VISA = "VISA",
   MASTERCARD = "MASTERCARD",
@@ -10,9 +9,7 @@ export enum CreditCardType {
   POSTEPAY = "POSTEPAY"
 }
 
-type CreditCardIconMap = {
-  [ key in keyof typeof CreditCardType ]: any
-};
+type CreditCardIconMap = { [key in keyof typeof CreditCardType]: any };
 
 export const CreditCardIcons: CreditCardIconMap = {
   MASTERCARD: require("../../../img/portfolio/cards-icons/mastercard.png"),

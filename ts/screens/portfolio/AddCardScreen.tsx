@@ -15,7 +15,10 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
-import { CreditCardIcons, CreditCardType } from "../../types/portfolio/CreditCardType";
+import {
+  CreditCardIcons,
+  CreditCardType
+} from "../../types/portfolio/CreditCardType";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;

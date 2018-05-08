@@ -9,16 +9,14 @@ import PortfolioNavigator from "./PortfolioNavigator";
 
 type RouteType = keyof typeof ROUTES;
 
-type RouteIconMap = {
-  [ key in RouteType ]?: string
-};
+type RouteIconMap = { [key in RouteType]?: string };
 
 const ROUTE_ICON: RouteIconMap = {
-  MAIN_MESSAGES   : "mail",
-  PORTFOLIO_HOME  : "wallet",
-  DOCUMENTS_HOME  : "document",
+  MAIN_MESSAGES: "mail",
+  PORTFOLIO_HOME: "wallet",
+  DOCUMENTS_HOME: "document",
   PREFERENCES_HOME: "cog",
-  MAIN_PROFILE    : "user"
+  MAIN_PROFILE: "user"
 };
 
 const getIcon = (routeName: RouteType): string => {
