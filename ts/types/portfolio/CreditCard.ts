@@ -63,12 +63,11 @@ export class CreditCard {
   }
 }
 
-export const UNKNOWN_CARD: CreditCard = {
-  id: -1,
-  brand: CreditCardType.AMEX,
-  lastUsage: "???",
-  number: "0",
-  image: null,
-  owner: "???",
-  expires: "???"
-};
+export const UNKNOWN_CARD: CreditCard = new CreditCard(
+  -1,
+  "???",
+  "0",
+  null,
+  "???",
+  "???"
+);

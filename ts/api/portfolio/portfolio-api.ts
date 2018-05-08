@@ -13,38 +13,38 @@ const todayAt = lastUsage + today;
 const yesterdayAt = lastUsage + yesterday;
 
 const cards: ReadonlyArray<CreditCard> = [
-  {
-    id: 1,
-    lastUsage: todayAt + "07:34",
-    number: "3759 876543 02001",
-    image: require("../../../img/portfolio/amex-cc.jpg"),
-    owner: "Mario Rossi",
-    expires: "10/20"
-  },
-  {
-    id: 2,
-    lastUsage: yesterdayAt + " 10:20",
-    number: "4324 5201 6988 0454",
-    image: require("../../../img/portfolio/visa-cc.jpg"),
-    owner: "John Doe",
-    expires: "11/21"
-  },
-  {
-    id: 3,
-    lastUsage: noNew,
-    number: "5400 4708 6234 2849",
-    image: require("../../../img/portfolio/mastercard-cc.png"),
-    owner: "Mario Bianchi",
-    expires: "12/22"
-  },
-  {
-    id: 4,
-    lastUsage: todayAt + "09:03",
-    number: "4000 1234 5678 9010",
-    image: require("../../../img/portfolio/simple-cc.png"),
-    owner: "John Smith",
-    expires: "09/19"
-  }
+  new CreditCard(
+    1,
+    todayAt + "07:34",
+    "3759 876543 02001",
+    require("../../../img/portfolio/amex-cc.jpg"),
+    "Mario Rossi",
+    "10/20"
+  ),
+  new CreditCard(
+    2,
+    yesterdayAt + " 10:20",
+    "4324 5201 6988 0454",
+    require("../../../img/portfolio/visa-cc.jpg"),
+    "John Doe",
+    "11/21"
+  ),
+  new CreditCard(
+    3,
+    noNew,
+    "5400 4708 6234 2849",
+    require("../../../img/portfolio/mastercard-cc.png"),
+    "Mario Bianchi",
+    "12/22"
+  ),
+  new CreditCard(
+    4,
+    todayAt + "09:03",
+    "4000 1234 5678 9010",
+    require("../../../img/portfolio/simple-cc.png"),
+    "John Smith",
+    "09/19"
+  )
 ];
 
 const operations: ReadonlyArray<Operation> = [
