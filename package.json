@@ -14,6 +14,7 @@
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix"
   },
   "dependencies": {
+    "apisauce": "^0.14.3",
     "color": "^3.0.0",
     "email-validator": "^1.0.7",
     "fp-ts": "^1.4.0",
