@@ -21,15 +21,17 @@ import {
 } from "../../types/portfolio/CreditCardType";
 import { PortfolioStyles } from "../../components/styles";
 
+import { Option, none, some } from "fp-ts/lib/Option";
+
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
 type State = Readonly<{
-  cardNumber: string;
-  expireDate: string;
-  secureCode: string;
-  cardHolder: string;
+  cardNumber: Option<string>;
+  expireDate: Option<string>;
+  secureCode: Option<string>;
+  cardHolder: Option<string>;
 }>;
 
 export class AddCardScreen extends React.Component<Props, State> {
@@ -41,10 +43,10 @@ export class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      cardNumber: "",
-      expireDate: "",
-      secureCode: "",
-      cardHolder: ""
+      cardNumber: none,
+      expireDate: none,
+      secureCode: none,
+      cardHolder: none
     };
   }
 
@@ -86,7 +88,7 @@ export class AddCardScreen extends React.Component<Props, State> {
           />
           <Input
             onChangeText={value => {
-              this.setState({ cardHolder: value });
+              this.setState({ cardHolder: some(value) });
             }}
             autoCapitalize={"words"}
             placeholder={I18n.t("portfolio.dummyCard.values.name")}
@@ -102,7 +104,7 @@ export class AddCardScreen extends React.Component<Props, State> {
           />
           <Input
             onChangeText={value => {
-              this.setState({ cardNumber: value });
+              this.setState({ cardNumber: some(value) });
             }}
             keyboardType={"numeric"}
             placeholderTextColor={"#D0D6DB"}
@@ -124,7 +126,7 @@ export class AddCardScreen extends React.Component<Props, State> {
                 />
                 <Input
                   onChangeText={value => {
-                    this.setState({ expireDate: value });
+                    this.setState({ expireDate: some(value) });
                   }}
                   placeholderTextColor={"#D0D6DB"}
                   placeholder={I18n.t("portfolio.dummyCard.values.expires")}
@@ -144,7 +146,7 @@ export class AddCardScreen extends React.Component<Props, State> {
                 />
                 <Input
                   onChangeText={value => {
-                    this.setState({ secureCode: value });
+                    this.setState({ secureCode: some(value) });
                   }}
                   keyboardType={"numeric"}
                   maxLength={3}
