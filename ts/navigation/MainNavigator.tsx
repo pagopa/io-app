@@ -7,26 +7,33 @@ import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
 import PortfolioNavigator from "./PortfolioNavigator";
 
-interface IRouteIcon {
-  readonly routeName: string;
-  readonly routeIcon: string;
-}
+type RouteType = keyof typeof ROUTES;
 
-const ROUTE_ICON: ReadonlyArray<IRouteIcon> = [
-  { routeName: ROUTES.MAIN_MESSAGES, routeIcon: "mail" },
-  { routeName: ROUTES.PORTFOLIO_HOME, routeIcon: "wallet" },
-  { routeName: ROUTES.DOCUMENTS_HOME, routeIcon: "document" },
-  { routeName: ROUTES.PREFERENCES_HOME, routeIcon: "cog" },
-  { routeName: ROUTES.MAIN_PROFILE, routeIcon: "user" }
-];
+type RouteIconMap = {
+  [ key in RouteType ]?: string
+};
 
-const getIcon = (routeName: string) => {
-  for (const route of ROUTE_ICON) {
-    if (route.routeName === routeName) {
-      return route.routeIcon;
+const ROUTE_ICON: RouteIconMap = {
+  MAIN_MESSAGES   : "mail",
+  PORTFOLIO_HOME  : "wallet",
+  DOCUMENTS_HOME  : "document",
+  PREFERENCES_HOME: "cog",
+  MAIN_PROFILE    : "user"
+};
+
+const getIcon = (routeName: RouteType): string => {
+  const unknownIcon = "???";
+
+  for (const route in ROUTE_ICON) {
+    if (route === routeName) {
+      const routeIcon = ROUTE_ICON[route];
+      if (routeIcon === undefined) {
+        return unknownIcon;
+      }
+      return routeIcon;
     }
   }
-  return "???";
+  return unknownIcon;
 };
 
 /**
@@ -54,7 +61,7 @@ const navigation = TabNavigator(
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state;
-        const iconName: string = getIcon(routeName);
+        const iconName: string = getIcon(routeName as RouteType);
         return <Icon name={iconName} active={focused} />;
       }
     }),
