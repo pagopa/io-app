@@ -2,6 +2,8 @@ import { NavigationState } from "react-navigation";
 import { FormStateMap } from "redux-form";
 
 import { Action } from "../actions/types";
+
+import { PinLoginState } from "./pinlogin";
 import { AppState } from "./appState";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
@@ -28,4 +30,5 @@ export type GlobalState = Readonly<{
   notifications: NotificationsState;
   profile: ProfileState;
   entities: EntitiesState;
+  pinlogin: PinLoginState;
 }>;

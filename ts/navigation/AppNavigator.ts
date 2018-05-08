@@ -4,6 +4,7 @@ import IngressScreen from "../screens/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
+import PinNavigator from "./PinNavigator";
 import ROUTES from "./routes";
 
 /**
@@ -23,6 +24,9 @@ const navigator = SwitchNavigator({
   },
   [ROUTES.ONBOARDING]: {
     screen: OnboardingNavigator
+  },
+  [ROUTES.PINLOGIN]: {
+    screen: PinNavigator
   },
   [ROUTES.MAIN]: {
     // The navigator used for authenticated users

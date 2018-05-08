@@ -9,6 +9,7 @@ import mainSaga from "./main";
 import messagesSaga from "./messages";
 import notificationsSaga from "./notifications";
 import onboardingSaga from "./onboarding";
+import pinloginSaga from "./pinlogin";
 import profileSaga from "./profile";
 import sessionSaga from "./session";
 
@@ -28,6 +29,7 @@ export default function* root(): Iterator<Effect> {
     fork(sessionSaga),
     fork(notificationsSaga),
     fork(onboardingSaga),
+    fork(pinloginSaga),
     fork(mainSaga),
     fork(profileSaga),
     fork(messagesSaga),

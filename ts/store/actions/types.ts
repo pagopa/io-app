@@ -20,6 +20,8 @@ import { OnboardingActions } from "./onboarding";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { SessionActions } from "./session";
+import { PinloginActions } from "./pinlogin";
+
 
 export type ApplicationState = "background" | "inactive" | "active";
 
@@ -35,6 +37,7 @@ export type Action =
   | SessionActions
   | OnboardingActions
   | NotificationsActions
+  | PinloginActions
   | ProfileActions
   | MessagesActions
   | ServicesActions

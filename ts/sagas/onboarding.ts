@@ -24,6 +24,7 @@ import {
   PIN_CREATE_FAILURE,
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
+  PIN_LOGIN_INITIALIZE,
   SESSION_INITIALIZE_SUCCESS,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
@@ -40,10 +41,11 @@ import { setPin } from "../utils/keychain";
  */
 function* pinCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_PIN);
-
+console.log("pinCHECK");
   // From the state we check whether the user has already created a PIN
   const isPinCreated: boolean = yield select(isPinCreatedSelector);
-
+  
+console.log("isPinCreated: "+isPinCreated);
   if (!isPinCreated) {
     // Navigate to the PinScreen
     const navigateToOnboardingPinScreenAction = NavigationActions.reset({
@@ -55,6 +57,7 @@ function* pinCheckSaga(): Iterator<Effect> {
     });
     yield put(navigateToOnboardingPinScreenAction);
 
+    console.log("isPinNotCreated: ");
     // Loop until PIN successfully saved in the Keystore
     // tslint:disable-next-line:no-constant-condition
     while (true) {
@@ -73,9 +76,16 @@ function* pinCheckSaga(): Iterator<Effect> {
       }
     }
   }
-
-  // Dispatch an action to start the next step
-  yield put({ type: ONBOARDING_CHECK_COMPLETE });
+  // if pin was created before
+  if (!isPinCreated) {
+    yield put({
+      type: ONBOARDING_CHECK_COMPLETE
+    });
+  } else {
+    yield put({
+      type: PIN_LOGIN_INITIALIZE
+    });
+  }
 }
 
 /**
@@ -83,7 +93,7 @@ function* pinCheckSaga(): Iterator<Effect> {
  */
 function* tosCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_TOS);
-
+  console.log("tosCHECK");
   // From the state we check whether the user has already accepted the ToS
   const isTosAccepted: boolean = yield select(isTosAcceptedSelector);
 

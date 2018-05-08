@@ -54,9 +54,12 @@ function* landingStep(): Iterator<Effect> {
 }
 
 function* sessionSaga(): Iterator<Effect> {
+
+  console.log("sessionCheck");
   // From the state we check if the session is already established
   const isAuthenticated: boolean = yield select(isAuthenticatedSelector);
 
+  console.log("auth: "+isAuthenticated);
   if (!isAuthenticated) {
     // If the session is not established we continue to the landing step
     yield call(landingStep);

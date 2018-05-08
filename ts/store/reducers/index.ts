@@ -7,6 +7,7 @@ import { Reducer, ReducersMapObject } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
 
 import { Action } from "../actions/types";
+import pinloginReducer from "./pinlogin";
 import appStateReducer from "./appState";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -45,7 +46,8 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
-  entities: entitiesReducer
+  entities: entitiesReducer,
+  pinlogin: pinloginReducer
 };
 
 export default reducers;
