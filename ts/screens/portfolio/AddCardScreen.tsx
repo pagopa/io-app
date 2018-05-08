@@ -19,6 +19,7 @@ import {
   CreditCardIcons,
   CreditCardType
 } from "../../types/portfolio/CreditCardType";
+import { PortfolioStyles } from "../../components/styles";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -91,14 +92,7 @@ export class AddCardScreen extends React.Component<Props, State> {
             placeholder={I18n.t("portfolio.dummyCard.values.name")}
           />
         </Item>
-        <Item
-          style={{
-            borderBottomWidth: 0,
-            marginTop: 5,
-            marginRight: 5,
-            marginLeft: 5
-          }}
-        >
+        <Item style={PortfolioStyles.addCardItem}>
           <Text>{I18n.t("portfolio.dummyCard.labels.number")}</Text>
         </Item>
         <Item style={{ borderBottomWidth: 1, marginRight: 5, marginLeft: 5 }}>
@@ -115,24 +109,10 @@ export class AddCardScreen extends React.Component<Props, State> {
             placeholder={I18n.t("portfolio.dummyCard.values.number")}
           />
         </Item>
-        <Item
-          style={{
-            borderBottomWidth: 0,
-            marginTop: 5,
-            marginRight: 5,
-            marginLeft: 5
-          }}
-        >
+        <Item style={PortfolioStyles.addCardItem}>
           <Grid>
             <Col>
-              <Item
-                style={{
-                  borderBottomWidth: 0,
-                  marginTop: 5,
-                  marginRight: 5,
-                  marginLeft: 5
-                }}
-              >
+              <Item style={PortfolioStyles.addCardItem}>
                 <Text>{I18n.t("portfolio.dummyCard.labels.expires")}</Text>
               </Item>
               <Item
@@ -152,14 +132,7 @@ export class AddCardScreen extends React.Component<Props, State> {
               </Item>
             </Col>
             <Col>
-              <Item
-                style={{
-                  borderBottomWidth: 0,
-                  marginTop: 5,
-                  marginRight: 5,
-                  marginLeft: 5
-                }}
-              >
+              <Item style={PortfolioStyles.addCardItem}>
                 <Text>{I18n.t("portfolio.dummyCard.labels.csc")}</Text>
               </Item>
               <Item
@@ -184,14 +157,7 @@ export class AddCardScreen extends React.Component<Props, State> {
           </Grid>
         </Item>
 
-        <Item
-          style={{
-            borderBottomWidth: 0,
-            marginTop: 5,
-            marginRight: 5,
-            marginLeft: 5
-          }}
-        >
+        <Item style={PortfolioStyles.addCardItem}>
           <Text>{I18n.t("portfolio.acceptedCards")}</Text>
         </Item>
 

@@ -56,9 +56,9 @@ const navigation = TabNavigator(
     }
   },
   {
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: ({ navigation: nav }) => ({
       tabBarIcon: ({ focused }) => {
-        const { routeName } = navigation.state;
+        const { routeName } = nav.state;
         const iconName: string = getIcon(routeName as RouteType);
         return <Icon name={iconName} active={focused} />;
       }

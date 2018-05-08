@@ -32,9 +32,11 @@ export class SaveNewCardScreen extends React.Component<Props, State> {
     };
   }
 
-  private onValueChange() {
-    this.setState({ isPreferredCard: !this.state.isPreferredCard });
-  }
+  private onValueChange = () => {
+    this.setState(prevState => ({
+      isPreferredCard: !prevState.isPreferredCard
+    }));
+  };
 
   public render(): React.ReactNode {
     const HEADER = I18n.t("saveCard.header");
@@ -52,7 +54,7 @@ export class SaveNewCardScreen extends React.Component<Props, State> {
           <Col style={{ flex: 1 }}>
             <Switch
               value={this.state.isPreferredCard}
-              onValueChange={() => this.onValueChange}
+              onValueChange={this.onValueChange}
             />
           </Col>
         </Grid>

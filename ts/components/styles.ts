@@ -47,6 +47,12 @@ export const ProfileStyles = StyleSheet.create({
 });
 
 export const PortfolioStyles = StyleSheet.create({
+  addCardItem: {
+    borderBottomWidth: 0,
+    marginTop: 5,
+    marginRight: 5,
+    marginLeft: 5
+  },
   pfText: {
     fontFamily: "Titillium Web",
     color: whiteIshColor
