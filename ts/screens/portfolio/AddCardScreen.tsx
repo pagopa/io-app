@@ -9,13 +9,8 @@ import {
   Text
 } from "native-base";
 import * as React from "react";
-import { 
-  FlatList, 
-  Image, 
-  View } from "react-native";
-import { 
-  NavigationScreenProp, 
-  NavigationState } from "react-navigation";
+import { FlatList, Image, View } from "react-native";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -40,7 +35,6 @@ type State = Readonly<{
 }>;
 
 export class AddCardScreen extends React.Component<Props, State> {
-  
   public static navigationOptions = {
     title: I18n.t("portfolio.addCardTitle"),
     headerBackTitle: null
@@ -54,29 +48,35 @@ export class AddCardScreen extends React.Component<Props, State> {
       secureCode: "",
       cardHolder: "",
       formattedCardNumber: "",
-      formattedExpireDate: "",
+      formattedExpireDate: ""
     };
   }
 
-  onExpireDateChange(value: string){
-    this.changeExpireDateAppeareance(value)
+  onExpireDateChange(value: string) {
+    this.changeExpireDateAppeareance(value);
   }
 
-  changeExpireDateAppeareance(value: string){
-    let formattedText = value.split('/').join('')
-    if (formattedText.length > 0) { 
-        formattedText = formattedText.match(new RegExp('.{1,2}', 'g')).join('/')
+  changeExpireDateAppeareance(value: string) {
+    const string = value.trim();
+    if (string.match(/^[\d\s]*$/)) {
+      const newString = string.replace(/\s/, "").match(/\d{1,2}/g);
+      if (newString !== null) {
+        const formattedText = newString.join("/");
+        this.setState({ formattedExpireDate: formattedText });
+      }
     }
-    this.setState({formattedExpireDate: formattedText});
   }
 
-  changeCardnumberAppeareance(value: string){
-    let formattedText = value.split(' ').join('');
-    if (formattedText.length > 0) {
-        formattedText = formattedText.match(new RegExp('.{1,4}', 'g')).join(' ');
+  changeCardnumberAppeareance(value: string) {
+    const string = value.trim();
+    if (string.match(/^[\d\s]*$/)) {
+      const newString = string.replace(/\s/, "").match(/\d{1,4}/g);
+      if (newString !== null) {
+        const formattedText = newString.join(" ");
+        this.setState({ formattedCardNumber: formattedText });
+      }
     }
-    this.setState({formattedCardNumber: formattedText});
-}
+  }
 
   public render(): React.ReactNode {
     const displayedCards: ReadonlyArray<CreditCardType> = [
@@ -115,9 +115,8 @@ export class AddCardScreen extends React.Component<Props, State> {
             name="user"
           />
           <Input
-            onChangeText={
-              (value) => {
-                this.setState({ cardHolder: value });
+            onChangeText={value => {
+              this.setState({ cardHolder: value });
             }}
             autoCapitalize={"words"}
             placeholder={I18n.t("portfolio.dummyCard.values.name")}
@@ -132,9 +131,8 @@ export class AddCardScreen extends React.Component<Props, State> {
             name="credit-card"
           />
           <Input
-            onChangeText={
-              (value) => {
-                this.changeCardnumberAppeareance(value)
+            onChangeText={value => {
+              this.changeCardnumberAppeareance(value);
             }}
             value={this.state.formattedCardNumber}
             keyboardType={"numeric"}
@@ -157,9 +155,8 @@ export class AddCardScreen extends React.Component<Props, State> {
                   name="calendar"
                 />
                 <Input
-                  onChangeText={
-                    (value) => {
-                      this.onExpireDateChange(value)
+                  onChangeText={value => {
+                    this.onExpireDateChange(value);
                   }}
                   value={this.state.formattedExpireDate}
                   maxLength={5}
@@ -181,7 +178,7 @@ export class AddCardScreen extends React.Component<Props, State> {
                   name="lock"
                 />
                 <Input
-                  onChangeText={(value) => {
+                  onChangeText={value => {
                     this.setState({ secureCode: value });
                   }}
                   keyboardType={"numeric"}
