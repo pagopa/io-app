@@ -4,11 +4,15 @@ import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
 import { OperationsList } from "../../components/portfolio/OperationsComponent";
-import { ImageType, PayLayout } from "../../components/portfolio/PayLayout";
+import { ImageType, PayLayout } from "../../components/portfolio/pay-layout/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Operation } from "../../types/portfolio/types";
+import {
+  topContentSubtitleTouchable,
+  topContentSubtitlesLRTouchable
+} from "../../components/portfolio/pay-layout/types";
 
 type ScreenProps = {};
 
@@ -32,6 +36,14 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
   }
 
   private touchableContent(): React.ReactElement<any> {
+
+    const str = value.trim();
+    if (str.match(/^[\d\s]*$/)) {
+      const newStr = str.replace(/\s/,"").match(/\d{4}/);
+      if (newStr !== null) {
+        console.log(newStr.join(" ")); 
+      }
+    }
     const { navigate } = this.props.navigation;
     if (PortfolioAPI.getCreditCards().length > 0) {
       return (
@@ -71,19 +83,24 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
     const latestOperations: ReadonlyArray<
       Operation
     > = PortfolioAPI.getLatestOperations();
-    const subtitles =
+
+    const topContents =
       PortfolioAPI.getCreditCards().length > 0
-        ? {
-            subtitleLeft: I18n.t("portfolio.paymentMethods"),
-            subtitleRight: I18n.t("portfolio.newPaymentMethod.add")
-          }
-        : { subtitle: I18n.t("portfolio.newPaymentMethod.addDescription") };
+        ? topContentSubtitlesLRTouchable(
+            this.touchableContent(),
+            I18n.t("portfolio.paymentMethods"),
+            I18n.t("portfolio.newPaymentMethod.add")
+          )
+        : topContentSubtitleTouchable(
+            this.touchableContent(),
+            I18n.t("portfolio.newPaymentMethod.addDescription")
+          );
+
     return (
       <PayLayout
         navigation={this.props.navigation}
         title={TITLE}
-        {...subtitles}
-        touchableContent={this.touchableContent()}
+        topContent={topContents}
         rightImage={ImageType.BANK_IMAGE}
       >
         <Content style={PortfolioStyles.pfwhite}>

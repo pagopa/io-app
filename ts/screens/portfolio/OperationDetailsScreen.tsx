@@ -9,11 +9,12 @@ import {
   NavigationState
 } from "react-navigation";
 
-import { PayLayout } from "../../components/portfolio/PayLayout";
+import { PayLayout } from "../../components/portfolio/pay-layout/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import { CreditCard } from "../../types/portfolio/CreditCard";
 import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types";
+import { topContentTouchable } from "../../components/portfolio/pay-layout/types";
 
 // Images
 const cardsImage = require("../../../img/portfolio/single-tab.png");
@@ -65,11 +66,12 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
     const { params } = this.props.navigation.state;
     const TITLE: string = I18n.t("portfolio.operationsDetails");
     const operation: Operation = params ? params.operation : UNKNOWN_OPERATION;
+    const topContent = topContentTouchable(this.touchableContent());
     return (
       <PayLayout
         navigation={this.props.navigation}
         title={TITLE}
-        touchableContent={this.touchableContent()}
+        topContent={topContent}
       >
         <Content style={PortfolioStyles.pfwhite}>
           <Grid>

@@ -11,11 +11,12 @@ import {
 
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
 import { OperationsList } from "../../components/portfolio/OperationsComponent";
-import { PayLayout } from "../../components/portfolio/PayLayout";
+import { PayLayout } from "../../components/portfolio/pay-layout/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";
 
+import { topContentTouchable } from "../../components/portfolio/pay-layout/types";
 // Images
 const cardsImage = require("../../../img/portfolio/card-tab.png");
 
@@ -67,11 +68,13 @@ export class TransactionsScreen extends React.Component<Props, never> {
     );
     const TITLE = I18n.t("portfolio.creditDebtCards");
 
+    const topContent = topContentTouchable(this.touchableContent());
+
     return (
       <PayLayout
         navigation={this.props.navigation}
         title={TITLE}
-        touchableContent={this.touchableContent()}
+        topContent={topContent}
       >
         <Content style={PortfolioStyles.pfwhite}>
           <OperationsList

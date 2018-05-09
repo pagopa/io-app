@@ -2,13 +2,14 @@ import * as React from "react";
 
 import { Content, List, View } from "native-base";
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
-import { PayLayout } from "../../components/portfolio/PayLayout";
+import { PayLayout } from "../../components/portfolio/pay-layout/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from "../../components/portfolio/CreditCardComponent";
 import { CreditCard } from "../../types/portfolio/CreditCard";
+import { topContentNone } from "../../components/portfolio/pay-layout/types";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -34,6 +35,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
       <PayLayout
         navigation={this.props.navigation}
         title={I18n.t("portfolio.creditcards")}
+        topContent={topContentNone()}
       >
         <Content style={PortfolioStyles.pfback}>
           <View style={{ minHeight: 400 }}>
