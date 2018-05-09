@@ -460,6 +460,13 @@
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#ab732ada08b18e060e3a53c6ecf67dc9258edfea"
 
+"@types/react-native-vector-icons@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.1.tgz#a9b2ee1a4b297b87a9917337aeee404c36fda8c2"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native@*", "@types/react-native@^0.55.0":
   version "0.55.10"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.10.tgz#d68c1dd216caa5a5732774f508ad3203335cca5d"

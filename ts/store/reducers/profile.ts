@@ -7,8 +7,6 @@
  * @flow
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
-
 import { Action } from "../../actions/types";
 import { ApiProfile } from "../../api";
 import {
@@ -16,9 +14,9 @@ import {
   PROFILE_UPDATE_SUCCESS
 } from "../actions/constants";
 
-export type ProfileState = Option<ApiProfile>;
+export type ProfileState = ApiProfile | null;
 
-export const INITIAL_STATE: ProfileState = none;
+export const INITIAL_STATE: ProfileState = null;
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,
@@ -26,10 +24,10 @@ const reducer = (
 ): ProfileState => {
   switch (action.type) {
     case PROFILE_LOAD_SUCCESS:
-      return some(action.payload);
+      return action.payload;
 
     case PROFILE_UPDATE_SUCCESS:
-      return some(action.payload);
+      return action.payload;
 
     default:
       return state;

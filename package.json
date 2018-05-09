@@ -61,6 +61,7 @@
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-mixpanel": "^0.1.0",
     "@types/react-native-push-notification": "^3.0.2",
+    "@types/react-native-vector-icons": "^4.6.1",
     "@types/react-navigation": "^1.5.10",
     "@types/react-redux": "^5.0.18",
     "@types/react-test-renderer": "^16.0.1",
@@ -113,7 +114,8 @@
   "rnpm": {
     "assets": [
       "./assets/fonts/TitilliumWeb",
-      "./assets/fonts/RobotoMono"
+      "./assets/fonts/RobotoMono",
+      "./assets/fonts/io-icon-font"
     ]
   }
 }
