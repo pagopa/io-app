@@ -26,6 +26,7 @@
     "no-submodule-imports": false,
     "jsx-no-lambda": false,
     "member-ordering": false,
+    "no-duplicate-imports": false,
 
     // custom rules
     "prettier": true,
