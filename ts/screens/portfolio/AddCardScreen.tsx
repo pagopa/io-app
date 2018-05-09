@@ -50,6 +50,32 @@ export class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
+  onExpireDateChange(value: string) {
+    this.changeExpireDateAppeareance(value);
+  }
+
+  changeExpireDateAppeareance(value: string) {
+    const string = value.trim();
+    if (string.match(/^[\d\s]*$/)) {
+      const newString = string.replace(/\s/, "").match(/\d{1,2}/g);
+      if (newString !== null) {
+        const formattedText = newString.join("/");
+        this.setState({ expireDate: some(formattedText) });
+      }
+    }
+  }
+
+  changeCardnumberAppeareance(value: string) {
+    const string = value.trim();
+    if (string.match(/^[\d\s]*$/)) {
+      const newString = string.replace(/\s/, "").match(/\d{1,4}/g);
+      if (newString !== null) {
+        const formattedText = newString.join(" ");
+        this.setState({ cardNumber: some(formattedText) });
+      }
+    }
+  }
+
   public render(): React.ReactNode {
     const displayedCards: ReadonlyArray<CreditCardType> = [
       CreditCardType.MASTERCARD,
@@ -104,9 +130,11 @@ export class AddCardScreen extends React.Component<Props, State> {
           />
           <Input
             onChangeText={value => {
-              this.setState({ cardNumber: some(value) });
+              this.changeCardnumberAppeareance(value);
             }}
+            value={this.state.cardNumber.getOrElse("")}
             keyboardType={"numeric"}
+            maxLength={23}
             placeholderTextColor={"#D0D6DB"}
             placeholder={I18n.t("portfolio.dummyCard.values.number")}
           />
@@ -126,8 +154,11 @@ export class AddCardScreen extends React.Component<Props, State> {
                 />
                 <Input
                   onChangeText={value => {
-                    this.setState({ expireDate: some(value) });
+                    this.onExpireDateChange(value);
                   }}
+                  value={this.state.expireDate.getOrElse("")}
+                  maxLength={5}
+                  keyboardType={"numeric"}
                   placeholderTextColor={"#D0D6DB"}
                   placeholder={I18n.t("portfolio.dummyCard.values.expires")}
                 />
