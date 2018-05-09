@@ -37,13 +37,6 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
 
   private touchableContent(): React.ReactElement<any> {
 
-    const str = value.trim();
-    if (str.match(/^[\d\s]*$/)) {
-      const newStr = str.replace(/\s/,"").match(/\d{4}/);
-      if (newStr !== null) {
-        console.log(newStr.join(" ")); 
-      }
-    }
     const { navigate } = this.props.navigation;
     if (PortfolioAPI.getCreditCards().length > 0) {
       return (

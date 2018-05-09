@@ -62,6 +62,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const { params } = this.props.navigation.state;
+    
     const card: CreditCard = params ? params.card : UNKNOWN_CARD;
     const operations: ReadonlyArray<Operation> = PortfolioAPI.getOperations(
       card.id

@@ -31,7 +31,7 @@ export class PayLayout extends React.Component<Props, never> {
   private payNoticeButton(): React.ReactNode {
     return (
       <Row size={this.BUTTON_SIZE}>
-        <Content>
+        <Content scrollEnabled={false}>
           <Button block>
             <Icon type="FontAwesome" name="qrcode" />
             <Text>{I18n.t("portfolio.payNotice")}</Text>

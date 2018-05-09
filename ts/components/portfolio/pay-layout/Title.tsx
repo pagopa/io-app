@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { PortfolioStyles } from "../../styles";
-import { ImageType } from "../PayLayout";
+import { ImageType } from "./PayLayout";
 
 type Props = Readonly<{
   text: string;
