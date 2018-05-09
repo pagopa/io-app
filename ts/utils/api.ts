@@ -2,17 +2,7 @@
  * Implements the APIs to interact with the backend.
  */
 
-/**
- * The user profile
- */
-export type ApiUserProfile = {
-  family_name: string;
-  fiscal_code: string;
-  has_profile: boolean;
-  is_inbox_enabled?: boolean;
-  name: string;
-  version: number;
-};
+import { Profile as ApiUserProfile } from "../../definitions/backend/Profile";
 
 /**
  * A type used for all the update operations
