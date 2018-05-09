@@ -4,7 +4,10 @@ import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
 import { OperationsList } from "../../components/portfolio/OperationsComponent";
-import { ImageType, PayLayout } from "../../components/portfolio/pay-layout/PayLayout";
+import {
+  ImageType,
+  PayLayout
+} from "../../components/portfolio/pay-layout/PayLayout";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -36,7 +39,6 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
   }
 
   private touchableContent(): React.ReactElement<any> {
-
     const { navigate } = this.props.navigation;
     if (PortfolioAPI.getCreditCards().length > 0) {
       return (

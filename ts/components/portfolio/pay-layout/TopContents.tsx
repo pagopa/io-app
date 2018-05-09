@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Col, Grid } from "react-native-easy-grid";
 import { PortfolioStyles } from "../../styles";
-import { ImageType } from "../PayLayout";
+import { ImageType } from "./PayLayout";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { SubtitlesLR, SUBTITLES_LR_SIZE } from "./SubtitlesLR";
 import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
