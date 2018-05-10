@@ -1,4 +1,4 @@
-import { Button, Container, Content, Icon, Text } from "native-base";
+import { Button, Container, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -23,34 +23,27 @@ type Props = Readonly<{
 /**
  * Pay layout component
  */
+const BOTTOM_SIZE = 4;
 export class PayLayout extends React.Component<Props, never> {
-  private readonly MAIN_SIZE = 14;
-  private readonly BUTTON_SIZE = 3;
-  private readonly BOTTOM_SIZE = 4;
-
   private payNoticeButton(): React.ReactNode {
     return (
-      <Row size={this.BUTTON_SIZE}>
-        <Content scrollEnabled={false}>
-          <Button block>
-            <Icon type="FontAwesome" name="qrcode" />
-            <Text>{I18n.t("portfolio.payNotice")}</Text>
-          </Button>
-        </Content>
-      </Row>
+      <View footer>
+        <Button block>
+          <Icon type="FontAwesome" name="qrcode" />
+          <Text>{I18n.t("portfolio.payNotice")}</Text>
+        </Button>
+      </View>
     );
   }
 
   private twoPartsPortfolioLayout(): React.ReactNode {
     return (
-      <Row size={this.MAIN_SIZE}>
-        <Grid>
-          <Row size={TopContents.getSize(this.props.topContent)}>
-            <TopContents {...this.props} />
-          </Row>
-          <Row size={this.getBottomSize()}>{this.props.children}</Row>
-        </Grid>
-      </Row>
+      <Grid>
+        <Row size={TopContents.getSize(this.props.topContent)}>
+          <TopContents {...this.props} />
+        </Row>
+        <Row size={this.getBottomSize()}>{this.props.children}</Row>
+      </Grid>
     );
   }
 
@@ -62,7 +55,7 @@ export class PayLayout extends React.Component<Props, never> {
      * is given by MAX_TOP_PART - ACTUAL_TOP_PART
      */
     return (
-      this.BOTTOM_SIZE +
+      BOTTOM_SIZE +
       (TopContents.getMaxSize() - TopContents.getSize(this.props.topContent))
     );
   }
@@ -70,10 +63,8 @@ export class PayLayout extends React.Component<Props, never> {
   public render(): React.ReactNode {
     return (
       <Container>
-        <Grid>
-          {this.twoPartsPortfolioLayout()}
-          {this.payNoticeButton()}
-        </Grid>
+        {this.twoPartsPortfolioLayout()}
+        {this.payNoticeButton()}
       </Container>
     );
   }

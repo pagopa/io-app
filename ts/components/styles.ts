@@ -8,18 +8,16 @@ const { StatusBarManager } = NativeModules;
 
 const STATUSBAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBarManager.HEIGHT;
 
+import variables from "../theme/variables";
+
 // Due to a bug, the following style must be wrapped
 // with a call to StyleSheet.flatten()
 // https://github.com/shoutem/ui/issues/51
 
-const blackIshColor = "rgb(30,30,30)";
-const whiteIshColor = "rgb(250,250,250)";
-const blueIshColor = "rgb(70,92,112)";
-
 export const CommonStyles = StyleSheet.create({
   fullContainer: {
     marginTop: STATUSBAR_HEIGHT,
-    backgroundColor: whiteIshColor
+    backgroundColor: variables.brandGray
   },
   errorContainer: {
     padding: 5,
@@ -54,37 +52,35 @@ export const PortfolioStyles = StyleSheet.create({
     marginLeft: 5
   },
   pfText: {
-    fontFamily: "Titillium Web",
-    color: whiteIshColor
+    fontFamily: variables.fontFamily,
+    color: variables.brandGray
   },
   pftitle: {
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
+    fontFamily: variables.fontFamily,
     fontSize: 30,
-    color: whiteIshColor
+    color: variables.brandGray
   },
   pfSubtitleLeft: {
-    fontFamily: "Titillium Web",
+    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     fontSize: 18,
-    color: whiteIshColor
+    color: variables.brandGray
   },
 
   pfbold: {
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
-    color: blackIshColor
+    fontFamily: variables.fontFamily,
+    fontWeight: "bold"
   },
   pfwhy: {
-    fontFamily: "Titillium Web",
+    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     color: "#3a3bfa"
   },
   pfback: {
-    backgroundColor: blueIshColor
-  },
+    backgroundColor: variables.brandDarkGray
+  }, 
   pfwhite: {
-    backgroundColor: whiteIshColor,
+    backgroundColor: variables.brandGray,
     flex: 1
   },
   pfImage: {
@@ -109,14 +105,13 @@ export const PortfolioStyles = StyleSheet.create({
     resizeMode: "contain"
   },
   titleStyle: {
-    fontFamily: "Titillium Web",
+    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     color: "rgb(150,150,150)"
   },
   boldStyle: {
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
-    color: blackIshColor
+    fontFamily: variables.fontFamily,
+    fontWeight: "bold"
   },
   container: {
     flex: 1,
@@ -130,12 +125,11 @@ export const PortfolioStyles = StyleSheet.create({
     resizeMode: "contain"
   },
   payBoldStyle: {
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
-    color: blackIshColor
+    fontFamily: variables.fontFamily,
+    fontWeight: "bold"
   },
   payLightStyle: {
-    fontFamily: "Titillium Web",
+    fontFamily: variables.fontFamily,
     fontSize: 12,
     color: "rgb(166, 166, 166)"
   },
@@ -144,25 +138,25 @@ export const PortfolioStyles = StyleSheet.create({
     marginBottom: 40,
     marginLeft: 10,
     marginRight: 10,
-    fontFamily: "Titillium Web",
+    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     color: "rgb(0, 0, 255)"
   },
   addPaymentMethodButton: {
-    borderColor: whiteIshColor
+    borderColor: variables.brandGray
   },
   addPaymentMethodText: {
     fontWeight: "bold",
-    color: whiteIshColor
+    color: variables.brandGray
   },
   topContainer: {
-    backgroundColor: blueIshColor
+    backgroundColor: variables.brandDarkGray
   }
 });
 
 export const CreditCardStyle = StyleSheet.create({
   largeTextStyle: {
-    fontSize: 20,
+    fontSize: variables.fontSize4,
     fontFamily: "Roboto Mono"
   },
   rowStyle: {
@@ -171,7 +165,7 @@ export const CreditCardStyle = StyleSheet.create({
   textStyle: {
     marginLeft: 15,
     color: "rgb(13, 37, 62)",
-    fontFamily: "Titillium Web"
+    fontFamily: variables.fontFamily
   },
   cardStyle: {
     backgroundColor: "rgb(242,242,242)",
@@ -180,12 +174,12 @@ export const CreditCardStyle = StyleSheet.create({
     height: 200
   },
   smallTextStyle: {
-    fontSize: 14,
+    fontSize: variables.fontSize2,
     color: "rgb(70,92,113)"
   },
   iconStyle: {
-    fontSize: 22,
-    color: "rgb(0,86,234)",
+    fontSize: variables.fontSize5,
+    color: variables.brandPrimary,
     paddingLeft: 10
   },
   whiteBarStyle: {
