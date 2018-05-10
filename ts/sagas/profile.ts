@@ -6,7 +6,7 @@ import { ApiResponse } from "apisauce";
 import { call, Effect, put, takeLatest } from "redux-saga/effects";
 
 import { proxyApi } from "../api";
-import { ApiProfile } from "../api/ProxyApi";
+import { IApiProfile } from "../api/types";
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_REQUEST,
@@ -21,7 +21,7 @@ import { ProfileUpdateRequest } from "../store/actions/profile";
 function* loadProfile(): Iterator<Effect> {
   try {
     // Fetch the profile from the proxy
-    const response: ApiResponse<ApiProfile> = yield call(proxyApi.readProfile);
+    const response: ApiResponse<IApiProfile> = yield call(proxyApi.readProfile);
 
     if (response.ok) {
       // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
@@ -46,7 +46,7 @@ function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
     const newProfile = action.payload;
 
     // Post the new Profile to the proxy
-    const response: ApiResponse<ApiProfile> = yield call(
+    const response: ApiResponse<IApiProfile> = yield call(
       proxyApi.updateProfile,
       newProfile
     );

@@ -9,15 +9,15 @@ import {
 
 import { Button, View } from "native-base";
 
-import { IdentityProvider } from "../api/types";
+import { IIdentityProvider } from "../api/types";
 
 import variables from "../theme/variables";
 
 export type OwnProps = {
   // Array of Identity Provider to show in the grid.
-  idps: ReadonlyArray<IdentityProvider>;
+  idps: ReadonlyArray<IIdentityProvider>;
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: (_: IdentityProvider) => void;
+  onIdpSelected: (_: IIdentityProvider) => void;
 };
 
 export type Props = OwnProps;
@@ -65,13 +65,13 @@ class IdpsGrid extends React.Component<Props> {
     );
   }
 
-  public keyExtractor = (idp: IdentityProvider): string => {
+  public keyExtractor = (idp: IIdentityProvider): string => {
     return idp.id;
   };
 
   /* eslint-disable flowtype/no-weak-types */
   public renderItem = (
-    info: ListRenderItemInfo<IdentityProvider>
+    info: ListRenderItemInfo<IIdentityProvider>
   ): React.ReactElement<any> => {
     const { onIdpSelected } = this.props;
     const idp = info.item;

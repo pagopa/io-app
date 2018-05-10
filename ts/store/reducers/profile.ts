@@ -8,13 +8,13 @@
  */
 
 import { Action } from "../../actions/types";
-import { ApiProfile } from "../../api/ProxyApi";
+import { IApiProfile } from "../../api/types";
 import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPDATE_SUCCESS
 } from "../actions/constants";
 
-export type ProfileState = ApiProfile | null;
+export type ProfileState = IApiProfile | null;
 
 export const INITIAL_STATE: ProfileState = null;
 

@@ -1,22 +1,11 @@
+/**
+ * Proxy client using apisauce
+ */
+
 import apisauce from "apisauce";
 
 import { apiUrlPrefix as proxyBaseURL } from "../config";
-
-export type Versionable = {
-  version: number;
-};
-
-export type WithOnlyVersionRequired<T> = Partial<T> & Versionable;
-
-export type ApiProfile = {
-  is_inbox_enabled: boolean;
-} & Versionable;
-
-export interface IInstallation {
-  uuid: string;
-  token: string;
-  platform: string;
-}
+import { IInstallation, IApiProfile, WithOnlyVersionRequired } from "./types";
 
 const create = () => {
   const api = apisauce.create({
@@ -42,11 +31,11 @@ const create = () => {
   };
 
   const readProfile = () => {
-    return api.get<ApiProfile>("api/v1/profile");
+    return api.get<IApiProfile>("api/v1/profile");
   };
 
-  const updateProfile = (newProfile: WithOnlyVersionRequired<ApiProfile>) => {
-    return api.post<ApiProfile>("api/v1/profile", JSON.stringify(newProfile));
+  const updateProfile = (newProfile: WithOnlyVersionRequired<IApiProfile>) => {
+    return api.post<IApiProfile>("api/v1/profile", JSON.stringify(newProfile));
   };
 
   return {

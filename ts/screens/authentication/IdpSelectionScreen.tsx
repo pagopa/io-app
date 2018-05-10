@@ -19,13 +19,13 @@ import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { selectIdp } from "../../store/actions/session";
-import { IdentityProvider } from "../../api/types";
+import { IIdentityProvider } from "../../api/types";
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
-const idps: ReadonlyArray<IdentityProvider> = [
+const idps: ReadonlyArray<IIdentityProvider> = [
   {
     id: "infocertid",
     name: "Infocert",
@@ -88,7 +88,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
     this.props.navigation.goBack();
   }
 
-  private onIdpSelected(idp: IdentityProvider): void {
+  private onIdpSelected(idp: IIdentityProvider): void {
     this.props.dispatch(selectIdp(idp));
   }
 

@@ -2,7 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
-import { ApiProfile, WithOnlyVersionRequired } from "../../api/ProxyApi";
+import { IApiProfile, WithOnlyVersionRequired } from "../../api/types";
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_REQUEST,
@@ -19,7 +19,7 @@ export type ProfileLoadRequest = Readonly<{
 
 export type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
-  payload: ApiProfile;
+  payload: IApiProfile;
 }>;
 
 export type ProfileLoadFailure = Readonly<{
@@ -29,12 +29,12 @@ export type ProfileLoadFailure = Readonly<{
 
 export type ProfileUpdateRequest = Readonly<{
   type: typeof PROFILE_UPDATE_REQUEST;
-  payload: WithOnlyVersionRequired<ApiProfile>;
+  payload: WithOnlyVersionRequired<IApiProfile>;
 }>;
 
 export type ProfileUpdateSuccess = Readonly<{
   type: typeof PROFILE_UPDATE_SUCCESS;
-  payload: ApiProfile;
+  payload: IApiProfile;
 }>;
 
 export type ProfileUpdateFailure = Readonly<{
@@ -56,7 +56,7 @@ export const loadProfile = (): ProfileLoadRequest => ({
 });
 
 export const updateProfile = (
-  newProfile: WithOnlyVersionRequired<ApiProfile>
+  newProfile: WithOnlyVersionRequired<IApiProfile>
 ): ProfileUpdateRequest => ({
   type: PROFILE_UPDATE_REQUEST,
   payload: newProfile

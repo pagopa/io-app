@@ -2,8 +2,7 @@
  * Action types and action creator related to the Session.
  */
 
-import { IdentityProvider } from "../../api/types";
-import { SessionState } from "../reducers/session";
+import { IIdentityProvider } from "../../api/types";
 import {
   IDP_SELECTED,
   LOGIN_FAILURE,
@@ -14,7 +13,7 @@ import {
 // Actions
 export type IdpSelected = Readonly<{
   type: typeof IDP_SELECTED;
-  payload: IdentityProvider;
+  payload: IIdentityProvider;
 }>;
 
 export type LoginSuccess = Readonly<{
@@ -39,7 +38,7 @@ export type SessionActions =
   | SessionInitializeSuccess;
 
 // Creators
-export const selectIdp = (idp: IdentityProvider): IdpSelected => ({
+export const selectIdp = (idp: IIdentityProvider): IdpSelected => ({
   type: IDP_SELECTED,
   payload: idp
 });
