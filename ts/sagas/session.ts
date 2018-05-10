@@ -21,11 +21,11 @@ import { sessionSelector, SessionState } from "../store/reducers/session";
 function* loginStep(action: LoginSuccess): Iterator<Effect> {
   // The user loggedin successfully
 
-  // Fetch the Profile
-  yield put(loadProfile());
-
   // Session is established we can dispatch SESSION_INITIALIZE_SUCCESS
   yield put(sessionInitializeSuccess(action.payload));
+
+  // Fetch the Profile
+  yield put(loadProfile());
 }
 
 function* idpSelectionStep(): Iterator<Effect> {

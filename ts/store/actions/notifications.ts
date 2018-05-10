@@ -1,3 +1,7 @@
+/**
+ * Action types and action creator related to the Notifications.
+ */
+
 import { NOTIFICATIONS_TOKEN_UPDATE } from "./constants";
 
 export type NotificationsTokenUpdate = Readonly<{

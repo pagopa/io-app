@@ -1,5 +1,8 @@
+/**
+ * A saga to manage notifications
+ */
+
 import { Platform } from "react-native";
-import { delay } from "redux-saga";
 import { call, Effect, select, takeLatest } from "redux-saga/effects";
 
 import { proxyApi } from "../api";
@@ -15,13 +18,16 @@ const notificationsPlatform = Platform.select({
   android: "gcm"
 });
 
+/**
+ * This generator function call the ProxyApi `installation` endpoint
+ */
 function* updateInstallation(): Iterator<Effect> {
-  // Get the notifications installation data
-  yield call(delay, 20000);
+  // Get the notifications installation data from the store
   const notificationsInstallation: InstallationState = yield select(
     notificationsInstallationSelector
   );
 
+  // Check if the notification server token is available
   if (notificationsInstallation.token) {
     yield call(
       callApiWithRetries,

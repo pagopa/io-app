@@ -1,3 +1,7 @@
+/**
+ * Notifications installation reducer
+ */
+
 import uuid from "uuid";
 
 import { Action } from "../../../actions/types";

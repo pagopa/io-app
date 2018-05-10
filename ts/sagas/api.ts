@@ -1,3 +1,7 @@
+/**
+ * Saga method to set the apisauce ProxyApi client bearer token
+ */
+
 import { call, Effect, takeLatest } from "redux-saga/effects";
 
 import { proxyApi } from "../api";

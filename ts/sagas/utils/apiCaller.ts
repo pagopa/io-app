@@ -1,5 +1,5 @@
 /**
- * Saga helper methods with option retry strategy in case of errors
+ * Saga helper methods to call API endpoints with optional retry strategy in case of errors
  */
 
 import { delay } from "redux-saga";
@@ -40,7 +40,9 @@ export function* callApiWithRetries(
   for (let i = 0; i <= RETRIES; i++) {
     // tslint:disable-next-line
     response = yield call(apiRequest, ...rest);
-    if (!response.ok) {
+    if (response.ok) {
+      break;
+    } else {
       // TODO: Add a specific handler for HTTP 401 (token expired)
       if (i < RETRIES) {
         yield call(delay, RETRIES_DELAY);
