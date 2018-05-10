@@ -4,4 +4,3 @@ export type ThemeSimpleValue = undefined | number | string;
 export type Theme = {
   [key: string]: ThemeSimpleValue | Theme;
 };
-

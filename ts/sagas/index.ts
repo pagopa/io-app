@@ -4,11 +4,10 @@
 import { networkEventsListenerSaga } from "react-native-offline";
 import { all, Effect, fork } from "redux-saga/effects";
 import sessionSaga from "./session";
-import onboardingSaga from "./onboarding"
+import onboardingSaga from "./onboarding";
 import profileSaga from "./profile";
 import messagesSaga from "./messages";
 import mainSaga from "./main";
-
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
 // We use `withRedux: true` to store the network status in the redux store.

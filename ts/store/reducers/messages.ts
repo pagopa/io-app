@@ -6,37 +6,32 @@
  * @flow
  */
 
-import {
-  MESSAGES_LOAD_SUCCESS
-} from '../actions/constants'
-
-import { Action } from '../../actions/types'
+import { MESSAGES_LOAD_SUCCESS } from "../actions/constants";
+import { Action } from "../../actions/types";
 
 export type ObjectListOfNormalizedMessages = {
-  [id: string] : {
-        id: string,
-        date: string,
-        content: { subject: string, markdown: string},
-        sender_service_id: string
-      }
-  }
+  [id: string]: {
+    id: string;
+    date: string;
+    content: { subject: string; markdown: string };
+    sender_service_id: string;
+  };
+};
 // A type to store single message of the user
 export type ListMessages = {
-  byId:  ObjectListOfNormalizedMessages,
-  allIds: ReadonlyArray<string>
-}
+  byId: ObjectListOfNormalizedMessages;
+  allIds: ReadonlyArray<string>;
+};
 // A type to store all the messages of the user
 export type NormalizedMessages = {
-  messages?: ListMessages,
-  page_size?: number,
-  next?: string
-}
+  messages: ListMessages;
+  page_size: number;
+  next: string;
+};
 
+export type MessagesState = NormalizedMessages | {};
 
-export type MessagesState = NormalizedMessages | null
-
-export const INITIAL_STATE = {}
-
+export const INITIAL_STATE: MessagesState = {};
 // To normalize
 const reducer = (
   state: MessagesState = INITIAL_STATE,
@@ -44,17 +39,20 @@ const reducer = (
 ): MessagesState => {
   switch (action.type) {
     case MESSAGES_LOAD_SUCCESS:
-      return action.payload
+      return action.payload;
     default:
-      return state
+      return state;
+  }
+};
+
+export function getAllMessagesById(
+  state: NormalizedMessages
+): ObjectListOfNormalizedMessages | {} {
+  if (Object.keys(state).length !== 0) {
+    return state.messages.byId;
+  } else {
+    return state;
   }
 }
 
-export function getAllMessagesById(state: MessagesState ) : ObjectListOfNormalizedMessages | MessagesState {
-  if (Object.keys(state).length !== 0 ) {
-  return state.messages.byId
-  }
-  else return state
-}
-
-export default reducer
+export default reducer;

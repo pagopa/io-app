@@ -10,7 +10,6 @@ import { OnboardingState } from "../store/reducers/onboarding";
 import { ProfileState } from "../store/reducers/profile";
 import { NormalizedMessages } from "../store/reducers/messages";
 
-
 export type NetworkState = Readonly<{
   isConnected: boolean;
   actionQueue: ReadonlyArray<Action>;

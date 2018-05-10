@@ -12,6 +12,7 @@ declare module "native-base" {
       modal?: boolean;
       footer?: boolean;
       header?: boolean;
+      messageSubjectContainer?: boolean;
     }
   }
 }
@@ -28,6 +29,10 @@ export default (): Theme => {
       },
 
       height: variables.spacerHeight
+    },
+
+    ".messageSubjectContainer": {
+      paddingBottom: variables.viewMessageSubjectContainerPadding
     },
 
     ".modal": {

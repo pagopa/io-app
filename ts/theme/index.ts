@@ -18,6 +18,7 @@ import viewTheme from "./components/View";
 import { Theme } from "./types";
 import variables from "./variables";
 import messageComponent from "./components/MessageComponent";
+import iconTheme from "./components/Icon";
 
 const theme = (): Theme => {
   const nbTheme = getTheme(variables);
@@ -52,9 +53,12 @@ const theme = (): Theme => {
     "NativeBase.ViewNB": {
       ...viewTheme()
     },
+    "NativeBase.Icon": {
+      ...iconTheme()
+    },
     "NativeBase.MessageComponent": {
       ...messageComponent()
-    },
+    }
   };
 
   // We need ad deep merge

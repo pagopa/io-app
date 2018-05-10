@@ -2,21 +2,39 @@
   "messages": [
     {
       "id": "mess1",
-      "date": "22/04/2018",
+      "date": "1525942800",
       "content": {
-        "subject": "soggetto del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto",
-        "markdown": "Testo del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto"
+        "subject": "Soggetto del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto.",
+        "markdown": "Testo del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto."
       },
       "sender_service_id": "Pinco Pallo"
     },
     {
       "id": "mess2",
-      "date": "23/04/2018",
+      "date": "1525867200",
       "content": {
-        "subject": "soggetto del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto",
+        "subject": "Soggetto del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto.",
         "markdown": "Testo del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto"
       },
-      "sender_service_id": "Well Test"
+      "sender_service_id": "Wellnet Test"
+    },
+    {
+      "id": "mess3",
+      "date": "1524472200",
+      "content": {
+        "subject": "Soggetto del messaggio 3 lorem ipsum test scritto per vedere l'allinemanto.",
+        "markdown": "Testo del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto"
+      },
+      "sender_service_id": "Comune di Milano"
+    },
+    {
+      "id": "mess4",
+      "date": "1524572400",
+      "content": {
+        "subject": "Soggetto del messaggio 4 lorem ipsum test scritto per vedere l'allinemanto!",
+        "markdown": "Testo del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto"
+      },
+      "sender_service_id": "Ente statale diverso dai precedenti"
     }
   ],
   "page_size": 2,

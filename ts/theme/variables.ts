@@ -18,6 +18,10 @@ const customVariables = {
   // Android
   btnUppercaseAndroidText: false,
 
+  // Flex
+  flexLeftAlign: 1,
+  flexRightAlign: 0,
+
   // Button
   btnTextFontWeight: "700" as FontWeight,
   btnHeight: 48,
@@ -60,9 +64,8 @@ const customVariables = {
   lineHeight: 24,
 
   // Icon
-  iconFamily: 'Entypo',
-  iconRightColor:'#0073E6' ,
-
+  iconFamily: "Entypo",
+  iconRightColor: "#0073E6",
 
   // Content
   contentPadding: 24,
@@ -93,8 +96,6 @@ const customVariables = {
   h3Color: "#17324D",
   h3FontWeight: "600" as FontWeight,
 
-
-
   // Header
   headerPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
@@ -115,16 +116,18 @@ const customVariables = {
   modalHeaderHeight: 75,
 
   // Text
-  textColor: '#5C6F82',
-  textLinkColor: '#0063CF',
-  textLinkWeight: '600',
-  textBoldWeight: '600',
+  textColor: "#5C6F82",
+  textLinkColor: "#0063CF",
+  textLinkWeight: "600",
+  textBoldWeight: "600",
   textBoldLineHeight: 18,
   dateTextFontSize: 14,
 
-  //Item
+  // Item
   itemPaddingTopSpacer: 20,
 
+  // Message
+  viewMessageSubjectContainerPadding: 20,
 
   // Spacer
   spacerHeight: 16,

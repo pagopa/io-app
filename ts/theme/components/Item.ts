@@ -6,8 +6,8 @@ import variables from "../variables";
 declare module "native-base" {
   namespace NativeBase {
     interface Item {
-      active?: boolean,
-      spacer?: boolean
+      active?: boolean;
+      spacer?: boolean;
     }
   }
 }
@@ -20,7 +20,7 @@ export default (): Theme => {
         .darken(0.2)
         .hex()
     },
-    '.spacer': {
+    ".spacer": {
       paddingTop: variables.itemPaddingTopSpacer
     }
   };

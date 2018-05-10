@@ -1,15 +1,26 @@
-import {Theme} from '../types'
-import variables from '../variables'
-import {makeFontStyleObject} from "../fonts";
-import {Platform} from "react-native";
+import { Theme } from "../types";
+import variables from "../variables";
+import { TouchableOpacityProperties } from "react-native";
 
+declare module "native-base" {
+  namespace NativeBase {
+    interface MessageComponent extends TouchableOpacityProperties, BsStyle {
+      left?: boolean;
+      right?: boolean;
+    }
+  }
+}
 
 export default (): Theme => {
-  const theme = {
+  return {
+    "NativeBase.Item": {
+      "NativeBase.ViewNB": {
+        flexDirection: "row",
+        flex: variables.flexLeftAlign
+      }
+    },
 
     flexDirection: "column",
-    flex:1,
-  }
-
-  return theme
-}
+    flex: variables.flexLeftAlign
+  };
+};

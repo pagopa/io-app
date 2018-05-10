@@ -5,7 +5,6 @@
 
 import { apiUrlPrefix } from "../config";
 
-
 /**
  * Describes a SPID Identity Provider
  */
@@ -133,44 +132,47 @@ export const postProfile = async (
 };
 
 export type ApiMessage = {
-  id: string,
-  date: string,
+  id: string;
+  date: string;
   content: {
-    subject: string,
-    markdown: string
-  },
-  sender_service_id: string
-}
+    subject: string;
+    markdown: string;
+  };
+  sender_service_id: string;
+};
 
 // A type to store all the messages of the user
 export type ApiMessages = {
-  messages: ReadonlyArray<ApiMessage>,
-  page_size: number,
-  next: string
-}
+  messages: ReadonlyArray<ApiMessage>;
+  page_size: number;
+  next: string;
+};
 
 // Fetch the messages from the Proxy
 export const fetchMessages = async (
   token: string
 ): Promise<ApiFetchResult<ApiMessages>> => {
   // TODO: change the fetch URL with  ${apiUrlPrefix}/api/v1/message
-  const response = await fetch('http://localhost:8081/ts/api/mock/messages.json', {
-    method: 'get',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+  const response = await fetch(
+    "http://localhost:8081/ts/api/mock/messages.json",
+    {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
     }
-  })
+  );
   if (response.ok) {
-    const messages = await response.json()
+    const messages = await response.json();
     return {
       isError: false,
       result: messages
-    }
+    };
   } else {
     return {
       isError: true,
-      error: new Error('Error fetching messages')
-    }
+      error: new Error("Error fetching messages")
+    };
   }
 };
