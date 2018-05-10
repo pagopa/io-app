@@ -31,6 +31,8 @@ target 'ItaliaApp' do
 
   pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end
 
 # Fix a open bug in react-native-config

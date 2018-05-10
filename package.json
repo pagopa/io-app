@@ -29,10 +29,11 @@
     "react-native-i18n": "^2.0.12",
     "react-native-keychain": "^3.0.0-rc.3",
     "react-native-mixpanel": "^0.0.16",
-    "react-native-offline": "^3.7.4",
     "react-native-modal": "^6.0.0",
+    "react-native-offline": "^3.7.4",
     "react-native-push-notification": "^3.0.2",
     "react-native-sha256": "^1.0.1",
+    "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.5.12",
     "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "5.0.7",
@@ -57,6 +58,7 @@
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-mixpanel": "^0.1.0",
     "@types/react-native-push-notification": "^3.0.2",
+    "@types/react-native-vector-icons": "^4.6.1",
     "@types/react-navigation": "^1.5.10",
     "@types/react-redux": "^5.0.18",
     "@types/react-test-renderer": "^16.0.1",
@@ -108,7 +110,8 @@
   },
   "rnpm": {
     "assets": [
-      "./assets/fonts/TitilliumWeb"
+      "./assets/fonts/TitilliumWeb",
+      "./assets/fonts/io-icon-font"
     ]
   }
 }

@@ -13,8 +13,8 @@ import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
-const customVariables = {
-  ...materialVariables,
+// tslint:disable-next-line
+const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
 
@@ -135,6 +135,6 @@ const customVariables = {
   spacerExtralargeHeight: 40,
 
   borderRadiusBase: 4
-};
+});
 
 export default customVariables;
