@@ -3,7 +3,7 @@
  */
 
 import { Action } from "../../actions/types";
-import { IdentityProvider } from "../../api";
+import { IdentityProvider } from "../../api/types";
 import { GlobalState } from "../../reducers/types";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
 
@@ -49,6 +49,9 @@ export function isUnauthenticatedWithoutIdpSessionState(
 }
 
 // Selectors
+export const sessionSelector = (state: GlobalState): SessionState =>
+  state.session;
+
 export const isAuthenticatedSelector = (state: GlobalState): boolean =>
   state.session.isAuthenticated;
 

@@ -1,13 +1,13 @@
 import { call, Effect, takeLatest } from "redux-saga/effects";
 
-import { proxyApi } from "../api/api";
-import { LOGIN_SUCCESS } from "../store/actions/constants";
-import { LoginSuccess } from "../store/actions/session";
+import { proxyApi } from "../api";
+import { SESSION_INITIALIZE_SUCCESS } from "../store/actions/constants";
+import { SessionInitializeSuccess } from "../store/actions/session";
 
-function* setBearerToken(action: LoginSuccess) {
+function* setBearerToken(action: SessionInitializeSuccess) {
   yield call(proxyApi.setBearerToken, action.payload);
 }
 
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(LOGIN_SUCCESS, setBearerToken);
+  yield takeLatest(SESSION_INITIALIZE_SUCCESS, setBearerToken);
 }

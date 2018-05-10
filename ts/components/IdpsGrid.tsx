@@ -9,7 +9,7 @@ import {
 
 import { Button, View } from "native-base";
 
-import { IdentityProvider } from "../utils/api";
+import { IdentityProvider } from "../api/types";
 
 import variables from "../theme/variables";
 

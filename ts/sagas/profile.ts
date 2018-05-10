@@ -5,7 +5,7 @@
 import { ApiResponse } from "apisauce";
 import { call, Effect, put, takeLatest } from "redux-saga/effects";
 
-import { proxyApi } from "../api/api";
+import { proxyApi } from "../api";
 import { ApiProfile } from "../api/ProxyApi";
 import {
   PROFILE_LOAD_FAILURE,

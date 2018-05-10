@@ -19,7 +19,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { selectIdp } from "../../store/actions/session";
-import { IdentityProvider } from "../../utils/api";
+import { IdentityProvider } from "../../api/types";
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

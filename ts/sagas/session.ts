@@ -9,22 +9,23 @@ import ROUTES from "../navigation/routes";
 import {
   APPLICATION_INITIALIZED,
   IDP_SELECTED,
-  LOGIN_SUCCESS,
-  SESSION_INITIALIZE_SUCCESS
+  LOGIN_SUCCESS
 } from "../store/actions/constants";
 import { loadProfile } from "../store/actions/profile";
-import { isAuthenticatedSelector } from "../store/reducers/session";
+import {
+  LoginSuccess,
+  sessionInitializeSuccess
+} from "../store/actions/session";
+import { sessionSelector, SessionState } from "../store/reducers/session";
 
-function* loginStep(): Iterator<Effect> {
+function* loginStep(action: LoginSuccess): Iterator<Effect> {
   // The user loggedin successfully
 
   // Fetch the Profile
   yield put(loadProfile());
 
   // Session is established we can dispatch SESSION_INITIALIZE_SUCCESS
-  yield put({
-    type: SESSION_INITIALIZE_SUCCESS
-  });
+  yield put(sessionInitializeSuccess(action.payload));
 }
 
 function* idpSelectionStep(): Iterator<Effect> {
@@ -55,21 +56,19 @@ function* landingStep(): Iterator<Effect> {
 
 function* sessionSaga(): Iterator<Effect> {
   // From the state we check if the session is already established
-  const isAuthenticated: boolean = yield select(isAuthenticatedSelector);
+  const session: SessionState = yield select(sessionSelector);
 
-  if (!isAuthenticated) {
-    // If the session is not established we continue to the landing step
-    yield call(landingStep);
-  } else {
+  if (session.isAuthenticated) {
     /**
      * If the session is established we can dispatch SESSION_INITIALIZE_SUCCESS.
      *
      * TODO: Start the real session management (inizialization/refresh)
      * @https://www.pivotaltracker.com/story/show/156692215
      */
-    yield put({
-      type: SESSION_INITIALIZE_SUCCESS
-    });
+    yield put(sessionInitializeSuccess(session.token));
+  } else {
+    // If the session is not established we continue to the landing step
+    yield call(landingStep);
   }
 }
 
