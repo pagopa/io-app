@@ -78,7 +78,7 @@ export const PortfolioStyles = StyleSheet.create({
   },
   pfback: {
     backgroundColor: variables.brandDarkGray
-  }, 
+  },
   pfwhite: {
     backgroundColor: variables.brandGray,
     flex: 1
