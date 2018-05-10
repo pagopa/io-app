@@ -8,7 +8,7 @@
  */
 
 import { Action } from "../../actions/types";
-import { ApiProfile } from "../../api";
+import { ApiProfile } from "../../api/ProxyApi";
 import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPDATE_SUCCESS

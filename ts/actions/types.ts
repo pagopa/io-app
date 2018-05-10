@@ -14,7 +14,7 @@ import { GlobalState } from "../reducers/types";
 import { ApplicationActions } from "../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
 import { ErrorActions } from "../store/actions/error";
-import { NotificationsActions } from '../store/actions/notifications';
+import { NotificationsActions } from "../store/actions/notifications";
 import { OnboardingActions } from "../store/actions/onboarding";
 import { ProfileActions } from "../store/actions/profile";
 import { SessionActions } from "../store/actions/session";

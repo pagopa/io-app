@@ -2,7 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
-import { ApiProfile, WithOnlyVersionRequired } from "../../api";
+import { ApiProfile, WithOnlyVersionRequired } from "../../api/ProxyApi";
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_REQUEST,
