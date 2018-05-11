@@ -4,12 +4,12 @@
 
 import apisauce, { ApiResponse } from "apisauce";
 
-import { apiUrlPrefix as proxyBaseURL } from "../config";
+import { apiDefaultTimeoutMs, apiUrlPrefix as proxyBaseURL } from "../config";
 import { IApiProfile, IInstallation, WithOnlyVersionRequired } from "./types";
 
 const api = apisauce.create({
   baseURL: proxyBaseURL,
-  timeout: 2500
+  timeout: apiDefaultTimeoutMs
 });
 
 function setBearerToken(token: string): void {

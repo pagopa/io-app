@@ -25,7 +25,7 @@ configureErrorHandler()
 // Create store and persistor
 const { store, persistor } = configureStoreAndPersistor();
 
-// Configure the application to receive push notification
+// Configure the application to receive push notifications
 configurePushNotifications(store);
 
 /**

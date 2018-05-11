@@ -5,14 +5,16 @@
 import { delay } from "redux-saga";
 import { call, Effect } from "redux-saga/effects";
 
+import { apiDefaultMaxRetries, apiDefaultRetriesDelayMs } from "../../config";
+
 export interface IRetriesOptions {
-  RETRIES: number;
-  RETRIES_DELAY: number;
+  MAX_RETRIES: number;
+  RETRIES_DELAY_MS: number;
 }
 
 const defaultRetriesOptions = {
-  RETRIES: 0,
-  RETRIES_DELAY: 0
+  MAX_RETRIES: apiDefaultMaxRetries,
+  RETRIES_DELAY_MS: apiDefaultRetriesDelayMs
 };
 
 // tslint:disable-next-line
@@ -31,20 +33,21 @@ export function* callApiWithRetries(
   // tslint:disable-next-line
   ...rest: any[]
 ): Iterator<Effect> {
-  const { RETRIES, RETRIES_DELAY } = retriesOptions;
+  const { MAX_RETRIES, RETRIES_DELAY_MS } = retriesOptions;
   // tslint:disable-next-line
   let response;
 
   // tslint:disable-next-line
-  for (let i = 0; i <= RETRIES; i++) {
+  for (let i = 0; i <= MAX_RETRIES; i++) {
     // tslint:disable-next-line
     response = yield call(apiRequest, ...rest);
     if (response.ok) {
       break;
     } else {
       // TODO: Add a specific handler for HTTP 401 (token expired)
-      if (i < RETRIES) {
-        yield call(delay, RETRIES_DELAY);
+      // https://www.pivotaltracker.com/story/show/157509296
+      if (i < MAX_RETRIES) {
+        yield call(delay, RETRIES_DELAY_MS);
       }
     }
   }
