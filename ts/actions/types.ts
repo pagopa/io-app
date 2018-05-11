@@ -14,6 +14,7 @@ import { GlobalState } from "../reducers/types";
 import { ApplicationActions } from "../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
 import { ErrorActions } from "../store/actions/error";
+import { NotificationsActions } from "../store/actions/notifications";
 import { OnboardingActions } from "../store/actions/onboarding";
 import { ProfileActions } from "../store/actions/profile";
 import { SessionActions } from "../store/actions/session";
@@ -32,6 +33,7 @@ export type Action =
   | SessionActions
   | OnboardingActions
   | ProfileActions
+  | NotificationsActions
   | ErrorActions;
 
 /* eslint-disable no-use-before-define */
@@ -41,7 +43,7 @@ export type GetState = () => GlobalState;
 
 export type Dispatch = DispatchAPI<Action, GlobalState>;
 
-export type Store = ReduxStore<GlobalState>;
+export type Store = ReduxStore<GlobalState, Action>;
 
 export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;
 

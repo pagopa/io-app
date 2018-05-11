@@ -2,16 +2,11 @@
  * A saga that manages the Profile.
  */
 
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { ApiResponse } from "apisauce";
+import { call, Effect, put, takeLatest } from "redux-saga/effects";
 
-import {
-  ApiFetchResult,
-  ApiProfile,
-  fetchProfile,
-  isApiFetchFailure,
-  postProfile
-} from "../api";
-import { GlobalState } from "../reducers/types";
+import { proxyApi } from "../api";
+import { IApiProfile } from "../api/types";
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_REQUEST,
@@ -22,31 +17,21 @@ import {
 } from "../store/actions/constants";
 import { ProfileUpdateRequest } from "../store/actions/profile";
 
-// A selector to get the token from the state
-const getSessionToken = (state: GlobalState): string | undefined =>
-  state.session.isAuthenticated ? state.session.token : undefined;
-
 // A saga to load the Profile.
 function* loadProfile(): Iterator<Effect> {
   try {
-    // Get the token from the state
-    const token: string = yield select(getSessionToken);
-
     // Fetch the profile from the proxy
-    const response: ApiFetchResult<ApiProfile> = yield call(
-      fetchProfile,
-      token
-    );
+    const response: ApiResponse<IApiProfile> = yield call(proxyApi.readProfile);
 
-    if (isApiFetchFailure(response)) {
+    if (response.ok) {
+      // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
+      yield put({ type: PROFILE_LOAD_SUCCESS, payload: response.data });
+    } else {
       // If the api response is an error then dispatch the PROFILE_LOAD_FAILURE action.
       yield put({
         type: PROFILE_LOAD_FAILURE,
-        payload: response.error
+        payload: response.problem
       });
-    } else {
-      // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
-      yield put({ type: PROFILE_LOAD_SUCCESS, payload: response.result });
     }
   } catch (error) {
     // If the api request raise an exception then dispatch the PROFILE_LOAD_FAILURE action.
@@ -60,24 +45,20 @@ function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
     // Get the new Profile from the action payload
     const newProfile = action.payload;
 
-    // Get the token from the state
-    const token: string = yield select(getSessionToken);
-
     // Post the new Profile to the proxy
-    const response: ApiFetchResult<ApiProfile> = yield call(
-      postProfile,
-      token,
+    const response: ApiResponse<IApiProfile> = yield call(
+      proxyApi.updateProfile,
       newProfile
     );
-    if (isApiFetchFailure(response)) {
+    if (response.ok) {
+      // If the api returns a valid Profile then dispatch the PROFILE_UPDATE_SUCCESS action.
+      yield put({ type: PROFILE_UPDATE_SUCCESS, payload: response.data });
+    } else {
       // If the api response is an error then dispatch the PROFILE_UPDATE_FAILURE action.
       yield put({
         type: PROFILE_UPDATE_FAILURE,
-        payload: response.error
+        payload: response.problem
       });
-    } else {
-      // If the api returns a valid Profile then dispatch the PROFILE_UPDATE_SUCCESS action.
-      yield put({ type: PROFILE_UPDATE_SUCCESS, payload: response.result });
     }
   } catch (error) {
     // If the api request raise an exception then dispatch the PROFILE_UPDATE_FAILURE action.

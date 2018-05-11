@@ -10,6 +10,7 @@ import { Action } from "../actions/types";
 
 import errorReducer from "../store/reducers/error";
 import loadingReducer from "../store/reducers/loading";
+import notificationsReducer from "../store/reducers/notifications";
 import onboardingReducer from "../store/reducers/onboarding";
 import profileReducer from "../store/reducers/profile";
 import sessionReducer from "../store/reducers/session";
@@ -42,7 +43,8 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   // DATA
   session: sessionReducer,
   onboarding: onboardingReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  notifications: notificationsReducer
 };
 
 export default reducers;

@@ -3,7 +3,7 @@
  */
 
 import { Action } from "../../actions/types";
-import { IdentityProvider } from "../../api";
+import { IIdentityProvider } from "../../api/types";
 import { GlobalState } from "../../reducers/types";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
 
@@ -13,7 +13,7 @@ export type UnauthenticatedWithoutIdpSessionState = Readonly<{
 
 export type UnauthenticatedWithIdpSessionState = Readonly<{
   isAuthenticated: false;
-  idp: IdentityProvider;
+  idp: IIdentityProvider;
 }>;
 
 export type UnauthenticatedSessionState =
@@ -22,7 +22,7 @@ export type UnauthenticatedSessionState =
 
 export type AuthenticatedSessionState = Readonly<{
   isAuthenticated: true;
-  idp: IdentityProvider;
+  idp: IIdentityProvider;
   token: string;
   expiredAt?: number;
 }>;
@@ -49,6 +49,9 @@ export function isUnauthenticatedWithoutIdpSessionState(
 }
 
 // Selectors
+export const sessionSelector = (state: GlobalState): SessionState =>
+  state.session;
+
 export const isAuthenticatedSelector = (state: GlobalState): boolean =>
   state.session.isAuthenticated;
 

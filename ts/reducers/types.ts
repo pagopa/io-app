@@ -4,6 +4,7 @@ import { FormStateMap } from "redux-form";
 import { Action } from "../actions/types";
 import { ErrorState } from "../store/reducers/error";
 import { LoadingState } from "../store/reducers/loading";
+import { NotificationsState } from "../store/reducers/notifications";
 import { OnboardingState } from "../store/reducers/onboarding";
 import { ProfileState } from "../store/reducers/profile";
 import { SessionState } from "../store/reducers/session";
@@ -24,4 +25,5 @@ export type GlobalState = Readonly<{
   session: SessionState;
   onboarding: OnboardingState;
   profile: ProfileState;
+  notifications: NotificationsState;
 }>;
