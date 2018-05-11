@@ -2,51 +2,47 @@
  * Proxy client using apisauce
  */
 
-import apisauce from "apisauce";
+import apisauce, { ApiResponse } from "apisauce";
 
 import { apiUrlPrefix as proxyBaseURL } from "../config";
 import { IApiProfile, IInstallation, WithOnlyVersionRequired } from "./types";
 
-const create = () => {
-  const api = apisauce.create({
-    baseURL: proxyBaseURL,
-    timeout: 1500
+const api = apisauce.create({
+  baseURL: proxyBaseURL,
+  timeout: 2500
+});
+
+function setBearerToken(token: string): void {
+  api.setHeader("Authorization", `Bearer ${token}`);
+}
+
+function unsetBearerToken(): void {
+  api.deleteHeader("Authorization");
+}
+
+function updateInstallation(
+  installation: IInstallation
+): Promise<ApiResponse<void>> {
+  return api.put(`api/v1/installations/${installation.uuid}`, {
+    platform: installation.platform,
+    pushChannel: installation.token
   });
+}
 
-  const setBearerToken = (token: string) => {
-    api.setHeader("Authorization", `Bearer ${token}`);
-    return Promise.resolve();
-  };
+function readProfile(): Promise<ApiResponse<IApiProfile>> {
+  return api.get<IApiProfile>("api/v1/profile");
+}
 
-  const unsetBearerToken = () => {
-    api.deleteHeader("Authorization");
-    return Promise.resolve();
-  };
-
-  const updateInstallation = (installation: IInstallation) => {
-    return api.put(`api/v1/installations/${installation.uuid}`, {
-      platform: installation.platform,
-      pushChannel: installation.token
-    });
-  };
-
-  const readProfile = () => {
-    return api.get<IApiProfile>("api/v1/profile");
-  };
-
-  const updateProfile = (newProfile: WithOnlyVersionRequired<IApiProfile>) => {
-    return api.post<IApiProfile>("api/v1/profile", JSON.stringify(newProfile));
-  };
-
-  return {
-    setBearerToken,
-    unsetBearerToken,
-    updateInstallation,
-    readProfile,
-    updateProfile
-  };
-};
+function updateProfile(
+  newProfile: WithOnlyVersionRequired<IApiProfile>
+): Promise<ApiResponse<IApiProfile>> {
+  return api.post<IApiProfile>("api/v1/profile", JSON.stringify(newProfile));
+}
 
 export default {
-  create
+  setBearerToken,
+  unsetBearerToken,
+  updateInstallation,
+  readProfile,
+  updateProfile
 };

@@ -6,6 +6,6 @@
 
 import ProxyApi from "./ProxyApi";
 
-const proxyApi = ProxyApi.create();
+const proxyApi = ProxyApi;
 
 export { proxyApi };

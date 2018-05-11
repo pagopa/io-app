@@ -25,9 +25,9 @@ const connectionMonitorParameters = {
 
 export default function* root(): Iterator<Effect> {
   yield all([
-    fork(notificationsSaga),
-    fork(apiSaga),
     fork(sessionSaga),
+    fork(apiSaga),
+    fork(notificationsSaga),
     fork(onboardingSaga),
     fork(mainSaga),
     fork(profileSaga),
