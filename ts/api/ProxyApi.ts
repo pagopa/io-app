@@ -5,7 +5,7 @@
 import apisauce from "apisauce";
 
 import { apiUrlPrefix as proxyBaseURL } from "../config";
-import { IInstallation, IApiProfile, WithOnlyVersionRequired } from "./types";
+import { IApiProfile, IInstallation, WithOnlyVersionRequired } from "./types";
 
 const create = () => {
   const api = apisauce.create({

@@ -17,7 +17,6 @@ const defaultRetriesOptions = {
 
 // tslint:disable-next-line
 export function* callApi(apiRequest: any, ...rest: any[]): Iterator<Effect> {
-  console.log("I am callApi");
   return yield call(
     callApiWithRetries,
     apiRequest,

@@ -3,8 +3,8 @@ import * as React from "react";
 import { WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import { ReduxProps } from "../../actions/types";
-import { extractLoginResult } from "../../utils/login";
 import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -14,6 +14,8 @@ import {
   isUnauthenticatedWithoutIdpSessionState,
   SessionState
 } from "../../store/reducers/session";
+import { extractLoginResult } from "../../utils/login";
+
 type ReduxMappedProps = {
   session: SessionState;
 };

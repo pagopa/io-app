@@ -4,8 +4,9 @@
 
 import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
-import { debugRemotePushNotification, gcmSenderId } from "../config";
+
 import { Store } from "../actions/types";
+import { debugRemotePushNotification, gcmSenderId } from "../config";
 import { updateNotificationsToken } from "../store/actions/notifications";
 
 function configurePushNotifications(store: Store) {
