@@ -74,8 +74,8 @@ function normalizeMessages(messages: ApiMessages) {
   };
 }
 
-function formatDate(date: string): string {
-  const a = new Date(date * 1000);
+function formatDate(date: string | any): string {
+  const messageDate = new Date(date * 1000);
 
   const nowDate = new Date();
   const nowYear = nowDate.getFullYear();
@@ -95,23 +95,23 @@ function formatDate(date: string): string {
     "12"
   ];
   const nowDateM = months[nowDate.getUTCMonth()];
-  const y = a.getFullYear();
-  const d = a.getDate();
-  const m = months[a.getUTCMonth()];
-  const h = a.getHours();
-  const min = a.getMinutes();
+  const year = messageDate.getFullYear();
+  const day = messageDate.getDate();
+  const month = months[messageDate.getUTCMonth()];
+  const hour = messageDate.getHours();
+  const min = messageDate.getMinutes();
 
-  if (nowYear === y && nowDateM === m && nowDateD === d) {
+  if (nowYear === year && nowDateM === month && nowDateD === day) {
     if (min < 9) {
-      return `${h}.0${min}`;
+      return `${hour}.0${min}`;
     } else {
-      return `${h}.${min}`;
+      return `${hour}.${min}`;
     }
   } else {
-    if (nowYear === y && nowDateM === m && nowDateD - 1 === d) {
+    if (nowYear === year && nowDateM === month && nowDateD - 1 === day) {
       return "ieri";
     } else {
-      return `${d}/${m}`;
+      return `${day}/${month}`;
     }
   }
 }
@@ -121,7 +121,7 @@ function* loadMessages(): Iterator<Effect> {
     // Get the token from the state
     const token: string = yield select(getSessionToken);
 
-    // Fetch the profile from the proxy
+    // Fetch the messages from the proxy
     const response: ApiFetchResult<ApiMessages> = yield call(
       fetchMessages,
       token
@@ -134,7 +134,7 @@ function* loadMessages(): Iterator<Effect> {
         payload: response.error
       });
     } else {
-      // If the api returns a valid Profile then dispatch the MESSAGES_LOAD_SUCCESS action.
+      // If the api returns a valid Messages Object then dispatch the MESSAGES_LOAD_SUCCESS action.
       yield put({
         type: MESSAGES_LOAD_SUCCESS,
         payload: normalizeMessages(response.result)
