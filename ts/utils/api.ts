@@ -4,19 +4,30 @@
 
 import { fromEither } from "fp-ts/lib/Option";
 
-import { ExtendedProfile as ApiNewUserProfile } from "../../definitions/backend/ExtendedProfile";
-import { Profile as ApiUserProfile } from "../../definitions/backend/Profile";
+import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+import { Profile } from "../../definitions/backend/Profile";
+
+import { getApi } from "./req";
+
+import { FiscalCode } from "../../definitions/backend/FiscalCode";
+
+export async function getProfile(): Promise<FiscalCode | undefined> {
+  return getApi<FiscalCode>({
+    method: "get",
+    response_body_type: FiscalCode
+  });
+}
 
 export async function getUserProfile(
   apiUrlPrefix: string,
   token: string
-): Promise<ApiUserProfile | undefined> {
+): Promise<Profile | undefined> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: "get",
       headers: { Authorization: `Bearer ${token}` }
     });
-    const profileOrError = ApiUserProfile.decode(await response.json());
+    const profileOrError = Profile.decode(await response.json());
     return fromEither(profileOrError).toUndefined();
   } catch (error) {
     return undefined;
@@ -28,8 +39,8 @@ export async function getUserProfile(
 export async function setUserProfile(
   apiUrlPrefix: string,
   token: string,
-  newProfile: ApiNewUserProfile
-): Promise<ApiUserProfile | number | undefined> {
+  newProfile: ExtendedProfile
+): Promise<Profile | number | undefined> {
   try {
     const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
       method: "post",
