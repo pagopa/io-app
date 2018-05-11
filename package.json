@@ -12,7 +12,7 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/master/api.yaml --out-dir ./definitions/backend"
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.17/api.yaml --out-dir ./definitions/backend"
   },
   "dependencies": {
     "color": "^3.0.0",
