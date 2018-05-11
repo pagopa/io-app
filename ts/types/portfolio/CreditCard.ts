@@ -54,12 +54,12 @@ export class CreditCard {
   constructor(
     public id: number,
     public lastUsage: string,
-    public number: string,
+    public ccNumber: string,
     public image: any,
     public owner: string,
     public expires: string
   ) {
-    this.brand = CreditCard.getCardType(this.number);
+    this.brand = CreditCard.getCardType(this.ccNumber);
   }
 }
 

@@ -27,8 +27,8 @@ const BOTTOM_SIZE = 4;
 export class PayLayout extends React.Component<Props, never> {
   private payNoticeButton(): React.ReactNode {
     return (
-      <View footer>
-        <Button block>
+      <View footer={true}>
+        <Button block={true}>
           <Icon type="FontAwesome" name="qrcode" />
           <Text>{I18n.t("portfolio.payNotice")}</Text>
         </Button>

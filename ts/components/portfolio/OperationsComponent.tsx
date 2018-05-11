@@ -48,16 +48,16 @@ export class OperationsList extends React.Component<Props, State> {
           <Icon
             type="FontAwesome"
             name="circle"
-            active
+            active={true}
             style={{ marginTop: 6, fontSize: 10, color: "#0066CC" }}
           />
-          <Text note>{datetime}</Text>
+          <Text note={true}>{datetime}</Text>
         </Row>
       );
     }
     return (
       <Row>
-        <Text note>{datetime}</Text>
+        <Text note={true}>{datetime}</Text>
       </Row>
     );
   }
@@ -112,7 +112,7 @@ export class OperationsList extends React.Component<Props, State> {
                       </Right>
                     </Row>
                     <Row>
-                      <Text note>{item.location}</Text>
+                      <Text note={true}>{item.location}</Text>
                     </Row>
                   </Grid>
                 </Body>

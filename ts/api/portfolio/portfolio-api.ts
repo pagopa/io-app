@@ -12,6 +12,8 @@ const noNew = I18n.t("portfolio.noNewTransactions");
 const todayAt = lastUsage + today;
 const yesterdayAt = lastUsage + yesterday;
 
+// temporarily making this a variable
+// (to mock the deleteCreditCard() api more easily)
 const cards: ReadonlyArray<CreditCard> = [
   new CreditCard(
     1,
@@ -160,7 +162,7 @@ export class PortfolioAPI {
   }
 
   public static getCreditCard(creditCardId: number): CreditCard {
-    const card = cards.find((c): boolean => c.id === creditCardId);
+    const card = cards.find((c: CreditCard): boolean => c.id === creditCardId);
     if (card === undefined) {
       return UNKNOWN_CARD;
     }

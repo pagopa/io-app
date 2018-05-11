@@ -1,9 +1,9 @@
 import { Left, Right, Text } from "native-base";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { PortfolioStyles } from "../../styles";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import ROUTES from "../../../navigation/routes";
+import { PortfolioStyles } from "../../styles";
 import { TopContent, TopContentSubtitlesLR } from "./types";
 
 type Props = Readonly<{

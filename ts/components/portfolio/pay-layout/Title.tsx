@@ -1,6 +1,6 @@
 import { H1 } from "native-base";
-import { Image } from "react-native";
 import * as React from "react";
+import { Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { PortfolioStyles } from "../../styles";
 import { ImageType } from "./PayLayout";

@@ -8,14 +8,14 @@ import {
   ImageType,
   PayLayout
 } from "../../components/portfolio/pay-layout/PayLayout";
+import {
+  topContentSubtitlesLRTouchable,
+  topContentSubtitleTouchable
+} from "../../components/portfolio/pay-layout/types";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Operation } from "../../types/portfolio/types";
-import {
-  topContentSubtitleTouchable,
-  topContentSubtitlesLRTouchable
-} from "../../components/portfolio/pay-layout/types";
 
 type ScreenProps = {};
 
@@ -57,8 +57,8 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
       return (
         <View style={PortfolioStyles.container}>
           <Button
-            bordered
-            block
+            bordered={true}
+            block={true}
             style={PortfolioStyles.addPaymentMethodButton}
             onPress={(): boolean =>
               navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)

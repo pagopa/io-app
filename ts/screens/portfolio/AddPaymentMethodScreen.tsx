@@ -108,7 +108,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             )}
           />
           <Text
-            link
+            link={true}
             style={{ marginTop: 10 }}
             onPress={(): void => this.setState({ isTosModalVisible: true })}
           >
@@ -116,10 +116,10 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           </Text>
         </Content>
 
-        <View footer>
+        <View footer={true}>
           <Button
-            block
-            light
+            block={true}
+            light={true}
             style={{ backgroundColor: "#5C6F82" }}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
@@ -127,8 +127,8 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           </Button>
         </View>
 
-        <Modal isVisible={this.state.isTosModalVisible} fullscreen>
-          <View header>
+        <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+          <View header={true}>
             <Icon
               name="cross"
               onPress={(): void => this.setState({ isTosModalVisible: false })}
@@ -136,7 +136,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           </View>
           <Content>
             <H1>{I18n.t("personal_data_processing.title")}</H1>
-            <View spacer large />
+            <View spacer={true} large={true} />
             <Text>{I18n.t("personal_data_processing.content")}</Text>
           </Content>
         </Modal>

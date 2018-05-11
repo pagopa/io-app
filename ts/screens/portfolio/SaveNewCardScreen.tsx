@@ -59,10 +59,10 @@ export class SaveNewCardScreen extends React.Component<Props, State> {
           </Col>
         </Grid>
 
-        <View footer>
+        <View footer={true}>
           <Button
-            block
-            primary
+            block={true}
+            primary={true}
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.PORTFOLIO_HOME)
             }
@@ -71,8 +71,8 @@ export class SaveNewCardScreen extends React.Component<Props, State> {
           </Button>
 
           <Button
-            block
-            light
+            block={true}
+            light={true}
             style={{ backgroundColor: "#5C6F82", marginTop: 5 }}
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.PORTFOLIO_HOME)

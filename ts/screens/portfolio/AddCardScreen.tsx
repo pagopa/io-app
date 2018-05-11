@@ -15,13 +15,13 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
+import { PortfolioStyles } from "../../components/styles";
 import {
   CreditCardIcons,
   CreditCardType
 } from "../../types/portfolio/CreditCardType";
-import { PortfolioStyles } from "../../components/styles";
 
-import { Option, none, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -50,14 +50,14 @@ export class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
-  onExpireDateChange(value: string) {
+  public onExpireDateChange(value: string) {
     this.changeExpireDateAppeareance(value);
   }
 
-  changeExpireDateAppeareance(value: string) {
-    const string = value.trim();
-    if (string.match(/^[\d\s]*$/)) {
-      const newString = string.replace(/\s/, "").match(/\d{1,2}/g);
+  public changeExpireDateAppeareance(value: string) {
+    const str = value.trim();
+    if (str.match(/^[\d\s]*$/)) {
+      const newString = str.replace(/\s/, "").match(/\d{1,2}/g);
       if (newString !== null) {
         const formattedText = newString.join("/");
         this.setState({ expireDate: some(formattedText) });
@@ -65,10 +65,10 @@ export class AddCardScreen extends React.Component<Props, State> {
     }
   }
 
-  changeCardnumberAppeareance(value: string) {
-    const string = value.trim();
-    if (string.match(/^[\d\s]*$/)) {
-      const newString = string.replace(/\s/, "").match(/\d{1,4}/g);
+  public changeCardnumberAppeareance(value: string) {
+    const str = value.trim();
+    if (str.match(/^[\d\s]*$/)) {
+      const newString = str.replace(/\s/, "").match(/\d{1,4}/g);
       if (newString !== null) {
         const formattedText = newString.join(" ");
         this.setState({ cardNumber: some(formattedText) });
@@ -195,7 +195,7 @@ export class AddCardScreen extends React.Component<Props, State> {
         </Item>
 
         <Item
-          last
+          last={true}
           style={{
             borderBottomWidth: 0,
             marginRight: 5,
@@ -232,8 +232,8 @@ export class AddCardScreen extends React.Component<Props, State> {
           }}
         >
           <Button
-            block
-            primary
+            block={true}
+            primary={true}
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.PORTFOLIO_SAVE_CARD)
             }
@@ -242,8 +242,8 @@ export class AddCardScreen extends React.Component<Props, State> {
           </Button>
 
           <Button
-            block
-            light
+            block={true}
+            light={true}
             style={{ backgroundColor: "#5C6F82", marginTop: 5 }}
             onPress={(): boolean => this.props.navigation.goBack()}
           >

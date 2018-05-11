@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Col, Grid } from "react-native-easy-grid";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { PortfolioStyles } from "../../styles";
 import { ImageType } from "./PayLayout";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { SubtitlesLR, SUBTITLES_LR_SIZE } from "./SubtitlesLR";
 import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
-import { TopContent } from "./types";
-import { Touchable, TOUCHABLE_SIZE } from "./Touchable";
+import { SUBTITLES_LR_SIZE, SubtitlesLR } from "./SubtitlesLR";
 import { Title, TITLE_SIZE } from "./Title";
+import { Touchable, TOUCHABLE_SIZE } from "./Touchable";
+import { TopContent } from "./types";
 
 type Props = Readonly<{
   title: string;

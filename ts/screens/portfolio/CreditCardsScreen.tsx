@@ -8,8 +8,8 @@ import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from "../../components/portfolio/CreditCardComponent";
-import { CreditCard } from "../../types/portfolio/CreditCard";
 import { topContentNone } from "../../components/portfolio/pay-layout/types";
+import { CreditCard } from "../../types/portfolio/CreditCard";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;

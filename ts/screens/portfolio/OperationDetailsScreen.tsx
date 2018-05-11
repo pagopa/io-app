@@ -10,11 +10,11 @@ import {
 } from "react-navigation";
 
 import { PayLayout } from "../../components/portfolio/pay-layout/PayLayout";
+import { topContentTouchable } from "../../components/portfolio/pay-layout/types";
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import { CreditCard } from "../../types/portfolio/CreditCard";
 import { Operation, UNKNOWN_OPERATION } from "../../types/portfolio/types";
-import { topContentTouchable } from "../../components/portfolio/pay-layout/types";
 
 // Images
 const cardsImage = require("../../../img/portfolio/single-tab.png");
@@ -89,7 +89,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t("portfolio.payAmount")}</Text>
+                <Text note={true}>{I18n.t("portfolio.payAmount")}</Text>
               </Left>
               <Right>
                 <Text>{operation.amount}</Text>
@@ -98,9 +98,9 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             <Row>
               <Left>
                 <Text>
-                  <Text note>{I18n.t("portfolio.transactionFee")}</Text>
-                  <Text note>&nbsp;</Text>
-                  <Text note style={PortfolioStyles.pfwhy}>
+                  <Text note={true}>{I18n.t("portfolio.transactionFee")}</Text>
+                  <Text note={true}>&nbsp;</Text>
+                  <Text note={true} style={PortfolioStyles.pfwhy}>
                     {I18n.t("portfolio.why")}
                   </Text>
                 </Text>
@@ -111,7 +111,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t("portfolio.causal")}</Text>
+                <Text note={true}>{I18n.t("portfolio.causal")}</Text>
               </Left>
               <Right>
                 <Text style={PortfolioStyles.boldStyle}>
@@ -121,7 +121,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t("portfolio.recipient")}</Text>
+                <Text note={true}>{I18n.t("portfolio.recipient")}</Text>
               </Left>
               <Right>
                 <Text style={PortfolioStyles.boldStyle}>
@@ -131,7 +131,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t("portfolio.date")}</Text>
+                <Text note={true}>{I18n.t("portfolio.date")}</Text>
               </Left>
               <Right>
                 <Text>{operation.date}</Text>
@@ -139,7 +139,7 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note>{I18n.t("portfolio.hour")}</Text>
+                <Text note={true}>{I18n.t("portfolio.hour")}</Text>
               </Left>
               <Right>
                 <Text>{operation.time}</Text>
@@ -148,8 +148,8 @@ export class OperationDetailsScreen extends React.Component<Props, never> {
             <Row>
               <Button
                 style={{ marginTop: 20 }}
-                block
-                success
+                block={true}
+                success={true}
                 onPress={(): boolean => navigate("Login")}
               >
                 <Text>{I18n.t("portfolio.seeReceipt")}</Text>
