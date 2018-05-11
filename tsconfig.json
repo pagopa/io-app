@@ -15,7 +15,8 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noErrorTruncation": true
   },
   "lib": [ "dom", "es2015", "es2016" ],
   "exclude": [

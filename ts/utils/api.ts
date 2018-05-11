@@ -2,65 +2,50 @@
  * Implements the APIs to interact with the backend.
  */
 
-import { fromEither } from "fp-ts/lib/Option";
-
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { Profile } from "../../definitions/backend/Profile";
 
-import { getApi } from "./req";
+import { createApiCall } from "./api_request";
 
-import { FiscalCode } from "../../definitions/backend/FiscalCode";
-
-export async function getProfile(): Promise<FiscalCode | undefined> {
-  return getApi<FiscalCode>({
-    method: "get",
-    response_body_type: FiscalCode
-  });
+interface IBaseApiParams {
+  apiUrlPrefix: string;
+  token: string;
 }
 
-export async function getUserProfile(
-  apiUrlPrefix: string,
-  token: string
-): Promise<Profile | undefined> {
-  try {
-    const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
-      method: "get",
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const profileOrError = Profile.decode(await response.json());
-    return fromEither(profileOrError).toUndefined();
-  } catch (error) {
-    return undefined;
-    // TODO handle error
-    // console.error(error)
-  }
+export const getUserProfile = createApiCall({
+  method: "get",
+  url: (p: IBaseApiParams) => `${p.apiUrlPrefix}/api/v1/profile`,
+  headers: (p: IBaseApiParams) => ({
+    Authorization: `Bearer ${p.token}`
+  }),
+  response_type: Profile
+});
+
+interface ISetProfileParams extends IBaseApiParams {
+  newProfile: ExtendedProfile;
 }
 
-export async function setUserProfile(
-  apiUrlPrefix: string,
-  token: string,
-  newProfile: ExtendedProfile
-): Promise<Profile | number | undefined> {
-  try {
-    const response = await fetch(`${apiUrlPrefix}/api/v1/profile`, {
-      method: "post",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newProfile)
-    });
+export const setUserProfile = createApiCall({
+  method: "post",
+  url: (p: ISetProfileParams) => `${p.apiUrlPrefix}/api/v1/profile`,
+  headers: (p: ISetProfileParams) => ({
+    Authorization: `Bearer ${p.token}`
+  }),
+  body: (p: ISetProfileParams) => JSON.stringify(p.newProfile),
+  response_type: Profile
+});
 
-    if (response.status === 500) {
-      return response.status;
-    } else {
-      // TODO: use profile
-      return await response.json();
-    }
-  } catch (error) {
-    return undefined;
-    // if the proxy is not reacheable
-    // TODO handle unsuccessful fetch
-    // @see https://www.pivotaltracker.com/story/show/154661120
-  }
+/**
+ * Describes a SPID Identity Provider
+ */
+export type IdentityProvider = {
+  id: string;
+  logo: any;
+  name: string;
+  entityID: string;
+  profileUrl: string;
+};
+
+export function isDemoIdp(idp: IdentityProvider): boolean {
+  return idp.id === "demo";
 }
