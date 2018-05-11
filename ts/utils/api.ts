@@ -2,6 +2,8 @@
  * Implements the APIs to interact with the backend.
  */
 
+import { fromEither } from "fp-ts/lib/Option";
+
 import { Profile as ApiUserProfile } from "../../definitions/backend/Profile";
 
 /**
@@ -24,7 +26,8 @@ export async function getUserProfile(
       method: "get",
       headers: { Authorization: `Bearer ${token}` }
     });
-    return await response.json();
+    const profileOrError = ApiUserProfile.decode(await response.json());
+    return fromEither(profileOrError).toUndefined();
   } catch (error) {
     return undefined;
     // TODO handle error
