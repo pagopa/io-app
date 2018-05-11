@@ -4,18 +4,8 @@
 
 import { fromEither } from "fp-ts/lib/Option";
 
+import { ExtendedProfile as ApiNewUserProfile } from "../../definitions/backend/ExtendedProfile";
 import { Profile as ApiUserProfile } from "../../definitions/backend/Profile";
-
-/**
- * A type used for all the update operations
- */
-export type ApiNewUserProfile = {
-  family_name?: string;
-  fiscal_code?: string;
-  is_inbox_enabled?: boolean;
-  name?: string;
-  version: number;
-};
 
 export async function getUserProfile(
   apiUrlPrefix: string,
@@ -53,6 +43,7 @@ export async function setUserProfile(
     if (response.status === 500) {
       return response.status;
     } else {
+      // TODO: use profile
       return await response.json();
     }
   } catch (error) {
