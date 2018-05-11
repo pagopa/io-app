@@ -2,28 +2,10 @@
  * Implements the APIs to interact with the backend.
  */
 
-/**
- * The user profile
- */
-export type ApiUserProfile = {
-  family_name: string;
-  fiscal_code: string;
-  has_profile: boolean;
-  is_inbox_enabled?: boolean;
-  name: string;
-  version: number;
-};
+import { fromEither } from "fp-ts/lib/Option";
 
-/**
- * A type used for all the update operations
- */
-export type ApiNewUserProfile = {
-  family_name?: string;
-  fiscal_code?: string;
-  is_inbox_enabled?: boolean;
-  name?: string;
-  version: number;
-};
+import { ExtendedProfile as ApiNewUserProfile } from "../../definitions/backend/ExtendedProfile";
+import { Profile as ApiUserProfile } from "../../definitions/backend/Profile";
 
 export async function getUserProfile(
   apiUrlPrefix: string,
@@ -34,7 +16,8 @@ export async function getUserProfile(
       method: "get",
       headers: { Authorization: `Bearer ${token}` }
     });
-    return await response.json();
+    const profileOrError = ApiUserProfile.decode(await response.json());
+    return fromEither(profileOrError).toUndefined();
   } catch (error) {
     return undefined;
     // TODO handle error
@@ -60,6 +43,7 @@ export async function setUserProfile(
     if (response.status === 500) {
       return response.status;
     } else {
+      // TODO: use profile
       return await response.json();
     }
   } catch (error) {
