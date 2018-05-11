@@ -11,7 +11,6 @@ import {
   InstallationState,
   notificationsInstallationSelector
 } from "../store/reducers/notifications/installation";
-import { callApi } from "./utils/apiCaller";
 
 const notificationsPlatform = Platform.select({
   ios: "apns",
@@ -29,7 +28,7 @@ function* updateInstallation(): Iterator<Effect> {
 
   // Check if the notification server token is available
   if (notificationsInstallation.token) {
-    yield call(callApi, proxyApi.updateInstallation, {
+    yield call(proxyApi.updateInstallation, {
       uuid: notificationsInstallation.uuid,
       token: notificationsInstallation.token,
       platform: notificationsPlatform
