@@ -2,7 +2,7 @@ import * as React from "react";
 import I18n from "../../i18n";
 
 import { Content, View } from "native-base";
-import { Image } from "react-native";
+import { Image, TouchableHighlight } from 'react-native'
 import {
   NavigationInjectedProps,
   NavigationScreenProp,
@@ -17,6 +17,8 @@ import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";
 
 import { topContentTouchable } from "../../components/portfolio/pay-layout/types";
+import ROUTES from '../../navigation/routes'
+import { CroppedCard } from '../../components/portfolio/CroppedCard'
 // Images
 const cardsImage = require("../../../img/portfolio/card-tab.png");
 
@@ -48,28 +50,32 @@ export class TransactionsScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  private touchableContent(): React.ReactElement<any> {
+  private getCardImage(card: CreditCard): React.ReactElement<any> {
+
+  }
+
+  private touchableContent(card: CreditCard): React.ReactElement<any> {
+    const { navigate } = this.props.navigation;
     return (
       <View style={PortfolioStyles.container}>
-        <Image
-          style={PortfolioStyles.pftabcard}
-          source={cardsImage}
-          resizeMode="contain"
-        />
+        <TouchableHighlight
+          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_CREDITCARDS)}
+        >
+          <CroppedCard card={card} navigation={this.props.navigation}/>
+        </TouchableHighlight>
       </View>
-    );
+    )
   }
 
   public render(): React.ReactNode {
     const { params } = this.props.navigation.state;
-
     const card: CreditCard = params ? params.card : UNKNOWN_CARD;
     const operations: ReadonlyArray<Operation> = PortfolioAPI.getOperations(
       card.id
     );
     const TITLE = I18n.t("portfolio.creditDebtCards");
 
-    const topContent = topContentTouchable(this.touchableContent());
+    const topContent = topContentTouchable(this.touchableContent(card));
 
     return (
       <PayLayout
