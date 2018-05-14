@@ -89,7 +89,6 @@ function* pinCheckSaga(): Iterator<Effect> {
  */
 function* tosCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_TOS);
-  console.log("tosCHECK");
   // From the state we check whether the user has already accepted the ToS
   const isTosAccepted: boolean = yield select(isTosAcceptedSelector);
 

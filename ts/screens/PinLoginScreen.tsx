@@ -43,14 +43,14 @@ class PinLoginScreen extends React.Component<Props> {
   // Render the PIN match/doesn't match feedback message
   public renderCodeInputConfirmValidation = () => {
     const validationMessage = (
-      <TextWithIcon danger>
+      <TextWithIcon danger={true}>
         <Icon name={"cross"} />
         <Text>{I18n.t("pinlogin.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );
     return (
       <React.Fragment>
-        <View spacer extralarge />
+        <View spacer={true} extralarge={true} />
         {validationMessage}
       </React.Fragment>
     );
@@ -77,11 +77,11 @@ class PinLoginScreen extends React.Component<Props> {
   // The Content of the Screen
   public renderContent = (pinLoginState: PinLoginState) => {
     return (
-      <Content primary>
-        <View spacer extralarge />
-        <Text white>{I18n.t("pinlogin.pin.pinInfo")}</Text>
+      <Content primary={true}>
+        <View spacer={true} extralarge={true} />
+        <Text white={true}>{I18n.t("pinlogin.pin.pinInfo")}</Text>
         {this.renderCodeInput(pinLoginState)}
-        <View spacer extralarge />
+        <View spacer={true} extralarge={true} />
         {this.renderForgotButton()}
       </Content>
     );
@@ -89,7 +89,7 @@ class PinLoginScreen extends React.Component<Props> {
   // Render the forgot PIN button
   public renderForgotButton = () => {
     return (
-      <Button block primary>
+      <Button block={true} primary={true}>
         <Text>{I18n.t("pinlogin.pin.pinforgot")}</Text>
       </Button>
     );
