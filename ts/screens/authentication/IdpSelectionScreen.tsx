@@ -18,8 +18,8 @@ import IdpsGrid from "../../components/IdpsGrid";
 import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
+import { IdentityProvider } from "../../models/IdentityProvider";
 import { selectIdp } from "../../store/actions/session";
-import { IdentityProvider } from "../../utils/api";
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

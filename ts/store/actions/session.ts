@@ -4,7 +4,7 @@
  * @flow
  */
 
-import { IdentityProvider } from "../../api";
+import { IdentityProvider } from "../../models/IdentityProvider";
 import { IDP_SELECTED, LOGIN_FAILURE, LOGIN_SUCCESS } from "./constants";
 
 // Actions

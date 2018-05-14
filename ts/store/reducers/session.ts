@@ -3,7 +3,7 @@
  */
 
 import { Action } from "../../actions/types";
-import { IdentityProvider } from "../../api";
+import { IdentityProvider } from "../../models/IdentityProvider";
 import { GlobalState } from "../../reducers/types";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
 
