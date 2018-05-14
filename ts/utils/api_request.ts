@@ -171,20 +171,26 @@ export function createFetchRequestForApi<
   Q extends string,
   R
 >(
-  requestType: ApiRequestType<P, KH, Q, R>
+  requestType: ApiRequestType<P, KH, Q, R>,
+  options: {
+    baseUrl?: string;
+  } = {}
 ): (params: P) => Promise<R | undefined> {
   // TODO: handle unsuccessful fetch and HTTP errors
   // @see https://www.pivotaltracker.com/story/show/154661120
   return async params => {
+    // Build request url from baseUrl if provided
+    const requestUrl = options.baseUrl
+      ? `${options.baseUrl}/${requestType.url}`
+      : requestType.url;
+
     // Generate the query params
     const queryParams = requestType.query(params);
     const queryString = queryStringFromParams(queryParams);
 
-    // get the URL from the params
+    // Append the query params to the URL
     const url =
-      queryString === undefined
-        ? requestType.url
-        : `${requestType.url}?${queryString}`;
+      queryString === undefined ? requestUrl : `${requestUrl}?${queryString}`;
 
     // get the headers from the params
     const headers = requestType.headers.apply(params);
@@ -272,14 +278,31 @@ export function basicResponseDecoder<R>(
 }
 
 /**
- * A RequestHeaderProducer that produces an Authorization header of type
- * "bearer token".
+ * Returns a RequestHeaderProducer that produces an Authorization header of type
+ * "bearer token" taking the value from the "token" parameter of each request.
  */
-export class AuthorizationBearerHeaderProducer<P extends { token: string }>
-  implements RequestHeaderProducer<P, "Authorization"> {
-  public apply(p: P): RequestHeaders<"Authorization"> {
-    return {
-      Authorization: `Bearer ${p.token}`
-    };
-  }
+export function ParamAuthorizationBearerHeaderProducer<
+  P extends { token: string }
+>(): RequestHeaderProducer<P, "Authorization"> {
+  return {
+    apply(p: P): RequestHeaders<"Authorization"> {
+      return {
+        Authorization: `Bearer ${p.token}`
+      };
+    }
+  };
+}
+
+/**
+ * Returns a RequestHeaderProducer that produces an Authorization header of type
+ * "bearer token" with a fixed token value.
+ */
+export function AuthorizationBearerHeaderProducer<P>(
+  token: string
+): RequestHeaderProducer<P, "Authorization"> {
+  return {
+    apply: () => ({
+      Authorization: `Bearer ${token}`
+    })
+  };
 }
