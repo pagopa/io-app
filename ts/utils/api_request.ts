@@ -2,6 +2,7 @@
  * Type safe wrapper around the fetch API
  */
 
+// TODO: when query/headers type is "never", it should not allow any query/header to be produced
 // TODO: add timeout to fetch (how to cancel request?)
 // TODO: add etag support in responses
 
@@ -23,6 +24,11 @@ type RequestHeaderKey = "Authorization" | "Content-Type";
 export type RequestHeaders<HS extends RequestHeaderKey> = {
   [key in HS]: string
 };
+
+/**
+ * Describes the query params for this request
+ */
+export type RequestQuery<K extends string> = Record<K, string>;
 
 /**
  * Generates a set of headers with certain keys (KH) from a parameters object
@@ -98,10 +104,12 @@ export interface IBaseApiRequestType<
   M extends RequestMethod,
   P,
   H extends RequestHeaderKey,
+  Q extends string,
   R
 > {
   readonly method: M;
-  readonly url: (params: P) => string;
+  readonly url: string;
+  readonly query: (params: P) => RequestQuery<Q>;
   readonly headers: RequestHeaderProducer<P, H>;
   readonly response_decoder: ResponseDecoder<R>;
 }
@@ -109,8 +117,12 @@ export interface IBaseApiRequestType<
 /**
  * Fully describes a GET request.
  */
-export interface IGetApiRequestType<P, KH extends RequestHeaderKey, R>
-  extends IBaseApiRequestType<"get", P, KH, R> {
+export interface IGetApiRequestType<
+  P,
+  KH extends RequestHeaderKey,
+  Q extends string,
+  R
+> extends IBaseApiRequestType<"get", P, KH, Q, R> {
   readonly method: "get";
 }
 
@@ -119,32 +131,60 @@ export interface IGetApiRequestType<P, KH extends RequestHeaderKey, R>
  *
  * POST requests require to provide the "Content-Type" header.
  */
-export interface IPostApiRequestType<P, KH extends RequestHeaderKey, R>
-  extends IBaseApiRequestType<"post", P, KH | "Content-Type", R> {
+export interface IPostApiRequestType<
+  P,
+  KH extends RequestHeaderKey,
+  Q extends string,
+  R
+> extends IBaseApiRequestType<"post", P, KH | "Content-Type", Q, R> {
   readonly method: "post";
   readonly body: (params: P) => string;
 }
 
-type ApiRequestType<P, KH extends RequestHeaderKey, R> =
-  | IGetApiRequestType<P, KH, R>
-  | IPostApiRequestType<P, KH, R>;
+type ApiRequestType<P, KH extends RequestHeaderKey, Q extends string, R> =
+  | IGetApiRequestType<P, KH, Q, R>
+  | IPostApiRequestType<P, KH, Q, R>;
 
 //
 // helpers
 //
 
+function queryStringFromParams<P extends string>(
+  params: RequestQuery<P>
+): string | undefined {
+  const keys = Object.getOwnPropertyNames(params);
+  if (keys.length === 0) {
+    return undefined;
+  }
+  return keys
+    .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k as P])}`)
+    .join("&");
+}
+
 /**
  * Returns an async method that implements the provided ApiRequestType backed
  * by the "fetch" API.
  */
-export function createFetchRequestForApi<P, KH extends RequestHeaderKey, R>(
-  requestType: ApiRequestType<P, KH, R>
+export function createFetchRequestForApi<
+  P,
+  KH extends RequestHeaderKey,
+  Q extends string,
+  R
+>(
+  requestType: ApiRequestType<P, KH, Q, R>
 ): (params: P) => Promise<R | undefined> {
   // TODO: handle unsuccessful fetch and HTTP errors
   // @see https://www.pivotaltracker.com/story/show/154661120
   return async params => {
+    // Generate the query params
+    const queryParams = requestType.query(params);
+    const queryString = queryStringFromParams(queryParams);
+
     // get the URL from the params
-    const url = requestType.url(params);
+    const url =
+      queryString === undefined
+        ? requestType.url
+        : `${requestType.url}?${queryString}`;
 
     // get the headers from the params
     const headers = requestType.headers.apply(params);

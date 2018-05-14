@@ -13,7 +13,6 @@ import {
 } from "./api_request";
 
 interface IBaseApiParams {
-  apiUrlPrefix: string;
   token: string;
 }
 
@@ -24,12 +23,14 @@ interface IBaseApiParams {
 type GetUserProfileRequestType = IGetApiRequestType<
   IBaseApiParams,
   "Authorization",
+  never,
   BasicResponseType<Profile>
 >;
 
 const getUserProfileRequestType: GetUserProfileRequestType = {
   method: "get",
-  url: p => `${p.apiUrlPrefix}/api/v1/profile`,
+  url: "/api/v1/profile",
+  query: _ => ({}),
   headers: new AuthorizationBearerHeaderProducer<IBaseApiParams>(),
   response_decoder: basicResponseDecoder(Profile)
 };
@@ -49,6 +50,7 @@ interface ISetProfileParams extends IBaseApiParams {
 type SetUserProfileApiRequestType = IPostApiRequestType<
   ISetProfileParams,
   "Authorization",
+  never,
   BasicResponseType<Profile>
 >;
 
@@ -59,8 +61,9 @@ const setUserProfileHeaders = composeHeaderProducers(
 
 const setUserProfileRequestType: SetUserProfileApiRequestType = {
   method: "post",
-  url: p => `${p.apiUrlPrefix}/api/v1/profile`,
+  url: "/api/v1/profile",
   headers: setUserProfileHeaders,
+  query: _ => ({}),
   body: p => JSON.stringify(p.newProfile),
   response_decoder: basicResponseDecoder(Profile)
 };
