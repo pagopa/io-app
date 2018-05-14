@@ -5,6 +5,8 @@
 // TODO: add timeout to fetch (how to cancel request?)
 // TODO: add etag support in responses
 
+import * as t from "io-ts";
+
 /**
  * Describes the possible methods of a request
  */
@@ -65,11 +67,24 @@ export interface ResponseType<S extends number, T> {
 
 /**
  * A function that generates a typed representation of a response.
- * It should return undefined in case of error (e.g. parsing).
+ * It should return undefined in case the response cannot be decoded (e.g.
+ * in case of a parsing error).
  */
-export type ResponseDecoder<R> = (
-  response: Response
-) => Promise<Required<R> | undefined>;
+export type ResponseDecoder<R> = (response: Response) => Promise<R | undefined>;
+
+/**
+ * Composes two ResponseDecoder(s)
+ */
+export function composeResponseDecoders<R1, R2>(
+  d0: ResponseDecoder<R1>,
+  d1: ResponseDecoder<R2>
+): ResponseDecoder<R1 | R2> {
+  // TODO: make sure R1, R2 don't intersect
+  return response => {
+    const r0 = d0(response);
+    return r0 !== undefined ? r0 : d1(response);
+  };
+}
 
 /**
  * Fully describes an API request.
@@ -157,3 +172,74 @@ export const ApiHeaderJson: RequestHeaderProducer<{}, "Content-Type"> = {
     "Content-Type": "application/json"
   })
 };
+
+/**
+ * An io-ts based ResponseDecoder
+ *
+ * @param status  The response status handled by this decoder
+ * @param type    The response type corresponding to the status
+ */
+export function ioResponseDecoder<S extends number, R>(
+  status: S,
+  type: t.Type<R>
+): ResponseDecoder<ResponseType<S, R>> {
+  return async (response: Response) => {
+    const json = await response.json();
+    const validated = type.decode(json);
+    if (validated.isRight()) {
+      return { status, value: validated.value };
+    }
+    return undefined;
+  };
+}
+
+/**
+ * A basic ResponseDecoder that returns an Error with the status text if the
+ * response status is S.
+ */
+export function basicErrorResponseDecoder<S extends number>(
+  status: S
+): ResponseDecoder<ResponseType<S, Error>> {
+  return async response => {
+    return response.status === status
+      ? { status, value: new Error(response.statusText) }
+      : undefined;
+  };
+}
+
+/**
+ * A basic set of responses where the 200 status corresponds to a payload of
+ * type R and 404 and 500 to an Error
+ */
+export type BasicResponseType<R> =
+  | ResponseType<200, R>
+  | ResponseType<404, Error>
+  | ResponseType<500, Error>;
+
+/**
+ * Returns a ResponseDecoder for BasicResponseType<R>
+ */
+export function basicResponseDecoder<R>(
+  type: t.Type<R>
+): ResponseDecoder<BasicResponseType<R>> {
+  return composeResponseDecoders(
+    composeResponseDecoders(
+      ioResponseDecoder(200, type),
+      basicErrorResponseDecoder(404)
+    ),
+    basicErrorResponseDecoder(500)
+  );
+}
+
+/**
+ * A RequestHeaderProducer that produces an Authorization header of type
+ * "bearer token".
+ */
+export class AuthorizationBearerHeaderProducer<P extends { token: string }>
+  implements RequestHeaderProducer<P, "Authorization"> {
+  public apply(p: P): RequestHeaders<"Authorization"> {
+    return {
+      Authorization: `Bearer ${p.token}`
+    };
+  }
+}

@@ -1,59 +1,20 @@
-/**
- * Implements the APIs to interact with the backend.
- */
-
-import * as t from "io-ts";
-
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { Profile } from "../../definitions/backend/Profile";
 
 import {
   ApiHeaderJson,
+  AuthorizationBearerHeaderProducer,
+  basicResponseDecoder,
+  BasicResponseType,
   composeHeaderProducers,
   createFetchRequestForApi,
   IGetApiRequestType,
-  IPostApiRequestType,
-  RequestHeaderProducer,
-  RequestHeaders,
-  ResponseType
+  IPostApiRequestType
 } from "./api_request";
-
-type BasicResponseType<R> =
-  | ResponseType<200, R>
-  | ResponseType<404, Error>
-  | ResponseType<500, Error>;
-
-function basicResponseDecoder<R>(
-  type: t.Type<R>
-): (response: Response) => Promise<BasicResponseType<R> | undefined> {
-  return async (response: Response) => {
-    if (response.status === 200) {
-      const json = await response.json();
-      const validated = type.decode(json);
-      if (validated.isRight()) {
-        return { status: 200, value: validated.value };
-      }
-    } else if (response.status === 404) {
-      return { status: response.status, value: new Error(response.statusText) };
-    } else if (response.status === 500) {
-      return { status: response.status, value: new Error(response.statusText) };
-    }
-    return undefined;
-  };
-}
 
 interface IBaseApiParams {
   apiUrlPrefix: string;
   token: string;
-}
-
-class AuthorizationHeaderProducer<P extends { token: string }>
-  implements RequestHeaderProducer<P, "Authorization"> {
-  public apply(p: P): RequestHeaders<"Authorization"> {
-    return {
-      Authorization: `Bearer ${p.token}`
-    };
-  }
 }
 
 //
@@ -69,7 +30,7 @@ type GetUserProfileRequestType = IGetApiRequestType<
 const getUserProfileRequestType: GetUserProfileRequestType = {
   method: "get",
   url: p => `${p.apiUrlPrefix}/api/v1/profile`,
-  headers: new AuthorizationHeaderProducer<IBaseApiParams>(),
+  headers: new AuthorizationBearerHeaderProducer<IBaseApiParams>(),
   response_decoder: basicResponseDecoder(Profile)
 };
 
@@ -92,7 +53,7 @@ type SetUserProfileApiRequestType = IPostApiRequestType<
 >;
 
 const setUserProfileHeaders = composeHeaderProducers(
-  new AuthorizationHeaderProducer<ISetProfileParams>(),
+  new AuthorizationBearerHeaderProducer<ISetProfileParams>(),
   ApiHeaderJson
 );
 
