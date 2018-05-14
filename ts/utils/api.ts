@@ -20,7 +20,8 @@ import {
 
 type BasicResponseType<R> =
   | ResponseType<200, R>
-  | ResponseType<500 | 404, Error>;
+  | ResponseType<404, Error>
+  | ResponseType<500, Error>;
 
 function basicResponseDecoder<R>(
   type: t.Type<R>
@@ -32,7 +33,9 @@ function basicResponseDecoder<R>(
       if (validated.isRight()) {
         return { status: 200, value: validated.value };
       }
-    } else if (response.status === 500 || response.status === 404) {
+    } else if (response.status === 404) {
+      return { status: response.status, value: new Error(response.statusText) };
+    } else if (response.status === 500) {
       return { status: response.status, value: new Error(response.statusText) };
     }
     return undefined;

@@ -2,6 +2,9 @@
  * Type safe wrapper around the fetch API
  */
 
+// TODO: add timeout to fetch (how to cancel request?)
+// TODO: add etag support in responses
+
 /**
  * Describes the possible methods of a request
  */
@@ -61,6 +64,14 @@ export interface ResponseType<S extends number, T> {
 }
 
 /**
+ * A function that generates a typed representation of a response.
+ * It should return undefined in case of error (e.g. parsing).
+ */
+export type ResponseDecoder<R> = (
+  response: Response
+) => Promise<Required<R> | undefined>;
+
+/**
  * Fully describes an API request.
  *
  * @param M   The request method
@@ -77,7 +88,7 @@ export interface IBaseApiRequestType<
   readonly method: M;
   readonly url: (params: P) => string;
   readonly headers: RequestHeaderProducer<P, H>;
-  readonly response_decoder: (response: Response) => Promise<R | undefined>;
+  readonly response_decoder: ResponseDecoder<R>;
 }
 
 /**
