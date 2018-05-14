@@ -1,6 +1,11 @@
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { Message } from "../../definitions/backend/Message";
-import { Profile } from "../../definitions/backend/Profile";
+import { Installation } from "../../definitions/backend/Installation";
+import { LimitedProfile } from "../../definitions/backend/LimitedProfile";
+import { Messages } from "../../definitions/backend/Messages";
+import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
+import { ProfileWithEmail } from "../../definitions/backend/ProfileWithEmail";
+import { ProfileWithoutEmail } from "../../definitions/backend/ProfileWithoutEmail";
+import { ServicePublic } from "../../definitions/backend/ServicePublic";
 
 import {
   ApiHeaderJson,
@@ -8,38 +13,68 @@ import {
   basicResponseDecoder,
   BasicResponseType,
   composeHeaderProducers,
+  composeResponseDecoders,
   createFetchRequestForApi,
   IGetApiRequestType,
-  IPostApiRequestType
+  IPostApiRequestType,
+  IPutApiRequestType
 } from "../utils/api_request";
 
 //
 // Define the types of the requests
 //
 
-type GetMessageRequestType = IGetApiRequestType<
+type GetServiceT = IGetApiRequestType<
   {
     id: string;
   },
   "Authorization",
   never,
-  BasicResponseType<Message>
+  BasicResponseType<ServicePublic>
 >;
 
-type GetProfileRequestType = IGetApiRequestType<
+type GetMessagesT = IGetApiRequestType<
+  {
+    cursor?: number;
+  },
+  "Authorization",
+  "cursor",
+  BasicResponseType<Messages>
+>;
+
+type GetMessageT = IGetApiRequestType<
+  {
+    id: string;
+  },
+  "Authorization",
+  never,
+  BasicResponseType<MessageWithContent>
+>;
+
+type GetProfileT = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseType<Profile>
+  BasicResponseType<ProfileWithEmail | ProfileWithoutEmail>
 >;
 
-type CreateOrUpdateProfileRequestType = IPostApiRequestType<
+type CreateOrUpdateProfileT = IPostApiRequestType<
   {
     newProfile: ExtendedProfile;
   },
   "Authorization",
   never,
-  BasicResponseType<Profile>
+  BasicResponseType<LimitedProfile | ExtendedProfile>
+>;
+
+type CreateOrUpdateInstallationT = IPutApiRequestType<
+  {
+    id: string;
+    installation: Installation;
+  },
+  "Authorization",
+  never,
+  BasicResponseType<Installation>
 >;
 
 //
@@ -53,36 +88,75 @@ export function BackendClient(baseUrl: string, token: string) {
 
   const tokenHeaderProducer = AuthorizationBearerHeaderProducer(token);
 
-  const getMessageRequestType: GetMessageRequestType = {
+  const getServiceT: GetServiceT = {
     method: "get",
-    url: params => `/messages/${params.id}`,
+    url: params => `/api/v1/services/${params.id}`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoder(Message)
+    response_decoder: basicResponseDecoder(ServicePublic)
   };
 
-  const getProfileRequestType: GetProfileRequestType = {
+  const getMessagesT: GetMessagesT = {
     method: "get",
-    url: () => "/profile",
+    url: () => `/api/v1/messages`,
+    query: params => ({
+      cursor: params.cursor ? `${params.cursor}` : ""
+    }),
+    headers: tokenHeaderProducer,
+    response_decoder: basicResponseDecoder(Messages)
+  };
+
+  const getMessageT: GetMessageT = {
+    method: "get",
+    url: params => `/api/v1/messages/${params.id}`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoder(Profile)
+    response_decoder: basicResponseDecoder(MessageWithContent)
   };
 
-  const createOrUpdateProfileRequestType: CreateOrUpdateProfileRequestType = {
+  const getProfileT: GetProfileT = {
+    method: "get",
+    url: () => "/api/v1/profile",
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: composeResponseDecoders(
+      basicResponseDecoder(ProfileWithEmail),
+      basicResponseDecoder(ProfileWithoutEmail)
+    )
+  };
+
+  const createOrUpdateProfileT: CreateOrUpdateProfileT = {
     method: "post",
-    url: () => "/profile",
+    url: () => "/api/v1/profile",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.newProfile),
-    response_decoder: basicResponseDecoder(Profile)
+    response_decoder: composeResponseDecoders(
+      basicResponseDecoder(LimitedProfile),
+      basicResponseDecoder(ExtendedProfile)
+    )
+  };
+
+  const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
+    method: "put",
+    url: params => `/api/v1/installations/${params.id}`,
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    query: _ => ({}),
+    body: p => JSON.stringify(p.installation),
+    response_decoder: basicResponseDecoder(Installation)
   };
 
   return {
-    getMessage: createFetchRequestForApi(getMessageRequestType, options),
-    getProfile: createFetchRequestForApi(getProfileRequestType, options),
+    getService: createFetchRequestForApi(getServiceT, options),
+    getMessages: createFetchRequestForApi(getMessagesT, options),
+    getMessage: createFetchRequestForApi(getMessageT, options),
+    getProfile: createFetchRequestForApi(getProfileT, options),
     createOrUpdateProfile: createFetchRequestForApi(
-      createOrUpdateProfileRequestType,
+      createOrUpdateProfileT,
+      options
+    ),
+    createOrUpdateInstallation: createFetchRequestForApi(
+      createOrUpdateInstallationT,
       options
     )
   };

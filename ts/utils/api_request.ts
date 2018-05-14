@@ -2,6 +2,7 @@
  * Type safe wrapper around the fetch API
  */
 
+// TODO: support for optional query parameters
 // TODO: when query/headers type is "never", it should not allow any query/header to be produced
 // TODO: add timeout to fetch (how to cancel request?)
 // TODO: add etag support in responses
@@ -11,7 +12,7 @@ import * as t from "io-ts";
 /**
  * Describes the possible methods of a request
  */
-export type RequestMethod = "get" | "post";
+export type RequestMethod = "get" | "post" | "put";
 
 /**
  * Describes the possible header keys of a request
@@ -141,9 +142,25 @@ export interface IPostApiRequestType<
   readonly body: (params: P) => string;
 }
 
+/**
+ * Fully describes a PUT request.
+ *
+ * PUT requests require to provide the "Content-Type" header.
+ */
+export interface IPutApiRequestType<
+  P,
+  KH extends RequestHeaderKey,
+  Q extends string,
+  R
+> extends IBaseApiRequestType<"put", P, KH | "Content-Type", Q, R> {
+  readonly method: "put";
+  readonly body: (params: P) => string;
+}
+
 type ApiRequestType<P, KH extends RequestHeaderKey, Q extends string, R> =
   | IGetApiRequestType<P, KH, Q, R>
-  | IPostApiRequestType<P, KH, Q, R>;
+  | IPostApiRequestType<P, KH, Q, R>
+  | IPutApiRequestType<P, KH, Q, R>;
 
 //
 // helpers
