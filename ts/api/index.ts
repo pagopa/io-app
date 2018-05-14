@@ -5,17 +5,6 @@
 
 import { apiUrlPrefix } from "../config";
 
-/**
- * Describes a SPID Identity Provider
- */
-export type IdentityProvider = {
-  id: string;
-  logo: any;
-  name: string;
-  entityID: string;
-  profileUrl: string;
-};
-
 export type ApiFetchSuccess<T> = {
   isError: false;
   result: T;
