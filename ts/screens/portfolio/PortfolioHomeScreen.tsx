@@ -1,6 +1,6 @@
 import { Button, Content, View } from "native-base";
 import * as React from "react";
-import { Text, TouchableHighlight, Image } from "react-native";
+import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { PortfolioAPI } from "../../api/portfolio/portfolio-api";
 import { OperationsList } from "../../components/portfolio/OperationsComponent";
@@ -15,8 +15,8 @@ import {
 import { PortfolioStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { CreditCard } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";
-import { CreditCard } from '../../types/portfolio/CreditCard'
 
 type ScreenProps = {};
 
@@ -52,31 +52,28 @@ export class PortfolioHomeScreen extends React.Component<Props, never> {
           />
         </TouchableHighlight>
       </View>
-    )
+    );
   }
 
   private getEmptyCardsSummary(): React.ReactElement<any> {
     const { navigate } = this.props.navigation;
     return (
       <View style={PortfolioStyles.container}>
-          <Button
-            bordered={true}
-            block={true}
-            style={PortfolioStyles.addPaymentMethodButton}
-            onPress={(): boolean =>
-              navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)
-            }
-          >
-            <Text style={PortfolioStyles.addPaymentMethodText}>
-              {I18n.t("portfolio.newPaymentMethod.addButton")}
-            </Text>
-          </Button>
-        </View>
+        <Button
+          bordered={true}
+          block={true}
+          style={PortfolioStyles.addPaymentMethodButton}
+          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_ADD_PAYMENT_METHOD)}
+        >
+          <Text style={PortfolioStyles.addPaymentMethodText}>
+            {I18n.t("portfolio.newPaymentMethod.addButton")}
+          </Text>
+        </Button>
+      </View>
     );
   }
 
   private touchableContent(): React.ReactElement<any> {
-
     const cards: ReadonlyArray<CreditCard> = PortfolioAPI.getCreditCards();
     if (cards.length > 0) {
       return this.getCardsSummaryImage();

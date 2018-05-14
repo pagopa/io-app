@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Body, Card, Icon, Text } from "native-base";
-import { Image } from 'react-native'
+import { Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 

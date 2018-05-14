@@ -2,7 +2,7 @@ import * as React from "react";
 import I18n from "../../i18n";
 
 import { Content, View } from "native-base";
-import { Image, TouchableHighlight } from 'react-native'
+import { Image } from "react-native";
 import {
   NavigationInjectedProps,
   NavigationScreenProp,
@@ -17,8 +17,7 @@ import { CreditCard, UNKNOWN_CARD } from "../../types/portfolio/CreditCard";
 import { Operation } from "../../types/portfolio/types";
 
 import { topContentTouchable } from "../../components/portfolio/pay-layout/types";
-import ROUTES from '../../navigation/routes'
-import { CroppedCard } from '../../components/portfolio/CroppedCard'
+
 // Images
 const cardsImage = require("../../../img/portfolio/card-tab.png");
 
@@ -50,21 +49,16 @@ export class TransactionsScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  private getCardImage(card: CreditCard): React.ReactElement<any> {
-
-  }
-
-  private touchableContent(card: CreditCard): React.ReactElement<any> {
-    const { navigate } = this.props.navigation;
+  private touchableContent(): React.ReactElement<any> {
     return (
       <View style={PortfolioStyles.container}>
-        <TouchableHighlight
-          onPress={(): boolean => navigate(ROUTES.PORTFOLIO_CREDITCARDS)}
-        >
-          <CroppedCard card={card} navigation={this.props.navigation}/>
-        </TouchableHighlight>
+        <Image
+          style={PortfolioStyles.pftabcard}
+          source={cardsImage}
+          resizeMode="contain"
+        />
       </View>
-    )
+    );
   }
 
   public render(): React.ReactNode {
@@ -75,7 +69,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
     );
     const TITLE = I18n.t("portfolio.creditDebtCards");
 
-    const topContent = topContentTouchable(this.touchableContent(card));
+    const topContent = topContentTouchable(this.touchableContent());
 
     return (
       <PayLayout
