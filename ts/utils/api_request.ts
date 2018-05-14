@@ -108,7 +108,7 @@ export interface IBaseApiRequestType<
   R
 > {
   readonly method: M;
-  readonly url: string;
+  readonly url: (params: P) => string;
   readonly query: (params: P) => RequestQuery<Q>;
   readonly headers: RequestHeaderProducer<P, H>;
   readonly response_decoder: ResponseDecoder<R>;
@@ -179,10 +179,13 @@ export function createFetchRequestForApi<
   // TODO: handle unsuccessful fetch and HTTP errors
   // @see https://www.pivotaltracker.com/story/show/154661120
   return async params => {
+    // Build operationUrl from the params
+    const operationUrl = requestType.url(params);
+
     // Build request url from baseUrl if provided
     const requestUrl = options.baseUrl
-      ? `${options.baseUrl}/${requestType.url}`
-      : requestType.url;
+      ? `${options.baseUrl}/${operationUrl}`
+      : operationUrl;
 
     // Generate the query params
     const queryParams = requestType.query(params);
