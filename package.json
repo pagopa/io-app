@@ -16,7 +16,7 @@
   "dependencies": {
     "color": "^3.0.0",
     "email-validator": "^1.0.7",
-    "fp-ts": "^1.4.0",
+    "fp-ts": "^1.4.1",
     "lodash": "^4.17.4",
     "native-base": "^2.4.2",
     "native-base-shoutem-theme": "^0.2.2",
@@ -46,7 +46,7 @@
     "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0",
     "tslib": "^1.9.0",
-    "validator": "^9.4.1"
+    "validator": "^10.2.0"
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
@@ -74,8 +74,8 @@
     "jest": "22.4.3",
     "prettier": "1.12.1",
     "react-native-typescript-transformer": "^1.2.5",
-    "react-test-renderer": "16.3.0-alpha.1",
-    "ts-jest": "^22.4.4",
+    "react-test-renderer": "16.3.2",
+    "ts-jest": "^22.4.6",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.12.0",
     "tslint-eslint-rules": "^5.1.0",
