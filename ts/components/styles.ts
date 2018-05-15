@@ -46,10 +46,45 @@ export const ProfileStyles = StyleSheet.create({
 
 export const PortfolioStyles = StyleSheet.create({
   addCardItem: {
-    borderBottomWidth: 0,
+    borderBottomWidth: variables.headerBorderBottomWidth,
     marginTop: 5,
     marginRight: 5,
     marginLeft: 5
+  },
+  addCardBoldedBorderItem: {
+    borderBottomWidth: variables.borderRadiusBase,
+    borderBottomColor: variables.brandDarkGray,
+    marginRight: 5,
+    marginLeft: 5
+  },
+  addCardBordedItem: {
+    borderBottomWidth: 1,
+    marginRight: 5,
+    marginLeft: 5
+  },
+  addCardLastItem: {
+    borderBottomWidth: variables.modalMargin,
+    marginRight: 5,
+    marginLeft: 5,
+    marginBottom: 30
+  },
+  addCardIcon: {
+    marginTop: 3,
+    marginRight: 3,
+    marginBottom: 3
+  },
+  addCardImage: {
+    width: 60,
+    height: 45,
+    resizeMode: "contain",
+    margin: 5
+  },
+  addCardfooterButtons: {
+    borderBottomWidth: 0,
+    marginRight: 5,
+    marginLeft: 5,
+    marginTop: 15,
+    marginBottom: 30
   },
   pfText: {
     fontFamily: variables.fontFamily,
@@ -123,6 +158,22 @@ export const PortfolioStyles = StyleSheet.create({
     height: 150,
     marginLeft: -120,
     resizeMode: "contain"
+  },
+  payList: {
+    padding: 0,
+    margin: 0
+  },
+  payListItem: {
+    marginLeft: 0,
+    flex: 1,
+    paddingRight: 0
+  },
+  payCancelButton: {
+    backgroundColor: variables.brandDarkGray,
+    marginTop: 5
+  },
+  payCancelButtonText: {
+    color: variables.brandPrimaryInverted
   },
   payBoldStyle: {
     fontFamily: variables.fontFamily,

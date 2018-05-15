@@ -75,16 +75,15 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
     return (
       <Container>
         <Content>
-          <Text style={{ marginBottom: 15 }}>
-            {I18n.t("portfolio.chooseMethod")}{" "}
-          </Text>
+          <Text>{I18n.t("portfolio.chooseMethod")} </Text>
+          <View spacer={true} large={true} />
           <List
-            style={{ padding: 0, margin: 0 }}
+            style={PortfolioStyles.payList}
             removeClippedSubviews={false}
             dataArray={paymentMethods as any[]} // tslint:disable-line
             renderRow={item => (
               <ListItem
-                style={{ marginLeft: 0, flex: 1, paddingRight: 0 }}
+                style={PortfolioStyles.payListItem}
                 onPress={() => navigate(item.navigateTo)}
               >
                 <Left>
@@ -107,9 +106,9 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
               </ListItem>
             )}
           />
+          <View spacer={true} large={true} />
           <Text
             link={true}
-            style={{ marginTop: 10 }}
             onPress={(): void => this.setState({ isTosModalVisible: true })}
           >
             {I18n.t("portfolio.whyFee")}
@@ -120,10 +119,12 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           <Button
             block={true}
             light={true}
-            style={{ backgroundColor: "#5C6F82" }}
+            style={PortfolioStyles.payCancelButton}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text style={{ color: "white" }}>{I18n.t("portfolio.cancel")}</Text>
+            <Text style={PortfolioStyles.payCancelButtonText}>
+              {I18n.t("portfolio.cancel")}
+            </Text>
           </Button>
         </View>
 

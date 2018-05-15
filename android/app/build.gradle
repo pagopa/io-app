@@ -167,7 +167,7 @@ dependencies {
     compile project(':react-native-config')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile ("com.facebook.react:react-native:0.54.2"){force = true}  // From node_modules
     compile "com.google.android.gms:play-services-gcm:8.1.0"
 }
 
