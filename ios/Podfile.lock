@@ -76,13 +76,6 @@ DEPENDENCIES:
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
-<<<<<<< HEAD
-=======
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Mixpanel
-
->>>>>>> master
 EXTERNAL SOURCES:
   React:
     :path: ../node_modules/react-native
@@ -97,15 +90,9 @@ EXTERNAL SOURCES:
   RNI18n:
     :path: ../node_modules/react-native-i18n
   RNKeychain:
-<<<<<<< HEAD
     :path: ../node_modules/react-native-keychain
   RNVectorIcons:
     :path: ../node_modules/react-native-vector-icons
-=======
-    :path: "../node_modules/react-native-keychain"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
->>>>>>> master
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
@@ -121,12 +108,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
   yoga: 55da126afc384965b96bff46652464373b330add
 
-<<<<<<< HEAD
-PODFILE CHECKSUM: 1b7b2706db9e22467ccbba3dcc3ab6d2024411db
+PODFILE CHECKSUM: 54863f09ddd485e01e83381a53930633b0ec7530
 
 COCOAPODS: 1.4.0
-=======
-PODFILE CHECKSUM: 3a943ee39824933896a7ae5aad3bf706ee25c50d
-
-COCOAPODS: 1.5.2
->>>>>>> master
