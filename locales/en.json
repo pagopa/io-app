@@ -113,10 +113,87 @@
         "email": {
           "placeholder": "email address"
         }
-      }      
+      }
     }
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "wallet": {
+    "wallet": "Wallet",
+    "creditcards": "Credit Cards",
+    "paymentMethods": "Payment Methods",
+    "add": "add",
+    "newPaymentMethod": {
+      "add": "add",
+      "addButton": "Add payment method",
+      "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
+    },
+    "operationsDetails": "Operations Details",
+    "total": "Total",
+    "payAmount": "Amount to pay",
+    "transactionFee": "Transaction fee",
+    "why": "Why?",
+    "causal": "Causal",
+    "recipient": "Recipient",
+    "date": "Date",
+    "hour": "Hour",
+    "receipt": "Receipt",
+    "seeReceipt": "See Receipt",
+    "transactions": "Transactions",
+    "noTransactions": "There are no transactions.",
+    "noNewTransactions": "There are no new transactions.",
+    "lastUsage": "Last usage ",
+    "yesterday": "yesterday at ",
+    "today": "today at ",
+    "payNotice": "Pay Notice",
+    "lastOperations": "Latest operations",
+    "operations": "Operations",
+    "creditDebitCards": "Credit/Debit Cards",
+    "addPaymentMethodTitle": "Add payment method",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "methods": {
+      "card": {
+        "name": "Credit/debit card",
+        "maxFee": "Maximum fee of 0.50€"
+      },
+      "bank": {
+        "name": "Bank account",
+        "maxFee": "Maximum fee of 0.50€"
+      },
+      "mobile": {
+        "name": "Other payment methods",
+        "maxFee": "Maximum fee of 0.50€"
+      }
+    },
+    "addCardTitle": "Card details",
+    "dummyCard": {
+      "labels": {
+        "name": "Card owner",
+        "number": "Card number",
+        "expires": "Expiration date",
+        "csc": "Card security code"
+      },
+      "values": {
+        "name": "John Doe",
+        "number": "0000 0000 0000 0000",
+        "expires": "mm/aa",
+        "csc": "●●●"
+      }
+    },
+    "acceptedCards": "Accepted cards",
+    "whyFee": "Why a fee?",
+    "chooseMethod":"Choose your favourite method"
+  },
+  "saveCard": {
+    "saveCard":"Save the card",
+    "cancel":"Cancel",
+    "header":"Do you whant to save this card?",
+    "favoriteTitle":"Set the cart as favourite payment method",
+    "favoriteText":"This payment method will be automatically proposed for the next payment"
+  },
+  "creditCardComponent": {
+    "validUntil": "Valid until "
   }
 }
