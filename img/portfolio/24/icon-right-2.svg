@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>F6591EE1-772A-4F54-98DB-50A7A398D950</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="headers/dark/no-left-icon" transform="translate(-292.000000, -19.000000)">
+            <g id="icons/white/search" transform="translate(289.000000, 16.000000)">
+                <g id="search-icon">
+                    <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                    <g id="Group-6" transform="translate(4.000000, 4.000000)" stroke="#FFFFFF" stroke-width="2">
+                        <circle id="Oval-2" stroke-linecap="square" cx="6" cy="6" r="6"></circle>
+                        <path d="M11,11 L15.5878878,15.5878878" id="Line-2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -5,26 +5,29 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
-    "test": "jest",
+    "test": "jest --verbose",
     "prettify": "prettier --write 'ts/**/*.ts'",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle",
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
-    "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix"
+    "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
+    "run:android": "react-native run-android",
+    "run:ios": "react-native run-ios"
   },
   "dependencies": {
     "color": "^3.0.0",
     "email-validator": "^1.0.7",
     "fp-ts": "^1.4.1",
     "lodash": "^4.17.4",
-    "native-base": "^2.4.2",
+    "native-base": "2.4.2",
     "native-base-shoutem-theme": "^0.2.2",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.2",
     "react-native-config": "^0.11.2",
     "react-native-confirmation-code-input": "git://github.com/teamdigitale/react-native-confirmation-code-input.git#550ad82",
     "react-native-device-info": "^0.13",
+    "react-native-easy-grid": "^0.1.17",
     "react-native-fs": "2.9.12",
     "react-native-i18n": "^2.0.12",
     "react-native-keychain": "^3.0.0-rc.3",
@@ -110,6 +113,7 @@
   "rnpm": {
     "assets": [
       "./assets/fonts/TitilliumWeb",
+      "./assets/fonts/RobotoMono",
       "./assets/fonts/io-icon-font"
     ]
   }
