@@ -65,6 +65,7 @@
     "@types/lodash": "^4.14.108",
     "@types/react": "16.3.16",
     "@types/react-native": "0.55.17",
+    "@types/node": "^10.1.0",
     "@types/react-native-fs": "^2.8.1",
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-mixpanel": "^0.1.0",
@@ -117,7 +118,7 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "**/__tests__/*.ts?(x)"
+      "**/__tests__/*.(test|spec).ts?(x)"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|react-navigation|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
@@ -133,7 +134,8 @@
   },
   "detox": {
     "test-runner": "jest",
-    "runner-config": "e2e/config.json",
+    "specs": "e2e",
+    "runner-config": "jest-e2e.json",
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
