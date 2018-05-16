@@ -148,7 +148,7 @@ export class WalletAPI {
   public static readonly MAX_OPERATIONS = 5;
 
   public static getCreditCards(): ReadonlyArray<CreditCard> {
-    return [];
+    return cards;
   }
 
   public static getCreditCard(creditCardId: number): CreditCard {
