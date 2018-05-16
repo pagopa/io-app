@@ -54,6 +54,7 @@ export class AddCardScreen extends React.Component<Props, State> {
     this.changeExpireDateAppeareance(value);
   }
 
+  // method to modify the appearence of the expire date so that it includes the character "/"after 2 numbers
   public changeExpireDateAppeareance(value: string) {
     const str = value.trim();
     if (str.match(/^[\d\s]*$/)) {
@@ -65,6 +66,7 @@ export class AddCardScreen extends React.Component<Props, State> {
     }
   }
 
+  // method to modify the appearence of the card number so that it includes a space each 4 numbers
   public changeCardnumberAppeareance(value: string) {
     const str = value.trim();
     if (str.match(/^[\d\s]*$/)) {
@@ -89,29 +91,11 @@ export class AddCardScreen extends React.Component<Props, State> {
 
     return (
       <Content>
-        <Item
-          style={{
-            borderBottomWidth: 0,
-            marginTop: 5,
-            marginRight: 5,
-            marginLeft: 5,
-            padding: 0
-          }}
-        >
+        <Item style={PortfolioStyles.addCardItem}>
           <Text>{I18n.t("portfolio.dummyCard.labels.name")}</Text>
         </Item>
-        <Item
-          style={{
-            borderBottomWidth: 3,
-            borderBottomColor: "#000000",
-            marginRight: 5,
-            marginLeft: 5
-          }}
-        >
-          <Icon
-            style={{ marginTop: 3, marginRight: 3, marginBottom: 3 }}
-            name="user"
-          />
+        <Item style={PortfolioStyles.addCardBoldedBorderItem}>
+          <Icon style={PortfolioStyles.addCardIcon} name="user" />
           <Input
             onChangeText={value => {
               this.setState({ cardHolder: some(value) });
@@ -123,11 +107,8 @@ export class AddCardScreen extends React.Component<Props, State> {
         <Item style={PortfolioStyles.addCardItem}>
           <Text>{I18n.t("portfolio.dummyCard.labels.number")}</Text>
         </Item>
-        <Item style={{ borderBottomWidth: 1, marginRight: 5, marginLeft: 5 }}>
-          <Icon
-            style={{ marginTop: 3, marginRight: 3, marginBottom: 3 }}
-            name="credit-card"
-          />
+        <Item style={PortfolioStyles.addCardBordedItem}>
+          <Icon style={PortfolioStyles.addCardIcon} name="credit-card" />
           <Input
             onChangeText={value => {
               this.changeCardnumberAppeareance(value);
@@ -145,13 +126,8 @@ export class AddCardScreen extends React.Component<Props, State> {
               <Item style={PortfolioStyles.addCardItem}>
                 <Text>{I18n.t("portfolio.dummyCard.labels.expires")}</Text>
               </Item>
-              <Item
-                style={{ borderBottomWidth: 1, marginRight: 5, marginLeft: 5 }}
-              >
-                <Icon
-                  style={{ marginTop: 3, marginRight: 3, marginBottom: 3 }}
-                  name="calendar"
-                />
+              <Item style={PortfolioStyles.addCardBordedItem}>
+                <Icon style={PortfolioStyles.addCardIcon} name="calendar" />
                 <Input
                   onChangeText={value => {
                     this.onExpireDateChange(value);
@@ -168,13 +144,8 @@ export class AddCardScreen extends React.Component<Props, State> {
               <Item style={PortfolioStyles.addCardItem}>
                 <Text>{I18n.t("portfolio.dummyCard.labels.csc")}</Text>
               </Item>
-              <Item
-                style={{ borderBottomWidth: 1, marginRight: 5, marginLeft: 5 }}
-              >
-                <Icon
-                  style={{ marginTop: 3, marginRight: 3, marginBottom: 3 }}
-                  name="lock"
-                />
+              <Item style={PortfolioStyles.addCardBordedItem}>
+                <Icon style={PortfolioStyles.addCardIcon} name="lock" />
                 <Input
                   onChangeText={value => {
                     this.setState({ secureCode: some(value) });
@@ -194,27 +165,14 @@ export class AddCardScreen extends React.Component<Props, State> {
           <Text>{I18n.t("portfolio.acceptedCards")}</Text>
         </Item>
 
-        <Item
-          last={true}
-          style={{
-            borderBottomWidth: 0,
-            marginRight: 5,
-            marginLeft: 5,
-            marginBottom: 30
-          }}
-        >
+        <Item last={true} style={PortfolioStyles.addCardLastItem}>
           <FlatList
             style={{ alignSelf: "center" }}
             data={displayedCards}
             numColumns={4}
             renderItem={({ item }) => (
               <Image
-                style={{
-                  width: 60,
-                  height: 45,
-                  resizeMode: "contain",
-                  margin: 5
-                }}
+                style={PortfolioStyles.addCardImage}
                 source={CreditCardIcons[item]}
               />
             )}
@@ -222,15 +180,7 @@ export class AddCardScreen extends React.Component<Props, State> {
           />
         </Item>
 
-        <View
-          style={{
-            borderBottomWidth: 0,
-            marginRight: 5,
-            marginLeft: 5,
-            marginTop: 15,
-            marginBottom: 30
-          }}
-        >
+        <View style={PortfolioStyles.addCardfooterButtons}>
           <Button
             block={true}
             primary={true}
@@ -244,10 +194,12 @@ export class AddCardScreen extends React.Component<Props, State> {
           <Button
             block={true}
             light={true}
-            style={{ backgroundColor: "#5C6F82", marginTop: 5 }}
+            style={PortfolioStyles.payCancelButton}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text style={{ color: "white" }}>{I18n.t("portfolio.cancel")}</Text>
+            <Text style={PortfolioStyles.payCancelButtonText}>
+              {I18n.t("portfolio.cancel")}
+            </Text>
           </Button>
         </View>
       </Content>
