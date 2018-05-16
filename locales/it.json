@@ -117,5 +117,34 @@
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "portfolio": {
+	"QRtoPay": {
+		"cameraSectionName": "QR Code avviso",
+      "manualSectionName": "Inserisci dati avviso",
+      "proceedSectionName": "Riepilogo avviso di Pagamento",
+      "instructions":"Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure inserisci manualmente i dati identificativi (IUV e codive ente/azienda).",
+      "setDataManually":"Inserisci i dati manualmente",
+      "manualSetHeader":"Inserisci i dati dell'avviso",
+      "manualInstructions":"che ci consentono di identificare il pagamento",
+      "modalLink":"Dove si trovano?",
+      "noticeCode":"Codice Avviso",
+      "entityCode":"Codice Fiscale Ente Creditore",
+      "amount":"Importo euro",
+      "paymentNotice": "Avviso di pagamento",
+      "expireDate":"Scadenza",
+      "tranche":"Rata",
+      "entity":"Ente creditore: ",
+      "info":"Per informazioni: ",
+      "tel":"Tel: ",
+      "email":"Email: ",
+      "PEC":"PEC:",
+      "recipient":"Destintario: ",
+      "object":"Oggetto del pagamento: ",
+      "cbillCode":"Codice CBILL: ",
+      "iuv":"IUV: ",
+      "entityCode2":"Codice Ente/Azienda: ",
+      "proceedWithPayment":"Procedi con il pagamento"
+	}
   }
 }

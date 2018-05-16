@@ -118,5 +118,34 @@
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "portfolio": {
+	"QRtoPay": {
+		"cameraSectionName": "Payment notice QR Code",
+		"manualSectionName": "Insert notice data",
+		"proceedSectionName": "Payment notice summary",
+		"instructions":"Capture the QR Code on the payment notice with the camera, or manually insert the payment data (IUV and the antity/company code).",
+		"setDataManually":"Insert data manually",
+		"manualSetHeader":"Insert the payment data",
+		"manualInstructions":"to let us identifying the payment",
+		"modalLink":"Where are they?",
+		"noticeCode":"Notice Code",
+		"entityCode":"Lender Fiscal Code",
+		"amount":"Amount", 
+		"paymentNotice": "Avviso di pagamento",
+		"expireDate":"Expire date",
+		"tranche":"Tranche",
+		"entity":"Lender:",
+		"info":"Info at:",
+		"tel":"Tel: ",
+		"email":"Email:",
+		"PEC":"PEC: ",
+		"recipient":"Recipient:",
+		"object":"Payment object:",
+		"cbillCode":"CBILL Code:",
+		"iuv":"IUV:",
+		"entityCode2":"Lender code:",    
+		"proceedWithPayment":"Proceed with the payment"
+	}
   }
 }
