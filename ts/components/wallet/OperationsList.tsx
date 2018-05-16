@@ -82,11 +82,7 @@ export class OperationsList extends React.Component<Props, State> {
             removeClippedSubviews={false}
             dataArray={ops as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
-              <ListItem
-                onPress={(): boolean =>
-                  navigate("")
-                }
-              >
+              <ListItem onPress={(): boolean => navigate("")}>
                 <Body>
                   <Grid>
                     {this.renderDate(item)}

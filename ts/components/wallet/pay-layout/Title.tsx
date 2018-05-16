@@ -15,7 +15,7 @@ export const TITLE_SIZE = 3;
 export class Title extends React.Component<Props> {
   private optionalRightImage(): React.ReactNode {
     const images = {
-      [ImageType.BANK_IMAGE]: require("../../../../img/portfolio/portfolio-icon.png")
+      [ImageType.BANK_IMAGE]: require("../../../../img/wallet/wallet-icon.png")
     };
     if (this.props.rightImage !== undefined) {
       return (

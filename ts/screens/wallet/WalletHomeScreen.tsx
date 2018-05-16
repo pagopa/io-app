@@ -3,6 +3,7 @@ import * as React from "react";
 import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
+import { WalletStyles } from "../../components/styles";
 import { OperationsList } from "../../components/wallet/OperationsList";
 import {
   ImageType,
@@ -12,7 +13,6 @@ import {
   topContentSubtitlesLRTouchable,
   topContentSubtitleTouchable
 } from "../../components/wallet/pay-layout/types";
-import { WalletStyles } from "../../components/styles";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/wallet/CreditCard";
@@ -27,7 +27,7 @@ type OwnProps = Readonly<{
 type Props = ScreenProps & OwnProps;
 
 /**
- * Portfolio Home Screen
+ * Wallet Home Screen
  */
 export class WalletHomeScreen extends React.Component<Props, never> {
   public static navigationOptions = {

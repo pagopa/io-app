@@ -30,13 +30,13 @@ export class PayLayout extends React.Component<Props, never> {
       <View footer={true}>
         <Button block={true}>
           <Icon type="FontAwesome" name="qrcode" />
-          <Text>{I18n.t("portfolio.payNotice")}</Text>
+          <Text>{I18n.t("wallet.payNotice")}</Text>
         </Button>
       </View>
     );
   }
 
-  private twoPartsPortfolioLayout(): React.ReactNode {
+  private twoPartsLayout(): React.ReactNode {
     return (
       <Grid>
         <Row size={TopContents.getSize(this.props.topContent)}>
@@ -63,7 +63,7 @@ export class PayLayout extends React.Component<Props, never> {
   public render(): React.ReactNode {
     return (
       <Container>
-        {this.twoPartsPortfolioLayout()}
+        {this.twoPartsLayout()}
         {this.payNoticeButton()}
       </Container>
     );

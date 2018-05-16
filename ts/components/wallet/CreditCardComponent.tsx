@@ -93,8 +93,7 @@ export default class CreditCardComponent extends React.Component<Props> {
               style={CreditCardStyle.rowStyle}
               size={2}
               {...{
-                onPress: (): boolean =>
-                  navigate("")
+                onPress: (): boolean => navigate("")
               }}
             >
               <Col size={8}>

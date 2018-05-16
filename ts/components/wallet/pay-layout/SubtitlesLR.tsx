@@ -33,9 +33,7 @@ export class SubtitlesLR extends React.Component<Props> {
               <Right>
                 <Text
                   style={WalletStyles.pfText}
-                  onPress={() =>
-                    this.props.navigation.navigate("")
-                  }
+                  onPress={() => this.props.navigation.navigate("")}
                 >
                   {subtitleRightText}
                 </Text>

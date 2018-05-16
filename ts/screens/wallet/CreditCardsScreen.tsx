@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { Content, List, View } from "native-base";
 import { WalletAPI } from "../../api/wallet/wallet-api";
-import { PayLayout } from "../../components/wallet/pay-layout/PayLayout";
 import { WalletStyles } from "../../components/styles";
+import { PayLayout } from "../../components/wallet/pay-layout/PayLayout";
 import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";

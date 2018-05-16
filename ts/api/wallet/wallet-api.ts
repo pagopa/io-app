@@ -5,10 +5,10 @@ import { Operation } from "../../types/wallet/types";
 
 import { CreditCard, UNKNOWN_CARD } from "../../types/wallet/CreditCard";
 
-const lastUsage = I18n.t("portfolio.lastUsage");
-const yesterday = I18n.t("portfolio.yesterday");
-const today = I18n.t("portfolio.today");
-const noNew = I18n.t("portfolio.noNewTransactions");
+const lastUsage = I18n.t("wallet.lastUsage");
+const yesterday = I18n.t("wallet.yesterday");
+const today = I18n.t("wallet.today");
+const noNew = I18n.t("wallet.noNewTransactions");
 const todayAt = lastUsage + today;
 const yesterdayAt = lastUsage + yesterday;
 
@@ -148,7 +148,7 @@ export class WalletAPI {
   public static readonly MAX_OPERATIONS = 5;
 
   public static getCreditCards(): ReadonlyArray<CreditCard> {
-    return cards;
+    return [];
   }
 
   public static getCreditCard(creditCardId: number): CreditCard {
@@ -166,8 +166,8 @@ export class WalletAPI {
   }
 
   public static getLatestOperations(
-    maxOps: number = PortfolioAPI.MAX_OPERATIONS
+    maxOps: number = WalletAPI.MAX_OPERATIONS
   ): ReadonlyArray<Operation> {
-    return operations.slice(0, maxOps); 
+    return operations.slice(0, maxOps);
   }
 }
