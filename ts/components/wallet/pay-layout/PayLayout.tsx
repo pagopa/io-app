@@ -23,7 +23,7 @@ type Props = Readonly<{
 /**
  * Pay layout component
  */
-const BOTTOM_SIZE = 4;
+const PAY_LAYOUT_BOTTOM_SIZE = 4;
 export class PayLayout extends React.Component<Props, never> {
   private payNoticeButton(): React.ReactNode {
     return (
@@ -55,7 +55,7 @@ export class PayLayout extends React.Component<Props, never> {
      * is given by MAX_TOP_PART - ACTUAL_TOP_PART
      */
     return (
-      BOTTOM_SIZE +
+      PAY_LAYOUT_BOTTOM_SIZE +
       (TopContents.getMaxSize() - TopContents.getSize(this.props.topContent))
     );
   }
