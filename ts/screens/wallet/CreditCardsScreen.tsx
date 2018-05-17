@@ -37,7 +37,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.creditcards")}
         topContent={topContentNone()}
       >
-        <Content style={WalletStyles.pfback}>
+        <Content style={WalletStyles.backContent}>
           <View style={{ minHeight: 400 }}>
             <List
               removeClippedSubviews={false}

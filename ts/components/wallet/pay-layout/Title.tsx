@@ -37,7 +37,7 @@ export class Title extends React.Component<Props> {
           <Col size={2}>
             <Row size={1} />
             <Row size={1}>
-              <H1 style={WalletStyles.pftitle}>{this.props.text}</H1>
+              <H1 style={WalletStyles.payLayoutTitle}>{this.props.text}</H1>
             </Row>
           </Col>
           {this.optionalRightImage()}

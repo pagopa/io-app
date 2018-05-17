@@ -86,35 +86,35 @@ export const WalletStyles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 30
   },
-  pfText: {
+  standardText: {
     fontFamily: variables.fontFamily,
     color: variables.brandGray
   },
-  pftitle: {
+  payLayoutTitle: {
     fontFamily: variables.fontFamily,
     fontSize: 30,
     color: variables.brandGray
   },
-  pfSubtitleLeft: {
+  payLayoutSubtitleLeft: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
     fontSize: 18,
     color: variables.brandGray
   },
 
-  pfbold: {
+  textBold: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold"
   },
-  pfwhy: {
+  whyLink: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
     color: "#3a3bfa"
   },
-  pfback: {
+  backContent: {
     backgroundColor: variables.brandDarkGray
   },
-  pfwhite: {
+  whiteContent: {
     backgroundColor: variables.brandGray,
     flex: 1
   },
@@ -123,17 +123,20 @@ export const WalletStyles = StyleSheet.create({
     width: "100%",
     resizeMode: "contain"
   },
-  pfcards: {
+  pfCards: {
+    // temporary -- will be updated with actual component in future version
     height: 120,
     marginLeft: -200,
     resizeMode: "contain"
   },
-  pftabcard: {
+  pfTabCard: {
+    // temporary
     height: 120,
     marginLeft: -170,
     resizeMode: "contain"
   },
-  pfsingle: {
+  pfSingle: {
+    // temporary
     height: 60,
     marginLeft: -190,
     marginTop: 45,
@@ -202,6 +205,11 @@ export const WalletStyles = StyleSheet.create({
   },
   topContainer: {
     backgroundColor: variables.brandDarkGray
+  },
+  newIconStyle: {
+    marginTop: 6,
+    fontSize: 10,
+    color: "#0066CC" 
   }
 });
 

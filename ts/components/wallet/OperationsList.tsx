@@ -46,7 +46,7 @@ export class OperationsList extends React.Component<Props, State> {
             type="FontAwesome"
             name="circle"
             active={true}
-            style={{ marginTop: 6, fontSize: 10, color: "#0066CC" }}
+            style={WalletStyles.newIconStyle}
           />
           <Text note={true}>{datetime}</Text>
         </Row>
@@ -71,7 +71,7 @@ export class OperationsList extends React.Component<Props, State> {
       <Grid>
         <Row>
           <Left>
-            <Text style={WalletStyles.pfbold}>{this.props.title}</Text>
+            <Text style={WalletStyles.boldStyle}>{this.props.title}</Text>
           </Left>
           <Right>
             <Text>{this.props.totalAmount}</Text>

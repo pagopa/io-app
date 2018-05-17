@@ -47,7 +47,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
           onPress={(): boolean => navigate(ROUTES.WALLET_CREDITCARDS)}
         >
           <Image
-            style={WalletStyles.pfcards}
+            style={WalletStyles.pfCards}
             source={require("../../../img/wallet/creditcards.jpg")}
           />
         </TouchableHighlight>
@@ -107,7 +107,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         topContent={topContents}
         rightImage={ImageType.BANK_IMAGE}
       >
-        <Content style={WalletStyles.pfwhite}>
+        <Content style={WalletStyles.whiteContent}>
           <OperationsList
             parent={I18n.t("wallet.wallet")}
             title={I18n.t("wallet.lastOperations")}

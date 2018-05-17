@@ -22,7 +22,7 @@ export class SubtitlesLR extends React.Component<Props> {
           <Col size={1}>
             <Row>
               <Left>
-                <Text style={WalletStyles.pfSubtitleLeft}>
+                <Text style={WalletStyles.payLayoutSubtitleLeft}>
                   {subtitleLeftText}
                 </Text>
               </Left>
@@ -32,7 +32,7 @@ export class SubtitlesLR extends React.Component<Props> {
             <Row>
               <Right>
                 <Text
-                  style={WalletStyles.pfText}
+                  style={WalletStyles.standardText}
                   onPress={() => this.props.navigation.navigate("")}
                 >
                   {subtitleRightText}

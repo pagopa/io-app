@@ -17,7 +17,7 @@ export class Subtitle extends React.Component<Props> {
       <Row size={SUBTITLE_SIZE}>
         <Grid>
           <Row>
-            <Text style={WalletStyles.pfText}>{subtitleText}</Text>
+            <Text style={WalletStyles.standardText}>{subtitleText}</Text>
           </Row>
         </Grid>
       </Row>
