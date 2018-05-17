@@ -5,6 +5,7 @@ import { Button, Col, Container, Grid, H1, Text, View } from "native-base";
 import { Switch } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import { PortfolioStyles } from "../../components/styles";
 import ROUTES from "../../navigation/routes";
 
 type Props = Readonly<{
@@ -73,12 +74,14 @@ export class SaveNewCardScreen extends React.Component<Props, State> {
           <Button
             block={true}
             light={true}
-            style={{ backgroundColor: "#5C6F82", marginTop: 5 }}
+            style={PortfolioStyles.payCancelButton}
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.PORTFOLIO_HOME)
             }
           >
-            <Text style={{ color: "white" }}>{I18n.t("saveCard.cancel")}</Text>
+            <Text style={PortfolioStyles.payCancelButtonText}>
+              {I18n.t("saveCard.cancel")}
+            </Text>
           </Button>
         </View>
       </Container>
