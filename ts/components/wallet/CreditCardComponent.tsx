@@ -20,7 +20,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
 
-import { CreditCard, getIconByCardType } from "../../types/wallet/CreditCard";
+import { CreditCard, getIconByCardType } from "../../types/CreditCard";
 import { CreditCardStyle } from "../styles";
 
 type Props = Readonly<{

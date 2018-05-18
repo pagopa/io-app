@@ -21,7 +21,7 @@ import {
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/wallet/CreditCard";
-import { Operation } from "../../types/wallet/types";
+import { Operation } from "../../types/wallet";
 
 type ScreenProps = {};
 

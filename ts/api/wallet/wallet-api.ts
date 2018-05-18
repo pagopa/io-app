@@ -11,16 +11,9 @@
 /* Required to build user-displayable contents (e.g. "last used ...") */
 import I18n from "../../i18n";
 
-import { Operation } from "../../types/wallet/types";
+import { Operation } from "../../types/wallet";
 
-import { CreditCard, UNKNOWN_CARD, getCardTypeFromPAN } from "../../types/wallet/CreditCard";
-
-const lastUsage = I18n.t("wallet.lastUsage");
-const yesterday = I18n.t("wallet.yesterday");
-const today = I18n.t("wallet.today");
-const noNew = I18n.t("wallet.noNewTransactions");
-const todayAt = lastUsage + today;
-const yesterdayAt = lastUsage + yesterday;
+import { CreditCard, UNKNOWN_CARD, getCardTypeFromPAN } from "../../types/CreditCard";
 
 interface ICardPrototype {
   id: number,
@@ -42,28 +35,28 @@ function genCardFromData(data: ICardPrototype): CreditCard {
 const cards: ReadonlyArray<CreditCard> = [
   {
     id: 1,
-    lastUsage: todayAt + "07:34",
+    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t("wallet.today")} 07:34`,
     pan: "3759 876543 02001",
     owner: "Mario Rossi",
     expirationDate: "10/20",
   },
   {
     id: 2,
-    lastUsage: yesterdayAt + " 10:20",
+    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t("wallet.yesterday")} 07:34`,
     pan: "4324 5201 6988 0454",
     owner: "John Doe",
     expirationDate: "11/21"
   },
   {
     id: 3,
-    lastUsage: noNew,
+    lastUsage: I18n.t("wallet.noNewTransactions"),
     pan: "5400 4708 6234 2849",
     owner: "Mario Bianchi",
     expirationDate: "12/22"
   },
   {
     id: 4,
-    lastUsage: todayAt + "09:03",
+    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t("wallet.today")} 09:12`,
     pan: "4000 1234 5678 9010",
     owner: "John Smith",
     expirationDate: "09/19"

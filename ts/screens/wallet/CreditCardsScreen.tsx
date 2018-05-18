@@ -14,7 +14,7 @@ import I18n from "../../i18n";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import { topContentNone } from "../../components/wallet/layout/types";
-import { CreditCard } from "../../types/wallet/CreditCard";
+import { CreditCard } from "../../types/CreditCard";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
