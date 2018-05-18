@@ -3,10 +3,10 @@
  */
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert, Platform } from "react-native";
 import { call, Effect, select, takeLatest } from "redux-saga/effects";
 
-import { Installation } from "../../definitions/backend/Installation";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, environment } from "../config";
@@ -43,7 +43,7 @@ function* updateInstallation(): Iterator<Effect> {
   );
 
   // Get the token from the state
-  const sessionToken: string = yield select(sessionTokenSelector);
+  const sessionToken: string | undefined = yield select(sessionTokenSelector);
 
   // Check if the we have a session token
   // TODO: Define what to do when the token is not available or is expired
@@ -56,7 +56,7 @@ function* updateInstallation(): Iterator<Effect> {
 
       try {
         const response:
-          | BasicResponseType<Installation>
+          | BasicResponseType<NonEmptyString>
           | undefined = yield call(backendClient.createOrUpdateInstallation, {
           id: notificationsInstallation.uuid,
           installation: {
