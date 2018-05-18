@@ -95,16 +95,7 @@
 		<string>Feather.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>io-icon-font.ttf</string>
-		<string>RobotoMono-Bold.ttf</string>
-		<string>RobotoMono-BoldItalic.ttf</string>
-		<string>RobotoMono-Italic.ttf</string>
-		<string>RobotoMono-Light.ttf</string>
-		<string>RobotoMono-LightItalic.ttf</string>
-		<string>RobotoMono-Medium.ttf</string>
-		<string>RobotoMono-MediumItalic.ttf</string>
 		<string>RobotoMono-Regular.ttf</string>
-		<string>RobotoMono-Thin.ttf</string>
-		<string>RobotoMono-ThinItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
