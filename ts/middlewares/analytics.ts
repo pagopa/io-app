@@ -2,7 +2,10 @@ import Mixpanel from "react-native-mixpanel";
 import { NavigationActions } from "react-navigation";
 
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
-import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
+import {
+  APP_STATE_CHANGE_ACTION,
+  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
+} from "../store/actions/constants";
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action
@@ -18,6 +21,10 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
             APPLICATION_STATE_NAME: result.payload
           });
           break;
+        }
+
+        case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE: {
+          Mixpanel.track(NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE);
         }
 
         /*
