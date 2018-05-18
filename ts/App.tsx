@@ -20,9 +20,10 @@ configureErrorHandler()
   // tslint:disable-next-line:no-empty
   .catch(() => {});
 
-configurePushNotifications();
-
 const { store, persistor } = configureStoreAndPersistor();
+
+// Configure the application to receive push notifications
+configurePushNotifications(store);
 
 /**
  * Main component of the application
