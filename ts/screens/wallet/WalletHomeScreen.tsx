@@ -1,3 +1,8 @@
+/**
+ * Wallet home screen, with a list of recent transactions,
+ * a "pay notice" button and payment methods info/button to
+ * add new ones
+ */
 import { Button, Content, View } from "native-base";
 import * as React from "react";
 import { Image, Text, TouchableHighlight } from "react-native";
@@ -7,12 +12,12 @@ import { WalletStyles } from "../../components/styles";
 import { OperationsList } from "../../components/wallet/OperationsList";
 import {
   ImageType,
-  PayLayout
-} from "../../components/wallet/pay-layout/PayLayout";
+  WalletLayout
+} from "../../components/wallet/layout/WalletLayout";
 import {
   topContentSubtitlesLRTouchable,
   topContentSubtitleTouchable
-} from "../../components/wallet/pay-layout/types";
+} from "../../components/wallet/layout/types";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/wallet/CreditCard";
@@ -39,6 +44,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
     super(props);
   }
 
+  // TODO: currently mocked, will be implemented properly as part of #157422715 (CreditCardComponent)
   private getCardsSummaryImage(): React.ReactElement<any> {
     const { navigate } = this.props.navigation;
     return (
@@ -101,7 +107,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
           );
 
     return (
-      <PayLayout
+      <WalletLayout
         navigation={this.props.navigation}
         title={TITLE}
         topContent={topContents}
@@ -116,7 +122,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
             navigation={this.props.navigation}
           />
         </Content>
-      </PayLayout>
+      </WalletLayout>
     );
   }
 }

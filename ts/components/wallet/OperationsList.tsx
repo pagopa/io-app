@@ -1,3 +1,9 @@
+/**
+ * This component displays a list of transactions
+ */
+// TODO: define the most suitable term for "transactions" 
+// (transactions, operations, payments, or something else entirely)
+// and stick with it throughout the code
 import {
   Body,
   Grid,

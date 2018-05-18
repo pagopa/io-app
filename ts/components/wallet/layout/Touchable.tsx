@@ -1,3 +1,6 @@
+/**
+ * Returns the touchable component wrapped by a Row
+ */
 import * as React from "react";
 import { Row } from "react-native-easy-grid";
 import { TopContent, TopContentTouchable } from "./types";

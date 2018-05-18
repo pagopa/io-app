@@ -1,3 +1,13 @@
+/**
+ * This file contains a list of mocked
+ * data (cards and transactions), plus
+ * a stub of code that is invoked throughout
+ * the app to get the required data
+ */
+// TODO: WalletAPI is synchronous right now, it will be 
+// transformed into async when needed (i.e. when the app
+// will actually fetch data from the proxy/pagopa)
+
 /* Required to build user-displayable contents (e.g. "last used ...") */
 import I18n from "../../i18n";
 

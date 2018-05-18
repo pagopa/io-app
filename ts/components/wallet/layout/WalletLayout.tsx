@@ -1,10 +1,18 @@
+/**
+ * Wallet layout, split into two parts:
+ * - the top-most one shows a header w/ a title, subtitle,
+ *   image and touchable content (or a subset of these)
+ * - the bottom-most part shows the current screen's contents
+ *   (e.g. list of payment methods)
+ */
+
 import { Button, Container, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../../i18n";
 
-import { TopContents } from "./TopContents";
+import { TopContents, TOP_CONTENTS_MAX_SIZE } from "./TopContents";
 import { TopContent } from "./types";
 
 export enum ImageType {
@@ -17,14 +25,10 @@ type Props = Readonly<{
   children?: React.ReactElement<any>;
   rightImage?: ImageType;
   navigation: NavigationScreenProp<NavigationState>;
-  showPayNoticeButton?: boolean;
 }>;
 
-/**
- * Pay layout component
- */
-const PAY_LAYOUT_BOTTOM_SIZE = 4;
-export class PayLayout extends React.Component<Props, never> {
+const WALLET_LAYOUT_BOTTOM_SIZE = 4;
+export class WalletLayout extends React.Component<Props, never> {
   private payNoticeButton(): React.ReactNode {
     return (
       <View footer={true}>
@@ -36,6 +40,9 @@ export class PayLayout extends React.Component<Props, never> {
     );
   }
 
+  /* The top part is defined by the TopContent component, 
+   * the bottom part is defined by this.props.children
+   */
   private twoPartsLayout(): React.ReactNode {
     return (
       <Grid>
@@ -55,8 +62,8 @@ export class PayLayout extends React.Component<Props, never> {
      * is given by MAX_TOP_PART - ACTUAL_TOP_PART
      */
     return (
-      PAY_LAYOUT_BOTTOM_SIZE +
-      (TopContents.getMaxSize() - TopContents.getSize(this.props.topContent))
+      WALLET_LAYOUT_BOTTOM_SIZE +
+      (TOP_CONTENTS_MAX_SIZE - TopContents.getSize(this.props.topContent))
     );
   }
 

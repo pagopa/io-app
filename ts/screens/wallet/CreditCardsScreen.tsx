@@ -1,14 +1,19 @@
+/**
+ * This screen shows the list of available payment methods
+ * (credit cards for now) 
+ */
+
 import * as React from "react";
 
 import { Content, List, View } from "native-base";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles";
-import { PayLayout } from "../../components/wallet/pay-layout/PayLayout";
+import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
-import { topContentNone } from "../../components/wallet/pay-layout/types";
+import { topContentNone } from "../../components/wallet/layout/types";
 import { CreditCard } from "../../types/wallet/CreditCard";
 
 type Props = Readonly<{
@@ -17,9 +22,6 @@ type Props = Readonly<{
 
 const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
-/**
- * Select Credit Card
- */
 export class CreditCardsScreen extends React.Component<Props, never> {
   public static navigationOptions = {
     title: I18n.t("wallet.wallet"),
@@ -32,7 +34,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     return (
-      <PayLayout
+      <WalletLayout
         navigation={this.props.navigation}
         title={I18n.t("wallet.creditcards")}
         topContent={topContentNone()}
@@ -51,7 +53,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
             />
           </View>
         </Content>
-      </PayLayout>
+      </WalletLayout>
     );
   }
 }
