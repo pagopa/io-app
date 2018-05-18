@@ -4,14 +4,14 @@
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Alert, Platform } from "react-native";
-import { call, Effect, select, takeLatest } from "redux-saga/effects";
+import { Platform } from "react-native";
+import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
-import { apiUrlPrefix, environment } from "../config";
-import I18n from "../i18n";
+import { apiUrlPrefix } from "../config";
 import { SESSION_INITIALIZE_SUCCESS } from "../store/actions/constants";
+import { updateNotificationInstallationFailure } from "../store/actions/notifications";
 import {
   InstallationState,
   notificationsInstallationSelector
@@ -22,16 +22,6 @@ const notificationsPlatform: PlatformEnum = Platform.select({
   ios: PlatformEnum.apns,
   android: PlatformEnum.gcm
 });
-
-function notifyNotificationsInstallationError() {
-  // If the application is running in dev mode show an alert
-  if (environment === "DEV") {
-    Alert.alert(
-      I18n.t("notifications.installation.errorTitle"),
-      I18n.t("notifications.installation.errorMessage")
-    );
-  }
-}
 
 /**
  * This generator function calls the ProxyApi `installation` endpoint
@@ -54,25 +44,21 @@ function* updateInstallation(): Iterator<Effect> {
       // Send the request to the backend
       const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
-      try {
-        const response:
-          | BasicResponseType<NonEmptyString>
-          | undefined = yield call(backendClient.createOrUpdateInstallation, {
-          id: notificationsInstallation.uuid,
-          installation: {
-            platform: notificationsPlatform,
-            pushChannel: notificationsInstallation.token
-          }
-        });
-
-        /**
-         * If the response is undefined (can't be decoded) or the status is not 200 notify the problem
-         */
-        if (!response || response.status !== 200) {
-          notifyNotificationsInstallationError();
+      const response:
+        | BasicResponseType<NonEmptyString>
+        | undefined = yield call(backendClient.createOrUpdateInstallation, {
+        id: notificationsInstallation.uuid,
+        installation: {
+          platform: notificationsPlatform,
+          pushChannel: notificationsInstallation.token
         }
-      } catch (error) {
-        notifyNotificationsInstallationError();
+      });
+
+      /**
+       * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
+       */
+      if (!response || response.status !== 200) {
+        yield put(updateNotificationInstallationFailure());
       }
     }
   }

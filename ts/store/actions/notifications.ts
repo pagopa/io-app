@@ -2,7 +2,10 @@
  * Action types and action creator related to the Notifications.
  */
 
-import { NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE } from "./constants";
+import {
+  NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
+  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
+} from "./constants";
 
 export type NotificationsTokenUpdate = Readonly<{
   type: typeof NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE;
@@ -10,6 +13,10 @@ export type NotificationsTokenUpdate = Readonly<{
    * The push notification service token
    */
   payload: string;
+}>;
+
+export type NotificationInstallationUpdateFailure = Readonly<{
+  type: typeof NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE;
 }>;
 
 // Creators
@@ -20,4 +27,10 @@ export const updateNotificationsInstallationToken = (
   payload: token
 });
 
-export type NotificationsActions = NotificationsTokenUpdate;
+export const updateNotificationInstallationFailure = (): NotificationInstallationUpdateFailure => ({
+  type: NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
+});
+
+export type NotificationsActions =
+  | NotificationsTokenUpdate
+  | NotificationInstallationUpdateFailure;
