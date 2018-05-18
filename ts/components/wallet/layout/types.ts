@@ -130,3 +130,16 @@ export type TopContent =
   | TopContentSubtitlesLRTouchable
   | TopContentTouchable
   | TopContentNone;
+
+/* guards */
+export function hasMainSubtitle(x: any): x is TopContentSubtitle {
+  return x.hasMainSubtitle;
+}
+
+export function hasSubtitlesLR(x: any): x is TopContentSubtitlesLR {
+  return x.hasSubtitlesLR;
+}
+
+export function hasTouchable(x: any): x is TopContentTouchable {
+  return x.hasTouchable;
+}

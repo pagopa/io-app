@@ -6,7 +6,7 @@ import { Text } from "native-base";
 import * as React from "react";
 import { Grid, Row } from "react-native-easy-grid";
 import { WalletStyles } from "../../styles";
-import { TopContent, TopContentSubtitle } from "./types";
+import { TopContent, hasMainSubtitle } from "./types";
 
 type Props = Readonly<{
   content: TopContent;
@@ -17,15 +17,17 @@ export const SUBTITLE_SIZE = 2;
 
 export class Subtitle extends React.Component<Props> {
   public render(): React.ReactNode {
-    const { subtitleText } = this.props.content as TopContentSubtitle;
-    return (
-      <Row size={SUBTITLE_SIZE}>
-        <Grid>
-          <Row>
-            <Text style={WalletStyles.standardText}>{subtitleText}</Text>
-          </Row>
-        </Grid>
-      </Row>
-    );
+    if (hasMainSubtitle(this.props.content)) {
+      return (
+        <Row size={SUBTITLE_SIZE}>
+          <Grid>
+            <Row>
+              <Text style={WalletStyles.standardText}>{this.props.content.subtitleText}</Text>
+            </Row>
+          </Grid>
+        </Row>
+      );      
+    }
+    return null;
   }
 }
