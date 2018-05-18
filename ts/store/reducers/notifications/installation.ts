@@ -10,16 +10,18 @@ import { NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE } from "../../actions/constants
 
 export type InstallationState = Readonly<{
   uuid: string;
-  token: string | null;
+  token: string | undefined;
 }>;
 
-export const INITIAL_STATE: InstallationState = {
-  uuid: uuid(),
-  token: null
-};
+export function getInitialState(): InstallationState {
+  return {
+    uuid: uuid(),
+    token: undefined
+  };
+}
 
 const reducer = (
-  state: InstallationState = INITIAL_STATE,
+  state: InstallationState = getInitialState(),
   action: Action
 ): InstallationState => {
   switch (action.type) {
