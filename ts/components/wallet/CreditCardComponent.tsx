@@ -7,8 +7,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
 
-import { CreditCard } from "../../types/wallet/CreditCard";
-import { CreditCardIcons } from "../../types/wallet/CreditCardType";
+import { CreditCard, getIconByCardType } from "../../types/wallet/CreditCard";
 import { CreditCardStyle } from "../styles";
 
 type Props = Readonly<{
@@ -36,7 +35,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                   ]}
                 >
                   {("\u25cf".repeat(4) + " ").repeat(3) +
-                    item.ccNumber.slice(-4)}
+                    item.pan.slice(-4)}
                 </Text>
               </Col>
               <Col size={1}>
@@ -64,7 +63,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                     CreditCardStyle.smallTextStyle
                   ]}
                 >
-                  {I18n.t("creditCardComponent.validUntil") + item.expires}
+                  {I18n.t("creditCardComponent.validUntil") + item.expirationDate}
                 </Text>
               </Col>
             </Row>
@@ -81,7 +80,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                 <Image
                   style={CreditCardStyle.issuerLogo}
                   source={
-                    CreditCardIcons[CreditCard.getCardType(item.ccNumber)]
+                    getIconByCardType(item.type)
                   }
                 />
               </Col>

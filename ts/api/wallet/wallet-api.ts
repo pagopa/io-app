@@ -3,7 +3,7 @@ import I18n from "../../i18n";
 
 import { Operation } from "../../types/wallet/types";
 
-import { CreditCard, UNKNOWN_CARD } from "../../types/wallet/CreditCard";
+import { CreditCard, UNKNOWN_CARD, getCardTypeFromPAN } from "../../types/wallet/CreditCard";
 
 const lastUsage = I18n.t("wallet.lastUsage");
 const yesterday = I18n.t("wallet.yesterday");
@@ -12,32 +12,53 @@ const noNew = I18n.t("wallet.noNewTransactions");
 const todayAt = lastUsage + today;
 const yesterdayAt = lastUsage + yesterday;
 
+interface ICardPrototype {
+  id: number,
+  pan: string,
+  owner: string,
+  expirationDate: string,
+  lastUsage: string
+}
+function genCardFromData(data: ICardPrototype): CreditCard {
+  return {
+    ...data,
+    type: getCardTypeFromPAN(data.pan)
+  };
+}
+ 
+ 
 // temporarily making this a variable
 // (to mock the deleteCreditCard() api more easily)
 const cards: ReadonlyArray<CreditCard> = [
-  new CreditCard(
-    1,
-    todayAt + "07:34",
-    "3759 876543 02001",
-    "Mario Rossi",
-    "10/20"
-  ),
-  new CreditCard(
-    2,
-    yesterdayAt + " 10:20",
-    "4324 5201 6988 0454",
-    "John Doe",
-    "11/21"
-  ),
-  new CreditCard(3, noNew, "5400 4708 6234 2849", "Mario Bianchi", "12/22"),
-  new CreditCard(
-    4,
-    todayAt + "09:03",
-    "4000 1234 5678 9010",
-    "John Smith",
-    "09/19"
-  )
-];
+  {
+    id: 1,
+    lastUsage: todayAt + "07:34",
+    pan: "3759 876543 02001",
+    owner: "Mario Rossi",
+    expirationDate: "10/20",
+  },
+  {
+    id: 2,
+    lastUsage: yesterdayAt + " 10:20",
+    pan: "4324 5201 6988 0454",
+    owner: "John Doe",
+    expirationDate: "11/21"
+  },
+  {
+    id: 3,
+    lastUsage: noNew,
+    pan: "5400 4708 6234 2849",
+    owner: "Mario Bianchi",
+    expirationDate: "12/22"
+  },
+  {
+    id: 4,
+    lastUsage: todayAt + "09:03",
+    pan: "4000 1234 5678 9010",
+    owner: "John Smith",
+    expirationDate: "09/19"
+  } 
+].map(genCardFromData);
 
 const operations: ReadonlyArray<Operation> = [
   {
