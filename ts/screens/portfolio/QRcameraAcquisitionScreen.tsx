@@ -11,7 +11,6 @@ import{
 } from "native-base";
 import AppHeader from "../../components/ui/AppHeader";
 
-
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
@@ -21,8 +20,8 @@ import {
 } from "react-navigation";
 
 type OwnProps = Readonly<{
-      navigation: NavigationScreenProp<NavigationState>;
-			}>;
+	navigation: NavigationScreenProp<NavigationState>;
+}>;
 			
 type ScreenProps = {};
 
@@ -31,7 +30,7 @@ type Props = ScreenProps & OwnProps;
 /**
  * Portfolio QR code acquisition by camera
  */
-export class QRcameraAcquisitionSreen extends React.Component<Props, never> {
+export class QRcameraAcquisitionScreen extends React.Component<Props, never> {
 	constructor(props: Props) {
 		super(props);
 	}
@@ -64,7 +63,7 @@ export class QRcameraAcquisitionSreen extends React.Component<Props, never> {
 						{I18n.t("portfolio.QRtoPay.instructions")}
 					</Text>
 				</Content>
-				<View footer>
+				<View footer={true}>
 					<Button
 						block={true}
 						primary={true}
