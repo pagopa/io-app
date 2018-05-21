@@ -20,15 +20,14 @@ export const INITIAL_STATE: LoadingState = {
 };
 
 /**
- * Create a selector that return true only if all the actions passed as
- * parameter are not in loading state.
+ * Create a selector that return true if any of the actions passed as parameter
+ * is in "loading" state.
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
 export const createLoadingSelector = (
   actions: ReadonlyArray<FetchRequestActionsType>
 ): ((_: GlobalState) => boolean) => (state: GlobalState): boolean => {
-  // Returns true only when all actions are not loading
   return actions.some(
     (action: FetchRequestActionsType): boolean => state.loading[action]
   );
