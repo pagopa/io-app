@@ -22,7 +22,7 @@ import I18n from "../../i18n";
 
 import { CreditCard, getCardIcon } from "../../types/CreditCard";
 
-import * as color from "color";
+import color from "color";
 import variables from "../../theme/variables";
 
 type Props = Readonly<{
