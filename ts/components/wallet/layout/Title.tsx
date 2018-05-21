@@ -7,7 +7,7 @@ import { H1 } from "native-base";
 import * as React from "react";
 import { Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { WalletStyles } from "../../styles";
+import { WalletStyles } from "../../styles/wallet";
 import { ImageType } from "./WalletLayout";
 
 type Props = Readonly<{

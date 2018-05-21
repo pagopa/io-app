@@ -10,6 +10,11 @@ const WalletNavigator = StackNavigator({
   [ROUTES.WALLET_CREDITCARDS]: {
     screen: CreditCardsScreen
   }
-});
+},
+{
+  // Let each screen handle the header and navigation
+  headerMode: "none"
+}
+);
 
 export default WalletNavigator;

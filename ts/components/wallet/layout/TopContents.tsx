@@ -8,7 +8,7 @@
 import * as React from "react";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletStyles } from "../../styles";
+import { WalletStyles } from "../../styles/wallet";
 import { ImageType } from "./WalletLayout";
 import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
 import { SUBTITLES_LR_SIZE, SubtitlesLR } from "./SubtitlesLR";

@@ -23,10 +23,6 @@ type Props = Readonly<{
 const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class CreditCardsScreen extends React.Component<Props, never> {
-  public static navigationOptions = {
-    title: I18n.t("wallet.wallet"),
-    headerBackTitle: null
-  };
 
   constructor(props: Props) {
     super(props);
@@ -35,6 +31,8 @@ export class CreditCardsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     return (
       <WalletLayout
+        headerTitle={I18n.t("wallet.wallet")}
+        allowGoBack={true}
         navigation={this.props.navigation}
         title={I18n.t("wallet.creditcards")}
         topContent={topContentNone()}

@@ -8,6 +8,12 @@ import variables from "../../theme/variables";
 
 
 export const WalletStyles = StyleSheet.create({
+  header: {
+    backgroundColor: variables.brandDarkGray,
+  },
+  white: {
+    color: "white"
+  },
   addCardItem: {
     borderBottomWidth: variables.headerBorderBottomWidth,
     marginTop: 5,

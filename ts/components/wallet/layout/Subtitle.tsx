@@ -5,7 +5,7 @@
 import { Text } from "native-base";
 import * as React from "react";
 import { Grid, Row } from "react-native-easy-grid";
-import { WalletStyles } from "../../styles";
+import { WalletStyles } from "../../styles/wallet";
 import { TopContent, hasMainSubtitle } from "./types";
 
 type Props = Readonly<{

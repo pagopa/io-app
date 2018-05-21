@@ -8,7 +8,7 @@ import { Left, Right, Text } from "native-base";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletStyles } from "../../styles";
+import { WalletStyles } from "../../styles/wallet";
 import { TopContent, hasSubtitlesLR } from "./types";
 
 type Props = Readonly<{

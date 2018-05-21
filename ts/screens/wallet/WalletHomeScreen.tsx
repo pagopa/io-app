@@ -35,10 +35,6 @@ type Props = ScreenProps & OwnProps;
  * Wallet Home Screen
  */
 export class WalletHomeScreen extends React.Component<Props, never> {
-  public static navigationOptions = {
-    title: I18n.t("wallet.wallet"),
-    headerBackTitle: null
-  };
 
   constructor(props: Props) {
     super(props);
@@ -108,6 +104,8 @@ export class WalletHomeScreen extends React.Component<Props, never> {
 
     return (
       <WalletLayout
+        headerTitle={I18n.t("wallet.wallet")}
+        allowGoBack={false}
         navigation={this.props.navigation}
         title={TITLE}
         topContent={topContents}

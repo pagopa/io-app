@@ -6,7 +6,7 @@
  *   (e.g. list of payment methods)
  */
 
-import { Button, Container, Icon, Text, View } from "native-base";
+import { Body, Button, Container, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -14,12 +14,17 @@ import I18n from "../../../i18n";
 
 import { TopContents, TOP_CONTENTS_MAX_SIZE } from "./TopContents";
 import { TopContent } from "./types";
+import AppHeader from '../../ui/AppHeader';
+import { Left } from 'native-base';
+import { WalletStyles } from '../../styles/wallet';
 
 export enum ImageType {
   BANK_IMAGE
 }
 
 type Props = Readonly<{
+  headerTitle: string; // header to be shown in the AppHeader (may differ from "title")
+  allowGoBack: boolean; // whether the "back" button should be displayed
   title: string;
   topContent: TopContent;
   children?: React.ReactElement<any>;
@@ -67,9 +72,30 @@ export class WalletLayout extends React.Component<Props, never> {
     );
   }
 
+  private goBackButton(): React.ReactNode {
+    if (this.props.allowGoBack === true) {
+      return (
+        <Left>
+          <Button transparent={true} onPress={_ => this.props.navigation.goBack()}>
+            <Icon style={WalletStyles.white} name="chevron-left" />
+          </Button>
+        </Left>
+      );
+    }
+    return <Left><Button transparent={true}/></Left>;
+  }
+
   public render(): React.ReactNode {
     return (
       <Container>
+        <AppHeader style={WalletStyles.header}>
+          {this.goBackButton()}
+          <Body>
+            <Text style={WalletStyles.white}>
+              {this.props.headerTitle}
+            </Text>
+          </Body>
+        </AppHeader>
         {this.twoPartsLayout()}
         {this.payNoticeButton()}
       </Container>
