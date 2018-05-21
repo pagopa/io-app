@@ -20,7 +20,7 @@ export const INITIAL_STATE: LoadingState = {
 };
 
 /**
- * Create a selector that return true if any of the actions passed as parameter
+ * Create a selector that returns true if any of the actions passed as parameter
  * is in "loading" state.
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
