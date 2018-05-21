@@ -6,14 +6,13 @@
  * (below the subtitles)
  */
 import * as React from "react";
-import { Col, Grid } from "react-native-easy-grid";
+import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../styles/wallet";
 import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
 import { SUBTITLES_LR_SIZE, SubtitlesLR } from "./SubtitlesLR";
 import { Title, TITLE_SIZE } from "./Title";
-import { Touchable, TOUCHABLE_SIZE } from "./Touchable";
-import { TopContent } from "./types";
+import { TopContent, hasTouchable } from "./types";
 import { ImageType } from "./WalletLayout";
 
 type Props = Readonly<{
@@ -23,6 +22,9 @@ type Props = Readonly<{
   rightImage?: ImageType;
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+// size (in rows) of the touchable content
+const TOUCHABLE_SIZE = 2;
 
 // maximum size attainable (if title, subtitles and touchable are all present)
 // (used to define how much space can be left to the bottom part if anything is
@@ -83,10 +85,7 @@ export class TopContents extends React.Component<Props> {
 
   private getTouchable() {
     const { topContent } = this.props;
-    if (topContent.hasTouchable === true) {
-      return <Touchable content={topContent} />;
-    }
-    return null;
+    return (hasTouchable(topContent)) ? <Row size={TOUCHABLE_SIZE}>{topContent.touchableContent}</Row> : null;
   }
 
   /* renders a title (mandatory as of now, but may be
