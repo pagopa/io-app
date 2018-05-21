@@ -14,6 +14,7 @@ import { GlobalState } from "../reducers/types";
 import { ApplicationActions } from "../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
 import { ErrorActions } from "../store/actions/error";
+import { MessagesActions } from "../store/actions/messages";
 import { NotificationsActions } from "../store/actions/notifications";
 import { OnboardingActions } from "../store/actions/onboarding";
 import { ProfileActions } from "../store/actions/profile";
@@ -34,6 +35,7 @@ export type Action =
   | OnboardingActions
   | NotificationsActions
   | ProfileActions
+  | MessagesActions
   | ErrorActions;
 
 /* eslint-disable no-use-before-define */
