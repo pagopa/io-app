@@ -5,8 +5,6 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
-import get from "lodash/get";
-
 import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { FetchRequestActionsType } from "../actions/constants";
@@ -22,17 +20,16 @@ export const INITIAL_STATE: LoadingState = {
 };
 
 /**
- * Create a selector that return true only if all the actions passed as
- * parameter are not in loading state.
+ * Create a selector that returns true if any of the actions passed as parameter
+ * is in "loading" state.
  *
  * USAGE: `createLoadingSelector(['PROFILE_LOAD', 'PREFERENCES_LOAD'])`
  */
 export const createLoadingSelector = (
   actions: ReadonlyArray<FetchRequestActionsType>
-): ((_: GlobalState) => boolean | null) => (state: GlobalState): boolean => {
-  // Returns true only when all actions are not loading
-  return actions.some((action: FetchRequestActionsType): boolean =>
-    get(state, `loading.${action}`)
+): ((_: GlobalState) => boolean) => (state: GlobalState): boolean => {
+  return actions.some(
+    (action: FetchRequestActionsType): boolean => state.loading[action]
   );
 };
 
