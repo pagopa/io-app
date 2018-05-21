@@ -64,13 +64,13 @@ export const WalletStyles = StyleSheet.create({
   },
   payLayoutTitle: {
     fontFamily: variables.fontFamily,
-    fontSize: 30,
+    fontSize: variables.fontSize6,
     color: variables.brandGray
   },
   payLayoutSubtitleLeft: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: variables.fontSize4,
     color: variables.brandGray
   },
 
@@ -156,7 +156,7 @@ export const WalletStyles = StyleSheet.create({
   },
   payLightStyle: {
     fontFamily: variables.fontFamily,
-    fontSize: 12,
+    fontSize: variables.fontSize1,
     color: "rgb(166, 166, 166)"
   },
   linkStyle: {
@@ -180,7 +180,7 @@ export const WalletStyles = StyleSheet.create({
   },
   newIconStyle: {
     marginTop: 6,
-    fontSize: 10,
+    fontSize: variables.fontSize1,
     color: "#0066CC"
   }
 });

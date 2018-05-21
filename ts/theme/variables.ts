@@ -59,6 +59,9 @@ const customVariables = Object.assign(materialVariables, {
   get fontSize5(): number {
     return this.fontSizeBase * 1.5;
   },
+  get fontSize6(): number {
+    return this.fontSizeBase * 1.75;
+  },
   lineHeight: 24,
 
   // Icon
