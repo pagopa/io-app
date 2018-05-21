@@ -1,14 +1,19 @@
+import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
-import { persistCombineReducers, Persistor, persistStore } from "redux-persist";
+import {
+  persistCombineReducers,
+  PersistConfig,
+  Persistor,
+  persistStore
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
 import thunk from "redux-thunk";
-import { analytics } from "../middlewares";
 
-import { NavigationState } from "react-navigation";
 import { Action, Store, StoreEnhancer } from "../actions/types";
+import { analytics } from "../middlewares";
 import rootReducer from "../reducers";
 import { GlobalState } from "../reducers/types";
 import rootSaga from "../sagas";
@@ -16,13 +21,13 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
-const persistConfig = {
+const persistConfig: PersistConfig = {
   key: "root",
   storage,
   /**
-   * Sections of the store that must not be persisted and rehydrated.
+   * Sections of the store that must be persisted and rehydrated.
    */
-  blacklist: ["navigation", "loading", "error"]
+  whitelist: ["session", "onboarding", "notifications", "profile"]
 };
 
 const persistedReducer: Reducer<GlobalState, Action> = persistCombineReducers<
