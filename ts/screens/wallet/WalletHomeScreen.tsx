@@ -20,8 +20,8 @@ import {
 import { OperationsList } from "../../components/wallet/OperationsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { Operation } from "../../types/wallet";
 import { CreditCard } from "../../types/CreditCard";
+import { Operation } from "../../types/wallet";
 
 type ScreenProps = {};
 

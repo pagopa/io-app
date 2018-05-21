@@ -117,7 +117,9 @@ export default class CreditCardComponent extends React.Component<Props> {
                     CreditCardStyle.smallTextStyle
                   ]}
                 >
-                  {`${I18n.t("creditCardComponent.validUntil")}${item.expirationDate}`}
+                  {`${I18n.t("creditCardComponent.validUntil")}${
+                    item.expirationDate
+                  }`}
                 </Text>
               </Col>
             </Row>
