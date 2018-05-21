@@ -39,6 +39,8 @@ const customVariables = Object.assign(materialVariables, {
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
 
+  fontColor: "#17324D",
+
   /* react-native's fontSize should be a number
    * (https://facebook.github.io/react-native/docs/text.html),
    * consider whether a different type should be used here

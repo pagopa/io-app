@@ -8,7 +8,7 @@ import * as React from "react";
 import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
-import { WalletStyles } from "../../components/styles";
+import { WalletStyles } from "../../components/styles/wallet";
 import { OperationsList } from "../../components/wallet/OperationsList";
 import {
   ImageType,

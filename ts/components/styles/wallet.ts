@@ -2,47 +2,10 @@
  * Common styles used across the components
  */
 
-import { NativeModules, Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
-const { StatusBarManager } = NativeModules;
+import variables from "../../theme/variables";
 
-const STATUSBAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBarManager.HEIGHT;
-
-import variables from "../theme/variables";
-
-// Due to a bug, the following style must be wrapped
-// with a call to StyleSheet.flatten()
-// https://github.com/shoutem/ui/issues/51
-
-export const CommonStyles = StyleSheet.create({
-  fullContainer: {
-    marginTop: STATUSBAR_HEIGHT,
-    backgroundColor: variables.brandGray
-  },
-  errorContainer: {
-    padding: 5,
-    backgroundColor: "#F23333",
-    borderRadius: 4,
-    color: "#eee",
-    fontSize: 15
-  }
-});
-
-export const ProfileStyles = StyleSheet.create({
-  profileHeader: { backgroundColor: "#0066CC" },
-  profileHeaderText: { fontSize: 22, color: "#fff" },
-  profileRow: { flexDirection: "row", alignItems: "center" },
-  profileRowIcon: { marginLeft: 10, fontSize: 13, color: "#b2d0ed" },
-  profileRowText: { fontSize: 15, color: "#b2d0ed" },
-  preferenceHeaderText: {
-    fontWeight: "bold",
-    color: "#555",
-    fontSize: 15,
-    marginTop: 10
-  },
-  listItem: { color: "#06C", fontWeight: "bold", marginLeft: 20 },
-  version: { textAlign: "right" }
-});
 
 export const WalletStyles = StyleSheet.create({
   addCardItem: {
@@ -213,43 +176,3 @@ export const WalletStyles = StyleSheet.create({
   }
 });
 
-export const CreditCardStyle = StyleSheet.create({
-  largeTextStyle: {
-    fontSize: variables.fontSize4,
-    fontFamily: "Roboto Mono"
-  },
-  rowStyle: {
-    alignItems: "center"
-  },
-  textStyle: {
-    marginLeft: 15,
-    color: "rgb(13, 37, 62)",
-    fontFamily: variables.fontFamily
-  },
-  cardStyle: {
-    backgroundColor: "rgb(242,242,242)",
-    borderRadius: 10,
-    marginTop: 10,
-    height: 200
-  },
-  smallTextStyle: {
-    fontSize: variables.fontSize2,
-    color: "rgb(70,92,113)"
-  },
-  iconStyle: {
-    fontSize: variables.fontSize5,
-    color: variables.brandPrimary,
-    paddingLeft: 10
-  },
-  whiteBarStyle: {
-    borderWidth: 0,
-    borderBottomColor: "white",
-    borderBottomWidth: 2,
-    paddingBottom: 15,
-    width: "100%"
-  },
-  issuerLogo: {
-    width: "100%",
-    resizeMode: "contain"
-  }
-});

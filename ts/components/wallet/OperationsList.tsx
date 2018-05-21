@@ -19,8 +19,8 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
-import { Operation } from "../../types/wallet/types";
-import { WalletStyles } from "../styles";
+import { Operation } from "../../types/wallet";
+import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
   parent: string;

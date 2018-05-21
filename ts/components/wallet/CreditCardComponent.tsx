@@ -14,19 +14,62 @@
 import * as React from "react";
 
 import { Body, Card, Icon, Text } from "native-base";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
 
 import { CreditCard, getIconByCardType } from "../../types/CreditCard";
-import { CreditCardStyle } from "../styles";
+
+import variables from "../../theme/variables";
+
 
 type Props = Readonly<{
   item: CreditCard;
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+export const CreditCardStyle = StyleSheet.create({
+  largeTextStyle: {
+    fontSize: variables.fontSize4,
+    fontFamily: "Roboto Mono"
+  },
+  rowStyle: {
+    alignItems: "center"
+  },
+  textStyle: {
+    marginLeft: 15,
+    color: variables.fontColor,
+    fontFamily: variables.fontFamily
+  },
+  cardStyle: {
+    backgroundColor: "rgb(242,242,242)",
+    borderRadius: 10,
+    marginTop: 10,
+    height: 200
+  },
+  smallTextStyle: {
+    fontSize: variables.fontSize2,
+    color: variables.brandDarkGray
+  },
+  iconStyle: {
+    fontSize: variables.fontSize5,
+    color: variables.brandPrimary,
+    paddingLeft: 10
+  },
+  whiteBarStyle: {
+    borderWidth: 0,
+    borderBottomColor: "white",
+    borderBottomWidth: 2,
+    paddingBottom: 15,
+    width: "100%"
+  },
+  issuerLogo: {
+    width: "100%",
+    resizeMode: "contain"
+  }
+});
 
 /**
  * Credit card component
