@@ -1,6 +1,6 @@
 /**
  * TopContent defines the type of top content
- * that needs to be displayed by WalletLayout. 
+ * that needs to be displayed by WalletLayout.
  * This can be a combination of the following
  * With* and Without*
  */

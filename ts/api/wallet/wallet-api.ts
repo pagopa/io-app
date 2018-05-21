@@ -4,7 +4,7 @@
  * a stub of code that is invoked throughout
  * the app to get the required data
  */
-// TODO: WalletAPI is synchronous right now, it will be 
+// TODO: WalletAPI is synchronous right now, it will be
 // transformed into async when needed (i.e. when the app
 // will actually fetch data from the proxy/pagopa)
 
@@ -13,55 +13,47 @@ import I18n from "../../i18n";
 
 import { Operation } from "../../types/wallet";
 
-import { CreditCard, UNKNOWN_CARD, getCardTypeFromPAN } from "../../types/CreditCard";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 
-interface ICardPrototype {
-  id: number,
-  pan: string,
-  owner: string,
-  expirationDate: string,
-  lastUsage: string
-}
-function genCardFromData(data: ICardPrototype): CreditCard {
-  return {
-    ...data,
-    type: getCardTypeFromPAN(data.pan)
-  };
-}
- 
- 
 // temporarily making this a variable
 // (to mock the deleteCreditCard() api more easily)
 const cards: ReadonlyArray<CreditCard> = [
   {
     id: 1,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t("wallet.today")} 07:34`,
-    pan: "3759 876543 02001",
-    owner: "Mario Rossi",
-    expirationDate: "10/20",
+    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
+      "wallet.today"
+    )} 07:34` as NonEmptyString,
+    pan: "375987654302001",
+    owner: "Mario Rossi" as NonEmptyString,
+    expirationDate: "10/20" as NonEmptyString
   },
   {
     id: 2,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t("wallet.yesterday")} 07:34`,
-    pan: "4324 5201 6988 0454",
-    owner: "John Doe",
-    expirationDate: "11/21"
+    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
+      "wallet.yesterday"
+    )} 07:34` as NonEmptyString,
+    pan: "4324520169880454",
+    owner: "John Doe" as NonEmptyString,
+    expirationDate: "11/21" as NonEmptyString
   },
   {
     id: 3,
-    lastUsage: I18n.t("wallet.noNewTransactions"),
-    pan: "5400 4708 6234 2849",
-    owner: "Mario Bianchi",
-    expirationDate: "12/22"
+    lastUsage: I18n.t("wallet.noNewTransactions") as NonEmptyString,
+    pan: "5400470862342849",
+    owner: "Mario Bianchi" as NonEmptyString,
+    expirationDate: "12/22" as NonEmptyString
   },
   {
     id: 4,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t("wallet.today")} 09:12`,
-    pan: "4000 1234 5678 9010",
-    owner: "John Smith",
-    expirationDate: "09/19"
-  } 
-].map(genCardFromData);
+    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
+      "wallet.today"
+    )} 09:12` as NonEmptyString,
+    pan: "4000123456789010",
+    owner: "John Smith" as NonEmptyString,
+    expirationDate: "09/19" as NonEmptyString
+  }
+];
 
 const operations: ReadonlyArray<Operation> = [
   {

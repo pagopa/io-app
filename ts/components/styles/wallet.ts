@@ -6,10 +6,13 @@ import { StyleSheet } from "react-native";
 
 import variables from "../../theme/variables";
 
-
+// TODO: when all the required screens are added,
+// this style will be refactored to get rid of useless
+// styles and aggregate repeated ones to improve
+// readability and maintenability
 export const WalletStyles = StyleSheet.create({
   header: {
-    backgroundColor: variables.brandDarkGray,
+    backgroundColor: variables.brandDarkGray
   },
   white: {
     color: "white"
@@ -178,7 +181,6 @@ export const WalletStyles = StyleSheet.create({
   newIconStyle: {
     marginTop: 6,
     fontSize: 10,
-    color: "#0066CC" 
+    color: "#0066CC"
   }
 });
-

@@ -9,7 +9,7 @@ import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../styles/wallet";
-import { TopContent, hasSubtitlesLR } from "./types";
+import { hasSubtitlesLR, TopContent } from "./types";
 
 type Props = Readonly<{
   content: TopContent;

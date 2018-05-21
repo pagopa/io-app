@@ -1,5 +1,5 @@
 /**
- * Component representing the title in a TopContents. 
+ * Component representing the title in a TopContents.
  * The title is comprised by a text and an optional
  * image displayed on the right-hand side of the screen
  */

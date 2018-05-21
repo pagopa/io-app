@@ -9,19 +9,19 @@ import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { OperationsList } from "../../components/wallet/OperationsList";
-import {
-  ImageType,
-  WalletLayout
-} from "../../components/wallet/layout/WalletLayout";
 import {
   topContentSubtitlesLRTouchable,
   topContentSubtitleTouchable
 } from "../../components/wallet/layout/types";
+import {
+  ImageType,
+  WalletLayout
+} from "../../components/wallet/layout/WalletLayout";
+import { OperationsList } from "../../components/wallet/OperationsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { CreditCard } from "../../types/wallet/CreditCard";
 import { Operation } from "../../types/wallet";
+import { CreditCard } from "../../types/CreditCard";
 
 type ScreenProps = {};
 
@@ -35,7 +35,6 @@ type Props = ScreenProps & OwnProps;
  * Wallet Home Screen
  */
 export class WalletHomeScreen extends React.Component<Props, never> {
-
   constructor(props: Props) {
     super(props);
   }

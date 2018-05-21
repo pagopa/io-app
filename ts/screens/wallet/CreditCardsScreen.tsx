@@ -1,6 +1,6 @@
 /**
  * This screen shows the list of available payment methods
- * (credit cards for now) 
+ * (credit cards for now)
  */
 
 import * as React from "react";
@@ -23,7 +23,6 @@ type Props = Readonly<{
 const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class CreditCardsScreen extends React.Component<Props, never> {
-
   constructor(props: Props) {
     super(props);
   }

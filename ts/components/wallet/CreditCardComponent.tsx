@@ -1,12 +1,12 @@
 /**
- * This component is used to display a credit card 
- * with its information. 
+ * This component is used to display a credit card
+ * with its information.
  */
 // TODO: as part of #157422715 (CreditCardComponent story), this component will be substantially
 // modified, in order to:
 // - have a grid-only layout that does not rely on margins and other ungodly things
 // - be used throughout the app whenever needed (as of now, CreditCardComponent can
-//   only be used when displaying the list of credit cards, with the rest being 
+//   only be used when displaying the list of credit cards, with the rest being
 //   cropped pictures)
 // TODO: at some point, this component may need to be restructured
 // to display different payment methods
@@ -20,10 +20,9 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
 
-import { CreditCard, getIconByCardType } from "../../types/CreditCard";
+import { CreditCard, getCardIcon } from "../../types/CreditCard";
 
 import variables from "../../theme/variables";
-
 
 type Props = Readonly<{
   item: CreditCard;
@@ -90,8 +89,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                     CreditCardStyle.largeTextStyle
                   ]}
                 >
-                  {("\u25cf".repeat(4) + " ").repeat(3) +
-                    item.pan.slice(-4)}
+                  {`${`${"\u25cf".repeat(4)} `.repeat(3)}${item.pan.slice(-4)}`}
                 </Text>
               </Col>
               <Col size={1}>
@@ -119,7 +117,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                     CreditCardStyle.smallTextStyle
                   ]}
                 >
-                  {I18n.t("creditCardComponent.validUntil") + item.expirationDate}
+                  {`${I18n.t("creditCardComponent.validUntil")}${item.expirationDate}`}
                 </Text>
               </Col>
             </Row>
@@ -135,9 +133,7 @@ export default class CreditCardComponent extends React.Component<Props> {
               <Col size={2}>
                 <Image
                   style={CreditCardStyle.issuerLogo}
-                  source={
-                    getIconByCardType(item.type)
-                  }
+                  source={getCardIcon(item)}
                 />
               </Col>
               <Col size={1}>

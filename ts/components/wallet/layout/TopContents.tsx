@@ -1,6 +1,6 @@
 /**
  * top-most part of the wallet layout, comprised of
- * a title, subtitle (either single, or split into a 
+ * a title, subtitle (either single, or split into a
  * left and right one), an optional image (on the right-
  * hand side of the title) and a touchable content
  * (below the subtitles)
@@ -9,12 +9,12 @@ import * as React from "react";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../styles/wallet";
-import { ImageType } from "./WalletLayout";
 import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
 import { SUBTITLES_LR_SIZE, SubtitlesLR } from "./SubtitlesLR";
 import { Title, TITLE_SIZE } from "./Title";
 import { Touchable, TOUCHABLE_SIZE } from "./Touchable";
 import { TopContent } from "./types";
+import { ImageType } from "./WalletLayout";
 
 type Props = Readonly<{
   title: string;
@@ -27,7 +27,8 @@ type Props = Readonly<{
 // maximum size attainable (if title, subtitles and touchable are all present)
 // (used to define how much space can be left to the bottom part if anything is
 // missing)
-export const TOP_CONTENTS_MAX_SIZE = TITLE_SIZE + Math.max(SUBTITLE_SIZE, SUBTITLES_LR_SIZE) + TOUCHABLE_SIZE;
+export const TOP_CONTENTS_MAX_SIZE =
+  TITLE_SIZE + Math.max(SUBTITLE_SIZE, SUBTITLES_LR_SIZE) + TOUCHABLE_SIZE;
 
 export class TopContents extends React.Component<Props> {
   /* this method returns the (vertical) size of a
@@ -50,10 +51,10 @@ export class TopContents extends React.Component<Props> {
      */
     const subtitleSize =
       hasMainSubtitle === true
-      ? SUBTITLE_SIZE
-      : hasSubtitlesLR === true
-        ? SUBTITLES_LR_SIZE
-        : 0;
+        ? SUBTITLE_SIZE
+        : hasSubtitlesLR === true
+          ? SUBTITLES_LR_SIZE
+          : 0;
     /* if topContent uses a touchable, it sets its size to that of
     the touchable object, otherwise it is set to 0 */
     const touchableSize = hasTouchable === true ? TOUCHABLE_SIZE : 0;

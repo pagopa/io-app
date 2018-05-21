@@ -12,11 +12,11 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../../i18n";
 
-import { TopContents, TOP_CONTENTS_MAX_SIZE } from "./TopContents";
+import { Left } from "native-base";
+import { WalletStyles } from "../../styles/wallet";
+import AppHeader from "../../ui/AppHeader";
+import { TOP_CONTENTS_MAX_SIZE, TopContents } from "./TopContents";
 import { TopContent } from "./types";
-import AppHeader from '../../ui/AppHeader';
-import { Left } from 'native-base';
-import { WalletStyles } from '../../styles/wallet';
 
 export enum ImageType {
   BANK_IMAGE
@@ -76,13 +76,20 @@ export class WalletLayout extends React.Component<Props, never> {
     if (this.props.allowGoBack === true) {
       return (
         <Left>
-          <Button transparent={true} onPress={_ => this.props.navigation.goBack()}>
+          <Button
+            transparent={true}
+            onPress={_ => this.props.navigation.goBack()}
+          >
             <Icon style={WalletStyles.white} name="chevron-left" />
           </Button>
         </Left>
       );
     }
-    return <Left><Button transparent={true}/></Left>;
+    return (
+      <Left>
+        <Button transparent={true} />
+      </Left>
+    );
   }
 
   public render(): React.ReactNode {
@@ -91,9 +98,7 @@ export class WalletLayout extends React.Component<Props, never> {
         <AppHeader style={WalletStyles.header}>
           {this.goBackButton()}
           <Body>
-            <Text style={WalletStyles.white}>
-              {this.props.headerTitle}
-            </Text>
+            <Text style={WalletStyles.white}>{this.props.headerTitle}</Text>
           </Body>
         </AppHeader>
         {this.twoPartsLayout()}
