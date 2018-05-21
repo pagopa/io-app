@@ -41,28 +41,22 @@ const customVariables = Object.assign(materialVariables, {
 
   fontColor: "#17324D",
 
-  /* react-native's fontSize should be a number
-   * (https://facebook.github.io/react-native/docs/text.html),
-   * consider whether a different type should be used here
-   * (using & number now as a workaround that does not
-   * get rid of ThemeSimpleValue)
-   */
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
-  get fontSize1(): ThemeSimpleValue & number {
+  get fontSize1(): number {
     return this.fontSizeBase * 0.75;
   },
-  get fontSize2(): ThemeSimpleValue & number {
+  get fontSize2(): number {
     return this.fontSizeBase * 0.875;
   },
-  get fontSize3(): ThemeSimpleValue & number {
+  get fontSize3(): number {
     return this.fontSizeBase * 1;
   },
-  get fontSize4(): ThemeSimpleValue & number {
+  get fontSize4(): number {
     return this.fontSizeBase * 1.125;
   },
-  get fontSize5(): ThemeSimpleValue & number {
+  get fontSize5(): number {
     return this.fontSizeBase * 1.5;
   },
   lineHeight: 24,

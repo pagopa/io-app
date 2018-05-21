@@ -40,7 +40,7 @@ type State = Readonly<{
 export class OperationsList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { data: Array.from(props.operations) };
+    this.state = { data: props.operations };
   }
 
   private renderDate(operation: Operation) {
