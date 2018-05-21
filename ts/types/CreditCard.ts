@@ -1,6 +1,8 @@
 import * as t from "io-ts";
 import { NonEmptyString, PatternString } from "italia-ts-commons/lib/strings";
 
+export type CreditCardType = "VISAELECTRON" | "MAESTRO" | "UNIONPAY" | "VISA" | "MASTERCARD" | "AMEX" | "DINERS" | "DISCOVER" | "JCB" | "POSTEPAY" | "UNKNOWN" ;
+
 const CreditCardUnknown = t.type(
   {
     id: t.number,
@@ -90,7 +92,7 @@ export const UNKNOWN_CARD: CreditCard = {
   lastUsage: "?" as NonEmptyString
 };
 
-export const getCardType = (cc: CreditCard) =>
+export const getCardType = (cc: CreditCard): CreditCardType =>
   CreditCard.types
     .filter(type => type.is(cc) && type.name !== "UNKNOWN")
-    .reduce((p, c) => (c ? c.name : p), "UNKNOWN");
+    .reduce((p, c) => (c ? c.name as CreditCardType : p), "UNKNOWN" as CreditCardType);
