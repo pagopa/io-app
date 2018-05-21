@@ -62,7 +62,7 @@ export const CreditCardStyle = StyleSheet.create({
   },
   whiteBarStyle: {
     borderWidth: 0,
-    borderBottomColor: "white",
+    borderBottomColor: variables.colorWhite,
     borderBottomWidth: 2,
     paddingBottom: 15,
     width: "100%"
