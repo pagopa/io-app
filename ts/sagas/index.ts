@@ -1,13 +1,16 @@
 /**
  * The root saga that forks and includes all the other sagas.
  */
+
 import { networkEventsListenerSaga } from "react-native-offline";
 import { all, Effect, fork } from "redux-saga/effects";
-import sessionSaga from "./session";
+
+import mainSaga from "./main";
+import notificationsSaga from "./notifications";
 import onboardingSaga from "./onboarding";
 import profileSaga from "./profile";
-import messagesSaga from "./messages";
-import mainSaga from "./main";
+import sessionSaga from "./session";
+import messagesSaga from "./messages"
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
 // We use `withRedux: true` to store the network status in the redux store.
@@ -23,6 +26,7 @@ const connectionMonitorParameters = {
 export default function* root(): Iterator<Effect> {
   yield all([
     fork(sessionSaga),
+    fork(notificationsSaga),
     fork(onboardingSaga),
     fork(mainSaga),
     fork(profileSaga),

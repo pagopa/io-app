@@ -118,6 +118,12 @@
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
+  "notifications": {
+    "installation": {
+      "errorTitle": "Notifiche push",
+      "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
+    }
+  },
   "messages": {
     "headerTitle": "io.italia.it",
     "contentTitle": "Messaggi",

@@ -5,7 +5,6 @@
     "tslint-eslint-rules",
     "typestrict",
     "tslint-react",
-    "tslint-react-recommended",
     "tslint-sonarts",
     "tslint-immutable",
     "tslint-plugin-prettier",
@@ -25,6 +24,8 @@
     "no-small-switch": false,
     "no-useless-intersection": false,
     "no-submodule-imports": false,
+    "jsx-no-lambda": false,
+    "member-ordering": false,
 
     // custom rules
     "prettier": true,
