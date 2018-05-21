@@ -88,7 +88,6 @@ export const getCardIcon = (cc: CreditCard) => {
   return icons[type];
 };
 
-
 /**
  * Credit card component
  */
