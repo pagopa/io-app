@@ -3,7 +3,7 @@ export type PaymentMethod = {
   type: string;
 };
 
-export type Operation = {
+export type WalletTransaction = {
   cardId: number;
   date: string;
   time: string;
@@ -15,11 +15,11 @@ export type Operation = {
   isNew: boolean;
 };
 
-export const UNKNOWN_OPERATION: Operation = {
+export const UNKNOWN_TRANSACTION: WalletTransaction = {
   cardId: -1,
   date: "",
   time: "",
-  subject: "UNKNOWN OPERATION",
+  subject: "UNKNOWN TRANSACTION",
   recipient: "",
   amount: 0,
   currency: "?",

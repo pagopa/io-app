@@ -11,7 +11,7 @@
 /* Required to build user-displayable contents (e.g. "last used ...") */
 import I18n from "../../i18n";
 
-import { Operation } from "../../types/wallet";
+import { WalletTransaction } from "../../types/wallet";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
@@ -55,7 +55,7 @@ const cards: ReadonlyArray<CreditCard> = [
   }
 ];
 
-const operations: ReadonlyArray<Operation> = [
+const transactions: ReadonlyArray<WalletTransaction> = [
   {
     cardId: 1,
     date: "17/04/2018",
@@ -161,7 +161,7 @@ const operations: ReadonlyArray<Operation> = [
  * Mocked Wallet Data
  */
 export class WalletAPI {
-  public static readonly MAX_OPERATIONS = 5;
+  public static readonly MAX_TRANSACTIONS = 5;
 
   public static getCreditCards(): ReadonlyArray<CreditCard> {
     return cards;
@@ -175,15 +175,17 @@ export class WalletAPI {
     return card;
   }
 
-  public static getOperations(cardId: number): ReadonlyArray<Operation> {
-    return operations.filter(
-      (operation): boolean => operation.cardId === cardId
+  public static getTransactions(
+    cardId: number
+  ): ReadonlyArray<WalletTransaction> {
+    return transactions.filter(
+      (transaction): boolean => transaction.cardId === cardId
     );
   }
 
-  public static getLatestOperations(
-    maxOps: number = WalletAPI.MAX_OPERATIONS
-  ): ReadonlyArray<Operation> {
-    return operations.slice(0, maxOps);
+  public static getLatestTransactions(
+    maxOps: number = WalletAPI.MAX_TRANSACTIONS
+  ): ReadonlyArray<WalletTransaction> {
+    return transactions.slice(0, maxOps);
   }
 }

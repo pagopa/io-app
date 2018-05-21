@@ -129,7 +129,7 @@
       "addButton": "Add payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
-    "operationsDetails": "Operations Details",
+    "transactionDetails": "Transaction details",
     "total": "Total",
     "payAmount": "Amount to pay",
     "transactionFee": "Transaction fee",
@@ -147,8 +147,7 @@
     "yesterday": "yesterday at",
     "today": "today at",
     "payNotice": "Pay Notice",
-    "lastOperations": "Latest operations",
-    "operations": "Operations",
+    "latestTransactions": "Latest transactions",
     "creditDebitCards": "Credit/Debit Cards",
     "addPaymentMethodTitle": "Add payment method",
     "cancel": "Cancel",

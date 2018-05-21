@@ -1,9 +1,7 @@
 /**
  * This component displays a list of transactions
  */
-// TODO: define the most suitable term for "transactions"
-// (transactions, operations, payments, or something else entirely)
-// and stick with it throughout the code
+
 import {
   Body,
   Grid,
@@ -19,7 +17,7 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
-import { Operation } from "../../types/wallet";
+import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
@@ -27,25 +25,25 @@ type Props = Readonly<{
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;
-  operations: ReadonlyArray<Operation>;
+  transactions: ReadonlyArray<WalletTransaction>;
 }>;
 
 type State = Readonly<{
-  data: ReadonlyArray<Operation>;
+  data: ReadonlyArray<WalletTransaction>;
 }>;
 
 /**
- * Operations' List component
+ * Transactions List component
  */
-export class OperationsList extends React.Component<Props, State> {
+export class TransactionsList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { data: props.operations };
+    this.state = { data: props.transactions };
   }
 
-  private renderDate(operation: Operation) {
-    const datetime: string = `${operation.date} - ${operation.time}`;
-    if (operation.isNew) {
+  private renderDate(transaction: WalletTransaction) {
+    const datetime: string = `${transaction.date} - ${transaction.time}`;
+    if (transaction.isNew) {
       return (
         <Row>
           <Icon

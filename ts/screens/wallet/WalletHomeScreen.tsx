@@ -17,11 +17,11 @@ import {
   ImageType,
   WalletLayout
 } from "../../components/wallet/layout/WalletLayout";
-import { OperationsList } from "../../components/wallet/OperationsList";
+import { TransactionsList } from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/CreditCard";
-import { Operation } from "../../types/wallet";
+import { WalletTransaction } from "../../types/wallet";
 
 type ScreenProps = {};
 
@@ -85,9 +85,9 @@ export class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const TITLE = I18n.t("wallet.wallet");
-    const latestOperations: ReadonlyArray<
-      Operation
-    > = WalletAPI.getLatestOperations();
+    const latestTransactions: ReadonlyArray<
+      WalletTransaction
+    > = WalletAPI.getLatestTransactions();
 
     const topContents =
       WalletAPI.getCreditCards().length > 0
@@ -111,11 +111,11 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         rightImage={ImageType.BANK_IMAGE}
       >
         <Content style={WalletStyles.whiteContent}>
-          <OperationsList
+          <TransactionsList
             parent={I18n.t("wallet.wallet")}
-            title={I18n.t("wallet.lastOperations")}
+            title={I18n.t("wallet.latestTransactions")}
             totalAmount={I18n.t("wallet.total")}
-            operations={latestOperations}
+            transactions={latestTransactions}
             navigation={this.props.navigation}
           />
         </Content>
