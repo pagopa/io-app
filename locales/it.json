@@ -122,5 +122,9 @@
     "headerTitle": "io.italia.it",
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messagi..."
+  },
+  "tabMessages": {
+    "itemAll": "Tutti",
+    "itemDeadlines": "Scadenze"
   }
 }

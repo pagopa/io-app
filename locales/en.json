@@ -123,5 +123,9 @@
     "headerTitle": "io.italia.it",
     "contentTitle": "Messages",
     "loading": "Loadin Messages..."
+  },
+  "tabMessages": {
+    "itemAll": "All",
+    "itemDeadlines": "Deadlines"
   }
 }
