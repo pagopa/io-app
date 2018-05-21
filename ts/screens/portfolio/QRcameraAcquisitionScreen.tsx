@@ -30,7 +30,7 @@ type Props = ScreenProps & OwnProps;
 /**
  * Portfolio QR code acquisition by camera
  */
-export class QRcameraAcquisitionScreen extends React.Component<Props, never> {
+export default class QRcameraAcquisitionScreen extends React.Component<Props, never> {
 	constructor(props: Props) {
 		super(props);
 	}
@@ -81,7 +81,7 @@ export class QRcameraAcquisitionScreen extends React.Component<Props, never> {
 						onPress={() => this.goBack()}
 						>
 						<Text>
-							{I18n.t("portfolio.cancel")}
+							{I18n.t("portfolio.QRtoPay.cancel")}
 						</Text>
 					</Button>
 				</View>

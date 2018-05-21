@@ -120,6 +120,8 @@
   },
   "portfolio": {
 	"QRtoPay": {
+    "cancel":"Annulla",
+    "continue":"Continua",
 		"cameraSectionName": "QR Code avviso",
       "manualSectionName": "Inserisci dati avviso",
       "proceedSectionName": "Riepilogo avviso di Pagamento",

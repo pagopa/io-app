@@ -121,6 +121,8 @@
   },
   "portfolio": {
 	"QRtoPay": {
+    "cancel":"Cancel",
+    "continue":"Continue",
 		"cameraSectionName": "Payment notice QR Code",
 		"manualSectionName": "Insert notice data",
 		"proceedSectionName": "Payment notice summary",

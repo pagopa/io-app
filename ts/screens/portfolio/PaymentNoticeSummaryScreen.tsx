@@ -9,14 +9,12 @@ import {
 	Button,
 	Icon,
 	H1,
-	H2,
 	H3,
 	Text
 } from "native-base";
 import {
 	Grid, 
-	Row,
-	Col 
+	Row 
 } from "react-native-easy-grid";
 import AppHeader from "../../components/ui/AppHeader";
 import variables from "../../theme/variables";
@@ -37,7 +35,7 @@ type Props = Readonly<{
  * Portfolio acquired payment notice summary
  */
 
-export class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
+class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 	constructor(props: Props) {
 		super(props);
 	}
@@ -266,7 +264,7 @@ export class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 					primary={true}
 					>
 					<Text>
-						{I18n.t("portfolio.continue")}
+						{I18n.t("portfolio.QRtoPay.continue")}
 					</Text>
 				</Button>
 				<Button
@@ -275,7 +273,7 @@ export class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 					onPress={() => this.goBack()}
 					>
 					<Text>
-						{I18n.t("portfolio.cancel")}
+						{I18n.t("portfolio.QRtoPay.cancel")}
 					</Text>
 				</Button>
 				</View>
@@ -284,3 +282,5 @@ export class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 	}
 
 }
+
+export default PaymentNoticeSummaryScreen

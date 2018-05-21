@@ -41,7 +41,7 @@ type State = Readonly<{
  * Portfolio QR code manual acquisition
  */
 
-export class QRmanualAcquisitionScreen extends React.Component<Props, State> {
+export default class QRmanualAcquisitionScreen extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -127,7 +127,7 @@ export class QRmanualAcquisitionScreen extends React.Component<Props, State> {
 						}
 					>
 					<Text>
-						{I18n.t("portfolio.continue")}
+						{I18n.t("portfolio.QRtoPay.continue")}
 					</Text>
 				</Button>
 				
