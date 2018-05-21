@@ -118,7 +118,9 @@ export const WalletStyles = StyleSheet.create({
   titleStyle: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
-    color: color(variables.colorWhite).darken(.38).string()
+    color: color(variables.colorWhite)
+      .darken(0.38)
+      .string()
   },
   boldStyle: {
     fontFamily: variables.fontFamily,
@@ -158,7 +160,9 @@ export const WalletStyles = StyleSheet.create({
   payLightStyle: {
     fontFamily: variables.fontFamily,
     fontSize: variables.fontSize1,
-    color: color(variables.colorWhite).darken(.38).string()
+    color: color(variables.colorWhite)
+      .darken(0.38)
+      .string()
   },
   linkStyle: {
     marginTop: 20,
