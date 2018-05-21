@@ -193,5 +193,11 @@
   },
   "creditCardComponent": {
     "validUntil": "Valida fino al "
+  },
+  "notifications": {
+    "installation": {
+      "errorTitle": "Notifiche push",
+      "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
+    }
   }
 }
