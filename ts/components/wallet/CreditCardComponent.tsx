@@ -22,6 +22,7 @@ import I18n from "../../i18n";
 
 import { CreditCard, getCardIcon } from "../../types/CreditCard";
 
+import * as color from "color";
 import variables from "../../theme/variables";
 
 type Props = Readonly<{
@@ -43,7 +44,7 @@ export const CreditCardStyle = StyleSheet.create({
     fontFamily: variables.fontFamily
   },
   cardStyle: {
-    backgroundColor: "rgb(242,242,242)",
+    backgroundColor: color(variables.colorWhite).darken(.05).string(),
     borderRadius: 10,
     marginTop: 10,
     height: 200

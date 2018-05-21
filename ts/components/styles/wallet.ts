@@ -4,6 +4,7 @@
 
 import { StyleSheet } from "react-native";
 
+import * as color from "color";
 import variables from "../../theme/variables";
 
 // TODO: when all the required screens are added,
@@ -15,7 +16,7 @@ export const WalletStyles = StyleSheet.create({
     backgroundColor: variables.brandDarkGray
   },
   white: {
-    color: "white"
+    color: variables.brandPrimaryInverted
   },
   addCardItem: {
     borderBottomWidth: variables.headerBorderBottomWidth,
@@ -81,7 +82,7 @@ export const WalletStyles = StyleSheet.create({
   whyLink: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
-    color: "#3a3bfa"
+    color: variables.textLinkColor
   },
   backContent: {
     backgroundColor: variables.brandDarkGray
@@ -117,7 +118,7 @@ export const WalletStyles = StyleSheet.create({
   titleStyle: {
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
-    color: "rgb(150,150,150)"
+    color: color(variables.colorWhite).darken(.38).string()
   },
   boldStyle: {
     fontFamily: variables.fontFamily,
@@ -127,7 +128,7 @@ export const WalletStyles = StyleSheet.create({
     flex: 1,
     alignItems: "flex-start",
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0)"
+    backgroundColor: "transparent"
   },
   image: {
     height: 150,
@@ -157,7 +158,7 @@ export const WalletStyles = StyleSheet.create({
   payLightStyle: {
     fontFamily: variables.fontFamily,
     fontSize: variables.fontSize1,
-    color: "rgb(166, 166, 166)"
+    color: color(variables.colorWhite).darken(.38).string()
   },
   linkStyle: {
     marginTop: 20,
@@ -166,7 +167,7 @@ export const WalletStyles = StyleSheet.create({
     marginRight: 10,
     fontFamily: variables.fontFamily,
     fontWeight: "bold",
-    color: "rgb(0, 0, 255)"
+    color: variables.textLinkColor
   },
   addPaymentMethodButton: {
     borderColor: variables.brandGray
@@ -181,6 +182,6 @@ export const WalletStyles = StyleSheet.create({
   newIconStyle: {
     marginTop: 6,
     fontSize: variables.fontSize1,
-    color: "#0066CC"
+    color: variables.brandPrimary
   }
 });
