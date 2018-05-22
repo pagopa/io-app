@@ -1,79 +1,85 @@
+import {
+  Body,
+  Container,
+  Content,
+  H1,
+  Tab,
+  Tabs,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { Container, Content, Text, Body, H1, View } from "native-base";
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ReduxProps } from "../../actions/types";
+import messages from "../../api/mock/messages.json";
+import MessageComponent from "../../components/MessageComponent";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
-import {
-  ObjectListOfNormalizedMessages,
-  getAllMessagesById
-} from "../../store/reducers/messages";
-import MessageComponent from "../../components/MessageComponent";
+import variables from "../../theme/variables";
 
-type ReduxMappedProps = {
-  messagesById: ObjectListOfNormalizedMessages;
-};
-
-export type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
+type ReduxMappedProps = {};
+export type OwnProps = {};
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type State = {};
+type ListOfCreatedMessageWithContentInterface = {
+  [id: string]: CreatedMessageWithContent;
+};
 
 /**
  * This screen show the messages to the authenticated user.
  */
-class MessagesScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
-
-  renderMessageList = (list: ObjectListOfNormalizedMessages) => {
+class MessagesScreen extends React.Component<Props, State> {
+  public renderMessageList = (
+    list: ListOfCreatedMessageWithContentInterface
+  ) => {
     return Object.keys(list).map(key => {
       return (
         <MessageComponent
           key={key}
           sender={list[key].sender_service_id}
           subject={list[key].content.subject}
-          date={list[key].date}
+          date={list[key].created_at}
         />
       );
     });
   };
 
-  componentDidMount() {
-    this.props.dispatch({
-      type: "MESSAGES_LOAD_REQUEST"
-    });
-  }
-
-  render() {
-    const { messagesById } = this.props;
+  public render() {
+    const messagesById: ListOfCreatedMessageWithContentInterface =
+      messages.byId;
     return (
       <Container>
         <AppHeader>
           <Body>
-            <Text> {I18n.t("messages.headerTitle")}</Text>
+            <Text>{I18n.t("messages.headerTitle")}</Text>
           </Body>
         </AppHeader>
         <Content>
-          <H1> {I18n.t("messages.contentTitle")}</H1>
-          <View spacer large />
-          {Object.keys(messagesById).length !== 0 ? (
-            this.renderMessageList(messagesById)
-          ) : (
-            <Text>{I18n.t("messages.loading")}</Text>
-          )}
+          <View spacer={true} />
+          <H1>{I18n.t("messages.contentTitle")}</H1>
+          <Tabs
+            tabBarUnderlineStyle={{
+              backgroundColor: variables.brandDarkenBlue
+            }}
+            initialPage={0}
+          >
+            <Tab heading={I18n.t("tabMessages.itemAll")}>
+              <View spacer={true} large={true} />
+              {Object.keys(messagesById).length !== 0 ? (
+                this.renderMessageList(messagesById)
+              ) : (
+                <Text>{I18n.t("messages.loading")}</Text>
+              )}
+            </Tab>
+            <Tab heading={I18n.t("tabMessages.itemDeadlines")}>
+              <View spacer={true} large={true} />
+            </Tab>
+          </Tabs>
         </Content>
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  messagesById: getAllMessagesById(state.messages)
-});
-
-export default connect(mapStateToProps)(MessagesScreen);
+export default connect()(MessagesScreen);

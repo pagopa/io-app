@@ -16,7 +16,6 @@ import profileReducer from "../store/reducers/profile";
 import sessionReducer from "../store/reducers/session";
 import appStateReducer from "./appState";
 import navigationReducer from "./navigation";
-import messagesReducer from "../store/reducers/messages";
 import { GlobalState } from "./types";
 
 /**
@@ -45,8 +44,7 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   session: sessionReducer,
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
-  profile: profileReducer,
-  messages: messagesReducer
+  profile: profileReducer
 };
 
 export default reducers;

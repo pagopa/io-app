@@ -13,6 +13,7 @@ declare module "native-base" {
       footer?: boolean;
       header?: boolean;
       messageSubjectContainer?: boolean;
+      borderBottomTab?: boolean;
     }
   }
 }
@@ -35,6 +36,10 @@ export default (): Theme => {
       paddingBottom: variables.viewMessageSubjectContainerPadding
     },
 
+    ".borderBottomTab": {
+      borderBottomColor: variables.brandDarkenBlue,
+      borderBottomWidth: 2
+    },
     ".modal": {
       flex: 1,
       backgroundColor: variables.contentBackground

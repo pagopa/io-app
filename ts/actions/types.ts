@@ -18,7 +18,6 @@ import { NotificationsActions } from "../store/actions/notifications";
 import { OnboardingActions } from "../store/actions/onboarding";
 import { ProfileActions } from "../store/actions/profile";
 import { SessionActions } from "../store/actions/session";
-import { MessagesActions } from "../store/actions/messages";
 
 export type ApplicationState = "background" | "inactive" | "active";
 
@@ -35,7 +34,6 @@ export type Action =
   | OnboardingActions
   | NotificationsActions
   | ProfileActions
-  | MessagesActions
   | ErrorActions;
 
 /* eslint-disable no-use-before-define */

@@ -9,7 +9,6 @@ import { OnboardingState } from "../store/reducers/onboarding";
 import { ProfileState } from "../store/reducers/profile";
 import { SessionState } from "../store/reducers/session";
 import { AppState } from "./appState";
-import { NormalizedMessages } from "../store/reducers/messages";
 
 export type NetworkState = Readonly<{
   isConnected: boolean;
@@ -27,5 +26,4 @@ export type GlobalState = Readonly<{
   onboarding: OnboardingState;
   notifications: NotificationsState;
   profile: ProfileState;
-  messages: NormalizedMessages;
 }>;

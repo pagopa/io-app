@@ -13,6 +13,7 @@ declare module "native-base" {
       dateFormat?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
+      colorLabelTab?: boolean;
     }
   }
 }
@@ -24,7 +25,7 @@ export default (): Theme => {
       color: variables.textLinkColor
     },
     ".bold": {
-      // lineHeight: variables.textBoldLineHeight,
+      lineHeight: variables.textBoldLineHeight,
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color
     },
@@ -35,10 +36,12 @@ export default (): Theme => {
     ".leftAlign": {
       flex: variables.flexLeftAlign
     },
+    ".colorLabelTab": {
+      color: variables.brandDarkenBlue
+    },
     ".rightAlign": {
       flex: variables.flexRightAlign
     },
-
     lineHeight: variables.lineHeight
   };
 };

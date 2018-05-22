@@ -42,6 +42,7 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
+  brandDarkenBlue: "#0073E6",
 
   // Font
   ...makeFontStyleObject(Platform.select),
@@ -65,8 +66,6 @@ const customVariables = Object.assign(materialVariables, {
 
   // Icon
   iconFamily: "Entypo",
-  iconRightColor: "#0073E6",
-
   // Content
   contentPadding: 24,
   contentBackground: "#FFFFFF",
@@ -128,6 +127,10 @@ const customVariables = Object.assign(materialVariables, {
 
   // Message
   viewMessageSubjectContainerPadding: 20,
+
+  // TabMessages
+  viewTabMessageswPaddingTop: 30,
+  textTabMessagesPaddingLeft: 24,
 
   // Spacer
   spacerHeight: 16,

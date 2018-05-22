@@ -1,6 +1,7 @@
+import { TouchableOpacityProperties } from "react-native";
+
 import { Theme } from "../types";
 import variables from "../variables";
-import { TouchableOpacityProperties } from "react-native";
 
 declare module "native-base" {
   namespace NativeBase {
