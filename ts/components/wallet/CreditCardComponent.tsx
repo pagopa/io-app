@@ -12,7 +12,7 @@
 import * as React from "react";
 
 import { Body, Card, Icon, Text } from "native-base";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, Platform } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
@@ -26,6 +26,7 @@ import {
 
 import color from "color";
 import variables from "../../theme/variables";
+import { makeFontStyleObject } from '../../theme/fonts';
 
 type Props = Readonly<{
   item: CreditCard;
@@ -34,8 +35,8 @@ type Props = Readonly<{
 
 export const CreditCardStyle = StyleSheet.create({
   largeTextStyle: {
-    fontSize: variables.fontSize4,
-    fontFamily: "Roboto Mono"
+    ...makeFontStyleObject(Platform.select, undefined, false, "RobotoMono"),
+    fontSize: variables.fontSize4
   },
   rowStyle: {
     alignItems: "center"
