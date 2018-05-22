@@ -9,11 +9,11 @@ import { Platform, PlatformStatic } from "react-native";
 type PlatformSelectType = PlatformStatic["select"];
 
 const fonts = {
-  "TitilliumWeb": Platform.select({
-      android: "TitilliumWeb",
-      ios: "Titillium Web"
+  TitilliumWeb: Platform.select({
+    android: "TitilliumWeb",
+    ios: "Titillium Web"
   }),
-  "RobotoMono": Platform.select({
+  RobotoMono: Platform.select({
     android: "RobotoMono",
     ios: "Roboto Mono"
   })

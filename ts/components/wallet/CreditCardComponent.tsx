@@ -12,7 +12,7 @@
 import * as React from "react";
 
 import { Body, Card, Icon, Text } from "native-base";
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
@@ -25,8 +25,8 @@ import {
 } from "../../types/CreditCard";
 
 import color from "color";
+import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
-import { makeFontStyleObject } from '../../theme/fonts';
 
 type Props = Readonly<{
   item: CreditCard;
