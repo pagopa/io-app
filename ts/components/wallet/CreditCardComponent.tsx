@@ -43,8 +43,7 @@ export const CreditCardStyle = StyleSheet.create({
   },
   textStyle: {
     marginLeft: 15,
-    color: variables.cardFontColor,
-    fontFamily: variables.fontFamily
+    color: variables.cardFontColor
   },
   cardStyle: {
     backgroundColor: color(variables.colorWhite)

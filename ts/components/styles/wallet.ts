@@ -61,27 +61,18 @@ export const WalletStyles = StyleSheet.create({
     marginBottom: 30
   },
   standardText: {
-    fontFamily: variables.fontFamily,
     color: variables.brandGray
   },
   payLayoutTitle: {
-    fontFamily: variables.fontFamily,
     fontSize: variables.fontSize6,
     color: variables.brandGray
   },
   payLayoutSubtitleLeft: {
-    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     fontSize: variables.fontSize4,
     color: variables.brandGray
   },
-
-  textBold: {
-    fontFamily: variables.fontFamily,
-    fontWeight: "bold"
-  },
   whyLink: {
-    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     color: variables.textLinkColor
   },
@@ -117,14 +108,12 @@ export const WalletStyles = StyleSheet.create({
     resizeMode: "contain"
   },
   titleStyle: {
-    fontFamily: variables.fontFamily,
     fontWeight: "bold",
     color: color(variables.colorWhite)
       .darken(0.38)
       .string()
   },
   boldStyle: {
-    fontFamily: variables.fontFamily,
     fontWeight: "bold"
   },
   container: {
@@ -137,42 +126,6 @@ export const WalletStyles = StyleSheet.create({
     height: 150,
     marginLeft: -120,
     resizeMode: "contain"
-  },
-  payList: {
-    padding: 0,
-    margin: 0
-  },
-  payListItem: {
-    marginLeft: 0,
-    flex: 1,
-    paddingRight: 0
-  },
-  payCancelButton: {
-    backgroundColor: variables.brandDarkGray,
-    marginTop: 5
-  },
-  payCancelButtonText: {
-    color: variables.brandPrimaryInverted
-  },
-  payBoldStyle: {
-    fontFamily: variables.fontFamily,
-    fontWeight: "bold"
-  },
-  payLightStyle: {
-    fontFamily: variables.fontFamily,
-    fontSize: variables.fontSize1,
-    color: color(variables.colorWhite)
-      .darken(0.38)
-      .string()
-  },
-  linkStyle: {
-    marginTop: 20,
-    marginBottom: 40,
-    marginLeft: 10,
-    marginRight: 10,
-    fontFamily: variables.fontFamily,
-    fontWeight: "bold",
-    color: variables.textLinkColor
   },
   addPaymentMethodButton: {
     borderColor: variables.brandGray
