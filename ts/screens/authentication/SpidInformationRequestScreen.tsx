@@ -19,7 +19,6 @@ import SpidInformationForm, {
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes"; // temporary, for easy access to the wallet
 import { GlobalState } from "../../reducers/types";
 type ReduxMappedProps = {
   isFormValid: boolean;
@@ -95,7 +94,6 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
             block={true}
             primary={true}
             disabled={!this.props.isFormValid}
-            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
           >
             <Text>
               {I18n.t("authentication.spid_information_request.continue")}

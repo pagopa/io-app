@@ -5,7 +5,7 @@
  * With* and Without*
  */
 
-/* subtitlesLR and subtitle are mutually exclusive */
+// subtitlesLR and subtitle are mutually exclusive
 type WithSubtitle = {
   hasMainSubtitle: true;
   hasSubtitlesLR: false;
@@ -33,7 +33,8 @@ type WithoutTouchable = {
   hasTouchable: false;
 };
 
-/* these are the possible options for TopContent,
+/**
+ * these are the possible options for TopContent,
  * based on whether the specific parts are present
  * or not -- the code should be self-explanatory
  */
@@ -45,7 +46,7 @@ export type TopContentSubtitleTouchable = WithSubtitle & WithTouchable;
 export type TopContentSubtitlesLRTouchable = WithSubtitlesLR & WithTouchable;
 export type TopContentNone = WithoutSubtitles & WithoutTouchable;
 
-/* 
+/**
  * The following functions create objects
  * of the appropriate types with the
  * approparite has* tags already set, and
@@ -120,7 +121,8 @@ export function topContentNone(): TopContentNone {
   };
 }
 
-/* TopContent can be either of the
+/**
+ * TopContent can be either of the
  * following possible TopContent-s
  */
 export type TopContent =
@@ -131,7 +133,7 @@ export type TopContent =
   | TopContentTouchable
   | TopContentNone;
 
-/* guards */
+// guards
 export function hasMainSubtitle(x: any): x is TopContentSubtitle {
   return x.hasMainSubtitle;
 }

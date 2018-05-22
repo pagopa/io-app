@@ -16,18 +16,19 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-/* size of the component ("height") */
+// size of the component ("height")
 export const SUBTITLES_LR_SIZE = 2;
 
 export class SubtitlesLR extends React.Component<Props> {
   public render(): React.ReactNode {
     if (hasSubtitlesLR(this.props.content)) {
-      /* the left part of the component should be touchable,
-      * right now the destination is hardcoded since there
-      * is no use for additional destinations. In the future, 
-      * this may no longer be the case and a touchable content
-      * may need to be provided via props
-      */
+      /**
+       * the left part of the component should be touchable,
+       * right now the destination is hardcoded since there
+       * is no use for additional destinations. In the future,
+       * this may no longer be the case and a touchable content
+       * may need to be provided via props
+       */
       return (
         <Row size={SUBTITLES_LR_SIZE}>
           <Grid>

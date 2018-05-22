@@ -20,7 +20,11 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
 
-import { CreditCard, getCardType, CreditCardType } from "../../types/CreditCard";
+import {
+  CreditCard,
+  CreditCardType,
+  getCardType
+} from "../../types/CreditCard";
 
 import color from "color";
 import variables from "../../theme/variables";
@@ -40,7 +44,7 @@ export const CreditCardStyle = StyleSheet.create({
   },
   textStyle: {
     marginLeft: 15,
-    color: variables.fontColor,
+    color: variables.cardFontColor,
     fontFamily: variables.fontFamily
   },
   cardStyle: {
@@ -76,17 +80,17 @@ export const CreditCardStyle = StyleSheet.create({
 export const getCardIcon = (cc: CreditCard) => {
   const type = getCardType(cc);
   const icons: { [key in CreditCardType]: any } = {
-    "MASTERCARD": require("../../../img/wallet/cards-icons/mastercard.png"),
-    "VISA": require("../../../img/wallet/cards-icons/visa.png"),
-    "AMEX": require("../../../img/wallet/cards-icons/amex.png"),
-    "DINERS": require("../../../img/wallet/cards-icons/diners.png"),
-    "MAESTRO": require("../../../img/wallet/cards-icons/maestro.png"),
-    "VISAELECTRON": require("../../../img/wallet/cards-icons/visa-electron.png"),
-    "POSTEPAY": require("../../../img/wallet/cards-icons/postepay.png"),
-    "UNIONPAY": require("../../../img/wallet/cards-icons/unknown.png"), 
-    "DISCOVER": require("../../../img/wallet/cards-icons/unknown.png"), 
-    "JCB": require("../../../img/wallet/cards-icons/unknown.png"), 
-    "UNKNOWN": require("../../../img/wallet/cards-icons/unknown.png")
+    MASTERCARD: require("../../../img/wallet/cards-icons/mastercard.png"),
+    VISA: require("../../../img/wallet/cards-icons/visa.png"),
+    AMEX: require("../../../img/wallet/cards-icons/amex.png"),
+    DINERS: require("../../../img/wallet/cards-icons/diners.png"),
+    MAESTRO: require("../../../img/wallet/cards-icons/maestro.png"),
+    VISAELECTRON: require("../../../img/wallet/cards-icons/visa-electron.png"),
+    POSTEPAY: require("../../../img/wallet/cards-icons/postepay.png"),
+    UNIONPAY: require("../../../img/wallet/cards-icons/unknown.png"),
+    DISCOVER: require("../../../img/wallet/cards-icons/unknown.png"),
+    JCB: require("../../../img/wallet/cards-icons/unknown.png"),
+    UNKNOWN: require("../../../img/wallet/cards-icons/unknown.png")
   };
   return icons[type];
 };

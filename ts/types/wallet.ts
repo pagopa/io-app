@@ -1,8 +1,14 @@
-export type PaymentMethod = {
-  id: number;
-  type: string;
-};
+/**
+ * Definition of other types required
+ * by the app
+ */
+// TODO: these types may need to be aligned with the PagoPA ones
 
+/**
+ * This type represents a transaction (or payment)
+ * carried out by the user; it contains the information
+ * needed for UI-related purposes
+ */
 export type WalletTransaction = {
   cardId: number;
   date: string;

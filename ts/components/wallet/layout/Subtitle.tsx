@@ -12,7 +12,7 @@ type Props = Readonly<{
   content: TopContent;
 }>;
 
-/* size of the subtitle row */
+// size of the subtitle row
 export const SUBTITLE_SIZE = 2;
 
 export class Subtitle extends React.Component<Props> {

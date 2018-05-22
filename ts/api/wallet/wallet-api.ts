@@ -8,7 +8,7 @@
 // transformed into async when needed (i.e. when the app
 // will actually fetch data from the proxy/pagopa)
 
-/* Required to build user-displayable contents (e.g. "last used ...") */
+// Required to build user-displayable contents (e.g. "last used ...")
 import I18n from "../../i18n";
 
 import { WalletTransaction } from "../../types/wallet";

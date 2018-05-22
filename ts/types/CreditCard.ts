@@ -1,7 +1,24 @@
+/**
+ * Definition of the CreditCard type, with the
+ * properties required for UI purposes.
+ */
+// TODO: this type may need to be aligned with the PagoPA one
+
 import * as t from "io-ts";
 import { NonEmptyString, PatternString } from "italia-ts-commons/lib/strings";
 
-export type CreditCardType = "VISAELECTRON" | "MAESTRO" | "UNIONPAY" | "VISA" | "MASTERCARD" | "AMEX" | "DINERS" | "DISCOVER" | "JCB" | "POSTEPAY" | "UNKNOWN" ;
+export type CreditCardType =
+  | "VISAELECTRON"
+  | "MAESTRO"
+  | "UNIONPAY"
+  | "VISA"
+  | "MASTERCARD"
+  | "AMEX"
+  | "DINERS"
+  | "DISCOVER"
+  | "JCB"
+  | "POSTEPAY"
+  | "UNKNOWN";
 
 const CreditCardUnknown = t.type(
   {
@@ -95,4 +112,7 @@ export const UNKNOWN_CARD: CreditCard = {
 export const getCardType = (cc: CreditCard): CreditCardType =>
   CreditCard.types
     .filter(type => type.is(cc) && type.name !== "UNKNOWN")
-    .reduce((p, c) => (c ? c.name as CreditCardType : p), "UNKNOWN" as CreditCardType);
+    .reduce(
+      (p, c) => (c ? (c.name as CreditCardType) : p),
+      "UNKNOWN" as CreditCardType
+    );

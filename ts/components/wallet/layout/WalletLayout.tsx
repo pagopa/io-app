@@ -32,6 +32,8 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
+// size of the bottom part of the screen
+// (i.e. the actual contents passed in this.props.children)
 const WALLET_LAYOUT_BOTTOM_SIZE = 4;
 export class WalletLayout extends React.Component<Props, never> {
   private payNoticeButton(): React.ReactNode {
@@ -45,7 +47,8 @@ export class WalletLayout extends React.Component<Props, never> {
     );
   }
 
-  /* The top part is defined by the TopContent component, 
+  /**
+   * The top part is defined by the TopContent component,
    * the bottom part is defined by this.props.children
    */
   private twoPartsLayout(): React.ReactNode {
@@ -60,7 +63,8 @@ export class WalletLayout extends React.Component<Props, never> {
   }
 
   private getBottomSize() {
-    /* from the default bottom size, add the 
+    /**
+     * from the default bottom size, add the
      * size that is not being used by the top
      * part (either because subtitles or touchable
      * parts are not used). The "unused" part

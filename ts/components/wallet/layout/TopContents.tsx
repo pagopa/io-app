@@ -12,7 +12,7 @@ import { WalletStyles } from "../../styles/wallet";
 import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
 import { SUBTITLES_LR_SIZE, SubtitlesLR } from "./SubtitlesLR";
 import { Title, TITLE_SIZE } from "./Title";
-import { TopContent, hasTouchable } from "./types";
+import { hasTouchable, TopContent } from "./types";
 import { ImageType } from "./WalletLayout";
 
 type Props = Readonly<{
@@ -33,8 +33,9 @@ export const TOP_CONTENTS_MAX_SIZE =
   TITLE_SIZE + Math.max(SUBTITLE_SIZE, SUBTITLES_LR_SIZE) + TOUCHABLE_SIZE;
 
 export class TopContents extends React.Component<Props> {
-  /* this method returns the (vertical) size of a
-   * given TopContent, based on which sub-components are 
+  /**
+   * this method returns the (vertical) size of a
+   * given TopContent, based on which sub-components are
    * actually being required (e.g. subtitles, touchable contents)
    */
   // TODO: a future PR will introduce a dynamic "empty space"
@@ -43,31 +44,35 @@ export class TopContents extends React.Component<Props> {
   // to the rest of the components in the TopContents, rather than
   // leaving to the bottom part of the screen
   public static getSize(topContent: TopContent) {
-    const { hasTouchable, hasMainSubtitle, hasSubtitlesLR } = topContent;
     const titleSize = TITLE_SIZE;
-    /* if topContent has the main subtitle, subtitleSize
+    /**
+     * if topContent has the main subtitle, subtitleSize
      *  is set to the main subtitle's size (height),
      * if topContent has the left-right subtitles, the
      *  subtitle size is set to that component's size,
      * otherwise (no subtitles used) its size is 0
      */
     const subtitleSize =
-      hasMainSubtitle === true
+      topContent.hasMainSubtitle === true
         ? SUBTITLE_SIZE
-        : hasSubtitlesLR === true
+        : topContent.hasSubtitlesLR === true
           ? SUBTITLES_LR_SIZE
           : 0;
-    /* if topContent uses a touchable, it sets its size to that of
-    the touchable object, otherwise it is set to 0 */
-    const touchableSize = hasTouchable === true ? TOUCHABLE_SIZE : 0;
+    /**
+     * if topContent uses a touchable, it sets its size to that of
+     * the touchable object, otherwise it is set to 0
+     */
+    const touchableSize = topContent.hasTouchable === true ? TOUCHABLE_SIZE : 0;
 
-    /* the total size of the TopContent is the sum of the sizes
+    /**
+     * the total size of the TopContent is the sum of the sizes
      * of its components (which are set to 0 if not present)
      */
     return titleSize + subtitleSize + touchableSize;
   }
 
-  /* returns the appropriate subtitle based on topContent 
+  /**
+   * returns the appropriate subtitle based on topContent
    * either "main", or "left-right", or none
    */
   private getSubtitles() {
@@ -85,11 +90,14 @@ export class TopContents extends React.Component<Props> {
 
   private getTouchable() {
     const { topContent } = this.props;
-    return (hasTouchable(topContent)) ? <Row size={TOUCHABLE_SIZE}>{topContent.touchableContent}</Row> : null;
+    return hasTouchable(topContent) ? (
+      <Row size={TOUCHABLE_SIZE}>{topContent.touchableContent}</Row>
+    ) : null;
   }
 
-  /* renders a title (mandatory as of now, but may be
-   * rendered optional in a future version), 
+  /**
+   * renders a title (mandatory as of now, but may be
+   * rendered optional in a future version),
    * an optional subtitle and an optional touchable content
    */
   public render(): React.ReactNode {
