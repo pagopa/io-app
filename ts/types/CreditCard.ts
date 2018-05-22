@@ -3,6 +3,7 @@
  * properties required for UI purposes.
  */
 // TODO: this type may need to be aligned with the PagoPA one
+// @https://www.pivotaltracker.com/story/show/157769657
 
 import * as t from "io-ts";
 import { NonEmptyString, PatternString } from "italia-ts-commons/lib/strings";

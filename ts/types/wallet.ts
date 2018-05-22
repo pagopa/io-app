@@ -3,6 +3,7 @@
  * by the app
  */
 // TODO: these types may need to be aligned with the PagoPA ones
+// @https://www.pivotaltracker.com/story/show/157769657
 
 /**
  * This type represents a transaction (or payment)

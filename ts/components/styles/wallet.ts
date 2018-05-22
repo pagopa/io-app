@@ -11,6 +11,7 @@ import variables from "../../theme/variables";
 // this style will be refactored to get rid of useless
 // styles and aggregate repeated ones to improve
 // readability and maintenability
+// @https://www.pivotaltracker.com/story/show/157769361
 export const WalletStyles = StyleSheet.create({
   header: {
     backgroundColor: variables.brandDarkGray
