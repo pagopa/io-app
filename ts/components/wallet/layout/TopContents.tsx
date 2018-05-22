@@ -38,11 +38,6 @@ export class TopContents extends React.Component<Props> {
    * given TopContent, based on which sub-components are
    * actually being required (e.g. subtitles, touchable contents)
    */
-  // TODO: a future PR will introduce a dynamic "empty space"
-  // allocation whereby the empty space left by either missing
-  // subtitles or missing touchable contents can be redistributed
-  // to the rest of the components in the TopContents, rather than
-  // leaving to the bottom part of the screen
   public static getSize(topContent: TopContent) {
     const titleSize = TITLE_SIZE;
     /**
