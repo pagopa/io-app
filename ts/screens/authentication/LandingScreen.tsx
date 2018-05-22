@@ -60,13 +60,6 @@ class LandingScreen extends React.Component<Props, never> {
           >
             <Text>{I18n.t("authentication.landing.nospid")}</Text>
           </Button>
-          <Button
-            onPress={() => {
-              this.props.navigation.navigate("MAIN_MESSAGES");
-            }}
-          >
-            <Text>Mess</Text>
-          </Button>
         </View>
       </Container>
     );
