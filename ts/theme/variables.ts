@@ -117,7 +117,7 @@ const customVariables = Object.assign(materialVariables, {
   // Text
   textColor: "#5C6F82",
   textLinkColor: "#0063CF",
-  textLinkWeight: "600",
+  textLinkWeight: "600" as FontWeight,
   textBoldWeight: "600",
   textBoldLineHeight: 18,
   dateTextFontSize: 14,
