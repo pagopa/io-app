@@ -2,7 +2,7 @@
  * Definition of other types required
  * by the app
  */
-// TODO: these types may need to be aligned with the PagoPA ones @https://www.pivotaltracker.com/story/show/157769657
+// TODO: these types may need to be aligned with the PagoPA ones
 
 /**
  * This type represents a transaction (or payment)

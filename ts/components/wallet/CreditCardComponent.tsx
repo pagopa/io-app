@@ -2,12 +2,14 @@
  * This component is used to display a credit card
  * with its information.
  */
-// TODO: this component will be substantially modified, in order to:
+// TODO: as part of #157422715 (CreditCardComponent story), this component will be substantially
+// modified, in order to:
 // - have a grid-only layout that does not rely on margins and other ungodly things
 // - be used throughout the app whenever needed (as of now, CreditCardComponent can
 //   only be used when displaying the list of credit cards, with the rest being
 //   cropped pictures)
-// @https://www.pivotaltracker.com/story/show/157422715
+// TODO: at some point, this component may need to be restructured
+// to display different payment methods
 
 import * as React from "react";
 

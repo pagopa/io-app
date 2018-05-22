@@ -39,7 +39,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  // TODO: currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
+  // TODO: currently mocked, will be implemented properly as part of #157422715 (CreditCardComponent)
   private getCardsSummaryImage(): React.ReactElement<any> {
     const { navigate } = this.props.navigation;
     return (
