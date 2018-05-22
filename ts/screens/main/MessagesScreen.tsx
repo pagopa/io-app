@@ -67,9 +67,7 @@ class MessagesScreen extends React.Component<Props, State> {
           >
             <Tab heading={I18n.t("tabMessages.itemAll")}>
               <View spacer={true} large={true} />
-              <List>
-                {this.renderMessageList(messagesById)}
-              </List>
+              <List>{this.renderMessageList(messagesById)}</List>
             </Tab>
             <Tab heading={I18n.t("tabMessages.itemDeadlines")}>
               <View spacer={true} large={true} />
