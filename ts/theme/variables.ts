@@ -63,6 +63,9 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.5;
   },
   lineHeight: 24,
+  get lineHeight1(): ThemeSimpleValue {
+    return this.lineHeight * 0.75;
+  },
 
   // Icon
   iconFamily: "Entypo",
@@ -118,15 +121,15 @@ const customVariables = Object.assign(materialVariables, {
   textColor: "#5C6F82",
   textLinkColor: "#0063CF",
   textLinkWeight: "600" as FontWeight,
-  textBoldWeight: "600",
-  textBoldLineHeight: 18,
-  dateTextFontSize: 14,
+  textBoldWeight: "700" as FontWeight,
 
   // Item
   itemPaddingTopSpacer: 20,
 
   // Message
-  viewMessageSubjectContainerPadding: 20,
+  iconSingleMessagePaddingTop: 10,
+  itemSingleMessageMarginLeft: 0,
+  itemSingleMessageBorderBottomWidth: 0.5,
 
   // TabMessages
   viewTabMessageswPaddingTop: 30,
@@ -136,7 +139,6 @@ const customVariables = Object.assign(materialVariables, {
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
-
   borderRadiusBase: 4
 });
 

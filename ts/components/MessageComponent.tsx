@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Icon, Item, Text, View } from "native-base";
+import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
 import { Theme } from "../theme/types";
@@ -21,23 +21,20 @@ export type Props = OwnProps;
 class MessageComponent extends React.Component<Props> {
   public render() {
     const { subject, sender, date } = this.props;
-    const styles = this.props.style;
 
     return (
-      <Item spacer={true} style={styles}>
-        <View>
+      <ListItem>
+        <Left>
           <Text leftAlign={true} bold={true}>
             {sender}
           </Text>
-          <Text rightAlign={true} dateFormat={true}>
-            {date}
-          </Text>
-        </View>
-        <View messageSubjectContainer={true}>
           <Text leftAlign={true}>{subject}</Text>
+        </Left>
+        <Right>
+          <Text dateFormat={true}>{date}</Text>
           <Icon rightArrow={true} name="chevron-right" />
-        </View>
-      </Item>
+        </Right>
+      </ListItem>
     );
   }
 }

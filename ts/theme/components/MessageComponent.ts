@@ -5,23 +5,38 @@ import variables from "../variables";
 
 declare module "native-base" {
   namespace NativeBase {
-    interface MessageComponent extends TouchableOpacityProperties, BsStyle {
-      left?: boolean;
-      right?: boolean;
-    }
+    interface MessageComponent extends TouchableOpacityProperties, BsStyle {}
   }
 }
 
 export default (): Theme => {
   return {
-    "NativeBase.Item": {
-      "NativeBase.ViewNB": {
-        flexDirection: "row",
-        flex: variables.flexLeftAlign
-      }
-    },
-
-    flexDirection: "column",
-    flex: variables.flexLeftAlign
+    "NativeBase.ListItem": {
+      "NativeBase.Right": {
+        "NativeBase.Text": {
+          alignSelf: "center"
+        },
+        "NativeBase.Icon": {
+          alignSelf: "center",
+          paddingTop: variables.iconSingleMessagePaddingTop
+        },
+        flexDirection: "column",
+        flex: 1,
+        alignSelf: "flex-start"
+      },
+      "NativeBase.Left": {
+        "NativeBase.Text": {
+          alignSelf: "flex-start"
+        },
+        alignSelf: "flex-start",
+        flexDirection: "column",
+        flex: 7
+      },
+      marginLeft: variables.itemSingleMessageMarginLeft,
+      flexDirection: "row",
+      flex: 1,
+      borderBottomColor: variables.brandLightGray,
+      borderBottomWidth: variables.itemSingleMessageBorderBottomWidth
+    }
   };
 };

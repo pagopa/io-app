@@ -25,13 +25,13 @@ export default (): Theme => {
       color: variables.textLinkColor
     },
     ".bold": {
-      lineHeight: variables.textBoldLineHeight,
+      lineHeight: variables.lineHeight1,
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color
     },
     ".dateFormat": {
       fontWeight: "bold",
-      fontSize: variables.dateTextFontSize
+      fontSize: variables.fontSize2
     },
     ".leftAlign": {
       flex: variables.flexLeftAlign

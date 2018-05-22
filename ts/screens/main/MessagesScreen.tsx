@@ -3,6 +3,7 @@ import {
   Container,
   Content,
   H1,
+  List,
   Tab,
   Tabs,
   Text,
@@ -66,11 +67,9 @@ class MessagesScreen extends React.Component<Props, State> {
           >
             <Tab heading={I18n.t("tabMessages.itemAll")}>
               <View spacer={true} large={true} />
-              {Object.keys(messagesById).length !== 0 ? (
-                this.renderMessageList(messagesById)
-              ) : (
-                <Text>{I18n.t("messages.loading")}</Text>
-              )}
+              <List>
+                {this.renderMessageList(messagesById)}
+              </List>
             </Tab>
             <Tab heading={I18n.t("tabMessages.itemDeadlines")}>
               <View spacer={true} large={true} />

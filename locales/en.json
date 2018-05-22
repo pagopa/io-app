@@ -128,7 +128,7 @@
   "messages": {
     "headerTitle": "io.italia.it",
     "contentTitle": "Messages",
-    "loading": "Loadin Messages..."
+    "loading": "Loading Messages..."
   },
   "tabMessages": {
     "itemAll": "All",
