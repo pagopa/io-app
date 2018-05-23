@@ -8,7 +8,7 @@
 import { Action } from "../../../../actions/types";
 import { GlobalState } from "../../../../reducers/types";
 import { ServicesListObject } from "../../../../sagas/messages";
-import { MESSAGES_LOAD_SUCCESS } from "../../../actions/constants";
+import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
 
 export type ServicesByIdState = ServicesListObject;
 
@@ -19,8 +19,8 @@ const reducer = (
   action: Action
 ): ServicesListObject => {
   switch (action.type) {
-    case MESSAGES_LOAD_SUCCESS:
-      return { ...state, ...action.payload.services.byId };
+    case SERVICE_LOAD_SUCCESS:
+      return { ...state, [action.payload.service_id]: { ...action.payload } };
     default:
       return state;
   }

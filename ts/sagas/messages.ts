@@ -1,23 +1,24 @@
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
-import { MessageWithoutContent } from "../../definitions/backend/MessageWithoutContent";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix } from "../config";
 import { MESSAGES_LOAD_REQUEST } from "../store/actions/constants";
 import {
   loadMessagesFailure,
-  loadMessagesSuccess
+  loadMessagesSuccess,
+  loadMessageSuccess
 } from "../store/actions/messages";
+import { loadServiceSuccess } from "../store/actions/services";
 import { messagesByIdSelectors } from "../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../store/reducers/entities/services/servicesById";
 import { sessionTokenSelector } from "../store/reducers/session";
 
 export interface MessagesListObject {
-  [key: string]: MessageWithoutContent;
+  [key: string]: MessageWithContent;
 }
 
 export interface ServicesListObject {
@@ -27,28 +28,6 @@ export interface ServicesListObject {
 export type MessagesIdsArray = ReadonlyArray<string>;
 
 export type ServicesIdsArray = ReadonlyArray<string>;
-
-export interface NormalizedMessagesResponse {
-  messages: {
-    byId: MessagesListObject;
-    allIds: MessagesIdsArray;
-  };
-  services: {
-    byId: ServicesListObject;
-    allIds: ServicesIdsArray;
-  };
-}
-
-export const INITIAL_NORMALIZED_MESSAGES_RESPONSE: NormalizedMessagesResponse = {
-  messages: {
-    byId: {},
-    allIds: []
-  },
-  services: {
-    byId: {},
-    allIds: []
-  }
-};
 
 function* loadMessage(sessionToken: string, id: string): Iterator<Effect> {
   const backendClient = BackendClient(apiUrlPrefix, sessionToken);
@@ -60,6 +39,7 @@ function* loadMessage(sessionToken: string, id: string): Iterator<Effect> {
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
   } else {
+    yield put(loadMessageSuccess(response.value));
     return response.value;
   }
 }
@@ -75,6 +55,7 @@ function* loadService(sessionToken: string, id: string): Iterator<Effect> {
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
   } else {
+    yield put(loadServiceSuccess(response.value));
     return response.value;
   }
 }
@@ -122,41 +103,13 @@ function* loadMessages(): Iterator<Effect> {
         .filter(id => !cachedServicesById.hasOwnProperty(id))
         .filter((id, index, ids) => index === ids.indexOf(id)); // Get unique ids
 
-      const messagesListObject: MessagesListObject = {};
-      for (const id of newMessagesIds) {
-        const messageWithContent: MessageWithContent = yield call(
-          loadMessage,
-          sessionToken,
-          id
-        );
+      // Fetch the services detail in parallel
+      yield all(newServicesIds.map(id => call(loadService, sessionToken, id)));
 
-        messagesListObject[id] = messageWithContent;
-      }
+      // Fetch the messages detail in parallel
+      yield all(newMessagesIds.map(id => call(loadMessage, sessionToken, id)));
 
-      const servicesListObject: ServicesListObject = {};
-      for (const id of newServicesIds) {
-        const servicePublic: ServicePublic = yield call(
-          loadService,
-          sessionToken,
-          id
-        );
-
-        servicesListObject[id] = servicePublic;
-      }
-
-      // Dispatch success action
-      yield put(
-        loadMessagesSuccess({
-          messages: {
-            byId: messagesListObject,
-            allIds: newMessagesIds
-          },
-          services: {
-            byId: servicesListObject,
-            allIds: newServicesIds
-          }
-        })
-      );
+      yield put(loadMessagesSuccess());
     }
   }
 }

@@ -7,7 +7,7 @@
 
 import { Action } from "../../../../actions/types";
 import { MessagesIdsArray } from "../../../../sagas/messages";
-import { MESSAGES_LOAD_SUCCESS } from "../../../actions/constants";
+import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
 
 export type MessagesAllIdsState = MessagesIdsArray;
 
@@ -18,8 +18,8 @@ const reducer = (
   action: Action
 ): MessagesAllIdsState => {
   switch (action.type) {
-    case MESSAGES_LOAD_SUCCESS:
-      return { ...state, ...action.payload.messages.allIds };
+    case MESSAGE_LOAD_SUCCESS:
+      return [...state, action.payload.id];
 
     default:
       return state;
