@@ -39,23 +39,29 @@ const customVariables = Object.assign(materialVariables, {
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
 
+  cardFontColor: "#17324D",
+  colorWhite: "white",
+
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
-  get fontSize1(): ThemeSimpleValue {
+  get fontSize1(): number {
     return this.fontSizeBase * 0.75;
   },
-  get fontSize2(): ThemeSimpleValue {
+  get fontSize2(): number {
     return this.fontSizeBase * 0.875;
   },
-  get fontSize3(): ThemeSimpleValue {
+  get fontSize3(): number {
     return this.fontSizeBase * 1;
   },
-  get fontSize4(): ThemeSimpleValue {
+  get fontSize4(): number {
     return this.fontSizeBase * 1.125;
   },
-  get fontSize5(): ThemeSimpleValue {
+  get fontSize5(): number {
     return this.fontSizeBase * 1.5;
+  },
+  get fontSize6(): number {
+    return this.fontSizeBase * 1.75;
   },
   lineHeight: 24,
 
