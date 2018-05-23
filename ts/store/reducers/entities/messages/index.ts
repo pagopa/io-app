@@ -1,11 +1,19 @@
 /**
  * Notifications reducer
  */
+
 import { combineReducers } from "redux";
+import { createSelector } from "reselect";
 
 import { Action } from "../../../../actions/types";
-import messagesAllIdsReducer, { MessagesAllIdsState } from "./messagesAllIds";
-import messagesByIdReducer, { MessagesByIdState } from "./messagesById";
+import messagesAllIdsReducer, {
+  messagesAllIdsSelector,
+  MessagesAllIdsState
+} from "./messagesAllIds";
+import messagesByIdReducer, {
+  messagesByIdSelectors,
+  MessagesByIdState
+} from "./messagesById";
 
 export type MessagesState = {
   byId: MessagesByIdState;
@@ -16,5 +24,13 @@ const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,
   allIds: messagesAllIdsReducer
 });
+
+// Selectors
+// TODO: Add sorting by date as soon as Backend response contains `created_at`
+export const orderedMessagesSelector = createSelector(
+  messagesAllIdsSelector,
+  messagesByIdSelectors,
+  (ids, messages) => [...ids].sort().map(id => messages[id])
+);
 
 export default reducer;

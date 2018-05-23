@@ -6,6 +6,7 @@
  */
 
 import { Action } from "../../../../actions/types";
+import { GlobalState } from "../../../../reducers/types";
 import { MessagesIdsArray } from "../../../../sagas/messages";
 import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
 
@@ -24,6 +25,13 @@ const reducer = (
     default:
       return state;
   }
+};
+
+// Selectors
+export const messagesAllIdsSelector = (
+  state: GlobalState
+): MessagesIdsArray => {
+  return state.entities.messages.allIds;
 };
 
 export default reducer;

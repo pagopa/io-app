@@ -8,15 +8,17 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
+import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
 import { ReduxProps } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
-import { MessagesListObject, ServicesListObject } from "../../sagas/messages";
+import { ServicesListObject } from "../../sagas/messages";
 import { loadMessages } from "../../store/actions/messages";
+import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import { createLoadingSelector } from "../../store/reducers/loading";
 
 type ReduxMappedProps = {
   isLoadingMessages: boolean;
-  messagesById: MessagesListObject;
+  messages: ReadonlyArray<MessageWithContent>;
   servicesById: ServicesListObject;
 };
 
@@ -65,9 +67,7 @@ class MessagesScreen extends React.Component<Props, never> {
       <Container>
         <Content>
           {this.renderLoadingStatus(this.props.isLoadingMessages)}
-          <Text>
-            You have {Object.keys(this.props.messagesById).length} messages
-          </Text>
+          <Text>You have {this.props.messages.length} messages</Text>
         </Content>
       </Container>
     );
@@ -80,7 +80,7 @@ class MessagesScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoadingMessages: createLoadingSelector(["MESSAGES_LOAD"])(state),
-  messagesById: state.entities.messages.byId,
+  messages: orderedMessagesSelector(state),
   servicesById: state.entities.services.byId
 });
 
