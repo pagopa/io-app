@@ -77,7 +77,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text>{`${I18n.t("wallet.total")} ${operation.currency}`}</Text>
               </Left>
               <Right>
-                <Text style={WalletStyles.boldStyle}>{operation.amount}</Text>
+                <Text bold={true}>{operation.amount}</Text>
               </Right>
             </Row>
             <Row>
@@ -107,7 +107,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text note={true}>{I18n.t("wallet.paymentReason")}</Text>
               </Left>
               <Right>
-                <Text style={WalletStyles.boldStyle}>{operation.subject}</Text>
+                <Text bold={true}>{operation.subject}</Text>
               </Right>
             </Row>
             <Row>
@@ -115,9 +115,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text note={true}>{I18n.t("wallet.recipient")}</Text>
               </Left>
               <Right>
-                <Text style={WalletStyles.boldStyle}>
-                  {operation.recipient}
-                </Text>
+                <Text bold={true}>{operation.recipient}</Text>
               </Right>
             </Row>
             <Row>

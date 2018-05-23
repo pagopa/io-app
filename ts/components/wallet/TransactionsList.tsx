@@ -76,7 +76,7 @@ export class TransactionsList extends React.Component<Props, State> {
       <Grid>
         <Row>
           <Left>
-            <Text style={WalletStyles.boldStyle}>{this.props.title}</Text>
+            <Text bold={true}>{this.props.title}</Text>
           </Left>
           <Right>
             <Text>{this.props.totalAmount}</Text>
