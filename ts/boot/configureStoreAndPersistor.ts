@@ -27,7 +27,7 @@ const persistConfig: PersistConfig = {
   /**
    * Sections of the store that must be persisted and rehydrated.
    */
-  whitelist: ["session", "onboarding", "notifications", "profile"]
+  whitelist: ["session", "onboarding", "notifications", "profile", "entities"]
 };
 
 const persistedReducer: Reducer<GlobalState, Action> = persistCombineReducers<

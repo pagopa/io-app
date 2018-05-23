@@ -19,7 +19,7 @@ const reducer = (
 ): MessagesAllIdsState => {
   switch (action.type) {
     case MESSAGES_LOAD_SUCCESS:
-      return { ...state, ...action.payload.ids };
+      return { ...state, ...action.payload.messages.allIds };
 
     default:
       return state;

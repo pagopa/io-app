@@ -1,5 +1,5 @@
 /**
- * A reducer to store the messages normalized by id
+ * A reducer to store the services normalized by id
  * It only manages SUCCESS actions because all UI state properties (like
  * loading/error)
  * are managed by different global reducers.
@@ -7,31 +7,30 @@
 
 import { Action } from "../../../../actions/types";
 import { GlobalState } from "../../../../reducers/types";
-import { MessagesListObject } from "../../../../sagas/messages";
+import { ServicesListObject } from "../../../../sagas/messages";
 import { MESSAGES_LOAD_SUCCESS } from "../../../actions/constants";
 
-export type MessagesByIdState = MessagesListObject;
+export type ServicesByIdState = ServicesListObject;
 
-export const INITIAL_STATE: MessagesByIdState = {};
+export const INITIAL_STATE: ServicesListObject = {};
 
 const reducer = (
-  state: MessagesByIdState = INITIAL_STATE,
+  state: ServicesByIdState = INITIAL_STATE,
   action: Action
-): MessagesByIdState => {
+): ServicesListObject => {
   switch (action.type) {
     case MESSAGES_LOAD_SUCCESS:
-      return { ...state, ...action.payload.messages.byId };
-
+      return { ...state, ...action.payload.services.byId };
     default:
       return state;
   }
 };
 
 // Selectors
-export const messagesByIdSelectors = (
+export const servicesByIdSelector = (
   state: GlobalState
-): MessagesListObject => {
-  return state.entities.messages.byId;
+): ServicesListObject => {
+  return state.entities.services.byId;
 };
 
 export default reducer;
