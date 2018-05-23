@@ -10,9 +10,9 @@ import {
 } from "react-navigation";
 
 import { WalletAPI } from "../../api/wallet/wallet-api";
-import { TransactionsList } from "../../components/wallet/TransactionsList";
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import { WalletStyles } from "../../components/styles/wallet";
+import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
+import { TransactionsList } from "../../components/wallet/TransactionsList";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
@@ -40,7 +40,6 @@ type Props = OwnProps & NavigationInjectedProps;
  * Show credit card transactions
  */
 export class TransactionsScreen extends React.Component<Props, never> {
-
   constructor(props: Props) {
     super(props);
   }
@@ -60,9 +59,9 @@ export class TransactionsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { params } = this.props.navigation.state;
     const card: CreditCard = params ? params.card : UNKNOWN_CARD;
-    const transactions: ReadonlyArray<WalletTransaction> = WalletAPI.getTransactions(
-      card.id
-    );
+    const transactions: ReadonlyArray<
+      WalletTransaction
+    > = WalletAPI.getTransactions(card.id);
     const TITLE = I18n.t("wallet.creditDebitCards");
 
     const topContent = topContentTouchable(this.touchableContent());
