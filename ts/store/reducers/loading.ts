@@ -4,7 +4,6 @@
  *
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
-
 import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { FetchRequestActionsType } from "../actions/constants";
@@ -16,7 +15,8 @@ export type LoadingState = Readonly<
 export const INITIAL_STATE: LoadingState = {
   PIN_CREATE: false,
   PROFILE_LOAD: false,
-  PROFILE_UPDATE: false
+  PROFILE_UPDATE: false,
+  MESSAGES_LOAD: false
 };
 
 /**
