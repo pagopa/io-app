@@ -34,7 +34,6 @@ interface StateParams extends NavigationState {
 
 interface OwnProps {
   readonly navigation: NavigationScreenProp<StateParams>;
-  readonly card: CreditCard;
 }
 
 type Props = OwnProps & NavigationInjectedProps;
