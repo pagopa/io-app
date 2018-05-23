@@ -62,7 +62,6 @@ export class TransactionsScreen extends React.Component<Props, never> {
     const transactions: ReadonlyArray<
       WalletTransaction
     > = WalletAPI.getTransactions(card.id);
-    const TITLE = I18n.t("wallet.creditDebitCards");
 
     const topContent = topContentTouchable(this.touchableContent());
 
@@ -71,7 +70,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
         headerTitle={I18n.t("wallet.paymentMethod")}
         allowGoBack={true}
         navigation={this.props.navigation}
-        title={TITLE}
+        title={I18n.t("wallet.creditDebitCards")}
         topContent={topContent}
       >
         <Content style={WalletStyles.whiteContent}>

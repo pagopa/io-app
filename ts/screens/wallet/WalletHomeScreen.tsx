@@ -84,7 +84,6 @@ export class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const TITLE = I18n.t("wallet.wallet");
     const latestTransactions: ReadonlyArray<
       WalletTransaction
     > = WalletAPI.getLatestTransactions();
@@ -106,7 +105,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         headerTitle={I18n.t("wallet.wallet")}
         allowGoBack={false}
         navigation={this.props.navigation}
-        title={TITLE}
+        title={I18n.t("wallet.wallet")}
         topContent={topContents}
         rightImage={ImageType.BANK_IMAGE}
       >
