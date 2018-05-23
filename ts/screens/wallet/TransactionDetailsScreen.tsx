@@ -104,7 +104,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note={true}>{I18n.t("wallet.causal")}</Text>
+                <Text note={true}>{I18n.t("wallet.paymentReason")}</Text>
               </Left>
               <Right>
                 <Text style={WalletStyles.boldStyle}>{operation.subject}</Text>
@@ -130,7 +130,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row>
               <Left>
-                <Text note={true}>{I18n.t("wallet.hour")}</Text>
+                <Text note={true}>{I18n.t("wallet.time")}</Text>
               </Left>
               <Right>
                 <Text>{operation.time}</Text>
