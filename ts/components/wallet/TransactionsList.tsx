@@ -21,7 +21,6 @@ import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
-  parent: string;
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;

@@ -75,7 +75,6 @@ export class TransactionsScreen extends React.Component<Props, never> {
       >
         <Content style={WalletStyles.whiteContent}>
           <TransactionsList
-            parent={I18n.t("wallet.transactions")}
             title={I18n.t("wallet.transactions")}
             totalAmount={I18n.t("wallet.total")}
             transactions={transactions}

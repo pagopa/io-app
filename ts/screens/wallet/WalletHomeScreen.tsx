@@ -111,7 +111,6 @@ export class WalletHomeScreen extends React.Component<Props, never> {
       >
         <Content style={WalletStyles.whiteContent}>
           <TransactionsList
-            parent={I18n.t("wallet.wallet")}
             title={I18n.t("wallet.latestTransactions")}
             totalAmount={I18n.t("wallet.total")}
             transactions={latestTransactions}
