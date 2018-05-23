@@ -27,6 +27,7 @@ import {
 import color from "color";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
+import ROUTES from '../../navigation/routes';
 
 type Props = Readonly<{
   item: CreditCard;
@@ -169,7 +170,9 @@ export default class CreditCardComponent extends React.Component<Props> {
               style={CreditCardStyle.rowStyle}
               size={2}
               {...{
-                onPress: (): boolean => navigate("")
+                onPress: (): boolean => navigate(ROUTES.WALLET_CARD_TRANSACTIONS, {
+                  card: item
+                })
               }}
             >
               <Col size={8}>
