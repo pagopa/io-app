@@ -1,3 +1,8 @@
+/**
+ * Transaction details screen, displaying 
+ * a list of information available about a 
+ * specific transaction. 
+ */
 import * as React from "react";
 
 import { Button, Content, Left, Right, Text, View } from "native-base";
@@ -49,6 +54,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
   }
 
   private touchableContent(): React.ReactElement<any> {
+    // TODO: replace this with actual component @https://www.pivotaltracker.com/story/show/157422715
     return (
       <View style={WalletStyles.container}>
         <Image
@@ -149,7 +155,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 style={{ marginTop: 20 }}
                 block={true}
                 success={true}
-                onPress={(): boolean => navigate("Login")}
+                onPress={(): boolean => navigate("")}
               >
                 <Text>{I18n.t("wallet.seeReceipt")}</Text>
               </Button>
