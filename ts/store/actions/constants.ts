@@ -71,7 +71,8 @@ export const ERROR_CLEAR: "ERROR_CLEAR" = "ERROR_CLEAR";
 export const FetchRequestActions = {
   PIN_CREATE: "PIN_CREATE",
   PROFILE_LOAD: "PROFILE_LOAD",
-  PROFILE_UPDATE: "PROFILE_UPDATE"
+  PROFILE_UPDATE: "PROFILE_UPDATE",
+  MESSAGES_LOAD: "MESSAGES_LOAD"
 };
 
 // Extract keys from object and create a new union type

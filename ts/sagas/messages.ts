@@ -104,6 +104,7 @@ function* loadMessages(): Iterator<Effect> {
         .filter((id, index, ids) => index === ids.indexOf(id)); // Get unique ids
 
       // Fetch the services detail in parallel
+      // We fetch services first because to show messages you need the related service info
       yield all(newServicesIds.map(id => call(loadService, sessionToken, id)));
 
       // Fetch the messages detail in parallel
