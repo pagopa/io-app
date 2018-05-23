@@ -16,7 +16,7 @@ import I18n from "../../i18n";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
-const cardsImage = require("../../../img/portfolio/single-tab.png");
+const cardsImage = require("../../../img/wallet/single-tab.png");
 
 interface ParamType {
   readonly transaction: WalletTransaction;
