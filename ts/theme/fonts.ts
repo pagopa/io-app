@@ -8,10 +8,16 @@ import { Platform, PlatformStatic } from "react-native";
 
 type PlatformSelectType = PlatformStatic["select"];
 
-const font = Platform.select({
-  android: "TitilliumWeb",
-  ios: "Titillium Web"
-});
+const fonts = {
+  TitilliumWeb: Platform.select({
+    android: "TitilliumWeb",
+    ios: "Titillium Web"
+  }),
+  RobotoMono: Platform.select({
+    android: "RobotoMono",
+    ios: "Roboto Mono"
+  })
+};
 
 export const fontWeights = {
   "300": "Light",
@@ -20,12 +26,14 @@ export const fontWeights = {
   "700": "Bold"
 };
 
+export type FontFamily = keyof typeof fonts;
 export type FontWeight = keyof typeof fontWeights;
+type FontStyle = "normal" | "italic";
 
 export type FontStyleObject = {
   fontFamily: string;
-  fontWeight?: string;
-  fontStyle?: string;
+  fontWeight?: FontWeight;
+  fontStyle?: FontStyle;
 };
 
 /**
@@ -33,14 +41,15 @@ export type FontStyleObject = {
  */
 export const makeFontFamilyName = (
   osSelect: PlatformSelectType,
+  font: FontFamily,
   weight: FontWeight | undefined,
   isItalic: boolean | undefined
 ): string =>
   osSelect({
-    android: `${font}-${fontWeights[weight || "400"]}${
+    android: `${fonts[font]}-${fontWeights[weight || "400"]}${
       isItalic ? "Italic" : ""
     }`,
-    ios: font
+    ios: fonts[font]
   });
 
 /**
@@ -50,15 +59,16 @@ export const makeFontFamilyName = (
 export const makeFontStyleObject = (
   osSelect: PlatformSelectType,
   weight: FontWeight | undefined = undefined,
-  isItalic: boolean | undefined = false
+  isItalic: boolean | undefined = false,
+  font: FontFamily | undefined = "TitilliumWeb"
 ): FontStyleObject =>
   osSelect({
     android: {
-      fontFamily: makeFontFamilyName(osSelect, weight, isItalic)
+      fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic)
     },
     ios: {
-      fontFamily: makeFontFamilyName(osSelect, weight, isItalic),
+      fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic),
       fontWeight: weight,
-      fontStyle: isItalic ? "italic" : "normal"
+      fontStyle: (isItalic ? "italic" : "normal") as FontStyle
     }
   });

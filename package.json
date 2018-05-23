@@ -116,7 +116,8 @@
   "rnpm": {
     "assets": [
       "./assets/fonts/TitilliumWeb",
-      "./assets/fonts/io-icon-font"
+      "./assets/fonts/io-icon-font",
+      "./assets/fonts/RobotoMono"
     ]
   }
 }
