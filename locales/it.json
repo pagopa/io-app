@@ -139,6 +139,7 @@
     "receipt": "Ricevuta",
     "seeReceipt": "Vedi la ricevuta",
     "transactions": "Operazioni",
+    "transaction": "Operazione",
     "noTransactions": "Non ci sono operazioni.",
     "noNewTransactions": "Non ci sono nuove operazioni.",
     "lastUsage": "Ultimo utilizzo",
