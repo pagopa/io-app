@@ -17,9 +17,9 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
-import ROUTES from '../../navigation/routes';
 
 type Props = Readonly<{
   parent: string;
@@ -87,9 +87,13 @@ export class TransactionsList extends React.Component<Props, State> {
             removeClippedSubviews={false}
             dataArray={ops as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
-              <ListItem onPress={(): boolean => navigate(ROUTES.WALLET_TRANSACTION_DETAILS, {
-                transaction: item
-              })}>
+              <ListItem
+                onPress={(): boolean =>
+                  navigate(ROUTES.WALLET_TRANSACTION_DETAILS, {
+                    transaction: item
+                  })
+                }
+              >
                 <Body>
                   <Grid>
                     {this.renderDate(item)}

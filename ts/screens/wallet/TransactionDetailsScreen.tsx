@@ -1,7 +1,7 @@
 /**
- * Transaction details screen, displaying 
- * a list of information available about a 
- * specific transaction. 
+ * Transaction details screen, displaying
+ * a list of information available about a
+ * specific transaction.
  */
 import * as React from "react";
 
@@ -14,11 +14,10 @@ import {
   NavigationState
 } from "react-navigation";
 
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
-import { topContentTouchable } from "../../components/wallet/layout/types";
 import { WalletStyles } from "../../components/styles/wallet";
+import { topContentTouchable } from "../../components/wallet/layout/types";
+import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
-import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
 const cardsImage = require("../../../img/wallet/single-tab.png");
@@ -33,9 +32,6 @@ interface StateParams extends NavigationState {
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<StateParams>;
-  transaction: WalletTransaction;
-  parent: string;
-  card: CreditCard;
 }>;
 
 type Props = OwnProps & NavigationInjectedProps;
@@ -44,11 +40,6 @@ type Props = OwnProps & NavigationInjectedProps;
  * Details of transaction
  */
 export class TransactionDetailsScreen extends React.Component<Props, never> {
-  public static navigationOptions = {
-    title: I18n.t("wallet.operationsDetails"),
-    headerBackTitle: null
-  };
-
   constructor(props: Props) {
     super(props);
   }
@@ -68,7 +59,8 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
-    const operation: WalletTransaction = this.props.navigation.state.params.transaction;
+    const operation: WalletTransaction = this.props.navigation.state.params
+      .transaction;
     const topContent = topContentTouchable(this.touchableContent());
     return (
       <WalletLayout
@@ -82,14 +74,10 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
           <Grid>
             <Row>
               <Left>
-                <Text>
-                  {`${I18n.t("wallet.total")} ${operation.currency}`}
-                </Text>
+                <Text>{`${I18n.t("wallet.total")} ${operation.currency}`}</Text>
               </Left>
               <Right>
-                <Text style={WalletStyles.boldStyle}>
-                  {operation.amount}
-                </Text>
+                <Text style={WalletStyles.boldStyle}>{operation.amount}</Text>
               </Right>
             </Row>
             <Row>
@@ -119,9 +107,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text note={true}>{I18n.t("wallet.causal")}</Text>
               </Left>
               <Right>
-                <Text style={WalletStyles.boldStyle}>
-                  {operation.subject}
-                </Text>
+                <Text style={WalletStyles.boldStyle}>{operation.subject}</Text>
               </Right>
             </Row>
             <Row>
