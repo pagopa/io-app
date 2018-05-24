@@ -26,7 +26,7 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
           placeholder={getCurrentFormFieldProperty("email")("placeholder")}
           validate={[validators.email]}
           showError={true}
-          keyboardType='email-address'
+          keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
         />
