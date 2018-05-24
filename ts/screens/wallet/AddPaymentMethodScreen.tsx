@@ -1,3 +1,12 @@
+/**
+ * This is the screen presented to the user
+ * when they request adding a new payment method. 
+ * From here, they can select their payment method
+ * of choice (although only credit cards will be allowed
+ * initially). 
+ * Keep in mind that the rest of the "add credit card" process
+ * is handled @https://www.pivotaltracker.com/story/show/157838293
+ */
 import * as React from "react";
 import I18n from "../../i18n";
 
@@ -65,7 +74,7 @@ const AddMethodStyle = StyleSheet.create({
   },
   transactionText: {
     fontSize: variables.fontSize1,
-    color: "#a6a6a6" // WIP update to variables.white.darken(.35)
+    color: "#a6a6a6" // WIP to be updated to variables.white.darken(.35)
   },
   centeredContents: {
     alignItems: "center"
@@ -117,7 +126,6 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                   <Grid>
                     <Row>
                       <Text style={{ fontWeight: "bold" }}>
-                        {" "}
                         {/* WIP will be changed to "bold={true}" when PR #162 passes */}
                         {item.name}
                       </Text>
