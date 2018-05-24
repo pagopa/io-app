@@ -1,7 +1,6 @@
 import { Form } from "native-base";
 import * as React from "react";
-import { TextInput } from "react-native";
-import { InjectedFormProps, reduxForm } from "redux-form";
+import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import {
   getTraslatedFormFieldPropertyValue,
   renderNativeBaseInput,
@@ -20,7 +19,7 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
   public render() {
     return (
       <Form>
-        <TextInput
+        <Field
           name="email"
           component={renderNativeBaseInput}
           placeholder={getCurrentFormFieldProperty("email")("placeholder")}
@@ -28,7 +27,6 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
           showError={true}
           keyboardType="email-address"
           autoCapitalize="none"
-          autoCorrect={false}
         />
       </Form>
     );
