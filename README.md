@@ -138,6 +138,12 @@ $ yarn generate:api-definitions
 
 #### Configurazione dell'app
 
+Se siete ancora nella subdirectory ios:
+
+```
+$ cd..
+```
+
 Infine copiamo la configurazione di esempio per l'app.
 
 ```
