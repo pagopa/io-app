@@ -1,3 +1,7 @@
+/**
+ * Generators to manage messages and related services.
+ */
+
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { all, call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
@@ -17,18 +21,29 @@ import { messagesByIdSelectors } from "../store/reducers/entities/messages/messa
 import { servicesByIdSelector } from "../store/reducers/entities/services/servicesById";
 import { sessionTokenSelector } from "../store/reducers/session";
 
+// An object containing MessageWithContent keyed by id
 export interface MessagesListObject {
   [key: string]: MessageWithContent;
 }
 
+// An object containing ServicePublic keyed by id
 export interface ServicesListObject {
   [key: string]: ServicePublic;
 }
 
+// An array of messages id
 export type MessagesIdsArray = ReadonlyArray<string>;
 
+// An array of services id
 export type ServicesIdsArray = ReadonlyArray<string>;
 
+/**
+ * A generator to load the message detail from the Backend
+ *
+ * @param {function} getMessage - The function that makes the Backend request
+ * @param {string} id - The id of the message to load
+ * @returns {(Error|MessageWithContent)}
+ */
 function* loadMessage(
   getMessage: (
     params: { id: string }
@@ -47,6 +62,13 @@ function* loadMessage(
   }
 }
 
+/**
+ * A generator to load the service details from the Backend
+ *
+ * @param {function} getService - The function that makes the Backend request
+ * @param {string} id - The id of the service to load
+ * @returns {(Error|ServicePublic)}
+ */
 function* loadService(
   getService: (
     params: { id: string }
@@ -66,19 +88,30 @@ function* loadService(
   }
 }
 
+/**
+ * A generator to load messages from the Backend.
+ * The messages returned by the Backend are filtered so the application downloads
+ * only the details of the messages and services not already in the redux store.
+ */
 function* loadMessages(): Iterator<Effect> {
   // Get the token from the state
   const sessionToken: string | undefined = yield select(sessionTokenSelector);
 
   if (sessionToken) {
+    // Create the backendClient to make fetch requests
     const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+    // Load already cached messages from the store
     const cachedMessagesById: MessagesListObject = yield select(
       messagesByIdSelectors
     );
+
+    // Load already cached services from the store
     const cachedServicesById: ServicesListObject = yield select(
       servicesByIdSelector
     );
 
+    // Request the list of messages from the Backend
     const response: BasicResponseType<Messages> | undefined = yield call(
       backendClient.getMessages,
       {}
