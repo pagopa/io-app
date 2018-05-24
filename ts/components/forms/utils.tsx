@@ -47,7 +47,7 @@ export interface NativeBaseInputProps {
   placeholder?: string;
   showError?: boolean;
   keyboardType?: KeyboardTypeOptions;
-  autoCapitalize?: string;
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
 }
 
 /**
