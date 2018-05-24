@@ -1,7 +1,7 @@
 import { Form } from "native-base";
 import * as React from "react";
 import { TextInput } from "react-native";
-import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import { InjectedFormProps, reduxForm } from "redux-form";
 import {
   getTraslatedFormFieldPropertyValue,
   renderNativeBaseInput,
