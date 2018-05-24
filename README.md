@@ -72,7 +72,7 @@ Il flusso di autenticazione è il seguente:
 3. Shibboleth prende in carico il processo di autenticazione verso l'IdP
 4. Ad autenticazione avvenuta, viene fatto un redirect dall'IdP all'endpoint del backend che si occupa della generazione di un nuovo token di sessione.
 5. L'endpoint di generazione di un nuovo token riceve via header HTTP gli attributi SPID, poi genera un nuovo token di sessione (es. `123456789`) e restituisce alla webview un HTTP redirect verso un URL _well known_, contenente il token di sessione (es. `/api/token/123456789`)
-6. L'app, che controlla la webview, intercetta questo URL prima che venga effettuata la richiesta HTTP, ne estrae il token di sessione e termina il flusso di autenticazione chiudendo la webview.  
+6. L'app, che controlla la webview, intercetta questo URL prima che venga effettuata la richiesta HTTP, ne estrae il token di sessione e termina il flusso di autenticazione chiudendo la webview.
 
 Successivamente il token di sessione viene usato dall'app per effettuare le chiamate all'API di backend (es. per ottenere gli attributi SPID).
 
@@ -80,19 +80,34 @@ Successivamente il token di sessione viene usato dall'app per effettuare le chia
 
 ### Pre-requisiti
 
-#### Nodenv
+#### nodenv
 
-Su macOS e Linux si consiglia l'uso di [nodenv](https://github.com/nodenv/nodenv) per la gestione di versione multiple di NodeJS.
+Su macOS e Linux si consiglia l'uso di [nodenv](https://github.com/nodenv/nodenv)
+per la gestione di versione multiple di NodeJS.
 
-La versione di node usata nel progetto [è questa](https://github.com/teamdigitale/ItaliaApp/blob/master/.node-version).
+La versione di node usata nel progetto [è questa](.node-version).
 
-#### Yarn
+Se si ha già `nodenv` installato e configurato sul proprio sistema, la versione
+di `node` corretta verrà impostata quando si accede alla directory dell'app.
 
-Per la gestione delle dipendenze usiamo [Yarn](https://yarnpkg.com/lang/en/).
+#### yarn
+
+Per la gestione delle dipendenze javascript usiamo
+[Yarn](https://yarnpkg.com/lang/en/).
 
 #### rbenv
 
-Alcune dipendenze (es. CocoaPods) sono installate tramite [rbenv](https://github.com/rbenv/rbenv).
+Su macOS e Linux si consiglia l'uso di [rbenv](https://github.com/rbenv/rbenv)
+per la gestione di versione multiple di Ruby.
+
+La versione di Ruby usata nel progetto [è questa](.ruby-version).
+
+Se si ha già `rbenv` installato e configurato sul proprio sistema, la versione
+di Ruby corretta verrà impostata quando si accede alla directory dell'app.
+
+#### Bundler
+
+Alcune dipendenze (es. CocoaPods) sono installate tramite [bundler](https://bundler.io/).
 
 #### React Native
 
@@ -100,44 +115,55 @@ Seguire [il tutorial (Building Projects with Native Code)](https://facebook.gith
 
 Se si dispone di un sistema macOS è possibile seguire sia il tutorial per iOS che per Android. Se invece si dispone di un sistema Linux o Windows sarà possibile installare solo l'ambiente di sviluppo per Android.
 
-### Compilazione (dev)
+### Compilazione e lancio sul simulatore
+
+#### Dipendenze
 
 Per prima cosa installiamo le librerie usate dal progetto:
 
 ```
-$ cd ItaliaApp
-
-$ nodenv install
-$ rbenv install
-
-$ gem install bundler
 $ bundle install
-
-$ yarn
-
+$ yarn install
 $ cd ios
 $ pod install
 ```
 
-E poi compiliamo e lanciamo l'app su Android:
+#### Generazione definizioni API
+
+Il secondo passo è generare le definizioni dalle specifiche openapi:
+
+```
+$ yarn generate:api-definitions
+```
+
+#### Configurazione dell'app
+
+Infine copiamo la configurazione di esempio per l'app.
+
+```
+$ cp .env.example .env
+```
+
+Nota: la configurazione di esempio imposta l'app per interfacciarsi al nostro
+ambiente di test, su cui lavoriamo continuamente - potrebbe quindi accadere
+che alcune funzionalità non siano sempre disponibili o completamente
+funzionanti.
+
+#### Installazione sul simulatore
+
+Su Android (il simulatore del device va [lanciato a mano](https://medium.com/@deepak.gulati/running-react-native-app-on-the-android-emulator-11bf309443eb)):
 
 ```
 $ react-native run-android
 ```
 
-Oppure su iOS:
+Su iOS (il simulatore verrà lanciato automaticamente):
 
 ```
 $ react-native run-ios
 ```
 
-Nota: L'app utilizza [CocoaPods](https://cocoapods.org/), il progetto da eseguire è quindi `ItaliaApp.xcworkspace` anzichè `ItaliaApp.xcodeproj` (`run-ios` lo rileva automaticamente)
-
-### Configurazione
-```
-$ cp .env.example .env
-```
-Inseriamo il MixPanel token
+Nota: l'app utilizza [CocoaPods](https://cocoapods.org/), il progetto da eseguire è quindi `ItaliaApp.xcworkspace` anzichè `ItaliaApp.xcodeproj` (`run-ios` lo rileva automaticamente)
 
 ### Compilazione (release)
 
@@ -204,7 +230,7 @@ Inserire al posto di `XXXXX`:
 
 ##### Installazione del certificato di mitmproxy all'interno dell'emulatore Android
 
-Installare il certificato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale. 
+Installare il certificato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale.
 
 #### Impostare il proxy per la connessione nell'emulatore Android
 
@@ -226,7 +252,7 @@ Per aggiungere una nuova lingua è necessario:
 1. Creare un nuovo file all'interno della directory `locales` usando come nome `<langcode>.json` (Es: `es.json`)
 2. Copiare il contenuto di uno degli altri file `.json` già presenti
 3. Procedere con la traduzione
-4. Modificare il file `ts/i18n.ts` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua 
+4. Modificare il file `ts/i18n.ts` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua
 
 
 ### Gestione degli errori
