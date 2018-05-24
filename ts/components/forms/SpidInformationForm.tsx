@@ -25,6 +25,8 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
           placeholder={getCurrentFormFieldProperty("email")("placeholder")}
           validate={[validators.email]}
           showError={true}
+          // TODO: Check wich type definition force us to disable tslint
+          // @https://www.pivotaltracker.com/story/show/157846397
           /* tslint:disable */
           keyboardType={"email-address" as "email-address"}
           autoCapitalize={"none" as "none"}
