@@ -44,7 +44,7 @@ export type ServicesIdsArray = ReadonlyArray<string>;
  * @param {string} id - The id of the message to load
  * @returns {(Error|MessageWithContent)}
  */
-function* loadMessage(
+export function* loadMessage(
   getMessage: (
     params: { id: string }
   ) => Promise<BasicResponseType<MessageWithContent> | undefined>,
@@ -70,7 +70,7 @@ function* loadMessage(
  * @param {string} id - The id of the service to load
  * @returns {(Error|ServicePublic)}
  */
-function* loadService(
+export function* loadService(
   getService: (
     params: { id: string }
   ) => Promise<BasicResponseType<ServicePublic> | undefined>,
@@ -95,7 +95,7 @@ function* loadService(
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
-function* loadMessages(): Iterator<Effect> {
+export function* loadMessages(): Iterator<Effect> {
   // Get the token from the state
   const sessionToken: string | undefined = yield select(sessionTokenSelector);
 
