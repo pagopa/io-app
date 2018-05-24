@@ -57,6 +57,7 @@ function* loadMessage(
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
   } else {
+    // Send and action to store the new message in the store
     yield put(loadMessageSuccess(response.value));
     return response.value;
   }
@@ -83,6 +84,7 @@ function* loadService(
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
   } else {
+    // Send and action to store the new service in the store
     yield put(loadServiceSuccess(response.value));
     return response.value;
   }

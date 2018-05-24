@@ -26,7 +26,10 @@ const reducer = combineReducers<MessagesState, Action>({
 });
 
 // Selectors
-// TODO: Add sorting by date as soon as Backend response contains `created_at`
+/**
+ * A memoized selector that returns an ordered list of messages.
+ * TODO: Add sorting by date as soon as Backend response contains `created_at`
+ */
 export const orderedMessagesSelector = createSelector(
   messagesAllIdsSelector,
   messagesByIdSelectors,
