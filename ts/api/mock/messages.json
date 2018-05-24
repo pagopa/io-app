@@ -1,32 +1,24 @@
-{
-  "byId" : {
-      "mess1" : {
+[
+  {
         "id": "mess1",
-        "created_at": "11.30",
-        "content" : {
-          "subject": "Soggetto del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto.",
-          "markdown": "Testo del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto."
-        },
+        "created_at": "1527156000",
+        "subject": "Soggetto del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto.",
+        "markdown": "Testo del messaggio 1 lorem ipsum test scritto per vedere l'allinemanto.",
         "sender_service_id": "Sender Tipo Uno"
       },
-      "mess2" : {
+    {
         "id": "mess2",
-        "created_at": "ieri",
-        "content" : {
-          "subject": "Soggetto del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto.",
-          "markdown": "Testo del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto."
-        },
+        "created_at": "1527076800",
+        "subject": "Soggetto del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto.",
+        "markdown": "Testo del messaggio 2 lorem ipsum test scritto per vedere l'allinemanto.",
         "sender_service_id": "Sender Tipo Due"
       },
-      "mess3" : {
+      {
         "id": "mess3",
-        "created_at": "11/05",
-        "content" : {
-          "subject": "Soggetto del messaggio 3 lorem ipsum test scritto per vedere l'allinemanto.",
-          "markdown": "Testo del messaggio 3 lorem ipsum test scritto per vedere l'allinemanto."
-        },
+        "created_at": "15245695800",
+        "subject": "Soggetto del messaggio 3 lorem ipsum test scritto per vedere l'allinemanto.",
+        "markdown": "Testo del messaggio 3 lorem ipsum test scritto per vedere l'allinemanto.",
         "sender_service_id": "Sender Tipo Tre Lungo"
       }
-    },
-  "allIds" : ["mess1", "mess2","mess3"]
-}
+
+]

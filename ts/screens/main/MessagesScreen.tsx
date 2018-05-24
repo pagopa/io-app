@@ -3,15 +3,15 @@ import {
   Container,
   Content,
   H1,
-  List,
   Tab,
   Tabs,
   Text,
   View
 } from "native-base";
 import * as React from "react";
+import { FlatList } from "react-native";
 import { connect } from "react-redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
 import { ReduxProps } from "../../actions/types";
 import messages from "../../api/mock/messages.json";
 import MessageComponent from "../../components/MessageComponent";
@@ -23,32 +23,30 @@ type ReduxMappedProps = {};
 export type OwnProps = {};
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 type State = {};
-type ListOfCreatedMessageWithContentInterface = {
-  [id: string]: CreatedMessageWithContent;
+
+type MessagesListInterface = {
+  item: MessageWithContent;
+  index: number;
 };
 
 /**
  * This screen show the messages to the authenticated user.
  */
 class MessagesScreen extends React.Component<Props, State> {
-  public renderMessageList = (
-    list: ListOfCreatedMessageWithContentInterface
-  ) => {
-    return Object.keys(list).map(key => {
-      return (
-        <MessageComponent
-          key={key}
-          sender={list[key].sender_service_id}
-          subject={list[key].content.subject}
-          date={list[key].created_at}
-        />
-      );
-    });
+  public renderItem = (messagesList: MessagesListInterface) => {
+    return (
+      <MessageComponent
+        key={messagesList.item.id}
+        date={messagesList.item.created_at}
+        sender={messagesList.item.sender_service_id}
+        subject={messagesList.item.subject}
+      />
+    );
   };
 
   public render() {
-    const messagesById: ListOfCreatedMessageWithContentInterface =
-      messages.byId;
+    const list: ReadonlyArray<MessageWithContent> = messages;
+
     return (
       <Container>
         <AppHeader>
@@ -67,7 +65,11 @@ class MessagesScreen extends React.Component<Props, State> {
           >
             <Tab heading={I18n.t("tabMessages.itemAll")}>
               <View spacer={true} large={true} />
-              <List>{this.renderMessageList(messagesById)}</List>
+              <FlatList
+                data={list}
+                renderItem={this.renderItem}
+                keyExtractor={item => item.id}
+              />
             </Tab>
             <Tab heading={I18n.t("tabMessages.itemDeadlines")}>
               <View spacer={true} large={true} />
@@ -78,5 +80,4 @@ class MessagesScreen extends React.Component<Props, State> {
     );
   }
 }
-
 export default connect()(MessagesScreen);
