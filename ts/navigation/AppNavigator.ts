@@ -1,10 +1,10 @@
 import { SwitchNavigator } from "react-navigation";
 
+import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-import { AddPaymentMethodScreen } from '../screens/wallet/AddPaymentMethodScreen';
 
 /**
  * The main stack of screens of the application.

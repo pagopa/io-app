@@ -2,6 +2,7 @@ import * as React from "react";
 import I18n from "../../i18n";
 
 import {
+  Body,
   Button,
   Container,
   Content,
@@ -18,8 +19,9 @@ import {
 } from "native-base";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
-import variables from '../../theme/variables';
+import variables from "../../theme/variables";
 
 // Images
 const bankLogo = require("../../../img/wallet/payment-methods/bank.png");
@@ -63,7 +65,7 @@ const AddMethodStyle = StyleSheet.create({
   },
   transactionText: {
     fontSize: variables.fontSize1,
-    color:"#a6a6a6" // WIP update to variables.white.darken(.35)
+    color: "#a6a6a6" // WIP update to variables.white.darken(.35)
   },
   centeredContents: {
     alignItems: "center"
@@ -75,7 +77,6 @@ const AddMethodStyle = StyleSheet.create({
 });
 
 export class AddPaymentMethodScreen extends React.Component<Props, State> {
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -88,10 +89,21 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
 
     return (
       <Container>
-        {/* <AppHeader>
-        </AppHeader> */}
+        <AppHeader>
+          <Left>
+            <Button
+              transparent={true}
+              onPress={_ => this.props.navigation.goBack()}
+            >
+              <Icon name="chevron-left" />
+            </Button>
+          </Left>
+          <Body>
+            <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
+          </Body>
+        </AppHeader>
         <Content>
-          <Text>{I18n.t("wallet.chooseMethod")} </Text>
+          <Text>{I18n.t("wallet.chooseMethod")}</Text>
           <View spacer={true} large={true} />
           <List
             removeClippedSubviews={false}
@@ -104,7 +116,9 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                 <Left>
                   <Grid>
                     <Row>
-                      <Text style={{fontWeight:"bold"}}>
+                      <Text style={{ fontWeight: "bold" }}>
+                        {" "}
+                        {/* WIP will be changed to "bold={true}" when PR #162 passes */}
                         {item.name}
                       </Text>
                     </Row>
@@ -116,7 +130,10 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                   </Grid>
                 </Left>
                 <Right style={AddMethodStyle.centeredContents}>
-                  <Image source={item.icon} style={AddMethodStyle.containedImage} />
+                  <Image
+                    source={item.icon}
+                    style={AddMethodStyle.containedImage}
+                  />
                 </Right>
               </ListItem>
             )}
@@ -136,9 +153,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             cancel={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text>
-              {I18n.t("wallet.cancel")}
-            </Text>
+            <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
 
