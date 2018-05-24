@@ -1,9 +1,9 @@
 /**
  * This is the screen presented to the user
- * when they request adding a new payment method. 
+ * when they request adding a new payment method.
  * From here, they can select their payment method
  * of choice (although only credit cards will be allowed
- * initially). 
+ * initially).
  * Keep in mind that the rest of the "add credit card" process
  * is handled @https://www.pivotaltracker.com/story/show/157838293
  */
