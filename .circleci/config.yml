@@ -43,7 +43,7 @@ jobs:
       - run: 'bash <(curl -s https://codecov.io/bash)'
 
       # Run DangerJS
-      - run: yarn danger ci
+      - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
 
       # Save workspace for next jobs in the workflow
       - persist_to_workspace:
