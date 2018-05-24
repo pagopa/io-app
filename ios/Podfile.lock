@@ -41,7 +41,7 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNDeviceInfo (0.21.5):
+  - RNDeviceInfo (0.9.3):
     - React
   - RNFS (2.9.12):
     - React
@@ -105,7 +105,7 @@ SPEC CHECKSUMS:
   React: c237e42de9c70e5cac6eeb52b4cfd3a0910c1f00
   react-native-config: 408003951fd9d8b1dfd7ebf535f67c315f44d823
   react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
-  RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
+  RNDeviceInfo: b375b3374cda3203d6d48cea8c07e46ba1169e26
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNI18n: db9be06a40336f04d136f24dd5de3f5eb9f3207c
   RNKeychain: 627c6095cef215dd3d9804a9a9cf45ab96aa3997

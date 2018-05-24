@@ -16,15 +16,15 @@ import {
   Text,
   View
 } from "native-base";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletStyles } from "../../components/styles/wallet";
 import Modal from "../../components/ui/Modal";
+import variables from '../../theme/variables';
 
 // Images
-const bankLogo = require("../../../img/portfolio/add-method/bank.png");
-const creditCardLogo = require("../../../img/portfolio/add-method/creditcard.png");
-const mobileLogo = require("../../../img/portfolio/add-method/mobile.png");
+const bankLogo = require("../../../img/wallet/payment-methods/bank.png");
+const creditCardLogo = require("../../../img/wallet/payment-methods/creditcard.png");
+const mobileLogo = require("../../../img/wallet/payment-methods/mobile.png");
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -37,23 +37,42 @@ type State = Readonly<{
 const paymentMethods: ReadonlyArray<any> = [
   {
     navigateTo: "", // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
-    name: I18n.t("portfolio.methods.card.name"),
-    maxFee: I18n.t("portfolio.methods.card.maxFee"),
+    name: I18n.t("wallet.methods.card.name"),
+    maxFee: I18n.t("wallet.methods.card.maxFee"),
     icon: creditCardLogo
   },
   {
     navigateTo: "",
-    name: I18n.t("portfolio.methods.bank.name"),
-    maxFee: I18n.t("portfolio.methods.bank.maxFee"),
+    name: I18n.t("wallet.methods.bank.name"),
+    maxFee: I18n.t("wallet.methods.bank.maxFee"),
     icon: bankLogo
   },
   {
     navigateTo: "",
-    name: I18n.t("portfolio.methods.mobile.name"),
-    maxFee: I18n.t("portfolio.methods.mobile.maxFee"),
+    name: I18n.t("wallet.methods.mobile.name"),
+    maxFee: I18n.t("wallet.methods.mobile.maxFee"),
     icon: mobileLogo
   }
 ];
+
+const AddMethodStyle = StyleSheet.create({
+  paymentMethodEntry: {
+    marginLeft: 0,
+    paddingRight: 0,
+    height: 75
+  },
+  transactionText: {
+    fontSize: variables.fontSize1,
+    color:"#a6a6a6" // WIP update to variables.white.darken(.35)
+  },
+  centeredContents: {
+    alignItems: "center"
+  },
+  containedImage: {
+    width: "100%",
+    resizeMode: "contain"
+  }
+});
 
 export class AddPaymentMethodScreen extends React.Component<Props, State> {
 
@@ -69,36 +88,35 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
 
     return (
       <Container>
-        <AppHeader>
-        </AppHeader>
+        {/* <AppHeader>
+        </AppHeader> */}
         <Content>
           <Text>{I18n.t("wallet.chooseMethod")} </Text>
           <View spacer={true} large={true} />
           <List
-            style={WalletStyles.payList}
             removeClippedSubviews={false}
             dataArray={paymentMethods as any[]} // tslint:disable-line
             renderRow={item => (
               <ListItem
-                style={WalletStyles.payListItem}
+                style={AddMethodStyle.paymentMethodEntry}
                 onPress={() => navigate(item.navigateTo)}
               >
                 <Left>
                   <Grid>
                     <Row>
-                      <Text style={WalletStyles.payBoldStyle}>
+                      <Text style={{fontWeight:"bold"}}>
                         {item.name}
                       </Text>
                     </Row>
                     <Row>
-                      <Text style={WalletStyles.payLightStyle}>
+                      <Text style={AddMethodStyle.transactionText}>
                         {item.maxFee}
                       </Text>
                     </Row>
                   </Grid>
                 </Left>
-                <Right style={{ alignItems: "center" }}>
-                  <Image source={item.icon} style={{ resizeMode: "contain" }} />
+                <Right style={AddMethodStyle.centeredContents}>
+                  <Image source={item.icon} style={AddMethodStyle.containedImage} />
                 </Right>
               </ListItem>
             )}
@@ -108,19 +126,18 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             link={true}
             onPress={(): void => this.setState({ isTosModalVisible: true })}
           >
-            {I18n.t("portfolio.whyFee")}
+            {I18n.t("wallet.whyFee")}
           </Text>
         </Content>
 
         <View footer={true}>
           <Button
             block={true}
-            light={true}
-            style={WalletStyles.payCancelButton}
+            cancel={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text style={WalletStyles.payCancelButtonText}>
-              {I18n.t("portfolio.cancel")}
+            <Text>
+              {I18n.t("wallet.cancel")}
             </Text>
           </Button>
         </View>
