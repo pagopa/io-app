@@ -29,12 +29,15 @@ export type MessagesIdsArray = ReadonlyArray<string>;
 
 export type ServicesIdsArray = ReadonlyArray<string>;
 
-function* loadMessage(sessionToken: string, id: string): Iterator<Effect> {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
+function* loadMessage(
+  getMessage: (
+    params: { id: string }
+  ) => Promise<BasicResponseType<MessageWithContent> | undefined>,
+  id: string
+): Iterator<Effect> {
   const response:
     | BasicResponseType<MessageWithContent>
-    | undefined = yield call(backendClient.getMessage, { id });
+    | undefined = yield call(getMessage, { id });
 
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
@@ -44,11 +47,14 @@ function* loadMessage(sessionToken: string, id: string): Iterator<Effect> {
   }
 }
 
-function* loadService(sessionToken: string, id: string): Iterator<Effect> {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
+function* loadService(
+  getService: (
+    params: { id: string }
+  ) => Promise<BasicResponseType<ServicePublic> | undefined>,
+  id: string
+): Iterator<Effect> {
   const response: BasicResponseType<ServicePublic> | undefined = yield call(
-    backendClient.getService,
+    getService,
     { id }
   );
 
@@ -105,10 +111,18 @@ function* loadMessages(): Iterator<Effect> {
 
       // Fetch the services detail in parallel
       // We fetch services first because to show messages you need the related service info
-      yield all(newServicesIds.map(id => call(loadService, sessionToken, id)));
+      yield all(
+        newServicesIds.map(id =>
+          call(loadService, backendClient.getService, id)
+        )
+      );
 
       // Fetch the messages detail in parallel
-      yield all(newMessagesIds.map(id => call(loadMessage, sessionToken, id)));
+      yield all(
+        newMessagesIds.map(id =>
+          call(loadMessage, backendClient.getMessage, id)
+        )
+      );
 
       yield put(loadMessagesSuccess());
     }
