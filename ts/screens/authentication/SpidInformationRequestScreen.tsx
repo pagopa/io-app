@@ -13,16 +13,17 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { isValid } from "redux-form";
-import {
-  ContextualHelp
-} from "../../components/ContextualHelp";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from "../../components/forms/SpidInformationForm";
+import {
+  ContextualHelpInjectedProps,
+  withContextualHelp
+} from "../../components/helpers/withContextualHelp";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import { GlobalState } from "../../reducers/types";
-import { withContextualHelp, ContextualHelpInjectedProps } from '../../components/helpers/withContextualHelp';
 type ReduxMappedProps = {
   isFormValid: boolean;
 };
