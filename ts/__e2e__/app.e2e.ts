@@ -12,8 +12,8 @@ import * as detox from "detox";
 
 const config = require("package.json").detox;
 
-// Set the default test timeout of 120s
-jest.setTimeout(120000);
+// Set the default test timeout (in milliseconds)
+jest.setTimeout(5 * 60 * 1000);
 
 beforeAll(async () => {
   await detox.init(config, { launchApp: false });
