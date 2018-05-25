@@ -289,13 +289,21 @@ jobs:
       # Re-run postinstall scripts (setup of react-native libs)
       - run: npm run postinstall
 
-      # Install Detox, see https://github.com/wix/detox/
+      # Install pods
+      - run: cd ios && pod install
+
+      # Install Detox
+      # see: https://github.com/wix/detox/
       - run: npm install -g detox
 
+      # Install required tools
+      # see: https://github.com/wix/detox/blob/master/docs/Guide.RunningOnCI.md
+      - run: brew tap wix/brew
+      - run: brew install applesimutils
+
       # Run detox e2e tests
-      - run: cd ios && pod install
       - run: detox build -c ios.sim.debug
-      - run: detox test -c ios.sim.debug
+      - run: detox test -c ios.sim.debug --cleanup
 
 workflows:
   version: 2
