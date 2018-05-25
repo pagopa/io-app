@@ -10,6 +10,7 @@ import{
 	View
 } from "native-base";
 import AppHeader from "../../components/ui/AppHeader";
+import QRCodeScanner from 'react-native-qrcode-scanner'; 
 
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -56,9 +57,8 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 					</Body>
 				</AppHeader>
 				<Content>
-					<Text>
-						QR code
-					</Text>
+					<QRCodeScanner>
+					</QRCodeScanner>
 					<Text>
 						{I18n.t("portfolio.QRtoPay.instructions")}
 					</Text>
