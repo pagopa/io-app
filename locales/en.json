@@ -122,7 +122,8 @@
   "wallet": {
     "wallet": "Wallet",
     "creditcards": "Credit Cards",
-    "paymentMethods": "Payment Methods",
+    "paymentMethods": "Payment methods",
+    "paymentMethod": "Payment method",
     "add": "add",
     "newPaymentMethod": {
       "add": "add",

@@ -121,7 +121,8 @@
     "wallet": {
     "wallet": "Portafoglio",
     "creditcards": "Carte di Credito",
-    "paymentMethods": "Metodi di Pagamento",
+    "paymentMethods": "Metodi di pagamento",
+    "paymentMethod": "Metodo di pagamento",
     "newPaymentMethod": {
       "add": "aggiungi",
       "addButton": "Aggiungi un metodo di pagamento",

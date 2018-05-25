@@ -22,7 +22,6 @@ import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
-  parent: string;
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;
@@ -71,7 +70,7 @@ export class TransactionsList extends React.Component<Props, State> {
     if (ops.length === 0) {
       return <Text>{I18n.t("wallet.noTransactions")}</Text>;
     }
-
+    // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
     return (
       <Grid>
         <Row>
