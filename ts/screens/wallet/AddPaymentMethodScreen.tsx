@@ -19,18 +19,18 @@ import {
   H1,
   Icon,
   Left,
-  List,
   ListItem,
   Right,
   Row,
   Text,
   View
 } from "native-base";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, FlatList } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
 import variables from "../../theme/variables";
+import ROUTES from '../../navigation/routes';
 
 // Images
 const bankLogo = require("../../../img/wallet/payment-methods/bank.png");
@@ -45,7 +45,15 @@ type State = Readonly<{
   isTosModalVisible: boolean;
 }>;
 
-const paymentMethods: ReadonlyArray<any> = [
+type Route = keyof typeof ROUTES;
+interface IPaymentMethod {
+  navigateTo: Route | "",
+  name: string,
+  maxFee: string,
+  icon: any
+}
+
+const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
     navigateTo: "", // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
     name: I18n.t("wallet.methods.card.name"),
@@ -114,32 +122,32 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
         <Content>
           <Text>{I18n.t("wallet.chooseMethod")}</Text>
           <View spacer={true} large={true} />
-          <List
+          <FlatList
             removeClippedSubviews={false}
-            dataArray={paymentMethods as any[]} // tslint:disable-line
-            renderRow={item => (
+            data={paymentMethods}
+            renderItem={(itemInfo) => (
               <ListItem
                 style={AddMethodStyle.paymentMethodEntry}
-                onPress={() => navigate(item.navigateTo)}
+                onPress={() => navigate(itemInfo.item.navigateTo)}
               >
                 <Left>
                   <Grid>
                     <Row>
                       <Text style={{ fontWeight: "bold" }}>
                         {/* WIP will be changed to "bold={true}" when PR #162 passes */}
-                        {item.name}
+                        {itemInfo.item.name}
                       </Text>
                     </Row>
                     <Row>
                       <Text style={AddMethodStyle.transactionText}>
-                        {item.maxFee}
+                        {itemInfo.item.maxFee}
                       </Text>
                     </Row>
                   </Grid>
                 </Left>
                 <Right style={AddMethodStyle.centeredContents}>
                   <Image
-                    source={item.icon}
+                    source={itemInfo.item.icon}
                     style={AddMethodStyle.containedImage}
                   />
                 </Right>
