@@ -19,7 +19,7 @@
     "email-validator": "^2.0.3",
     "fp-ts": "^1.4.1",
     "io-ts": "^1.1.1",
-    "italia-ts-commons": "^1.7.0",
+    "italia-ts-commons": "^1.10.0",
     "lodash": "^4.17.10",
     "native-base": "^2.4.2",
     "native-base-shoutem-theme": "^0.2.2",
