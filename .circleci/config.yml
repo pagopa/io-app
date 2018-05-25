@@ -290,7 +290,7 @@ jobs:
       - run: npm run postinstall
 
       # Install Detox, see https://github.com/wix/detox/
-      - run: mpm install -g detox
+      - run: npm install -g detox
 
       # Run detox e2e tests
       - run: cd ios && pod install
