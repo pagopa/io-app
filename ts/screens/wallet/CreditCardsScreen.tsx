@@ -23,7 +23,6 @@ type Props = Readonly<{
 const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class CreditCardsScreen extends React.Component<Props, never> {
-
   public render(): React.ReactNode {
     return (
       <WalletLayout
