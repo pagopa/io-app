@@ -1,11 +1,50 @@
+#
+# Defaults
+#
+
+# shared
 defaults: &defaults
   working_directory: ~/italia-app
 
+# nodejs builds
 defaults_js: &defaults_js
   <<: *defaults
   parallelism: 2
   docker:
     - image: circleci/node:8
+
+# android builds
+defaults_android: &defaults_android
+  <<: *defaults
+  docker:
+    - image: circleci/android:api-27-node8-alpha
+  environment:
+    - TERM: "dumb"
+    - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
+    - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+
+# macos builds
+defaults_macos: &defaults_macos
+  <<: *defaults
+  macos:
+    xcode: "9.3.1"
+  working_directory: /Users/distiller/italia-app
+  environment:
+    # Fastlane requires locale set to UTF-8
+    # see https://docs.fastlane.tools/getting-started/ios/setup/#set-up-environment-variables
+    LC_ALL: en_US.UTF-8
+    LANG: en_US.UTF-8
+    # Set Fastlane output dir
+    FL_OUTPUT_DIR: output
+    # Make Ruby bundler a little faster
+    BUNDLE_JOBS: 3
+    BUNDLE_RETRY: 3
+    BUNDLE_PATH: vendor/bundle
+  shell: /bin/bash --login -o pipefail
+
+#
+# Build pipeline
+#
 
 version: 2
 jobs:
@@ -75,15 +114,7 @@ jobs:
 
   # Run test on android
   test-android:
-    <<: *defaults
-
-    docker:
-      - image: circleci/android:api-27-node8-alpha
-
-    environment:
-      - TERM: "dumb"
-      - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
-      - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+    <<: *defaults_android
 
     steps:
       # Restore workflow workspace
@@ -187,26 +218,7 @@ jobs:
 
   # Test ios build
   test-ios:
-    <<: *defaults
-
-    macos:
-      xcode: "9.3.1"
-
-    working_directory: /Users/distiller/italia-app
-
-    environment:
-      # Fastlane requires locale set to UTF-8
-      # see https://docs.fastlane.tools/getting-started/ios/setup/#set-up-environment-variables
-      LC_ALL: en_US.UTF-8
-      LANG: en_US.UTF-8
-      # Set Fastlane output dir
-      FL_OUTPUT_DIR: output
-      # Make Ruby bundler a little faster
-      BUNDLE_JOBS: 3
-      BUNDLE_RETRY: 3
-      BUNDLE_PATH: vendor/bundle
-
-    shell: /bin/bash --login -o pipefail
+    <<: *defaults_macos
 
     steps:
       # Restore workflow workspace
@@ -242,6 +254,49 @@ jobs:
       # Move to the ios project directory and run the test_build lane
       - run: cd ios && bundle exec fastlane test_build
 
+  # End-to-end ios tests
+  test-ios-e2e:
+    <<: *defaults_macos
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /Users/distiller
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - ruby-{{ checksum "Gemfile.lock" }}
+            - ruby-
+
+      # Set Ruby Version for chruby
+      - run: echo "ruby-2.4" > .ruby-version
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: ruby-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Fetch CocoaPods specs
+      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+
+      # Re-run postinstall scripts (setup of react-native libs)
+      - run: npm run postinstall
+
+      # Install Detox, see https://github.com/wix/detox/
+      - run: mpm install -g detox
+
+      # Run detox e2e tests
+      - run: cd ios && pod install
+      - run: detox build -c ios.sim.debug
+      - run: detox test -c ios.sim.debug
+
 workflows:
   version: 2
   build:
@@ -267,7 +322,7 @@ workflows:
             - hold-native-tests
 
       # Native iOS tests
-      - test-ios:
+      - test-ios-e2e:
           requires:
             - hold-native-tests
 
