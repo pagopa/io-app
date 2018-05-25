@@ -141,7 +141,7 @@
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone 6, iOS 10.2"
+        "name": "iPhone 6, iOS 11.2"
       }
     }
   }
