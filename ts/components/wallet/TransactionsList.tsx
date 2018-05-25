@@ -74,7 +74,8 @@ export class TransactionsList extends React.Component<Props, State> {
       <Grid>
         <Row>
           <Left>
-            <Text style={WalletStyles.boldStyle}>{this.props.title}</Text>
+            {/* WIP after PR#162 is approved (or as part of @https://www.pivotaltracker.com/story/show/157769361, whichever occurs first), change this to bold={true} */}
+            <Text style={{ fontWeight: "bold" }}>{this.props.title}</Text>
           </Left>
           <Right>
             <Text>{this.props.totalAmount}</Text>
