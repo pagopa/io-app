@@ -39,7 +39,7 @@ const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
 // Define the types of the requests
 //
 
-type GetServiceT = IGetApiRequestType<
+export type GetServiceT = IGetApiRequestType<
   {
     id: string;
   },
@@ -48,7 +48,7 @@ type GetServiceT = IGetApiRequestType<
   BasicResponseType<ServicePublic>
 >;
 
-type GetMessagesT = IGetApiRequestType<
+export type GetMessagesT = IGetApiRequestType<
   {
     cursor?: number;
   },
@@ -57,7 +57,7 @@ type GetMessagesT = IGetApiRequestType<
   BasicResponseType<Messages>
 >;
 
-type GetMessageT = IGetApiRequestType<
+export type GetMessageT = IGetApiRequestType<
   {
     id: string;
   },
@@ -66,14 +66,14 @@ type GetMessageT = IGetApiRequestType<
   BasicResponseType<MessageWithContent>
 >;
 
-type GetProfileT = IGetApiRequestType<
+export type GetProfileT = IGetApiRequestType<
   {},
   "Authorization",
   never,
   BasicResponseType<ProfileWithEmail | ProfileWithoutEmail>
 >;
 
-type CreateOrUpdateProfileT = IPostApiRequestType<
+export type CreateOrUpdateProfileT = IPostApiRequestType<
   {
     newProfile: ExtendedProfile;
   },
@@ -82,7 +82,7 @@ type CreateOrUpdateProfileT = IPostApiRequestType<
   BasicResponseType<LimitedProfile | ExtendedProfile>
 >;
 
-type CreateOrUpdateInstallationT = IPutApiRequestType<
+export type CreateOrUpdateInstallationT = IPutApiRequestType<
   {
     id: string;
     installation: Installation;
@@ -91,6 +91,8 @@ type CreateOrUpdateInstallationT = IPutApiRequestType<
   never,
   BasicResponseType<NonEmptyString>
 >;
+
+export type BackendClientT = ReturnType<typeof BackendClient>;
 
 //
 // Create client
