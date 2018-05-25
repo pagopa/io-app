@@ -290,7 +290,7 @@ jobs:
       - run: npm run postinstall
 
       # Install pods
-      - run: cd ios && pod install
+      - run: cd ios && pod install --verbose
 
       # Install Detox
       # see: https://github.com/wix/detox/
