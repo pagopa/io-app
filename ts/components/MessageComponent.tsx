@@ -18,7 +18,8 @@ export type Props = OwnProps;
  */
 class MessageComponent extends React.Component<Props> {
   public formatDate(date: string): string {
-    const messageDate = new Date(date * 1000);
+    const dateStringToNumber = +date;
+    const messageDate = new Date(dateStringToNumber * 1000);
     const nowDate = new Date();
     const nowYear = nowDate.getFullYear();
     const nowDateD = nowDate.getDate();
