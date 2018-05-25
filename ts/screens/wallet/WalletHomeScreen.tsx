@@ -35,10 +35,6 @@ type Props = ScreenProps & OwnProps;
  * Wallet Home Screen
  */
 export class WalletHomeScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   // TODO: currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
   private getCardsSummaryImage(): React.ReactElement<any> {
     const { navigate } = this.props.navigation;
@@ -84,7 +80,6 @@ export class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const TITLE = I18n.t("wallet.wallet");
     const latestTransactions: ReadonlyArray<
       WalletTransaction
     > = WalletAPI.getLatestTransactions();
@@ -106,13 +101,12 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         headerTitle={I18n.t("wallet.wallet")}
         allowGoBack={false}
         navigation={this.props.navigation}
-        title={TITLE}
+        title={I18n.t("wallet.wallet")}
         topContent={topContents}
         rightImage={ImageType.BANK_IMAGE}
       >
         <Content style={WalletStyles.whiteContent}>
           <TransactionsList
-            parent={I18n.t("wallet.wallet")}
             title={I18n.t("wallet.latestTransactions")}
             totalAmount={I18n.t("wallet.total")}
             transactions={latestTransactions}
