@@ -13,11 +13,11 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { isValid } from "redux-form";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from "../../components/forms/SpidInformationForm";
 import AppHeader from "../../components/ui/AppHeader";
-import Modal from "../../components/ui/Modal";
 import I18n from "../../i18n";
 import { GlobalState } from "../../reducers/types";
 type ReduxMappedProps = {
@@ -28,27 +28,27 @@ type OwnProps = {
 };
 type Props = ReduxMappedProps & OwnProps;
 type State = {
-  isTosModalVisible: boolean;
+  isHelpVisible: boolean;
 };
 /**
  * A screen where the user can insert an email to receive information about SPID.
  */
 class SpidInformationRequestScreen extends React.Component<Props, State> {
   public state: State = {
-    isTosModalVisible: false
+    isHelpVisible: false
   };
 
   private goBack() {
     this.props.navigation.goBack();
   }
 
-  private showModal() {
-    this.setState({ isTosModalVisible: true });
-  }
+  private showHelp = () => {
+    this.setState({ isHelpVisible: true });
+  };
 
-  private hideModal() {
-    this.setState({ isTosModalVisible: false });
-  }
+  public hideHelp = () => {
+    this.setState({ isHelpVisible: false });
+  };
 
   public render() {
     return (
@@ -85,7 +85,7 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
           <Text>
             {I18n.t("authentication.spid_information_request.paragraph3")}
           </Text>
-          <Text link={true} onPress={_ => this.showModal()}>
+          <Text link={true} onPress={this.showHelp}>
             {I18n.t("authentication.spid_information_request.tosLinkText")}
           </Text>
         </Content>
@@ -100,16 +100,12 @@ class SpidInformationRequestScreen extends React.Component<Props, State> {
             </Text>
           </Button>
         </View>
-        <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
-          <View header={true}>
-            <Icon name="cross" onPress={_ => this.hideModal()} />
-          </View>
-          <Content>
-            <H1>{I18n.t("personal_data_processing.title")}</H1>
-            <View spacer={true} large={true} />
-            <Text>{I18n.t("personal_data_processing.content")}</Text>
-          </Content>
-        </Modal>
+        <ContextualHelp
+          title={I18n.t("personal_data_processing.title")}
+          body={I18n.t("personal_data_processing.content")}
+          show={this.state.isHelpVisible}
+          close={this.hideHelp}
+        />
       </Container>
     );
   }
