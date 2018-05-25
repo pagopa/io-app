@@ -25,12 +25,12 @@ import {
   Text,
   View
 } from "native-base";
-import { Image, StyleSheet, FlatList } from "react-native";
+import { FlatList, Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
+import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
-import ROUTES from '../../navigation/routes';
 
 // Images
 const bankLogo = require("../../../img/wallet/payment-methods/bank.png");
@@ -47,10 +47,10 @@ type State = Readonly<{
 
 type Route = keyof typeof ROUTES;
 interface IPaymentMethod {
-  navigateTo: Route | "",
-  name: string,
-  maxFee: string,
-  icon: any
+  navigateTo: Route | "";
+  name: string;
+  maxFee: string;
+  icon: any;
 }
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
@@ -125,7 +125,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           <FlatList
             removeClippedSubviews={false}
             data={paymentMethods}
-            renderItem={(itemInfo) => (
+            renderItem={itemInfo => (
               <ListItem
                 style={AddMethodStyle.paymentMethodEntry}
                 onPress={() => navigate(itemInfo.item.navigateTo)}
