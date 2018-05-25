@@ -39,9 +39,6 @@ interface OwnProps {
 type Props = OwnProps & NavigationInjectedProps;
 
 export class TransactionsScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
 
   private touchableContent(): React.ReactElement<any> {
     // TODO: change this with an actual component @https://www.pivotaltracker.com/story/show/157422715

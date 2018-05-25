@@ -35,9 +35,6 @@ type Props = ScreenProps & OwnProps;
  * Wallet Home Screen
  */
 export class WalletHomeScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
 
   // TODO: currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
   private getCardsSummaryImage(): React.ReactElement<any> {
