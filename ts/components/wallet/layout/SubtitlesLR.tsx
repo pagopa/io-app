@@ -10,6 +10,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../styles/wallet";
 import { hasSubtitlesLR, TopContent } from "./types";
+import ROUTES from '../../../navigation/routes';
 
 type Props = Readonly<{
   content: TopContent;
@@ -46,7 +47,7 @@ export class SubtitlesLR extends React.Component<Props> {
                 <Right>
                   <Text
                     style={WalletStyles.standardText}
-                    onPress={() => this.props.navigation.navigate("")}
+                    onPress={() => this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)}
                   >
                     {this.props.content.subtitleRightText}
                   </Text>
