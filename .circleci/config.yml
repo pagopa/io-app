@@ -190,18 +190,25 @@ workflows:
       # Lint ant test Javascript
       - test-js-node-8
 
-      # Build Android bundle
-      - build-android-bundle:
+      # To avoid running too many (long) native builds and tests, this step
+      # waits the approval for the iOS and Android native tests.
+      - hold-native-tests:
+          type: approval
           requires:
             - test-js-node-8
 
-      # Test Android
+      # Build Android bundle
+      - build-android-bundle:
+          requires:
+            - hold-native-tests
+
+      # Native Android tests
       - test-android:
           requires:
             - build-android-bundle
 
-      # Test iOS
+      # Native iOS tests
       - test-ios:
           requires:
-            - test-js-node-8
+            - hold-native-tests
 
