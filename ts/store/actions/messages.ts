@@ -1,9 +1,11 @@
 /**
  * Action types and action creator related to the Messages.
  */
+
 import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
 import {
   MESSAGE_LOAD_SUCCESS,
+  MESSAGES_LOAD_CANCEL,
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_REQUEST,
   MESSAGES_LOAD_SUCCESS
@@ -11,6 +13,10 @@ import {
 
 export type MessagesLoadRequest = Readonly<{
   type: typeof MESSAGES_LOAD_REQUEST;
+}>;
+
+export type MessagesLoadCancel = Readonly<{
+  type: typeof MESSAGES_LOAD_CANCEL;
 }>;
 
 export type MessagesLoadSuccess = Readonly<{
@@ -30,6 +36,7 @@ export type MessageLoadSuccess = Readonly<{
 
 export type MessagesActions =
   | MessagesLoadRequest
+  | MessagesLoadCancel
   | MessagesLoadSuccess
   | MessagesLoadFailure
   | MessageLoadSuccess;

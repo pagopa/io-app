@@ -2,19 +2,42 @@
  * Generators to manage messages and related services.
  */
 
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { all, call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import {
+  BasicResponseType,
+  TypeofApiCall
+} from "italia-ts-commons/lib/requests";
+import {
+  all,
+  call,
+  cancel,
+  cancelled,
+  Effect,
+  fork,
+  put,
+  select,
+  take
+} from "redux-saga/effects";
 
 import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import { BackendClient } from "../api/backend";
+import {
+  BackendClient,
+  BackendClientT,
+  GetMessageT,
+  GetServiceT
+} from "../api/backend";
 import { apiUrlPrefix } from "../config";
-import { MESSAGES_LOAD_REQUEST } from "../store/actions/constants";
+import {
+  MESSAGES_LOAD_CANCEL,
+  MESSAGES_LOAD_REQUEST
+} from "../store/actions/constants";
 import {
   loadMessagesFailure,
   loadMessagesSuccess,
-  loadMessageSuccess
+  loadMessageSuccess,
+  MessagesLoadCancel,
+  MessagesLoadRequest
 } from "../store/actions/messages";
 import { loadServiceSuccess } from "../store/actions/services";
 import { messagesByIdSelectors } from "../store/reducers/entities/messages/messagesById";
@@ -45,11 +68,9 @@ export type ServicesIdsArray = ReadonlyArray<string>;
  * @returns {(Error|MessageWithContent)}
  */
 export function* loadMessage(
-  getMessage: (
-    params: { id: string }
-  ) => Promise<BasicResponseType<MessageWithContent> | undefined>,
+  getMessage: TypeofApiCall<GetMessageT>,
   id: string
-): Iterator<Effect> {
+): IterableIterator<Effect> {
   const response:
     | BasicResponseType<MessageWithContent>
     | undefined = yield call(getMessage, { id });
@@ -71,11 +92,9 @@ export function* loadMessage(
  * @returns {(Error|ServicePublic)}
  */
 export function* loadService(
-  getService: (
-    params: { id: string }
-  ) => Promise<BasicResponseType<ServicePublic> | undefined>,
+  getService: TypeofApiCall<GetServiceT>,
   id: string
-): Iterator<Effect> {
+): IterableIterator<Effect> {
   const response: BasicResponseType<ServicePublic> | undefined = yield call(
     getService,
     { id }
@@ -95,14 +114,10 @@ export function* loadService(
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
-export function* loadMessages(): Iterator<Effect> {
-  // Get the token from the state
-  const sessionToken: string | undefined = yield select(sessionTokenSelector);
-
-  if (sessionToken) {
-    // Create the backendClient to make fetch requests
-    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
+export function* loadMessages(
+  backendClient: BackendClientT
+): IterableIterator<Effect> {
+  try {
     // Load already cached messages from the store
     const cachedMessagesById: MessagesListObject = yield select(
       messagesByIdSelectors
@@ -161,9 +176,43 @@ export function* loadMessages(): Iterator<Effect> {
 
       yield put(loadMessagesSuccess());
     }
+  } finally {
+    if (yield cancelled()) {
+      // If the task is cancelled send a failure message
+      yield put(loadMessagesFailure(new Error()));
+    }
   }
 }
 
-export default function* root(): Iterator<Effect> {
-  yield takeLatest(MESSAGES_LOAD_REQUEST, loadMessages);
+export function* loadMessagesWatcher(): IterableIterator<Effect> {
+  // We store the latest task so we can also cancel it
+  // tslint:disable-next-line
+  let lastTask;
+  while (true) {
+    // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
+    const action: MessagesLoadRequest | MessagesLoadCancel = yield take([
+      MESSAGES_LOAD_REQUEST,
+      MESSAGES_LOAD_CANCEL
+    ]);
+    if (lastTask) {
+      // If there is an already running task cancel it
+      yield cancel(lastTask);
+    }
+
+    // If the action received is another MESSAGES_LOAD_REQUEST send the request
+    // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
+    if (action.type === MESSAGES_LOAD_REQUEST) {
+      const sessionToken: string | undefined = yield select(
+        sessionTokenSelector
+      );
+      if (sessionToken) {
+        const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+        lastTask = yield fork(loadMessages, backendClient);
+      }
+    }
+  }
+}
+
+export default function* root(): IterableIterator<Effect> {
+  yield fork(loadMessagesWatcher);
 }
