@@ -32,16 +32,11 @@ type OwnProps = {
 };
 
 type Props = ReduxMappedProps & OwnProps & ContextualHelpInjectedProps;
-type State = {
-  isHelpVisible: boolean;
-};
+
 /**
  * A screen where the user can insert an email to receive information about SPID.
  */
-class SpidInformationRequestScreen extends React.Component<Props, State> {
-  public state: State = {
-    isHelpVisible: false
-  };
+class SpidInformationRequestScreen extends React.Component<Props> {
 
   private goBack() {
     this.props.navigation.goBack();
@@ -116,5 +111,5 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
 });
 
 export default connect(mapStateToProps)(
-  withContextualHelp<Props>(SpidInformationRequestScreen)
+  withContextualHelp(SpidInformationRequestScreen)
 );
