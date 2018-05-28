@@ -41,6 +41,9 @@ export class CreditCardsScreen extends React.Component<Props, never> {
                 <CreditCardComponent
                   navigation={this.props.navigation}
                   item={item}
+                  menu={true}
+                  favorite={true}
+                  lastUsage={true}
                 />
               )}
             />

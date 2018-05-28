@@ -14,6 +14,7 @@ import { hasSubtitlesLR, TopContent } from "./types";
 type Props = Readonly<{
   content: TopContent;
   navigation: NavigationScreenProp<NavigationState>;
+  extraSize: number;
 }>;
 
 // size of the component ("height")
@@ -30,7 +31,7 @@ export class SubtitlesLR extends React.Component<Props> {
        * may need to be provided via props
        */
       return (
-        <Row size={SUBTITLES_LR_SIZE}>
+        <Row size={SUBTITLES_LR_SIZE + this.props.extraSize}>
           <Grid>
             <Col size={1}>
               <Row>

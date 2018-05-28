@@ -13,7 +13,7 @@ import { Subtitle, SUBTITLE_SIZE } from "./Subtitle";
 import { SUBTITLES_LR_SIZE, SubtitlesLR } from "./SubtitlesLR";
 import { Title, TITLE_SIZE } from "./Title";
 import { hasTouchable, TopContent } from "./types";
-import { ImageType } from "./WalletLayout";
+import { ImageType, SpaceAllocationPolicy } from "./WalletLayout";
 
 type Props = Readonly<{
   title: string;
@@ -21,6 +21,7 @@ type Props = Readonly<{
   children?: React.ReactElement<any>;
   rightImage?: ImageType;
   navigation: NavigationScreenProp<NavigationState>;
+  spaceAllocationPolicy?: SpaceAllocationPolicy;
 }>;
 
 // size (in rows) of the touchable content
@@ -38,7 +39,7 @@ export class TopContents extends React.Component<Props> {
    * given TopContent, based on which sub-components are
    * actually being required (e.g. subtitles, touchable contents)
    */
-  public static getSize(topContent: TopContent) {
+  public static getSize(topContent: TopContent, sap: SpaceAllocationPolicy | undefined) {
     const titleSize = TITLE_SIZE;
     /**
      * if topContent has the main subtitle, subtitleSize
@@ -61,9 +62,32 @@ export class TopContents extends React.Component<Props> {
 
     /**
      * the total size of the TopContent is the sum of the sizes
-     * of its components (which are set to 0 if not present)
+     * of its components (which are set to 0 if not present),
+     * plus the "extra size" left when using the appropriate space
+     * allocation policy
      */
-    return titleSize + subtitleSize + touchableSize;
+    return (
+      titleSize +
+      subtitleSize +
+      touchableSize +
+      TopContents.getExtraSize(topContent, sap)
+    );
+  }
+
+  public static getExtraSize(
+    topContent: TopContent,
+    sap: SpaceAllocationPolicy | undefined
+  ): number {
+    if (sap === SpaceAllocationPolicy.TO_AVAILABLE_CONTENTS) {
+      const { hasTouchable, hasMainSubtitle, hasSubtitlesLR } = topContent;
+      if (hasTouchable === false) {
+        return TOUCHABLE_SIZE;
+      }
+      if (hasMainSubtitle === false && hasSubtitlesLR === false) {
+        return Math.max(SUBTITLE_SIZE, SUBTITLES_LR_SIZE);
+      }
+    }
+    return 0;
   }
 
   /**
@@ -73,11 +97,11 @@ export class TopContents extends React.Component<Props> {
   private getSubtitles() {
     const { topContent } = this.props;
     if (topContent.hasMainSubtitle === true) {
-      return <Subtitle content={this.props.topContent} />;
+      return <Subtitle extraSize={this.extraSize} content={this.props.topContent} />;
     }
     if (topContent.hasSubtitlesLR === true) {
       return (
-        <SubtitlesLR content={topContent} navigation={this.props.navigation} />
+        <SubtitlesLR extraSize={this.extraSize} content={topContent} navigation={this.props.navigation} />
       );
     }
     return null;
@@ -85,11 +109,24 @@ export class TopContents extends React.Component<Props> {
 
   private getTouchable() {
     const { topContent } = this.props;
+    /*WIP remove inline style*/
     return hasTouchable(topContent) ? (
-      <Row size={TOUCHABLE_SIZE}>{topContent.touchableContent}</Row>
+      <Row
+        size={TOUCHABLE_SIZE + this.extraSize}
+        style={{ alignContent: "flex-end", alignItems: "flex-end" }}
+      >{topContent.touchableContent}</Row>
     ) : null;
   }
 
+  private extraSize: number;
+  constructor(props: Props) {
+    super(props);
+    this.extraSize = TopContents.getExtraSize(
+      this.props.topContent,
+      this.props.spaceAllocationPolicy
+    );
+  }
+  
   /**
    * renders a title (mandatory as of now, but may be
    * rendered optional in a future version),

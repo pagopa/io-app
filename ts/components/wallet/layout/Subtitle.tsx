@@ -10,6 +10,7 @@ import { hasMainSubtitle, TopContent } from "./types";
 
 type Props = Readonly<{
   content: TopContent;
+  extraSize: number;
 }>;
 
 // size of the subtitle row
@@ -19,7 +20,7 @@ export class Subtitle extends React.Component<Props> {
   public render(): React.ReactNode {
     if (hasMainSubtitle(this.props.content)) {
       return (
-        <Row size={SUBTITLE_SIZE}>
+        <Row size={SUBTITLE_SIZE + this.props.extraSize}>
           <Grid>
             <Row>
               <Text style={WalletStyles.standardText}>

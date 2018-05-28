@@ -30,7 +30,17 @@ type Props = Readonly<{
   children?: React.ReactElement<any>;
   rightImage?: ImageType;
   navigation: NavigationScreenProp<NavigationState>;
+  spaceAllocationPolicy?: SpaceAllocationPolicy;
 }>;
+
+/* different policies to adopt when 
+ * one of the elements of the top
+ * part is not available
+ */
+export enum SpaceAllocationPolicy {
+  TO_BOTTOM_CONTENTS, // leave space to bottom part of screen (default behavior)
+  TO_AVAILABLE_CONTENTS // leave space to other optional contents
+}
 
 // size of the bottom part of the screen
 // (i.e. the actual contents passed in this.props.children)
@@ -54,7 +64,7 @@ export class WalletLayout extends React.Component<Props, never> {
   private twoPartsLayout(): React.ReactNode {
     return (
       <Grid>
-        <Row size={TopContents.getSize(this.props.topContent)}>
+        <Row size={TopContents.getSize(this.props.topContent,this.props.spaceAllocationPolicy)}>
           <TopContents {...this.props} />
         </Row>
         <Row size={this.getBottomSize()}>{this.props.children}</Row>
@@ -72,8 +82,7 @@ export class WalletLayout extends React.Component<Props, never> {
      */
     return (
       WALLET_LAYOUT_BOTTOM_SIZE +
-      (TOP_CONTENTS_MAX_SIZE - TopContents.getSize(this.props.topContent))
-    );
+      (TOP_CONTENTS_MAX_SIZE - TopContents.getSize(this.props.topContent, this.props.spaceAllocationPolicy)));
   }
 
   private goBackButton(): React.ReactNode {
