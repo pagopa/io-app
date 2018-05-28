@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
       .darken(0.05)
       .string(),
     borderRadius: 10,
-    marginTop: 20,
+    // marginTop: 20,
     marginLeft: 0,
     marginRight: 0,
     marginBottom: -1,
@@ -76,8 +76,8 @@ export const styles = StyleSheet.create({
   },
   rotatedCard: {
     transform: [{ perspective: 850 }, { rotateX: "-30deg" }, { scale: 0.87 }],
-    shadowRadius: 10,
-    shadowOpacity: 1
+    // shadowRadius: 10,
+    // shadowOpacity: 1
   },
   smallTextStyle: {
     fontSize: variables.fontSize2,
@@ -125,6 +125,7 @@ export const getCardIcon = (cc: CreditCard) => {
 export class CreditCardComponent extends React.Component<Props> {
   private showMenu() {
     const options: string[] = [ // tslint:disable-line
+      I18n.t("creditCardComponent.setFavourite"),
       I18n.t("global.buttons.delete"),
       I18n.t("global.buttons.cancel")
     ];

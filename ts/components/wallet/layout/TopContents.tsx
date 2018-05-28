@@ -25,7 +25,7 @@ type Props = Readonly<{
 }>;
 
 // size (in rows) of the touchable content
-const TOUCHABLE_SIZE = 2;
+const TOUCHABLE_SIZE = 3;
 
 // maximum size attainable (if title, subtitles and touchable are all present)
 // (used to define how much space can be left to the bottom part if anything is

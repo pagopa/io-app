@@ -18,7 +18,7 @@ type Props = Readonly<{
 }>;
 
 // size of the component ("height")
-export const SUBTITLES_LR_SIZE = 2;
+export const SUBTITLES_LR_SIZE = 1;
 
 export class SubtitlesLR extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -35,7 +35,7 @@ export class SubtitlesLR extends React.Component<Props> {
           <Grid>
             <Col size={1}>
               <Row>
-                <Left>
+                <Left style={{flexDirection:"column",alignSelf:"flex-end"}}>
                   <Text style={WalletStyles.payLayoutSubtitleLeft}>
                     {this.props.content.subtitleLeftText}
                   </Text>
@@ -44,7 +44,7 @@ export class SubtitlesLR extends React.Component<Props> {
             </Col>
             <Col size={1}>
               <Row>
-                <Right>
+                <Right style={{flexDirection:"column",alignSelf:"flex-end"}}>
                   <Text
                     style={WalletStyles.standardText}
                     onPress={() => this.props.navigation.navigate("")}
