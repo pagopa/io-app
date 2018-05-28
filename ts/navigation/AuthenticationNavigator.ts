@@ -9,6 +9,7 @@ import ROUTES from "./routes";
 import QRcameraAcquisitionScreen from "../screens/portfolio/QRcameraAcquisitionScreen";
 import QRmanualAcquisitionScreen from "../screens/portfolio/QRmanualAcquisitionScreen";
 import PaymentNoticeSummaryScreen from "../screens/portfolio/PaymentNoticeSummaryScreen";
+import RequireConfirmPaymentScreen from "../screens/portfolio/RequireConfirmPaymentScreen";
 
 /**
  * The authentication related stack of screens of the application.
@@ -35,6 +36,9 @@ const navigator = StackNavigator(
     },
     [ROUTES.PORTFOLIO_PAYMENT_SUMMARY] : {
       screen: PaymentNoticeSummaryScreen
+    },
+    [ROUTES.PORTFOLIO_ASK_CONFIRM_PAYMENT]: {
+      screen: RequireConfirmPaymentScreen
     }
   },
   {

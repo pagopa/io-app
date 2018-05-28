@@ -26,6 +26,7 @@ import {
 	NavigationScreenProp, 
 	NavigationState 
 } from "react-navigation";
+import ROUTES from '../../navigation/routes';
 
 type Props = Readonly<{
 	navigation: NavigationScreenProp<NavigationState>;
@@ -262,6 +263,9 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 				<Button
 					block={true}
 					primary={true}
+					onPress={()=>
+						this.props.navigation.navigate(ROUTES.PORTFOLIO_ASK_CONFIRM_PAYMENT)
+					}
 					>
 					<Text>
 						{I18n.t("portfolio.QRtoPay.continue")}

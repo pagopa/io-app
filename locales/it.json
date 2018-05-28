@@ -147,6 +147,16 @@
       "iuv":"IUV: ",
       "entityCode2":"Codice Ente/Azienda: ",
       "proceedWithPayment":"Procedi con il pagamento"
-	}
+    },
+    "ConfirmPayment": {
+      "title":"Conferma pagamento",
+      "cancel":"ANNULLA",
+      "askConfirm":"Confermi il pagamento?",
+      "partialAmount":"Importo da pagare",
+      "fee":"Costi di commissione",
+      "why":"Perhè?",
+      "totalAmount":"Totale",
+      "info":"Attenzione: dopo queto passaggio non sarà più possibile annullare"
+    } 
   }
 }
