@@ -36,7 +36,6 @@ type Props = ReduxMappedProps & OwnProps & ContextualHelpInjectedProps;
  * A screen where the user can insert an email to receive information about SPID.
  */
 class SpidInformationRequestScreen extends React.Component<Props> {
-
   private goBack() {
     this.props.navigation.goBack();
   }

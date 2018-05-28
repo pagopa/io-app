@@ -2,9 +2,9 @@
  * Adds a contextual help (components/ContextualHelp)
  * to a component
  */
+import { View } from "native-base";
 import * as React from "react";
-import { ContextualHelp } from '../ContextualHelp';
-import { View } from 'native-base';
+import { ContextualHelp } from "../ContextualHelp";
 
 type State = {
   isHelpVisible: boolean;
@@ -22,7 +22,7 @@ export type ContextualHelpInjectedProps = {
  */
 export function withContextualHelp<P extends ContextualHelpInjectedProps>(
   WrappedComponent: React.ComponentType<P>,
-  title: string, 
+  title: string,
   body: string
 ) {
   // WIP this class is parked here atm, but it will be moved to
@@ -48,7 +48,7 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
         showHelp: this.showHelp
       };
       return (
-        <View style={{width:"100%",height:"100%"}}>
+        <View style={{ width: "100%", height: "100%" }}>
           <WrappedComponent {...this.props} {...injectedProps} />
           <ContextualHelp
             title={title}
