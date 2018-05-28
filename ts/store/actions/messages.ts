@@ -46,6 +46,10 @@ export const loadMessages = (): MessagesLoadRequest => ({
   type: MESSAGES_LOAD_REQUEST
 });
 
+export const loadMessagesCancel = (): MessagesLoadCancel => ({
+  type: MESSAGES_LOAD_CANCEL
+});
+
 export const loadMessagesSuccess = (): MessagesLoadSuccess => ({
   type: MESSAGES_LOAD_SUCCESS
 });

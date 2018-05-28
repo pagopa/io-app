@@ -2,10 +2,12 @@
  * Generators to manage messages and related services.
  */
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import {
   BasicResponseType,
   TypeofApiCall
 } from "italia-ts-commons/lib/requests";
+import { Task } from "redux-saga";
 import {
   all,
   call,
@@ -33,6 +35,7 @@ import {
   MESSAGES_LOAD_REQUEST
 } from "../store/actions/constants";
 import {
+  loadMessagesCancel,
   loadMessagesFailure,
   loadMessagesSuccess,
   loadMessageSuccess,
@@ -178,8 +181,8 @@ export function* loadMessages(
     }
   } finally {
     if (yield cancelled()) {
-      // If the task is cancelled send a failure message
-      yield put(loadMessagesFailure(new Error()));
+      // If the task is cancelled send a cancel message
+      yield put(loadMessagesCancel());
     }
   }
 }
@@ -187,16 +190,17 @@ export function* loadMessages(
 export function* loadMessagesWatcher(): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line
-  let lastTask;
+  let lastTask: Option<Task> = none;
   while (true) {
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
     const action: MessagesLoadRequest | MessagesLoadCancel = yield take([
       MESSAGES_LOAD_REQUEST,
       MESSAGES_LOAD_CANCEL
     ]);
-    if (lastTask) {
+    if (lastTask.isSome()) {
       // If there is an already running task cancel it
-      yield cancel(lastTask);
+      yield cancel(lastTask.value);
+      lastTask = none;
     }
 
     // If the action received is another MESSAGES_LOAD_REQUEST send the request
@@ -207,7 +211,7 @@ export function* loadMessagesWatcher(): IterableIterator<Effect> {
       );
       if (sessionToken) {
         const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-        lastTask = yield fork(loadMessages, backendClient);
+        lastTask = some(yield fork(loadMessages, backendClient));
       }
     }
   }
