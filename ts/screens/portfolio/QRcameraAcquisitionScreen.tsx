@@ -11,14 +11,12 @@ import{
 	Row,
 	Col
 } from "native-base";
-import AppHeader from "../../components/ui/AppHeader";
 import QRCodeScanner from 'react-native-qrcode-scanner'; 
-
+import AppHeader from "../../components/ui/AppHeader";
 import {Dimensions, StyleSheet} from 'react-native';
-
+import variables from "../../theme/variables";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-
 import { 
 	NavigationScreenProp, 
 	NavigationState 
@@ -47,7 +45,7 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 	public render(): React.ReactNode {
 	 
 		return (
-			<Container>
+			<Container style={{backgroundColor:variables.brandPrimaryInverted}}>
 				<AppHeader>
 					<Left>
 						<Button transparent={true} onPress={() => this.goBack()}>
@@ -93,8 +91,8 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 					</QRCodeScanner>
 					<View>
 						<View spacer={true} large={true}/>
-						<Text style={{textAlign:'center'}}>
-								{I18n.t("portfolio.QRtoPay.instructions")}
+						<Text style={{textAlign:'center', paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
+							{I18n.t("portfolio.QRtoPay.instructions")}
 						</Text>
 						<View spacer={true} extralarge={true}/>
 					</View>	

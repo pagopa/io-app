@@ -73,3 +73,6 @@ buck-out/
 
 # Bundler
 vendor
+
+# Auto generated definitions
+definitions

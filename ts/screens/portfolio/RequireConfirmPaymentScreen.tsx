@@ -8,8 +8,7 @@ import {
 	Button,
 	Icon,
 	Text,
-	H1,
-	Item
+	H1
 } from "native-base";
 
 import AppHeader from "../../components/ui/AppHeader";

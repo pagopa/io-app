@@ -16,6 +16,7 @@ import {
 } from "native-base";
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
+import variables from '../../theme/variables';
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { 
@@ -75,7 +76,7 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 						</Text>
 					</Body>
 				</AppHeader>
-				<Content>
+				<Content style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
 					<H1>
 						{I18n.t("portfolio.QRtoPay.manualSetHeader")}
 					</H1>

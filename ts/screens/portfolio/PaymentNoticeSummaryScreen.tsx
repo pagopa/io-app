@@ -18,8 +18,6 @@ import {
 } from "react-native-easy-grid";
 import AppHeader from "../../components/ui/AppHeader";
 import variables from "../../theme/variables";
-
-
 import I18n from "../../i18n";
 //import ROUTES from "../../navigation/routes";
 import { 
@@ -46,22 +44,22 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 	}
 	
 	public render(): React.ReactNode {
-		const NOMEAVVISO = "Tari 2018"
-		const IMPORTO = "€ 199,00"
-		const SCADENZA = "31/01/2018"
-		const RATA = "unica"
-		const NOMEENTE = "Comune di Gallarate - Settore Tributi"
-		const INDIRIZZOENTE = "Via Cavour n.2 - Palazzo Broletto,21013"
-		const CITTAENTE = "Gallarate (VA)"
-		const TELENTE = "0331.754224"
-		const WEBPAGEENTE = "www.comune.gallarate.va.it"
-		const EMAILENTE = "tributi@coumne.gallarate.va.it"
-		const PECENTE = "protocollo@pec.comune.gallarate.va.it"
-		const DESTINATARIO = "Mario Rossi"
-		const INDIRIZZODESTINATARIO = "Via Murillo 8, 20149 Milano (MI)"
-		const CBILL = "A0EDT"
-		const IUV = "1 1111 6000 0015 80"
-		const CODICEENTE = "01 19 9250 158"
+		const NOMEAVVISO: string = "Tari 2018"
+		const IMPORTO: string = "€ 199,00"
+		const SCADENZA: string = "31/01/2018"
+		const RATA: string = "unica"
+		const NOMEENTE: string = "Comune di Gallarate - Settore Tributi"
+		const INDIRIZZOENTE: string = "Via Cavour n.2 - Palazzo Broletto,21013"
+		const CITTAENTE: string = "Gallarate (VA)"
+		const TELENTE: string = "0331.754224"
+		const WEBPAGEENTE: string = "www.comune.gallarate.va.it"
+		const EMAILENTE: string = "tributi@coumne.gallarate.va.it"
+		const PECENTE: string = "protocollo@pec.comune.gallarate.va.it"
+		const DESTINATARIO: string = "Mario Rossi"
+		const INDIRIZZODESTINATARIO: string = "Via Murillo 8, 20149 Milano (MI)"
+		const CBILL: string = "A0EDT"
+		const IUV: string = "1 1111 6000 0015 80"
+		const CODICEENTE: string = "01 19 9250 158"
 
 		return (
 			<Container>
@@ -84,7 +82,7 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 				</AppHeader>
 
 				<Content>
-					<Grid>
+					<Grid style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
 						<Row>
 							<Left>
 								<H3>
@@ -108,7 +106,7 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 									spacer={true} 
 									large={true} 
 								/>
-								<Row>
+								<Row style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
 										<H3>
 											{I18n.t("portfolio.QRtoPay.amount")}
 										</H3>
@@ -118,7 +116,7 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 											</H1>
 										</Right>
 								</Row>
-								<Row>
+								<Row style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
 										<H3>
 											{I18n.t("portfolio.QRtoPay.expireDate")}
 										</H3>
@@ -128,7 +126,7 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 											</H1>
 										</Right>
 								</Row>
-								<Row>
+								<Row style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
 										<H3>
 											{I18n.t("portfolio.QRtoPay.tranche")}
 										</H3>
@@ -143,9 +141,9 @@ class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
 						spacer={true} 
 						large={true}
 					/>
-					<Grid>
+					<Grid style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
 						<Row>
-							<Text >
+							<Text>
 								{I18n.t("portfolio.QRtoPay.entity")}
 							</Text>
 						</Row>

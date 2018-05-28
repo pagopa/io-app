@@ -5,8 +5,7 @@ import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-import PortfolioNavigator from './PortfolioNavigator';
-import RequireConfirmPaymentScreen from '../screens/portfolio/RequireConfirmPaymentScreen';
+
 /**
  * The main stack of screens of the application.
  * SwitchNavigator is very useful here because it automatically
@@ -16,7 +15,7 @@ const navigator = SwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: RequireConfirmPaymentScreen//IngressScreen
+    screen: IngressScreen
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users
@@ -28,9 +27,6 @@ const navigator = SwitchNavigator({
   [ROUTES.MAIN]: {
     // The navigator used for authenticated users
     screen: MainNavigator
-  },
-  [ROUTES.PORTFOLIO]: {
-    screen: PortfolioNavigator
   }
 });
 

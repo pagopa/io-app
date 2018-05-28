@@ -49,7 +49,7 @@ class ReceiptPaymentScreen extends React.Component<Props, never> {
     const ORA: string = "23.51";
 
     return (
-      <Container>
+      <Container >
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
