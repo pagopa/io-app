@@ -12,8 +12,6 @@ type State = {
 
 export type ContextualHelpInjectedProps = {
   showHelp: () => void;
-  hideHelp: () => void;
-  isHelpVisible: boolean;
 };
 
 /**
@@ -47,9 +45,7 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
 
     public render() {
       const injectedProps = {
-        showHelp: this.showHelp,
-        hideHelp: this.hideHelp,
-        isHelpVisible: this.state.isHelpVisible
+        showHelp: this.showHelp
       };
       return (
         <View style={{width:"100%",height:"100%"}}>
