@@ -48,7 +48,8 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
         showHelp: this.showHelp
       };
       return (
-        <View style={{ width: "100%", height: "100%" }}> {/* WIP any more appropriate wrapper? */}
+        <View style={{ width: "100%", height: "100%" }}>
+          {/* WIP any more appropriate wrapper? */}
           <WrappedComponent {...this.props} {...injectedProps} />
           <ContextualHelp
             title={title}
