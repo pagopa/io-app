@@ -5,7 +5,7 @@
  */
 import { Button, Content, View } from "native-base";
 import * as React from "react";
-import { Image, Text, TouchableHighlight } from "react-native";
+import { Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -22,6 +22,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
+import { CreditCardsFan } from '../../components/wallet/CreditCardsFan';
 
 type ScreenProps = {};
 
@@ -43,9 +44,9 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         <TouchableHighlight
           onPress={(): boolean => navigate(ROUTES.WALLET_CREDITCARDS)}
         >
-          <Image
-            style={WalletStyles.pfCards}
-            source={require("../../../img/wallet/creditcards.jpg")}
+          <CreditCardsFan
+            navigation={this.props.navigation}
+             cards={WalletAPI.getCreditCards()}
           />
         </TouchableHighlight>
       </View>
