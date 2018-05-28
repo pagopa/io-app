@@ -6,6 +6,10 @@
     },
     "app":  {
       "version": "Versione"
+    },
+    "buttons": {
+      "delete": "Elimina",
+      "cancel": "Annulla"
     }
   },
   "connection": {
@@ -192,7 +196,9 @@
     "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
   },
   "creditCardComponent": {
-    "validUntil": "Valida fino al "
+    "validUntil": "Valida fino al",
+    "actions": "Azioni",
+    "setFavourite": "Imposta come preferita"
   },
   "notifications": {
     "installation": {
