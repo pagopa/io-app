@@ -13,7 +13,6 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { isValid } from "redux-form";
-import { ContextualHelp } from "../../components/ContextualHelp";
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from "../../components/forms/SpidInformationForm";
@@ -92,12 +91,6 @@ class SpidInformationRequestScreen extends React.Component<Props> {
             </Text>
           </Button>
         </View>
-        <ContextualHelp
-          title={I18n.t("personal_data_processing.title")}
-          body={I18n.t("personal_data_processing.content")}
-          show={this.props.isHelpVisible}
-          close={this.props.hideHelp}
-        />
       </Container>
     );
   }
@@ -111,5 +104,9 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
 });
 
 export default connect(mapStateToProps)(
-  withContextualHelp(SpidInformationRequestScreen)
+  withContextualHelp(
+    SpidInformationRequestScreen,
+    I18n.t("personal_data_processing.title"),
+    I18n.t("personal_data_processing.content")
+  )
 );

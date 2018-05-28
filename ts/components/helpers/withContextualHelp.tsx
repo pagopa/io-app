@@ -3,6 +3,8 @@
  * to a component
  */
 import * as React from "react";
+import { ContextualHelp } from '../ContextualHelp';
+import { View } from 'native-base';
 
 type State = {
   isHelpVisible: boolean;
@@ -21,7 +23,9 @@ export type ContextualHelpInjectedProps = {
  * @param WrappedComponent Component using the ContextualHelp
  */
 export function withContextualHelp<P extends ContextualHelpInjectedProps>(
-  WrappedComponent: React.ComponentType<P>
+  WrappedComponent: React.ComponentType<P>,
+  title: string, 
+  body: string
 ) {
   // WIP this class is parked here atm, but it will be moved to
   // its own file soon (disable-line to temporarely suppress max-classes-per-file)
@@ -47,7 +51,17 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
         hideHelp: this.hideHelp,
         isHelpVisible: this.state.isHelpVisible
       };
-      return <WrappedComponent {...this.props} {...injectedProps} />;
+      return (
+        <View style={{width:"100%",height:"100%"}}>
+          <WrappedComponent {...this.props} {...injectedProps} />
+          <ContextualHelp
+            title={title}
+            body={body}
+            show={this.state.isHelpVisible}
+            close={this.hideHelp}
+          />
+        </View>
+      );
     }
   };
 }
