@@ -17,6 +17,7 @@ import {
   notificationsInstallationSelector
 } from "../store/reducers/notifications/installation";
 import { sessionTokenSelector } from "../store/reducers/session";
+import { SessionToken } from "../types/SessionToken";
 
 const notificationsPlatform: PlatformEnum = Platform.select({
   ios: PlatformEnum.apns,
@@ -33,7 +34,9 @@ function* updateInstallation(): Iterator<Effect> {
   );
 
   // Get the token from the state
-  const sessionToken: string | undefined = yield select(sessionTokenSelector);
+  const sessionToken: SessionToken | undefined = yield select(
+    sessionTokenSelector
+  );
 
   // Check if the we have a session token
   // TODO: Define what to do when the token is not available or is expired
