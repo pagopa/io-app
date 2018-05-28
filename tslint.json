@@ -11,6 +11,7 @@
     "tslint-config-prettier"
   ],
   "jsRules": {},
+  "rulesDirectory": "./tslint-rules/",
   "rules": {
     // disabled temporarily
     "interface-name": false,
@@ -29,6 +30,7 @@
 
     // custom rules
     "prettier": true,
+    "saga-yield-return-type": true,
 
     // Disallows use of the null keyword literal.
     // "no-null-keyword": true,
