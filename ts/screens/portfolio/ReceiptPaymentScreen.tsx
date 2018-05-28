@@ -21,18 +21,26 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import variables from '../../theme/variables';
 import I18n from "../../i18n";
+import Modal from "../../components/ui/Modal";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
+type State = Readonly<{
+	isTosModalVisible: boolean;
+ }>;
+
 /**
  * Portfolio provide a resume on the payment
  */
 
-class ReceiptPaymentScreen extends React.Component<Props, never> {
+class ReceiptPaymentScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      isTosModalVisible:false
+    }
   }
 
   private goBack() {
@@ -108,7 +116,12 @@ class ReceiptPaymentScreen extends React.Component<Props, never> {
             <Row>
               <Col>
                 <Text> {I18n.t("portfolio.Receipt.fee")} </Text>
-                <Text link={true}> {I18n.t("portfolio.Receipt.why")} </Text>
+                <Text 
+                  link={true}
+                  onPress={(): void => 
+                    this.setState({ isTosModalVisible: true })
+                  }
+                > {I18n.t("portfolio.Receipt.why")} </Text>
                 <View spacer={true}/>
               </Col>
               <Col>
@@ -153,6 +166,21 @@ class ReceiptPaymentScreen extends React.Component<Props, never> {
             </Row>
           </Grid>
         </Content>
+
+        <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+					<View header={true}>
+						<Icon
+						name="cross"
+						onPress={(): void => this.setState({ isTosModalVisible: false })}
+						/>
+					</View>
+					<Content>
+						<H1>{I18n.t("personal_data_processing.title")}</H1>
+						<View spacer={true} large={true} />
+						<Text>{I18n.t("personal_data_processing.content")}</Text>
+					</Content>
+				</Modal>
+
       </Container>
     );
   }

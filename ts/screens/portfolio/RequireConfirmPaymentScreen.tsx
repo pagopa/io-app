@@ -22,18 +22,26 @@ import {
 import { Grid, Row, Col  } from 'react-native-easy-grid';
 import variables from '../../theme/variables';
 import ROUTES from '../../navigation/routes';
+import Modal from "../../components/ui/Modal";
 
 type Props = Readonly<{
 	navigation: NavigationScreenProp<NavigationState>;
 }>;
 
+type State = Readonly<{
+	isTosModalVisible: boolean;
+ }>;
+
 /**
  * Portfolio ask to the user about proceed or not with the payment
  */
 
-class RequireConfirmPaymentScreen extends React.Component<Props, never> {
+class RequireConfirmPaymentScreen extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+		this.state = {
+			isTosModalVisible: false
+		}
 	}
 
 	private goBack() {
@@ -113,7 +121,12 @@ class RequireConfirmPaymentScreen extends React.Component<Props, never> {
 							<Row>
 								<Col>
 									<Text>{I18n.t("portfolio.ConfirmPayment.fee")}</Text>
-									<Text link={true}> {I18n.t("portfolio.ConfirmPayment.why")} </Text>
+									<Text 
+										link={true}
+										onPress={(): void => 
+											this.setState({ isTosModalVisible: true })
+										}
+									> {I18n.t("portfolio.ConfirmPayment.why")} </Text>
 								</Col>
 								
 								<Col>
@@ -167,6 +180,20 @@ class RequireConfirmPaymentScreen extends React.Component<Props, never> {
 						</Text>
 				</Button>
 				</View>
+
+				<Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+					<View header={true}>
+						<Icon
+						name="cross"
+						onPress={(): void => this.setState({ isTosModalVisible: false })}
+						/>
+					</View>
+					<Content>
+						<H1>{I18n.t("personal_data_processing.title")}</H1>
+						<View spacer={true} large={true} />
+						<Text>{I18n.t("personal_data_processing.content")}</Text>
+					</Content>
+				</Modal>
 			</Container>
 		);
 	}

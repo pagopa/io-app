@@ -34,9 +34,9 @@ type Props = Readonly<{
  * Portfolio acquired payment notice summary
  */
 
-class PaymentNoticeSummaryScreen extends React.Component<Props, never> {
+class PaymentNoticeSummaryScreen extends React.Component<Props, State> {
 	constructor(props: Props) {
-		super(props);
+		super(props);	
 	}
 
 	private goBack() {
