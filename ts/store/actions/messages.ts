@@ -2,7 +2,7 @@
  * Action types and action creator related to the Messages.
  */
 
-import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import {
   MESSAGE_LOAD_SUCCESS,
   MESSAGES_LOAD_CANCEL,
@@ -31,7 +31,7 @@ export type MessagesLoadFailure = Readonly<{
 
 export type MessageLoadSuccess = Readonly<{
   type: typeof MESSAGE_LOAD_SUCCESS;
-  payload: MessageWithContent;
+  payload: MessageWithContentPO;
 }>;
 
 export type MessagesActions =
@@ -61,7 +61,7 @@ export const loadMessagesFailure = (error: Error): MessagesLoadFailure => ({
 });
 
 export const loadMessageSuccess = (
-  message: MessageWithContent
+  message: MessageWithContentPO
 ): MessageLoadSuccess => ({
   type: MESSAGE_LOAD_SUCCESS,
   payload: message

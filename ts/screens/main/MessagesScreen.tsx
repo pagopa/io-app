@@ -8,17 +8,17 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
 import { ReduxProps } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { ServicesListObject } from "../../sagas/messages";
 import { loadMessages } from "../../store/actions/messages";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import { createLoadingSelector } from "../../store/reducers/loading";
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 type ReduxMappedProps = {
   isLoadingMessages: boolean;
-  messages: ReadonlyArray<MessageWithContent>;
+  messages: ReadonlyArray<MessageWithContentPO>;
   servicesById: ServicesListObject;
 };
 
@@ -30,6 +30,9 @@ export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * This screen show the messages to the authenticated user.
+ *
+ * TODO: Just a moked version at the moment.
+ * Going to be replaced with real content in @https://www.pivotaltracker.com/story/show/152843981
  */
 class MessagesScreen extends React.Component<Props, never> {
   private didFocusSubscription:
@@ -41,6 +44,7 @@ class MessagesScreen extends React.Component<Props, never> {
   }
 
   public componentDidMount() {
+    // TODO: Messages must be refreshed using pull-down @https://www.pivotaltracker.com/story/show/157917217
     // tslint:disable-next-line
     this.didFocusSubscription = this.props.navigation.addListener(
       "didFocus",
@@ -62,12 +66,23 @@ class MessagesScreen extends React.Component<Props, never> {
     ) : null;
   };
 
+  private renderMockedMessages = (
+    messages: ReadonlyArray<MessageWithContentPO>
+  ): React.ReactNode => {
+    return messages.map(message => (
+      <Text key={message.id}>
+        {message.subject}: {message.created_at}
+      </Text>
+    ));
+  };
+
   public render() {
     return (
       <Container>
         <Content>
           {this.renderLoadingStatus(this.props.isLoadingMessages)}
           <Text>You have {this.props.messages.length} messages</Text>
+          {this.renderMockedMessages(this.props.messages)}
         </Content>
       </Container>
     );

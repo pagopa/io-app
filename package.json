@@ -70,7 +70,6 @@
     "@types/redux-form": "^7.2.4",
     "@types/redux-logger": "^3.0.6",
     "@types/redux-saga": "^0.10.5",
-    "@types/reselect": "^2.2.0",
     "@types/stacktrace-js": "^0.0.32",
     "@types/uuid": "^3.4.3",
     "@types/validator": "^9.4.1",

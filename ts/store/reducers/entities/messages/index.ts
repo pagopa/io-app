@@ -6,6 +6,7 @@ import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
 import { Action } from "../../../../actions/types";
+import { messagesComparatorByDateDesc } from "../../../../utils/messages";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
@@ -28,12 +29,17 @@ const reducer = combineReducers<MessagesState, Action>({
 // Selectors
 /**
  * A memoized selector that returns an ordered list of messages.
- * TODO: Add sorting by date as soon as Backend response contains `created_at`
  */
 export const orderedMessagesSelector = createSelector(
   messagesAllIdsSelector,
   messagesByIdSelectors,
-  (ids, messages) => [...ids].sort().map(id => messages[id])
+  (ids, messages) => {
+    return [...ids]
+      .sort((id1, id2) =>
+        messagesComparatorByDateDesc(messages[id1], messages[id2])
+      )
+      .map(id => messages[id]);
+  }
 );
 
 export default reducer;

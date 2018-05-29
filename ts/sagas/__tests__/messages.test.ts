@@ -13,6 +13,7 @@ import {
 import { loadServiceSuccess } from "../../store/actions/services";
 import { messagesByIdSelectors } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { loadMessage, loadMessages, loadService } from "../messages";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
@@ -86,7 +87,9 @@ describe("messages", () => {
         .next()
         // Return 200 with a valid message as getMessage response
         .next({ status: 200, value: testMessageWithContent1 })
-        .put(loadMessageSuccess(testMessageWithContent1))
+        .put(
+          loadMessageSuccess(toMessageWithContentPO(testMessageWithContent1))
+        )
         .next()
         .returns(testMessageWithContent1);
     });
