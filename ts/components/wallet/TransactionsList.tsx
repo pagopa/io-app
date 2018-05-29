@@ -98,7 +98,7 @@ export class TransactionsList extends React.Component<Props, State> {
                     {this.renderDate(item)}
                     <Row>
                       <Left>
-                        <Text>{item.subject}</Text>
+                        <Text>{item.paymentReason}</Text>
                       </Left>
                       <Right>
                         <Text>
