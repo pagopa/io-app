@@ -6,7 +6,7 @@
 import * as React from "react";
 
 import { Button, Content, Left, Right, Text, View } from "native-base";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationInjectedProps,
@@ -35,6 +35,15 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps & NavigationInjectedProps;
+
+const styles = StyleSheet.create({
+  rowStyle: {
+    paddingTop: 10
+  },
+  alignedRight: {
+    textAlign: "right"
+  }
+});
 
 /**
  * Details of transaction
@@ -72,7 +81,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
       >
         <Content style={WalletStyles.whiteContent}>
           <Grid>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
                 <Text>{`${I18n.t("wallet.total")} ${operation.currency}`}</Text>
               </Left>
@@ -80,7 +89,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text bold={true}>{operation.amount}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
                 <Text note={true}>{I18n.t("wallet.payAmount")}</Text>
               </Left>
@@ -88,7 +97,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text>{operation.amount}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
                 <Text>
                   <Text note={true}>{I18n.t("wallet.transactionFee")}</Text>
@@ -102,15 +111,15 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text>{operation.transactionCost}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
-                <Text note={true}>{I18n.t("wallet.paymentReason")}</Text>
+                <Text note={true}>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</Text>
               </Left>
               <Right>
-                <Text bold={true}>{operation.subject}</Text>
+                <Text bold={true} style={styles.alignedRight}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
                 <Text note={true}>{I18n.t("wallet.recipient")}</Text>
               </Left>
@@ -118,7 +127,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text bold={true}>{operation.recipient}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
                 <Text note={true}>{I18n.t("wallet.date")}</Text>
               </Left>
@@ -126,7 +135,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text>{operation.date}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Left>
                 <Text note={true}>{I18n.t("wallet.time")}</Text>
               </Left>
@@ -134,7 +143,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text>{operation.time}</Text>
               </Right>
             </Row>
-            <Row>
+            <Row style={styles.rowStyle}>
               <Button
                 style={{ marginTop: 20 }}
                 block={true}
