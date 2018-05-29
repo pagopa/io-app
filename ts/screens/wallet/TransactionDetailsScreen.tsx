@@ -163,7 +163,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row style={styles.rowStyle}>
               <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>{I18n.t("wallet.recipient")}</Text>
+                <Text note={true}>{transaction.paymentReason}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
                 <Text bold={true} style={styles.alignedRight}>
