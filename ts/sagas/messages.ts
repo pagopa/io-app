@@ -50,6 +50,7 @@ import {
   MessageWithContentPO,
   toMessageWithContentPO
 } from "../types/MessageWithContentPO";
+import { SessionToken } from "../types/SessionToken";
 
 // An object containing MessageWithContentPO keyed by id
 export interface MessagesListObject {
@@ -221,7 +222,7 @@ export function* loadMessagesWatcher(): IterableIterator<Effect> {
     // If the action received is a MESSAGES_LOAD_REQUEST send the request
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
     if (action.type === MESSAGES_LOAD_REQUEST) {
-      const sessionToken: string | undefined = yield select(
+      const sessionToken: SessionToken | undefined = yield select(
         sessionTokenSelector
       );
       if (sessionToken) {
