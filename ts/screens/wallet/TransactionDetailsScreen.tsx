@@ -98,7 +98,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
-    const operation: WalletTransaction = this.props.navigation.state.params
+    const transaction: WalletTransaction = this.props.navigation.state.params
       .transaction;
     const topContent = topContentTouchable(this.touchableContent());
     return (
@@ -116,11 +116,11 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row style={styles.rowStyle}>
               <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text>{`${I18n.t("wallet.total")} ${operation.currency}`}</Text>
+                <Text>{`${I18n.t("wallet.total")} ${transaction.currency}`}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
                 <Text bold={true} style={styles.alignedRight}>
-                  {operation.amount}
+                  {transaction.amount}
                 </Text>
               </Col>
             </Row>
@@ -129,7 +129,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text note={true}>{I18n.t("wallet.payAmount")}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{operation.amount}</Text>
+                <Text style={styles.alignedRight}>{transaction.amount}</Text>
               </Col>
             </Row>
             <Row style={styles.rowStyle}>
@@ -145,13 +145,13 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
               </Col>
               <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
                 <Text style={styles.alignedRight}>
-                  {operation.transactionCost}
+                  {transaction.transactionCost}
                 </Text>
               </Col>
             </Row>
             <Row style={styles.rowStyle}>
               <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>Duis aute</Text>
+                <Text note={true}>{I18n.t("wallet.paymentReason")}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
                 <Text bold={true} style={styles.alignedRight}>
@@ -162,11 +162,11 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row style={styles.rowStyle}>
               <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>{I18n.t("wallet.recipient")}</Text>
+                <Text note={true}>{transaction.subject}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
                 <Text bold={true} style={styles.alignedRight}>
-                  {operation.recipient}
+                  {transaction.recipient}
                 </Text>
               </Col>
             </Row>
@@ -175,7 +175,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text note={true}>{I18n.t("wallet.date")}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{operation.date}</Text>
+                <Text style={styles.alignedRight}>{transaction.date}</Text>
               </Col>
             </Row>
             <Row style={styles.rowStyle}>
@@ -183,7 +183,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                 <Text note={true}>{I18n.t("wallet.time")}</Text>
               </Col>
               <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{operation.time}</Text>
+                <Text style={styles.alignedRight}>{transaction.time}</Text>
               </Col>
             </Row>
             <Row style={styles.rowStyle}>
