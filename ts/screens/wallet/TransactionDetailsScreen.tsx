@@ -5,9 +5,9 @@
  */
 import * as React from "react";
 
-import { Button, Content, Left, Right, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import { Image, StyleSheet } from "react-native";
-import { Grid, Row } from "react-native-easy-grid";
+import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   NavigationInjectedProps,
   NavigationScreenProp,
@@ -46,6 +46,36 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * > PREFIXES:
+ *   - LABEL_COL_SIZE_*: prefix that represents
+ *     the width of the "label" column (the description
+ *     of the field)
+ *
+ *   - VALUE_COL_SIZE_*: prefix that represents
+ *     the width of the "value" column (the actual
+ *     contents of the field)
+ *
+ *
+ * > SUFFIXES:
+ *   - *_NARROW_LABEL: suffix that represents the cases
+ *     where "label" column should be narrow
+ *     (i.e. when the "value" column contains free text)
+ *     Proportions: 1/3 : 2/3
+ *
+ *   - *_WIDE_LABEL: suffix that represents the cases
+ *     where the "label" columnn should be wide (i.e. when
+ *     the "value" column is narrow (it has either a number
+ *     or a date/time, thus allowing additional space for
+ *     the label)
+ *     Proportions: 1/2 : 1/2
+ */
+const LABEL_COL_SIZE_NARROW_LABEL = 1;
+const VALUE_COL_SIZE_NARROW_LABEL = 2;
+
+const LABEL_COL_SIZE_WIDE_LABEL = 1;
+const VALUE_COL_SIZE_WIDE_LABEL = 1;
+
+/**
  * Details of transaction
  */
 export class TransactionDetailsScreen extends React.Component<Props, never> {
@@ -81,67 +111,80 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
       >
         <Content style={WalletStyles.whiteContent}>
           <Grid>
+            <Row>
+              <Text bold={true}>{I18n.t("wallet.transactionDetails")}</Text>
+            </Row>
             <Row style={styles.rowStyle}>
-              <Left>
+              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
                 <Text>{`${I18n.t("wallet.total")} ${operation.currency}`}</Text>
-              </Left>
-              <Right>
-                <Text bold={true}>{operation.amount}</Text>
-              </Right>
+              </Col>
+              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
+                <Text bold={true} style={styles.alignedRight}>
+                  {operation.amount}
+                </Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Left>
+              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
                 <Text note={true}>{I18n.t("wallet.payAmount")}</Text>
-              </Left>
-              <Right>
-                <Text>{operation.amount}</Text>
-              </Right>
+              </Col>
+              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
+                <Text style={styles.alignedRight}>{operation.amount}</Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Left>
+              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
                 <Text>
-                  <Text note={true}>{I18n.t("wallet.transactionFee")}</Text>
-                  <Text note={true}>&nbsp;</Text>
+                  <Text note={true}>{`${I18n.t(
+                    "wallet.transactionFee"
+                  )}  `}</Text>
                   <Text note={true} style={WalletStyles.whyLink}>
                     {I18n.t("wallet.why")}
                   </Text>
                 </Text>
-              </Left>
-              <Right>
-                <Text>{operation.transactionCost}</Text>
-              </Right>
+              </Col>
+              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
+                <Text style={styles.alignedRight}>
+                  {operation.transactionCost}
+                </Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Left>
-                <Text note={true}>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</Text>
-              </Left>
-              <Right>
-                <Text bold={true} style={styles.alignedRight}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
-              </Right>
+              <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
+                <Text note={true}>Duis aute</Text>
+              </Col>
+              <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
+                <Text bold={true} style={styles.alignedRight}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Left>
+              <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
                 <Text note={true}>{I18n.t("wallet.recipient")}</Text>
-              </Left>
-              <Right>
-                <Text bold={true}>{operation.recipient}</Text>
-              </Right>
+              </Col>
+              <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
+                <Text bold={true} style={styles.alignedRight}>
+                  {operation.recipient}
+                </Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Left>
+              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
                 <Text note={true}>{I18n.t("wallet.date")}</Text>
-              </Left>
-              <Right>
-                <Text>{operation.date}</Text>
-              </Right>
+              </Col>
+              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
+                <Text style={styles.alignedRight}>{operation.date}</Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Left>
+              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
                 <Text note={true}>{I18n.t("wallet.time")}</Text>
-              </Left>
-              <Right>
-                <Text>{operation.time}</Text>
-              </Right>
+              </Col>
+              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
+                <Text style={styles.alignedRight}>{operation.time}</Text>
+              </Col>
             </Row>
             <Row style={styles.rowStyle}>
               <Button
