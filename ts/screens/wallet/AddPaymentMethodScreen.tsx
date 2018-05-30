@@ -31,7 +31,7 @@ import Modal from "../../components/ui/Modal";
 import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 import Icon from "../../theme/font-icons/io-icon-font/index";
-
+import color from "color";
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -77,7 +77,7 @@ const AddMethodStyle = StyleSheet.create({
   },
   transactionText: {
     fontSize: variables.fontSize1,
-    color: "#a6a6a6" // WIP to be updated to variables.white.darken(.35)
+    color: color(variables.colorWhite).darken(.35).string()
   },
   centeredContents: {
     alignItems: "center"
