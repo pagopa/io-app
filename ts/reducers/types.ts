@@ -8,6 +8,7 @@ import { NotificationsState } from "../store/reducers/notifications";
 import { OnboardingState } from "../store/reducers/onboarding";
 import { ProfileState } from "../store/reducers/profile";
 import { SessionState } from "../store/reducers/session";
+import { WalletState } from "../store/reducers/wallet";
 import { AppState } from "./appState";
 
 export type NetworkState = Readonly<{
@@ -26,4 +27,5 @@ export type GlobalState = Readonly<{
   onboarding: OnboardingState;
   notifications: NotificationsState;
   profile: ProfileState;
+  wallet: WalletState;
 }>;

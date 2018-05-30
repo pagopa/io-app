@@ -7,38 +7,25 @@ import I18n from "../../i18n";
 
 import { Content, View } from "native-base";
 import { Image } from "react-native";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
-import { TransactionsList } from "../../components/wallet/TransactionsList";
-import { CreditCard } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
+import TransactionsList from "../../components/wallet/TransactionsList";
 
+import { connect, Dispatch } from "react-redux";
 import { topContentTouchable } from "../../components/wallet/layout/types";
+import { loadTransactionsBySelectedCard } from "../../store/actions/wallet";
 
 const cardsImage = require("../../../img/wallet/card-tab.png");
 
-interface ParamType {
-  readonly card: CreditCard;
-}
+type ReduxMappedProps = Readonly<{
+  getTransactionsByCard: () => void;
+}>;
 
-interface StateParams extends NavigationState {
-  readonly params: ParamType;
-}
+type Props = ReduxMappedProps & NavigationInjectedProps;
 
-interface OwnProps {
-  readonly navigation: NavigationScreenProp<StateParams>;
-}
-
-type Props = OwnProps & NavigationInjectedProps;
-
-export class TransactionsScreen extends React.Component<Props, never> {
+class TransactionsScreen extends React.Component<Props, never> {
   private touchableContent(): React.ReactElement<any> {
     // TODO: change this with an actual component @https://www.pivotaltracker.com/story/show/157422715
     return (
@@ -52,12 +39,11 @@ export class TransactionsScreen extends React.Component<Props, never> {
     );
   }
 
-  public render(): React.ReactNode {
-    const card: CreditCard = this.props.navigation.state.params.card;
-    const transactions: ReadonlyArray<
-      WalletTransaction
-    > = WalletAPI.getTransactions(card.id);
+  public componentWillMount() {
+    this.props.getTransactionsByCard();
+  }
 
+  public render(): React.ReactNode {
     const topContent = topContentTouchable(this.touchableContent());
 
     return (
@@ -72,7 +58,6 @@ export class TransactionsScreen extends React.Component<Props, never> {
           <TransactionsList
             title={I18n.t("wallet.transactions")}
             totalAmount={I18n.t("wallet.total")}
-            transactions={transactions}
             navigation={this.props.navigation}
           />
         </Content>
@@ -80,3 +65,8 @@ export class TransactionsScreen extends React.Component<Props, never> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  getTransactionsByCard: () => dispatch(loadTransactionsBySelectedCard())
+});
+export default connect(undefined, mapDispatchToProps)(TransactionsScreen);

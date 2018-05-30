@@ -18,6 +18,7 @@ import { NotificationsActions } from "../store/actions/notifications";
 import { OnboardingActions } from "../store/actions/onboarding";
 import { ProfileActions } from "../store/actions/profile";
 import { SessionActions } from "../store/actions/session";
+import { WalletActions } from "../store/actions/wallet";
 
 export type ApplicationState = "background" | "inactive" | "active";
 
@@ -34,7 +35,8 @@ export type Action =
   | OnboardingActions
   | NotificationsActions
   | ProfileActions
-  | ErrorActions;
+  | ErrorActions
+  | WalletActions;
 
 /* eslint-disable no-use-before-define */
 // We need to disable the eslint rule because of a problem described here

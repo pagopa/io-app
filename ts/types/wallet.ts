@@ -11,6 +11,7 @@
  * needed for UI-related purposes
  */
 export type WalletTransaction = {
+  id: number;
   cardId: number;
   date: string;
   time: string;
@@ -23,6 +24,7 @@ export type WalletTransaction = {
 };
 
 export const UNKNOWN_TRANSACTION: WalletTransaction = {
+  id: -1,
   cardId: -1,
   date: "",
   time: "",

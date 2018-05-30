@@ -57,6 +57,7 @@ const cards: ReadonlyArray<CreditCard> = [
 
 const transactions: ReadonlyArray<WalletTransaction> = [
   {
+    id: 1,
     cardId: 1,
     date: "17/04/2018",
     time: "07:34",
@@ -68,6 +69,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: true
   },
   {
+    id: 2,
     cardId: 2,
     date: "16/04/2018",
     time: "15:01",
@@ -79,6 +81,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: true
   },
   {
+    id: 3,
     cardId: 4,
     date: "15/04/2018",
     time: "08:56",
@@ -90,6 +93,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: true
   },
   {
+    id: 4,
     cardId: 2,
     date: "14/02/2018",
     time: "10:21",
@@ -101,6 +105,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: false
   },
   {
+    id: 5,
     cardId: 4,
     date: "22/01/2018",
     time: "14:54",
@@ -112,6 +117,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: false
   },
   {
+    id: 6,
     cardId: 4,
     date: "01/01/2018",
     time: "23:34",
@@ -123,6 +129,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: false
   },
   {
+    id: 7,
     cardId: 1,
     date: "22/12/2017",
     time: "14:23",
@@ -134,6 +141,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: false
   },
   {
+    id: 8,
     cardId: 1,
     date: "17/12/2017",
     time: "12:34",
@@ -145,6 +153,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isNew: false
   },
   {
+    id: 9,
     cardId: 4,
     date: "13/12/2017",
     time: "10:34",
@@ -185,6 +194,10 @@ export class WalletAPI {
     return transactions.filter(
       (transaction): boolean => transaction.cardId === cardId
     );
+  }
+
+  public static getAllTransactions(): ReadonlyArray<WalletTransaction> {
+    return transactions;
   }
 
   public static getLatestTransactions(

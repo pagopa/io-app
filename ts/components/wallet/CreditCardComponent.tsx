@@ -25,14 +25,22 @@ import {
 } from "../../types/CreditCard";
 
 import color from "color";
+import { connect, Dispatch } from "react-redux";
 import ROUTES from "../../navigation/routes";
+import { selectCard } from "../../store/actions/wallet";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  selectCard: (item: CreditCard) => void;
+}>;
+
+type OwnProps = Readonly<{
   item: CreditCard;
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ReduxMappedProps;
 
 export const CreditCardStyle = StyleSheet.create({
   largeTextStyle: {
@@ -97,7 +105,7 @@ export const getCardIcon = (cc: CreditCard) => {
 /**
  * Credit card component
  */
-export default class CreditCardComponent extends React.Component<Props> {
+class CreditCardComponent extends React.Component<Props> {
   public render(): React.ReactNode {
     const { item } = this.props;
     const { navigate } = this.props.navigation;
@@ -170,10 +178,10 @@ export default class CreditCardComponent extends React.Component<Props> {
               style={CreditCardStyle.rowStyle}
               size={2}
               {...{
-                onPress: (): boolean =>
-                  navigate(ROUTES.WALLET_CARD_TRANSACTIONS, {
-                    card: item
-                  })
+                onPress: () => {
+                  this.props.selectCard(item);
+                  navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
+                }
               }}
             >
               <Col size={8}>
@@ -200,3 +208,8 @@ export default class CreditCardComponent extends React.Component<Props> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  selectCard: (card: CreditCard) => dispatch(selectCard(card))
+});
+export default connect(undefined, mapDispatchToProps)(CreditCardComponent);

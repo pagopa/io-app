@@ -8,33 +8,27 @@ import * as React from "react";
 import { Button, Content, Text, View } from "native-base";
 import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import { topContentTouchable } from "../../components/wallet/layout/types";
 import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
-import { WalletTransaction } from "../../types/wallet";
+import { GlobalState } from "../../reducers/types";
+import {
+  hasSelectedTransaction,
+  transactionSelector
+} from "../../store/reducers/wallet";
+import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
 const cardsImage = require("../../../img/wallet/single-tab.png");
 
-interface ParamType {
-  readonly transaction: WalletTransaction;
-}
-
-interface StateParams extends NavigationState {
-  readonly params: ParamType;
-}
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<StateParams>;
+type ReduxMappedProps = Readonly<{
+  transaction: WalletTransaction;
 }>;
 
-type Props = OwnProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   rowStyle: {
@@ -78,11 +72,7 @@ const VALUE_COL_SIZE_WIDE_LABEL = 1;
 /**
  * Details of transaction
  */
-export class TransactionDetailsScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+class TransactionDetailsScreen extends React.Component<Props, never> {
   private touchableContent(): React.ReactElement<any> {
     // TODO: replace this with actual component @https://www.pivotaltracker.com/story/show/157422715
     return (
@@ -97,9 +87,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
-    const transaction: WalletTransaction = this.props.navigation.state.params
-      .transaction;
+    const { transaction } = this.props;
     const topContent = topContentTouchable(this.touchableContent());
     return (
       <WalletLayout
@@ -192,12 +180,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
               </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Button
-                style={{ marginTop: 20 }}
-                block={true}
-                success={true}
-                onPress={(): boolean => navigate("")}
-              >
+              <Button style={{ marginTop: 20 }} block={true} success={true}>
                 <Text>{I18n.t("wallet.seeReceipt")}</Text>
               </Button>
             </Row>
@@ -207,3 +190,15 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
     );
   }
 }
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => {
+  if (hasSelectedTransaction(state.wallet)) {
+    return {
+      transaction: transactionSelector(state.wallet)
+    };
+  }
+  return {
+    transaction: UNKNOWN_TRANSACTION
+  };
+};
+
+export default connect(mapStateToProps)(TransactionDetailsScreen);

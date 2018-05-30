@@ -7,6 +7,7 @@ import { Button, Content, View } from "native-base";
 import * as React from "react";
 import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect, Dispatch } from "react-redux";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import {
@@ -17,24 +18,40 @@ import {
   ImageType,
   WalletLayout
 } from "../../components/wallet/layout/WalletLayout";
-import { TransactionsList } from "../../components/wallet/TransactionsList";
+import TransactionsList from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import {
+  loadLatestTransactions,
+  loadTransactionsRequest
+} from "../../store/actions/wallet";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
 type ScreenProps = {};
 
+type ReduxMappedDispatchProps = Readonly<{
+  loadTransactions: () => void;
+  loadLatestTransactions: () => void;
+}>;
+
+type ReduxMappedStateProps = Readonly<{
+  latestTransactions: ReadonlyArray<WalletTransaction>;
+}>;
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ScreenProps & OwnProps;
+type Props = ReduxMappedDispatchProps &
+  ReduxMappedStateProps &
+  ScreenProps &
+  OwnProps;
 
 /**
  * Wallet Home Screen
  */
-export class WalletHomeScreen extends React.Component<Props, never> {
+class WalletHomeScreen extends React.Component<Props, never> {
   // TODO: currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
   private getCardsSummaryImage(): React.ReactElement<any> {
     const { navigate } = this.props.navigation;
@@ -79,11 +96,12 @@ export class WalletHomeScreen extends React.Component<Props, never> {
     }
   }
 
-  public render(): React.ReactNode {
-    const latestTransactions: ReadonlyArray<
-      WalletTransaction
-    > = WalletAPI.getLatestTransactions();
+  public componentDidMount() {
+    this.props.loadTransactions();
+    this.props.loadLatestTransactions();
+  }
 
+  public render(): React.ReactNode {
     const topContents =
       WalletAPI.getCreditCards().length > 0
         ? topContentSubtitlesLRTouchable(
@@ -109,7 +127,6 @@ export class WalletHomeScreen extends React.Component<Props, never> {
           <TransactionsList
             title={I18n.t("wallet.latestTransactions")}
             totalAmount={I18n.t("wallet.total")}
-            transactions={latestTransactions}
             navigation={this.props.navigation}
           />
         </Content>
@@ -117,3 +134,9 @@ export class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  loadTransactions: () => dispatch(loadTransactionsRequest()),
+  loadLatestTransactions: () => dispatch(loadLatestTransactions())
+});
+export default connect(undefined, mapDispatchToProps)(WalletHomeScreen);

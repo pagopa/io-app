@@ -14,6 +14,7 @@ import notificationsReducer from "../store/reducers/notifications";
 import onboardingReducer from "../store/reducers/onboarding";
 import profileReducer from "../store/reducers/profile";
 import sessionReducer from "../store/reducers/session";
+import walletReducer from "../store/reducers/wallet";
 import appStateReducer from "./appState";
 import navigationReducer from "./navigation";
 import { GlobalState } from "./types";
@@ -44,7 +45,10 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   session: sessionReducer,
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
-  profile: profileReducer
+  profile: profileReducer,
+
+  // WALLET
+  wallet: walletReducer
 };
 
 export default reducers;

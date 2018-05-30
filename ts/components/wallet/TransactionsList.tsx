@@ -16,26 +16,41 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import { connect, Dispatch } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { GlobalState } from "../../reducers/types";
+import { transactionSelected } from "../../store/actions/wallet";
+import {
+  hasSelectedTransactions,
+  transactionsSelector
+} from "../../store/reducers/wallet";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 
-type Props = Readonly<{
+type ReduxMappedDispatchProps = Readonly<{
+  selectTransaction: (item: WalletTransaction) => void;
+}>;
+
+type ReduxMappedStateProps = Readonly<{
+  transactions: ReadonlyArray<WalletTransaction>;
+}>;
+
+type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;
-  transactions: ReadonlyArray<WalletTransaction>;
 }>;
 
 type State = Readonly<{
   data: ReadonlyArray<WalletTransaction>;
 }>;
 
+type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
 /**
  * Transactions List component
  */
-export class TransactionsList extends React.Component<Props, State> {
+class TransactionsList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { data: props.transactions };
@@ -65,9 +80,9 @@ export class TransactionsList extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
-    const ops = this.state.data;
+    const { transactions } = this.props;
 
-    if (ops.length === 0) {
+    if (transactions.length === 0) {
       return <Text>{I18n.t("wallet.noTransactions")}</Text>;
     }
     // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
@@ -84,14 +99,13 @@ export class TransactionsList extends React.Component<Props, State> {
         <Row>
           <List
             removeClippedSubviews={false}
-            dataArray={ops as any[]} // tslint:disable-line
+            dataArray={transactions as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
               <ListItem
-                onPress={(): boolean =>
-                  navigate(ROUTES.WALLET_TRANSACTION_DETAILS, {
-                    transaction: item
-                  })
-                }
+                onPress={() => {
+                  this.props.selectTransaction(item);
+                  navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+                }}
               >
                 <Body>
                   <Grid>
@@ -119,3 +133,20 @@ export class TransactionsList extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  if (hasSelectedTransactions(state.wallet)) {
+    return {
+      transactions: transactionsSelector(state.wallet)
+    };
+  }
+  return {
+    transactions: []
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  selectTransaction: (item: WalletTransaction) =>
+    dispatch(transactionSelected(item))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
