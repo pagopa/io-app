@@ -32,11 +32,6 @@ import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 
-// Images
-const bankLogo = require("../../../img/wallet/payment-methods/bank.png");
-const creditCardLogo = require("../../../img/wallet/payment-methods/creditcard.png");
-const mobileLogo = require("../../../img/wallet/payment-methods/mobile.png");
-
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
