@@ -14,7 +14,7 @@ export type WalletTransaction = {
   cardId: number;
   date: string;
   time: string;
-  subject: string;
+  paymentReason: string;
   recipient: string;
   amount: number;
   currency: string;
@@ -26,7 +26,7 @@ export const UNKNOWN_TRANSACTION: WalletTransaction = {
   cardId: -1,
   date: "",
   time: "",
-  subject: "UNKNOWN TRANSACTION",
+  paymentReason: "UNKNOWN TRANSACTION",
   recipient: "",
   amount: 0,
   currency: "?",
