@@ -122,6 +122,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
           <FlatList
             removeClippedSubviews={false}
             data={paymentMethods}
+            keyExtractor={item => item.name}
             renderItem={itemInfo => (
               <ListItem
                 style={AddMethodStyle.paymentMethodEntry}
@@ -130,8 +131,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                 <Left>
                   <Grid>
                     <Row>
-                      <Text style={{ fontWeight: "bold" }}>
-                        {/* WIP will be changed to "bold={true}" when PR #162 passes */}
+                      <Text bold={true}>
                         {itemInfo.item.name}
                       </Text>
                     </Row>
