@@ -135,7 +135,7 @@
     "payAmount": "Amount to pay",
     "transactionFee": "Transaction fee",
     "why": "Why?",
-    "paymentReason": "Reason for payment",
+    "paymentReason": "Reason",
     "recipient": "Recipient",
     "date": "Date",
     "time": "Time",
