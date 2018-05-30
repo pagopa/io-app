@@ -58,7 +58,7 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.125;
   },
   get fontSize5(): number {
-    return this.fontSizeBase * 10.5;
+    return this.fontSizeBase * 1.5;
   },
   get fontSize6(): number {
     return this.fontSizeBase * 1.75;

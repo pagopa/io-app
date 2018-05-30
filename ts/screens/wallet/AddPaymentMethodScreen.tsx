@@ -42,7 +42,7 @@ type State = Readonly<{
 
 type Route = keyof typeof ROUTES;
 interface IPaymentMethod {
-  navigateTo: Route | "";
+  navigateTo: Route | undefined;
   name: string;
   maxFee: string;
   icon: any;
@@ -50,19 +50,19 @@ interface IPaymentMethod {
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
-    navigateTo: "", // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
+    navigateTo: undefined, // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
     name: I18n.t("wallet.methods.card.name"),
     maxFee: I18n.t("wallet.methods.card.maxFee"),
     icon: "io-48-card"
   },
   {
-    navigateTo: "",
+    navigateTo: undefined,
     name: I18n.t("wallet.methods.bank.name"),
     maxFee: I18n.t("wallet.methods.bank.maxFee"),
     icon: "io-48-bank"
   },
   {
-    navigateTo: "",
+    navigateTo: undefined,
     name: I18n.t("wallet.methods.mobile.name"),
     maxFee: I18n.t("wallet.methods.mobile.maxFee"),
     icon: "io-48-phone"
