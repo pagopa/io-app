@@ -287,6 +287,22 @@ mentre in iOS il codice da applicare è:
 
 Per rendere la gestione dei font e delle varianti più sempice sono state create delle funzioni di utilità all'interno del file `ts/theme/fonts.ts`
 
+### Io-Icon-Font
+
+L'applicazione utilizza un font-icon custom dal nome 'io-icon-font'. Grazie alla libreria [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) inclusa nel progetto è possibile creare un nuovi IconSet. In particolare tra i vari metodi esposti nell'[apposita sezione](https://github.com/oblador/react-native-vector-icons#custom-fonts) della documentazione si è scelto di utilizzare quello che prevede di esportare il font tramite [IcoMoon](https://icomoon.io/).
+Per aggiornare l'icon-font ad una nuova versione è necessario estrarre e posizionare correttamente i seguenti due file dall'archivio '.zip' generatoro da IcoMoon:
+
+* `selection.json` contenuto nella root dell'archivio, da posizionare in `ts/theme/font-icons/io-icon-font/`
+* `io-icon-font.ttf` contenuto nella directory `fonts` dell'archivio, da posizionare in `assets/fonts/io-icon-font/`
+
+Una volta copiati i due file è necessario aggiornare il link dell'asset eseguendo
+
+```
+react-native link
+```
+
+Questo ultimo comando si occupa in particolare di copiare l'asset all'interno di una cartella specifica del sottoprogetto Android.
+
 
 ### Theming
 
