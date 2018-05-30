@@ -24,7 +24,7 @@ import {
   Text,
   View
 } from "native-base";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
@@ -181,9 +181,9 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             </TouchableOpacity>
           </View>
           <Content>
-            <H1>{I18n.t("personal_data_processing.title")}</H1>
+            <H1>{I18n.t("why_a_fee.title")}</H1>
             <View spacer={true} large={true} />
-            <Text>{I18n.t("personal_data_processing.content")}</Text>
+            <Text>{I18n.t("why_a_fee.content")}</Text>
           </Content>
         </Modal>
       </Container>
