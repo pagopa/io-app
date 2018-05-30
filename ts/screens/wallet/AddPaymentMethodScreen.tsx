@@ -17,7 +17,6 @@ import {
   Content,
   Grid,
   H1,
-  Icon,
   Left,
   ListItem,
   Right,
@@ -25,12 +24,13 @@ import {
   Text,
   View
 } from "native-base";
-import { FlatList, Image, StyleSheet } from "react-native";
+import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
 import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
+import Icon from "../../theme/font-icons/io-icon-font/index";
 
 // Images
 const bankLogo = require("../../../img/wallet/payment-methods/bank.png");
@@ -58,19 +58,19 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
     navigateTo: "", // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
     name: I18n.t("wallet.methods.card.name"),
     maxFee: I18n.t("wallet.methods.card.maxFee"),
-    icon: creditCardLogo
+    icon: "io-48-card"
   },
   {
     navigateTo: "",
     name: I18n.t("wallet.methods.bank.name"),
     maxFee: I18n.t("wallet.methods.bank.maxFee"),
-    icon: bankLogo
+    icon: "io-48-bank"
   },
   {
     navigateTo: "",
     name: I18n.t("wallet.methods.mobile.name"),
     maxFee: I18n.t("wallet.methods.mobile.maxFee"),
-    icon: mobileLogo
+    icon: "io-48-phone"
   }
 ];
 
@@ -114,7 +114,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
               transparent={true}
               onPress={_ => this.props.navigation.goBack()}
             >
-              <Icon name="chevron-left" />
+              <Icon name="io-back" size={variables.iconSmall} />
             </Button>
           </Left>
           <Body>
@@ -148,9 +148,10 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                   </Grid>
                 </Left>
                 <Right style={AddMethodStyle.centeredContents}>
-                  <Image
-                    source={itemInfo.item.icon}
-                    style={AddMethodStyle.containedImage}
+                  <Icon
+                    name={itemInfo.item.icon}
+                    color={variables.brandPrimary}
+                    size={variables.iconLarge}
                   />
                 </Right>
               </ListItem>
@@ -177,10 +178,12 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
 
         <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
           <View header={true}>
-            <Icon
-              name="cross"
-              onPress={(): void => this.setState({ isTosModalVisible: false })}
-            />
+            <TouchableOpacity onPress={(): void => this.setState({ isTosModalVisible: false })}>
+              <Icon
+                name="io-close"
+                size={variables.iconBase}
+              />
+            </TouchableOpacity>
           </View>
           <Content>
             <H1>{I18n.t("personal_data_processing.title")}</H1>
