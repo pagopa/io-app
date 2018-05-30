@@ -2,7 +2,7 @@
  * A reducer that manages loading state for all the actions dispatched.
  * To work the actions need to use the conventional flux/redux naming:
  *
- * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
+ * - ACTION_NAME_(REQUEST|CANCEL|SUCCESS|FAILURE)
  */
 import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
@@ -33,15 +33,15 @@ export const createLoadingSelector = (
   );
 };
 
-// Listen for _REQUEST|_SUCCESS|_FAILURE actions and set/remove loading state.
+// Listen for _REQUEST|_CANCEL|_SUCCESS|_FAILURE actions and set/remove loading state.
 const reducer = (
   state: LoadingState = INITIAL_STATE,
   action: Action
 ): LoadingState => {
   const { type } = action;
-  const matches = /(.*)_(REQUEST|SUCCESS|FAILURE)/.exec(type);
+  const matches = /(.*)_(REQUEST|CANCEL|SUCCESS|FAILURE)/.exec(type);
 
-  // Not a *_REQUEST / *_SUCCESS /  *_FAILURE actions, so we ignore them
+  // Not a *_REQUEST / *_CANCEL / *_SUCCESS /  *_FAILURE action, so we ignore it
   if (!matches) {
     return state;
   }
