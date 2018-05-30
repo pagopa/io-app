@@ -10,6 +10,7 @@
 import * as React from "react";
 import I18n from "../../i18n";
 
+import color from "color";
 import {
   Body,
   Button,
@@ -29,9 +30,8 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import Modal from "../../components/ui/Modal";
 import ROUTES from "../../navigation/routes";
-import variables from "../../theme/variables";
 import Icon from "../../theme/font-icons/io-icon-font/index";
-import color from "color";
+import variables from "../../theme/variables";
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -77,7 +77,9 @@ const AddMethodStyle = StyleSheet.create({
   },
   transactionText: {
     fontSize: variables.fontSize1,
-    color: color(variables.colorWhite).darken(.35).string()
+    color: color(variables.colorWhite)
+      .darken(0.35)
+      .string()
   },
   centeredContents: {
     alignItems: "center"
@@ -131,9 +133,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                 <Left>
                   <Grid>
                     <Row>
-                      <Text bold={true}>
-                        {itemInfo.item.name}
-                      </Text>
+                      <Text bold={true}>{itemInfo.item.name}</Text>
                     </Row>
                     <Row>
                       <Text style={AddMethodStyle.transactionText}>
@@ -173,11 +173,10 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
 
         <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
           <View header={true}>
-            <TouchableOpacity onPress={(): void => this.setState({ isTosModalVisible: false })}>
-              <Icon
-                name="io-close"
-                size={variables.iconBase}
-              />
+            <TouchableOpacity
+              onPress={(): void => this.setState({ isTosModalVisible: false })}
+            >
+              <Icon name="io-close" size={variables.iconBase} />
             </TouchableOpacity>
           </View>
           <Content>
