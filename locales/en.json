@@ -205,7 +205,8 @@
   "messages": {
     "headerTitle": "io.italia.it",
     "contentTitle": "Messages",
-    "loading": "Loading Messages..."
+    "loading": "Loading Messages...",
+    "yesterday": "yesterday"
   },
   "tabMessages": {
     "itemAll": "All",

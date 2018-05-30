@@ -21,7 +21,7 @@ export default (): Theme => {
           paddingTop: variables.iconSingleMessagePaddingTop
         },
         flexDirection: "column",
-        flex: 1,
+        flex: 2,
         alignSelf: "flex-start"
       },
       "NativeBase.Left": {
@@ -30,7 +30,7 @@ export default (): Theme => {
         },
         alignSelf: "flex-start",
         flexDirection: "column",
-        flex: 7
+        flex: 6
       },
       marginLeft: variables.itemSingleMessageMarginLeft,
       flexDirection: "row",

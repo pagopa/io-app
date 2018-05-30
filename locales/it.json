@@ -203,7 +203,8 @@
   "messages": {
     "headerTitle": "io.italia.it",
     "contentTitle": "Messaggi",
-    "loading": "Caricamento dei messaggi..."
+    "loading": "Caricamento dei messaggi...",
+    "yesterday": "ieri"
   },
   "tabMessages": {
     "itemAll": "Tutti",

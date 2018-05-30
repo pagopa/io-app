@@ -24,16 +24,16 @@ export type OwnProps = {};
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 type State = {};
 
-type MessagesListInterface = {
+interface IMessagesList {
   item: MessageWithContent;
   index: number;
-};
+}
 
 /**
  * This screen show the messages to the authenticated user.
  */
 class MessagesScreen extends React.Component<Props, State> {
-  public renderItem = (messagesList: MessagesListInterface) => {
+  public renderItem = (messagesList: IMessagesList) => {
     return (
       <MessageComponent
         key={messagesList.item.id}

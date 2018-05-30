@@ -1,8 +1,10 @@
 import * as React from "react";
 
+import moment from "moment";
 import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
+import I18n from "../i18n";
 
 export type OwnProps = {
   sender: string;
@@ -18,50 +20,46 @@ export type Props = OwnProps;
  */
 class MessageComponent extends React.Component<Props> {
   public formatDate(date: string): string {
+    moment.locales();
     const dateStringToNumber = +date;
-    const messageDate = new Date(dateStringToNumber * 1000);
-    const nowDate = new Date();
-    const nowYear = nowDate.getFullYear();
-    const nowDateD = nowDate.getDate();
-    const months: ReadonlyArray<string> = [
-      "01",
-      "02",
-      "03",
-      "04",
-      "05",
-      "06",
-      "07",
-      "08",
-      "09",
-      "10",
-      "11",
-      "12"
-    ];
-    const nowDateM = months[nowDate.getUTCMonth()];
-    const year = messageDate.getFullYear();
-    const day = messageDate.getDate();
-    const month = months[messageDate.getUTCMonth()];
-    const hour = messageDate.getHours();
-    const min = messageDate.getMinutes();
-
-    if (nowYear === year && nowDateM === month && nowDateD === day) {
-      if (min < 9) {
-        return `${hour - 2}.0${min}`;
-      } else {
-        return `${hour - 2}.${min}`;
-      }
+    const messageDate = moment(new Date(dateStringToNumber * 1000)).format();
+    if (
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("hours ago") === true ||
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("hour ago") === true ||
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("minutes ago") === true ||
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("minute ago") === true
+    ) {
+      return moment(messageDate).format("H.mm");
+    } else if (
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("a day ago") === true
+    ) {
+      return I18n.t("messages.yesterday");
+    } else if (
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("year") === true ||
+      moment(messageDate, "YYYYMMDDh")
+        .fromNow()
+        .includes("years") === true
+    ) {
+      return moment(messageDate).format("D/MM/YY");
     } else {
-      if (nowYear === year && nowDateM === month && nowDateD - 1 === day) {
-        return "ieri";
-      } else {
-        return `${day}/${month}`;
-      }
+      return moment(messageDate).format("D/MM");
     }
   }
 
   public render() {
     const { subject, sender, date, key } = this.props;
-
     return (
       <ListItem key={key}>
         <Left>
