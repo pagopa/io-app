@@ -16,6 +16,7 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
       screen: AddPaymentMethodScreen
+    },
     [ROUTES.WALLET_TRANSACTION_DETAILS]: {
       screen: TransactionDetailsScreen
     },
