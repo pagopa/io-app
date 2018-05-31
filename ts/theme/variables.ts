@@ -67,6 +67,9 @@ const customVariables = Object.assign(materialVariables, {
 
   // Icon
   iconFamily: "Entypo",
+  iconSmall: 16,
+  iconBase: 20,
+  iconLarge: 46, // WIP should these also depend on fontSizeBase? (also, iconSizeLarge is already taken)
 
   // Content
   contentPadding: 24,

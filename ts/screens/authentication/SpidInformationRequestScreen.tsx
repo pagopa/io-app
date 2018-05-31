@@ -30,6 +30,9 @@ type Props = ReduxMappedProps & OwnProps;
 type State = {
   isTosModalVisible: boolean;
 };
+
+// TODO: replace the contextual help with the approariate
+// component @https://www.pivotaltracker.com/story/show/157874540
 /**
  * A screen where the user can insert an email to receive information about SPID.
  */
