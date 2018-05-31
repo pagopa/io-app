@@ -8,10 +8,12 @@
 import * as React from "react";
 import ROUTES from "./routes";
 
-import { Icon } from "native-base";
 import { TabBarBottom, TabNavigator } from "react-navigation";
+import I18n from "../i18n";
 import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
+import Icon from "../theme/font-icons/io-icon-font";
+import variables from "../theme/variables";
 import WalletNavigator from "./WalletNavigator";
 
 // routes that should be paired with an icon
@@ -21,18 +23,23 @@ type RoutesWithIcons =
   | "DOCUMENTS_HOME"
   | "PREFERENCES_HOME"
   | "MAIN_PROFILE";
-type RouteIconMap = { [key in RoutesWithIcons]: string };
 
-const ROUTE_ICON: RouteIconMap = {
-  MAIN_MESSAGES: "mail",
-  WALLET_HOME: "wallet",
-  DOCUMENTS_HOME: "document",
-  PREFERENCES_HOME: "cog",
-  MAIN_PROFILE: "user"
+type RouteLabelMap = { [key in RoutesWithIcons]: string };
+const ROUTE_LABEL: RouteLabelMap = {
+  MAIN_MESSAGES: I18n.t("global.navigator.messages"),
+  WALLET_HOME: I18n.t("global.navigator.wallet"),
+  DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
+  PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
+  MAIN_PROFILE: I18n.t("global.navigator.profile")
 };
 
-const getIcon = (routeName: RoutesWithIcons): string => {
-  return ROUTE_ICON[routeName];
+type RouteIconMap = { [key in RoutesWithIcons]: string };
+const ROUTE_ICON: RouteIconMap = {
+  MAIN_MESSAGES: "io-messaggi",
+  WALLET_HOME: "io-portafoglio",
+  DOCUMENTS_HOME: "io-documenti",
+  PREFERENCES_HOME: "io-preferenze",
+  MAIN_PROFILE: "io-profilo"
 };
 
 /**
@@ -58,17 +65,27 @@ const navigation = TabNavigator(
   },
   {
     navigationOptions: ({ navigation: nav }) => ({
-      tabBarIcon: ({ focused }) => {
+      tabBarLabel: _ => {
         const { routeName } = nav.state;
-        const iconName: string = getIcon(routeName as RoutesWithIcons);
-        return <Icon name={iconName} active={focused} />;
+        return ROUTE_LABEL[routeName as RoutesWithIcons];
+      },
+      tabBarIcon: ({ tintColor }) => {
+        const { routeName } = nav.state;
+        const iconName: string = ROUTE_ICON[routeName as RoutesWithIcons];
+        return (
+          <Icon
+            name={iconName}
+            size={variables.iconSize4}
+            color={tintColor === null ? undefined : tintColor}
+          />
+        );
       }
     }),
     tabBarComponent: TabBarBottom,
     tabBarPosition: "bottom",
     tabBarOptions: {
-      activeTintColor: "black",
-      inactiveTintColor: "gray"
+      activeTintColor: variables.brandPrimary,
+      inactiveTintColor: variables.brandDarkGray
     },
     animationEnabled: true,
     swipeEnabled: false,
