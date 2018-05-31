@@ -90,7 +90,7 @@ const AddMethodStyle = StyleSheet.create({
   }
 });
 
-// TODO: replace the contextual help with the approariate
+// TODO: replace the contextual help with the appropriate
 // component @https://www.pivotaltracker.com/story/show/157874540
 export class AddPaymentMethodScreen extends React.Component<Props, State> {
   constructor(props: Props) {
