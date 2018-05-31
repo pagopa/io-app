@@ -40,13 +40,13 @@ const getLabel = (routeName: string): string => {
   const fallbackLabel = "unknown"; // fallback label
   const label = ROUTE_LABEL[routeName as Routes]; // routeName is defined as string, but has values within Routes
   return label === undefined ? fallbackLabel : label;
-}
+};
 
 const getIcon = (routeName: string): string => {
   const fallbackIcon = "io-question"; // fallback icon: question mark
   const route = ROUTE_ICON[routeName as Routes];
   return route === undefined ? fallbackIcon : route;
-}
+};
 
 /**
  * A navigator for all the screens used when the user is authenticated.
