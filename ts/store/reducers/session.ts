@@ -5,6 +5,7 @@
 import { Action } from "../../actions/types";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { GlobalState } from "../../reducers/types";
+import { SessionToken } from "../../types/SessionToken";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
 
 export type UnauthenticatedWithoutIdpSessionState = Readonly<{
@@ -23,7 +24,7 @@ export type UnauthenticatedSessionState =
 export type AuthenticatedSessionState = Readonly<{
   isAuthenticated: true;
   idp: IdentityProvider;
-  token: string;
+  token: SessionToken;
   expiredAt?: number;
 }>;
 
@@ -60,7 +61,7 @@ export const isAuthenticatedSelector = (state: GlobalState): boolean =>
 
 export const sessionTokenSelector = (
   state: GlobalState
-): string | undefined => {
+): SessionToken | undefined => {
   return isAuthenticated(state.session) ? state.session.token : undefined;
 };
 

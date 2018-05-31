@@ -5,6 +5,7 @@
  */
 
 import { IdentityProvider } from "../../models/IdentityProvider";
+import { SessionToken } from "../../types/SessionToken";
 import { IDP_SELECTED, LOGIN_FAILURE, LOGIN_SUCCESS } from "./constants";
 
 // Actions
@@ -15,7 +16,7 @@ export type IdpSelected = Readonly<{
 
 export type LoginSuccess = Readonly<{
   type: typeof LOGIN_SUCCESS;
-  payload: string;
+  payload: SessionToken;
 }>;
 
 export type LoginFailure = Readonly<{
@@ -30,7 +31,7 @@ export const selectIdp = (idp: IdentityProvider): IdpSelected => ({
   payload: idp
 });
 
-export const loginSuccess = (token: string): LoginSuccess => ({
+export const loginSuccess = (token: SessionToken): LoginSuccess => ({
   type: LOGIN_SUCCESS,
   payload: token
 });

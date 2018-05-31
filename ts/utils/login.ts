@@ -1,10 +1,12 @@
+import { SessionToken } from "../types/SessionToken";
+
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
 
 export type LoginSuccess = {
   success: true;
-  token: string;
+  token: SessionToken;
 };
 
 export type LoginFailure = {
@@ -25,7 +27,7 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
     const token = url.substr(successTokenPathPos + LOGIN_SUCCESS_PREFIX.length);
 
     if (token && token.length > 0) {
-      return { success: true, token };
+      return { success: true, token: token as SessionToken };
     } else {
       return { success: false };
     }
