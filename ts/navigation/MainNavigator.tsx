@@ -16,15 +16,9 @@ import Icon from "../theme/font-icons/io-icon-font";
 import variables from "../theme/variables";
 import WalletNavigator from "./WalletNavigator";
 
-// routes that should be paired with an icon
-type RoutesWithIcons =
-  | "MAIN_MESSAGES"
-  | "WALLET_HOME"
-  | "DOCUMENTS_HOME"
-  | "PREFERENCES_HOME"
-  | "MAIN_PROFILE";
+type Routes = keyof typeof ROUTES;
 
-type RouteLabelMap = { [key in RoutesWithIcons]: string };
+type RouteLabelMap = { [key in Routes]?: string };
 const ROUTE_LABEL: RouteLabelMap = {
   MAIN_MESSAGES: I18n.t("global.navigator.messages"),
   WALLET_HOME: I18n.t("global.navigator.wallet"),
@@ -33,7 +27,7 @@ const ROUTE_LABEL: RouteLabelMap = {
   MAIN_PROFILE: I18n.t("global.navigator.profile")
 };
 
-type RouteIconMap = { [key in RoutesWithIcons]: string };
+type RouteIconMap = { [key in Routes]?: string };
 const ROUTE_ICON: RouteIconMap = {
   MAIN_MESSAGES: "io-messaggi",
   WALLET_HOME: "io-portafoglio",
@@ -41,6 +35,18 @@ const ROUTE_ICON: RouteIconMap = {
   PREFERENCES_HOME: "io-preferenze",
   MAIN_PROFILE: "io-profilo"
 };
+
+const getLabel = (routeName: string): string => {
+  const fallbackLabel = "unknown"; // fallback label
+  const label = ROUTE_LABEL[routeName as Routes]; // routeName is defined as string, but has values within Routes
+  return label === undefined ? fallbackLabel : label;
+}
+
+const getIcon = (routeName: string): string => {
+  const fallbackIcon = "io-question"; // fallback icon: question mark
+  const route = ROUTE_ICON[routeName as Routes];
+  return route === undefined ? fallbackIcon : route;
+}
 
 /**
  * A navigator for all the screens used when the user is authenticated.
@@ -67,11 +73,11 @@ const navigation = TabNavigator(
     navigationOptions: ({ navigation: nav }) => ({
       tabBarLabel: _ => {
         const { routeName } = nav.state;
-        return ROUTE_LABEL[routeName as RoutesWithIcons];
+        return getLabel(routeName);
       },
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = nav.state;
-        const iconName: string = ROUTE_ICON[routeName as RoutesWithIcons];
+        const iconName: string = getIcon(routeName);
         return (
           <Icon
             name={iconName}
