@@ -111,7 +111,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
               transparent={true}
               onPress={_ => this.props.navigation.goBack()}
             >
-              <Icon name="io-back" size={variables.iconSmall} />
+              <Icon name="io-back" size={variables.iconSize2} />
             </Button>
           </Left>
           <Body>
@@ -146,7 +146,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                   <Icon
                     name={itemInfo.item.icon}
                     color={variables.brandPrimary}
-                    size={variables.iconLarge}
+                    size={variables.iconSize6}
                   />
                 </Right>
               </ListItem>
@@ -176,7 +176,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             <TouchableOpacity
               onPress={(): void => this.setState({ isTosModalVisible: false })}
             >
-              <Icon name="io-close" size={variables.iconBase} />
+              <Icon name="io-close" size={variables.iconSize3} />
             </TouchableOpacity>
           </View>
           <Content>
