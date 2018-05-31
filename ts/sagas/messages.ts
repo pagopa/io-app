@@ -43,7 +43,7 @@ import {
   MessagesLoadRequest
 } from "../store/actions/messages";
 import { loadServiceSuccess } from "../store/actions/services";
-import { messagesByIdSelectors } from "../store/reducers/entities/messages/messagesById";
+import { messagesByIdSelector } from "../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../store/reducers/entities/services/servicesById";
 import { sessionTokenSelector } from "../store/reducers/session";
 import {
@@ -130,7 +130,7 @@ export function* loadMessages(
   try {
     // Load already cached messages from the store
     const cachedMessagesById: MessagesListObject = yield select(
-      messagesByIdSelectors
+      messagesByIdSelector
     );
 
     // Load already cached services from the store

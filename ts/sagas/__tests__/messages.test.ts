@@ -11,7 +11,7 @@ import {
   loadMessageSuccess
 } from "../../store/actions/messages";
 import { loadServiceSuccess } from "../../store/actions/services";
-import { messagesByIdSelectors } from "../../store/reducers/entities/messages/messagesById";
+import { messagesByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { SessionToken } from "../../types/SessionToken";
@@ -133,7 +133,7 @@ describe("messages", () => {
     it("should put MESSAGES_LOAD_FAILURE with empty error it the getMessages response is undefined (can't be decoded)", () => {
       testSaga(loadMessages, backendClient)
         .next()
-        .select(messagesByIdSelectors)
+        .select(messagesByIdSelector)
         // Return an empty object as messagesByIdSelectors response
         .next({})
         .select(servicesByIdSelector)
@@ -151,7 +151,7 @@ describe("messages", () => {
     it("should put MESSAGES_LOAD_FAILURE with the error it the getMessages response status is not 200", () => {
       testSaga(loadMessages, backendClient)
         .next()
-        .select(messagesByIdSelectors)
+        .select(messagesByIdSelector)
         // Return an empty object as messagesByIdSelectors response
         .next({})
         .select(servicesByIdSelector)
@@ -169,7 +169,7 @@ describe("messages", () => {
     it("should call the getService saga N times and getMessage M times if the getMessages response contains N new services and M new messages", () => {
       testSaga(loadMessages, backendClient)
         .next()
-        .select(messagesByIdSelectors)
+        .select(messagesByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
         .next({})
         .select(servicesByIdSelector)
@@ -197,7 +197,7 @@ describe("messages", () => {
     it("should not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
       testSaga(loadMessages, backendClient)
         .next()
-        .select(messagesByIdSelectors)
+        .select(messagesByIdSelector)
         // Return an object as messagesByIdSelectors response
         .next({
           [testMessageId1]: testMessageWithContent1,

@@ -28,7 +28,7 @@ const reducer = (
 };
 
 // Selectors
-export const messagesByIdSelectors = (
+export const messagesByIdSelector = (
   state: GlobalState
 ): MessagesListObject => {
   return state.entities.messages.byId;

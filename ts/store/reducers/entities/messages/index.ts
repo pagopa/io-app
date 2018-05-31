@@ -12,7 +12,7 @@ import messagesAllIdsReducer, {
   MessagesAllIdsState
 } from "./messagesAllIds";
 import messagesByIdReducer, {
-  messagesByIdSelectors,
+  messagesByIdSelector,
   MessagesByIdState
 } from "./messagesById";
 
@@ -32,7 +32,7 @@ const reducer = combineReducers<MessagesState, Action>({
  */
 export const orderedMessagesSelector = createSelector(
   messagesAllIdsSelector,
-  messagesByIdSelectors,
+  messagesByIdSelector,
   (ids, messages) => {
     return [...ids]
       .sort((id1, id2) =>
