@@ -1,32 +1,20 @@
 import * as t from "io-ts";
 
-import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
-import { MessageSubject } from "../../definitions/backend/MessageSubject";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
-
-// Required attributes
-const MessageWithContentPOR = t.interface({
-  created_at: t.string,
-
-  id: t.string,
-
-  sender_service_id: t.string
-});
-
-// Optional attributes
-const MessageWithContentPOO = t.partial({
-  markdown: MessageBodyMarkdown,
-
-  subject: MessageSubject
-});
 
 /**
  * A plain object representation of a MessageWithContent useful to avoid problems with the redux store.
  * The create_at date object is transformed in a string.
  */
-export const MessageWithContentPO = t.exact(
+const MessageWithContentPO = t.exact(
   t.intersection(
-    [MessageWithContentPOR, MessageWithContentPOO],
+    [
+      t.type({
+        ...MessageWithContent.type.types[0].props,
+        created_at: t.string
+      }),
+      MessageWithContent.type.types[1]
+    ],
     "MessageWithContentPO"
   )
 );
