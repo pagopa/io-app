@@ -8,11 +8,13 @@
 import * as React from "react";
 import ROUTES from "./routes";
 
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { TabBarBottom, TabNavigator } from "react-navigation";
 import I18n from "../i18n";
 import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
 import Icon from "../theme/font-icons/io-icon-font";
+import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import WalletNavigator from "./WalletNavigator";
 
@@ -38,15 +40,38 @@ const ROUTE_ICON: RouteIconMap = {
 
 const getLabel = (routeName: string): string => {
   const fallbackLabel = "unknown"; // fallback label
-  const label = ROUTE_LABEL[routeName as Routes]; // routeName is defined as string, but has values within Routes
+  // "routeName as Routes" is assumed to be safe as explained @https://github.com/teamdigitale/italia-app/pull/193#discussion_r192347234
+  // adding fallback anyway -- better safe than sorry
+  const label = ROUTE_LABEL[routeName as Routes];
   return label === undefined ? fallbackLabel : label;
 };
 
 const getIcon = (routeName: string): string => {
   const fallbackIcon = "io-question"; // fallback icon: question mark
-  const route = ROUTE_ICON[routeName as Routes];
+  const route = ROUTE_ICON[routeName as Routes]; // same as for getLabel
   return route === undefined ? fallbackIcon : route;
 };
+
+const styles = StyleSheet.create({
+  labelStyle: {
+    ...makeFontStyleObject(Platform.select),
+    marginBottom: 7,
+    width: 64,
+    textAlign: "center",
+    marginRight: 3,
+    fontSize: variables.fontSize1
+  },
+  iconWrapperStyle: {
+    marginTop: 12
+  },
+  tabBarStyle: {
+    height: 64,
+    backgroundColor: variables.colorWhite,
+    marginLeft: 3,
+    marginRight: 3,
+    borderTopWidth: 0
+  }
+});
 
 /**
  * A navigator for all the screens used when the user is authenticated.
@@ -71,19 +96,31 @@ const navigation = TabNavigator(
   },
   {
     navigationOptions: ({ navigation: nav }) => ({
-      tabBarLabel: _ => {
+      tabBarLabel: ({ tintColor }) => {
         const { routeName } = nav.state;
-        return getLabel(routeName);
+        // adding `color` as a separate style property since it depends on tintColor
+        return (
+          <Text
+            style={[
+              styles.labelStyle,
+              { color: tintColor === null ? undefined : tintColor }
+            ]}
+          >
+            {getLabel(routeName)}
+          </Text>
+        );
       },
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
         return (
-          <Icon
-            name={iconName}
-            size={variables.iconSize4}
-            color={tintColor === null ? undefined : tintColor}
-          />
+          <View style={styles.iconWrapperStyle}>
+            <Icon
+              name={iconName}
+              size={variables.iconSize3}
+              color={tintColor === null ? undefined : tintColor}
+            />
+          </View>
         );
       }
     }),
@@ -91,7 +128,8 @@ const navigation = TabNavigator(
     tabBarPosition: "bottom",
     tabBarOptions: {
       activeTintColor: variables.brandPrimary,
-      inactiveTintColor: variables.brandDarkGray
+      inactiveTintColor: variables.brandDarkGray,
+      style: styles.tabBarStyle
     },
     animationEnabled: true,
     swipeEnabled: false,
