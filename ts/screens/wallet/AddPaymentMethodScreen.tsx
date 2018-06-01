@@ -111,7 +111,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
               transparent={true}
               onPress={_ => this.props.navigation.goBack()}
             >
-              <Icon name="io-back" size={variables.iconSize2} />
+              <Icon name="io-back" size={variables.iconSize1} />
             </Button>
           </Left>
           <Body>
