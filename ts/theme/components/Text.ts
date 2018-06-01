@@ -8,6 +8,7 @@ declare module "native-base" {
   namespace NativeBase {
     interface Text extends TextProperties {
       link?: boolean;
+      bold?: boolean;
     }
   }
 }
@@ -18,7 +19,9 @@ export default (): Theme => {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor
     },
-
+    ".bold": {
+      fontWeight:'bold'
+    },
     lineHeight: variables.lineHeight
   };
 };

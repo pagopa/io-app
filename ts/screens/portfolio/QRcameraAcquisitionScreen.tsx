@@ -33,7 +33,7 @@ type Props = ScreenProps & OwnProps;
 /**
  * Portfolio QR code acquisition by camera
  */
-export default class QRcameraAcquisitionScreen extends React.Component<Props, never> {
+class QRcameraAcquisitionScreen extends React.Component<Props, never> {
 	constructor(props: Props) {
 		super(props);
 	}
@@ -48,7 +48,11 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 			<Container style={{backgroundColor:variables.brandPrimaryInverted}}>
 				<AppHeader>
 					<Left>
-						<Button transparent={true} onPress={() => this.goBack()}>
+						<Button 
+							transparent={true} 
+							onPress={() => 
+								this.goBack()}
+							>
 							<Icon name="chevron-left" />
 						</Button>
 					</Left>
@@ -69,10 +73,10 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 										<Grid>
 											<Row>
 												<Col>
-												<View style={styles.rectangleTL}/>
+													<View style={styles.rectangleTL}/>
 												</Col>
 												<Col>
-												<View style={styles.rectangleTR}/>
+													<View style={styles.rectangleTR}/>
 												</Col>
 											</Row>
 											<Row>
@@ -80,7 +84,7 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 													<View style={styles.rectangleBL}/>
 												</Col>
 												<Col>
-												<View style={styles.rectangleBR}/>
+													<View style={styles.rectangleBR}/>
 												</Col>
 											</Row>
 										</Grid>
@@ -91,10 +95,18 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 					</QRCodeScanner>
 					<View>
 						<View spacer={true} large={true}/>
-						<Text style={{textAlign:'center', paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
+						<Text style={{
+							textAlign:'center', 
+							paddingRight:variables.contentPadding, 
+							paddingLeft:variables.contentPadding
+							}}
+						>
 							{I18n.t("portfolio.QRtoPay.instructions")}
 						</Text>
-						<View spacer={true} extralarge={true}/>
+						<View 
+							spacer={true} 
+							extralarge={true}
+						/>
 					</View>	
 				</Container>
 				<View footer={true}>
@@ -112,7 +124,9 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 					<Button
 						block={true}
 						light={true}
-						onPress={() => this.goBack()}
+						onPress={() => 
+							this.goBack()
+						}
 						>
 						<Text>
 							{I18n.t("portfolio.QRtoPay.cancel")}
@@ -124,6 +138,7 @@ export default class QRcameraAcquisitionScreen extends React.Component<Props, ne
 	}
 }
 
+export default  QRcameraAcquisitionScreen;
 
 const screenwidth = Dimensions.get("screen").width;
 

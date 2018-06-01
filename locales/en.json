@@ -122,7 +122,7 @@
   "portfolio": {
     "QRtoPay": {
       "cancel":"Cancel",
-      "continue":"Continue",
+      "continue":"Proceed with the payment",
       "cameraSectionName": "Payment notice QR Code",
       "manualSectionName": "Insert notice data",
       "proceedSectionName": "Payment notice summary",
@@ -134,6 +134,9 @@
       "noticeCode":"Notice Code",
       "entityCode":"Lender Fiscal Code",
       "amount":"Amount", 
+      "updatedAmount":"Updated amount",
+      "updateInfo":"The pagoPa system updates automatically the amount to ensure you pay the exact amount and to avoid you arrears or addictional interests ",
+      "moreInfo":"More details",
       "paymentNotice": "Avviso di pagamento",
       "expireDate":"Expire date",
       "tranche":"Tranche",
@@ -157,7 +160,17 @@
       "fee":"Fee",
       "why":"Why?",
       "totalAmount":"Total amount",
-      "info":"Warning: after this step it will not be possile to come back"
+      "info":"Warning: after this step it will not be possile to come back",
+      "info2":" You are using your favourite payment method",
+      "changeMethod":"Change the payment method"
+    },
+    "sms": {
+      "title":"SMS confirmation code",
+      "code":"Confirmation code",
+      "newCode":"Request a new code",
+      "info":"Insert the code we sent as SMS to yout mobile phone",
+      "continue":"Continue",
+      "cancel":"Cancel"
     },
     "Receipt": {
       "title": "Payment receipt",
@@ -171,7 +184,7 @@
       "purpose":"Purpose",
       "recipient":"Recipient",
       "date":"Date",
-      "hour":"Hour"
+      "time":"Time"
     }
   },
   "wallet": {

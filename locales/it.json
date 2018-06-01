@@ -119,10 +119,10 @@
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
   "portfolio": {
-	"QRtoPay": {
-    "cancel":"Annulla",
-    "continue":"Continua",
-		"cameraSectionName": "QR Code avviso",
+	  "QRtoPay": {
+      "cancel":"Annulla",
+      "continue":"Procedi con il pagamento",
+	  	"cameraSectionName": "QR Code avviso",
       "manualSectionName": "Inserisci dati avviso",
       "proceedSectionName": "Riepilogo avviso di Pagamento",
       "instructions":"Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure inserisci manualmente i dati identificativi (IUV e codive ente/azienda).",
@@ -133,6 +133,9 @@
       "noticeCode":"Codice Avviso",
       "entityCode":"Codice Fiscale Ente Creditore",
       "amount":"Importo euro",
+      "updatedAmount":"Importo aggiornato",
+      "updateInfo":"Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi",
+      "moreInfo":"Per saperne di più",
       "paymentNotice": "Avviso di pagamento",
       "expireDate":"Scadenza",
       "tranche":"Rata",
@@ -156,7 +159,17 @@
       "fee":"Costi di commissione",
       "why":"Perhè?",
       "totalAmount":"Totale",
-      "info":"Attenzione: dopo queto passaggio non sarà più possibile annullare"
+      "info":"Attenzione: dopo queto passaggio non sarà più possibile annullare",
+      "info2":"Stai utilizzando il tuo metodo di pagamento preferito",
+      "changeMethod":"Cambia metodo di pagamento"
+    },
+    "sms": {
+      "title":"Codice di Conferma SMS",
+      "code":"Codice di conferma",
+      "newCode":"Richiedi nuovo codice",
+      "info":"Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono",
+      "continue":"Contina",
+      "cancel":"Annulla"
     },
     "Receipt": {
       "title": "Ricevuta di pagamento",
@@ -170,7 +183,7 @@
       "purpose":"Causale",
       "recipient":"Destinatario",
       "date":"Data",
-      "hour":"Ora"
+      "time":"Ora"
     }
   },
   "wallet": {

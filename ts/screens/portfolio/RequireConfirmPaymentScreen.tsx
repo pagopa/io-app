@@ -10,7 +10,11 @@ import {
 	Text,
 	H1
 } from "native-base";
-
+import { 
+	Grid,
+	Row,
+	Col  
+} from 'react-native-easy-grid';
 import AppHeader from "../../components/ui/AppHeader";
 
 import I18n from "../../i18n";
@@ -19,10 +23,10 @@ import {
 	NavigationScreenProp, 
 	NavigationState 
 } from "react-navigation";
-import { Grid, Row, Col  } from 'react-native-easy-grid';
 import variables from '../../theme/variables';
 import ROUTES from '../../navigation/routes';
 import Modal from "../../components/ui/Modal";
+import PaymentBannerComponent from "../../components/portfolio/PaymentBannerComponent";
 
 type Props = Readonly<{
 	navigation: NavigationScreenProp<NavigationState>;
@@ -49,9 +53,7 @@ class RequireConfirmPaymentScreen extends React.Component<Props, State> {
 	}
 	
 	public render(): React.ReactNode {
-		const NOMEAVVISO = "Tari 2018"
 		const IMPORTO = "€ 199,00"
-		const ENTE = "Comune di Gallarate"
 		const FEE = "€ 0,50"
 		const TOTALEALL = "€ 199,50"
 
@@ -75,84 +77,140 @@ class RequireConfirmPaymentScreen extends React.Component<Props, State> {
 					</Body>
 				</AppHeader>
 
-				<Content>
-					<Grid style={{backgroundColor:'#5C6F82'}}>
-						<Row style={{paddingLeft: variables.contentPadding, paddingRight: variables.contentPadding}}>
-							<Col>
-								<View spacer={true} /> 
-								<Text style={{fontWeight:'bold',color:'#FFFFFF'}}>{NOMEAVVISO}</Text>
-							</Col>
-							<Col>
-								<View spacer={true} /> 
-								<Text style={{fontWeight:'bold',color:'#FFFFFF',textAlign:'right'}}>{IMPORTO}</Text>
-							</Col>
-						</Row>
-						<Row style={{paddingLeft: variables.contentPadding, paddingRight: variables.contentPadding}}>
-							<Col>
-								<Text style={{color:'#FFFFFF'}}>{ENTE}</Text>
-								<View spacer={true} /> 
-							</Col>
-							<Col>
-								<Text style={{color:'#FFFFFF',textAlign:'right'}} >{I18n.t("portfolio.ConfirmPayment.cancel")}</Text>
-								<View spacer={true}/> 
-							</Col>
-						</Row>
-					</Grid>
-					<View style={{paddingLeft: variables.contentPadding, paddingRight: variables.contentPadding}}>
-						<View spacer={true} large={true}/>		
-						
-						<H1>{I18n.t("portfolio.ConfirmPayment.askConfirm")}</H1>
-
-						<View spacer={true} large={true}/>
-
-						<Text> Credit Card component </Text>
-
-						<View spacer={true} large={true}/>
-
+				<Content original={true}>
+					<PaymentBannerComponent navigation={this.props.navigation}/>
+					<View style={{
+							paddingLeft: variables.contentPadding, 
+							paddingRight: variables.contentPadding}
+							}
+					>
+						<View 
+							spacer={true} 
+							large={true}
+						/>		
+						<H1>
+							{I18n.t("portfolio.ConfirmPayment.askConfirm")}
+						</H1>
+						<View 
+							spacer={true} 
+							large={true}
+						/>
+						<Text> 
+							CREDIT CARD COMPONENT
+						</Text>
+						<View 
+							spacer={true} 
+							large={true}
+						/>
 						<Grid>
 							<Row>
 								<Col>
-									<Text>{I18n.t("portfolio.ConfirmPayment.partialAmount")}</Text>
+									<Text>
+										{I18n.t("portfolio.ConfirmPayment.partialAmount")}
+									</Text>
 								</Col>
 								<Col>
-									<Text style={{fontWeight:'bold', textAlign:'right'}}>{IMPORTO}</Text>
-								</Col>
-							</Row>
-							<Row>
-								<Col>
-									<Text>{I18n.t("portfolio.ConfirmPayment.fee")}</Text>
 									<Text 
-										link={true}
-										onPress={(): void => 
-											this.setState({ isTosModalVisible: true })
-										}
-									> {I18n.t("portfolio.ConfirmPayment.why")} </Text>
+										bold={true} 
+										style={{textAlign:'right'}}
+									>
+										{IMPORTO}
+									</Text>
 								</Col>
-								
-								<Col>
-									<Text style={{fontWeight:'bold', textAlign:'right'}} >{FEE}</Text>
-								</Col>
-								
-							</Row>
-							<View spacer={true} large={true}/>
-							<Row style={{borderTopWidth:1}}>
-							 
-								<Col>
-									<View spacer={true} large={true}/>
-									<H1> {I18n.t("portfolio.ConfirmPayment.totalAmount")} </H1>
-								</Col>
-								<Col>
-									<View spacer={true} large={true}/> 
-									<H1 style={{ textAlign:'right'}}> {TOTALEALL} </H1>
-								</Col>
-								
 							</Row>
 							<Row>
 								<Col>
-									<View spacer={true} large={true}/>
-									<Text style={{textAlign:'center'}}> {I18n.t("portfolio.ConfirmPayment.info")} </Text>
-									<View spacer={true} extralarge={true}/>
+									<Text>	
+										{I18n.t("portfolio.ConfirmPayment.fee")}
+										<Text>{' '} </Text>
+										<Text 
+											link={true}
+											onPress={(): void => 
+												this.setState({ isTosModalVisible: true })
+											}
+										> 
+											{I18n.t("portfolio.ConfirmPayment.why")} 
+										</Text>
+									</Text>
+									
+									
 								</Col>
+								
+								<Col>
+									<Text 
+										bold={true} 	
+										style={{textAlign:'right'}}
+									>
+										{FEE}
+									</Text>
+								</Col>
+								
+							</Row>
+							<View 
+								spacer={true} 
+								large={true}
+							/>
+							<Row style={{
+									borderTopWidth:1, 
+									borderTopColor: variables.brandGray}
+								}
+							>
+								<Col>
+									<View 
+										spacer={true} 
+										large={true}
+									/>
+									<H1> 
+										{I18n.t("portfolio.ConfirmPayment.totalAmount")} 
+									</H1>
+								</Col>
+								<Col>
+									<View 
+										spacer={true} 
+										large={true}
+									/> 
+									<H1 style={{ textAlign:'right'}}> 
+										{TOTALEALL} 
+									</H1>
+								</Col>
+							</Row>
+							<Row>
+								<Col size={1}/>
+								<Col 
+									size={5} 
+									style={{justifyContent:'space-between'}}> 
+									<View 
+										spacer={true} 
+										large={true}
+									/>
+									<Text style={{textAlign:'center'}}> 
+										{I18n.t("portfolio.ConfirmPayment.info2")} 
+										<Text> 
+											{' '} 
+										</Text>
+										<Text link={true}> 
+											{I18n.t("portfolio.ConfirmPayment.changeMethod")} 
+										</Text>
+									</Text>
+								</Col>
+								<Col size={1}/>
+							</Row>
+							<Row style={{
+								borderTopWidth:1, 
+								borderTopColor: variables.brandGray
+							}}>
+								<Col size={1}/>
+								<Col size={5}>
+									<View spacer={true}/>
+									<Text style={{textAlign:'center'}}> 
+										{I18n.t("portfolio.ConfirmPayment.info")} 
+									</Text>
+									<View 
+										spacer={true} 
+										extralarge={true}
+									/>
+								</Col>
+								<Col size={1}/>
 							</Row>
 						</Grid>
 					</View>
@@ -163,7 +221,7 @@ class RequireConfirmPaymentScreen extends React.Component<Props, State> {
 						block={true}
 						primary={true}
 						onPress={() =>
-							this.props.navigation.navigate(ROUTES.PORTFOLIO_RECEIPT)
+							this.props.navigation.navigate(ROUTES.PORTFOLIO_VERIFY_CODE) 
 						}
 						>
 						<Text>
@@ -181,17 +239,29 @@ class RequireConfirmPaymentScreen extends React.Component<Props, State> {
 				</Button>
 				</View>
 
-				<Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+				<Modal 
+					isVisible={this.state.isTosModalVisible} 
+					fullscreen={true}
+				>
 					<View header={true}>
 						<Icon
 						name="cross"
-						onPress={(): void => this.setState({ isTosModalVisible: false })}
+						onPress={(): void => 
+							this.setState({ isTosModalVisible: false })
+						}
 						/>
 					</View>
 					<Content>
-						<H1>{I18n.t("personal_data_processing.title")}</H1>
-						<View spacer={true} large={true} />
-						<Text>{I18n.t("personal_data_processing.content")}</Text>
+						<H1>
+							{I18n.t("personal_data_processing.title")}
+						</H1>
+						<View 
+							spacer={true} 
+							large={true} 
+						/>
+						<Text>	
+							{I18n.t("personal_data_processing.content")}
+						</Text>
 					</Content>
 				</Modal>
 			</Container>

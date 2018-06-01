@@ -30,10 +30,7 @@ const getSessionToken = (state: GlobalState): string | undefined =>
 function* loadProfile(): Iterator<Effect> {
   try {
     // Get the token from the state
-    const token: string | undefined = yield select(getSessionToken);
-    if (token === undefined) {
-      throw new Error("session token is not defined");
-    }
+    const token: string = yield select(getSessionToken);
 
     // Fetch the profile from the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(
@@ -64,10 +61,7 @@ function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
     const newProfile = action.payload;
 
     // Get the token from the state
-    const token: string | undefined = yield select(getSessionToken);
-    if (token === undefined) {
-      throw new Error("session token is not defined");
-    }
+    const token: string = yield select(getSessionToken);
 
     // Post the new Profile to the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(

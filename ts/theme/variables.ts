@@ -63,6 +63,7 @@ const customVariables = Object.assign(materialVariables, {
   iconFamily: "Entypo",
 
   // Content
+  contentNoPadding: 0,
   contentPadding: 24,
   contentBackground: "#FFFFFF",
   contentAlternativeBackground: "#F5F6F7",

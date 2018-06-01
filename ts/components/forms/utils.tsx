@@ -3,6 +3,8 @@
  */
 
 import { Input, Item, Text, View } from "native-base";
+import { KeyboardTypeOptions } from "react-native";
+
 import * as React from "react";
 import { WrappedFieldProps } from "redux-form";
 import { isEmail } from "validator";
@@ -44,6 +46,8 @@ export interface NativeBaseInputProps {
   name?: string;
   placeholder?: string;
   showError?: boolean;
+  keyboardType?: KeyboardTypeOptions;
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
 }
 
 /**
@@ -52,10 +56,20 @@ export interface NativeBaseInputProps {
  */
 export const renderNativeBaseInput: React.SFC<
   WrappedFieldProps & NativeBaseInputProps
-> = ({ meta: { touched, error, active }, placeholder, showError }) => (
+> = ({
+  meta: { touched, error, active },
+  placeholder,
+  showError,
+  keyboardType,
+  autoCapitalize
+}) => (
   <View>
     <Item error={error && touched} active={active}>
-      <Input placeholder={placeholder} />
+      <Input
+        placeholder={placeholder}
+        keyboardType={keyboardType || "default"}
+        autoCapitalize={autoCapitalize || "none"}
+      />
     </Item>
     {showError && error && touched && <Text>{error}</Text>}
   </View>

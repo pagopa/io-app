@@ -10,6 +10,7 @@ import QRcameraAcquisitionScreen from "../screens/portfolio/QRcameraAcquisitionS
 import QRmanualAcquisitionScreen from "../screens/portfolio/QRmanualAcquisitionScreen";
 import PaymentNoticeSummaryScreen from "../screens/portfolio/PaymentNoticeSummaryScreen";
 import RequireConfirmPaymentScreen from "../screens/portfolio/RequireConfirmPaymentScreen";
+import VerifyTransactionCodeScreen from "../screens/portfolio/VerifyTransactionCodeScreen";
 import ReceiptPaymentScreen from "../screens/portfolio/ReceiptPaymentScreen";
 
 /**
@@ -43,6 +44,9 @@ const navigator = StackNavigator(
     },
     [ROUTES.PORTFOLIO_RECEIPT] : {
       screen: ReceiptPaymentScreen
+    },
+    [ROUTES.PORTFOLIO_VERIFY_CODE] : {
+      screen: VerifyTransactionCodeScreen
     }
   },
   {

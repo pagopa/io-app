@@ -42,7 +42,7 @@ type State = Readonly<{
  * Portfolio QR code manual acquisition
  */
 
-export default class QRmanualAcquisitionScreen extends React.Component<Props, State> {
+class QRmanualAcquisitionScreen extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -65,7 +65,9 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 					<Left>
 						<Button 
 							transparent={true} 
-							onPress={() => this.goBack()}
+							onPress={() => 
+								this.goBack()
+							}
 						>
 							<Icon name="chevron-left" />
 						</Button>
@@ -76,7 +78,11 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 						</Text>
 					</Body>
 				</AppHeader>
-				<Content style={{paddingRight:variables.contentPadding, paddingLeft:variables.contentPadding}}>
+				<Content style={{
+					paddingRight:variables.contentPadding, 
+					paddingLeft:variables.contentPadding}
+					}
+				>
 					<H1>
 						{I18n.t("portfolio.QRtoPay.manualSetHeader")}
 					</H1>
@@ -84,14 +90,18 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 						{I18n.t("portfolio.QRtoPay.manualInstructions")}
 					</Text>
 					<Text
-						 link={true}
-						 onPress={(): void => this.setState({ isTosModalVisible: true })}
+						link={true}
+						onPress={(): void => 
+							this.setState({ isTosModalVisible: true })
+						}
 					>
 						{I18n.t("portfolio.QRtoPay.modalLink")}
 					</Text>
 					<Form>
 						<Item floatingLabel>
-             				 	<Label>{I18n.t("portfolio.QRtoPay.noticeCode")}</Label>
+						    	<Label>
+						    		{I18n.t("portfolio.QRtoPay.noticeCode")}
+							</Label>
               					<Input 
 							    keyboardType={"numeric"}
 							    onChangeText={(value) => {
@@ -108,18 +118,20 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 							    }}
 							/>
            				</Item>
-						<Item floatingLabel>
-             				 	<Label>{I18n.t("portfolio.QRtoPay.amount")}</Label>
+						<Item floatingLabel={true}>
+							<Label>
+						    		{I18n.t("portfolio.QRtoPay.amount")}
+							</Label>
               					<Input 
-							    keyboardType={"numeric"}
-							    onChangeText={(value) => {
-								    this.setState({ Amount: some(value)})
-							    }}
-							/>
+							keyboardType={"numeric"}
+							onChangeText={(value) => {
+								this.setState({ Amount: some(value)})
+							}}
+						/>
            				</Item>
 					</Form>
 				</Content>
-				<View footer>
+				<View footer={true}>
 				<Button
 					block={true}
 					primary={true}
@@ -133,11 +145,16 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 				</Button>
 				
 				</View>
-				<Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
+				<Modal 
+					isVisible={this.state.isTosModalVisible} 
+					fullscreen={true}
+				>
 					<View header={true}>
 						<Icon
 							name="cross"
-							onPress={(): void => this.setState({ isTosModalVisible: false })}
+							onPress={(): void => 
+								this.setState({ isTosModalVisible: false }
+							)}
 						/>
 					</View>
 					<Content>
@@ -158,6 +175,7 @@ export default class QRmanualAcquisitionScreen extends React.Component<Props, St
 			</Container>
 		);
 	}
-
 }
+
+export default  QRmanualAcquisitionScreen;
 
