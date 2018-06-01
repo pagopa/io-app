@@ -70,16 +70,16 @@ const customVariables = Object.assign(materialVariables, {
   iconSizeBase: 24,
 
   get iconSize1(): number {
-    return this.iconSizeBase * 2 / 3;
+    return this.iconSizeBase * (2 / 3);
   },
   get iconSize2(): number {
-    return this.iconSizeBase * 5 / 6;
+    return this.iconSizeBase * (5 / 6);
   },
   get iconSize3(): number {
     return this.iconSizeBase * 1;
   },
   get iconSize4(): number {
-    return this.iconSizeBase * 7 / 6;
+    return this.iconSizeBase * (7 / 6);
   },
   get iconSize5(): number {
     return this.iconSizeBase * 1.5;
