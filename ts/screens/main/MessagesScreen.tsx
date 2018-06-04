@@ -9,35 +9,36 @@ import {
 import { connect } from "react-redux";
 
 import { ReduxProps } from "../../actions/types";
+import I18n from "../../i18n";
 import { GlobalState } from "../../reducers/types";
 import { ServicesListObject } from "../../sagas/messages";
+import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import { createLoadingSelector } from "../../store/reducers/loading";
+import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-type ReduxMappedProps = {
+type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
   servicesById: ServicesListObject;
-};
+}>;
 
-export type OwnProps = {
+export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-};
+}>;
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * This screen show the messages to the authenticated user.
  *
- * TODO: Just a moked version at the moment.
+ * TODO: Just a mocked version at the moment.
  * Going to be replaced with real content in @https://www.pivotaltracker.com/story/show/152843981
  */
 class MessagesScreen extends React.Component<Props, never> {
-  private didFocusSubscription:
-    | NavigationEventSubscription
-    | undefined = undefined;
+  private didFocusSubscription?: NavigationEventSubscription;
 
   constructor(props: Props) {
     super(props);
@@ -45,11 +46,11 @@ class MessagesScreen extends React.Component<Props, never> {
 
   public componentDidMount() {
     // TODO: Messages must be refreshed using pull-down @https://www.pivotaltracker.com/story/show/157917217
-    // tslint:disable-next-line
+    // tslint:disable-next-line no-object-mutation
     this.didFocusSubscription = this.props.navigation.addListener(
       "didFocus",
       () => {
-        this.loadMessages();
+        this.props.dispatch(loadMessages());
       }
     );
   }
@@ -57,12 +58,14 @@ class MessagesScreen extends React.Component<Props, never> {
   public componentWillUnmount() {
     if (this.didFocusSubscription) {
       this.didFocusSubscription.remove();
+      // tslint:disable-next-line no-object-mutation
+      this.didFocusSubscription = undefined;
     }
   }
 
   private renderLoadingStatus = (isLoadingMessages: boolean) => {
     return isLoadingMessages ? (
-      <ActivityIndicator size="small" color="#00ff00" />
+      <ActivityIndicator size="small" color={variables.brandPrimary} />
     ) : null;
   };
 
@@ -81,20 +84,20 @@ class MessagesScreen extends React.Component<Props, never> {
       <Container>
         <Content>
           {this.renderLoadingStatus(this.props.isLoadingMessages)}
-          <Text>You have {this.props.messages.length} messages</Text>
+          <Text>
+            {I18n.t("messages.counting", { count: this.props.messages.length })}
+          </Text>
           {this.renderMockedMessages(this.props.messages)}
         </Content>
       </Container>
     );
   }
-
-  private loadMessages() {
-    this.props.dispatch(loadMessages());
-  }
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  isLoadingMessages: createLoadingSelector(["MESSAGES_LOAD"])(state),
+  isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
+    state
+  ),
   messages: orderedMessagesSelector(state),
   servicesById: state.entities.services.byId
 });

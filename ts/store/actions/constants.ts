@@ -69,13 +69,13 @@ export const SERVICE_LOAD_SUCCESS: "SERVICE_LOAD_SUCCESS" =
 // Error
 export const ERROR_CLEAR: "ERROR_CLEAR" = "ERROR_CLEAR";
 
-// Costants for actions that need UI state reducers
-export const FetchRequestActions = {
-  PIN_CREATE: "PIN_CREATE",
-  PROFILE_LOAD: "PROFILE_LOAD",
-  PROFILE_UPDATE: "PROFILE_UPDATE",
-  MESSAGES_LOAD: "MESSAGES_LOAD"
-};
+// Enum for actions that need UI state reducers
+export const enum FetchRequestActions {
+  PIN_CREATE = "PIN_CREATE",
+  PROFILE_LOAD = "PROFILE_LOAD",
+  PROFILE_UPDATE = "PROFILE_UPDATE",
+  MESSAGES_LOAD = "MESSAGES_LOAD"
+}
 
 // Extract keys from object and create a new union type
 export type FetchRequestActionsType = keyof typeof FetchRequestActions;
