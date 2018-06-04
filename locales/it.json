@@ -105,11 +105,11 @@
       "confirmInvalid": "i due pin non coincidono"
     }
   },
-  "pinlogin":{
+  "pin_login":{
     "pin": {
       "pinInfo": "Appoggia l'impronta sul sensore oppure inserisci il codice PIN",
-      "pinforgot": "Non ricordi il PIN",
-      "confirmValid": "grazie, pin corretto",
+      "pinForgot": "Non ricordo il PIN",
+      "confirmValid": "PIN corretto",
       "confirmInvalid": "PIN non valido"
     }   
   },

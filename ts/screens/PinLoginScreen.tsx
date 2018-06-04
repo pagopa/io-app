@@ -45,7 +45,7 @@ class PinLoginScreen extends React.Component<Props> {
     const validationMessage = (
       <TextWithIcon danger={true}>
         <Icon name={"cross"} />
-        <Text>{I18n.t("pinlogin.pin.confirmInvalid")}</Text>
+        <Text>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );
     return (
@@ -61,14 +61,14 @@ class PinLoginScreen extends React.Component<Props> {
     return (
       <React.Fragment>
         <Pinpad
-          autofocus={false}
+          autofocus={true}
           onFulfill={this.onPinFulfill}
           activeColor={variables.brandWhite}
           inactiveColor={variables.brandWhite}
-          codeInputRef={pinpad => (this.pinComponent = pinpad)}
+          codeInputRef={pinpad => (this.pinComponent = pinpad)} // tslint:disable-line no-object-mutation
         />
 
-        {pinLoginState === "PinConfirmedInvalid" &&
+        {pinLoginState.PinConfirmed === "PinConfirmedInvalid" &&
           this.renderCodeInputConfirmValidation()}
       </React.Fragment>
     );
@@ -79,7 +79,7 @@ class PinLoginScreen extends React.Component<Props> {
     return (
       <Content primary={true}>
         <View spacer={true} extralarge={true} />
-        <Text white={true}>{I18n.t("pinlogin.pin.pinInfo")}</Text>
+        <Text white={true}>{I18n.t("pin_login.pin.pinInfo")}</Text>
         {this.renderCodeInput(pinLoginState)}
         <View spacer={true} extralarge={true} />
         {this.renderForgotButton()}
@@ -90,7 +90,7 @@ class PinLoginScreen extends React.Component<Props> {
   public renderForgotButton = () => {
     return (
       <Button block={true} primary={true}>
-        <Text>{I18n.t("pinlogin.pin.pinforgot")}</Text>
+        <Text>{I18n.t("pin_login.pin.pinForgot")}</Text>
       </Button>
     );
   };

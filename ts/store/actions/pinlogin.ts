@@ -1,5 +1,5 @@
 /**
- * Action types and action creator related to the Onboarding.
+ * Action types and action creator related to the PinLogin.
  */
 
 import {
@@ -26,7 +26,6 @@ export type PinloginActions =
   | PinValidateRequest
   | PinValidateSuccess;
 
-// Creators
 // Send the PIN to be match with the one in the keychain
 export const validatePin = (pin: string): PinValidateRequest => ({
   type: PIN_LOGIN_VALIDATE_REQUEST,

@@ -8,11 +8,8 @@ declare module "native-base" {
   namespace NativeBase {
     interface Text extends TextProperties {
       link?: boolean;
-<<<<<<< HEAD
       bold?: boolean;
-=======
       white?: boolean;
->>>>>>> Initial PIN login integration
     }
   }
 }

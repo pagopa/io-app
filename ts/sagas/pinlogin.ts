@@ -19,17 +19,17 @@ import { getPin } from "../utils/keychain";
 /**
  * The PIN step of the pin login
  */
-function* pinloginSaga(): Iterator<Effect> {
-  const navigateToPinForgotNavigatorAction = NavigationActions.navigate({
+function* pinLoginSaga(): Iterator<Effect> {
+  const navigateToPinLoginNavigatorAction = NavigationActions.navigate({
     routeName: ROUTES.PINLOGIN,
     key: undefined
   });
-  yield put(navigateToPinForgotNavigatorAction);
+  yield put(navigateToPinLoginNavigatorAction);
 }
 function* validatePinSaga(action: PinValidateRequest): Iterator<Effect> {
   try {
     const userPin = action.payload;
-    const basePin = yield call(getPin);
+    const basePin: string = yield call(getPin);
     if (basePin === userPin) {
       // Navigate to the MainNavigator
       const navigateToPinValidNavigatorAction = NavigationActions.navigate({
@@ -50,6 +50,6 @@ function* validatePinSaga(action: PinValidateRequest): Iterator<Effect> {
 }
 
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(PIN_LOGIN_INITIALIZE, pinloginSaga);
+  yield takeLatest(PIN_LOGIN_INITIALIZE, pinLoginSaga);
   yield takeLatest(PIN_LOGIN_VALIDATE_REQUEST, validatePinSaga);
 }
