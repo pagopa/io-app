@@ -1,15 +1,17 @@
 import { MessageWithContentPO } from "../types/MessageWithContentPO";
 
 /**
- * A function to compare two messages by date (created_at)
+ * A function to compare two messages by id.
+ * We use ULID as ID so the comparator just need to order lexicographically.
+ * More @https://github.com/ulid/javascript#monotonic-ulids
  *
  * @param {MessageWithContentPO} m1
  * @param {MessageWithContentPO} m2
  * @returns {number}
  */
-export function messagesComparatorByDateDesc(
+export function messagesComparatorByIdDesc(
   m1: MessageWithContentPO,
   m2: MessageWithContentPO
 ): number {
-  return Date.parse(m2.created_at) - Date.parse(m1.created_at);
+  return m1.id === m2.id ? 0 : m1.id < m2.id ? 1 : -1;
 }

@@ -6,7 +6,7 @@ import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
 import { Action } from "../../../../actions/types";
-import { messagesComparatorByDateDesc } from "../../../../utils/messages";
+import { messagesComparatorByIdDesc } from "../../../../utils/messages";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
@@ -36,7 +36,7 @@ export const orderedMessagesSelector = createSelector(
   (ids, messages) => {
     return [...ids]
       .sort((id1, id2) =>
-        messagesComparatorByDateDesc(messages[id1], messages[id2])
+        messagesComparatorByIdDesc(messages[id1], messages[id2])
       )
       .map(id => messages[id]);
   }
