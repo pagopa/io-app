@@ -22,8 +22,8 @@ import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../reducers/types";
 import { showTransactionDetails } from "../../store/actions/wallet";
 import {
-  hasSelectedTransactions,
-  transactionsSelector
+  hasTransactionsList,
+  transactionsListSelector
 } from "../../store/reducers/wallet";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
@@ -135,9 +135,9 @@ class TransactionsList extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  if (hasSelectedTransactions(state.wallet)) {
+  if (hasTransactionsList(state.wallet)) {
     return {
-      transactions: transactionsSelector(state.wallet)
+      transactions: transactionsListSelector(state.wallet)
     };
   }
   return {

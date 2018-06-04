@@ -1,5 +1,6 @@
 /**
- * A reducer for the wallet
+ * A reducer for the wallet, with some 
+ * selectors and type guards
  */
 
 import { Action } from "../../actions/types";
@@ -13,21 +14,21 @@ import {
 } from "../actions/constants";
 
 export type EmptyState = Readonly<{
-  hasTransaction: boolean;
-  hasTransactions: boolean;
+  hasTransactionForDetails: boolean;
+  hasTransactionsList: boolean;
   transactions: ReadonlyArray<WalletTransaction>;
   transactionsList: ReadonlyArray<number>;
-  hasCreditCard: boolean;
+  hasSelectedCreditCard: boolean;
 }>;
 
 export type SelectedTransactionState = Readonly<{
-  hasTransaction: true;
-  selectedTransactionId: number;
+  hasTransactionForDetails: true;
+  transactionIdForDetails: number;
 }> &
   EmptyState;
 
 export type TransactionsListState = Readonly<{
-  hasTransactions: true;
+  hasTransactionsList: true;
   transactionsList: ReadonlyArray<number>;
 }> &
   EmptyState;
@@ -39,41 +40,56 @@ export type SelectedCreditCardState = Readonly<{
   EmptyState;
 
 export type WalletState =
-  | EmptyState
+  EmptyState
   | SelectedTransactionState
   | TransactionsListState
   | SelectedCreditCardState;
 
 export const INITIAL_STATE: EmptyState = {
-  hasTransaction: false,
-  hasTransactions: false,
-  hasCreditCard: false,
+  hasTransactionForDetails: false,
+  hasTransactionsList: false,
+  hasSelectedCreditCard: false,
   transactions: [],
   transactionsList: []
 };
 
-// typeguard(s)
-export const hasSelectedTransaction = (
+// type guards
+export const hasTransactionForDetails = (
   state: WalletState
-): state is SelectedTransactionState => state.hasTransaction;
-export const hasSelectedTransactions = (
+): state is SelectedTransactionState => state.hasTransactionForDetails;
+export const hasTransactionsList = (
   state: WalletState
-): state is TransactionsListState => state.hasTransactions;
+): state is TransactionsListState => state.hasTransactionsList;
 export const hasSelectedCreditCard = (
   state: WalletState
-): state is SelectedCreditCardState => state.hasCreditCard;
+): state is SelectedCreditCardState => state.hasSelectedCreditCard;
 
 // selectors
-export const transactionSelector = (
+
+/**
+ * Selector for the "transaction for details".
+ * The state stores an id for the requested transactions,
+ * and a list of all the transactions. This selector
+ * iterates on the list to find the one with the matching id
+ * @param walletState the wallet state from which the transaction should be extracted
+ */
+export const transactionForDetailsSelector = (
   walletState: SelectedTransactionState
 ): WalletTransaction => {
   const transaction = walletState.transactions.find(
-    (t: WalletTransaction) => t.id === walletState.selectedTransactionId
+    (t: WalletTransaction) => t.id === walletState.transactionIdForDetails
   );
   return transaction === undefined ? UNKNOWN_TRANSACTION : transaction;
 };
 
-export const transactionsSelector = (
+/**
+ * Selector for the list of selected transactions. 
+ * If a list of transactions has been selected (e.g. latest
+ * transactions on transactions by card), a list of ids is stored.
+ * This selector matches the selected ids with the actual objects
+ * @param walletState the wallet state from which the transactions list should be extracted
+ */
+export const transactionsListSelector = (
   walletState: TransactionsListState
 ): ReadonlyArray<WalletTransaction> => {
   return walletState.transactionsList.map(id => {
@@ -82,17 +98,32 @@ export const transactionsSelector = (
   });
 };
 
-export const latestTransactionsSelector = (
+/**
+ * Identifies the transaction ids of the
+ * latest transactions
+ * @param walletState wallet state from which the latest transactions sould be extracted
+ */
+// WIP no magic numbers
+// WIP sort by date/time
+export const latestTransactionsListSelector = (
   walletState: WalletState
-): ReadonlyArray<number> => walletState.transactions.slice(0, 5).map(t => t.id); // WIP no magic numbers, WIP return ids
+): ReadonlyArray<number> => walletState.transactions.slice(0, 5).map(t => t.id);
 
-export const transactionsByCardSelector = (
+/**
+ * Extracts the transactions ids of the
+ * transactions given a selected credit card
+ * (which is also part of the state)
+ * @param walletState wallet state (SelectedCreditCardState) from which the transactions
+ *                    sould be extracted this state also contains the selected credit card
+ */
+export const transactionsListByCardSelector = (
   walletState: SelectedCreditCardState
 ): ReadonlyArray<number> =>
   walletState.transactions
     .filter(t => t.cardId === walletState.selectedCardId)
     .map(t => t.id);
 
+// reducer
 const reducer = (
   state: WalletState = INITIAL_STATE,
   action: Action
@@ -100,15 +131,15 @@ const reducer = (
   if (action.type === SHOW_TRANSACTION_DETAILS) {
     return {
       ...state,
-      hasTransaction: true,
-      selectedTransactionId: action.payload
+      hasTransactionForDetails: true,
+      transactionIdForDetails: action.payload
     };
   }
   if (action.type === LOAD_LATEST_TRANSACTIONS_LIST) {
     return {
       ...state,
-      hasTransactions: true,
-      transactionsList: latestTransactionsSelector(state)
+      hasTransactionsList: true,
+      transactionsList: latestTransactionsListSelector(state)
     };
   }
   if (action.type === TRANSACTIONS_FETCHED) {
@@ -120,7 +151,7 @@ const reducer = (
   if (action.type === SELECT_CARD) {
     return {
       ...state,
-      hasCreditCard: true,
+      hasSelectedCreditCard: true,
       selectedCardId: action.payload
     };
   }
@@ -130,7 +161,7 @@ const reducer = (
   ) {
     return {
       ...state,
-      transactionsList: transactionsByCardSelector(state)
+      transactionsList: transactionsListByCardSelector(state)
     };
   }
   return state;

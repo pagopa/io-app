@@ -97,6 +97,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public componentDidMount() {
+    // WIP loadTransactions should not be called from here (should be
+    // handled by a saga)
+    // WIP WIP create pivotal story
     this.props.loadTransactions();
     this.props.loadLatestTransactions();
   }
