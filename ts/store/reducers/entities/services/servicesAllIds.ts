@@ -5,10 +5,10 @@
  */
 
 import { Action } from "../../../../actions/types";
-import { ServicesIdsArray } from "../../../../sagas/messages";
 import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
 
-export type ServicesAllIdsState = ServicesIdsArray;
+// An array of services id
+export type ServicesAllIdsState = ReadonlyArray<string>;
 
 export const INITIAL_STATE: ServicesAllIdsState = [];
 

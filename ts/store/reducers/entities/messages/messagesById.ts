@@ -6,10 +6,13 @@
 
 import { Action } from "../../../../actions/types";
 import { GlobalState } from "../../../../reducers/types";
-import { MessagesListObject } from "../../../../sagas/messages";
+import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
 import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
 
-export type MessagesByIdState = MessagesListObject;
+// An object containing MessageWithContentPO keyed by id
+export type MessagesByIdState = Readonly<{
+  [key: string]: MessageWithContentPO;
+}>;
 
 export const INITIAL_STATE: MessagesByIdState = {};
 
@@ -31,9 +34,7 @@ const reducer = (
 };
 
 // Selectors
-export const messagesByIdSelector = (
-  state: GlobalState
-): MessagesListObject => {
+export const messagesByIdSelector = (state: GlobalState): MessagesByIdState => {
   return state.entities.messages.byId;
 };
 

@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import { ReduxProps } from "../../actions/types";
 import I18n from "../../i18n";
 import { GlobalState } from "../../reducers/types";
-import { ServicesListObject } from "../../sagas/messages";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
@@ -22,7 +21,6 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
-  servicesById: ServicesListObject;
 }>;
 
 export type OwnProps = Readonly<{
@@ -98,8 +96,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
     state
   ),
-  messages: orderedMessagesSelector(state),
-  servicesById: state.entities.services.byId
+  messages: orderedMessagesSelector(state)
 });
 
 export default connect(mapStateToProps)(MessagesScreen);

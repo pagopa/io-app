@@ -6,10 +6,10 @@
 
 import { Action } from "../../../../actions/types";
 import { GlobalState } from "../../../../reducers/types";
-import { MessagesIdsArray } from "../../../../sagas/messages";
 import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
 
-export type MessagesAllIdsState = MessagesIdsArray;
+// An array of messages id
+export type MessagesAllIdsState = ReadonlyArray<string>;
 
 export const INITIAL_STATE: MessagesAllIdsState = [];
 
@@ -32,7 +32,7 @@ const reducer = (
 // Selectors
 export const messagesAllIdsSelector = (
   state: GlobalState
-): MessagesIdsArray => {
+): MessagesAllIdsState => {
   return state.entities.messages.allIds;
 };
 

@@ -4,19 +4,21 @@
  * are managed by different global reducers.
  */
 
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { Action } from "../../../../actions/types";
 import { GlobalState } from "../../../../reducers/types";
-import { ServicesListObject } from "../../../../sagas/messages";
 import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
 
-export type ServicesByIdState = ServicesListObject;
+export type ServicesByIdState = Readonly<{
+  [key: string]: ServicePublic;
+}>;
 
-export const INITIAL_STATE: ServicesListObject = {};
+export const INITIAL_STATE: ServicesByIdState = {};
 
 const reducer = (
   state: ServicesByIdState = INITIAL_STATE,
   action: Action
-): ServicesListObject => {
+): ServicesByIdState => {
   switch (action.type) {
     /**
      * A new service has been loaded from the Backend. Add the service to the list object.
@@ -30,9 +32,7 @@ const reducer = (
 };
 
 // Selectors
-export const servicesByIdSelector = (
-  state: GlobalState
-): ServicesListObject => {
+export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => {
   return state.entities.services.byId;
 };
 

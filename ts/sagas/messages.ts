@@ -43,30 +43,17 @@ import {
   MessagesLoadRequest
 } from "../store/actions/messages";
 import { loadServiceSuccess } from "../store/actions/services";
-import { messagesByIdSelector } from "../store/reducers/entities/messages/messagesById";
-import { servicesByIdSelector } from "../store/reducers/entities/services/servicesById";
-import { sessionTokenSelector } from "../store/reducers/session";
 import {
-  MessageWithContentPO,
-  toMessageWithContentPO
-} from "../types/MessageWithContentPO";
+  messagesByIdSelector,
+  MessagesByIdState
+} from "../store/reducers/entities/messages/messagesById";
+import {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../store/reducers/entities/services/servicesById";
+import { sessionTokenSelector } from "../store/reducers/session";
+import { toMessageWithContentPO } from "../types/MessageWithContentPO";
 import { SessionToken } from "../types/SessionToken";
-
-// An object containing MessageWithContentPO keyed by id
-export interface MessagesListObject {
-  [key: string]: MessageWithContentPO;
-}
-
-// An object containing ServicePublic keyed by id
-export interface ServicesListObject {
-  [key: string]: ServicePublic;
-}
-
-// An array of messages id
-export type MessagesIdsArray = ReadonlyArray<string>;
-
-// An array of services id
-export type ServicesIdsArray = ReadonlyArray<string>;
 
 /**
  * A generator to load the message detail from the Backend
@@ -129,12 +116,12 @@ export function* loadMessages(
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
     // Load already cached messages from the store
-    const cachedMessagesById: MessagesListObject = yield select(
+    const cachedMessagesById: MessagesByIdState = yield select(
       messagesByIdSelector
     );
 
     // Load already cached services from the store
-    const cachedServicesById: ServicesListObject = yield select(
+    const cachedServicesById: ServicesByIdState = yield select(
       servicesByIdSelector
     );
 
