@@ -8,6 +8,7 @@ declare module "native-base" {
   namespace NativeBase {
     interface Button extends TouchableOpacityProperties, BsStyle {
       white?: boolean;
+      cancel?: boolean;
     }
   }
 }
@@ -44,6 +45,12 @@ export default (): Theme => {
       }
     },
     ".white": { backgroundColor: "#FFFFFF" },
+    ".cancel": {
+      backgroundColor: variables.brandDarkGray,
+      "NativeBase.Text": {
+        color: variables.colorWhite
+      }
+    },
     "NativeBase.Text": {
       ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize

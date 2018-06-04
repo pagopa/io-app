@@ -10,6 +10,13 @@
     "buttons": {
       "delete": "Elimina",
       "cancel": "Annulla"
+    },
+    "navigator": {
+      "messages": "messaggi",
+      "wallet": "portafoglio",
+      "documents": "documenti",
+      "preferences": "preferenze",
+      "profile": "profilo"
     }
   },
   "connection": {
@@ -106,6 +113,10 @@
     "title": "Regole sul trattamento dei dati personali",
     "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
   },
+  "why_a_fee": {
+    "title": "Perche' devo pagare una commissione?",
+    "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
+  },
   "forms": {
     "validators": {
       "required": "Valore richiesto",
@@ -132,18 +143,19 @@
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
-    "transactionsDetails": "Dettaglio delle operazioni",
+    "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",
     "payAmount": "Importo da pagare",
     "transactionFee": "Costo operazione",
     "why": "Perché?",
-    "causal": "Causale",
+    "paymentReason": "Causale",
     "recipient": "Destinatario",
     "date": "Data",
-    "hour": "Ora",
+    "time": "Ora",
     "receipt": "Ricevuta",
     "seeReceipt": "Vedi la ricevuta",
     "transactions": "Operazioni",
+    "transaction": "Operazione",
     "noTransactions": "Non ci sono operazioni.",
     "noNewTransactions": "Non ci sono nuove operazioni.",
     "lastUsage": "Ultimo utilizzo",

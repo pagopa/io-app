@@ -67,6 +67,26 @@ const customVariables = Object.assign(materialVariables, {
 
   // Icon
   iconFamily: "Entypo",
+  iconSizeBase: 24,
+
+  get iconSize1(): number {
+    return this.iconSizeBase * (2 / 3);
+  },
+  get iconSize2(): number {
+    return this.iconSizeBase * (5 / 6);
+  },
+  get iconSize3(): number {
+    return this.iconSizeBase * 1;
+  },
+  get iconSize4(): number {
+    return this.iconSizeBase * (7 / 6);
+  },
+  get iconSize5(): number {
+    return this.iconSizeBase * 1.5;
+  },
+  get iconSize6(): number {
+    return this.iconSizeBase * 2;
+  },
 
   // Content
   contentPadding: 24,
@@ -119,6 +139,7 @@ const customVariables = Object.assign(materialVariables, {
   // Text
   textColor: "#5C6F82",
   textLinkColor: "#0063CF",
+  textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
 
   // Spacer

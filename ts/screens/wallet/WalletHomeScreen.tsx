@@ -61,7 +61,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
           bordered={true}
           block={true}
           style={WalletStyles.addPaymentMethodButton}
-          onPress={(): boolean => navigate("")}
+          onPress={(): boolean => navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)}
         >
           <Text style={WalletStyles.addPaymentMethodText}>
             {I18n.t("wallet.newPaymentMethod.addButton")}
