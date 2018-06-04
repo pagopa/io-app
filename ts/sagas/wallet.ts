@@ -6,14 +6,14 @@ import { call, Effect, put, takeLatest } from "redux-saga/effects";
 
 import { WalletAPI } from "../api/wallet/wallet-api";
 import { FETCH_TRANSACTIONS_REQUEST } from "../store/actions/constants";
-import { transactionsLoaded } from "../store/actions/wallet";
+import { transactionsFetched } from "../store/actions/wallet";
 import { WalletTransaction } from "../types/wallet";
 
 function* fetchTransactions(): Iterator<Effect> {
   const transactions: ReadonlyArray<WalletTransaction> = yield call(
     WalletAPI.getAllTransactions
   );
-  yield put(transactionsLoaded(transactions));
+  yield put(transactionsFetched(transactions));
 }
 
 // This function listens for Profile related requests and calls the needed saga.

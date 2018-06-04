@@ -22,8 +22,8 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
-  loadLatestTransactions,
-  loadTransactionsRequest
+  loadLatestTransactionsList,
+  fetchTransactionsRequest
 } from "../../store/actions/wallet";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
@@ -136,7 +136,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadTransactions: () => dispatch(loadTransactionsRequest()),
-  loadLatestTransactions: () => dispatch(loadLatestTransactions())
+  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadLatestTransactions: () => dispatch(loadLatestTransactionsList())
 });
 export default connect(undefined, mapDispatchToProps)(WalletHomeScreen);

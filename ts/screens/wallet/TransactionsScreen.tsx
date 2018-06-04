@@ -15,7 +15,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 
 import { connect, Dispatch } from "react-redux";
 import { topContentTouchable } from "../../components/wallet/layout/types";
-import { loadTransactionsBySelectedCard } from "../../store/actions/wallet";
+import { loadTransactionsListBySelectedCard } from "../../store/actions/wallet";
 
 const cardsImage = require("../../../img/wallet/card-tab.png");
 
@@ -67,6 +67,6 @@ class TransactionsScreen extends React.Component<Props, never> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  getTransactionsByCard: () => dispatch(loadTransactionsBySelectedCard())
+  getTransactionsByCard: () => dispatch(loadTransactionsListBySelectedCard())
 });
 export default connect(undefined, mapDispatchToProps)(TransactionsScreen);
