@@ -4,8 +4,8 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import {
-  BasicResponseType,
-  TypeofApiCall
+  TypeofApiCall,
+  TypeofApiResponse
 } from "italia-ts-commons/lib/requests";
 import { Task } from "redux-saga";
 import {
@@ -20,12 +20,12 @@ import {
   take
 } from "redux-saga/effects";
 
-import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import {
   BackendClient,
   BackendClientT,
+  GetMessagesT,
   GetMessageT,
   GetServiceT
 } from "../api/backend";
@@ -66,9 +66,9 @@ export function* loadMessage(
   getMessage: TypeofApiCall<GetMessageT>,
   id: string
 ): IterableIterator<Effect | Error | MessageWithContent> {
-  const response:
-    | BasicResponseType<MessageWithContent>
-    | undefined = yield call(getMessage, { id });
+  const response: TypeofApiResponse<GetMessageT> = yield call(getMessage, {
+    id
+  });
 
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
@@ -90,10 +90,9 @@ export function* loadService(
   getService: TypeofApiCall<GetServiceT>,
   id: string
 ): IterableIterator<Effect | Error | ServicePublic> {
-  const response: BasicResponseType<ServicePublic> | undefined = yield call(
-    getService,
-    { id }
-  );
+  const response: TypeofApiResponse<GetServiceT> = yield call(getService, {
+    id
+  });
 
   if (!response || response.status !== 200) {
     return response ? response.value : Error();
@@ -126,7 +125,7 @@ export function* loadMessages(
     );
 
     // Request the list of messages from the Backend
-    const response: BasicResponseType<Messages> | undefined = yield call(
+    const response: TypeofApiResponse<GetMessagesT> = yield call(
       backendClient.getMessages,
       {}
     );
