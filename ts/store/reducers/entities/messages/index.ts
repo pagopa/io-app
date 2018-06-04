@@ -16,10 +16,10 @@ import messagesByIdReducer, {
   MessagesByIdState
 } from "./messagesById";
 
-export type MessagesState = {
+export type MessagesState = Readonly<{
   byId: MessagesByIdState;
   allIds: MessagesAllIdsState;
-};
+}>;
 
 const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,

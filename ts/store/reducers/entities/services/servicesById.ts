@@ -1,7 +1,6 @@
 /**
  * A reducer to store the services normalized by id
- * It only manages SUCCESS actions because all UI state properties (like
- * loading/error)
+ * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
 
@@ -19,7 +18,11 @@ const reducer = (
   action: Action
 ): ServicesListObject => {
   switch (action.type) {
+    /**
+     * A new service has been loaded from the Backend. Add the service to the list object.
+     */
     case SERVICE_LOAD_SUCCESS:
+      // Use the ID as object key
       return { ...state, [action.payload.service_id]: { ...action.payload } };
     default:
       return state;

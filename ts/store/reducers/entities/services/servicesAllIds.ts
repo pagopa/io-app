@@ -1,7 +1,6 @@
 /**
- * A reducer to store all service id
- * It only manages SUCCESS actions because all UI state properties (like
- * loading/error)
+ * A reducer to store all services id
+ * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
 
@@ -18,6 +17,9 @@ const reducer = (
   action: Action
 ): ServicesAllIdsState => {
   switch (action.type) {
+    /**
+     * A new service has been loaded from the Backend. Add the ID to the array.
+     */
     case SERVICE_LOAD_SUCCESS:
       return [...state, action.payload.service_id];
 

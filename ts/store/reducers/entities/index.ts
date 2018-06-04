@@ -7,10 +7,10 @@ import { Action } from "../../../actions/types";
 import messagesReducer, { MessagesState } from "./messages";
 import servicesReducer, { ServicesState } from "./services";
 
-export type EntitiesState = {
+export type EntitiesState = Readonly<{
   messages: MessagesState;
   services: ServicesState;
-};
+}>;
 
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,

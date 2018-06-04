@@ -1,7 +1,6 @@
 /**
  * A reducer to store the messages normalized by id
- * It only manages SUCCESS actions because all UI state properties (like
- * loading/error)
+ * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
 
@@ -19,7 +18,11 @@ const reducer = (
   action: Action
 ): MessagesByIdState => {
   switch (action.type) {
+    /**
+     * A new service has been loaded from the Backend. Add the message to the list object.
+     */
     case MESSAGE_LOAD_SUCCESS:
+      // Use the ID as object key
       return { ...state, [action.payload.id]: { ...action.payload } };
 
     default:

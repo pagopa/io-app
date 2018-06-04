@@ -8,10 +8,10 @@ import servicesAllIdsReducer, { ServicesAllIdsState } from "./servicesAllIds";
 
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
 
-export type ServicesState = {
+export type ServicesState = Readonly<{
   byId: ServicesByIdState;
   allIds: ServicesAllIdsState;
-};
+}>;
 
 const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
