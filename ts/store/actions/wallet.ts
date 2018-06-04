@@ -1,75 +1,98 @@
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 import {
-  LOAD_LATEST_TRANSACTIONS,
-  LOAD_TRANSACTIONS_BY_SELECTED_CARD,
-  LOAD_TRANSACTIONS_REQUEST,
+  LOAD_LATEST_TRANSACTIONS_LIST,
+  LOAD_TRANSACTIONS_LIST_BY_SELECTED_CARD,
+  FETCH_TRANSACTIONS_REQUEST,
   SELECT_CARD,
-  TRANSACTION_SELECTED,
-  TRANSACTIONS_LOADED
-} from "../actions/constants"; // TODO add
+  SHOW_TRANSACTION_DETAILS,
+  TRANSACTIONS_FETCHED
+} from "../actions/constants";
 
-export type TransactionSelected = Readonly<{
-  type: typeof TRANSACTION_SELECTED;
-  payload: number;
+/**
+ * Request a fetch of the transactions (this triggers
+ * the fetchTransactions saga)
+ */
+export type FetchTransactionsRequest = Readonly<{
+  type: typeof FETCH_TRANSACTIONS_REQUEST;
 }>;
 
-export type LoadTransactions = Readonly<{
-  type: typeof TRANSACTIONS_LOADED;
+/**
+ * The list of (all) transactions has been fetched via the API
+ */
+export type TransactionsFetched = Readonly<{
+  type: typeof TRANSACTIONS_FETCHED;
   payload: ReadonlyArray<WalletTransaction>;
 }>;
 
-export type LoadLatestTransactions = Readonly<{
-  type: typeof LOAD_LATEST_TRANSACTIONS;
+/**
+ * a transaction's details are requested
+ */
+export type ShowTransactionDetails = Readonly<{
+  type: typeof SHOW_TRANSACTION_DETAILS;
+  payload: number;
 }>;
 
-export type LoadTransactionsRequest = Readonly<{
-  type: typeof LOAD_TRANSACTIONS_REQUEST;
+/**
+ * Requests loading in the store the list
+ * of latest transactions
+ */
+export type LoadLatestTransactionsList = Readonly<{
+  type: typeof LOAD_LATEST_TRANSACTIONS_LIST;
 }>;
 
+/**
+ * A card has been selected for showing the transactions
+ */
 export type SelectCard = Readonly<{
   type: typeof SELECT_CARD;
   payload: number;
 }>;
 
-export type LoadTransactionsBySelectedCard = Readonly<{
-  type: typeof LOAD_TRANSACTIONS_BY_SELECTED_CARD;
+/**
+ * Requests loading in the store the list of
+ * transactions associated with a previously
+ * selected credit card (already in the store)
+ */
+export type LoadTransactionsListBySelectedCard = Readonly<{
+  type: typeof LOAD_TRANSACTIONS_LIST_BY_SELECTED_CARD;
 }>;
 
 export type WalletActions =
-  | TransactionSelected
-  | LoadTransactions
-  | LoadLatestTransactions
+    FetchTransactionsRequest
+  | TransactionsFetched
+  | ShowTransactionDetails
+  | LoadLatestTransactionsList
   | SelectCard
-  | LoadTransactionsBySelectedCard;
+  | LoadTransactionsListBySelectedCard;
 
-export const transactionSelected = (
+  export const fetchTransactionsRequest = (): FetchTransactionsRequest => ({
+  type: FETCH_TRANSACTIONS_REQUEST
+});
+  
+export const transactionsFetched = (
+  transactions: ReadonlyArray<WalletTransaction>
+): TransactionsFetched => ({
+  type: TRANSACTIONS_FETCHED,
+  payload: transactions
+});
+
+export const showTransactionDetails = (
   transaction: WalletTransaction
-): TransactionSelected => ({
-  type: TRANSACTION_SELECTED,
+): ShowTransactionDetails => ({
+  type: SHOW_TRANSACTION_DETAILS,
   payload: transaction.id
 });
 
-export const loadTransactionsRequest = (): LoadTransactionsRequest => ({
-  type: LOAD_TRANSACTIONS_REQUEST
-});
-
-export const loadLatestTransactions = (): LoadLatestTransactions => ({
-  type: LOAD_LATEST_TRANSACTIONS
-});
-
-export const loadTransactionsBySelectedCard = (): LoadTransactionsBySelectedCard => ({
-  type: LOAD_TRANSACTIONS_BY_SELECTED_CARD
-});
-
-export const transactionsLoaded = (
-  transactions: ReadonlyArray<WalletTransaction>
-): LoadTransactions => ({
-  type: TRANSACTIONS_LOADED,
-  payload: transactions
+export const loadLatestTransactionsList = (): LoadLatestTransactionsList => ({
+  type: LOAD_LATEST_TRANSACTIONS_LIST
 });
 
 export const selectCard = (card: CreditCard): SelectCard => ({
   type: SELECT_CARD,
   payload: card.id
+});
+
+export const loadTransactionsListBySelectedCard = (): LoadTransactionsListBySelectedCard => ({
+  type: LOAD_TRANSACTIONS_LIST_BY_SELECTED_CARD
 });

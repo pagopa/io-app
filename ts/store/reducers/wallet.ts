@@ -5,11 +5,11 @@
 import { Action } from "../../actions/types";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 import {
-  LOAD_LATEST_TRANSACTIONS,
-  LOAD_TRANSACTIONS_BY_SELECTED_CARD,
+  LOAD_LATEST_TRANSACTIONS_LIST,
+  LOAD_TRANSACTIONS_LIST_BY_SELECTED_CARD,
   SELECT_CARD,
-  TRANSACTION_SELECTED,
-  TRANSACTIONS_LOADED
+  SHOW_TRANSACTION_DETAILS,
+  TRANSACTIONS_FETCHED
 } from "../actions/constants";
 
 export type EmptyState = Readonly<{
@@ -97,21 +97,21 @@ const reducer = (
   state: WalletState = INITIAL_STATE,
   action: Action
 ): WalletState => {
-  if (action.type === TRANSACTION_SELECTED) {
+  if (action.type === SHOW_TRANSACTION_DETAILS) {
     return {
       ...state,
       hasTransaction: true,
       selectedTransactionId: action.payload
     };
   }
-  if (action.type === LOAD_LATEST_TRANSACTIONS) {
+  if (action.type === LOAD_LATEST_TRANSACTIONS_LIST) {
     return {
       ...state,
       hasTransactions: true,
       transactionsList: latestTransactionsSelector(state)
     };
   }
-  if (action.type === TRANSACTIONS_LOADED) {
+  if (action.type === TRANSACTIONS_FETCHED) {
     return {
       ...state,
       transactions: action.payload
@@ -125,7 +125,7 @@ const reducer = (
     };
   }
   if (
-    action.type === LOAD_TRANSACTIONS_BY_SELECTED_CARD &&
+    action.type === LOAD_TRANSACTIONS_LIST_BY_SELECTED_CARD &&
     hasSelectedCreditCard(state)
   ) {
     return {

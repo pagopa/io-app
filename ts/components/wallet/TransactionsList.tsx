@@ -20,7 +20,7 @@ import { connect, Dispatch } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../reducers/types";
-import { transactionSelected } from "../../store/actions/wallet";
+import { showTransactionDetails } from "../../store/actions/wallet";
 import {
   hasSelectedTransactions,
   transactionsSelector
@@ -147,6 +147,6 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   selectTransaction: (item: WalletTransaction) =>
-    dispatch(transactionSelected(item))
+    dispatch(showTransactionDetails(item))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
