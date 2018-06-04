@@ -69,4 +69,7 @@ class TransactionsScreen extends React.Component<Props, never> {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   getTransactionsByCard: () => dispatch(loadTransactionsListBySelectedCard())
 });
-export default connect(undefined, mapDispatchToProps)(TransactionsScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(TransactionsScreen);

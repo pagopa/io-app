@@ -1,5 +1,5 @@
 /**
- * A reducer for the wallet, with some 
+ * A reducer for the wallet, with some
  * selectors and type guards
  */
 
@@ -40,7 +40,7 @@ export type SelectedCreditCardState = Readonly<{
   EmptyState;
 
 export type WalletState =
-  EmptyState
+  | EmptyState
   | SelectedTransactionState
   | TransactionsListState
   | SelectedCreditCardState;
@@ -83,7 +83,7 @@ export const transactionForDetailsSelector = (
 };
 
 /**
- * Selector for the list of selected transactions. 
+ * Selector for the list of selected transactions.
  * If a list of transactions has been selected (e.g. latest
  * transactions on transactions by card), a list of ids is stored.
  * This selector matches the selected ids with the actual objects

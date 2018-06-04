@@ -212,4 +212,7 @@ class CreditCardComponent extends React.Component<Props> {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   selectCard: (card: CreditCard) => dispatch(selectCard(card))
 });
-export default connect(undefined, mapDispatchToProps)(CreditCardComponent);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(CreditCardComponent);

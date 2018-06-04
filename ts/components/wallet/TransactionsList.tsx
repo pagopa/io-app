@@ -149,4 +149,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   selectTransaction: (item: WalletTransaction) =>
     dispatch(showTransactionDetails(item))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionsList);

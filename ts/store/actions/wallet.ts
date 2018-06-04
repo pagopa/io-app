@@ -1,9 +1,9 @@
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 import {
+  FETCH_TRANSACTIONS_REQUEST,
   LOAD_LATEST_TRANSACTIONS_LIST,
   LOAD_TRANSACTIONS_LIST_BY_SELECTED_CARD,
-  FETCH_TRANSACTIONS_REQUEST,
   SELECT_CARD,
   SHOW_TRANSACTION_DETAILS,
   TRANSACTIONS_FETCHED
@@ -59,17 +59,17 @@ export type LoadTransactionsListBySelectedCard = Readonly<{
 }>;
 
 export type WalletActions =
-    FetchTransactionsRequest
+  | FetchTransactionsRequest
   | TransactionsFetched
   | ShowTransactionDetails
   | LoadLatestTransactionsList
   | SelectCard
   | LoadTransactionsListBySelectedCard;
 
-  export const fetchTransactionsRequest = (): FetchTransactionsRequest => ({
+export const fetchTransactionsRequest = (): FetchTransactionsRequest => ({
   type: FETCH_TRANSACTIONS_REQUEST
 });
-  
+
 export const transactionsFetched = (
   transactions: ReadonlyArray<WalletTransaction>
 ): TransactionsFetched => ({
