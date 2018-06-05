@@ -14,6 +14,7 @@ declare module "native-base" {
       leftAlign?: boolean;
       rightAlign?: boolean;
       colorLabelTab?: boolean;
+      boldSender?: boolean;
     }
   }
 }
@@ -25,9 +26,7 @@ export default (): Theme => {
       color: variables.textLinkColor
     },
     ".bold": {
-      lineHeight: variables.lineHeight1,
-      fontWeight: variables.textBoldWeight,
-      color: variables.h1Color
+      ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
     },
     ".dateFormat": {
       fontWeight: "bold",
@@ -42,6 +41,13 @@ export default (): Theme => {
     ".rightAlign": {
       flex: variables.flexRightAlign
     },
-    lineHeight: variables.lineHeight
+    ".boldSender": {
+      lineHeight: variables.lineHeight1,
+      fontWeight: variables.textBoldWeight,
+      color: variables.h1Color,
+      ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
+    },
+
+   lineHeight: variables.lineHeight
   };
 };

@@ -113,9 +113,6 @@ export const WalletStyles = StyleSheet.create({
       .darken(0.38)
       .string()
   },
-  boldStyle: {
-    fontWeight: "bold"
-  },
   container: {
     flex: 1,
     alignItems: "flex-start",
