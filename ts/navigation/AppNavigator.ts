@@ -1,9 +1,10 @@
 import { SwitchNavigator } from "react-navigation";
 
-import IngressScreen from "../screens/IngressScreen";
+import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
+
 import ROUTES from "./routes";
 
 /**
@@ -15,7 +16,7 @@ const navigator = SwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: IngressScreen
+    screen: QRcodeAcquisitionByScannerScreen // IngressScreen
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users

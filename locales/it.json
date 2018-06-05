@@ -129,7 +129,7 @@
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
-    "wallet": {
+  "wallet": {
     "wallet": "Portafoglio",
     "creditcards": "Carte di Credito",
     "paymentMethods": "Metodi di pagamento",
@@ -195,6 +195,12 @@
     "acceptedCards": "Carte accettate",
     "whyFee": "Perchè la commissione?",
     "chooseMethod":"Scegli il metodo che preferisci"
+  },
+  "QRtoPay": {
+    "byCameraTitle": "QR Code avviso",
+    "cameraUsageInfo":"Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure inserisci manualmente i dati identificativi (IUV e codive ente/azienda).",
+    "setManually":"Inserisci i dati manualmente",
+    "cancel":"Annulla"    
   },
   "saveCard": {
     "saveCard":"Salva la carta",

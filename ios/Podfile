@@ -35,6 +35,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
 end
 
 # Fix a open bug in react-native-config
