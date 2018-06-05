@@ -122,7 +122,7 @@
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
-    "wallet": {
+  "wallet": {
     "wallet": "Portafoglio",
     "creditcards": "Carte di Credito",
     "paymentMethods": "Metodi di pagamento",
@@ -131,6 +131,14 @@
       "add": "aggiungi",
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
+    },
+    "AddManager": {
+      "title":"Scegli il gestore",
+      "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
+      "infobold":"Scegli il soggetto economico",
+      "info2":"che dovrà gestire la tua transazione.",
+      "link":"Per saperne di più",
+      "maxFee":"Commissione massima"
     },
     "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",

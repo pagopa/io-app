@@ -134,6 +134,14 @@
       "addButton": "Add payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
+    "AddManager": {
+      "title":"Choose the manager",
+      "info":"This card does not belong to the PagoPA payment network.",
+      "infobold":"Choose the economic operator",
+      "info2":"which will havo to manage yout payment.",
+      "link":"Found out more",
+      "maxFee":"Commissione massima"
+    },
     "transactionDetails": "Transaction details",
     "total": "Total",
     "payAmount": "Amount to pay",
