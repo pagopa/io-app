@@ -2,6 +2,7 @@ import { NavigationState } from "react-navigation";
 import { FormStateMap } from "redux-form";
 
 import { Action } from "../actions/types";
+import { EntitiesState } from "../store/reducers/entities";
 import { ErrorState } from "../store/reducers/error";
 import { LoadingState } from "../store/reducers/loading";
 import { NotificationsState } from "../store/reducers/notifications";
@@ -26,4 +27,5 @@ export type GlobalState = Readonly<{
   onboarding: OnboardingState;
   notifications: NotificationsState;
   profile: ProfileState;
+  entities: EntitiesState;
 }>;

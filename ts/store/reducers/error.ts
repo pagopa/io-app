@@ -17,7 +17,8 @@ export type ErrorState = Readonly<
 export const INITIAL_STATE: ErrorState = {
   PIN_CREATE: none,
   PROFILE_LOAD: none,
-  PROFILE_UPDATE: none
+  PROFILE_UPDATE: none,
+  MESSAGES_LOAD: none
 };
 
 /**
