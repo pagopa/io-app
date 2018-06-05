@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
   labelStyle: {
     ...makeFontStyleObject(Platform.select),
     marginBottom: 7,
-    width: 64,
     textAlign: "center",
-    marginRight: 3,
     fontSize: variables.fontSize1
   },
   iconWrapperStyle: {
