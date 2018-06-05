@@ -4,8 +4,8 @@
  * Handles React Native's AppState changes.
  */
 
-import { Action, ApplicationState } from "../actions/types";
 import { APP_STATE_CHANGE_ACTION } from "../store/actions/constants";
+import { Action, ApplicationState } from "../store/actions/types";
 
 export type AppState = Readonly<{
   appState: ApplicationState;

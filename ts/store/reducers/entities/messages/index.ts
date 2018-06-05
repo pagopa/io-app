@@ -5,8 +5,8 @@
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
-import { Action } from "../../../../actions/types";
 import { messagesComparatorByIdDesc } from "../../../../utils/messages";
+import { Action } from "../../../actions/types";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
