@@ -7024,9 +7024,9 @@ tslint-react@^3.5.1:
   dependencies:
     tsutils "^2.13.1"
 
-tslint-sonarts@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/tslint-sonarts/-/tslint-sonarts-1.6.0.tgz#b21366029d83e2426d207174255bb2e09525e162"
+tslint-sonarts@^1.6.0, tslint-sonarts@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/tslint-sonarts/-/tslint-sonarts-1.7.0.tgz#1bcaf9f524c86b8d4cf9a2afae736edffd2e0dea"
   dependencies:
     immutable "^3.8.2"
 
