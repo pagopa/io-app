@@ -1,5 +1,5 @@
-import { ApplicationStateAction } from "../../actions/types";
 import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
+import { ApplicationStateAction } from "../../store/actions/types";
 import appState, { initialAppState } from "../appState";
 
 describe("appState reducer", () => {

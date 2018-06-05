@@ -6,9 +6,9 @@
  */
 
 import { isSome, none, Option } from "fp-ts/lib/Option";
-import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
+import { Action } from "../actions/types";
 
 export type ErrorState = Readonly<
   { [key in FetchRequestActionsType]: Option<string> }
