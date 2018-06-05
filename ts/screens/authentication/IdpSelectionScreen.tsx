@@ -13,13 +13,13 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { ReduxProps } from "../../actions/types";
 import IdpsGrid from "../../components/IdpsGrid";
 import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { selectIdp } from "../../store/actions/session";
+import { ReduxProps } from "../../store/actions/types";
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

@@ -1,7 +1,7 @@
 import { NavigationActions, NavigationState } from "react-navigation";
 
-import { Action } from "../actions/types";
 import AppNavigator from "../navigation/AppNavigator";
+import { Action } from "../store/actions/types";
 
 const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
   NavigationActions.init()

@@ -3,12 +3,12 @@ import * as React from "react";
 import { WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { ReduxProps } from "../../actions/types";
 import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { GlobalState } from "../../reducers/types";
 import { loginFailure, loginSuccess } from "../../store/actions/session";
+import { ReduxProps } from "../../store/actions/types";
 import {
   isUnauthenticatedWithoutIdpSessionState,
   SessionState

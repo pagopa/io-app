@@ -4,9 +4,9 @@
  *
  * - ACTION_NAME_(REQUEST|CANCEL|SUCCESS|FAILURE)
  */
-import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { FetchRequestActionsType } from "../actions/constants";
+import { Action } from "../actions/types";
 
 export type LoadingState = Readonly<
   { [key in FetchRequestActionsType]: boolean }

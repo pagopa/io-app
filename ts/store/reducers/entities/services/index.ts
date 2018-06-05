@@ -3,7 +3,7 @@
  */
 import { combineReducers } from "redux";
 
-import { Action } from "../../../../actions/types";
+import { Action } from "../../../actions/types";
 import servicesAllIdsReducer, { ServicesAllIdsState } from "./servicesAllIds";
 
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
