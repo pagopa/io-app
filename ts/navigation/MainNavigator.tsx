@@ -8,7 +8,7 @@
 import * as React from "react";
 import ROUTES from "./routes";
 
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import { TabBarBottom, TabNavigator } from "react-navigation";
 import I18n from "../i18n";
 import MessagesScreen from "../screens/main/MessagesScreen";
@@ -55,19 +55,17 @@ const getIcon = (routeName: string): string => {
 const styles = StyleSheet.create({
   labelStyle: {
     ...makeFontStyleObject(Platform.select),
-    marginBottom: 7,
     textAlign: "center",
     fontSize: variables.fontSize1
-  },
-  iconWrapperStyle: {
-    marginTop: 12
   },
   tabBarStyle: {
     height: 64,
     backgroundColor: variables.colorWhite,
-    marginLeft: 3,
-    marginRight: 3,
-    borderTopWidth: 0
+    paddingLeft: 3,
+    paddingRight: 3,
+    borderTopWidth: 0,
+    paddingTop: 12,
+    paddingBottom: 7
   }
 });
 
@@ -112,13 +110,11 @@ const navigation = TabNavigator(
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
         return (
-          <View style={styles.iconWrapperStyle}>
-            <Icon
-              name={iconName}
-              size={variables.iconSize3}
-              color={tintColor === null ? undefined : tintColor}
-            />
-          </View>
+          <Icon
+            name={iconName}
+            size={variables.iconSize3}
+            color={tintColor === null ? undefined : tintColor}
+          />
         );
       }
     }),
