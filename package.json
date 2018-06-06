@@ -24,7 +24,7 @@
     "native-base": "^2.4.5",
     "native-base-shoutem-theme": "^0.2.2",
     "react": "16.3.0-alpha.1",
-    "react-native": "0.54.2",
+    "react-native": "0.55.4",
     "react-native-config": "^0.11.2",
     "react-native-confirmation-code-input": "git://github.com/teamdigitale/react-native-confirmation-code-input.git#550ad82",
     "react-native-device-info": "^0.21",
