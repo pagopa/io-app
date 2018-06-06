@@ -3429,9 +3429,9 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
-io-ts@^1.0.5, io-ts@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.1.1.tgz#4c4354edc056d5ba31eb3f9838f876767325e8cf"
+io-ts@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.1.4.tgz#8d8b448fa7d9899e1e4fe32afa8374ee6774fa92"
   dependencies:
     fp-ts "^1.0.0"
 
@@ -3726,12 +3726,12 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
-italia-ts-commons@^1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-1.15.0.tgz#3692ca8c862b37add786f23131419ac700fdf98a"
+italia-ts-commons@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.0.0.tgz#022c99843a588952f63d6445639f2e31be84a528"
   dependencies:
     fp-ts "^1.6.0"
-    io-ts "^1.0.5"
+    io-ts "^1.1.4"
     json-set-map "^1.0.2"
     validator "^10.1.0"
 
