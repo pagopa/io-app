@@ -69,6 +69,7 @@ export const makeFontStyleObject = (
     ios: {
       fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic),
       fontWeight: weight,
+      // tslint:disable-next-line:no-useless-cast
       fontStyle: (isItalic ? "italic" : "normal") as FontStyle
     }
   });
