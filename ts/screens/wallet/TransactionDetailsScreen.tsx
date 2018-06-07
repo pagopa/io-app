@@ -185,9 +185,9 @@ class TransactionDetailsScreen extends React.Component<Props, never> {
   }
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  transaction: transactionForDetailsSelector(
-    state.wallet.transactions
-  ).getOrElse(UNKNOWN_TRANSACTION)
+  transaction: transactionForDetailsSelector(state).getOrElse(
+    UNKNOWN_TRANSACTION
+  )
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);

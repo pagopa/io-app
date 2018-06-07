@@ -58,6 +58,6 @@ class CreditCardsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cards: creditCardsSelector(state.wallet.cards).getOrElse([])
+  cards: creditCardsSelector(state)
 });
 export default connect(mapStateToProps)(CreditCardsScreen);

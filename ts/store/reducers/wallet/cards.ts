@@ -1,77 +1,53 @@
+/**
+ * Reducers, states, selectors and guards for the cards
+ */
 import { none, Option, some } from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
 import { CreditCard } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   SELECT_CARD_FOR_DETAILS
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
 
-export type EmptyState = Readonly<{
-  hasCards: boolean;
-  hasCardSelectedForDetails: boolean;
+export type CardsState = Readonly<{
+  cards: ReadonlyArray<CreditCard>;
+  selectedCardId: Option<number>;
 }>;
 
-export type WithCardsState = Readonly<{
-  hasCards: true;
-  cards: ReadonlyArray<CreditCard>;
-}> &
-  EmptyState;
-
-export type WithSelectedCardState = Readonly<{
-  hasCardSelectedForDetails: true;
-  selectedCardId: number;
-}> &
-  WithCardsState;
-
-export const CARDS_INITIAL_STATE: EmptyState = {
-  hasCards: false,
-  hasCardSelectedForDetails: false
+export const CARDS_INITIAL_STATE: CardsState = {
+  cards: [],
+  selectedCardId: none
 };
-
-export type CardsState = EmptyState | WithCardsState | WithSelectedCardState;
-
-// type guards
-export const hasCreditCards = (state: CardsState): state is WithCardsState =>
-  state.hasCards;
-export const hasCardSelectedForDetails = (
-  state: CardsState
-): state is WithSelectedCardState => state.hasCardSelectedForDetails;
 
 // selectors
-export const creditCardsSelector = (
-  state: CardsState
-): Option<ReadonlyArray<CreditCard>> => {
-  if (hasCreditCards(state)) {
-    return some(state.cards);
-  }
-  return none;
-};
+export const getCards = (state: GlobalState) => state.wallet.cards.cards;
+export const getSelectedCreditCardId = (state: GlobalState) =>
+  state.wallet.cards.selectedCardId;
 
-export const cardForDetailsSelector = (
-  state: CardsState
-): Option<CreditCard> => {
-  if (hasCardSelectedForDetails(state)) {
-    const card = state.cards.find(c => c.id === state.selectedCardId);
-    if (card !== undefined) {
-      return some(card);
-    }
-  }
-  return none;
-};
+export const creditCardsSelector = createSelector(
+  getCards,
+  // define whether an order among cards needs to be established
+  // (e.g. by insertion date, expiration date, ...)
+  (cards: ReadonlyArray<CreditCard>): ReadonlyArray<CreditCard> => cards
+);
 
-const reducer = (state: CardsState = CARDS_INITIAL_STATE, action: Action) => {
+// reducer
+const reducer = (
+  state: CardsState = CARDS_INITIAL_STATE,
+  action: Action
+): CardsState => {
   if (action.type === CARDS_FETCHED) {
     return {
       ...state,
-      hasCards: true,
       cards: action.payload
     };
   }
-  if (action.type === SELECT_CARD_FOR_DETAILS && hasCreditCards(state)) {
+  if (action.type === SELECT_CARD_FOR_DETAILS) {
     return {
       ...state,
-      hasCardSelectedForDetails: true,
-      selectedCardId: action.payload.id
+      selectedCardId: some(action.payload.id)
     };
   }
   return state;

@@ -22,8 +22,10 @@ import ROUTES from "../../navigation/routes";
 
 import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
-import { transactionsBySelectedCardSelector } from "../../store/reducers/wallet";
-import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
+import {
+  latestTransactionsSelector,
+  transactionsByCardSelector
+} from "../../store/reducers/wallet/transactions";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 
@@ -137,16 +139,12 @@ const mapStateToProps = (
   switch (props.display) {
     case TransactionsDisplayed.LATEST: {
       return {
-        transactions: latestTransactionsSelector(
-          state.wallet.transactions
-        ).getOrElse([])
+        transactions: latestTransactionsSelector(state)
       };
     }
     case TransactionsDisplayed.BY_CARD: {
       return {
-        transactions: transactionsBySelectedCardSelector(
-          state.wallet
-        ).getOrElse([])
+        transactions: transactionsByCardSelector(state)
       };
     }
   }
