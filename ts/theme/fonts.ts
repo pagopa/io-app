@@ -28,7 +28,10 @@ export const fontWeights = {
 
 export type FontFamily = keyof typeof fonts;
 export type FontWeight = keyof typeof fontWeights;
-type FontStyle = "normal" | "italic";
+export const enum FontStyle {
+  "normal" = "normal",
+  "italic" = "italic"
+}
 
 export type FontStyleObject = {
   fontFamily: string;
@@ -69,7 +72,6 @@ export const makeFontStyleObject = (
     ios: {
       fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic),
       fontWeight: weight,
-      // tslint:disable-next-line:no-useless-cast
-      fontStyle: (isItalic ? "italic" : "normal") as FontStyle
+      fontStyle: isItalic ? FontStyle.italic : FontStyle.normal
     }
   });
