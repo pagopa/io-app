@@ -141,6 +141,16 @@
       "addButton": "Add payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
+    "insertManually":{
+      "header": "Insert notice data",
+      "title": "Insert the notice data",
+      "info": " which allow us to recognize the transaction", 
+      "link": "Where they are?",
+      "noticeCode":"Notice code",
+      "entityCode":"Lender Fiscal Code",
+      "amount": "Amount EUR",
+      "proceed": "Proceed with the transaction"
+    },
     "transactionDetails": "Transaction details",
     "total": "Total",
     "payAmount": "Amount to pay",
