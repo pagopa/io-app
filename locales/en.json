@@ -144,7 +144,7 @@
     "insertManually":{
       "header": "Insert notice data",
       "title": "Insert the notice data",
-      "info": " which allow us to recognize the transaction", 
+      "info": "which allow us to identify the transaction", 
       "link": "Where they are?",
       "noticeCode":"Notice code",
       "entityCode":"Lender Fiscal Code",
