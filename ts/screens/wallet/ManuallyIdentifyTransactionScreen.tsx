@@ -1,3 +1,11 @@
+/**
+ * This screen allows the user to manually insert the data which identify the transaction:
+ * - Numero Avviso, which includes: aux, digit, application code, codice IUV
+ * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
+ * - amount of the transaction
+ *  TO DO: integrate modal to obtain details on the data to insert for manually identifying the transaction
+ */
+
 import { none, Option, some } from "fp-ts/lib/Option";
 import {
   Body,
@@ -15,11 +23,9 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -31,25 +37,7 @@ type State = Readonly<{
   Amount: Option<string>;
 }>;
 
-const style = StyleSheet.create({
-  content: {
-    paddingRight: variables.contentPadding,
-    paddingLeft: variables.contentPadding
-  }
-});
-
-/**
- * This screen allows the user inserts manually the data which identify the transaction:
- * - Numero Avviso, which includes: aux, digit, application code, codice IUV
- * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
- * - amount of the transaction
- *  TO DO: integrate modal to obtain details on the data to insert for manually identifying the transaction
- */
-
-export class ManuallyIdentifyTransactionScreen extends React.Component<
-  Props,
-  State
-> {
+export class ManuallyIdentifyTransactionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -76,7 +64,7 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<
             <Text>{I18n.t("wallet.insertManually.header")}</Text>
           </Body>
         </AppHeader>
-        <Content style={style.content}>
+        <Content>
           <H1>{I18n.t("wallet.insertManually.title")}</H1>
           <Text>{I18n.t("wallet.insertManually.info")}</Text>
           <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>

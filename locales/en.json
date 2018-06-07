@@ -145,7 +145,7 @@
       "header": "Insert notice data",
       "title": "Insert the notice data",
       "info": "which allow us to identify the transaction", 
-      "link": "Where they are?",
+      "link": "Where are they?",
       "noticeCode":"Notice code",
       "entityCode":"Lender Fiscal Code",
       "amount": "Amount EUR",
