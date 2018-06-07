@@ -10,7 +10,7 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 
-import { GlobalState } from "../../reducers/types";
+import { GlobalState } from "../reducers/types";
 import { ApplicationActions } from "./application";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
 import { ErrorActions } from "./error";

@@ -19,10 +19,10 @@ import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
 import { createPin } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
+import { GlobalState } from "../../store/reducers/types";
 
 type ReduxMappedProps = {
   pinSaveError: Option<string>;

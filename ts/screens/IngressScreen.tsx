@@ -3,10 +3,10 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { GlobalState } from "../reducers/types";
 import { applicationInitialized } from "../store/actions/application";
 import { ReduxProps } from "../store/actions/types";
 import { SessionState } from "../store/reducers/session";
+import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 type ReduxMappedProps = {
   session: SessionState;
