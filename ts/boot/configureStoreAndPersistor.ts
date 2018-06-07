@@ -1,3 +1,4 @@
+import { AsyncStorage } from "react-native";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
@@ -8,7 +9,6 @@ import {
   Persistor,
   persistStore
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
 import thunk from "redux-thunk";
 
@@ -23,7 +23,7 @@ const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
 const persistConfig: PersistConfig = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
   /**
    * Sections of the store that must be persisted and rehydrated.
    */
