@@ -26,7 +26,7 @@ export default (): Theme => {
       color: variables.textLinkColor
     },
     ".bold": {
-      ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
+      ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
     ".dateFormat": {
       fontWeight: "bold",
@@ -45,9 +45,9 @@ export default (): Theme => {
       lineHeight: variables.lineHeight1,
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color,
-      ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
+      ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
 
-   lineHeight: variables.lineHeight
+    lineHeight: variables.lineHeight
   };
 };

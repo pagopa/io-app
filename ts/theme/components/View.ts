@@ -13,6 +13,7 @@ declare module "native-base" {
       footer?: boolean;
       header?: boolean;
       borderBottomTab?: boolean;
+      content?: boolean;
     }
   }
 }
@@ -56,6 +57,11 @@ export default (): Theme => {
       shadowRadius: variables.footerShadowRadius,
       // Android shadow
       elevation: variables.footerElevation
+    },
+    ".content": {
+      padding: variables.contentPadding,
+      backgroundColor: variables.contentBackground,
+      flex: 1
     }
   };
 };

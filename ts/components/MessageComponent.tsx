@@ -5,12 +5,14 @@ import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
 import I18n from "../i18n";
+import { ServicesState } from "../store/reducers/entities/services";
 
 export type OwnProps = {
   sender: string;
   subject: string;
   key: string;
   date: string;
+  services: ServicesState;
 };
 
 export type Props = OwnProps;
@@ -21,8 +23,8 @@ export type Props = OwnProps;
 class MessageComponent extends React.Component<Props> {
   public formatDate(date: string): string {
     moment.locales();
-    const dateStringToNumber = +date;
-    const messageDate = moment(new Date(dateStringToNumber * 1000)).format();
+
+    const messageDate = moment(new Date(date)).format();
     if (
       moment(messageDate, "YYYYMMDDh")
         .fromNow()
@@ -58,13 +60,17 @@ class MessageComponent extends React.Component<Props> {
     }
   }
 
+  public extractSenderName(sender: string, services: ServicesState): string {
+    return services.byId[sender].organization_name;
+  }
+
   public render() {
-    const { subject, sender, date, key } = this.props;
+    const { subject, sender, date, key, services } = this.props;
     return (
       <ListItem key={key}>
         <Left>
-          <Text leftAlign={true} bold={true}>
-            {sender}
+          <Text leftAlign={true} boldSender={true}>
+            {this.extractSenderName(sender, services)}
           </Text>
           <Text leftAlign={true}>{subject}</Text>
         </Left>

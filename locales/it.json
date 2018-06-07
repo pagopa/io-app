@@ -211,7 +211,11 @@
       "zero": "Nessun messaggio",
       "one": "Hai 1 messaggio",
       "other": "Hai {{count}} messaggi"
-    }
+    },
+    "headerTitle": "io.italia.it",
+    "contentTitle": "Messaggi",
+    "loading": "Caricamento dei messaggi...",
+    "yesterday": "ieri"
   },
   "notifications": {
     "installation": {
@@ -219,12 +223,7 @@
       "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
     }
   },
-  "messages": {
-    "headerTitle": "io.italia.it",
-    "contentTitle": "Messaggi",
-    "loading": "Caricamento dei messaggi...",
-    "yesterday": "ieri"
-  },
+
   "tabMessages": {
     "itemAll": "Tutti",
     "itemDeadlines": "Scadenze"
