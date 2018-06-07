@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "color": "^3.0.0",
+    "date-fns": "^1.29.0",
     "email-validator": "^2.0.3",
     "fp-ts": "^1.4.1",
     "io-ts": "^1.1.1",
     "italia-ts-commons": "^1.15.0",
     "lodash": "^4.17.10",
-    "moment": "^2.22.1",
     "native-base": "^2.4.2",
     "native-base-shoutem-theme": "^0.2.2",
     "react": "16.3.0-alpha.1",

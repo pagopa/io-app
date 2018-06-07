@@ -8,7 +8,7 @@ export default (): Theme => {
     },
     ".active": {
       "NativeBase.Text": {
-        color: variables.brandDarkenBlue,
+        color: variables.brandLightBlue,
         fontWeight: "600"
       }
     },

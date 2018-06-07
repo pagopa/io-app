@@ -23,7 +23,7 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
-  services: ServicesState;
+  services: Readonly<ServicesState>;
 }>;
 
 export type OwnProps = Readonly<{
@@ -31,7 +31,7 @@ export type OwnProps = Readonly<{
 }>;
 
 interface IMessagesList {
-  item: MessageWithContentPO;
+  item: Readonly<MessageWithContentPO>;
   index: number;
 }
 
@@ -93,7 +93,7 @@ class MessagesScreen extends React.Component<Props, never> {
     return (
       <Tabs
         tabBarUnderlineStyle={{
-          backgroundColor: variables.brandDarkenBlue
+          backgroundColor: variables.brandLightBlue
         }}
         initialPage={0}
       >

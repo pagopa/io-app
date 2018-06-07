@@ -7,9 +7,9 @@
 
 // tslint:disable:no-invalid-this
 
+import color from "color";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
-
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
@@ -42,7 +42,9 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
-  brandDarkenBlue: "#0073E6",
+  brandLightBlue: color("#0066CC")
+    .lighten(0.15)
+    .hex(),
 
   cardFontColor: "#17324D",
   colorWhite: "white",
@@ -68,9 +70,9 @@ const customVariables = Object.assign(materialVariables, {
   get fontSize6(): number {
     return this.fontSizeBase * 1.75;
   },
-  lineHeight: 24,
+  lineHeightBase: 24,
   get lineHeight1(): ThemeSimpleValue {
-    return this.lineHeight * 0.75;
+    return this.lineHeightBase * 0.75;
   },
 
   // Icon

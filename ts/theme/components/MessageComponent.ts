@@ -1,13 +1,5 @@
-import { TouchableOpacityProperties } from "react-native";
-
 import { Theme } from "../types";
 import variables from "../variables";
-
-declare module "native-base" {
-  namespace NativeBase {
-    interface MessageComponent extends TouchableOpacityProperties, BsStyle {}
-  }
-}
 
 export default (): Theme => {
   return {

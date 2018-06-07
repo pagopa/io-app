@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import moment from "moment";
+import { format } from "date-fns";
+import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
@@ -12,7 +13,7 @@ export type OwnProps = {
   subject: string;
   key: string;
   date: string;
-  services: ServicesState;
+  services: Readonly<ServicesState>;
 };
 
 export type Props = OwnProps;
@@ -22,46 +23,29 @@ export type Props = OwnProps;
  */
 class MessageComponent extends React.Component<Props> {
   public formatDate(date: string): string {
-    moment.locales();
-
-    const messageDate = moment(new Date(date)).format();
+    const distance = distanceInWordsToNow(new Date(date));
     if (
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("hours ago") === true ||
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("hour ago") === true ||
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("minutes ago") === true ||
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("minute ago") === true
+      distance.includes("hours") === true ||
+      distance.includes("hour") === true ||
+      distance.includes("minutes ") === true ||
+      distance.includes("minute") === true ||
+      distance.includes("seconds") === true
     ) {
-      return moment(messageDate).format("H.mm");
-    } else if (
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("a day ago") === true
-    ) {
+      return format(new Date(date), "H.mm");
+    } else if (distance.includes("1 day") === true) {
       return I18n.t("messages.yesterday");
     } else if (
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("year") === true ||
-      moment(messageDate, "YYYYMMDDh")
-        .fromNow()
-        .includes("years") === true
+      distance.includes("year") === true ||
+      distance.includes("years") === true
     ) {
-      return moment(messageDate).format("D/MM/YY");
+      return format(new Date(date), "D/MM/YY");
     } else {
-      return moment(messageDate).format("D/MM");
+      return format(new Date(date), "DD/MM");
     }
   }
 
-  public extractSenderName(sender: string, services: ServicesState): string {
-    return services.byId[sender].organization_name;
+  public getSenderName(senderId: string, services: ServicesState): string {
+    return services.byId[senderId].organization_name;
   }
 
   public render() {
@@ -70,7 +54,7 @@ class MessageComponent extends React.Component<Props> {
       <ListItem key={key}>
         <Left>
           <Text leftAlign={true} boldSender={true}>
-            {this.extractSenderName(sender, services)}
+            {this.getSenderName(sender, services)}
           </Text>
           <Text leftAlign={true}>{subject}</Text>
         </Left>

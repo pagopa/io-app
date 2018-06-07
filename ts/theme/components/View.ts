@@ -33,7 +33,7 @@ export default (): Theme => {
     },
 
     ".borderBottomTab": {
-      borderBottomColor: variables.brandDarkenBlue,
+      borderBottomColor: variables.brandLightBlue,
       borderBottomWidth: 2
     },
     ".modal": {

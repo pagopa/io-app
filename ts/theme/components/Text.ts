@@ -8,7 +8,6 @@ declare module "native-base" {
   namespace NativeBase {
     interface Text extends TextProperties {
       link?: boolean;
-      item?: boolean;
       bold?: boolean;
       dateFormat?: boolean;
       leftAlign?: boolean;
@@ -36,7 +35,7 @@ export default (): Theme => {
       flex: variables.flexLeftAlign
     },
     ".colorLabelTab": {
-      color: variables.brandDarkenBlue
+      color: variables.brandLightBlue
     },
     ".rightAlign": {
       flex: variables.flexRightAlign
@@ -47,7 +46,6 @@ export default (): Theme => {
       color: variables.h1Color,
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
-
-    lineHeight: variables.lineHeight
+    lineHeight: variables.lineHeightBase
   };
 };
