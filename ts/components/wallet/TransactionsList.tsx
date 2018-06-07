@@ -20,14 +20,12 @@ import { connect, Dispatch } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
-import {
-  latestTransactionsSelector
-} from "../../store/reducers/wallet/transactions";
+import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
+import { GlobalState } from "../../store/reducers/types";
+import { transactionsBySelectedCardSelector } from "../../store/reducers/wallet";
+import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
-import { selectTransactionForDetails } from '../../store/actions/wallet/transactions';
-import { transactionsBySelectedCardSelector } from '../../store/reducers/wallet';
-import { GlobalState } from '../../store/reducers/types';
 
 type ReduxMappedStateProps = Readonly<{
   transactions: ReadonlyArray<WalletTransaction>;
@@ -40,13 +38,13 @@ type ReduxMappedDispatchProps = Readonly<{
 export enum TransactionsDisplayed {
   LATEST,
   BY_CARD
-};
+}
 
 type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;
-  display: TransactionsDisplayed
+  display: TransactionsDisplayed;
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
@@ -54,7 +52,6 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  * Transactions List component
  */
 class TransactionsList extends React.Component<Props> {
-
   private renderDate(transaction: WalletTransaction) {
     const datetime: string = `${transaction.date} - ${transaction.time}`;
     if (transaction.isNew) {
@@ -133,17 +130,24 @@ class TransactionsList extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState, props: OwnProps): ReduxMappedStateProps => {
+const mapStateToProps = (
+  state: GlobalState,
+  props: OwnProps
+): ReduxMappedStateProps => {
   switch (props.display) {
     case TransactionsDisplayed.LATEST: {
       return {
-        transactions: latestTransactionsSelector(state.wallet.transactions).getOrElse([])
-      }
+        transactions: latestTransactionsSelector(
+          state.wallet.transactions
+        ).getOrElse([])
+      };
     }
     case TransactionsDisplayed.BY_CARD: {
       return {
-        transactions: transactionsBySelectedCardSelector(state.wallet).getOrElse([])
-      }
+        transactions: transactionsBySelectedCardSelector(
+          state.wallet
+        ).getOrElse([])
+      };
     }
   }
   return { transactions: [] };

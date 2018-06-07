@@ -3,18 +3,25 @@
  * selectors and type guards
  */
 
-import { CARDS_INITIAL_STATE, CardsState, hasCardSelectedForDetails } from './cards';
-import { TransactionsState, TRANSACTIONS_INITIAL_STATE, transactionsByCardSelector } from './transactions';
-import { combineReducers } from 'redux';
-import transactionsReducer from "./transactions";
+import { none, Option } from "fp-ts/lib/Option";
+import { combineReducers } from "redux";
+import { WalletTransaction } from "../../../types/wallet";
+import {
+  CARDS_INITIAL_STATE,
+  CardsState,
+  hasCardSelectedForDetails
+} from "./cards";
 import cardsReducer from "./cards";
-import { WalletTransaction } from '../../../types/wallet';
-import { Option, none } from 'fp-ts/lib/Option';
-
+import {
+  TRANSACTIONS_INITIAL_STATE,
+  transactionsByCardSelector,
+  TransactionsState
+} from "./transactions";
+import transactionsReducer from "./transactions";
 
 export type WalletState = Readonly<{
-  transactions: TransactionsState,
-  cards: CardsState
+  transactions: TransactionsState;
+  cards: CardsState;
 }>;
 
 export const INITIAL_STATE: WalletState = {
@@ -22,18 +29,22 @@ export const INITIAL_STATE: WalletState = {
   cards: CARDS_INITIAL_STATE
 };
 
-
 // selectors
-// transactionsBySelectedCardSelector requires both the transactions and the 
+// transactionsBySelectedCardSelector requires both the transactions and the
 // cards states, hence its positioning here
-export const transactionsBySelectedCardSelector = (state: WalletState): Option<ReadonlyArray<WalletTransaction>> => {
+export const transactionsBySelectedCardSelector = (
+  state: WalletState
+): Option<ReadonlyArray<WalletTransaction>> => {
   const transactionsState = state.transactions;
   const cardsState = state.cards;
   if (hasCardSelectedForDetails(cardsState)) {
-    return transactionsByCardSelector(transactionsState, cardsState.selectedCardId)
+    return transactionsByCardSelector(
+      transactionsState,
+      cardsState.selectedCardId
+    );
   }
   return none;
-}
+};
 
 const reducer = combineReducers({
   transactions: transactionsReducer,

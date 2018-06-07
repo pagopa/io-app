@@ -10,9 +10,11 @@ import { Image } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
-import TransactionsList, { TransactionsDisplayed } from "../../components/wallet/TransactionsList";
 import { topContentTouchable } from "../../components/wallet/layout/types";
+import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
+import TransactionsList, {
+  TransactionsDisplayed
+} from "../../components/wallet/TransactionsList";
 
 const cardsImage = require("../../../img/wallet/card-tab.png");
 

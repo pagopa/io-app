@@ -5,11 +5,14 @@
 import { call, Effect, put, takeLatest } from "redux-saga/effects";
 
 import { WalletAPI } from "../api/wallet/wallet-api";
-import { FETCH_TRANSACTIONS_REQUEST, FETCH_CARDS_REQUEST } from "../store/actions/constants";
+import {
+  FETCH_CARDS_REQUEST,
+  FETCH_TRANSACTIONS_REQUEST
+} from "../store/actions/constants";
+import { cardsFetched } from "../store/actions/wallet/cards";
 import { transactionsFetched } from "../store/actions/wallet/transactions";
+import { CreditCard } from "../types/CreditCard";
 import { WalletTransaction } from "../types/wallet";
-import { CreditCard } from '../types/CreditCard';
-import { cardsFetched } from '../store/actions/wallet/cards';
 
 function* fetchTransactions(): Iterator<Effect> {
   const transactions: ReadonlyArray<WalletTransaction> = yield call(
@@ -18,10 +21,8 @@ function* fetchTransactions(): Iterator<Effect> {
   yield put(transactionsFetched(transactions));
 }
 
-function *fetchCards(): Iterator<Effect> {
-  const cards: ReadonlyArray<CreditCard> = yield call(
-    WalletAPI.getCreditCards
-  );
+function* fetchCards(): Iterator<Effect> {
+  const cards: ReadonlyArray<CreditCard> = yield call(WalletAPI.getCreditCards);
   yield put(cardsFetched(cards));
 }
 

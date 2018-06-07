@@ -1,26 +1,32 @@
-
 import { WalletTransaction } from "../../../types/wallet";
 import {
-  TRANSACTIONS_FETCHED, FETCH_TRANSACTIONS_REQUEST, SELECT_TRANSACTION_FOR_DETAILS
+  FETCH_TRANSACTIONS_REQUEST,
+  SELECT_TRANSACTION_FOR_DETAILS,
+  TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 
 export type TransactionsFetched = Readonly<{
-  type: typeof TRANSACTIONS_FETCHED,
-  payload: ReadonlyArray<WalletTransaction>
+  type: typeof TRANSACTIONS_FETCHED;
+  payload: ReadonlyArray<WalletTransaction>;
 }>;
 
 export type FetchTransactionsRequest = Readonly<{
-  type: typeof FETCH_TRANSACTIONS_REQUEST
+  type: typeof FETCH_TRANSACTIONS_REQUEST;
 }>;
 
 export type SelectTransactionForDetails = Readonly<{
-  type: typeof SELECT_TRANSACTION_FOR_DETAILS,
-  payload: WalletTransaction
+  type: typeof SELECT_TRANSACTION_FOR_DETAILS;
+  payload: WalletTransaction;
 }>;
 
-export type TransactionsActions = TransactionsFetched | FetchTransactionsRequest | SelectTransactionForDetails;
+export type TransactionsActions =
+  | TransactionsFetched
+  | FetchTransactionsRequest
+  | SelectTransactionForDetails;
 
-export const transactionsFetched = (transactions: ReadonlyArray<WalletTransaction>): TransactionsFetched => ({
+export const transactionsFetched = (
+  transactions: ReadonlyArray<WalletTransaction>
+): TransactionsFetched => ({
   type: TRANSACTIONS_FETCHED,
   payload: transactions
 });
@@ -29,7 +35,9 @@ export const fetchTransactionsRequest = (): FetchTransactionsRequest => ({
   type: FETCH_TRANSACTIONS_REQUEST
 });
 
-export const selectTransactionForDetails = (transaction: WalletTransaction): SelectTransactionForDetails => ({
+export const selectTransactionForDetails = (
+  transaction: WalletTransaction
+): SelectTransactionForDetails => ({
   type: SELECT_TRANSACTION_FOR_DETAILS,
   payload: transaction
 });

@@ -27,10 +27,9 @@ import {
 import color from "color";
 import { connect, Dispatch } from "react-redux";
 import ROUTES from "../../navigation/routes";
-// import { selectCard } from "../../store/actions/wallet";
+import { selectCardForDetails } from "../../store/actions/wallet/cards";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
-import { selectCardForDetails } from '../../store/actions/wallet/cards';
 
 type ReduxMappedProps = Readonly<{
   selectCard: (item: CreditCard) => void;

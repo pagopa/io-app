@@ -16,8 +16,8 @@ import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import profileReducer from "./profile";
 import sessionReducer from "./session";
-import walletReducer from "./wallet";
 import { GlobalState } from "./types";
+import walletReducer from "./wallet";
 
 /**
  * Here we combine all the reducers.

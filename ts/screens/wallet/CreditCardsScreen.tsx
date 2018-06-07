@@ -11,15 +11,15 @@ import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import { topContentNone } from "../../components/wallet/layout/types";
+import { GlobalState } from "../../store/reducers/types";
+import { creditCardsSelector } from "../../store/reducers/wallet/cards";
 import { CreditCard } from "../../types/CreditCard";
-import { creditCardsSelector } from '../../store/reducers/wallet/cards';
-import { GlobalState } from '../../store/reducers/types';
-import { connect } from 'react-redux';
 
 type ReduxMappedStateProps = Readonly<{
-  cards: ReadonlyArray<CreditCard>
+  cards: ReadonlyArray<CreditCard>;
 }>;
 
 type OwnProps = Readonly<{

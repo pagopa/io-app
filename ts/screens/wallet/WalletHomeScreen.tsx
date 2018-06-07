@@ -18,18 +18,19 @@ import {
   ImageType,
   WalletLayout
 } from "../../components/wallet/layout/WalletLayout";
-import TransactionsList, { TransactionsDisplayed } from "../../components/wallet/TransactionsList";
+import TransactionsList, {
+  TransactionsDisplayed
+} from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  fetchTransactionsRequest
-} from "../../store/actions/wallet/transactions";
+import { fetchCardsRequest } from "../../store/actions/wallet/cards";
+import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { CreditCard } from "../../types/CreditCard";
-import { fetchCardsRequest } from '../../store/actions/wallet/cards';
 
 type ScreenProps = {};
 
-type ReduxMappedDispatchProps = Readonly<{ // temporary
+type ReduxMappedDispatchProps = Readonly<{
+  // temporary
   loadTransactions: () => void;
   loadCards: () => void;
 }>;
@@ -38,9 +39,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedDispatchProps &
-  ScreenProps &
-  OwnProps;
+type Props = ReduxMappedDispatchProps & ScreenProps & OwnProps;
 
 /**
  * Wallet Home Screen
