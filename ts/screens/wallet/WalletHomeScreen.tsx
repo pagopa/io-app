@@ -22,21 +22,14 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
-  fetchTransactionsRequest,
-  loadLatestTransactionsList
+  fetchTransactionsRequest
 } from "../../store/actions/wallet";
 import { CreditCard } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
 
 type ScreenProps = {};
 
 type ReduxMappedDispatchProps = Readonly<{
   loadTransactions: () => void;
-  loadLatestTransactions: () => void;
-}>;
-
-type ReduxMappedStateProps = Readonly<{
-  latestTransactions: ReadonlyArray<WalletTransaction>;
 }>;
 
 type OwnProps = Readonly<{
@@ -44,7 +37,6 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = ReduxMappedDispatchProps &
-  ReduxMappedStateProps &
   ScreenProps &
   OwnProps;
 
@@ -97,11 +89,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public componentDidMount() {
-    // WIP loadTransactions should not be called from here (should be
-    // handled by a saga)
+    // WIP loadTransactions should not be called from here
+    // (transactions should be persisted & fetched periodically)
     // WIP WIP create pivotal story
     this.props.loadTransactions();
-    this.props.loadLatestTransactions();
   }
 
   public render(): React.ReactNode {
@@ -139,8 +130,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadLatestTransactions: () => dispatch(loadLatestTransactionsList())
+  loadTransactions: () => dispatch(fetchTransactionsRequest())
 });
 export default connect(
   undefined,

@@ -16,21 +16,16 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
-import { connect, Dispatch } from "react-redux";
+import { connect } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../reducers/types";
-import { showTransactionDetails } from "../../store/actions/wallet";
+
 import {
-  hasTransactionsList,
-  transactionsListSelector
+  latestTransactionsSelector
 } from "../../store/reducers/wallet";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
-
-type ReduxMappedDispatchProps = Readonly<{
-  selectTransaction: (item: WalletTransaction) => void;
-}>;
 
 type ReduxMappedStateProps = Readonly<{
   transactions: ReadonlyArray<WalletTransaction>;
@@ -46,7 +41,7 @@ type State = Readonly<{
   data: ReadonlyArray<WalletTransaction>;
 }>;
 
-type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps;
 /**
  * Transactions List component
  */
@@ -103,7 +98,7 @@ class TransactionsList extends React.Component<Props, State> {
             renderRow={(item): React.ReactElement<any> => (
               <ListItem
                 onPress={() => {
-                  this.props.selectTransaction(item);
+                  // this.props.selectTransaction(item);
                   navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
                 }}
               >
@@ -134,22 +129,10 @@ class TransactionsList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  if (hasTransactionsList(state.wallet)) {
-    return {
-      transactions: transactionsListSelector(state.wallet)
-    };
-  }
-  return {
-    transactions: []
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  selectTransaction: (item: WalletTransaction) =>
-    dispatch(showTransactionDetails(item))
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  transactions: latestTransactionsSelector(state.wallet)
 });
+
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(TransactionsList);
