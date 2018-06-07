@@ -1,6 +1,6 @@
 import { Body, Button, Container, Icon, Left, Text } from "native-base";
 import * as React from "react";
-import { WebView } from "react-native";
+import { NavState, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
@@ -55,18 +55,19 @@ class IdpLoginScreen extends React.Component<Props, never> {
       </Container>
     );
   }
-  public onNavigationStateChange = (navState: any) => {
-    const url = navState.url;
+  public onNavigationStateChange = (navState: NavState) => {
     // Extract the login result from the url.
     // If the url is not related to login this will be `null`
-    const loginResult = extractLoginResult(url);
-    if (loginResult) {
-      if (loginResult.success) {
-        // In case of successful login
-        this.props.dispatch(loginSuccess(loginResult.token));
-      } else {
-        // In case of login failure
-        this.props.dispatch(loginFailure());
+    if (navState.url) {
+      const loginResult = extractLoginResult(navState.url);
+      if (loginResult) {
+        if (loginResult.success) {
+          // In case of successful login
+          this.props.dispatch(loginSuccess(loginResult.token));
+        } else {
+          // In case of login failure
+          this.props.dispatch(loginFailure());
+        }
       }
     }
   };
