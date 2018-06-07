@@ -4,10 +4,10 @@
  * are managed by different global reducers.
  */
 
-import { GlobalState } from "../../../../reducers/types";
 import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
 import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
 import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 // An object containing MessageWithContentPO keyed by id
 export type MessagesByIdState = Readonly<{

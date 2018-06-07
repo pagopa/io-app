@@ -3,10 +3,10 @@
  */
 
 import { IdentityProvider } from "../../models/IdentityProvider";
-import { GlobalState } from "../../reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type UnauthenticatedWithoutIdpSessionState = Readonly<{
   isAuthenticated: false;
