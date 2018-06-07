@@ -1,6 +1,6 @@
-import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
-import { ApplicationStateAction } from "../../store/actions/types";
-import appState, { initialAppState } from "../appState";
+import appState, { initialAppState } from "../../../sore/reducers/appState";
+import { APP_STATE_CHANGE_ACTION } from "../../actions/constants";
+import { ApplicationStateAction } from "../../actions/types";
 
 describe("appState reducer", () => {
   it("should have a valid initial state", () => {
