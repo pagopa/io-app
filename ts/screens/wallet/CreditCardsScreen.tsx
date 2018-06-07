@@ -15,7 +15,7 @@ import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import { topContentNone } from "../../components/wallet/layout/types";
 import { CreditCard } from "../../types/CreditCard";
 import { creditCardsSelector } from '../../store/reducers/wallet/cards';
-import { GlobalState } from '../../reducers/types';
+import { GlobalState } from '../../store/reducers/types';
 import { connect } from 'react-redux';
 
 type ReduxMappedStateProps = Readonly<{

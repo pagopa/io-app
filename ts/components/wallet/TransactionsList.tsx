@@ -19,7 +19,6 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect, Dispatch } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { GlobalState } from "../../reducers/types";
 
 import {
   latestTransactionsSelector
@@ -28,6 +27,7 @@ import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 import { selectTransactionForDetails } from '../../store/actions/wallet/transactions';
 import { transactionsBySelectedCardSelector } from '../../store/reducers/wallet';
+import { GlobalState } from '../../store/reducers/types';
 
 type ReduxMappedStateProps = Readonly<{
   transactions: ReadonlyArray<WalletTransaction>;

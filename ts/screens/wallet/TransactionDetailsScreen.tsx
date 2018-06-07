@@ -15,7 +15,7 @@ import { WalletStyles } from "../../components/styles/wallet";
 import { topContentTouchable } from "../../components/wallet/layout/types";
 import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
+import { GlobalState } from "../../store/reducers/types";
 import {
 
 } from "../../store/reducers/wallet";
