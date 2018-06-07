@@ -46,13 +46,12 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
-<<<<<<< HEAD
 
   // WALLET
-  wallet: walletReducer
-=======
+  wallet: walletReducer,
+
+  // ENTITIES
   entities: entitiesReducer
->>>>>>> master
 };
 
 export default reducers;

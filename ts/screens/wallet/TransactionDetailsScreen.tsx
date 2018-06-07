@@ -151,11 +151,7 @@ class TransactionDetailsScreen extends React.Component<Props, never> {
             </Row>
             <Row style={styles.rowStyle}>
               <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-<<<<<<< HEAD
-                <Text note={true}>{transaction.paymentReason}</Text>
-=======
                 <Text note={true}>{I18n.t("wallet.recipient")}</Text>
->>>>>>> restoring original fields
               </Col>
               <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
                 <Text bold={true} style={styles.alignedRight}>
