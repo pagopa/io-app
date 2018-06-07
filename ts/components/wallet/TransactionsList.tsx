@@ -16,40 +16,44 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
-import { connect } from "react-redux";
+import { connect, Dispatch } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../reducers/types";
 
 import {
   latestTransactionsSelector
-} from "../../store/reducers/wallet";
+} from "../../store/reducers/wallet/transactions";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
+import { selectTransactionForDetails } from '../../store/actions/wallet/transactions';
+import { transactionsBySelectedCardSelector } from '../../store/reducers/wallet';
 
 type ReduxMappedStateProps = Readonly<{
   transactions: ReadonlyArray<WalletTransaction>;
 }>;
 
+type ReduxMappedDispatchProps = Readonly<{
+  selectTransaction: (i: WalletTransaction) => void;
+}>;
+
+export enum TransactionsDisplayed {
+  LATEST,
+  BY_CARD
+};
+
 type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
   navigation: NavigationScreenProp<NavigationState>;
+  display: TransactionsDisplayed
 }>;
 
-type State = Readonly<{
-  data: ReadonlyArray<WalletTransaction>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 /**
  * Transactions List component
  */
-class TransactionsList extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { data: props.transactions };
-  }
+class TransactionsList extends React.Component<Props> {
 
   private renderDate(transaction: WalletTransaction) {
     const datetime: string = `${transaction.date} - ${transaction.time}`;
@@ -98,7 +102,7 @@ class TransactionsList extends React.Component<Props, State> {
             renderRow={(item): React.ReactElement<any> => (
               <ListItem
                 onPress={() => {
-                  // this.props.selectTransaction(item);
+                  this.props.selectTransaction(item);
                   navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
                 }}
               >
@@ -129,10 +133,27 @@ class TransactionsList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  transactions: latestTransactionsSelector(state.wallet)
+const mapStateToProps = (state: GlobalState, props: OwnProps): ReduxMappedStateProps => {
+  switch (props.display) {
+    case TransactionsDisplayed.LATEST: {
+      return {
+        transactions: latestTransactionsSelector(state.wallet.transactions).getOrElse([])
+      }
+    }
+    case TransactionsDisplayed.BY_CARD: {
+      return {
+        transactions: transactionsBySelectedCardSelector(state.wallet).getOrElse([])
+      }
+    }
+  }
+  return { transactions: [] };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  selectTransaction: item => dispatch(selectTransactionForDetails(item))
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(TransactionsList);

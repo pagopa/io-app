@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		003166291676479E902515D2 /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792875ED868845B580CD999A /* TitilliumWeb-Regular.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -774,8 +775,8 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 4RV73SN38W;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 6J49XYLAXX;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1395,10 +1396,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 4RV73SN38W;
+				DEVELOPMENT_TEAM = 6J49XYLAXX;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-sha256/ios",
@@ -1413,10 +1415,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.Italia;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.app.Italia;
 				PRODUCT_NAME = ItaliaApp;
-				PROVISIONING_PROFILE = "67aaa377-e4ae-42d2-979e-1469db19db6c";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.Italia";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1428,8 +1431,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
-				DEVELOPMENT_TEAM = 4RV73SN38W;
+				DEVELOPMENT_TEAM = 6J49XYLAXX;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-sha256/ios",
@@ -1444,10 +1448,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.Italia;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.app.Italia;
 				PRODUCT_NAME = ItaliaApp;
-				PROVISIONING_PROFILE = "67aaa377-e4ae-42d2-979e-1469db19db6c";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.Italia";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

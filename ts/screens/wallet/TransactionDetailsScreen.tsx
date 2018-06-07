@@ -17,10 +17,10 @@ import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../reducers/types";
 import {
-  hasTransactionForDetails,
-  transactionForDetailsSelector
+
 } from "../../store/reducers/wallet";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
+import { transactionForDetailsSelector } from '../../store/reducers/wallet/transactions';
 
 const cardsImage = require("../../../img/wallet/single-tab.png");
 
@@ -186,15 +186,8 @@ class TransactionDetailsScreen extends React.Component<Props, never> {
     );
   }
 }
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => {
-  if (hasTransactionForDetails(state.wallet)) {
-    return {
-      transaction: transactionForDetailsSelector(state.wallet)
-    };
-  }
-  return {
-    transaction: UNKNOWN_TRANSACTION
-  };
-};
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  transaction: transactionForDetailsSelector(state.wallet.transactions).getOrElse(UNKNOWN_TRANSACTION)
+});
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);

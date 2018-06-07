@@ -30,6 +30,7 @@ import ROUTES from "../../navigation/routes";
 // import { selectCard } from "../../store/actions/wallet";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
+import { selectCardForDetails } from '../../store/actions/wallet/cards';
 
 type ReduxMappedProps = Readonly<{
   selectCard: (item: CreditCard) => void;
@@ -213,7 +214,7 @@ class CreditCardComponent extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  selectCard: (card: CreditCard) => 3//dispatch(selectCard(card))
+  selectCard: card => dispatch(selectCardForDetails(card))
 });
 export default connect(
   undefined,

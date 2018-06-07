@@ -18,18 +18,20 @@ import {
   ImageType,
   WalletLayout
 } from "../../components/wallet/layout/WalletLayout";
-import TransactionsList from "../../components/wallet/TransactionsList";
+import TransactionsList, { TransactionsDisplayed } from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
   fetchTransactionsRequest
-} from "../../store/actions/wallet";
+} from "../../store/actions/wallet/transactions";
 import { CreditCard } from "../../types/CreditCard";
+import { fetchCardsRequest } from '../../store/actions/wallet/cards';
 
 type ScreenProps = {};
 
-type ReduxMappedDispatchProps = Readonly<{
+type ReduxMappedDispatchProps = Readonly<{ // temporary
   loadTransactions: () => void;
+  loadCards: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -92,6 +94,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // WIP WIP create pivotal story
+    this.props.loadCards();
     this.props.loadTransactions();
   }
 
@@ -122,6 +125,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
             title={I18n.t("wallet.latestTransactions")}
             totalAmount={I18n.t("wallet.total")}
             navigation={this.props.navigation}
+            display={TransactionsDisplayed.LATEST}
           />
         </Content>
       </WalletLayout>
@@ -130,7 +134,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest())
+  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadCards: () => dispatch(fetchCardsRequest())
 });
 export default connect(
   undefined,

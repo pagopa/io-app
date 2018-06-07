@@ -11,11 +11,8 @@ import { NavigationInjectedProps } from "react-navigation";
 
 import { WalletStyles } from "../../components/styles/wallet";
 import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
-import TransactionsList from "../../components/wallet/TransactionsList";
-
-import { connect, Dispatch } from "react-redux";
+import TransactionsList, { TransactionsDisplayed } from "../../components/wallet/TransactionsList";
 import { topContentTouchable } from "../../components/wallet/layout/types";
-import { loadTransactionsListBySelectedCard } from "../../store/actions/wallet";
 
 const cardsImage = require("../../../img/wallet/card-tab.png");
 
@@ -25,7 +22,7 @@ type ReduxMappedProps = Readonly<{
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
 
-class TransactionsScreen extends React.Component<Props, never> {
+export default class TransactionsScreen extends React.Component<Props, never> {
   private touchableContent(): React.ReactElement<any> {
     // TODO: change this with an actual component @https://www.pivotaltracker.com/story/show/157422715
     return (
@@ -37,10 +34,6 @@ class TransactionsScreen extends React.Component<Props, never> {
         />
       </View>
     );
-  }
-
-  public componentWillMount() {
-    this.props.getTransactionsByCard();
   }
 
   public render(): React.ReactNode {
@@ -59,17 +52,10 @@ class TransactionsScreen extends React.Component<Props, never> {
             title={I18n.t("wallet.transactions")}
             totalAmount={I18n.t("wallet.total")}
             navigation={this.props.navigation}
+            display={TransactionsDisplayed.BY_CARD}
           />
         </Content>
       </WalletLayout>
     );
   }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  getTransactionsByCard: () => dispatch(loadTransactionsListBySelectedCard())
-});
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(TransactionsScreen);
