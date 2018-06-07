@@ -88,7 +88,7 @@
     "italia-utils": "^3.11.1",
     "jest": "23.0.1",
     "prettier": "1.13.0",
-    "detox": "^7.3.7",
+    "detox": "^7.4.0",
     "react-native-typescript-transformer": "^1.2.5",
     "react-test-renderer": "16.3.1",
     "redux-saga-test-plan": "^3.7.0",
