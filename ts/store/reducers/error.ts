@@ -6,9 +6,9 @@
  */
 
 import { isSome, none, Option } from "fp-ts/lib/Option";
-import { Action } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
+import { Action } from "../actions/types";
 
 export type ErrorState = Readonly<
   { [key in FetchRequestActionsType]: Option<string> }
@@ -17,7 +17,8 @@ export type ErrorState = Readonly<
 export const INITIAL_STATE: ErrorState = {
   PIN_CREATE: none,
   PROFILE_LOAD: none,
-  PROFILE_UPDATE: none
+  PROFILE_UPDATE: none,
+  MESSAGES_LOAD: none
 };
 
 /**

@@ -27,13 +27,16 @@ import {
 import color from "color";
 import { connect, Dispatch } from "react-redux";
 import ROUTES from "../../navigation/routes";
-import { selectCard } from "../../store/actions/wallet";
+// import { selectCard } from "../../store/actions/wallet";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 
 type ReduxMappedProps = Readonly<{
   selectCard: (item: CreditCard) => void;
 }>;
+
+const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
 type OwnProps = Readonly<{
   item: CreditCard;
@@ -121,7 +124,7 @@ class CreditCardComponent extends React.Component<Props> {
                     CreditCardStyle.largeTextStyle
                   ]}
                 >
-                  {`${`${"\u25cf".repeat(4)} `.repeat(3)}${item.pan.slice(-4)}`}
+                  {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
                 </Text>
               </Col>
               <Col size={1}>
@@ -210,7 +213,7 @@ class CreditCardComponent extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  selectCard: (card: CreditCard) => dispatch(selectCard(card))
+  selectCard: (card: CreditCard) => 3//dispatch(selectCard(card))
 });
 export default connect(
   undefined,

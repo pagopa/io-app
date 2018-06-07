@@ -47,6 +47,7 @@ export interface NativeBaseInputProps {
   placeholder?: string;
   showError?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  // tslint:disable-next-line:max-union-size
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
 }
 

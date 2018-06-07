@@ -68,6 +68,9 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# Bundle artifact
+*.jsbundle
+
 # Visual Studio Code settings
 .vscode
 

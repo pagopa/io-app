@@ -54,15 +54,33 @@ export const FETCH_TRANSACTIONS_REQUEST: "FETCH_TRANSACTIONS_REQUEST" = "FETCH_T
 export const TRANSACTIONS_FETCHED: "TRANSACTIONS_FETCHED" =
   "TRANSACTIONS_FETCHED";
 
+// Messages
+export const MESSAGES_LOAD_REQUEST: "MESSAGES_LOAD_REQUEST" =
+  "MESSAGES_LOAD_REQUEST";
+export const MESSAGES_LOAD_CANCEL: "MESSAGES_LOAD_CANCEL" =
+  "MESSAGES_LOAD_CANCEL";
+export const MESSAGES_LOAD_SUCCESS: "MESSAGES_LOAD_SUCCESS" =
+  "MESSAGES_LOAD_SUCCESS";
+export const MESSAGES_LOAD_FAILURE: "MESSAGES_LOAD_FAILURE" =
+  "MESSAGES_LOAD_FAILURE";
+
+export const MESSAGE_LOAD_SUCCESS: "MESSAGE_LOAD_SUCCESS" =
+  "MESSAGE_LOAD_SUCCESS";
+
+// Services
+export const SERVICE_LOAD_SUCCESS: "SERVICE_LOAD_SUCCESS" =
+  "SERVICE_LOAD_SUCCESS";
+
 // Error
 export const ERROR_CLEAR: "ERROR_CLEAR" = "ERROR_CLEAR";
 
-// Costants for actions that need UI state reducers
-export const FetchRequestActions = {
-  PIN_CREATE: "PIN_CREATE",
-  PROFILE_LOAD: "PROFILE_LOAD",
-  PROFILE_UPDATE: "PROFILE_UPDATE"
-};
+// Enum for actions that need UI state reducers
+export const enum FetchRequestActions {
+  PIN_CREATE = "PIN_CREATE",
+  PROFILE_LOAD = "PROFILE_LOAD",
+  PROFILE_UPDATE = "PROFILE_UPDATE",
+  MESSAGES_LOAD = "MESSAGES_LOAD"
+}
 
 // Extract keys from object and create a new union type
 export type FetchRequestActionsType = keyof typeof FetchRequestActions;
