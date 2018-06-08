@@ -9,6 +9,11 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
+      dateFormat?: boolean;
+      leftAlign?: boolean;
+      rightAlign?: boolean;
+      colorLabelTab?: boolean;
+      boldSender?: boolean;
     }
   }
 }
@@ -22,7 +27,25 @@ export default (): Theme => {
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
-
-    lineHeight: variables.lineHeight
+    ".dateFormat": {
+      fontWeight: "bold",
+      fontSize: variables.fontSize2
+    },
+    ".leftAlign": {
+      flex: variables.flexLeftAlign
+    },
+    ".colorLabelTab": {
+      color: variables.brandLightBlue
+    },
+    ".rightAlign": {
+      flex: variables.flexRightAlign
+    },
+    ".boldSender": {
+      lineHeight: variables.lineHeight1,
+      fontWeight: variables.textBoldWeight,
+      color: variables.h1Color,
+      ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
+    },
+    lineHeight: variables.lineHeightBase
   };
 };

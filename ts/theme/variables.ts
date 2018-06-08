@@ -7,9 +7,9 @@
 
 // tslint:disable:no-invalid-this
 
+import color from "color";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
-
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
@@ -17,6 +17,10 @@ import { ThemeSimpleValue } from "./types";
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
+
+  // Flex
+  flexLeftAlign: 1,
+  flexRightAlign: 0,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -38,6 +42,9 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
+  brandLightBlue: color("#0066CC")
+    .lighten(0.15)
+    .hex(),
 
   cardFontColor: "#17324D",
   colorWhite: "white",
@@ -63,7 +70,10 @@ const customVariables = Object.assign(materialVariables, {
   get fontSize6(): number {
     return this.fontSizeBase * 1.75;
   },
-  lineHeight: 24,
+  lineHeightBase: 24,
+  get lineHeight1(): ThemeSimpleValue {
+    return this.lineHeightBase * 0.75;
+  },
 
   // Icon
   iconFamily: "Entypo",
@@ -87,7 +97,6 @@ const customVariables = Object.assign(materialVariables, {
   get iconSize6(): number {
     return this.iconSizeBase * 2;
   },
-
   // Content
   contentPadding: 24,
   contentBackground: "#FFFFFF",
@@ -142,11 +151,13 @@ const customVariables = Object.assign(materialVariables, {
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
 
+  // Item
+  itemPaddingTopSpacer: 20,
+
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
-
   borderRadiusBase: 4
 });
 
