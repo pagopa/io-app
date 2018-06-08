@@ -138,5 +138,19 @@ export const WalletStyles = StyleSheet.create({
     marginTop: 6,
     fontSize: variables.fontSize1,
     color: variables.brandPrimary
+  },
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  },
+  divider: {
+    borderTopWidth: 1,
+    borderTopColor: variables.brandGray
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  textCenter: {
+    textAlign: "center"
   }
 });

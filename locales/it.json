@@ -139,15 +139,17 @@
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
-    "insertManually":{
-      "header": "Inserisci dati avviso",
-      "title": "Inserisci i dati dell'avviso",
-      "info": "che ci consentono di identificare il pagamento", 
-      "link": "Dove si trovano?",
-      "noticeCode":"Codice Avviso",
-      "entityCode":"Codice Fiscale Ente Creditore",
-      "amount": "Importo EUR",
-      "proceed": "Procedi con il pagamento"
+    "ConfirmPayment": {
+      "header":"Conferma pagamento",
+      "cancel":"ANNULLA",
+      "askConfirm":"Confermi il pagamento?",
+      "partialAmount":"Importo da pagare",
+      "fee":"Costi di commissione",
+      "why":"Perhè?",
+      "totalAmount":"Totale",
+      "info":"Attenzione: dopo queto passaggio non sarà più possibile annullare",
+      "info2":"Stai utilizzando il tuo metodo di pagamento preferito.",
+      "changeMethod":"Cambia metodo di pagamento"
     },
     "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",

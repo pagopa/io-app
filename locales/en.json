@@ -141,15 +141,17 @@
       "addButton": "Add payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
-    "insertManually":{
-      "header": "Insert notice data",
-      "title": "Insert the notice data",
-      "info": "which allow us to identify the transaction", 
-      "link": "Where are they?",
-      "noticeCode":"Notice code",
-      "entityCode":"Lender Fiscal Code",
-      "amount": "Amount EUR",
-      "proceed": "Proceed with the transaction"
+    "ConfirmPayment": {
+      "header":"Confirm transaction",
+      "cancel":"CANCEL",
+      "askConfirm":"Want to proceed with the transaction?",
+      "partialAmount":"Amount to pay",
+      "fee":"Fee",
+      "why":"Why?",
+      "totalAmount":"Total amount",
+      "info":"Warning: after this step it will not be possile to come back",
+      "info2":" You are using your favourite payment method.",
+      "changeMethod":"Change the payment method"
     },
     "transactionDetails": "Transaction details",
     "total": "Total",
