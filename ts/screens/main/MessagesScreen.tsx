@@ -23,17 +23,17 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
-  services: Readonly<ServicesState>;
+  services: ServicesState;
 }>;
 
 export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-interface IMessagesList {
+export type IMessagesList = Readonly<{
   item: Readonly<MessageWithContentPO>;
   index: number;
-}
+}>;
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 

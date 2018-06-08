@@ -10,7 +10,7 @@ export default (): Theme => {
         },
         "NativeBase.Icon": {
           alignSelf: "center",
-          paddingTop: variables.iconSingleMessagePaddingTop
+          paddingTop: 10
         },
         flexDirection: "column",
         flex: 2,
@@ -24,11 +24,11 @@ export default (): Theme => {
         flexDirection: "column",
         flex: 6
       },
-      marginLeft: variables.itemSingleMessageMarginLeft,
+      marginLeft: 0,
       flexDirection: "row",
       flex: 1,
       borderBottomColor: variables.brandLightGray,
-      borderBottomWidth: variables.itemSingleMessageBorderBottomWidth
+      borderBottomWidth: 0.5
     }
   };
 };

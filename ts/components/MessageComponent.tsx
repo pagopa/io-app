@@ -8,13 +8,13 @@ import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
 import I18n from "../i18n";
 import { ServicesState } from "../store/reducers/entities/services";
 
-export type OwnProps = {
+export type OwnProps = Readonly<{
   sender: string;
   subject: string;
   key: string;
   date: string;
-  services: Readonly<ServicesState>;
-};
+  services: ServicesState;
+}>;
 
 export type Props = OwnProps;
 
@@ -22,8 +22,10 @@ export type Props = OwnProps;
  * Implements a component that show a message in the MessagesScreen List
  */
 class MessageComponent extends React.Component<Props> {
-  public formatDate(date: string): string {
+  // Convert the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM
+  public convertDateToDistance(date: string): string {
     const distance = distanceInWordsToNow(new Date(date));
+    // 0h < distance < 23h
     if (
       distance.includes("hours") === true ||
       distance.includes("hour") === true ||
@@ -32,14 +34,17 @@ class MessageComponent extends React.Component<Props> {
       distance.includes("seconds") === true
     ) {
       return format(new Date(date), "H.mm");
-    } else if (distance.includes("1 day") === true) {
+    } // 24h < distance < 47h
+    else if (distance.includes("1 day") === true) {
       return I18n.t("messages.yesterday");
-    } else if (
+    } // distance > current year
+    else if (
       distance.includes("year") === true ||
       distance.includes("years") === true
     ) {
       return format(new Date(date), "D/MM/YY");
-    } else {
+    } // distance > 48h
+    else {
       return format(new Date(date), "DD/MM");
     }
   }
@@ -59,7 +64,7 @@ class MessageComponent extends React.Component<Props> {
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text dateFormat={true}>{this.formatDate(date)}</Text>
+          <Text dateFormat={true}>{this.convertDateToDistance(date)}</Text>
           <Icon rightArrow={true} name="chevron-right" />
         </Right>
       </ListItem>

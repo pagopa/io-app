@@ -154,15 +154,6 @@ const customVariables = Object.assign(materialVariables, {
   // Item
   itemPaddingTopSpacer: 20,
 
-  // Message
-  iconSingleMessagePaddingTop: 10,
-  itemSingleMessageMarginLeft: 0,
-  itemSingleMessageBorderBottomWidth: 0.5,
-
-  // TabMessages
-  viewTabMessageswPaddingTop: 30,
-  textTabMessagesPaddingLeft: 24,
-
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
