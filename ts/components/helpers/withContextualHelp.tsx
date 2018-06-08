@@ -4,6 +4,7 @@
  */
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { ContextualHelp } from "../ContextualHelp";
 
 type State = {
@@ -13,6 +14,13 @@ type State = {
 export type ContextualHelpInjectedProps = {
   showHelp: () => void;
 };
+
+const styles = StyleSheet.create({
+  fullSize: {
+    width: "100%",
+    height: "100%"
+  }
+});
 
 /**
  * Adds the methods for showing/hiding the contextual
@@ -25,9 +33,7 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
   title: string,
   body: string
 ) {
-  // WIP this class is parked here atm, but it will be moved to
-  // its own file soon (disable-line to temporarely suppress max-classes-per-file)
-  return class extends React.Component<P, State> { // tslint:disable-line
+  return class extends React.Component<P, State> {
     constructor(props: P) {
       super(props);
       this.state = {
@@ -48,8 +54,7 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
         showHelp: this.showHelp
       };
       return (
-        <View style={{ width: "100%", height: "100%" }}>
-          {/* WIP any more appropriate wrapper? */}
+        <View style={styles.fullSize}>
           <WrappedComponent {...this.props} {...injectedProps} />
           <ContextualHelp
             title={title}
