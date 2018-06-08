@@ -24,6 +24,9 @@ export enum LogoPosition {
   CENTER
 }
 
+const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
+
 type Props = Readonly<{
   item: CreditCard;
   navigation: NavigationScreenProp<NavigationState>;
@@ -343,8 +346,7 @@ export class CreditCardComponent extends React.Component<Props> {
                         styles.largeTextStyle
                       ]}
                     >
-                      {("\u25cf".repeat(4) + " ").repeat(3) +
-                        item.pan.slice(-4)}
+                    {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
                     </Text>
                   </Col>
 

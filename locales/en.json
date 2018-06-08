@@ -214,6 +214,13 @@
     "actions": "Actions",
     "setFavourite": "Set as favourite"
   },
+  "messages": {
+    "counting": {
+      "zero": "No message",
+      "one": "You have 1 message",
+      "other": "You have {{count}} messages"
+    }
+  },
   "notifications": {
     "installation": {
       "errorTitle": "Push notifications",

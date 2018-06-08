@@ -212,6 +212,13 @@
     "actions": "Azioni",
     "setFavourite": "Imposta come preferita"
   },
+  "messages": {
+    "counting": {
+      "zero": "Nessun messaggio",
+      "one": "Hai 1 messaggio",
+      "other": "Hai {{count}} messaggi"
+    }
+  },
   "notifications": {
     "installation": {
       "errorTitle": "Notifiche push",

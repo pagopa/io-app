@@ -128,7 +128,11 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             renderItem={itemInfo => (
               <ListItem
                 style={AddMethodStyle.paymentMethodEntry}
-                onPress={() => navigate(itemInfo.item.navigateTo)}
+                onPress={() =>
+                  itemInfo.item.navigateTo
+                    ? navigate(itemInfo.item.navigateTo)
+                    : undefined
+                }
               >
                 <Left>
                   <Grid>

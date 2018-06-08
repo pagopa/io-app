@@ -4,9 +4,9 @@
 
 import uuid from "uuid/v4";
 
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../../reducers/types";
 import { NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE } from "../../actions/constants";
+import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
 
 export type InstallationState = Readonly<{
   uuid: string;

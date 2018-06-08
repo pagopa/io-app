@@ -1,18 +1,18 @@
 import { Body, Button, Container, Icon, Left, Text } from "native-base";
 import * as React from "react";
-import { WebView } from "react-native";
+import { NavState, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { ReduxProps } from "../../actions/types";
 import AppHeader from "../../components/ui/AppHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
 import { loginFailure, loginSuccess } from "../../store/actions/session";
+import { ReduxProps } from "../../store/actions/types";
 import {
   isUnauthenticatedWithoutIdpSessionState,
   SessionState
 } from "../../store/reducers/session";
+import { GlobalState } from "../../store/reducers/types";
 import { extractLoginResult } from "../../utils/login";
 type ReduxMappedProps = {
   session: SessionState;
@@ -55,18 +55,19 @@ class IdpLoginScreen extends React.Component<Props, never> {
       </Container>
     );
   }
-  public onNavigationStateChange = (navState: any) => {
-    const url = navState.url;
+  public onNavigationStateChange = (navState: NavState) => {
     // Extract the login result from the url.
     // If the url is not related to login this will be `null`
-    const loginResult = extractLoginResult(url);
-    if (loginResult) {
-      if (loginResult.success) {
-        // In case of successful login
-        this.props.dispatch(loginSuccess(loginResult.token));
-      } else {
-        // In case of login failure
-        this.props.dispatch(loginFailure());
+    if (navState.url) {
+      const loginResult = extractLoginResult(navState.url);
+      if (loginResult) {
+        if (loginResult.success) {
+          // In case of successful login
+          this.props.dispatch(loginSuccess(loginResult.token));
+        } else {
+          // In case of login failure
+          this.props.dispatch(loginFailure());
+        }
       }
     }
   };

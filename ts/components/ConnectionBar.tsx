@@ -1,9 +1,11 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { connect } from "react-redux";
-import { ReduxProps } from "../actions/types";
+
 import I18n from "../i18n";
-import { GlobalState } from "../reducers/types";
+import { ReduxProps } from "../store/actions/types";
+import { GlobalState } from "../store/reducers/types";
+
 export type ReduxMappedProps = {
   isConnected: boolean;
 };
