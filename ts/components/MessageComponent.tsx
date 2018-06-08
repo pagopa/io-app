@@ -4,7 +4,9 @@ import { format } from "date-fns";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
+//import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import ROUTES from "../navigation/routes";
 import I18n from "../i18n";
 import { ServicesState } from "../store/reducers/entities/services";
 
@@ -55,8 +57,18 @@ class MessageComponent extends React.Component<Props> {
 
   public render() {
     const { subject, sender, date, key, services } = this.props;
+    const { navigate } = this.props.navigation;
     return (
-      <ListItem key={key}>
+      <ListItem
+        key={key}
+        onPress={(): boolean =>{
+          console.log("dfhdshoi");
+          navigate(ROUTES.MESSAGE_DETAILS, {
+            message: subject
+          })
+        }
+        }
+      >
         <Left>
           <Text leftAlign={true} boldSender={true}>
             {this.getSenderName(sender, services)}
@@ -74,7 +86,6 @@ class MessageComponent extends React.Component<Props> {
 
 const StyledMessageComponent = connectStyle(
   "NativeBase.MessageComponent",
-  {},
-  mapPropsToStyleNames
+  {}
 )(MessageComponent);
 export default StyledMessageComponent;

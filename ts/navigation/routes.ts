@@ -34,7 +34,10 @@ const ROUTES = {
   // Main
   MAIN: "MAIN",
   MAIN_MESSAGES: "MAIN_MESSAGES",
-  MAIN_PROFILE: "MAIN_PROFILE"
+  MAIN_PROFILE: "MAIN_PROFILE",
+
+  // Message Details
+  MESSAGE_DETAILS: "MESSAGE_DETAILS"
 };
 
 export default ROUTES;

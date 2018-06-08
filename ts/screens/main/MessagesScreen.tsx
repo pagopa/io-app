@@ -84,6 +84,7 @@ class MessagesScreen extends React.Component<Props, never> {
         services={this.props.services}
         sender={messagesList.item.sender_service_id}
         subject={messagesList.item.subject}
+        navigation={this.props.navigation}
       />
     );
   };
