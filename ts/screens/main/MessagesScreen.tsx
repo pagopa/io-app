@@ -8,13 +8,13 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import { ReduxProps } from "../../actions/types";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
+import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import { createLoadingSelector } from "../../store/reducers/loading";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
