@@ -29,6 +29,9 @@ import ROUTES from "../../navigation/routes";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 
+const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
+
 type Props = Readonly<{
   item: CreditCard;
   navigation: NavigationScreenProp<NavigationState>;
@@ -113,7 +116,7 @@ export default class CreditCardComponent extends React.Component<Props> {
                     CreditCardStyle.largeTextStyle
                   ]}
                 >
-                  {`${`${"\u25cf".repeat(4)} `.repeat(3)}${item.pan.slice(-4)}`}
+                  {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
                 </Text>
               </Col>
               <Col size={1}>

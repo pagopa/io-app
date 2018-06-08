@@ -22,7 +22,7 @@ import {
 } from "../../components/helpers/withContextualHelp";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
+import { GlobalState } from "../../store/reducers/types";
 type ReduxMappedProps = {
   isFormValid: boolean;
 };
