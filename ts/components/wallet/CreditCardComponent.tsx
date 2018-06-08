@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
       .darken(0.05)
       .string(),
     borderRadius: 10,
-    // marginTop: 20,
+    marginTop: 20,
     marginLeft: 0,
     marginRight: 0,
     marginBottom: -1,

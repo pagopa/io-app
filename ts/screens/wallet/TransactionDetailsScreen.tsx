@@ -22,7 +22,7 @@ import { WalletTransaction } from "../../types/wallet";
 import { WalletAPI } from '../../api/wallet/wallet-api';
 import { UNKNOWN_CARD, CreditCard } from '../../types/CreditCard';
 import { CreditCardComponent } from '../../components/wallet/CreditCardComponent';
-import { LogoPosition } from '../../components/wallet/CreditCardsFan';
+import { LogoPosition } from '../../components/wallet/CreditCardComponent';
 
 interface ParamType {
   readonly transaction: WalletTransaction;
