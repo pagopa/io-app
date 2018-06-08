@@ -4,9 +4,9 @@
  * are managed by different global reducers.
  */
 
-import { Action } from "../../../../actions/types";
-import { GlobalState } from "../../../../reducers/types";
 import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
+import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 // An array of messages id
 export type MessagesAllIdsState = ReadonlyArray<string>;

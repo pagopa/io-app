@@ -4,8 +4,8 @@
  * are managed by different global reducers.
  */
 
-import { Action } from "../../../../actions/types";
 import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
+import { Action } from "../../../actions/types";
 
 // An array of services id
 export type ServicesAllIdsState = ReadonlyArray<string>;

@@ -7,12 +7,12 @@
  * @flow
  */
 
-import { Action } from "../../actions/types";
 import { ApiProfile } from "../../api";
 import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPDATE_SUCCESS
 } from "../actions/constants";
+import { Action } from "../actions/types";
 
 export type ProfileState = ApiProfile | null;
 

@@ -8,8 +8,8 @@ import {
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 import { connect } from "react-redux";
 
-import { ReduxProps } from "../actions/types";
-import { GlobalState } from "../reducers/types";
+import { ReduxProps } from "../store/actions/types";
+import { GlobalState } from "../store/reducers/types";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import AppNavigator from "./AppNavigator";
 

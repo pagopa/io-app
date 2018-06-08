@@ -22,7 +22,7 @@ declare module "native-base-shoutem-theme" {
   );
 }
 
-declare module "native-base/src/Utils/mapPropsToStyleNames" {
+declare module "native-base/src/utils/mapPropsToStyleNames" {
   export default function(styleNames: string[], props: {}): string[];
 }
 
