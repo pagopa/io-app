@@ -5,8 +5,8 @@
  */
 import * as React from "react";
 
-import { Button, Content, Text, View } from "native-base";
-import { Image, StyleSheet } from "react-native";
+import { Button, Content, Text } from "native-base";
+import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   NavigationInjectedProps,
@@ -19,8 +19,10 @@ import { topContentTouchable } from "../../components/wallet/layout/types";
 import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
 import { WalletTransaction } from "../../types/wallet";
-
-const cardsImage = require("../../../img/wallet/single-tab.png");
+import { WalletAPI } from '../../api/wallet/wallet-api';
+import { UNKNOWN_CARD, CreditCard } from '../../types/CreditCard';
+import { CreditCardComponent } from '../../components/wallet/CreditCardComponent';
+import { LogoPosition } from '../../components/wallet/CreditCardsFan';
 
 interface ParamType {
   readonly transaction: WalletTransaction;
@@ -83,16 +85,15 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  private touchableContent(): React.ReactElement<any> {
-    // TODO: replace this with actual component @https://www.pivotaltracker.com/story/show/157422715
+  private touchableContent(card: CreditCard): React.ReactElement<any> {
     return (
-      <View style={WalletStyles.container}>
-        <Image
-          style={WalletStyles.pfSingle}
-          source={cardsImage}
-          resizeMode="contain"
-        />
-      </View>
+      <CreditCardComponent
+        navigation={this.props.navigation}
+        item={card}
+        logoPosition={LogoPosition.TOP}
+        flatBottom={true}
+        headerOnly={true}
+      />
     );
   }
 
@@ -100,7 +101,9 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
     const { navigate } = this.props.navigation;
     const transaction: WalletTransaction = this.props.navigation.state.params
       .transaction;
-    const topContent = topContentTouchable(this.touchableContent());
+    // temporary, until card is available from redux state (https://www.pivotaltracker.com/story/show/157962664)
+    const card = WalletAPI.getCreditCards().find(c => c.id === transaction.cardId);
+    const topContent = topContentTouchable(this.touchableContent(card !== undefined ? card : UNKNOWN_CARD));
     return (
       <WalletLayout
         headerTitle={I18n.t("wallet.transaction")}
