@@ -31,12 +31,12 @@ import { selectCardForDetails } from "../../store/actions/wallet/cards";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 
+const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
+
 type ReduxMappedProps = Readonly<{
   selectCard: (item: CreditCard) => void;
 }>;
-
-const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
 type OwnProps = Readonly<{
   item: CreditCard;

@@ -37,6 +37,9 @@ type ReduxMappedDispatchProps = Readonly<{
   selectTransaction: (i: WalletTransaction) => void;
 }>;
 
+/**
+ * The type of transactions that are to be shown
+ */
 export enum TransactionsDisplayed {
   LATEST,
   BY_CARD
