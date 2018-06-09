@@ -6,8 +6,8 @@ import { reducer as networkReducer } from "react-native-offline";
 import { Reducer, ReducersMapObject } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
 
-import appStateReducer from "../../sore/reducers/appState";
 import { Action } from "../actions/types";
+import appStateReducer from "./appState";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
