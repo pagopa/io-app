@@ -21,7 +21,7 @@
     "io-ts": "^1.1.4",
     "italia-ts-commons": "^2.0.0",
     "lodash": "^4.17.10",
-    "native-base": "^2.4.5",
+    "native-base": "^2.5.1",
     "native-base-shoutem-theme": "^0.2.2",
     "react": "16.3.1",
     "react-native": "0.55.4",
