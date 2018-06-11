@@ -14,7 +14,7 @@ export type OwnProps = Readonly<{
   key: string;
   date: Date;
   services: ServicesState;
-  navigation: NavigationState;
+  navigation: NavigationScreenProp<NavigationState>;
 }>;
 
 export type Props = OwnProps;
@@ -34,7 +34,7 @@ class MessageComponent extends React.Component<Props> {
     return (
       <ListItem
         key={key}
-        onPress={(): boolean =>{
+        onPress={() =>{
           navigate(ROUTES.MESSAGE_DETAILS, {
             message: subject
           })

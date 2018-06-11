@@ -11,7 +11,7 @@ import ROUTES from "./routes";
 import { Platform, StyleSheet, Text } from "react-native";
 import { TabBarBottom, TabNavigator } from "react-navigation";
 import I18n from "../i18n";
-import MessagesScreen from "../screens/main/MessagesScreen";
+import MessagesScreen from "../screens/messages/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
 import Icon from "../theme/font-icons/io-icon-font";
 import { makeFontStyleObject } from "../theme/fonts";
