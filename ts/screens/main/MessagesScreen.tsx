@@ -81,7 +81,7 @@ class MessagesScreen extends React.Component<Props, never> {
         key={messageDetails.item.id}
         date={messageDetails.item.created_at}
         services={this.props.services}
-        sender={messageDetails.item.sender_service_id}
+        senderServiceId={messageDetails.item.sender_service_id}
         subject={messageDetails.item.subject}
       />
     );
@@ -97,7 +97,7 @@ class MessagesScreen extends React.Component<Props, never> {
         }}
         initialPage={0}
       >
-        <Tab heading={I18n.t("messagges.tab.all")}>
+        <Tab heading={I18n.t("messages.tab.all")}>
           <FlatList
             alwaysBounceVertical={false}
             scrollEnabled={true}
@@ -106,7 +106,7 @@ class MessagesScreen extends React.Component<Props, never> {
             keyExtractor={item => item.id}
           />
         </Tab>
-        <Tab heading={I18n.t("messagges.tab.deadlines")}>
+        <Tab heading={I18n.t("messages.tab.deadlines")}>
           <View spacer={true} large={true} />
         </Tab>
       </Tabs>

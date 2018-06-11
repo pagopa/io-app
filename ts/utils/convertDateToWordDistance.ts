@@ -13,7 +13,7 @@ export function convertDateToWordDistance(date: Date): string {
     return I18n.t("messages.yesterday");
   } // 1 day < distance < 365, current year
   else if (distance > 1 && distance < 365) {
-    return format(new Date(date), "D/MM");
+    return format(new Date(date), "DD/MM");
   } // distance > current year
   else {
     return format(new Date(date), "DD/MM/YY");

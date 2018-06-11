@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
+import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import { ServicesState } from "../store/reducers/entities/services";
 import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 

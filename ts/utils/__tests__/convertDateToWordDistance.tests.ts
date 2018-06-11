@@ -12,11 +12,11 @@ test("Compare now date with 24 hours earlier, expected  yesterday", () => {
   const testDate = addHours(nowDate, -24);
   expect(convertDateToWordDistance(testDate)).toBe("yesterday");
 });
-
-test("Compare now date with 48 hours earlier, expected  D/MM", () => {
+// tslint:disable-next-line:no-identical-functions
+test("Compare now date with 48 hours earlier, expected  DD/MM", () => {
   const nowDate = new Date();
   const testDate = addHours(nowDate, -48);
-  expect(convertDateToWordDistance(testDate)).toBe(format(testDate, "D/MM"));
+  expect(convertDateToWordDistance(testDate)).toBe(format(testDate, "DD/MM"));
 });
 
 test("Compare now date with last year date, expected  DD/MM/YY", () => {
