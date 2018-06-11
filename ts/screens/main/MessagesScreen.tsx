@@ -30,7 +30,7 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type IMessagesList = Readonly<{
+export type IMessageDetails = Readonly<{
   item: Readonly<MessageWithContentPO>;
   index: number;
 }>;
@@ -75,29 +75,29 @@ class MessagesScreen extends React.Component<Props, never> {
     ) : null;
   };
 
-  public renderItem = (messagesList: IMessagesList) => {
+  public renderItem = (messageDetails: IMessageDetails) => {
     return (
       <MessageComponent
-        key={messagesList.item.id}
-        date={messagesList.item.created_at}
+        key={messageDetails.item.id}
+        date={messageDetails.item.created_at}
         services={this.props.services}
-        sender={messagesList.item.sender_service_id}
-        subject={messagesList.item.subject}
+        sender={messageDetails.item.sender_service_id}
+        subject={messageDetails.item.subject}
       />
     );
   };
 
-  private renderMockedMessages = (
+  private renderMessages = (
     messages: ReadonlyArray<MessageWithContentPO>
   ): React.ReactNode => {
     return (
       <Tabs
         tabBarUnderlineStyle={{
-          backgroundColor: variables.brandLightBlue
+          backgroundColor: variables.brandPrimaryLight
         }}
         initialPage={0}
       >
-        <Tab heading={I18n.t("tabMessages.itemAll")}>
+        <Tab heading={I18n.t("messagges.tab.all")}>
           <FlatList
             alwaysBounceVertical={false}
             scrollEnabled={true}
@@ -106,7 +106,7 @@ class MessagesScreen extends React.Component<Props, never> {
             keyExtractor={item => item.id}
           />
         </Tab>
-        <Tab heading={I18n.t("tabMessages.itemDeadlines")}>
+        <Tab heading={I18n.t("messagges.tab.deadlines")}>
           <View spacer={true} large={true} />
         </Tab>
       </Tabs>
@@ -125,7 +125,7 @@ class MessagesScreen extends React.Component<Props, never> {
           <View spacer={true} />
           <H1>{I18n.t("messages.contentTitle")}</H1>
           {this.renderLoadingStatus(this.props.isLoadingMessages)}
-          {this.renderMockedMessages(this.props.messages)}
+          {this.renderMessages(this.props.messages)}
         </View>
       </Container>
     );

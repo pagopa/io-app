@@ -4,13 +4,13 @@ import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/Utils/mapPropsToStyleNames";
 import { ServicesState } from "../store/reducers/entities/services";
-import { convertDateToDistance } from "../utils/convertDateToDistance";
+import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 
 export type OwnProps = Readonly<{
-  sender: string;
+  senderServiceId: string;
   subject: string;
   key: string;
-  date: string;
+  date: Date;
   services: ServicesState;
 }>;
 
@@ -25,17 +25,17 @@ class MessageComponent extends React.Component<Props> {
   }
 
   public render() {
-    const { subject, sender, date, key, services } = this.props;
+    const { subject, senderServiceId, date, key, services } = this.props;
     return (
       <ListItem key={key}>
         <Left>
-          <Text leftAlign={true} boldSender={true}>
-            {this.getSenderName(sender, services)}
+          <Text leftAlign={true} alternativeBold={true}>
+            {this.getSenderName(senderServiceId, services)}
           </Text>
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text dateFormat={true}>{convertDateToDistance(date)}</Text>
+          <Text formatDate={true}>{convertDateToWordDistance(date)}</Text>
           <Icon rightArrow={true} name="chevron-right" />
         </Right>
       </ListItem>
