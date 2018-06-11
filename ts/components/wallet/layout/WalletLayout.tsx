@@ -64,7 +64,12 @@ export class WalletLayout extends React.Component<Props, never> {
   private twoPartsLayout(): React.ReactNode {
     return (
       <Grid>
-        <Row size={TopContents.getSize(this.props.topContent,this.props.spaceAllocationPolicy)}>
+        <Row
+          size={TopContents.getSize(
+            this.props.topContent,
+            this.props.spaceAllocationPolicy
+          )}
+        >
           <TopContents {...this.props} />
         </Row>
         <Row size={this.getBottomSize()}>{this.props.children}</Row>
@@ -82,7 +87,12 @@ export class WalletLayout extends React.Component<Props, never> {
      */
     return (
       WALLET_LAYOUT_BOTTOM_SIZE +
-      (TOP_CONTENTS_MAX_SIZE - TopContents.getSize(this.props.topContent, this.props.spaceAllocationPolicy)));
+      (TOP_CONTENTS_MAX_SIZE -
+        TopContents.getSize(
+          this.props.topContent,
+          this.props.spaceAllocationPolicy
+        ))
+    );
   }
 
   private goBackButton(): React.ReactNode {

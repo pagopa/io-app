@@ -36,7 +36,9 @@ export class SubtitlesLR extends React.Component<Props> {
           <Grid>
             <Col size={1}>
               <Row>
-                <Left style={{flexDirection:"column",alignSelf:"flex-end"}}>
+                <Left
+                  style={{ flexDirection: "column", alignSelf: "flex-end" }}
+                >
                   <Text style={WalletStyles.payLayoutSubtitleLeft}>
                     {this.props.content.subtitleLeftText}
                   </Text>
@@ -45,7 +47,9 @@ export class SubtitlesLR extends React.Component<Props> {
             </Col>
             <Col size={1}>
               <Row>
-                <Right style={{flexDirection:"column",alignSelf:"flex-end"}}>
+                <Right
+                  style={{ flexDirection: "column", alignSelf: "flex-end" }}
+                >
                   <Text
                     style={WalletStyles.standardText}
                     onPress={() =>

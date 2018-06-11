@@ -1,15 +1,22 @@
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { CreditCard, CreditCardType, getCardType } from '../../../types/CreditCard';
+import {
+  CreditCard,
+  CreditCardType,
+  getCardType
+} from "../../../types/CreditCard";
 
 export enum LogoPosition {
   TOP,
   CENTER
-};
-
-export const shouldRenderLogo = (current: LogoPosition ,requested?: LogoPosition) => {
-  return current === requested // current position is the requested one
 }
+
+export const shouldRenderLogo = (
+  current: LogoPosition,
+  requested?: LogoPosition
+) => {
+  return current === requested; // current position is the requested one
+};
 
 export const getCardIcon = (cc: CreditCard) => {
   const type = getCardType(cc);
@@ -38,17 +45,13 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  item: CreditCard
+  item: CreditCard;
 }>;
 
 export default class Logo extends React.Component<Props> {
-  public render () {
+  public render() {
     return (
-      <Image
-        style={styles.issuerLogo}
-        source={getCardIcon(this.props.item)}
-      />
+      <Image style={styles.issuerLogo} source={getCardIcon(this.props.item)} />
     );
   }
-
 }

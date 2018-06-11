@@ -1,15 +1,14 @@
+import { Right, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Row, Col } from 'react-native-easy-grid';
-import { CreditCardStyles } from './style';
-import { Text, Right } from "native-base";
-import { LastUsageRow } from './LastUsageRow';
-import I18n from "../../../i18n";
-import { ActionIcon } from './ActionIcon';
-import Logo, { LogoPosition, shouldRenderLogo } from './Logo';
+import { Col, Row } from "react-native-easy-grid";
 import { Props } from ".";
+import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-
+import { ActionIcon } from "./ActionIcon";
+import { LastUsageRow } from "./LastUsageRow";
+import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
+import { CreditCardStyles } from "./style";
 
 const styles = StyleSheet.create({
   whiteBarStyle: {
@@ -21,7 +20,6 @@ const styles = StyleSheet.create({
 });
 
 export class CardBody extends React.Component<Props> {
-
   private middleRightSide() {
     const { logoPosition, mainActionNavigation } = this.props;
     if (logoPosition === LogoPosition.TOP) {
@@ -33,24 +31,24 @@ export class CardBody extends React.Component<Props> {
               name="io-right"
               size={variables.iconSize2}
               onPress={() =>
-                mainActionNavigation !== undefined ?
-                this.props.navigation.navigate(mainActionNavigation) :
-                undefined
+                mainActionNavigation !== undefined
+                  ? this.props.navigation.navigate(mainActionNavigation)
+                  : undefined
               }
             />
           </Right>
         </Row>
       );
     } else {
-      return  shouldRenderLogo(LogoPosition.CENTER, this.props.logoPosition) ? <Logo item={this.props.item}/> : null;
+      return shouldRenderLogo(LogoPosition.CENTER, this.props.logoPosition) ? (
+        <Logo item={this.props.item} />
+      ) : null;
     }
   }
 
   private whiteLine() {
     if (this.props.lastUsage === true || this.props.whiteLine === true) {
-      return (
-        <Row key="whiteLine" size={2} style={styles.whiteBarStyle} />
-      );
+      return <Row key="whiteLine" size={2} style={styles.whiteBarStyle} />;
     }
     return null;
   }
@@ -75,7 +73,14 @@ export class CardBody extends React.Component<Props> {
       </Row>,
       null,
       this.whiteLine(),
-      <LastUsageRow {...{navigation, item, showMsg: this.props.lastUsage, key: "bottomRow"} }/>
+      <LastUsageRow
+        {...{
+          navigation,
+          item,
+          showMsg: this.props.lastUsage,
+          key: "bottomRow"
+        }}
+      />
     ];
   }
 }

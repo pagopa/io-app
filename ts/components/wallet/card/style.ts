@@ -1,6 +1,6 @@
-import { StyleSheet, Platform } from "react-native";
-import variables from '../../../theme/variables';
-import { makeFontStyleObject } from '../../../theme/fonts';
+import { Platform, StyleSheet } from "react-native";
+import { makeFontStyleObject } from "../../../theme/fonts";
+import variables from "../../../theme/variables";
 
 export const CreditCardStyles = StyleSheet.create({
   largeTextStyle: {
@@ -18,4 +18,4 @@ export const CreditCardStyles = StyleSheet.create({
     fontSize: variables.fontSize2,
     color: variables.brandDarkGray
   }
-})
+});

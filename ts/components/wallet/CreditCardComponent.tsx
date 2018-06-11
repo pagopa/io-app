@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ActionSheet, Body, Card, Icon, Text } from "native-base";
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
@@ -11,13 +11,13 @@ import ROUTES from "../../navigation/routes";
 import color from "color";
 
 import { Right } from "native-base";
+import { makeFontStyleObject } from "../../theme/fonts";
+import variables from "../../theme/variables";
 import {
   CreditCard,
   CreditCardType,
   getCardType
 } from "../../types/CreditCard";
-import variables from '../../theme/variables';
-import { makeFontStyleObject } from '../../theme/fonts';
 
 export enum LogoPosition {
   TOP,
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 0,
     marginRight: 0,
-    marginBottom: -1,
+    marginBottom: -1
   },
   fullCard: {
     height: 200
@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotatedCard: {
-    transform: [{ perspective: 850 }, { rotateX: "-30deg" }, { scale: 0.87 }],
+    transform: [{ perspective: 850 }, { rotateX: "-30deg" }, { scale: 0.87 }]
     // shadowRadius: 10,
     // shadowOpacity: 1
   },
@@ -183,9 +183,7 @@ export class CreditCardComponent extends React.Component<Props> {
 
   private whiteLine() {
     if (this.props.lastUsage === true || this.props.whiteLine === true) {
-      return (
-        <Row key="whiteLine" size={2} style={styles.whiteBarStyle} />
-      );
+      return <Row key="whiteLine" size={2} style={styles.whiteBarStyle} />;
     }
     return null;
   }
@@ -199,9 +197,7 @@ export class CreditCardComponent extends React.Component<Props> {
       return (
         <Image
           style={styles.issuerLogo}
-          source={
-            getCardIcon(this.props.item)
-          }
+          source={getCardIcon(this.props.item)}
         />
       );
     }
@@ -223,12 +219,7 @@ export class CreditCardComponent extends React.Component<Props> {
           }}
         >
           <Col size={8}>
-            <Text
-              style={[
-                styles.textStyle,
-                styles.smallTextStyle
-              ]}
-            >
+            <Text style={[styles.textStyle, styles.smallTextStyle]}>
               {item.lastUsage}
             </Text>
           </Col>
@@ -292,17 +283,15 @@ export class CreditCardComponent extends React.Component<Props> {
     if (this.props.headerOnly !== true) {
       return [
         <Row key="validity" size={4} style={styles.rowStyle}>
-          <Text
-            style={[styles.textStyle, styles.smallTextStyle]}
-          >
-            {`${I18n.t("creditCardComponent.validUntil")} ${item.expirationDate}`}
+          <Text style={[styles.textStyle, styles.smallTextStyle]}>
+            {`${I18n.t("creditCardComponent.validUntil")} ${
+              item.expirationDate
+            }`}
           </Text>
         </Row>,
         <Row key="owner" size={6} style={styles.rowStyle}>
           <Col size={7}>
-            <Text style={styles.textStyle}>
-              {item.owner.toUpperCase()}
-            </Text>
+            <Text style={styles.textStyle}>{item.owner.toUpperCase()}</Text>
           </Col>
           <Col size={2}>{this.middleRightSide()}</Col>
         </Row>,
@@ -340,13 +329,8 @@ export class CreditCardComponent extends React.Component<Props> {
                 <Row size={1} />
                 <Row size={6} style={styles.rowStyle}>
                   <Col size={7}>
-                    <Text
-                      style={[
-                        styles.textStyle,
-                        styles.largeTextStyle
-                      ]}
-                    >
-                    {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
+                    <Text style={[styles.textStyle, styles.largeTextStyle]}>
+                      {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
                     </Text>
                   </Col>
 

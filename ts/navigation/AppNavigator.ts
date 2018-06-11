@@ -1,10 +1,10 @@
 import { SwitchNavigator } from "react-navigation";
 
+import { WalletHomeScreen } from "../screens/wallet/WalletHomeScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-import { WalletHomeScreen } from '../screens/wallet/WalletHomeScreen';
 
 /**
  * The main stack of screens of the application.

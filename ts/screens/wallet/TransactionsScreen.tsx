@@ -14,13 +14,16 @@ import {
 
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout, SpaceAllocationPolicy } from "../../components/wallet/layout/WalletLayout";
+import {
+  SpaceAllocationPolicy,
+  WalletLayout
+} from "../../components/wallet/layout/WalletLayout";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
-import { topContentTouchable } from "../../components/wallet/layout/types";
 import { CreditCardComponent } from "../../components/wallet/card";
+import { topContentTouchable } from "../../components/wallet/layout/types";
 
 interface ParamType {
   readonly card: CreditCard;

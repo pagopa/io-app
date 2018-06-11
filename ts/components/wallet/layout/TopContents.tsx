@@ -39,7 +39,10 @@ export class TopContents extends React.Component<Props> {
    * given TopContent, based on which sub-components are
    * actually being required (e.g. subtitles, touchable contents)
    */
-  public static getSize(topContent: TopContent, sap: SpaceAllocationPolicy | undefined) {
+  public static getSize(
+    topContent: TopContent,
+    sap: SpaceAllocationPolicy | undefined
+  ) {
     const titleSize = TITLE_SIZE;
     /**
      * if topContent has the main subtitle, subtitleSize
@@ -79,11 +82,13 @@ export class TopContents extends React.Component<Props> {
     sap: SpaceAllocationPolicy | undefined
   ): number {
     if (sap === SpaceAllocationPolicy.TO_AVAILABLE_CONTENTS) {
-      const { hasTouchable, hasMainSubtitle, hasSubtitlesLR } = topContent;
-      if (hasTouchable === false) {
+      if (topContent.hasTouchable === false) {
         return TOUCHABLE_SIZE;
       }
-      if (hasMainSubtitle === false && hasSubtitlesLR === false) {
+      if (
+        topContent.hasMainSubtitle === false &&
+        topContent.hasSubtitlesLR === false
+      ) {
         return Math.max(SUBTITLE_SIZE, SUBTITLES_LR_SIZE);
       }
     }
@@ -97,11 +102,17 @@ export class TopContents extends React.Component<Props> {
   private getSubtitles() {
     const { topContent } = this.props;
     if (topContent.hasMainSubtitle === true) {
-      return <Subtitle extraSize={this.extraSize} content={this.props.topContent} />;
+      return (
+        <Subtitle extraSize={this.extraSize} content={this.props.topContent} />
+      );
     }
     if (topContent.hasSubtitlesLR === true) {
       return (
-        <SubtitlesLR extraSize={this.extraSize} content={topContent} navigation={this.props.navigation} />
+        <SubtitlesLR
+          extraSize={this.extraSize}
+          content={topContent}
+          navigation={this.props.navigation}
+        />
       );
     }
     return null;
@@ -114,7 +125,9 @@ export class TopContents extends React.Component<Props> {
       <Row
         size={TOUCHABLE_SIZE + this.extraSize}
         style={{ alignContent: "flex-end", alignItems: "flex-end" }}
-      >{topContent.touchableContent}</Row>
+      >
+        {topContent.touchableContent}
+      </Row>
     ) : null;
   }
 
@@ -126,7 +139,7 @@ export class TopContents extends React.Component<Props> {
       this.props.spaceAllocationPolicy
     );
   }
-  
+
   /**
    * renders a title (mandatory as of now, but may be
    * rendered optional in a future version),
