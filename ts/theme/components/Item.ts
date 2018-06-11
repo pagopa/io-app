@@ -21,7 +21,7 @@ export default (): Theme => {
         .hex()
     },
     ".spacer": {
-      paddingTop: variables.itemPaddingTopSpacer
+      paddingTop: 20
     }
   };
 };

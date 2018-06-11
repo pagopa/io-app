@@ -212,6 +212,10 @@
       "one": "Hai 1 messaggio",
       "other": "Hai {{count}} messaggi"
     },
+    "tab": {
+      "all": "Tutti",
+      "deadlines":"Scadenze"
+    },
     "headerTitle": "io.italia.it",
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messaggi...",
@@ -222,10 +226,5 @@
       "errorTitle": "Notifiche push",
       "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
     }
-  },
-
-  "tabMessages": {
-    "itemAll": "Tutti",
-    "itemDeadlines": "Scadenze"
   }
 }

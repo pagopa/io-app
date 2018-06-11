@@ -214,6 +214,10 @@
       "one": "You have 1 message",
       "other": "You have {{count}} messages"
     },
+    "tab": {
+      "all": "All",
+      "deadlines":"Deadlines"
+    },
     "headerTitle": "io.italia.it",
     "contentTitle": "Messages",
     "loading": "Loading Messages...",
@@ -224,9 +228,5 @@
       "errorTitle": "Push notifications",
       "errorMessage": "Registration with the push notifications service generated an error"
     }
-  },
-  "tabMessages": {
-    "itemAll": "All",
-    "itemDeadlines": "Deadlines"
   }
 }

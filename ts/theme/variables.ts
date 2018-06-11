@@ -18,7 +18,7 @@ const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
 
-  // Flex
+  // FlexBox Flex Position
   flexLeftAlign: 1,
   flexRightAlign: 0,
 
@@ -42,7 +42,7 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
-  brandLightBlue: color("#0066CC")
+  brandPrimaryLight: color("#0066CC")
     .lighten(0.15)
     .hex(),
 
@@ -71,7 +71,7 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.75;
   },
   lineHeightBase: 24,
-  get lineHeight1(): ThemeSimpleValue {
+  get lineHeight1(): number {
     return this.lineHeightBase * 0.75;
   },
 
@@ -150,9 +150,6 @@ const customVariables = Object.assign(materialVariables, {
   textLinkColor: "#0063CF",
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
-
-  // Item
-  itemPaddingTopSpacer: 20,
 
   // Spacer
   spacerHeight: 16,

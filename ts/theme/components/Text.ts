@@ -9,11 +9,11 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
-      dateFormat?: boolean;
+      formatDate?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
       colorLabelTab?: boolean;
-      boldSender?: boolean;
+      alternativeBold?: boolean;
     }
   }
 }
@@ -27,7 +27,7 @@ export default (): Theme => {
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
-    ".dateFormat": {
+    ".formatDate": {
       fontWeight: "bold",
       fontSize: variables.fontSize2
     },
@@ -35,12 +35,12 @@ export default (): Theme => {
       flex: variables.flexLeftAlign
     },
     ".colorLabelTab": {
-      color: variables.brandLightBlue
+      color: variables.brandPrimaryLight
     },
     ".rightAlign": {
       flex: variables.flexRightAlign
     },
-    ".boldSender": {
+    ".alternativeBold": {
       lineHeight: variables.lineHeight1,
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color,

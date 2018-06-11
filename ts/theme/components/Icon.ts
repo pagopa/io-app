@@ -13,7 +13,7 @@ export default (): Theme => {
   return {
     ".rightArrow": {
       flex: variables.flexRightAlign,
-      color: variables.brandLightBlue,
+      color: variables.brandPrimaryLight,
       alignSelf: "center"
     }
   };
