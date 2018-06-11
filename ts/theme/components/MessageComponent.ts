@@ -13,7 +13,7 @@ export default (): Theme => {
           paddingTop: 10
         },
         flexDirection: "column",
-        flex: 2,
+        flex: 3,
         alignSelf: "flex-start"
       },
       "NativeBase.Left": {
@@ -22,7 +22,7 @@ export default (): Theme => {
         },
         alignSelf: "flex-start",
         flexDirection: "column",
-        flex: 6
+        flex: 9
       },
       marginLeft: 0,
       flexDirection: "row",
