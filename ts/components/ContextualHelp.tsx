@@ -7,10 +7,10 @@
 
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import Modal from "./ui/Modal";
+import { TouchableHighlight } from "react-native";
 import Icon from "../theme/font-icons/io-icon-font/index";
-import { TouchableHighlight } from 'react-native';
-import variables from '../theme/variables';
+import variables from "../theme/variables";
+import Modal from "./ui/Modal";
 
 type Props = Readonly<{
   title: string;
