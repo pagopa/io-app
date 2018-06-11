@@ -8,7 +8,6 @@ import * as React from "react";
 import { Image, Text, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect, Dispatch } from "react-redux";
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import {
   topContentSubtitlesLRTouchable,
@@ -25,9 +24,14 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { fetchCardsRequest } from "../../store/actions/wallet/cards";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
-import { CreditCard } from "../../types/CreditCard";
+import { GlobalState } from "../../store/reducers/types";
+import { creditCardsSelector } from "../../store/reducers/wallet/cards";
 
 type ScreenProps = {};
+
+type ReduxMappedStateProps = Readonly<{
+  cardsNumber: number;
+}>;
 
 type ReduxMappedDispatchProps = Readonly<{
   // temporary
@@ -39,7 +43,10 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedDispatchProps & ScreenProps & OwnProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  ScreenProps &
+  OwnProps;
 
 /**
  * Wallet Home Screen
@@ -81,8 +88,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   private touchableContent(): React.ReactElement<any> {
-    const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
-    if (cards.length > 0) {
+    if (this.props.cardsNumber > 0) {
       return this.getCardsSummaryImage();
     } else {
       return this.getEmptyCardsSummary();
@@ -99,7 +105,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const topContents =
-      WalletAPI.getCreditCards().length > 0
+      this.props.cardsNumber > 0
         ? topContentSubtitlesLRTouchable(
             this.touchableContent(),
             I18n.t("wallet.paymentMethods"),
@@ -132,11 +138,15 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 }
 
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  cardsNumber: creditCardsSelector(state).length
+});
+
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadCards: () => dispatch(fetchCardsRequest())
 });
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(WalletHomeScreen);

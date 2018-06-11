@@ -174,7 +174,7 @@ class TransactionDetailsScreen extends React.Component<Props, never> {
               </Col>
             </Row>
             <Row style={styles.rowStyle}>
-              <Button style={{ marginTop: 20 }} block={true} success={true}>
+              <Button block={true} success={true}>
                 <Text>{I18n.t("wallet.seeReceipt")}</Text>
               </Button>
             </Row>

@@ -11,7 +11,7 @@ import I18n from "../../i18n";
 import { WalletTransaction } from "../../types/wallet";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
+import { CreditCard } from "../../types/CreditCard";
 
 // temporarily making this a variable
 // (to mock the deleteCreditCard() api more easily)
@@ -183,35 +183,13 @@ const transactions: ReadonlyArray<WalletTransaction> = [
 // will actually fetch data from the proxy/pagopa)
 // @https://www.pivotaltracker.com/story/show/157770129
 export class WalletAPI {
-  public static readonly MAX_TRANSACTIONS = 5;
-
-  public static getCreditCards(): ReadonlyArray<CreditCard> {
+  public static async getCreditCards(): Promise<ReadonlyArray<CreditCard>> {
     return cards;
   }
 
-  public static getCreditCard(creditCardId: number): CreditCard {
-    const card = cards.find((c: CreditCard): boolean => c.id === creditCardId);
-    if (card === undefined) {
-      return UNKNOWN_CARD;
-    }
-    return card;
-  }
-
-  public static getTransactions(
-    cardId: number
-  ): ReadonlyArray<WalletTransaction> {
-    return transactions.filter(
-      (transaction): boolean => transaction.cardId === cardId
-    );
-  }
-
-  public static getAllTransactions(): ReadonlyArray<WalletTransaction> {
+  public static async getTransactions(): Promise<
+    ReadonlyArray<WalletTransaction>
+  > {
     return transactions;
-  }
-
-  public static getLatestTransactions(
-    maxOps: number = WalletAPI.MAX_TRANSACTIONS
-  ): ReadonlyArray<WalletTransaction> {
-    return transactions.slice(0, maxOps);
   }
 }

@@ -41,8 +41,8 @@ type ReduxMappedDispatchProps = Readonly<{
  * The type of transactions that are to be shown
  */
 export enum TransactionsDisplayed {
-  LATEST,
-  BY_CARD
+  LATEST, // show the latest transactions
+  BY_CARD // show all the transactions paid with an already-selected credit card (available in the store)
 }
 
 type OwnProps = Readonly<{
@@ -100,7 +100,7 @@ class TransactionsList extends React.Component<Props> {
         <Row>
           <List
             removeClippedSubviews={false}
-            dataArray={transactions as any[]} // tslint:disable-line
+            dataArray={transactions as any[]} // tslint:disable-line: readonly-array
             renderRow={(item): React.ReactElement<any> => (
               <ListItem
                 onPress={() => {
