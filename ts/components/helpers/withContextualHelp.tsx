@@ -59,7 +59,7 @@ export function withContextualHelp<P extends ContextualHelpInjectedProps>(
           <ContextualHelp
             title={title}
             body={body}
-            show={this.state.isHelpVisible}
+            isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
           />
         </View>

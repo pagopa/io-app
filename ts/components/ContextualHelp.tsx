@@ -5,23 +5,28 @@
  * needed)
  */
 
-import { Content, H1, Icon, Text, View } from "native-base";
+import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import Modal from "./ui/Modal";
+import Icon from "../theme/font-icons/io-icon-font/index";
+import { TouchableHighlight } from 'react-native';
+import variables from '../theme/variables';
 
 type Props = Readonly<{
   title: string;
   body: string;
-  show: boolean;
+  isVisible: boolean;
   close: () => void;
 }>;
 
 export class ContextualHelp extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
-      <Modal isVisible={this.props.show} fullscreen={true}>
+      <Modal isVisible={this.props.isVisible} fullscreen={true}>
         <View header={true}>
-          <Icon name="cross" onPress={_ => this.props.close()} />
+          <TouchableHighlight onPress={_ => this.props.close()}>
+            <Icon name="io-close" size={variables.iconSizeBase} />
+          </TouchableHighlight>
         </View>
         <Content>
           <H1>{this.props.title}</H1>
