@@ -38,7 +38,6 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
-  brandWhite: "#FFFFFF",
 
   cardFontColor: "#17324D",
   colorWhite: "white",

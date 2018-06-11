@@ -3,15 +3,15 @@
  * @flow
  */
 
-import { Action } from "../../actions/types";
 import { PIN_LOGIN_VALIDATE_FAILURE } from "../actions/constants";
+import { Action } from "../actions/types";
 
 export type PinLoginState = Readonly<{
   PinConfirmed: string;
 }>;
 
 export const INITIAL_STATE: PinLoginState = {
-  PinConfirmed: "PinConfirmedInvalid"
+  PinConfirmed: "PinCheck"
 };
 
 const reducer = (

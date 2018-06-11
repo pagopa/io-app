@@ -8,8 +8,8 @@ import { PIN_LENGTH } from "../utils/constants";
 type OwnProps = {
   autofocus: boolean;
   compareWithCode?: string;
-  inactiveColor?: string;
-  activeColor?: string;
+  inactiveColor: string;
+  activeColor: string;
   codeInputRef?: React.Ref<CodeInput>;
   onFulfill:
     | ((code: string) => void)
@@ -39,10 +39,10 @@ const Pinpad: React.SFC<Props> = props => {
       codeLength={PIN_LENGTH}
       compareWithCode={compareWithCode || ""}
       cellBorderWidth={2}
-      inactiveColor={color(inactiveColor || variables.brandLightGray)
+      inactiveColor={color(inactiveColor)
         .rgb()
         .string()}
-      activeColor={color(activeColor || variables.brandDarkGray)
+      activeColor={color(activeColor)
         .rgb()
         .string()}
       onFulfill={onFulfill}

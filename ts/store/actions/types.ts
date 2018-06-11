@@ -17,11 +17,10 @@ import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { PinloginActions } from "./pinlogin";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { SessionActions } from "./session";
-import { PinloginActions } from "./pinlogin";
-
 
 export type ApplicationState = "background" | "inactive" | "active";
 

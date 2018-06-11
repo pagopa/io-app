@@ -10,6 +10,7 @@ declare module "native-base" {
       link?: boolean;
       bold?: boolean;
       white?: boolean;
+      alignCenter?: boolean;
     }
   }
 }
@@ -24,7 +25,10 @@ export default (): Theme => {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
     ".white": {
-      color: variables.brandWhite
+      color: variables.colorWhite
+    },
+    ".alignCenter": {
+      textAlign: "center"
     },
     lineHeight: variables.lineHeight
   };

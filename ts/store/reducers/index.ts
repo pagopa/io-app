@@ -7,7 +7,6 @@ import { Reducer, ReducersMapObject } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
 
 import { Action } from "../actions/types";
-import pinloginReducer from "./pinlogin";
 import appStateReducer from "./appState";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -15,6 +14,7 @@ import loadingReducer from "./loading";
 import navigationReducer from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
+import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
 import sessionReducer from "./session";
 import { GlobalState } from "./types";

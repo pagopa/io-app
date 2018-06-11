@@ -108,7 +108,7 @@
   },
   "pin_login":{
     "pin": {
-      "pinInfo": "Put the fingerprint on the sensor or enter the PIN",
+      "pinInfo": "Enter the PIN",
       "pinForgot": "I do not remember the pin",
       "confirmValid": "Correct PIN",
       "confirmInvalid": "Invalid PIN"

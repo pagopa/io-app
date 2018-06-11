@@ -26,6 +26,7 @@ function* pinLoginSaga(): Iterator<Effect> {
   });
   yield put(navigateToPinLoginNavigatorAction);
 }
+
 function* validatePinSaga(action: PinValidateRequest): Iterator<Effect> {
   try {
     const userPin = action.payload;

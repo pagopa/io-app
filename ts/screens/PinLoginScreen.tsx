@@ -3,13 +3,13 @@ import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { ReduxProps } from "../actions/types";
 import Pinpad from "../components/Pinpad";
 import TextWithIcon from "../components/ui/TextWithIcon";
 import I18n from "../i18n";
-import { GlobalState } from "../reducers/types";
 import { validatePin } from "../store/actions/pinlogin";
+import { ReduxProps } from "../store/actions/types";
 import { PinLoginState } from "../store/reducers/pinlogin";
+import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 
 type ReduxMappedProps = {
@@ -63,8 +63,8 @@ class PinLoginScreen extends React.Component<Props> {
         <Pinpad
           autofocus={true}
           onFulfill={this.onPinFulfill}
-          activeColor={variables.brandWhite}
-          inactiveColor={variables.brandWhite}
+          activeColor={variables.colorWhite}
+          inactiveColor={variables.colorWhite}
           codeInputRef={pinpad => (this.pinComponent = pinpad)} // tslint:disable-line no-object-mutation
         />
 
@@ -79,7 +79,9 @@ class PinLoginScreen extends React.Component<Props> {
     return (
       <Content primary={true}>
         <View spacer={true} extralarge={true} />
-        <Text white={true}>{I18n.t("pin_login.pin.pinInfo")}</Text>
+        <Text white={true} alignCenter={true}>
+          {I18n.t("pin_login.pin.pinInfo")}
+        </Text>
         {this.renderCodeInput(pinLoginState)}
         <View spacer={true} extralarge={true} />
         {this.renderForgotButton()}
