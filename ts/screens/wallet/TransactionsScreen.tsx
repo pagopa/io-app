@@ -20,7 +20,7 @@ import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
 import { topContentTouchable } from "../../components/wallet/layout/types";
-import { CreditCardComponent } from "../../components/wallet/CreditCardComponent";
+import { CreditCardComponent } from "../../components/wallet/card";
 
 interface ParamType {
   readonly card: CreditCard;

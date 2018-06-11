@@ -21,8 +21,8 @@ import I18n from "../../i18n";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletAPI } from '../../api/wallet/wallet-api';
 import { UNKNOWN_CARD, CreditCard } from '../../types/CreditCard';
-import { CreditCardComponent } from '../../components/wallet/CreditCardComponent';
-import { LogoPosition } from '../../components/wallet/CreditCardComponent';
+import { CreditCardComponent } from '../../components/wallet/card';
+import { LogoPosition } from '../../components/wallet/card/Logo';
 
 interface ParamType {
   readonly transaction: WalletTransaction;

@@ -12,9 +12,9 @@ import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
 import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { CreditCardComponent } from "../../components/wallet/CreditCardComponent";
+import { CreditCardComponent } from "../../components/wallet/card";
 import { topContentNone } from "../../components/wallet/layout/types";
-import { CreditCard } from "../../types/CreditCard";
+import { CreditCard } from '../../types/CreditCard';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
