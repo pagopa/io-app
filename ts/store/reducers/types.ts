@@ -1,8 +1,6 @@
 import { NavigationState } from "react-navigation";
 import { FormStateMap } from "redux-form";
-
 import { Action } from "../actions/types";
-
 import { AppState } from "./appState";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
