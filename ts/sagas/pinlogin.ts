@@ -6,7 +6,6 @@
 
 import { NavigationActions } from "react-navigation";
 import { call, Effect, put, takeLatest } from "redux-saga/effects";
-
 import ROUTES from "../navigation/routes";
 import {
   PIN_LOGIN_INITIALIZE,

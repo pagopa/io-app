@@ -1,6 +1,5 @@
 /**
  * A reducer for the PinLogin.
- * 
  */
 
 import { PIN_LOGIN_VALIDATE_FAILURE } from "../actions/constants";
