@@ -93,6 +93,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
         logoPosition={LogoPosition.TOP}
         flatBottom={true}
         headerOnly={true}
+        rotated={true}
       />
     );
   }

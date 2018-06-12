@@ -15,7 +15,7 @@ const navigator = SwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: WalletHomeScreen // WIP to be replaced by IngressScreen before merging w/ master
+    screen: MainNavigator // WIP to be replaced by IngressScreen before merging w/ master
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users

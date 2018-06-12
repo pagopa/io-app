@@ -35,14 +35,15 @@ const styles = StyleSheet.create({
     height: 148
   },
   headerCard: {
-    height: 56
+    height: 58
   },
   flatBottom: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
   },
   rotatedCard: {
-    transform: [{ perspective: 850 }, { rotateX: "-30deg" }, { scale: 0.87 }]
+    transform: [{ perspective: 850 }, { rotateX: "-20deg" } ],
+    marginBottom: -3
     // shadowRadius: 10,
     // shadowOpacity: 1
   }
