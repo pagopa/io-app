@@ -21,7 +21,7 @@ import { getPin } from "../utils/keychain";
  */
 function* pinLoginSaga(): Iterator<Effect> {
   const navigateToPinLoginNavigatorAction = NavigationActions.navigate({
-    routeName: ROUTES.PINLOGIN,
+    routeName: ROUTES.PIN_LOGIN,
     key: undefined
   });
   yield put(navigateToPinLoginNavigatorAction);

@@ -32,7 +32,7 @@ const ROUTES = {
   WALLET_ADD_CARD: "WALLET_ADD_CARD",
 
   // Pin
-  PINLOGIN: "PINLOGIN",
+  PIN_LOGIN: "PIN_LOGIN",
 
   // Main
   MAIN: "MAIN",

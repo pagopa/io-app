@@ -8,7 +8,7 @@ import ROUTES from "./routes";
  */
 const navigator = StackNavigator(
   {
-    [ROUTES.PINLOGIN]: {
+    [ROUTES.PIN_LOGIN]: {
       screen: PinLoginScreen
     }
   },

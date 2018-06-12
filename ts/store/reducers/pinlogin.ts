@@ -7,7 +7,7 @@ import { PIN_LOGIN_VALIDATE_FAILURE } from "../actions/constants";
 import { Action } from "../actions/types";
 
 export type PinLoginState = Readonly<{
-  PinConfirmed: string;
+  PinConfirmed: "PinCheck" | "PinConfirmedInvalid";
 }>;
 
 export const INITIAL_STATE: PinLoginState = {

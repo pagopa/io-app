@@ -25,7 +25,7 @@ const navigator = SwitchNavigator({
   [ROUTES.ONBOARDING]: {
     screen: OnboardingNavigator
   },
-  [ROUTES.PINLOGIN]: {
+  [ROUTES.PIN_LOGIN]: {
     screen: PinNavigator
   },
   [ROUTES.MAIN]: {
