@@ -10,7 +10,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import thunk from "redux-thunk";
 
 import { analytics } from "../middlewares";
 import rootSaga from "../sagas";
@@ -66,7 +65,6 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const enhancer: StoreEnhancer = composeEnhancers(
     applyMiddleware(
-      thunk,
       sagaMiddleware,
       logger,
       navigation,
