@@ -201,6 +201,7 @@ class PinScreen extends React.Component<Props, State> {
       </Content>
     );
   }
+
   // Render the description for the different states
   public renderDescription(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
