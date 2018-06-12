@@ -123,7 +123,6 @@ class MessagesScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Body>
-            <Text>{I18n.t("messages.headerTitle")}</Text>
           </Body>
         </AppHeader>
         <View content={true}>
