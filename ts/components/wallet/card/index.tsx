@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotatedCard: {
-    transform: [{ perspective: 850 }, { rotateX: "-20deg" } ],
+    transform: [{ perspective: 850 }, { rotateX: "-20deg" }],
     marginBottom: -3
     // shadowRadius: 10,
     // shadowOpacity: 1
