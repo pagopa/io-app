@@ -1,6 +1,6 @@
 /**
  * A reducer for the PinLogin.
- * @flow
+ * 
  */
 
 import { PIN_LOGIN_VALIDATE_FAILURE } from "../actions/constants";

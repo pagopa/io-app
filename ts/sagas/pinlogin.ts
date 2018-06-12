@@ -1,5 +1,5 @@
 /**
- * A saga that manages the Onboarding.
+ * A saga that manages the Pinlogin.
  *
  * For a detailed view of the flow check @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
  */
@@ -27,7 +27,7 @@ function* pinLoginSaga(): Iterator<Effect> {
   yield put(navigateToPinLoginNavigatorAction);
 }
 
-function* validatePinSaga(action: PinValidateRequest): Iterator<Effect> {
+function* PinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
   try {
     const userPin = action.payload;
     const basePin: string = yield call(getPin);
@@ -52,5 +52,5 @@ function* validatePinSaga(action: PinValidateRequest): Iterator<Effect> {
 
 export default function* root(): Iterator<Effect> {
   yield takeLatest(PIN_LOGIN_INITIALIZE, pinLoginSaga);
-  yield takeLatest(PIN_LOGIN_VALIDATE_REQUEST, validatePinSaga);
+  yield takeLatest(PIN_LOGIN_VALIDATE_REQUEST, PinValidateSaga);
 }
