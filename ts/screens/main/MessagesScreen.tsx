@@ -1,4 +1,4 @@
-import { Body, Container, H1, Tab, Tabs, Text, View } from "native-base";
+import { Body, Container, H1, Tab, Tabs, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 import {
@@ -122,8 +122,7 @@ class MessagesScreen extends React.Component<Props, never> {
     return (
       <Container>
         <AppHeader>
-          <Body>
-          </Body>
+          <Body />
         </AppHeader>
         <View content={true}>
           <View spacer={true} />

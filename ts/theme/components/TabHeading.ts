@@ -9,11 +9,11 @@ export default (): Theme => {
     ".active": {
       "NativeBase.Text": {
         color: variables.brandPrimaryLight,
-        fontWeight: "600"
+        fontWeight: variables.h3FontWeight
       }
     },
-    backgroundColor: "#fff",
+    backgroundColor: variables.brandPrimaryInverted,
     borderBottomWidth: 0,
-    borderColor: "#fff"
+    borderColor: variables.brandPrimaryInverted
   };
 };
