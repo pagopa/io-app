@@ -9,30 +9,31 @@ import {
   TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
+import { IndexedObject } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { getSelectedCreditCardId } from "./cards";
 
 export type TransactionsState = Readonly<{
-  transactions: ReadonlyArray<WalletTransaction>;
+  transactions: IndexedObject<WalletTransaction>;
   selectedTransactionId: Option<number>;
 }>;
 
 export const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
-  transactions: [],
+  transactions: IndexedObject.create([]),
   selectedTransactionId: none
 };
 
 // selectors
 export const getTransactions = (
   state: GlobalState
-): ReadonlyArray<WalletTransaction> => state.wallet.transactions.transactions;
+): IndexedObject<WalletTransaction> => state.wallet.transactions.transactions;
 export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
   state.wallet.transactions.selectedTransactionId;
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
-  (transactions: ReadonlyArray<WalletTransaction>) =>
-    [...transactions]
+  (transactions: IndexedObject<WalletTransaction>) =>
+    [...transactions.values()]
       .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
       .slice(0, 5) // WIP no magic numbers
 );
@@ -41,16 +42,11 @@ export const transactionForDetailsSelector = createSelector(
   getTransactions,
   getSelectedTransactionId,
   (
-    transactions: ReadonlyArray<WalletTransaction>,
+    transactions: IndexedObject<WalletTransaction>,
     selectedTransactionId: Option<number>
   ): Option<WalletTransaction> => {
     if (selectedTransactionId.isSome()) {
-      const transaction = transactions.find(
-        t => t.id === selectedTransactionId.value
-      );
-      if (transaction !== undefined) {
-        return some(transaction);
-      }
+      return transactions.get(selectedTransactionId.value);
     }
     return none;
   }
@@ -60,11 +56,11 @@ export const transactionsByCardSelector = createSelector(
   getTransactions,
   getSelectedCreditCardId,
   (
-    transactions: ReadonlyArray<WalletTransaction>,
+    transactions: IndexedObject<WalletTransaction>,
     cardId: Option<number>
   ): ReadonlyArray<WalletTransaction> => {
     if (cardId.isSome()) {
-      return transactions.filter(t => t.cardId === cardId.value);
+      return transactions.values().filter(t => t.cardId === cardId.value);
     }
     return [];
   }
@@ -78,7 +74,7 @@ const reducer = (
   if (action.type === TRANSACTIONS_FETCHED) {
     return {
       ...state,
-      transactions: action.payload
+      transactions: IndexedObject.create(action.payload)
     };
   }
   if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {

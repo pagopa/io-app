@@ -9,15 +9,16 @@ import {
   SELECT_CARD_FOR_DETAILS
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
+import { IndexedObject } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type CardsState = Readonly<{
-  cards: ReadonlyArray<CreditCard>;
+  cards: IndexedObject<CreditCard>;
   selectedCardId: Option<number>;
 }>;
 
 export const CARDS_INITIAL_STATE: CardsState = {
-  cards: [],
+  cards: IndexedObject.create([]),
   selectedCardId: none
 };
 
@@ -30,7 +31,8 @@ export const creditCardsSelector = createSelector(
   getCards,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (cards: ReadonlyArray<CreditCard>): ReadonlyArray<CreditCard> => cards
+  (cards: IndexedObject<CreditCard>): ReadonlyArray<CreditCard> =>
+    cards.values()
 );
 
 // reducer
@@ -41,7 +43,7 @@ const reducer = (
   if (action.type === CARDS_FETCHED) {
     return {
       ...state,
-      cards: action.payload
+      cards: IndexedObject.create(action.payload)
     };
   }
   if (action.type === SELECT_CARD_FOR_DETAILS) {
