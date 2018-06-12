@@ -45,7 +45,7 @@
     "redux-logger": "3.0.6",
     "redux-persist": "5.10.0",
     "redux-saga": "^0.16.0",
-    "redux-thunk": "2.2.0",
+    "redux-thunk": "2.3.0",
     "reselect": "^3.0.1",
     "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0",
