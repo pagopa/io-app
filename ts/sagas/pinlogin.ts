@@ -26,7 +26,7 @@ function* pinLoginSaga(): Iterator<Effect> {
   yield put(navigateToPinLoginNavigatorAction);
 }
 
-function* PinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
+function* pinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
   try {
     const userPin = action.payload;
     const basePin: string = yield call(getPin);
@@ -51,5 +51,5 @@ function* PinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
 
 export default function* root(): Iterator<Effect> {
   yield takeLatest(PIN_LOGIN_INITIALIZE, pinLoginSaga);
-  yield takeLatest(PIN_LOGIN_VALIDATE_REQUEST, PinValidateSaga);
+  yield takeLatest(PIN_LOGIN_VALIDATE_REQUEST, pinValidateSaga);
 }
