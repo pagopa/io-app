@@ -204,12 +204,7 @@ class PinScreen extends React.Component<Props, State> {
   // Render the description for the different states
   public renderDescription(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
-      return (
-        <React.Fragment>
-          <Text>{I18n.t("onboarding.pin.pinInfo")}</Text>
-          <Text link={true}>{I18n.t("onboarding.pin.moreLinkText")}</Text>
-        </React.Fragment>
-      );
+      return <Text>{I18n.t("onboarding.pin.pinInfo")}</Text>;
     } else {
       return <Text>{I18n.t("onboarding.pin.pinInfoSelected")}</Text>;
     }
