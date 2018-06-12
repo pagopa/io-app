@@ -45,7 +45,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         >
           <Image
             style={WalletStyles.pfCards}
-            source={require("../../../img/wallet/creditcards.jpg")}
+            source={require("../../../img/wallet/creditcards.png")}
           />
         </TouchableHighlight>
       </View>
