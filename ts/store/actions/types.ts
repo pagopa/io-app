@@ -42,12 +42,9 @@ export type Action =
   | ErrorActions
   | WalletActions;
 
-/* eslint-disable no-use-before-define */
-// We need to disable the eslint rule because of a problem described here
-// @https://github.com/babel/babel-eslint/issues/485
 export type GetState = () => GlobalState;
 
-export type Dispatch = DispatchAPI<Action, GlobalState>;
+export type Dispatch = DispatchAPI<Action>;
 
 export type Store = ReduxStore<GlobalState>;
 
