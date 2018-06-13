@@ -8,11 +8,12 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import { WalletStyles } from "../../../components/styles/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   amount: string;
-  expireDate: string;
+  expireDate: String;
   tranche: string;
 }>;
 
@@ -26,10 +27,6 @@ const styles = StyleSheet.create({
     backgroundColor: variables.brandDarkGray,
     paddingRight: variables.contentPadding,
     paddingLeft: variables.contentPadding
-  },
-
-  white: {
-    color: variables.brandLight
   },
 
   whiteStrike: {
@@ -56,29 +53,29 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
       <Grid style={styles.darkContentPadding}>
         <View spacer={true} large={true} />
         <Row>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.amount")}
           </H3>
           <Right>
-            <H1 style={styles.white}>{this.props.amount}</H1>
+            <H1 style={WalletStyles.white}>{this.props.amount}</H1>
           </Right>
         </Row>
         <View spacer={true} />
         <Row>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.expireDate")}
           </H3>
           <Right>
-            <H1 style={styles.white}>{this.props.expireDate}</H1>
+            <H1 style={WalletStyles.white}>{this.props.expireDate}</H1>
           </Right>
         </Row>
         <View spacer={true} />
         <Row>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.tranche")}
           </H3>
           <Right>
-            <H1 style={styles.white}>{this.props.tranche}</H1>
+            <H1 style={WalletStyles.white}>{this.props.tranche}</H1>
           </Right>
         </Row>
         <View spacer={true} large={true} />

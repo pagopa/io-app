@@ -8,6 +8,7 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import { WalletStyles } from "../../../components/styles/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -21,14 +22,6 @@ const styles = StyleSheet.create({
   padded: {
     paddingRight: variables.contentPadding,
     paddingLeft: variables.contentPadding
-  },
-
-  darkContent: {
-    backgroundColor: variables.brandDarkGray
-  },
-
-  white: {
-    color: variables.brandLight
   },
 
   whiteStrike: {
@@ -51,6 +44,14 @@ const styles = StyleSheet.create({
   underlined: {
     textDecorationLine: "underline",
     color: variables.brandLight
+  },
+
+  /**
+   * TODO: testare proporzioni
+   */
+  iconMargin: {
+    marginBottom: 3,
+    marginLeft: 3
   }
 });
 
@@ -59,10 +60,10 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
 > {
   public render(): React.ReactNode {
     return (
-      <Grid style={[styles.darkContent, styles.padded]}>
+      <Grid style={[WalletStyles.backContent, styles.padded]}>
         <View spacer={true} large={true} />
         <Row>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.amount")}
           </H3>
           <Right>
@@ -71,18 +72,17 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
         </Row>
         <View spacer={true} />
         <Row style={styles.toAlignCenter}>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
           </H3>
-          <Text> {""} </Text>
-          <Icon style={styles.white} name={"alert-circle"} type={"Feather"} />
+          <Icon style={[WalletStyles.white, styles.iconMargin]} name={"alert-circle"} type={"Feather"} />
           <Right>
-            <H1 style={styles.white}>{this.props.updatedAmount}</H1>
+            <H1 style={WalletStyles.white}>{this.props.updatedAmount}</H1>
           </Right>
         </Row>
         <View spacer={true} />
         <Row style={styles.toAlignColumnstart}>
-          <Text style={styles.white}>
+          <Text style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.updateInfo")}
           </Text>
           <Text style={styles.underlined}>
@@ -96,20 +96,20 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
         </Row>
         <View spacer={true} />
         <Row>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.expireDate")}
           </H3>
           <Right>
-            <H1 style={styles.white}>{this.props.expireDate}</H1>
+            <H1 style={WalletStyles.white}>{this.props.expireDate}</H1>
           </Right>
         </Row>
         <View spacer={true} />
         <Row>
-          <H3 style={styles.white}>
+          <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.tranche")}
           </H3>
           <Right>
-            <H1 style={styles.white}>{this.props.tranche}</H1>
+            <H1 style={WalletStyles.white}>{this.props.tranche}</H1>
           </Right>
         </Row>
         <View spacer={true} large={true} />

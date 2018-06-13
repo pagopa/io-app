@@ -142,7 +142,7 @@
     "firstTransactionSummary":{
       "header": "Riepilogo avviso di Pagamento",
       "title": "Avviso di pagamento",
-      "amount":"Importo EUR",
+      "amount":"Importo",
       "expireDate":"Scadenza",
       "tranche":"Rata",
       "entity":"Ente creditore:",	
@@ -157,7 +157,7 @@
       "entityCode2":"Codice Ente/Azienda:",		
       "updatedAmount":"Importo aggiornato",
       "updateInfo":"Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi",
-      "moreInfo":"Per saperne di più",
+      "moreInfo":"Per saperne di più"
     },
     "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",

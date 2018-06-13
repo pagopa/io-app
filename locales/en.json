@@ -144,7 +144,7 @@
     "firstTransactionSummary":{
       "header": "Transaction notice summary",
       "title": "Transaction notice",
-      "amount":"Amount EUR",
+      "amount":"Amount",
       "expireDate":"Expire date",
       "tranche":"Tranche",
       "entity":"Entity:",	
@@ -158,8 +158,8 @@
       "iuv":"IUV:",
       "entityCode2":"Entity/Company code:",
       "updatedAmount":"Updated amount",
-      "updateInfo":"The pagoPa system updates automatically the amount to ensure you pay the exact amount and to avoid you arrears or addictional interests ",
-      "moreInfo":"More details",	
+      "updateInfo":"The pagoPa system updates automatically the amount to ensure you pay the exact amount and to avoid you arrears or additional interests ",
+      "moreInfo":"More details"
     },
     "transactionDetails": "Transaction details",
     "total": "Total",

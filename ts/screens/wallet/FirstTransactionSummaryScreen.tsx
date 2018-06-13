@@ -1,16 +1,15 @@
 /**
  * This screen shows the transaction details.
  * It should occur after the transaction identification by qr scanner or manual procedure.
- * TODO: data displayed by this screen should be evaluated. The following data don't seem to be available:
- *  - expire date
- *  - cbill code
- *  - telephone number
- *  - web page
- *  - pec
- *  - email
- *  - tranche
- *  Data about the subject to which the transfer is releted to could be reviewed too.
+ * TODO: 
+ * - integrate contextual help
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
+ * 
+ * - check availability of displayed data. Define optional data and implement their rendering as preferred
+ *    
+ * 
  */
+
 import {
   Body,
   Button,
@@ -20,113 +19,93 @@ import {
   H3,
   Icon,
   Left,
-  Right,
   Text,
   View
 } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { Grid, Row } from "react-native-easy-grid";
+import { Grid, Row, Col } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
-import Modal from "../../components/ui/Modal";
 import PaymentSummaryComponent from "../../components/wallet/paymentSummary/PaymentSummaryComponent";
 import UpdatedPaymentSummaryComponent from "../../components/wallet/paymentSummary/UpdatedPaymentSummaryComponent";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import { WalletAPI } from "../../api/wallet/wallet-api";
+import { NotifiedTransaction, TransactionEntity, TransactionSubject } from "../../types/wallet";
+import { WalletStyles } from "../../components/styles/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type State = Readonly<{
-  isModalVisible: boolean;
-  isAmountUpdated: boolean; // its value will depend on the match withe the amount on the notice and the remote value
-  amount: string;
-  // The following data should be globally obtained as result of the transaction identification.
-  // Further discussions on thier availability is required
-  updatedAmount: string;
-  expireDate: string;
-  tranche: string;
 }>;
 
 const styles = StyleSheet.create({
   padded: {
     paddingRight: variables.contentPadding,
     paddingLeft: variables.contentPadding
-  }
-});
+  },
+}); 
+
+const transactionDetails : Readonly<NotifiedTransaction> = WalletAPI.getNotifiedTransaction();
+const entityDetails : Readonly<TransactionEntity> = WalletAPI.getTransactionEntity();
+const subjectDetails: Readonly<TransactionSubject> = WalletAPI.getTransactionSubject();
 
 export class FirstTransactionSummaryScreen extends React.Component<
   Props,
-  State
+  never
 > {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isModalVisible: false,
-      isAmountUpdated: true,
-      amount: "€ 199,00",
-      updatedAmount: "€ 215,00",
-      expireDate: "31/01/2018",
-      tranche: "unica"
-    };
   }
 
   private goBack() {
     this.props.navigation.goBack();
   }
 
-  /* depending on the comparison between the amount on the notice and the amount saved remotely by the lender
-   * it will be displayed a different component
+  /**
+  * Depending on the comparison between the amount on the notice and the amount saved remotely by the lender
+  * it will be displayed a different component. If the values differ, then the user can display both the value
+  * and a brief exmplanation.
   */
+  private isAmountUpdated(){
+    if (transactionDetails.currentAmount.match(transactionDetails.notifiedAmount) === null) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   private getSummary() {
-    if (this.state.isAmountUpdated === true) {
+    if (this.isAmountUpdated() === true) {
       return (
         // if the amount had been updated, it will be displayed and presented with a brief description
         <UpdatedPaymentSummaryComponent
           navigation={this.props.navigation}
-          amount={this.state.amount}
-          updatedAmount={this.state.updatedAmount}
-          expireDate={this.state.expireDate}
-          tranche={this.state.tranche}
+          amount= {`${transactionDetails.notifiedAmount}`}
+          updatedAmount={`${transactionDetails.currentAmount}`}
+          expireDate= {`${transactionDetails.expireDate.toLocaleDateString()}`}
+          tranche={`${transactionDetails.tranche}`}
         />
       );
     } else {
       return (
         <PaymentSummaryComponent
           navigation={this.props.navigation}
-          amount={this.state.amount}
-          expireDate={this.state.expireDate}
-          tranche={this.state.tranche}
+          amount={`${transactionDetails.currentAmount}`}
+          expireDate={`${transactionDetails.expireDate.toLocaleDateString()}`}
+          tranche={`${transactionDetails.tranche}`}
         />
       );
     }
   }
 
   public render(): React.ReactNode {
-    // The following data should be globally obtained as result of the transaction identification.
-    // Further discussions on thier availability is required
-    const NOMEAVVISO: string = "Tari 2018";
-    const NOMEENTE: string = "Comune di Gallarate - Settore Tributi";
-    const INDIRIZZOENTE: string = "Via Cavour n.2 - Palazzo Broletto,21013";
-    const CITTAENTE: string = "Gallarate (VA)";
-    const TELENTE: string = "0331.754224";
-    const WEBPAGEENTE: string = "www.comune.gallarate.va.it";
-    const EMAILENTE: string = "tributi@coumne.gallarate.va.it";
-    const PECENTE: string = "protocollo@pec.comune.gallarate.va.it";
-    const DESTINATARIO: string = "Mario Rossi";
-    const INDIRIZZODESTINATARIO: string = "Via Murillo 8, 20149 Milano (MI)";
-    const CBILL: string = "A0EDT";
-    const IUV: string = "111116000001580";
-    const CODICEENTE: string = "01199250158";
-
     return (
       <Container>
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="chevron-left" />
+              <Icon name="chevron-left" /> 
             </Button>
           </Left>
           <Body>
@@ -135,21 +114,23 @@ export class FirstTransactionSummaryScreen extends React.Component<
         </AppHeader>
 
         <Content original={true}>
-          <Grid style={styles.padded}>
+          <Grid style={[styles.padded, WalletStyles.backContent]}>
             <Row>
-              <Left>
-                <H3>{I18n.t("wallet.firstTransactionSummary.title")}</H3>
-                <H1>{NOMEAVVISO}</H1>
-              </Left>
-              <Right>
-                <Image
-                  source={require("../../../img/wallet/icon-avviso-pagopa.png")}
-                />
-              </Right>
+              <Col size={5}>
+                <View spacer={true} large={true} />
+                <H3 style={WalletStyles.white}> {I18n.t("wallet.firstTransactionSummary.title")}</H3>
+                <H1 style={WalletStyles.white}>{`${transactionDetails.paymentReason}`}</H1>
+              </Col>
+              <Col size={1}>
+                <View spacer={true} large={true} />
+                <Image source={require("../../../img/wallet/icon-avviso-pagopa.png")}/>
+              </Col>
             </Row>
             <View spacer={true} large={true} />
           </Grid>
+
           {this.getSummary()}
+
           <View spacer={true} large={true} />
           <Grid style={styles.padded}>
             <Row>
@@ -158,34 +139,31 @@ export class FirstTransactionSummaryScreen extends React.Component<
               </Text>
             </Row>
             <Row>
-              <Text>{NOMEENTE}</Text>
+              <Text>{`${entityDetails.name}`}</Text> 
             </Row>
             <Row>
-              <Text>{INDIRIZZOENTE}</Text>
+              <Text>{`${entityDetails.address}`}</Text>
             </Row>
             <Row>
-              <Text>{CITTAENTE}</Text>
+              <Text>{`${entityDetails.city}`}</Text>
             </Row>
             <Row>
               <Text>{I18n.t("wallet.firstTransactionSummary.info")}</Text>
             </Row>
             <Row>
-              <Text>{I18n.t("wallet.firstTransactionSummary.tel")}</Text>
-              <Text> {""} </Text>
-              <Text link={true}>{TELENTE}</Text>
+              <Text>{I18n.t("wallet.firstTransactionSummary.tel") + " "}</Text>
+              <Text link={true}>{`${entityDetails.tel}`}</Text>
             </Row>
             <Row>
-              <Text link={true}>{WEBPAGEENTE}</Text>
+              <Text link={true}>{`${entityDetails.webpage}`}</Text>
             </Row>
             <Row>
-              <Text>{I18n.t("wallet.firstTransactionSummary.email")}</Text>
-              <Text> {""} </Text>
-              <Text link={true}>{EMAILENTE}</Text>
+              <Text>{I18n.t("wallet.firstTransactionSummary.email")+ " "}</Text>
+              <Text link={true}>{`${entityDetails.email}`}</Text>
             </Row>
             <Row>
-              <Text>{I18n.t("wallet.firstTransactionSummary.PEC")}</Text>
-              <Text> {""} </Text>
-              <Text link={true}>{PECENTE}</Text>
+              <Text>{I18n.t("wallet.firstTransactionSummary.PEC") + " "}}</Text>
+              <Text link={true}>{`${entityDetails.pec}`}</Text>
             </Row>
             <View spacer={true} large={true} />
             <Row>
@@ -194,10 +172,10 @@ export class FirstTransactionSummaryScreen extends React.Component<
               </Text>
             </Row>
             <Row>
-              <Text>{DESTINATARIO}</Text>
+              <Text>{`${subjectDetails.name}`}</Text>
             </Row>
             <Row>
-              <Text>{INDIRIZZODESTINATARIO}</Text>
+              <Text>{`${subjectDetails.address}`}</Text>
             </Row>
             <View spacer={true} large={true} />
             <Row>
@@ -206,29 +184,26 @@ export class FirstTransactionSummaryScreen extends React.Component<
               </Text>
             </Row>
             <Row>
-              <Text>{NOMEAVVISO}</Text>
+              <Text>{`${transactionDetails.paymentReason}`}</Text>
             </Row>
             <View spacer={true} large={true} />
             <Row>
               <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.cbillCode")}
+                {I18n.t("wallet.firstTransactionSummary.cbillCode")+ " "}
               </Text>
-              <Text> {""} </Text>
-              <Text bold={true}>{CBILL}</Text>
+              <Text bold={true}>{`${transactionDetails.cbill}`}</Text>
             </Row>
             <Row>
               <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.iuv")}
+                {I18n.t("wallet.firstTransactionSummary.iuv")+ " "}
               </Text>
-              <Text> {""} </Text>
-              <Text bold={true}>{IUV}</Text>
+              <Text bold={true}>{`${transactionDetails.iuv}`}</Text>
             </Row>
             <Row>
               <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.entityCode2")}
+                {I18n.t("wallet.firstTransactionSummary.entityCode2")+ " "}
               </Text>
-              <Text> {""} </Text>
-              <Text bold={true}>{CODICEENTE}</Text>
+              <Text bold={true}>{`${entityDetails.code}`}</Text>
             </Row>
             <View spacer={true} extralarge={true} />
           </Grid>
@@ -241,20 +216,6 @@ export class FirstTransactionSummaryScreen extends React.Component<
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
-
-        <Modal isVisible={this.state.isModalVisible} fullscreen={true}>
-          <View header={true}>
-            <Icon
-              name="cross"
-              onPress={(): void => this.setState({ isModalVisible: false })}
-            />
-          </View>
-          <Content>
-            <H1>{I18n.t("personal_data_processing.title")}</H1>
-            <View spacer={true} large={true} />
-            <Text>{I18n.t("personal_data_processing.content")}</Text>
-          </Content>
-        </Modal>
       </Container>
     );
   }
