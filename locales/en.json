@@ -147,7 +147,7 @@
       "info": "which allow us to identify the transaction", 
       "link": "Where are they?",
       "noticeCode":"Notice code",
-      "entityCode":"Lender Fiscal Code",
+      "entityCode":"Entity Fiscal Code",
       "amount": "Amount EUR",
       "proceed": "Proceed with the transaction"
     },

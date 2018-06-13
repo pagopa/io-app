@@ -26,6 +26,7 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
+import ROUTES from '../../navigation/routes';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -101,6 +102,11 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<Props, St
         <View footer={true}>
           <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.insertManually.proceed")}</Text>
+          </Button>
+          <Button block={true} light={true}
+            onPress={() =>
+              this.props.navigation.navigate(ROUTES.WALLET_HOME)}>
+            <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
       </Container>
