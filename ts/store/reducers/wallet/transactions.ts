@@ -1,7 +1,8 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import _ from "lodash";
 import { createSelector } from "reselect";
 import { WalletTransaction } from "../../../types/wallet";
 import {
@@ -9,31 +10,32 @@ import {
   TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
-import { IndexedObject } from "../../helpers/indexer";
+import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { getSelectedCreditCardId } from "./cards";
 
 export type TransactionsState = Readonly<{
-  transactions: IndexedObject<WalletTransaction>;
+  transactions: IndexedById<WalletTransaction>;
   selectedTransactionId: Option<number>;
 }>;
 
 export const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
-  transactions: IndexedObject.create([]),
+  transactions: {},
   selectedTransactionId: none
 };
 
 // selectors
 export const getTransactions = (
   state: GlobalState
-): IndexedObject<WalletTransaction> => state.wallet.transactions.transactions;
+): IndexedById<WalletTransaction> => state.wallet.transactions.transactions;
 export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
   state.wallet.transactions.selectedTransactionId;
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
-  (transactions: IndexedObject<WalletTransaction>) =>
-    [...transactions.values()]
+  (transactions: IndexedById<WalletTransaction>) =>
+    _
+      .values(transactions)
       .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
       .slice(0, 5) // WIP no magic numbers
 );
@@ -42,11 +44,11 @@ export const transactionForDetailsSelector = createSelector(
   getTransactions,
   getSelectedTransactionId,
   (
-    transactions: IndexedObject<WalletTransaction>,
+    transactions: IndexedById<WalletTransaction>,
     selectedTransactionId: Option<number>
   ): Option<WalletTransaction> => {
     if (selectedTransactionId.isSome()) {
-      return transactions.get(selectedTransactionId.value);
+      return fromNullable(transactions[selectedTransactionId.value]);
     }
     return none;
   }
@@ -56,11 +58,11 @@ export const transactionsByCardSelector = createSelector(
   getTransactions,
   getSelectedCreditCardId,
   (
-    transactions: IndexedObject<WalletTransaction>,
+    transactions: IndexedById<WalletTransaction>,
     cardId: Option<number>
   ): ReadonlyArray<WalletTransaction> => {
     if (cardId.isSome()) {
-      return transactions.values().filter(t => t.cardId === cardId.value);
+      return _.values(transactions).filter(t => t.cardId === cardId.value);
     }
     return [];
   }
@@ -74,7 +76,7 @@ const reducer = (
   if (action.type === TRANSACTIONS_FETCHED) {
     return {
       ...state,
-      transactions: IndexedObject.create(action.payload)
+      transactions: toIndexed(action.payload)
     };
   }
   if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {

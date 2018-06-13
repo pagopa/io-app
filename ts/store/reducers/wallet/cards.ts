@@ -2,6 +2,7 @@
  * Reducers, states, selectors and guards for the cards
  */
 import { none, Option, some } from "fp-ts/lib/Option";
+import _ from "lodash";
 import { createSelector } from "reselect";
 import { CreditCard } from "../../../types/CreditCard";
 import {
@@ -9,16 +10,16 @@ import {
   SELECT_CARD_FOR_DETAILS
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
-import { IndexedObject } from "../../helpers/indexer";
+import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type CardsState = Readonly<{
-  cards: IndexedObject<CreditCard>;
+  cards: IndexedById<CreditCard>;
   selectedCardId: Option<number>;
 }>;
 
 export const CARDS_INITIAL_STATE: CardsState = {
-  cards: IndexedObject.create([]),
+  cards: {},
   selectedCardId: none
 };
 
@@ -31,8 +32,7 @@ export const creditCardsSelector = createSelector(
   getCards,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (cards: IndexedObject<CreditCard>): ReadonlyArray<CreditCard> =>
-    cards.values()
+  (cards: IndexedById<CreditCard>): ReadonlyArray<CreditCard> => _.values(cards)
 );
 
 // reducer
@@ -43,7 +43,7 @@ const reducer = (
   if (action.type === CARDS_FETCHED) {
     return {
       ...state,
-      cards: IndexedObject.create(action.payload)
+      cards: toIndexed(action.payload)
     };
   }
   if (action.type === SELECT_CARD_FOR_DETAILS) {
