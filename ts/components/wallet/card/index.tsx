@@ -1,3 +1,8 @@
+/**
+ * Component rendering a credit card,
+ * with different appearences based on
+ * the props passed
+ */
 import { ActionSheet, Body, Card, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";

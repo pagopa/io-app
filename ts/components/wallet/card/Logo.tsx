@@ -1,3 +1,7 @@
+/**
+ * Component representing the appropriate
+ * credit card logo based on its pan
+ */
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import {

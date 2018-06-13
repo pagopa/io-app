@@ -1,3 +1,10 @@
+/**
+ * A component for the bottom row of the
+ * credit card component, which either
+ * contains the "last usage" string or a
+ * bottom padding in those cases where
+ * the "last usage" part is not required
+ */
 import { Text } from "native-base";
 import * as React from "react";
 import { Col, Row } from "react-native-easy-grid";
@@ -14,7 +21,7 @@ type Props = Readonly<{
   showMsg?: boolean;
 }>;
 
-export class LastUsageRow extends React.Component<Props> {
+export class FooterRow extends React.Component<Props> {
   public static defaultProps = {
     showMsg: true
   };
@@ -23,6 +30,7 @@ export class LastUsageRow extends React.Component<Props> {
     const { navigate } = this.props.navigation;
     const { item } = this.props;
     if (this.props.showMsg) {
+      // show "last usage" row
       return (
         <Row
           style={CreditCardStyles.rowStyle}
@@ -48,6 +56,6 @@ export class LastUsageRow extends React.Component<Props> {
         </Row>
       );
     }
-    return <Row size={2} />;
+    return <Row size={2} />; // pad
   }
 }

@@ -1,3 +1,8 @@
+/**
+ * Component that renders an icon from the
+ * icon font and wraps it with a touchable
+ * highlight (thus allowing onPress actions)
+ */
 import * as React from "react";
 import { StyleSheet, TouchableHighlight } from "react-native";
 import Icon from "../../../theme/font-icons/io-icon-font/index";
