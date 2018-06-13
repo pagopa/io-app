@@ -1,6 +1,6 @@
-import { Body, Container, H1, Tab, Tabs, View } from "native-base";
+import { Container, H1, Tab, Tabs, View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, FlatList } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -8,7 +8,6 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import MessageComponent from "../../components/MessageComponent";
-import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
@@ -36,6 +35,20 @@ export type IMessageDetails = Readonly<{
 }>;
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+const styles = StyleSheet.create({
+  tabBarUnderlineStyle: {
+    width: 0
+  },
+  activeTabStyle: {
+    borderBottomWidth: 2,
+    borderBottomColor: variables.brandPrimaryLight
+  },
+  NotActiveTabStyle: {
+    borderBottomWidth: 0,
+    borderBottomColor: variables.brandPrimaryInverted
+  }
+});
 
 /**
  * This screen show the messages to the authenticated user.
@@ -76,7 +89,10 @@ class MessagesScreen extends React.Component<Props, never> {
   };
 
   public getOrganizationName = (senderServiceId: string): string => {
-    return this.props.services.byId[senderServiceId].organization_name;
+    return `
+             ${this.props.services.byId[senderServiceId].organization_name} 
+             - ${this.props.services.byId[senderServiceId].service_name}
+           `;
   };
 
   public renderItem = (messageDetails: IMessageDetails) => {
@@ -96,13 +112,11 @@ class MessagesScreen extends React.Component<Props, never> {
     messages: ReadonlyArray<MessageWithContentPO>
   ): React.ReactNode => {
     return (
-      <Tabs
-        tabBarUnderlineStyle={{
-          backgroundColor: variables.brandPrimaryLight
-        }}
-        initialPage={0}
-      >
-        <Tab heading={I18n.t("messages.tab.all")}>
+      <Tabs tabBarUnderlineStyle={styles.tabBarUnderlineStyle} initialPage={0}>
+        <Tab
+          heading={I18n.t("messages.tab.all")}
+          activeTabStyle={styles.activeTabStyle}
+        >
           <FlatList
             alwaysBounceVertical={false}
             scrollEnabled={true}
@@ -111,7 +125,16 @@ class MessagesScreen extends React.Component<Props, never> {
             keyExtractor={item => item.id}
           />
         </Tab>
-        <Tab heading={I18n.t("messages.tab.deadlines")}>
+        <Tab
+          heading={I18n.t("messages.tab.deadlines")}
+          activeTabStyle={styles.activeTabStyle}
+        >
+          <View spacer={true} large={true} />
+        </Tab>
+        <Tab heading={""} activeTabStyle={styles.NotActiveTabStyle}>
+          <View spacer={true} large={true} />
+        </Tab>
+        <Tab heading={" "} activeTabStyle={styles.NotActiveTabStyle}>
           <View spacer={true} large={true} />
         </Tab>
       </Tabs>
@@ -121,9 +144,7 @@ class MessagesScreen extends React.Component<Props, never> {
   public render() {
     return (
       <Container>
-        <AppHeader>
-          <Body />
-        </AppHeader>
+        <View spacer={true} />
         <View content={true}>
           <View spacer={true} />
           <H1>{I18n.t("messages.contentTitle")}</H1>

@@ -14,6 +14,7 @@ import iconTheme from "./components/Icon";
 import itemTheme from "./components/Item";
 import messageComponent from "./components/MessageComponent";
 import modalTheme from "./components/Modal";
+import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
@@ -61,6 +62,9 @@ const theme = (): Theme => {
     },
     "NativeBase.TabHeading": {
       ...tabHeadingTheme()
+    },
+    "NativeBase.TabContainer": {
+      ...tabContainerTheme()
     }
   };
 

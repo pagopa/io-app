@@ -6,14 +6,18 @@ export default (): Theme => {
     "NativeBase.ListItem": {
       "NativeBase.Right": {
         "NativeBase.Text": {
-          alignSelf: "center"
+          alignSelf: "flex-end",
+          fontWeight: "bold",
+          fontSize: variables.fontSize2,
+          lineHeight: variables.lineHeight1
         },
         "NativeBase.Icon": {
-          alignSelf: "center",
-          paddingTop: 10
+          color: variables.brandPrimaryLight,
+          alignSelf: "flex-end",
+          paddingTop: 20
         },
-        flexDirection: "column",
         flex: 3,
+        flexDirection: "column",
         alignSelf: "flex-start"
       },
       "NativeBase.Left": {
