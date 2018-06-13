@@ -27,10 +27,6 @@ export default (): Theme => {
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
-    ".formatDate": {
-      fontWeight: "bold",
-      fontSize: variables.fontSize2
-    },
     ".leftAlign": {
       flex: variables.flexLeftAlign
     },

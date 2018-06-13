@@ -45,7 +45,7 @@ class MessageComponent extends React.Component<Props> {
         </Left>
         <Right>
           <Text formatDate={true}>{convertDateToWordDistance(date)}</Text>
-          <Icon rightArrow={true} name="chevron-right" />
+          <Icon name="chevron-right" />
         </Right>
       </ListItem>
     );
