@@ -1,17 +1,14 @@
-import { Body, Container, H1, Tab, Tabs, Text, View } from "native-base";
+import { Body, Button, Icon, Container, Content, H1, Left, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
-import { connect } from "react-redux";
 
-import MessageComponent from "../../components/MessageComponent";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
-import { FetchRequestActions } from "../../store/actions/constants";
-import { loadMessages } from "../../store/actions/messages";
+
 import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages/index";
 import { ServicesState } from "../../store/reducers/entities/services/index";
@@ -44,9 +41,27 @@ export type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * Going to be replaced with real content in @https://www.pivotaltracker.com/story/show/152843981
  */
 export class MessageDetailsScreen extends React.Component<Props, never> {
+
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
   render() {
     return(
-      <Text> DETAILS </Text>
+      <Container>
+       <Content>
+         <AppHeader>
+           <Left>
+             <Button transparent={true} onPress={_ => this.goBack()}>
+               <Icon name="chevron-left" />
+             </Button>
+           </Left>
+           <Body>
+           <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>
+           </Body>
+         </AppHeader>
+       </Content>
+      </Container>
     )
   }
 }
