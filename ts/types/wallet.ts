@@ -10,9 +10,9 @@
 /**
  * This type represents the transaction as reported in the notice sent to the user;
  * it contains the data used by the app to identify the transation the user wants to perform
-*/
+ */
 export type NotifiedTransaction = {
-  noticeCode: string; 
+  noticeCode: string;
   notifiedAmount: string;
   currentAmount: string; // also in WalletTransaction
   expireDate: Date;
@@ -23,7 +23,7 @@ export type NotifiedTransaction = {
 };
 
 export type TransactionEntity = {
-  code: string,
+  code: string;
   name: string;
   address: string;
   city: string;

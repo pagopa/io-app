@@ -6,9 +6,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { WalletStyles } from "../../../components/styles/wallet";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import { WalletStyles } from "../../../components/styles/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -75,7 +75,11 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
           <H3 style={WalletStyles.white}>
             {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
           </H3>
-          <Icon style={[WalletStyles.white, styles.iconMargin]} name={"alert-circle"} type={"Feather"} />
+          <Icon
+            style={[WalletStyles.white, styles.iconMargin]}
+            name={"alert-circle"}
+            type={"Feather"}
+          />
           <Right>
             <H1 style={WalletStyles.white}>{this.props.updatedAmount}</H1>
           </Right>
