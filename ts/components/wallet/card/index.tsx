@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     marginBottom: -1
   },
   fullCard: {
-    height: 200
+    height: 184
   },
   croppedCard: {
-    height: 148
+    height: 125
   },
   headerCard: {
     height: 58
