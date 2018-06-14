@@ -187,7 +187,7 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
           </Button>
           <Button block={true} light={true} onPress={() => this.goBack()}>
-            <Text>{I18n.t("wallet.QRtoPay.cancel")}</Text>
+            <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
       </Container>

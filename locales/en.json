@@ -199,7 +199,7 @@
     "chooseMethod":"Select the desired method",
     "QRtoPay": {
       "byCameraTitle": "Notice QR Code",
-      "cameraUsageInfo":"Capture the QR Code on the payment notice with the camera, or manually insert the transaction-related data (IUV and the antity/company code).",
+      "cameraUsageInfo":"Capture the QR Code on the payment notice with the camera, or manually insert the transaction-related data (IUV and the entity/company code).",
       "setManually":"Insert data manually"
     }
   },
