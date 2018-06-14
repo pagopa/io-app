@@ -78,7 +78,9 @@ export class FirstTransactionSummaryScreen extends React.Component<
    * and a brief exmplanation related to the update.
    */
   private isAmountUpdated() {
-      return transactionDetails.currentAmount !== transactionDetails.notifiedAmount ;
+    return (
+      transactionDetails.currentAmount !== transactionDetails.notifiedAmount
+    );
   }
 
   private getSummary() {
@@ -124,11 +126,13 @@ export class FirstTransactionSummaryScreen extends React.Component<
             <Row>
               <Col size={5}>
                 <View spacer={true} large={true} />
-                <H3 style={WalletStyles.white}> {" " + I18n.t("wallet.firstTransactionSummary.title")}
+                <H3 style={WalletStyles.white}>
+                  {" "}
+                  {" " + I18n.t("wallet.firstTransactionSummary.title")}
                 </H3>
-                <H1 style={WalletStyles.white}>{
-                  transactionDetails.paymentReason
-                }</H1>
+                <H1 style={WalletStyles.white}>
+                  {transactionDetails.paymentReason}
+                </H1>
               </Col>
               <Col size={1}>
                 <View spacer={true} large={true} />
