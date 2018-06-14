@@ -16,33 +16,14 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import { WalletAPI } from "../../api/wallet/wallet-api";
+import { transactionManager } from "../../types/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-interface IPaymentManager {
-  maxFee: string;
-  icon: any;
-}
-
-const FEE: string = "1€";
-const FEE2: string = "1,30€";
-
-const paymentManagers: ReadonlyArray<IPaymentManager> = [
-  {
-    maxFee: FEE,
-    icon: require("../../../img/wallet/Managers/Poste_Italiane1x.png")
-  },
-  {
-    maxFee: FEE2,
-    icon: require("../../../img/wallet/Managers/Unicredit1x.png")
-  },
-  {
-    maxFee: FEE,
-    icon: require("../../../img/wallet/Managers/Nexi1x.png")
-  }
-];
+const paymentManagers: ReadonlyArray<transactionManager> = WalletAPI.getManagers();
 
 const style = StyleSheet.create({
   listItem: {
@@ -87,16 +68,14 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
             <Text>{I18n.t("saveCard.saveCard")}</Text>
           </Body>
         </AppHeader>
+        
         <Content>
           <H1>{I18n.t("wallet.AddManager.title")}</H1>
           <View spacer={true} />
           <Text>
-            {I18n.t("wallet.AddManager.info")}
-            <Text> {""} </Text>
-            <Text bold={true}>{I18n.t("wallet.AddManager.infobold")}</Text>
-            <Text> {""} </Text>
-            <Text>{I18n.t("wallet.AddManager.info2")}</Text>
-            <Text> {""} </Text>
+            {I18n.t("wallet.AddManager.info") + " "}
+            <Text bold={true}>{I18n.t("wallet.AddManager.infobold") + " "}</Text>
+            <Text>{I18n.t("wallet.AddManager.info2") + " "}</Text>
             <Text link={true}>{I18n.t("wallet.AddManager.link")}</Text>
           </Text>
           <View spacer={true} />
@@ -112,7 +91,7 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
             removeClippedSubviews={false}
             numColumns={1}
             data={paymentManagers}
-            keyExtractor={item => item.name}
+            keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
               <View style={style.listItem}>
                 <Grid>

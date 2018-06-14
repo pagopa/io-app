@@ -4,6 +4,7 @@ import { CreditCardsScreen } from "../screens/wallet/CreditCardsScreen";
 import { TransactionDetailsScreen } from "../screens/wallet/TransactionDetailsScreen";
 import { TransactionsScreen } from "../screens/wallet/TransactionsScreen";
 import { WalletHomeScreen } from "../screens/wallet/WalletHomeScreen";
+import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen";
 import ROUTES from "./routes";
 
 const WalletNavigator = StackNavigator(
@@ -22,7 +23,11 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
       screen: TransactionsScreen
+    },
+    [ROUTES.WALLET_ADD_MANAGER]: {
+      screen: AddManagerToCardScreen
     }
+
   },
   {
     // Let each screen handle the header and navigation

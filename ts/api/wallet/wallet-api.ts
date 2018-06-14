@@ -8,7 +8,7 @@
 // Required to build user-displayable contents (e.g. "last used ...")
 import I18n from "../../i18n";
 
-import { WalletTransaction } from "../../types/wallet";
+import { WalletTransaction, transactionManager } from "../../types/wallet";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
@@ -18,6 +18,24 @@ import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 /**
  * Mocked wallet data
  */
+const managers: ReadonlyArray<transactionManager> = [
+  {
+    id: 1,
+    maxFee: 1.30,
+    icon: require("../../../img/wallet/Managers/Poste_Italiane1x.png")
+  },
+  {
+    id: 2,
+    maxFee: 1.00,
+    icon: require("../../../img/wallet/Managers/Unicredit1x.png")
+  },
+  {
+    id: 2,
+    maxFee: 0.50,
+    icon: require("../../../img/wallet/Managers/Nexi1x.png")
+  }
+];
+
 const cards: ReadonlyArray<CreditCard> = [
   {
     id: 1,
@@ -191,5 +209,9 @@ export class WalletAPI {
     maxOps: number = WalletAPI.MAX_TRANSACTIONS
   ): ReadonlyArray<WalletTransaction> {
     return transactions.slice(0, maxOps);
+  }
+
+  public static getManagers(): ReadonlyArray<transactionManager> {
+    return managers;
   }
 }
