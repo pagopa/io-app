@@ -13,6 +13,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../../i18n";
 
 import { Left } from "native-base";
+import ROUTES from "../../../navigation/routes";
 import { WalletStyles } from "../../styles/wallet";
 import AppHeader from "../../ui/AppHeader";
 import { TOP_CONTENTS_MAX_SIZE, TopContents } from "./TopContents";
@@ -39,7 +40,14 @@ export class WalletLayout extends React.Component<Props, never> {
   private payNoticeButton(): React.ReactNode {
     return (
       <View footer={true}>
-        <Button block={true}>
+        <Button
+          block={true}
+          onPress={(): boolean =>
+            this.props.navigation.navigate(
+              ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER
+            )
+          }
+        >
           <Icon type="FontAwesome" name="qrcode" />
           <Text>{I18n.t("wallet.payNotice")}</Text>
         </Button>
