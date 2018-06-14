@@ -9,7 +9,6 @@ import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { TouchableHighlight } from "react-native";
 import IconFont from "../components/ui/IconFont";
-import variables from "../theme/variables";
 import Modal from "./ui/Modal";
 
 type Props = Readonly<{
