@@ -13,8 +13,6 @@ import variables from "../../../theme/variables";
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   amount: string;
-  expireDate: string;
-  tranche: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -60,25 +58,6 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
             <H1 style={WalletStyles.white}>{this.props.amount + "€"}</H1>
           </Right>
         </Row>
-        <View spacer={true} />
-        <Row>
-          <H3 style={WalletStyles.white}>
-            {I18n.t("wallet.firstTransactionSummary.expireDate")}
-          </H3>
-          <Right>
-            <H1 style={WalletStyles.white}>{this.props.expireDate}</H1>
-          </Right>
-        </Row>
-        <View spacer={true} />
-        <Row>
-          <H3 style={WalletStyles.white}>
-            {I18n.t("wallet.firstTransactionSummary.tranche")}
-          </H3>
-          <Right>
-            <H1 style={WalletStyles.white}>{this.props.tranche}</H1>
-          </Right>
-        </Row>
-        <View spacer={true} large={true} />
       </Grid>
     );
   }

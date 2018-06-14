@@ -17,8 +17,8 @@ import {
   Content,
   H1,
   H3,
-  Icon,
   Left,
+  Right,
   Text,
   View
 } from "native-base";
@@ -32,6 +32,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import PaymentSummaryComponent from "../../components/wallet/paymentSummary/PaymentSummaryComponent";
 import UpdatedPaymentSummaryComponent from "../../components/wallet/paymentSummary/UpdatedPaymentSummaryComponent";
 import I18n from "../../i18n";
+import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
 import {
   NotifiedTransaction,
@@ -84,15 +85,13 @@ export class FirstTransactionSummaryScreen extends React.Component<
   }
 
   private getSummary() {
-    if (this.isAmountUpdated() === false) {
+    if (this.isAmountUpdated() === true) {
       return (
         // if the amount had been updated, it will be displayed and presented with a brief description
         <UpdatedPaymentSummaryComponent
           navigation={this.props.navigation}
           amount={transactionDetails.notifiedAmount.toString()}
           updatedAmount={transactionDetails.currentAmount.toString()}
-          expireDate={transactionDetails.expireDate.toLocaleDateString()}
-          tranche={transactionDetails.tranche}
         />
       );
     } else {
@@ -100,8 +99,6 @@ export class FirstTransactionSummaryScreen extends React.Component<
         <PaymentSummaryComponent
           navigation={this.props.navigation}
           amount={transactionDetails.currentAmount.toString()}
-          expireDate={transactionDetails.expireDate.toLocaleDateString()}
-          tranche={transactionDetails.tranche}
         />
       );
     }
@@ -113,7 +110,7 @@ export class FirstTransactionSummaryScreen extends React.Component<
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="chevron-left" />
+              <Icon name="io-back" size={variables.iconSize1} />
             </Button>
           </Left>
           <Body>
@@ -127,8 +124,7 @@ export class FirstTransactionSummaryScreen extends React.Component<
               <Col size={5}>
                 <View spacer={true} large={true} />
                 <H3 style={WalletStyles.white}>
-                  {" "}
-                  {" " + I18n.t("wallet.firstTransactionSummary.title")}
+                  {I18n.t("wallet.firstTransactionSummary.title")}
                 </H3>
                 <H1 style={WalletStyles.white}>
                   {transactionDetails.paymentReason}
@@ -145,6 +141,30 @@ export class FirstTransactionSummaryScreen extends React.Component<
           </Grid>
 
           {this.getSummary()}
+
+          <Grid style={[styles.padded, WalletStyles.backContent]}>
+            <View spacer={true} />
+            <Row>
+              <H3 style={WalletStyles.white}>
+                {I18n.t("wallet.firstTransactionSummary.expireDate")}
+              </H3>
+              <Right>
+                <H1 style={WalletStyles.white}>
+                  {transactionDetails.expireDate.toLocaleDateString()}
+                </H1>
+              </Right>
+            </Row>
+            <View spacer={true} />
+            <Row>
+              <H3 style={WalletStyles.white}>
+                {I18n.t("wallet.firstTransactionSummary.tranche")}
+              </H3>
+              <Right>
+                <H1 style={WalletStyles.white}>{transactionDetails.tranche}</H1>
+              </Right>
+            </Row>
+            <View spacer={true} large={true} />
+          </Grid>
 
           <View spacer={true} large={true} />
           <Grid style={styles.padded}>

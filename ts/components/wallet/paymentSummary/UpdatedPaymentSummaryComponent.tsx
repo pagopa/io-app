@@ -14,8 +14,6 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   amount: string;
   updatedAmount: string;
-  expireDate: string;
-  tranche: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -46,9 +44,6 @@ const styles = StyleSheet.create({
     color: variables.brandLight
   },
 
-  /**
-   * TODO: testare proporzioni
-   */
   iconMargin: {
     marginBottom: 3,
     marginLeft: 3
@@ -98,25 +93,6 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
             {I18n.t("wallet.firstTransactionSummary.moreInfo")}
           </Text>
         </Row>
-        <View spacer={true} />
-        <Row>
-          <H3 style={WalletStyles.white}>
-            {I18n.t("wallet.firstTransactionSummary.expireDate")}
-          </H3>
-          <Right>
-            <H1 style={WalletStyles.white}>{this.props.expireDate}</H1>
-          </Right>
-        </Row>
-        <View spacer={true} />
-        <Row>
-          <H3 style={WalletStyles.white}>
-            {I18n.t("wallet.firstTransactionSummary.tranche")}
-          </H3>
-          <Right>
-            <H1 style={WalletStyles.white}>{this.props.tranche}</H1>
-          </Right>
-        </Row>
-        <View spacer={true} large={true} />
       </Grid>
     );
   }
