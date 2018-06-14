@@ -8,7 +8,7 @@
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { TouchableHighlight } from "react-native";
-import Icon from "../theme/font-icons/io-icon-font/index";
+import IconFont from "../components/ui/IconFont";
 import variables from "../theme/variables";
 import Modal from "./ui/Modal";
 
@@ -25,7 +25,7 @@ export class ContextualHelp extends React.Component<Props> {
       <Modal isVisible={this.props.isVisible} fullscreen={true}>
         <View header={true}>
           <TouchableHighlight onPress={_ => this.props.close()}>
-            <Icon name="io-close" size={variables.iconSizeBase} />
+            <IconFont name="io-close" />
           </TouchableHighlight>
         </View>
         <Content>

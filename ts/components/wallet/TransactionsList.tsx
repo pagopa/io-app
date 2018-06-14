@@ -5,7 +5,6 @@
 import {
   Body,
   Grid,
-  Icon,
   Left,
   List,
   ListItem,
@@ -18,6 +17,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { Content } from "native-base";
 import { connect, Dispatch } from "react-redux";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
@@ -65,12 +65,7 @@ class TransactionsList extends React.Component<Props> {
         <Left>
           <Text>
             {transaction.isNew && (
-              <Icon
-                type="FontAwesome"
-                name="circle"
-                active={true}
-                style={WalletStyles.newIconStyle}
-              />
+              <IconFont name="io-new" style={WalletStyles.newIconStyle} />
             )}
             <Text note={true}>
               {transaction.isNew ? `  ${datetime}` : datetime}
