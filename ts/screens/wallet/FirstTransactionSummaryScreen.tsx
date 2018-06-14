@@ -74,40 +74,32 @@ export class FirstTransactionSummaryScreen extends React.Component<
 
   /**
    * Depending on the comparison between the amount on the notice and the amount saved remotely by the lender
-   * it will be displayed a different component. If the values differ, then the user can display both the value
-   * and a brief exmplanation.
+   * it will be displayed a different component. If the values differ, then the user can display both the values
+   * and a brief exmplanation related to the update.
    */
   private isAmountUpdated() {
-    if (
-      transactionDetails.currentAmount.match(
-        transactionDetails.notifiedAmount
-      ) === null
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+      return transactionDetails.currentAmount !== transactionDetails.notifiedAmount ;
   }
 
   private getSummary() {
-    if (this.isAmountUpdated() === true) {
+    if (this.isAmountUpdated() === false) {
       return (
         // if the amount had been updated, it will be displayed and presented with a brief description
         <UpdatedPaymentSummaryComponent
           navigation={this.props.navigation}
-          amount={`${transactionDetails.notifiedAmount}`}
-          updatedAmount={`${transactionDetails.currentAmount}`}
-          expireDate={`${transactionDetails.expireDate.toLocaleDateString()}`}
-          tranche={`${transactionDetails.tranche}`}
+          amount={transactionDetails.notifiedAmount.toString()}
+          updatedAmount={transactionDetails.currentAmount.toString()}
+          expireDate={transactionDetails.expireDate.toLocaleDateString()}
+          tranche={transactionDetails.tranche}
         />
       );
     } else {
       return (
         <PaymentSummaryComponent
           navigation={this.props.navigation}
-          amount={`${transactionDetails.currentAmount}`}
-          expireDate={`${transactionDetails.expireDate.toLocaleDateString()}`}
-          tranche={`${transactionDetails.tranche}`}
+          amount={transactionDetails.currentAmount.toString()}
+          expireDate={transactionDetails.expireDate.toLocaleDateString()}
+          tranche={transactionDetails.tranche}
         />
       );
     }
@@ -132,13 +124,11 @@ export class FirstTransactionSummaryScreen extends React.Component<
             <Row>
               <Col size={5}>
                 <View spacer={true} large={true} />
-                <H3 style={WalletStyles.white}>
-                  {" "}
-                  {I18n.t("wallet.firstTransactionSummary.title")}
+                <H3 style={WalletStyles.white}> {" " + I18n.t("wallet.firstTransactionSummary.title")}
                 </H3>
-                <H1 style={WalletStyles.white}>{`${
+                <H1 style={WalletStyles.white}>{
                   transactionDetails.paymentReason
-                }`}</H1>
+                }</H1>
               </Col>
               <Col size={1}>
                 <View spacer={true} large={true} />
@@ -160,33 +150,33 @@ export class FirstTransactionSummaryScreen extends React.Component<
               </Text>
             </Row>
             <Row>
-              <Text>{`${entityDetails.name}`}</Text>
+              <Text>{entityDetails.name}</Text>
             </Row>
             <Row>
-              <Text>{`${entityDetails.address}`}</Text>
+              <Text>{entityDetails.address}</Text>
             </Row>
             <Row>
-              <Text>{`${entityDetails.city}`}</Text>
+              <Text>{entityDetails.city}</Text>
             </Row>
             <Row>
               <Text>{I18n.t("wallet.firstTransactionSummary.info")}</Text>
             </Row>
             <Row>
               <Text>{I18n.t("wallet.firstTransactionSummary.tel") + " "}</Text>
-              <Text link={true}>{`${entityDetails.tel}`}</Text>
+              <Text link={true}>{entityDetails.tel}</Text>
             </Row>
             <Row>
-              <Text link={true}>{`${entityDetails.webpage}`}</Text>
+              <Text link={true}>{entityDetails.webpage}</Text>
             </Row>
             <Row>
               <Text>
                 {I18n.t("wallet.firstTransactionSummary.email") + " "}
               </Text>
-              <Text link={true}>{`${entityDetails.email}`}</Text>
+              <Text link={true}>{entityDetails.email}</Text>
             </Row>
             <Row>
               <Text>{I18n.t("wallet.firstTransactionSummary.PEC") + " "}}</Text>
-              <Text link={true}>{`${entityDetails.pec}`}</Text>
+              <Text link={true}>{entityDetails.pec}</Text>
             </Row>
             <View spacer={true} large={true} />
             <Row>
@@ -195,10 +185,10 @@ export class FirstTransactionSummaryScreen extends React.Component<
               </Text>
             </Row>
             <Row>
-              <Text>{`${subjectDetails.name}`}</Text>
+              <Text>{subjectDetails.name}</Text>
             </Row>
             <Row>
-              <Text>{`${subjectDetails.address}`}</Text>
+              <Text>{subjectDetails.address}</Text>
             </Row>
             <View spacer={true} large={true} />
             <Row>
@@ -207,26 +197,26 @@ export class FirstTransactionSummaryScreen extends React.Component<
               </Text>
             </Row>
             <Row>
-              <Text>{`${transactionDetails.paymentReason}`}</Text>
+              <Text>{transactionDetails.paymentReason}</Text>
             </Row>
             <View spacer={true} large={true} />
             <Row>
               <Text bold={true}>
                 {I18n.t("wallet.firstTransactionSummary.cbillCode") + " "}
               </Text>
-              <Text bold={true}>{`${transactionDetails.cbill}`}</Text>
+              <Text bold={true}>{transactionDetails.cbill}</Text>
             </Row>
             <Row>
               <Text bold={true}>
                 {I18n.t("wallet.firstTransactionSummary.iuv") + " "}
               </Text>
-              <Text bold={true}>{`${transactionDetails.iuv}`}</Text>
+              <Text bold={true}>{transactionDetails.iuv}</Text>
             </Row>
             <Row>
               <Text bold={true}>
                 {I18n.t("wallet.firstTransactionSummary.entityCode2") + " "}
               </Text>
-              <Text bold={true}>{`${entityDetails.code}`}</Text>
+              <Text bold={true}>{entityDetails.code}</Text>
             </Row>
             <View spacer={true} extralarge={true} />
           </Grid>

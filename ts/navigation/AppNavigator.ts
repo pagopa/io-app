@@ -5,6 +5,7 @@ import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
+import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 
 /**
  * The main stack of screens of the application.
@@ -15,7 +16,7 @@ const navigator = SwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: IngressScreen
+    screen: FirstTransactionSummaryScreen //IngressScreen
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users

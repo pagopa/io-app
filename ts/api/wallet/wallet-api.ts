@@ -160,8 +160,8 @@ const transactions: ReadonlyArray<WalletTransaction> = [
 
 const notifiedTransaction: Readonly<NotifiedTransaction> = {
   noticeCode: "112324875636161",
-  notifiedAmount: "199.00 €",
-  currentAmount: "215.00 €",
+  notifiedAmount: 199.00,
+  currentAmount: 215.00,
   expireDate: new Date("03/01/2018"),
   tranche: "unica",
   paymentReason: "Tari 2018",

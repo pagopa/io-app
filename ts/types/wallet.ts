@@ -13,8 +13,8 @@
  */
 export type NotifiedTransaction = {
   noticeCode: string;
-  notifiedAmount: string;
-  currentAmount: string; // also in WalletTransaction
+  notifiedAmount: number;
+  currentAmount: number; // also in WalletTransaction
   expireDate: Date;
   tranche: string;
   paymentReason: string; // also in WalletTransaction

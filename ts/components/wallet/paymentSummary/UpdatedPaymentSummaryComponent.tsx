@@ -67,7 +67,7 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
             {I18n.t("wallet.firstTransactionSummary.amount")}
           </H3>
           <Right>
-            <H1 style={styles.whiteStrike}>{this.props.amount}</H1>
+            <H1 style={styles.whiteStrike}>{this.props.amount + "€"}</H1>
           </Right>
         </Row>
         <View spacer={true} />
@@ -81,7 +81,7 @@ export default class UpdatedPaymentSummaryComponent extends React.Component<
             type={"Feather"}
           />
           <Right>
-            <H1 style={WalletStyles.white}>{this.props.updatedAmount}</H1>
+            <H1 style={WalletStyles.white}>{this.props.updatedAmount + "€"}</H1>
           </Right>
         </Row>
         <View spacer={true} />

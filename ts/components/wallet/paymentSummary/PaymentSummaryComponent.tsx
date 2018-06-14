@@ -57,7 +57,7 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
             {I18n.t("wallet.firstTransactionSummary.amount")}
           </H3>
           <Right>
-            <H1 style={WalletStyles.white}>{this.props.amount}</H1>
+            <H1 style={WalletStyles.white}>{this.props.amount + "€"}</H1>
           </Right>
         </Row>
         <View spacer={true} />
