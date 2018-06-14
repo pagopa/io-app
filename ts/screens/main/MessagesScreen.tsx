@@ -91,8 +91,8 @@ class MessagesScreen extends React.Component<Props, never> {
   public getOrganizationName = (senderServiceId: string): string => {
     const organizationName = this.props.services.byId[senderServiceId]
       .organization_name;
-    const serviceName = this.props.services.byId[senderServiceId].service_name;
-    return `${organizationName} - ${serviceName}`;
+    const departmentName = this.props.services.byId[senderServiceId].department_name;
+    return `${organizationName} - ${departmentName}`;
   };
 
   public renderItem = (messageDetails: IMessageDetails) => {
