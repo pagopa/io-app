@@ -1,13 +1,13 @@
 import { NavigationState } from "react-navigation";
 import { FormStateMap } from "redux-form";
-
-import { AppState } from "../../sore/reducers/appState";
 import { Action } from "../actions/types";
+import { AppState } from "./appState";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
+import { PinLoginState } from "./pinlogin";
 import { ProfileState } from "./profile";
 import { SessionState } from "./session";
 
@@ -28,4 +28,5 @@ export type GlobalState = Readonly<{
   notifications: NotificationsState;
   profile: ProfileState;
   entities: EntitiesState;
+  pinlogin: PinLoginState;
 }>;

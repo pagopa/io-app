@@ -656,9 +656,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/redux-form@^7.2.4":
-  version "7.2.4"
-  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.2.4.tgz#253053bfc010b9675c4db089246cf7ec05bb4da1"
+"@types/redux-form@^7.2.6":
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.2.6.tgz#442cdf28b1626a0693202766be2edafc5300b6a5"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
@@ -6205,9 +6205,9 @@ redux-logger@3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-persist@5.9.1:
-  version "5.9.1"
-  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.9.1.tgz#83bd4abd526ef768f63fceee338fa9d8ed6552d6"
+redux-persist@5.10.0:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.10.0.tgz#5d8d802c5571e55924efc1c3a9b23575283be62b"
 
 redux-saga-test-plan@^3.6.0:
   version "3.6.0"
@@ -6223,10 +6223,6 @@ redux-saga-test-plan@^3.6.0:
 redux-saga@*, redux-saga@^0.16.0:
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
-
-redux-thunk@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
 redux@4.0.0, redux@^4.0.0:
   version "4.0.0"
@@ -7175,9 +7171,9 @@ tslint-config-prettier@^1.13.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.13.0.tgz#189e821931ad89e0364e4e292d5c44a14e90ecd6"
 
-tslint-eslint-rules@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/tslint-eslint-rules/-/tslint-eslint-rules-5.1.0.tgz#3232b318da55dbb5a83e3f5d657c1ddbb27b9ff2"
+tslint-eslint-rules@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/tslint-eslint-rules/-/tslint-eslint-rules-5.3.1.tgz#10dec4361df0b3e4385d91ff8e0226bda4ec2ad4"
   dependencies:
     doctrine "0.7.2"
     tslib "1.9.0"
