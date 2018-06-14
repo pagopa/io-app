@@ -113,10 +113,9 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
                     </Row>
                     <Row>
                       <Text style={style.feetext}>
-                        {I18n.t("wallet.AddManager.maxFee")}
-                        <Text> {""} </Text>
+                        {I18n.t("wallet.AddManager.maxFee") + " "}
                         <Text bold={true} style={style.feetext}>
-                          {item.maxFee}
+                          {`${item.maxFee} € `}
                         </Text>
                       </Text>
                     </Row>
