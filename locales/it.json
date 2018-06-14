@@ -199,8 +199,7 @@
   "QRtoPay": {
     "byCameraTitle": "QR Code avviso",
     "cameraUsageInfo":"Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure inserisci manualmente i dati identificativi (IUV e codive ente/azienda).",
-    "setManually":"Inserisci i dati manualmente",
-    "cancel":"Annulla"    
+    "setManually":"Inserisci i dati manualmente"
   },
   "saveCard": {
     "saveCard":"Salva la carta",

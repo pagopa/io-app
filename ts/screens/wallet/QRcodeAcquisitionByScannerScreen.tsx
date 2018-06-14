@@ -1,3 +1,6 @@
+/**
+ * The screen allows to identify a transaction by the QR code on the analogic notice
+ */
 import {
   Body,
   Button,
@@ -16,23 +19,19 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 
-type OwnProps = Readonly<{
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type ScreenProps = {};
+type State = Readonly<{
+  data: string;
+}>;
 
-type Props = ScreenProps & OwnProps;
-
-/**
- * Acquisition of the  QR code by scanner
- */
 export class QRcodeAcquisitionByScannerScreen extends React.Component<
   Props,
-  never
+  State
 > {
   constructor(props: Props) {
     super(props);
@@ -46,12 +45,25 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
     const screenwidth = Dimensions.get("screen").width;
 
     const styles = StyleSheet.create({
-      container: {
-        flex: 1,
+      padded: {
+        paddingRight: variables.contentPadding,
+        paddingLeft: variables.contentPadding
+      },
+
+      white: {
+        backgroundColor: variables.brandPrimaryInverted
+      },
+
+      centerText: {
+        textAlign: "center"
+      },
+
+      cameraCcontainer: {
         alignItems: "flex-start",
         justifyContent: "center",
         backgroundColor: "transparent"
       },
+
       camera: {
         flex: 0,
         alignItems: "center",
@@ -65,77 +77,55 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "transparent",
-
-        borderColor: "rgba(56,56,56,0.5)"
-        // borderWidth: screenwidth/4,
+        backgroundColor: "transparent"
       },
 
-      outRectangle: {
-        alignItems: "center",
-        justifyContent: "center",
-        borderWidth: screenwidth / 2,
-        borderColor: "rgba(56,56,56,0.5)"
-      },
       rectangle: {
         height: screenwidth / 2,
         width: screenwidth / 2,
         borderWidth: 0,
-        borderColor: "transparent",
         backgroundColor: "transparent"
       },
 
-      rectangleTR: {
+      smallBorded: {
         height: screenwidth / 6,
         width: screenwidth / 6,
+        borderColor: variables.brandPrimaryInverted,
+        backgroundColor: "transparent",
+        position: "absolute"
+      },
+
+      rectangleTR: {
         borderTopWidth: 2,
         borderRightWidth: 2,
-        borderColor: "#FFFFFF",
-        backgroundColor: "transparent",
-        position: "absolute",
         top: 0,
         right: 0
       },
 
       rectangleTL: {
-        height: screenwidth / 6,
-        width: screenwidth / 6,
         borderTopWidth: 2,
         borderLeftWidth: 2,
-        borderColor: "#FFFFFF",
-        backgroundColor: "transparent",
-        position: "absolute",
         top: 0,
         left: 0
       },
 
       rectangleBL: {
-        height: screenwidth / 6,
-        width: screenwidth / 6,
         borderBottomWidth: 2,
         borderLeftWidth: 2,
-        borderColor: "#FFFFFF",
-        backgroundColor: "transparent",
-        position: "absolute",
         bottom: 0,
         left: 0
       },
 
       rectangleBR: {
-        height: screenwidth / 6,
-        width: screenwidth / 6,
         borderBottomWidth: 2,
         borderRightWidth: 2,
-        borderColor: "#FFFFFF",
-        backgroundColor: "transparent",
-        position: "absolute",
         bottom: 0,
         right: 0
       }
     });
 
     return (
-      <Container style={{ backgroundColor: variables.brandPrimaryInverted }}>
+      <Container style={styles.white}>
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
@@ -148,7 +138,7 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
         </AppHeader>
         <Container>
           <QRCodeScanner
-            containerStyle={styles.container}
+            containerStyle={styles.cameraCcontainer}
             showMarker={true}
             cameraStyle={styles.camera}
             customMarker={
@@ -157,18 +147,26 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
                   <Grid>
                     <Row>
                       <Col>
-                        <View style={styles.rectangleTL} />
+                        <View
+                          style={[styles.rectangleTL, styles.smallBorded]}
+                        />
                       </Col>
                       <Col>
-                        <View style={styles.rectangleTR} />
+                        <View
+                          style={[styles.rectangleTR, styles.smallBorded]}
+                        />
                       </Col>
                     </Row>
                     <Row>
                       <Col>
-                        <View style={styles.rectangleBL} />
+                        <View
+                          style={[styles.rectangleBL, styles.smallBorded]}
+                        />
                       </Col>
                       <Col>
-                        <View style={styles.rectangleBR} />
+                        <View
+                          style={[styles.rectangleBR, styles.smallBorded]}
+                        />
                       </Col>
                     </Row>
                   </Grid>
@@ -178,28 +176,14 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
           />
           <View>
             <View spacer={true} large={true} />
-            <Text
-              style={{
-                textAlign: "center",
-                paddingRight: variables.contentPadding,
-                paddingLeft: variables.contentPadding
-              }}
-            >
+            <Text style={[styles.padded, styles.centerText]}>
               {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
             </Text>
             <View spacer={true} extralarge={true} />
           </View>
         </Container>
         <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={(): boolean =>
-              this.props.navigation.navigate(
-                ROUTES.WALLET_QRCODE_MANUAL_ACQUISITION
-              )
-            }
-          >
+          <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
           </Button>
           <Button block={true} light={true} onPress={() => this.goBack()}>
