@@ -9,7 +9,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import MessageComponent from "../../components/MessageComponent";
+import MessageComponent from "../../components/messagges/MessageComponent";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
@@ -108,6 +108,7 @@ class MessagesScreen extends React.Component<Props, never> {
         subject={messageDetails.item.subject}
         navigation={this.props.navigation}
         senderServiceId={messageDetails.item.sender_service_id}
+        markdown={messageDetails.item.markdown}
       />
     );
   };

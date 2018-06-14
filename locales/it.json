@@ -220,6 +220,9 @@
     "loading": "Caricamento dei messaggi...",
     "yesterday": "ieri"
   },
+  "messageDetails": {
+    "headerTitle": "Message"
+  },
   "notifications": {
     "installation": {
       "errorTitle": "Notifiche push",

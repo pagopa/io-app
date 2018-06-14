@@ -3,15 +3,16 @@ import * as React from "react";
 import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import ROUTES from "../navigation/routes";
+import ROUTES from "../../navigation/routes";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
-import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
+import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 
 export type OwnProps = Readonly<{
   serviceOrganizationName: string;
   subject: string;
   key: string;
   date: Date;
+  markdown: string;
   navigation: NavigationScreenProp<NavigationState>;
 
 }>;
@@ -26,13 +27,13 @@ class MessageComponent extends React.Component<Props> {
 
     const { navigate } = this.props.navigation;
 
-    const { subject, serviceOrganizationName, date, key } = this.props;
+    const { subject, markdown ,serviceOrganizationName, date, key } = this.props;
     return (
       <ListItem
         key={key}
         onPress={() =>{
           navigate(ROUTES.MESSAGE_DETAILS, {
-            message: subject
+            details: { subject, serviceOrganizationName,markdown }
           })
         }
         }
