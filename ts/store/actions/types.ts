@@ -17,6 +17,7 @@ import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { PinloginActions } from "./pinlogin";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { SessionActions } from "./session";
@@ -36,6 +37,7 @@ export type Action =
   | SessionActions
   | OnboardingActions
   | NotificationsActions
+  | PinloginActions
   | ProfileActions
   | MessagesActions
   | ServicesActions
