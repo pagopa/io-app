@@ -8,7 +8,7 @@
 // Required to build user-displayable contents (e.g. "last used ...")
 import I18n from "../../i18n";
 
-import { WalletTransaction, transactionManager } from "../../types/wallet";
+import { transactionManager, WalletTransaction } from "../../types/wallet";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
@@ -21,17 +21,17 @@ import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 const managers: ReadonlyArray<transactionManager> = [
   {
     id: 1,
-    maxFee: 1.30,
+    maxFee: 1.3,
     icon: require("../../../img/wallet/Managers/Poste_Italiane1x.png")
   },
   {
     id: 2,
-    maxFee: 1.00,
+    maxFee: 1.0,
     icon: require("../../../img/wallet/Managers/Unicredit1x.png")
   },
   {
     id: 2,
-    maxFee: 0.50,
+    maxFee: 0.5,
     icon: require("../../../img/wallet/Managers/Nexi1x.png")
   }
 ];

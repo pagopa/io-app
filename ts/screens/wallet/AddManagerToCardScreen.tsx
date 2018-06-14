@@ -13,17 +13,19 @@ import * as React from "react";
 import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { WalletAPI } from "../../api/wallet/wallet-api";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import { transactionManager } from "../../types/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-const paymentManagers: ReadonlyArray<transactionManager> = WalletAPI.getManagers();
+const paymentManagers: ReadonlyArray<
+  transactionManager
+> = WalletAPI.getManagers();
 
 const style = StyleSheet.create({
   listItem: {
@@ -68,13 +70,15 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
             <Text>{I18n.t("saveCard.saveCard")}</Text>
           </Body>
         </AppHeader>
-        
+
         <Content>
           <H1>{I18n.t("wallet.AddManager.title")}</H1>
           <View spacer={true} />
           <Text>
             {I18n.t("wallet.AddManager.info") + " "}
-            <Text bold={true}>{I18n.t("wallet.AddManager.infobold") + " "}</Text>
+            <Text bold={true}>
+              {I18n.t("wallet.AddManager.infobold") + " "}
+            </Text>
             <Text>{I18n.t("wallet.AddManager.info2") + " "}</Text>
             <Text link={true}>{I18n.t("wallet.AddManager.link")}</Text>
           </Text>

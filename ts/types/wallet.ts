@@ -1,4 +1,4 @@
-import { ImageSource } from 'react-native-vector-icons/Icon';
+import { ImageSource } from "react-native-vector-icons/Icon";
 
 /**
  * Definition of other types required
