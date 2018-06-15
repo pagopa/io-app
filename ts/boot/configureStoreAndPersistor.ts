@@ -1,3 +1,4 @@
+import { AsyncStorage } from "react-native";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
@@ -8,22 +9,20 @@ import {
   Persistor,
   persistStore
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
-import thunk from "redux-thunk";
 
 import { analytics } from "../middlewares";
-import rootReducer from "../reducers";
-import { GlobalState } from "../reducers/types";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
+import rootReducer from "../store/reducers";
+import { GlobalState } from "../store/reducers/types";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
 const persistConfig: PersistConfig = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
   /**
    * Sections of the store that must be persisted and rehydrated.
    */
@@ -66,7 +65,6 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const enhancer: StoreEnhancer = composeEnhancers(
     applyMiddleware(
-      thunk,
       sagaMiddleware,
       logger,
       navigation,
