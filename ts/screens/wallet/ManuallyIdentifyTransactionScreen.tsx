@@ -3,7 +3,9 @@
  * - Numero Avviso, which includes: aux, digit, application code, codice IUV
  * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
  * - amount of the transaction
- *  TO DO: integrate modal to obtain details on the data to insert for manually identifying the transaction
+ *  TO DO:
+ *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
@@ -106,9 +108,11 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<
           <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.insertManually.proceed")}</Text>
           </Button>
+          <View spacer={true} />
           <Button
             block={true}
             light={true}
+            bordered={true}
             onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
           >
             <Text>{I18n.t("wallet.cancel")}</Text>
