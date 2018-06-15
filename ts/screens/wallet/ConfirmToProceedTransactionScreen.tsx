@@ -29,7 +29,6 @@ import AppHeader from "../../components/ui/AppHeader";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/CreditCard";
 import { TransactionSummary } from "../../types/wallet";
 
@@ -130,12 +129,7 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
                   <View spacer={true} large={true} />
                   <Text style={WalletStyles.textCenter}>
                     {`${I18n.t("wallet.ConfirmPayment.info2")} `}
-                    <Text
-                      link={true}
-                      onPress={(): boolean =>
-                        this.props.navigation.navigate(ROUTES.WALLET_PAY_WITH)
-                      }
-                    >
+                    <Text link={true}>
                       {I18n.t("wallet.ConfirmPayment.changeMethod")}
                     </Text>
                   </Text>
@@ -162,7 +156,8 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
           <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.continue")}</Text>
           </Button>
-          <Button block={true} light={true} onPress={_ => this.goBack()}>
+          <View spacer={true} />
+          <Button block={true} cancel={true} onPress={_ => this.goBack()}>
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>

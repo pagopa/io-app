@@ -15,7 +15,6 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -81,28 +80,26 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
                 />
               )}
             />
-            <Grid>
-              <Col size={1} />
-              <Col size={7}>
-                <View spacer={true} />
-                <Text
-                  style={WalletStyles.textCenter}
-                  link={true}
-                  onPress={(): boolean =>
-                    this.props.navigation.navigate(
-                      ROUTES.WALLET_ADD_PAYMENT_METHOD
-                    )
-                  }
-                >
-                  {" "}
-                  Aggiungi un nuovo metodo di pagamento{" "}
-                </Text>
-                <View spacer={true} large={true} />
-              </Col>
-              <Col size={1} />
-            </Grid>
           </View>
         </Content>
+        <View footer={true}>
+          <Button
+            block={true}
+            onPress={(): boolean =>
+              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+            }
+          >
+            <Text>{I18n.t("wallet.newPaymentMethod.newMethod")}</Text>
+          </Button>
+          <View spacer={true} />
+          <Button
+            block={true}
+            cancel={true}
+            onPress={(): boolean => this.props.navigation.goBack()}
+          >
+            <Text>{I18n.t("wallet.cancel")}</Text>
+          </Button>
+        </View>
       </Container>
     );
   }

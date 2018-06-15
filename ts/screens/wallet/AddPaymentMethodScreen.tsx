@@ -96,7 +96,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             light={true}
-            cancel={true}
+            bordered={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
             <Text>{I18n.t("wallet.cancel")}</Text>
