@@ -91,7 +91,8 @@ class MessagesScreen extends React.Component<Props, never> {
   public getOrganizationName = (senderServiceId: string): string => {
     const organizationName = this.props.services.byId[senderServiceId]
       .organization_name;
-    const departmentName = this.props.services.byId[senderServiceId].department_name;
+    const departmentName = this.props.services.byId[senderServiceId]
+      .department_name;
     return `${organizationName} - ${departmentName}`;
   };
 
