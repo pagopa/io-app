@@ -150,7 +150,7 @@
     "AddManager": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
-      "infobold":"Scegli il soggetto economico",
+      "infoBold":"Scegli il soggetto economico",
       "info2":"che dovrà gestire la tua transazione.",
       "link":"Per saperne di più",
       "maxFee":"Commissione massima"

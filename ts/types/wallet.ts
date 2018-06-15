@@ -39,7 +39,7 @@ export const UNKNOWN_TRANSACTION: WalletTransaction = {
 /**
  * This type represents a transaction Manager. One manager should be associated to each payment method not handled by PagoPA
  */
-export type transactionManager = {
+export type TransactionManager = {
   id: number;
   maxFee: number;
   icon: ImageSource;

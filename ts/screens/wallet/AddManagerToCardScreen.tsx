@@ -17,14 +17,15 @@ import { WalletAPI } from "../../api/wallet/wallet-api";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { transactionManager } from "../../types/wallet";
+import { TransactionManager } from "../../types/wallet";
+import { WalletStyles } from '../../components/styles/wallet';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
 const paymentManagers: ReadonlyArray<
-  transactionManager
+  TransactionManager
 > = WalletAPI.getManagers();
 
 const style = StyleSheet.create({
@@ -39,10 +40,12 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
 
-  feetext: {
+  feeText: {
     color: variables.brandDarkGray,
     fontSize: variables.fontSize2
-  }
+  },
+
+
 });
 
 /**
@@ -75,21 +78,18 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
           <H1>{I18n.t("wallet.AddManager.title")}</H1>
           <View spacer={true} />
           <Text>
-            {I18n.t("wallet.AddManager.info") + " "}
+            {`${I18n.t("wallet.AddManager.info")} `}
             <Text bold={true}>
-              {I18n.t("wallet.AddManager.infobold") + " "}
+              {`${I18n.t("wallet.AddManager.infoBold")} `}
             </Text>
-            <Text>{I18n.t("wallet.AddManager.info2") + " "}</Text>
+            <Text>{`${I18n.t("wallet.AddManager.info2")} `}</Text>
             <Text link={true}>{I18n.t("wallet.AddManager.link")}</Text>
           </Text>
           <View spacer={true} />
           <FlatList
             ItemSeparatorComponent={() => (
               <View
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: variables.brandGray
-                }}
+                style={WalletStyles.bottomBorder}
               />
             )}
             removeClippedSubviews={false}
@@ -112,9 +112,9 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
                       />
                     </Row>
                     <Row>
-                      <Text style={style.feetext}>
-                        {I18n.t("wallet.AddManager.maxFee") + " "}
-                        <Text bold={true} style={style.feetext}>
+                      <Text style={style.feeText}>
+                        {`${I18n.t("wallet.AddManager.maxFee")} `}
+                        <Text bold={true} style={style.feeText}>
                           {`${item.maxFee} € `}
                         </Text>
                       </Text>

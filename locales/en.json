@@ -152,10 +152,10 @@
     "AddManager": {
       "title":"Choose the manager",
       "info":"This card does not belong to the PagoPA payment network.",
-      "infobold":"Choose the economic operator",
-      "info2":"which will havo to manage yout payment.",
-      "link":"Found out more",
-      "maxFee":"Commissione massima"
+      "infoBold":"Choose the economic operator",
+      "info2":"which will have to manage yout payment.",
+      "link":"Find out more",
+      "maxFee":"Maximum fee"
     },
     "transactionDetails": "Transaction details",
     "total": "Total",

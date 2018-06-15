@@ -8,7 +8,7 @@
 // Required to build user-displayable contents (e.g. "last used ...")
 import I18n from "../../i18n";
 
-import { transactionManager, WalletTransaction } from "../../types/wallet";
+import { TransactionManager, WalletTransaction } from "../../types/wallet";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
@@ -18,7 +18,7 @@ import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 /**
  * Mocked wallet data
  */
-const managers: ReadonlyArray<transactionManager> = [
+const managers: ReadonlyArray<TransactionManager> = [
   {
     id: 1,
     maxFee: 1.3,
@@ -211,7 +211,7 @@ export class WalletAPI {
     return transactions.slice(0, maxOps);
   }
 
-  public static getManagers(): ReadonlyArray<transactionManager> {
+  public static getManagers(): ReadonlyArray<TransactionManager> {
     return managers;
   }
 }
