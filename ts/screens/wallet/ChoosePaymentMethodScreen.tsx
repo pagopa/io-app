@@ -1,7 +1,10 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
- * TODO: integrate credit card component
+ * TODO:
+ *  - integrate credit card component
  *   https://www.pivotaltracker.com/n/projects/2048617/stories/157422715
+ *  - implement the proper navigation
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
 import {
   Body,

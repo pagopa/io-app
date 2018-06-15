@@ -7,6 +7,8 @@
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  *  - make API provides data correctly
  *   https://www.pivotaltracker.com/n/projects/2048617/stories/157483031
+ * - implement the proper navigation
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
 
 import {

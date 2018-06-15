@@ -47,8 +47,10 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
    * - a different title inside the header
    * - the banner with the summary of the transaction
    * - the visualization of the title "Pay with"
-   * TODO: implement the function so that when the screen is accessed during the identification of a
-   * transaction, the banner and the title are displayed.
+   * TODO:
+   * - implement the code so that when the screen is accessed during the identification of a
+   *    transaction, the banner and the title are displayed
+   *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
    */
   private isInTransaction() {
     return true;
