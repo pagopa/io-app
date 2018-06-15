@@ -146,9 +146,9 @@
       "title": "Insert the notice data",
       "info": "which allow us to identify the transaction", 
       "link": "Where are they?",
-      "noticeCode":"Notice code",
+      "noticeCode":"Notice Code",
       "entityCode":"Entity Fiscal Code",
-      "amount": "Amount EUR",
+      "amount": "Amount (€)",
       "proceed": "Proceed with the transaction"
     },
     "transactionDetails": "Transaction details",

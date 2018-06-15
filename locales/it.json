@@ -146,7 +146,7 @@
       "link": "Dove si trovano?",
       "noticeCode":"Codice Avviso",
       "entityCode":"Codice Fiscale Ente Creditore",
-      "amount": "Importo EUR",
+      "amount": "Importo (€)",
       "proceed": "Procedi con il pagamento"
     },
     "transactionDetails": "Dettaglio delle operazioni",
