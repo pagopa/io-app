@@ -151,6 +151,8 @@
     "ConfirmPayment": {
       "header":"Conferma pagamento",
       "cancel":"ANNULLA",
+      "cancelPayment":"Annulla il pagamento",
+      "goToPay":"Conferma e paga",
       "askConfirm":"Confermi il pagamento?",
       "partialAmount":"Importo da pagare",
       "fee":"Costi di commissione",

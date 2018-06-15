@@ -153,6 +153,8 @@
     "ConfirmPayment": {
       "header":"Confirm transaction",
       "cancel":"CANCEL",
+      "cancelPayment":"Cancel the transaction",
+      "goToPay":"Confirm and pay",
       "askConfirm":"Want to proceed with the transaction?",
       "partialAmount":"Amount to pay",
       "fee":"Fee",

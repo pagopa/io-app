@@ -156,11 +156,16 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
 
         <View footer={true}>
           <Button block={true} primary={true}>
-            <Text>{I18n.t("wallet.continue")}</Text>
+            <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
           <View spacer={true} />
-          <Button block={true} cancel={true} onPress={_ => this.goBack()}>
-            <Text>{I18n.t("wallet.cancel")}</Text>
+          <Button
+            block={true}
+            light={true}
+            bordered={true}
+            onPress={_ => this.goBack()}
+          >
+            <Text>{I18n.t("wallet.ConfirmPayment.cancelPayment")}</Text>
           </Button>
         </View>
       </Container>
