@@ -147,9 +147,14 @@
       "fee":"Costi di commissione",
       "why":"Perhè?",
       "totalAmount":"Totale",
-      "info":"Attenzione: dopo queto passaggio non sarà più possibile annullare",
+      "info":"Attenzione: dopo questo passaggio non sarà più possibile annullare",
       "info2":"Stai utilizzando il tuo metodo di pagamento preferito.",
       "changeMethod":"Cambia metodo di pagamento"
+    },
+    "payWith": {
+      "header":"Scelta metodo di pagamamento",
+      "title":"Paga con",
+      "info":"Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento"
     },
     "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",

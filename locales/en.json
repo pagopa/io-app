@@ -149,9 +149,14 @@
       "fee":"Fee",
       "why":"Why?",
       "totalAmount":"Total amount",
-      "info":"Warning: after this step it will not be possile to come back",
+      "info":"Warning: after this step it will not be possible to come back",
       "info2":" You are using your favourite payment method.",
       "changeMethod":"Change the payment method"
+    },
+    "payWith": {
+      "header":"Choose payment method",
+      "title":"Pay with",
+      "info":"Choose one saved payment method or add a new one"
     },
     "transactionDetails": "Transaction details",
     "total": "Total",

@@ -8,7 +8,7 @@
 // Required to build user-displayable contents (e.g. "last used ...")
 import I18n from "../../i18n";
 
-import { WalletTransaction } from "../../types/wallet";
+import { WalletTransaction, TransactionSummary } from "../../types/wallet";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
@@ -157,6 +157,14 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   }
 ];
 
+const transactionSummary: Readonly<TransactionSummary> = {
+  currentAmount: 199.0,
+  fee: 1.5,
+  totalAmount: 200.5,
+  paymentReason: "Tari 2018",
+  entityName: "Comune di Gallarate"
+};
+
 /**
  * Mocked Wallet API
  */
@@ -191,5 +199,9 @@ export class WalletAPI {
     maxOps: number = WalletAPI.MAX_TRANSACTIONS
   ): ReadonlyArray<WalletTransaction> {
     return transactions.slice(0, maxOps);
+  }
+
+  public static getTransactionSummary(): Readonly<TransactionSummary> {
+    return transactionSummary;
   }
 }

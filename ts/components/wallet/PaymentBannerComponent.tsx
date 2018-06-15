@@ -1,6 +1,7 @@
 /**
  * This component displays a summary on the transaction.
  * Used for the screens from the identification of the transaction to the end of the procedure.
+ * TODO: integrate with walletAPI
  */
 
 import { Text, View } from "native-base";
@@ -12,21 +13,20 @@ import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
+  paymentReason: string;
+  currentAmount: string;
+  entity: string;
 }>;
 
 export default class PaymentBannerComponent extends React.Component<Props> {
   public render(): React.ReactNode {
-    const NOMEAVVISO = "Tari 2018";
-    const IMPORTO = "€ 199,00";
-    const ENTE = "Comune di Gallarate";
-
     return (
       <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
         <Row>
           <Col>
             <View spacer={true} />
             <Text bold={true} style={WalletStyles.white}>
-              {NOMEAVVISO}
+              {this.props.paymentReason}
             </Text>
           </Col>
           <Col>
@@ -35,13 +35,13 @@ export default class PaymentBannerComponent extends React.Component<Props> {
               bold={true}
               style={[WalletStyles.white, WalletStyles.textRight]}
             >
-              {IMPORTO}
+              {this.props.currentAmount}
             </Text>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Text style={WalletStyles.white}>{ENTE}</Text>
+            <Text style={WalletStyles.white}>{this.props.entity}</Text>
             <View spacer={true} />
           </Col>
           <Col>

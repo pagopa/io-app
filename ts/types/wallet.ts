@@ -33,3 +33,16 @@ export const UNKNOWN_TRANSACTION: WalletTransaction = {
   transactionCost: 0,
   isNew: false
 };
+
+/**
+ * This type represent the details of a transaction the user should display
+ * to see summary of the transaction.
+ */
+
+export type TransactionSummary = {
+  currentAmount: number;
+  fee: number;
+  totalAmount: number; // it should be obtained as sum of the "currrentAmount" and the "fee"
+  paymentReason: string;
+  entityName: string;
+};

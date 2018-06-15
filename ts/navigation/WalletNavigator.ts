@@ -5,6 +5,8 @@ import { CreditCardsScreen } from "../screens/wallet/CreditCardsScreen";
 import { TransactionDetailsScreen } from "../screens/wallet/TransactionDetailsScreen";
 import { TransactionsScreen } from "../screens/wallet/TransactionsScreen";
 import { WalletHomeScreen } from "../screens/wallet/WalletHomeScreen";
+import { ChoosePaymentMethodScreen } from "../screens/wallet/ChoosePaymentMethodScreen";
+
 import ROUTES from "./routes";
 
 /**
@@ -29,7 +31,10 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_CONFIRM_TO_PROCEED]: {
       screen: ConfirmToProceedTransactionScreen
-    }
+    },
+    [ROUTES.WALLET_PAY_WITH] : {
+      screen: ChoosePaymentMethodScreen
+    },
   },
   {
     // Let each screen handle the header and navigation
