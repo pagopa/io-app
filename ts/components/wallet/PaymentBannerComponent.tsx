@@ -35,7 +35,7 @@ export default class PaymentBannerComponent extends React.Component<Props> {
               bold={true}
               style={[WalletStyles.white, WalletStyles.textRight]}
             >
-              {this.props.currentAmount}
+              {this.props.currentAmount + " €"}
             </Text>
           </Col>
         </Row>
@@ -46,7 +46,7 @@ export default class PaymentBannerComponent extends React.Component<Props> {
           </Col>
           <Col>
             <Text style={[WalletStyles.white, WalletStyles.textRight]}>
-              {I18n.t("wallet.cancel")}
+              {I18n.t("wallet.cancel").toUpperCase()}
             </Text>
             <View spacer={true} />
           </Col>

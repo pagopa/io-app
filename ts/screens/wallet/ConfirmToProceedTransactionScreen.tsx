@@ -1,7 +1,12 @@
 /**
  * This screen ask the authorization to proceed with the transaction.
- * TODO: integrate credit card componet for visualization of the payment method selected for the transaction
- * https://www.pivotaltracker.com/n/projects/2048617/stories/157422715
+ * TODO:
+ * - integrate credit card componet for visualization of the payment method selected for the transaction
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/157422715
+ * - integrate contextual help:
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
+ *  - make API provides data correctly
+ *   https://www.pivotaltracker.com/n/projects/2048617/stories/157483031
  */
 
 import {
@@ -18,19 +23,24 @@ import {
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
-import { TransactionSummary } from '../../types/wallet';
-import { WalletAPI } from '../../api/wallet/wallet-api';
-import ROUTES from '../../../italia-app/ts/navigation/routes';
+import ROUTES from "../../navigation/routes";
+import { CreditCard } from "../../types/CreditCard";
+import { TransactionSummary } from "../../types/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-const transaction: Readonly<TransactionSummary> = WalletAPI.getTransactionSummary();
+const transaction: Readonly<
+  TransactionSummary
+> = WalletAPI.getTransactionSummary();
+const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class ConfirmToProceedTransactionScreen extends React.Component<
   Props,
@@ -59,17 +69,20 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
         </AppHeader>
 
         <Content original={true}>
-          <PaymentBannerComponent 
-						navigation={this.props.navigation} 
-						paymentReason={transaction.paymentReason}
-						currentAmount={transaction.currentAmount.toString()}
-						entity={transaction.entityName}
-					/>
+          <PaymentBannerComponent
+            navigation={this.props.navigation}
+            paymentReason={transaction.paymentReason}
+            currentAmount={transaction.totalAmount.toString()}
+            entity={transaction.entityName}
+          />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} large={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} large={true} />
-            <Text>CREDIT CARD COMPONENT</Text>
+            <CreditCardComponent
+              navigation={this.props.navigation}
+              item={cards[1]}
+            />
             <View spacer={true} large={true} />
             <Grid>
               <Row>
@@ -78,14 +91,14 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {transaction.currentAmount}
+                    {`${transaction.currentAmount}  €`}
                   </Text>
                 </Col>
               </Row>
               <Row>
                 <Col size={4}>
                   <Text>
-                    {I18n.t("wallet.ConfirmPayment.fee") + " "}
+                    {`${I18n.t("wallet.ConfirmPayment.fee")} `}
                     <Text link={true}>
                       {I18n.t("wallet.ConfirmPayment.why")}
                     </Text>
@@ -94,7 +107,7 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {transaction.fee}
+                    {`${transaction.fee} €`}
                   </Text>
                 </Col>
               </Row>
@@ -106,7 +119,9 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
                 </Col>
                 <Col>
                   <View spacer={true} large={true} />
-                  <H1 style={WalletStyles.textRight}>{transaction.totalAmount}</H1>
+                  <H1 style={WalletStyles.textRight}>
+                    {`${transaction.totalAmount} €`}
+                  </H1>
                 </Col>
               </Row>
               <Row>
@@ -114,10 +129,13 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
                 <Col size={9}>
                   <View spacer={true} large={true} />
                   <Text style={WalletStyles.textCenter}>
-                    {I18n.t("wallet.ConfirmPayment.info2") + " "}
-                    <Text link={true} onPress={(): boolean =>
+                    {`${I18n.t("wallet.ConfirmPayment.info2")} `}
+                    <Text
+                      link={true}
+                      onPress={(): boolean =>
                         this.props.navigation.navigate(ROUTES.WALLET_PAY_WITH)
-                    }>
+                      }
+                    >
                       {I18n.t("wallet.ConfirmPayment.changeMethod")}
                     </Text>
                   </Text>
