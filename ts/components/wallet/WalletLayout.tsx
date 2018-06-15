@@ -1,3 +1,12 @@
+/**
+ * Layout for the wallet section of the app.
+ * This is comprised by a customizable header part
+ * (with optionally a card displayed on the bottom
+ * of this header), and a customized content on
+ * the bottom part of the screen. Both are
+ * wrapped in a ScrollView, and optionally a
+ * footer with a button for starting a new payment
+ */
 import { Body, Container, Content, Text, View } from "native-base";
 import { Button } from "native-base";
 import { Left } from "native-base";
@@ -24,11 +33,13 @@ const styles = StyleSheet.create({
   }
 });
 
+// card type to be displayed at
+// the bottom of the header
 export enum CardType {
-  NONE,
-  FAN,
-  FULL,
-  HEADER
+  NONE, // show no card
+  FAN, // "fanned cards" (not really fanned, but you get the idea)
+  FULL, // full-sized card
+  HEADER // card header (only card number & logo)
 }
 
 type Props = Readonly<{
