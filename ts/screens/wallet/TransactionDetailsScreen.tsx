@@ -15,10 +15,9 @@ import {
 } from "react-navigation";
 
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout, CardType } from "../../components/wallet/layout";
+import { CardType, WalletLayout } from "../../components/wallet/layout";
 import I18n from "../../i18n";
 import { WalletTransaction } from "../../types/wallet";
-// import { isString } from 'util';
 
 interface ParamType {
   readonly transaction: WalletTransaction;
@@ -81,16 +80,37 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  private labelValueRow (label: string | React.ReactElement<any>, value: string | React.ReactElement<any>, ratio: "WIDE" | "NARROW", labelIsNote: boolean = true): React.ReactNode {
-    const labelSize = ratio === "WIDE" ? LABEL_COL_SIZE_WIDE_LABEL : LABEL_COL_SIZE_NARROW_LABEL;
-    const valueSize = ratio === "WIDE" ? VALUE_COL_SIZE_WIDE_LABEL : VALUE_COL_SIZE_NARROW_LABEL;
+  private labelValueRow(
+    label: string | React.ReactElement<any>,
+    value: string | React.ReactElement<any>,
+    ratio: "WIDE" | "NARROW",
+    labelIsNote: boolean = true
+  ): React.ReactNode {
+    const labelSize =
+      ratio === "WIDE"
+        ? LABEL_COL_SIZE_WIDE_LABEL
+        : LABEL_COL_SIZE_NARROW_LABEL;
+    const valueSize =
+      ratio === "WIDE"
+        ? VALUE_COL_SIZE_WIDE_LABEL
+        : VALUE_COL_SIZE_NARROW_LABEL;
     return (
       <Row style={styles.rowStyle}>
         <Col size={labelSize}>
-          { typeof label === "string" ? <Text note={labelIsNote}>{label}</Text> : label }
+          {typeof label === "string" ? (
+            <Text note={labelIsNote}>{label}</Text>
+          ) : (
+            label
+          )}
         </Col>
         <Col size={valueSize}>
-          { typeof value === "string" ? <Text style={styles.alignedRight} bold={true}>{value}</Text> : value }
+          {typeof value === "string" ? (
+            <Text style={styles.alignedRight} bold={true}>
+              {value}
+            </Text>
+          ) : (
+            value
+          )}
         </Col>
       </Row>
     );
@@ -103,9 +123,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
     return (
       <WalletLayout
         navigation={this.props.navigation}
-        headerContents={(
-          <View spacer={true}/>
-        )}
+        headerContents={<View spacer={true} />}
         cardType={CardType.HEADER}
         showPayButton={false}
       >
@@ -114,13 +132,49 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             <Row>
               <Text bold={true}>{I18n.t("wallet.transactionDetails")}</Text>
             </Row>
-            {this.labelValueRow(`${I18n.t("wallet.total")} ${transaction.currency}`,`${transaction.amount}`,"WIDE", false)}
-            {this.labelValueRow(I18n.t("wallet.payAmount"),`${transaction.amount}`,"WIDE")}
-            {this.labelValueRow(<Text><Text note={true}>{`${I18n.t("wallet.transactionFee")}  `}</Text><Text note={true} style={WalletStyles.whyLink}>{I18n.t("wallet.why")}</Text></Text>,`${transaction.transactionCost}`,"WIDE")}
-            {this.labelValueRow(I18n.t("wallet.paymentReason"),transaction.paymentReason,"NARROW")}
-            {this.labelValueRow(I18n.t("wallet.recipient"),transaction.recipient,"NARROW")}
-            {this.labelValueRow(I18n.t("wallet.date"),transaction.date,"WIDE")}
-            {this.labelValueRow(I18n.t("wallet.time"),transaction.time,"WIDE")}
+            {this.labelValueRow(
+              `${I18n.t("wallet.total")} ${transaction.currency}`,
+              `${transaction.amount}`,
+              "WIDE",
+              false
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.payAmount"),
+              `${transaction.amount}`,
+              "WIDE"
+            )}
+            {this.labelValueRow(
+              <Text>
+                <Text note={true}>{`${I18n.t(
+                  "wallet.transactionFee"
+                )}  `}</Text>
+                <Text note={true} style={WalletStyles.whyLink}>
+                  {I18n.t("wallet.why")}
+                </Text>
+              </Text>,
+              `${transaction.transactionCost}`,
+              "WIDE"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.paymentReason"),
+              transaction.paymentReason,
+              "NARROW"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.recipient"),
+              transaction.recipient,
+              "NARROW"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.date"),
+              transaction.date,
+              "WIDE"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.time"),
+              transaction.time,
+              "WIDE"
+            )}
             <Row style={styles.rowStyle}>
               <Button
                 style={{ marginTop: 20 }}

@@ -3,20 +3,20 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
-import { Left, H1, Right, Text, Button, View } from "native-base";
+import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 
-import { WalletLayout, CardType } from "../../components/wallet/layout";
+import { Col, Grid, Row } from "react-native-easy-grid";
+import { CardType, WalletLayout } from "../../components/wallet/layout";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
-import { Grid, Col, Row } from 'react-native-easy-grid';
 
 type ScreenProps = {};
 
@@ -42,27 +42,37 @@ const styles = StyleSheet.create({
  * Wallet Home Screen
  */
 export class WalletHomeScreen extends React.Component<Props, never> {
-
   private withCardsHeader() {
     return (
       <Grid style={styles.threeRowsBanner}>
         <Col size={2}>
-          <Row/>
-          <Row style={styles.bottomAlignedItems}><H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1></Row>
+          <Row />
+          <Row style={styles.bottomAlignedItems}>
+            <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
+          </Row>
           <Row>
             <Left>
-              <Text bold={true} style={WalletStyles.white}>{I18n.t("wallet.paymentMethods")}</Text>
+              <Text bold={true} style={WalletStyles.white}>
+                {I18n.t("wallet.paymentMethods")}
+              </Text>
             </Left>
           </Row>
         </Col>
         <Col>
           <Row size={2}>
-            <Image source={require("../../../img/wallet/wallet-icon.png")} style = {WalletStyles.pfImage}/>
+            <Image
+              source={require("../../../img/wallet/wallet-icon.png")}
+              style={WalletStyles.pfImage}
+            />
           </Row>
           <Row>
             <Right>
               <Text
-                onPress={(): boolean => this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)}
+                onPress={(): boolean =>
+                  this.props.navigation.navigate(
+                    ROUTES.WALLET_ADD_PAYMENT_METHOD
+                  )
+                }
                 style={WalletStyles.white}
               >
                 {I18n.t("wallet.newPaymentMethod.add")}
@@ -79,30 +89,39 @@ export class WalletHomeScreen extends React.Component<Props, never> {
       <View>
         <Grid style={styles.twoRowsBanner}>
           <Col size={2}>
-            <Row/>
-            <Row style={styles.bottomAlignedItems}><H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1></Row>
+            <Row />
+            <Row style={styles.bottomAlignedItems}>
+              <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
+            </Row>
           </Col>
           <Col>
             <Row size={2}>
-              <Image source={require("../../../img/wallet/wallet-icon.png")} style = {WalletStyles.pfImage}/>
+              <Image
+                source={require("../../../img/wallet/wallet-icon.png")}
+                style={WalletStyles.pfImage}
+              />
             </Row>
           </Col>
         </Grid>
-        <View spacer={true}/>
-        <Text style={WalletStyles.white}>{I18n.t("wallet.newPaymentMethod.addDescription")}</Text>
-        <View spacer={true}/>
+        <View spacer={true} />
+        <Text style={WalletStyles.white}>
+          {I18n.t("wallet.newPaymentMethod.addDescription")}
+        </Text>
+        <View spacer={true} />
         <View style={WalletStyles.container}>
           <Button
             bordered={true}
             block={true}
             style={WalletStyles.addPaymentMethodButton}
-            onPress={(): boolean => this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)}
+            onPress={(): boolean =>
+              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+            }
           >
             <Text style={WalletStyles.addPaymentMethodText}>
               {I18n.t("wallet.newPaymentMethod.addButton")}
             </Text>
           </Button>
-          <View spacer={true}/>
+          <View spacer={true} />
         </View>
       </View>
     );
@@ -117,18 +136,16 @@ export class WalletHomeScreen extends React.Component<Props, never> {
     const showCards = cards.length > 0;
 
     // TODO: cards list is currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
-    const headerContents = showCards ? (
-      this.withCardsHeader()
-    ) : (
-      this.withoutCardsHeader()
-    );
+    const headerContents = showCards
+      ? this.withCardsHeader()
+      : this.withoutCardsHeader();
 
     return (
       <WalletLayout
         navigation={this.props.navigation}
         headerContents={headerContents}
         cardType={showCards ? CardType.FAN : CardType.NONE}
-      >        
+      >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}

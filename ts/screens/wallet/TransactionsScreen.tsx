@@ -14,7 +14,7 @@ import {
 
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout, CardType } from "../../components/wallet/layout";
+import { CardType, WalletLayout } from "../../components/wallet/layout";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
@@ -34,7 +34,6 @@ interface OwnProps {
 type Props = OwnProps & NavigationInjectedProps;
 
 export class TransactionsScreen extends React.Component<Props, never> {
-
   public render(): React.ReactNode {
     const card: CreditCard = this.props.navigation.state.params.card;
     const transactions: ReadonlyArray<
@@ -44,7 +43,9 @@ export class TransactionsScreen extends React.Component<Props, never> {
     const headerContents = (
       <View>
         <View style={WalletStyles.walletBannerText}>
-          <Text style={WalletStyles.white}>{I18n.t("wallet.creditDebitCards")}</Text>
+          <Text style={WalletStyles.white}>
+            {I18n.t("wallet.creditDebitCards")}
+          </Text>
         </View>
         <View spacer={true} />
       </View>

@@ -16,11 +16,11 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import { Content } from "native-base";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
-import { Content } from 'native-base';
 
 type Props = Readonly<{
   title: string;
@@ -123,7 +123,7 @@ export class TransactionsList extends React.Component<Props, State> {
             />
           </Row>
         </Grid>
-    </Content>
+      </Content>
     );
   }
 }
