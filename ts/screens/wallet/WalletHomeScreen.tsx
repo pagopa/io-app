@@ -11,8 +11,8 @@ import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { CardType, WalletLayout } from "../../components/wallet/layout";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
+import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { CreditCard } from "../../types/CreditCard";
@@ -142,6 +142,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
 
     return (
       <WalletLayout
+        title={I18n.t("wallet.wallet")}
         navigation={this.props.navigation}
         headerContents={headerContents}
         cardType={showCards ? CardType.FAN : CardType.NONE}

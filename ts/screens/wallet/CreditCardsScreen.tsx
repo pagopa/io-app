@@ -8,7 +8,7 @@ import * as React from "react";
 import { Content, List, Text, View } from "native-base";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout } from "../../components/wallet/layout";
+import { WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";
@@ -34,6 +34,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
     );
     return (
       <WalletLayout
+        title={I18n.t("wallet.paymentMethods")}
         navigation={this.props.navigation}
         headerContents={headerContents}
       >

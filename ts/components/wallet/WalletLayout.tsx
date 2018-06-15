@@ -5,19 +5,16 @@ import * as React from "react";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import Icon from "../../../theme/font-icons/io-icon-font";
-import variables from "../../../theme/variables";
-import { WalletStyles } from "../../styles/wallet";
-import AppHeader from "../../ui/AppHeader";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+import Icon from "../../theme/font-icons/io-icon-font";
+import variables from "../../theme/variables";
+import { WalletStyles } from "../styles/wallet";
+import AppHeader from "../ui/AppHeader";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
-  },
-  noTopPadding: {
-    paddingTop: 18
   },
   whiteBg: {
     backgroundColor: variables.colorWhite
@@ -35,6 +32,7 @@ export enum CardType {
 }
 
 type Props = Readonly<{
+  title: string;
   navigation: NavigationScreenProp<NavigationState>;
   headerContents?: React.ReactNode;
   cardType?: CardType;
@@ -60,7 +58,7 @@ export class WalletLayout extends React.Component<Props> {
             >
               <Image
                 style={WalletStyles.pfCards}
-                source={require("../../../../img/wallet/creditcards.jpg")}
+                source={require("../../../img/wallet/creditcards.jpg")}
               />
             </TouchableHighlight>
           </View>
@@ -76,7 +74,7 @@ export class WalletLayout extends React.Component<Props> {
                 bottom: -1,
                 resizeMode: "contain"
               }}
-              source={require("../../../../img/wallet/card-tab.png")}
+              source={require("../../../img/wallet/card-tab.png")}
             />
           </View>
         );
@@ -91,7 +89,7 @@ export class WalletLayout extends React.Component<Props> {
                 bottom: -1,
                 resizeMode: "stretch"
               }}
-              source={require("../../../../img/wallet/single-tab.png")}
+              source={require("../../../img/wallet/single-tab.png")}
             />
           </View>
         );
@@ -104,24 +102,28 @@ export class WalletLayout extends React.Component<Props> {
     const showBack = true; // WIP
     return (
       <Container>
-        <AppHeader style={[styles.noTopPadding, styles.darkGrayBg]}>
+        <AppHeader style={styles.darkGrayBg}>
           <Left>
             {showBack ? (
               <Button
                 transparent={true}
                 onPress={_ => this.props.navigation.goBack()}
               >
-                <Icon color={variables.colorWhite} name="io-back" />
+                <Icon
+                  color={variables.colorWhite}
+                  size={variables.iconSize3}
+                  name="io-back"
+                />
               </Button>
             ) : (
               <Button transparent={true} />
             )}
           </Left>
           <Body>
-            <Text style={WalletStyles.white}>io.italia.it</Text>
+            <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
         </AppHeader>
-        <ScrollView bounces={false}>
+        <ScrollView bounces={false} style={styles.whiteBg}>
           <Content
             scrollEnabled={false}
             style={[styles.darkGrayBg, styles.noBottomPadding]}

@@ -97,7 +97,7 @@ const customVariables = Object.assign(materialVariables, {
   // Footer
   footerBackground: "#FFFFFF",
   footerElevation: 50,
-  footerPaddingTop: 24,
+  footerPaddingTop: 16,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,

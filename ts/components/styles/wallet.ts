@@ -80,7 +80,7 @@ export const WalletStyles = StyleSheet.create({
     backgroundColor: variables.brandDarkGray
   },
   whiteContent: {
-    backgroundColor: variables.brandGray,
+    backgroundColor: variables.colorWhite,
     flex: 1
   },
   pfImage: {

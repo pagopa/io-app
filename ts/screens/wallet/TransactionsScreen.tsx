@@ -14,8 +14,8 @@ import {
 
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { CardType, WalletLayout } from "../../components/wallet/layout";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
+import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 
@@ -53,6 +53,7 @@ export class TransactionsScreen extends React.Component<Props, never> {
 
     return (
       <WalletLayout
+        title={I18n.t("wallet.paymentMethod")}
         navigation={this.props.navigation}
         showPayButton={false}
         headerContents={headerContents}

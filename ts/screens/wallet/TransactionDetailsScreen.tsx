@@ -15,7 +15,7 @@ import {
 } from "react-navigation";
 
 import { WalletStyles } from "../../components/styles/wallet";
-import { CardType, WalletLayout } from "../../components/wallet/layout";
+import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { WalletTransaction } from "../../types/wallet";
 
@@ -122,6 +122,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
       .transaction;
     return (
       <WalletLayout
+        title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
         headerContents={<View spacer={true} />}
         cardType={CardType.HEADER}
