@@ -5,9 +5,9 @@
  */
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { GlobalState } from "../../../../reducers/types";
 import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
 import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 export type ServicesByIdState = Readonly<{
   [key: string]: ServicePublic;
