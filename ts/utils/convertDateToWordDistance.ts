@@ -1,7 +1,7 @@
 import { differenceInCalendarDays, format } from "date-fns";
 import I18n from "../i18n";
 /**
- * This function convert the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM
+ * This function converts the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM
  */
 export function convertDateToWordDistance(date: Date): string {
   const distance = differenceInCalendarDays(new Date(), new Date(date));
