@@ -101,27 +101,22 @@ export class WalletLayout extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const showBack = true; // WIP
     return (
       <Container>
         <AppHeader style={styles.darkGrayBg}>
           <Left>
-            {showBack ? (
-              <Button
-                transparent={true}
-                onPress={_ => this.props.navigation.goBack()}
-              >
-                {this.props.allowGoBack && (
-                  <Icon
-                    color={variables.colorWhite}
-                    size={variables.iconSize3}
-                    name="io-back"
-                  />
-                )}
-              </Button>
-            ) : (
-              <Button transparent={true} />
-            )}
+            <Button
+              transparent={true}
+              onPress={_ => this.props.navigation.goBack()}
+            >
+              {this.props.allowGoBack && (
+                <Icon
+                  color={variables.colorWhite}
+                  size={variables.iconSize3}
+                  name="io-back"
+                />
+              )}
+            </Button>
           </Left>
           <Body>
             <Text style={WalletStyles.white}>{this.props.title}</Text>
