@@ -7,7 +7,17 @@ import variables from "../variables";
 export default (): Theme => {
   return {
     "NativeBase.Left": {
-      flex: 0.2
+      "NativeBase.Button": {
+        "NativeBase.Icon": {
+          color: variables.textColor
+        },
+        padding: 0,
+        justifyContent: "center",
+        width: variables.iconSizeBase * 2
+      },
+      paddingLeft: 0,
+      marginLeft: -((variables.iconSizeBase * 3) / 4),
+      flex: 0.17
     },
     "NativeBase.Body": {
       "NativeBase.Text": {

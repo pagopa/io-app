@@ -71,8 +71,13 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.75;
   },
   lineHeightBase: 24,
+
   get lineHeight1(): number {
     return this.lineHeightBase * 0.75;
+  },
+
+  get lineHeight2(): number {
+    return this.lineHeightBase * (13 / 12);
   },
 
   // Icon

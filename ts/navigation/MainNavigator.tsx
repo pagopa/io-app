@@ -11,13 +11,12 @@ import ROUTES from "./routes";
 import { Platform, StyleSheet, Text } from "react-native";
 import { TabBarBottom, TabNavigator } from "react-navigation";
 import I18n from "../i18n";
-import MessagesScreen from "../screens/messages/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
 import Icon from "../theme/font-icons/io-icon-font";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
+import MessageNavigation from "./MessagesNavigation";
 import WalletNavigator from "./WalletNavigator";
-import MessageNavigation from "./MessagesNavigation"
 
 type Routes = keyof typeof ROUTES;
 

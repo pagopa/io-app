@@ -90,11 +90,16 @@ class MessagesScreen extends React.Component<Props, never> {
     ) : null;
   };
 
+  public getServiceName = (senderServiceId: string): string => {
+    return this.props.services.byId[senderServiceId].service_name;
+  };
+
   public getOrganizationName = (senderServiceId: string): string => {
     const organizationName = this.props.services.byId[senderServiceId]
       .organization_name;
-    const serviceName = this.props.services.byId[senderServiceId].service_name;
-    return `${organizationName} - ${serviceName}`;
+    const departmentName = this.props.services.byId[senderServiceId]
+      .department_name;
+    return `${organizationName} - ${departmentName}`;
   };
 
   public renderItem = (messageDetails: IMessageDetails) => {
@@ -109,6 +114,7 @@ class MessagesScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         senderServiceId={messageDetails.item.sender_service_id}
         markdown={messageDetails.item.markdown}
+        service={this.getServiceName(messageDetails.item.sender_service_id)}
       />
     );
   };

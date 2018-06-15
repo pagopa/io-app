@@ -1,25 +1,44 @@
-import { Body, Button, Icon, Container, Content, H1, Left, Tab, Tabs, Text, View } from "native-base";
+import {
+  Body,
+  Button,
+  Container,
+  Content,
+  H1,
+  Icon,
+  Left,
+  Text
+} from "native-base";
 import * as React from "react";
 import {
+  NavigationInjectedProps,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
-
+import MessageDetailsComponent from "../../components/messagges/MessageDetailsComponent";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 
-import { ReduxProps } from "../../store/actions/types";
+interface ParamTypeObject {
+  subject: string;
+  serviceOrganizationName: string;
+  markdown: string;
+  date: Date;
+  service: string;
+}
 
-type ReduxMappedProps = Readonly<{
+interface ParamType {
+  readonly details: ParamTypeObject;
+}
 
+interface StateParams extends NavigationState {
+  readonly params: ParamType;
+}
+
+type OwnProps = Readonly<{
+  navigation: NavigationScreenProp<StateParams>;
 }>;
 
-export type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-
-export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = OwnProps & NavigationInjectedProps;
 
 /**
  * This screen show the messages to the authenticated user.
@@ -28,28 +47,40 @@ export type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * Going to be replaced with real content in @https://www.pivotaltracker.com/story/show/152843981
  */
 export class MessageDetailsScreen extends React.Component<Props, never> {
-
   private goBack() {
     this.props.navigation.goBack();
   }
 
-  render() {
-    console.log(this.props);
-    return(
+  public render() {
+    const {
+      subject,
+      markdown,
+      serviceOrganizationName,
+      date,
+      service
+    } = this.props.navigation.state.params.details;
+    return (
       <Container>
-       <Content>
-         <AppHeader>
-           <Left>
-             <Button transparent={true} onPress={_ => this.goBack()}>
-               <Icon name="chevron-left" />
-             </Button>
-           </Left>
-           <Body>
-           <Text>{I18n.t("messageDetails.headerTitle")}</Text>
-           </Body>
-         </AppHeader>
-       </Content>
+        <AppHeader>
+          <Left>
+            <Button transparent={true} onPress={_ => this.goBack()}>
+              <Icon name="chevron-left" />
+            </Button>
+          </Left>
+          <Body>
+            <Text>{I18n.t("messageDetails.headerTitle")}</Text>
+          </Body>
+        </AppHeader>
+        <Content>
+          <H1>{subject}</H1>
+          <MessageDetailsComponent
+            markdown={markdown}
+            serviceOrganizationName={serviceOrganizationName}
+            date={date}
+            service={service}
+          />
+        </Content>
       </Container>
-    )
+    );
   }
 }

@@ -221,7 +221,17 @@
     "yesterday": "ieri"
   },
   "messageDetails": {
-    "headerTitle": "Message"
+    "headerTitle": "Messaggio",
+    "detailsLink": {
+      "showLabel": "Dettagli del messaggio",
+      "hideLabel": "Chiudi dettagli"
+    },
+    "infoLabels": {
+      "data": "Data:",
+      "senderBy": "Inviato da:",
+      "department": "Dipartimento:",
+      "service": "Servizio:"
+    }
   },
   "notifications": {
     "installation": {
