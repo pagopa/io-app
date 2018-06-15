@@ -147,7 +147,7 @@
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
-    "AddManager": {
+    "addManager": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
       "infoBold":"Scegli il soggetto economico",

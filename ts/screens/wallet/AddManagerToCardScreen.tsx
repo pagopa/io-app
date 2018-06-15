@@ -73,15 +73,15 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content>
-          <H1>{I18n.t("wallet.AddManager.title")}</H1>
+          <H1>{I18n.t("wallet.addManager.title")}</H1>
           <View spacer={true} />
           <Text>
-            {`${I18n.t("wallet.AddManager.info")} `}
+            {`${I18n.t("wallet.addManager.info")} `}
             <Text bold={true}>
-              {`${I18n.t("wallet.AddManager.infoBold")} `}
+              {`${I18n.t("wallet.addManager.infoBold")} `}
             </Text>
-            <Text>{`${I18n.t("wallet.AddManager.info2")} `}</Text>
-            <Text link={true}>{I18n.t("wallet.AddManager.link")}</Text>
+            <Text>{`${I18n.t("wallet.addManager.info2")} `}</Text>
+            <Text link={true}>{I18n.t("wallet.addManager.link")}</Text>
           </Text>
           <View spacer={true} />
           <FlatList
@@ -109,7 +109,7 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
                     </Row>
                     <Row>
                       <Text style={style.feeText}>
-                        {`${I18n.t("wallet.AddManager.maxFee")} `}
+                        {`${I18n.t("wallet.addManager.maxFee")} `}
                         <Text bold={true} style={style.feeText}>
                           {`${item.maxFee} € `}
                         </Text>
