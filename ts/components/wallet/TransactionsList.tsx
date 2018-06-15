@@ -20,6 +20,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
+import { Content } from 'native-base';
 
 type Props = Readonly<{
   title: string;
@@ -68,54 +69,61 @@ export class TransactionsList extends React.Component<Props, State> {
     const ops = this.state.data;
 
     if (ops.length === 0) {
-      return <Text>{I18n.t("wallet.noTransactions")}</Text>;
+      return (
+        <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+          <Text>{I18n.t("wallet.noTransactions")}</Text>
+        </Content>
+      );
     }
     // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
     return (
-      <Grid>
-        <Row>
-          <Left>
-            <Text bold={true}>{this.props.title}</Text>
-          </Left>
-          <Right>
-            <Text>{this.props.totalAmount}</Text>
-          </Right>
-        </Row>
-        <Row>
-          <List
-            removeClippedSubviews={false}
-            dataArray={ops as any[]} // tslint:disable-line
-            renderRow={(item): React.ReactElement<any> => (
-              <ListItem
-                onPress={(): boolean =>
-                  navigate(ROUTES.WALLET_TRANSACTION_DETAILS, {
-                    transaction: item
-                  })
-                }
-              >
-                <Body>
-                  <Grid>
-                    {this.renderDate(item)}
-                    <Row>
-                      <Left>
-                        <Text>{item.paymentReason}</Text>
-                      </Left>
-                      <Right>
-                        <Text>
-                          {item.amount} {item.currency}
-                        </Text>
-                      </Right>
-                    </Row>
-                    <Row>
-                      <Text note={true}>{item.location}</Text>
-                    </Row>
-                  </Grid>
-                </Body>
-              </ListItem>
-            )}
-          />
-        </Row>
-      </Grid>
+      <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+        <Grid>
+          <Row>
+            <Left>
+              <Text bold={true}>{this.props.title}</Text>
+            </Left>
+            <Right>
+              <Text>{this.props.totalAmount}</Text>
+            </Right>
+          </Row>
+          <Row>
+            <List
+              scrollEnabled={false}
+              removeClippedSubviews={false}
+              dataArray={ops as any[]} // tslint:disable-line
+              renderRow={(item): React.ReactElement<any> => (
+                <ListItem
+                  onPress={(): boolean =>
+                    navigate(ROUTES.WALLET_TRANSACTION_DETAILS, {
+                      transaction: item
+                    })
+                  }
+                >
+                  <Body>
+                    <Grid>
+                      {this.renderDate(item)}
+                      <Row>
+                        <Left>
+                          <Text>{item.paymentReason}</Text>
+                        </Left>
+                        <Right>
+                          <Text>
+                            {item.amount} {item.currency}
+                          </Text>
+                        </Right>
+                      </Row>
+                      <Row>
+                        <Text note={true}>{item.location}</Text>
+                      </Row>
+                    </Grid>
+                  </Body>
+                </ListItem>
+              )}
+            />
+          </Row>
+        </Grid>
+    </Content>
     );
   }
 }

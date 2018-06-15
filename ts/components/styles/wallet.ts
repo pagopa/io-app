@@ -138,5 +138,10 @@ export const WalletStyles = StyleSheet.create({
     marginTop: 6,
     fontSize: variables.fontSize1,
     color: variables.brandPrimary
+  },
+  walletBannerText: {
+    height: 50,
+    alignItems: "flex-end",
+    flexDirection: "row"
   }
 });

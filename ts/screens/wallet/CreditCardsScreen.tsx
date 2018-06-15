@@ -5,16 +5,17 @@
 
 import * as React from "react";
 
-import { Content, List, View } from "native-base";
+import { Text, Content, List, View } from "native-base";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
+import { WalletLayout } from "../../components/wallet/layout";
 import I18n from "../../i18n";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
-import { topContentNone } from "../../components/wallet/layout/types";
 import { CreditCard } from "../../types/CreditCard";
+import { Button } from 'native-base';
+import ROUTES from '../../navigation/routes';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -24,16 +25,17 @@ const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class CreditCardsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
+    const headerContents = (
+      <View style={WalletStyles.walletBannerText}>
+        <Text style={WalletStyles.white}>{I18n.t("wallet.creditDebitCards")}</Text>
+      </View>
+    );
     return (
       <WalletLayout
-        headerTitle={I18n.t("wallet.wallet")}
-        allowGoBack={true}
         navigation={this.props.navigation}
-        title={I18n.t("wallet.creditcards")}
-        topContent={topContentNone()}
+        headerContents={headerContents}
       >
         <Content style={WalletStyles.backContent}>
-          <View style={{ minHeight: 400 }}>
             <List
               removeClippedSubviews={false}
               dataArray={cards as any[]} // tslint:disable-line
@@ -44,7 +46,18 @@ export class CreditCardsScreen extends React.Component<Props, never> {
                 />
               )}
             />
-          </View>
+            <View spacer={true}/>
+            <Button
+              bordered={true}
+              block={true}
+              style={WalletStyles.addPaymentMethodButton}
+              onPress={(): boolean => this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)}
+            >
+              <Text style={WalletStyles.addPaymentMethodText}>
+                {I18n.t("wallet.newPaymentMethod.addButton")}
+              </Text>
+            </Button>
+
         </Content>
       </WalletLayout>
     );
