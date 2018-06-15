@@ -6,8 +6,10 @@ import { networkEventsListenerSaga } from "react-native-offline";
 import { all, Effect, fork } from "redux-saga/effects";
 
 import mainSaga from "./main";
+import messagesSaga from "./messages";
 import notificationsSaga from "./notifications";
 import onboardingSaga from "./onboarding";
+import pinLoginSaga from "./pinlogin";
 import profileSaga from "./profile";
 import sessionSaga from "./session";
 
@@ -27,8 +29,10 @@ export default function* root(): Iterator<Effect> {
     fork(sessionSaga),
     fork(notificationsSaga),
     fork(onboardingSaga),
+    fork(pinLoginSaga),
     fork(mainSaga),
     fork(profileSaga),
+    fork(messagesSaga),
     fork(networkEventsListenerSaga, connectionMonitorParameters)
   ]);
 }

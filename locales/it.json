@@ -6,6 +6,13 @@
     },
     "app":  {
       "version": "Versione"
+    },
+    "navigator": {
+      "messages": "messaggi",
+      "wallet": "portafoglio",
+      "documents": "documenti",
+      "preferences": "preferenze",
+      "profile": "profilo"
     }
   },
   "connection": {
@@ -97,6 +104,14 @@
       "confirmValid": "grazie, puoi continuare",
       "confirmInvalid": "i due pin non coincidono"
     }
+  },
+  "pin_login":{
+    "pin": {
+      "pinInfo": "Inserisci il codice PIN",
+      "pinForgot": "Non ricordo il PIN",
+      "confirmValid": "PIN corretto",
+      "confirmInvalid": "PIN non valido"
+    }   
   },
   "personal_data_processing": {
     "title": "Regole sul trattamento dei dati personali",
@@ -206,6 +221,13 @@
   },
   "creditCardComponent": {
     "validUntil": "Valida fino al "
+  },
+  "messages": {
+    "counting": {
+      "zero": "Nessun messaggio",
+      "one": "Hai 1 messaggio",
+      "other": "Hai {{count}} messaggi"
+    }
   },
   "notifications": {
     "installation": {

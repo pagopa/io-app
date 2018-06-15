@@ -6,9 +6,9 @@ import { Root } from "native-base";
 
 import ConnectionBar from "./components/ConnectionBar";
 
-import { ApplicationState, ReduxProps } from "./actions/types";
 import Navigation from "./navigation";
 import { APP_STATE_CHANGE_ACTION } from "./store/actions/constants";
+import { ApplicationState, ReduxProps } from "./store/actions/types";
 
 interface ReduxMappedProps {}
 

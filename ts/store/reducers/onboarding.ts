@@ -3,9 +3,9 @@
  * @flow
  */
 
-import { Action } from "../../actions/types";
-import { GlobalState } from "../../reducers/types";
 import { PIN_CREATE_SUCCESS, TOS_ACCEPT_SUCCESS } from "../actions/constants";
+import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type OnboardingState = Readonly<{
   isTosAccepted: boolean;

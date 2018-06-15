@@ -15,14 +15,15 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { Option } from "fp-ts/lib/Option";
-import { ReduxProps } from "../../actions/types";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
 import { createPin } from "../../store/actions/onboarding";
+import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
+import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
 
 type ReduxMappedProps = {
   pinSaveError: Option<string>;
@@ -160,6 +161,8 @@ class PinScreen extends React.Component<Props, State> {
       return (
         <Pinpad
           autofocus={false}
+          inactiveColor={variables.brandLightGray}
+          activeColor={variables.brandDarkGray}
           onFulfill={(code: string) => this.onPinFulfill(code)}
         />
       );
@@ -171,6 +174,8 @@ class PinScreen extends React.Component<Props, State> {
         <React.Fragment>
           <Pinpad
             autofocus={true}
+            inactiveColor={variables.brandLightGray}
+            activeColor={variables.brandDarkGray}
             compareWithCode={pinState.pin}
             onFulfill={(isValid, code) =>
               this.onPinConfirmFulfill(isValid, code)
