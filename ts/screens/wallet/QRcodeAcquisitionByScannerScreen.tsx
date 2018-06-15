@@ -25,105 +25,97 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type State = Readonly<{
-  data: string;
-}>;
+const screenWidth = Dimensions.get("screen").width;
+
+const styles = StyleSheet.create({
+  padded: {
+    paddingRight: variables.contentPadding,
+    paddingLeft: variables.contentPadding
+  },
+
+  white: {
+    backgroundColor: variables.brandPrimaryInverted
+  },
+
+  centerText: {
+    textAlign: "center"
+  },
+
+  cameraCcontainer: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+
+  camera: {
+    flex: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    height: (screenWidth * 4) / 3,
+    width: screenWidth
+  },
+
+  rectangleContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+
+  rectangle: {
+    height: screenWidth / 2,
+    width: screenWidth / 2,
+    borderWidth: 0,
+    backgroundColor: "transparent"
+  },
+
+  smallBorded: {
+    height: screenWidth / 6,
+    width: screenWidth / 6,
+    borderColor: variables.brandPrimaryInverted,
+    backgroundColor: "transparent",
+    position: "absolute"
+  },
+
+  topRightCorner: {
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    top: 0,
+    right: 0
+  },
+
+  topLeftCorner: {
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    top: 0,
+    left: 0
+  },
+
+  bottomLeftCorner: {
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    bottom: 0,
+    left: 0
+  },
+
+  bottomRightCorner: {
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    bottom: 0,
+    right: 0
+  }
+});
 
 export class QRcodeAcquisitionByScannerScreen extends React.Component<
   Props,
-  State
+  never
 > {
-  constructor(props: Props) {
-    super(props);
-  }
-
   private goBack() {
     this.props.navigation.goBack();
   }
 
   public render(): React.ReactNode {
-    const screenwidth = Dimensions.get("screen").width;
-
-    const styles = StyleSheet.create({
-      padded: {
-        paddingRight: variables.contentPadding,
-        paddingLeft: variables.contentPadding
-      },
-
-      white: {
-        backgroundColor: variables.brandPrimaryInverted
-      },
-
-      centerText: {
-        textAlign: "center"
-      },
-
-      cameraCcontainer: {
-        alignItems: "flex-start",
-        justifyContent: "center",
-        backgroundColor: "transparent"
-      },
-
-      camera: {
-        flex: 0,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "transparent",
-        height: (screenwidth * 4) / 3,
-        width: screenwidth
-      },
-
-      rectangleContainer: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "transparent"
-      },
-
-      rectangle: {
-        height: screenwidth / 2,
-        width: screenwidth / 2,
-        borderWidth: 0,
-        backgroundColor: "transparent"
-      },
-
-      smallBorded: {
-        height: screenwidth / 6,
-        width: screenwidth / 6,
-        borderColor: variables.brandPrimaryInverted,
-        backgroundColor: "transparent",
-        position: "absolute"
-      },
-
-      rectangleTR: {
-        borderTopWidth: 2,
-        borderRightWidth: 2,
-        top: 0,
-        right: 0
-      },
-
-      rectangleTL: {
-        borderTopWidth: 2,
-        borderLeftWidth: 2,
-        top: 0,
-        left: 0
-      },
-
-      rectangleBL: {
-        borderBottomWidth: 2,
-        borderLeftWidth: 2,
-        bottom: 0,
-        left: 0
-      },
-
-      rectangleBR: {
-        borderBottomWidth: 2,
-        borderRightWidth: 2,
-        bottom: 0,
-        right: 0
-      }
-    });
-
     return (
       <Container style={styles.white}>
         <AppHeader>
@@ -148,24 +140,24 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
                     <Row>
                       <Col>
                         <View
-                          style={[styles.rectangleTL, styles.smallBorded]}
+                          style={[styles.topLeftCorner, styles.smallBorded]}
                         />
                       </Col>
                       <Col>
                         <View
-                          style={[styles.rectangleTR, styles.smallBorded]}
+                          style={[styles.topRightCorner, styles.smallBorded]}
                         />
                       </Col>
                     </Row>
                     <Row>
                       <Col>
                         <View
-                          style={[styles.rectangleBL, styles.smallBorded]}
+                          style={[styles.bottomLeftCorner, styles.smallBorded]}
                         />
                       </Col>
                       <Col>
                         <View
-                          style={[styles.rectangleBR, styles.smallBorded]}
+                          style={[styles.bottomRightCorner, styles.smallBorded]}
                         />
                       </Col>
                     </Row>
