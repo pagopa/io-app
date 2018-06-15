@@ -6,7 +6,7 @@ declare module "native-base" {
     interface Content {
       alternative?: boolean;
       original?: boolean;
-      primary?: boolean
+      primary?: boolean;
     }
   }
 }

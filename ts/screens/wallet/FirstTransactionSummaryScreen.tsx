@@ -30,7 +30,6 @@ import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import PaymentSummaryComponent from "../../components/wallet/paymentSummary/PaymentSummaryComponent";
-import UpdatedPaymentSummaryComponent from "../../components/wallet/paymentSummary/UpdatedPaymentSummaryComponent";
 import I18n from "../../i18n";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
@@ -73,37 +72,6 @@ export class FirstTransactionSummaryScreen extends React.Component<
     this.props.navigation.goBack();
   }
 
-  /**
-   * Depending on the comparison between the amount on the notice and the amount saved remotely by the lender
-   * it will be displayed a different component. If the values differ, then the user can display both the values
-   * and a brief exmplanation related to the update.
-   */
-  private isAmountUpdated() {
-    return (
-      transactionDetails.currentAmount !== transactionDetails.notifiedAmount
-    );
-  }
-
-  private getSummary() {
-    if (this.isAmountUpdated() === true) {
-      return (
-        // if the amount had been updated, it will be displayed and presented with a brief description
-        <UpdatedPaymentSummaryComponent
-          navigation={this.props.navigation}
-          amount={transactionDetails.notifiedAmount.toString()}
-          updatedAmount={transactionDetails.currentAmount.toString()}
-        />
-      );
-    } else {
-      return (
-        <PaymentSummaryComponent
-          navigation={this.props.navigation}
-          amount={transactionDetails.currentAmount.toString()}
-        />
-      );
-    }
-  }
-
   public render(): React.ReactNode {
     return (
       <Container>
@@ -140,10 +108,13 @@ export class FirstTransactionSummaryScreen extends React.Component<
             <View spacer={true} large={true} />
           </Grid>
 
-          {this.getSummary()}
+          <PaymentSummaryComponent
+            navigation={this.props.navigation}
+            amount={transactionDetails.notifiedAmount.toString()}
+            updatedAmount={transactionDetails.currentAmount.toString()}
+          />
 
           <Grid style={[styles.padded, WalletStyles.backContent]}>
-            <View spacer={true} />
             <Row>
               <H3 style={WalletStyles.white}>
                 {I18n.t("wallet.firstTransactionSummary.expireDate")}
