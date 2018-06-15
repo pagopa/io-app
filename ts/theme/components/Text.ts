@@ -14,6 +14,8 @@ declare module "native-base" {
       rightAlign?: boolean;
       colorLabelTab?: boolean;
       alternativeBold?: boolean;
+      white?: boolean;
+      alignCenter?: boolean;
     }
   }
 }
@@ -41,6 +43,12 @@ export default (): Theme => {
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color,
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
+    },
+    ".white": {
+      color: variables.colorWhite
+    },
+    ".alignCenter": {
+      textAlign: "center"
     },
     lineHeight: variables.lineHeightBase
   };
