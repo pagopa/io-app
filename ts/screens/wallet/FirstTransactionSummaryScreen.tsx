@@ -29,7 +29,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
-import PaymentSummaryComponent from "../../components/wallet/paymentSummary/PaymentSummaryComponent";
+import PaymentSummaryComponent from "../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../i18n";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";

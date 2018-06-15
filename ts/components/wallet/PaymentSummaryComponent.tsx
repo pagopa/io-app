@@ -6,9 +6,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletStyles } from "../../../components/styles/wallet";
-import I18n from "../../../i18n";
-import variables from "../../../theme/variables";
+import { WalletStyles } from "../../components/styles/wallet";
+import I18n from "../../i18n";
+import variables from "../../theme/variables";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -52,9 +52,9 @@ const styles = StyleSheet.create({
 
 export default class PaymentSummaryComponent extends React.Component<Props> {
   /**
-   * Depending on the comparison between the amount on the notice and the amount saved remotely by the lender
+   * If differences occur between the amount on the notice and the amount saved remotely by the entity
    * it will be displayed a different component. If the values differ, then the user can display both the values
-   * and a brief exmplanation related to the update.
+   * and a brief explanation related to the update.
    */
   private isAmountUpdated() {
     return this.props.updatedAmount !== this.props.amount;
