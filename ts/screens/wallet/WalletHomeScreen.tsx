@@ -146,6 +146,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         headerContents={headerContents}
         cardType={showCards ? CardType.FAN : CardType.NONE}
+        allowGoBack={false}
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}

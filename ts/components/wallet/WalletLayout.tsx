@@ -37,13 +37,15 @@ type Props = Readonly<{
   headerContents?: React.ReactNode;
   cardType?: CardType;
   showPayButton?: boolean;
+  allowGoBack?: boolean;
 }>;
 
 export class WalletLayout extends React.Component<Props> {
   public static defaultProps = {
     headerContents: null,
     cardType: CardType.NONE,
-    showPayButton: true
+    showPayButton: true,
+    allowGoBack: true
   };
 
   private getLogo(): React.ReactNode {
@@ -109,11 +111,13 @@ export class WalletLayout extends React.Component<Props> {
                 transparent={true}
                 onPress={_ => this.props.navigation.goBack()}
               >
-                <Icon
-                  color={variables.colorWhite}
-                  size={variables.iconSize3}
-                  name="io-back"
-                />
+                {this.props.allowGoBack && (
+                  <Icon
+                    color={variables.colorWhite}
+                    size={variables.iconSize3}
+                    name="io-back"
+                  />
+                )}
               </Button>
             ) : (
               <Button transparent={true} />
