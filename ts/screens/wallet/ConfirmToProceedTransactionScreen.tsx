@@ -68,7 +68,7 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
           </Body>
         </AppHeader>
 
-        <Content original={true}>
+        <Content noPadded={true}>
           <PaymentBannerComponent
             navigation={this.props.navigation}
             paymentReason={transaction.paymentReason}

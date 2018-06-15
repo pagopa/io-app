@@ -54,7 +54,7 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
             <Text>{I18n.t("wallet.payWith.header")}</Text>
           </Body>
         </AppHeader>
-        <Content original={true}>
+        <Content noPadded={true}>
           <PaymentBannerComponent
             navigation={this.props.navigation}
             paymentReason={transaction.paymentReason}
