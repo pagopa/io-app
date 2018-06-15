@@ -14,11 +14,11 @@ import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
+import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { TransactionManager } from "../../types/wallet";
-import { WalletStyles } from '../../components/styles/wallet';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -43,9 +43,7 @@ const style = StyleSheet.create({
   feeText: {
     color: variables.brandDarkGray,
     fontSize: variables.fontSize2
-  },
-
-
+  }
 });
 
 /**
@@ -88,9 +86,7 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
           <View spacer={true} />
           <FlatList
             ItemSeparatorComponent={() => (
-              <View
-                style={WalletStyles.bottomBorder}
-              />
+              <View style={WalletStyles.bottomBorder} />
             )}
             removeClippedSubviews={false}
             numColumns={1}
