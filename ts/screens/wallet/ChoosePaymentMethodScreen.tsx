@@ -15,6 +15,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
+import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -22,6 +23,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
 import { CreditCard } from "../../types/CreditCard";
@@ -61,9 +63,11 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
             currentAmount={transaction.totalAmount.toString()}
             entity={transaction.entityName}
           />
+
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} />
             <H1> {I18n.t("wallet.payWith.title")} </H1>
+
             <View spacer={true} />
             <Text> {I18n.t("wallet.payWith.info")}</Text>
             <View spacer={true} />
@@ -77,6 +81,26 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
                 />
               )}
             />
+            <Grid>
+              <Col size={1} />
+              <Col size={7}>
+                <View spacer={true} />
+                <Text
+                  style={WalletStyles.textCenter}
+                  link={true}
+                  onPress={(): boolean =>
+                    this.props.navigation.navigate(
+                      ROUTES.WALLET_ADD_PAYMENT_METHOD
+                    )
+                  }
+                >
+                  {" "}
+                  Aggiungi un nuovo metodo di pagamento{" "}
+                </Text>
+                <View spacer={true} large={true} />
+              </Col>
+              <Col size={1} />
+            </Grid>
           </View>
         </Content>
       </Container>
