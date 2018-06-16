@@ -18,10 +18,6 @@ const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
 
-  // FlexBox Flex Position
-  flexLeftAlign: 1,
-  flexRightAlign: 0,
-
   // Button
   btnTextFontWeight: "700" as FontWeight,
   btnHeight: 48,

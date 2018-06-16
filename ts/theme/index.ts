@@ -10,7 +10,6 @@ import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
 import h3Theme from "./components/H3";
 import headerTheme from "./components/Header";
-import iconTheme from "./components/Icon";
 import itemTheme from "./components/Item";
 import messageComponent from "./components/MessageComponent";
 import modalTheme from "./components/Modal";
@@ -54,10 +53,7 @@ const theme = (): Theme => {
     "NativeBase.ViewNB": {
       ...viewTheme()
     },
-    "NativeBase.Icon": {
-      ...iconTheme()
-    },
-    "NativeBase.MessageComponent": {
+    "UIComponent.MessageComponent": {
       ...messageComponent()
     },
     "NativeBase.TabHeading": {

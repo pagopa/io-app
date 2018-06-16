@@ -12,7 +12,6 @@ declare module "native-base" {
       formatDate?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
-      colorLabelTab?: boolean;
       alternativeBold?: boolean;
       white?: boolean;
       alignCenter?: boolean;
@@ -30,13 +29,10 @@ export default (): Theme => {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
     ".leftAlign": {
-      flex: variables.flexLeftAlign
-    },
-    ".colorLabelTab": {
-      color: variables.brandPrimaryLight
+      textAlign: "left"
     },
     ".rightAlign": {
-      flex: variables.flexRightAlign
+      textAlign: "right"
     },
     ".alternativeBold": {
       lineHeight: variables.lineHeight1,

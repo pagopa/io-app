@@ -7,6 +7,7 @@ import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 
 export type OwnProps = Readonly<{
   serviceOrganizationName: string;
+  serviceDepartmentName: string;
   subject: string;
   key: string;
   date: Date;
@@ -19,12 +20,18 @@ export type Props = OwnProps;
  */
 class MessageComponent extends React.Component<Props> {
   public render() {
-    const { subject, serviceOrganizationName, date, key } = this.props;
+    const {
+      subject,
+      serviceOrganizationName,
+      serviceDepartmentName,
+      date,
+      key
+    } = this.props;
     return (
       <ListItem key={key}>
         <Left>
           <Text leftAlign={true} alternativeBold={true}>
-            {serviceOrganizationName}
+            {serviceOrganizationName + " - " + serviceDepartmentName}
           </Text>
           <Text leftAlign={true}>{subject}</Text>
         </Left>
@@ -38,7 +45,7 @@ class MessageComponent extends React.Component<Props> {
 }
 
 const StyledMessageComponent = connectStyle(
-  "NativeBase.MessageComponent",
+  "UIComponent.MessageComponent",
   {},
   mapPropsToStyleNames
 )(MessageComponent);
