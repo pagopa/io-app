@@ -95,19 +95,20 @@ class MessagesScreen extends React.Component<Props, never> {
   };
 
   public getOrganizationName = (senderServiceId: string): string => {
-    const organizationName = this.props.services.byId[senderServiceId]
-      .organization_name;
-    const departmentName = this.props.services.byId[senderServiceId]
-      .department_name;
-    return `${organizationName} - ${departmentName}`;
+    return this.props.services.byId[senderServiceId].organization_name;
   };
-
+  public getDepartmentName = (senderServiceId: string): string => {
+    return this.props.services.byId[senderServiceId].department_name;
+  };
   public renderItem = (messageDetails: IMessageDetails) => {
     return (
       <MessageComponent
         key={messageDetails.item.id}
         date={messageDetails.item.created_at}
         serviceOrganizationName={this.getOrganizationName(
+          messageDetails.item.sender_service_id
+        )}
+        serviceDepartmentName={this.getDepartmentName(
           messageDetails.item.sender_service_id
         )}
         subject={messageDetails.item.subject}
@@ -155,7 +156,6 @@ class MessagesScreen extends React.Component<Props, never> {
   public render() {
     return (
       <Container>
-        <View spacer={true} />
         <View content={true}>
           <View spacer={true} />
           <H1>{I18n.t("messages.contentTitle")}</H1>

@@ -14,6 +14,7 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   service: string;
   serviceOrganizationName: string;
+  serviceDepartmentName: string;
   subject: string;
 }>;
 
@@ -25,13 +26,14 @@ export type Props = OwnProps;
 class MessageComponent extends React.Component<Props> {
   public render() {
     const { navigate } = this.props.navigation;
+
     const {
       subject,
-      markdown,
       serviceOrganizationName,
+      serviceDepartmentName,
       date,
-      key,
-      service
+      markdown,
+      key
     } = this.props;
     return (
       <ListItem
@@ -41,7 +43,7 @@ class MessageComponent extends React.Component<Props> {
             details: {
               date,
               markdown,
-              service,
+              serviceDepartmentName,
               serviceOrganizationName,
               subject
             }
@@ -50,7 +52,7 @@ class MessageComponent extends React.Component<Props> {
       >
         <Left>
           <Text leftAlign={true} alternativeBold={true}>
-            {serviceOrganizationName}
+            {serviceOrganizationName + " - " + serviceDepartmentName}
           </Text>
           <Text leftAlign={true}>{subject}</Text>
         </Left>
@@ -64,7 +66,7 @@ class MessageComponent extends React.Component<Props> {
 }
 
 const StyledMessageComponent = connectStyle(
-  "NativeBase.MessageComponent",
+  "UIComponent.MessageComponent",
   {},
   mapPropsToStyleNames
 )(MessageComponent);

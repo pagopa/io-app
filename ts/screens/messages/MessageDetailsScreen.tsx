@@ -21,9 +21,9 @@ import I18n from "../../i18n";
 interface ParamTypeObject {
   subject: string;
   serviceOrganizationName: string;
+  serviceDepartmentName: string;
   markdown: string;
   date: Date;
-  service: string;
 }
 
 interface ParamType {
@@ -57,7 +57,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
       markdown,
       serviceOrganizationName,
       date,
-      service
+      serviceDepartmentName
     } = this.props.navigation.state.params.details;
     return (
       <Container>
@@ -77,7 +77,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
             markdown={markdown}
             serviceOrganizationName={serviceOrganizationName}
             date={date}
-            service={service}
+            serviceDepartmentName={serviceDepartmentName}
           />
         </Content>
       </Container>
