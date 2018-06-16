@@ -10,6 +10,7 @@ import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 export type OwnProps = Readonly<{
   serviceOrganizationName: string;
   serviceDepartmentName: string;
+  service: string;
   key: string;
   date: Date;
   markdown: string;
@@ -54,7 +55,13 @@ class MessageDetailsComponent extends React.Component<Props, State> {
     }
   };
   public render() {
-    const { markdown, date, serviceOrganizationName, serviceDepartmentName } = this.props;
+    const {
+      markdown,
+      date,
+      serviceOrganizationName,
+      serviceDepartmentName,
+      service
+    } = this.props;
     return (
       <View>
         <TouchableOpacity
@@ -67,7 +74,8 @@ class MessageDetailsComponent extends React.Component<Props, State> {
         {this.state.isMessageDetailsInfoVisible ? (
           <MessageDetailsInfoComponent
             date={date}
-            service={serviceDepartmentName}
+            service={service}
+            serviceDepartmentName={serviceDepartmentName}
             serviceOrganizationName={serviceOrganizationName}
           />
         ) : null}

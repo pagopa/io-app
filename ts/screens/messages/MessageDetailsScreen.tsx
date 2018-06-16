@@ -23,6 +23,7 @@ interface ParamTypeObject {
   serviceOrganizationName: string;
   serviceDepartmentName: string;
   markdown: string;
+  service: string;
   date: Date;
 }
 
@@ -57,6 +58,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
       markdown,
       serviceOrganizationName,
       date,
+      service,
       serviceDepartmentName
     } = this.props.navigation.state.params.details;
     return (
@@ -75,6 +77,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
           <H1>{subject}</H1>
           <MessageDetailsComponent
             markdown={markdown}
+            service={service}
             serviceOrganizationName={serviceOrganizationName}
             date={date}
             serviceDepartmentName={serviceDepartmentName}

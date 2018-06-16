@@ -32,6 +32,7 @@ class MessageComponent extends React.Component<Props> {
       serviceOrganizationName,
       serviceDepartmentName,
       date,
+      service,
       markdown,
       key
     } = this.props;
@@ -43,6 +44,7 @@ class MessageComponent extends React.Component<Props> {
             details: {
               date,
               markdown,
+              service,
               serviceDepartmentName,
               serviceOrganizationName,
               subject

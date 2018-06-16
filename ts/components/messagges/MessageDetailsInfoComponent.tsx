@@ -11,6 +11,7 @@ import I18n from "../../i18n";
 
 export type OwnProps = Readonly<{
   serviceOrganizationName: string;
+  serviceDepartmentName: string;
   service: string;
   date: Date;
 }>;
@@ -21,18 +22,14 @@ export type Props = OwnProps;
  * Implements a component that show the message details info when the link is click
  */
 class MessageDetailsInfoComponent extends React.Component<Props> {
-  private getSender = (sentence: string): string => {
-    return sentence.split(" - ")[0];
-  };
-
-  private getDepartment = (sentence: string): string => {
-    return sentence.split(" - ")[1];
-  };
-
   public render() {
-    const { date, service, serviceOrganizationName } = this.props;
+    const {
+      date,
+      serviceDepartmentName,
+      serviceOrganizationName,
+      service
+    } = this.props;
     const localeLanguage = I18n.locale.includes("en") ? enLocale : itLocale;
-
     return (
       <View>
         <View>
@@ -49,13 +46,13 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
           <Text bold={true}>
             {I18n.t("messageDetails.infoLabels.senderBy")}
           </Text>
-          <Text> {this.getSender(serviceOrganizationName)}</Text>
+          <Text> {serviceOrganizationName}</Text>
         </View>
         <View>
           <Text bold={true}>
             {I18n.t("messageDetails.infoLabels.department")}
           </Text>
-          <Text> {this.getDepartment(serviceOrganizationName)}</Text>
+          <Text> {serviceDepartmentName}</Text>
         </View>
         <View>
           <Text bold={true}>{I18n.t("messageDetails.infoLabels.service")}</Text>
