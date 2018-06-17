@@ -61,6 +61,11 @@ export class WalletLayout extends React.Component<Props> {
 
   private getLogo(): React.ReactNode {
     switch (this.props.cardType) {
+      case CardType.NONE:
+      case undefined: {
+        // "undefined" is here because cardType is optional, but defaultProps sets it to NONE
+        return null;
+      }
       case CardType.FAN: {
         return (
           <View style={WalletStyles.container}>
@@ -107,8 +112,10 @@ export class WalletLayout extends React.Component<Props> {
           </View>
         );
       }
+      default:
+        ((): never => this.props.cardType)();
+        return null;
     }
-    return null;
   }
 
   public render(): React.ReactNode {
