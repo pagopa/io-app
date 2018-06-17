@@ -36,21 +36,21 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   public renderDetailsInfoLink = () => {
     if (!this.state.isMessageDetailsInfoVisible) {
       return (
-        <View>
+        <React.Fragment>
           <Text link={true}>
             {I18n.t("messageDetails.detailsLink.showLabel")}
           </Text>
           <Icon name="chevron-right" />
-        </View>
+        </React.Fragment>
       );
     } else {
       return (
-        <View>
+        <React.Fragment>
           <Text link={true}>
             {I18n.t("messageDetails.detailsLink.hideLabel")}
           </Text>
           <Icon name="cross" />
-        </View>
+        </React.Fragment>
       );
     }
   };
@@ -69,16 +69,16 @@ class MessageDetailsComponent extends React.Component<Props, State> {
             this.handleDetailsInfoClick(this.state.isMessageDetailsInfoVisible)
           }
         >
-          {this.renderDetailsInfoLink()}
+          <View>{this.renderDetailsInfoLink()}</View>
         </TouchableOpacity>
-        {this.state.isMessageDetailsInfoVisible ? (
+        {this.state.isMessageDetailsInfoVisible && (
           <MessageDetailsInfoComponent
             date={date}
             service={service}
             serviceDepartmentName={serviceDepartmentName}
             serviceOrganizationName={serviceOrganizationName}
           />
-        ) : null}
+        )}
         <Text>{markdown}</Text>
       </View>
     );
@@ -86,7 +86,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
 }
 
 const StyledMessageDetailsComponent = connectStyle(
-  "NativeBase.MessageDetailsComponent",
+  "UIComponent.MessageDetailsComponent",
   {},
   mapPropsToStyleNames
 )(MessageDetailsComponent);

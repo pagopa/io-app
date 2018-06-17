@@ -15,7 +15,7 @@ import ProfileScreen from "../screens/main/ProfileScreen";
 import Icon from "../theme/font-icons/io-icon-font";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
-import MessageNavigation from "./MessagesNavigation";
+import MessageNavigator from "./MessagesNavigation";
 import WalletNavigator from "./WalletNavigator";
 
 type Routes = keyof typeof ROUTES;
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 const navigation = TabNavigator(
   {
     [ROUTES.MAIN_MESSAGES]: {
-      screen: MessageNavigation
+      screen: MessageNavigator
     },
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator

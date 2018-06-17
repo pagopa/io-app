@@ -64,10 +64,10 @@ const theme = (): Theme => {
     "NativeBase.TabContainer": {
       ...tabContainerTheme()
     },
-    "NativeBase.MessageDetailsComponent": {
+    "UIComponent.MessageDetailsComponent": {
       ...messageDetailsComponent()
     },
-    "NativeBase.MessageDetailsInfoComponent": {
+    "UIComponent.MessageDetailsInfoComponent": {
       ...messageDetailsInfoComponent()
     }
   };

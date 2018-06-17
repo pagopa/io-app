@@ -35,11 +35,11 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
         <View>
           <Text bold={true}>{I18n.t("messageDetails.infoLabels.data")}</Text>
           <Text>
-            {" "}
-            {_.capitalize(format(date, "dddd D ", { locale: localeLanguage })) +
-              _.capitalize(
-                format(date, "MMMM YYYY", { locale: localeLanguage })
-              )}
+            {` ${_.capitalize(
+              format(date, "dddd D ", { locale: localeLanguage })
+            )}${_.capitalize(
+              format(date, "MMMM YYYY", { locale: localeLanguage })
+            )}`}
           </Text>
         </View>
         <View>
@@ -64,7 +64,7 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
 }
 
 const StyledMessageDetailsInfoComponent = connectStyle(
-  "NativeBase.MessageDetailsInfoComponent",
+  "UIComponent.MessageDetailsInfoComponent",
   {},
   mapPropsToStyleNames
 )(MessageDetailsInfoComponent);

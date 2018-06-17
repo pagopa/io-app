@@ -14,7 +14,7 @@ import {
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
-import MessageDetailsComponent from "../../components/messagges/MessageDetailsComponent";
+import MessageDetailsComponent from "../../components/messages/MessageDetailsComponent";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 
@@ -42,10 +42,7 @@ type OwnProps = Readonly<{
 type Props = OwnProps & NavigationInjectedProps;
 
 /**
- * This screen show the messages to the authenticated user.
- *
- * TODO: Just a mocked version at the moment.
- * Going to be replaced with real content in @https://www.pivotaltracker.com/story/show/152843981
+ * This screen show the Message Details for a simple message
  */
 export class MessageDetailsScreen extends React.Component<Props, never> {
   private goBack() {
