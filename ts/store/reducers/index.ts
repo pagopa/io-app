@@ -18,6 +18,7 @@ import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
 import sessionReducer from "./session";
 import { GlobalState } from "./types";
+import walletReducer from "./wallet";
 
 /**
  * Here we combine all the reducers.
@@ -47,7 +48,10 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  pinlogin: pinloginReducer
+  pinlogin: pinloginReducer,
+
+  // WALLET
+  wallet: walletReducer
 };
 
 export default reducers;

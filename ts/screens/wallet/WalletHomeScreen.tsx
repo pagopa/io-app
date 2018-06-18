@@ -7,24 +7,41 @@ import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletAPI } from "../../api/wallet/wallet-api";
+import { connect, Dispatch } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { TransactionsList } from "../../components/wallet/TransactionsList";
+import TransactionsList, {
+  TransactionsDisplayed
+} from "../../components/wallet/TransactionsList";
 import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { CreditCard } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
+import { fetchCardsRequest } from "../../store/actions/wallet/cards";
+import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
+import { GlobalState } from "../../store/reducers/types";
+import { creditCardsSelector } from "../../store/reducers/wallet/cards";
 
 type ScreenProps = {};
+
+type ReduxMappedStateProps = Readonly<{
+  cardsNumber: number;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  // temporary
+  loadTransactions: () => void;
+  loadCards: () => void;
+}>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ScreenProps & OwnProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  ScreenProps &
+  OwnProps;
 
 const styles = StyleSheet.create({
   twoRowsBanner: {
@@ -127,13 +144,16 @@ export class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  public render(): React.ReactNode {
-    const latestTransactions: ReadonlyArray<
-      WalletTransaction
-    > = WalletAPI.getLatestTransactions();
+  public componentDidMount() {
+    // WIP loadTransactions should not be called from here
+    // (transactions should be persisted & fetched periodically)
+    // WIP WIP create pivotal story
+    this.props.loadCards();
+    this.props.loadTransactions();
+  }
 
-    const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
-    const showCards = cards.length > 0;
+  public render(): React.ReactNode {
+    const showCards = this.props.cardsNumber > 0;
 
     // TODO: cards list is currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
     const headerContents = showCards
@@ -151,10 +171,23 @@ export class WalletHomeScreen extends React.Component<Props, never> {
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
-          transactions={latestTransactions}
           navigation={this.props.navigation}
+          display={TransactionsDisplayed.LATEST}
         />
       </WalletLayout>
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  cardsNumber: creditCardsSelector(state).length
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadCards: () => dispatch(fetchCardsRequest())
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WalletHomeScreen);

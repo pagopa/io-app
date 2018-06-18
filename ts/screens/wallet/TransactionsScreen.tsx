@@ -12,12 +12,12 @@ import {
   NavigationState
 } from "react-navigation";
 
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
-import { TransactionsList } from "../../components/wallet/TransactionsList";
+import TransactionsList, {
+  TransactionsDisplayed
+} from "../../components/wallet/TransactionsList";
 import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import { CreditCard } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
 
 interface ParamType {
   readonly card: CreditCard;
@@ -33,13 +33,8 @@ interface OwnProps {
 
 type Props = OwnProps & NavigationInjectedProps;
 
-export class TransactionsScreen extends React.Component<Props, never> {
+export default class TransactionsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
-    const card: CreditCard = this.props.navigation.state.params.card;
-    const transactions: ReadonlyArray<
-      WalletTransaction
-    > = WalletAPI.getTransactions(card.id);
-
     const headerContents = (
       <View>
         <View style={WalletStyles.walletBannerText}>
@@ -62,8 +57,8 @@ export class TransactionsScreen extends React.Component<Props, never> {
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
-          transactions={transactions}
           navigation={this.props.navigation}
+          display={TransactionsDisplayed.BY_CARD}
         />
       </WalletLayout>
     );

@@ -8,30 +8,22 @@ import * as React from "react";
 import { Content, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import { WalletTransaction } from "../../types/wallet";
+import { GlobalState } from "../../store/reducers/types";
+import {} from "../../store/reducers/wallet";
+import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
-interface ParamType {
-  readonly transaction: WalletTransaction;
-}
-
-interface StateParams extends NavigationState {
-  readonly params: ParamType;
-}
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<StateParams>;
+type ReduxMappedProps = Readonly<{
+  transaction: WalletTransaction;
 }>;
 
-type Props = OwnProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   rowStyle: {
@@ -76,10 +68,6 @@ const VALUE_COL_SIZE_WIDE_LABEL = 1;
  * Details of transaction
  */
 export class TransactionDetailsScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   private labelValueRow(
     label: string | React.ReactElement<any>,
     value: string | React.ReactElement<any>,
@@ -117,8 +105,8 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const transaction: WalletTransaction = this.props.navigation.state.params
-      .transaction;
+    const { transaction } = this.props;
+
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
@@ -181,3 +169,10 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
     );
   }
 }
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  transaction: transactionForDetailsSelector(state).getOrElse(
+    UNKNOWN_TRANSACTION
+  )
+});
+
+export default connect(mapStateToProps)(TransactionDetailsScreen);

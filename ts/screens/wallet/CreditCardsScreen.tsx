@@ -6,24 +6,30 @@
 import * as React from "react";
 
 import { Content, List, Text, View } from "native-base";
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import { WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import ROUTES from "../../navigation/routes";
+import { GlobalState } from "../../store/reducers/types";
+import { creditCardsSelector } from "../../store/reducers/wallet/cards";
 import { CreditCard } from "../../types/CreditCard";
 
-type Props = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  cards: ReadonlyArray<CreditCard>;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
+type Props = OwnProps & ReduxMappedStateProps;
 
-export class CreditCardsScreen extends React.Component<Props, never> {
+class CreditCardsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const headerContents = (
       <View style={WalletStyles.walletBannerText}>
@@ -41,7 +47,7 @@ export class CreditCardsScreen extends React.Component<Props, never> {
         <Content style={WalletStyles.backContent}>
           <List
             removeClippedSubviews={false}
-              dataArray={cards as any[]} // tslint:disable-line
+            dataArray={this.props.cards as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
               <CreditCardComponent
                 navigation={this.props.navigation}
@@ -67,3 +73,8 @@ export class CreditCardsScreen extends React.Component<Props, never> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  cards: creditCardsSelector(state)
+});
+export default connect(mapStateToProps)(CreditCardsScreen);
