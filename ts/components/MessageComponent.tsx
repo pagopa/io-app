@@ -36,7 +36,9 @@ class MessageComponent extends React.Component<Props> {
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text formatDate={true}>{convertDateToWordDistance(created_at)}</Text>
+          <Text formatDate={true}>
+            {convertDateToWordDistance(new Date(created_at))}
+          </Text>
           <Icon name="chevron-right" />
         </Right>
       </ListItem>
