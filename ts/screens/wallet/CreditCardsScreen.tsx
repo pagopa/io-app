@@ -13,7 +13,7 @@ import I18n from "../../i18n";
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import CreditCardComponent from "../../components/wallet/CreditCardComponent";
+import { CreditCardComponent } from "../../components/wallet/card";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardsSelector } from "../../store/reducers/wallet/cards";

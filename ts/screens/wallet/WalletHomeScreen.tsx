@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 /**
  * Wallet Home Screen
  */
-export class WalletHomeScreen extends React.Component<Props, never> {
+class WalletHomeScreen extends React.Component<Props, never> {
   private withCardsHeader() {
     return (
       <Grid style={styles.threeRowsBanner}>
@@ -154,7 +154,7 @@ export class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const showCards = this.props.cardsNumber > 0;
-
+    
     // TODO: cards list is currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
     const headerContents = showCards
       ? this.withCardsHeader()

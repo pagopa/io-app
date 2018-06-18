@@ -45,7 +45,7 @@ export class ActionIcon extends React.Component<Props> {
         {icon}
       </TouchableHighlight>
     ) : (
-      <View style={styles.iconWrapper}>icon</View>
+      <View style={styles.iconWrapper}>{icon}</View>
     );
   }
 }
