@@ -112,7 +112,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
               onPress={_ => this.props.navigation.goBack()}
             >
               <IconFont name="io-back" size={variables.iconSize3} />
-	</Button>
+            </Button>
           </Left>
           <Body>
             <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
