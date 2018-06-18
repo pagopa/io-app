@@ -20,6 +20,9 @@ import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
+import { CreditCard } from '../../types/CreditCard';
+import { CreditCardComponent } from './card';
+import { LogoPosition } from './card/Logo';
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -35,12 +38,33 @@ const styles = StyleSheet.create({
 
 // card type to be displayed at
 // the bottom of the header
-export enum CardType {
+export enum CardEnum {
   NONE, // show no card
   FAN, // "fanned cards" (not really fanned, but you get the idea)
   FULL, // full-sized card
   HEADER // card header (only card number & logo)
-}
+};
+
+type FullCard = Readonly<{
+  type: CardEnum.FULL,
+  card: CreditCard
+}>;
+
+type HeaderCard = Readonly<{
+  type: CardEnum.HEADER,
+  card: CreditCard
+}>;
+
+type FannedCards = Readonly<{
+  type: CardEnum.FAN,
+  cards: ReadonlyArray<CreditCard>
+}>;
+
+type NoCards = Readonly<{
+  type: CardEnum.NONE
+}>;
+
+export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
 type Props = Readonly<{
   title: string;
@@ -54,19 +78,22 @@ type Props = Readonly<{
 export class WalletLayout extends React.Component<Props> {
   public static defaultProps = {
     headerContents: null,
-    cardType: CardType.NONE,
+    cardType: { type: CardEnum.NONE },
     showPayButton: true,
     allowGoBack: true
   };
 
   private getLogo(): React.ReactNode {
-    switch (this.props.cardType) {
-      case CardType.NONE:
+    if (!this.props.cardType) {
+      return null;
+    }
+    switch (this.props.cardType.type) {
+      case CardEnum.NONE:
       case undefined: {
         // "undefined" is here because cardType is optional, but defaultProps sets it to NONE
         return null;
       }
-      case CardType.FAN: {
+      case CardEnum.FAN: {
         return (
           <View style={WalletStyles.container}>
             <TouchableHighlight
@@ -76,38 +103,36 @@ export class WalletLayout extends React.Component<Props> {
             >
               <Image
                 style={WalletStyles.pfCards}
-                source={require("../../../img/wallet/creditcards.jpg")}
+                source={require("../../../img/wallet/creditcards.png")}
               />
             </TouchableHighlight>
           </View>
         );
       }
-      case CardType.FULL: {
+      case CardEnum.FULL: {
         return (
           <View style={WalletStyles.container}>
-            <Image
-              style={{
-                height: 120,
-                width: "100%",
-                bottom: -1,
-                resizeMode: "contain"
-              }}
-              source={require("../../../img/wallet/card-tab.png")}
+            <CreditCardComponent
+              navigation={this.props.navigation}
+              item={this.props.cardType.card}
+              favorite={false}
+              menu={true}
+              lastUsage={false}
+              flatBottom={true}
             />
           </View>
         );
       }
-      case CardType.HEADER: {
+      case CardEnum.HEADER: {
         return (
           <View style={WalletStyles.container}>
-            <Image
-              style={{
-                height: 55,
-                width: "100%",
-                bottom: -1,
-                resizeMode: "stretch"
-              }}
-              source={require("../../../img/wallet/single-tab.png")}
+            <CreditCardComponent
+              navigation={this.props.navigation}
+              item={this.props.cardType.card}
+              logoPosition={LogoPosition.TOP}
+              flatBottom={true}
+              headerOnly={true}
+              rotated={true}
             />
           </View>
         );
