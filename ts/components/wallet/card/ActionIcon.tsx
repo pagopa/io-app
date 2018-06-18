@@ -37,15 +37,15 @@ export class ActionIcon extends React.Component<Props> {
         size={this.props.size}
       />
     );
-    return (
-      this.props.touchable ? (
-        <TouchableHighlight
+    return this.props.touchable ? (
+      <TouchableHighlight
         style={styles.iconWrapper}
         onPress={onPress === undefined ? undefined : onPress}
-        >
-          {icon}
-        </TouchableHighlight>
-      ) : <View style={styles.iconWrapper}>icon</View>
+      >
+        {icon}
+      </TouchableHighlight>
+    ) : (
+      <View style={styles.iconWrapper}>icon</View>
     );
   }
 }

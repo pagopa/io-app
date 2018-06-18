@@ -141,7 +141,7 @@
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
-    "wallet": {
+  "wallet": {
     "wallet": "Portafoglio",
     "creditcards": "Carte di Credito",
     "paymentMethods": "Metodi di pagamento",
@@ -171,7 +171,7 @@
     "today": "oggi alle",
     "payNotice": "Paga un avviso",
     "latestOperations": "Ultime operazioni",
-    "creditDebtCards": "Carte di Credito/Debito",
+    "creditDebitCards": "Carte di Credito/Debito",
     "addPaymentMethodTitle": "Aggiungi metodo di pagamento",
     "cancel": "Annulla",
     "continue": "Continua",

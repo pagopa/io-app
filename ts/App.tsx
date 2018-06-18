@@ -6,12 +6,12 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import theme from "./theme";
 
+import { MenuProvider } from "react-native-popup-menu";
 import configureErrorHandler from "./boot/configureErrorHandler";
 import configurePushNotifications from "./boot/configurePushNotification";
 import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
 import * as config from "./config";
 import RootContainer from "./RootContainer";
-import { MenuProvider } from "react-native-popup-menu";
 
 // Inizialize Mixpanel and configure the global js error handler
 Mixpanel.sharedInstanceWithToken(config.mixpanelToken);

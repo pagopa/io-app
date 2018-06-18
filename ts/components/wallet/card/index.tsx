@@ -12,13 +12,18 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../../i18n";
 
 import color from "color";
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger
+} from "react-native-popup-menu";
 import variables from "../../../theme/variables";
 import { CreditCard } from "../../../types/CreditCard";
 import { ActionIcon } from "./ActionIcon";
 import { CardBody } from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
-import { Menu, MenuTrigger, MenuOption, MenuOptions } from 'react-native-popup-menu';
 
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
@@ -143,7 +148,7 @@ export class CreditCardComponent extends React.Component<Props> {
                 <ActionIcon touchable={false} name="io-more" />
               </MenuTrigger>
               <MenuOptions>
-                <MenuOption text="Test"/>
+                <MenuOption text="Test" />
               </MenuOptions>
             </Menu>
           )}

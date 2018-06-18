@@ -10,6 +10,7 @@ import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
 import { ProfileState } from "./profile";
 import { SessionState } from "./session";
+import { WalletState } from "./wallet";
 
 export type NetworkState = Readonly<{
   isConnected: boolean;
@@ -27,6 +28,7 @@ export type GlobalState = Readonly<{
   onboarding: OnboardingState;
   notifications: NotificationsState;
   profile: ProfileState;
+  wallet: WalletState;
   entities: EntitiesState;
   pinlogin: PinLoginState;
 }>;

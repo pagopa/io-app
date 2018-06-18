@@ -5,38 +5,25 @@
  */
 import * as React from "react";
 
-import { Button, Content, Text } from "native-base";
+import { Content, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 
-import { WalletAPI } from "../../api/wallet/wallet-api";
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
-import { CreditCardComponent } from "../../components/wallet/card";
-import { LogoPosition } from "../../components/wallet/card/Logo";
-import { topContentTouchable } from "../../components/wallet/layout/types";
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
+import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
+import { GlobalState } from "../../store/reducers/types";
+import {} from "../../store/reducers/wallet";
+import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
-interface ParamType {
-  readonly transaction: WalletTransaction;
-}
-
-interface StateParams extends NavigationState {
-  readonly params: ParamType;
-}
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<StateParams>;
+type ReduxMappedProps = Readonly<{
+  transaction: WalletTransaction;
 }>;
 
-type Props = OwnProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   rowStyle: {
@@ -81,133 +68,111 @@ const VALUE_COL_SIZE_WIDE_LABEL = 1;
  * Details of transaction
  */
 export class TransactionDetailsScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
-
-  private touchableContent(card: CreditCard): React.ReactElement<any> {
+  private labelValueRow(
+    label: string | React.ReactElement<any>,
+    value: string | React.ReactElement<any>,
+    ratio: "WIDE" | "NARROW",
+    labelIsNote: boolean = true
+  ): React.ReactNode {
+    const labelSize =
+      ratio === "WIDE"
+        ? LABEL_COL_SIZE_WIDE_LABEL
+        : LABEL_COL_SIZE_NARROW_LABEL;
+    const valueSize =
+      ratio === "WIDE"
+        ? VALUE_COL_SIZE_WIDE_LABEL
+        : VALUE_COL_SIZE_NARROW_LABEL;
     return (
-      <CreditCardComponent
-        navigation={this.props.navigation}
-        item={card}
-        logoPosition={LogoPosition.TOP}
-        flatBottom={true}
-        headerOnly={true}
-        rotated={true}
-      />
+      <Row style={styles.rowStyle}>
+        <Col size={labelSize}>
+          {typeof label === "string" ? (
+            <Text note={labelIsNote}>{label}</Text>
+          ) : (
+            label
+          )}
+        </Col>
+        <Col size={valueSize}>
+          {typeof value === "string" ? (
+            <Text style={styles.alignedRight} bold={true}>
+              {value}
+            </Text>
+          ) : (
+            value
+          )}
+        </Col>
+      </Row>
     );
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
-    const transaction: WalletTransaction = this.props.navigation.state.params
-      .transaction;
-    // temporary, until card is available from redux state (https://www.pivotaltracker.com/story/show/157962664)
-    const card = WalletAPI.getCreditCards().find(
-      c => c.id === transaction.cardId
-    );
-    const topContent = topContentTouchable(
-      this.touchableContent(card !== undefined ? card : UNKNOWN_CARD)
-    );
+    const { transaction } = this.props;
+
     return (
       <WalletLayout
-        headerTitle={I18n.t("wallet.transaction")}
-        allowGoBack={true}
+        title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
-        title={I18n.t("wallet.transactionDetails")}
-        topContent={topContent}
+        headerContents={<View spacer={true} />}
+        cardType={CardType.HEADER}
+        showPayButton={false}
       >
-        <Content style={WalletStyles.whiteContent}>
+        <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
             <Row>
               <Text bold={true}>{I18n.t("wallet.transactionDetails")}</Text>
             </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text>{`${I18n.t("wallet.total")} ${
-                  transaction.currency
-                }`}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text bold={true} style={styles.alignedRight}>
-                  {transaction.amount}
+            {this.labelValueRow(
+              `${I18n.t("wallet.total")} ${transaction.currency}`,
+              `${transaction.amount}`,
+              "WIDE",
+              false
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.payAmount"),
+              `${transaction.amount}`,
+              "WIDE"
+            )}
+            {this.labelValueRow(
+              <Text>
+                <Text note={true}>{`${I18n.t(
+                  "wallet.transactionFee"
+                )}  `}</Text>
+                <Text note={true} style={WalletStyles.whyLink}>
+                  {I18n.t("wallet.why")}
                 </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text note={true}>{I18n.t("wallet.payAmount")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{transaction.amount}</Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text>
-                  <Text note={true}>{`${I18n.t(
-                    "wallet.transactionFee"
-                  )}  `}</Text>
-                  <Text note={true} style={WalletStyles.whyLink}>
-                    {I18n.t("wallet.why")}
-                  </Text>
-                </Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>
-                  {transaction.transactionCost}
-                </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>{I18n.t("wallet.paymentReason")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
-                <Text bold={true} style={styles.alignedRight}>
-                  {transaction.paymentReason}
-                </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>{I18n.t("wallet.recipient")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
-                <Text bold={true} style={styles.alignedRight}>
-                  {transaction.recipient}
-                </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text note={true}>{I18n.t("wallet.date")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{transaction.date}</Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text note={true}>{I18n.t("wallet.time")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{transaction.time}</Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Button
-                style={{ marginTop: 20 }}
-                block={true}
-                success={true}
-                onPress={(): boolean => navigate("")}
-              >
-                <Text>{I18n.t("wallet.seeReceipt")}</Text>
-              </Button>
-            </Row>
+              </Text>,
+              `${transaction.transactionCost}`,
+              "WIDE"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.paymentReason"),
+              transaction.paymentReason,
+              "NARROW"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.recipient"),
+              transaction.recipient,
+              "NARROW"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.date"),
+              transaction.date,
+              "WIDE"
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.time"),
+              transaction.time,
+              "WIDE"
+            )}
           </Grid>
         </Content>
       </WalletLayout>
     );
   }
 }
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  transaction: transactionForDetailsSelector(state).getOrElse(
+    UNKNOWN_TRANSACTION
+  )
+});
+
+export default connect(mapStateToProps)(TransactionDetailsScreen);
