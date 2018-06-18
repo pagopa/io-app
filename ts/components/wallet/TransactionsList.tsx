@@ -16,6 +16,7 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import { Content } from "native-base";
 import { connect, Dispatch } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -59,78 +60,89 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 class TransactionsList extends React.Component<Props> {
   private renderDate(transaction: WalletTransaction) {
     const datetime: string = `${transaction.date} - ${transaction.time}`;
-    if (transaction.isNew) {
-      return (
-        <Row>
-          <Icon
-            type="FontAwesome"
-            name="circle"
-            active={true}
-            style={WalletStyles.newIconStyle}
-          />
-          <Text note={true}>{datetime}</Text>
-        </Row>
-      );
-    }
     return (
       <Row>
-        <Text note={true}>{datetime}</Text>
+        <Left>
+          <Text>
+            {transaction.isNew && (
+              <Icon
+                type="FontAwesome"
+                name="circle"
+                active={true}
+                style={WalletStyles.newIconStyle}
+              />
+            )}
+            <Text note={true}>
+              {transaction.isNew ? `  ${datetime}` : datetime}
+            </Text>
+          </Text>
+        </Left>
       </Row>
     );
   }
 
+  private renderRow = (item: WalletTransaction): React.ReactElement<any> => (
+    <ListItem
+      onPress={() => {
+        this.props.selectTransaction(item);
+        this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+      }}
+    >
+      <Body>
+        <Grid>
+          {this.renderDate(item)}
+          <Row>
+            <Left>
+              <Text>{item.paymentReason}</Text>
+            </Left>
+            <Right>
+              <Text>
+                {item.amount} {item.currency}
+              </Text>
+            </Right>
+          </Row>
+          <Row>
+            <Left>
+              <Text note={true}>{item.recipient}</Text>
+            </Left>
+          </Row>
+        </Grid>
+      </Body>
+    </ListItem>
+  );
+
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
     const { transactions } = this.props;
 
     if (transactions.length === 0) {
-      return <Text>{I18n.t("wallet.noTransactions")}</Text>;
+      return (
+        <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+          <Text>{I18n.t("wallet.noTransactions")}</Text>
+        </Content>
+      );
     }
     // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
     return (
-      <Grid>
-        <Row>
-          <Left>
-            <Text bold={true}>{this.props.title}</Text>
-          </Left>
-          <Right>
-            <Text>{this.props.totalAmount}</Text>
-          </Right>
-        </Row>
-        <Row>
-          <List
-            removeClippedSubviews={false}
-            dataArray={transactions as any[]} // tslint:disable-line: readonly-array
-            renderRow={(item): React.ReactElement<any> => (
-              <ListItem
-                onPress={() => {
-                  this.props.selectTransaction(item);
-                  navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
-                }}
-              >
-                <Body>
-                  <Grid>
-                    {this.renderDate(item)}
-                    <Row>
-                      <Left>
-                        <Text>{item.paymentReason}</Text>
-                      </Left>
-                      <Right>
-                        <Text>
-                          {item.amount} {item.currency}
-                        </Text>
-                      </Right>
-                    </Row>
-                    <Row>
-                      <Text note={true}>{item.location}</Text>
-                    </Row>
-                  </Grid>
-                </Body>
-              </ListItem>
-            )}
-          />
-        </Row>
-      </Grid>
+      <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+        <Grid>
+          <Row>
+            <Left>
+              <Text bold={true}>{this.props.title}</Text>
+            </Left>
+            <Right>
+              <Text>{this.props.totalAmount}</Text>
+            </Right>
+          </Row>
+          <Row>
+            <List
+              scrollEnabled={false}
+              removeClippedSubviews={false}
+              dataArray={transactions as WalletTransaction[]} // tslint:disable-line: readonly-array
+              renderRow={this.renderRow}
+            />
+          </Row>
+        </Grid>
+      </Content>
     );
   }
 }
