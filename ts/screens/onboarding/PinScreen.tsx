@@ -160,9 +160,9 @@ class PinScreen extends React.Component<Props, State> {
        */
       return (
         <Pinpad
+          autofocus={true}
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
-          autofocus={true}
           onFulfill={(code: string) => this.onPinFulfill(code)}
         />
       );
