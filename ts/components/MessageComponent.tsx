@@ -9,8 +9,8 @@ export type OwnProps = Readonly<{
   serviceOrganizationName: string;
   serviceDepartmentName: string;
   subject: string;
-  key: string;
-  date: Date;
+  id: string;
+  created_at: Date;
 }>;
 
 export type Props = OwnProps;
@@ -24,11 +24,11 @@ class MessageComponent extends React.Component<Props> {
       subject,
       serviceOrganizationName,
       serviceDepartmentName,
-      date,
-      key
+      created_at,
+      id
     } = this.props;
     return (
-      <ListItem key={key}>
+      <ListItem key={id}>
         <Left>
           <Text leftAlign={true} alternativeBold={true}>
             {serviceOrganizationName + " - " + serviceDepartmentName}
@@ -36,7 +36,7 @@ class MessageComponent extends React.Component<Props> {
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text formatDate={true}>{convertDateToWordDistance(date)}</Text>
+          <Text formatDate={true}>{convertDateToWordDistance(created_at)}</Text>
           <Icon name="chevron-right" />
         </Right>
       </ListItem>
