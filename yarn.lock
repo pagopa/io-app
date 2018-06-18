@@ -3017,13 +3017,9 @@ format-util@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/format-util/-/format-util-1.0.3.tgz#032dca4a116262a12c43f4c3ec8566416c5b2d95"
 
-fp-ts@^1.0.0, fp-ts@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.4.1.tgz#1e3580a768bdd7de93dcb1ada651c1b3298f5951"
-
-fp-ts@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.6.0.tgz#2449d71928e2e324027ba7047da5e385d4853f8d"
+fp-ts@^1.0.0, fp-ts@^1.6.0, fp-ts@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.6.2.tgz#21f3675262d35b507b6e854f68965979e125ff77"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
