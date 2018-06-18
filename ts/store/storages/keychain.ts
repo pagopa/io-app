@@ -20,14 +20,10 @@ export default function createSecureStorage(): Storage {
       }
     },
 
-    setItem: async (key, value) => {
-      return await Keychain.setGenericPassword(USERNAME, value, {
-        service: key
-      });
-    },
+    setItem: async (key, value) =>
+      await Keychain.setGenericPassword(USERNAME, value, { service: key }),
 
-    removeItem: async key => {
-      return await Keychain.resetGenericPassword({ service: key });
-    }
+    removeItem: async key =>
+      await Keychain.resetGenericPassword({ service: key })
   };
 }
