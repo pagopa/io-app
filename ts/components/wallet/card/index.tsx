@@ -18,6 +18,7 @@ import { ActionIcon } from "./ActionIcon";
 import { CardBody } from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
+import { Menu, MenuTrigger, MenuOption, MenuOptions } from 'react-native-popup-menu';
 
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
@@ -137,7 +138,14 @@ export class CreditCardComponent extends React.Component<Props> {
         </Col>,
         <Col key="menu" size={1}>
           {this.props.menu && (
-            <ActionIcon name="io-more" onPress={this.showMenu} />
+            <Menu>
+              <MenuTrigger>
+                <ActionIcon touchable={false} name="io-more" />
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption text="Test"/>
+              </MenuOptions>
+            </Menu>
           )}
         </Col>
       ];

@@ -11,6 +11,7 @@ import configurePushNotifications from "./boot/configurePushNotification";
 import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
 import * as config from "./config";
 import RootContainer from "./RootContainer";
+import { MenuProvider } from "react-native-popup-menu";
 
 // Inizialize Mixpanel and configure the global js error handler
 Mixpanel.sharedInstanceWithToken(config.mixpanelToken);
@@ -33,13 +34,15 @@ configurePushNotifications(store);
 export default class App extends React.Component<{}, never> {
   public render() {
     return (
-      <StyleProvider style={theme()}>
-        <Provider store={store}>
-          <PersistGate loading={undefined} persistor={persistor}>
-            <RootContainer />
-          </PersistGate>
-        </Provider>
-      </StyleProvider>
+      <MenuProvider>
+        <StyleProvider style={theme()}>
+          <Provider store={store}>
+            <PersistGate loading={undefined} persistor={persistor}>
+              <RootContainer />
+            </PersistGate>
+          </Provider>
+        </StyleProvider>
+      </MenuProvider>
     );
   }
 }
