@@ -18,11 +18,7 @@ import TransactionsList, {
 
 const cardsImage = require("../../../img/wallet/card-tab.png");
 
-type ReduxMappedProps = Readonly<{
-  getTransactionsByCard: () => void;
-}>;
-
-type Props = ReduxMappedProps & NavigationInjectedProps;
+type Props = NavigationInjectedProps;
 
 export default class TransactionsScreen extends React.Component<Props, never> {
   private touchableContent(): React.ReactElement<any> {
