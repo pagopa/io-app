@@ -112,9 +112,10 @@ export class WalletLayout extends React.Component<Props> {
           </View>
         );
       }
-      default:
+      default: {
         ((): never => this.props.cardType)();
         return null;
+      }
     }
   }
 
