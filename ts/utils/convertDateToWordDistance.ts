@@ -5,7 +5,7 @@ import I18n from "../i18n";
  *  TODO: Make date consistent with the timezone
  *  https://www.pivotaltracker.com/story/show/158389284
  */
-export function convertDateToWordDistance(date: Date): string {
+export function convertDateToWordDistance(date: string): string {
   const distance = differenceInCalendarDays(new Date(), date);
   // 0 days, distance < one day
   if (distance < 1) {

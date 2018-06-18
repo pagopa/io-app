@@ -10,7 +10,7 @@ export type OwnProps = Readonly<{
   serviceDepartmentName: string;
   subject: string;
   id: string;
-  created_at: Date;
+  created_at: string;
 }>;
 
 export type Props = OwnProps;
