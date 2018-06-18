@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "color": "^3.0.0",
+    "date-fns": "^1.29.0",
     "email-validator": "^2.0.3",
     "fp-ts": "^1.6.2",
     "io-ts": "^1.1.4",
