@@ -110,6 +110,14 @@
       "confirmInvalid": "the two pins do not match"
     }
   },
+  "pin_login":{
+    "pin": {
+      "pinInfo": "Enter the PIN",
+      "pinForgot": "I do not remember the pin",
+      "confirmValid": "Correct PIN",
+      "confirmInvalid": "Invalid PIN"
+    } 
+  },
   "personal_data_processing": {
     "title": "Rules on the processing of personal data",
     "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
@@ -219,7 +227,14 @@
       "zero": "No message",
       "one": "You have 1 message",
       "other": "You have {{count}} messages"
-    }
+    },
+    "tab": {
+      "all": "All",
+      "deadlines":"Deadlines"
+    },
+    "contentTitle": "Messages",
+    "loading": "Loading Messages...",
+    "yesterday": "yesterday"
   },
   "notifications": {
     "installation": {

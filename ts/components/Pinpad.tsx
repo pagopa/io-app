@@ -8,6 +8,9 @@ import { PIN_LENGTH } from "../utils/constants";
 type OwnProps = {
   autofocus: boolean;
   compareWithCode?: string;
+  inactiveColor: string;
+  activeColor: string;
+  codeInputRef?: React.Ref<CodeInput>;
   onFulfill:
     | ((code: string) => void)
     | ((isValid: boolean, code: string) => void);
@@ -19,7 +22,14 @@ type Props = OwnProps;
  * A customized CodeInput component.
  */
 const Pinpad: React.SFC<Props> = props => {
-  const { autofocus, compareWithCode, onFulfill } = props;
+  const {
+    autofocus,
+    compareWithCode,
+    onFulfill,
+    inactiveColor,
+    activeColor,
+    codeInputRef
+  } = props;
   return (
     <CodeInput
       secureTextEntry={true}
@@ -29,14 +39,15 @@ const Pinpad: React.SFC<Props> = props => {
       codeLength={PIN_LENGTH}
       compareWithCode={compareWithCode || ""}
       cellBorderWidth={2}
-      inactiveColor={color(variables.brandLightGray)
+      inactiveColor={color(inactiveColor)
         .rgb()
         .string()}
-      activeColor={color(variables.brandDarkGray)
+      activeColor={color(activeColor)
         .rgb()
         .string()}
       onFulfill={onFulfill}
       codeInputStyle={{ fontSize: variables.fontSize5, height: 56 }}
+      ref={codeInputRef}
     />
   );
 };
