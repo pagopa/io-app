@@ -1,3 +1,4 @@
+
 import { StackNavigator } from "react-navigation";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import { CreditCardsScreen } from "../screens/wallet/CreditCardsScreen";
@@ -9,6 +10,7 @@ import ROUTES from "./routes";
 
 /**
  * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.
+ *   - https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
  */
 const WalletNavigator = StackNavigator(
   {
