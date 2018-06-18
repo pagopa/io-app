@@ -10,7 +10,7 @@ export type OwnProps = Readonly<{
   serviceDepartmentName: string;
   subject: string;
   id: string;
-  created_at: Date;
+  created_at: string;
 }>;
 
 export type Props = OwnProps;
@@ -36,7 +36,9 @@ class MessageComponent extends React.Component<Props> {
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text formatDate={true}>{convertDateToWordDistance(created_at)}</Text>
+          <Text formatDate={true}>
+            {convertDateToWordDistance(new Date(created_at))}
+          </Text>
           <Icon name="chevron-right" />
         </Right>
       </ListItem>
