@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
@@ -117,7 +117,6 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
     const transaction: WalletTransaction = this.props.navigation.state.params
       .transaction;
     return (
@@ -176,16 +175,6 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
               transaction.time,
               "WIDE"
             )}
-            <Row style={styles.rowStyle}>
-              <Button
-                style={{ marginTop: 20 }}
-                block={true}
-                success={true}
-                onPress={(): boolean => navigate("")}
-              >
-                <Text>{I18n.t("wallet.seeReceipt")}</Text>
-              </Button>
-            </Row>
           </Grid>
         </Content>
       </WalletLayout>
