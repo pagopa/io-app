@@ -97,8 +97,8 @@ class MessagesScreen extends React.Component<Props, never> {
   public renderItem = (messageDetails: IMessageDetails) => {
     return (
       <MessageComponent
-        key={messageDetails.item.id}
-        date={messageDetails.item.created_at}
+        id={messageDetails.item.id}
+        created_at={messageDetails.item.created_at}
         serviceOrganizationName={this.getOrganizationName(
           messageDetails.item.sender_service_id
         )}
