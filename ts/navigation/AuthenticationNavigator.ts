@@ -3,6 +3,7 @@ import { createStackNavigator } from "react-navigation";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
+import MarkdownScreen from "../screens/authentication/MarkdownScreen";
 import SpidInformationRequestScreen from "../screens/authentication/SpidInformationRequestScreen";
 import ROUTES from "./routes";
 
@@ -22,6 +23,9 @@ const navigator = createStackNavigator(
     },
     [ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST]: {
       screen: SpidInformationRequestScreen
+    },
+    [ROUTES.MARKDOWN]: {
+      screen: MarkdownScreen
     }
   },
   {
