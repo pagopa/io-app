@@ -7,6 +7,11 @@ import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
+/**
+ * TO DO: Add the screen AddManagerToCardScreen to the proper navigator
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
+ */
+
 const WalletNavigator = StackNavigator(
   {
     [ROUTES.WALLET_HOME]: {
