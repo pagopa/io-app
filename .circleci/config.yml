@@ -301,9 +301,20 @@ jobs:
       - run: brew tap wix/brew
       - run: brew install applesimutils
 
+      # Enumerate SDKs and Device types
+      - run: ios-sim showsdks
+      - run: ios-sim showdevicetypes
+
+      # Start emulator in background
+      - run: ios-sim start --verbose --devicetypeid "iPhone-6, 11.2"
+
       # Run detox e2e tests
       - run: detox build -c ios.sim.debug
       - run: detox test -c ios.sim.debug --cleanup
+
+      # store ios simulator logs
+      - store_artifacts:
+          path: /Users/distiller/Library/Developer/CoreSimulator/Devices/
 
 workflows:
   version: 2
