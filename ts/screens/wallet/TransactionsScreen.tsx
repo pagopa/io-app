@@ -12,15 +12,15 @@ import {
   NavigationState
 } from "react-navigation";
 
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
 import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
+import { GlobalState } from "../../store/reducers/types";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
-import { GlobalState } from '../../store/reducers/types';
-import { selectedCreditCardSelector } from '../../store/reducers/wallet/cards';
-import { connect } from 'react-redux';
 
 interface ParamType {
   readonly card: CreditCard;
@@ -35,7 +35,7 @@ interface OwnProps {
 }
 
 type ReduxMappedProps = Readonly<{
-  selectedCard: CreditCard
+  selectedCard: CreditCard;
 }>;
 
 type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;

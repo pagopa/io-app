@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { none, Option, some, fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { CreditCard } from "../../../types/CreditCard";

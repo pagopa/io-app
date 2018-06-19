@@ -9,17 +9,17 @@ import { Text } from "native-base";
 import * as React from "react";
 import { Col, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import ROUTES from "../../../navigation/routes";
+import { Dispatch } from "../../../store/actions/types";
+import { selectCardForDetails } from "../../../store/actions/wallet/cards";
 import variables from "../../../theme/variables";
 import { CreditCard } from "../../../types/CreditCard";
 import ActionIcon from "./ActionIcon";
 import { CreditCardStyles } from "./style";
-import { Dispatch } from '../../../store/actions/types';
-import { selectCardForDetails } from '../../../store/actions/wallet/cards';
-import { connect } from 'react-redux';
 
 type ReduxMappedProps = Readonly<{
-  selectCard: (item: CreditCard) => void; 
+  selectCard: (item: CreditCard) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -48,7 +48,8 @@ class FooterRow extends React.Component<Props> {
             onPress: () => {
               this.props.selectCard(item);
               navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
-          }}}
+            }
+          }}
         >
           <Col size={8}>
             <Text
@@ -74,4 +75,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   selectCard: item => dispatch(selectCardForDetails(item))
 });
 
-export default connect(undefined, mapDispatchToProps)(FooterRow);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(FooterRow);

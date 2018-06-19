@@ -154,7 +154,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const showCards = this.props.cardsNumber > 0;
-    
+
     // TODO: cards list is currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
     const headerContents = showCards
       ? this.withCardsHeader()
@@ -165,7 +165,11 @@ class WalletHomeScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.wallet")}
         navigation={this.props.navigation}
         headerContents={headerContents}
-        cardType={showCards ? { type: CardEnum.FAN, cards: [] } : { type: CardEnum.NONE } }
+        cardType={
+          showCards
+            ? { type: CardEnum.FAN, cards: [] }
+            : { type: CardEnum.NONE }
+        }
         allowGoBack={false}
       >
         <TransactionsList

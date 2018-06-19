@@ -16,14 +16,14 @@ import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import {} from "../../store/reducers/wallet";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
-import { CreditCard, UNKNOWN_CARD } from '../../types/CreditCard';
-import { selectedCreditCardSelector } from '../../store/reducers/wallet/cards';
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
-  selectedCard: CreditCard
+  selectedCard: CreditCard;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
@@ -115,7 +115,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
         headerContents={<View spacer={true} />}
-        cardType={{ type:CardEnum.HEADER, card: this.props.selectedCard }}
+        cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
         showPayButton={false}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>

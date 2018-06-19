@@ -8,8 +8,8 @@
  * footer with a button for starting a new payment
  */
 import { Body, Container, Content, Text, View } from "native-base";
-import { Button } from "native-base";
 import { Left } from "native-base";
+import { Button } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
@@ -18,11 +18,11 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
+import { CreditCard } from "../../types/CreditCard";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
-import { CreditCard } from '../../types/CreditCard';
-import { CreditCardComponent } from './card';
-import { LogoPosition } from './card/Logo';
+import { CreditCardComponent } from "./card";
+import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -43,25 +43,25 @@ export enum CardEnum {
   FAN, // "fanned cards" (not really fanned, but you get the idea)
   FULL, // full-sized card
   HEADER // card header (only card number & logo)
-};
+}
 
 type FullCard = Readonly<{
-  type: CardEnum.FULL,
-  card: CreditCard
+  type: CardEnum.FULL;
+  card: CreditCard;
 }>;
 
 type HeaderCard = Readonly<{
-  type: CardEnum.HEADER,
-  card: CreditCard
+  type: CardEnum.HEADER;
+  card: CreditCard;
 }>;
 
 type FannedCards = Readonly<{
-  type: CardEnum.FAN,
-  cards: ReadonlyArray<CreditCard>
+  type: CardEnum.FAN;
+  cards: ReadonlyArray<CreditCard>;
 }>;
 
 type NoCards = Readonly<{
-  type: CardEnum.NONE
+  type: CardEnum.NONE;
 }>;
 
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
