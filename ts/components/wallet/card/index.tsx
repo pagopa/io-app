@@ -5,7 +5,7 @@
  */
 import { ActionSheet, Body, Card, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle, Platform } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
@@ -20,10 +20,11 @@ import {
 } from "react-native-popup-menu";
 import variables from "../../../theme/variables";
 import { CreditCard } from "../../../types/CreditCard";
-import { ActionIcon } from "./ActionIcon";
-import { CardBody } from "./CardBody";
+import ActionIcon from "./ActionIcon";
+import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
+import { makeFontStyleObject } from '../../../theme/fonts';
 
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
@@ -57,6 +58,11 @@ const styles = StyleSheet.create({
     marginBottom: -3
     // shadowRadius: 10,
     // shadowOpacity: 1
+  },
+  blueText: {
+    color: variables.brandPrimary,
+    textAlign: "center",
+    ...makeFontStyleObject(Platform.select)
   }
 });
 
@@ -148,7 +154,12 @@ export class CreditCardComponent extends React.Component<Props> {
                 <ActionIcon touchable={false} name="io-more" />
               </MenuTrigger>
               <MenuOptions>
-                <MenuOption text="Test" />
+                <MenuOption>
+                  <Text bold={true} style={styles.blueText}>Set as favorite</Text>
+                </MenuOption>
+                <MenuOption>
+                  <Text bold={true} style={styles.blueText}>Delete</Text>
+                </MenuOption>
               </MenuOptions>
             </Menu>
           )}

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class ActionIcon extends React.Component<Props> {
+export default class ActionIcon extends React.Component<Props> {
   public static defaultProps = {
     size: variables.iconSizeBase,
     touchable: true

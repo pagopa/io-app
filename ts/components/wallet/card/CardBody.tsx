@@ -10,8 +10,8 @@ import { Col, Row } from "react-native-easy-grid";
 import { Props } from ".";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import { ActionIcon } from "./ActionIcon";
-import { FooterRow } from "./FooterRow";
+import ActionIcon from "./ActionIcon";
+import FooterRow from "./FooterRow";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class CardBody extends React.Component<Props> {
+export default class CardBody extends React.Component<Props> {
   /**
    * Display the right-end part of the
    * card body. This will be the card

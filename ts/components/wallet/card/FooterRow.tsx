@@ -12,16 +12,25 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import ROUTES from "../../../navigation/routes";
 import variables from "../../../theme/variables";
 import { CreditCard } from "../../../types/CreditCard";
-import { ActionIcon } from "./ActionIcon";
+import ActionIcon from "./ActionIcon";
 import { CreditCardStyles } from "./style";
+import { Dispatch } from '../../../store/actions/types';
+import { selectCardForDetails } from '../../../store/actions/wallet/cards';
+import { connect } from 'react-redux';
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  selectCard: (item: CreditCard) => void; 
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   item: CreditCard;
   showMsg?: boolean;
 }>;
 
-export class FooterRow extends React.Component<Props> {
+type Props = OwnProps & ReduxMappedProps;
+
+class FooterRow extends React.Component<Props> {
   public static defaultProps = {
     showMsg: true
   };
@@ -36,9 +45,10 @@ export class FooterRow extends React.Component<Props> {
           style={CreditCardStyles.rowStyle}
           size={6}
           {...{
-            onPress: (): boolean =>
-              navigate(ROUTES.WALLET_CARD_TRANSACTIONS, { card: item })
-          }}
+            onPress: () => {
+              this.props.selectCard(item);
+              navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
+          }}}
         >
           <Col size={8}>
             <Text
@@ -59,3 +69,9 @@ export class FooterRow extends React.Component<Props> {
     return <Row size={2} />; // pad
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  selectCard: item => dispatch(selectCardForDetails(item))
+});
+
+export default connect(undefined, mapDispatchToProps)(FooterRow);
