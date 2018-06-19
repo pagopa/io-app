@@ -9,7 +9,8 @@
     },
     "buttons": {
       "delete": "Elimina",
-      "cancel": "Annulla"
+      "cancel": "Annulla",
+      "ok": "OK"
     },
     "navigator": {
       "messages": "messaggi",
@@ -218,7 +219,9 @@
   "creditCardComponent": {
     "validUntil": "Valida fino al",
     "actions": "Azioni",
-    "setFavourite": "Imposta come preferita"
+    "setFavourite": "Imposta come preferita",
+    "deleteTitle": "Procedere con l'operazione?",
+    "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
   "messages": {
     "counting": {

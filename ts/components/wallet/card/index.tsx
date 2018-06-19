@@ -3,9 +3,9 @@
  * with different appearences based on
  * the props passed
  */
-import { ActionSheet, Body, Card, Text } from "native-base";
+import { Body, Card, Text } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, ViewStyle } from "react-native";
+import { Alert, Platform, StyleSheet, ViewStyle } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
@@ -56,8 +56,6 @@ const styles = StyleSheet.create({
   rotatedCard: {
     transform: [{ perspective: 850 }, { rotateX: "-20deg" }],
     marginBottom: -3
-    // shadowRadius: 10,
-    // shadowOpacity: 1
   },
   blueText: {
     color: variables.brandPrimary,
@@ -98,41 +96,6 @@ export class CreditCardComponent extends React.Component<Props> {
     customStyle: undefined
   };
 
-  public showMenu = () => {
-    // tslint:disable-next-line: readonly-array
-    const options: string[] = [
-      I18n.t("creditCardComponent.setFavourite"),
-      I18n.t("global.buttons.delete"),
-      I18n.t("global.buttons.cancel")
-    ];
-    const CANCEL_INDEX = options.indexOf(I18n.t("global.buttons.cancel"));
-    const FAVORITE_INDEX = options.indexOf(
-      I18n.t("creditCardComponent.setFavourite")
-    );
-    const DELETE_INDEX = options.indexOf(I18n.t("global.buttons.delete"));
-
-    ActionSheet.show(
-      {
-        options,
-        cancelButtonIndex: CANCEL_INDEX,
-        destructiveButtonIndex: DELETE_INDEX,
-        title: I18n.t("creditCardComponent.actions")
-      },
-      buttonIndex => {
-        switch (buttonIndex) {
-          case DELETE_INDEX: {
-            // delete card
-            break;
-          }
-          case FAVORITE_INDEX: {
-            // set card as favorite
-            break;
-          }
-        }
-      }
-    );
-  };
-
   private topRightCorner() {
     if (this.props.logoPosition === LogoPosition.TOP) {
       return (
@@ -156,12 +119,30 @@ export class CreditCardComponent extends React.Component<Props> {
               <MenuOptions>
                 <MenuOption>
                   <Text bold={true} style={styles.blueText}>
-                    Set as favorite
+                    {I18n.t("creditCardComponent.setFavourite")}
                   </Text>
                 </MenuOption>
-                <MenuOption>
+                <MenuOption
+                  onSelect={() =>
+                    Alert.alert(
+                      I18n.t("creditCardComponent.deleteTitle"),
+                      I18n.t("creditCardComponent.deleteMsg"),
+                      [
+                        {
+                          text: I18n.t("global.buttons.cancel"),
+                          style: "cancel"
+                        },
+                        {
+                          text: I18n.t("global.buttons.ok"),
+                          style: "destructive"
+                        }
+                      ],
+                      { cancelable: false }
+                    )
+                  }
+                >
                   <Text bold={true} style={styles.blueText}>
-                    Delete
+                    {I18n.t("global.buttons.delete")}
                   </Text>
                 </MenuOption>
               </MenuOptions>
