@@ -1,3 +1,9 @@
+
+/**
+ * This screen allows to identify the proper manager for a credit card 
+ * when it is added to the user wallet
+ */
+
 import {
   Body,
   Button,
@@ -46,9 +52,6 @@ const style = StyleSheet.create({
   }
 });
 
-/**
- * Selection of a payment manager for the new added card
- */
 export class AddManagerToCardScreen extends React.Component<Props, never> {
   constructor(props: Props) {
     super(props);
