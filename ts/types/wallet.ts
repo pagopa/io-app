@@ -1,17 +1,15 @@
 /**
  * Definition of other types required
  * by the app
- */
- /** 
-  * TODO: 
-  *  - these types may need to be aligned with the PagoPA ones
-  *      @https://www.pivotaltracker.com/story/show/157769657
-  *  -  verify if email, phone numbers etc can became responsive
-  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
-  * /
+ * TODO: 
+ *  - these types may need to be aligned with the PagoPA ones
+ *      @https://www.pivotaltracker.com/story/show/157769657
+ *  -  verify if email, phone numbers etc can became responsive
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
+ * /
 /**
- * This type represents the transaction as reported in the notice sent to the user;
- * it contains the data used by the app to identify the transation the user wants to perform
+ * This type represents the transaction as reported in the notice sent to the user; it contains the data 
+ * used by the app to identify the transation the user wants to perform.
  */
 export type NotifiedTransaction = Readonly<{
   noticeCode: string;

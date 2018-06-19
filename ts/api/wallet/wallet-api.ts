@@ -9,10 +9,10 @@
 import I18n from "../../i18n";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { CreditCard } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
-import { CreditCard } from "../../types/CreditCard";
 
 // temporarily making this a variable
 // (to mock the deleteCreditCard() api more easily)

@@ -1,7 +1,7 @@
-
 import { StackNavigator } from "react-navigation";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
+import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
