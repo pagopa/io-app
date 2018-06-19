@@ -44,11 +44,9 @@ class FooterRow extends React.Component<Props> {
         <Row
           style={CreditCardStyles.rowStyle}
           size={6}
-          {...{
-            onPress: () => {
-              this.props.selectCard(item);
-              navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
-            }
+          onPress={() => {
+            this.props.selectCard(item);
+            navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
           }}
         >
           <Col size={8}>

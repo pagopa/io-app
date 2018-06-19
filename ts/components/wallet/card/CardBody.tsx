@@ -45,12 +45,11 @@ export default class CardBody extends React.Component<Props> {
       return (
         <Row
           style={CreditCardStyles.rowStyle}
-          {...{
-            onPress: () =>
-              mainActionNavigation !== undefined
-                ? this.props.navigation.navigate(mainActionNavigation)
-                : undefined
-          }}
+          onPress={() =>
+            mainActionNavigation !== undefined
+              ? this.props.navigation.navigate(mainActionNavigation)
+              : undefined
+          }
         >
           <Right>
             <ActionIcon name="io-right" size={variables.iconSize2} />
