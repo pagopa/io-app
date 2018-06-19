@@ -21,6 +21,7 @@ import { PinloginActions } from "./pinlogin";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { SessionActions } from "./session";
+import { WalletActions } from "./wallet";
 
 export type ApplicationState = "background" | "inactive" | "active";
 
@@ -40,7 +41,8 @@ export type Action =
   | ProfileActions
   | MessagesActions
   | ServicesActions
-  | ErrorActions;
+  | ErrorActions
+  | WalletActions;
 
 export type GetState = () => GlobalState;
 

@@ -12,6 +12,7 @@ import onboardingSaga from "./onboarding";
 import pinLoginSaga from "./pinlogin";
 import profileSaga from "./profile";
 import sessionSaga from "./session";
+import walletSaga from "./wallet";
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
 // We use `withRedux: true` to store the network status in the redux store.
@@ -32,6 +33,7 @@ export default function* root(): Iterator<Effect> {
     fork(pinLoginSaga),
     fork(mainSaga),
     fork(profileSaga),
+    fork(walletSaga),
     fork(messagesSaga),
     fork(networkEventsListenerSaga, connectionMonitorParameters)
   ]);

@@ -67,7 +67,6 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.75;
   },
   lineHeightBase: 24,
-
   get lineHeight1(): number {
     return this.lineHeightBase * 0.75;
   },
@@ -107,7 +106,7 @@ const customVariables = Object.assign(materialVariables, {
   // Footer
   footerBackground: "#FFFFFF",
   footerElevation: 50,
-  footerPaddingTop: 24,
+  footerPaddingTop: 16,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
