@@ -34,15 +34,15 @@ configurePushNotifications(store);
 export default class App extends React.Component<{}, never> {
   public render() {
     return (
-      <MenuProvider>
-        <StyleProvider style={theme()}>
-          <Provider store={store}>
-            <PersistGate loading={undefined} persistor={persistor}>
+      <StyleProvider style={theme()}>
+        <Provider store={store}>
+          <PersistGate loading={undefined} persistor={persistor}>
+            <MenuProvider>
               <RootContainer />
-            </PersistGate>
-          </Provider>
-        </StyleProvider>
-      </MenuProvider>
+            </MenuProvider>
+          </PersistGate>
+        </Provider>
+      </StyleProvider>
     );
   }
 }

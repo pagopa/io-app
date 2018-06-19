@@ -43,17 +43,17 @@ export default class CardBody extends React.Component<Props> {
       // ">" icon is not to be shown must be
       // handled here)
       return (
-        <Row style={CreditCardStyles.rowStyle}>
+        <Row
+          style={CreditCardStyles.rowStyle}
+          {...{
+            onPress: () =>
+              mainActionNavigation !== undefined
+                ? this.props.navigation.navigate(mainActionNavigation)
+                : undefined
+          }}
+        >
           <Right>
-            <ActionIcon
-              name="io-right"
-              size={variables.iconSize2}
-              onPress={() =>
-                mainActionNavigation !== undefined
-                  ? this.props.navigation.navigate(mainActionNavigation)
-                  : undefined
-              }
-            />
+            <ActionIcon name="io-right" size={variables.iconSize2} />
           </Right>
         </Row>
       );

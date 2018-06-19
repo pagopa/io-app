@@ -31,7 +31,7 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedProps;
 
 class FooterRow extends React.Component<Props> {
-  public static defaultProps = {
+  public static defaultProps: Partial<Props> = {
     showMsg: true
   };
 

@@ -21,7 +21,7 @@ import variables from "../../theme/variables";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
-import { CreditCardComponent } from "./card";
+import CreditCardComponent from "./card";
 import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({

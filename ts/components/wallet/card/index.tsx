@@ -82,8 +82,8 @@ export type Props = Readonly<{
 /**
  * Credit card component
  */
-export class CreditCardComponent extends React.Component<Props> {
-  public static defaultProps = {
+export default class CreditCardComponent extends React.Component<Props> {
+  public static defaultProps: Partial<Props> = {
     menu: true,
     favorite: true,
     lastUsage: true,
@@ -114,7 +114,7 @@ export class CreditCardComponent extends React.Component<Props> {
           {this.props.menu && (
             <Menu>
               <MenuTrigger>
-                <ActionIcon touchable={false} name="io-more" />
+                <ActionIcon name="io-more" />
               </MenuTrigger>
               <MenuOptions>
                 <MenuOption>
