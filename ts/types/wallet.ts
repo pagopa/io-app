@@ -2,16 +2,18 @@
  * Definition of other types required
  * by the app
  */
-// TODO: these types may need to be aligned with the PagoPA ones
-// @https://www.pivotaltracker.com/story/show/157769657
-// TODO: evaluate a remodulation of the types related to the transactions
-// TODO: verify if email, phone numbers etc can became responsive
-
+ /** 
+  * TODO: 
+  *  - these types may need to be aligned with the PagoPA ones
+  *      @https://www.pivotaltracker.com/story/show/157769657
+  *  -  verify if email, phone numbers etc can became responsive
+  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
+  * /
 /**
  * This type represents the transaction as reported in the notice sent to the user;
  * it contains the data used by the app to identify the transation the user wants to perform
  */
-export type NotifiedTransaction = {
+export type NotifiedTransaction = Readonly<{
   noticeCode: string;
   notifiedAmount: number;
   currentAmount: number; // also in WalletTransaction
@@ -20,9 +22,9 @@ export type NotifiedTransaction = {
   paymentReason: string; // also in WalletTransaction
   cbill: string;
   iuv: string;
-};
+}>;
 
-export type TransactionEntity = {
+export type TransactionEntity = Readonly<{
   code: string;
   name: string;
   address: string;
@@ -31,12 +33,12 @@ export type TransactionEntity = {
   webpage: string;
   email: string;
   pec: string;
-};
+}>;
 
-export type TransactionSubject = {
+export type TransactionSubject = Readonly<{
   name: string;
   address: string;
-};
+}>;
 
 /**
  * This type represents a transaction (or payment)
