@@ -313,7 +313,9 @@ jobs:
 
       # store ios simulator logs
       - store_artifacts:
-          path: /tmp/detox.last_launch_app_log
+          path: /Users/distiller/Library/Developer/CoreSimulator/Devices/4BF3F2B2-A68D-4130-8114-3878A8381D39/data/tmp/detox.last_launch_app_log.out
+      - store_artifacts:
+          path: /Users/distiller/Library/Developer/CoreSimulator/Devices/4BF3F2B2-A68D-4130-8114-3878A8381D39/data/tmp/detox.last_launch_app_log.err
 
 workflows:
   version: 2
