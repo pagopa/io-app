@@ -292,21 +292,20 @@ jobs:
       # Install pods
       - run: cd ios && pod install --verbose
 
-      # Install Detox
+      # Install Detox and ios-sim utils
       # see: https://github.com/wix/detox/
-      - run: npm install -g detox
+      - run: npm install -g detox ios-sim
 
       # Install required tools
       # see: https://github.com/wix/detox/blob/master/docs/Guide.RunningOnCI.md
       - run: brew tap wix/brew
       - run: brew install applesimutils
 
-      # Enumerate SDKs and Device types
-      - run: ios-sim showsdks
+      # Enumerate device types available in simulator
       - run: ios-sim showdevicetypes
 
       # Start emulator in background
-      - run: ios-sim start --verbose --devicetypeid "iPhone-6, 11.2"
+      - run: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
 
       # Run detox e2e tests
       - run: detox build -c ios.sim.debug
@@ -314,7 +313,7 @@ jobs:
 
       # store ios simulator logs
       - store_artifacts:
-          path: /Users/distiller/Library/Developer/CoreSimulator/Devices/
+          path: /tmp/detox.last_launch_app_log
 
 workflows:
   version: 2
