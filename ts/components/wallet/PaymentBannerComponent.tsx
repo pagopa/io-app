@@ -2,6 +2,7 @@
  * This component displays a summary on the transaction.
  * Used for the screens from the identification of the transaction to the end of the procedure.
  * TODO: integrate with walletAPI
+ *   @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
  */
 
 import { Text, View } from "native-base";

@@ -75,7 +75,7 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <List
               removeClippedSubviews={false}
-								dataArray={cards as any[]} // tslint:disable-line
+              dataArray={cards as ReadonlyArray<any>} // // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
                 <CreditCardComponent
                   navigation={this.props.navigation}

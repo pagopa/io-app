@@ -23,12 +23,12 @@ type Props = Readonly<{
 
 type Route = keyof typeof ROUTES;
 
-interface IPaymentMethod {
+type IPaymentMethod = Readonly<{
   navigateTo: Route | undefined;
   name: string;
   maxFee: string;
   icon: any;
-}
+}>;
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
