@@ -7,6 +7,7 @@ declare module "native-base" {
   namespace NativeBase {
     interface Item {
       active?: boolean;
+      spacer?: boolean;
     }
   }
 }
@@ -18,6 +19,9 @@ export default (): Theme => {
       borderColor: color(variables.inputBorderColor)
         .darken(0.2)
         .hex()
+    },
+    ".spacer": {
+      paddingTop: 20
     }
   };
 };

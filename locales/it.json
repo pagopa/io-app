@@ -187,7 +187,7 @@
     "today": "oggi alle",
     "payNotice": "Paga un avviso",
     "latestOperations": "Ultime operazioni",
-    "creditDebtCards": "Carte di Credito/Debito",
+    "creditDebitCards": "Carte di Credito/Debito",
     "addPaymentMethodTitle": "Aggiungi metodo di pagamento",
     "cancel": "Annulla",
     "continue": "Continua",
@@ -239,7 +239,14 @@
       "zero": "Nessun messaggio",
       "one": "Hai 1 messaggio",
       "other": "Hai {{count}} messaggi"
-    }
+    },
+    "tab": {
+      "all": "Tutti",
+      "deadlines":"Scadenze"
+    },
+    "contentTitle": "Messaggi",
+    "loading": "Caricamento dei messaggi...",
+    "yesterday": "ieri"
   },
   "notifications": {
     "installation": {
