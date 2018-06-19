@@ -175,7 +175,7 @@
     "lastUsage": "Last usage",
     "yesterday": "yesterday at",
     "today": "today at",
-    "payNotice": "Pay Notice",
+    "payNotice": "Pay notice",
     "latestTransactions": "Latest transactions",
     "creditDebitCards": "Credit/Debit Cards",
     "addPaymentMethodTitle": "Add payment method",
@@ -229,7 +229,14 @@
       "zero": "No message",
       "one": "You have 1 message",
       "other": "You have {{count}} messages"
-    }
+    },
+    "tab": {
+      "all": "All",
+      "deadlines":"Deadlines"
+    },
+    "contentTitle": "Messages",
+    "loading": "Loading Messages...",
+    "yesterday": "yesterday"
   },
   "notifications": {
     "installation": {
