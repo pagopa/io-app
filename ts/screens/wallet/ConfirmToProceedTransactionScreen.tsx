@@ -2,7 +2,7 @@
  * This screen ask the authorization to proceed with the transaction.
  * TODO:
  * - integrate credit card componet for visualization of the payment method selected for the transaction
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/157422715
+ *    (implemented into the master)
  * - integrate contextual help:
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  *  - make API provides data correctly
@@ -28,10 +28,8 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
-import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
-import { CreditCard } from "../../types/CreditCard";
 import { TransactionSummary } from "../../types/wallet";
 
 type Props = Readonly<{
@@ -41,7 +39,6 @@ type Props = Readonly<{
 const transaction: Readonly<
   TransactionSummary
 > = WalletAPI.getTransactionSummary();
-const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class ConfirmToProceedTransactionScreen extends React.Component<
   Props,
@@ -80,10 +77,7 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
             <View spacer={true} large={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} large={true} />
-            <CreditCardComponent
-              navigation={this.props.navigation}
-              item={cards[1]}
-            />
+            <Text> INTEGRATE CREDIT CARD PREVIEW </Text>
             <View spacer={true} large={true} />
             <Grid>
               <Row>
