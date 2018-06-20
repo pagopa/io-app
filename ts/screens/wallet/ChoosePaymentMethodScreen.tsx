@@ -13,7 +13,6 @@ import {
   Content,
   H1,
   Left,
-  List,
   Text,
   View
 } from "native-base";
@@ -22,13 +21,11 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
-import CreditCardComponent from "../../components/wallet/CreditCardComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
-import { CreditCard } from "../../types/CreditCard";
 import { TransactionSummary } from "../../types/wallet";
 
 type Props = Readonly<{
@@ -38,7 +35,6 @@ type Props = Readonly<{
 const transaction: Readonly<
   TransactionSummary
 > = WalletAPI.getTransactionSummary();
-const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
 
 export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
   private goBack() {
@@ -73,15 +69,7 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <Text> {I18n.t("wallet.payWith.info")}</Text>
             <View spacer={true} />
-            <List
-              removeClippedSubviews={false}
-              dataArray={cards as ReadonlyArray<any>} // // tslint:disable-line: readonly-array
-              renderRow={(item): React.ReactElement<any> => (
-                <CreditCardComponent
-                  navigation={this.props.navigation}
-                  item={item}
-                />
-              )}
+            <Text> IMPLEMENT THE LIST OF AVAILABLE CARDS </Text>
             />
           </View>
         </Content>
