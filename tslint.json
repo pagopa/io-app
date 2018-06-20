@@ -8,10 +8,10 @@
     "tslint-sonarts",
     "tslint-immutable",
     "tslint-plugin-prettier",
-    "tslint-config-prettier"
+    "tslint-config-prettier",
+    "italia-tslint-rules"
   ],
   "jsRules": {},
-  "rulesDirectory": "./tslint-rules/",
   "rules": {
     // disabled temporarily
     "interface-name": false,
@@ -31,6 +31,7 @@
     // custom rules
     "prettier": true,
     "saga-yield-return-type": true,
+    "no-tslint-disable-all": true,
 
     // Disallows use of the null keyword literal.
     // "no-null-keyword": true,
