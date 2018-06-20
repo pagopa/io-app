@@ -4,6 +4,9 @@ import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
 import { makeReactNativeRule } from ".";
 
+/**
+ * A rule that render `em` elements using a Text component with the `italic` property
+ */
 function rule() {
   return (
     node: SingleASTNode,

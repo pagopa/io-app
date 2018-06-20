@@ -30,7 +30,7 @@ export default (): Theme => {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
     ".italic": {
-      ...makeFontStyleObject(Platform.select, variables.textWeight, true)
+      ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
     },
     ".leftAlign": {
       textAlign: "left"

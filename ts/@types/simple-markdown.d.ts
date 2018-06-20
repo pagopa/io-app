@@ -1,12 +1,12 @@
 declare module "simple-markdown" {
-  export const defaultRules = Object;
+  export const defaultRules = {};
 
-  export type SingleASTNode = {
+  export type SingleASTNode = Readonly<{
     type: string,
     [key: string]: any
-  };
+  }>;
 
-  export type ASTNode = SingleASTNode | Array<SingleASTNode>;
+  export type ASTNode = SingleASTNode | ReadonlyArray<SingleASTNode>;
 
   export type State = {
     [key: string]: any
@@ -32,9 +32,9 @@ declare module "simple-markdown" {
 
   export type ReactNodeOutput = NodeOutput<React.ReactNode>;
 
-  export function parserFor(rules: ParserRules, defaultState?: ?State): Parser
+  export function parserFor(rules: ParserRules, defaultState?: ?State): Parser;
 
-  export function ruleOutput<Rule extends Object>(rules: OutputRules<Rule>, param: $Keys<Rule>): NodeOutput<any>
+  export function ruleOutput<Rule extends Object>(rules: OutputRules<Rule>, param: $Keys<Rule>): NodeOutput<any>;
 
-  export function reactFor(ReactNodeOutput): ReactOutput
+  export function reactFor(ReactNodeOutput): ReactOutput;
 }

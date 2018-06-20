@@ -4,6 +4,9 @@ import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
 import { makeReactNativeRule } from ".";
 
+/**
+ * A rule that render `strong` elements using a Text component with the `bold` property
+ */
 function rule() {
   return (
     node: SingleASTNode,
