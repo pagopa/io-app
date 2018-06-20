@@ -10,7 +10,6 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
- * TODO: implement the credit card preview (verificare se presente già su master)
  */
 import * as React from "react";
 
