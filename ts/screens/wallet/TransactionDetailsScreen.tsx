@@ -2,21 +2,29 @@
  * Transaction details screen, displaying
  * a list of information available about a
  * specific transaction.
+ * TODO: implement the check icon (at left of the "thank you" title) into font or as svg
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158383890
+ * TODO: check what controls implemented into this screen will be included into API
+ *      - number deimals fixed to 2
+ *      - get total amount from fee + amount
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
+ * TODO: insert contextual help to the Text link related to the fee
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as React from "react";
 
-import { Content, Text, View } from "native-base";
+import { Content, H1, H3, Right, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
-
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
-import {} from "../../store/reducers/wallet";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import Icon from "../../theme/font-icons/io-icon-font/index";
+import variables from "../../theme/variables";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
 type ReduxMappedProps = Readonly<{
@@ -31,6 +39,12 @@ const styles = StyleSheet.create({
   },
   alignedRight: {
     textAlign: "right"
+  },
+  alignedLeft: {
+    textAlign: "left"
+  },
+  H3: {
+    fontSize: variables.fontSizeBase * 1.25
   }
 });
 
@@ -61,13 +75,46 @@ const styles = StyleSheet.create({
 const LABEL_COL_SIZE_NARROW_LABEL = 1;
 const VALUE_COL_SIZE_NARROW_LABEL = 2;
 
-const LABEL_COL_SIZE_WIDE_LABEL = 1;
+const LABEL_COL_SIZE_WIDE_LABEL = 2;
 const VALUE_COL_SIZE_WIDE_LABEL = 1;
 
 /**
  * Details of transaction
  */
 export class TransactionDetailsScreen extends React.Component<Props, never> {
+  /**
+   * It sum the amount to pay and the fee requested to perform the transaction
+   * TO DO: it could be provided by API as presentd on header
+   */
+  private getTotalAmount(transaction: Readonly<WalletTransaction>) {
+    return +(transaction.amount + transaction.transactionCost).toFixed(12);
+  }
+
+  private getsubHeader() {
+    return this.props.transaction.isTransactionCompleted ? (
+      <View>
+        <Grid>
+          <Col size={1} />
+          <Col size={5} style={WalletStyles.alignCenter}>
+            <View spacer={true} />
+            <Row>
+              <H1 style={WalletStyles.white}>{I18n.t("wallet.thanks")}</H1>
+            </Row>
+            <Row>
+              <Text style={WalletStyles.white}>
+                {I18n.t("wallet.endPayment")}
+              </Text>
+            </Row>
+            <View spacer={true} />
+          </Col>
+          <Col size={1} />
+        </Grid>
+      </View>
+    ) : (
+      <View spacer={true} />
+    );
+  }
+
   private labelValueRow(
     label: string | React.ReactElement<any>,
     value: string | React.ReactElement<any>,
@@ -111,36 +158,47 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
       <WalletLayout
         title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
-        headerContents={<View spacer={true} />}
+        headerContents={this.getsubHeader()}
         cardType={CardType.HEADER}
         showPayButton={false}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
             <Row>
-              <Text bold={true}>{I18n.t("wallet.transactionDetails")}</Text>
+              <H3>{I18n.t("wallet.transactionDetails")}</H3>
+              <Right>
+                <Icon name="io-close" size={variables.iconSizeBase} />
+              </Right>
             </Row>
-            {this.labelValueRow(
-              `${I18n.t("wallet.total")} ${transaction.currency}`,
-              `${transaction.amount}`,
-              "WIDE",
-              false
-            )}
+            <View spacer={true} extralarge={true} />
+
+            <Row>
+              <Text>
+                {`${I18n.t("wallet.total")}  `}
+                <H3>
+                  {" "}
+                  {`-${this.getTotalAmount(transaction).toFixed(2)} ${
+                    transaction.currency
+                  }`}{" "}
+                </H3>
+              </Text>
+            </Row>
+
             {this.labelValueRow(
               I18n.t("wallet.payAmount"),
-              `${transaction.amount}`,
+              `${transaction.amount.toFixed(2)} ${transaction.currency}`,
               "WIDE"
             )}
             {this.labelValueRow(
               <Text>
-                <Text note={true}>{`${I18n.t(
-                  "wallet.transactionFee"
-                )}  `}</Text>
+                <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
                 <Text note={true} style={WalletStyles.whyLink}>
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              `${transaction.transactionCost}`,
+              `${transaction.transactionCost.toFixed(2)} ${
+                transaction.currency
+              }`,
               "WIDE"
             )}
             {this.labelValueRow(

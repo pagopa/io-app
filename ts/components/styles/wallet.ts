@@ -19,6 +19,9 @@ export const WalletStyles = StyleSheet.create({
   white: {
     color: variables.brandPrimaryInverted
   },
+  alignCenter: {
+    alignItems: "center"
+  },
   addCardItem: {
     borderBottomWidth: variables.headerBorderBottomWidth,
     marginTop: 5,

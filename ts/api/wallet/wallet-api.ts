@@ -64,10 +64,11 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isoDatetime: "2018-04-17T07:34:00.000Z",
     paymentReason: "Certificato di residenza",
     recipient: "Comune di Gallarate",
-    amount: -20.02,
-    currency: "EUR",
+    amount: 20.02,
+    currency: "€",
     transactionCost: 0.5,
-    isNew: true
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 2,
@@ -77,10 +78,11 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isoDatetime: "2018-04-16T15:01:00.000Z",
     paymentReason: "Spesa Supermarket",
     recipient: "Segrate",
-    amount: -74.1,
-    currency: "EUR",
+    amount: 74.1,
+    currency: "€",
     transactionCost: 0.5,
-    isNew: true
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 3,
@@ -91,9 +93,10 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Prelievo contante",
     recipient: "Busto Arsizio",
     amount: -200.0,
-    currency: "EUR",
+    currency: "€",
     transactionCost: 0.5,
-    isNew: true
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 4,
@@ -106,7 +109,8 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 100.1,
     currency: "USD",
     transactionCost: 0.5,
-    isNew: false
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 5,
@@ -117,9 +121,10 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Esecuzione atti notarili",
     recipient: "Comune di Legnano",
     transactionCost: 0.5,
-    amount: -56.0,
-    currency: "EUR",
-    isNew: false
+    amount: 56.0,
+    currency: "€",
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 6,
@@ -129,10 +134,11 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isoDatetime: "2018-01-01T23:34:00.000Z",
     paymentReason: "Pizzeria Da Gennarino",
     recipient: "Busto Arsizio",
-    amount: -45.0,
-    currency: "EUR",
+    amount: 45.0,
+    currency: "€",
     transactionCost: 0.5,
-    isNew: false
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 7,
@@ -143,9 +149,10 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Rimborso TARI 2012",
     recipient: "Comune di Gallarate",
     amount: 150.2,
-    currency: "EUR",
+    currency: "€",
     transactionCost: 0,
-    isNew: false
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 8,
@@ -156,9 +163,10 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Ristorante I Pini",
     recipient: "Busto Arsizio",
     transactionCost: 0,
-    amount: -134.0,
-    currency: "EUR",
-    isNew: false
+    amount: 134.0,
+    currency: "€",
+    isNew: true,
+    isTransactionCompleted: true
   },
   {
     id: 9,
@@ -169,9 +177,10 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Estetista Estella",
     recipient: "Milano - via Parini 12",
     transactionCost: 0.5,
-    amount: -100.0,
-    currency: "EUR",
-    isNew: false
+    amount: 100.0,
+    currency: "€",
+    isNew: true,
+    isTransactionCompleted: true
   }
 ];
 
@@ -191,5 +200,9 @@ export class WalletAPI {
     ReadonlyArray<WalletTransaction>
   > {
     return transactions;
+  }
+
+  public static getTransaction(id: number): Readonly<WalletTransaction> {
+    return transactions[id];
   }
 }

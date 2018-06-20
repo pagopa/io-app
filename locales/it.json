@@ -147,7 +147,9 @@
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
-    "transactionDetails": "Dettaglio delle operazioni",
+    "thanks":"Grazie!",
+    "endPayment":"Il tuo pagamento è concluso",
+    "transactionDetails": "Dettagli dell'operazione",
     "total": "Totale",
     "payAmount": "Importo da pagare",
     "transactionFee": "Costo operazione",
