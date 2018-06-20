@@ -2,6 +2,8 @@
  * A reducer for the Session.
  */
 
+import { PersistPartial } from "redux-persist";
+
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import { IDP_SELECTED, LOGIN_SUCCESS } from "../actions/constants";
@@ -31,6 +33,9 @@ export type AuthenticatedSessionState = Readonly<{
 export type SessionState =
   | UnauthenticatedSessionState
   | AuthenticatedSessionState;
+
+// Here we mix the plain SessionState with the keys added by redux-persist
+export type PersistedSessionState = SessionState & PersistPartial;
 
 export const INITIAL_STATE: UnauthenticatedWithoutIdpSessionState = {
   isAuthenticated: false

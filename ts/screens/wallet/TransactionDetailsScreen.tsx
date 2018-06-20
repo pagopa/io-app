@@ -10,6 +10,7 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
+ * TODO: implement the credit card preview (verificare se presente già su master)
  */
 import * as React from "react";
 
@@ -19,16 +20,20 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
-import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
+import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
+import {} from "../../store/reducers/wallet";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
+import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
+  selectedCard: CreditCard;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
@@ -159,7 +164,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
         headerContents={this.getsubHeader()}
-        cardType={CardType.HEADER}
+        cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
         showPayButton={false}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
@@ -230,7 +235,8 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   transaction: transactionForDetailsSelector(state).getOrElse(
     UNKNOWN_TRANSACTION
-  )
+  ),
+  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);
