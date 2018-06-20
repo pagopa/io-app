@@ -1,5 +1,7 @@
 import { NavigationState } from "react-navigation";
 import { FormStateMap } from "redux-form";
+import { PersistPartial } from "redux-persist";
+
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { EntitiesState } from "./entities";
@@ -9,7 +11,8 @@ import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
 import { ProfileState } from "./profile";
-import { SessionState } from "./session";
+import { PersistedSessionState } from "./session";
+import { WalletState } from "./wallet";
 
 export type NetworkState = Readonly<{
   isConnected: boolean;
@@ -23,10 +26,13 @@ export type GlobalState = Readonly<{
   loading: LoadingState;
   error: ErrorState;
   form: FormStateMap;
-  session: SessionState;
+  session: PersistedSessionState;
   onboarding: OnboardingState;
   notifications: NotificationsState;
   profile: ProfileState;
+  wallet: WalletState;
   entities: EntitiesState;
   pinlogin: PinLoginState;
 }>;
+
+export type PersistedGlobalState = GlobalState & PersistPartial;

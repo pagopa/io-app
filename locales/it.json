@@ -7,6 +7,11 @@
     "app":  {
       "version": "Versione"
     },
+    "buttons": {
+      "delete": "Elimina",
+      "cancel": "Annulla",
+      "ok": "OK"
+    },
     "navigator": {
       "messages": "messaggi",
       "wallet": "portafoglio",
@@ -187,7 +192,7 @@
     "today": "oggi alle",
     "payNotice": "Paga un avviso",
     "latestOperations": "Ultime operazioni",
-    "creditDebtCards": "Carte di Credito/Debito",
+    "creditDebitCards": "Carte di Credito/Debito",
     "addPaymentMethodTitle": "Aggiungi metodo di pagamento",
     "cancel": "Annulla",
     "continue": "Continua",
@@ -232,14 +237,25 @@
     "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
   },
   "creditCardComponent": {
-    "validUntil": "Valida fino al "
+    "validUntil": "Valida fino al",
+    "actions": "Azioni",
+    "setFavourite": "Imposta come preferita",
+    "deleteTitle": "Procedere con l'operazione?",
+    "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
   "messages": {
     "counting": {
       "zero": "Nessun messaggio",
       "one": "Hai 1 messaggio",
       "other": "Hai {{count}} messaggi"
-    }
+    },
+    "tab": {
+      "all": "Tutti",
+      "deadlines":"Scadenze"
+    },
+    "contentTitle": "Messaggi",
+    "loading": "Caricamento dei messaggi...",
+    "yesterday": "ieri"
   },
   "notifications": {
     "installation": {

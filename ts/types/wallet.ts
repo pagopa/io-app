@@ -11,7 +11,9 @@
  * needed for UI-related purposes
  */
 export type WalletTransaction = {
+  id: number;
   cardId: number;
+  isoDatetime: string;
   date: string;
   time: string;
   paymentReason: string;
@@ -23,7 +25,9 @@ export type WalletTransaction = {
 };
 
 export const UNKNOWN_TRANSACTION: WalletTransaction = {
+  id: -1,
   cardId: -1,
+  isoDatetime: "",
   date: "",
   time: "",
   paymentReason: "UNKNOWN TRANSACTION",

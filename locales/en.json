@@ -7,6 +7,11 @@
     "app":  {
       "version": "Version"
     },
+    "buttons": {
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "ok": "OK"
+    },
     "navigator": {
       "messages": "messages",
       "wallet": "wallet",
@@ -187,7 +192,7 @@
     "lastUsage": "Last usage",
     "yesterday": "yesterday at",
     "today": "today at",
-    "payNotice": "Pay Notice",
+    "payNotice": "Pay notice",
     "latestTransactions": "Latest transactions",
     "creditDebitCards": "Credit/Debit Cards",
     "addPaymentMethodTitle": "Add payment method",
@@ -234,14 +239,25 @@
     "favoriteText":"This payment method will be automatically proposed for the next payment"
   },
   "creditCardComponent": {
-    "validUntil": "Valid until "
+    "validUntil": "Valid until",
+    "actions": "Actions",
+    "setFavourite": "Set as favourite",
+    "deleteTitle": "Do you want to proceed?",
+    "deleteMsg": "This will delete the payment method"
   },
   "messages": {
     "counting": {
       "zero": "No message",
       "one": "You have 1 message",
       "other": "You have {{count}} messages"
-    }
+    },
+    "tab": {
+      "all": "All",
+      "deadlines":"Deadlines"
+    },
+    "contentTitle": "Messages",
+    "loading": "Loading Messages...",
+    "yesterday": "yesterday"
   },
   "notifications": {
     "installation": {
