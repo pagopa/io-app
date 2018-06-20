@@ -152,6 +152,12 @@
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
+    "sms": {
+      "title":"Codice di conferma",
+	    "header":"Codice di Conferma SMS",
+      "newCode":"Richiedi nuovo codice",
+      "info":"Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono"
+    },
     "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",
     "payAmount": "Importo da pagare",
