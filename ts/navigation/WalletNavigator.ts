@@ -2,7 +2,7 @@ import { StackNavigator } from "react-navigation";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import { ChoosePaymentMethodScreen } from "../screens/wallet/ChoosePaymentMethodScreen";
 import { ConfirmToProceedTransactionScreen } from "../screens/wallet/ConfirmToProceedTransactionScreen";
-import { CreditCardsScreen } from "../screens/wallet/CreditCardsScreen";
+import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
