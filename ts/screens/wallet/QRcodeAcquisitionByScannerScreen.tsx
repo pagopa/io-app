@@ -41,14 +41,13 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
 
-  cameraCcontainer: {
+  cameraContainer: {
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: "transparent"
   },
 
   camera: {
-    flex: 0,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
@@ -128,52 +127,50 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
             <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
           </Body>
         </AppHeader>
-        <Container>
-          <QRCodeScanner
-            containerStyle={styles.cameraCcontainer}
-            showMarker={true}
-            cameraStyle={styles.camera}
-            customMarker={
-              <View style={styles.rectangleContainer}>
-                <View style={styles.rectangle}>
-                  <Grid>
-                    <Row>
-                      <Col>
-                        <View
-                          style={[styles.topLeftCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                      <Col>
-                        <View
-                          style={[styles.topRightCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <View
-                          style={[styles.bottomLeftCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                      <Col>
-                        <View
-                          style={[styles.bottomRightCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                    </Row>
-                  </Grid>
-                </View>
+        <QRCodeScanner
+          containerStyle={styles.cameraContainer}
+          showMarker={true}
+          cameraStyle={styles.camera}
+          customMarker={(
+            <View style={styles.rectangleContainer}>
+              <View style={styles.rectangle}>
+                <Grid>
+                  <Row>
+                    <Col>
+                      <View
+                        style={[styles.topLeftCorner, styles.smallBorded]}
+                      />
+                    </Col>
+                    <Col>
+                      <View
+                        style={[styles.topRightCorner, styles.smallBorded]}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <View
+                        style={[styles.bottomLeftCorner, styles.smallBorded]}
+                      />
+                    </Col>
+                    <Col>
+                      <View
+                        style={[styles.bottomRightCorner, styles.smallBorded]}
+                      />
+                    </Col>
+                  </Row>
+                </Grid>
               </View>
-            }
-          />
-          <View>
-            <View spacer={true} large={true} />
-            <Text style={[styles.padded, styles.centerText]}>
-              {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-            </Text>
-            <View spacer={true} extralarge={true} />
-          </View>
-        </Container>
+            </View>
+          )}
+        />
+        <View>
+          <View spacer={true} large={true} />
+          <Text style={[styles.padded, styles.centerText]}>
+            {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+          </Text>
+          <View spacer={true} extralarge={true} />
+        </View>
         <View footer={true}>
           <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
