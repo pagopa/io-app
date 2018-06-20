@@ -1,15 +1,15 @@
 import { StackNavigator } from "react-navigation";
+import IngressScren from "../screens/IngressScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
-import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
 const WalletNavigator = StackNavigator(
   {
     [ROUTES.WALLET_HOME]: {
-      screen: WalletHomeScreen
+      screen: IngressScren
     },
     [ROUTES.WALLET_CREDITCARDS]: {
       screen: CreditCardsScreen

@@ -67,8 +67,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 20.02,
     currency: "€",
     transactionCost: 0.5,
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 2,
@@ -81,8 +80,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 74.1,
     currency: "€",
     transactionCost: 0.5,
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 3,
@@ -95,8 +93,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: -200.0,
     currency: "€",
     transactionCost: 0.5,
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 4,
@@ -109,8 +106,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 100.1,
     currency: "USD",
     transactionCost: 0.5,
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 5,
@@ -123,8 +119,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     transactionCost: 0.5,
     amount: 56.0,
     currency: "€",
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 6,
@@ -137,8 +132,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 45.0,
     currency: "€",
     transactionCost: 0.5,
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 7,
@@ -151,8 +145,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 150.2,
     currency: "€",
     transactionCost: 0,
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 8,
@@ -165,8 +158,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     transactionCost: 0,
     amount: 134.0,
     currency: "€",
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   },
   {
     id: 9,
@@ -179,8 +171,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     transactionCost: 0.5,
     amount: 100.0,
     currency: "€",
-    isNew: true,
-    isTransactionCompleted: true
+    isNew: true
   }
 ];
 

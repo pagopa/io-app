@@ -154,8 +154,8 @@
       "addButton": "Add payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
-    "thanks":"thank you!",
-    "endPayment":"your transaction is completed",
+    "thanks":"Thank you!",
+    "endPayment":"Your transaction is completed",
     "transactionDetails": "Transaction details",
     "total": "Total",
     "payAmount": "Amount to pay",

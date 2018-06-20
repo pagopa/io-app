@@ -37,6 +37,10 @@ type ReduxMappedProps = Readonly<{
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
 
+type State = {
+  isTransactionCompleted: boolean; // it will be true when the user accepted to proceed with a transaction and he is going to display the datail of the transaction as receipt
+};
+
 const styles = StyleSheet.create({
   rowStyle: {
     paddingTop: 10
@@ -46,9 +50,6 @@ const styles = StyleSheet.create({
   },
   alignedLeft: {
     textAlign: "left"
-  },
-  H3: {
-    fontSize: variables.fontSizeBase * 1.25
   }
 });
 
@@ -85,7 +86,14 @@ const VALUE_COL_SIZE_WIDE_LABEL = 1;
 /**
  * Details of transaction
  */
-export class TransactionDetailsScreen extends React.Component<Props, never> {
+export class TransactionDetailsScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isTransactionCompleted: true
+    };
+  }
+
   /**
    * It sum the amount to pay and the fee requested to perform the transaction
    * TO DO: it could be provided by API as presentd on header
@@ -95,7 +103,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
   }
 
   private getsubHeader() {
-    return this.props.transaction.isTransactionCompleted ? (
+    return this.state.isTransactionCompleted ? (
       <View>
         <Grid>
           <Col size={1} />
@@ -180,10 +188,9 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
               <Text>
                 {`${I18n.t("wallet.total")}  `}
                 <H3>
-                  {" "}
                   {`-${this.getTotalAmount(transaction).toFixed(2)} ${
                     transaction.currency
-                  }`}{" "}
+                  }`}
                 </H3>
               </Text>
             </Row>
