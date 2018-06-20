@@ -65,7 +65,6 @@ export class ChoosePaymentMethodScreen extends React.Component<Props, never> {
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} />
             <H1> {I18n.t("wallet.payWith.title")} </H1>
-
             <View spacer={true} />
             <Text> {I18n.t("wallet.payWith.info")}</Text>
             <View spacer={true} />
