@@ -7,6 +7,11 @@
     "app":  {
       "version": "Versione"
     },
+    "buttons": {
+      "delete": "Elimina",
+      "cancel": "Annulla",
+      "ok": "OK"
+    },
     "navigator": {
       "messages": "messaggi",
       "wallet": "portafoglio",
@@ -105,6 +110,14 @@
       "confirmInvalid": "i due pin non coincidono"
     }
   },
+  "pin_login":{
+    "pin": {
+      "pinInfo": "Inserisci il codice PIN",
+      "pinForgot": "Non ricordo il PIN",
+      "confirmValid": "PIN corretto",
+      "confirmInvalid": "PIN non valido"
+    }   
+  },
   "personal_data_processing": {
     "title": "Regole sul trattamento dei dati personali",
     "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
@@ -169,7 +182,7 @@
     "today": "oggi alle",
     "payNotice": "Paga un avviso",
     "latestOperations": "Ultime operazioni",
-    "creditDebtCards": "Carte di Credito/Debito",
+    "creditDebitCards": "Carte di Credito/Debito",
     "addPaymentMethodTitle": "Aggiungi metodo di pagamento",
     "cancel": "Annulla",
     "continue": "Continua",
@@ -214,14 +227,25 @@
     "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
   },
   "creditCardComponent": {
-    "validUntil": "Valida fino al "
+    "validUntil": "Valida fino al",
+    "actions": "Azioni",
+    "setFavourite": "Imposta come preferita",
+    "deleteTitle": "Procedere con l'operazione?",
+    "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
   "messages": {
     "counting": {
       "zero": "Nessun messaggio",
       "one": "Hai 1 messaggio",
       "other": "Hai {{count}} messaggi"
-    }
+    },
+    "tab": {
+      "all": "Tutti",
+      "deadlines":"Scadenze"
+    },
+    "contentTitle": "Messaggi",
+    "loading": "Caricamento dei messaggi...",
+    "yesterday": "ieri"
   },
   "notifications": {
     "installation": {

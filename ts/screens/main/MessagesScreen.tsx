@@ -1,33 +1,54 @@
-import { Container, Content, Text } from "native-base";
+import { Container, H1, Tab, Tabs, View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-
+import MessageComponent from "../../components/MessageComponent";
 import I18n from "../../i18n";
-import { GlobalState } from "../../reducers/types";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
+import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
+  services: ServicesState;
 }>;
 
 export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
+export type IMessageDetails = Readonly<{
+  item: Readonly<MessageWithContentPO>;
+  index: number;
+}>;
+
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+const styles = StyleSheet.create({
+  tabBarUnderlineStyle: {
+    width: 0
+  },
+  activeTabStyle: {
+    borderBottomWidth: 2,
+    borderBottomColor: variables.brandPrimaryLight
+  },
+  NotActiveTabStyle: {
+    borderBottomWidth: 0,
+    borderBottomColor: variables.brandPrimaryInverted
+  }
+});
 
 /**
  * This screen show the messages to the authenticated user.
@@ -67,26 +88,70 @@ class MessagesScreen extends React.Component<Props, never> {
     ) : null;
   };
 
-  private renderMockedMessages = (
+  public getOrganizationName = (senderServiceId: string): string => {
+    return this.props.services.byId[senderServiceId].organization_name;
+  };
+  public getDepartmentName = (senderServiceId: string): string => {
+    return this.props.services.byId[senderServiceId].department_name;
+  };
+  public renderItem = (messageDetails: IMessageDetails) => {
+    return (
+      <MessageComponent
+        id={messageDetails.item.id}
+        created_at={messageDetails.item.created_at}
+        serviceOrganizationName={this.getOrganizationName(
+          messageDetails.item.sender_service_id
+        )}
+        serviceDepartmentName={this.getDepartmentName(
+          messageDetails.item.sender_service_id
+        )}
+        subject={messageDetails.item.subject}
+      />
+    );
+  };
+
+  private renderMessages = (
     messages: ReadonlyArray<MessageWithContentPO>
   ): React.ReactNode => {
-    return messages.map(message => (
-      <Text key={message.id}>
-        {message.subject}: {message.created_at}
-      </Text>
-    ));
+    return (
+      <Tabs tabBarUnderlineStyle={styles.tabBarUnderlineStyle} initialPage={0}>
+        <Tab
+          heading={I18n.t("messages.tab.all")}
+          activeTabStyle={styles.activeTabStyle}
+        >
+          <FlatList
+            alwaysBounceVertical={false}
+            scrollEnabled={true}
+            data={messages}
+            renderItem={this.renderItem}
+            keyExtractor={item => item.id}
+          />
+        </Tab>
+        <Tab
+          heading={I18n.t("messages.tab.deadlines")}
+          activeTabStyle={styles.activeTabStyle}
+        >
+          <View spacer={true} large={true} />
+        </Tab>
+        <Tab heading={""} activeTabStyle={styles.NotActiveTabStyle}>
+          <View spacer={true} large={true} />
+        </Tab>
+        <Tab heading={" "} activeTabStyle={styles.NotActiveTabStyle}>
+          <View spacer={true} large={true} />
+        </Tab>
+      </Tabs>
+    );
   };
 
   public render() {
     return (
       <Container>
-        <Content>
+        <View content={true}>
+          <View spacer={true} />
+          <H1>{I18n.t("messages.contentTitle")}</H1>
           {this.renderLoadingStatus(this.props.isLoadingMessages)}
-          <Text>
-            {I18n.t("messages.counting", { count: this.props.messages.length })}
-          </Text>
-          {this.renderMockedMessages(this.props.messages)}
-        </Content>
+          {this.renderMessages(this.props.messages)}
+        </View>
       </Container>
     );
   }
@@ -96,7 +161,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
     state
   ),
-  messages: orderedMessagesSelector(state)
+  messages: orderedMessagesSelector(state),
+  services: state.entities.services
 });
 
 export default connect(mapStateToProps)(MessagesScreen);

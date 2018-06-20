@@ -11,7 +11,6 @@ import {
   isApiFetchFailure,
   postProfile
 } from "../api";
-import { GlobalState } from "../reducers/types";
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_REQUEST,
@@ -21,6 +20,7 @@ import {
   PROFILE_UPDATE_SUCCESS
 } from "../store/actions/constants";
 import { ProfileUpdateRequest } from "../store/actions/profile";
+import { GlobalState } from "../store/reducers/types";
 
 // A selector to get the token from the state
 const getSessionToken = (state: GlobalState): string | undefined =>
