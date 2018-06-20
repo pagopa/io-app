@@ -1,6 +1,5 @@
-
 /**
- * This screen allows to identify the proper manager for a credit card 
+ * This screen allows to identify the proper manager for a credit card
  * when it is added to the user wallet
  */
 
