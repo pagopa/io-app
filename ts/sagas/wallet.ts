@@ -13,6 +13,9 @@ import { cardsFetched } from "../store/actions/wallet/cards";
 import { transactionsFetched } from "../store/actions/wallet/transactions";
 import { CreditCard } from "../types/CreditCard";
 import { WalletTransaction } from "../types/wallet";
+import { fetchCreditCards } from "../api/pagopa";
+import { ApiFetchResult } from "../api";
+import { Wallet } from "../../definitions/pagopa/Wallet";
 
 function* fetchTransactions(
   loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>
@@ -23,10 +26,11 @@ function* fetchTransactions(
   yield put(transactionsFetched(transactions));
 }
 
-function* fetchCreditCards(
-  loadCards: () => Promise<ReadonlyArray<CreditCard>>
+function* fetchCreditCardsSaga(
+  loadCards: (token: string) => Promise<ApiFetchResult<Readonly<Wallet>>>,
+  token: string
 ): Iterator<Effect> {
-  const cards: ReadonlyArray<CreditCard> = yield call(loadCards);
+  const cards: ReadonlyArray<CreditCard> = yield call(loadCards, token);
   yield put(cardsFetched(cards));
 }
 
@@ -44,7 +48,8 @@ export default function* root(): Iterator<Effect> {
   );
   yield takeLatest(
     FETCH_CARDS_REQUEST,
+    fetchCreditCardsSaga,
     fetchCreditCards,
-    WalletAPI.getCreditCards
+    "6JgPz41xViiG9AWOTcpnkjtELu5YTOSxx1hR6WoMWQRpS5YzB6eL8Gp0CAtcFkm9"
   );
 }

@@ -12,7 +12,8 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.21/api_proxy.yaml --out-dir ./definitions/backend"
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.21/api_proxy.yaml --out-dir ./definitions/backend",
+    "generate:pagopa-api-definitions": "rimraf definitions/pagopa && mkdir -p definitions/pagopa && gen-api-models --api-spec https://acardste.vaservices.eu:1443/pp-restapi/v2/api-docs --out-dir ./definitions/pagopa --strict false"
   },
   "dependencies": {
     "color": "^3.0.0",
