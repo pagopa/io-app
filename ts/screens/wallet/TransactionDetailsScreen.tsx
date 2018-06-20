@@ -12,15 +12,18 @@ import { NavigationInjectedProps } from "react-navigation";
 
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
-import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
+import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import {} from "../../store/reducers/wallet";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
+  selectedCard: CreditCard;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
@@ -112,7 +115,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
         headerContents={<View spacer={true} />}
-        cardType={CardType.HEADER}
+        cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
         showPayButton={false}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
@@ -172,7 +175,8 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   transaction: transactionForDetailsSelector(state).getOrElse(
     UNKNOWN_TRANSACTION
-  )
+  ),
+  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);

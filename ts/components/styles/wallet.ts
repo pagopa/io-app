@@ -98,6 +98,7 @@ export const WalletStyles = StyleSheet.create({
     // temporary -- will be updated with actual component in future version
     height: 120,
     marginLeft: -200,
+    bottom: -10,
     resizeMode: "contain"
   },
   pfTabCard: {

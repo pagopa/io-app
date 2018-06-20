@@ -3,10 +3,12 @@
  */
 
 import { reducer as networkReducer } from "react-native-offline";
-import { Reducer, ReducersMapObject } from "redux";
+import { combineReducers, Reducer } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
+import { PersistConfig, persistReducer } from "redux-persist";
 
 import { Action } from "../actions/types";
+import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -16,9 +18,15 @@ import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
-import sessionReducer from "./session";
+import sessionReducer, { SessionState } from "./session";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
+
+// A custom configuration to store the session into the Keychain
+const sessionPersistConfig: PersistConfig = {
+  key: "session",
+  storage: createSecureStorage()
+};
 
 /**
  * Here we combine all the reducers.
@@ -30,7 +38,7 @@ import walletReducer from "./wallet";
  * More at
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-const reducers: ReducersMapObject<GlobalState, Action> = {
+const reducer = combineReducers<GlobalState, Action>({
   appState: appStateReducer,
   network: networkReducer,
   navigation: navigationReducer,
@@ -43,7 +51,10 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
   form: formReducer as Reducer<FormStateMap, Action>,
 
   // DATA
-  session: sessionReducer,
+  session: persistReducer<SessionState, Action>(
+    sessionPersistConfig,
+    sessionReducer
+  ),
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
@@ -52,6 +63,6 @@ const reducers: ReducersMapObject<GlobalState, Action> = {
 
   // WALLET
   wallet: walletReducer
-};
+});
 
-export default reducers;
+export default reducer;

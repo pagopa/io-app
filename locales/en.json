@@ -7,6 +7,11 @@
     "app":  {
       "version": "Version"
     },
+    "buttons": {
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "ok": "OK"
+    },
     "navigator": {
       "messages": "messages",
       "wallet": "wallet",
@@ -222,7 +227,11 @@
     "favoriteText":"This payment method will be automatically proposed for the next payment"
   },
   "creditCardComponent": {
-    "validUntil": "Valid until "
+    "validUntil": "Valid until",
+    "actions": "Actions",
+    "setFavourite": "Set as favourite",
+    "deleteTitle": "Do you want to proceed?",
+    "deleteMsg": "This will delete the payment method"
   },
   "messages": {
     "counting": {
