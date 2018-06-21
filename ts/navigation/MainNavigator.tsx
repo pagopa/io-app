@@ -10,10 +10,10 @@ import ROUTES from "./routes";
 
 import { Platform, StyleSheet, Text } from "react-native";
 import { TabBarBottom, TabNavigator } from "react-navigation";
+import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
-import Icon from "../theme/font-icons/io-icon-font";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import WalletNavigator from "./WalletNavigator";
@@ -110,7 +110,7 @@ const navigation = TabNavigator(
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
         return (
-          <Icon
+          <IconFont
             name={iconName}
             size={variables.iconSize3}
             color={tintColor === null ? undefined : tintColor}

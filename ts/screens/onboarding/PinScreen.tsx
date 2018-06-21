@@ -1,10 +1,10 @@
+import { Option } from "fp-ts/lib/Option";
 import {
   Body,
   Button,
   Container,
   Content,
   H1,
-  Icon,
   Left,
   Text,
   View
@@ -13,10 +13,9 @@ import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { Option } from "fp-ts/lib/Option";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
 import { createPin } from "../../store/actions/onboarding";
@@ -135,12 +134,12 @@ class PinScreen extends React.Component<Props, State> {
   public renderCodeInputConfirmValidation(pinState: PinConfirmed) {
     const validationMessage = pinState.isConfirmationPinMatch ? (
       <TextWithIcon success={true}>
-        <Icon name={"check"} />
+        <IconFont name="io-tick-big" />
         <Text>{I18n.t("onboarding.pin.confirmValid")}</Text>
       </TextWithIcon>
     ) : (
       <TextWithIcon danger={true}>
-        <Icon name={"cross"} />
+        <IconFont name="io-close" />
         <Text>{I18n.t("onboarding.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );
@@ -267,7 +266,7 @@ class PinScreen extends React.Component<Props, State> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={_ => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>
