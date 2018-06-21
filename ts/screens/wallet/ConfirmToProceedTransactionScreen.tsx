@@ -1,8 +1,6 @@
 /**
  * This screen ask the authorization to proceed with the transaction.
  * TODO:
- * - integrate credit card componet for visualization of the payment method selected for the transaction
- *    (implemented into the master)
  * - integrate contextual help:
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  *  - make API provides data correctly
@@ -10,7 +8,6 @@
  * - implement the proper navigation
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
-
 import {
   Body,
   Button,
@@ -30,11 +27,23 @@ import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
-import { TransactionSummary } from "../../types/wallet";
+import { TransactionSummary, WalletTransaction } from "../../types/wallet";
+import { CreditCard } from "../../types/CreditCard";
 
-type Props = Readonly<{
+
+/**
+ * TODO: integrate with the proper transaction type
+ */
+type ReduxMappedStateProps = Readonly<{
+  card: Readonly<CreditCard>;
+  transaction: Readonly<WalletTransaction>
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ReduxMappedStateProps;
 
 const transaction: Readonly<
   TransactionSummary
@@ -162,3 +171,5 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
     );
   }
 }
+
+
