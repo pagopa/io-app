@@ -10,7 +10,8 @@
     "buttons": {
       "delete": "Elimina",
       "cancel": "Annulla",
-      "ok": "OK"
+      "ok": "OK",
+      "continue": "Continua"
     },
     "navigator": {
       "messages": "messaggi",

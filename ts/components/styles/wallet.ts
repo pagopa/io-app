@@ -19,47 +19,6 @@ export const WalletStyles = StyleSheet.create({
   white: {
     color: variables.brandPrimaryInverted
   },
-  addCardItem: {
-    borderBottomWidth: variables.headerBorderBottomWidth,
-    marginTop: 5,
-    marginRight: 5,
-    marginLeft: 5
-  },
-  addCardBoldedBorderItem: {
-    borderBottomWidth: variables.borderRadiusBase,
-    borderBottomColor: variables.brandDarkGray,
-    marginRight: 5,
-    marginLeft: 5
-  },
-  addCardBordedItem: {
-    borderBottomWidth: 1,
-    marginRight: 5,
-    marginLeft: 5
-  },
-  addCardLastItem: {
-    borderBottomWidth: variables.modalMargin,
-    marginRight: 5,
-    marginLeft: 5,
-    marginBottom: 30
-  },
-  addCardIcon: {
-    marginTop: 3,
-    marginRight: 3,
-    marginBottom: 3
-  },
-  addCardImage: {
-    width: 60,
-    height: 45,
-    resizeMode: "contain",
-    margin: 5
-  },
-  addCardfooterButtons: {
-    borderBottomWidth: 0,
-    marginRight: 5,
-    marginLeft: 5,
-    marginTop: 15,
-    marginBottom: 30
-  },
   standardText: {
     color: variables.brandGray
   },

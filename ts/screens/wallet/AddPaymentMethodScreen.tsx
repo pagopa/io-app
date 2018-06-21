@@ -50,7 +50,7 @@ interface IPaymentMethod {
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
-    navigateTo: undefined, // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
+    navigateTo: ROUTES.WALLET_ADD_CARD as Route, // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
     name: I18n.t("wallet.methods.card.name"),
     maxFee: I18n.t("wallet.methods.card.maxFee"),
     icon: "io-48-card"

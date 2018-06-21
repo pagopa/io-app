@@ -10,7 +10,8 @@
     "buttons": {
       "delete": "Delete",
       "cancel": "Cancel",
-      "ok": "OK"
+      "ok": "OK",
+      "continue": "Continue"
     },
     "navigator": {
       "messages": "messages",
@@ -195,7 +196,7 @@
     "addCardTitle": "Card details",
     "dummyCard": {
       "labels": {
-        "name": "Card owner",
+        "name": "Card holder",
         "number": "Card number",
         "expires": "Expiration date",
         "csc": "Card security code"
