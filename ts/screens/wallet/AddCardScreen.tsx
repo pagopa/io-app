@@ -16,10 +16,10 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { cardIcons } from '../../components/wallet/card/Logo';
-import _ from 'lodash';
-import { Grid, Col } from "react-native-easy-grid";
-import WrappedGrid from '../../components/WrappedGrid';
+import _ from "lodash";
+import { Col, Grid } from "react-native-easy-grid";
+import { cardIcons } from "../../components/wallet/card/Logo";
+import WrappedGrid from "../../components/WrappedGrid";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
   }
 });
 
-
 export class AddCardScreen extends React.Component<Props, State> {
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -111,7 +109,6 @@ export class AddCardScreen extends React.Component<Props, State> {
     return (
       <Container>
         <Content>
-
           <Item style={styles.noBottomLine}>
             <Text>{I18n.t("wallet.dummyCard.labels.name")}</Text>
           </Item>
@@ -126,7 +123,7 @@ export class AddCardScreen extends React.Component<Props, State> {
             />
           </Item>
 
-          <View spacer={true}/>
+          <View spacer={true} />
           <Item style={styles.noBottomLine}>
             <Text>{I18n.t("wallet.dummyCard.labels.number")}</Text>
           </Item>
@@ -144,63 +141,61 @@ export class AddCardScreen extends React.Component<Props, State> {
             />
           </Item>
 
-          <View spacer={true}/>
-            <Grid>
-              <Col>
-                <Item style={styles.noBottomLine}>
-                  <Text>{I18n.t("wallet.dummyCard.labels.expires")}</Text>
-                </Item>
-                <Item style={styles.bottomLine}>
-                  <Icon style={styles.addCardIcon} name="calendar" />
-                  <Input
-                    onChangeText={value => {
-                      this.onExpireDateChange(value);
-                    }}
-                    value={this.state.expirationDate.getOrElse("")}
-                    maxLength={5}
-                    keyboardType={"numeric"}
-                    placeholderTextColor={"#D0D6DB"}
-                    placeholder={I18n.t("wallet.dummyCard.values.expires")}
-                  />
-                </Item>
-              </Col>
-              <Col style={styles.verticalSpacing}/>
-              <Col>
-                <Item style={styles.noBottomLine}>
-                  <Text>{I18n.t("wallet.dummyCard.labels.csc")}</Text>
-                </Item>
-                <Item style={styles.bottomLine}>
-                  <Icon style={styles.addCardIcon} name="lock" />
-                  <Input
-                    onChangeText={value => {
-                      this.setState({ securityCode: some(value) });
-                    }}
-                    keyboardType={"numeric"}
-                    maxLength={3}
-                    secureTextEntry={true}
-                    placeholderTextColor={"#D0D6DB"}
-                    placeholder={I18n.t("wallet.dummyCard.values.csc")}
-                  />
-                </Item>
-              </Col>
-            </Grid>
+          <View spacer={true} />
+          <Grid>
+            <Col>
+              <Item style={styles.noBottomLine}>
+                <Text>{I18n.t("wallet.dummyCard.labels.expires")}</Text>
+              </Item>
+              <Item style={styles.bottomLine}>
+                <Icon style={styles.addCardIcon} name="calendar" />
+                <Input
+                  onChangeText={value => {
+                    this.onExpireDateChange(value);
+                  }}
+                  value={this.state.expirationDate.getOrElse("")}
+                  maxLength={5}
+                  keyboardType={"numeric"}
+                  placeholderTextColor={"#D0D6DB"}
+                  placeholder={I18n.t("wallet.dummyCard.values.expires")}
+                />
+              </Item>
+            </Col>
+            <Col style={styles.verticalSpacing} />
+            <Col>
+              <Item style={styles.noBottomLine}>
+                <Text>{I18n.t("wallet.dummyCard.labels.csc")}</Text>
+              </Item>
+              <Item style={styles.bottomLine}>
+                <Icon style={styles.addCardIcon} name="lock" />
+                <Input
+                  onChangeText={value => {
+                    this.setState({ securityCode: some(value) });
+                  }}
+                  keyboardType={"numeric"}
+                  maxLength={3}
+                  secureTextEntry={true}
+                  placeholderTextColor={"#D0D6DB"}
+                  placeholder={I18n.t("wallet.dummyCard.values.csc")}
+                />
+              </Item>
+            </Col>
+          </Grid>
 
-          <View spacer={true}/>
+          <View spacer={true} />
           <Item style={styles.noBottomLine}>
             <Text>{I18n.t("wallet.acceptedCards")}</Text>
           </Item>
 
           <Item last={true} style={styles.noBottomLine}>
-            <WrappedGrid cols={4} items={
-              _.values(displayedCards).map(
-                item => (
-                  <Image
-                  style={styles.addCardImage}
-                  source={item}
-                />
-                )
-              )
-            }/>
+            <WrappedGrid
+              cols={4}
+              items={_
+                .values(displayedCards)
+                .map(item => (
+                  <Image style={styles.addCardImage} source={item} />
+                ))}
+            />
           </Item>
         </Content>
         <View footer={true}>
@@ -213,16 +208,13 @@ export class AddCardScreen extends React.Component<Props, State> {
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
-          <View spacer={true}/>
+          <View spacer={true} />
           <Button
             block={true}
             light={true}
-            
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text>
-              {I18n.t("global.buttons.cancel")}
-            </Text>
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
       </Container>

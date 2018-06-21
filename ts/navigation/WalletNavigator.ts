@@ -1,11 +1,11 @@
 import { StackNavigator } from "react-navigation";
+import { AddCardScreen } from "../screens/wallet/AddCardScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
-import { AddCardScreen } from "../screens/wallet/AddCardScreen";
 
 const WalletNavigator = StackNavigator(
   {
