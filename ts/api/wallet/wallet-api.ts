@@ -65,7 +65,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Certificato di residenza",
     recipient: "Comune di Gallarate",
     amount: 20.02,
-    currency: "€",
+    currency: "EUR",
     transactionCost: 0.5,
     isNew: true
   },
@@ -78,7 +78,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Spesa Supermarket",
     recipient: "Segrate",
     amount: 74.1,
-    currency: "€",
+    currency: "EUR",
     transactionCost: 0.5,
     isNew: true
   },
@@ -91,7 +91,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Prelievo contante",
     recipient: "Busto Arsizio",
     amount: -200.0,
-    currency: "€",
+    currency: "EUR",
     transactionCost: 0.5,
     isNew: true
   },
@@ -118,7 +118,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     recipient: "Comune di Legnano",
     transactionCost: 0.5,
     amount: 56.0,
-    currency: "€",
+    currency: "EUR",
     isNew: true
   },
   {
@@ -130,7 +130,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Pizzeria Da Gennarino",
     recipient: "Busto Arsizio",
     amount: 45.0,
-    currency: "€",
+    currency: "EUR",
     transactionCost: 0.5,
     isNew: true
   },
@@ -143,7 +143,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Rimborso TARI 2012",
     recipient: "Comune di Gallarate",
     amount: 150.2,
-    currency: "€",
+    currency: "EUR",
     transactionCost: 0,
     isNew: true
   },
@@ -157,7 +157,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     recipient: "Busto Arsizio",
     transactionCost: 0,
     amount: 134.0,
-    currency: "€",
+    currency: "EUR",
     isNew: true
   },
   {
@@ -170,7 +170,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     recipient: "Milano - via Parini 12",
     transactionCost: 0.5,
     amount: 100.0,
-    currency: "€",
+    currency: "EUR",
     isNew: true
   }
 ];
