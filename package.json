@@ -12,7 +12,7 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.21/api_proxy.yaml --out-dir ./definitions/backend"
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.22/api_proxy.yaml --out-dir ./definitions/backend"
   },
   "dependencies": {
     "color": "^3.0.0",
@@ -35,6 +35,7 @@
     "react-native-mixpanel": "^0.0.16",
     "react-native-modal": "^6.0.0",
     "react-native-offline": "^3.7.4",
+    "react-native-popup-menu": "^0.13.1",
     "react-native-push-notification": "^3.0.2",
     "react-native-sha256": "^1.0.1",
     "react-native-vector-icons": "^4.6.0",
@@ -77,6 +78,7 @@
     "babel-preset-react-native": "4.0.0",
     "danger": "^3.7.18",
     "danger-plugin-digitalcitizenship": "^0.2.0",
+    "italia-tslint-rules": "^0.1.1",
     "italia-utils": "^3.6.1",
     "jest": "23.0.1",
     "prettier": "1.13.0",

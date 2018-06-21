@@ -192,7 +192,7 @@ export function* loadMessages(
  */
 export function* loadMessagesWatcher(): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
-  // tslint:disable-next-line
+  // tslint:disable-next-line:no-let
   let lastTask: Option<Task> = none;
   while (true) {
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
