@@ -102,7 +102,8 @@
       "headerTitle": "Attivazione",
       "contentTitle": "Scegli un codice PIN",
       "contentTitleConfirm": "Digita ancora il PIN",
-      "pinInfo": "Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere oprazioni dispositive. Deve essere composto di 5 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento entrando con SPID.",
+      "pinInfo": "Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere composto di 5 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento entrando con SPID.",
+      "pinInfoSelected":"Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.",
       "moreLinkText": "Per saperne di più.",
       "continue": "Continua",
       "reset": "Modifica il codice",
@@ -159,6 +160,16 @@
       "info2":"che dovrà gestire la tua transazione.",
       "link":"Per saperne di più",
       "maxFee":"Commissione massima"
+    },
+    "insertManually":{
+      "header": "Inserisci dati avviso",
+      "title": "Inserisci i dati dell'avviso",
+      "info": "che ci consentono di identificare il pagamento", 
+      "link": "Dove si trovano?",
+      "noticeCode":"Codice Avviso",
+      "entityCode":"Codice Fiscale Ente Creditore",
+      "amount": "Importo (€)",
+      "proceed": "Procedi con il pagamento"
     },
     "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",
