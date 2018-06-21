@@ -1,7 +1,6 @@
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 
@@ -15,12 +14,9 @@ type Props = Readonly<IconProps>;
 class IconFont extends React.Component<Props> {
   public render() {
     const { color, size, style } = this.props;
-    const styleOverride = StyleSheet.flatten([
-      style,
-      color !== undefined ? { color } : {},
-      size !== undefined ? { fontSize: size } : {}
-    ]);
-    return <Icon {...this.props} style={styleOverride} />;
+    const colorStyle = color ? { color } : {};
+    const fontSizeStyle = size ? { fontSize: size } : {};
+    return <Icon {...this.props} style={[style, colorStyle, fontSizeStyle]} />;
   }
 }
 
