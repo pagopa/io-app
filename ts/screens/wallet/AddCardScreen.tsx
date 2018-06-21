@@ -1,3 +1,7 @@
+/**
+ * Screen for entering the credit card details
+ * (holder, pan, cvc, expiration date)
+ */
 import {
   Body,
   Button,
@@ -8,7 +12,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../i18n";
@@ -17,8 +21,8 @@ import ROUTES from "../../navigation/routes";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Col, Grid } from "react-native-easy-grid";
 import { cardIcons } from "../../components/wallet/card/Logo";
-import WrappedGrid from "../../components/WrappedGrid";
 
+import _ from "lodash";
 import { Left } from "native-base";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -52,6 +56,8 @@ const styles = StyleSheet.create({
     flex: 0
   }
 });
+
+const CARD_LOGOS_COLUMNS = 4;
 
 export class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -96,14 +102,15 @@ export class AddCardScreen extends React.Component<Props, State> {
   // the exact behavior should be defined before
   // being implemented
   public onPanChange = (value: string) => {
-    const quads = value.replace(/[^\d]/g, "").match(/\d{1,4}/g);
-    if (quads !== null) {
-      const formatted = quads.join(" ");
+    const groups = value.replace(/[^\d]/g, "").match(/\d{1,4}/g);
+    if (groups !== null) {
+      const formatted = groups.join(" ");
       this.setState({
         pan:
           formatted.length > 0
             ? some(
-                quads[quads.length - 1].length === 4
+                // add trailing space if last group of digits has 4 elements
+                groups[groups.length - 1].length === 4
                   ? `${formatted} `
                   : formatted
               )
@@ -113,23 +120,23 @@ export class AddCardScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
-    const displayedCards: ReadonlyArray<any> = [
-      cardIcons.MASTERCARD,
-      cardIcons.MAESTRO,
-      cardIcons.VISA,
-      cardIcons.VISAELECTRON,
-      cardIcons.AMEX,
-      cardIcons.POSTEPAY,
-      cardIcons.DINERS
-    ];
-
+    // list of cards to be displayed
+    const displayedCards: { [key: string]: any } = {
+      MASTERCARD: cardIcons.MASTERCARD,
+      MAESTRO: cardIcons.MAESTRO,
+      VISA: cardIcons.VISA,
+      VISAELECTRON: cardIcons.VISAELECTRON,
+      AMEX: cardIcons.AMEX,
+      POSTEPAY: cardIcons.POSTEPAY,
+      DINER: cardIcons.DINERS
+    };
     return (
       <Container>
         <AppHeader>
           <Left>
             <Button
               transparent={true}
-              onPress={_ => this.props.navigation.goBack()}
+              onPress={__ => this.props.navigation.goBack()}
             >
               <Icon name="io-back" size={variables.iconSize3} />
             </Button>
@@ -206,12 +213,25 @@ export class AddCardScreen extends React.Component<Props, State> {
               <Text>{I18n.t("wallet.acceptedCards")}</Text>
             </Item>
             <Item last={true} style={styles.noBottomLine}>
-              <WrappedGrid
-                cols={4}
-                keyPrefix="cards"
-                items={displayedCards.map(item => (
-                  <Image style={styles.addCardImage} source={item} />
-                ))}
+              <FlatList
+                numColumns={CARD_LOGOS_COLUMNS}
+                data={_.entries(displayedCards).concat(
+                  // padding with empty items so as to have a # of cols
+                  // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
+                  _
+                    .range(
+                      CARD_LOGOS_COLUMNS -
+                        (_.size(displayedCards) % CARD_LOGOS_COLUMNS)
+                    )
+                    .map((__): [string, any] => ["", undefined])
+                )}
+                renderItem={({ item }) => (
+                  <View style={{ flex: 1, flexDirection: "row" }}>
+                    {item[1] && (
+                      <Image style={styles.addCardImage} source={item[1]} />
+                    )}
+                  </View>
+                )}
               />
             </Item>
           </Content>

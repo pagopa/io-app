@@ -1,3 +1,14 @@
+/**
+ * Display a labelled, followed by a
+ * input and an icon on the left-end
+ * side of the input
+ *
+ * LABEL
+ * X __________
+ * ^     ^
+ * icon  |
+ *       input
+ */
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
