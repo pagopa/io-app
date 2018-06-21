@@ -35,9 +35,9 @@ type Props = Readonly<{
 }>;
 
 type State = Readonly<{
-  TransactionCode: Option<string>;
-  FiscalCode: Option<string>;
-  Amount: Option<string>;
+  transactionCode: Option<string>;
+  fiscalCode: Option<string>;
+  amount: Option<string>;
 }>;
 
 export class ManuallyIdentifyTransactionScreen extends React.Component<
@@ -47,9 +47,9 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<
   constructor(props: Props) {
     super(props);
     this.state = {
-      TransactionCode: none,
-      FiscalCode: none,
-      Amount: none
+      transactionCode: none,
+      fiscalCode: none,
+      amount: none
     };
   }
 
@@ -80,7 +80,7 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<
               <Input
                 keyboardType={"numeric"}
                 onChangeText={value => {
-                  this.setState({ TransactionCode: some(value) });
+                  this.setState({ transactionCode: some(value) });
                 }}
               />
             </Item>
@@ -89,7 +89,7 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<
               <Input
                 keyboardType={"numeric"}
                 onChangeText={value => {
-                  this.setState({ FiscalCode: some(value) });
+                  this.setState({ fiscalCode: some(value) });
                 }}
               />
             </Item>
@@ -98,7 +98,7 @@ export class ManuallyIdentifyTransactionScreen extends React.Component<
               <Input
                 keyboardType={"numeric"}
                 onChangeText={value => {
-                  this.setState({ Amount: some(value) });
+                  this.setState({ amount: some(value) });
                 }}
               />
             </Item>
