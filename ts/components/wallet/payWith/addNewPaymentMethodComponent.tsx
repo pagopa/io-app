@@ -18,7 +18,6 @@ import variables from "../../../theme/variables";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-  isInTransaction?: boolean;
 }>;
 
 type Route = keyof typeof ROUTES;
