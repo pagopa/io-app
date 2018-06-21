@@ -21,6 +21,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
+import { selectCardForDetails } from "../../store/actions/wallet/cards";
 import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
 import {
@@ -36,6 +37,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   selectTransaction: (i: WalletTransaction) => void;
+  selectCard: (item: number) => void;
 }>;
 
 /**
@@ -80,6 +82,7 @@ class TransactionsList extends React.Component<Props> {
     <ListItem
       onPress={() => {
         this.props.selectTransaction(item);
+        this.props.selectCard(item.cardId);
         this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
       }}
     >
@@ -162,7 +165,8 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  selectTransaction: item => dispatch(selectTransactionForDetails(item))
+  selectTransaction: item => dispatch(selectTransactionForDetails(item)),
+  selectCard: item => dispatch(selectCardForDetails(item))
 });
 
 export default connect(
