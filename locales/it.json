@@ -157,6 +157,14 @@
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
     "transactionDetails": "Dettagli dell'operazione",
+    "addManager": {
+      "title":"Scegli il gestore",
+      "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
+      "infoBold":"Scegli il soggetto economico",
+      "info2":"che dovrà gestire la tua transazione.",
+      "link":"Per saperne di più",
+      "maxFee":"Commissione massima"
+    },
     "ConfirmPayment": {
       "header":"Conferma pagamento",
       "cancel":"ANNULLA",

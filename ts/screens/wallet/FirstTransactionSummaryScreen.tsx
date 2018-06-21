@@ -4,10 +4,7 @@
  * TODO:
  * - integrate contextual help
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
- *
  * - check availability of displayed data. Define optional data and implement their rendering as preferred
- *
- *
  */
 
 import {

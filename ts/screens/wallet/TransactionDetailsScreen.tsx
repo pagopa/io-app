@@ -36,8 +36,12 @@ type ReduxMappedProps = Readonly<{
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
 
+/**
+ * isTransactionStarted will be true when the user accepted to proceed with a transaction
+ * and he is going to display the detail of the transaction as receipt
+ */
 type State = Readonly<{
-  isTransactionStarted: boolean; // it will be true when the user accepted to proceed with a transaction and he is going to display the datail of the transaction as receipt
+  isTransactionStarted: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -55,18 +59,21 @@ const styles = StyleSheet.create({
 
 /**
  * Details of transaction
+ * TODO: implement the proper state control
+ * @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
 export class TransactionDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isTransactionStarted: true // TODO: implement the proper state control @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
+      isTransactionStarted: true
     };
   }
 
   /**
    * It provide the currency EUR symbol
-   * TODO: verify if implement it furthermore (other currencies) or mantain the EUR notation @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
+   * TODO: verify how approach the euro notation
+   * @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
    */
   private getCurrencySymbol(currency: string) {
     if (currency === "EUR") {
@@ -78,14 +85,17 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
 
   /**
    * It sum the amount to pay and the fee requested to perform the transaction
-   * TO DO: If required, it should be implemented the proper algorithm to manage values from 10^13
+   * TO DO: If required, it should be implemented the proper algorithm to manage values
+   * from 10^13
+   *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
    */
   private getTotalAmount(transaction: Readonly<WalletTransaction>) {
     return transaction.amount + transaction.transactionCost;
   }
 
   /**
-   * It provides the proper header to the screen. If isTransactionStarted (the user displays the screen during the process of identify and accept a transaction)
+   * It provides the proper header to the screen. If isTransactionStarted
+   * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
   private getSubHeader() {

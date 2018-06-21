@@ -1,11 +1,12 @@
 import { StackNavigator } from "react-navigation";
+import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import { ChoosePaymentMethodScreen } from "../screens/wallet/ChoosePaymentMethodScreen";
 import { ConfirmToProceedTransactionScreen } from "../screens/wallet/ConfirmToProceedTransactionScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
-import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
+import { TransactionDetailsScreen } from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
@@ -30,6 +31,9 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
       screen: TransactionsScreen
+    },
+    [ROUTES.WALLET_ADD_MANAGER]: {
+      screen: AddManagerToCardScreen
     },
     [ROUTES.WALLET_CONFIRM_TO_PROCEED]: {
       screen: ConfirmToProceedTransactionScreen

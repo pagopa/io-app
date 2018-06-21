@@ -158,6 +158,14 @@
     },
     "thanks":"✓ Thank you!",
     "endPayment":"Your transaction is completed",
+    "addManager": {
+      "title":"Choose the manager",
+      "info":"This card does not belong to the PagoPA payment network.",
+      "infoBold":"Choose the economic operator",
+      "info2":"which will have to manage yout payment.",
+      "link":"Find out more",
+      "maxFee":"Maximum fee"
+    },
     "ConfirmPayment": {
       "header":"Confirm transaction",
       "cancel":"CANCEL",
