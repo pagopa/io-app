@@ -19,6 +19,9 @@ export const WalletStyles = StyleSheet.create({
   white: {
     color: variables.brandPrimaryInverted
   },
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  },
   standardText: {
     color: variables.brandGray
   },

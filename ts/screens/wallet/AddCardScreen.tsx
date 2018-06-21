@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Content,
-  Input,
   Item,
   Text,
   View
@@ -21,6 +20,8 @@ import { cardIcons } from "../../components/wallet/card/Logo";
 import WrappedGrid from "../../components/WrappedGrid";
 
 import { Left } from "native-base";
+import { LabelledItem } from "../../components/LabelledItem";
+import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
@@ -39,9 +40,6 @@ type State = Readonly<{
 const styles = StyleSheet.create({
   noBottomLine: {
     borderBottomWidth: 0
-  },
-  bottomLine: {
-    borderBottomWidth: 1
   },
   addCardImage: {
     width: 60,
@@ -74,7 +72,7 @@ export class AddCardScreen extends React.Component<Props, State> {
    * This is a draft version -- the exact behavior should be
    * defined somewhere in order for it to be implemented
    */
-  public onExpirationDateChange(value: string) {
+  public onExpirationDateChange = (value: string) => {
     const filteredValue = value.replace(/[^\d\/]/g, "");
     // month has already been entered fully ("1" is ignored as another number may follow)
     if (filteredValue.match(/^(1[012]|0[1-9]|[2-9])$/)) {
@@ -92,7 +90,7 @@ export class AddCardScreen extends React.Component<Props, State> {
         expirationDate: filteredValue.length > 0 ? some(filteredValue) : none
       });
     }
-  }
+  };
 
   // update pan so as to add a space every 4 digits
   // the exact behavior should be defined before
@@ -112,7 +110,7 @@ export class AddCardScreen extends React.Component<Props, State> {
             : none
       });
     }
-  }
+  };
 
   public render(): React.ReactNode {
     const displayedCards: ReadonlyArray<any> = [
@@ -140,90 +138,66 @@ export class AddCardScreen extends React.Component<Props, State> {
             <Text>{I18n.t("wallet.addCardTitle")}</Text>
           </Body>
         </AppHeader>
-        <ScrollView bounces={false}>
-          <Content>
-            <Item style={styles.noBottomLine}>
-              <Text>{I18n.t("wallet.dummyCard.labels.name")}</Text>
-            </Item>
-            <Item style={styles.bottomLine}>
-              <Icon
-                size={variables.iconSize3}
-                color={variables.brandDarkGray}
-                name="io-titolare"
-              />
-              <Input
-                onChangeText={value => {
+
+        <ScrollView bounces={false} style={WalletStyles.whiteBg}>
+          <Content scrollEnabled={false}>
+            <LabelledItem
+              label={I18n.t("wallet.dummyCard.labels.holder")}
+              icon="io-titolare"
+              placeholder={I18n.t("wallet.dummyCard.values.holder")}
+              inputProps={{
+                onChangeText: value => {
                   this.setState({ holder: some(value) });
-                }}
-                autoCapitalize={"words"}
-                placeholderTextColor={variables.brandLightGray}
-                placeholder={I18n.t("wallet.dummyCard.values.name")}
-              />
-            </Item>
+                },
+                value: this.state.holder.getOrElse(""),
+                autoCapitalize: "words"
+              }}
+            />
 
             <View spacer={true} />
-            <Item style={styles.noBottomLine}>
-              <Text>{I18n.t("wallet.dummyCard.labels.number")}</Text>
-            </Item>
-            <Item style={styles.bottomLine}>
-              <Icon
-                size={variables.iconSize3}
-                color={variables.brandDarkGray}
-                name="io-carta"
-              />
-              <Input
-                onChangeText={this.onPanChange}
-                value={this.state.pan.getOrElse("")}
-                keyboardType={"numeric"}
-                maxLength={23}
-                placeholderTextColor={variables.brandLightGray}
-                placeholder={I18n.t("wallet.dummyCard.values.number")}
-              />
-            </Item>
+
+            <LabelledItem
+              label={I18n.t("wallet.dummyCard.labels.pan")}
+              icon="io-carta"
+              placeholder={I18n.t("wallet.dummyCard.values.pan")}
+              inputProps={{
+                onChangeText: this.onPanChange,
+                value: this.state.pan.getOrElse(""),
+                keyboardType: "numeric",
+                maxLength: 23
+              }}
+            />
 
             <View spacer={true} />
             <Grid>
               <Col>
-                <Item style={styles.noBottomLine}>
-                  <Text>{I18n.t("wallet.dummyCard.labels.expires")}</Text>
-                </Item>
-                <Item style={styles.bottomLine}>
-                  <Icon
-                    size={variables.iconSize3}
-                    color={variables.brandDarkGray}
-                    name="io-calendario"
-                  />
-                  <Input
-                    onChangeText={this.onExpirationDateChange}
-                    value={this.state.expirationDate.getOrElse("")}
-                    keyboardType={"numeric"}
-                    placeholderTextColor={variables.brandLightGray}
-                    placeholder={I18n.t("wallet.dummyCard.values.expires")}
-                  />
-                </Item>
+                <LabelledItem
+                  label={I18n.t("wallet.dummyCard.labels.expirationDate")}
+                  icon="io-calendario"
+                  placeholder={I18n.t("wallet.dummyCard.values.expirationDate")}
+                  inputProps={{
+                    onChangeText: this.onExpirationDateChange,
+                    value: this.state.expirationDate.getOrElse(""),
+                    keyboardType: "numeric"
+                  }}
+                />
               </Col>
               <Col style={styles.verticalSpacing} />
               <Col>
-                <Item style={styles.noBottomLine}>
-                  <Text>{I18n.t("wallet.dummyCard.labels.csc")}</Text>
-                </Item>
-                <Item style={styles.bottomLine}>
-                  <Icon
-                    size={variables.iconSize3}
-                    color={variables.brandDarkGray}
-                    name="io-lucchetto"
-                  />
-                  <Input
-                    onChangeText={value => {
+                <LabelledItem
+                  label={I18n.t("wallet.dummyCard.labels.securityCode")}
+                  icon="io-lucchetto"
+                  placeholder={I18n.t("wallet.dummyCard.values.securityCode")}
+                  inputProps={{
+                    onChangeText: value => {
                       this.setState({ securityCode: some(value) });
-                    }}
-                    keyboardType={"numeric"}
-                    maxLength={4}
-                    secureTextEntry={true}
-                    placeholderTextColor={variables.brandLightGray}
-                    placeholder={I18n.t("wallet.dummyCard.values.csc")}
-                  />
-                </Item>
+                    },
+                    value: this.state.securityCode.getOrElse(""),
+                    keyboardType: "numeric",
+                    maxLength: 4,
+                    secureTextEntry: true
+                  }}
+                />
               </Col>
             </Grid>
 
@@ -231,7 +205,6 @@ export class AddCardScreen extends React.Component<Props, State> {
             <Item style={styles.noBottomLine}>
               <Text>{I18n.t("wallet.acceptedCards")}</Text>
             </Item>
-
             <Item last={true} style={styles.noBottomLine}>
               <WrappedGrid
                 cols={4}
@@ -247,9 +220,7 @@ export class AddCardScreen extends React.Component<Props, State> {
           <Button
             block={true}
             primary={true}
-            onPress={() =>
-              this.props.navigation.navigate(ROUTES.WALLET_HOME)
-            }
+            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>

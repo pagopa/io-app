@@ -196,16 +196,16 @@
     "addCardTitle": "Card details",
     "dummyCard": {
       "labels": {
-        "name": "Card holder",
-        "number": "Card number",
-        "expires": "Expiration date",
-        "csc": "Card security code"
+        "holder": "Card holder",
+        "pan": "Card number",
+        "expirationDate": "Expiration date",
+        "securityCode": "Card security code"
       },
       "values": {
-        "name": "John Doe",
-        "number": "0000 0000 0000 0000",
-        "expires": "mm/yy",
-        "csc": "•••"
+        "holder": "John Doe",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/yy",
+        "securityCode": "•••"
       }
     },
     "acceptedCards": "Accepted cards",
