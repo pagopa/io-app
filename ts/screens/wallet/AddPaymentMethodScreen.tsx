@@ -26,10 +26,10 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import AddNewPaymentMethodComponent from "../../components/wallet/payWith/addNewPaymentMethodComponent";
 import I18n from "../../i18n";
-import IconFont from "../../components/ui/IconFont";
 import variables from "../../theme/variables";
 import { TransactionSummary } from "../../types/wallet";
 
