@@ -153,7 +153,27 @@
     "newPaymentMethod": {
       "add": "add",
       "addButton": "Add payment method",
+      "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
+    },
+    "ConfirmPayment": {
+      "header":"Confirm transaction",
+      "cancel":"CANCEL",
+      "cancelPayment":"Cancel the transaction",
+      "goToPay":"Confirm and pay",
+      "askConfirm":"Want to proceed with the transaction?",
+      "partialAmount":"Amount to pay",
+      "fee":"Fee",
+      "why":"Why?",
+      "totalAmount":"Total amount",
+      "info":"Warning: after this step it will not be possible to come back",
+      "info2":"You are using your favourite payment method.",
+      "changeMethod":"Change the payment method"
+    },
+    "payWith": {
+      "header":"Choose payment method",
+      "title":"Pay with",
+      "info":"Choose one saved payment method or add a new one"
     },
     "firstTransactionSummary":{
       "header": "Transaction notice summary",
