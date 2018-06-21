@@ -4,105 +4,59 @@
  * From here, they can select their payment method
  * of choice (although only credit cards will be allowed
  * initially).
+ *
+ * This screen allows also to add a new payment method after a transaction is identified
+ * the header banner provide a summary on the transaction to perform.
+ *
  * Keep in mind that the rest of the "add credit card" process
  * is handled @https://www.pivotaltracker.com/story/show/157838293
  */
-import * as React from "react";
-import I18n from "../../i18n";
-
-import color from "color";
 import {
   Body,
   Button,
   Container,
   Content,
-  Grid,
   H1,
   Left,
-  ListItem,
-  Right,
-  Row,
   Text,
   View
 } from "native-base";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { WalletAPI } from "../../api/wallet/wallet-api";
+import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
-import Modal from "../../components/ui/Modal";
-import ROUTES from "../../navigation/routes";
+import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
+import AddNewPaymentMethodComponent from "../../components/wallet/payWith/addNewPaymentMethodComponent";
+import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import { TransactionSummary } from "../../types/wallet";
+
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type State = Readonly<{
-  isTosModalVisible: boolean;
-}>;
+const transaction: Readonly<
+  TransactionSummary
+> = WalletAPI.getTransactionSummary();
 
-type Route = keyof typeof ROUTES;
-interface IPaymentMethod {
-  navigateTo: Route | undefined;
-  name: string;
-  maxFee: string;
-  icon: any;
-}
-
-const paymentMethods: ReadonlyArray<IPaymentMethod> = [
-  {
-    navigateTo: undefined, // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
-    name: I18n.t("wallet.methods.card.name"),
-    maxFee: I18n.t("wallet.methods.card.maxFee"),
-    icon: "io-48-card"
-  },
-  {
-    navigateTo: undefined,
-    name: I18n.t("wallet.methods.bank.name"),
-    maxFee: I18n.t("wallet.methods.bank.maxFee"),
-    icon: "io-48-bank"
-  },
-  {
-    navigateTo: undefined,
-    name: I18n.t("wallet.methods.mobile.name"),
-    maxFee: I18n.t("wallet.methods.mobile.maxFee"),
-    icon: "io-48-phone"
-  }
-];
-
-const AddMethodStyle = StyleSheet.create({
-  paymentMethodEntry: {
-    marginLeft: 0,
-    paddingRight: 0,
-    height: 75
-  },
-  transactionText: {
-    fontSize: variables.fontSize1,
-    color: color(variables.colorWhite)
-      .darken(0.35)
-      .string()
-  },
-  centeredContents: {
-    alignItems: "center"
-  },
-  containedImage: {
-    width: "100%",
-    resizeMode: "contain"
-  }
-});
-
-// TODO: replace the contextual help with the appropriate
-// component @https://www.pivotaltracker.com/story/show/157874540
-export class AddPaymentMethodScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isTosModalVisible: false
-    };
+export class AddPaymentMethodScreen extends React.Component<Props, never> {
+  /**
+   * if it return true, the screen includes:
+   * - a different title inside the header
+   * - the banner with the summary of the transaction
+   * - the visualization of the title "Pay with"
+   * TODO:
+   * - implement the code so that when the screen is accessed during the identification of a
+   *    transaction, the banner and the title are displayed
+   *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
+   */
+  private isInTransaction() {
+    return true;
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
-
     return (
       <Container>
         <AppHeader>
@@ -115,80 +69,41 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             </Button>
           </Left>
           <Body>
-            <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
+            {this.isInTransaction() ? (
+              <Text> {I18n.t("wallet.payWith.header")} </Text>
+            ) : (
+              <Text> {I18n.t("wallet.addPaymentMethodTitle")} </Text>
+            )}
           </Body>
         </AppHeader>
-        <Content>
-          <Text>{I18n.t("wallet.chooseMethod")}</Text>
-          <View spacer={true} large={true} />
-          <FlatList
-            removeClippedSubviews={false}
-            data={paymentMethods}
-            keyExtractor={item => item.name}
-            renderItem={itemInfo => (
-              <ListItem
-                style={AddMethodStyle.paymentMethodEntry}
-                onPress={() =>
-                  itemInfo.item.navigateTo
-                    ? navigate(itemInfo.item.navigateTo)
-                    : undefined
-                }
-              >
-                <Left>
-                  <Grid>
-                    <Row>
-                      <Text bold={true}>{itemInfo.item.name}</Text>
-                    </Row>
-                    <Row>
-                      <Text style={AddMethodStyle.transactionText}>
-                        {itemInfo.item.maxFee}
-                      </Text>
-                    </Row>
-                  </Grid>
-                </Left>
-                <Right style={AddMethodStyle.centeredContents}>
-                  <IconFont
-                    name={itemInfo.item.icon}
-                    color={variables.brandPrimary}
-                    size={variables.iconSize6}
-                  />
-                </Right>
-              </ListItem>
+        <Content noPadded={true}>
+          {this.isInTransaction() && (
+            <PaymentBannerComponent
+              navigation={this.props.navigation}
+              paymentReason={transaction.paymentReason}
+              currentAmount={transaction.totalAmount.toString()}
+              entity={transaction.entityName}
+            />
+          )}
+          <View style={WalletStyles.paddedLR}>
+            <View spacer={true} large={true} />
+            {this.isInTransaction() && (
+              <H1> {I18n.t("wallet.payWith.title")} </H1>
             )}
-          />
-          <View spacer={true} large={true} />
-          <Text
-            link={true}
-            onPress={(): void => this.setState({ isTosModalVisible: true })}
-          >
-            {I18n.t("wallet.whyFee")}
-          </Text>
+            <View spacer={true} />
+            <AddNewPaymentMethodComponent navigation={this.props.navigation} />
+          </View>
         </Content>
-
         <View footer={true}>
           <Button
             block={true}
-            cancel={true}
+            light={true}
+            bordered={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
-
-        <Modal isVisible={this.state.isTosModalVisible} fullscreen={true}>
-          <View header={true}>
-            <TouchableOpacity
-              onPress={(): void => this.setState({ isTosModalVisible: false })}
-            >
-              <IconFont name="io-close" size={variables.iconSize3} />
-            </TouchableOpacity>
-          </View>
-          <Content>
-            <H1>{I18n.t("why_a_fee.title")}</H1>
-            <View spacer={true} large={true} />
-            <Text>{I18n.t("why_a_fee.content")}</Text>
-          </Content>
-        </Modal>
       </Container>
     );
   }

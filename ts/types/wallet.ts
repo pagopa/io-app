@@ -1,3 +1,5 @@
+import { ImageSource } from "react-native-vector-icons/Icon";
+
 /**
  * Definition of other types required
  * by the app
@@ -47,8 +49,8 @@ export type WalletTransaction = {
   id: number;
   cardId: number;
   isoDatetime: string;
-  date: string;
-  time: string;
+  date: string; // it could be the same of date, having date as date.toLocaleDateString() TODO: @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
+  time: string; // it could be the same of date, having date as date.toLocaleTimeString() TODO: @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
   paymentReason: string;
   recipient: string;
   amount: number;
@@ -70,3 +72,24 @@ export const UNKNOWN_TRANSACTION: WalletTransaction = {
   transactionCost: 0,
   isNew: false
 };
+
+/**
+ * This type represents a transaction Manager. One manager should be associated to each payment method not handled by PagoPA
+ */
+export type TransactionManager = Readonly<{
+  id: number;
+  maxFee: number;
+  icon: ImageSource;
+}>;
+
+/**
+ * This type represent the details of a transaction the user should display
+ * to see summary of the transaction.
+ */
+export type TransactionSummary = Readonly<{
+  currentAmount: number;
+  fee: number;
+  totalAmount: number; // it should be obtained as sum of the "currrentAmount" and the "fee"
+  paymentReason: string;
+  entityName: string;
+}>;

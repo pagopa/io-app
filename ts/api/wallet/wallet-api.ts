@@ -6,12 +6,11 @@
  */
 
 // Required to build user-displayable contents (e.g. "last used ...")
-import I18n from "../../i18n";
-
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import I18n from "../../i18n";
 import { CreditCard } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
-import { NotifiedTransaction } from "../../types/wallet";
+import { TransactionManager, WalletTransaction } from "../../types/wallet";
+import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 
 // temporarily making this a variable
@@ -19,6 +18,24 @@ import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 /**
  * Mocked wallet data
  */
+const managers: ReadonlyArray<TransactionManager> = [
+  {
+    id: 1,
+    maxFee: 1.3,
+    icon: require("../../../img/wallet/Managers/Poste_Italiane1x.png")
+  },
+  {
+    id: 2,
+    maxFee: 1.0,
+    icon: require("../../../img/wallet/Managers/Unicredit1x.png")
+  },
+  {
+    id: 2,
+    maxFee: 0.5,
+    icon: require("../../../img/wallet/Managers/Nexi1x.png")
+  }
+];
+
 const cards: ReadonlyArray<CreditCard> = [
   {
     id: 1,
@@ -65,7 +82,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isoDatetime: "2018-04-17T07:34:00.000Z",
     paymentReason: "Certificato di residenza",
     recipient: "Comune di Gallarate",
-    amount: -20.02,
+    amount: 20.02,
     currency: "EUR",
     transactionCost: 0.5,
     isNew: true
@@ -78,7 +95,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isoDatetime: "2018-04-16T15:01:00.000Z",
     paymentReason: "Spesa Supermarket",
     recipient: "Segrate",
-    amount: -74.1,
+    amount: 74.1,
     currency: "EUR",
     transactionCost: 0.5,
     isNew: true
@@ -107,7 +124,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 100.1,
     currency: "USD",
     transactionCost: 0.5,
-    isNew: false
+    isNew: true
   },
   {
     id: 5,
@@ -118,9 +135,9 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Esecuzione atti notarili",
     recipient: "Comune di Legnano",
     transactionCost: 0.5,
-    amount: -56.0,
+    amount: 56.0,
     currency: "EUR",
-    isNew: false
+    isNew: true
   },
   {
     id: 6,
@@ -130,10 +147,10 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     isoDatetime: "2018-01-01T23:34:00.000Z",
     paymentReason: "Pizzeria Da Gennarino",
     recipient: "Busto Arsizio",
-    amount: -45.0,
+    amount: 45.0,
     currency: "EUR",
     transactionCost: 0.5,
-    isNew: false
+    isNew: true
   },
   {
     id: 7,
@@ -146,7 +163,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     amount: 150.2,
     currency: "EUR",
     transactionCost: 0,
-    isNew: false
+    isNew: true
   },
   {
     id: 8,
@@ -157,9 +174,9 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Ristorante I Pini",
     recipient: "Busto Arsizio",
     transactionCost: 0,
-    amount: -134.0,
+    amount: 134.0,
     currency: "EUR",
-    isNew: false
+    isNew: true
   },
   {
     id: 9,
@@ -170,11 +187,19 @@ const transactions: ReadonlyArray<WalletTransaction> = [
     paymentReason: "Estetista Estella",
     recipient: "Milano - via Parini 12",
     transactionCost: 0.5,
-    amount: -100.0,
+    amount: 100.0,
     currency: "EUR",
-    isNew: false
+    isNew: true
   }
 ];
+
+const transactionSummary: Readonly<TransactionSummary> = {
+  currentAmount: 199.0,
+  fee: 1.5,
+  totalAmount: 200.5,
+  paymentReason: "Tari 2018",
+  entityName: "Comune di Gallarate"
+};
 
 const notifiedTransaction: Readonly<NotifiedTransaction> = {
   noticeCode: "112324875636161",
@@ -219,6 +244,18 @@ export class WalletAPI {
     ReadonlyArray<WalletTransaction>
   > {
     return transactions;
+  }
+
+  public static getTransaction(id: number): Readonly<WalletTransaction> {
+    return transactions[id];
+  }
+
+  public static getManagers(): ReadonlyArray<TransactionManager> {
+    return managers;
+  }
+
+  public static getTransactionSummary(): Readonly<TransactionSummary> {
+    return transactionSummary;
   }
 
   public static getNotifiedTransaction(): Readonly<NotifiedTransaction> {
