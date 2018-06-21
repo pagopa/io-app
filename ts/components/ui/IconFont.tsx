@@ -15,10 +15,9 @@ type Props = Readonly<IconProps>;
 class IconFont extends React.Component<Props> {
   public render() {
     const { color, size, style } = this.props;
-    const colorOverride = color;
     const styleOverride = StyleSheet.flatten([
       style,
-      color !== undefined ? { color: colorOverride } : {},
+      color !== undefined ? { color } : {},
       size !== undefined ? { fontSize: size } : {}
     ]);
     return <Icon {...this.props} style={styleOverride} />;
