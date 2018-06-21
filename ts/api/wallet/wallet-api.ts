@@ -6,12 +6,12 @@
  */
 
 // Required to build user-displayable contents (e.g. "last used ...")
-import I18n from "../../i18n";
-
-import { TransactionManager, WalletTransaction } from "../../types/wallet";
-
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import I18n from "../../i18n";
 import { CreditCard } from "../../types/CreditCard";
+import { TransactionManager, WalletTransaction } from "../../types/wallet";
+import { NotifiedTransaction } from "../../types/wallet";
+import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 
 // temporarily making this a variable
 // (to mock the deleteCreditCard() api more easily)
@@ -193,6 +193,33 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   }
 ];
 
+const notifiedTransaction: Readonly<NotifiedTransaction> = {
+  noticeCode: "112324875636161",
+  notifiedAmount: 199.0,
+  currentAmount: 215.0,
+  expireDate: new Date("03/01/2018"),
+  tranche: "unica",
+  paymentReason: "Tari 2018",
+  cbill: "A0EDT",
+  iuv: "111116000001580"
+};
+
+const transactionEntity: Readonly<TransactionEntity> = {
+  code: "01199250158",
+  name: "Comune di Gallarate - Settore Tributi",
+  address: "Via Cavour n.2 - Palazzo Broletto,21013",
+  city: "Gallarate (VA)",
+  tel: "0331.754224",
+  webpage: "www.comune.gallarate.va.it",
+  email: "tributi@coumne.gallarate.va.it",
+  pec: "protocollo@pec.comune.gallarate.va.it"
+};
+
+const transactionSubject: Readonly<TransactionSubject> = {
+  name: "Mario Rossi",
+  address: "Via Murillo 8, 20149 Milano (MI)"
+};
+
 /**
  * Mocked Wallet API
  */
@@ -213,5 +240,17 @@ export class WalletAPI {
 
   public static getManagers(): ReadonlyArray<TransactionManager> {
     return managers;
+  }
+
+  public static getNotifiedTransaction(): Readonly<NotifiedTransaction> {
+    return notifiedTransaction;
+  }
+
+  public static getTransactionEntity(): Readonly<TransactionEntity> {
+    return transactionEntity;
+  }
+
+  public static getTransactionSubject(): Readonly<TransactionSubject> {
+    return transactionSubject;
   }
 }

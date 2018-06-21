@@ -17,7 +17,7 @@ export default (): Theme => {
   return {
     ".block": {
       ".iconVeryLeft": {
-        "NativeBase.Icon": {
+        "UIComponents.IconFont": {
           flex: 0,
           borderRightWidth: 1,
           borderColor: "#FFFFFF",
@@ -32,10 +32,12 @@ export default (): Theme => {
         justifyContent: "flex-start"
       }
     },
+
     ".small": {
       height: variables.btnSmallHeight,
       "NativeBase.Text": { fontSize: variables.btnSmallFontSize }
     },
+
     ".light": {
       ".bordered": {
         "NativeBase.Text": { color: variables.btnLightTextColor },
@@ -44,6 +46,7 @@ export default (): Theme => {
         backgroundColor: variables.brandLight
       }
     },
+
     ".white": { backgroundColor: "#FFFFFF" },
     ".cancel": {
       backgroundColor: variables.brandDarkGray,
@@ -51,10 +54,12 @@ export default (): Theme => {
         color: variables.colorWhite
       }
     },
+
     "NativeBase.Text": {
       ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize
     },
+
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,
     elevation: 0,

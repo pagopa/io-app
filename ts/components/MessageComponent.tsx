@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { Icon, Left, ListItem, Right, Text } from "native-base";
+import { Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
+import IconFont from "../components/ui/IconFont";
 import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 
 export type OwnProps = Readonly<{
@@ -39,7 +40,7 @@ class MessageComponent extends React.Component<Props> {
           <Text formatDate={true}>
             {convertDateToWordDistance(new Date(created_at))}
           </Text>
-          <Icon name="chevron-right" />
+          <IconFont name="io-right" />
         </Right>
       </ListItem>
     );
