@@ -10,7 +10,7 @@ import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import I18n from "../../i18n";
 import { CreditCard } from "../../types/CreditCard";
 import { TransactionManager, WalletTransaction } from "../../types/wallet";
-import { NotifiedTransaction } from "../../types/wallet";
+import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 
 // temporarily making this a variable
@@ -193,6 +193,14 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   }
 ];
 
+const transactionSummary: Readonly<TransactionSummary> = {
+  currentAmount: 199.0,
+  fee: 1.5,
+  totalAmount: 200.5,
+  paymentReason: "Tari 2018",
+  entityName: "Comune di Gallarate"
+};
+
 const notifiedTransaction: Readonly<NotifiedTransaction> = {
   noticeCode: "112324875636161",
   notifiedAmount: 199.0,
@@ -240,6 +248,10 @@ export class WalletAPI {
 
   public static getManagers(): ReadonlyArray<TransactionManager> {
     return managers;
+  }
+
+  public static getTransactionSummary(): Readonly<TransactionSummary> {
+    return transactionSummary;
   }
 
   public static getNotifiedTransaction(): Readonly<NotifiedTransaction> {

@@ -14,6 +14,7 @@ import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
+import PlaceholderScreen from "../screens/PlaceholderScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import WalletNavigator from "./WalletNavigator";
@@ -81,10 +82,10 @@ const navigation = TabNavigator(
       screen: WalletNavigator
     },
     [ROUTES.DOCUMENTS_HOME]: {
-      screen: WalletNavigator
+      screen: PlaceholderScreen
     },
     [ROUTES.PREFERENCES_HOME]: {
-      screen: WalletNavigator
+      screen: PlaceholderScreen
     },
     [ROUTES.MAIN_PROFILE]: {
       screen: ProfileScreen
