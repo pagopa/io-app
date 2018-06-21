@@ -1,3 +1,5 @@
+import { ImageSource } from "react-native-vector-icons/Icon";
+
 /**
  * Definition of other types required
  * by the app
@@ -72,10 +74,18 @@ export const UNKNOWN_TRANSACTION: WalletTransaction = {
 };
 
 /**
+ * This type represents a transaction Manager. One manager should be associated to each payment method not handled by PagoPA
+ */
+export type TransactionManager = Readonly<{
+  id: number;
+  maxFee: number;
+  icon: ImageSource;
+}>;
+
+/**
  * This type represent the details of a transaction the user should display
  * to see summary of the transaction.
  */
-
 export type TransactionSummary = Readonly<{
   currentAmount: number;
   fee: number;

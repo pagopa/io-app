@@ -156,6 +156,14 @@
       "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
+    "addManager": {
+      "title":"Choose the manager",
+      "info":"This card does not belong to the PagoPA payment network.",
+      "infoBold":"Choose the economic operator",
+      "info2":"which will have to manage yout payment.",
+      "link":"Find out more",
+      "maxFee":"Maximum fee"
+    },
     "ConfirmPayment": {
       "header":"Confirm transaction",
       "cancel":"CANCEL",
