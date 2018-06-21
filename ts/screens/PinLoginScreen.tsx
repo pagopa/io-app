@@ -1,9 +1,10 @@
-import { Button, Container, Content, Icon, Text, View } from "native-base";
+import { Button, Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import Pinpad from "../components/Pinpad";
+import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
 import I18n from "../i18n";
 import { validatePin } from "../store/actions/pinlogin";
@@ -44,7 +45,7 @@ class PinLoginScreen extends React.Component<Props> {
   public renderCodeInputConfirmValidation = () => {
     const validationMessage = (
       <TextWithIcon danger={true}>
-        <Icon name={"cross"} />
+        <IconFont name="io-close" />
         <Text>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );

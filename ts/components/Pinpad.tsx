@@ -5,7 +5,7 @@ import CodeInput from "react-native-confirmation-code-input";
 import variables from "../theme/variables";
 import { PIN_LENGTH } from "../utils/constants";
 
-type OwnProps = {
+type OwnProps = Readonly<{
   autofocus: boolean;
   compareWithCode?: string;
   inactiveColor: string;
@@ -14,7 +14,7 @@ type OwnProps = {
   onFulfill:
     | ((code: string) => void)
     | ((isValid: boolean, code: string) => void);
-};
+}>;
 
 type Props = OwnProps;
 

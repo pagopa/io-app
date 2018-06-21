@@ -28,9 +28,9 @@ import {
 import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import Modal from "../../components/ui/Modal";
 import ROUTES from "../../navigation/routes";
-import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -111,7 +111,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
               transparent={true}
               onPress={_ => this.props.navigation.goBack()}
             >
-              <Icon name="io-back" size={variables.iconSize3} />
+              <IconFont name="io-back" size={variables.iconSize3} />
             </Button>
           </Left>
           <Body>
@@ -147,7 +147,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
                   </Grid>
                 </Left>
                 <Right style={AddMethodStyle.centeredContents}>
-                  <Icon
+                  <IconFont
                     name={itemInfo.item.icon}
                     color={variables.brandPrimary}
                     size={variables.iconSize6}
@@ -180,7 +180,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, State> {
             <TouchableOpacity
               onPress={(): void => this.setState({ isTosModalVisible: false })}
             >
-              <Icon name="io-close" size={variables.iconSize3} />
+              <IconFont name="io-close" size={variables.iconSize3} />
             </TouchableOpacity>
           </View>
           <Content>
