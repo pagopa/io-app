@@ -14,9 +14,9 @@ import * as React from "react";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
 import { CreditCard } from "../../types/CreditCard";
 import { WalletStyles } from "../styles/wallet";
@@ -151,10 +151,12 @@ export class WalletLayout extends React.Component<Props> {
               onPress={_ => this.props.navigation.goBack()}
             >
               {this.props.allowGoBack && (
-                <Icon
-                  color={variables.colorWhite}
-                  size={variables.iconSize3}
+                <IconFont
                   name="io-back"
+                  style={{
+                    color: variables.colorWhite,
+                    fontSize: variables.iconSize3
+                  }}
                 />
               )}
             </Button>
@@ -176,11 +178,7 @@ export class WalletLayout extends React.Component<Props> {
         {this.props.showPayButton && (
           <View footer={true}>
             <Button block={true}>
-              <Icon
-                name="io-qr"
-                color={variables.colorWhite}
-                size={variables.iconSize2}
-              />
+              <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
           </View>

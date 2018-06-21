@@ -5,7 +5,6 @@ import {
   Content,
   H1,
   H3,
-  Icon,
   Left,
   Text,
   View
@@ -14,6 +13,7 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { acceptTos } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
@@ -38,7 +38,7 @@ class TosScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={_ => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>

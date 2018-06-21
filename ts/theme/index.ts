@@ -10,6 +10,7 @@ import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
 import h3Theme from "./components/H3";
 import headerTheme from "./components/Header";
+import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
 import messageComponent from "./components/MessageComponent";
 import modalTheme from "./components/Modal";
@@ -49,6 +50,9 @@ const theme = (): Theme => {
     },
     "UIComponents.TextWithIcon": {
       ...textWithIconTheme()
+    },
+    "UIComponents.IconFont": {
+      ...iconFontTheme()
     },
     "NativeBase.ViewNB": {
       ...viewTheme()
