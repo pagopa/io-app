@@ -86,7 +86,7 @@ export class FirstTransactionSummaryScreen extends React.Component<
           </Body>
         </AppHeader>
 
-        <Content original={true}>
+        <Content noPadded={true}>
           <Grid style={[styles.padded, WalletStyles.backContent]}>
             <Row>
               <Col size={5}>
