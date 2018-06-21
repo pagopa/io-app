@@ -13,7 +13,6 @@ import { TabBarBottom, TabNavigator } from "react-navigation";
 import I18n from "../i18n";
 import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
-import PlaceholderScreen from "../screens/PlaceholderScreen";
 import Icon from "../theme/font-icons/io-icon-font";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
@@ -82,10 +81,10 @@ const navigation = TabNavigator(
       screen: WalletNavigator
     },
     [ROUTES.DOCUMENTS_HOME]: {
-      screen: PlaceholderScreen
+      screen: WalletNavigator
     },
     [ROUTES.PREFERENCES_HOME]: {
-      screen: PlaceholderScreen
+      screen: WalletNavigator
     },
     [ROUTES.MAIN_PROFILE]: {
       screen: ProfileScreen
