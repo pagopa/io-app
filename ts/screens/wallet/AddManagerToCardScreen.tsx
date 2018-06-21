@@ -48,6 +48,11 @@ const style = StyleSheet.create({
   feeText: {
     color: variables.brandDarkGray,
     fontSize: variables.fontSize2
+  },
+
+  flexStart: {
+    flexDirection: "row",
+    justifyContent: "flex-start"
   }
 });
 
@@ -101,10 +106,7 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
                     <View spacer={true} />
                     <Row>
                       <Image
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "flex-start"
-                        }}
+                        style={style.flexStart}
                         resizeMode={"contain"}
                         source={item.icon}
                       />
