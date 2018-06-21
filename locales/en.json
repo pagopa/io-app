@@ -204,8 +204,8 @@
       "values": {
         "name": "John Doe",
         "number": "0000 0000 0000 0000",
-        "expires": "mm/aa",
-        "csc": "●●●"
+        "expires": "mm/yy",
+        "csc": "•••"
       }
     },
     "acceptedCards": "Accepted cards",
