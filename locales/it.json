@@ -153,6 +153,13 @@
       "addButton": "Aggiungi un metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
+    "saveCard": {
+      "header":"Salva la carta",
+      "title":"Vuoi salvare questa carta?",
+      "infoTitle":"Imposta la carta come metodo di pagamento preferito",
+      "info":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento",
+      "save":"Salva la carta"
+    },
     "firstTransactionSummary":{
       "header": "Riepilogo avviso di Pagamento",
       "title": "Avviso di pagamento",

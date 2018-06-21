@@ -232,4 +232,8 @@ export class WalletAPI {
   public static getTransactionSubject(): Readonly<TransactionSubject> {
     return transactionSubject;
   }
+
+  public static getCreditCard(index: number): Readonly<CreditCard> {
+    return cards[index];
+  }
 }
