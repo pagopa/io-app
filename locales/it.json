@@ -173,6 +173,26 @@
       "title":"Paga con",
       "info":"Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento"
     },
+    "firstTransactionSummary":{
+      "header": "Riepilogo avviso di Pagamento",
+      "title": "Avviso di pagamento",
+      "amount":"Importo",
+      "expireDate":"Scadenza",
+      "tranche":"Rata",
+      "entity":"Ente creditore:",	
+      "info":"Per informazioni:",
+       "tel":"Tel:",
+      "email":"Email:",
+      "PEC":"PEC:",
+      "recipient":"Destintario:",
+      "object":"Oggetto del pagamento:",
+      "cbillCode":"Codice CBILL:",
+      "iuv":"IUV:",
+      "entityCode2":"Codice Ente/Azienda:",		
+      "updatedAmount":"Importo aggiornato",
+      "updateInfo":"Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi",
+      "moreInfo":"Per saperne di più"
+    },
     "insertManually":{
       "header": "Inserisci dati avviso",
       "title": "Inserisci i dati dell'avviso",

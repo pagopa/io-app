@@ -175,6 +175,26 @@
       "title":"Pay with",
       "info":"Choose one saved payment method or add a new one"
     },
+    "firstTransactionSummary":{
+      "header": "Transaction notice summary",
+      "title": "Transaction notice",
+      "amount":"Amount",
+      "expireDate":"Expire date",
+      "tranche":"Tranche",
+      "entity":"Entity:",	
+      "info":"More info at:",
+      "tel":"Tel:",
+      "email":"Email:",
+      "PEC":"PEC:",
+      "recipient":"Recipient:",
+      "object":"Transaction object:",
+      "cbillCode":"CBILL code:",
+      "iuv":"IUV:",
+      "entityCode2":"Entity/Company code:",
+      "updatedAmount":"Updated amount",
+      "updateInfo":"The pagoPa system updates automatically the amount to ensure you pay the exact amount and to avoid you arrears or additional interests ",
+      "moreInfo":"More details"
+    },
     "insertManually":{
       "header": "Insert notice data",
       "title": "Insert the notice data",

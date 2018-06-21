@@ -63,7 +63,9 @@ const reducer = (
   if (action.type === SELECT_CARD_FOR_DETAILS) {
     return {
       ...state,
-      selectedCardId: some(action.payload.id)
+      selectedCardId: some(
+        typeof action.payload === "number" ? action.payload : action.payload.id
+      )
     };
   }
   return state;

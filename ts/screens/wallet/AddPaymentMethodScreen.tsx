@@ -29,7 +29,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import AddNewPaymentMethodComponent from "../../components/wallet/payWith/addNewPaymentMethodComponent";
 import I18n from "../../i18n";
-import Icon from "../../theme/font-icons/io-icon-font/index";
+import IconFont from "../../components/ui/IconFont";
 import variables from "../../theme/variables";
 import { TransactionSummary } from "../../types/wallet";
 
@@ -65,7 +65,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
               transparent={true}
               onPress={_ => this.props.navigation.goBack()}
             >
-              <Icon name="io-back" size={variables.iconSize3} />
+              <IconFont name="io-back" size={variables.iconSize3} />
             </Button>
           </Left>
           <Body>

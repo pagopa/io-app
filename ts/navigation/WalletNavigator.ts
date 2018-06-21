@@ -3,6 +3,7 @@ import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen
 import { ChoosePaymentMethodScreen } from "../screens/wallet/ChoosePaymentMethodScreen";
 import { ConfirmToProceedTransactionScreen } from "../screens/wallet/ConfirmToProceedTransactionScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
+import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
@@ -35,6 +36,9 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_PAY_WITH]: {
       screen: ChoosePaymentMethodScreen
+    },
+    [ROUTES.WALLET_FIRST_TRANSACTION_SUMMARY]: {
+      screen: FirstTransactionSummaryScreen
     },
     [ROUTES.WALLET_MANUAL_TRANSACTION_IDENTIFICATION]: {
       screen: ManuallyIdentifyTransactionScreen

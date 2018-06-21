@@ -4,7 +4,6 @@ import {
   Container,
   Content,
   H1,
-  Icon,
   Left,
   Text,
   View
@@ -21,6 +20,7 @@ import {
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 type ReduxMappedProps = {
@@ -46,7 +46,7 @@ class SpidInformationRequestScreen extends React.Component<Props> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={_ => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>

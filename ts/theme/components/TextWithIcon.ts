@@ -8,7 +8,7 @@ export default (): Theme => {
         color: variables.brandDanger
       },
 
-      "NativeBase.Icon": {
+      "UIComponents.IconFont": {
         color: variables.brandDanger
       }
     },
@@ -18,7 +18,7 @@ export default (): Theme => {
         color: variables.brandSuccess
       },
 
-      "NativeBase.Icon": {
+      "UIComponents.IconFont": {
         color: variables.brandSuccess
       }
     },
