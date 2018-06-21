@@ -49,8 +49,8 @@ export type WalletTransaction = {
   id: number;
   cardId: number;
   isoDatetime: string;
-  date: string;
-  time: string;
+  date: string; // it could be the same of date, having date as date.toLocaleDateString() TODO: @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
+  time: string; // it could be the same of date, having date as date.toLocaleTimeString() TODO: @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
   paymentReason: string;
   recipient: string;
   amount: number;

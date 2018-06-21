@@ -19,12 +19,13 @@ export const WalletStyles = StyleSheet.create({
   white: {
     color: variables.brandPrimaryInverted
   },
-
+  alignCenter: {
+    alignItems: "center"
+  },
   bottomBorder: {
     borderBottomWidth: 1,
     borderBottomColor: variables.brandGray
   },
-
   addCardItem: {
     borderBottomWidth: variables.headerBorderBottomWidth,
     marginTop: 5,

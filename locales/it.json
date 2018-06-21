@@ -154,6 +154,9 @@
       "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
+    "thanks":"✓ Grazie!",
+    "endPayment":"Il tuo pagamento è concluso",
+    "transactionDetails": "Dettagli dell'operazione",
     "addManager": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
@@ -211,7 +214,6 @@
       "amount": "Importo (€)",
       "proceed": "Procedi con il pagamento"
     },
-    "transactionDetails": "Dettaglio delle operazioni",
     "total": "Totale",
     "payAmount": "Importo da pagare",
     "transactionFee": "Costo operazione",
