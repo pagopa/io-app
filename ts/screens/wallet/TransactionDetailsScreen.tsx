@@ -109,6 +109,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const { transaction } = this.props;
+    const dt = new Date(transaction.datetime);
 
     return (
       <WalletLayout
@@ -143,7 +144,7 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              `${transaction.transactionCost}`,
+              `${transaction.fee}`,
               "WIDE"
             )}
             {this.labelValueRow(
@@ -158,12 +159,12 @@ export class TransactionDetailsScreen extends React.Component<Props, never> {
             )}
             {this.labelValueRow(
               I18n.t("wallet.date"),
-              transaction.date,
+              dt.toLocaleDateString(),
               "WIDE"
             )}
             {this.labelValueRow(
               I18n.t("wallet.time"),
-              transaction.time,
+              dt.toLocaleTimeString(),
               "WIDE"
             )}
           </Grid>

@@ -35,6 +35,12 @@ export const creditCardsSelector = createSelector(
   (cards: IndexedById<CreditCard>): ReadonlyArray<CreditCard> => _.values(cards)
 );
 
+export const creditCardIdsSelector = createSelector(
+  getCards,
+  (cards: IndexedById<CreditCard>): ReadonlyArray<number> =>
+    _.values(cards).map(c => c.id) // not using _.keys as it returns a string[]
+);
+
 export const selectedCreditCardSelector = createSelector(
   getSelectedCreditCardId,
   getCards,
@@ -63,7 +69,9 @@ const reducer = (
   if (action.type === SELECT_CARD_FOR_DETAILS) {
     return {
       ...state,
-      selectedCardId: some(action.payload.id)
+      selectedCardId: some(
+        typeof action.payload === "number" ? action.payload : action.payload.id
+      )
     };
   }
   return state;

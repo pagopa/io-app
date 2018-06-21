@@ -36,7 +36,7 @@ export const latestTransactionsSelector = createSelector(
   (transactions: IndexedById<WalletTransaction>) =>
     _
       .values(transactions)
-      .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
+      .sort((a, b) => b.datetime.localeCompare(a.datetime))
       .slice(0, 5) // WIP no magic numbers
 );
 

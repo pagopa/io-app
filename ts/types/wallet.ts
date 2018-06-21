@@ -13,27 +13,23 @@
 export type WalletTransaction = {
   id: number;
   cardId: number;
-  isoDatetime: string;
-  date: string;
-  time: string;
+  datetime: string;
   paymentReason: string;
   recipient: string;
   amount: number;
   currency: string;
-  transactionCost: number;
+  fee: number;
   isNew: boolean;
 };
 
 export const UNKNOWN_TRANSACTION: WalletTransaction = {
   id: -1,
   cardId: -1,
-  isoDatetime: "",
-  date: "",
-  time: "",
+  datetime: "",
   paymentReason: "UNKNOWN TRANSACTION",
   recipient: "",
   amount: 0,
   currency: "?",
-  transactionCost: 0,
+  fee: 0,
   isNew: false
 };

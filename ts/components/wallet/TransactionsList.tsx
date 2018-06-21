@@ -29,6 +29,7 @@ import {
 } from "../../store/reducers/wallet/transactions";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
+import { selectCardForDetails } from '../../store/actions/wallet/cards';
 
 type ReduxMappedStateProps = Readonly<{
   transactions: ReadonlyArray<WalletTransaction>;
@@ -36,6 +37,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   selectTransaction: (i: WalletTransaction) => void;
+  selectCard: (item: number) => void;
 }>;
 
 /**
@@ -59,7 +61,7 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  */
 class TransactionsList extends React.Component<Props> {
   private renderDate(transaction: WalletTransaction) {
-    const datetime: string = `${transaction.date} - ${transaction.time}`;
+    const datetime = transaction.datetime;
     return (
       <Row>
         <Left>
@@ -85,6 +87,7 @@ class TransactionsList extends React.Component<Props> {
     <ListItem
       onPress={() => {
         this.props.selectTransaction(item);
+        this.props.selectCard(item.cardId);
         this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
       }}
     >
@@ -167,7 +170,8 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  selectTransaction: item => dispatch(selectTransactionForDetails(item))
+  selectTransaction: item => dispatch(selectTransactionForDetails(item)),
+  selectCard: item => dispatch(selectCardForDetails(item))
 });
 
 export default connect(
