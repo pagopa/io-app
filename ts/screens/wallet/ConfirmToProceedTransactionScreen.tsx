@@ -44,10 +44,6 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
   Props,
   never
 > {
-  constructor(props: Props) {
-    super(props);
-  }
-
   private goBack() {
     this.props.navigation.goBack();
   }
