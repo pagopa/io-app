@@ -5,7 +5,7 @@ declare module "native-base" {
   namespace NativeBase {
     interface Content {
       alternative?: boolean;
-      original?: boolean;
+      noPadded?: boolean;
       primary?: boolean;
       noPadded?: true;
     }
@@ -17,7 +17,7 @@ export default (): Theme => {
     ".alternative": {
       backgroundColor: variables.contentAlternativeBackground
     },
-    ".original": {
+    ".noPadded": {
       padding: 0
     },
     ".primary": {

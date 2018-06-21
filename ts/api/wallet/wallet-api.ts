@@ -10,7 +10,7 @@ import I18n from "../../i18n";
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreditCard } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
+import { TransactionSummary, WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 
@@ -176,6 +176,14 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   }
 ];
 
+const transactionSummary: Readonly<TransactionSummary> = {
+  currentAmount: 199.0,
+  fee: 1.5,
+  totalAmount: 200.5,
+  paymentReason: "Tari 2018",
+  entityName: "Comune di Gallarate"
+};
+
 const notifiedTransaction: Readonly<NotifiedTransaction> = {
   noticeCode: "112324875636161",
   notifiedAmount: 199.0,
@@ -223,6 +231,10 @@ export class WalletAPI {
 
   public static getTransaction(id: number): Readonly<WalletTransaction> {
     return transactions[id];
+  }
+  
+  public static getTransactionSummary(): Readonly<TransactionSummary> {
+    return transactionSummary;
   }
 
   public static getNotifiedTransaction(): Readonly<NotifiedTransaction> {

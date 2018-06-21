@@ -151,11 +151,31 @@
     "newPaymentMethod": {
       "add": "aggiungi",
       "addButton": "Aggiungi un metodo di pagamento",
+      "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
     "transactionDetails": "Dettagli dell'operazione",
+    "ConfirmPayment": {
+      "header":"Conferma pagamento",
+      "cancel":"ANNULLA",
+      "cancelPayment":"Annulla il pagamento",
+      "goToPay":"Conferma e paga",
+      "askConfirm":"Confermi il pagamento?",
+      "partialAmount":"Importo da pagare",
+      "fee":"Costi di commissione",
+      "why":"Perchè?",
+      "totalAmount":"Totale",
+      "info":"Attenzione: dopo questo passaggio non sarà più possibile annullare",
+      "info2":"Stai utilizzando il tuo metodo di pagamento preferito.",
+      "changeMethod":"Cambia metodo di pagamento"
+    },
+    "payWith": {
+      "header":"Scelta metodo di pagamamento",
+      "title":"Paga con",
+      "info":"Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento"
+    },
     "firstTransactionSummary":{
       "header": "Riepilogo avviso di Pagamento",
       "title": "Avviso di pagamento",
