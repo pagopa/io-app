@@ -29,14 +29,17 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import I18n from "../../i18n";
 import { TransactionSummary, WalletTransaction } from "../../types/wallet";
 import { CreditCard } from "../../types/CreditCard";
-
+import CreditCardComponent from "../../components/wallet/card";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
+import { GlobalState } from "../../store/reducers/types";
+import { connect } from "react-redux";
 
 /**
  * TODO: integrate with the proper transaction type
  */
 type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
-  transaction: Readonly<WalletTransaction>
+  transaction: Readonly<WalletTransaction>;
 }>;
 
 type OwnProps = Readonly<{
@@ -49,7 +52,7 @@ const transaction: Readonly<
   TransactionSummary
 > = WalletAPI.getTransactionSummary();
 
-export class ConfirmToProceedTransactionScreen extends React.Component<
+class ConfirmToProceedTransactionScreen extends React.Component<
   Props,
   never
 > {
@@ -82,7 +85,13 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
             <View spacer={true} large={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} large={true} />
-            <Text> INTEGRATE CREDIT CARD PREVIEW </Text>
+            <CreditCardComponent
+              navigation={this.props.navigation}
+              item={this.props.card}
+              menu={false}
+              favorite={false}
+              lastUsage={false}
+            />
             <View spacer={true} large={true} />
             <Grid>
               <Row>
@@ -171,5 +180,10 @@ export class ConfirmToProceedTransactionScreen extends React.Component<
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  card: selectedCreditCardSelector(state)
+});
+export default connect(mapStateToProps)(ConfirmToProceedTransactionScreen);
 
 
