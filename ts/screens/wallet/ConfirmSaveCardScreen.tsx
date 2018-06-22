@@ -1,6 +1,6 @@
 /**
  * This screen presents a summary on the credit card after the user
- * insterted the data required to save a new card
+ * inserted the data required to save a new card
  */
 import {
   Body,
