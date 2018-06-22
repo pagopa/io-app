@@ -204,6 +204,9 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
   }
 }
 
+/**
+ * selectors will be reviewed in next pr
+ */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD),
   transaction: transactionForDetailsSelector(state).getOrElse(
