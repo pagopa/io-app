@@ -180,7 +180,8 @@ export class WalletLayout extends React.Component<Props> {
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
-            <Button block={true}>
+            <Button block={true}
+            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER)}>
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
