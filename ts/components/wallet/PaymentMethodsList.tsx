@@ -11,10 +11,10 @@ import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import Icon from "../../../theme/font-icons/io-icon-font/index";
-import variables from "../../../theme/variables";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+import Icon from "../../theme/font-icons/io-icon-font/index";
+import variables from "../../theme/variables";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -71,10 +71,7 @@ const AddMethodStyle = StyleSheet.create({
   }
 });
 
-export default class AddNewPaymentMethodComponent extends React.Component<
-  Props,
-  never
-> {
+export default class PaymentMethodsList extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
 

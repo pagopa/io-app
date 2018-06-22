@@ -28,7 +28,7 @@ import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
-import AddNewPaymentMethodComponent from "../../components/wallet/payWith/addNewPaymentMethodComponent";
+import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { TransactionSummary } from "../../types/wallet";
@@ -53,7 +53,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
    *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
    */
   private isInTransaction() {
-    return true;
+    return false;
   }
 
   public render(): React.ReactNode {
@@ -70,30 +70,34 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
           </Left>
           <Body>
             {this.isInTransaction() ? (
-              <Text> {I18n.t("wallet.payWith.header")} </Text>
+              <Text>{I18n.t("wallet.payWith.header")}</Text>
             ) : (
-              <Text> {I18n.t("wallet.addPaymentMethodTitle")} </Text>
+              <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
             )}
           </Body>
         </AppHeader>
-        <Content noPadded={true}>
-          {this.isInTransaction() && (
+        {this.isInTransaction() ? (
+          <Content noPadded={true}>
             <PaymentBannerComponent
               navigation={this.props.navigation}
               paymentReason={transaction.paymentReason}
               currentAmount={transaction.totalAmount.toString()}
               entity={transaction.entityName}
             />
-          )}
-          <View style={WalletStyles.paddedLR}>
-            <View spacer={true} large={true} />
-            {this.isInTransaction() && (
-              <H1> {I18n.t("wallet.payWith.title")} </H1>
-            )}
-            <View spacer={true} />
-            <AddNewPaymentMethodComponent navigation={this.props.navigation} />
-          </View>
-        </Content>
+            <View style={WalletStyles.paddedLR}>
+              <View spacer={true} large={true} />
+              {this.isInTransaction() && (
+                <H1>{I18n.t("wallet.payWith.title")}</H1>
+              )}
+              <View spacer={true} />
+              <PaymentMethodsList navigation={this.props.navigation} />
+            </View>
+          </Content>
+        ) : (
+          <Content>
+            <PaymentMethodsList navigation={this.props.navigation} />
+          </Content>
+        )}
         <View footer={true}>
           <Button
             block={true}
