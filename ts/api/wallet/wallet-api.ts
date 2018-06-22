@@ -250,10 +250,6 @@ export class WalletAPI {
     return transactions[id];
   }
 
-  public static getCard(index: number): Readonly<CreditCard> {
-    return cards[index];
-  }
-
   public static getManagers(): ReadonlyArray<TransactionManager> {
     return managers;
   }

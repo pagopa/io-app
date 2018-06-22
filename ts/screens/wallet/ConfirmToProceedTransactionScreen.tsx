@@ -12,7 +12,6 @@ import {
   Container,
   Content,
   H1,
-  Icon,
   Left,
   Text,
   View
@@ -24,6 +23,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import CreditCardComponent from "../../components/wallet/card";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
@@ -75,7 +75,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>
@@ -195,7 +195,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
               cancel={true}
               onPress={_ => this.goBack()}
             >
-              <Text>{I18n.t("wallet.cancel")}</Text>
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
         </View>

@@ -20,6 +20,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import CreditCardComponent from "../../components/wallet/card";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
@@ -27,8 +28,6 @@ import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardsSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
-import Icon from "../../theme/font-icons/io-icon-font/index";
-import variables from "../../theme/variables";
 import { CreditCard } from "../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
@@ -54,7 +53,7 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="io-back" size={variables.iconSize1} />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>
@@ -105,7 +104,7 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
             cancel={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text>{I18n.t("wallet.cancel")}</Text>
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
       </Container>
@@ -113,6 +112,9 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
+/**
+ * selectors will be reviewed in next pr
+ */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   cards: creditCardsSelector(state),
   transaction: transactionForDetailsSelector(state).getOrElse(
