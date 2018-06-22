@@ -6,7 +6,7 @@ import ROUTES from "./routes";
 
 const Messagesnavigation = StackNavigator(
   {
-    [ROUTES.MAIN_MESSAGES]: {
+    [ROUTES.MESSAGES_MAIN]: {
       screen: MessagesScreen
     },
     [ROUTES.MESSAGE_DETAILS]: {

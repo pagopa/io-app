@@ -128,7 +128,7 @@ const navigation = TabNavigator(
     },
     animationEnabled: true,
     swipeEnabled: false,
-    initialRouteName: ROUTES.MAIN_MESSAGES
+    initialRouteName: ROUTES.MESSAGES_MAIN
   }
 );
 

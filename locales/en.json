@@ -304,7 +304,7 @@
     "headerTitle": "Message",
     "detailsLink": {
       "showLabel": "Details of the message",
-      "hideLabel": "Close details",
+      "hideLabel": "Close details"
     },
     "infoLabels": {
       "data": "Data:",

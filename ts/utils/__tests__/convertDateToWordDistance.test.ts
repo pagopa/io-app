@@ -1,5 +1,6 @@
 import { addHours, addYears, format } from "date-fns";
 import { convertDateToWordDistance } from "../convertDateToWordDistance";
+import I18n from '../../i18n'
 
 describe("convertDateToWordDistance test plan", () => {
   it("should compare now date with 2 hours earlier, expected  hh:mm", () => {
@@ -11,7 +12,7 @@ describe("convertDateToWordDistance test plan", () => {
   it("should compare now date with 24 hours earlier, expected yesterday", () => {
     const nowDate = new Date();
     const testDate = addHours(nowDate, -24);
-    expect(convertDateToWordDistance(testDate)).toBe("yesterday");
+    expect(convertDateToWordDistance(testDate)).toBe(I18n.t("messages.yesterday"));
   });
   // tslint:disable-next-line:no-identical-functions
   it("should compare now date with 48 hours earlier, expected DD/MM", () => {
