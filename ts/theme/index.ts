@@ -13,8 +13,8 @@ import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
 import messageComponent from "./components/MessageComponent";
-import messageDetailsComponent from "./components/MessageDetailsComponent";
-import messageDetailsInfoComponent from "./components/MessageDetailsInfoComponent";
+import messageDetailsComponentTheme from "./components/MessageDetailsComponent";
+import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
 import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
@@ -69,10 +69,10 @@ const theme = (): Theme => {
       ...tabContainerTheme()
     },
     "UIComponent.MessageDetailsComponent": {
-      ...messageDetailsComponent()
+      ...messageDetailsComponentTheme()
     },
     "UIComponent.MessageDetailsInfoComponent": {
-      ...messageDetailsInfoComponent()
+      ...messageDetailsInfoComponentTheme()
     }
   };
 
