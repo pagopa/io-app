@@ -8,7 +8,6 @@ import {
   Container,
   Content,
   H1,
-  Icon,
   Left,
   Text,
   View
@@ -19,6 +18,7 @@ import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import CreditCardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
@@ -36,21 +36,21 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedStateProps;
 
 type State = Readonly<{
-  isPreferredCard: boolean;
+  isFavoriteCard: boolean;
 }>;
 
 class ConfirmSaveCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isPreferredCard: true
+      isFavoriteCard: true
     };
   }
 
   // It supports switch state changes
   private onValueChange = () => {
     this.setState(prevState => ({
-      isPreferredCard: !prevState.isPreferredCard
+      isFavoriteCard: !prevState.isFavoriteCard
     }));
   };
 
@@ -64,7 +64,7 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>
@@ -88,7 +88,7 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
             </Col>
             <Col size={1}>
               <Switch
-                value={this.state.isPreferredCard}
+                value={this.state.isFavoriteCard}
                 onValueChange={this.onValueChange}
               />
             </Col>
@@ -105,7 +105,7 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
             bordered={true}
             onPress={(): void => this.goBack()}
           >
-            <Text>{I18n.t("wallet.cancel")}</Text>
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
       </Container>
@@ -113,6 +113,9 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
   }
 }
 
+/**
+ * selectedCreditCardSelector has to be substitute with the proper selector
+ */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
 });
