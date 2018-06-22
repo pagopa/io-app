@@ -48,6 +48,8 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
+    const { transaction } = this.props;
+
     return (
       <Container>
         <AppHeader>
@@ -63,9 +65,9 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
         <Content noPadded={true}>
           <PaymentBannerComponent
             navigation={this.props.navigation}
-            paymentReason={this.props.transaction.paymentReason}
-            currentAmount={this.props.transaction.amount.toFixed(2).toString()}
-            entity={this.props.transaction.recipient}
+            paymentReason={transaction.paymentReason}
+            currentAmount={transaction.amount.toFixed(2).toString()}
+            entity={transaction.recipient}
           />
 
           <View style={WalletStyles.paddedLR}>
@@ -76,7 +78,7 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <List
               removeClippedSubviews={false}
-              dataArray={this.props.cards as any[]} // tslint:disable-line
+              dataArray={this.props.cards as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
                 <CreditCardComponent
                   navigation={this.props.navigation}

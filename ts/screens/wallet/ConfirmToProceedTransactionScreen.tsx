@@ -61,8 +61,8 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
 
   /**
    * It sum the amount to pay and the fee requested to perform the transaction
-   * TO DO: If required, it should be implemented the proper algorithm to manage values
-   * from 10^13
+   * TO DO: If required, it should be implemented to manage values
+   * of the order of of higher 10^13
    *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
    */
   private getTotalAmount(transaction: Readonly<WalletTransaction>) {
@@ -70,6 +70,8 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
+    const { transaction } = this.props;
+
     return (
       <Container>
         <AppHeader>
@@ -86,9 +88,9 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
         <Content noPadded={true}>
           <PaymentBannerComponent
             navigation={this.props.navigation}
-            paymentReason={this.props.transaction.paymentReason}
-            currentAmount={this.props.transaction.amount.toFixed(2).toString()}
-            entity={this.props.transaction.recipient}
+            paymentReason={transaction.paymentReason}
+            currentAmount={transaction.amount.toFixed(2).toString()}
+            entity={transaction.recipient}
           />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
@@ -109,7 +111,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${this.props.transaction.amount.toFixed(2)}  €`}
+                    {`${transaction.amount.toFixed(2)}  €`}
                   </Text>
                 </Col>
               </Row>
@@ -125,7 +127,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${this.props.transaction.transactionCost.toFixed(2)} €`}
+                    {`${transaction.transactionCost.toFixed(2)} €`}
                   </Text>
                 </Col>
               </Row>
@@ -138,9 +140,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={WalletStyles.textRight}>
-                    {`${this.getTotalAmount(this.props.transaction).toFixed(
-                      2
-                    )} €`}
+                    {`${this.getTotalAmount(transaction).toFixed(2)} €`}
                   </H1>
                 </Col>
               </Row>
