@@ -442,7 +442,7 @@ Esempio di utilizzo:
 
 ```javascript
 <TextWithIcon danger>
-  <Icon name={'cross'} />
+  <IconFont name="io-back" />
   <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
 </TextWithIcon>
 ```

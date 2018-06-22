@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { CreditCard } from "../../../types/CreditCard";
@@ -35,6 +35,20 @@ export const creditCardsSelector = createSelector(
   (cards: IndexedById<CreditCard>): ReadonlyArray<CreditCard> => _.values(cards)
 );
 
+export const selectedCreditCardSelector = createSelector(
+  getSelectedCreditCardId,
+  getCards,
+  (
+    cardId: Option<number>,
+    cards: IndexedById<CreditCard>
+  ): Option<CreditCard> => {
+    if (cardId.isNone()) {
+      return none;
+    }
+    return fromNullable(_.values(cards).find(c => c.id === cardId.value));
+  }
+);
+
 // reducer
 const reducer = (
   state: CardsState = CARDS_INITIAL_STATE,
@@ -49,7 +63,9 @@ const reducer = (
   if (action.type === SELECT_CARD_FOR_DETAILS) {
     return {
       ...state,
-      selectedCardId: some(action.payload.id)
+      selectedCardId: some(
+        typeof action.payload === "number" ? action.payload : action.payload.id
+      )
     };
   }
   return state;

@@ -12,12 +12,15 @@ import {
   NavigationState
 } from "react-navigation";
 
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
-import { CardType, WalletLayout } from "../../components/wallet/WalletLayout";
-import { CreditCard } from "../../types/CreditCard";
+import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
+import { GlobalState } from "../../store/reducers/types";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
+import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 
 interface ParamType {
   readonly card: CreditCard;
@@ -31,9 +34,13 @@ interface OwnProps {
   readonly navigation: NavigationScreenProp<StateParams>;
 }
 
-type Props = OwnProps & NavigationInjectedProps;
+type ReduxMappedProps = Readonly<{
+  selectedCard: CreditCard;
+}>;
 
-export default class TransactionsScreen extends React.Component<Props, never> {
+type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;
+
+class TransactionsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const headerContents = (
       <View>
@@ -52,7 +59,7 @@ export default class TransactionsScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         showPayButton={false}
         headerContents={headerContents}
-        cardType={CardType.FULL}
+        cardType={{ type: CardEnum.FULL, card: this.props.selectedCard }}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
@@ -64,3 +71,8 @@ export default class TransactionsScreen extends React.Component<Props, never> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+});
+export default connect(mapStateToProps)(TransactionsScreen);

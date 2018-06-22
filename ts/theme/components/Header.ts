@@ -8,7 +8,7 @@ export default (): Theme => {
   return {
     "NativeBase.Left": {
       "NativeBase.Button": {
-        "NativeBase.Icon": {
+        "UIComponents.IconFont": {
           color: variables.textColor
         },
         padding: 0,
@@ -19,6 +19,7 @@ export default (): Theme => {
       marginLeft: -((variables.iconSizeBase * 3) / 4),
       flex: 0.17
     },
+
     "NativeBase.Body": {
       "NativeBase.Text": {
         ...makeFontStyleObject(Platform.select, variables.headerBodyFontWeight),

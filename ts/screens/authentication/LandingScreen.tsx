@@ -1,19 +1,13 @@
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  Icon,
-  Text,
-  View
-} from "native-base";
+import { Body, Button, Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
+import variables from "../../theme/variables";
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -48,7 +42,7 @@ class LandingScreen extends React.Component<Props, never> {
             iconLeft={true}
             onPress={_ => this.navigateToIdpSelection()}
           >
-            <Icon name="user" />
+            <IconFont name="io-profilo" color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.login")}</Text>
           </Button>
           <View spacer={true} />
