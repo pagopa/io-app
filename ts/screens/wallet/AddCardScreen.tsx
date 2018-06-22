@@ -232,6 +232,7 @@ export class AddCardScreen extends React.Component<Props, State> {
                     )}
                   </View>
                 )}
+                keyExtractor={item => item[0]}
               />
             </Item>
           </Content>

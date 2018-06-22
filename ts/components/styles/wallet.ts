@@ -22,6 +22,13 @@ export const WalletStyles = StyleSheet.create({
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
+  alignCenter: {
+    alignItems: "center"
+  },
+  bottomBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: variables.brandGray
+  },
   standardText: {
     color: variables.brandGray
   },
