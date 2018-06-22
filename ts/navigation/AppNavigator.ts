@@ -5,7 +5,6 @@ import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import PinNavigator from "./PinNavigator";
 import ROUTES from "./routes";
-
 /**
  * The main stack of screens of the application.
  * SwitchNavigator is very useful here because it automatically

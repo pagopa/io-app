@@ -5,48 +5,76 @@
 
 import * as React from "react";
 
-import { Content, List, View } from "native-base";
-import { WalletAPI } from "../../api/wallet/wallet-api";
+import { Content, List, Text, View } from "native-base";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
+import { WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
+import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import CreditCardComponent from "../../components/wallet/CreditCardComponent";
-import { topContentNone } from "../../components/wallet/layout/types";
+import { connect } from "react-redux";
+import CreditCardComponent from "../../components/wallet/card";
+import ROUTES from "../../navigation/routes";
+import { GlobalState } from "../../store/reducers/types";
+import { creditCardsSelector } from "../../store/reducers/wallet/cards";
 import { CreditCard } from "../../types/CreditCard";
 
-type Props = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  cards: ReadonlyArray<CreditCard>;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-const cards: ReadonlyArray<CreditCard> = WalletAPI.getCreditCards();
+type Props = OwnProps & ReduxMappedStateProps;
 
-export class CreditCardsScreen extends React.Component<Props, never> {
+class CreditCardsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
+    const headerContents = (
+      <View style={WalletStyles.walletBannerText}>
+        <Text style={WalletStyles.white}>
+          {I18n.t("wallet.creditDebitCards")}
+        </Text>
+      </View>
+    );
     return (
       <WalletLayout
-        headerTitle={I18n.t("wallet.wallet")}
-        allowGoBack={true}
+        title={I18n.t("wallet.paymentMethods")}
         navigation={this.props.navigation}
-        title={I18n.t("wallet.creditcards")}
-        topContent={topContentNone()}
+        headerContents={headerContents}
       >
         <Content style={WalletStyles.backContent}>
-          <View style={{ minHeight: 400 }}>
-            <List
-              removeClippedSubviews={false}
-              dataArray={cards as any[]} // tslint:disable-line
-              renderRow={(item): React.ReactElement<any> => (
-                <CreditCardComponent
-                  navigation={this.props.navigation}
-                  item={item}
-                />
-              )}
-            />
-          </View>
+          <List
+            removeClippedSubviews={false}
+            dataArray={this.props.cards as any[]} // tslint:disable-line
+            renderRow={(item): React.ReactElement<any> => (
+              <CreditCardComponent
+                navigation={this.props.navigation}
+                item={item}
+              />
+            )}
+          />
+          <View spacer={true} />
+          <Button
+            bordered={true}
+            block={true}
+            style={WalletStyles.addPaymentMethodButton}
+            onPress={(): boolean =>
+              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+            }
+          >
+            <Text style={WalletStyles.addPaymentMethodText}>
+              {I18n.t("wallet.newPaymentMethod.addButton")}
+            </Text>
+          </Button>
         </Content>
       </WalletLayout>
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  cards: creditCardsSelector(state)
+});
+export default connect(mapStateToProps)(CreditCardsScreen);

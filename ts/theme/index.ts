@@ -4,21 +4,23 @@
  */
 
 import merge from "lodash/merge";
-
 import getTheme from "native-base/src/theme/components";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
 import h3Theme from "./components/H3";
 import headerTheme from "./components/Header";
+import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
+import messageComponent from "./components/MessageComponent";
 import modalTheme from "./components/Modal";
+import tabContainerTheme from "./components/TabContainer";
+import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
 import viewTheme from "./components/View";
 import { Theme } from "./types";
 import variables from "./variables";
-
 const theme = (): Theme => {
   const nbTheme = getTheme(variables);
   const overrides = {
@@ -49,8 +51,20 @@ const theme = (): Theme => {
     "UIComponents.TextWithIcon": {
       ...textWithIconTheme()
     },
+    "UIComponents.IconFont": {
+      ...iconFontTheme()
+    },
     "NativeBase.ViewNB": {
       ...viewTheme()
+    },
+    "UIComponent.MessageComponent": {
+      ...messageComponent()
+    },
+    "NativeBase.TabHeading": {
+      ...tabHeadingTheme()
+    },
+    "NativeBase.TabContainer": {
+      ...tabContainerTheme()
     }
   };
 

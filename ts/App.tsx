@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import theme from "./theme";
 
+import { MenuProvider } from "react-native-popup-menu";
 import configureErrorHandler from "./boot/configureErrorHandler";
 import configurePushNotifications from "./boot/configurePushNotification";
 import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
@@ -36,7 +37,9 @@ export default class App extends React.Component<{}, never> {
       <StyleProvider style={theme()}>
         <Provider store={store}>
           <PersistGate loading={undefined} persistor={persistor}>
-            <RootContainer />
+            <MenuProvider>
+              <RootContainer />
+            </MenuProvider>
           </PersistGate>
         </Provider>
       </StyleProvider>

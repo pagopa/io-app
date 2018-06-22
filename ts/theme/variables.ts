@@ -7,13 +7,12 @@
 
 // tslint:disable:no-invalid-this
 
+import color from "color";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
-
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
-// tslint:disable-next-line
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
@@ -38,6 +37,9 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
+  brandPrimaryLight: color("#0066CC")
+    .lighten(0.15)
+    .hex(),
 
   cardFontColor: "#17324D",
   colorWhite: "white",
@@ -63,7 +65,10 @@ const customVariables = Object.assign(materialVariables, {
   get fontSize6(): number {
     return this.fontSizeBase * 1.75;
   },
-  lineHeight: 24,
+  lineHeightBase: 24,
+  get lineHeight1(): number {
+    return this.lineHeightBase * 0.75;
+  },
 
   // Icon
   iconFamily: "Entypo",
@@ -87,7 +92,6 @@ const customVariables = Object.assign(materialVariables, {
   get iconSize6(): number {
     return this.iconSizeBase * 2;
   },
-
   // Content
   contentPadding: 24,
   contentBackground: "#FFFFFF",
@@ -97,7 +101,7 @@ const customVariables = Object.assign(materialVariables, {
   // Footer
   footerBackground: "#FFFFFF",
   footerElevation: 50,
-  footerPaddingTop: 24,
+  footerPaddingTop: 16,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
   footerPaddingRight: 24,
@@ -147,7 +151,6 @@ const customVariables = Object.assign(materialVariables, {
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
-
   borderRadiusBase: 4
 });
 

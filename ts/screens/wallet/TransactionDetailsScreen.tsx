@@ -2,204 +2,214 @@
  * Transaction details screen, displaying
  * a list of information available about a
  * specific transaction.
+ * TODO: check what controls implemented into this screen will be included into API
+ *      - number deimals fixed to 2
+ *      - get total amount from fee + amount
+ *      - currency symbol
+ *      - sum of amounts
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
+ * TODO: insert contextual help to the Text link related to the fee
+ *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as React from "react";
 
-import { Button, Content, Text, View } from "native-base";
-import { Image, StyleSheet } from "react-native";
+import { Content, H1, H3, Text, View } from "native-base";
+import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
-
+import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
-import { topContentTouchable } from "../../components/wallet/layout/types";
-import { WalletLayout } from "../../components/wallet/layout/WalletLayout";
+import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import { WalletTransaction } from "../../types/wallet";
+import { GlobalState } from "../../store/reducers/types";
+import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
+import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import Icon from "../../theme/font-icons/io-icon-font/index";
+import variables from "../../theme/variables";
+import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
+import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
-const cardsImage = require("../../../img/wallet/single-tab.png");
-
-interface ParamType {
-  readonly transaction: WalletTransaction;
-}
-
-interface StateParams extends NavigationState {
-  readonly params: ParamType;
-}
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<StateParams>;
+type ReduxMappedProps = Readonly<{
+  transaction: WalletTransaction;
+  selectedCard: CreditCard;
 }>;
 
-type Props = OwnProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps;
+
+/**
+ * isTransactionStarted will be true when the user accepted to proceed with a transaction
+ * and he is going to display the detail of the transaction as receipt
+ */
+type State = Readonly<{
+  isTransactionStarted: boolean;
+}>;
 
 const styles = StyleSheet.create({
-  rowStyle: {
-    paddingTop: 10
+  value: {
+    flex: 1,
+    flexDirection: "row"
   },
-  alignedRight: {
+  align: {
     textAlign: "right"
+  },
+  titleRow: {
+    justifyContent: "space-between"
   }
 });
 
 /**
- * > PREFIXES:
- *   - LABEL_COL_SIZE_*: prefix that represents
- *     the width of the "label" column (the description
- *     of the field)
- *
- *   - VALUE_COL_SIZE_*: prefix that represents
- *     the width of the "value" column (the actual
- *     contents of the field)
- *
- *
- * > SUFFIXES:
- *   - *_NARROW_LABEL: suffix that represents the cases
- *     where "label" column should be narrow
- *     (i.e. when the "value" column contains free text)
- *     Proportions: 1/3 : 2/3
- *
- *   - *_WIDE_LABEL: suffix that represents the cases
- *     where the "label" columnn should be wide (i.e. when
- *     the "value" column is narrow (it has either a number
- *     or a date/time, thus allowing additional space for
- *     the label)
- *     Proportions: 1/2 : 1/2
- */
-const LABEL_COL_SIZE_NARROW_LABEL = 1;
-const VALUE_COL_SIZE_NARROW_LABEL = 2;
-
-const LABEL_COL_SIZE_WIDE_LABEL = 1;
-const VALUE_COL_SIZE_WIDE_LABEL = 1;
-
-/**
  * Details of transaction
+ * TODO: implement the proper state control
+ * @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
-export class TransactionDetailsScreen extends React.Component<Props, never> {
+export class TransactionDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      isTransactionStarted: false
+    };
   }
 
-  private touchableContent(): React.ReactElement<any> {
-    // TODO: replace this with actual component @https://www.pivotaltracker.com/story/show/157422715
-    return (
-      <View style={WalletStyles.container}>
-        <Image
-          style={WalletStyles.pfSingle}
-          source={cardsImage}
-          resizeMode="contain"
-        />
+  /**
+   * It provide the currency EUR symbol
+   * TODO: verify how approach the euro notation
+   * @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
+   */
+  private getCurrencySymbol(currency: string) {
+    if (currency === "EUR") {
+      return "€";
+    } else {
+      return currency;
+    }
+  }
+
+  /**
+   * It sum the amount to pay and the fee requested to perform the transaction
+   * TO DO: If required, it should be implemented the proper algorithm to manage values
+   * from 10^13
+   *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
+   */
+  private getTotalAmount(transaction: Readonly<WalletTransaction>) {
+    return transaction.amount + transaction.transactionCost;
+  }
+
+  /**
+   * It provides the proper header to the screen. If isTransactionStarted
+   * (the user displays the screen during the process of identify and accept a transaction)
+   * then the "Thank you message" is displayed
+   */
+  private getSubHeader() {
+    return this.state.isTransactionStarted ? (
+      <View>
+        <Grid>
+          <Col size={1} />
+          <Col size={5} style={WalletStyles.alignCenter}>
+            <View spacer={true} />
+            <Row>
+              <H1 style={WalletStyles.white}>{I18n.t("wallet.thanks")}</H1>
+            </Row>
+            <Row>
+              <Text style={WalletStyles.white}>
+                {I18n.t("wallet.endPayment")}
+              </Text>
+            </Row>
+            <View spacer={true} />
+          </Col>
+          <Col size={1} />
+        </Grid>
       </View>
+    ) : (
+      <View spacer={true} />
+    );
+  }
+
+  /**
+   * It provides the proper format to the listed content by using flex layout
+   */
+  private labelValueRow(
+    label: string | React.ReactElement<any>,
+    value: string | React.ReactElement<any>,
+    labelIsNote: boolean = true
+  ): React.ReactNode {
+    return (
+      <Col>
+        <View spacer={true} />
+        <Row>
+          <Text note={labelIsNote}>{label}</Text>
+          <Text style={[styles.value, styles.align]} bold={true}>
+            {value}
+          </Text>
+        </Row>
+      </Col>
     );
   }
 
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
-    const transaction: WalletTransaction = this.props.navigation.state.params
-      .transaction;
-    const topContent = topContentTouchable(this.touchableContent());
+    const { transaction } = this.props;
+
     return (
       <WalletLayout
-        headerTitle={I18n.t("wallet.transaction")}
-        allowGoBack={true}
+        title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
-        title={I18n.t("wallet.transactionDetails")}
-        topContent={topContent}
+        headerContents={this.getSubHeader()}
+        cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
+        showPayButton={false}
       >
-        <Content style={WalletStyles.whiteContent}>
+        <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
+            <Row style={styles.titleRow}>
+              <H3>{I18n.t("wallet.transactionDetails")}</H3>
+              <Icon name="io-close" size={variables.iconSizeBase} />
+            </Row>
+            <View spacer={true} extralarge={true} />
             <Row>
-              <Text bold={true}>{I18n.t("wallet.transactionDetails")}</Text>
+              <Text>
+                {`${I18n.t("wallet.total")}  `}
+                <H3 style={styles.value}>
+                  {`-${this.getTotalAmount(transaction).toFixed(
+                    2
+                  )} ${this.getCurrencySymbol(transaction.currency)}`}
+                </H3>
+              </Text>
             </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text>{`${I18n.t("wallet.total")} ${
-                  transaction.currency
-                }`}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text bold={true} style={styles.alignedRight}>
-                  {transaction.amount}
+            {this.labelValueRow(
+              I18n.t("wallet.payAmount"),
+              `${transaction.amount.toFixed(2)} ${this.getCurrencySymbol(
+                transaction.currency
+              )}`
+            )}
+            {this.labelValueRow(
+              <Text>
+                <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
+                <Text note={true} style={WalletStyles.whyLink}>
+                  {I18n.t("wallet.why")}
                 </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text note={true}>{I18n.t("wallet.payAmount")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{transaction.amount}</Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text>
-                  <Text note={true}>{`${I18n.t(
-                    "wallet.transactionFee"
-                  )}  `}</Text>
-                  <Text note={true} style={WalletStyles.whyLink}>
-                    {I18n.t("wallet.why")}
-                  </Text>
-                </Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>
-                  {transaction.transactionCost}
-                </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>{I18n.t("wallet.paymentReason")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
-                <Text bold={true} style={styles.alignedRight}>
-                  {transaction.paymentReason}
-                </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_NARROW_LABEL}>
-                <Text note={true}>{I18n.t("wallet.recipient")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_NARROW_LABEL}>
-                <Text bold={true} style={styles.alignedRight}>
-                  {transaction.recipient}
-                </Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text note={true}>{I18n.t("wallet.date")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{transaction.date}</Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Col size={LABEL_COL_SIZE_WIDE_LABEL}>
-                <Text note={true}>{I18n.t("wallet.time")}</Text>
-              </Col>
-              <Col size={VALUE_COL_SIZE_WIDE_LABEL}>
-                <Text style={styles.alignedRight}>{transaction.time}</Text>
-              </Col>
-            </Row>
-            <Row style={styles.rowStyle}>
-              <Button
-                style={{ marginTop: 20 }}
-                block={true}
-                success={true}
-                onPress={(): boolean => navigate("")}
-              >
-                <Text>{I18n.t("wallet.seeReceipt")}</Text>
-              </Button>
-            </Row>
+              </Text>,
+              `${transaction.transactionCost.toFixed(
+                2
+              )} ${this.getCurrencySymbol(transaction.currency)}`
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.paymentReason"),
+              transaction.paymentReason
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.recipient"),
+              transaction.recipient
+            )}
+            {this.labelValueRow(I18n.t("wallet.date"), transaction.date)}
+            {this.labelValueRow(I18n.t("wallet.time"), transaction.time)}
           </Grid>
         </Content>
       </WalletLayout>
     );
   }
 }
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  transaction: transactionForDetailsSelector(state).getOrElse(
+    UNKNOWN_TRANSACTION
+  ),
+  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+});
+
+export default connect(mapStateToProps)(TransactionDetailsScreen);
