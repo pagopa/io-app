@@ -14,7 +14,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
@@ -127,54 +127,59 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
             <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
           </Body>
         </AppHeader>
-        <QRCodeScanner
-          containerStyle={styles.cameraContainer}
-          showMarker={true}
-          cameraStyle={styles.camera}
-          customMarker={(
-            <View style={styles.rectangleContainer}>
-              <View style={styles.rectangle}>
-                <Grid>
-                  <Row>
-                    <Col>
-                      <View
-                        style={[styles.topLeftCorner, styles.smallBorded]}
-                      />
-                    </Col>
-                    <Col>
-                      <View
-                        style={[styles.topRightCorner, styles.smallBorded]}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <View
-                        style={[styles.bottomLeftCorner, styles.smallBorded]}
-                      />
-                    </Col>
-                    <Col>
-                      <View
-                        style={[styles.bottomRightCorner, styles.smallBorded]}
-                      />
-                    </Col>
-                  </Row>
-                </Grid>
+        <ScrollView bounces={false}>
+          <QRCodeScanner
+            containerStyle={styles.cameraContainer}
+            showMarker={true}
+            cameraStyle={styles.camera}
+            customMarker={
+              <View style={styles.rectangleContainer}>
+                <View style={styles.rectangle}>
+                  <Grid>
+                    <Row>
+                      <Col>
+                        <View
+                          style={[styles.topLeftCorner, styles.smallBorded]}
+                        />
+                      </Col>
+                      <Col>
+                        <View
+                          style={[styles.topRightCorner, styles.smallBorded]}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <View
+                          style={[styles.bottomLeftCorner, styles.smallBorded]}
+                        />
+                      </Col>
+                      <Col>
+                        <View
+                          style={[styles.bottomRightCorner, styles.smallBorded]}
+                        />
+                      </Col>
+                    </Row>
+                  </Grid>
+                </View>
               </View>
-            </View>
-          )}
-        />
-        <View>
-          <View spacer={true} large={true} />
-          <Text style={[styles.padded, styles.centerText]}>
-            {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-          </Text>
-          <View spacer={true} extralarge={true} />
-        </View>
+            }
+            bottomContent={
+              <View>
+                <View spacer={true} large={true} />
+                <Text style={[styles.padded, styles.centerText]}>
+                  {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                </Text>
+                <View spacer={true} extralarge={true} />
+              </View>
+            }
+          />
+        </ScrollView>
         <View footer={true}>
           <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
           </Button>
+          <View spacer={true} />
           <Button block={true} light={true} onPress={() => this.goBack()}>
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
