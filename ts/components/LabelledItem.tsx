@@ -9,6 +9,7 @@
  * icon  |
  *       input
  */
+import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
@@ -45,7 +46,9 @@ export class LabelledItem extends React.Component<Props> {
             name={this.props.icon}
           />
           <Input
-            placeholderTextColor={variables.brandLightGray}
+            placeholderTextColor={color(variables.brandGray)
+              .darken(0.2)
+              .string()}
             placeholder={this.props.placeholder}
             {...this.props.inputProps}
           />

@@ -29,6 +29,7 @@ import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
+import { fixExpirationDate, fixPan } from "../../utils/input";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -70,53 +71,14 @@ export class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
-  /**
-   * method to modify the formatting of the expiration date
-   * it currently adds a "/" after the month (if a valid
-   * value is entered) and converts 4-digits years in their
-   * 2-digits versions
-   * This is a draft version -- the exact behavior should be
-   * defined somewhere in order for it to be implemented
-   */
-  public onExpirationDateChange = (value: string) => {
-    const filteredValue = value.replace(/[^\d\/]/g, "");
-    // month has already been entered fully ("1" is ignored as another number may follow)
-    if (filteredValue.match(/^(1[012]|0[1-9]|[2-9])$/)) {
-      this.setState({ expirationDate: some(`${filteredValue}/`) }); // make "/" separator pop up
-    } else if (filteredValue.match(/\/\d{3,}$/)) {
-      // if the year is on 3+ digits, cut the
-      // first one (so if user
-      // is entering 2022 it will accept
-      // [in () the cropped part]
-      // 2 -> 20 -> (2)02 -> (20)22
-      const [month, year] = filteredValue.split("/");
-      this.setState({ expirationDate: some(`${month}/${year.slice(-2)}`) });
-    } else {
-      this.setState({
-        expirationDate: filteredValue.length > 0 ? some(filteredValue) : none
-      });
-    }
+  private onExpirationDateChange = (value: string) => {
+    const newValue: Option<string> = fixExpirationDate(value);
+    this.setState({ expirationDate: newValue });
   };
 
-  // update pan so as to add a space every 4 digits
-  // the exact behavior should be defined before
-  // being implemented
-  public onPanChange = (value: string) => {
-    const groups = value.replace(/[^\d]/g, "").match(/\d{1,4}/g);
-    if (groups !== null) {
-      const formatted = groups.join(" ");
-      this.setState({
-        pan:
-          formatted.length > 0
-            ? some(
-                // add trailing space if last group of digits has 4 elements
-                groups[groups.length - 1].length === 4
-                  ? `${formatted} `
-                  : formatted
-              )
-            : none
-      });
-    }
+  private onPanChange = (value: string) => {
+    const newValue: Option<string> = fixPan(value);
+    this.setState({ pan: newValue });
   };
 
   public render(): React.ReactNode {
