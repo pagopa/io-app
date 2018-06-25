@@ -157,6 +157,17 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
+      # Set Ruby Version for chruby
+      - run: echo "ruby-2.4" > .ruby-version
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Fetch CocoaPods specs
+      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+
       # Recreate keystore from ENV variable
       - run:
           command: ./scripts/keystore-setup.sh
