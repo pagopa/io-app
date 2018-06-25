@@ -126,6 +126,49 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
+  # Create signed Android release
+  release-android:
+    <<: *defaults
+
+    docker:
+      - image: circleci/android:api-27-node8-alpha
+
+    environment:
+      - TERM: "dumb"
+      - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
+      - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
+
+      # Restore sdk cache
+      - restore_cache:
+          keys:
+            - v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
+            - v1-android-sdkmanager-packages-
+
+      # Install Android SDK
+      - run:
+          command: ./scripts/circleci-android-setup.sh
+
+      # Restore jars cache
+      - restore_cache:
+          key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+
+      # Recreate keystore from ENV variable
+      - run:
+          command: ./scripts/keystore-setup.sh
+
+      # Run release_build lane
+      - run:
+          command: cd android && bundle exec fastlane release_build
+
+      - store_artifacts:
+          path: android/app/build/outputs/apk/app-release.apk
+          destination: apks/
+
   # Test ios build
   test-ios:
     <<: *defaults
@@ -212,3 +255,13 @@ workflows:
           requires:
             - hold-native-tests
 
+      # Build Android release oly on tags
+      - release-android:
+          requires:
+            - test-android
+         # Disabled to check the build is ok   
+         # filters:
+         #   branches:
+         #     ignore: /.*/
+         #   tags:
+         #     only: /^v.*/
