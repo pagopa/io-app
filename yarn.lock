@@ -631,12 +631,12 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-redux@^5.0.18":
-  version "5.0.18"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.18.tgz#95fdcce00b617b93c98a3684ed6666e75d8a669e"
+"@types/react-redux@^5.0.20":
+  version "5.0.20"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.20.tgz#a332f2a97043d6127159956a4639a9fb5dc1f5dc"
   dependencies:
     "@types/react" "*"
-    redux "^4.0.0"
+    redux "^3.6.0"
 
 "@types/react-test-renderer@^16.0.1":
   version "16.0.1"
@@ -644,13 +644,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
-  version "16.3.12"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.12.tgz#68d9146f3e9797e38ffbf22f7ed1dde91a2cfd2e"
-  dependencies:
-    csstype "^2.2.0"
-
-"@types/react@16.3.16":
+"@types/react@*", "@types/react@16.3.16":
   version "16.3.16"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.16.tgz#78fc44a90b45701f50c8a7008f733680ba51fc86"
   dependencies:
@@ -6303,7 +6297,7 @@ redux-saga@*, redux-saga@^0.16.0:
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
 
-redux@4.0.0, redux@^4.0.0:
+redux@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
   dependencies:
