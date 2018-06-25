@@ -8,11 +8,11 @@ import ROUTES from "../../navigation/routes";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 
 export type OwnProps = Readonly<{
-  date: Date;
-  key: string;
+  createdAt: Date;
+  id: string;
   markdown: string;
   navigation: NavigationScreenProp<NavigationState>;
-  service: string;
+  serviceName: string;
   serviceOrganizationName: string;
   serviceDepartmentName: string;
   subject: string;
@@ -31,20 +31,20 @@ class MessageComponent extends React.Component<Props> {
       subject,
       serviceOrganizationName,
       serviceDepartmentName,
-      date,
-      service,
+      createdAt,
+      serviceName,
       markdown,
-      key
+      id
     } = this.props;
     return (
       <ListItem
-        key={key}
+        key={id}
         onPress={() => {
           navigate(ROUTES.MESSAGE_DETAILS, {
             details: {
-              date,
+              createdAt,
               markdown,
-              service,
+              serviceName,
               serviceDepartmentName,
               serviceOrganizationName,
               subject
@@ -54,12 +54,12 @@ class MessageComponent extends React.Component<Props> {
       >
         <Left>
           <Text leftAlign={true} alternativeBold={true}>
-            {serviceOrganizationName + " - " + serviceDepartmentName}
+            {`${serviceOrganizationName} -  ${serviceDepartmentName}`}
           </Text>
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text formatDate={true}>{convertDateToWordDistance(date)}</Text>
+          <Text formatDate={true}>{convertDateToWordDistance(createdAt)}</Text>
           <Icon name="chevron-right" />
         </Right>
       </ListItem>

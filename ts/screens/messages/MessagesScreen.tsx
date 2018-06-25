@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: variables.brandPrimaryLight
   },
-  NotActiveTabStyle: {
+  notActiveTabStyle: {
     borderBottomWidth: 0,
     borderBottomColor: variables.brandPrimaryInverted
   }
@@ -60,10 +60,6 @@ const styles = StyleSheet.create({
  */
 class MessagesScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
-
-  constructor(props: Props) {
-    super(props);
-  }
 
   public componentDidMount() {
     // TODO: Messages must be refreshed using pull-down @https://www.pivotaltracker.com/story/show/157917217
@@ -97,14 +93,16 @@ class MessagesScreen extends React.Component<Props, never> {
   public getOrganizationName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].organization_name;
   };
+
   public getDepartmentName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].department_name;
   };
+
   public renderItem = (messageDetails: IMessageDetails) => {
     return (
       <MessageComponent
-        key={messageDetails.item.id}
-        date={messageDetails.item.created_at}
+        id={messageDetails.item.id}
+        createdAt={messageDetails.item.created_at}
         serviceOrganizationName={this.getOrganizationName(
           messageDetails.item.sender_service_id
         )}
@@ -115,7 +113,7 @@ class MessagesScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         senderServiceId={messageDetails.item.sender_service_id}
         markdown={messageDetails.item.markdown}
-        service={this.getServiceName(messageDetails.item.sender_service_id)}
+        serviceName={this.getServiceName(messageDetails.item.sender_service_id)}
       />
     );
   };
@@ -143,10 +141,10 @@ class MessagesScreen extends React.Component<Props, never> {
         >
           <View spacer={true} large={true} />
         </Tab>
-        <Tab heading={""} activeTabStyle={styles.NotActiveTabStyle}>
+        <Tab heading={""} activeTabStyle={styles.notActiveTabStyle}>
           <View spacer={true} large={true} />
         </Tab>
-        <Tab heading={" "} activeTabStyle={styles.NotActiveTabStyle}>
+        <Tab heading={" "} activeTabStyle={styles.notActiveTabStyle}>
           <View spacer={true} large={true} />
         </Tab>
       </Tabs>

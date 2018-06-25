@@ -1,18 +1,19 @@
 import * as React from "react";
 
-import { Icon, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import { TouchableOpacity } from "react-native";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
 export type OwnProps = Readonly<{
   serviceOrganizationName: string;
   serviceDepartmentName: string;
-  service: string;
-  key: string;
-  date: Date;
+  serviceName: string;
+  id: string;
+  createdAt: Date;
   markdown: string;
 }>;
 
@@ -30,9 +31,11 @@ class MessageDetailsComponent extends React.Component<Props, State> {
     super(props);
     this.state = { isMessageDetailsInfoVisible: false };
   }
+
   public handleDetailsInfoClick = (isVisible: boolean) => {
     this.setState({ isMessageDetailsInfoVisible: !isVisible });
   };
+
   public renderDetailsInfoLink = () => {
     if (!this.state.isMessageDetailsInfoVisible) {
       return (
@@ -40,7 +43,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
           <Text link={true}>
             {I18n.t("messageDetails.detailsLink.showLabel")}
           </Text>
-          <Icon name="chevron-right" />
+          <IconFont name="io-right" />
         </React.Fragment>
       );
     } else {
@@ -49,18 +52,19 @@ class MessageDetailsComponent extends React.Component<Props, State> {
           <Text link={true}>
             {I18n.t("messageDetails.detailsLink.hideLabel")}
           </Text>
-          <Icon name="cross" />
+          <IconFont name="io-close" />
         </React.Fragment>
       );
     }
   };
+
   public render() {
     const {
       markdown,
-      date,
+      createdAt,
       serviceOrganizationName,
       serviceDepartmentName,
-      service
+      serviceName
     } = this.props;
     return (
       <View>
@@ -73,8 +77,8 @@ class MessageDetailsComponent extends React.Component<Props, State> {
         </TouchableOpacity>
         {this.state.isMessageDetailsInfoVisible && (
           <MessageDetailsInfoComponent
-            date={date}
-            service={service}
+            createdAt={createdAt}
+            serviceName={serviceName}
             serviceDepartmentName={serviceDepartmentName}
             serviceOrganizationName={serviceOrganizationName}
           />

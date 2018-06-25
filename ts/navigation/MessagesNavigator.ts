@@ -4,9 +4,9 @@ import MessagesScreen from "../screens/messages/MessagesScreen";
 
 import ROUTES from "./routes";
 
-const Messagesnavigation = StackNavigator(
+const MessagesNavigator = StackNavigator(
   {
-    [ROUTES.MESSAGES_MAIN]: {
+    [ROUTES.MESSAGES_LIST]: {
       screen: MessagesScreen
     },
     [ROUTES.MESSAGE_DETAILS]: {
@@ -19,4 +19,4 @@ const Messagesnavigation = StackNavigator(
   }
 );
 
-export default Messagesnavigation;
+export default MessagesNavigator;

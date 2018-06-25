@@ -16,14 +16,14 @@ import ProfileScreen from "../screens/main/ProfileScreen";
 import PlaceholderScreen from "../screens/PlaceholderScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
-import MessageNavigator from "./MessagesNavigation";
+import MessageNavigator from "./MessagesNavigator";
 import WalletNavigator from "./WalletNavigator";
 
 type Routes = keyof typeof ROUTES;
 
 type RouteLabelMap = { [key in Routes]?: string };
 const ROUTE_LABEL: RouteLabelMap = {
-  MAIN_MESSAGES: I18n.t("global.navigator.messages"),
+  MESSAGES_HOME: I18n.t("global.navigator.messages"),
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
   PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
@@ -32,7 +32,7 @@ const ROUTE_LABEL: RouteLabelMap = {
 
 type RouteIconMap = { [key in Routes]?: string };
 const ROUTE_ICON: RouteIconMap = {
-  MAIN_MESSAGES: "io-messaggi",
+  MESSAGES_HOME: "io-messaggi",
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
   PREFERENCES_HOME: "io-preferenze",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
  */
 const navigation = TabNavigator(
   {
-    [ROUTES.MAIN_MESSAGES]: {
+    [ROUTES.MESSAGES_HOME]: {
       screen: MessageNavigator
     },
     [ROUTES.WALLET_HOME]: {
@@ -128,7 +128,7 @@ const navigation = TabNavigator(
     },
     animationEnabled: true,
     swipeEnabled: false,
-    initialRouteName: ROUTES.MESSAGES_MAIN
+    initialRouteName: ROUTES.MESSAGES_HOME
   }
 );
 

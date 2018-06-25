@@ -9,7 +9,7 @@ export default (): Theme => {
           alignSelf: "flex-start"
         },
 
-        "NativeBase.Icon": {
+        "UIComponents.IconFont": {
           alignSelf: "flex-start",
           color: variables.brandPrimary,
           fontSize: variables.iconSizeBase,

@@ -1,13 +1,4 @@
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  Icon,
-  Left,
-  Text
-} from "native-base";
+import { Body, Button, Container, Content, H1, Left, Text } from "native-base";
 import * as React from "react";
 import {
   NavigationInjectedProps,
@@ -16,6 +7,7 @@ import {
 } from "react-navigation";
 import MessageDetailsComponent from "../../components/messages/MessageDetailsComponent";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 
 interface ParamTypeObject {
@@ -23,8 +15,8 @@ interface ParamTypeObject {
   serviceOrganizationName: string;
   serviceDepartmentName: string;
   markdown: string;
-  service: string;
-  date: Date;
+  serviceName: string;
+  createdAt: Date;
 }
 
 interface ParamType {
@@ -54,8 +46,8 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
       subject,
       markdown,
       serviceOrganizationName,
-      date,
-      service,
+      createdAt,
+      serviceName,
       serviceDepartmentName
     } = this.props.navigation.state.params.details;
     return (
@@ -63,7 +55,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={_ => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>
@@ -74,9 +66,9 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
           <H1>{subject}</H1>
           <MessageDetailsComponent
             markdown={markdown}
-            service={service}
+            serviceName={serviceName}
             serviceOrganizationName={serviceOrganizationName}
-            date={date}
+            createdAt={createdAt}
             serviceDepartmentName={serviceDepartmentName}
           />
         </Content>
