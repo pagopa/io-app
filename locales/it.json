@@ -306,9 +306,9 @@
     },
     "infoLabels": {
       "data": "Data:",
-      "senderBy": "Inviato da:",
-      "department": "Dipartimento:",
-      "service": "Servizio:"
+      "senderFrom": "Inviato da",
+      "department": "Dipartimento",
+      "service": "Servizio"
     }
   },
   "notifications": {

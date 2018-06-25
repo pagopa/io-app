@@ -308,9 +308,9 @@
     },
     "infoLabels": {
       "data": "Data:",
-      "senderBy": "Sender by:",
-      "department": "Department:",
-      "service": "Service:"
+      "senderFrom": "Sender from",
+      "department": "Department",
+      "service": "Service"
     }
   },
   "notifications": {

@@ -44,18 +44,20 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
         </View>
         <View>
           <Text bold={true}>
-            {I18n.t("messageDetails.infoLabels.senderBy")}
+            {I18n.t("messageDetails.infoLabels.senderFrom")}:
           </Text>
           <Text> {serviceOrganizationName}</Text>
         </View>
         <View>
           <Text bold={true}>
-            {I18n.t("messageDetails.infoLabels.department")}
+            {I18n.t("messageDetails.infoLabels.department")}:
           </Text>
           <Text> {serviceDepartmentName}</Text>
         </View>
         <View>
-          <Text bold={true}>{I18n.t("messageDetails.infoLabels.service")}</Text>
+          <Text bold={true}>
+            {I18n.t("messageDetails.infoLabels.service")}:
+          </Text>
           <Text> {serviceName}</Text>
         </View>
       </View>

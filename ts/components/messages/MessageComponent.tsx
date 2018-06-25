@@ -4,6 +4,7 @@ import { Icon, Left, ListItem, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 
@@ -59,7 +60,9 @@ class MessageComponent extends React.Component<Props> {
           <Text leftAlign={true}>{subject}</Text>
         </Left>
         <Right>
-          <Text formatDate={true}>{convertDateToWordDistance(createdAt)}</Text>
+          <Text formatDate={true}>
+            {convertDateToWordDistance(createdAt, I18n.t("messages.yesterday"))}
+          </Text>
           <Icon name="chevron-right" />
         </Right>
       </ListItem>
