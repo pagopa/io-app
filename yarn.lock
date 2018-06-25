@@ -2257,9 +2257,9 @@ csstype@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.3.0.tgz#062e141c78345cf814da0e0b716ad777931b08af"
 
-danger-plugin-digitalcitizenship@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/danger-plugin-digitalcitizenship/-/danger-plugin-digitalcitizenship-0.2.0.tgz#792c69c4a350718753a2399aa4f971b041962ba5"
+danger-plugin-digitalcitizenship@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/danger-plugin-digitalcitizenship/-/danger-plugin-digitalcitizenship-0.3.1.tgz#ed941ee5905788bb9f1f61f171029d76c985b995"
   dependencies:
     danger-plugin-yarn "^1.2.1"
     pivotaljs "^1.0.3"
