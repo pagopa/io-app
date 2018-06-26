@@ -184,7 +184,8 @@
       "totalAmount":"Totale",
       "info":"Attenzione: dopo questo passaggio non sarà più possibile annullare",
       "info2":"Stai utilizzando il tuo metodo di pagamento preferito.",
-      "changeMethod":"Cambia metodo di pagamento"
+      "changeMethod":"Cambia metodo di pagamento",
+      "change":"Cambia metodo"
     },
     "payWith": {
       "header":"Scelta metodo di pagamamento",

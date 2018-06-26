@@ -36,7 +36,7 @@ export default class PaymentBannerComponent extends React.Component<Props> {
               bold={true}
               style={[WalletStyles.white, WalletStyles.textRight]}
             >
-              {this.props.currentAmount + " €"}
+              {`${this.props.currentAmount} €`}
             </Text>
           </Col>
         </Row>
