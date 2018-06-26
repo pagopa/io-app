@@ -20,7 +20,6 @@ class ScreenHeader extends React.Component<Props> {
     return (
       <View>
         {heading}
-
         <View>
           <Image source={icon} />
         </View>
