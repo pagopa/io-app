@@ -1,9 +1,10 @@
 import { List, View } from "native-base";
 import * as React from "react";
+import { PreferenceItem as PreferenceItemType } from "../types/PreferenceItem";
 import PreferenceItem from "./PreferenceItem";
 
 type OwnProps = {
-  preferences: ReadonlyArray<any>;
+  preferences: ReadonlyArray<PreferenceItemType>;
 };
 
 type Props = OwnProps;

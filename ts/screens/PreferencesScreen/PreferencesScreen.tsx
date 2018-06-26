@@ -3,9 +3,10 @@ import * as React from "react";
 import { Image } from "react-native";
 import PreferenceList from "../../components/PreferencesList";
 import I18n from "../../i18n";
+import { PreferenceItem } from "../../types/PreferenceItem";
 import ownStyles from "./PreferencesScreen.styles";
 
-const preferences: ReadonlyArray<any> = [
+const preferences: ReadonlyArray<PreferenceItem> = [
   {
     id: "email",
     icon: require("../../../img/wallet/icon-avviso-pagopa.png"),

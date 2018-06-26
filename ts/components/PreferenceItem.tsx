@@ -4,14 +4,9 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { Image } from "react-native";
 import I18n from "../i18n";
+import { PreferenceItem } from "../types/PreferenceItem";
 
-type OwnProps = {
-  id: string;
-  icon: string;
-  valuePreview: string;
-};
-
-type Props = OwnProps;
+type Props = PreferenceItem;
 
 const PreferenceItem: React.SFC<Props> = ({ id, icon, valuePreview }) => (
   <ListItem>
