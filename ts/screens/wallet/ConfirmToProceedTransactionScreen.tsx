@@ -162,7 +162,8 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
                 <Col size={1} />
                 <Col size={9}>
                   <View spacer={true} />
-                  <Text style={WalletStyles.textCenter}>
+
+<Text style={WalletStyles.textCenter}>
                     {I18n.t("wallet.ConfirmPayment.info")}
                   </Text>
                   <View spacer={true} extralarge={true} />
@@ -205,7 +206,8 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
 }
 
 /**
- * selectors will be reviewed in next pr
+ * TODO: selectors will be reviewed in next pr
+ *  @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD),
