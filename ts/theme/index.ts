@@ -16,7 +16,7 @@ import messageComponent from "./components/MessageComponent";
 import messageDetailsComponentTheme from "./components/MessageDetailsComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
-import preferenceItem from "./components/PreferenceItem";
+import preferenceItemTheme from "./components/PreferenceItem";
 import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
@@ -77,7 +77,7 @@ const theme = (): Theme => {
       ...messageDetailsInfoComponentTheme()
     },
     "UIComponent.PreferenceItem": {
-      ...preferenceItem()
+      ...preferenceItemTheme()
     }
   };
 
