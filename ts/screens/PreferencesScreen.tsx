@@ -1,7 +1,8 @@
-import { Container, Content, H1, Text, View } from "native-base";
+import { Body, Container, Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import PreferenceList from "../components/PreferencesList";
 import ScreenHeader from "../components/ScreenHeader";
+import AppHeader from "../components/ui/AppHeader";
 import I18n from "../i18n";
 import { PreferenceItem } from "../types/PreferenceItem";
 
@@ -30,8 +31,14 @@ const preferences: ReadonlyArray<PreferenceItem> = [
 
 const PreferencesScreen: React.SFC = () => (
   <Container>
-    <Content noPadded={true}>
-      <View content={true}>
+    <AppHeader>
+      <Body>
+        <Text>{I18n.t("authentication.landing.headerTitle")}</Text>
+      </Body>
+    </AppHeader>
+
+    <Content>
+      <View>
         <ScreenHeader
           heading={<H1>{I18n.t("preferences.title")}</H1>}
           icon={require("../../img/icons/gears.png")}
