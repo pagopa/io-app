@@ -7,7 +7,8 @@ import ConfirmToProceedTransactionScreen from "../screens/wallet/ConfirmToProcee
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
-import { TransactionDetailsScreen } from "../screens/wallet/TransactionDetailsScreen";
+import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
+import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
@@ -32,6 +33,9 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
       screen: TransactionsScreen
+    },
+    [ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER]: {
+      screen: QRcodeAcquisitionByScannerScreen
     },
     [ROUTES.WALLET_ADD_MANAGER]: {
       screen: AddManagerToCardScreen
