@@ -156,6 +156,13 @@
       "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
+    "saveCard": {
+      "header":"Save the card",
+      "title":"Do you want to save this card?",
+      "infoTitle":"Set the card as favourite payment method",
+      "info":"This payment method will be automatically proposed for the next payment",
+      "save":"Save the card"
+    },
     "thanks":"✓ Thank you!",
     "endPayment":"Your transaction is completed",
     "addManager": {
