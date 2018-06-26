@@ -2,11 +2,11 @@ import { List, View } from "native-base";
 import * as React from "react";
 import PreferenceItem from "./PreferenceItem";
 
-type ownProps = {
+type OwnProps = {
   preferences: ReadonlyArray<any>;
 };
 
-type Props = ownProps;
+type Props = OwnProps;
 
 const PreferenceList: React.SFC<Props> = ({ preferences }) => (
   <View>

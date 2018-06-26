@@ -5,13 +5,13 @@ import * as React from "react";
 import { Image } from "react-native";
 import I18n from "../i18n";
 
-type ownProps = {
+type OwnProps = {
   id: string;
   icon: string;
   valuePreview: string;
 };
 
-type Props = ownProps;
+type Props = OwnProps;
 
 const PreferenceItem: React.SFC<Props> = ({ id, icon, valuePreview }) => (
   <ListItem>
