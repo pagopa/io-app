@@ -165,8 +165,9 @@ jobs:
           name: Bundle Install
           command: bundle check || bundle install
 
-      # Fetch CocoaPods specs
-      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+      # Recreate JSON key file (for Google Play) from ENV variable
+      - run:
+          command: ./scripts/json-key-file-setup.sh
 
       # Recreate keystore from ENV variable
       - run:
@@ -266,7 +267,7 @@ workflows:
           requires:
             - hold-native-tests
 
-      # Build Android release oly on tags
+      # Build Android release only on tags
       - release-android:
           requires:
             - test-android
