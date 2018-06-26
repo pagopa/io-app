@@ -163,7 +163,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
                 <Col size={9}>
                   <View spacer={true} />
 
-<Text style={WalletStyles.textCenter}>
+                  <Text style={WalletStyles.textCenter}>
                     {I18n.t("wallet.ConfirmPayment.info")}
                   </Text>
                   <View spacer={true} extralarge={true} />
