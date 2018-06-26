@@ -294,6 +294,7 @@
     "validUntil": "Valida fino al",
     "actions": "Azioni",
     "setFavourite": "Imposta come preferita",
+    "unsetFavourite": "Rimuovi dai preferiti",
     "deleteTitle": "Procedere con l'operazione?",
     "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
