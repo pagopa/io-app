@@ -3,6 +3,7 @@ import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import ChoosePaymentMethodScreen from "../screens/wallet/ChoosePaymentMethodScreen";
 import ConfirmToProceedTransactionScreen from "../screens/wallet/ConfirmToProceedTransactionScreen";
+import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
@@ -46,6 +47,9 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_MANUAL_TRANSACTION_IDENTIFICATION]: {
       screen: ManuallyIdentifyTransactionScreen
+    },
+    [ROUTES.WALLET_ASK_SAVE_CARD]: {
+      screen: ConfirmSaveCardScreen
     }
   },
   {
