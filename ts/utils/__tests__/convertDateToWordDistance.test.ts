@@ -14,9 +14,9 @@ describe("convertDateToWordDistance test plan", () => {
   it("should compare now date with 24 hours earlier, expected yesterday", () => {
     const nowDate = new Date();
     const testDate = addHours(nowDate, -24);
-    expect(
-      convertDateToWordDistance(testDate, I18n.t("messages.yesterday"))
-    ).toBe(I18n.t("messages.yesterday"));
+    expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
+      I18n.t("messages.yesterday")
+    );
   });
   // tslint:disable-next-line:no-identical-functions
   it("should compare now date with 48 hours earlier, expected DD/MM", () => {
