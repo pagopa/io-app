@@ -4,6 +4,7 @@ import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen
 import ChoosePaymentMethodScreen from "../screens/wallet/ChoosePaymentMethodScreen";
 import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
 import ConfirmToProceedTransactionScreen from "../screens/wallet/ConfirmToProceedTransactionScreen";
+import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
