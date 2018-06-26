@@ -4,9 +4,9 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { Image } from "react-native";
 import I18n from "../i18n";
-import { PreferenceItem } from "../types/PreferenceItem";
+import { PreferenceItem as PreferenceItemType } from "../types/PreferenceItem";
 
-type Props = PreferenceItem;
+type Props = PreferenceItemType;
 
 class PreferenceItem extends React.Component<Props> {
   public render() {
