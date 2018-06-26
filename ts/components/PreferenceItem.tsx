@@ -8,17 +8,23 @@ import { PreferenceItem } from "../types/PreferenceItem";
 
 type Props = PreferenceItem;
 
-const PreferenceItem: React.SFC<Props> = ({ id, icon, valuePreview }) => (
-  <ListItem>
-    <Left>
-      <H3>{I18n.t(`preferences.list.${id}`)}</H3>
-      <Text>{valuePreview}</Text>
-    </Left>
-    <Right>
-      <Image source={icon} />
-    </Right>
-  </ListItem>
-);
+class PreferenceItem extends React.Component<Props> {
+  public render() {
+    const { id, icon, valuePreview } = this.props;
+
+    return (
+      <ListItem>
+        <Left>
+          <H3>{I18n.t(`preferences.list.${id}`)}</H3>
+          <Text>{valuePreview}</Text>
+        </Left>
+        <Right>
+          <Image source={icon} />
+        </Right>
+      </ListItem>
+    );
+  }
+}
 
 export default connectStyle(
   "UIComponent.PreferenceItem",

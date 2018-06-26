@@ -17,6 +17,7 @@ import messageDetailsComponentTheme from "./components/MessageDetailsComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
 import preferenceItemTheme from "./components/PreferenceItem";
+import screenHeaderTheme from "./components/ScreenHeader";
 import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
@@ -78,6 +79,9 @@ const theme = (): Theme => {
     },
     "UIComponent.PreferenceItem": {
       ...preferenceItemTheme()
+    },
+    "UIComponent.ScreenHeader": {
+      ...screenHeaderTheme()
     }
   };
 
