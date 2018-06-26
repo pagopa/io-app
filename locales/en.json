@@ -185,7 +185,8 @@
       "totalAmount":"Total amount",
       "info":"Warning: after this step it will not be possible to come back",
       "info2":"You are using your favourite payment method.",
-      "changeMethod":"Change the payment method"
+      "changeMethod":"Change the payment method",
+      "change":"Change method"
     },
     "payWith": {
       "header":"Choose payment method",
