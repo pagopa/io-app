@@ -5,22 +5,33 @@
  */
 import { Body, Card, Text } from "native-base";
 import * as React from "react";
-import { Alert, Platform, StyleSheet, ViewStyle } from "react-native";
+import {
+  Alert,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle
+} from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../../../i18n";
 
 import color from "color";
+import { none, Option, some } from "fp-ts/lib/Option";
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { connect, Dispatch } from "react-redux";
+import { setFavoriteCard } from "../../../store/actions/wallet/cards";
+import { GlobalState } from "../../../store/reducers/types";
+import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
-import { CreditCard } from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import ActionIcon from "./ActionIcon";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -64,7 +75,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export type Props = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  isFavoriteCard: boolean;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  setFavoriteCard: (item: Option<CreditCardId>) => void;
+}>;
+
+export type CardProps = Readonly<{
   item: CreditCard;
   navigation: NavigationScreenProp<NavigationState>;
   menu?: boolean;
@@ -79,10 +98,12 @@ export type Props = Readonly<{
   customStyle?: any;
 }>;
 
+type Props = CardProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+
 /**
  * Credit card component
  */
-export default class CreditCardComponent extends React.Component<Props> {
+class CreditCardComponent extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {
     menu: true,
     favorite: true,
@@ -94,6 +115,14 @@ export default class CreditCardComponent extends React.Component<Props> {
     headerOnly: false,
     rotated: false,
     customStyle: undefined
+  };
+
+  private toggleFavorite = () => {
+    if (this.props.isFavoriteCard) {
+      this.props.setFavoriteCard(none);
+    } else {
+      this.props.setFavoriteCard(some(this.props.item.id));
+    }
   };
 
   private topRightCorner() {
@@ -108,7 +137,15 @@ export default class CreditCardComponent extends React.Component<Props> {
     } else {
       return [
         <Col key="favorite" size={1}>
-          {this.props.favorite && <ActionIcon name="io-empty-star" />}
+          {this.props.favorite && (
+            <TouchableOpacity onPress={this.toggleFavorite}>
+              <ActionIcon
+                name={
+                  this.props.isFavoriteCard ? "io-filled-star" : "io-empty-star"
+                }
+              />
+            </TouchableOpacity>
+          )}
         </Col>,
         <Col key="menu" size={1}>
           {this.props.menu && (
@@ -117,9 +154,13 @@ export default class CreditCardComponent extends React.Component<Props> {
                 <ActionIcon name="io-more" />
               </MenuTrigger>
               <MenuOptions>
-                <MenuOption>
+                <MenuOption onSelect={this.toggleFavorite}>
                   <Text bold={true} style={styles.blueText}>
-                    {I18n.t("creditCardComponent.setFavourite")}
+                    {I18n.t(
+                      this.props.isFavoriteCard
+                        ? "creditCardComponent.unsetFavourite"
+                        : "creditCardComponent.setFavourite"
+                    )}
                   </Text>
                 </MenuOption>
                 <MenuOption
@@ -201,3 +242,24 @@ export default class CreditCardComponent extends React.Component<Props> {
     );
   }
 }
+
+const mapStateToProps = (
+  state: GlobalState,
+  props: CardProps
+): ReduxMappedStateProps => {
+  const favoriteCard = getFavoriteCreditCardId(state);
+  return {
+    isFavoriteCard:
+      favoriteCard.isSome() && favoriteCard.value === props.item.id
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  setFavoriteCard: (item: Option<CreditCardId>) =>
+    dispatch(setFavoriteCard(item))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreditCardComponent);

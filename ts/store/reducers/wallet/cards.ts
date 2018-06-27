@@ -4,10 +4,11 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { CreditCard } from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
-  SELECT_CARD_FOR_DETAILS
+  SELECT_CARD_FOR_DETAILS,
+  SET_FAVORITE_CARD
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -15,18 +16,22 @@ import { GlobalState } from "../types";
 
 export type CardsState = Readonly<{
   cards: IndexedById<CreditCard>;
-  selectedCardId: Option<number>;
+  selectedCardId: Option<CreditCardId>;
+  favoriteCardId: Option<CreditCardId>;
 }>;
 
 export const CARDS_INITIAL_STATE: CardsState = {
   cards: {},
-  selectedCardId: none
+  selectedCardId: none,
+  favoriteCardId: none
 };
 
 // selectors
 export const getCards = (state: GlobalState) => state.wallet.cards.cards;
 export const getSelectedCreditCardId = (state: GlobalState) =>
   state.wallet.cards.selectedCardId;
+export const getFavoriteCreditCardId = (state: GlobalState) =>
+  state.wallet.cards.favoriteCardId;
 
 export const creditCardsSelector = createSelector(
   getCards,
@@ -35,18 +40,26 @@ export const creditCardsSelector = createSelector(
   (cards: IndexedById<CreditCard>): ReadonlyArray<CreditCard> => _.values(cards)
 );
 
+const getCardFromId = (
+  cardId: Option<number>,
+  cards: IndexedById<CreditCard>
+): Option<CreditCard> => {
+  if (cardId.isNone()) {
+    return none;
+  }
+  return fromNullable(_.values(cards).find(c => c.id === cardId.value));
+};
+
 export const selectedCreditCardSelector = createSelector(
   getSelectedCreditCardId,
   getCards,
-  (
-    cardId: Option<number>,
-    cards: IndexedById<CreditCard>
-  ): Option<CreditCard> => {
-    if (cardId.isNone()) {
-      return none;
-    }
-    return fromNullable(_.values(cards).find(c => c.id === cardId.value));
-  }
+  getCardFromId
+);
+
+export const favoriteCreditCardSelector = createSelector(
+  getFavoriteCreditCardId,
+  getCards,
+  getCardFromId
 );
 
 // reducer
@@ -63,9 +76,13 @@ const reducer = (
   if (action.type === SELECT_CARD_FOR_DETAILS) {
     return {
       ...state,
-      selectedCardId: some(
-        typeof action.payload === "number" ? action.payload : action.payload.id
-      )
+      selectedCardId: some(action.payload)
+    };
+  }
+  if (action.type === SET_FAVORITE_CARD) {
+    return {
+      ...state,
+      favoriteCardId: action.payload
     };
   }
   return state;

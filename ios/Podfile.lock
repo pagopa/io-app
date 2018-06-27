@@ -2,6 +2,14 @@ PODS:
   - Mixpanel (3.2.3)
   - React (0.55.4):
     - React/Core (= 0.55.4)
+  - react-native-camera (1.0.2):
+    - React
+    - react-native-camera/RCT (= 1.0.2)
+    - react-native-camera/RN (= 1.0.2)
+  - react-native-camera/RCT (1.0.2):
+    - React
+  - react-native-camera/RN (1.0.2):
+    - React
   - react-native-config (0.11.5):
     - React
   - react-native-mixpanel (0.0.6):
@@ -41,6 +49,8 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - ReactNativePermissions (1.1.1):
+    - React
   - RNDeviceInfo (0.21.5):
     - React
   - RNFS (2.9.12):
@@ -54,6 +64,7 @@ PODS:
   - yoga (0.55.4.React)
 
 DEPENDENCIES:
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - React/ART (from `../node_modules/react-native`)
@@ -69,6 +80,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNI18n (from `../node_modules/react-native-i18n`)
@@ -83,10 +95,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
+  ReactNativePermissions:
+    :path: "../node_modules/react-native-permissions"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -103,8 +119,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
   React: aa2040dbb6f317b95314968021bd2888816e03d5
+  react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
   react-native-config: 408003951fd9d8b1dfd7ebf535f67c315f44d823
   react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
+  ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNI18n: db9be06a40336f04d136f24dd5de3f5eb9f3207c
@@ -112,6 +130,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: 3a943ee39824933896a7ae5aad3bf706ee25c50d
+PODFILE CHECKSUM: 4b20054b1ff719751f2c9325bbeec82868134691
 
 COCOAPODS: 1.5.3

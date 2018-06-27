@@ -66,7 +66,7 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isTransactionStarted: true
+      isTransactionStarted: false
     };
   }
 

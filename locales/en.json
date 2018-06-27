@@ -10,7 +10,8 @@
     "buttons": {
       "delete": "Delete",
       "cancel": "Cancel",
-      "ok": "OK"
+      "ok": "OK",
+      "continue": "Continue"
     },
     "navigator": {
       "messages": "messages",
@@ -156,6 +157,13 @@
       "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
+    "saveCard": {
+      "header":"Save the card",
+      "title":"Do you want to save this card?",
+      "infoTitle":"Set the card as favourite payment method",
+      "info":"This payment method will be automatically proposed for the next payment",
+      "save":"Save the card"
+    },
     "thanks":"✓ Thank you!",
     "endPayment":"Your transaction is completed",
     "addManager": {
@@ -178,7 +186,8 @@
       "totalAmount":"Total amount",
       "info":"Warning: after this step it will not be possible to come back",
       "info2":"You are using your favourite payment method.",
-      "changeMethod":"Change the payment method"
+      "changeMethod":"Change the payment method",
+      "change":"Change method"
     },
     "payWith": {
       "header":"Choose payment method",
@@ -256,21 +265,26 @@
     "addCardTitle": "Card details",
     "dummyCard": {
       "labels": {
-        "name": "Card owner",
-        "number": "Card number",
-        "expires": "Expiration date",
-        "csc": "Card security code"
+        "holder": "Card holder",
+        "pan": "Card number",
+        "expirationDate": "Expiration date",
+        "securityCode": "Card security code"
       },
       "values": {
-        "name": "John Doe",
-        "number": "0000 0000 0000 0000",
-        "expires": "mm/aa",
-        "csc": "●●●"
+        "holder": "John Doe",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/yy",
+        "securityCode": "•••"
       }
     },
     "acceptedCards": "Accepted cards",
     "whyFee": "Why a fee?",
-    "chooseMethod":"Select the desired method"
+    "chooseMethod":"Select the desired method",
+    "QRtoPay": {
+      "byCameraTitle": "Notice QR Code",
+      "cameraUsageInfo":"Capture the QR Code on the payment notice with the camera, or manually insert the transaction-related data (IUV and the entity/company code).",
+      "setManually":"Insert data manually"
+    }
   },
   "saveCard": {
     "saveCard":"Save the card",
@@ -283,6 +297,7 @@
     "validUntil": "Valid until",
     "actions": "Actions",
     "setFavourite": "Set as favourite",
+    "unsetFavourite": "Remove from favourites",
     "deleteTitle": "Do you want to proceed?",
     "deleteMsg": "This will delete the payment method"
   },
@@ -299,6 +314,19 @@
     "contentTitle": "Messages",
     "loading": "Loading Messages...",
     "yesterday": "yesterday"
+  },
+  "messageDetails": {
+    "headerTitle": "Message",
+    "detailsLink": {
+      "showLabel": "Details of the message",
+      "hideLabel": "Close details"
+    },
+    "infoLabels": {
+      "data": "Data:",
+      "senderFrom": "Sender from",
+      "department": "Department",
+      "service": "Service"
+    }
   },
   "notifications": {
     "installation": {

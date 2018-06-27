@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
-  whiteBg: {
-    backgroundColor: variables.colorWhite
-  },
   noBottomPadding: {
     paddingBottom: 0
   }
@@ -168,7 +165,7 @@ export class WalletLayout extends React.Component<Props> {
             <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
         </AppHeader>
-        <ScrollView bounces={false} style={styles.whiteBg}>
+        <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}
             style={[styles.darkGrayBg, styles.noBottomPadding]}
@@ -180,7 +177,14 @@ export class WalletLayout extends React.Component<Props> {
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
-            <Button block={true}>
+            <Button
+              block={true}
+              onPress={() =>
+                this.props.navigation.navigate(
+                  ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER
+                )
+              }
+            >
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
