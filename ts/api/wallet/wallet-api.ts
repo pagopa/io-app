@@ -8,7 +8,7 @@
 // Required to build user-displayable contents (e.g. "last used ...")
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import I18n from "../../i18n";
-import { CreditCard } from "../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../types/CreditCard";
 import { TransactionManager, WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
@@ -38,7 +38,7 @@ const managers: ReadonlyArray<TransactionManager> = [
 
 const cards: ReadonlyArray<CreditCard> = [
   {
-    id: 1,
+    id: 1 as CreditCardId,
     lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
       "wallet.today"
     )} 07:34` as NonEmptyString,
@@ -47,7 +47,7 @@ const cards: ReadonlyArray<CreditCard> = [
     expirationDate: "10/20" as NonEmptyString
   },
   {
-    id: 2,
+    id: 2 as CreditCardId,
     lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
       "wallet.yesterday"
     )} 07:34` as NonEmptyString,
@@ -56,14 +56,14 @@ const cards: ReadonlyArray<CreditCard> = [
     expirationDate: "11/21" as NonEmptyString
   },
   {
-    id: 3,
+    id: 3 as CreditCardId,
     lastUsage: I18n.t("wallet.noNewTransactions") as NonEmptyString,
     pan: "5400470862342849",
     owner: "Mario Bianchi" as NonEmptyString,
     expirationDate: "12/22" as NonEmptyString
   },
   {
-    id: 4,
+    id: 4 as CreditCardId,
     lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
       "wallet.today"
     )} 09:12` as NonEmptyString,
@@ -76,7 +76,7 @@ const cards: ReadonlyArray<CreditCard> = [
 const transactions: ReadonlyArray<WalletTransaction> = [
   {
     id: 1,
-    cardId: 1,
+    cardId: 1 as CreditCardId,
     date: "17/04/2018",
     time: "07:34",
     isoDatetime: "2018-04-17T07:34:00.000Z",
@@ -89,7 +89,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 2,
-    cardId: 2,
+    cardId: 2 as CreditCardId,
     date: "16/04/2018",
     time: "15:01",
     isoDatetime: "2018-04-16T15:01:00.000Z",
@@ -102,7 +102,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 3,
-    cardId: 4,
+    cardId: 4 as CreditCardId,
     date: "15/04/2018",
     time: "08:56",
     isoDatetime: "2018-04-15T08:56:00.000Z",
@@ -115,7 +115,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 4,
-    cardId: 2,
+    cardId: 2 as CreditCardId,
     date: "14/02/2018",
     time: "10:21",
     isoDatetime: "2018-02-14T10:21:00.000Z",
@@ -128,7 +128,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 5,
-    cardId: 4,
+    cardId: 4 as CreditCardId,
     date: "22/01/2018",
     time: "14:54",
     isoDatetime: "2018-01-22T14:54:00.000Z",
@@ -141,7 +141,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 6,
-    cardId: 4,
+    cardId: 4 as CreditCardId,
     date: "01/01/2018",
     time: "23:34",
     isoDatetime: "2018-01-01T23:34:00.000Z",
@@ -154,7 +154,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 7,
-    cardId: 1,
+    cardId: 1 as CreditCardId,
     date: "22/12/2017",
     time: "14:23",
     isoDatetime: "2017-12-22T14:23:00.000Z",
@@ -167,7 +167,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 8,
-    cardId: 1,
+    cardId: 1 as CreditCardId,
     date: "17/12/2017",
     time: "12:34",
     isoDatetime: "2017-12-17T12:34:00.000Z",
@@ -180,7 +180,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 9,
-    cardId: 4,
+    cardId: 4 as CreditCardId,
     date: "13/12/2017",
     time: "10:34",
     isoDatetime: "2017-12-13T10:34:00.000Z",
