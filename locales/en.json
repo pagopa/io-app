@@ -313,6 +313,19 @@
     "loading": "Loading Messages...",
     "yesterday": "yesterday"
   },
+  "messageDetails": {
+    "headerTitle": "Message",
+    "detailsLink": {
+      "showLabel": "Details of the message",
+      "hideLabel": "Close details"
+    },
+    "infoLabels": {
+      "data": "Data:",
+      "senderFrom": "Sender from",
+      "department": "Department",
+      "service": "Service"
+    }
+  },
   "notifications": {
     "installation": {
       "errorTitle": "Push notifications",
