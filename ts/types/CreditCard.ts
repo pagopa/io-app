@@ -16,9 +16,6 @@ interface ICreditCardIdTag {
 export const CreditCardId = tag<ICreditCardIdTag>()(t.number);
 export type CreditCardId = t.TypeOf<typeof CreditCardId>;
 
-export const isCreditCardId = (obj: any): obj is CreditCardId =>
-  typeof obj === "number";
-
 export type CreditCardType =
   | "VISAELECTRON"
   | "MAESTRO"

@@ -4,11 +4,7 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createSelector } from "reselect";
-import {
-  CreditCard,
-  CreditCardId,
-  isCreditCardId
-} from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   SELECT_CARD_FOR_DETAILS,
@@ -81,7 +77,7 @@ const reducer = (
     return {
       ...state,
       selectedCardId: some(
-        isCreditCardId(action.payload) ? action.payload : action.payload.id
+        CreditCardId.is(action.payload) ? action.payload : action.payload.id
       )
     };
   }
