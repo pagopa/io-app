@@ -1,5 +1,6 @@
 import { Body, Container, Content, H1, Text, View } from "native-base";
 import * as React from "react";
+import DeviceInfo from "react-native-device-info";
 import PreferenceList from "../components/PreferencesList";
 import ScreenHeader from "../components/ScreenHeader";
 import AppHeader from "../components/ui/AppHeader";
@@ -33,7 +34,7 @@ const PreferencesScreen: React.SFC = () => (
   <Container>
     <AppHeader>
       <Body>
-        <Text>{I18n.t("global.app.title")}</Text>
+        <Text>{DeviceInfo.getApplicationName()}</Text>
       </Body>
     </AppHeader>
 

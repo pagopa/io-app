@@ -5,8 +5,7 @@
       "message": "We have reported this to our team! Please close the app and start again!"
     },
     "app":  {
-      "version": "Version",
-      "title": "ItaliaApp"
+      "version": "Version"
     },
     "buttons": {
       "delete": "Delete",
