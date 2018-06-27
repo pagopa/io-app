@@ -5,7 +5,8 @@
       "message": "We have reported this to our team! Please close the app and start again!"
     },
     "app":  {
-      "version": "Version"
+      "version": "Version",
+      "title": "ItaliaApp"
     },
     "buttons": {
       "delete": "Delete",
@@ -68,7 +69,6 @@
   },
   "authentication": {
     "landing": {
-      "headerTitle": "ItaliaApp",
       "login": "Login with SPID",
       "nospid": "Don't have SPID? Find out more"
     },

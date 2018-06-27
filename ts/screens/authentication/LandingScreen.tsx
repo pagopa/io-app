@@ -31,7 +31,7 @@ class LandingScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Body>
-            <Text>{I18n.t("authentication.landing.headerTitle")}</Text>
+            <Text>{I18n.t("global.app.title")}</Text>
           </Body>
         </AppHeader>
         <Content />
