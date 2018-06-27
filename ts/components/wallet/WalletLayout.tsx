@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
-  whiteBg: {
-    backgroundColor: variables.colorWhite
-  },
   noBottomPadding: {
     paddingBottom: 0
   }
@@ -168,7 +165,7 @@ export class WalletLayout extends React.Component<Props> {
             <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
         </AppHeader>
-        <ScrollView bounces={false} style={styles.whiteBg}>
+        <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}
             style={[styles.darkGrayBg, styles.noBottomPadding]}
