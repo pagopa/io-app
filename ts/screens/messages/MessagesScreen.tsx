@@ -1,5 +1,6 @@
-import { Container, H1, Tab, Tabs, View } from "native-base";
 import * as React from "react";
+
+import { Container, H1, Tab, Tabs, View } from "native-base";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import {
   NavigationEventSubscription,
@@ -7,13 +8,14 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import MessageComponent from "../../components/MessageComponent";
+
+import MessageComponent from "../../components/messages/MessageComponent";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
-import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
-import { ServicesState } from "../../store/reducers/entities/services";
+import { orderedMessagesSelector } from "../../store/reducers/entities/messages/index";
+import { ServicesState } from "../../store/reducers/entities/services/index";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: variables.brandPrimaryLight
   },
-  NotActiveTabStyle: {
+  notActiveTabStyle: {
     borderBottomWidth: 0,
     borderBottomColor: variables.brandPrimaryInverted
   }
@@ -58,10 +60,6 @@ const styles = StyleSheet.create({
  */
 class MessagesScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
-
-  constructor(props: Props) {
-    super(props);
-  }
 
   public componentDidMount() {
     // TODO: Messages must be refreshed using pull-down @https://www.pivotaltracker.com/story/show/157917217
@@ -88,17 +86,23 @@ class MessagesScreen extends React.Component<Props, never> {
     ) : null;
   };
 
+  public getServiceName = (senderServiceId: string): string => {
+    return this.props.services.byId[senderServiceId].service_name;
+  };
+
   public getOrganizationName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].organization_name;
   };
+
   public getDepartmentName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].department_name;
   };
+
   public renderItem = (messageDetails: IMessageDetails) => {
     return (
       <MessageComponent
         id={messageDetails.item.id}
-        created_at={messageDetails.item.created_at}
+        createdAt={messageDetails.item.created_at}
         serviceOrganizationName={this.getOrganizationName(
           messageDetails.item.sender_service_id
         )}
@@ -106,6 +110,10 @@ class MessagesScreen extends React.Component<Props, never> {
           messageDetails.item.sender_service_id
         )}
         subject={messageDetails.item.subject}
+        navigation={this.props.navigation}
+        senderServiceId={messageDetails.item.sender_service_id}
+        markdown={messageDetails.item.markdown}
+        serviceName={this.getServiceName(messageDetails.item.sender_service_id)}
       />
     );
   };
@@ -133,10 +141,10 @@ class MessagesScreen extends React.Component<Props, never> {
         >
           <View spacer={true} large={true} />
         </Tab>
-        <Tab heading={""} activeTabStyle={styles.NotActiveTabStyle}>
+        <Tab heading={""} activeTabStyle={styles.notActiveTabStyle}>
           <View spacer={true} large={true} />
         </Tab>
-        <Tab heading={" "} activeTabStyle={styles.NotActiveTabStyle}>
+        <Tab heading={" "} activeTabStyle={styles.notActiveTabStyle}>
           <View spacer={true} large={true} />
         </Tab>
       </Tabs>

@@ -155,6 +155,13 @@
       "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
+    "saveCard": {
+      "header":"Salva la carta",
+      "title":"Vuoi salvare questa carta?",
+      "infoTitle":"Imposta la carta come metodo di pagamento preferito",
+      "info":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento",
+      "save":"Salva la carta"
+    },
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
     "transactionDetails": "Dettagli dell'operazione",
@@ -178,7 +185,8 @@
       "totalAmount":"Totale",
       "info":"Attenzione: dopo questo passaggio non sarà più possibile annullare",
       "info2":"Stai utilizzando il tuo metodo di pagamento preferito.",
-      "changeMethod":"Cambia metodo di pagamento"
+      "changeMethod":"Cambia metodo di pagamento",
+      "change":"Cambia metodo"
     },
     "payWith": {
       "header":"Scelta metodo di pagamamento",
@@ -271,6 +279,11 @@
     "whyFee": "Perchè la commissione?",
     "chooseMethod":"Scegli il metodo che preferisci"
   },
+  "QRtoPay": {
+    "byCameraTitle": "QR Code avviso",
+    "cameraUsageInfo":"Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure inserisci manualmente i dati identificativi (IUV e codive ente/azienda).",
+    "setManually":"Inserisci i dati manualmente"
+  },
   "saveCard": {
     "saveCard":"Salva la carta",
     "cancel":"Annulla",
@@ -298,6 +311,19 @@
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messaggi...",
     "yesterday": "ieri"
+  },
+  "messageDetails": {
+    "headerTitle": "Messaggio",
+    "detailsLink": {
+      "showLabel": "Dettagli del messaggio",
+      "hideLabel": "Chiudi dettagli"
+    },
+    "infoLabels": {
+      "data": "Data:",
+      "senderFrom": "Inviato da",
+      "department": "Dipartimento",
+      "service": "Servizio"
+    }
   },
   "notifications": {
     "installation": {
