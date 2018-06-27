@@ -8,6 +8,9 @@ import { PreferenceItem as PreferenceItemType } from "../types/PreferenceItem";
 
 type Props = PreferenceItemType;
 
+/**
+ * Component that implements the list item of the preferences screen
+ */
 class PreferenceItem extends React.Component<Props> {
   public render() {
     const { id, icon, valuePreview } = this.props;

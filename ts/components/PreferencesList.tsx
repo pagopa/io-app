@@ -9,6 +9,9 @@ type OwnProps = {
 
 type Props = OwnProps;
 
+/**
+ * Component that implements the preference list of the preferences screen
+ */
 const PreferenceList: React.SFC<Props> = ({ preferences }) => (
   <View>
     <List>
