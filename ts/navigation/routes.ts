@@ -1,4 +1,8 @@
+import { Platform } from "react-native";
+
 const ROUTES = {
+  PREFIX: Platform.OS === "android" ? "italiaapp://italiaapp/" : "italiaapp://",
+
   // Ingress
   INGRESS: "INGRESS",
 
