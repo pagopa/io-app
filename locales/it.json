@@ -10,7 +10,8 @@
     "buttons": {
       "delete": "Elimina",
       "cancel": "Annulla",
-      "ok": "OK"
+      "ok": "OK",
+      "continue": "Continua"
     },
     "navigator": {
       "messages": "messaggi",
@@ -262,16 +263,16 @@
     "addCardTitle": "Dati carta",
     "dummyCard": {
       "labels": {
-        "name": "Titolare",
-        "number": "Numero della carta",
-        "expires": "Data di scadenza",
-        "csc": "Codice di sicurezza"
+        "holder": "Titolare",
+        "pan": "Numero della carta",
+        "expirationDate": "Data di scadenza",
+        "securityCode": "Codice di sicurezza"
       },
       "values": {
-        "name": "Mario Rossi",
-        "number": "0000 0000 0000 0000",
-        "expires": "mm/aa",
-        "csc": "●●●"
+        "holder": "Mario Rossi",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/aa",
+        "securityCode": "•••"
       }
     },
     "acceptedCards": "Carte accettate",
