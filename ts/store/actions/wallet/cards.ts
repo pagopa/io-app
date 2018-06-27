@@ -18,7 +18,7 @@ export type CardsFetched = Readonly<{
 
 export type CardSelectedForDetails = Readonly<{
   type: typeof SELECT_CARD_FOR_DETAILS;
-  payload: CreditCard | CreditCardId; // either a card or its id
+  payload: CreditCardId;
 }>;
 
 export type SetFavoriteCard = Readonly<{
@@ -44,7 +44,7 @@ export const cardsFetched = (
 });
 
 export const selectCardForDetails = (
-  card: CreditCard | CreditCardId
+  card: CreditCardId
 ): CardSelectedForDetails => ({
   type: SELECT_CARD_FOR_DETAILS,
   payload: card

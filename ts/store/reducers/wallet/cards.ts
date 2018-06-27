@@ -76,9 +76,7 @@ const reducer = (
   if (action.type === SELECT_CARD_FOR_DETAILS) {
     return {
       ...state,
-      selectedCardId: some(
-        CreditCardId.is(action.payload) ? action.payload : action.payload.id
-      )
+      selectedCardId: some(action.payload)
     };
   }
   if (action.type === SET_FAVORITE_CARD) {
