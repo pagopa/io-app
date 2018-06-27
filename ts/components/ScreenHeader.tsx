@@ -5,7 +5,7 @@ import * as React from "react";
 import { Image, ImageSourcePropType } from "react-native";
 
 type Props = {
-  heading: Node;
+  heading: React.ReactNode;
   icon: ImageSourcePropType;
 };
 
