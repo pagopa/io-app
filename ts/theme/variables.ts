@@ -69,6 +69,10 @@ const customVariables = Object.assign(materialVariables, {
   get lineHeight1(): number {
     return this.lineHeightBase * 0.75;
   },
+  // LineHeigth = 26 for the icon font in message details component
+  get lineHeight2(): number {
+    return this.lineHeightBase * (26 / 24);
+  },
 
   // Icon
   iconFamily: "Entypo",
