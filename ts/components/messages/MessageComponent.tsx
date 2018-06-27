@@ -9,7 +9,7 @@ import ROUTES from "../../navigation/routes";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 
 export type OwnProps = Readonly<{
-  createdAt: Date;
+  createdAt: string;
   id: string;
   markdown: string;
   navigation: NavigationScreenProp<NavigationState>;
@@ -61,7 +61,10 @@ class MessageComponent extends React.Component<Props> {
         </Left>
         <Right>
           <Text formatDate={true}>
-            {convertDateToWordDistance(createdAt, I18n.t("messages.yesterday"))}
+            {convertDateToWordDistance(
+              new Date(createdAt),
+              I18n.t("messages.yesterday")
+            )}
           </Text>
           <Icon name="chevron-right" />
         </Right>
