@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { CreditCard } from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   FETCH_CARDS_REQUEST,
@@ -18,12 +18,12 @@ export type CardsFetched = Readonly<{
 
 export type CardSelectedForDetails = Readonly<{
   type: typeof SELECT_CARD_FOR_DETAILS;
-  payload: CreditCard | number; // either a card or its id
+  payload: CreditCard | CreditCardId; // either a card or its id
 }>;
 
 export type SetFavoriteCard = Readonly<{
   type: typeof SET_FAVORITE_CARD;
-  payload: Option<number>;
+  payload: Option<CreditCardId>;
 }>;
 
 export type CardsActions =
@@ -44,13 +44,15 @@ export const cardsFetched = (
 });
 
 export const selectCardForDetails = (
-  card: CreditCard | number
+  card: CreditCard | CreditCardId
 ): CardSelectedForDetails => ({
   type: SELECT_CARD_FOR_DETAILS,
   payload: card
 });
 
-export const setFavoriteCard = (cardId: Option<number>): SetFavoriteCard => ({
+export const setFavoriteCard = (
+  cardId: Option<CreditCardId>
+): SetFavoriteCard => ({
   type: SET_FAVORITE_CARD,
   payload: cardId
 });

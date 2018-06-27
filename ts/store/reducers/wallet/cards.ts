@@ -4,7 +4,11 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { CreditCard } from "../../../types/CreditCard";
+import {
+  CreditCard,
+  CreditCardId,
+  isCreditCardId
+} from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   SELECT_CARD_FOR_DETAILS,
@@ -16,8 +20,8 @@ import { GlobalState } from "../types";
 
 export type CardsState = Readonly<{
   cards: IndexedById<CreditCard>;
-  selectedCardId: Option<number>;
-  favoriteCardId: Option<number>;
+  selectedCardId: Option<CreditCardId>;
+  favoriteCardId: Option<CreditCardId>;
 }>;
 
 export const CARDS_INITIAL_STATE: CardsState = {
@@ -77,7 +81,7 @@ const reducer = (
     return {
       ...state,
       selectedCardId: some(
-        typeof action.payload === "number" ? action.payload : action.payload.id
+        isCreditCardId(action.payload) ? action.payload : action.payload.id
       )
     };
   }

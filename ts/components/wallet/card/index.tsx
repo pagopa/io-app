@@ -31,7 +31,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
-import { CreditCard } from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import ActionIcon from "./ActionIcon";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -80,7 +80,7 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  setFavoriteCard: (item: Option<number>) => void;
+  setFavoriteCard: (item: Option<CreditCardId>) => void;
 }>;
 
 export type CardProps = Readonly<{
@@ -255,7 +255,8 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteCard(item))
+  setFavoriteCard: (item: Option<CreditCardId>) =>
+    dispatch(setFavoriteCard(item))
 });
 
 export default connect(
