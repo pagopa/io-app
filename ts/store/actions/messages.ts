@@ -5,11 +5,14 @@
 import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import {
+  MESSAGE_LOAD_FAILURE,
+  MESSAGE_LOAD_REQUEST,
   MESSAGE_LOAD_SUCCESS,
   MESSAGES_LOAD_CANCEL,
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_REQUEST,
   MESSAGES_LOAD_SUCCESS,
+  NAVIGATE_TO_MESSAGE_DETAILS,
   START_PAYMENT
 } from "./constants";
 
@@ -31,9 +34,25 @@ export type MessagesLoadFailure = Readonly<{
   error: true;
 }>;
 
+export type MessageLoadRequest = Readonly<{
+  type: typeof MESSAGE_LOAD_REQUEST;
+  payload: string;
+}>;
+
 export type MessageLoadSuccess = Readonly<{
   type: typeof MESSAGE_LOAD_SUCCESS;
   payload: MessageWithContentPO;
+}>;
+
+export type MessageLoadFailure = Readonly<{
+  type: typeof MESSAGE_LOAD_FAILURE;
+  payload: Error;
+  error: true;
+}>;
+
+export type NavigateToMessageDetails = Readonly<{
+  type: typeof NAVIGATE_TO_MESSAGE_DETAILS;
+  payload: string;
 }>;
 
 export type StartPayment = Readonly<{
@@ -68,11 +87,29 @@ export const loadMessagesFailure = (error: Error): MessagesLoadFailure => ({
   error: true
 });
 
+export const loadMessage = (id: string): MessageLoadRequest => ({
+  type: MESSAGE_LOAD_REQUEST,
+  payload: id
+});
+
 export const loadMessageSuccess = (
   message: MessageWithContentPO
 ): MessageLoadSuccess => ({
   type: MESSAGE_LOAD_SUCCESS,
   payload: message
+});
+
+export const loadMessageFailure = (error: Error): MessageLoadFailure => ({
+  type: MESSAGE_LOAD_FAILURE,
+  payload: error,
+  error: true
+});
+
+export const navigateToMessageDetails = (
+  messageId: string
+): NavigateToMessageDetails => ({
+  type: NAVIGATE_TO_MESSAGE_DETAILS,
+  payload: messageId
 });
 
 export const startPayment = (paymentData: PaymentData): StartPayment => ({

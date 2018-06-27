@@ -33,3 +33,11 @@ export const validatePin = (pin: PinString): PinValidateRequest => ({
   type: PIN_LOGIN_VALIDATE_REQUEST,
   payload: pin
 });
+
+export const pinFailure = (): PinValidateFailure => ({
+  type: PIN_LOGIN_VALIDATE_FAILURE
+});
+
+export const pinSuccess = (): PinValidateSuccess => ({
+  type: PIN_LOGIN_VALIDATE_SUCCESS
+});
