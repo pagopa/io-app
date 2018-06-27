@@ -2,6 +2,9 @@
  * Screen for entering the credit card details
  * (holder, pan, cvc, expiration date)
  */
+import { none, Option, some } from "fp-ts/lib/Option";
+import _ from "lodash";
+import { Left } from "native-base";
 import {
   Body,
   Button,
@@ -13,20 +16,14 @@ import {
 } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-
-import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
-
-import { none, Option, some } from "fp-ts/lib/Option";
 import { Col, Grid } from "react-native-easy-grid";
-import { cardIcons } from "../../components/wallet/card/Logo";
-
-import _ from "lodash";
-import { Left } from "native-base";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import { cardIcons } from "../../components/wallet/card/Logo";
+import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
 import { fixExpirationDate, fixPan } from "../../utils/input";
