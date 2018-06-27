@@ -331,5 +331,16 @@
       "errorTitle": "Notifiche push",
       "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
     }
+  },
+  "preferences": {
+    "title": "Preferenze",
+    "subtitle": "Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica Amministrazione.",
+    "moreLinkText": "Per saperne di più.",
+    "list": {
+      "email": "Indirizzo email",
+      "servicesNotifications": "Notifiche dai servizi",
+      "language": "Lingua",
+      "digitalDomicile": "Domicilio digitale"
+    }
   }
 }

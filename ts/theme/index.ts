@@ -16,6 +16,8 @@ import messageComponent from "./components/MessageComponent";
 import messageDetailsComponentTheme from "./components/MessageDetailsComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
+import preferenceItemTheme from "./components/PreferenceItem";
+import screenHeaderTheme from "./components/ScreenHeader";
 import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
@@ -23,6 +25,7 @@ import textWithIconTheme from "./components/TextWithIcon";
 import viewTheme from "./components/View";
 import { Theme } from "./types";
 import variables from "./variables";
+
 const theme = (): Theme => {
   const nbTheme = getTheme(variables);
   const overrides = {
@@ -73,6 +76,12 @@ const theme = (): Theme => {
     },
     "UIComponent.MessageDetailsInfoComponent": {
       ...messageDetailsInfoComponentTheme()
+    },
+    "UIComponent.PreferenceItem": {
+      ...preferenceItemTheme()
+    },
+    "UIComponent.ScreenHeader": {
+      ...screenHeaderTheme()
     }
   };
 

@@ -69,7 +69,6 @@
   },
   "authentication": {
     "landing": {
-      "headerTitle": "ItaliaApp",
       "login": "Login with SPID",
       "nospid": "Don't have SPID? Find out more"
     },
@@ -332,6 +331,17 @@
     "installation": {
       "errorTitle": "Push notifications",
       "errorMessage": "Registration with the push notifications service generated an error"
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "subtitle": "This settings will be used by all services of the Public Amministration.",
+    "moreLinkText": "Get more info.",
+    "list": {
+      "email": "Email address",
+      "servicesNotifications": "Notifications from services",
+      "language": "Language",
+      "digitalDomicile": "Digital domicile"
     }
   }
 }
