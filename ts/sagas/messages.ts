@@ -2,6 +2,7 @@
  * Generators to manage messages and related services.
  */
 
+import { Either } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import {
   BasicResponseType,
@@ -43,6 +44,7 @@ import {
   MessagesLoadRequest
 } from "../store/actions/messages";
 import { loadServiceSuccess } from "../store/actions/services";
+import { sessionTokenSelector } from "../store/reducers/authentication";
 import {
   messagesByIdSelector,
   MessagesByIdState
@@ -51,9 +53,9 @@ import {
   servicesByIdSelector,
   ServicesByIdState
 } from "../store/reducers/entities/services/servicesById";
-import { sessionTokenSelector } from "../store/reducers/session";
 import { toMessageWithContentPO } from "../types/MessageWithContentPO";
 import { SessionToken } from "../types/SessionToken";
+import { callApi } from "./api";
 
 /**
  * A generator to load the message detail from the Backend
@@ -125,20 +127,15 @@ export function* loadMessages(
       servicesByIdSelector
     );
 
-    // Request the list of messages from the Backend
-    const response: BasicResponseType<Messages> | undefined = yield call(
+    const response: Either<Error, Messages> = yield call(
+      callApi,
       backendClient.getMessages,
       {}
     );
 
-    /**
-     * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
-     */
-    if (!response || response.status !== 200) {
-      const error: Error = response ? response.value : Error();
-
-      // Dispatch failure action
-      yield put(loadMessagesFailure(error));
+    if (response.isLeft()) {
+      // We got an error dispatch failure action
+      yield put(loadMessagesFailure(response.value));
     } else {
       // Filter messages already in the store
       const newMessagesWithoutContent = response.value.items.filter(

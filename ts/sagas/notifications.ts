@@ -1,7 +1,6 @@
 /**
  * A saga to manage notifications
  */
-
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Platform } from "react-native";
@@ -10,13 +9,13 @@ import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix } from "../config";
-import { SESSION_INITIALIZE_SUCCESS } from "../store/actions/constants";
+import { START_NOTIFICATION_INSTALLATION_UPDATE } from "../store/actions/constants";
 import { updateNotificationInstallationFailure } from "../store/actions/notifications";
+import { sessionTokenSelector } from "../store/reducers/authentication";
 import {
   InstallationState,
   notificationsInstallationSelector
 } from "../store/reducers/notifications/installation";
-import { sessionTokenSelector } from "../store/reducers/session";
 import { SessionToken } from "../types/SessionToken";
 
 const notificationsPlatform: PlatformEnum = Platform.select({
@@ -68,5 +67,5 @@ function* updateInstallation(): Iterator<Effect> {
 }
 
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(SESSION_INITIALIZE_SUCCESS, updateInstallation);
+  yield takeLatest(START_NOTIFICATION_INSTALLATION_UPDATE, updateInstallation);
 }
