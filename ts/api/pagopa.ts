@@ -51,10 +51,13 @@ const mapToLocalCreditCard = (pWallet: Wallet): CreditCard => {
 export const fetchCreditCards = async (
   token: string
 ): Promise<ApiFetchResult<ReadonlyArray<CreditCard>>> => {
-  const response = await fetch(
-    `${pagoPaApiUrlPrefix}/v1/app-users/me/wallets?access_token=${token}`,
-    { method: "get" }
-  );
+  const response = await fetch(`${pagoPaApiUrlPrefix}/v1/wallet`, {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  });
   if (response.ok) {
     const wallet: ReadonlyArray<any> = await response.json();
     const cards = wallet
@@ -138,8 +141,14 @@ export const fetchTransactionsByCreditCard = async (
   walletId: number
 ): Promise<ApiFetchResult<ReadonlyArray<WalletTransaction>>> => {
   const response = await fetch(
-    `${pagoPaApiUrlPrefix}/v1/wallets/${walletId}/transactions?access_token=${token}`,
-    { method: "get" }
+    `${pagoPaApiUrlPrefix}/v1/wallets/${walletId}/transactions`,
+    {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    }
   );
   if (response.ok) {
     const transactions: ReadonlyArray<any> = await response.json();
