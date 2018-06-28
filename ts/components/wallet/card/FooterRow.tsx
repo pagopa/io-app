@@ -57,7 +57,7 @@ class FooterRow extends React.Component<Props> {
             navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
           }}
         >
-          <Col size={9}>
+          <Col size={8}>
             <Text
               style={[
                 CreditCardStyles.textStyle,
