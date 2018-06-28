@@ -10,7 +10,7 @@ import { Col, Row } from "react-native-easy-grid";
 import { CardProps } from ".";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import ActionIcon from "./ActionIcon";
+import IconFont from "../../ui/IconFont";
 import FooterRow from "./FooterRow";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -52,7 +52,11 @@ export default class CardBody extends React.Component<CardProps> {
           }
         >
           <Right>
-            <ActionIcon name="io-right" size={variables.iconSize2} />
+            <IconFont
+              name="io-right"
+              size={variables.iconSize2}
+              color={variables.brandPrimary}
+            />
           </Right>
         </Row>
       );
