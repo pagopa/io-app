@@ -23,6 +23,7 @@ import { SessionToken } from "../../types/SessionToken";
 import { loadSession, watchSessionExpired } from "../authentication";
 
 jest.mock("react-native-device-info");
+jest.mock("react-native-camera");
 jest.mock("../../api/backend");
 
 const testSessionToken = "5b1ce7390b108b8f42009b0aa900eefa6dbdc574edf1b76960625478a32ed1f17d7b79f80c4cd7477ad9a0630d1dbd00" as SessionToken;
