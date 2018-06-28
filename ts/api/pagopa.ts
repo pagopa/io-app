@@ -2,10 +2,7 @@ import { ApiFetchResult } from ".";
 import { pagoPaApiUrlPrefix } from "../config";
 import { Wallet } from "../../definitions/pagopa/Wallet";
 import { CreditCard as PagoPACreditCard } from "../../definitions/pagopa/CreditCard";
-import {
-  Transaction as PagoPATransaction,
-  Entity
-} from "../../definitions/pagopa/Transaction";
+import { Transaction as PagoPATransaction } from "../../definitions/pagopa/Transaction";
 import { CreditCard, UNKNOWN_CARD, CreditCardType } from "../types/CreditCard";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import I18n from "../i18n";
@@ -23,19 +20,19 @@ const mapToLocalCreditCard = (pWallet: Wallet): CreditCard => {
   }
   const pCard: PagoPACreditCard = pWallet.creditCard;
   if (
-    !pWallet.lastUsage ||
-    !pWallet.id ||
-    !pCard.pan ||
-    !pCard.holder ||
-    !pCard.expireMonth ||
-    !pCard.expireYear ||
-    !pCard.brandLogo ||
+    pWallet.lastUsage === undefined ||
+    pWallet.idWallet === undefined ||
+    pCard.pan === undefined ||
+    pCard.holder === undefined ||
+    pCard.expireMonth === undefined ||
+    pCard.expireYear === undefined ||
+    pCard.brandLogo === undefined ||
     CreditCardType.decode(pCard.brandLogo).isLeft()
   ) {
     return UNKNOWN_CARD;
   }
   return {
-    id: pWallet.id, // TODO: idWallet on the original API -- but being this the wallet itself, `id` is a better naming convention
+    id: pWallet.idWallet,
     lastUsage: `${I18n.t("wallet.lastUsage")} ${new Date(
       pWallet.lastUsage
     ).toLocaleDateString()}` as NonEmptyString,
@@ -59,8 +56,8 @@ export const fetchCreditCards = async (
     }
   });
   if (response.ok) {
-    const wallet: ReadonlyArray<any> = await response.json();
-    const cards = wallet
+    const wallet: { data: ReadonlyArray<any> } = await response.json();
+    const cards = wallet.data
       .map(w => Wallet.decode(w))
       .filter(w => w.isRight())
       .map(w => mapToLocalCreditCard(w.value as Wallet)); // w has already passed the "isRight" test
@@ -101,32 +98,29 @@ const mapToLocalTransaction = (
     amount: undefined
   });
   const fee = Amount.decode(pTransaction.fee).getOrElse({ amount: undefined });
-  const entityName = Entity.decode(pTransaction.entity).getOrElse({
-    name: undefined
-  }).name;
   const currency = amount.currency
     ? amount.currency
     : fee.currency
       ? fee.currency
       : undefined;
   if (
-    !pTransaction.id ||
-    !pTransaction.walletId ||
-    !pTransaction.created ||
-    !pTransaction.description ||
-    !amount.amount ||
-    !fee.amount ||
-    !currency ||
-    !entityName
+    pTransaction.id === undefined ||
+    pTransaction.idWallet === undefined ||
+    pTransaction.created === undefined ||
+    pTransaction.description === undefined ||
+    amount.amount === undefined ||
+    fee.amount === undefined ||
+    currency === undefined ||
+    pTransaction.merchant === undefined
   ) {
     return UNKNOWN_TRANSACTION;
   }
   return {
     id: pTransaction.id,
-    cardId: pTransaction.walletId, // idWallet accoring to SIA
+    cardId: pTransaction.idWallet, // idWallet accoring to SIA
     datetime: pTransaction.created,
     paymentReason: pTransaction.description,
-    recipient: entityName,
+    recipient: pTransaction.merchant,
     amount:
       amount.amount /
       Math.pow(10, amount.decimalDigits ? amount.decimalDigits : 2),
@@ -140,19 +134,16 @@ export const fetchTransactionsByCreditCard = async (
   token: string,
   walletId: number
 ): Promise<ApiFetchResult<ReadonlyArray<WalletTransaction>>> => {
-  const response = await fetch(
-    `${pagoPaApiUrlPrefix}/v1/wallets/${walletId}/transactions`,
-    {
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
+  const response = await fetch(`${pagoPaApiUrlPrefix}/v1/transactions`, {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
     }
-  );
+  });
   if (response.ok) {
-    const transactions: ReadonlyArray<any> = await response.json();
-    const localTransactions = transactions
+    const transactions: { data: ReadonlyArray<any> } = await response.json();
+    const localTransactions = transactions.data
       .map(t => PagoPATransaction.decode(t))
       .filter(t => t.isRight())
       .map((t): WalletTransaction => mapToLocalTransaction(t.value));
