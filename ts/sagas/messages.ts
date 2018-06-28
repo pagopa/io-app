@@ -2,7 +2,6 @@
  * Generators to manage messages and related services.
  */
 
-import { Either } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import {
   BasicResponseType,
@@ -55,7 +54,7 @@ import {
 } from "../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../types/MessageWithContentPO";
 import { SessionToken } from "../types/SessionToken";
-import { callApi } from "./api";
+import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
  * A generator to load the message detail from the Backend
@@ -127,15 +126,21 @@ export function* loadMessages(
       servicesByIdSelector
     );
 
-    const response: Either<Error, Messages> = yield call(
-      callApi,
+    // Request the list of messages from the Backend
+    const response: BasicResponseType<Messages> | undefined = yield call(
+      callApiWith401ResponseStatusHandler,
       backendClient.getMessages,
       {}
     );
 
-    if (response.isLeft()) {
-      // We got an error dispatch failure action
-      yield put(loadMessagesFailure(response.value));
+    /**
+     * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
+     */
+    if (!response || response.status !== 200) {
+      const error: Error = response ? response.value : Error();
+
+      // Dispatch failure action
+      yield put(loadMessagesFailure(error));
     } else {
       // Filter messages already in the store
       const newMessagesWithoutContent = response.value.items.filter(

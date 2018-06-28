@@ -1,4 +1,3 @@
-import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 
@@ -16,7 +15,7 @@ import { messagesByIdSelector } from "../../store/reducers/entities/messages/mes
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { SessionToken } from "../../types/SessionToken";
-import { callApi } from "../api";
+import { callApiWith401ResponseStatusHandler } from "../api";
 import { loadMessage, loadMessages, loadService } from "../messages";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
@@ -141,9 +140,13 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response
         .next({})
-        .call(callApi, backendClient.getMessages, {})
+        .call(
+          callApiWith401ResponseStatusHandler,
+          backendClient.getMessages,
+          {}
+        )
         // Return an error message as getMessages response
-        .next(left(Error("Backend error")))
+        .next({ status: 500, value: Error("Backend error") })
         .put(loadMessagesFailure(Error("Backend error")))
         .next()
         .next()
@@ -159,9 +162,13 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response (no service already stored)
         .next({})
-        .call(callApi, backendClient.getMessages, {})
+        .call(
+          callApiWith401ResponseStatusHandler,
+          backendClient.getMessages,
+          {}
+        )
         // Return 200 with a list of 2 messages as getMessages response
-        .next(right(testMessages))
+        .next({ status: 200, value: testMessages })
         .all([
           call(
             loadService,
@@ -192,9 +199,13 @@ describe("messages", () => {
         .next({
           testServiceId1: testServicePublic
         })
-        .call(callApi, backendClient.getMessages, {})
+        .call(
+          callApiWith401ResponseStatusHandler,
+          backendClient.getMessages,
+          {}
+        )
         // Return 200 with a list of 2 messages as getMessages response
-        .next(right(testMessages))
+        .next({ status: 200, value: testMessages })
         .all([])
         .next()
         .all([])

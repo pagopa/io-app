@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import { Either } from "fp-ts/lib/Either";
 import { Effect } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 
@@ -9,7 +9,8 @@ import { sessionExpired } from "../store/actions/authentication";
  * A generator that wrap an API Call and handle the response status.
  * If the response status is 401 the user must be logged out.
  */
-export function* callApi<
+
+export function* callApiWith401ResponseStatusHandler<
   P,
   RT,
   T extends Promise<BasicResponseTypeWith401<RT> | undefined>
@@ -22,16 +23,8 @@ export function* callApi<
     param
   );
 
-  // Not able to decode the response
-  if (!response) {
-    return left(Error());
-  } else if (response.status !== 200) {
-    if (response.status === 401) {
-      // If the response status is 401 the session is expired
-      // Dispatch a SESSION_EXPIRED action
-      yield put(sessionExpired());
-    }
-    return left(response.value);
+  if (response && response.status === 401) {
+    yield put(sessionExpired());
   }
-  return right(response.value);
+  return response;
 }
