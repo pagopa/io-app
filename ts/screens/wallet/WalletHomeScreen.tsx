@@ -187,7 +187,9 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   cardsNumber: creditCardsSelector(state).length
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<GlobalState>
+): ReduxMappedDispatchProps => ({
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadCards: () => dispatch(fetchCardsRequest())
 });

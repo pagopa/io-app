@@ -254,7 +254,9 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<GlobalState>
+): ReduxMappedDispatchProps => ({
   setFavoriteCard: (item: Option<CreditCardId>) =>
     dispatch(setFavoriteCard(item))
 });

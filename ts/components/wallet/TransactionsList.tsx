@@ -165,7 +165,9 @@ const mapStateToProps = (
   return { transactions: [] };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<GlobalState>
+): ReduxMappedDispatchProps => ({
   selectTransaction: item => dispatch(selectTransactionForDetails(item)),
   selectCard: item => dispatch(selectCardForDetails(item))
 });
