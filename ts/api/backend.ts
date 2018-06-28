@@ -2,13 +2,17 @@ import * as t from "io-ts";
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
+  basicErrorResponseDecoder,
   basicResponseDecoder,
   BasicResponseType,
   composeHeaderProducers,
+  composeResponseDecoders,
   createFetchRequestForApi,
   IGetApiRequestType,
   IPostApiRequestType,
-  IPutApiRequestType
+  IPutApiRequestType,
+  IResponseType,
+  ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 
@@ -19,6 +23,7 @@ import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
 import { ProfileWithEmail } from "../../definitions/backend/ProfileWithEmail";
 import { ProfileWithoutEmail } from "../../definitions/backend/ProfileWithoutEmail";
+import { PublicSession } from "../../definitions/backend/PublicSession";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { SessionToken } from "../types/SessionToken";
 
@@ -40,6 +45,28 @@ const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
 // Define the types of the requests
 //
 
+// A basic response type that also include 401
+export type BasicResponseTypeWith401<R> =
+  | BasicResponseType<R>
+  | IResponseType<401, Error>;
+
+// A basic response decoder that also include 401
+export function basicResponseDecoderWith401<R, O = R>(
+  type: t.Type<R, O>
+): ResponseDecoder<BasicResponseTypeWith401<R>> {
+  return composeResponseDecoders(
+    basicResponseDecoder(type),
+    basicErrorResponseDecoder(401)
+  );
+}
+
+export type GetSessionT = IGetApiRequestType<
+  {},
+  "Authorization",
+  never,
+  BasicResponseTypeWith401<PublicSession>
+>;
+
 export type GetServiceT = IGetApiRequestType<
   {
     id: string;
@@ -55,7 +82,7 @@ export type GetMessagesT = IGetApiRequestType<
   },
   "Authorization",
   "cursor",
-  BasicResponseType<Messages>
+  BasicResponseTypeWith401<Messages>
 >;
 
 export type GetMessageT = IGetApiRequestType<
@@ -106,6 +133,14 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
 
   const tokenHeaderProducer = AuthorizationBearerHeaderProducer(token);
 
+  const getSessionT: GetSessionT = {
+    method: "get",
+    url: () => "/api/v1/session",
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: basicResponseDecoderWith401(PublicSession)
+  };
+
   const getServiceT: GetServiceT = {
     method: "get",
     url: params => `/api/v1/services/${params.id}`,
@@ -121,7 +156,7 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
       cursor: params.cursor ? `${params.cursor}` : ""
     }),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoder(Messages)
+    response_decoder: basicResponseDecoderWith401(Messages)
   };
 
   const getMessageT: GetMessageT = {
@@ -159,6 +194,7 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
   };
 
   return {
+    getSession: createFetchRequestForApi(getSessionT, options),
     getService: createFetchRequestForApi(getServiceT, options),
     getMessages: createFetchRequestForApi(getMessagesT, options),
     getMessage: createFetchRequestForApi(getMessageT, options),

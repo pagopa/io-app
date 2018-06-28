@@ -43,6 +43,7 @@ import {
   MessagesLoadRequest
 } from "../store/actions/messages";
 import { loadServiceSuccess } from "../store/actions/services";
+import { sessionTokenSelector } from "../store/reducers/authentication";
 import {
   messagesByIdSelector,
   MessagesByIdState
@@ -51,9 +52,9 @@ import {
   servicesByIdSelector,
   ServicesByIdState
 } from "../store/reducers/entities/services/servicesById";
-import { sessionTokenSelector } from "../store/reducers/session";
 import { toMessageWithContentPO } from "../types/MessageWithContentPO";
 import { SessionToken } from "../types/SessionToken";
+import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
  * A generator to load the message detail from the Backend
@@ -127,6 +128,7 @@ export function* loadMessages(
 
     // Request the list of messages from the Backend
     const response: BasicResponseType<Messages> | undefined = yield call(
+      callApiWith401ResponseStatusHandler,
       backendClient.getMessages,
       {}
     );

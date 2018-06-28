@@ -1,7 +1,6 @@
 /**
  * A saga that manages the Profile.
  */
-
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
@@ -20,25 +19,24 @@ import {
   PROFILE_UPDATE_SUCCESS
 } from "../store/actions/constants";
 import { ProfileUpdateRequest } from "../store/actions/profile";
-import { GlobalState } from "../store/reducers/types";
-
-// A selector to get the token from the state
-const getSessionToken = (state: GlobalState): string | undefined =>
-  state.session.isAuthenticated ? state.session.token : undefined;
+import { sessionTokenSelector } from "../store/reducers/authentication";
+import { SessionToken } from "../types/SessionToken";
 
 // A saga to load the Profile.
 function* loadProfile(): Iterator<Effect> {
   try {
     // Get the token from the state
-    const token: string | undefined = yield select(getSessionToken);
-    if (token === undefined) {
+    const sessionToken: SessionToken | undefined = yield select(
+      sessionTokenSelector
+    );
+    if (sessionToken === undefined) {
       throw new Error("session token is not defined");
     }
 
     // Fetch the profile from the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(
       fetchProfile,
-      token
+      sessionToken
     );
 
     if (isApiFetchFailure(response)) {
@@ -64,15 +62,17 @@ function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
     const newProfile = action.payload;
 
     // Get the token from the state
-    const token: string | undefined = yield select(getSessionToken);
-    if (token === undefined) {
+    const sessionToken: SessionToken | undefined = yield select(
+      sessionTokenSelector
+    );
+    if (sessionToken === undefined) {
       throw new Error("session token is not defined");
     }
 
     // Post the new Profile to the proxy
     const response: ApiFetchResult<ApiProfile> = yield call(
       postProfile,
-      token,
+      sessionToken,
       newProfile
     );
     if (isApiFetchFailure(response)) {

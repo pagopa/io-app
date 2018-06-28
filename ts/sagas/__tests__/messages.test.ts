@@ -15,6 +15,7 @@ import { messagesByIdSelector } from "../../store/reducers/entities/messages/mes
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { SessionToken } from "../../types/SessionToken";
+import { callApiWith401ResponseStatusHandler } from "../api";
 import { loadMessage, loadMessages, loadService } from "../messages";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
@@ -130,7 +131,7 @@ describe("messages", () => {
   });
 
   describe("loadMessages test plan", () => {
-    it("should put MESSAGES_LOAD_FAILURE with empty error it the getMessages response is undefined (can't be decoded)", () => {
+    it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
       testSaga(loadMessages, backendClient)
         .next()
         .select(messagesByIdSelector)
@@ -139,26 +140,12 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response
         .next({})
-        .call(backendClient.getMessages, {})
-        // Return undefined as getMessages response
-        .next(undefined)
-        .put(loadMessagesFailure(Error()))
-        .next()
-        .next()
-        .isDone();
-    });
-
-    it("should put MESSAGES_LOAD_FAILURE with the error it the getMessages response status is not 200", () => {
-      testSaga(loadMessages, backendClient)
-        .next()
-        .select(messagesByIdSelector)
-        // Return an empty object as messagesByIdSelectors response
-        .next({})
-        .select(servicesByIdSelector)
-        // Return an empty object as servicesByIdSelector response
-        .next({})
-        .call(backendClient.getMessages, {})
-        // Return 500 with an error message as getMessages response
+        .call(
+          callApiWith401ResponseStatusHandler,
+          backendClient.getMessages,
+          {}
+        )
+        // Return an error message as getMessages response
         .next({ status: 500, value: Error("Backend error") })
         .put(loadMessagesFailure(Error("Backend error")))
         .next()
@@ -175,7 +162,11 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response (no service already stored)
         .next({})
-        .call(backendClient.getMessages, {})
+        .call(
+          callApiWith401ResponseStatusHandler,
+          backendClient.getMessages,
+          {}
+        )
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
         .all([
@@ -208,7 +199,11 @@ describe("messages", () => {
         .next({
           testServiceId1: testServicePublic
         })
-        .call(backendClient.getMessages, {})
+        .call(
+          callApiWith401ResponseStatusHandler,
+          backendClient.getMessages,
+          {}
+        )
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
         .all([])

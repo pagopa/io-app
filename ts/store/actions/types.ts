@@ -2,7 +2,6 @@
  * Defines types for the available actions and store related stuff.
  */
 
-import { NavigationAction } from "react-navigation";
 import {
   Dispatch as DispatchAPI,
   MiddlewareAPI as ReduxMiddlewareAPI,
@@ -12,15 +11,16 @@ import {
 
 import { GlobalState } from "../reducers/types";
 import { ApplicationActions } from "./application";
+import { AuthenticationActions } from "./authentication";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
+import { NavigationActions } from "./navigation";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
 import { PinloginActions } from "./pinlogin";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
-import { SessionActions } from "./session";
 import { WalletActions } from "./wallet";
 
 export type ApplicationState = "background" | "inactive" | "active";
@@ -33,8 +33,8 @@ export type ApplicationStateAction = Readonly<{
 export type Action =
   | ApplicationActions
   | ApplicationStateAction
-  | NavigationAction
-  | SessionActions
+  | NavigationActions
+  | AuthenticationActions
   | OnboardingActions
   | NotificationsActions
   | PinloginActions
