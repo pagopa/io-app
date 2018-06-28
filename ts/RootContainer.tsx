@@ -1,31 +1,95 @@
 import { Root } from "native-base";
 import * as React from "react";
-import { AppState, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
+import { AppState, Linking, Platform, StatusBar } from "react-native";
 import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
+
+import { NavigationNavigateActionPayload } from "react-navigation";
 import Navigation from "./navigation";
-import { APP_STATE_CHANGE_ACTION } from "./store/actions/constants";
-import { ApplicationState, ReduxProps } from "./store/actions/types";
+import ROUTES from "./navigation/routes";
+import {
+  applicationChangeState,
+  ApplicationChangeState
+} from "./store/actions/application";
+import {
+  navigateToDeeplink,
+  NavigateToDeeplink,
+  setDeeplink,
+  SetDeeplink
+} from "./store/actions/deeplink";
+import { ApplicationState } from "./store/actions/types";
+import { GlobalState } from "./store/reducers/types";
 
-interface ReduxMappedProps {}
+type StateProps = {
+  appState: string;
+};
 
-interface OwnProps {}
+type DispatchProps = {
+  applicationChangeState: (
+    activity: ApplicationState
+  ) => ApplicationChangeState;
+  setDeeplink: (
+    navigationPayload: NavigationNavigateActionPayload
+  ) => SetDeeplink;
+  navigateToDeeplink: (
+    navigationPayload: NavigationNavigateActionPayload
+  ) => NavigateToDeeplink;
+};
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = StateProps & DispatchProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
  */
 class RootContainer extends React.Component<Props> {
   public componentDidMount() {
-    AppState.addEventListener("change", this.onApplicationActivityChange);
+    if (Platform.OS === "android") {
+      Linking.getInitialURL()
+        .then(this.navigate)
+        .catch(console.error);
+    } else {
+      Linking.addEventListener("url", this.handleOpenURL);
+    }
+
+    AppState.addEventListener("change", this.handleApplicationActivityChange);
   }
 
   public componentWillUnmount() {
-    AppState.removeEventListener("change", this.onApplicationActivityChange);
+    Linking.removeEventListener("url", this.handleOpenURL);
+    AppState.removeEventListener(
+      "change",
+      this.handleApplicationActivityChange
+    );
   }
+
+  private handleOpenURL = (event: { url: string }) => {
+    this.navigate(event.url);
+  };
+
+  private navigate = (url: string | null) => {
+    if (!url) {
+      return;
+    }
+
+    const route = url.slice(ROUTES.PREFIX.length);
+    const routeParts = route.split("/");
+    const routeName = routeParts[0];
+    const id = routeParts[1] || undefined;
+
+    const deeplinkNavigationPayload = { routeName, id };
+
+    if (this.props.appState === "background") {
+      this.props.setDeeplink(deeplinkNavigationPayload);
+    } else {
+      this.props.navigateToDeeplink(deeplinkNavigationPayload);
+    }
+  };
+
+  public handleApplicationActivityChange = (activity: ApplicationState) => {
+    this.props.applicationChangeState(activity);
+  };
 
   public render() {
     return (
@@ -37,13 +101,19 @@ class RootContainer extends React.Component<Props> {
       </Root>
     );
   }
-
-  public onApplicationActivityChange = (activity: ApplicationState) => {
-    this.props.dispatch({
-      type: APP_STATE_CHANGE_ACTION,
-      payload: activity
-    });
-  };
 }
 
-export default connect()(RootContainer);
+const mapStateToProps = (state: GlobalState) => ({
+  appState: state.appState.appState
+});
+
+const mapDispatchToProps = {
+  applicationChangeState,
+  setDeeplink,
+  navigateToDeeplink
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RootContainer);

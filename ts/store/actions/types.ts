@@ -14,6 +14,7 @@ import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
+import { DeeplinkActions } from "./deeplink";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
@@ -34,17 +35,18 @@ export type ApplicationStateAction = Readonly<{
 export type Action =
   | ApplicationActions
   | ApplicationStateAction
-  | NavigationActions
   | AuthenticationActions
-  | OnboardingActions
+  | BackendInfoActions
+  | DeeplinkActions
+  | ErrorActions
+  | MessagesActions
+  | NavigationActions
   | NotificationsActions
+  | OnboardingActions
   | PinloginActions
   | ProfileActions
-  | MessagesActions
   | ServicesActions
-  | ErrorActions
-  | WalletActions
-  | BackendInfoActions;
+  | WalletActions;
 
 export type GetState = () => GlobalState;
 
