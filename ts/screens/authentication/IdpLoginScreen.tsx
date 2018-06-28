@@ -3,20 +3,22 @@ import * as React from "react";
 import { NavState, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import * as config from "../../config";
 import I18n from "../../i18n";
-import { loginFailure, loginSuccess } from "../../store/actions/session";
+import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import {
-  isUnauthenticatedWithoutIdpSessionState,
-  SessionState
-} from "../../store/reducers/session";
+  AuthenticationState,
+  isLoggedOutWithoutIdp
+} from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { extractLoginResult } from "../../utils/login";
+
 type ReduxMappedProps = {
-  session: SessionState;
+  authentication: AuthenticationState;
 };
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -29,11 +31,11 @@ const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`;
  */
 class IdpLoginScreen extends React.Component<Props, never> {
   public render() {
-    const { session } = this.props;
-    if (isUnauthenticatedWithoutIdpSessionState(session)) {
+    const { authentication } = this.props;
+    if (isLoggedOutWithoutIdp(authentication)) {
       return null;
     }
-    const loginUri = LOGIN_BASE_URL + session.idp.entityID;
+    const loginUri = LOGIN_BASE_URL + authentication.idp.entityID;
     const onPress = () => this.props.navigation.goBack();
     return (
       <Container>
@@ -74,6 +76,6 @@ class IdpLoginScreen extends React.Component<Props, never> {
   };
 }
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  session: state.session
+  authentication: state.authentication
 });
 export default connect(mapStateToProps)(IdpLoginScreen);
