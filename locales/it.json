@@ -295,6 +295,7 @@
     "validUntil": "Valida fino al",
     "actions": "Azioni",
     "setFavourite": "Imposta come preferita",
+    "unsetFavourite": "Rimuovi dai preferiti",
     "deleteTitle": "Procedere con l'operazione?",
     "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
@@ -329,6 +330,17 @@
     "installation": {
       "errorTitle": "Notifiche push",
       "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
+    }
+  },
+  "preferences": {
+    "title": "Preferenze",
+    "subtitle": "Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica Amministrazione.",
+    "moreLinkText": "Per saperne di più.",
+    "list": {
+      "email": "Indirizzo email",
+      "servicesNotifications": "Notifiche dai servizi",
+      "language": "Lingua",
+      "digitalDomicile": "Domicilio digitale"
     }
   }
 }

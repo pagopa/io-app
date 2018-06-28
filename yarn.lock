@@ -573,9 +573,9 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.0.tgz#48a6be13cbe0e56904b301d1f58ce8847f731c44"
 
-"@types/jest@^22.2.3":
-  version "22.2.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
+"@types/jest@^23.1.1":
+  version "23.1.1"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.1.1.tgz#c54ab1a5f41aa693c0957222dd10414416d0c87b"
 
 "@types/lodash@^4.14.108":
   version "4.14.108"
@@ -5988,10 +5988,10 @@ react-native-offline@^3.7.4:
 react-native-permissions@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
-  
-react-native-popup-menu@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.13.1.tgz#24977beab0247eccab0e10abcd259aadf06e6a22"
+
+react-native-popup-menu@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.13.2.tgz#6ea7a7446b04fc3e41d148a908a8a94ad949256f"
 
 react-native-push-notification@^3.0.2:
   version "3.0.2"

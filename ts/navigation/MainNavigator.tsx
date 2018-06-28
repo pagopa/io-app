@@ -14,6 +14,7 @@ import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import ProfileScreen from "../screens/main/ProfileScreen";
 import PlaceholderScreen from "../screens/PlaceholderScreen";
+import PreferencesScreen from "../screens/PreferencesScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
@@ -85,7 +86,7 @@ const navigation = TabNavigator(
       screen: PlaceholderScreen
     },
     [ROUTES.PREFERENCES_HOME]: {
-      screen: PlaceholderScreen
+      screen: PreferencesScreen
     },
     [ROUTES.MAIN_PROFILE]: {
       screen: ProfileScreen

@@ -14,12 +14,12 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { selectCardForDetails } from "../../../store/actions/wallet/cards";
 import variables from "../../../theme/variables";
-import { CreditCard } from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import ActionIcon from "./ActionIcon";
 import { CreditCardStyles } from "./style";
 
 type ReduxMappedProps = Readonly<{
-  selectCard: (item: CreditCard) => void;
+  selectCard: (item: CreditCardId) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -45,7 +45,7 @@ class FooterRow extends React.Component<Props> {
           style={CreditCardStyles.rowStyle}
           size={6}
           onPress={() => {
-            this.props.selectCard(item);
+            this.props.selectCard(item.id);
             navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
           }}
         >

@@ -1,5 +1,6 @@
 import { Body, Button, Container, Content, Text, View } from "native-base";
 import * as React from "react";
+import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
@@ -8,6 +9,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
+
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -31,7 +33,7 @@ class LandingScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Body>
-            <Text>{I18n.t("authentication.landing.headerTitle")}</Text>
+            <Text>{DeviceInfo.getApplicationName()}</Text>
           </Body>
         </AppHeader>
         <Content />
