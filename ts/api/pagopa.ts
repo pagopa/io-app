@@ -1,13 +1,18 @@
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { ApiFetchResult } from ".";
-import { pagoPaApiUrlPrefix } from "../config";
-import { Wallet } from "../../definitions/pagopa/Wallet";
+import { Amount } from "../../definitions/pagopa/Amount";
 import { CreditCard as PagoPACreditCard } from "../../definitions/pagopa/CreditCard";
 import { Transaction as PagoPATransaction } from "../../definitions/pagopa/Transaction";
-import { CreditCard, UNKNOWN_CARD, CreditCardType } from "../types/CreditCard";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { Wallet } from "../../definitions/pagopa/Wallet";
+import { pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
-import { WalletTransaction, UNKNOWN_TRANSACTION } from "../types/wallet";
-import { Amount } from "../../definitions/pagopa/Amount";
+import {
+  CreditCard,
+  CreditCardId,
+  CreditCardType,
+  UNKNOWN_CARD
+} from "../types/CreditCard";
+import { UNKNOWN_TRANSACTION, WalletTransaction } from "../types/wallet";
 
 /**
  * This function converts a Wallet object into
@@ -32,11 +37,11 @@ const mapToLocalCreditCard = (pWallet: Wallet): CreditCard => {
     return UNKNOWN_CARD;
   }
   return {
-    id: pWallet.idWallet,
+    id: pWallet.idWallet as CreditCardId,
     lastUsage: `${I18n.t("wallet.lastUsage")} ${new Date(
       pWallet.lastUsage
     ).toLocaleDateString()}` as NonEmptyString,
-    pan: pCard.pan as NonEmptyString,
+    pan: pCard.pan,
     holder: pCard.holder as NonEmptyString,
     expirationDate: `${pCard.expireMonth}/${
       pCard.expireYear
@@ -71,7 +76,7 @@ const mapToLocalTransaction = (
   }
   return {
     id: pTransaction.id,
-    cardId: pTransaction.idWallet, // idWallet accoring to SIA
+    cardId: pTransaction.idWallet as CreditCardId,
     datetime: pTransaction.created,
     paymentReason: pTransaction.description,
     recipient: pTransaction.merchant,
@@ -105,7 +110,7 @@ export const fetchCreditCards = async (
       const cards = wallet.data
         .map(w => Wallet.decode(w))
         .filter(w => w.isRight())
-        .map(w => mapToLocalCreditCard(w.value as Wallet)); // w has already passed the "isRight" test
+        .map(w => mapToLocalCreditCard(w.value));
       return {
         isError: false,
         result: cards

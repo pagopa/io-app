@@ -186,9 +186,9 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              `${transaction.fee.toFixed(
-                2
-              )} ${this.getCurrencySymbol(transaction.currency)}`
+              `${transaction.fee.toFixed(2)} ${this.getCurrencySymbol(
+                transaction.currency
+              )}`
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),

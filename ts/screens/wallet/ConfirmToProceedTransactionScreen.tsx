@@ -66,7 +66,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
    *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
    */
   private getTotalAmount(transaction: Readonly<WalletTransaction>) {
-    return transaction.amount + transaction.transactionCost;
+    return transaction.amount + transaction.fee;
   }
 
   public render(): React.ReactNode {
@@ -127,7 +127,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${transaction.transactionCost.toFixed(2)} €`}
+                    {`${transaction.fee.toFixed(2)} €`}
                   </Text>
                 </Col>
               </Row>

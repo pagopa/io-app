@@ -2,21 +2,21 @@
  * A saga that manages the Wallet.
  */
 
-import { call, Effect, put, take, fork } from "redux-saga/effects";
+import { call, Effect, fork, put, take } from "redux-saga/effects";
 
+import { ApiFetchResult, isApiFetchFailure } from "../api";
+import { fetchCreditCards, fetchTransactions } from "../api/pagopa";
 import {
   FETCH_CARDS_REQUEST,
   FETCH_TRANSACTIONS_REQUEST
 } from "../store/actions/constants";
 import { cardsFetched } from "../store/actions/wallet/cards";
 import {
-  transactionsFetched,
-  fetchTransactionsRequest
+  fetchTransactionsRequest,
+  transactionsFetched
 } from "../store/actions/wallet/transactions";
 import { CreditCard } from "../types/CreditCard";
 import { WalletTransaction } from "../types/wallet";
-import { fetchCreditCards, fetchTransactions } from "../api/pagopa";
-import { ApiFetchResult, isApiFetchFailure } from "../api";
 
 function* fetchTransactionsSaga(token: string): Iterator<Effect> {
   const response: ApiFetchResult<ReadonlyArray<WalletTransaction>> = yield call(
