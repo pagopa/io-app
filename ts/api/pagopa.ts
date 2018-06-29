@@ -45,52 +45,6 @@ const mapToLocalCreditCard = (pWallet: Wallet): CreditCard => {
   };
 };
 
-export const fetchCreditCards = async (
-  token: string
-): Promise<ApiFetchResult<ReadonlyArray<CreditCard>>> => {
-  const response = await fetch(`${pagoPaApiUrlPrefix}/v1/wallet`, {
-    method: "get",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    }
-  });
-  if (response.ok) {
-    const wallet: { data: ReadonlyArray<any> } = await response.json();
-    const cards = wallet.data
-      .map(w => Wallet.decode(w))
-      .filter(w => w.isRight())
-      .map(w => mapToLocalCreditCard(w.value as Wallet)); // w has already passed the "isRight" test
-    return {
-      isError: false,
-      result: cards
-    };
-  } else {
-    return {
-      isError: true,
-      error: new Error(
-        `The credit cards fetching operation failed with error ${
-          response.status
-        }`
-      )
-    };
-  }
-};
-
-export type WalletTransaction = {
-  id: number;
-  cardId: number;
-  isoDatetime: string;
-  date: string;
-  time: string;
-  paymentReason: string;
-  recipient: string;
-  amount: number;
-  currency: string;
-  transactionCost: number;
-  isNew: boolean;
-};
-
 const mapToLocalTransaction = (
   pTransaction: PagoPATransaction
 ): WalletTransaction => {
@@ -130,35 +84,92 @@ const mapToLocalTransaction = (
   };
 };
 
-export const fetchTransactionsByCreditCard = async (
-  token: string,
-  walletId: number
-): Promise<ApiFetchResult<ReadonlyArray<WalletTransaction>>> => {
-  const response = await fetch(`${pagoPaApiUrlPrefix}/v1/transactions`, {
-    method: "get",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
+/**
+ * fetches a list of credit cards from PagoPA
+ * and returns it (after converting
+ * it Wallet -> CreditCard)
+ * @param token the token to be passed to the server
+ */
+export const fetchCreditCards = async (
+  token: string
+): Promise<ApiFetchResult<ReadonlyArray<CreditCard>>> => {
+  try {
+    const response = await fetch(`${pagoPaApiUrlPrefix}/v1/wallet`, {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+    if (response.ok) {
+      const wallet: { data: ReadonlyArray<any> } = await response.json();
+      const cards = wallet.data
+        .map(w => Wallet.decode(w))
+        .filter(w => w.isRight())
+        .map(w => mapToLocalCreditCard(w.value as Wallet)); // w has already passed the "isRight" test
+      return {
+        isError: false,
+        result: cards
+      };
+    } else {
+      return {
+        isError: true,
+        error: Error(
+          `The credit cards fetching operation failed with error ${
+            response.status
+          }`
+        )
+      };
     }
-  });
-  if (response.ok) {
-    const transactions: { data: ReadonlyArray<any> } = await response.json();
-    const localTransactions = transactions.data
-      .map(t => PagoPATransaction.decode(t))
-      .filter(t => t.isRight())
-      .map((t): WalletTransaction => mapToLocalTransaction(t.value));
-    return {
-      isError: false,
-      result: localTransactions
-    };
-  } else {
+  } catch (error) {
     return {
       isError: true,
-      error: new Error(
-        `The credit cards fetching operation failed with error ${
-          response.status
-        }`
-      )
+      error
+    };
+  }
+};
+
+/**
+ * Fetches a list of transactions from the
+ * PagoPA server and returns it (after converting
+ * Transaction -> WalletTransaction )
+ * @param token the token to be passed to the server
+ */
+export const fetchTransactions = async (
+  token: string
+): Promise<ApiFetchResult<ReadonlyArray<WalletTransaction>>> => {
+  try {
+    const response = await fetch(`${pagoPaApiUrlPrefix}/v1/transactions`, {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+    if (response.ok) {
+      const transactions: { data: ReadonlyArray<any> } = await response.json();
+      const localTransactions = transactions.data
+        .map(t => PagoPATransaction.decode(t))
+        .filter(t => t.isRight())
+        .map((t): WalletTransaction => mapToLocalTransaction(t.value));
+      return {
+        isError: false,
+        result: localTransactions
+      };
+    } else {
+      return {
+        isError: true,
+        error: Error(
+          `The transactions fetching operation failed with error ${
+            response.status
+          }`
+        )
+      };
+    }
+  } catch (error) {
+    return {
+      isError: true,
+      error
     };
   }
 };

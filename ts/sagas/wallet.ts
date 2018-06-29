@@ -2,7 +2,7 @@
  * A saga that manages the Wallet.
  */
 
-import { call, Effect, put, take, fork, select, all } from "redux-saga/effects";
+import { call, Effect, put, take, fork } from "redux-saga/effects";
 
 import {
   FETCH_CARDS_REQUEST,
@@ -15,28 +15,19 @@ import {
 } from "../store/actions/wallet/transactions";
 import { CreditCard } from "../types/CreditCard";
 import { WalletTransaction } from "../types/wallet";
-import { fetchCreditCards, fetchTransactionsByCreditCard } from "../api/pagopa";
+import { fetchCreditCards, fetchTransactions } from "../api/pagopa";
 import { ApiFetchResult, isApiFetchFailure } from "../api";
-import { creditCardIdsSelector } from "../store/reducers/wallet/cards";
 
-function* fetchTransactions(token: string): Iterator<Effect> {
-  const cardIds: ReadonlyArray<number> = yield select(creditCardIdsSelector);
-
-  const responses: ReadonlyArray<
-    ApiFetchResult<ReadonlyArray<WalletTransaction>>
-  > = yield all(
-    cardIds.map(cardId => call(fetchTransactionsByCreditCard, token, cardId))
+function* fetchTransactionsSaga(token: string): Iterator<Effect> {
+  const response: ApiFetchResult<ReadonlyArray<WalletTransaction>> = yield call(
+    fetchTransactions,
+    token
   );
-
-  const transactions = responses.reduce(
-    (t: ReadonlyArray<WalletTransaction>, r) => [
-      ...t,
-      ...(isApiFetchFailure(r) ? [] : r.result)
-    ],
-    []
-  );
-
-  yield put(transactionsFetched(transactions));
+  if (isApiFetchFailure(response)) {
+    console.warn(response.error.message);
+  } else {
+    yield put(transactionsFetched(response.result));
+  }
 }
 
 function* fetchCreditCardsSaga(token: string): Iterator<Effect> {
@@ -45,7 +36,7 @@ function* fetchCreditCardsSaga(token: string): Iterator<Effect> {
     token
   );
   if (isApiFetchFailure(response)) {
-    console.error(response.error);
+    console.warn(response.error.message);
   } else {
     yield put(cardsFetched(response.result));
     yield put(fetchTransactionsRequest());
@@ -58,13 +49,12 @@ function* watcher(): Iterator<Effect> {
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_CARDS_REQUEST
     ]);
-    const token =
-      "O1vN7EE5I67FhF20484CpGC9m1Qso7A9viu3FVGzVggDO2xyyhiDGzRhciZv74sy";
+    const token = "TOKEN"; // get this from state (wallet_token)
     if (action.type === FETCH_CARDS_REQUEST) {
       yield fork(fetchCreditCardsSaga, token);
     }
     if (action.type === FETCH_TRANSACTIONS_REQUEST) {
-      yield fork(fetchTransactions, token);
+      yield fork(fetchTransactionsSaga, token);
     }
   }
 }
