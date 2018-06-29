@@ -126,6 +126,65 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
+  # Create signed Android release and deploy a new alpha version to the Google Play Store
+  alpha-release-android:
+    <<: *defaults
+
+    docker:
+      - image: circleci/android:api-27-node8-alpha
+
+    environment:
+      - TERM: "dumb"
+      - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
+      - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+      - REACT_NATIVE_MAX_WORKERS: 1
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
+
+      # Restore sdk cache
+      - restore_cache:
+          keys:
+            - v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
+            - v1-android-sdkmanager-packages-
+
+      # Install Android SDK
+      - run:
+          command: ./scripts/circleci-android-setup.sh
+
+      # Restore jars cache
+      - restore_cache:
+          key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+
+      # Set Ruby Version for chruby
+      - run: echo "ruby-2.4" > .ruby-version
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Recreate JSON key file (for Google Play) from ENV variable
+      - run:
+          command: ./scripts/json-key-file-setup.sh
+
+      # Recreate keystore from ENV variable
+      - run:
+          command: ./scripts/keystore-setup.sh
+
+      # Build the js bundle in release mode
+      - run: yarn bundle:android-release
+
+      # Run alpha lane
+      - run:
+          command: cd android && bundle exec fastlane alpha
+
+      - store_artifacts:
+          path: android/app/build/outputs/apk
+          destination: apks/release
+
   # Test ios build
   test-ios:
     <<: *defaults
@@ -212,3 +271,10 @@ workflows:
           requires:
             - hold-native-tests
 
+      # Build Android alpha release only on master branch
+      - alpha-release-android:
+          requires:
+            - test-js-node-8
+          filters:
+            branches:
+              only: master

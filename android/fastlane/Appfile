@@ -1,2 +1,2 @@
-json_key_file "./app/Google Play Android Developer-04750d2c0cf8.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+json_key_file "/tmp/json-key.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
 package_name "it.teamdigitale.app.italiaapp" # e.g. com.krausefx.app
