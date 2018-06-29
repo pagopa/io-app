@@ -1,0 +1,40 @@
+[
+  {
+    "created_at":"2018-06-28T09:00:06.771Z" ,
+    "id": "01CFSP4XYK3Y0VZ22HW9FKS1XM",
+    "markdown": "Testo da mostrare come markdown.",
+    "sender_service_id": "5a25abf4fcc89605c082f042c49a",
+    "subject": "Messaggio con informazioni di pagamento",
+    "payment_data": {
+      "amount": 55,
+      "notice_number": "12432237427346s52734234"
+    }
+  },
+  {
+    "created_at":"2018-06-25T10:00:06.771Z" ,
+    "id": "01CFSP4XYK3Y0VZTKHW9FKS1XM",
+    "markdown": "Testo da mostrare come markdown.",
+    "sender_service_id": "5a25abf4fcc89605c082f042c49a",
+    "subject": "Messaggio senza informazioni di pagamento",
+    "payment_data": {}
+  },
+  {
+    "created_at":"2018-06-25T09:45:06.771Z" ,
+    "id": "id10101010101010",
+    "markdown": "Testo da mostrare come markdown.",
+    "sender_service_id": "5a563817fcc896087002ea46c49a",
+    "subject": "Messaggio con informazioni di pagamento",
+    "payment_data": {
+      "amount": 129.33,
+      "notice_number": "124322374v2734652734234"
+    }
+  },
+  {
+    "created_at":"2018-06-22T09:45:06.771Z" ,
+    "id": "id1010101010101023",
+    "markdown": "Testo da mostrare come markdown.",
+    "sender_service_id": "5a563817fcc896087002ea46c49a",
+    "subject": "Messaggio senza informazioni di pagamento",
+    "payment_data": {}
+  }
+]

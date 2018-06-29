@@ -12,8 +12,8 @@ declare module "native-base" {
       modal?: boolean;
       footer?: boolean;
       header?: boolean;
-      borderBottomTab?: boolean;
       content?: boolean;
+      padded?: boolean;
     }
   }
 }
@@ -32,13 +32,13 @@ export default (): Theme => {
       height: variables.spacerHeight
     },
 
-    ".borderBottomTab": {
-      borderBottomColor: variables.brandPrimaryLight,
-      borderBottomWidth: 2
-    },
     ".modal": {
       flex: 1,
       backgroundColor: variables.contentBackground
+    },
+
+    ".padded": {
+      paddingBottom: 15
     },
 
     ".footer": {

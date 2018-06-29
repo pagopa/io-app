@@ -35,7 +35,7 @@ export default (): Theme => {
       textAlign: "right"
     },
     ".alternativeBold": {
-      lineHeight: variables.lineHeight1,
+      lineHeight: variables.lineHeight2,
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color,
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)

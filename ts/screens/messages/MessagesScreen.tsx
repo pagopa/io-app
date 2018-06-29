@@ -8,7 +8,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-
+import mockMessages from "../../__mocks__/messages-with-payment-data.json";
 import MessageComponent from "../../components/messages/MessageComponent";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
@@ -32,8 +32,22 @@ export type OwnProps = Readonly<{
 }>;
 
 export type IMessageDetails = Readonly<{
-  item: Readonly<MessageWithContentPO>;
+  item: Readonly<IMessageWithPaymentData>;
   index: number;
+}>;
+
+export type IPaymentData = Readonly<{
+  amount: number;
+  notice_number: string;
+}>;
+
+export type IMessageWithPaymentData = Readonly<{
+  id: string;
+  created_at: string;
+  subject: string;
+  sender_service_id: string;
+  markdown: string;
+  payment_data: IPaymentData;
 }>;
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
@@ -114,12 +128,14 @@ class MessagesScreen extends React.Component<Props, never> {
         senderServiceId={messageDetails.item.sender_service_id}
         markdown={messageDetails.item.markdown}
         serviceName={this.getServiceName(messageDetails.item.sender_service_id)}
+        paymentAmount={messageDetails.item.payment_data.amount}
+        paymentNoticeNumber={messageDetails.item.payment_data.notice_number}
       />
     );
   };
 
   private renderMessages = (
-    messages: ReadonlyArray<MessageWithContentPO>
+    messages: ReadonlyArray<IMessageWithPaymentData>
   ): React.ReactNode => {
     return (
       <Tabs tabBarUnderlineStyle={styles.tabBarUnderlineStyle} initialPage={0}>
@@ -152,16 +168,29 @@ class MessagesScreen extends React.Component<Props, never> {
   };
 
   public render() {
-    return (
-      <Container>
-        <View content={true}>
-          <View spacer={true} />
-          <H1>{I18n.t("messages.contentTitle")}</H1>
-          {this.renderLoadingStatus(this.props.isLoadingMessages)}
-          {this.renderMessages(this.props.messages)}
-        </View>
-      </Container>
-    );
+    // This if fix the latency of services props
+    if (Object.keys(this.props.services.byId).length < 2) {
+      return (
+        <Container>
+          <View content={true}>
+            <View spacer={true} />
+            <H1>{I18n.t("messages.contentTitle")}</H1>
+            {this.renderLoadingStatus(this.props.isLoadingMessages)}
+          </View>
+        </Container>
+      );
+    } else {
+      return (
+        <Container>
+          <View content={true}>
+            <View spacer={true} />
+            <H1>{I18n.t("messages.contentTitle")}</H1>
+            {this.renderLoadingStatus(this.props.isLoadingMessages)}
+            {this.renderMessages(mockMessages)}
+          </View>
+        </Container>
+      );
+    }
   }
 }
 

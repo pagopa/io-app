@@ -16,7 +16,7 @@ interface ParamTypeObject {
   serviceDepartmentName: string;
   markdown: string;
   serviceName: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 interface ParamType {

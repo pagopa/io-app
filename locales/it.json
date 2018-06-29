@@ -10,8 +10,7 @@
     "buttons": {
       "delete": "Elimina",
       "cancel": "Annulla",
-      "ok": "OK",
-      "continue": "Continua"
+      "ok": "OK"
     },
     "navigator": {
       "messages": "messaggi",
@@ -118,7 +117,7 @@
       "pinForgot": "Non ricordo il PIN",
       "confirmValid": "PIN corretto",
       "confirmInvalid": "PIN non valido"
-    }   
+    }
   },
   "personal_data_processing": {
     "title": "Regole sul trattamento dei dati personali",
@@ -199,16 +198,16 @@
       "amount":"Importo",
       "expireDate":"Scadenza",
       "tranche":"Rata",
-      "entity":"Ente creditore:",	
+      "entity":"Ente creditore:",
       "info":"Per informazioni:",
-       "tel":"Tel:",
+      "tel":"Tel:",
       "email":"Email:",
       "PEC":"PEC:",
       "recipient":"Destintario:",
       "object":"Oggetto del pagamento:",
       "cbillCode":"Codice CBILL:",
       "iuv":"IUV:",
-      "entityCode2":"Codice Ente/Azienda:",		
+      "entityCode2":"Codice Ente/Azienda:",
       "updatedAmount":"Importo aggiornato",
       "updateInfo":"Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi",
       "moreInfo":"Per saperne di più"
@@ -216,7 +215,7 @@
     "insertManually":{
       "header": "Inserisci dati avviso",
       "title": "Inserisci i dati dell'avviso",
-      "info": "che ci consentono di identificare il pagamento", 
+      "info": "che ci consentono di identificare il pagamento",
       "link": "Dove si trovano?",
       "noticeCode":"Codice Avviso",
       "entityCode":"Codice Fiscale Ente Creditore",
@@ -263,16 +262,16 @@
     "addCardTitle": "Dati carta",
     "dummyCard": {
       "labels": {
-        "holder": "Titolare",
-        "pan": "Numero della carta",
-        "expirationDate": "Data di scadenza",
-        "securityCode": "Codice di sicurezza"
+        "name": "Titolare",
+        "number": "Numero della carta",
+        "expires": "Data di scadenza",
+        "csc": "Codice di sicurezza"
       },
       "values": {
-        "holder": "Mario Rossi",
-        "pan": "0000 0000 0000 0000",
-        "expirationDate": "mm/aa",
-        "securityCode": "•••"
+        "name": "Mario Rossi",
+        "number": "0000 0000 0000 0000",
+        "expires": "mm/aa",
+        "csc": "●●●"
       }
     },
     "acceptedCards": "Carte accettate",
@@ -295,7 +294,6 @@
     "validUntil": "Valida fino al",
     "actions": "Azioni",
     "setFavourite": "Imposta come preferita",
-    "unsetFavourite": "Rimuovi dai preferiti",
     "deleteTitle": "Procedere con l'operazione?",
     "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
@@ -311,7 +309,10 @@
     },
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messaggi...",
-    "yesterday": "ieri"
+    "yesterday": "ieri",
+    "paymentCta": {
+      "payLabel": "Paga"
+    }
   },
   "messageDetails": {
     "headerTitle": "Messaggio",
@@ -330,17 +331,6 @@
     "installation": {
       "errorTitle": "Notifiche push",
       "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
-    }
-  },
-  "preferences": {
-    "title": "Preferenze",
-    "subtitle": "Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica Amministrazione.",
-    "moreLinkText": "Per saperne di più.",
-    "list": {
-      "email": "Indirizzo email",
-      "servicesNotifications": "Notifiche dai servizi",
-      "language": "Lingua",
-      "digitalDomicile": "Domicilio digitale"
     }
   }
 }

@@ -13,7 +13,7 @@ export type OwnProps = Readonly<{
   serviceDepartmentName: string;
   serviceName: string;
   id: string;
-  createdAt: Date;
+  createdAt: string;
   markdown: string;
 }>;
 
