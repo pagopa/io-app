@@ -109,8 +109,8 @@ android {
         applicationId "it.teamdigitale.app.italiaapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 6
-        versionName "1.0"
+        versionCode System.getenv('CIRCLE_BUILD_NUM').toInteger()
+        versionName "1.0." + System.getenv('CIRCLE_BUILD_NUM')
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
