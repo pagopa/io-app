@@ -38,7 +38,7 @@ platform :android do
     gradle(
       task: 'assemble',
       build_type: 'Release',
-      flags: '--no-daemon'
+      flags: '-x bundleReleaseJsAndAssets --no-daemon'
     )
   end
 
