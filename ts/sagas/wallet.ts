@@ -45,7 +45,7 @@ function* addCardSaga(token: string): Iterator<Effect> {
     if (!isSuccessful) {
       yield put({
         type: CARD_ERROR,
-        error: Error("Failed to add card")
+        payload: Error("Failed to add card")
       });
     }
   }
@@ -59,7 +59,7 @@ function* deleteCardSaga(
   if (!isSuccessful) {
     yield put({
       type: CARD_ERROR,
-      error: Error("Failed to delete card!")
+      payload: Error("Failed to delete card!")
     });
   }
 }

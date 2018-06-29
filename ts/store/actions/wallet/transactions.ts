@@ -22,7 +22,7 @@ export type SelectTransactionForDetails = Readonly<{
 
 export type TransactionError = Readonly<{
   type: typeof TRANSACTION_ERROR;
-  error: Error;
+  payload: Error;
 }>;
 
 export type TransactionsActions =

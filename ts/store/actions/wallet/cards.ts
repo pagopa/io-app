@@ -46,7 +46,7 @@ export type DeleteCardRequest = Readonly<{
 
 export type CardError = Readonly<{
   type: typeof CARD_ERROR;
-  error: Error;
+  payload: Error;
 }>;
 
 export type CardsActions =
