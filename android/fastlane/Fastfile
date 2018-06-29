@@ -36,7 +36,7 @@ platform :android do
   desc "Build the app in release mode and deploy a new alpha version to the Google Play Store"
   lane :alpha do
     # Ensure that your git status is not dirty
-    ensure_git_status_clean
+    # ensure_git_status_clean
     
     gradle(
       task: "assemble",
