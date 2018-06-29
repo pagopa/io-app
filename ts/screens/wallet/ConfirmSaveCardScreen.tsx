@@ -16,24 +16,30 @@ import * as React from "react";
 import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
+import { connect, Dispatch } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import CreditCardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
+import { getNewCardData } from "../../store/reducers/wallet/cards";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
+import { addCardRequest } from '../../store/actions/wallet/cards';
+import ROUTES from '../../navigation/routes';
 
 type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  addCard: () => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 type State = Readonly<{
   isFavoriteCard: boolean;
@@ -95,7 +101,16 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
           </Grid>
         </Content>
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button
+            block={true}
+            primary={true}
+            onPress={
+              () => {
+                this.props.addCard();
+                this.props.navigation.navigate(ROUTES.WALLET_HOME);
+              }
+            }
+          >
             <Text>{I18n.t("wallet.saveCard.save")}</Text>
           </Button>
           <View spacer={true} />
@@ -113,10 +128,12 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
   }
 }
 
-/**
- * selectedCreditCardSelector has to be substitute with the proper selector
- */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+  card: getNewCardData(state).getOrElse(UNKNOWN_CARD)
 });
-export default connect(mapStateToProps)(ConfirmSaveCardScreen);
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  addCard: () => dispatch(addCardRequest())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmSaveCardScreen);

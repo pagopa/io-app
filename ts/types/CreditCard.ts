@@ -29,14 +29,20 @@ export type CreditCardType =
   | "POSTEPAY"
   | "UNKNOWN";
 
-const CreditCardUnknown = t.type(
-  {
-    id: CreditCardId,
-    lastUsage: NonEmptyString,
-    pan: PatternString("^[0-9]+$"),
-    owner: NonEmptyString,
-    expirationDate: NonEmptyString
-  },
+const CreditCardUnknown_R = t.type({
+  id: CreditCardId,
+  lastUsage: NonEmptyString,
+  pan: PatternString("^[0-9]+$"),
+  owner: NonEmptyString,
+  expirationDate: NonEmptyString
+});
+
+const CreditCardUnknown_O = t.partial({
+  securityCode: t.string
+});
+
+const CreditCardUnknown = t.intersection(
+  [CreditCardUnknown_R, CreditCardUnknown_O],
   "UNKNOWN"
 );
 

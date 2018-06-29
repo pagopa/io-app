@@ -8,7 +8,8 @@ import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   SELECT_CARD_FOR_DETAILS,
-  SET_FAVORITE_CARD
+  SET_FAVORITE_CARD,
+  STORE_NEW_CARD_DATA
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -18,12 +19,14 @@ export type CardsState = Readonly<{
   cards: IndexedById<CreditCard>;
   selectedCardId: Option<CreditCardId>;
   favoriteCardId: Option<CreditCardId>;
+  newCardData: Option<CreditCard>;
 }>;
 
 export const CARDS_INITIAL_STATE: CardsState = {
   cards: {},
   selectedCardId: none,
-  favoriteCardId: none
+  favoriteCardId: none,
+  newCardData: none
 };
 
 // selectors
@@ -32,6 +35,8 @@ export const getSelectedCreditCardId = (state: GlobalState) =>
   state.wallet.cards.selectedCardId;
 export const getFavoriteCreditCardId = (state: GlobalState) =>
   state.wallet.cards.favoriteCardId;
+export const getNewCardData = (state: GlobalState) =>
+  state.wallet.cards.newCardData;
 
 export const creditCardsSelector = createSelector(
   getCards,
@@ -83,6 +88,12 @@ const reducer = (
     return {
       ...state,
       favoriteCardId: action.payload
+    };
+  }
+  if (action.type === STORE_NEW_CARD_DATA) {
+    return {
+      ...state,
+      newCardData: some(action.payload)
     };
   }
   return state;

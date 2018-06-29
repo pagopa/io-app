@@ -1,5 +1,5 @@
 import { StackNavigator } from "react-navigation";
-import { AddCardScreen } from "../screens/wallet/AddCardScreen";
+import AddCardScreen from "../screens/wallet/AddCardScreen";
 import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import ChoosePaymentMethodScreen from "../screens/wallet/ChoosePaymentMethodScreen";
