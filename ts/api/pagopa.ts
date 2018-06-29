@@ -37,16 +37,16 @@ const mapToLocalCreditCard = (pWallet: Wallet): CreditCard => {
     return UNKNOWN_CARD;
   }
   return {
-    id: pWallet.idWallet as CreditCardId,
+    id: pWallet.idWallet as CreditCardId, // tslint:disable-line no-useless-cast
     lastUsage: `${I18n.t("wallet.lastUsage")} ${new Date(
       pWallet.lastUsage
     ).toLocaleDateString()}` as NonEmptyString,
     pan: pCard.pan,
-    holder: pCard.holder as NonEmptyString,
+    holder: pCard.holder as NonEmptyString, // tslint:disable-line no-useless-cast
     expirationDate: `${pCard.expireMonth}/${
       pCard.expireYear
     }` as NonEmptyString,
-    brandLogo: CreditCardType.decode(pCard.brandLogo).value as CreditCardType
+    brandLogo: CreditCardType.decode(pCard.brandLogo).value as CreditCardType // tslint:disable-line no-useless-cast
   };
 };
 
@@ -76,7 +76,7 @@ const mapToLocalTransaction = (
   }
   return {
     id: pTransaction.id,
-    cardId: pTransaction.idWallet as CreditCardId,
+    cardId: pTransaction.idWallet as CreditCardId, // tslint:disable-line no-useless-cast
     datetime: pTransaction.created,
     paymentReason: pTransaction.description,
     recipient: pTransaction.merchant,

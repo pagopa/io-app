@@ -7,8 +7,10 @@ import { call, Effect, fork, put, take } from "redux-saga/effects";
 import { ApiFetchResult, isApiFetchFailure } from "../api";
 import { fetchCreditCards, fetchTransactions } from "../api/pagopa";
 import {
+  CARD_ERROR,
   FETCH_CARDS_REQUEST,
-  FETCH_TRANSACTIONS_REQUEST
+  FETCH_TRANSACTIONS_REQUEST,
+  TRANSACTION_ERROR
 } from "../store/actions/constants";
 import { cardsFetched } from "../store/actions/wallet/cards";
 import {
@@ -24,7 +26,10 @@ function* fetchTransactionsSaga(token: string): Iterator<Effect> {
     token
   );
   if (isApiFetchFailure(response)) {
-    console.warn(response.error.message);
+    yield put({
+      type: TRANSACTION_ERROR,
+      payload: response.error
+    });
   } else {
     yield put(transactionsFetched(response.result));
   }
@@ -36,7 +41,10 @@ function* fetchCreditCardsSaga(token: string): Iterator<Effect> {
     token
   );
   if (isApiFetchFailure(response)) {
-    console.warn(response.error.message);
+    yield put({
+      type: CARD_ERROR,
+      payload: response.error
+    });
   } else {
     yield put(cardsFetched(response.result));
     yield put(fetchTransactionsRequest());

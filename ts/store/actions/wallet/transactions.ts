@@ -2,6 +2,7 @@ import { WalletTransaction } from "../../../types/wallet";
 import {
   FETCH_TRANSACTIONS_REQUEST,
   SELECT_TRANSACTION_FOR_DETAILS,
+  TRANSACTION_ERROR,
   TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 
@@ -19,10 +20,16 @@ export type SelectTransactionForDetails = Readonly<{
   payload: WalletTransaction;
 }>;
 
+export type TransactionError = Readonly<{
+  type: typeof TRANSACTION_ERROR;
+  payload: Error;
+}>;
+
 export type TransactionsActions =
   | TransactionsFetched
   | FetchTransactionsRequest
-  | SelectTransactionForDetails;
+  | SelectTransactionForDetails
+  | TransactionError;
 
 export const transactionsFetched = (
   transactions: ReadonlyArray<WalletTransaction>
