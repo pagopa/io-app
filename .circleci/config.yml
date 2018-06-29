@@ -126,8 +126,8 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
-  # Create signed Android release
-  release-android:
+  # Create signed Android release and deploy a new alpha version to the Google Play Store
+  alpha-release-android:
     <<: *defaults
 
     docker:
@@ -177,9 +177,9 @@ jobs:
       # Build the js bundle in release mode
       - run: yarn bundle:android-release
 
-      # Run release_build lane
+      # Run alpha lane
       - run:
-          command: cd android && bundle exec fastlane release_build
+          command: cd android && bundle exec fastlane alpha
 
       - store_artifacts:
           path: android/app/build/outputs/apk
@@ -272,7 +272,7 @@ workflows:
             - hold-native-tests
 
       # Build Android release only on tags
-      - release-android:
+      - alpha-release-android:
           requires:
             - test-android
          # Disabled to check the build is ok   
