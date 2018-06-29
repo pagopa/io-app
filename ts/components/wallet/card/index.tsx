@@ -26,7 +26,7 @@ import {
   MenuTrigger
 } from "react-native-popup-menu";
 import { connect, Dispatch } from "react-redux";
-import { setFavoriteCard } from "../../../store/actions/wallet/cards";
+import { setFavoriteCard, deleteCardRequest } from "../../../store/actions/wallet/cards";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
 import { makeFontStyleObject } from "../../../theme/fonts";
@@ -81,6 +81,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   setFavoriteCard: (item: Option<CreditCardId>) => void;
+  deleteCard: (item: CreditCardId) => void;
 }>;
 
 export type CardProps = Readonly<{
@@ -175,7 +176,8 @@ class CreditCardComponent extends React.Component<Props> {
                         },
                         {
                           text: I18n.t("global.buttons.ok"),
-                          style: "destructive"
+                          style: "destructive",
+                          onPress: () => this.props.deleteCard(this.props.item.id)
                         }
                       ],
                       { cancelable: false }
@@ -256,7 +258,8 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   setFavoriteCard: (item: Option<CreditCardId>) =>
-    dispatch(setFavoriteCard(item))
+    dispatch(setFavoriteCard(item)),
+    deleteCard: (item: CreditCardId) => dispatch(deleteCardRequest(item))
 });
 
 export default connect(

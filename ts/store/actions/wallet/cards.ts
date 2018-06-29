@@ -6,7 +6,8 @@ import {
   SELECT_CARD_FOR_DETAILS,
   SET_FAVORITE_CARD,
   ADD_CARD_REQUEST,
-  STORE_NEW_CARD_DATA
+  STORE_NEW_CARD_DATA,
+  DELETE_CARD_REQUEST
 } from "../constants";
 
 export type FetchCardsRequest = Readonly<{
@@ -37,13 +38,19 @@ export type AddCardRequest = Readonly<{
   type: typeof ADD_CARD_REQUEST;
 }>;
 
+export type DeleteCardRequest = Readonly<{
+  type: typeof DELETE_CARD_REQUEST;
+  payload: CreditCardId;
+}>;
+
 export type CardsActions =
   | FetchCardsRequest
   | CardsFetched
   | CardSelectedForDetails
   | SetFavoriteCard
   | StoreNewCardData
-  | AddCardRequest;
+  | AddCardRequest
+  | DeleteCardRequest;
 
 export const fetchCardsRequest = (): FetchCardsRequest => ({
   type: FETCH_CARDS_REQUEST
@@ -77,4 +84,9 @@ export const storeNewCardData = (card: CreditCard): StoreNewCardData => ({
 
 export const addCardRequest = (): AddCardRequest => ({
   type: ADD_CARD_REQUEST
+});
+
+export const deleteCardRequest = (cardId: CreditCardId): DeleteCardRequest => ({
+  type: DELETE_CARD_REQUEST,
+  payload: cardId
 });

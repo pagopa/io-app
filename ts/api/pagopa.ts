@@ -18,8 +18,6 @@ export const addCard = async (
     },
     body: JSON.stringify(wallet)
   });
-  const t = await response.json();
-  console.warn(t);
   return response.ok;
 };
 
@@ -32,5 +30,6 @@ export const deleteCard = async (
     headers: {
       Authorization: `Bearer ${token}`
     }
-  }
+  });
+  return response.ok;
 };
