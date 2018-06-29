@@ -4,7 +4,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
-import { Left } from "native-base";
 import {
   Body,
   Button,
@@ -14,24 +13,25 @@ import {
   Text,
   View
 } from "native-base";
+import { Left } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+import { storeNewCardData } from "../../store/actions/wallet/cards";
 import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
+import { CreditCard } from "../../types/CreditCard";
+import { buildCreditCardFromState } from "../../utils/converters";
 import { fixExpirationDate, fixPan } from "../../utils/input";
-import { CreditCard } from '../../types/CreditCard';
-import { Dispatch } from 'redux';
-import { storeNewCardData } from '../../store/actions/wallet/cards';
-import { connect } from 'react-redux';
-import { buildCreditCardFromState } from '../../utils/converters';
-import ROUTES from '../../navigation/routes';
 
 type ReduxMappedProps = Readonly<{
   storeNewCardData: (card: CreditCard) => void;
@@ -215,9 +215,8 @@ class AddCardScreen extends React.Component<Props, State> {
             primary={true}
             onPress={() => {
               this.props.navigation.navigate(ROUTES.WALLET_ASK_SAVE_CARD);
-              this.props.storeNewCardData(buildCreditCardFromState(this.state))
-            }
-          }
+              this.props.storeNewCardData(buildCreditCardFromState(this.state));
+            }}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
@@ -239,4 +238,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   storeNewCardData: (item: CreditCard) => dispatch(storeNewCardData(item))
 });
 
-export default connect(undefined, mapDispatchToProps)(AddCardScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddCardScreen);

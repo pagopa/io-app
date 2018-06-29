@@ -1,6 +1,5 @@
 import { SwitchNavigator } from "react-navigation";
 
-import IngressScreen from "../screens/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";

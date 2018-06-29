@@ -1,6 +1,6 @@
+import { pagoPaApiUrlPrefix } from "../config";
 import { CreditCard, CreditCardId } from "../types/CreditCard";
 import { buildWalletFromCreditCard } from "../utils/converters";
-import { pagoPaApiUrlPrefix } from "../config";
 
 // Send a new version of the profile to the Proxy
 export const addCard = async (

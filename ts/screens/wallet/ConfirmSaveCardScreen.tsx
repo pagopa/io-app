@@ -21,11 +21,11 @@ import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import CreditCardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
+import { addCardRequest } from "../../store/actions/wallet/cards";
 import { GlobalState } from "../../store/reducers/types";
 import { getNewCardData } from "../../store/reducers/wallet/cards";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
-import { addCardRequest } from '../../store/actions/wallet/cards';
-import ROUTES from '../../navigation/routes';
 
 type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
@@ -104,12 +104,10 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
           <Button
             block={true}
             primary={true}
-            onPress={
-              () => {
-                this.props.addCard();
-                this.props.navigation.navigate(ROUTES.WALLET_HOME);
-              }
-            }
+            onPress={() => {
+              this.props.addCard();
+              this.props.navigation.navigate(ROUTES.WALLET_HOME);
+            }}
           >
             <Text>{I18n.t("wallet.saveCard.save")}</Text>
           </Button>
@@ -134,6 +132,9 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   addCard: () => dispatch(addCardRequest())
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmSaveCardScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmSaveCardScreen);

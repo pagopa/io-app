@@ -1,13 +1,14 @@
 import { Option } from "fp-ts/lib/Option";
 import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
+  ADD_CARD_REQUEST,
+  CARD_ERROR,
   CARDS_FETCHED,
+  DELETE_CARD_REQUEST,
   FETCH_CARDS_REQUEST,
   SELECT_CARD_FOR_DETAILS,
   SET_FAVORITE_CARD,
-  ADD_CARD_REQUEST,
-  STORE_NEW_CARD_DATA,
-  DELETE_CARD_REQUEST
+  STORE_NEW_CARD_DATA
 } from "../constants";
 
 export type FetchCardsRequest = Readonly<{
@@ -43,6 +44,11 @@ export type DeleteCardRequest = Readonly<{
   payload: CreditCardId;
 }>;
 
+export type CardError = Readonly<{
+  type: typeof CARD_ERROR;
+  error: Error;
+}>;
+
 export type CardsActions =
   | FetchCardsRequest
   | CardsFetched
@@ -50,7 +56,8 @@ export type CardsActions =
   | SetFavoriteCard
   | StoreNewCardData
   | AddCardRequest
-  | DeleteCardRequest;
+  | DeleteCardRequest
+  | CardError;
 
 export const fetchCardsRequest = (): FetchCardsRequest => ({
   type: FETCH_CARDS_REQUEST

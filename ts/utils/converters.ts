@@ -1,7 +1,7 @@
-import { CreditCard, CreditCardId } from "../types/CreditCard";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Wallet } from "../../definitions/pagopa/Wallet";
 import { AddCardState } from "../screens/wallet/AddCardScreen";
+import { CreditCard, CreditCardId } from "../types/CreditCard";
 
 export const buildCreditCardFromState = (state: AddCardState): CreditCard => ({
   owner: state.holder.getOrElse("") as NonEmptyString,
