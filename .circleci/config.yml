@@ -271,13 +271,10 @@ workflows:
           requires:
             - hold-native-tests
 
-      # Build Android release only on tags
+      # Build Android alpha release only on master branch
       - alpha-release-android:
           requires:
-            - test-android
-         # Disabled to check the build is ok   
-         # filters:
-         #   branches:
-         #     ignore: /.*/
-         #   tags:
-         #     only: /^v.*/
+            - test-js-node-8
+          filters:
+            branches:
+              only: master
