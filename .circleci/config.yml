@@ -175,8 +175,7 @@ jobs:
           command: ./scripts/keystore-setup.sh
 
       # Build the js bundle in release mode
-      - run:
-          command: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+      - run: yarn bundle:android-release
 
       # Run release_build lane
       - run:
