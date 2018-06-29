@@ -97,8 +97,7 @@ export const fetchCreditCards = async (
     const response = await fetch(`${pagoPaApiUrlPrefix}/v1/wallet`, {
       method: "get",
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`
       }
     });
     if (response.ok) {
@@ -142,8 +141,7 @@ export const fetchTransactions = async (
     const response = await fetch(`${pagoPaApiUrlPrefix}/v1/transactions`, {
       method: "get",
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`
       }
     });
     if (response.ok) {
