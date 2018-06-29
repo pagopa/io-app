@@ -1,7 +1,12 @@
 import * as React from "react";
 
 import { Container, H1, Tab, Tabs, View } from "native-base";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet
+} from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -70,12 +75,6 @@ class MessagesScreen extends React.Component<Props, never> {
     }
   }
 
-  private renderLoadingStatus = (isLoadingMessages: boolean) => {
-    return isLoadingMessages ? (
-      <ActivityIndicator size="small" color={variables.brandPrimary} />
-    ) : null;
-  };
-
   public getServiceName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].service_name;
   };
@@ -112,7 +111,11 @@ class MessagesScreen extends React.Component<Props, never> {
     messages: ReadonlyArray<MessageWithContentPO>
   ): React.ReactNode => {
     return (
-      <Tabs tabBarUnderlineStyle={styles.tabBarUnderlineStyle} initialPage={0}>
+      <Tabs
+        tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
+        initialPage={0}
+        locked={true}
+      >
         <Tab
           heading={I18n.t("messages.tab.all")}
           activeTabStyle={styles.activeTabStyle}
@@ -123,6 +126,13 @@ class MessagesScreen extends React.Component<Props, never> {
             data={messages}
             renderItem={this.renderItem}
             keyExtractor={item => item.id}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.isLoadingMessages}
+                onRefresh={this.listRefresh.bind(this)}
+                colors={[variables.brandPrimary]}
+              />
+            }
           />
         </Tab>
         <Tab
@@ -140,6 +150,9 @@ class MessagesScreen extends React.Component<Props, never> {
       </Tabs>
     );
   };
+  public listRefresh() {
+    this.props.dispatch(loadMessages());
+  }
 
   public render() {
     return (
@@ -147,7 +160,6 @@ class MessagesScreen extends React.Component<Props, never> {
         <View content={true}>
           <View spacer={true} />
           <H1>{I18n.t("messages.contentTitle")}</H1>
-          {this.renderLoadingStatus(this.props.isLoadingMessages)}
           {this.renderMessages(this.props.messages)}
         </View>
       </Container>
