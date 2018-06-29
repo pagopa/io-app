@@ -38,6 +38,7 @@ platform :android do
     gradle(
       task: 'assemble',
       build_type: 'Release'
+      flags: '--no-daemon'
     )
   end
 

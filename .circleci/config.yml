@@ -137,6 +137,7 @@ jobs:
       - TERM: "dumb"
       - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
       - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+      - REACT_NATIVE_MAX_WORKERS: 1
 
     steps:
       # Restore workflow workspace
