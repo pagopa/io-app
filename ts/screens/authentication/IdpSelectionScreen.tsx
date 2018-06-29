@@ -4,7 +4,6 @@ import {
   Container,
   Content,
   H1,
-  Icon,
   Left,
   Text,
   View
@@ -13,13 +12,16 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import IdpsGrid from "../../components/IdpsGrid";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
-import { selectIdp } from "../../store/actions/session";
+import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
+
 type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -89,7 +91,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
   }
 
   private onIdpSelected(idp: IdentityProvider): void {
-    this.props.dispatch(selectIdp(idp));
+    this.props.dispatch(idpSelected(idp));
   }
 
   public render() {
@@ -98,7 +100,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={_ => this.goBack()}>
-              <Icon name="chevron-left" />
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>

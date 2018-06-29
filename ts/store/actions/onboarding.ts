@@ -5,11 +5,17 @@
 import {
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
+  START_ONBOARDING,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "./constants";
 
 // Actions
+
+export type StartOnboarding = Readonly<{
+  type: typeof START_ONBOARDING;
+}>;
+
 export type TosAcceptRequest = Readonly<{
   type: typeof TOS_ACCEPT_REQUEST;
 }>;
@@ -29,12 +35,18 @@ export type PinCreateSuccess = Readonly<{
 }>;
 
 export type OnboardingActions =
+  | StartOnboarding
   | TosAcceptRequest
   | TosAcceptSuccess
   | PinCreateRequest
   | PinCreateSuccess;
 
 // Creators
+
+export const startOnboarding = (): StartOnboarding => ({
+  type: START_ONBOARDING
+});
+
 export const acceptTos = (): TosAcceptRequest => ({
   type: TOS_ACCEPT_REQUEST
 });

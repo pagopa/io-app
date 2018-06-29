@@ -1,8 +1,10 @@
-import { CreditCard } from "../../../types/CreditCard";
+import { Option } from "fp-ts/lib/Option";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   FETCH_CARDS_REQUEST,
-  SELECT_CARD_FOR_DETAILS
+  SELECT_CARD_FOR_DETAILS,
+  SET_FAVORITE_CARD
 } from "../constants";
 
 export type FetchCardsRequest = Readonly<{
@@ -16,13 +18,19 @@ export type CardsFetched = Readonly<{
 
 export type CardSelectedForDetails = Readonly<{
   type: typeof SELECT_CARD_FOR_DETAILS;
-  payload: CreditCard | number; // card or id
+  payload: CreditCardId;
+}>;
+
+export type SetFavoriteCard = Readonly<{
+  type: typeof SET_FAVORITE_CARD;
+  payload: Option<CreditCardId>;
 }>;
 
 export type CardsActions =
   | FetchCardsRequest
   | CardsFetched
-  | CardSelectedForDetails;
+  | CardSelectedForDetails
+  | SetFavoriteCard;
 
 export const fetchCardsRequest = (): FetchCardsRequest => ({
   type: FETCH_CARDS_REQUEST
@@ -36,8 +44,15 @@ export const cardsFetched = (
 });
 
 export const selectCardForDetails = (
-  card: CreditCard | number
+  card: CreditCardId
 ): CardSelectedForDetails => ({
   type: SELECT_CARD_FOR_DETAILS,
   payload: card
+});
+
+export const setFavoriteCard = (
+  cardId: Option<CreditCardId>
+): SetFavoriteCard => ({
+  type: SET_FAVORITE_CARD,
+  payload: cardId
 });

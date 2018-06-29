@@ -7,6 +7,14 @@
 
 import * as t from "io-ts";
 import { NonEmptyString, PatternString } from "italia-ts-commons/lib/strings";
+import { tag } from "italia-ts-commons/lib/types";
+
+interface ICreditCardIdTag {
+  readonly kind: "CreditCardId";
+}
+
+export const CreditCardId = tag<ICreditCardIdTag>()(t.number);
+export type CreditCardId = t.TypeOf<typeof CreditCardId>;
 
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),
@@ -24,7 +32,7 @@ export const CreditCardType = t.union([
 export type CreditCardType = t.TypeOf<typeof CreditCardType>;
 
 const CreditCard = t.type({
-  id: t.number,
+  id: CreditCardId,
   lastUsage: NonEmptyString,
   pan: PatternString("^[0-9]+$"),
   holder: NonEmptyString,
@@ -37,7 +45,7 @@ export const UNKNOWN_CARD: CreditCard = {
   holder: "?" as NonEmptyString,
   pan: "0000000000000000",
   expirationDate: "??/??" as NonEmptyString,
-  id: -1,
+  id: -1 as CreditCardId,
   lastUsage: "?" as NonEmptyString,
   brandLogo: "UNKNOWN"
 };
