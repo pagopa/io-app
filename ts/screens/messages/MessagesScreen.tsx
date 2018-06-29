@@ -68,9 +68,6 @@ const styles = StyleSheet.create({
 
 /**
  * This screen show the messages to the authenticated user.
- *
- * TODO: Just a mocked version at the moment.
- * Going to be replaced with real content in @https://www.pivotaltracker.com/story/show/152843981
  */
 class MessagesScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
