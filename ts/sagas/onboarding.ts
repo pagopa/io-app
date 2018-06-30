@@ -25,7 +25,7 @@ import {
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
   PIN_LOGIN_INITIALIZE,
-  SESSION_INITIALIZE_SUCCESS,
+  START_ONBOARDING,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
@@ -122,11 +122,5 @@ function* onboardingSaga(): Iterator<Effect> {
 }
 
 export default function* root(): Iterator<Effect> {
-  /**
-   * The Onboarding saga need to be started only after the Session saga is fully
-   * finished.
-   * The SESSION_INITIALIZE_SUCCESS action is dispatched only when the Session
-   * is established and valid.
-   */
-  yield takeLatest(SESSION_INITIALIZE_SUCCESS, onboardingSaga);
+  yield takeLatest(START_ONBOARDING, onboardingSaga);
 }

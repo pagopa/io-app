@@ -5988,10 +5988,10 @@ react-native-offline@^3.7.4:
 react-native-permissions@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
-  
-react-native-popup-menu@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.13.1.tgz#24977beab0247eccab0e10abcd259aadf06e6a22"
+
+react-native-popup-menu@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.13.2.tgz#6ea7a7446b04fc3e41d148a908a8a94ad949256f"
 
 react-native-push-notification@^3.0.2:
   version "3.0.2"

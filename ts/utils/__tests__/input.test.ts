@@ -25,7 +25,7 @@ describe("fixExpirationDate", () => {
       "012/": some("012/"), // all good here
       " abc012": some("012"), // get rid of " abc"
       " abc": none, // get rid of " abc" (left with nothing)
-      "01/23/xx/xx": some("01/23"), // get rid of 2nd and 3rd / and x's
+      "01/23/xx/xx": some("0123/"), // get rid of 2nd and 3rd / and x's
       "!@#$%/^&*()-=/": some("/"), // get rid of everything but the 1st /
       "!@#$%^&*()-=": none // get rid of it all
     };

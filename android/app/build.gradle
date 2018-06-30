@@ -109,19 +109,19 @@ android {
         applicationId "it.teamdigitale.app.italiaapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 4
-        versionName "1.0"
+        versionCode System.getenv('CIRCLE_BUILD_NUM') ? System.getenv('CIRCLE_BUILD_NUM').toInteger() : 1
+        versionName "1.0." + (System.getenv('CIRCLE_BUILD_NUM') ? System.getenv('CIRCLE_BUILD_NUM') : "1")
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
     signingConfigs {
         release {
-            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword MYAPP_RELEASE_STORE_PASSWORD
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            if (System.getenv('ITALIAAPP_RELEASE_STORE_FILE')) {
+                storeFile file(System.getenv('ITALIAAPP_RELEASE_STORE_FILE'))
+                storePassword System.getenv('ITALIAAPP_RELEASE_STORE_PASSWORD')
+                keyAlias System.getenv('ITALIAAPP_RELEASE_KEY_ALIAS')
+                keyPassword System.getenv('ITALIAAPP_RELEASE_KEY_PASSWORD')
             }
         }
     }

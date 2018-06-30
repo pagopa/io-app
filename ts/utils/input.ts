@@ -11,7 +11,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 export const fixExpirationDate = (value: string): Option<string> => {
   const filteredValue = value
     .replace(/[^\d\/]/g, "") // replace all non-numbers, non-/ with ""
-    .replace(/(?<=\/.*)\//g, ""); // replace all /'s that follow the 1st one with ""
+    .replace(/\/(?=.*\/)/g, ""); // replace all /'s that are followed by a / with "" (only leave last /)
 
   // month has already been entered fully ("1" is ignored as another number may follow)
   if (filteredValue.match(/^(1[012]|0[1-9]|[2-9])$/)) {

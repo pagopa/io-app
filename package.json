@@ -12,7 +12,8 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.22/api_proxy.yaml --out-dir ./definitions/backend"
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.22/api_proxy.yaml --out-dir ./definitions/backend",
+    "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {
     "color": "^3.0.0",
@@ -36,7 +37,7 @@
     "react-native-mixpanel": "^0.0.16",
     "react-native-modal": "^6.0.0",
     "react-native-offline": "^3.7.4",
-    "react-native-popup-menu": "^0.13.1",
+    "react-native-popup-menu": "^0.13.2",
     "react-native-push-notification": "^3.0.2",
     "react-native-qrcode-scanner": "^1.0.1",
     "react-native-sha256": "^1.0.1",
@@ -115,7 +116,7 @@
       "**/__tests__/*.ts?(x)"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
+      "node_modules/(?!react-native|react-navigation|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
     ],
     "collectCoverage": true
   },
