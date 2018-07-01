@@ -13,7 +13,7 @@ import {
   ViewStyle
 } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 
 import I18n from "../../../i18n";
 
@@ -85,7 +85,6 @@ type ReduxMappedDispatchProps = Readonly<{
 
 export type CardProps = Readonly<{
   item: CreditCard;
-  navigation: NavigationScreenProp<NavigationState>;
   menu?: boolean;
   favorite?: boolean;
   lastUsage?: boolean;
@@ -98,7 +97,10 @@ export type CardProps = Readonly<{
   customStyle?: any;
 }>;
 
-type Props = CardProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = CardProps &
+  ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationScreenProps<NavigationState>;
 
 /**
  * Credit card component

@@ -17,7 +17,7 @@ import {
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
@@ -28,9 +28,9 @@ import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
 import { fixExpirationDate, fixPan } from "../../utils/input";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
+
+type Props = OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;

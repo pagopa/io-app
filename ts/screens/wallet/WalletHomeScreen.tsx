@@ -6,7 +6,7 @@
 import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect, Dispatch } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 
@@ -34,9 +34,7 @@ type ReduxMappedDispatchProps = Readonly<{
   loadCards: () => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = ReduxMappedStateProps &
   ReduxMappedDispatchProps &

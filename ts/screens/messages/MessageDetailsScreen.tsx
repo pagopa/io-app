@@ -1,10 +1,6 @@
 import { Body, Button, Container, Content, H1, Left, Text } from "native-base";
 import * as React from "react";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import MessageDetailsComponent from "../../components/messages/MessageDetailsComponent";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -23,15 +19,13 @@ interface ParamType {
   readonly details: ParamTypeObject;
 }
 
-interface StateParams extends NavigationState {
+interface StateParams {
   readonly params: ParamType;
 }
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<StateParams>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState & StateParams>;
 
-type Props = OwnProps & NavigationInjectedProps;
+type Props = OwnProps;
 
 /**
  * This screen show the Message Details for a simple message

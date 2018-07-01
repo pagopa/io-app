@@ -22,7 +22,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
@@ -33,9 +33,9 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { TransactionSummary } from "../../types/wallet";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
+
+type Props = OwnProps;
 
 const transaction: Readonly<
   TransactionSummary

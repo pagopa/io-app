@@ -4,6 +4,7 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidInformationRequestScreen from "../screens/authentication/SpidInformationRequestScreen";
+import { SafeNavigationScreenComponent } from "../types/redux_navigation";
 import ROUTES from "./routes";
 
 /**
@@ -12,16 +13,24 @@ import ROUTES from "./routes";
 const navigator = StackNavigator(
   {
     [ROUTES.AUTHENTICATION_LANDING]: {
-      screen: LandingScreen
+      screen: LandingScreen as SafeNavigationScreenComponent<
+        typeof LandingScreen
+      >
     },
     [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
-      screen: IdpSelectionScreen
+      screen: IdpSelectionScreen as SafeNavigationScreenComponent<
+        typeof IdpSelectionScreen
+      >
     },
     [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
-      screen: IdpLoginScreen
+      screen: IdpLoginScreen as SafeNavigationScreenComponent<
+        typeof IdpLoginScreen
+      >
     },
     [ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST]: {
-      screen: SpidInformationRequestScreen
+      screen: SpidInformationRequestScreen as SafeNavigationScreenComponent<
+        typeof SpidInformationRequestScreen
+      >
     }
   },
   {

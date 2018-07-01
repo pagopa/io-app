@@ -12,6 +12,7 @@ import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquis
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import { SafeNavigationScreenComponent } from "../types/redux_navigation";
 import ROUTES from "./routes";
 
 /**
@@ -21,43 +22,69 @@ import ROUTES from "./routes";
 const WalletNavigator = StackNavigator(
   {
     [ROUTES.WALLET_HOME]: {
-      screen: WalletHomeScreen
+      screen: WalletHomeScreen as SafeNavigationScreenComponent<
+        typeof WalletHomeScreen
+      >
     },
     [ROUTES.WALLET_CREDITCARDS]: {
-      screen: CreditCardsScreen
+      screen: CreditCardsScreen as SafeNavigationScreenComponent<
+        typeof CreditCardsScreen
+      >
     },
     [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
-      screen: AddPaymentMethodScreen
+      screen: AddPaymentMethodScreen as SafeNavigationScreenComponent<
+        typeof AddPaymentMethodScreen
+      >
     },
     [ROUTES.WALLET_TRANSACTION_DETAILS]: {
-      screen: TransactionDetailsScreen
+      screen: TransactionDetailsScreen as SafeNavigationScreenComponent<
+        typeof TransactionDetailsScreen
+      >
     },
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
-      screen: TransactionsScreen
+      screen: TransactionsScreen as SafeNavigationScreenComponent<
+        typeof TransactionsScreen
+      >
     },
     [ROUTES.WALLET_ADD_CARD]: {
-      screen: AddCardScreen
+      screen: AddCardScreen as SafeNavigationScreenComponent<
+        typeof AddCardScreen
+      >
     },
     [ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER]: {
-      screen: QRcodeAcquisitionByScannerScreen
+      screen: QRcodeAcquisitionByScannerScreen as SafeNavigationScreenComponent<
+        typeof QRcodeAcquisitionByScannerScreen
+      >
     },
     [ROUTES.WALLET_ADD_MANAGER]: {
-      screen: AddManagerToCardScreen
+      screen: AddManagerToCardScreen as SafeNavigationScreenComponent<
+        typeof AddManagerToCardScreen
+      >
     },
     [ROUTES.WALLET_CONFIRM_TO_PROCEED]: {
-      screen: ConfirmToProceedTransactionScreen
+      screen: ConfirmToProceedTransactionScreen as SafeNavigationScreenComponent<
+        typeof ConfirmToProceedTransactionScreen
+      >
     },
     [ROUTES.WALLET_PAY_WITH]: {
-      screen: ChoosePaymentMethodScreen
+      screen: ChoosePaymentMethodScreen as SafeNavigationScreenComponent<
+        typeof ChoosePaymentMethodScreen
+      >
     },
     [ROUTES.WALLET_FIRST_TRANSACTION_SUMMARY]: {
-      screen: FirstTransactionSummaryScreen
+      screen: FirstTransactionSummaryScreen as SafeNavigationScreenComponent<
+        typeof FirstTransactionSummaryScreen
+      >
     },
     [ROUTES.WALLET_MANUAL_TRANSACTION_IDENTIFICATION]: {
-      screen: ManuallyIdentifyTransactionScreen
+      screen: ManuallyIdentifyTransactionScreen as SafeNavigationScreenComponent<
+        typeof ManuallyIdentifyTransactionScreen
+      >
     },
     [ROUTES.WALLET_ASK_SAVE_CARD]: {
-      screen: ConfirmSaveCardScreen
+      screen: ConfirmSaveCardScreen as SafeNavigationScreenComponent<
+        typeof ConfirmSaveCardScreen
+      >
     }
   },
   {

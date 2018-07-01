@@ -1,26 +1,18 @@
-import {
-  NavigationComponent,
-  NavigationRouteConfigMap,
-  StackNavigator,
-  NavigationScreenComponent
-} from "react-navigation";
+import { NavigationRouteConfigMap, StackNavigator } from "react-navigation";
 import { MessageDetailsScreen } from "../screens/messages/MessageDetailsScreen";
 import MessagesScreen from "../screens/messages/MessagesScreen";
+import { SafeNavigationScreenComponent } from "../types/redux_navigation";
 
 import ROUTES from "./routes";
 
-// const messagesNavigatorConfig: NavigationRouteConfigMap = {
-//   [ROUTES.MESSAGES_LIST]: {
-//     screen: MessagesScreen
-//   },
-//   [ROUTES.MESSAGE_DETAILS]: {
-//     screen: MessageDetailsScreen
-//   }
-// };
-
 const messagesNavigatorConfig: NavigationRouteConfigMap = {
   [ROUTES.MESSAGES_LIST]: {
-    screen: MessagesScreen
+    screen: MessagesScreen as SafeNavigationScreenComponent<
+      typeof MessagesScreen
+    >
+  },
+  [ROUTES.MESSAGE_DETAILS]: {
+    screen: MessageDetailsScreen
   }
 };
 

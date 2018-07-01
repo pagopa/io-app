@@ -8,16 +8,17 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import { WalletStyles } from "../styles/wallet";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
+type OwnProps = Readonly<{
   paymentReason: string;
   currentAmount: string;
   entity: string;
 }>;
+
+type Props = OwnProps & NavigationScreenProps<NavigationState>;
 
 export default class PaymentBannerComponent extends React.Component<Props> {
   public render(): React.ReactNode {
