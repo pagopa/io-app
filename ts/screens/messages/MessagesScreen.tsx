@@ -5,9 +5,13 @@ import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
-  NavigationState
+  NavigationState,
+  NavigationScreenComponent,
+  NavigationRoute,
+  NavigationComponent,
+  NavigationScreenProps
 } from "react-navigation";
-import { connect } from "react-redux";
+import { connect, MapStateToPropsParam } from "react-redux";
 
 import MessageComponent from "../../components/messages/MessageComponent";
 import I18n from "../../i18n";
@@ -27,9 +31,7 @@ type ReduxMappedProps = Readonly<{
   services: ServicesState;
 }>;
 
-export type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+export type OwnProps = NavigationScreenProps<any, any>;
 
 export type IMessageDetails = Readonly<{
   item: Readonly<MessageWithContentPO>;
@@ -165,12 +167,23 @@ class MessagesScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps: MapStateToPropsParam<
+  ReduxMappedProps,
+  OwnProps,
+  GlobalState
+> = (state: GlobalState): ReduxMappedProps => ({
   isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
     state
   ),
   messages: orderedMessagesSelector(state),
   services: state.entities.services
 });
+
+const X: NavigationScreenComponent<any, any, any> = connect<
+  ReduxMappedProps,
+  {},
+  OwnProps,
+  GlobalState
+>(mapStateToProps)(MessagesScreen);
 
 export default connect(mapStateToProps)(MessagesScreen);

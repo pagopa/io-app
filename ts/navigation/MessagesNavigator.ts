@@ -1,4 +1,9 @@
-import { NavigationRouteConfigMap, StackNavigator } from "react-navigation";
+import {
+  NavigationComponent,
+  NavigationRouteConfigMap,
+  StackNavigator,
+  NavigationScreenComponent
+} from "react-navigation";
 import { MessageDetailsScreen } from "../screens/messages/MessageDetailsScreen";
 import MessagesScreen from "../screens/messages/MessagesScreen";
 
@@ -14,8 +19,8 @@ import ROUTES from "./routes";
 // };
 
 const messagesNavigatorConfig: NavigationRouteConfigMap = {
-  "[ROUTES.MESSAGES_LIST]": {
-    getScreen: () => MessagesScreen
+  [ROUTES.MESSAGES_LIST]: {
+    screen: MessagesScreen
   }
 };
 
