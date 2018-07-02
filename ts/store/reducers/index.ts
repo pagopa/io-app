@@ -41,7 +41,7 @@ const authenticationPersistConfig: PersistConfig = {
 const reducer = combineReducers<GlobalState, Action>({
   appState: appStateReducer,
   network: networkReducer,
-  navigation: navigationReducer,
+  nav: navigationReducer,
 
   // UI
   loading: loadingReducer,

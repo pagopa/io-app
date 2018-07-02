@@ -114,14 +114,11 @@ export function* watchStartAuthentication(): IterableIterator<Effect> {
 
     // Show the Authentication LandingScreen to the user
     yield put(
-      NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({
-            routeName: ROUTES.AUTHENTICATION_LANDING
-          })
-        ],
-        key: ROUTES.AUTHENTICATION
+      NavigationActions.navigate({
+        routeName: ROUTES.AUTHENTICATION,
+        action: NavigationActions.navigate({
+          routeName: ROUTES.AUTHENTICATION_LANDING
+        })
       })
     );
 
