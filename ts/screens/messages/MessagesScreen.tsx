@@ -1,12 +1,7 @@
 import * as React from "react";
 
 import { Container, H1, Tab, Tabs, View } from "native-base";
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  StyleSheet
-} from "react-native";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
