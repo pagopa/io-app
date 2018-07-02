@@ -8,7 +8,7 @@
 import { Text } from "native-base";
 import * as React from "react";
 import { Col, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
@@ -23,12 +23,13 @@ type ReduxMappedProps = Readonly<{
 }>;
 
 type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
   item: CreditCard;
   showMsg?: boolean;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type Props = OwnProps &
+  ReduxMappedProps &
+  NavigationScreenProps<NavigationState>;
 
 class FooterRow extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {

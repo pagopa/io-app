@@ -1,7 +1,7 @@
 import { Body, Button, Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -11,9 +11,7 @@ import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 
 type ReduxMappedProps = {};
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 /**
  * A screen where the user can choose to login with SPID or get more informations.

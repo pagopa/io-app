@@ -9,7 +9,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { isValid } from "redux-form";
 import SpidInformationForm, {
@@ -26,9 +26,7 @@ import { GlobalState } from "../../store/reducers/types";
 type ReduxMappedProps = {
   isFormValid: boolean;
 };
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = ReduxMappedProps & OwnProps & ContextualHelpInjectedProps;
 

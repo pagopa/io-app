@@ -8,12 +8,12 @@
  * footer with a button for starting a new payment
  */
 import { Body, Container, Content, Text, View } from "native-base";
-import { Left } from "native-base";
 import { Button } from "native-base";
+import { Left } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -63,14 +63,15 @@ type NoCards = Readonly<{
 
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
-type Props = Readonly<{
+type OwnProps = Readonly<{
   title: string;
-  navigation: NavigationScreenProp<NavigationState>;
   headerContents?: React.ReactNode;
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
 }>;
+
+type Props = OwnProps & NavigationScreenProps<NavigationState>;
 
 export class WalletLayout extends React.Component<Props> {
   public static defaultProps = {

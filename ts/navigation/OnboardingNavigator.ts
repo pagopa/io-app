@@ -2,6 +2,7 @@ import { StackNavigator } from "react-navigation";
 
 import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
+import { SafeNavigationScreenComponent } from "../types/redux_navigation";
 import ROUTES from "./routes";
 
 /**
@@ -10,10 +11,10 @@ import ROUTES from "./routes";
 const navigator = StackNavigator(
   {
     [ROUTES.ONBOARDING_TOS]: {
-      screen: TosScreen
+      screen: TosScreen as SafeNavigationScreenComponent<typeof TosScreen>
     },
     [ROUTES.ONBOARDING_PIN]: {
-      screen: PinScreen
+      screen: PinScreen as SafeNavigationScreenComponent<typeof PinScreen>
     }
   },
   {

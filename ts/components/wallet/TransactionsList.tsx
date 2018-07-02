@@ -13,7 +13,7 @@ import {
   Text
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 
 import { Content } from "native-base";
 import { connect, Dispatch } from "react-redux";
@@ -52,11 +52,14 @@ export enum TransactionsDisplayed {
 type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
-  navigation: NavigationScreenProp<NavigationState>;
   display: TransactionsDisplayed;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps &
+  ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationScreenProps<NavigationState>;
+
 /**
  * Transactions List component
  */
@@ -165,7 +168,9 @@ const mapStateToProps = (
   return { transactions: [] };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<GlobalState>
+): ReduxMappedDispatchProps => ({
   selectTransaction: item => dispatch(selectTransactionForDetails(item)),
   selectCard: item => dispatch(selectCardForDetails(item))
 });

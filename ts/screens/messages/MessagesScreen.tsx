@@ -4,7 +4,7 @@ import { Container, H1, Tab, Tabs, View } from "native-base";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import {
   NavigationEventSubscription,
-  NavigationScreenProp,
+  NavigationScreenProps,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
@@ -27,9 +27,7 @@ type ReduxMappedProps = Readonly<{
   services: ServicesState;
 }>;
 
-export type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+export type OwnProps = NavigationScreenProps<NavigationState>;
 
 export type IMessageDetails = Readonly<{
   item: Readonly<MessageWithContentPO>;

@@ -25,14 +25,14 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
+
+type Props = OwnProps;
 
 type State = Readonly<{
   transactionCode: Option<string>;

@@ -10,15 +10,13 @@ import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type Props = NavigationScreenProps<NavigationState>;
 
 type Route = keyof typeof ROUTES;
 

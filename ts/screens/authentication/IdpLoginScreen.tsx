@@ -1,7 +1,7 @@
 import { Body, Button, Container, Left, Text } from "native-base";
 import * as React from "react";
 import { NavState, WebView } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import AppHeader from "../../components/ui/AppHeader";
@@ -20,9 +20,7 @@ import { extractLoginResult } from "../../utils/login";
 type ReduxMappedProps = {
   authentication: AuthenticationState;
 };
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`;
 /**

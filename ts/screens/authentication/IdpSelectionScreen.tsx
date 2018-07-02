@@ -10,7 +10,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
@@ -23,9 +23,7 @@ import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
 type ReduxMappedProps = {};
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const idps: ReadonlyArray<IdentityProvider> = [
   {

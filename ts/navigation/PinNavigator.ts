@@ -1,6 +1,7 @@
 import { StackNavigator } from "react-navigation";
 
 import PinLoginScreen from "../screens/PinLoginScreen";
+import { SafeNavigationScreenComponent } from "../types/redux_navigation";
 import ROUTES from "./routes";
 
 /**
@@ -9,7 +10,9 @@ import ROUTES from "./routes";
 const navigator = StackNavigator(
   {
     [ROUTES.PIN_LOGIN]: {
-      screen: PinLoginScreen
+      screen: PinLoginScreen as SafeNavigationScreenComponent<
+        typeof PinLoginScreen
+      >
     }
   },
   {

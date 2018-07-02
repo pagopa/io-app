@@ -6,11 +6,7 @@ import * as React from "react";
 import I18n from "../../i18n";
 
 import { Text, View } from "native-base";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -26,19 +22,16 @@ interface ParamType {
   readonly card: CreditCard;
 }
 
-interface StateParams extends NavigationState {
+interface StateParams {
   readonly params: ParamType;
-}
-
-interface OwnProps {
-  readonly navigation: NavigationScreenProp<StateParams>;
 }
 
 type ReduxMappedProps = Readonly<{
   selectedCard: CreditCard;
 }>;
 
-type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;
+type Props = ReduxMappedProps &
+  NavigationScreenProps<NavigationState & StateParams>;
 
 class TransactionsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {

@@ -11,7 +11,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
@@ -28,9 +28,7 @@ type ReduxMappedProps = {
   pinSaveError: Option<string>;
 };
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 

@@ -16,7 +16,7 @@ import * as React from "react";
 import { Content, H1, H3, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
@@ -34,7 +34,9 @@ type ReduxMappedProps = Readonly<{
   selectedCard: CreditCard;
 }>;
 
-type Props = ReduxMappedProps & NavigationInjectedProps;
+type OwnProps = NavigationScreenProps<NavigationState>;
+
+type Props = ReduxMappedProps & OwnProps;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction

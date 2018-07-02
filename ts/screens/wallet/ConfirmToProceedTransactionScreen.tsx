@@ -19,7 +19,7 @@ import {
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
@@ -38,9 +38,7 @@ type ReduxMappedStateProps = Readonly<{
   transaction: Readonly<WalletTransaction>;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = OwnProps & ReduxMappedStateProps;
 

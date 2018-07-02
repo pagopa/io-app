@@ -16,14 +16,14 @@ import {
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
+
+type Props = OwnProps;
 
 const screenWidth = Dimensions.get("screen").width;
 

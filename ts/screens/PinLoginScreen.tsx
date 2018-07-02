@@ -1,7 +1,7 @@
 import { Button, Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import Pinpad from "../components/Pinpad";
 import IconFont from "../components/ui/IconFont";
@@ -16,9 +16,7 @@ import variables from "../theme/variables";
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
 };
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 

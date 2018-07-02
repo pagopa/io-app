@@ -15,7 +15,7 @@ import {
 import * as React from "react";
 import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -29,9 +29,7 @@ type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = OwnProps & ReduxMappedStateProps;
 

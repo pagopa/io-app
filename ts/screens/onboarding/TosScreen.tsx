@@ -10,7 +10,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -18,9 +18,7 @@ import I18n from "../../i18n";
 import { acceptTos } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 type ReduxMappedProps = {};
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+type OwnProps = NavigationScreenProps<NavigationState>;
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 /**
  * A screen to show the ToS to the user.

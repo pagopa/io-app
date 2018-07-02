@@ -11,7 +11,7 @@ import { WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import CreditCardComponent from "../../components/wallet/card";
 import ROUTES from "../../navigation/routes";
@@ -23,9 +23,7 @@ type ReduxMappedStateProps = Readonly<{
   cards: ReadonlyArray<CreditCard>;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationScreenProps<NavigationState>;
 
 type Props = OwnProps & ReduxMappedStateProps;
 

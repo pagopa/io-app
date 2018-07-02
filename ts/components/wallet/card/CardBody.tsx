@@ -7,6 +7,7 @@ import { Right, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
+import { NavigationScreenProps, NavigationState } from "react-navigation";
 import { CardProps } from ".";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -24,7 +25,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CardBody extends React.Component<CardProps> {
+type Props = CardProps & NavigationScreenProps<NavigationState>;
+
+export default class CardBody extends React.Component<Props> {
   /**
    * Display the right-end part of the
    * card body. This will be the card
