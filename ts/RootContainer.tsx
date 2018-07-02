@@ -8,7 +8,6 @@ import ConnectionBar from "./components/ConnectionBar";
 import Navigation from "./navigation";
 import { APP_STATE_CHANGE_ACTION } from "./store/actions/constants";
 import { ApplicationState, ReduxProps } from "./store/actions/types";
-import { environment } from "./config";
 
 interface ReduxMappedProps {}
 
@@ -49,13 +48,11 @@ class RootContainer extends React.Component<Props> {
       <Root>
         <StatusBar barStyle="dark-content" />
         <ConnectionBar />
-        {environment === "DEV" && (
-          <View style={styles.versionContainer}>
-            <Text style={styles.versionText}>
-              {DeviceInfo.getReadableVersion()}
-            </Text>
-          </View>
-        )}
+        <View style={styles.versionContainer}>
+          <Text style={styles.versionText}>
+            {DeviceInfo.getReadableVersion()}
+          </Text>
+        </View>
         <Navigation />
       </Root>
     );
