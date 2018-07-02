@@ -78,7 +78,7 @@ export default class CardBody extends React.Component<CardProps> {
     const { item, navigation } = this.props;
     // returns a list of rows, namely:
     // - the "validity" row displaying when the card expires
-    // - the "owner" row, displaying the owner name on the left-end
+    // - the "holder" row, displaying the holder name on the left-end
     //   side, and either a card logo or a "forward" button on the
     //   right-end one
     // - "whiteLine" is an (optional) white line that separates the
@@ -94,10 +94,10 @@ export default class CardBody extends React.Component<CardProps> {
           {`${I18n.t("creditCardComponent.validUntil")} ${item.expirationDate}`}
         </Text>
       </Row>,
-      <Row key="owner" size={6} style={CreditCardStyles.rowStyle}>
+      <Row key="holder" size={6} style={CreditCardStyles.rowStyle}>
         <Col size={7}>
           <Text style={CreditCardStyles.textStyle}>
-            {item.owner.toUpperCase()}
+            {item.holder.toUpperCase()}
           </Text>
         </Col>
         <Col size={2}>{this.rightPart()}</Col>

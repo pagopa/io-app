@@ -48,29 +48,25 @@ export type TransactionSubject = Readonly<{
  */
 export type WalletTransaction = {
   id: number;
+  datetime: string;
   cardId: CreditCardId;
-  isoDatetime: string;
-  date: string; // it could be the same of date, having date as date.toLocaleDateString() TODO: @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
-  time: string; // it could be the same of date, having date as date.toLocaleTimeString() TODO: @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
   paymentReason: string;
   recipient: string;
   amount: number;
   currency: string;
-  transactionCost: number;
+  fee: number;
   isNew: boolean;
 };
 
 export const UNKNOWN_TRANSACTION: WalletTransaction = {
   id: -1,
+  datetime: "",
   cardId: -1 as CreditCardId,
-  isoDatetime: "",
-  date: "",
-  time: "",
   paymentReason: "UNKNOWN TRANSACTION",
   recipient: "",
   amount: 0,
   currency: "?",
-  transactionCost: 0,
+  fee: 0,
   isNew: false
 };
 

@@ -62,7 +62,7 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  */
 class TransactionsList extends React.Component<Props> {
   private renderDate(transaction: WalletTransaction) {
-    const datetime: string = `${transaction.date} - ${transaction.time}`;
+    const datetime = transaction.datetime;
     return (
       <Row>
         <Left>

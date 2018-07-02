@@ -90,7 +90,7 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
    *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
    */
   private getTotalAmount(transaction: Readonly<WalletTransaction>) {
-    return transaction.amount + transaction.transactionCost;
+    return transaction.amount + transaction.fee;
   }
 
   /**
@@ -146,6 +146,7 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { transaction } = this.props;
+    const dt = new Date(transaction.datetime);
 
     return (
       <WalletLayout
@@ -185,9 +186,9 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              `${transaction.transactionCost.toFixed(
-                2
-              )} ${this.getCurrencySymbol(transaction.currency)}`
+              `${transaction.fee.toFixed(2)} ${this.getCurrencySymbol(
+                transaction.currency
+              )}`
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
@@ -197,8 +198,8 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
               I18n.t("wallet.recipient"),
               transaction.recipient
             )}
-            {this.labelValueRow(I18n.t("wallet.date"), transaction.date)}
-            {this.labelValueRow(I18n.t("wallet.time"), transaction.time)}
+            {this.labelValueRow(I18n.t("wallet.date"), dt.toLocaleDateString())}
+            {this.labelValueRow(I18n.t("wallet.time"), dt.toLocaleTimeString())}
           </Grid>
         </Content>
       </WalletLayout>

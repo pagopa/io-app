@@ -1,6 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
+  CARD_ERROR,
   CARDS_FETCHED,
   FETCH_CARDS_REQUEST,
   SELECT_CARD_FOR_DETAILS,
@@ -26,11 +27,17 @@ export type SetFavoriteCard = Readonly<{
   payload: Option<CreditCardId>;
 }>;
 
+export type CardError = Readonly<{
+  type: typeof CARD_ERROR;
+  payload: Error;
+}>;
+
 export type CardsActions =
   | FetchCardsRequest
   | CardsFetched
   | CardSelectedForDetails
-  | SetFavoriteCard;
+  | SetFavoriteCard
+  | CardError;
 
 export const fetchCardsRequest = (): FetchCardsRequest => ({
   type: FETCH_CARDS_REQUEST

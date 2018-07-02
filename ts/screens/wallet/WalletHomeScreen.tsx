@@ -131,7 +131,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
             block={true}
             style={WalletStyles.addPaymentMethodButton}
             onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+              this.props.navigation.navigate(ROUTES.WALLET_CREDITCARDS)
             }
           >
             <Text style={WalletStyles.addPaymentMethodText}>
