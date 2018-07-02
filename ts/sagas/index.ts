@@ -19,10 +19,10 @@ import walletSaga from "./wallet";
 // More info at https://github.com/rauliyohmc/react-native-offline#withnetworkconnectivity
 const connectionMonitorParameters = {
   withRedux: true,
-  timeout: 5000,
+  timeout: 2500,
   pingServerUrl: "https://google.com",
   withExtraHeadRequest: true,
-  checkConnectionInterval: 2500
+  checkConnectionInterval: 5000
 };
 
 export default function* root(): Iterator<Effect> {
