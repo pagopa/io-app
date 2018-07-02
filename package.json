@@ -82,7 +82,7 @@
     "danger": "^3.7.19",
     "danger-plugin-digitalcitizenship": "^0.3.1",
     "italia-tslint-rules": "^0.1.1",
-    "italia-utils": "^3.6.1",
+    "italia-utils": "^3.11.1",
     "jest": "23.0.1",
     "prettier": "1.13.0",
     "react-native-typescript-transformer": "^1.2.5",

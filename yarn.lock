@@ -3949,9 +3949,9 @@ italia-tslint-rules@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/italia-tslint-rules/-/italia-tslint-rules-0.1.1.tgz#b150373925a268ff892a545229708484ac0533ba"
 
-italia-utils@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.6.1.tgz#e869f8aa071e45aff023c30443700e41ad0cfb3d"
+italia-utils@^3.11.1:
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.11.1.tgz#2148b5ab9a09128a80e4ab67f02c73324b464c08"
   dependencies:
     fs-extra "^6.0.0"
     nunjucks "^3.1.2"
