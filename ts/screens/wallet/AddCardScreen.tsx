@@ -4,7 +4,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
-import { Left } from "native-base";
 import {
   Body,
   Button,
@@ -14,23 +13,35 @@ import {
   Text,
   View
 } from "native-base";
+import { Left } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { storeNewCardData } from "../../store/actions/wallet/cards";
 import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
+import { CreditCard } from "../../types/CreditCard";
+import { buildCreditCardFromState } from "../../utils/converters";
 import { fixExpirationDate, fixPan } from "../../utils/input";
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  storeNewCardData: (card: CreditCard) => void;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ReduxMappedProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -38,6 +49,8 @@ type State = Readonly<{
   securityCode: Option<string>;
   holder: Option<string>;
 }>;
+
+export type AddCardState = State;
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -57,7 +70,7 @@ const styles = StyleSheet.create({
 
 const CARD_LOGOS_COLUMNS = 4;
 
-export class AddCardScreen extends React.Component<Props, State> {
+class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -200,7 +213,10 @@ export class AddCardScreen extends React.Component<Props, State> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
+            onPress={() => {
+              this.props.navigation.navigate(ROUTES.WALLET_ASK_SAVE_CARD);
+              this.props.storeNewCardData(buildCreditCardFromState(this.state));
+            }}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
@@ -217,3 +233,12 @@ export class AddCardScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  storeNewCardData: (item: CreditCard) => dispatch(storeNewCardData(item))
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddCardScreen);

@@ -1,10 +1,14 @@
 import { Option } from "fp-ts/lib/Option";
 import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import {
+  ADD_CARD_REQUEST,
+  CARD_ERROR,
   CARDS_FETCHED,
+  DELETE_CARD_REQUEST,
   FETCH_CARDS_REQUEST,
   SELECT_CARD_FOR_DETAILS,
-  SET_FAVORITE_CARD
+  SET_FAVORITE_CARD,
+  STORE_NEW_CARD_DATA
 } from "../constants";
 
 export type FetchCardsRequest = Readonly<{
@@ -26,11 +30,34 @@ export type SetFavoriteCard = Readonly<{
   payload: Option<CreditCardId>;
 }>;
 
+export type StoreNewCardData = Readonly<{
+  type: typeof STORE_NEW_CARD_DATA;
+  payload: CreditCard;
+}>;
+
+export type AddCardRequest = Readonly<{
+  type: typeof ADD_CARD_REQUEST;
+}>;
+
+export type DeleteCardRequest = Readonly<{
+  type: typeof DELETE_CARD_REQUEST;
+  payload: CreditCardId;
+}>;
+
+export type CardError = Readonly<{
+  type: typeof CARD_ERROR;
+  payload: Error;
+}>;
+
 export type CardsActions =
   | FetchCardsRequest
   | CardsFetched
   | CardSelectedForDetails
-  | SetFavoriteCard;
+  | SetFavoriteCard
+  | StoreNewCardData
+  | AddCardRequest
+  | DeleteCardRequest
+  | CardError;
 
 export const fetchCardsRequest = (): FetchCardsRequest => ({
   type: FETCH_CARDS_REQUEST
@@ -54,5 +81,19 @@ export const setFavoriteCard = (
   cardId: Option<CreditCardId>
 ): SetFavoriteCard => ({
   type: SET_FAVORITE_CARD,
+  payload: cardId
+});
+
+export const storeNewCardData = (card: CreditCard): StoreNewCardData => ({
+  type: STORE_NEW_CARD_DATA,
+  payload: card
+});
+
+export const addCardRequest = (): AddCardRequest => ({
+  type: ADD_CARD_REQUEST
+});
+
+export const deleteCardRequest = (cardId: CreditCardId): DeleteCardRequest => ({
+  type: DELETE_CARD_REQUEST,
   payload: cardId
 });

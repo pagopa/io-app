@@ -9,3 +9,4 @@ export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId = Config.GCM_SENDER_ID;
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
+export const pagoPaApiUrlPrefix = Config.PAGOPA_API_URL_PREFIX;

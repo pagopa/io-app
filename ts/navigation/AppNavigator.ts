@@ -1,6 +1,5 @@
 import { SwitchNavigator } from "react-navigation";
 
-import IngressScreen from "../screens/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -15,7 +14,7 @@ const navigator = SwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: IngressScreen
+    screen: MainNavigator
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users
