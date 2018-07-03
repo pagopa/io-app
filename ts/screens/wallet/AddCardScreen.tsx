@@ -21,10 +21,10 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import Icon from "../../theme/font-icons/io-icon-font";
 import variables from "../../theme/variables";
 import { fixExpirationDate, fixPan } from "../../utils/input";
 
@@ -97,7 +97,7 @@ export class AddCardScreen extends React.Component<Props, State> {
               transparent={true}
               onPress={__ => this.props.navigation.goBack()}
             >
-              <Icon name="io-back" size={variables.iconSize3} />
+              <IconFont name="io-back" size={variables.iconSize3} />
             </Button>
           </Left>
           <Body>

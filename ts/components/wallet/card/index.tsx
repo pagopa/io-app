@@ -7,13 +7,7 @@ import color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Body, Card, Text } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  ViewStyle
-} from "react-native";
+import { Alert, Platform, StyleSheet, ViewStyle } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   Menu,
@@ -32,7 +26,7 @@ import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
 import { CreditCard, CreditCardId } from "../../../types/CreditCard";
-import ActionIcon from "./ActionIcon";
+import IconFont from "../../ui/IconFont";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -72,6 +66,9 @@ const styles = StyleSheet.create({
     color: variables.brandPrimary,
     textAlign: "center",
     ...makeFontStyleObject(Platform.select)
+  },
+  paddedIcon: {
+    paddingLeft: 10
   }
 });
 
@@ -138,20 +135,25 @@ class CreditCardComponent extends React.Component<Props> {
       return [
         <Col key="favorite" size={1}>
           {this.props.favorite && (
-            <TouchableOpacity onPress={this.toggleFavorite}>
-              <ActionIcon
-                name={
-                  this.props.isFavoriteCard ? "io-filled-star" : "io-empty-star"
-                }
-              />
-            </TouchableOpacity>
+            <IconFont
+              name={
+                this.props.isFavoriteCard ? "io-filled-star" : "io-empty-star"
+              }
+              color={variables.brandPrimary}
+              style={styles.paddedIcon}
+              onPress={this.toggleFavorite}
+            />
           )}
         </Col>,
         <Col key="menu" size={1}>
           {this.props.menu && (
             <Menu>
               <MenuTrigger>
-                <ActionIcon name="io-more" />
+                <IconFont
+                  name="io-more"
+                  color={variables.brandPrimary}
+                  style={styles.paddedIcon}
+                />
               </MenuTrigger>
               <MenuOptions>
                 <MenuOption onSelect={this.toggleFavorite}>
