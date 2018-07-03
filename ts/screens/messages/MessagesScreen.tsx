@@ -1,7 +1,11 @@
-import * as React from "react";
-
 import { Container, H1, Tab, Tabs, View } from "native-base";
-import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import * as React from "react";
+import {
+  FlatList,
+  RefreshControl,
+  RefreshControlProps,
+  StyleSheet
+} from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -14,8 +18,8 @@ import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
-import { orderedMessagesSelector } from "../../store/reducers/entities/messages/index";
-import { ServicesState } from "../../store/reducers/entities/services/index";
+import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
+import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -59,7 +63,7 @@ class MessagesScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
 
   public componentDidMount() {
-    this.props.dispatch(loadMessages());
+    this.refreshList();
   }
 
   public componentWillUnmount() {
@@ -70,17 +74,21 @@ class MessagesScreen extends React.Component<Props, never> {
     }
   }
 
-  public getServiceName = (senderServiceId: string): string => {
+  private getServiceName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].service_name;
   };
 
-  public getOrganizationName = (senderServiceId: string): string => {
+  private getOrganizationName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].organization_name;
   };
 
-  public getDepartmentName = (senderServiceId: string): string => {
+  private getDepartmentName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].department_name;
   };
+
+  private refreshList() {
+    this.props.dispatch(loadMessages());
+  }
 
   public renderItem = (messageDetails: IMessageDetails) => {
     return (
@@ -102,6 +110,16 @@ class MessagesScreen extends React.Component<Props, never> {
     );
   };
 
+  private refreshControl(): React.ReactElement<RefreshControlProps> {
+    return (
+      <RefreshControl
+        onRefresh={() => this.refreshList()}
+        refreshing={this.props.isLoadingMessages}
+        colors={[variables.brandPrimary]}
+      />
+    );
+  }
+
   private renderMessages = (
     messages: ReadonlyArray<MessageWithContentPO>
   ): React.ReactNode => {
@@ -121,13 +139,7 @@ class MessagesScreen extends React.Component<Props, never> {
             data={messages}
             renderItem={this.renderItem}
             keyExtractor={item => item.id}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.isLoadingMessages}
-                onRefresh={this.listRefresh.bind(this)}
-                colors={[variables.brandPrimary]}
-              />
-            }
+            refreshControl={this.refreshControl()}
           />
         </Tab>
         <Tab
@@ -145,9 +157,6 @@ class MessagesScreen extends React.Component<Props, never> {
       </Tabs>
     );
   };
-  public listRefresh() {
-    this.props.dispatch(loadMessages());
-  }
 
   public render() {
     return (
