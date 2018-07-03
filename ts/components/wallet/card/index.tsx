@@ -3,23 +3,23 @@
  * with different appearences based on
  * the props passed
  */
+import color from "color";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { Body, Card, Text } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet, ViewStyle } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-
-import I18n from "../../../i18n";
-
-import color from "color";
-import { none, Option, some } from "fp-ts/lib/Option";
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { connect, Dispatch } from "react-redux";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+
+import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
 import { setFavoriteCard } from "../../../store/actions/wallet/cards";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
