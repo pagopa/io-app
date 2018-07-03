@@ -1,8 +1,10 @@
 import merge from "lodash/merge";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import * as SimpleMarkdown from "simple-markdown";
 
+import { isDevEnvironment } from "../../../config";
+import I18n from "../../../i18n";
 import reactNativeRules from "./rules";
 
 // A regex to test if a string ends with `/n/n`
@@ -35,7 +37,11 @@ class Markdown extends React.Component<{}, never> {
         SimpleMarkdown.ruleOutput(rules, "react_native")
       )(syntaxTree);
     } catch (error) {
-      return null;
+      return isDevEnvironment ? (
+        <Text>${children}</Text>
+      ) : (
+        <Text>{I18n.t("global.markdown.decodeError")}</Text>
+      );
     }
   }
 
