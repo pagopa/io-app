@@ -22,7 +22,7 @@ export type NetworkState = Readonly<{
 export type GlobalState = Readonly<{
   appState: AppState;
   network: NetworkState;
-  navigation: NavigationState;
+  nav: NavigationState;
   loading: LoadingState;
   error: ErrorState;
   form: FormStateMap;

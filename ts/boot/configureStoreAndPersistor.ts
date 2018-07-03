@@ -54,7 +54,7 @@ const navigation = createReactNavigationReduxMiddleware(
   // The same key will be used by the createReduxBoundAddListener function
   NAVIGATION_MIDDLEWARE_LISTENERS_KEY,
   // This is a selector to get the navigation state from the global state
-  (state: GlobalState): NavigationState => state.navigation
+  (state: GlobalState): NavigationState => state.nav
 );
 
 function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {

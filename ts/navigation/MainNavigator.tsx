@@ -9,7 +9,7 @@ import * as React from "react";
 import ROUTES from "./routes";
 
 import { Platform, StyleSheet, Text } from "react-native";
-import { TabBarBottom, TabNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import ProfileScreen from "../screens/main/ProfileScreen";
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 /**
  * A navigator for all the screens used when the user is authenticated.
  */
-const navigation = TabNavigator(
+const navigation = createBottomTabNavigator(
   {
     [ROUTES.MESSAGES_HOME]: {
       screen: MessageNavigator
@@ -120,8 +120,6 @@ const navigation = TabNavigator(
         );
       }
     }),
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: "bottom",
     tabBarOptions: {
       activeTintColor: variables.brandPrimary,
       inactiveTintColor: variables.brandDarkGray,

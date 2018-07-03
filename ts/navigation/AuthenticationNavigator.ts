@@ -1,4 +1,4 @@
-import { StackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
@@ -9,7 +9,7 @@ import ROUTES from "./routes";
 /**
  * The authentication related stack of screens of the application.
  */
-const navigator = StackNavigator(
+const navigator = createStackNavigator(
   {
     [ROUTES.AUTHENTICATION_LANDING]: {
       screen: LandingScreen

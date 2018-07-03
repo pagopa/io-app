@@ -11,7 +11,7 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 
 // Selectors
 
-export const navigationStateSelector = (state: GlobalState) => state.navigation;
+export const navigationStateSelector = (state: GlobalState) => state.nav;
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {

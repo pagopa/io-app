@@ -19,12 +19,12 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
+import IconFont from "../../components/ui/IconFont";
 import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
-import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
 import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
@@ -159,7 +159,7 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
           <Grid>
             <Row style={styles.titleRow}>
               <H3>{I18n.t("wallet.transactionDetails")}</H3>
-              <Icon name="io-close" size={variables.iconSizeBase} />
+              <IconFont name="io-close" size={variables.iconSizeBase} />
             </Row>
             <View spacer={true} extralarge={true} />
             <Row>
