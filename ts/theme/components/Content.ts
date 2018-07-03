@@ -7,7 +7,6 @@ declare module "native-base" {
       alternative?: boolean;
       noPadded?: boolean;
       primary?: boolean;
-      noPadded?: boolean;
     }
   }
 }
@@ -22,9 +21,6 @@ export default (): Theme => {
     },
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground
-    },
-    ".noPadded": {
-      padding: 0
     },
     padding: variables.contentPadding,
     backgroundColor: variables.contentBackground

@@ -79,7 +79,6 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
         {this.isInTransaction() ? (
           <Content noPadded={true}>
             <PaymentBannerComponent
-              navigation={this.props.navigation}
               paymentReason={transaction.paymentReason}
               currentAmount={transaction.totalAmount.toString()}
               entity={transaction.entityName}

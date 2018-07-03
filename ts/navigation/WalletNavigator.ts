@@ -9,9 +9,9 @@ import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
 import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
+import { TextVerificationScreen } from "../screens/wallet/TextVerificationScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
-import { TextVerificationScreen } from "../screens/wallet/TextVerificationScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 

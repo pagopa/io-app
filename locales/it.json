@@ -155,7 +155,7 @@
       "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
-    "text": {
+    "textMsg": {
       "title":"Codice di conferma",
 	    "header":"Codice di Conferma SMS",
       "newCode":"Richiedi nuovo codice",
