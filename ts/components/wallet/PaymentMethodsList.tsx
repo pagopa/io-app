@@ -13,8 +13,8 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
+import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -105,7 +105,7 @@ export default class PaymentMethodsList extends React.Component<Props, never> {
                 </Grid>
               </Left>
               <Right style={AddMethodStyle.centeredContents}>
-                <Icon
+                <IconFont
                   name={itemInfo.item.icon}
                   color={variables.brandPrimary}
                   size={variables.iconSize6}

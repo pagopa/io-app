@@ -13,8 +13,8 @@ import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
-import Icon from "../theme/font-icons/io-icon-font";
 import variables from "../theme/variables";
+import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -40,7 +40,7 @@ export class LabelledItem extends React.Component<Props> {
           <Text>{this.props.label}</Text>
         </Item>
         <Item style={styles.bottomLine}>
-          <Icon
+          <IconFont
             size={variables.iconSize3}
             color={variables.brandDarkGray}
             name={this.props.icon}
