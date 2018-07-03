@@ -10,9 +10,14 @@ import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
 import h3Theme from "./components/H3";
 import headerTheme from "./components/Header";
+import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
 import messageComponent from "./components/MessageComponent";
+import messageDetailsComponentTheme from "./components/MessageDetailsComponent";
+import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
+import preferenceItemTheme from "./components/PreferenceItem";
+import screenHeaderTheme from "./components/ScreenHeader";
 import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
@@ -20,6 +25,7 @@ import textWithIconTheme from "./components/TextWithIcon";
 import viewTheme from "./components/View";
 import { Theme } from "./types";
 import variables from "./variables";
+
 const theme = (): Theme => {
   const nbTheme = getTheme(variables);
   const overrides = {
@@ -50,6 +56,9 @@ const theme = (): Theme => {
     "UIComponents.TextWithIcon": {
       ...textWithIconTheme()
     },
+    "UIComponents.IconFont": {
+      ...iconFontTheme()
+    },
     "NativeBase.ViewNB": {
       ...viewTheme()
     },
@@ -61,6 +70,18 @@ const theme = (): Theme => {
     },
     "NativeBase.TabContainer": {
       ...tabContainerTheme()
+    },
+    "UIComponent.MessageDetailsComponent": {
+      ...messageDetailsComponentTheme()
+    },
+    "UIComponent.MessageDetailsInfoComponent": {
+      ...messageDetailsInfoComponentTheme()
+    },
+    "UIComponent.PreferenceItem": {
+      ...preferenceItemTheme()
+    },
+    "UIComponent.ScreenHeader": {
+      ...screenHeaderTheme()
     }
   };
 

@@ -13,7 +13,6 @@ import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
-// tslint:disable-next-line
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
@@ -67,8 +66,15 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.75;
   },
   lineHeightBase: 24,
+  get lineHeightFontSizeRatio(): number {
+    return this.lineHeightBase / this.fontSizeBase;
+  },
   get lineHeight1(): number {
-    return this.lineHeightBase * 0.75;
+    return this.lineHeightBase * this.lineHeightFontSizeRatio;
+  },
+  // LineHeigth = 26 for the icon font in message details component
+  get lineHeight2(): number {
+    return this.lineHeightBase * (26 / 24);
   },
 
   // Icon
@@ -118,6 +124,12 @@ const customVariables = Object.assign(materialVariables, {
   // H1
   h1Color: "#17324D",
   h1FontWeight: "700" as FontWeight,
+  get h1FontSize(): number {
+    return this.fontSize6;
+  },
+  get h1LineHeight(): number {
+    return this.fontSize6 * this.lineHeightFontSizeRatio;
+  },
 
   // H3
   h3Color: "#17324D",

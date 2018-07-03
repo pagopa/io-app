@@ -9,20 +9,22 @@ import * as React from "react";
 import ROUTES from "./routes";
 
 import { Platform, StyleSheet, Text } from "react-native";
-import { TabBarBottom, TabNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
+import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
-import MessagesScreen from "../screens/main/MessagesScreen";
 import ProfileScreen from "../screens/main/ProfileScreen";
-import Icon from "../theme/font-icons/io-icon-font";
+import PlaceholderScreen from "../screens/PlaceholderScreen";
+import PreferencesScreen from "../screens/PreferencesScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
+import MessageNavigator from "./MessagesNavigator";
 import WalletNavigator from "./WalletNavigator";
 
 type Routes = keyof typeof ROUTES;
 
 type RouteLabelMap = { [key in Routes]?: string };
 const ROUTE_LABEL: RouteLabelMap = {
-  MAIN_MESSAGES: I18n.t("global.navigator.messages"),
+  MESSAGES_HOME: I18n.t("global.navigator.messages"),
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
   PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
@@ -31,7 +33,7 @@ const ROUTE_LABEL: RouteLabelMap = {
 
 type RouteIconMap = { [key in Routes]?: string };
 const ROUTE_ICON: RouteIconMap = {
-  MAIN_MESSAGES: "io-messaggi",
+  MESSAGES_HOME: "io-messaggi",
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
   PREFERENCES_HOME: "io-preferenze",
@@ -72,19 +74,19 @@ const styles = StyleSheet.create({
 /**
  * A navigator for all the screens used when the user is authenticated.
  */
-const navigation = TabNavigator(
+const navigation = createBottomTabNavigator(
   {
-    [ROUTES.MAIN_MESSAGES]: {
-      screen: MessagesScreen
+    [ROUTES.MESSAGES_HOME]: {
+      screen: MessageNavigator
     },
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator
     },
     [ROUTES.DOCUMENTS_HOME]: {
-      screen: WalletNavigator
+      screen: PlaceholderScreen
     },
     [ROUTES.PREFERENCES_HOME]: {
-      screen: WalletNavigator
+      screen: PreferencesScreen
     },
     [ROUTES.MAIN_PROFILE]: {
       screen: ProfileScreen
@@ -110,7 +112,7 @@ const navigation = TabNavigator(
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
         return (
-          <Icon
+          <IconFont
             name={iconName}
             size={variables.iconSize3}
             color={tintColor === null ? undefined : tintColor}
@@ -118,8 +120,6 @@ const navigation = TabNavigator(
         );
       }
     }),
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: "bottom",
     tabBarOptions: {
       activeTintColor: variables.brandPrimary,
       inactiveTintColor: variables.brandDarkGray,
@@ -127,7 +127,7 @@ const navigation = TabNavigator(
     },
     animationEnabled: true,
     swipeEnabled: false,
-    initialRouteName: ROUTES.MAIN_MESSAGES
+    initialRouteName: ROUTES.MESSAGES_HOME
   }
 );
 

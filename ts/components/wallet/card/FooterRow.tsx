@@ -7,6 +7,7 @@
  */
 import { Text } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -14,12 +15,12 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { selectCardForDetails } from "../../../store/actions/wallet/cards";
 import variables from "../../../theme/variables";
-import { CreditCard } from "../../../types/CreditCard";
-import ActionIcon from "./ActionIcon";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
+import IconFont from "../../ui/IconFont";
 import { CreditCardStyles } from "./style";
 
 type ReduxMappedProps = Readonly<{
-  selectCard: (item: CreditCard) => void;
+  selectCard: (item: CreditCardId) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -29,6 +30,13 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
+
+const styles = StyleSheet.create({
+  rightAligned: {
+    flexDirection: "row",
+    justifyContent: "flex-end"
+  }
+});
 
 class FooterRow extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {
@@ -45,7 +53,7 @@ class FooterRow extends React.Component<Props> {
           style={CreditCardStyles.rowStyle}
           size={6}
           onPress={() => {
-            this.props.selectCard(item);
+            this.props.selectCard(item.id);
             navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
           }}
         >
@@ -59,8 +67,12 @@ class FooterRow extends React.Component<Props> {
               {item.lastUsage}
             </Text>
           </Col>
-          <Col size={1}>
-            <ActionIcon name="io-right" size={variables.iconSize2} />
+          <Col size={1} style={styles.rightAligned}>
+            <IconFont
+              name="io-right"
+              size={variables.iconSize2}
+              color={variables.brandPrimary}
+            />
           </Col>
         </Row>
       );

@@ -7,10 +7,10 @@ import { Right, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
-import { Props } from ".";
+import { CardProps } from ".";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import ActionIcon from "./ActionIcon";
+import IconFont from "../../ui/IconFont";
 import FooterRow from "./FooterRow";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CardBody extends React.Component<Props> {
+export default class CardBody extends React.Component<CardProps> {
   /**
    * Display the right-end part of the
    * card body. This will be the card
@@ -52,7 +52,11 @@ export default class CardBody extends React.Component<Props> {
           }
         >
           <Right>
-            <ActionIcon name="io-right" size={variables.iconSize2} />
+            <IconFont
+              name="io-right"
+              size={variables.iconSize2}
+              color={variables.brandPrimary}
+            />
           </Right>
         </Row>
       );

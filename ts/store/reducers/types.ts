@@ -4,6 +4,7 @@ import { PersistPartial } from "redux-persist";
 
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
+import { PersistedAuthenticationState } from "./authentication";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
@@ -11,7 +12,6 @@ import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
 import { ProfileState } from "./profile";
-import { PersistedSessionState } from "./session";
 import { WalletState } from "./wallet";
 
 export type NetworkState = Readonly<{
@@ -22,11 +22,11 @@ export type NetworkState = Readonly<{
 export type GlobalState = Readonly<{
   appState: AppState;
   network: NetworkState;
-  navigation: NavigationState;
+  nav: NavigationState;
   loading: LoadingState;
   error: ErrorState;
   form: FormStateMap;
-  session: PersistedSessionState;
+  authentication: PersistedAuthenticationState;
   onboarding: OnboardingState;
   notifications: NotificationsState;
   profile: ProfileState;

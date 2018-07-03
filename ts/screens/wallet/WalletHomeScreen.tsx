@@ -6,17 +6,18 @@
 import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect, Dispatch } from "react-redux";
-import { WalletStyles } from "../../components/styles/wallet";
-
 import { Col, Grid, Row } from "react-native-easy-grid";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+
+import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
 import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { Dispatch } from "../../store/actions/types";
 import { fetchCardsRequest } from "../../store/actions/wallet/cards";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";

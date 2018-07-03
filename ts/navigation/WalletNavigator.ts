@@ -1,6 +1,14 @@
-import { StackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
+import { AddCardScreen } from "../screens/wallet/AddCardScreen";
+import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
+import ChoosePaymentMethodScreen from "../screens/wallet/ChoosePaymentMethodScreen";
+import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
+import ConfirmToProceedTransactionScreen from "../screens/wallet/ConfirmToProceedTransactionScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
+import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
+import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
+import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import { VerifyTransactionBySMSScreen } from "../screens/wallet/VerifyTransactionBySMSScreen";
@@ -8,11 +16,10 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
 /**
- * integrate the proper natigator for the no footer menu screens
- *  @https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
+ * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.
+ *   @https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
  */
-
-const WalletNavigator = StackNavigator(
+const WalletNavigator = createStackNavigator(
   {
     [ROUTES.WALLET_HOME]: {
       screen: WalletHomeScreen
@@ -31,6 +38,30 @@ const WalletNavigator = StackNavigator(
     },
     [ROUTES.WALLET_INSERT_SMS_CODE]: {
       screen: VerifyTransactionBySMSScreen
+    },
+    [ROUTES.WALLET_ADD_CARD]: {
+      screen: AddCardScreen
+    },
+    [ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER]: {
+      screen: QRcodeAcquisitionByScannerScreen
+    },
+    [ROUTES.WALLET_ADD_MANAGER]: {
+      screen: AddManagerToCardScreen
+    },
+    [ROUTES.WALLET_CONFIRM_TO_PROCEED]: {
+      screen: ConfirmToProceedTransactionScreen
+    },
+    [ROUTES.WALLET_PAY_WITH]: {
+      screen: ChoosePaymentMethodScreen
+    },
+    [ROUTES.WALLET_FIRST_TRANSACTION_SUMMARY]: {
+      screen: FirstTransactionSummaryScreen
+    },
+    [ROUTES.WALLET_MANUAL_TRANSACTION_IDENTIFICATION]: {
+      screen: ManuallyIdentifyTransactionScreen
+    },
+    [ROUTES.WALLET_ASK_SAVE_CARD]: {
+      screen: ConfirmSaveCardScreen
     }
   },
   {

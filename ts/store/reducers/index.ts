@@ -10,6 +10,7 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
+import authenticationReducer, { AuthenticationState } from "./authentication";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
@@ -18,13 +19,12 @@ import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
-import sessionReducer, { SessionState } from "./session";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
-// A custom configuration to store the session into the Keychain
-const sessionPersistConfig: PersistConfig = {
-  key: "session",
+// A custom configuration to store the authentication into the Keychain
+const authenticationPersistConfig: PersistConfig = {
+  key: "authentication",
   storage: createSecureStorage()
 };
 
@@ -41,7 +41,7 @@ const sessionPersistConfig: PersistConfig = {
 const reducer = combineReducers<GlobalState, Action>({
   appState: appStateReducer,
   network: networkReducer,
-  navigation: navigationReducer,
+  nav: navigationReducer,
 
   // UI
   loading: loadingReducer,
@@ -51,9 +51,9 @@ const reducer = combineReducers<GlobalState, Action>({
   form: formReducer as Reducer<FormStateMap, Action>,
 
   // DATA
-  session: persistReducer<SessionState, Action>(
-    sessionPersistConfig,
-    sessionReducer
+  authentication: persistReducer<AuthenticationState, Action>(
+    authenticationPersistConfig,
+    authenticationReducer
   ),
   onboarding: onboardingReducer,
   notifications: notificationsReducer,

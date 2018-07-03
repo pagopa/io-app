@@ -19,46 +19,15 @@ export const WalletStyles = StyleSheet.create({
   white: {
     color: variables.brandPrimaryInverted
   },
-  addCardItem: {
-    borderBottomWidth: variables.headerBorderBottomWidth,
-    marginTop: 5,
-    marginRight: 5,
-    marginLeft: 5
+  whiteBg: {
+    backgroundColor: variables.colorWhite
   },
-  addCardBoldedBorderItem: {
-    borderBottomWidth: variables.borderRadiusBase,
-    borderBottomColor: variables.brandDarkGray,
-    marginRight: 5,
-    marginLeft: 5
+  alignCenter: {
+    alignItems: "center"
   },
-  addCardBordedItem: {
+  bottomBorder: {
     borderBottomWidth: 1,
-    marginRight: 5,
-    marginLeft: 5
-  },
-  addCardLastItem: {
-    borderBottomWidth: variables.modalMargin,
-    marginRight: 5,
-    marginLeft: 5,
-    marginBottom: 30
-  },
-  addCardIcon: {
-    marginTop: 3,
-    marginRight: 3,
-    marginBottom: 3
-  },
-  addCardImage: {
-    width: 60,
-    height: 45,
-    resizeMode: "contain",
-    margin: 5
-  },
-  addCardfooterButtons: {
-    borderBottomWidth: 0,
-    marginRight: 5,
-    marginLeft: 5,
-    marginTop: 15,
-    marginBottom: 30
+    borderBottomColor: variables.brandGray
   },
   standardText: {
     color: variables.brandGray
@@ -139,6 +108,20 @@ export const WalletStyles = StyleSheet.create({
     marginTop: 6,
     fontSize: variables.fontSize1,
     color: variables.brandPrimary
+  },
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  },
+  divider: {
+    borderTopWidth: 1,
+    borderTopColor: variables.brandGray
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  textCenter: {
+    textAlign: "center"
   },
   walletBannerText: {
     height: 50,

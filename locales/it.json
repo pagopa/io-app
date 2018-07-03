@@ -10,7 +10,8 @@
     "buttons": {
       "delete": "Elimina",
       "cancel": "Annulla",
-      "ok": "OK"
+      "ok": "OK",
+      "continue": "Continua"
     },
     "navigator": {
       "messages": "messaggi",
@@ -102,7 +103,8 @@
       "headerTitle": "Attivazione",
       "contentTitle": "Scegli un codice PIN",
       "contentTitleConfirm": "Digita ancora il PIN",
-      "pinInfo": "Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere oprazioni dispositive. Deve essere composto di 5 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento entrando con SPID.",
+      "pinInfo": "Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere composto di 5 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento entrando con SPID.",
+      "pinInfoSelected":"Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.",
       "moreLinkText": "Per saperne di più.",
       "continue": "Continua",
       "reset": "Modifica il codice",
@@ -150,15 +152,83 @@
     "newPaymentMethod": {
       "add": "aggiungi",
       "addButton": "Aggiungi un metodo di pagamento",
+      "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
-    "sms": {
+    "text": {
       "title":"Codice di conferma",
 	    "header":"Codice di Conferma SMS",
       "newCode":"Richiedi nuovo codice",
       "info":"Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono"
     },
     "transactionDetails": "Dettaglio delle operazioni",
+    "saveCard": {
+      "header":"Salva la carta",
+      "title":"Vuoi salvare questa carta?",
+      "infoTitle":"Imposta la carta come metodo di pagamento preferito",
+      "info":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento",
+      "save":"Salva la carta"
+    },
+    "thanks":"✓ Grazie!",
+    "endPayment":"Il tuo pagamento è concluso",
+    "addManager": {
+      "title":"Scegli il gestore",
+      "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
+      "infoBold":"Scegli il soggetto economico",
+      "info2":"che dovrà gestire la tua transazione.",
+      "link":"Per saperne di più",
+      "maxFee":"Commissione massima"
+    },
+    "ConfirmPayment": {
+      "header":"Conferma pagamento",
+      "cancel":"ANNULLA",
+      "cancelPayment":"Annulla il pagamento",
+      "goToPay":"Conferma e paga",
+      "askConfirm":"Confermi il pagamento?",
+      "partialAmount":"Importo da pagare",
+      "fee":"Costi di commissione",
+      "why":"Perchè?",
+      "totalAmount":"Totale",
+      "info":"Attenzione: dopo questo passaggio non sarà più possibile annullare",
+      "info2":"Stai utilizzando il tuo metodo di pagamento preferito.",
+      "changeMethod":"Cambia metodo di pagamento",
+      "change":"Cambia metodo"
+    },
+    "payWith": {
+      "header":"Scelta metodo di pagamamento",
+      "title":"Paga con",
+      "info":"Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento"
+    },
+    "firstTransactionSummary":{
+      "header": "Riepilogo avviso di Pagamento",
+      "title": "Avviso di pagamento",
+      "amount":"Importo",
+      "expireDate":"Scadenza",
+      "tranche":"Rata",
+      "entity":"Ente creditore:",	
+      "info":"Per informazioni:",
+       "tel":"Tel:",
+      "email":"Email:",
+      "PEC":"PEC:",
+      "recipient":"Destintario:",
+      "object":"Oggetto del pagamento:",
+      "cbillCode":"Codice CBILL:",
+      "iuv":"IUV:",
+      "entityCode2":"Codice Ente/Azienda:",		
+      "updatedAmount":"Importo aggiornato",
+      "updateInfo":"Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi",
+      "moreInfo":"Per saperne di più"
+    },
+    "insertManually":{
+      "header": "Inserisci dati avviso",
+      "title": "Inserisci i dati dell'avviso",
+      "info": "che ci consentono di identificare il pagamento", 
+      "link": "Dove si trovano?",
+      "noticeCode":"Codice Avviso",
+      "entityCode":"Codice Fiscale Ente Creditore",
+      "amount": "Importo (€)",
+      "proceed": "Procedi con il pagamento"
+    },
     "total": "Totale",
     "payAmount": "Importo da pagare",
     "transactionFee": "Costo operazione",
@@ -199,21 +269,26 @@
     "addCardTitle": "Dati carta",
     "dummyCard": {
       "labels": {
-        "name": "Titolare",
-        "number": "Numero della carta",
-        "expires": "Data di scadenza",
-        "csc": "Codice di sicurezza"
+        "holder": "Titolare",
+        "pan": "Numero della carta",
+        "expirationDate": "Data di scadenza",
+        "securityCode": "Codice di sicurezza"
       },
       "values": {
-        "name": "Mario Rossi",
-        "number": "0000 0000 0000 0000",
-        "expires": "mm/aa",
-        "csc": "●●●"
+        "holder": "Mario Rossi",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/aa",
+        "securityCode": "•••"
       }
     },
     "acceptedCards": "Carte accettate",
     "whyFee": "Perchè la commissione?",
     "chooseMethod":"Scegli il metodo che preferisci"
+  },
+  "QRtoPay": {
+    "byCameraTitle": "QR Code avviso",
+    "cameraUsageInfo":"Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure inserisci manualmente i dati identificativi (IUV e codive ente/azienda).",
+    "setManually":"Inserisci i dati manualmente"
   },
   "saveCard": {
     "saveCard":"Salva la carta",
@@ -226,6 +301,7 @@
     "validUntil": "Valida fino al",
     "actions": "Azioni",
     "setFavourite": "Imposta come preferita",
+    "unsetFavourite": "Rimuovi dai preferiti",
     "deleteTitle": "Procedere con l'operazione?",
     "deleteMsg": "Questo cancellerà il metodo di pagamento"
   },
@@ -243,10 +319,34 @@
     "loading": "Caricamento dei messaggi...",
     "yesterday": "ieri"
   },
+  "messageDetails": {
+    "headerTitle": "Messaggio",
+    "detailsLink": {
+      "showLabel": "Dettagli del messaggio",
+      "hideLabel": "Chiudi dettagli"
+    },
+    "infoLabels": {
+      "data": "Data:",
+      "senderFrom": "Inviato da",
+      "department": "Dipartimento",
+      "service": "Servizio"
+    }
+  },
   "notifications": {
     "installation": {
       "errorTitle": "Notifiche push",
       "errorMessage": "La registrazione verso il servizio di notifiche push ha generato un errore"
+    }
+  },
+  "preferences": {
+    "title": "Preferenze",
+    "subtitle": "Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica Amministrazione.",
+    "moreLinkText": "Per saperne di più.",
+    "list": {
+      "email": "Indirizzo email",
+      "servicesNotifications": "Notifiche dai servizi",
+      "language": "Lingua",
+      "digitalDomicile": "Domicilio digitale"
     }
   }
 }
