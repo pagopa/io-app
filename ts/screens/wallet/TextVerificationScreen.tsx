@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class VerifyTransactionBySMSScreen extends React.Component<
+export class TextVerificationScreen extends React.Component<
   Props,
   never
 > {
@@ -63,7 +63,7 @@ export class VerifyTransactionBySMSScreen extends React.Component<
             </Button>
           </Left>
           <Body>
-            <Text>{I18n.t("wallet.sms.header")}</Text>
+            <Text>{I18n.t("wallet.text.header")}</Text>
           </Body>
         </AppHeader>
 
@@ -71,31 +71,31 @@ export class VerifyTransactionBySMSScreen extends React.Component<
           <Text> INSERT THE BANNER HERE </Text>
           <View style={styles.contentPadding}>
             <View spacer={true} large={true} />
-            <H1>{I18n.t("wallet.sms.title")}</H1>
+            <H1>{I18n.t("wallet.text.title")}</H1>
             <View spacer={true} large={true} />
 
             <Grid>
               <Col>
                 <Text bold={true} note={true}>
-                  {I18n.t("wallet.sms.header")}
+                  {I18n.t("wallet.text.header")}
                 </Text>
               </Col>
               <Col>
                 <Text note={true} link={true} style={styles.textRight}>
-                  {I18n.t("wallet.sms.newCode")}
+                  {I18n.t("wallet.text.newCode")}
                 </Text>
               </Col>
             </Grid>
             <View spacer={true} />
             <Input style={styles.borded} keyboardType={"numeric"} />
             <View spacer={true} />
-            <Text>{I18n.t("wallet.sms.info")}</Text>
+            <Text>{I18n.t("wallet.text.info")}</Text>
           </View>
         </Content>
 
         <View footer={true}>
           <Button block={true} primary={true}>
-            <Text>{I18n.t("wallet.continue")}</Text>
+            <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
           <View spacer={true} />
           <Button
@@ -104,7 +104,7 @@ export class VerifyTransactionBySMSScreen extends React.Component<
             bordered={true}
             onPress={() => this.goBack()}
           >
-            <Text>{I18n.t("wallet.cancel")}</Text>
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
       </Container>

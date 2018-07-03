@@ -11,7 +11,7 @@ import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIde
 import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
-import { VerifyTransactionBySMSScreen } from "../screens/wallet/VerifyTransactionBySMSScreen";
+import { TextVerificationScreen } from "../screens/wallet/TextVerificationScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
@@ -36,8 +36,8 @@ const WalletNavigator = createStackNavigator(
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
       screen: TransactionsScreen
     },
-    [ROUTES.WALLET_INSERT_SMS_CODE]: {
-      screen: VerifyTransactionBySMSScreen
+    [ROUTES.WALLET_TEXT_VERIFICATION]: {
+      screen: TextVerificationScreen
     },
     [ROUTES.WALLET_ADD_CARD]: {
       screen: AddCardScreen
