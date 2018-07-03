@@ -116,9 +116,9 @@ export function screenTracking(
         return next(action);
       }
 
-      const currentScreen = getCurrentRouteName(store.getState().navigation);
+      const currentScreen = getCurrentRouteName(store.getState().nav);
       const result = next(action);
-      const nextScreen = getCurrentRouteName(store.getState().navigation);
+      const nextScreen = getCurrentRouteName(store.getState().nav);
 
       if (nextScreen !== currentScreen) {
         Mixpanel.trackWithProperties("SCREEN_CHANGE", {

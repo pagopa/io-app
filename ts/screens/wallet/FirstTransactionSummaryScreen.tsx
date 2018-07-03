@@ -26,9 +26,9 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import IconFont from "../../components/ui/IconFont";
 import PaymentSummaryComponent from "../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../i18n";
-import Icon from "../../theme/font-icons/io-icon-font/index";
 import variables from "../../theme/variables";
 import {
   NotifiedTransaction,
@@ -75,7 +75,7 @@ export class FirstTransactionSummaryScreen extends React.Component<
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="io-back" size={variables.iconSize1} />
+              <IconFont name="io-back" size={variables.iconSize3} />
             </Button>
           </Left>
           <Body>
@@ -217,6 +217,7 @@ export class FirstTransactionSummaryScreen extends React.Component<
           <Button block={true} primary={true}>
             <Text>{I18n.t("wallet.continue")}</Text>
           </Button>
+          <View spacer={true} />
           <Button block={true} light={true} onPress={(): void => this.goBack()}>
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
