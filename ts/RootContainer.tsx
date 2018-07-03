@@ -20,8 +20,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
-    width: 50,
-    height: 50,
     zIndex: 1000
   },
 
@@ -49,9 +47,7 @@ class RootContainer extends React.Component<Props> {
         <StatusBar barStyle="dark-content" />
         <ConnectionBar />
         <View style={styles.versionContainer}>
-          <Text style={styles.versionText}>
-            {DeviceInfo.getReadableVersion()}
-          </Text>
+          <Text style={styles.versionText}>{DeviceInfo.getVersion()}</Text>
         </View>
         <Navigation />
       </Root>
