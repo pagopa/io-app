@@ -156,6 +156,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':react-native-vector-icons')
     compile project(':react-native-push-notification')
     compile project(':react-native-keychain')
@@ -169,13 +170,6 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile ("com.facebook.react:react-native:0.55.4") { force = true } // From node_modules
     compile "com.google.android.gms:play-services-gcm:8.1.0"
-    compile project(':react-native-camera')
-    // compile (project(':react-native-camera')) {
-	// 		exclude group: "com.google.android.gms"
-	// 		compile ('com.google.android.gms:play-services-vision:12.0.1') {
-	// 			force = true
-	// 		}
-	// }
 }
 
 // Run this once to be able to run the application with BUCK
