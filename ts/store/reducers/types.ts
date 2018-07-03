@@ -5,7 +5,6 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { BackendInfoState } from "./backendInfo";
 import { DeeplinkState } from "./deeplink";
-import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
 import { NavigationState } from "./navigation";
@@ -29,7 +28,6 @@ export type GlobalState = Readonly<{
   form: FormStateMap;
   loading: LoadingState;
   nav: NavigationState;
-  navigation: NavigationState;
   network: NetworkState;
   notifications: NotificationsState;
   onboarding: OnboardingState;
