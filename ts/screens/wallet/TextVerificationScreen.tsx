@@ -22,6 +22,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 import { TransactionSummary } from "../../types/wallet";
 
@@ -47,10 +48,6 @@ export class TextVerificationScreen extends React.Component<Props> {
     super(props);
   }
 
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   public render(): React.ReactNode {
     const transaction: Readonly<
       TransactionSummary
@@ -60,7 +57,10 @@ export class TextVerificationScreen extends React.Component<Props> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button
+              transparent={true}
+              onPress={() => this.props.navigation.goBack()}
+            >
               <IconFont name="io-back" />
             </Button>
           </Left>
@@ -108,7 +108,7 @@ export class TextVerificationScreen extends React.Component<Props> {
             block={true}
             light={true}
             bordered={true}
-            onPress={() => this.goBack()}
+            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
