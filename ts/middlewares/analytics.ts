@@ -3,7 +3,25 @@ import { NavigationActions } from "react-navigation";
 
 import {
   APP_STATE_CHANGE_ACTION,
-  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
+  AUTHENTICATION_COMPLETED,
+  IDP_SELECTED,
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+  MESSAGES_LOAD_FAILURE,
+  MESSAGES_LOAD_SUCCESS,
+  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
+  PIN_CREATE_FAILURE,
+  PIN_CREATE_SUCCESS,
+  PROFILE_LOAD_FAILURE,
+  PROFILE_LOAD_SUCCESS,
+  PROFILE_UPDATE_FAILURE,
+  PROFILE_UPDATE_SUCCESS,
+  SESSION_EXPIRED,
+  SESSION_LOAD_FAILURE,
+  SESSION_LOAD_SUCCESS,
+  START_AUTHENTICATION,
+  START_ONBOARDING,
+  TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
 import { Action, Dispatch, MiddlewareAPI } from "../store/actions/types";
 
@@ -13,47 +31,61 @@ import { Action, Dispatch, MiddlewareAPI } from "../store/actions/types";
 export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
   return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
-      const result: Action = next(action);
+      const nextAction: Action = next(action);
 
-      switch (result.type) {
-        case APP_STATE_CHANGE_ACTION: {
+      switch (nextAction.type) {
+        //
+        // Application state actions
+        //
+
+        case APP_STATE_CHANGE_ACTION:
           Mixpanel.trackWithProperties("APP_STATE_CHANGE", {
-            APPLICATION_STATE_NAME: result.payload
+            APPLICATION_STATE_NAME: nextAction.payload
           });
           break;
-        }
 
-        case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE: {
-          Mixpanel.track(NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE);
-        }
+        //
+        // Authentication actions (with properties)
+        //
+
+        case IDP_SELECTED:
+          Mixpanel.trackWithProperties(IDP_SELECTED, {
+            SPID_IDP_ID: nextAction.payload.id,
+            SPID_IDP_NAME: nextAction.payload.name
+          });
+          break;
+
+        //
+        // Actions (without properties)
+        //
+
+        // authentication
+        case START_AUTHENTICATION:
+        case LOGIN_SUCCESS:
+        case LOGIN_FAILURE:
+        case SESSION_LOAD_SUCCESS:
+        case SESSION_LOAD_FAILURE:
+        case SESSION_EXPIRED:
+        case AUTHENTICATION_COMPLETED:
+        // onboarding
+        case START_ONBOARDING:
+        case TOS_ACCEPT_SUCCESS:
+        case PIN_CREATE_SUCCESS:
+        case PIN_CREATE_FAILURE:
+        // profile
+        case PROFILE_LOAD_SUCCESS:
+        case PROFILE_LOAD_FAILURE:
+        case PROFILE_UPDATE_SUCCESS:
+        case PROFILE_UPDATE_FAILURE:
+        // messages
+        case MESSAGES_LOAD_SUCCESS:
+        case MESSAGES_LOAD_FAILURE:
+        // other
+        case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE:
+          Mixpanel.track(nextAction.type);
+          break;
 
         /*
-        case USER_WILL_LOGIN_ACTION: {
-          Mixpanel.track('USER_WILL_LOGIN')
-          break
-        }
-        case USER_SELECTED_SPID_PROVIDER_ACTION: {
-          const { id, name } = result.data.idp
-          Mixpanel.trackWithProperties('USER_SELECTED_SPID_PROVIDER', {
-            SPID_IDP_ID: id,
-            SPID_IDP_NAME: name
-          })
-          break
-        }
-        case USER_LOGGED_IN_ACTION: {
-          const { idpId } = result.data
-          Mixpanel.trackWithProperties('USER_LOGGED_IN', {
-            SPID_IDP_ID: idpId
-          })
-          break
-        }
-        case USER_LOGIN_ERROR_ACTION: {
-          const { error } = result.data
-          Mixpanel.trackWithProperties('USER_LOGIN_ERROR', {
-            error
-          })
-          break
-        }
         case REHYDRATE: {
           if (!has(result, 'payload.user.profile.fiscalnumber')) {
             break
@@ -75,7 +107,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         }
       }
 
-      return result;
+      return nextAction;
     };
   };
 }
