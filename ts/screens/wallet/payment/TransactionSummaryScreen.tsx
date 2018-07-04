@@ -23,18 +23,18 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletAPI } from "../../api/wallet/wallet-api";
-import { WalletStyles } from "../../components/styles/wallet";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
-import PaymentSummaryComponent from "../../components/wallet/PaymentSummaryComponent";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import { WalletAPI } from "../../../api/wallet/wallet-api";
+import { WalletStyles } from "../../../components/styles/wallet";
+import AppHeader from "../../../components/ui/AppHeader";
+import IconFont from "../../../components/ui/IconFont";
+import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 import {
   NotifiedTransaction,
   TransactionEntity,
   TransactionSubject
-} from "../../types/wallet";
+} from "../../../types/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -57,10 +57,7 @@ const subjectDetails: Readonly<
   TransactionSubject
 > = WalletAPI.getTransactionSubject();
 
-export class FirstTransactionSummaryScreen extends React.Component<
-  Props,
-  never
-> {
+export class TransactionSummaryScreen extends React.Component<Props, never> {
   constructor(props: Props) {
     super(props);
   }

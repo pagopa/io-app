@@ -180,9 +180,7 @@ export class WalletLayout extends React.Component<Props> {
             <Button
               block={true}
               onPress={() =>
-                this.props.navigation.navigate(
-                  ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER
-                )
+                this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
               }
             >
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />

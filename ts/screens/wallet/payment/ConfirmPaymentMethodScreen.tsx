@@ -21,17 +21,17 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { WalletStyles } from "../../components/styles/wallet";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
-import CreditCardComponent from "../../components/wallet/card";
-import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
-import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
-import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
-import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
+import { WalletStyles } from "../../../components/styles/wallet";
+import AppHeader from "../../../components/ui/AppHeader";
+import IconFont from "../../../components/ui/IconFont";
+import CreditCardComponent from "../../../components/wallet/card";
+import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import I18n from "../../../i18n";
+import { GlobalState } from "../../../store/reducers/types";
+import { selectedCreditCardSelector } from "../../../store/reducers/wallet/cards";
+import { transactionForDetailsSelector } from "../../../store/reducers/wallet/transactions";
+import { CreditCard, UNKNOWN_CARD } from "../../../types/CreditCard";
+import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
 
 type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
+class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private goBack() {
     this.props.navigation.goBack();
   }
@@ -215,4 +215,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
     UNKNOWN_TRANSACTION
   )
 });
-export default connect(mapStateToProps)(ConfirmToProceedTransactionScreen);
+export default connect(mapStateToProps)(ConfirmPaymentMethodScreen);

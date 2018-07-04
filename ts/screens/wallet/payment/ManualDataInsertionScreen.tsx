@@ -26,9 +26,9 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import AppHeader from "../../components/ui/AppHeader";
-import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
+import AppHeader from "../../../components/ui/AppHeader";
+import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -40,10 +40,7 @@ type State = Readonly<{
   amount: Option<string>;
 }>;
 
-export class ManuallyIdentifyTransactionScreen extends React.Component<
-  Props,
-  State
-> {
+export class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {

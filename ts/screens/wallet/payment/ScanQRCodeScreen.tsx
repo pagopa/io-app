@@ -17,9 +17,9 @@ import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import AppHeader from "../../components/ui/AppHeader";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import AppHeader from "../../../components/ui/AppHeader";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -106,10 +106,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class QRcodeAcquisitionByScannerScreen extends React.Component<
-  Props,
-  never
-> {
+export class ScanQRCodeScreen extends React.Component<Props, never> {
   private goBack() {
     this.props.navigation.goBack();
   }
