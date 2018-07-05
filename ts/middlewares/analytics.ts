@@ -14,8 +14,8 @@ import {
   PIN_CREATE_SUCCESS,
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_SUCCESS,
-  PROFILE_UPDATE_FAILURE,
-  PROFILE_UPDATE_SUCCESS,
+  PROFILE_UPSERT_FAILURE,
+  PROFILE_UPSERT_SUCCESS,
   SESSION_EXPIRED,
   SESSION_LOAD_FAILURE,
   SESSION_LOAD_SUCCESS,
@@ -75,8 +75,8 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // profile
         case PROFILE_LOAD_SUCCESS:
         case PROFILE_LOAD_FAILURE:
-        case PROFILE_UPDATE_SUCCESS:
-        case PROFILE_UPDATE_FAILURE:
+        case PROFILE_UPSERT_SUCCESS:
+        case PROFILE_UPSERT_FAILURE:
         // messages
         case MESSAGES_LOAD_SUCCESS:
         case MESSAGES_LOAD_FAILURE:

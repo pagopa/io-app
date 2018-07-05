@@ -4,98 +4,98 @@
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
-  ApiFetchResult,
-  ApiProfile,
-  fetchProfile,
-  isApiFetchFailure,
-  postProfile
-} from "../api";
+  BackendClient,
+  BasicResponseTypeWith401,
+  ProfileWithOrWithoutEmail
+} from "../api/backend";
+import { apiUrlPrefix } from "../config";
 import {
-  PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_REQUEST,
-  PROFILE_LOAD_SUCCESS,
-  PROFILE_UPDATE_FAILURE,
-  PROFILE_UPDATE_REQUEST,
-  PROFILE_UPDATE_SUCCESS
+  PROFILE_UPSERT_REQUEST
 } from "../store/actions/constants";
-import { ProfileUpdateRequest } from "../store/actions/profile";
+import {
+  profileLoadFailure,
+  profileLoadSuccess,
+  profileUpsertFailure,
+  ProfileUpsertRequest,
+  profileUpsertSuccess
+} from "../store/actions/profile";
 import { sessionTokenSelector } from "../store/reducers/authentication";
 import { SessionToken } from "../types/SessionToken";
+import { callApiWith401ResponseStatusHandler } from "./api";
 
 // A saga to load the Profile.
 function* loadProfile(): Iterator<Effect> {
-  try {
-    // Get the token from the state
-    const sessionToken: SessionToken | undefined = yield select(
-      sessionTokenSelector
-    );
-    if (sessionToken === undefined) {
-      throw new Error("session token is not defined");
-    }
+  const sessionToken: SessionToken | undefined = yield select(
+    sessionTokenSelector
+  );
 
-    // Fetch the profile from the proxy
-    const response: ApiFetchResult<ApiProfile> = yield call(
-      fetchProfile,
-      sessionToken
+  if (sessionToken) {
+    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+    const response:
+      | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
+      | undefined = yield call(
+      callApiWith401ResponseStatusHandler,
+      backendClient.getProfile,
+      {}
     );
 
-    if (isApiFetchFailure(response)) {
-      // If the api response is an error then dispatch the PROFILE_LOAD_FAILURE action.
-      yield put({
-        type: PROFILE_LOAD_FAILURE,
-        payload: response.error
-      });
+    if (!response || response.status !== 200) {
+      // We got a error, send a SESSION_LOAD_FAILURE action
+      const error: Error = response ? response.value : Error();
+
+      yield put(profileLoadFailure(error));
     } else {
-      // If the api returns a valid Profile then dispatch the PROFILE_LOAD_SUCCESS action.
-      yield put({ type: PROFILE_LOAD_SUCCESS, payload: response.result });
+      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
+      yield put(profileLoadSuccess(response.value));
     }
-  } catch (error) {
-    // If the api request raise an exception then dispatch the PROFILE_LOAD_FAILURE action.
-    yield put({ type: PROFILE_LOAD_FAILURE, payload: error });
+  } else {
+    // No SessionToken can't send the request
+    yield put(profileLoadFailure(Error()));
   }
 }
 
 // A saga to update the Profile.
-function* updateProfile(action: ProfileUpdateRequest): Iterator<Effect> {
-  try {
-    // Get the new Profile from the action payload
-    const newProfile = action.payload;
+function* createOrUpdateProfile(
+  action: ProfileUpsertRequest
+): Iterator<Effect> {
+  // Get the new Profile from the action payload
+  const newProfile = action.payload;
 
-    // Get the token from the state
-    const sessionToken: SessionToken | undefined = yield select(
-      sessionTokenSelector
-    );
-    if (sessionToken === undefined) {
-      throw new Error("session token is not defined");
-    }
+  // Get the token from the state
+  const sessionToken: SessionToken | undefined = yield select(
+    sessionTokenSelector
+  );
 
-    // Post the new Profile to the proxy
-    const response: ApiFetchResult<ApiProfile> = yield call(
-      postProfile,
-      sessionToken,
-      newProfile
+  if (sessionToken) {
+    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+    const response:
+      | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
+      | undefined = yield call(
+      callApiWith401ResponseStatusHandler,
+      backendClient.createOrUpdateProfile,
+      { newProfile }
     );
-    if (isApiFetchFailure(response)) {
-      // If the api response is an error then dispatch the PROFILE_UPDATE_FAILURE action.
-      yield put({
-        type: PROFILE_UPDATE_FAILURE,
-        payload: response.error
-      });
+
+    if (!response || response.status !== 200) {
+      // We got a error, send a SESSION_UPSERT_FAILURE action
+      const error: Error = response ? response.value : Error();
+
+      yield put(profileUpsertFailure(error));
     } else {
-      // If the api returns a valid Profile then dispatch the PROFILE_UPDATE_SUCCESS action.
-      yield put({ type: PROFILE_UPDATE_SUCCESS, payload: response.result });
+      // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
+      yield put(profileUpsertSuccess(response.value));
     }
-  } catch (error) {
-    // If the api request raise an exception then dispatch the PROFILE_UPDATE_FAILURE action.
-    yield put({
-      type: PROFILE_UPDATE_FAILURE,
-      payload: error
-    });
+  } else {
+    // No SessionToken can't send the request
+    yield put(profileUpsertFailure(Error()));
   }
 }
 
 // This function listens for Profile related requests and calls the needed saga.
 export default function* root(): Iterator<Effect> {
   yield takeLatest(PROFILE_LOAD_REQUEST, loadProfile);
-  yield takeLatest(PROFILE_UPDATE_REQUEST, updateProfile);
+  yield takeLatest(PROFILE_UPSERT_REQUEST, createOrUpdateProfile);
 }

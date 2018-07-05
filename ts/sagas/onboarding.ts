@@ -25,15 +25,19 @@ import {
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
   PIN_LOGIN_INITIALIZE,
+  PROFILE_UPSERT_FAILURE,
+  PROFILE_UPSERT_SUCCESS,
   START_ONBOARDING,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
 import { PinCreateRequest } from "../store/actions/onboarding";
+import { profileUpsertRequest } from "../store/actions/profile";
 import {
   isPinCreatedSelector,
   isTosAcceptedSelector
 } from "../store/reducers/onboarding";
+import { profileSelector, ProfileState } from "../store/reducers/profile";
 import { setPin } from "../utils/keychain";
 
 /**
@@ -99,6 +103,23 @@ function* tosCheckSaga(): Iterator<Effect> {
 
     // Here we wait the user accept the ToS
     yield take(TOS_ACCEPT_REQUEST);
+
+    // Get the current user profile from the store
+    const userProfile: ProfileState = yield select(profileSelector);
+
+    // We have the profile info but the user hasn't a profile active on API
+    // NOTE: `has_profile` is a boolean that is true if the profile is active in the API
+    if (userProfile && !userProfile.has_profile) {
+      // Upsert the user profile to enable inbox and webhook
+      yield put(
+        profileUpsertRequest({
+          isInboxEnabled: true,
+          isWebhookEnabled: true
+        } as any) // TODO: Change this when https://www.pivotaltracker.com/story/show/158832766 is fixed
+      );
+
+      yield take([PROFILE_UPSERT_SUCCESS, PROFILE_UPSERT_FAILURE]);
+    }
 
     // Dispatch the action that sets isTosAccepted to true into the store
     yield put({ type: TOS_ACCEPT_SUCCESS });

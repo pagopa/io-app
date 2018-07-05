@@ -38,8 +38,14 @@ const ProfileWithOrWithoutEmail = t.union([
   ProfileWithoutEmail
 ]);
 
+export type ProfileWithOrWithoutEmail = t.TypeOf<
+  typeof ProfileWithOrWithoutEmail
+>;
+
 // FullProfile is allOf [ExtendedProfile, LimitedProfile]
-const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
+export const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
+
+export type FullProfile = t.TypeOf<typeof FullProfile>;
 
 //
 // Define the types of the requests
@@ -98,7 +104,7 @@ export type GetProfileT = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseType<ProfileWithEmail | ProfileWithoutEmail>
+  BasicResponseTypeWith401<ProfileWithEmail | ProfileWithoutEmail>
 >;
 
 export type CreateOrUpdateProfileT = IPostApiRequestType<
@@ -107,7 +113,7 @@ export type CreateOrUpdateProfileT = IPostApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseType<LimitedProfile | ExtendedProfile>
+  BasicResponseTypeWith401<LimitedProfile | ExtendedProfile>
 >;
 
 export type CreateOrUpdateInstallationT = IPutApiRequestType<
@@ -172,7 +178,7 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoder(ProfileWithOrWithoutEmail)
+    response_decoder: basicResponseDecoderWith401(ProfileWithOrWithoutEmail)
   };
 
   const createOrUpdateProfileT: CreateOrUpdateProfileT = {
@@ -181,7 +187,7 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.newProfile),
-    response_decoder: basicResponseDecoder(FullProfile)
+    response_decoder: basicResponseDecoderWith401(ProfileWithOrWithoutEmail)
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
