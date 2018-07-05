@@ -1,3 +1,12 @@
+import nodeFetch from "node-fetch";
+
+//
+// We need to override the global fetch to make the tests
+// compatible with node-fetch
+//
+// tslint:disable-next-line:no-object-mutation no-any
+(global as any).fetch = nodeFetch;
+
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 
