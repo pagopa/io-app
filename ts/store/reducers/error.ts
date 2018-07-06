@@ -5,7 +5,7 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
-import { isSome, none, Option } from "fp-ts/lib/Option";
+import { isSome, none, Option, some } from "fp-ts/lib/Option";
 
 import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
 import { Action } from "../actions/types";
@@ -66,7 +66,7 @@ function reducer(
     // We need to set the error message
     return {
       ...state,
-      [requestName]: (action as any).payload || "Generic error"
+      [requestName]: some((action as any).payload) || "Generic error"
     };
   } else {
     // We need to remove the error message
