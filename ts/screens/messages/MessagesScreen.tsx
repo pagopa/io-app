@@ -8,7 +8,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import mockMessages from "../../__mocks__/messages-with-payment-data.json";
 import MessageComponent from "../../components/messages/MessageComponent";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
@@ -20,10 +19,11 @@ import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import mockMessages from "./messages-with-payment-data.json";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
-  messages: ReadonlyArray<MessageWithContentPO>;
+  messages: ReadonlyArray<IMessageWithPaymentData>;
   services: ServicesState;
 }>;
 
@@ -41,14 +41,9 @@ export type IPaymentData = Readonly<{
   notice_number: string;
 }>;
 
-export type IMessageWithPaymentData = Readonly<{
-  id: string;
-  created_at: string;
-  subject: string;
-  sender_service_id: string;
-  markdown: string;
+interface IMessageWithPaymentData extends MessageWithContentPO {
   payment_data: IPaymentData;
-}>;
+}
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
@@ -125,8 +120,16 @@ class MessagesScreen extends React.Component<Props, never> {
         senderServiceId={messageDetails.item.sender_service_id}
         markdown={messageDetails.item.markdown}
         serviceName={this.getServiceName(messageDetails.item.sender_service_id)}
-        paymentAmount={messageDetails.item.payment_data.amount}
-        paymentNoticeNumber={messageDetails.item.payment_data.notice_number}
+        paymentAmount={
+          messageDetails.item.payment_data != null
+            ? messageDetails.item.payment_data.amount
+            : null
+        }
+        paymentNoticeNumber={
+          messageDetails.item.payment_data != null
+            ? messageDetails.item.payment_data.notice_number
+            : null
+        }
       />
     );
   };
@@ -165,37 +168,30 @@ class MessagesScreen extends React.Component<Props, never> {
   };
 
   public render() {
-    // This if fix the latency of services props
-    if (Object.keys(this.props.services.byId).length < 2) {
-      return (
-        <Container>
-          <View content={true}>
-            <View spacer={true} />
-            <H1>{I18n.t("messages.contentTitle")}</H1>
-            {this.renderLoadingStatus(this.props.isLoadingMessages)}
-          </View>
-        </Container>
-      );
-    } else {
-      return (
-        <Container>
-          <View content={true}>
-            <View spacer={true} />
-            <H1>{I18n.t("messages.contentTitle")}</H1>
-            {this.renderLoadingStatus(this.props.isLoadingMessages)}
-            {this.renderMessages(mockMessages)}
-          </View>
-        </Container>
-      );
-    }
+    return (
+      <Container>
+        <View content={true}>
+          <View spacer={true} />
+          <H1>{I18n.t("messages.contentTitle")}</H1>
+          {this.renderLoadingStatus(this.props.isLoadingMessages)}
+          {this.renderMessages(this.props.messages)}
+        </View>
+      </Container>
+    );
   }
 }
+
+const messagesSelectorWithFakePaymentData = (state: GlobalState) => {
+  return orderedMessagesSelector(state).length !== 0
+    ? mockMessages.concat(orderedMessagesSelector(state))
+    : orderedMessagesSelector(state);
+};
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
     state
   ),
-  messages: orderedMessagesSelector(state),
+  messages: messagesSelectorWithFakePaymentData(state),
   services: state.entities.services
 });
 

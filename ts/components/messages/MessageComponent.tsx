@@ -78,7 +78,7 @@ class MessageComponent extends React.Component<Props> {
             <Icon name="chevron-right" />
           </Right>
         </View>
-        {paymentAmount !== undefined && (
+        {paymentAmount !== null && (
           <Button block={true} small={true}>
             <Text>
               {`${I18n.t(

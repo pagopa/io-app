@@ -10,7 +10,8 @@
     "buttons": {
       "delete": "Delete",
       "cancel": "Cancel",
-      "ok": "OK"
+      "ok": "OK",
+      "continue": "Continue"
     },
     "navigator": {
       "messages": "messages",
@@ -68,7 +69,6 @@
   },
   "authentication": {
     "landing": {
-      "headerTitle": "ItaliaApp",
       "login": "Login with SPID",
       "nospid": "Don't have SPID? Find out more"
     },
@@ -264,16 +264,16 @@
     "addCardTitle": "Card details",
     "dummyCard": {
       "labels": {
-        "name": "Card owner",
-        "number": "Card number",
-        "expires": "Expiration date",
-        "csc": "Card security code"
+        "holder": "Card holder",
+        "pan": "Card number",
+        "expirationDate": "Expiration date",
+        "securityCode": "Card security code"
       },
       "values": {
-        "name": "John Doe",
-        "number": "0000 0000 0000 0000",
-        "expires": "mm/aa",
-        "csc": "●●●"
+        "holder": "John Doe",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/yy",
+        "securityCode": "•••"
       }
     },
     "acceptedCards": "Accepted cards",
@@ -296,6 +296,7 @@
     "validUntil": "Valid until",
     "actions": "Actions",
     "setFavourite": "Set as favourite",
+    "unsetFavourite": "Remove from favourites",
     "deleteTitle": "Do you want to proceed?",
     "deleteMsg": "This will delete the payment method"
   },
@@ -333,6 +334,17 @@
     "installation": {
       "errorTitle": "Push notifications",
       "errorMessage": "Registration with the push notifications service generated an error"
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "subtitle": "This settings will be used by all services of the Public Amministration.",
+    "moreLinkText": "Get more info.",
+    "list": {
+      "email": "Email address",
+      "servicesNotifications": "Notifications from services",
+      "language": "Language",
+      "digitalDomicile": "Digital domicile"
     }
   }
 }
