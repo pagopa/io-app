@@ -4,6 +4,7 @@
 
 import {
   Body,
+  Content,
   Grid,
   Left,
   List,
@@ -14,13 +15,12 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 
-import { Content } from "native-base";
-import { connect, Dispatch } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-
+import { Dispatch } from "../../store/actions/types";
 import { selectCardForDetails } from "../../store/actions/wallet/cards";
 import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";

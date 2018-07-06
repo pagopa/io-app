@@ -1,11 +1,12 @@
-import * as React from "react";
-
 import { Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
+import * as React from "react";
 import { TouchableOpacity } from "react-native";
+
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import Markdown from "../ui/Markdown";
 import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
 export type OwnProps = Readonly<{
@@ -83,7 +84,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
             serviceOrganizationName={serviceOrganizationName}
           />
         )}
-        <Text>{markdown}</Text>
+        <Markdown>{markdown}</Markdown>
       </View>
     );
   }

@@ -4,6 +4,9 @@
       "title": "Unexpected error occurred",
       "message": "We have reported this to our team! Please close the app and start again!"
     },
+    "markdown": {
+      "decodeError": "Message can't be decoded"
+    },
     "app":  {
       "version": "Version"
     },

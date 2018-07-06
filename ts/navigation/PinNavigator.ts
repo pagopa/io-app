@@ -1,4 +1,4 @@
-import { StackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
 import PinLoginScreen from "../screens/PinLoginScreen";
 import ROUTES from "./routes";
@@ -6,7 +6,7 @@ import ROUTES from "./routes";
 /**
  * The onboarding related stack of screens of the application.
  */
-const navigator = StackNavigator(
+const navigator = createStackNavigator(
   {
     [ROUTES.PIN_LOGIN]: {
       screen: PinLoginScreen

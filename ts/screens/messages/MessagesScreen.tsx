@@ -1,7 +1,11 @@
-import * as React from "react";
-
 import { Container, H1, Tab, Tabs, View } from "native-base";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import * as React from "react";
+import {
+  FlatList,
+  RefreshControl,
+  RefreshControlProps,
+  StyleSheet
+} from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -13,8 +17,8 @@ import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
-import { orderedMessagesSelector } from "../../store/reducers/entities/messages/index";
-import { ServicesState } from "../../store/reducers/entities/services/index";
+import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
+import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -68,14 +72,7 @@ class MessagesScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
 
   public componentDidMount() {
-    // TODO: Messages must be refreshed using pull-down @https://www.pivotaltracker.com/story/show/157917217
-    // tslint:disable-next-line no-object-mutation
-    this.didFocusSubscription = this.props.navigation.addListener(
-      "didFocus",
-      () => {
-        this.props.dispatch(loadMessages());
-      }
-    );
+    this.refreshList();
   }
 
   public componentWillUnmount() {
@@ -86,23 +83,21 @@ class MessagesScreen extends React.Component<Props, never> {
     }
   }
 
-  private renderLoadingStatus = (isLoadingMessages: boolean) => {
-    return isLoadingMessages ? (
-      <ActivityIndicator size="small" color={variables.brandPrimary} />
-    ) : null;
-  };
-
-  public getServiceName = (senderServiceId: string): string => {
+  private getServiceName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].service_name;
   };
 
-  public getOrganizationName = (senderServiceId: string): string => {
+  private getOrganizationName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].organization_name;
   };
 
-  public getDepartmentName = (senderServiceId: string): string => {
+  private getDepartmentName = (senderServiceId: string): string => {
     return this.props.services.byId[senderServiceId].department_name;
   };
+
+  private refreshList() {
+    this.props.dispatch(loadMessages());
+  }
 
   public renderItem = (messageDetails: IMessageDetails) => {
     return (
@@ -134,11 +129,25 @@ class MessagesScreen extends React.Component<Props, never> {
     );
   };
 
+  private refreshControl(): React.ReactElement<RefreshControlProps> {
+    return (
+      <RefreshControl
+        onRefresh={() => this.refreshList()}
+        refreshing={this.props.isLoadingMessages}
+        colors={[variables.brandPrimary]}
+      />
+    );
+  }
+
   private renderMessages = (
     messages: ReadonlyArray<IMessageWithPaymentData>
   ): React.ReactNode => {
     return (
-      <Tabs tabBarUnderlineStyle={styles.tabBarUnderlineStyle} initialPage={0}>
+      <Tabs
+        tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
+        initialPage={0}
+        locked={true}
+      >
         <Tab
           heading={I18n.t("messages.tab.all")}
           activeTabStyle={styles.activeTabStyle}
@@ -149,6 +158,7 @@ class MessagesScreen extends React.Component<Props, never> {
             data={messages}
             renderItem={this.renderItem}
             keyExtractor={item => item.id}
+            refreshControl={this.refreshControl()}
           />
         </Tab>
         <Tab
@@ -173,7 +183,6 @@ class MessagesScreen extends React.Component<Props, never> {
         <View content={true}>
           <View spacer={true} />
           <H1>{I18n.t("messages.contentTitle")}</H1>
-          {this.renderLoadingStatus(this.props.isLoadingMessages)}
           {this.renderMessages(this.props.messages)}
         </View>
       </Container>

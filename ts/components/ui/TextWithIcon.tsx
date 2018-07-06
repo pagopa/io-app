@@ -16,7 +16,12 @@ class TextWithIcon extends React.Component<Props> {
   }
 }
 
-const StyledTextWithIcon = connectStyle(
+type StyleProps = {
+  danger?: boolean;
+  success?: boolean;
+};
+
+const StyledTextWithIcon = connectStyle<Props, StyleProps>(
   "UIComponents.TextWithIcon",
   {},
   mapPropsToStyleNames

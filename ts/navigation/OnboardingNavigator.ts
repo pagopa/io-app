@@ -1,4 +1,4 @@
-import { StackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
 import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
@@ -7,7 +7,7 @@ import ROUTES from "./routes";
 /**
  * The onboarding related stack of screens of the application.
  */
-const navigator = StackNavigator(
+const navigator = createStackNavigator(
   {
     [ROUTES.ONBOARDING_TOS]: {
       screen: TosScreen
