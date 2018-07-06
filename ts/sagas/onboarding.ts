@@ -25,15 +25,23 @@ import {
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
   PIN_LOGIN_INITIALIZE,
+  PROFILE_UPSERT_FAILURE,
+  PROFILE_UPSERT_SUCCESS,
   START_ONBOARDING,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
 import { PinCreateRequest } from "../store/actions/onboarding";
 import {
+  ProfileUpsertFailure,
+  profileUpsertRequest,
+  ProfileUpsertSuccess
+} from "../store/actions/profile";
+import {
   isPinCreatedSelector,
   isTosAcceptedSelector
 } from "../store/reducers/onboarding";
+import { profileSelector, ProfileState } from "../store/reducers/profile";
 import { setPin } from "../utils/keychain";
 
 /**
@@ -97,11 +105,42 @@ function* tosCheckSaga(): Iterator<Effect> {
     });
     yield put(navigateToOnboardingTosScreenAction);
 
-    // Here we wait the user accept the ToS
-    yield take(TOS_ACCEPT_REQUEST);
+    // Loop until this step is fulfilled: TOS accepted and if necessary Profile upserted.
+    while (true) {
+      // Here we wait the user accept the ToS
+      yield take(TOS_ACCEPT_REQUEST);
 
-    // Dispatch the action that sets isTosAccepted to true into the store
-    yield put({ type: TOS_ACCEPT_SUCCESS });
+      // Get the current user profile from the store
+      const userProfile: ProfileState = yield select(profileSelector);
+
+      // We have the profile info but the user doesn't yet have an active profile in the CD APIs
+      // NOTE: `has_profile` is a boolean that is true if the profile is active in the API
+      if (userProfile && !userProfile.has_profile) {
+        // Upsert the user profile to enable inbox and webhook
+        yield put(
+          profileUpsertRequest({
+            is_inbox_enabled: true,
+            is_webhook_enabled: true
+          })
+        );
+
+        const action: ProfileUpsertSuccess | ProfileUpsertFailure = yield take([
+          PROFILE_UPSERT_SUCCESS,
+          PROFILE_UPSERT_FAILURE
+        ]);
+
+        // We got an error
+        if (action.type === PROFILE_UPSERT_FAILURE) {
+          // Continue the loop to let the user retry.
+          continue;
+        }
+      }
+
+      // Dispatch the action that sets isTosAccepted to true into the store
+      yield put({ type: TOS_ACCEPT_SUCCESS });
+
+      break;
+    }
   }
 
   // Dispatch an action to start the next step
