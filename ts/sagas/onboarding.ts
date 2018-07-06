@@ -32,7 +32,11 @@ import {
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
 import { PinCreateRequest } from "../store/actions/onboarding";
-import { profileUpsertRequest } from "../store/actions/profile";
+import {
+  ProfileUpsertFailure,
+  profileUpsertRequest,
+  ProfileUpsertSuccess
+} from "../store/actions/profile";
 import {
   isPinCreatedSelector,
   isTosAcceptedSelector
@@ -101,28 +105,42 @@ function* tosCheckSaga(): Iterator<Effect> {
     });
     yield put(navigateToOnboardingTosScreenAction);
 
-    // Here we wait the user accept the ToS
-    yield take(TOS_ACCEPT_REQUEST);
+    // Loop until this step is fulfilled: TOS accepted and if necessary Profile upserted.
+    while (true) {
+      // Here we wait the user accept the ToS
+      yield take(TOS_ACCEPT_REQUEST);
 
-    // Get the current user profile from the store
-    const userProfile: ProfileState = yield select(profileSelector);
+      // Get the current user profile from the store
+      const userProfile: ProfileState = yield select(profileSelector);
 
-    // We have the profile info but the user hasn't a profile active on API
-    // NOTE: `has_profile` is a boolean that is true if the profile is active in the API
-    if (userProfile && !userProfile.has_profile) {
-      // Upsert the user profile to enable inbox and webhook
-      yield put(
-        profileUpsertRequest({
-          isInboxEnabled: true,
-          isWebhookEnabled: true
-        } as any) // TODO: Change this when https://www.pivotaltracker.com/story/show/158832766 is fixed
-      );
+      // We have the profile info but the user hasn't a profile active on API
+      // NOTE: `has_profile` is a boolean that is true if the profile is active in the API
+      if (userProfile && !userProfile.has_profile) {
+        // Upsert the user profile to enable inbox and webhook
+        yield put(
+          profileUpsertRequest({
+            is_inbox_enabled: true,
+            is_webhook_enabled: true
+          })
+        );
 
-      yield take([PROFILE_UPSERT_SUCCESS, PROFILE_UPSERT_FAILURE]);
+        const action: ProfileUpsertSuccess | ProfileUpsertFailure = yield take([
+          PROFILE_UPSERT_SUCCESS,
+          PROFILE_UPSERT_FAILURE
+        ]);
+
+        // We got an error
+        if (action.type === PROFILE_UPSERT_FAILURE) {
+          // Continue the loop to let the user retry.
+          continue;
+        }
+      }
+
+      // Dispatch the action that sets isTosAccepted to true into the store
+      yield put({ type: TOS_ACCEPT_SUCCESS });
+
+      break;
     }
-
-    // Dispatch the action that sets isTosAccepted to true into the store
-    yield put({ type: TOS_ACCEPT_SUCCESS });
   }
 
   // Dispatch an action to start the next step

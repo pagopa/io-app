@@ -22,6 +22,9 @@
       "documents": "documents",
       "preferences": "preferences",
       "profile": "profile"
+    },
+    "actions": {
+      "retry": "An error occurred, please retry"
     }
   },
   "connection": {

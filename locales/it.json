@@ -22,6 +22,9 @@
       "documents": "documenti",
       "preferences": "preferenze",
       "profile": "profilo"
+    },
+    "actions": {
+      "retry": "Si è verificato un errore, si prega di riprovare"
     }
   },
   "connection": {

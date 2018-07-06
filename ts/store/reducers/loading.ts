@@ -16,7 +16,7 @@ export type LoadingState = Readonly<
 export const INITIAL_STATE: LoadingState = {
   PIN_CREATE: false,
   PROFILE_LOAD: false,
-  PROFILE_UPDATE: false,
+  PROFILE_UPSERT: false,
   MESSAGES_LOAD: false
 };
 
