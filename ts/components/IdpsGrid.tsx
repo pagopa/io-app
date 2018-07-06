@@ -1,16 +1,8 @@
-import * as React from "react";
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  ListRenderItemInfo,
-  StyleSheet
-} from "react-native";
-
 import { Button, View } from "native-base";
+import * as React from "react";
+import { Dimensions, Image, StyleSheet } from "react-native";
 
 import { IdentityProvider } from "../models/IdentityProvider";
-
 import variables from "../theme/variables";
 
 export type OwnProps = {
@@ -32,6 +24,9 @@ const GRID_GUTTER = variables.gridGutter;
  */
 const styles = StyleSheet.create({
   gridContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
     margin: -GRID_GUTTER
   },
   gridItem: {
@@ -55,13 +50,9 @@ class IdpsGrid extends React.Component<Props> {
   public render() {
     const { idps } = this.props;
     return (
-      <FlatList
-        style={styles.gridContainer}
-        numColumns={2}
-        data={idps}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
-      />
+      <View style={styles.gridContainer}>
+        {idps.map(idp => this.renderGridItem(idp))}
+      </View>
     );
   }
 
@@ -69,15 +60,11 @@ class IdpsGrid extends React.Component<Props> {
     return idp.id;
   };
 
-  /* eslint-disable flowtype/no-weak-types */
-  public renderItem = (
-    info: ListRenderItemInfo<IdentityProvider>
-  ): React.ReactElement<any> => {
+  public renderGridItem = (idp: IdentityProvider): React.ReactElement<any> => {
     const { onIdpSelected } = this.props;
-    const idp = info.item;
     const onPress = () => onIdpSelected(idp);
     return (
-      <View style={styles.gridItem}>
+      <View key={idp.id} style={styles.gridItem}>
         <Button block={true} white={true} onPress={onPress}>
           <Image source={idp.logo} style={styles.idpLogo} />
         </Button>
