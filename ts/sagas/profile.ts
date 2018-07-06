@@ -9,6 +9,7 @@ import {
   ProfileWithOrWithoutEmail
 } from "../api/backend";
 import { apiUrlPrefix } from "../config";
+import I18n from "../i18n";
 import {
   PROFILE_LOAD_REQUEST,
   PROFILE_UPSERT_REQUEST
@@ -43,7 +44,9 @@ function* loadProfile(): Iterator<Effect> {
 
     if (!response || response.status !== 200) {
       // We got a error, send a SESSION_LOAD_FAILURE action
-      const error: Error = response ? response.value : Error();
+      const error: Error = response
+        ? response.value
+        : Error(I18n.t("profile.errors.load"));
 
       yield put(profileLoadFailure(error));
     } else {
@@ -52,7 +55,9 @@ function* loadProfile(): Iterator<Effect> {
     }
   } else {
     // No SessionToken can't send the request
-    yield put(profileLoadFailure(Error()));
+    yield put(
+      profileLoadFailure(Error(I18n.t("authentication.errors.notoken")))
+    );
   }
 }
 
@@ -81,7 +86,9 @@ function* createOrUpdateProfile(
 
     if (!response || response.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      const error: Error = response ? response.value : Error();
+      const error: Error = response
+        ? response.value
+        : Error(I18n.t("profile.errors.upsert"));
 
       yield put(profileUpsertFailure(error));
     } else {
@@ -90,7 +97,9 @@ function* createOrUpdateProfile(
     }
   } else {
     // No SessionToken can't send the request
-    yield put(profileUpsertFailure(Error()));
+    yield put(
+      profileUpsertFailure(Error(I18n.t("authentication.errors.notoken")))
+    );
   }
 }
 
