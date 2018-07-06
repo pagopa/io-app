@@ -113,7 +113,7 @@ function* tosCheckSaga(): Iterator<Effect> {
       // Get the current user profile from the store
       const userProfile: ProfileState = yield select(profileSelector);
 
-      // We have the profile info but the user hasn't a profile active on API
+      // We have the profile info but the user doesn't yet have an active profile in the CD APIs
       // NOTE: `has_profile` is a boolean that is true if the profile is active in the API
       if (userProfile && !userProfile.has_profile) {
         // Upsert the user profile to enable inbox and webhook
