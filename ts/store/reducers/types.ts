@@ -5,6 +5,7 @@ import { PersistPartial } from "redux-persist";
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
+import { BackendInfoState } from "./backendInfo";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
@@ -33,6 +34,7 @@ export type GlobalState = Readonly<{
   wallet: WalletState;
   entities: EntitiesState;
   pinlogin: PinLoginState;
+  backendInfo: BackendInfoState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

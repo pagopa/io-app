@@ -1,10 +1,10 @@
-import { Root, Text, View } from "native-base";
+import { Root } from "native-base";
 import * as React from "react";
-import { AppState, StatusBar, StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
+import { AppState, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
 import ConnectionBar from "./components/ConnectionBar";
+import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { APP_STATE_CHANGE_ACTION } from "./store/actions/constants";
 import { ApplicationState, ReduxProps } from "./store/actions/types";
@@ -14,20 +14,6 @@ interface ReduxMappedProps {}
 interface OwnProps {}
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
-
-const styles = StyleSheet.create({
-  versionContainer: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    zIndex: 1000
-  },
-
-  versionText: {
-    fontSize: 12,
-    color: "#000000"
-  }
-});
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
@@ -46,9 +32,7 @@ class RootContainer extends React.Component<Props> {
       <Root>
         <StatusBar barStyle="dark-content" />
         <ConnectionBar />
-        <View style={styles.versionContainer}>
-          <Text style={styles.versionText}>{DeviceInfo.getVersion()}</Text>
-        </View>
+        <VersionInfoOverlay />
         <Navigation />
       </Root>
     );
