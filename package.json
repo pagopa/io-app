@@ -60,7 +60,6 @@
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
-    "@types/detox": "^7.3.0",
     "@types/jest": "^23.1.1",
     "@types/lodash": "^4.14.108",
     "@types/node": "^10.1.0",
