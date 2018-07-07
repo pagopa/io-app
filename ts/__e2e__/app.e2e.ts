@@ -15,6 +15,7 @@ const config = require("package.json").detox;
 
 // Set the default test timeout (in milliseconds)
 jest.setTimeout(5 * 60 * 1000);
+(jasmine as any).getEnv().addReporter(adapter);
 
 beforeAll(async () => {
   await detox.init(config, { launchApp: false });
