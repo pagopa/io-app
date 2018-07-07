@@ -308,8 +308,8 @@ jobs:
       - run: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
 
       # Run detox e2e tests
-      - run: detox build -c ios.sim.debug
-      - run: detox test -c ios.sim.debug --cleanup
+      - run: detox build -c ios.sim.release
+      - run: detox test -c ios.sim.release --cleanup
 
       # store ios simulator logs
       - store_artifacts:
