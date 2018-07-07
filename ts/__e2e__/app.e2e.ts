@@ -9,6 +9,7 @@ declare const expect: Detox.Expect<Detox.Expect<any>>;
 declare const by: Detox.Matchers;
 
 import * as detox from "detox";
+import adapter from "detox/runners/jest/adapter";
 
 const config = require("package.json").detox;
 
@@ -19,7 +20,12 @@ beforeAll(async () => {
   await detox.init(config, { launchApp: false });
 });
 
+beforeEach(async () => {
+  await adapter.beforeEach();
+});
+
 afterAll(async () => {
+  await adapter.afterAll();
   await detox.cleanup();
 });
 

@@ -309,13 +309,11 @@ jobs:
 
       # Run detox e2e tests
       - run: detox build -c ios.sim.release
-      - run: detox test -c ios.sim.release --cleanup
+      - run: detox test -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all
 
-      # store ios simulator logs
+      # store detox artifacts
       - store_artifacts:
-          path: /Users/distiller/Library/Developer/CoreSimulator/Devices/4BF3F2B2-A68D-4130-8114-3878A8381D39/data/tmp/detox.last_launch_app_log.out
-      - store_artifacts:
-          path: /Users/distiller/Library/Developer/CoreSimulator/Devices/4BF3F2B2-A68D-4130-8114-3878A8381D39/data/tmp/detox.last_launch_app_log.err
+          path: /tmp/detox_artifacts
 
 workflows:
   version: 2

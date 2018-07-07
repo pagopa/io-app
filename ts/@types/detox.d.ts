@@ -1,3 +1,5 @@
+// tslint:disable:no-namespace no-method-signature
+
 declare namespace Detox {
   interface Detox {
     /**
@@ -15,12 +17,12 @@ declare namespace Detox {
      * Artifacts currently include only logs from the app process before each task
      * @param args
      */
-    beforeEach(...args: any[]): Promise<void>;
+    beforeEach(...args: ReadonlyArray<any>): Promise<void>;
     /**
      * Artifacts currently include only logs from the app process after each task
      * @param args
      */
-    afterEach(...args: any[]): Promise<void>;
+    afterEach(...args: ReadonlyArray<any>): Promise<void>;
     /**
      * The cleanup phase should happen after all the tests have finished. This is the phase where detox-server shuts down.
      * @example after(async () => {
@@ -84,12 +86,12 @@ declare namespace Detox {
      * Mock handling of received user notification when app is in foreground.
      * @param params
      */
-    sendUserNotification(...params: any[]): Promise<void>;
+    sendUserNotification(...params: ReadonlyArray<any>): Promise<void>;
     /**
      * Mock handling of received user activity when app is in foreground.
      * @param params
      */
-    sendUserActivity(...params: any[]): Promise<void>;
+    sendUserActivity(...params: ReadonlyArray<any>): Promise<void>;
     /**
      * Takes "portrait" or "landscape" and rotates the device to the given orientation. Currently only available in the iOS Simulator.
      * @param orientation
@@ -107,7 +109,7 @@ declare namespace Detox {
      * @param urls
      * @example await device.setURLBlacklist(['.*127.0.0.1.*']);
      */
-    setURLBlacklist(urls: string[]): Promise<void>;
+    setURLBlacklist(urls: ReadonlyArray<string>): Promise<void>;
     /**
      * Enable EarlGrey's synchronization mechanism (enabled by default). This is being reset on every new instance of the app.
      * @example await device.enableSynchronization();
@@ -192,7 +194,7 @@ declare namespace Detox {
      * Find an element with an accessibility trait. (iOS only)
      * @example await element(by.traits(['button']));
      */
-    traits(traits: string[]): Matchers;
+    traits(traits: ReadonlyArray<string>): Matchers;
   }
   interface Expect<R> {
     (element: Element): Expect<any>;
@@ -404,4 +406,9 @@ declare module "detox" {
   export const cleanup: Detox.Detox.cleanup;
   export const beforeEach: Detox.Detox.beforeEach;
   export const afterEach: Detox.Detox.afterEach;
+}
+
+declare module "detox/runners/jest/adapter" {
+  export function beforeEach(): Promise<void>;
+  export function afterAll(): Promise<void>;
 }
