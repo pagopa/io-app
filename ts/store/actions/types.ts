@@ -12,6 +12,7 @@ import {
 import { GlobalState } from "../reducers/types";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
+import { BackendInfoActions } from "./backendInfo";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
@@ -42,7 +43,8 @@ export type Action =
   | MessagesActions
   | ServicesActions
   | ErrorActions
-  | WalletActions;
+  | WalletActions
+  | BackendInfoActions;
 
 export type GetState = () => GlobalState;
 
