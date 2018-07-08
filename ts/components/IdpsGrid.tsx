@@ -66,7 +66,12 @@ class IdpsGrid extends React.Component<Props> {
     const onPress = () => onIdpSelected(idp);
     return (
       <View key={idp.id} style={styles.gridItem}>
-        <Button block={true} white={true} onPress={onPress}>
+        <Button
+          block={true}
+          white={true}
+          onPress={onPress}
+          testID={`idp-${idp.id}-button`}
+        >
           <Image source={idp.logo} style={styles.idpLogo} />
         </Button>
       </View>
