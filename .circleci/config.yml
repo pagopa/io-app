@@ -272,6 +272,10 @@ jobs:
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
 
+      # TODO: possibly remove this after the following issue has been fixed:
+      # https://github.com/GeekyAnts/NativeBase/issues/1957
+      - run: '[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils'
+
       # Install bundle dependencies
       - run:
           name: Bundle Install
