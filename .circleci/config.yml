@@ -254,8 +254,8 @@ jobs:
       # Move to the ios project directory and run the test_build lane
       - run: cd ios && bundle exec fastlane test_build
 
-  # End-to-end ios tests
-  test-ios-e2e:
+  # Prepare build for end-to-end iOS tests
+  test-ios-e2e-build:
     <<: *defaults_macos
 
     steps:
@@ -313,11 +313,31 @@ jobs:
 
       # Run detox e2e tests
       - run: detox build -c ios.sim.release
-      - run: detox test -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all
+
+      # Save workspace for next jobs in the workflow
+      - persist_to_workspace:
+          root: /Users/distiller
+          paths:
+            - italia-app
+
+  # Run end-to-end iOS tests
+  test-ios-e2e-run:
+    <<: *defaults_macos
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /Users/distiller
+
+      # Run detox e2e tests
+      - run: detox test -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --record-videos all
 
       # store detox artifacts
       - store_artifacts:
           path: /tmp/detox_artifacts
+      # store iOS simulator logs
+      - store_artifacts:
+          path: /tmp/detox.last_launch_app_log
 
 workflows:
   version: 2
@@ -344,9 +364,12 @@ workflows:
             - hold-native-tests
 
       # Native iOS tests
-      - test-ios-e2e:
+      - test-ios-e2e-build:
           requires:
             - hold-native-tests
+      - test-ios-e2e-run:
+          requires:
+            - test-ios-e2e-build
 
       # Build Android alpha release only on master branch
       - alpha-release-android:
