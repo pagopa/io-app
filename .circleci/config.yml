@@ -298,18 +298,7 @@ jobs:
 
       # Install Detox and ios-sim utils
       # see: https://github.com/wix/detox/
-      - run: npm install -g detox ios-sim
-
-      # Install required tools
-      # see: https://github.com/wix/detox/blob/master/docs/Guide.RunningOnCI.md
-      - run: brew tap wix/brew
-      - run: brew install applesimutils
-
-      # Enumerate device types available in simulator
-      - run: ios-sim showdevicetypes
-
-      # Start emulator in background
-      - run: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
+      - run: npm install -g detox
 
       # Run detox e2e tests
       - run: detox build -c ios.sim.release
@@ -328,6 +317,21 @@ jobs:
       # Restore workflow workspace
       - attach_workspace:
           at: /Users/distiller
+
+      # Install Detox and ios-sim utils
+      # see: https://github.com/wix/detox/
+      - run: npm install -g detox ios-sim
+
+      # Install required tools
+      # see: https://github.com/wix/detox/blob/master/docs/Guide.RunningOnCI.md
+      - run: brew tap wix/brew
+      - run: brew install applesimutils
+
+      # Enumerate device types available in simulator
+      - run: ios-sim showdevicetypes
+
+      # Start emulator in background
+      - run: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
 
       # Run detox e2e tests
       - run: detox test -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --record-videos all
