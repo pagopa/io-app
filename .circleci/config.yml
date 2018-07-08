@@ -346,9 +346,6 @@ jobs:
       # store detox artifacts
       - store_artifacts:
           path: /tmp/detox_artifacts
-      # store iOS simulator logs
-      - store_artifacts:
-          path: /tmp/detox.last_launch_app_log
 
 workflows:
   version: 2
