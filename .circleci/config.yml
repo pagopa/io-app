@@ -341,7 +341,7 @@ jobs:
           background: true
 
       # Run detox e2e tests
-      - run: detox test -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --record-videos all
+      - run: detox test --loglevel verbose -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --record-videos all --debug-synchronization 1000
 
       # store detox artifacts
       - store_artifacts:

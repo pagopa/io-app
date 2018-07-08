@@ -31,6 +31,7 @@ describe("e2e app", () => {
     await adapter.beforeEach();
     await device.launchApp({ permissions: { notifications: "YES" } });
     await device.reloadReactNative();
+    await device.disableSynchronization();
   });
 
   afterAll(async () => {
