@@ -275,6 +275,7 @@ jobs:
       # TODO: possibly remove this after the following issue has been fixed:
       # https://github.com/GeekyAnts/NativeBase/issues/1957
       - run: '[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils'
+      - run: '[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils'
 
       # Install bundle dependencies
       - run:
@@ -299,6 +300,10 @@ jobs:
       # Install Detox and ios-sim utils
       # see: https://github.com/wix/detox/
       - run: npm install -g detox
+
+      # cleanup metro and haste cache
+      - run: rm -rf /tmp/metro-bundler-cache-*
+      - run: rm -rf /tmp/haste-map-react-native-packager-*
 
       # Run detox e2e tests
       - run: detox build -c ios.sim.release
