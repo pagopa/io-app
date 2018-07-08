@@ -336,7 +336,9 @@ jobs:
       - run: ios-sim showdevicetypes
 
       # Start emulator in background
-      - run: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
+      - run:
+          command: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
+          background: true
 
       # Run detox e2e tests
       - run: detox test -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --record-videos all
@@ -372,10 +374,14 @@ workflows:
           requires:
             - hold-native-tests
 
-      # Native iOS tests
+      # Native iOS e2e tests
+      - hold-ios-e2e-tests:
+          type: approval
+          requires:
+            - test-js-node-8
       - test-ios-e2e-build:
           requires:
-            - hold-native-tests
+            - hold-ios-e2e-tests
       - test-ios-e2e-run:
           requires:
             - test-ios-e2e-build

@@ -4,7 +4,7 @@
 // test modules clashing with Jest's expect
 declare const device: Detox.Device;
 declare const element: Detox.Element;
-// declare const waitFor: Detox.WaitFor;
+declare const waitFor: Detox.WaitFor;
 declare const expect: Detox.Expect<Detox.Expect<any>>;
 declare const by: Detox.Matchers;
 
@@ -36,9 +36,12 @@ describe("e2e app", () => {
     await device.reloadReactNative();
 
     const loginButtonId = "landing-button-login";
-    await expect(element(by.id(loginButtonId))).toBeVisible();
+    await waitFor(element(by.id(loginButtonId)))
+      .toBeVisible()
+      .withTimeout(20000);
+    // await expect(element(by.id(loginButtonId))).toBeVisible();
 
-    // await element(by.id(loginButtonId)).tap();
-    // await expect(element(by.id("idps-grid"))).toBeVisible();
+    await element(by.id(loginButtonId)).tap();
+    await expect(element(by.id("idps-grid"))).toBeVisible();
   });
 });
