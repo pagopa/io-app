@@ -24,7 +24,7 @@ describe("e2e app", () => {
   const loginButtonId = "landing-button-login";
   // const idpsGridId = "idps-view";
   const posteIdpButtonId = "idp-posteid-button";
-  const idpWebviewId = "idp-webview";
+  // const idpWebviewId = "idp-webview";
 
   beforeAll(async () => {
     await detox.init(config, { launchApp: false });
