@@ -17,20 +17,22 @@ const config = require("package.json").detox;
 jest.setTimeout(5 * 60 * 1000);
 (jasmine as any).getEnv().addReporter(adapter);
 
-beforeAll(async () => {
-  await detox.init(config, { launchApp: false });
-});
-
-beforeEach(async () => {
-  await adapter.beforeEach();
-});
-
-afterAll(async () => {
-  await adapter.afterAll();
-  await detox.cleanup();
-});
+const WAIT_TIMEOUT_MS = 20 * 1000;
 
 describe("e2e app", () => {
+  beforeAll(async () => {
+    await detox.init(config, { launchApp: false });
+  });
+
+  beforeEach(async () => {
+    await adapter.beforeEach();
+  });
+
+  afterAll(async () => {
+    await adapter.afterAll();
+    await detox.cleanup();
+  });
+
   it("should display SPID login button", async () => {
     await device.launchApp({ permissions: { notifications: "YES" } });
     await device.reloadReactNative();
@@ -38,10 +40,12 @@ describe("e2e app", () => {
     const loginButtonId = "landing-button-login";
     await waitFor(element(by.id(loginButtonId)))
       .toBeVisible()
-      .withTimeout(20000);
-    // await expect(element(by.id(loginButtonId))).toBeVisible();
-
+      .withTimeout(WAIT_TIMEOUT_MS);
     await element(by.id(loginButtonId)).tap();
-    await expect(element(by.id("idps-grid"))).toBeVisible();
+
+    // await waitFor(element(by.id(loginButtonId)))
+    //   .toBeVisible()
+    //   .withTimeout(WAIT_TIMEOUT_MS);
+    // await expect(element(by.id("idps-grid"))).toBeVisible();
   });
 });
