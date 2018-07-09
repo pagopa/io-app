@@ -21,6 +21,7 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
+import variables from "../../theme/variables";
 
 type ReduxMappedProps = {};
 type OwnProps = {
@@ -80,6 +81,10 @@ const styles = StyleSheet.create({
   subheader: {
     backgroundColor: "#FFFFFF",
     padding: 24
+  },
+  gridContainer: {
+    padding: variables.contentPadding,
+    flex: 1
   }
 });
 /**
@@ -107,28 +112,30 @@ class IdpSelectionScreen extends React.Component<Props, never> {
             <Text>{I18n.t("authentication.idp_selection.headerTitle")}</Text>
           </Body>
         </AppHeader>
-        <View style={styles.subheader}>
-          <Image
-            source={require("../../../img/spid.png")}
-            style={styles.spidLogo}
-          />
-          <View spacer={true} />
-          <H1>{I18n.t("authentication.idp_selection.contentTitle")}</H1>
-        </View>
-        <Content alternative={true}>
-          <IdpsGrid
-            idps={enabledIdps}
-            onIdpSelected={idp => this.onIdpSelected(idp)}
-          />
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            bordered={true}
-            onPress={_ => this.props.navigation.goBack()}
-          >
-            <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
-          </Button>
+        <Content noPadded={true} alternative={true}>
+          <View style={styles.subheader}>
+            <Image
+              source={require("../../../img/spid.png")}
+              style={styles.spidLogo}
+            />
+            <View spacer={true} />
+            <H1>{I18n.t("authentication.idp_selection.contentTitle")}</H1>
+          </View>
+          <View style={styles.gridContainer} testID="idps-view">
+            <IdpsGrid
+              idps={enabledIdps}
+              onIdpSelected={idp => this.onIdpSelected(idp)}
+            />
+            <View spacer={true} />
+            <Button
+              block={true}
+              light={true}
+              bordered={true}
+              onPress={_ => this.props.navigation.goBack()}
+            >
+              <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
+            </Button>
+          </View>
         </Content>
         <View footer={true}>
           <Button block={true} transparent={true}>
