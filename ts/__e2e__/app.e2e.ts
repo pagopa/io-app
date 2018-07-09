@@ -29,8 +29,8 @@ describe("e2e app", () => {
   beforeAll(async () => {
     await detox.init(config, { launchApp: false });
     await device.launchApp({ permissions: { notifications: "YES" } });
-    await device.reloadReactNative();
-    await device.disableSynchronization();
+    // await device.reloadReactNative();
+    // await device.disableSynchronization();
   });
 
   beforeEach(async () => {
