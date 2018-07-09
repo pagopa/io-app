@@ -22,6 +22,9 @@
       "documents": "documents",
       "preferences": "preferences",
       "profile": "profile"
+    },
+    "actions": {
+      "retry": "An error occurred, please retry"
     }
   },
   "connection": {
@@ -49,7 +52,11 @@
       "spid": "SPID PROFILE"
     },
     "unknown": "UNKNOWN",
-    "logout": "Logout from this SPID identity"
+    "logout": "Logout from this SPID identity",
+    "errors": {
+      "load": "Error loading the profile",
+      "upsert": "Error creating or updating the profile"
+    }
   },
   "navigation": {
     "messages": "Messages",
@@ -92,6 +99,9 @@
     },
     "idp_login": {
       "headerTitle": "Login"
+    },
+    "errors": {
+      "notoken": "The session is not ready or is invalid"
     }
   },
   "onboarding": {

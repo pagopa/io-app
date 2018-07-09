@@ -22,6 +22,9 @@
       "documents": "documenti",
       "preferences": "preferenze",
       "profile": "profilo"
+    },
+    "actions": {
+      "retry": "Si è verificato un errore, si prega di riprovare"
     }
   },
   "connection": {
@@ -49,7 +52,11 @@
       "spid": "PROFILO SPID"
     },
     "unknown": "SCONOSCIUTO",
-    "logout": "Esci da questa identità SPID"
+    "logout": "Esci da questa identità SPID",
+    "errors": {
+      "load": "Errore nel caricamento del profilo",
+      "upsert": "Errore nella creazione o nell'aggiornamento del profilo"
+    }
   },
   "navigation": {
     "messages": "Messaggi",
@@ -92,6 +99,9 @@
     },
     "idp_login": {
       "headerTitle": "Accedi"
+    },
+    "errors": {
+      "notoken": "La sessione non è pronta o non è valida"
     }
   },
   "onboarding": {

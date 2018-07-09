@@ -9,8 +9,11 @@ import { PersistConfig, persistReducer } from "redux-persist";
 
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
+import { GlobalState } from "./types";
+
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
+import backendInfoReducer from "./backendInfo";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
@@ -19,7 +22,6 @@ import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
-import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
 // A custom configuration to store the authentication into the Keychain
@@ -62,7 +64,10 @@ const reducer = combineReducers<GlobalState, Action>({
   pinlogin: pinloginReducer,
 
   // WALLET
-  wallet: walletReducer
+  wallet: walletReducer,
+
+  // BACKEND INFO
+  backendInfo: backendInfoReducer
 });
 
 export default reducer;

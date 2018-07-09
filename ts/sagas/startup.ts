@@ -16,6 +16,7 @@ import {
 } from "../store/actions/constants";
 import { startNotificationInstallationUpdate } from "../store/actions/notifications";
 import { startOnboarding } from "../store/actions/onboarding";
+import { profileLoadRequest } from "../store/actions/profile";
 import { isAuthenticatedSelector } from "../store/reducers/authentication";
 
 /**
@@ -65,6 +66,9 @@ export function* watchApplicationInitialized(): IterableIterator<Effect> {
   }
 
   // If we are here the user is logged in and the session is loaded and valid
+
+  // Get the profile info
+  yield put(profileLoadRequest());
 
   // Start the notification installation update
   yield put(startNotificationInstallationUpdate());
