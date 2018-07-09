@@ -79,7 +79,7 @@
     "@types/stacktrace-js": "^0.0.32",
     "@types/uuid": "^3.4.3",
     "@types/validator": "^9.4.1",
-    "babel-jest": "23.0.1",
+    "babel-jest": "23.2.0",
     "babel-preset-react-native": "4.0.0",
     "danger": "^3.7.20",
     "danger-plugin-digitalcitizenship": "^0.3.1",
