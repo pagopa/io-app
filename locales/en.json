@@ -325,7 +325,10 @@
     },
     "contentTitle": "Messages",
     "loading": "Loading Messages...",
-    "yesterday": "yesterday"
+    "yesterday": "yesterday",
+    "cta": {
+      "pay": "Pay € {{amount}}"
+    }
   },
   "messageDetails": {
     "headerTitle": "Message",

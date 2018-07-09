@@ -95,6 +95,7 @@ class MessagesScreen extends React.Component<Props, never> {
       <MessageComponent
         id={messageDetails.item.id}
         createdAt={messageDetails.item.created_at}
+        paymentData={messageDetails.item.payment_data}
         serviceOrganizationName={this.getOrganizationName(
           messageDetails.item.sender_service_id
         )}
