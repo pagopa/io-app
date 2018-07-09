@@ -121,7 +121,7 @@ class IdpSelectionScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <H1>{I18n.t("authentication.idp_selection.contentTitle")}</H1>
           </View>
-          <View style={styles.gridContainer}>
+          <View style={styles.gridContainer} testID="idps-view">
             <IdpsGrid
               idps={enabledIdps}
               onIdpSelected={idp => this.onIdpSelected(idp)}
