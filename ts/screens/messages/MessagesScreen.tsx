@@ -17,6 +17,7 @@ import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
+import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
@@ -179,51 +180,12 @@ class MessagesScreen extends React.Component<Props, never> {
   }
 }
 
-const mockedMessages: any = [
-  {
-    created_at: "2018-06-28T09:00:06.771Z",
-    id: "01CFSP4XYK3Y0VZ22HWWFKS1XM",
-    markdown: "Testo da mostrare come markdown.",
-    sender_service_id: "5a25abf4fcc89605c082f042c49a",
-    subject: "Messaggio con informazioni di pagamento",
-    payment_data: {
-      amount: 55,
-      notice_number: "12432237427346s52734234"
-    }
-  },
-  {
-    created_at: "2018-06-29T09:00:00.771Z",
-    id: "01CFSP4XYK3Y0VZ333WWFKS1XM",
-    markdown: "Testo da mostrare come markdown.",
-    sender_service_id: "5a563817fcc896087002ea46c49a",
-    subject: "Messaggio senza informazioni di pagamento"
-  }
-];
-
-const mockedServices: any = {
-  allIds: ["5a25abf4fcc89605c082f042c49a", "5a563817fcc896087002ea46c49a"],
-  byId: {
-    "5a25abf4fcc89605c082f042c49a": {
-      department_name: "dept",
-      organization_name: "agid",
-      service_id: "5a25abf4fcc89605c082f042c49a",
-      service_name: "service"
-    },
-    "5a563817fcc896087002ea46c49a": {
-      department_name: "dept name: qualcosa di più lungo",
-      organization_name: "Wellnet",
-      service_id: "5a563817fcc896087002ea46c49a",
-      service_name: "serviceName: qualcosa di più lungo"
-    }
-  }
-};
-
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
     state
   ),
-  messages: mockedMessages,
-  services: mockedServices
+  messages: orderedMessagesSelector(state),
+  services: state.entities.services
 });
 
 export default connect(mapStateToProps)(MessagesScreen);

@@ -27,8 +27,9 @@ export type Props = OwnProps;
  * Implements a component that show a message in the MessagesScreen List
  */
 class MessageComponent extends React.Component<Props> {
+
   public formattedAmount = (amount: number): string => {
-    return I18n.toCurrency(amount, { unit: "€ ", separator: "," });
+    return I18n.toCurrency(amount/100, { unit: "€ ", separator: ","});
   };
 
   public render() {
