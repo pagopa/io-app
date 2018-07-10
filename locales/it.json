@@ -330,7 +330,10 @@
     },
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messaggi...",
-    "yesterday": "ieri"
+    "yesterday": "ieri",
+    "cta": {
+      "pay": "Paga € {{amount}}"
+    }
   },
   "messageDetails": {
     "headerTitle": "Messaggio",

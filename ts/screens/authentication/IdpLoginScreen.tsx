@@ -41,7 +41,7 @@ class IdpLoginScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={onPress}>
+            <Button transparent={true} onPress={onPress} testID="back-button">
               <IconFont name="io-back" />
             </Button>
           </Left>
