@@ -3,6 +3,7 @@
  */
 
 import {
+  PIN_CREATE_FAILURE,
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
   START_ONBOARDING,
@@ -34,12 +35,17 @@ export type PinCreateSuccess = Readonly<{
   type: typeof PIN_CREATE_SUCCESS;
 }>;
 
+export type PinCreateFailure = Readonly<{
+  type: typeof PIN_CREATE_FAILURE;
+}>;
+
 export type OnboardingActions =
   | StartOnboarding
   | TosAcceptRequest
   | TosAcceptSuccess
   | PinCreateRequest
-  | PinCreateSuccess;
+  | PinCreateSuccess
+  | PinCreateFailure;
 
 // Creators
 

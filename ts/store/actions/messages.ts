@@ -2,13 +2,15 @@
  * Action types and action creator related to the Messages.
  */
 
+import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import {
   MESSAGE_LOAD_SUCCESS,
   MESSAGES_LOAD_CANCEL,
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_REQUEST,
-  MESSAGES_LOAD_SUCCESS
+  MESSAGES_LOAD_SUCCESS,
+  START_PAYMENT
 } from "./constants";
 
 export type MessagesLoadRequest = Readonly<{
@@ -34,12 +36,18 @@ export type MessageLoadSuccess = Readonly<{
   payload: MessageWithContentPO;
 }>;
 
+export type StartPayment = Readonly<{
+  type: typeof START_PAYMENT;
+  payload: PaymentData;
+}>;
+
 export type MessagesActions =
   | MessagesLoadRequest
   | MessagesLoadCancel
   | MessagesLoadSuccess
   | MessagesLoadFailure
-  | MessageLoadSuccess;
+  | MessageLoadSuccess
+  | StartPayment;
 
 // Creators
 export const loadMessages = (): MessagesLoadRequest => ({
@@ -65,4 +73,9 @@ export const loadMessageSuccess = (
 ): MessageLoadSuccess => ({
   type: MESSAGE_LOAD_SUCCESS,
   payload: message
+});
+
+export const startPayment = (paymentData: PaymentData): StartPayment => ({
+  type: START_PAYMENT,
+  payload: paymentData
 });

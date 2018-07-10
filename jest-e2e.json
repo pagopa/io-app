@@ -1,0 +1,18 @@
+{
+  "modulePaths": [
+    "<rootDir>"
+  ],
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js"
+  ],
+  "transform": {
+    "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  },
+  "testMatch": [
+    "**/__e2e__/*.e2e.ts?(x)"
+  ],
+  "forceExit": true,
+  "verbose": true
+}

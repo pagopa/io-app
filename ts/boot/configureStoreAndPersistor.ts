@@ -69,8 +69,8 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
       sagaMiddleware,
       logger,
       navigation,
-      analytics.actionTracking,
-      analytics.screenTracking
+      analytics.actionTracking, // generic tracker for selected redux actions
+      analytics.screenTracking // tracks screen navigation
     )
   );
 
