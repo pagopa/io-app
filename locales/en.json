@@ -328,6 +328,9 @@
     "yesterday": "yesterday",
     "paymentCta": {
       "payLabel": "Pay"
+    },
+    "cta": {
+      "pay": "Pay € {{amount}}"
     }
   },
   "messageDetails": {

@@ -327,6 +327,9 @@
     "yesterday": "ieri",
     "paymentCta": {
       "payLabel": "Paga"
+    },
+    "cta": {
+      "pay": "Paga € {{amount}}"
     }
   },
   "messageDetails": {

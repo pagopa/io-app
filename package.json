@@ -12,7 +12,7 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.29/api_proxy.yaml --out-dir ./definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.29/api_public.yaml --out-dir ./definitions/backend",
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.30/api_proxy.yaml --out-dir ./definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.29/api_public.yaml --out-dir ./definitions/backend",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {

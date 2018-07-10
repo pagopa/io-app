@@ -3,7 +3,10 @@ import * as React from "react";
 import { Button, Icon, Left, ListItem, Right, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
+import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+
+import { PaymentData } from "../../../definitions/backend/PaymentData";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
@@ -13,6 +16,7 @@ export type OwnProps = Readonly<{
   id: string;
   markdown: string;
   navigation: NavigationScreenProp<NavigationState>;
+  paymentData: PaymentData;
   serviceName: string;
   serviceOrganizationName: string;
   serviceDepartmentName: string;
@@ -35,14 +39,15 @@ class MessageComponent extends React.Component<Props> {
     const { navigate } = this.props.navigation;
 
     const {
-      subject,
-      serviceOrganizationName,
-      serviceDepartmentName,
       createdAt,
-      serviceName,
-      markdown,
       id,
-      paymentAmount
+      markdown,
+      paymentAmount,
+      paymentData,
+      serviceDepartmentName,
+      serviceName,
+      serviceOrganizationName,
+      subject
     } = this.props;
 
     return (
@@ -53,6 +58,7 @@ class MessageComponent extends React.Component<Props> {
             details: {
               createdAt,
               markdown,
+              paymentData,
               serviceName,
               serviceDepartmentName,
               serviceOrganizationName,
