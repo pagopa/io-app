@@ -5,12 +5,15 @@ import {
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
+import { connect } from "react-redux";
 
 import { PaymentData } from "../../../definitions/backend/PaymentData";
 import MessageDetailsComponent from "../../components/messages/MessageDetailsComponent";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import { startPayment } from "../../store/actions/messages";
+import { ReduxProps } from "../../store/actions/types";
 
 interface ParamTypeObject {
   createdAt: Date;
@@ -34,7 +37,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<StateParams>;
 }>;
 
-type Props = OwnProps & NavigationInjectedProps;
+type Props = ReduxProps & NavigationInjectedProps & OwnProps;
 
 /**
  * This screen show the Message Details for a simple message
@@ -43,6 +46,10 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
   private goBack() {
     this.props.navigation.goBack();
   }
+
+  private handlePaymentCTA = (paymentData: PaymentData) => {
+    this.props.dispatch(startPayment(paymentData));
+  };
 
   public render() {
     const {
@@ -75,9 +82,12 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
             serviceName={serviceName}
             serviceOrganizationName={serviceOrganizationName}
             subject={subject}
+            onPaymentCTAClick={this.handlePaymentCTA}
           />
         </Content>
       </Container>
     );
   }
 }
+
+export default connect()(MessageDetailsScreen);

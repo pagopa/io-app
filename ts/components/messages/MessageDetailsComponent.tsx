@@ -21,6 +21,7 @@ export type OwnProps = Readonly<{
   serviceName: string;
   serviceOrganizationName: string;
   subject: string;
+  onPaymentCTAClick: (paymentData: PaymentData) => void;
 }>;
 
 type State = Readonly<{
@@ -87,7 +88,11 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   private renderMessageCTA = (paymentData: PaymentData) => {
     return paymentData ? (
       <View style={styles.messageCTAContainer}>
-        <Button block={true} primary={true}>
+        <Button
+          block={true}
+          primary={true}
+          onPress={() => this.props.onPaymentCTAClick(paymentData)}
+        >
           <Text>
             {I18n.t("messages.cta.pay", {
               amount: formatPaymentAmount(paymentData.amount)
