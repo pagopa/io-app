@@ -31,14 +31,33 @@ import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryCo
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import {
-  NotifiedTransaction,
-  TransactionEntity,
-  TransactionSubject
+  NotifiedTransaction
 } from "../../../types/wallet";
+import Markdown from '../../../components/ui/Markdown';
+import { EnteBeneficiario } from '../../../../definitions/pagopa-proxy/EnteBeneficiario';
+import { paymentRecipientSelector, paymentReasonSelector, getRptId, getInitialAmount, currentAmountSelector } from '../../../store/reducers/wallet/payment';
+import { UNKNOWN_RECIPIENT, UNKNOWN_RPTID } from '../../../types/unknown';
+import { GlobalState } from '../../../store/reducers/types';
+import { connect } from 'react-redux';
+import { RptId, PaymentNoticeNumberFromString, AmountInEuroCents } from '../../../../node_modules/italia-ts-commons/lib/pagopa';
 
-type Props = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  paymentRecipient: EnteBeneficiario;
+  paymentReason: string;
+  rptId: RptId;
+  originalAmount: AmountInEuroCents;
+  updatedAmount: AmountInEuroCents;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  confirmSummary: () => void;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 const styles = StyleSheet.create({
   padded: {
@@ -50,14 +69,59 @@ const styles = StyleSheet.create({
 const transactionDetails: Readonly<
   NotifiedTransaction
 > = WalletAPI.getNotifiedTransaction();
-const entityDetails: Readonly<
-  TransactionEntity
-> = WalletAPI.getTransactionEntity();
-const subjectDetails: Readonly<
-  TransactionSubject
-> = WalletAPI.getTransactionSubject();
 
-export class TransactionSummaryScreen extends React.Component<Props, never> {
+///////////////////// to be removed when italia-ts-commons is updated
+import * as t from "io-ts";
+import { Dispatch } from '../../../store/actions/types';
+import { confirmSummary } from '../../../store/actions/wallet/payment';
+export const MAX_AMOUNT_DIGITS = 10;
+export const CENTS_IN_ONE_EURO = 100;
+export type AmountInEuroCents = t.TypeOf<typeof AmountInEuroCents>;
+
+export const AmountInEuroCentsFromNumber = new t.Type<
+  AmountInEuroCents,
+  number,
+  number
+>(
+  "AmountInEuroCentsFromNumber",
+  AmountInEuroCents.is,
+  (i, c) =>
+    AmountInEuroCents.validate(
+      `${"0".repeat(MAX_AMOUNT_DIGITS)}${Math.floor(
+        i * CENTS_IN_ONE_EURO
+      )}`.slice(-MAX_AMOUNT_DIGITS),
+      c
+    ),
+  a => parseInt(a, 10) / CENTS_IN_ONE_EURO
+);
+//////////////////
+
+const formatMdRecipient = (e: EnteBeneficiario): React.ReactNode => (
+  <Markdown>{`
+  **${I18n.t("wallet.firstTransactionSummary.entity")}**\n
+  ${e.denominazioneBeneficiario} - ${e.denomUnitOperBeneficiario}\n
+  ${e.indirizzoBeneficiario} n. ${e.civicoBeneficiario}\n
+  ${e.capBeneficiario} ${e.localitaBeneficiario} (${e.provinciaBeneficiario})
+  `}
+  </Markdown>
+);
+
+const formatMdPaymentReason = (p: string): React.ReactNode => (
+  <Markdown>{`
+  **${I18n.t("wallet.firstTransactionSummary.object")}**\n
+  ${p}
+  `}
+  </Markdown>
+);
+
+const formatMdInfoRpt = (r: RptId): React.ReactNode => (
+  <Markdown>{`
+  **IUV:** ${PaymentNoticeNumberFromString.encode(r.paymentNoticeNumber)}\n
+  **Recipient Fiscal Code:** ${ r.organizationFiscalCode}`}
+  </Markdown>
+);
+
+class TransactionSummaryScreen extends React.Component<Props, never> {
   constructor(props: Props) {
     super(props);
   }
@@ -95,7 +159,7 @@ export class TransactionSummaryScreen extends React.Component<Props, never> {
               <Col size={1}>
                 <View spacer={true} large={true} />
                 <Image
-                  source={require("../../../img/wallet/icon-avviso-pagopa.png")}
+                  source={require("../../../../img/wallet/icon-avviso-pagopa.png")}
                 />
               </Col>
             </Row>
@@ -104,8 +168,8 @@ export class TransactionSummaryScreen extends React.Component<Props, never> {
 
           <PaymentSummaryComponent
             navigation={this.props.navigation}
-            amount={transactionDetails.notifiedAmount.toString()}
-            updatedAmount={transactionDetails.currentAmount.toString()}
+            amount={`${AmountInEuroCentsFromNumber.encode(this.props.originalAmount)}`}
+            updatedAmount={`${AmountInEuroCentsFromNumber.encode(this.props.updatedAmount)}`}
           />
 
           <Grid style={[styles.padded, WalletStyles.backContent]}>
@@ -130,88 +194,16 @@ export class TransactionSummaryScreen extends React.Component<Props, never> {
             </Row>
             <View spacer={true} large={true} />
           </Grid>
-
-          <View spacer={true} large={true} />
-          <Grid style={styles.padded}>
-            <Row>
-              <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.entity")}
-              </Text>
-            </Row>
-            <Row>
-              <Text>{entityDetails.name}</Text>
-            </Row>
-            <Row>
-              <Text>{entityDetails.address}</Text>
-            </Row>
-            <Row>
-              <Text>{entityDetails.city}</Text>
-            </Row>
-            <Row>
-              <Text>{I18n.t("wallet.firstTransactionSummary.info")}</Text>
-            </Row>
-            <Row>
-              <Text>{I18n.t("wallet.firstTransactionSummary.tel") + " "}</Text>
-              <Text link={true}>{entityDetails.tel}</Text>
-            </Row>
-            <Row>
-              <Text link={true}>{entityDetails.webpage}</Text>
-            </Row>
-            <Row>
-              <Text>
-                {I18n.t("wallet.firstTransactionSummary.email") + " "}
-              </Text>
-              <Text link={true}>{entityDetails.email}</Text>
-            </Row>
-            <Row>
-              <Text>{I18n.t("wallet.firstTransactionSummary.PEC") + " "}}</Text>
-              <Text link={true}>{entityDetails.pec}</Text>
-            </Row>
-            <View spacer={true} large={true} />
-            <Row>
-              <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.recipient")}
-              </Text>
-            </Row>
-            <Row>
-              <Text>{subjectDetails.name}</Text>
-            </Row>
-            <Row>
-              <Text>{subjectDetails.address}</Text>
-            </Row>
-            <View spacer={true} large={true} />
-            <Row>
-              <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.object")}
-              </Text>
-            </Row>
-            <Row>
-              <Text>{transactionDetails.paymentReason}</Text>
-            </Row>
-            <View spacer={true} large={true} />
-            <Row>
-              <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.cbillCode") + " "}
-              </Text>
-              <Text bold={true}>{transactionDetails.cbill}</Text>
-            </Row>
-            <Row>
-              <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.iuv") + " "}
-              </Text>
-              <Text bold={true}>{transactionDetails.iuv}</Text>
-            </Row>
-            <Row>
-              <Text bold={true}>
-                {I18n.t("wallet.firstTransactionSummary.entityCode2") + " "}
-              </Text>
-              <Text bold={true}>{entityDetails.code}</Text>
-            </Row>
-            <View spacer={true} extralarge={true} />
-          </Grid>
+          {formatMdRecipient(this.props.paymentRecipient)}
+          {formatMdPaymentReason(this.props.paymentReason)}
+          {formatMdInfoRpt(this.props.rptId)}
+          <View spacer={true}/>
         </Content>
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button
+            block={true}
+            primary={true}
+            onPress={() => this.props.confirmSummary()}>
             <Text>{I18n.t("wallet.continue")}</Text>
           </Button>
           <View spacer={true} />
@@ -223,3 +215,17 @@ export class TransactionSummaryScreen extends React.Component<Props, never> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  paymentRecipient: paymentRecipientSelector(state).getOrElse(UNKNOWN_RECIPIENT),
+  paymentReason: paymentReasonSelector(state).getOrElse(""),
+  rptId: getRptId(state).getOrElse(UNKNOWN_RPTID),
+  originalAmount: getInitialAmount(state).getOrElse("0000000000" as AmountInEuroCents),
+  updatedAmount: currentAmountSelector(state).getOrElse("0000000000" as AmountInEuroCents)
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  confirmSummary: () => dispatch(confirmSummary())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionSummaryScreen);

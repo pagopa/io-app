@@ -5,10 +5,10 @@ import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen
 import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
 import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
-import { ManualDataInsertionScreen } from "../screens/wallet/payment/ManualDataInsertionScreen";
+import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
-import { ScanQRCodeScreen } from "../screens/wallet/payment/ScanQRCodeScreen";
-import { TransactionSummaryScreen } from "../screens/wallet/payment/TransactionSummaryScreen";
+import ScanQRCodeScreen from "../screens/wallet/payment/ScanQRCodeScreen";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";

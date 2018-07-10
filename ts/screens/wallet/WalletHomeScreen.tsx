@@ -14,7 +14,8 @@ import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
-import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
+import { CardEnum } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";

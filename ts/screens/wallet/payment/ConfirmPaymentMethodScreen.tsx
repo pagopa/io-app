@@ -28,21 +28,25 @@ import CreditCardComponent from "../../../components/wallet/card";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../../store/reducers/wallet/cards";
-import { transactionForDetailsSelector } from "../../../store/reducers/wallet/transactions";
 import { CreditCard, UNKNOWN_CARD } from "../../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
+import { selectedPaymentMethodSelector } from '../../../store/reducers/wallet/payment';
+import { Dispatch } from '../../../store/actions/types';
+import { pickPaymentMethod } from '../../../store/actions/wallet/payment';
 
 type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
-  transaction: Readonly<WalletTransaction>;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  pickPaymentMethod: () => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 const styles = StyleSheet.create({
   child: {
@@ -70,7 +74,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { transaction } = this.props;
+    const transaction = UNKNOWN_TRANSACTION;
 
     return (
       <Container>
@@ -111,7 +115,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${transaction.amount.toFixed(2)}  €`}
+                    {`${transaction.amount.toFixed(2)} €`}
                   </Text>
                 </Col>
               </Row>
@@ -185,11 +189,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.goBack()}
+              onPress={_ => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
-            <View spacer={true} />
+            <View style={{width: 16}}/>
             <Button
               style={styles.child}
               block={true}
@@ -205,14 +209,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
-/**
- * TODO: selectors will be reviewed in next pr
- *  @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
- */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD),
-  transaction: transactionForDetailsSelector(state).getOrElse(
-    UNKNOWN_TRANSACTION
-  )
+  card: selectedPaymentMethodSelector(state).getOrElse(UNKNOWN_CARD)
 });
-export default connect(mapStateToProps)(ConfirmPaymentMethodScreen);
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  pickPaymentMethod: () => dispatch(pickPaymentMethod())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPaymentMethodScreen);

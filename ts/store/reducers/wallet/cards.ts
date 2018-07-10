@@ -40,8 +40,8 @@ export const creditCardsSelector = createSelector(
   (cards: IndexedById<CreditCard>): ReadonlyArray<CreditCard> => _.values(cards)
 );
 
-const getCardFromId = (
-  cardId: Option<number>,
+export const getCardFromId = (
+  cardId: Option<CreditCardId>,
   cards: IndexedById<CreditCard>
 ): Option<CreditCard> => {
   if (cardId.isNone()) {

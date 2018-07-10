@@ -23,6 +23,9 @@ import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import CreditCardComponent from "./card";
 import { LogoPosition } from "./card/Logo";
+import { Dispatch } from '../../store/actions/types';
+import { connect } from 'react-redux';
+import { startPayment } from '../../store/actions/wallet/payment';
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -63,7 +66,11 @@ type NoCards = Readonly<{
 
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  startPayment: () => void;
+}>;
+
+type OwnProps = Readonly<{
   title: string;
   navigation: NavigationScreenProp<NavigationState>;
   headerContents?: React.ReactNode;
@@ -72,10 +79,12 @@ type Props = Readonly<{
   allowGoBack?: boolean;
 }>;
 
-export class WalletLayout extends React.Component<Props> {
+type Props = OwnProps & ReduxMappedProps;
+
+class WalletLayout extends React.Component<Props> {
   public static defaultProps = {
     headerContents: null,
-    cardType: { type: CardEnum.NONE },
+    cardType: { type: CardEnum.NONE } as NoCards,
     showPayButton: true,
     allowGoBack: true
   };
@@ -180,7 +189,7 @@ export class WalletLayout extends React.Component<Props> {
             <Button
               block={true}
               onPress={() =>
-                this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+                this.props.startPayment()
               }
             >
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
@@ -192,3 +201,9 @@ export class WalletLayout extends React.Component<Props> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  startPayment: () => dispatch(startPayment())
+});
+
+export default connect(undefined, mapDispatchToProps)(WalletLayout);

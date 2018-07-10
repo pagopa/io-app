@@ -34,7 +34,7 @@ export default class CardBody extends React.Component<CardProps> {
    * is shown
    */
   private rightPart() {
-    const { logoPosition, mainActionNavigation } = this.props;
+    const { logoPosition, mainAction } = this.props;
     if (logoPosition === LogoPosition.TOP) {
       // the ">" icon can be displayed since
       // the logo is being positioned on the
@@ -46,8 +46,8 @@ export default class CardBody extends React.Component<CardProps> {
         <Row
           style={CreditCardStyles.rowStyle}
           onPress={() =>
-            mainActionNavigation !== undefined
-              ? this.props.navigation.navigate(mainActionNavigation)
+            mainAction !== undefined
+              ? mainAction(this.props.item.id)
               : undefined
           }
         >

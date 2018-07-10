@@ -29,18 +29,52 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { RptId, AmountInEuroCents } from 'italia-ts-commons/lib/pagopa';
+import { connect } from 'react-redux';
+import { Dispatch } from '../../../store/actions/types';
+import { showPaymentSummary } from '../../../store/actions/wallet/payment';
+import { RptIdFromString } from '../../../../definitions/pagopa-proxy/RptIdFromString';
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ReduxMappedProps;
 
 type State = Readonly<{
   transactionCode: Option<string>;
   fiscalCode: Option<string>;
-  amount: Option<string>;
+  amount: Option<number>;
 }>;
 
-export class ManualDataInsertionScreen extends React.Component<Props, State> {
+import * as t from "io-ts";
+export const MAX_AMOUNT_DIGITS = 10;
+export const CENTS_IN_ONE_EURO = 100;
+export type AmountInEuroCents = t.TypeOf<typeof AmountInEuroCents>;
+
+export const AmountInEuroCentsFromNumber = new t.Type<
+  AmountInEuroCents,
+  number,
+  number
+>(
+  "AmountInEuroCentsFromNumber",
+  AmountInEuroCents.is,
+  (i, c) =>
+    AmountInEuroCents.validate(
+      `${"0".repeat(MAX_AMOUNT_DIGITS)}${Math.floor(
+        i * CENTS_IN_ONE_EURO
+      )}`.slice(-MAX_AMOUNT_DIGITS),
+      c
+    ),
+  a => parseInt(a, 10) / CENTS_IN_ONE_EURO
+);
+
+
+class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -52,6 +86,22 @@ export class ManualDataInsertionScreen extends React.Component<Props, State> {
 
   private goBack() {
     this.props.navigation.goBack();
+  }
+
+  private proceedToSummary = () => {
+    if (this.state.transactionCode.isSome() &&
+        this.state.fiscalCode.isSome() &&
+        this.state.amount.isSome()) {
+      const rptId = RptIdFromString.decode(`${this.state.fiscalCode.value}${this.state.transactionCode.value}`);
+      const amount = AmountInEuroCentsFromNumber.decode(this.state.amount.value);
+      if (rptId.isRight() && amount.isRight()) {
+        // valid Rpt Id and valid amount were entered
+        this.props.showPaymentSummary(rptId.value, amount.value);
+      }
+      else {
+        console.warn("Invalid data");
+      }
+    }
   }
 
   public render(): React.ReactNode {
@@ -94,15 +144,22 @@ export class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Label>{I18n.t("wallet.insertManually.amount")}</Label>
               <Input
                 keyboardType={"numeric"}
+                value={this.state.amount.isSome() ? `${this.state.amount.value}` : ""}
                 onChangeText={value => {
-                  this.setState({ amount: some(value) });
+                  const parsedValue = parseFloat(value);
+                  if (!isNaN(parsedValue)) {
+                    this.setState({ amount: some(parsedValue) });
+                  }
                 }}
               />
             </Item>
           </Form>
         </Content>
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button
+            block={true}
+            primary={true}
+            onPress={this.proceedToSummary}>
             <Text>{I18n.t("wallet.insertManually.proceed")}</Text>
           </Button>
           <View spacer={true} />
@@ -119,3 +176,9 @@ export class ManualDataInsertionScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => dispatch(showPaymentSummary(rptId, amount))
+});
+
+export default connect(undefined, mapDispatchToProps)(ManualDataInsertionScreen);

@@ -88,7 +88,7 @@ export type CardProps = Readonly<{
   lastUsage?: boolean;
   whiteLine?: boolean;
   logoPosition?: LogoPosition;
-  mainActionNavigation?: string;
+  mainAction?: (cardId: CreditCardId) => void;
   flatBottom?: boolean;
   headerOnly?: boolean;
   rotated?: boolean;
@@ -107,7 +107,7 @@ class CreditCardComponent extends React.Component<Props> {
     lastUsage: true,
     whiteLine: false,
     logoPosition: LogoPosition.CENTER,
-    mainActionNavigation: undefined,
+    mainAction: undefined,
     flatBottom: false,
     headerOnly: false,
     rotated: false,

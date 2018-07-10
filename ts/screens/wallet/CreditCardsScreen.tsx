@@ -7,7 +7,7 @@ import * as React from "react";
 
 import { Content, List, Text, View } from "native-base";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";

@@ -28,21 +28,28 @@ import ROUTES from "../../../navigation/routes";
 import { GlobalState } from "../../../store/reducers/types";
 import { creditCardsSelector } from "../../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../../store/reducers/wallet/transactions";
-import { CreditCard } from "../../../types/CreditCard";
+import { CreditCard, CreditCardId } from "../../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
+import { Dispatch } from '../../../store/actions/types';
+import { confirmPaymentMethod } from '../../../store/actions/wallet/payment';
+import { LogoPosition } from '../../../components/wallet/card/Logo';
 
 type ReduxMappedStateProps = Readonly<{
   cards: ReadonlyArray<CreditCard>;
   transaction: Readonly<WalletTransaction>;
 }>;
 
+type ReduxMappedDispatchProps = Readonly<{
+  confirmPaymentMethod: (cardId: CreditCardId) => void
+}>;
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
-class PickPaymentMethodScreen extends React.Component<Props, never> {
+class PickPaymentMethodScreen extends React.Component<Props> {
   private goBack() {
     this.props.navigation.goBack();
   }
@@ -86,6 +93,8 @@ class PickPaymentMethodScreen extends React.Component<Props, never> {
                   menu={false}
                   favorite={false}
                   lastUsage={false}
+                  mainAction={this.props.confirmPaymentMethod}
+                  logoPosition={LogoPosition.TOP}
                 />
               )}
             />
@@ -124,4 +133,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   )
 });
 
-export default connect(mapStateToProps)(PickPaymentMethodScreen);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  confirmPaymentMethod: (cardId: CreditCardId) => dispatch(confirmPaymentMethod(cardId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PickPaymentMethodScreen);
