@@ -9,6 +9,7 @@ import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
 import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
 import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
+import { TextVerificationScreen } from "../screens/wallet/TextVerificationScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
@@ -34,6 +35,9 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
       screen: TransactionsScreen
+    },
+    [ROUTES.WALLET_TEXT_VERIFICATION]: {
+      screen: TextVerificationScreen
     },
     [ROUTES.WALLET_ADD_CARD]: {
       screen: AddCardScreen

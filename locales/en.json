@@ -169,6 +169,12 @@
       "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
     },
+    "textMsg": {
+      "title":"Text confirmation code",
+      "header":"Confirmation code",
+      "newCode":"Request a new code",
+      "info":"Insert the code that was sent by text to your mobile phone"
+    },
     "saveCard": {
       "header":"Save the card",
       "title":"Do you want to save this card?",

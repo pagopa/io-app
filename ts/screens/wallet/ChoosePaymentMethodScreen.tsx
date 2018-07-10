@@ -64,7 +64,6 @@ class ChoosePaymentMethodScreen extends React.Component<Props, never> {
         </AppHeader>
         <Content noPadded={true}>
           <PaymentBannerComponent
-            navigation={this.props.navigation}
             paymentReason={transaction.paymentReason}
             currentAmount={transaction.amount.toFixed(2).toString()}
             entity={transaction.recipient}
