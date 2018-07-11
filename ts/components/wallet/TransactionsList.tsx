@@ -28,7 +28,6 @@ import {
   latestTransactionsSelector,
   transactionsByCardSelector
 } from "../../store/reducers/wallet/transactions";
-import { CreditCardId } from "../../types/CreditCard";
 import { WalletTransaction } from "../../types/wallet";
 import { WalletStyles } from "../styles/wallet";
 
@@ -38,7 +37,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   selectTransaction: (i: WalletTransaction) => void;
-  selectCard: (item: CreditCardId) => void;
+  selectCard: (item: number) => void;
 }>;
 
 /**

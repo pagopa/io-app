@@ -13,14 +13,14 @@ import I18n from "../../i18n";
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import CreditCardComponent from "../../components/wallet/card";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardsSelector } from "../../store/reducers/wallet/cards";
-import { CreditCard } from "../../types/CreditCard";
 
 type ReduxMappedStateProps = Readonly<{
-  cards: ReadonlyArray<CreditCard>;
+  cards: ReadonlyArray<Wallet>;
 }>;
 
 type OwnProps = Readonly<{
@@ -44,7 +44,7 @@ class CreditCardsScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         headerContents={headerContents}
       >
-        <Content style={WalletStyles.backContent}>
+        <Content style={WalletStyles.header}>
           <List
             removeClippedSubviews={false}
             dataArray={this.props.cards as any[]} // tslint:disable-line

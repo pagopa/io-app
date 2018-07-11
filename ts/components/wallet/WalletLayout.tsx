@@ -8,24 +8,24 @@
  * footer with a button for starting a new payment
  */
 import { Body, Container, Content, Text, View } from "native-base";
-import { Left } from "native-base";
 import { Button } from "native-base";
+import { Left } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { Dispatch } from "../../store/actions/types";
+import { startPayment } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
-import { CreditCard } from "../../types/CreditCard";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import CreditCardComponent from "./card";
 import { LogoPosition } from "./card/Logo";
-import { Dispatch } from '../../store/actions/types';
-import { connect } from 'react-redux';
-import { startPayment } from '../../store/actions/wallet/payment';
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -47,17 +47,17 @@ export enum CardEnum {
 
 type FullCard = Readonly<{
   type: CardEnum.FULL;
-  card: CreditCard;
+  card: Wallet;
 }>;
 
 type HeaderCard = Readonly<{
   type: CardEnum.HEADER;
-  card: CreditCard;
+  card: Wallet;
 }>;
 
 type FannedCards = Readonly<{
   type: CardEnum.FAN;
-  cards: ReadonlyArray<CreditCard>;
+  cards: ReadonlyArray<Wallet>;
 }>;
 
 type NoCards = Readonly<{
@@ -186,12 +186,7 @@ class WalletLayout extends React.Component<Props> {
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
-            <Button
-              block={true}
-              onPress={() =>
-                this.props.startPayment()
-              }
-            >
+            <Button block={true} onPress={() => this.props.startPayment()}>
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
@@ -206,4 +201,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   startPayment: () => dispatch(startPayment())
 });
 
-export default connect(undefined, mapDispatchToProps)(WalletLayout);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(WalletLayout);

@@ -17,16 +17,17 @@ import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import CreditCardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
+import { UNKNOWN_CARD } from "../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{
-  card: Readonly<CreditCard>;
+  card: Readonly<Wallet>;
 }>;
 
 type OwnProps = Readonly<{

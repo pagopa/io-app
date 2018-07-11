@@ -10,6 +10,10 @@ import { Col, Row } from "react-native-easy-grid";
 import { CardProps } from ".";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import {
+  getCardExpirationDate,
+  getCardHolder
+} from "../../../types/CreditCard";
 import IconFont from "../../ui/IconFont";
 import FooterRow from "./FooterRow";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -95,13 +99,15 @@ export default class CardBody extends React.Component<CardProps> {
         <Text
           style={[CreditCardStyles.textStyle, CreditCardStyles.smallTextStyle]}
         >
-          {`${I18n.t("creditCardComponent.validUntil")} ${item.expirationDate}`}
+          {`${I18n.t("creditCardComponent.validUntil")} ${getCardExpirationDate(
+            item
+          )}`}
         </Text>
       </Row>,
       <Row key="owner" size={6} style={CreditCardStyles.rowStyle}>
         <Col size={7}>
           <Text style={CreditCardStyles.textStyle}>
-            {item.owner.toUpperCase()}
+            {getCardHolder(item).toUpperCase()}
           </Text>
         </Col>
         <Col size={2}>{this.rightPart()}</Col>

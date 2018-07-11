@@ -1,3 +1,4 @@
+import { PAYMENT_VERIFY_OTP } from "./../store/actions/constants";
 /**
  * A saga that manages the Wallet.
  */
@@ -5,49 +6,49 @@
 import {
   call,
   Effect,
+  fork,
   put,
-  takeLatest,
-  take,
   select,
-  fork
+  take,
+  takeLatest
 } from "redux-saga/effects";
 
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { NavigationActions } from "react-navigation";
+import { CodiceContestoPagamento } from "../../definitions/pagopa-proxy/CodiceContestoPagamento";
+import { EnteBeneficiario } from "../../definitions/pagopa-proxy/EnteBeneficiario";
+import { Iban } from "../../definitions/pagopa-proxy/Iban";
+import { ImportoEuroCents } from "../../definitions/pagopa-proxy/ImportoEuroCents";
+import { PaymentRequestsGetResponse } from "../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
+import { Wallet } from "../../definitions/pagopa/Wallet";
+import { Option } from "../../node_modules/fp-ts/lib/Option";
 import { WalletAPI } from "../api/wallet/wallet-api";
+import ROUTES from "../navigation/routes";
 import {
+  COMPLETE_PAYMENT,
   FETCH_CARDS_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
-  START_PAYMENT,
-  COMPLETE_PAYMENT,
-  PAYMENT_INSERT_DATA_MANUALLY,
-  PAYMENT_SHOW_SUMMARY,
-  PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_CONFIRM_SUMMARY,
-  PAYMENT_REQUEST_TEXT_VERIFICATION
+  PAYMENT_INSERT_DATA_MANUALLY,
+  PAYMENT_PICK_PAYMENT_METHOD,
+  PAYMENT_REQUEST_OTP,
+  PAYMENT_SHOW_SUMMARY,
+  START_PAYMENT
 } from "../store/actions/constants";
-import { cardsFetched } from "../store/actions/wallet/cards";
-import { transactionsFetched } from "../store/actions/wallet/transactions";
-import { CreditCard, CreditCardId } from "../types/CreditCard";
-import { WalletTransaction } from "../types/wallet";
-import ROUTES from "../navigation/routes";
-import { NavigationActions } from "react-navigation";
-import { PaymentRequestsGetResponse } from "../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
-import { ImportoEuroCents } from "../../definitions/pagopa-proxy/ImportoEuroCents";
-import { CodiceContestoPagamento } from "../../definitions/pagopa-proxy/CodiceContestoPagamento";
-import { Iban } from "../../definitions/pagopa-proxy/Iban";
-import { EnteBeneficiario } from "../../definitions/pagopa-proxy/EnteBeneficiario";
-import {
-  storeRptIdData,
-  storeVerificaResponse,
-  storeInitialAmount,
-  pickPaymentMethod,
-  confirmPaymentMethod,
-  storeSelectedPaymentMethod
-} from "../store/actions/wallet/payment";
-import { RptId, AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
-import { getFavoriteCreditCardId } from "../store/reducers/wallet/cards";
-import { Option } from "../../node_modules/fp-ts/lib/Option";
 import { Action } from "../store/actions/types";
+import { cardsFetched } from "../store/actions/wallet/cards";
+import {
+  confirmPaymentMethod,
+  pickPaymentMethod,
+  storeInitialAmount,
+  storeRptIdData,
+  storeSelectedPaymentMethod,
+  storeVerificaResponse
+} from "../store/actions/wallet/payment";
+import { transactionsFetched } from "../store/actions/wallet/transactions";
+import { getFavoriteCreditCardId } from "../store/reducers/wallet/cards";
+import { WalletTransaction } from "../types/wallet";
 
 function* fetchTransactions(
   loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>
@@ -59,9 +60,9 @@ function* fetchTransactions(
 }
 
 function* fetchCreditCards(
-  loadCards: () => Promise<ReadonlyArray<CreditCard>>
+  loadCards: () => Promise<ReadonlyArray<Wallet>>
 ): Iterator<Effect> {
-  const cards: ReadonlyArray<CreditCard> = yield call(loadCards);
+  const cards: ReadonlyArray<Wallet> = yield call(loadCards);
   yield put(cardsFetched(cards));
 }
 
@@ -79,7 +80,7 @@ function* paymentSaga(): Iterator<Effect> {
       PAYMENT_CONFIRM_SUMMARY,
       PAYMENT_PICK_PAYMENT_METHOD,
       PAYMENT_CONFIRM_PAYMENT_METHOD,
-      PAYMENT_REQUEST_TEXT_VERIFICATION,
+      PAYMENT_REQUEST_OTP,
       COMPLETE_PAYMENT
     ]);
     yield fork(handlePaymentActions, action);
@@ -138,9 +139,7 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
     // Otherwise, show a list of payment methods available
     // TODO: if no payment method is available (or if the
     // user chooses to do so), allow adding a new one.
-    const favoriteCard: Option<CreditCardId> = yield select(
-      getFavoriteCreditCardId
-    );
+    const favoriteCard: Option<number> = yield select(getFavoriteCreditCardId);
     if (favoriteCard.isSome()) {
       // show card
       yield put(confirmPaymentMethod(favoriteCard.value));
@@ -158,12 +157,19 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
     yield put(storeSelectedPaymentMethod(cardId));
     yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
   }
-  if (action.type === PAYMENT_REQUEST_TEXT_VERIFICATION) {
+  if (action.type === PAYMENT_REQUEST_OTP) {
     // a payment method has been selected.
     // TODO
     // -> do the "attiva" here (-> pagoPA proxy)
     // -> Request OTP /v1/users/actions/send-otp ? (-> pagoPA REST)
-    //yield put(navigateTo(ROUTES.PAYMENT_TEXT_VERIFICATION));
+    yield put(navigateTo(ROUTES.PAYMENT_TEXT_VERIFICATION));
+  }
+  if (action.type === PAYMENT_VERIFY_OTP) {
+    // TODO contact server & send OTP -> action.payload (-> pagoPA REST)
+    // temporary check: if OTP is empty, fail
+    if (action.payload !== "") {
+      yield put({ type: COMPLETE_PAYMENT });
+    }
   }
 }
 

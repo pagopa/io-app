@@ -21,26 +21,30 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import CreditCardComponent from "../../../components/wallet/card";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import {
+  pickPaymentMethod,
+  requestOtp
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { CreditCard, UNKNOWN_CARD } from "../../../types/CreditCard";
+import { selectedPaymentMethodSelector } from "../../../store/reducers/wallet/payment";
+import { UNKNOWN_CARD } from "../../../types/unknown";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
-import { selectedPaymentMethodSelector } from '../../../store/reducers/wallet/payment';
-import { Dispatch } from '../../../store/actions/types';
-import { pickPaymentMethod, requestTextVerification } from '../../../store/actions/wallet/payment';
 
 type ReduxMappedStateProps = Readonly<{
-  card: Readonly<CreditCard>;
+  card: Readonly<Wallet>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
-  requestTextVerification: () => void;
+  requestOtp: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -91,15 +95,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentBannerComponent
-<<<<<<< HEAD:ts/screens/wallet/payment/ConfirmPaymentMethodScreen.tsx
-            navigation={this.props.navigation}
-=======
-            paymentReason={transaction.paymentReason}
-            currentAmount={transaction.amount.toFixed(2).toString()}
-            entity={transaction.recipient}
->>>>>>> master:ts/screens/wallet/ConfirmToProceedTransactionScreen.tsx
-          />
+          <PaymentBannerComponent navigation={this.props.navigation} />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
@@ -183,7 +179,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button block={true} primary={true} onPress={this.props.requestTextVerification}>
+          <Button
+            block={true}
+            primary={true}
+            onPress={() => this.props.requestOtp()}
+          >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
           <View spacer={true} />
@@ -197,7 +197,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
-            <View vspacer={true} />
+            <View hspacer={true} />
             <Button
               style={styles.child}
               block={true}
@@ -219,7 +219,10 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(pickPaymentMethod()),
-  requestTextVerification: () => dispatch(requestTextVerification())
+  requestOtp: () => dispatch(requestOtp())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPaymentMethodScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmPaymentMethodScreen);

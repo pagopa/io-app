@@ -18,21 +18,22 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import { CardEnum } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
 import variables from "../../theme/variables";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
+import { UNKNOWN_CARD } from "../../types/unknown";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
-  selectedCard: CreditCard;
+  selectedCard: Wallet;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps;

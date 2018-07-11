@@ -5,10 +5,7 @@
  * the app to get the required data
  */
 
-// Required to build user-displayable contents (e.g. "last used ...")
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import I18n from "../../i18n";
-import { CreditCard, CreditCardId } from "../../types/CreditCard";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { TransactionManager, WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
@@ -36,47 +33,105 @@ const managers: ReadonlyArray<TransactionManager> = [
   }
 ];
 
-const cards: ReadonlyArray<CreditCard> = [
+const cards: ReadonlyArray<Wallet> = [
   {
-    id: 1 as CreditCardId,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
-      "wallet.today"
-    )} 07:34` as NonEmptyString,
-    pan: "375987654302001",
-    owner: "Mario Rossi" as NonEmptyString,
-    expirationDate: "10/20" as NonEmptyString
+    creditCard: {
+      brandLogo: "AMEX",
+      expireMonth: "10",
+      expireYear: "20",
+      flag3dsVerified: false,
+      holder: "Mario Rossi",
+      id: -1,
+      pan: "2001"
+    },
+    favourite: false,
+    idPsp: 4,
+    id: 1,
+    lastUsage: "2018-04-17T07:34:00.000Z",
+    psp: {
+      businessName: "Poste Italiane",
+      fixedCost: {
+        amount: 50,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   },
   {
-    id: 2 as CreditCardId,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
-      "wallet.yesterday"
-    )} 07:34` as NonEmptyString,
-    pan: "4324520169880454",
-    owner: "John Doe" as NonEmptyString,
-    expirationDate: "11/21" as NonEmptyString
+    creditCard: {
+      brandLogo: "VISA",
+      expireMonth: "11",
+      expireYear: "21",
+      flag3dsVerified: false,
+      holder: "John Doe",
+      id: -1,
+      pan: "4545"
+    },
+    favourite: false,
+    idPsp: 3,
+    id: 2,
+    lastUsage: "2018-02-14T10:21:00.000Z",
+    psp: {
+      businessName: "Visa",
+      fixedCost: {
+        amount: 150,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   },
   {
-    id: 3 as CreditCardId,
-    lastUsage: I18n.t("wallet.noNewTransactions") as NonEmptyString,
-    pan: "5400470862342849",
-    owner: "Mario Bianchi" as NonEmptyString,
-    expirationDate: "12/22" as NonEmptyString
+    creditCard: {
+      brandLogo: "MASTERCARD",
+      expireMonth: "12",
+      expireYear: "22",
+      flag3dsVerified: false,
+      holder: "Mario Bianchi",
+      id: -1,
+      pan: "2849"
+    },
+    favourite: false,
+    idPsp: 2,
+    id: 3,
+    lastUsage: "never",
+    psp: {
+      businessName: "Mastercard",
+      fixedCost: {
+        amount: 200,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   },
   {
-    id: 4 as CreditCardId,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
-      "wallet.today"
-    )} 09:12` as NonEmptyString,
-    pan: "4000123456789010",
-    owner: "John Smith" as NonEmptyString,
-    expirationDate: "09/19" as NonEmptyString
+    creditCard: {
+      brandLogo: "VISA",
+      expireMonth: "09",
+      expireYear: "19",
+      flag3dsVerified: false,
+      holder: "John Smith",
+      id: -1,
+      pan: "9010"
+    },
+    favourite: false,
+    idPsp: 3,
+    id: 4,
+    lastUsage: "2018-01-22T14:54:00.000Z",
+    psp: {
+      businessName: "Visa",
+      fixedCost: {
+        amount: 125,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   }
 ];
 
 const transactions: ReadonlyArray<WalletTransaction> = [
   {
     id: 1,
-    cardId: 1 as CreditCardId,
+    cardId: 1,
     date: "17/04/2018",
     time: "07:34",
     isoDatetime: "2018-04-17T07:34:00.000Z",
@@ -89,7 +144,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 2,
-    cardId: 2 as CreditCardId,
+    cardId: 2,
     date: "16/04/2018",
     time: "15:01",
     isoDatetime: "2018-04-16T15:01:00.000Z",
@@ -102,7 +157,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 3,
-    cardId: 4 as CreditCardId,
+    cardId: 4,
     date: "15/04/2018",
     time: "08:56",
     isoDatetime: "2018-04-15T08:56:00.000Z",
@@ -115,7 +170,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 4,
-    cardId: 2 as CreditCardId,
+    cardId: 2,
     date: "14/02/2018",
     time: "10:21",
     isoDatetime: "2018-02-14T10:21:00.000Z",
@@ -128,7 +183,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 5,
-    cardId: 4 as CreditCardId,
+    cardId: 4,
     date: "22/01/2018",
     time: "14:54",
     isoDatetime: "2018-01-22T14:54:00.000Z",
@@ -141,7 +196,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 6,
-    cardId: 4 as CreditCardId,
+    cardId: 4,
     date: "01/01/2018",
     time: "23:34",
     isoDatetime: "2018-01-01T23:34:00.000Z",
@@ -154,7 +209,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 7,
-    cardId: 1 as CreditCardId,
+    cardId: 1,
     date: "22/12/2017",
     time: "14:23",
     isoDatetime: "2017-12-22T14:23:00.000Z",
@@ -167,7 +222,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 8,
-    cardId: 1 as CreditCardId,
+    cardId: 1,
     date: "17/12/2017",
     time: "12:34",
     isoDatetime: "2017-12-17T12:34:00.000Z",
@@ -180,7 +235,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 9,
-    cardId: 4 as CreditCardId,
+    cardId: 4,
     date: "13/12/2017",
     time: "10:34",
     isoDatetime: "2017-12-13T10:34:00.000Z",
@@ -236,7 +291,7 @@ const transactionSubject: Readonly<TransactionSubject> = {
 // will actually fetch data from the proxy/pagopa)
 // @https://www.pivotaltracker.com/story/show/157770129
 export class WalletAPI {
-  public static async getCreditCards(): Promise<ReadonlyArray<CreditCard>> {
+  public static async getCreditCards(): Promise<ReadonlyArray<Wallet>> {
     return cards;
   }
 

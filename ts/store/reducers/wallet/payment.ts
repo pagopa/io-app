@@ -1,24 +1,23 @@
-import { RptId, AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
-import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
-import { Option, none, some } from "fp-ts/lib/Option";
-import { Action } from "../../actions/types";
-import {
-  STORE_RPTID_DATA,
-  STORE_INITIAL_AMOUNT,
-  STORE_VERIFICA_DATA,
-  PAYMENT_STORE_SELECTED_PAYMENT_METHOD
-} from "../../actions/constants";
-import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
-import { GlobalState } from "../types";
+import { none, Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
-import { CreditCardId } from "../../../types/CreditCard";
-import { getCards, getCardFromId } from "./cards";
+import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
+import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
+import {
+  PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
+  STORE_INITIAL_AMOUNT,
+  STORE_RPTID_DATA,
+  STORE_VERIFICA_DATA
+} from "../../actions/constants";
+import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
+import { getCardFromId, getCards } from "./cards";
 
 export type PaymentState = Readonly<{
   rptId: Option<RptId>;
   verificaResponse: Option<PaymentRequestsGetResponse>;
   initialAmount: Option<AmountInEuroCents>;
-  selectedPaymentMethod: Option<CreditCardId>;
+  selectedPaymentMethod: Option<number>;
 }>;
 
 export const PAYMENT_INITIAL_STATE: PaymentState = {
@@ -39,9 +38,8 @@ export const getInitialAmount = (
   state: GlobalState
 ): Option<AmountInEuroCents> => state.wallet.payment.initialAmount;
 
-export const getSelectedPaymentMethod = (
-  state: GlobalState
-): Option<CreditCardId> => state.wallet.payment.selectedPaymentMethod;
+export const getSelectedPaymentMethod = (state: GlobalState): Option<number> =>
+  state.wallet.payment.selectedPaymentMethod;
 
 export const currentAmountSelector = createSelector(
   getVerificaResponse,

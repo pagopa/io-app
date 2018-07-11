@@ -18,6 +18,7 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { setFavoriteCard } from "../../../store/actions/wallet/cards";
@@ -25,7 +26,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
-import { CreditCard, CreditCardId } from "../../../types/CreditCard";
+import { getCardId, getCardPan } from "../../../types/CreditCard";
 import IconFont from "../../ui/IconFont";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -77,18 +78,18 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  setFavoriteCard: (item: Option<CreditCardId>) => void;
+  setFavoriteCard: (item: Option<number>) => void;
 }>;
 
 export type CardProps = Readonly<{
-  item: CreditCard;
+  item: Wallet;
   navigation: NavigationScreenProp<NavigationState>;
   menu?: boolean;
   favorite?: boolean;
   lastUsage?: boolean;
   whiteLine?: boolean;
   logoPosition?: LogoPosition;
-  mainAction?: (cardId: CreditCardId) => void;
+  mainAction?: (cardId: number) => void;
   flatBottom?: boolean;
   headerOnly?: boolean;
   rotated?: boolean;
@@ -118,7 +119,7 @@ class CreditCardComponent extends React.Component<Props> {
     if (this.props.isFavoriteCard) {
       this.props.setFavoriteCard(none);
     } else {
-      this.props.setFavoriteCard(some(this.props.item.id));
+      this.props.setFavoriteCard(some(getCardId(this.props.item)));
     }
   };
 
@@ -227,7 +228,9 @@ class CreditCardComponent extends React.Component<Props> {
                         CreditCardStyles.largeTextStyle
                       ]}
                     >
-                      {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
+                      {`${HIDDEN_CREDITCARD_NUMBERS}${getCardPan(item).slice(
+                        -4
+                      )}`}
                     </Text>
                   </Col>
 
@@ -252,13 +255,12 @@ const mapStateToProps = (
   const favoriteCard = getFavoriteCreditCardId(state);
   return {
     isFavoriteCard:
-      favoriteCard.isSome() && favoriteCard.value === props.item.id
+      favoriteCard.isSome() && favoriteCard.value === getCardId(props.item)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<CreditCardId>) =>
-    dispatch(setFavoriteCard(item))
+  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteCard(item))
 });
 
 export default connect(

@@ -25,6 +25,10 @@ export const WalletStyles = StyleSheet.create({
   alignCenter: {
     alignItems: "center"
   },
+  flexRow: {
+    flex: 1,
+    flexDirection: "row"
+  },
   bottomBorder: {
     borderBottomWidth: 1,
     borderBottomColor: variables.brandGray
@@ -44,9 +48,6 @@ export const WalletStyles = StyleSheet.create({
   whyLink: {
     fontWeight: "bold",
     color: variables.textLinkColor
-  },
-  backContent: {
-    backgroundColor: variables.brandDarkGray
   },
   whiteContent: {
     backgroundColor: variables.colorWhite,

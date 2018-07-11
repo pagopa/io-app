@@ -17,14 +17,12 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
-import { TransactionSummary } from "../../types/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -49,10 +47,6 @@ export default class TextVerificationScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const transaction: Readonly<
-      TransactionSummary
-    > = WalletAPI.getTransactionSummary();
-
     return (
       <Container>
         <AppHeader>
@@ -70,9 +64,7 @@ export default class TextVerificationScreen extends React.Component<Props> {
         </AppHeader>
 
         <Content noPadded={true} scrollEnabled={false}>
-          <PaymentBannerComponent
-            paymentReason={transaction.paymentReason}
-          />
+          <PaymentBannerComponent navigation={this.props.navigation} />
           <View style={styles.contentPadding}>
             <View spacer={true} large={true} />
             <H1>{I18n.t("wallet.textMsg.title")}</H1>

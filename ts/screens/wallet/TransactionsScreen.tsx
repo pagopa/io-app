@@ -13,6 +13,7 @@ import {
 } from "react-navigation";
 
 import { connect } from "react-redux";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
@@ -21,10 +22,10 @@ import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
+import { UNKNOWN_CARD } from "../../types/unknown";
 
 interface ParamType {
-  readonly card: CreditCard;
+  readonly card: Wallet;
 }
 
 interface StateParams extends NavigationState {
@@ -36,7 +37,7 @@ interface OwnProps {
 }
 
 type ReduxMappedProps = Readonly<{
-  selectedCard: CreditCard;
+  selectedCard: Wallet;
 }>;
 
 type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;

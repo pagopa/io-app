@@ -4,7 +4,8 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { CreditCard, CreditCardId } from "../../../types/CreditCard";
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
+import { getCardId } from "../../../types/CreditCard";
 import {
   CARDS_FETCHED,
   SELECT_CARD_FOR_DETAILS,
@@ -15,9 +16,9 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type CardsState = Readonly<{
-  cards: IndexedById<CreditCard>;
-  selectedCardId: Option<CreditCardId>;
-  favoriteCardId: Option<CreditCardId>;
+  cards: IndexedById<Wallet>;
+  selectedCardId: Option<number>;
+  favoriteCardId: Option<number>;
 }>;
 
 export const CARDS_INITIAL_STATE: CardsState = {
@@ -37,17 +38,17 @@ export const creditCardsSelector = createSelector(
   getCards,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (cards: IndexedById<CreditCard>): ReadonlyArray<CreditCard> => _.values(cards)
+  (cards: IndexedById<Wallet>): ReadonlyArray<Wallet> => _.values(cards)
 );
 
 export const getCardFromId = (
-  cardId: Option<CreditCardId>,
-  cards: IndexedById<CreditCard>
-): Option<CreditCard> => {
+  cardId: Option<number>,
+  cards: IndexedById<Wallet>
+): Option<Wallet> => {
   if (cardId.isNone()) {
     return none;
   }
-  return fromNullable(_.values(cards).find(c => c.id === cardId.value));
+  return fromNullable(_.values(cards).find(c => getCardId(c) === cardId.value));
 };
 
 export const selectedCreditCardSelector = createSelector(

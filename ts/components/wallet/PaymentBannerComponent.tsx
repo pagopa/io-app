@@ -5,32 +5,32 @@
  *   @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
  */
 
+import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import I18n from "../../i18n";
-import { WalletStyles } from "../styles/wallet";
-import { AmountInEuroCentsFromNumber } from '../../screens/wallet/payment/TransactionSummaryScreen';
-import { AmountInEuroCents } from 'italia-ts-commons/lib/pagopa';
-import { GlobalState } from '../../store/reducers/types';
-import { paymentReasonSelector, currentAmountSelector, paymentRecipientSelector } from '../../store/reducers/wallet/payment';
-import { UNKNOWN_RECIPIENT } from '../../types/unknown';
-import { EnteBeneficiario } from '../../../definitions/pagopa-proxy/EnteBeneficiario';
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
-
+import { EnteBeneficiario } from "../../../definitions/pagopa-proxy/EnteBeneficiario";
+import I18n from "../../i18n";
+import { AmountInEuroCentsFromNumber } from "../../screens/wallet/payment/TransactionSummaryScreen";
+import { GlobalState } from "../../store/reducers/types";
+import {
+  currentAmountSelector,
+  paymentReasonSelector,
+  paymentRecipientSelector
+} from "../../store/reducers/wallet/payment";
+import { UNKNOWN_RECIPIENT } from "../../types/unknown";
+import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedProps = Readonly<{
-  paymentReason: string, 
-  currentAmount: AmountInEuroCents,
-  recipient: EnteBeneficiario
+  paymentReason: string;
+  currentAmount: AmountInEuroCents;
+  recipient: EnteBeneficiario;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-  // paymentReason: string;
-  // currentAmount: string;
-  // entity: string;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -52,13 +52,17 @@ class PaymentBannerComponent extends React.Component<Props> {
               bold={true}
               style={[WalletStyles.white, WalletStyles.textRight]}
             >
-              {`${AmountInEuroCentsFromNumber.encode(this.props.currentAmount)} €`}
+              {`${AmountInEuroCentsFromNumber.encode(
+                this.props.currentAmount
+              )} €`}
             </Text>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Text style={WalletStyles.white}>{this.props.recipient.denominazioneBeneficiario}</Text>
+            <Text style={WalletStyles.white}>
+              {this.props.recipient.denominazioneBeneficiario}
+            </Text>
             <View spacer={true} />
           </Col>
           <Col>
@@ -74,8 +78,10 @@ class PaymentBannerComponent extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  paymentReason: paymentReasonSelector(state).getOrElse(""), 
-  currentAmount: currentAmountSelector(state).getOrElse("0000000000" as AmountInEuroCents),
+  paymentReason: paymentReasonSelector(state).getOrElse(""),
+  currentAmount: currentAmountSelector(state).getOrElse(
+    "0000000000" as AmountInEuroCents
+  ),
   recipient: paymentRecipientSelector(state).getOrElse(UNKNOWN_RECIPIENT)
 });
 

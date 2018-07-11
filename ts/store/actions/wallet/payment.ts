@@ -1,19 +1,19 @@
-import { RptId, AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
-import {
-  STORE_RPTID_DATA,
-  PAYMENT_SHOW_SUMMARY,
-  STORE_INITIAL_AMOUNT,
-  STORE_VERIFICA_DATA,
-  START_PAYMENT,
-  PAYMENT_INSERT_DATA_MANUALLY,
-  PAYMENT_CONFIRM_SUMMARY,
-  PAYMENT_PICK_PAYMENT_METHOD,
-  PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  PAYMENT_REQUEST_TEXT_VERIFICATION
-} from "../constants";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
-import { CreditCardId } from "../../../types/CreditCard";
+import {
+  PAYMENT_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_CONFIRM_SUMMARY,
+  PAYMENT_INSERT_DATA_MANUALLY,
+  PAYMENT_PICK_PAYMENT_METHOD,
+  PAYMENT_REQUEST_OTP,
+  PAYMENT_SHOW_SUMMARY,
+  PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
+  START_PAYMENT,
+  STORE_INITIAL_AMOUNT,
+  STORE_RPTID_DATA,
+  STORE_VERIFICA_DATA
+} from "../constants";
+import { PAYMENT_VERIFY_OTP } from "./../constants";
 
 export type StartPayment = Readonly<{
   type: typeof START_PAYMENT;
@@ -45,7 +45,7 @@ export type StoreInitialAmount = Readonly<{
 
 export type StoreSelectedPaymentMethod = Readonly<{
   type: typeof PAYMENT_STORE_SELECTED_PAYMENT_METHOD;
-  payload: CreditCardId;
+  payload: number;
 }>;
 
 export type ConfirmSummary = Readonly<{
@@ -58,11 +58,16 @@ export type PickPaymentMethod = Readonly<{
 
 export type ConfirmPaymentMethod = Readonly<{
   type: typeof PAYMENT_CONFIRM_PAYMENT_METHOD;
-  payload: CreditCardId;
+  payload: number;
 }>;
 
-export type RequestTextVerification = Readonly<{
-  type: typeof PAYMENT_REQUEST_TEXT_VERIFICATION;
+export type RequestOtp = Readonly<{
+  type: typeof PAYMENT_REQUEST_OTP;
+}>;
+
+export type VerifyOtp = Readonly<{
+  type: typeof PAYMENT_VERIFY_OTP;
+  payload: string;
 }>;
 
 export type PaymentAction =
@@ -76,7 +81,8 @@ export type PaymentAction =
   | PickPaymentMethod
   | ConfirmPaymentMethod
   | StoreSelectedPaymentMethod
-  | RequestTextVerification;
+  | RequestOtp
+  | VerifyOtp;
 
 export const storeRptIdData = (rptId: RptId): StoreRptIdData => ({
   type: STORE_RPTID_DATA,
@@ -125,17 +131,22 @@ export const pickPaymentMethod = (): PickPaymentMethod => ({
 });
 
 export const confirmPaymentMethod = (
-  creditCardId: CreditCardId
+  creditCardId: number
 ): ConfirmPaymentMethod => ({
   type: PAYMENT_CONFIRM_PAYMENT_METHOD,
   payload: creditCardId
 });
 
-export const storeSelectedPaymentMethod = (creditCardId: CreditCardId) => ({
+export const storeSelectedPaymentMethod = (creditCardId: number) => ({
   type: PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
   payload: creditCardId
 });
 
-export const requestTextVerification = (): RequestTextVerification => ({
-  type: PAYMENT_REQUEST_TEXT_VERIFICATION
+export const requestOtp = (): RequestOtp => ({
+  type: PAYMENT_REQUEST_OTP
+});
+
+export const verifyOtp = (otp: string): VerifyOtp => ({
+  type: PAYMENT_VERIFY_OTP,
+  payload: otp
 });

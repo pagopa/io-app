@@ -1,6 +1,14 @@
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
+import { Either } from "fp-ts/lib/Either";
+import * as t from "io-ts";
+import {
+  AmountInEuroCents,
+  PaymentNoticeQrCodeFromString,
+  RptId,
+  rptIdFromPaymentNoticeQrCode
+} from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -17,19 +25,19 @@ import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import {
+  insertDataManually,
+  showPaymentSummary
+} from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import { PaymentNoticeQrCodeFromString, rptIdFromPaymentNoticeQrCode, RptId, AmountInEuroCents } from 'italia-ts-commons/lib/pagopa';
-import { showPaymentSummary, insertDataManually } from '../../../store/actions/wallet/payment';
-import { Dispatch } from '../../../store/actions/types';
-import { connect } from 'react-redux';
-import { Either } from 'fp-ts/lib/Either';
-import * as t from "io-ts";
 
 type ReduxMappedProps = Readonly<{
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void,
-  insertDataManually: () => void
+  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  insertDataManually: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -132,7 +140,6 @@ const rptIdFromQrCodeString = (
   }
 };
 
-
 class ScanQRCodeScreen extends React.Component<Props, never> {
   private goBack() {
     this.props.navigation.goBack();
@@ -144,10 +151,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
     if (rptId.isRight() && qrCode.isRight()) {
       // successful conversion to RptId
       this.props.showPaymentSummary(rptId.value, qrCode.value.amount);
-    }
-    else {
-      console.warn("Invalid QR code!");
-    }
+    } // else toast stating that QR code is invalid
   };
 
   public render(): React.ReactNode {
@@ -165,7 +169,9 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
         </AppHeader>
         <ScrollView bounces={false}>
           <QRCodeScanner
-            onRead={(reading: { data: string }) => this.qrCodeRead(reading.data)}
+            onRead={(reading: { data: string }) =>
+              this.qrCodeRead(reading.data)
+            }
             containerStyle={styles.cameraContainer}
             showMarker={true}
             cameraStyle={styles.camera}
@@ -216,7 +222,8 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.insertDataManually()}>
+            onPress={() => this.props.insertDataManually()}
+          >
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
           </Button>
           <View spacer={true} />
@@ -230,8 +237,12 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => dispatch(showPaymentSummary(rptId, amount)),
+  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
+    dispatch(showPaymentSummary(rptId, amount)),
   insertDataManually: () => dispatch(insertDataManually())
 });
 
-export default connect(undefined, mapDispatchToProps)(ScanQRCodeScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(ScanQRCodeScreen);

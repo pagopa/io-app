@@ -18,26 +18,26 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import CreditCardComponent from "../../../components/wallet/card";
+import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { Dispatch } from "../../../store/actions/types";
+import { confirmPaymentMethod } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { creditCardsSelector } from "../../../store/reducers/wallet/cards";
-import { CreditCard, CreditCardId } from "../../../types/CreditCard";
-import { Dispatch } from '../../../store/actions/types';
-import { confirmPaymentMethod } from '../../../store/actions/wallet/payment';
-import { LogoPosition } from '../../../components/wallet/card/Logo';
 
 type ReduxMappedStateProps = Readonly<{
-  cards: ReadonlyArray<CreditCard>;
+  cards: ReadonlyArray<Wallet>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmPaymentMethod: (cardId: CreditCardId) => void
+  confirmPaymentMethod: (cardId: number) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -65,9 +65,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           </Body>
         </AppHeader>
         <Content noPadded={true}>
-          <PaymentBannerComponent
-            navigation={this.props.navigation}
-          />
+          <PaymentBannerComponent navigation={this.props.navigation} />
 
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} />
@@ -123,7 +121,11 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmPaymentMethod: (cardId: CreditCardId) => dispatch(confirmPaymentMethod(cardId))
+  confirmPaymentMethod: (cardId: number) =>
+    dispatch(confirmPaymentMethod(cardId))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PickPaymentMethodScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PickPaymentMethodScreen);

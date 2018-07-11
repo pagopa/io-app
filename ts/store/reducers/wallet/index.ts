@@ -6,10 +6,10 @@
 import { combineReducers } from "redux";
 import { CARDS_INITIAL_STATE, CardsState } from "./cards";
 import cardsReducer from "./cards";
-import { TRANSACTIONS_INITIAL_STATE, TransactionsState } from "./transactions";
-import transactionsReducer from "./transactions";
 import { PAYMENT_INITIAL_STATE, PaymentState } from "./payment";
 import paymentReducer from "./payment";
+import { TRANSACTIONS_INITIAL_STATE, TransactionsState } from "./transactions";
+import transactionsReducer from "./transactions";
 
 export type WalletState = Readonly<{
   transactions: TransactionsState;

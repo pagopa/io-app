@@ -9,6 +9,7 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -26,17 +27,16 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
+import { RptIdFromString } from "../../../../definitions/pagopa-proxy/RptIdFromString";
 import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { RptId, AmountInEuroCents } from 'italia-ts-commons/lib/pagopa';
-import { connect } from 'react-redux';
-import { Dispatch } from '../../../store/actions/types';
-import { showPaymentSummary } from '../../../store/actions/wallet/payment';
-import { RptIdFromString } from '../../../../definitions/pagopa-proxy/RptIdFromString';
+import { Dispatch } from "../../../store/actions/types";
+import { showPaymentSummary } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedProps = Readonly<{
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void
+  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -73,7 +73,6 @@ export const AmountInEuroCentsFromNumber = new t.Type<
   a => parseInt(a, 10) / CENTS_IN_ONE_EURO
 );
 
-
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -89,20 +88,23 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 
   private proceedToSummary = () => {
-    if (this.state.transactionCode.isSome() &&
-        this.state.fiscalCode.isSome() &&
-        this.state.amount.isSome()) {
-      const rptId = RptIdFromString.decode(`${this.state.fiscalCode.value}${this.state.transactionCode.value}`);
-      const amount = AmountInEuroCentsFromNumber.decode(this.state.amount.value);
+    if (
+      this.state.transactionCode.isSome() &&
+      this.state.fiscalCode.isSome() &&
+      this.state.amount.isSome()
+    ) {
+      const rptId = RptIdFromString.decode(
+        `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
+      );
+      const amount = AmountInEuroCentsFromNumber.decode(
+        this.state.amount.value
+      );
       if (rptId.isRight() && amount.isRight()) {
         // valid Rpt Id and valid amount were entered
         this.props.showPaymentSummary(rptId.value, amount.value);
-      }
-      else {
-        console.warn("Invalid data");
-      }
+      } // else toast saying that the data entered is invalid
     }
-  }
+  };
 
   public render(): React.ReactNode {
     return (
@@ -144,7 +146,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Label>{I18n.t("wallet.insertManually.amount")}</Label>
               <Input
                 keyboardType={"numeric"}
-                value={this.state.amount.isSome() ? `${this.state.amount.value}` : ""}
+                value={
+                  this.state.amount.isSome() ? `${this.state.amount.value}` : ""
+                }
                 onChangeText={value => {
                   const parsedValue = parseFloat(value);
                   if (!isNaN(parsedValue)) {
@@ -156,10 +160,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           </Form>
         </Content>
         <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={this.proceedToSummary}>
+          <Button block={true} primary={true} onPress={this.proceedToSummary}>
             <Text>{I18n.t("wallet.insertManually.proceed")}</Text>
           </Button>
           <View spacer={true} />
@@ -178,7 +179,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => dispatch(showPaymentSummary(rptId, amount))
+  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
+    dispatch(showPaymentSummary(rptId, amount))
 });
 
-export default connect(undefined, mapDispatchToProps)(ManualDataInsertionScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(ManualDataInsertionScreen);
