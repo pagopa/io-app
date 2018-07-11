@@ -13,11 +13,8 @@ import Markdown from "../ui/Markdown";
 import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
 export type OwnProps = Readonly<{
-  serviceOrganizationName: string;
-  serviceDepartmentName: string;
-  serviceName: string;
-  id: string;
   createdAt: string;
+  id: string;
   markdown: string;
   paymentData: PaymentData;
   serviceDepartmentName: string;

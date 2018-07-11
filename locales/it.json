@@ -325,9 +325,6 @@
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messaggi...",
     "yesterday": "ieri",
-    "paymentCta": {
-      "payLabel": "Paga"
-    },
     "cta": {
       "pay": "Paga € {{amount}}"
     }
