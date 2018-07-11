@@ -8,7 +8,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import { WalletStyles } from "../styles/wallet";
 import { AmountInEuroCentsFromNumber } from '../../screens/wallet/payment/TransactionSummaryScreen';
@@ -18,6 +17,8 @@ import { paymentReasonSelector, currentAmountSelector, paymentRecipientSelector 
 import { UNKNOWN_RECIPIENT } from '../../types/unknown';
 import { EnteBeneficiario } from '../../../definitions/pagopa-proxy/EnteBeneficiario';
 import { connect } from "react-redux";
+import { NavigationScreenProp, NavigationState } from 'react-navigation';
+
 
 type ReduxMappedProps = Readonly<{
   paymentReason: string, 

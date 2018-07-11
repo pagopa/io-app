@@ -92,7 +92,13 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
         <Content noPadded={true}>
           <PaymentBannerComponent
+<<<<<<< HEAD:ts/screens/wallet/payment/ConfirmPaymentMethodScreen.tsx
             navigation={this.props.navigation}
+=======
+            paymentReason={transaction.paymentReason}
+            currentAmount={transaction.amount.toFixed(2).toString()}
+            entity={transaction.recipient}
+>>>>>>> master:ts/screens/wallet/ConfirmToProceedTransactionScreen.tsx
           />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />

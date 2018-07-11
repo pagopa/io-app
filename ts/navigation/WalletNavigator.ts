@@ -10,6 +10,7 @@ import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethod
 import ScanQRCodeScreen from "../screens/wallet/payment/ScanQRCodeScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
+import TextVerificationScreen from "../screens/wallet/TextVerificationScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
@@ -58,6 +59,9 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
+    },
+    [ROUTES.PAYMENT_TEXT_VERIFICATION]: {
+      screen: TextVerificationScreen
     }
   },
   {

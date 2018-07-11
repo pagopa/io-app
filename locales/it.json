@@ -168,6 +168,13 @@
       "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
+    "textMsg": {
+      "title":"Codice di conferma",
+	    "header":"Codice di Conferma SMS",
+      "newCode":"Richiedi nuovo codice",
+      "info":"Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono"
+    },
+    "transactionDetails": "Dettagli della transazione",
     "saveCard": {
       "header":"Salva la carta",
       "title":"Vuoi salvare questa carta?",
@@ -177,7 +184,6 @@
     },
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
-    "transactionDetails": "Dettagli dell'operazione",
     "addManager": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
