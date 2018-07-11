@@ -32,7 +32,7 @@ import { CreditCard, UNKNOWN_CARD } from "../../../types/CreditCard";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
 import { selectedPaymentMethodSelector } from '../../../store/reducers/wallet/payment';
 import { Dispatch } from '../../../store/actions/types';
-import { pickPaymentMethod } from '../../../store/actions/wallet/payment';
+import { pickPaymentMethod, requestTextVerification } from '../../../store/actions/wallet/payment';
 
 type ReduxMappedStateProps = Readonly<{
   card: Readonly<CreditCard>;
@@ -40,6 +40,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
+  requestTextVerification: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -92,9 +93,6 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         <Content noPadded={true}>
           <PaymentBannerComponent
             navigation={this.props.navigation}
-            paymentReason={transaction.paymentReason}
-            currentAmount={transaction.amount.toFixed(2).toString()}
-            entity={transaction.recipient}
           />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
@@ -179,7 +177,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button block={true} primary={true} onPress={this.props.requestTextVerification}>
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
           <View spacer={true} />
@@ -193,7 +191,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
-            <View style={{width: 16}}/>
+            <View vspacer={true} />
             <Button
               style={styles.child}
               block={true}
@@ -214,7 +212,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: () => dispatch(pickPaymentMethod())
+  pickPaymentMethod: () => dispatch(pickPaymentMethod()),
+  requestTextVerification: () => dispatch(requestTextVerification())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPaymentMethodScreen);

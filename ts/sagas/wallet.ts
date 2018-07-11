@@ -22,7 +22,8 @@ import {
   PAYMENT_SHOW_SUMMARY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_CONFIRM_SUMMARY
+  PAYMENT_CONFIRM_SUMMARY,
+  PAYMENT_REQUEST_TEXT_VERIFICATION
 } from "../store/actions/constants";
 import { cardsFetched } from "../store/actions/wallet/cards";
 import { transactionsFetched } from "../store/actions/wallet/transactions";
@@ -78,6 +79,7 @@ function* paymentSaga(): Iterator<Effect> {
       PAYMENT_CONFIRM_SUMMARY,
       PAYMENT_PICK_PAYMENT_METHOD,
       PAYMENT_CONFIRM_PAYMENT_METHOD,
+      PAYMENT_REQUEST_TEXT_VERIFICATION,
       COMPLETE_PAYMENT
     ]);
     yield fork(handlePaymentActions, action);
@@ -155,6 +157,13 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
     const cardId = action.payload;
     yield put(storeSelectedPaymentMethod(cardId));
     yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
+  }
+  if (action.type === PAYMENT_REQUEST_TEXT_VERIFICATION) {
+    // a payment method has been selected.
+    // TODO
+    // -> do the "attiva" here (-> pagoPA proxy)
+    // -> Request OTP /v1/users/actions/send-otp ? (-> pagoPA REST)
+    //yield put(navigateTo(ROUTES.PAYMENT_TEXT_VERIFICATION));
   }
 }
 

@@ -27,16 +27,13 @@ import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { GlobalState } from "../../../store/reducers/types";
 import { creditCardsSelector } from "../../../store/reducers/wallet/cards";
-import { transactionForDetailsSelector } from "../../../store/reducers/wallet/transactions";
 import { CreditCard, CreditCardId } from "../../../types/CreditCard";
-import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
 import { Dispatch } from '../../../store/actions/types';
 import { confirmPaymentMethod } from '../../../store/actions/wallet/payment';
 import { LogoPosition } from '../../../components/wallet/card/Logo';
 
 type ReduxMappedStateProps = Readonly<{
   cards: ReadonlyArray<CreditCard>;
-  transaction: Readonly<WalletTransaction>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -55,8 +52,6 @@ class PickPaymentMethodScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const { transaction } = this.props;
-
     return (
       <Container>
         <AppHeader>
@@ -72,9 +67,6 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         <Content noPadded={true}>
           <PaymentBannerComponent
             navigation={this.props.navigation}
-            paymentReason={transaction.paymentReason}
-            currentAmount={transaction.amount.toFixed(2).toString()}
-            entity={transaction.recipient}
           />
 
           <View style={WalletStyles.paddedLR}>
@@ -127,10 +119,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
  * selectors will be reviewed in next pr
  */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cards: creditCardsSelector(state),
-  transaction: transactionForDetailsSelector(state).getOrElse(
-    UNKNOWN_TRANSACTION
-  )
+  cards: creditCardsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

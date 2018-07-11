@@ -9,7 +9,8 @@ import {
   PAYMENT_CONFIRM_SUMMARY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_STORE_SELECTED_PAYMENT_METHOD
+  PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
+  PAYMENT_REQUEST_TEXT_VERIFICATION
 } from "../constants";
 import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
 import { CreditCardId } from "../../../types/CreditCard";
@@ -60,6 +61,10 @@ export type ConfirmPaymentMethod = Readonly<{
   payload: CreditCardId;
 }>;
 
+export type RequestTextVerification = Readonly<{
+  type: typeof PAYMENT_REQUEST_TEXT_VERIFICATION;
+}>;
+
 export type PaymentAction =
   | StartPayment
   | ShowPaymentSummary
@@ -70,7 +75,8 @@ export type PaymentAction =
   | ConfirmSummary
   | PickPaymentMethod
   | ConfirmPaymentMethod
-  | StoreSelectedPaymentMethod;
+  | StoreSelectedPaymentMethod
+  | RequestTextVerification;
 
 export const storeRptIdData = (rptId: RptId): StoreRptIdData => ({
   type: STORE_RPTID_DATA,
@@ -128,4 +134,8 @@ export const confirmPaymentMethod = (
 export const storeSelectedPaymentMethod = (creditCardId: CreditCardId) => ({
   type: PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
   payload: creditCardId
+});
+
+export const requestTextVerification = (): RequestTextVerification => ({
+  type: PAYMENT_REQUEST_TEXT_VERIFICATION
 });
