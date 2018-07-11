@@ -106,16 +106,6 @@ class MessagesScreen extends React.Component<Props, never> {
         senderServiceId={messageDetails.item.sender_service_id}
         markdown={messageDetails.item.markdown}
         serviceName={this.getServiceName(messageDetails.item.sender_service_id)}
-        paymentAmount={
-          messageDetails.item.payment_data != null
-            ? messageDetails.item.payment_data.amount
-            : null
-        }
-        paymentNoticeNumber={
-          messageDetails.item.payment_data != null
-            ? messageDetails.item.payment_data.notice_number
-            : null
-        }
       />
     );
   };

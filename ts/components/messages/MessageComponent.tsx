@@ -21,8 +21,6 @@ export type OwnProps = Readonly<{
   serviceOrganizationName: string;
   serviceDepartmentName: string;
   subject: string;
-  paymentNoticeNumber: string;
-  paymentAmount: number;
 }>;
 
 export type Props = OwnProps;
@@ -38,14 +36,12 @@ class MessageComponent extends React.Component<Props> {
       createdAt,
       id,
       markdown,
-      paymentAmount,
       paymentData,
       serviceDepartmentName,
       serviceName,
       serviceOrganizationName,
       subject
     } = this.props;
-
     return (
       <ListItem
         key={id}
@@ -63,7 +59,7 @@ class MessageComponent extends React.Component<Props> {
           });
         }}
       >
-        <View padded={paymentAmount !== undefined}>
+        <View padded={paymentData !== undefined}>
           <Left>
             <Text leftAlign={true} alternativeBold={true}>
               {`${serviceOrganizationName} - ${serviceDepartmentName}`}
@@ -80,11 +76,11 @@ class MessageComponent extends React.Component<Props> {
             <Icon name="chevron-right" />
           </Right>
         </View>
-        {paymentAmount !== null && (
+        {paymentData !== undefined && (
           <Button block={true} small={true}>
             <Text>
               {I18n.t("messages.cta.pay", {
-                amount: formatPaymentAmount(paymentAmount)
+                amount: formatPaymentAmount(paymentData.amount)
               })}
             </Text>
           </Button>
