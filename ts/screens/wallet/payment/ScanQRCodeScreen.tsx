@@ -152,6 +152,9 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
       // successful conversion to RptId
       this.props.showPaymentSummary(rptId.value, qrCode.value.amount);
     } // else toast stating that QR code is invalid
+    else {
+      setTimeout(() => (this.refs.scanner as QRCodeScanner).reactivate(), 2000);
+    }
   };
 
   public render(): React.ReactNode {
@@ -172,6 +175,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
             onRead={(reading: { data: string }) =>
               this.qrCodeRead(reading.data)
             }
+            ref="scanner"
             containerStyle={styles.cameraContainer}
             showMarker={true}
             cameraStyle={styles.camera}
@@ -238,7 +242,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(showPaymentSummary(rptId, amount)),
+    dispatch(showPaymentSummary({rptId, initialAmount: amount})),
   insertDataManually: () => dispatch(insertDataManually())
 });
 

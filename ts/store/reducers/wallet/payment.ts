@@ -12,6 +12,7 @@ import {
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { getCardFromId, getCards } from "./cards";
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
 
 export type PaymentState = Readonly<{
   rptId: Option<RptId>;
@@ -73,6 +74,14 @@ export const paymentReasonSelector = createSelector(
     return some(rsp.value.causaleVersamento);
   }
 );
+
+export const feeExtractor = (w: Wallet): Option<AmountInEuroCents> => {
+  if (w.psp === undefined || w.psp.fixedCost === undefined) {
+    return none;
+  }
+  return some(("0".repeat(10) +
+    `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
+};
 
 export const selectedPaymentMethodSelector = createSelector(
   getSelectedPaymentMethod,

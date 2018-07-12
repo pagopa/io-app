@@ -22,5 +22,7 @@ declare module "react-native-qrcode-scanner" {
     checkAndroid6Permissions?: boolean;
   }>;
 
-  export default class QRCodeScanner extends React.Component<Props> {}
+  export default class QRCodeScanner extends React.Component<Props> {
+    reactivate: () => void;
+  }
 }

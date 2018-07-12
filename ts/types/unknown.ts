@@ -1,10 +1,8 @@
 import { EnteBeneficiario } from "../../definitions/pagopa-proxy/EnteBeneficiario";
 import { Wallet } from "../../definitions/pagopa/Wallet";
-import {
-  PaymentNoticeNumber,
-  RptId
-} from "../../node_modules/italia-ts-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "../../node_modules/italia-ts-commons/lib/strings";
+import { PaymentNoticeNumber, RptId } from "italia-ts-commons/lib/pagopa";
+import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 
 export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
   identificativoUnivocoBeneficiario: "?",
@@ -58,3 +56,5 @@ export const UNKNOWN_CARD: Wallet = {
     }
   }
 };
+
+export const UNKNOWN_AMOUNT = "9999999999" as AmountInEuroCents;

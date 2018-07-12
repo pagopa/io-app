@@ -23,8 +23,9 @@ import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBenef
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
-  RptId
-} from "../../../../node_modules/italia-ts-commons/lib/pagopa";
+  RptId,
+  AmountInEuroCentsFromNumber
+} from "italia-ts-commons/lib/pagopa";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";
@@ -40,6 +41,8 @@ import {
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import { UNKNOWN_RECIPIENT, UNKNOWN_RPTID } from "../../../types/unknown";
+import { Dispatch } from '../../../store/actions/types';
+import { confirmSummary } from '../../../store/actions/wallet/payment';
 
 type ReduxMappedStateProps = Readonly<{
   paymentRecipient: EnteBeneficiario;
@@ -58,32 +61,6 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
-
-///////////////////// to be removed when italia-ts-commons is updated
-import * as t from "io-ts";
-import { Dispatch } from "../../../store/actions/types";
-import { confirmSummary } from "../../../store/actions/wallet/payment";
-export const MAX_AMOUNT_DIGITS = 10;
-export const CENTS_IN_ONE_EURO = 100;
-export type AmountInEuroCents = t.TypeOf<typeof AmountInEuroCents>;
-
-export const AmountInEuroCentsFromNumber = new t.Type<
-  AmountInEuroCents,
-  number,
-  number
->(
-  "AmountInEuroCentsFromNumber",
-  AmountInEuroCents.is,
-  (i, c) =>
-    AmountInEuroCents.validate(
-      `${"0".repeat(MAX_AMOUNT_DIGITS)}${Math.floor(
-        i * CENTS_IN_ONE_EURO
-      )}`.slice(-MAX_AMOUNT_DIGITS),
-      c
-    ),
-  a => parseInt(a, 10) / CENTS_IN_ONE_EURO
-);
-//////////////////
 
 const formatMdRecipient = (e: EnteBeneficiario): React.ReactNode => (
   <Markdown>

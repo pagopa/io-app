@@ -17,16 +17,30 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
-import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
-import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
-import variables from "../../theme/variables";
+import AppHeader from "../../../components/ui/AppHeader";
+import IconFont from "../../../components/ui/IconFont";
+import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
+import variables from "../../../theme/variables";
+import { Dispatch } from '../../../store/actions/types';
+import { verifyOtp } from '../../../store/actions/wallet/payment';
+import { connect } from 'react-redux';
+import { Option, none, some } from "fp-ts/lib/Option";
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  verifyOtp: (otp: string) => void;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type State = Readonly<{
+  otp: Option<string>
+}>;
+
+type Props = OwnProps & ReduxMappedProps;
 
 const styles = StyleSheet.create({
   contentPadding: {
@@ -41,9 +55,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class TextVerificationScreen extends React.Component<Props> {
+class TextVerificationScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = { otp: none };
   }
 
   public render(): React.ReactNode {
@@ -83,14 +98,18 @@ export default class TextVerificationScreen extends React.Component<Props> {
               </Col>
             </Grid>
             <View spacer={true} />
-            <Input style={styles.bottomBordered} keyboardType={"numeric"} />
+            <Input
+              style={styles.bottomBordered}
+              keyboardType={"numeric"}
+              onChangeText={value => this.setState({ otp: value !== "" ? some(value) : none })}
+              />
             <View spacer={true} />
             <Text>{I18n.t("wallet.textMsg.info")}</Text>
           </View>
         </Content>
 
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button block={true} primary={true} onPress={() => this.props.verifyOtp(this.state.otp.getOrElse("")) }>
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
           <View spacer={true} />
@@ -107,3 +126,8 @@ export default class TextVerificationScreen extends React.Component<Props> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  verifyOtp: (otp: string) => dispatch(verifyOtp(otp))
+});
+export default connect(undefined, mapDispatchToProps)(TextVerificationScreen);

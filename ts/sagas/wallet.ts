@@ -1,3 +1,11 @@
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import {
+  paymentReasonSelector,
+  currentAmountSelector,
+  paymentRecipientSelector,
+  feeExtractor,
+  selectedPaymentMethodSelector
+} from "./../store/reducers/wallet/payment";
 import { PAYMENT_VERIFY_OTP } from "./../store/actions/constants";
 /**
  * A saga that manages the Wallet.
@@ -21,7 +29,7 @@ import { Iban } from "../../definitions/pagopa-proxy/Iban";
 import { ImportoEuroCents } from "../../definitions/pagopa-proxy/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
 import { Wallet } from "../../definitions/pagopa/Wallet";
-import { Option } from "../../node_modules/fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
@@ -37,7 +45,10 @@ import {
   START_PAYMENT
 } from "../store/actions/constants";
 import { Action } from "../store/actions/types";
-import { cardsFetched } from "../store/actions/wallet/cards";
+import {
+  cardsFetched,
+  selectCardForDetails
+} from "../store/actions/wallet/cards";
 import {
   confirmPaymentMethod,
   pickPaymentMethod,
@@ -46,9 +57,15 @@ import {
   storeSelectedPaymentMethod,
   storeVerificaResponse
 } from "../store/actions/wallet/payment";
-import { transactionsFetched } from "../store/actions/wallet/transactions";
+import {
+  transactionsFetched,
+  selectTransactionForDetails,
+  storeNewTransaction
+} from "../store/actions/wallet/transactions";
 import { getFavoriteCreditCardId } from "../store/reducers/wallet/cards";
 import { WalletTransaction } from "../types/wallet";
+import { getCardId } from "../types/CreditCard";
+import { UNKNOWN_CARD, UNKNOWN_RECIPIENT } from "../types/unknown";
 
 function* fetchTransactions(
   loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>
@@ -66,8 +83,8 @@ function* fetchCreditCards(
   yield put(cardsFetched(cards));
 }
 
-const navigateTo = (route: string) => {
-  return NavigationActions.navigate({ routeName: route });
+const navigateTo = (routeName: string, params?: object) => {
+  return NavigationActions.navigate({ routeName, params });
 };
 
 function* paymentSaga(): Iterator<Effect> {
@@ -81,8 +98,12 @@ function* paymentSaga(): Iterator<Effect> {
       PAYMENT_PICK_PAYMENT_METHOD,
       PAYMENT_CONFIRM_PAYMENT_METHOD,
       PAYMENT_REQUEST_OTP,
+      PAYMENT_VERIFY_OTP,
       COMPLETE_PAYMENT
     ]);
+    if (action.type === COMPLETE_PAYMENT) {
+      break;
+    }
     yield fork(handlePaymentActions, action);
   }
 }
@@ -94,40 +115,45 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
     yield put(navigateTo(ROUTES.PAYMENT_MANUAL_DATA_INSERTION));
   }
   if (action.type === PAYMENT_SHOW_SUMMARY) {
-    // either the QR code has been read, or the
-    // data has been entered manually. Store the
-    // payload and proceed with showing the
-    // transaction information fetched from the
-    // pagoPA proxy
+    // the user may have gotten here from the QR code,
+    // the manual data entry, from a message OR by
+    // tapping on the payment banner further in the process.
+    // in all cases but the last one, a payload will be
+    // provided, and it will contain the RptId information
+    if (action.payload !== undefined) {
+      // either the QR code has been read, or the
+      // data has been entered manually. Store the
+      // payload and proceed with showing the
+      // transaction information fetched from the
+      // pagoPA proxy
+      const {
+        rptId,
+        initialAmount
+      }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
+      yield put(storeRptIdData(rptId));
+      yield put(storeInitialAmount(initialAmount));
 
-    const {
-      rptId,
-      initialAmount
-    }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
-    // TODO: validate data ("PAGOPA|002|...")
-    yield put(storeRptIdData(rptId));
-    yield put(storeInitialAmount(initialAmount));
-
-    // TODO: fetch the data from the pagoPA proxy
-    const verificaResponse: PaymentRequestsGetResponse = {
-      importoSingoloVersamento: 10052 as ImportoEuroCents,
-      codiceContestoPagamento: "6793ad707f9b11e888482902221575ae" as CodiceContestoPagamento,
-      ibanAccredito: "IT17X0605502100000001234567" as Iban,
-      causaleVersamento: "IMU 2018",
-      enteBeneficiario: {
-        identificativoUnivocoBeneficiario: "123",
-        denominazioneBeneficiario: "Comune di Canicattì",
-        codiceUnitOperBeneficiario: "01",
-        denomUnitOperBeneficiario: "CDC",
-        indirizzoBeneficiario: "Via Roma",
-        civicoBeneficiario: "23",
-        capBeneficiario: "92010",
-        localitaBeneficiario: "Canicattì",
-        provinciaBeneficiario: "Agrigento",
-        nazioneBeneficiario: "IT"
-      } as EnteBeneficiario
-    };
-    yield put(storeVerificaResponse(verificaResponse));
+      // TODO: fetch the data from the pagoPA proxy
+      const verificaResponse: PaymentRequestsGetResponse = {
+        importoSingoloVersamento: 10052 as ImportoEuroCents,
+        codiceContestoPagamento: "6793ad707f9b11e888482902221575ae" as CodiceContestoPagamento,
+        ibanAccredito: "IT17X0605502100000001234567" as Iban,
+        causaleVersamento: "IMU 2018",
+        enteBeneficiario: {
+          identificativoUnivocoBeneficiario: "123",
+          denominazioneBeneficiario: "Comune di Canicattì",
+          codiceUnitOperBeneficiario: "01",
+          denomUnitOperBeneficiario: "CDC",
+          indirizzoBeneficiario: "Via Roma",
+          civicoBeneficiario: "23",
+          capBeneficiario: "92010",
+          localitaBeneficiario: "Canicattì",
+          provinciaBeneficiario: "Agrigento",
+          nazioneBeneficiario: "IT"
+        } as EnteBeneficiario
+      };
+      yield put(storeVerificaResponse(verificaResponse));
+    }
 
     // also, show summary screen
     yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
@@ -168,6 +194,39 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
     // TODO contact server & send OTP -> action.payload (-> pagoPA REST)
     // temporary check: if OTP is empty, fail
     if (action.payload !== "") {
+      // do payment stuff? (-> pagoPA REST)
+      // retrieve transaction and store it
+      // mocked data here
+      const card: Wallet = (yield select(
+        selectedPaymentMethodSelector
+      )).getOrElse(UNKNOWN_CARD);
+      const transaction: WalletTransaction = {
+        id: Math.floor(Math.random() * 1000),
+        cardId: getCardId(card),
+        isoDatetime: new Date().toISOString(),
+        paymentReason: (yield select(paymentReasonSelector)).getOrElse("???"),
+        recipient: (yield select(paymentRecipientSelector)).getOrElse(
+          UNKNOWN_RECIPIENT
+        ).denominazioneBeneficiario,
+        amount: AmountInEuroCentsFromNumber.encode(
+          ((yield select(currentAmountSelector)) as Option<
+            AmountInEuroCents
+          >).getOrElse("0000000000" as AmountInEuroCents)
+        ),
+        currency: "EUR",
+        transactionCost: AmountInEuroCentsFromNumber.encode(
+          feeExtractor(card).getOrElse("0000000000" as AmountInEuroCents)
+        ),
+        isNew: true
+      };
+      yield put(storeNewTransaction(transaction));
+      yield put(selectTransactionForDetails(transaction));
+      yield put(selectCardForDetails(card.id)); // for the banner
+      yield put(
+        navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
+          paymentCompleted: true
+        })
+      );
       yield put({ type: COMPLETE_PAYMENT });
     }
   }

@@ -13,7 +13,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/pagopa-proxy/EnteBeneficiario";
 import I18n from "../../i18n";
-import { AmountInEuroCentsFromNumber } from "../../screens/wallet/payment/TransactionSummaryScreen";
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { GlobalState } from "../../store/reducers/types";
 import {
   currentAmountSelector,
@@ -22,62 +22,71 @@ import {
 } from "../../store/reducers/wallet/payment";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { WalletStyles } from "../styles/wallet";
+import { TouchableOpacity } from 'react-native';
+import { Dispatch } from '../../store/actions/types';
+import { showPaymentSummary } from '../../store/actions/wallet/payment';
 
-type ReduxMappedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
   paymentReason: string;
   currentAmount: AmountInEuroCents;
   recipient: EnteBeneficiario;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  showPaymentSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class PaymentBannerComponent extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
-      <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
-        <Row>
-          <Col>
-            <View spacer={true} />
-            <Text bold={true} style={WalletStyles.white}>
-              {this.props.paymentReason}
-            </Text>
-          </Col>
-          <Col>
-            <View spacer={true} />
-            <Text
-              bold={true}
-              style={[WalletStyles.white, WalletStyles.textRight]}
-            >
-              {`${AmountInEuroCentsFromNumber.encode(
-                this.props.currentAmount
-              )} €`}
-            </Text>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Text style={WalletStyles.white}>
-              {this.props.recipient.denominazioneBeneficiario}
-            </Text>
-            <View spacer={true} />
-          </Col>
-          <Col>
-            <Text style={[WalletStyles.white, WalletStyles.textRight]}>
-              {I18n.t("wallet.cancel").toUpperCase()}
-            </Text>
-            <View spacer={true} />
-          </Col>
-        </Row>
-      </Grid>
+      <TouchableOpacity onPress={() => this.props.showPaymentSummary()}>
+        <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
+          <Row>
+            <Col>
+              <View spacer={true} />
+              <Text bold={true} style={WalletStyles.white}>
+                {this.props.paymentReason}
+              </Text>
+            </Col>
+            <Col>
+              <View spacer={true} />
+              <Text
+                bold={true}
+                style={[WalletStyles.white, WalletStyles.textRight]}
+              >
+                {`${AmountInEuroCentsFromNumber.encode(
+                  this.props.currentAmount
+                )} €`}
+              </Text>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Text style={WalletStyles.white}>
+                {this.props.recipient.denominazioneBeneficiario}
+              </Text>
+              <View spacer={true} />
+            </Col>
+            <Col>
+              <Text style={[WalletStyles.white, WalletStyles.textRight]}>
+                {I18n.t("wallet.cancel").toUpperCase()}
+              </Text>
+              <View spacer={true} />
+            </Col>
+          </Row>
+        </Grid>
+      </TouchableOpacity>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   paymentReason: paymentReasonSelector(state).getOrElse(""),
   currentAmount: currentAmountSelector(state).getOrElse(
     "0000000000" as AmountInEuroCents
@@ -85,4 +94,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   recipient: paymentRecipientSelector(state).getOrElse(UNKNOWN_RECIPIENT)
 });
 
-export default connect(mapStateToProps)(PaymentBannerComponent);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  showPaymentSummary: () => dispatch(showPaymentSummary())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentBannerComponent);

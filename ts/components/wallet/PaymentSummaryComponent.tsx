@@ -3,7 +3,7 @@
  */
 import { H1, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, Platform } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
     paddingLeft: variables.contentPadding
   },
 
-  whiteStrike: {
-    fontSize: variables.fontSizeBase * 1.25,
-    color: variables.brandLight,
+  strikeThrough: {
     textDecorationLine: "line-through",
     textDecorationStyle: "solid"
   },
@@ -49,9 +47,16 @@ const styles = StyleSheet.create({
     marginLeft: 3
   },
 
-  noBottomLine: {
-    lineHeight: 0
-  }
+  noBottomLine: Platform.select({
+    ios: {
+      lineHeight: 0
+    },
+    android: {
+      // do nothing for android -- lineHeight 
+      // does not work as expected
+      // TODO: figure this out
+    }
+  })
 });
 
 export default class PaymentSummaryComponent extends React.Component<Props> {
@@ -103,13 +108,11 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
           <H3 style={[WalletStyles.white, styles.noBottomLine]}>
             {I18n.t("wallet.firstTransactionSummary.amount")}
           </H3>,
-          <H1
-            style={
-              this.isAmountUpdated() ? styles.whiteStrike : WalletStyles.white
-            }
-          >
-            {`${this.props.amount} €`}
-          </H1>
+          this.isAmountUpdated() ? (
+            <H3 style={[WalletStyles.white, styles.strikeThrough]}>{`${this.props.amount} €`}</H3>
+          ) : (
+            <H1 style={WalletStyles.white}>{`${this.props.amount} €`}</H1>
+          )
         )}
         {this.isAmountUpdated() && (
           <View>

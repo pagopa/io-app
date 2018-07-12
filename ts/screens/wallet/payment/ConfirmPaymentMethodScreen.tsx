@@ -31,20 +31,25 @@ import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
   pickPaymentMethod,
-  requestOtp
+  requestOtp,
+  showPaymentSummary
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { selectedPaymentMethodSelector } from "../../../store/reducers/wallet/payment";
-import { UNKNOWN_CARD } from "../../../types/unknown";
-import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../../types/wallet";
+import { selectedPaymentMethodSelector, currentAmountSelector, feeExtractor } from "../../../store/reducers/wallet/payment";
+import { UNKNOWN_CARD, UNKNOWN_AMOUNT } from "../../../types/unknown";
+import { AmountInEuroCents } from '../../../../node_modules/italia-ts-commons/lib/pagopa';
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 
 type ReduxMappedStateProps = Readonly<{
-  card: Readonly<Wallet>;
+  card: Wallet;
+  amount: AmountInEuroCents,
+  fee: AmountInEuroCents
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
   requestOtp: () => void;
+  showPaymentSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -74,13 +79,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
    * of the order of of higher 10^13
    *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
    */
-  private getTotalAmount(transaction: Readonly<WalletTransaction>) {
-    return transaction.amount + transaction.transactionCost;
+  private getTotalAmount() {
+    return AmountInEuroCentsFromNumber.encode(this.props.amount) + AmountInEuroCentsFromNumber.encode(this.props.fee);
   }
 
   public render(): React.ReactNode {
-    const transaction = UNKNOWN_TRANSACTION;
-
     return (
       <Container>
         <AppHeader>
@@ -115,7 +118,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${transaction.amount.toFixed(2)} €`}
+                    {`${AmountInEuroCentsFromNumber.encode(this.props.amount)} €`}
                   </Text>
                 </Col>
               </Row>
@@ -131,7 +134,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${transaction.transactionCost.toFixed(2)} €`}
+                    {`${AmountInEuroCentsFromNumber.encode(this.props.fee)} €`}
                   </Text>
                 </Col>
               </Row>
@@ -144,7 +147,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={WalletStyles.textRight}>
-                    {`${this.getTotalAmount(transaction).toFixed(2)} €`}
+                    {`${this.getTotalAmount()} €`}
                   </H1>
                 </Col>
               </Row>
@@ -202,7 +205,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               style={styles.child}
               block={true}
               cancel={true}
-              onPress={_ => this.goBack()}
+              onPress={_ => this.props.showPaymentSummary()}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
@@ -213,13 +216,19 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  card: selectedPaymentMethodSelector(state).getOrElse(UNKNOWN_CARD)
-});
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  const card = selectedPaymentMethodSelector(state).getOrElse(UNKNOWN_CARD);
+  return {
+    card,
+    amount: currentAmountSelector(state).getOrElse(UNKNOWN_AMOUNT),
+    fee: feeExtractor(card).getOrElse(UNKNOWN_AMOUNT)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(pickPaymentMethod()),
-  requestOtp: () => dispatch(requestOtp())
+  requestOtp: () => dispatch(requestOtp()),
+  showPaymentSummary: () => dispatch(showPaymentSummary())
 });
 
 export default connect(

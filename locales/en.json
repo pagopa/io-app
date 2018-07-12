@@ -183,7 +183,7 @@
       "save":"Save the card"
     },
     "thanks":"✓ Thank you!",
-    "endPayment":"Your transaction is completed",
+    "endPayment":"Your payment has been completed successfully",
     "addManager": {
       "title":"Choose the manager",
       "info":"This card does not belong to the PagoPA payment network.",

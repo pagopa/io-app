@@ -30,6 +30,7 @@ import { transactionForDetailsSelector } from "../../store/reducers/wallet/trans
 import variables from "../../theme/variables";
 import { UNKNOWN_CARD } from "../../types/unknown";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
+import ROUTES from '../../navigation/routes';
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
@@ -42,9 +43,6 @@ type Props = ReduxMappedProps & NavigationInjectedProps;
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
  * and he is going to display the detail of the transaction as receipt
  */
-type State = Readonly<{
-  isTransactionStarted: boolean;
-}>;
 
 const styles = StyleSheet.create({
   value: {
@@ -59,18 +57,7 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Details of transaction
- * TODO: implement the proper state control
- * @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
- */
-export class TransactionDetailsScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isTransactionStarted: false
-    };
-  }
+export class TransactionDetailsScreen extends React.Component<Props> {
 
   /**
    * It provide the currency EUR symbol
@@ -101,7 +88,7 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
    * then the "Thank you message" is displayed
    */
   private getSubHeader() {
-    return this.state.isTransactionStarted ? (
+    return this.props.navigation.getParam("paymentCompleted", false) ? (
       <View>
         <Grid>
           <Col size={1} />
@@ -148,6 +135,7 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { transaction } = this.props;
+    const dt = new Date(transaction.isoDatetime);
 
     return (
       <WalletLayout
@@ -156,12 +144,21 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
         headerContents={this.getSubHeader()}
         cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
         showPayButton={false}
+        allowGoBack={!this.props.navigation.getParam("paymentCompleted", false)}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
             <Row style={styles.titleRow}>
               <H3>{I18n.t("wallet.transactionDetails")}</H3>
-              <IconFont name="io-close" size={variables.iconSizeBase} />
+              <IconFont
+                name="io-close"
+                size={variables.iconSizeBase}
+                onPress={() =>
+                  this.props.navigation.getParam("paymentCompleted", false)
+                    ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
+                    : this.props.navigation.goBack()
+                }
+              />
             </Row>
             <View spacer={true} extralarge={true} />
             <Row>
@@ -199,8 +196,8 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
               I18n.t("wallet.recipient"),
               transaction.recipient
             )}
-            {this.labelValueRow(I18n.t("wallet.date"), transaction.date)}
-            {this.labelValueRow(I18n.t("wallet.time"), transaction.time)}
+            {this.labelValueRow(I18n.t("wallet.date"), dt.toLocaleDateString())}
+            {this.labelValueRow(I18n.t("wallet.time"), dt.toLocaleTimeString())}
           </Grid>
         </Content>
       </WalletLayout>

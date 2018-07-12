@@ -28,9 +28,14 @@ export type StoreRptIdData = Readonly<{
   payload: RptId;
 }>;
 
+export interface PaymentInfoPayload {
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+}
+
 export type ShowPaymentSummary = Readonly<{
   type: typeof PAYMENT_SHOW_SUMMARY;
-  payload: { rptId: RptId; initialAmount: AmountInEuroCents };
+  payload?: PaymentInfoPayload;
 }>;
 
 export type StoreVerificaResponse = Readonly<{
@@ -90,14 +95,10 @@ export const storeRptIdData = (rptId: RptId): StoreRptIdData => ({
 });
 
 export const showPaymentSummary = (
-  rptId: RptId,
-  initialAmount: AmountInEuroCents
+  paymentInfo?: PaymentInfoPayload
 ): ShowPaymentSummary => ({
   type: PAYMENT_SHOW_SUMMARY,
-  payload: {
-    rptId,
-    initialAmount
-  }
+  payload: paymentInfo
 });
 
 export const startPayment = (): StartPayment => ({
