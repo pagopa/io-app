@@ -54,7 +54,10 @@ const authenticationPersistConfig: PersistConfig = {
  * More at
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-const appReducer = combineReducers<GlobalState, Action>({
+const appReducer: Reducer<GlobalState, Action> = combineReducers<
+  GlobalState,
+  Action
+>({
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
@@ -84,8 +87,14 @@ const appReducer = combineReducers<GlobalState, Action>({
   backendInfo: backendInfoReducer
 });
 
-const rootReducer = (state: GlobalState, action: Action) => {
-  return appReducer(filterStateOnLogout(state, action), action);
+const rootReducer: Reducer<GlobalState, Action> = (
+  state: GlobalState | undefined,
+  action: Action
+): GlobalState => {
+  return appReducer(
+    state ? filterStateOnLogout(state, action) : undefined,
+    action
+  );
 };
 
 // On logout we need to clear the state from user specific data
