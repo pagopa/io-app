@@ -6,18 +6,18 @@
  */
 
 import * as React from "react";
-import ROUTES from "./routes";
-
 import { Platform, StyleSheet, Text } from "react-native";
 import { createBottomTabNavigator } from "react-navigation";
+
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
-import ProfileScreen from "../screens/main/ProfileScreen";
 import PlaceholderScreen from "../screens/PlaceholderScreen";
 import PreferencesScreen from "../screens/PreferencesScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
+import ProfileNavigator from "./ProfileNavigator";
+import ROUTES from "./routes";
 import WalletNavigator from "./WalletNavigator";
 
 type Routes = keyof typeof ROUTES;
@@ -28,7 +28,7 @@ const ROUTE_LABEL: RouteLabelMap = {
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
   PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
-  MAIN_PROFILE: I18n.t("global.navigator.profile")
+  PROFILE_HOME: I18n.t("global.navigator.profile")
 };
 
 type RouteIconMap = { [key in Routes]?: string };
@@ -37,7 +37,7 @@ const ROUTE_ICON: RouteIconMap = {
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
   PREFERENCES_HOME: "io-preferenze",
-  MAIN_PROFILE: "io-profilo"
+  PROFILE_HOME: "io-profilo"
 };
 
 const getLabel = (routeName: string): string => {
@@ -88,8 +88,8 @@ const navigation = createBottomTabNavigator(
     [ROUTES.PREFERENCES_HOME]: {
       screen: PreferencesScreen
     },
-    [ROUTES.MAIN_PROFILE]: {
-      screen: ProfileScreen
+    [ROUTES.PROFILE_HOME]: {
+      screen: ProfileNavigator
     }
   },
   {

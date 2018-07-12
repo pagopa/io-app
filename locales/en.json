@@ -56,6 +56,11 @@
     "errors": {
       "load": "Error loading the profile",
       "upsert": "Error creating or updating the profile"
+    },
+    "main": {
+      "screenTitle": "Profile",
+      "screenSubtitle": "Here you will find information and data related to your identity and your personal data.",
+      "logout": "Logout/Exit"
     }
   },
   "navigation": {
@@ -101,7 +106,8 @@
       "headerTitle": "Login"
     },
     "errors": {
-      "notoken": "The session is not ready or is invalid"
+      "notoken": "The session is not ready or is invalid",
+      "logout": "Error on logout"
     }
   },
   "onboarding": {

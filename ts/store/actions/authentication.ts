@@ -10,7 +10,9 @@ import {
   IDP_SELECTED,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
-  LOGOUT,
+  LOGOUT_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
   SESSION_EXPIRED,
   SESSION_LOAD_FAILURE,
   SESSION_LOAD_REQUEST,
@@ -38,8 +40,18 @@ export type LoginFailure = Readonly<{
   type: typeof LOGIN_FAILURE;
 }>;
 
-export type Logout = Readonly<{
-  type: typeof LOGOUT;
+export type LogoutRequest = Readonly<{
+  type: typeof LOGOUT_REQUEST;
+}>;
+
+export type LogoutSuccess = Readonly<{
+  type: typeof LOGOUT_SUCCESS;
+}>;
+
+export type LogoutFailure = Readonly<{
+  type: typeof LOGOUT_FAILURE;
+  payload: Error;
+  error: true;
 }>;
 
 export type AuthenticationCompleted = Readonly<{
@@ -70,7 +82,9 @@ export type AuthenticationActions =
   | IdpSelected
   | LoginSuccess
   | LoginFailure
-  | Logout
+  | LogoutRequest
+  | LogoutSuccess
+  | LogoutFailure
   | AuthenticationCompleted
   | SessionLoadRequest
   | SessionLoadSuccess
@@ -97,8 +111,18 @@ export const loginFailure = (): LoginFailure => ({
   type: LOGIN_FAILURE
 });
 
-export const logout = (): Logout => ({
-  type: LOGOUT
+export const logoutRequest = (): LogoutRequest => ({
+  type: LOGOUT_REQUEST
+});
+
+export const logoutSuccess = (): LogoutSuccess => ({
+  type: LOGOUT_SUCCESS
+});
+
+export const logoutFailure = (error: Error): LogoutFailure => ({
+  type: LOGOUT_FAILURE,
+  payload: error,
+  error: true
 });
 
 export const authenticationCompleted = (): AuthenticationCompleted => ({

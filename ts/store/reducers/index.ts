@@ -2,15 +2,15 @@
  * Aggregates all defined reducers
  */
 
+import pick from "lodash/pick";
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
 import { PersistConfig, persistReducer } from "redux-persist";
 
+import { LOGOUT_SUCCESS } from "../actions/constants";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
-import { GlobalState } from "./types";
-
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
@@ -22,7 +22,21 @@ import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
+import { GlobalState } from "./types";
 import walletReducer from "./wallet";
+
+/** State keys we want to retail on user logout.
+ *  We can't use ReadonlyArray because lodash/pick doesn't like it.
+ */
+// tslint:disable-next-line:readonly-array
+const stateRetainKeys = [
+  "appState",
+  "network",
+  "nav",
+  "loading",
+  "error",
+  "authentication"
+];
 
 // A custom configuration to store the authentication into the Keychain
 const authenticationPersistConfig: PersistConfig = {
@@ -40,7 +54,7 @@ const authenticationPersistConfig: PersistConfig = {
  * More at
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-const reducer = combineReducers<GlobalState, Action>({
+const appReducer = combineReducers<GlobalState, Action>({
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
@@ -70,4 +84,16 @@ const reducer = combineReducers<GlobalState, Action>({
   backendInfo: backendInfoReducer
 });
 
-export default reducer;
+const rootReducer = (state: GlobalState, action: Action) => {
+  return appReducer(filterStateOnLogout(state, action), action);
+};
+
+// On logout we need to clear the state from user specific data
+function filterStateOnLogout(state: GlobalState, action: Action): GlobalState {
+  // If the action is LOGOUT_SUCCESS filter the not needed keys
+  return action.type === LOGOUT_SUCCESS
+    ? (pick(state, stateRetainKeys) as GlobalState)
+    : state;
+}
+
+export default rootReducer;
