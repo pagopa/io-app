@@ -6,9 +6,9 @@ import DeviceInfo from "react-native-device-info";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from "react-redux";
 
+import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
 import { FetchActivityIndicator } from "../../components/FetchActivityIndicator";
 import AppHeader from "../../components/ui/AppHeader";
-import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { logoutRequest } from "../../store/actions/authentication";
