@@ -18,15 +18,15 @@ const styles = StyleSheet.create({
 });
 
 export type Props = {
-  show: boolean;
+  isVisible: boolean;
 };
 
 export class FetchActivityIndicator extends React.PureComponent<Props, never> {
   public render() {
-    const { show } = this.props;
+    const { isVisible } = this.props;
 
     return (
-      show && (
+      isVisible && (
         <View style={styles.activityIndicatorContainer}>
           <ActivityIndicator size={"large"} color={variables.brandPrimary} />
         </View>

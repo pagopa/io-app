@@ -28,7 +28,7 @@ const ROUTE_LABEL: RouteLabelMap = {
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
   PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
-  PROFILE_HOME: I18n.t("global.navigator.profile")
+  PROFILE_NAVIGATOR: I18n.t("global.navigator.profile")
 };
 
 type RouteIconMap = { [key in Routes]?: string };
@@ -37,7 +37,7 @@ const ROUTE_ICON: RouteIconMap = {
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
   PREFERENCES_HOME: "io-preferenze",
-  PROFILE_HOME: "io-profilo"
+  PROFILE_NAVIGATOR: "io-profilo"
 };
 
 const getLabel = (routeName: string): string => {
@@ -88,7 +88,7 @@ const navigation = createBottomTabNavigator(
     [ROUTES.PREFERENCES_HOME]: {
       screen: PreferencesScreen
     },
-    [ROUTES.PROFILE_HOME]: {
+    [ROUTES.PROFILE_NAVIGATOR]: {
       screen: ProfileNavigator
     }
   },

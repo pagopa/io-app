@@ -14,7 +14,6 @@ import {
 import { apiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
-import { applicationInitialized } from "../store/actions/application";
 import {
   authenticationCompleted,
   IdpSelected,
@@ -40,6 +39,7 @@ import { navigationRestore } from "../store/actions/navigation";
 import { sessionTokenSelector } from "../store/reducers/authentication";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { SessionToken } from "../types/SessionToken";
+import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
  * Load session info from the Backend
@@ -110,6 +110,7 @@ export function* watchSessionExpired(): IterableIterator<Effect> {
   }
 }
 
+// tslint:disable-next-line:cognitive-complexity
 export function* watchLogoutRequest(): IterableIterator<Effect> {
   while (true) {
     yield take(LOGOUT_REQUEST);
@@ -119,30 +120,44 @@ export function* watchLogoutRequest(): IterableIterator<Effect> {
       sessionTokenSelector
     );
 
+    // A variable to decide if the user need to be logged out
+    // tslint:disable-next-line:no-let
+    let needLogout = true;
     if (sessionToken) {
       const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
       // Call the Backend service
       const response:
         | BasicResponseTypeWith401<SuccessResponse>
-        | undefined = yield call(backendClient.logout, {});
+        | undefined = yield call(
+        callApiWith401ResponseStatusHandler,
+        backendClient.logout,
+        {}
+      );
 
       if (!response || response.status !== 200) {
-        // We got a error, send a LOGOUT_FAILURE action
+        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
         const error: Error = response
           ? response.value
           : Error(I18n.t("authentication.errors.logout"));
 
-        yield put(logoutFailure(error));
-      } else {
-        // Ok we got a valid response send the LOGOUT_SUCCESS action
-        yield put(logoutSuccess());
+        // The user is already logged out by watchSessionExpired saga on SESSION_EXPIRED
+        if (response && response.status === 401) {
+          needLogout = false;
+        }
 
-        // Dispatch the APPLICATION_INITIALIZED action so we can start all from the beginning
-        yield put(applicationInitialized());
+        yield put(logoutFailure(error));
       }
     } else {
       yield put(logoutFailure(Error(I18n.t("authentication.errors.notoken"))));
+    }
+
+    /**
+     * The user is logged out in in all the case except when the logout request
+     * returns 401 (SESSION_EXPIRED).
+     */
+    if (needLogout) {
+      yield put(logoutSuccess());
     }
   }
 }

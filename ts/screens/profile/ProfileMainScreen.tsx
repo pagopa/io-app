@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A component to show the main screen of the Profile section
+ */
 export class ProfileMainScreen extends React.Component<Props, never> {
   public render() {
     const { isLoggingOut } = this.props;
@@ -47,7 +50,7 @@ export class ProfileMainScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content>
-          <FetchActivityIndicator show={isLoggingOut} />
+          <FetchActivityIndicator isVisible={isLoggingOut} />
           <View>
             <DefaultSubscreenHeader
               screenTitle={I18n.t("profile.main.screenTitle")}
