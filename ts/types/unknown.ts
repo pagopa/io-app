@@ -1,8 +1,8 @@
+import { PaymentNoticeNumber, RptId } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
+import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { EnteBeneficiario } from "../../definitions/pagopa-proxy/EnteBeneficiario";
 import { Wallet } from "../../definitions/pagopa/Wallet";
-import { PaymentNoticeNumber, RptId } from "italia-ts-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 
 export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
   identificativoUnivocoBeneficiario: "?",

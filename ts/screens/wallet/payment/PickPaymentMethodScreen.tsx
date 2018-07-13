@@ -28,7 +28,10 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
-import { confirmPaymentMethod, showPaymentSummary } from "../../../store/actions/wallet/payment";
+import {
+  confirmPaymentMethod,
+  showPaymentSummary
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { creditCardsSelector } from "../../../store/reducers/wallet/cards";
 
@@ -94,7 +97,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         <View footer={true}>
           <Button
             block={true}
-            onPress={ () => this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD) }
+            onPress={() =>
+              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+            }
           >
             <Text>{I18n.t("wallet.newPaymentMethod.newMethod")}</Text>
           </Button>
@@ -102,7 +107,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           <Button
             block={true}
             cancel={true}
-            onPress={ () => this.props.showPaymentSummary() }
+            onPress={() => this.props.showPaymentSummary()}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
@@ -122,7 +127,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmPaymentMethod: (cardId: number) =>
     dispatch(confirmPaymentMethod(cardId)),
-    showPaymentSummary: () => dispatch(showPaymentSummary())
+  showPaymentSummary: () => dispatch(showPaymentSummary())
 });
 
 export default connect(

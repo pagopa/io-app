@@ -3,7 +3,7 @@
  */
 import { H1, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
       lineHeight: 0
     },
     android: {
-      // do nothing for android -- lineHeight 
+      // do nothing for android -- lineHeight
       // does not work as expected
       // TODO: figure this out
     }
@@ -109,7 +109,9 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
             {I18n.t("wallet.firstTransactionSummary.amount")}
           </H3>,
           this.isAmountUpdated() ? (
-            <H3 style={[WalletStyles.white, styles.strikeThrough]}>{`${this.props.amount} €`}</H3>
+            <H3 style={[WalletStyles.white, styles.strikeThrough]}>{`${
+              this.props.amount
+            } €`}</H3>
           ) : (
             <H1 style={WalletStyles.white}>{`${this.props.amount} €`}</H1>
           )

@@ -6,6 +6,7 @@
  * - implement the proper navigation
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -22,6 +23,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
+import { AmountInEuroCents } from "../../../../node_modules/italia-ts-commons/lib/pagopa";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -35,15 +37,17 @@ import {
   showPaymentSummary
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { selectedPaymentMethodSelector, currentAmountSelector, feeExtractor } from "../../../store/reducers/wallet/payment";
-import { UNKNOWN_CARD, UNKNOWN_AMOUNT } from "../../../types/unknown";
-import { AmountInEuroCents } from '../../../../node_modules/italia-ts-commons/lib/pagopa';
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import {
+  currentAmountSelector,
+  feeExtractor,
+  selectedPaymentMethodSelector
+} from "../../../store/reducers/wallet/payment";
+import { UNKNOWN_AMOUNT, UNKNOWN_CARD } from "../../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{
   card: Wallet;
-  amount: AmountInEuroCents,
-  fee: AmountInEuroCents
+  amount: AmountInEuroCents;
+  fee: AmountInEuroCents;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -80,7 +84,10 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
    *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
    */
   private getTotalAmount() {
-    return AmountInEuroCentsFromNumber.encode(this.props.amount) + AmountInEuroCentsFromNumber.encode(this.props.fee);
+    return (
+      AmountInEuroCentsFromNumber.encode(this.props.amount) +
+      AmountInEuroCentsFromNumber.encode(this.props.fee)
+    );
   }
 
   public render(): React.ReactNode {
@@ -118,7 +125,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${AmountInEuroCentsFromNumber.encode(this.props.amount)} €`}
+                    {`${AmountInEuroCentsFromNumber.encode(
+                      this.props.amount
+                    )} €`}
                   </Text>
                 </Col>
               </Row>

@@ -5,15 +5,18 @@
  *   @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
  */
 
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { Text, View } from "native-base";
 import * as React from "react";
+import { TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/pagopa-proxy/EnteBeneficiario";
 import I18n from "../../i18n";
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import { Dispatch } from "../../store/actions/types";
+import { showPaymentSummary } from "../../store/actions/wallet/payment";
 import { GlobalState } from "../../store/reducers/types";
 import {
   currentAmountSelector,
@@ -22,9 +25,6 @@ import {
 } from "../../store/reducers/wallet/payment";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { WalletStyles } from "../styles/wallet";
-import { TouchableOpacity } from 'react-native';
-import { Dispatch } from '../../store/actions/types';
-import { showPaymentSummary } from '../../store/actions/wallet/payment';
 
 type ReduxMappedStateProps = Readonly<{
   paymentReason: string;
@@ -96,6 +96,9 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showPaymentSummary: () => dispatch(showPaymentSummary())
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentBannerComponent);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentBannerComponent);

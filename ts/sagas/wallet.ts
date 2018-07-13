@@ -1,12 +1,12 @@
 import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import { PAYMENT_VERIFY_OTP } from "./../store/actions/constants";
 import {
-  paymentReasonSelector,
   currentAmountSelector,
-  paymentRecipientSelector,
   feeExtractor,
+  paymentReasonSelector,
+  paymentRecipientSelector,
   selectedPaymentMethodSelector
 } from "./../store/reducers/wallet/payment";
-import { PAYMENT_VERIFY_OTP } from "./../store/actions/constants";
 /**
  * A saga that manages the Wallet.
  */
@@ -21,6 +21,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
+import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/pagopa-proxy/CodiceContestoPagamento";
@@ -29,7 +30,6 @@ import { Iban } from "../../definitions/pagopa-proxy/Iban";
 import { ImportoEuroCents } from "../../definitions/pagopa-proxy/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
 import { Wallet } from "../../definitions/pagopa/Wallet";
-import { Option } from "fp-ts/lib/Option";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
@@ -58,14 +58,14 @@ import {
   storeVerificaResponse
 } from "../store/actions/wallet/payment";
 import {
-  transactionsFetched,
   selectTransactionForDetails,
-  storeNewTransaction
+  storeNewTransaction,
+  transactionsFetched
 } from "../store/actions/wallet/transactions";
 import { getFavoriteCreditCardId } from "../store/reducers/wallet/cards";
-import { WalletTransaction } from "../types/wallet";
 import { getCardId } from "../types/CreditCard";
 import { UNKNOWN_CARD, UNKNOWN_RECIPIENT } from "../types/unknown";
+import { WalletTransaction } from "../types/wallet";
 
 function* fetchTransactions(
   loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>

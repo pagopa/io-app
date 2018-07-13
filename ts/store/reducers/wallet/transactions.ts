@@ -6,12 +6,12 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { WalletTransaction } from "../../../types/wallet";
 import {
+  PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
-  TRANSACTIONS_FETCHED,
-  PAYMENT_STORE_NEW_TRANSACTION
+  TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
-import { IndexedById, toIndexed, addToIndexed } from "../../helpers/indexer";
+import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { getSelectedCreditCardId } from "./cards";
 

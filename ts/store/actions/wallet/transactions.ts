@@ -1,9 +1,9 @@
 import { WalletTransaction } from "../../../types/wallet";
 import {
   FETCH_TRANSACTIONS_REQUEST,
+  PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
-  TRANSACTIONS_FETCHED,
-  PAYMENT_STORE_NEW_TRANSACTION
+  TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 
 export type TransactionsFetched = Readonly<{

@@ -242,7 +242,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(showPaymentSummary({rptId, initialAmount: amount})),
+    dispatch(showPaymentSummary({ rptId, initialAmount: amount })),
   insertDataManually: () => dispatch(insertDataManually())
 });
 

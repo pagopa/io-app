@@ -3,6 +3,7 @@ import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
 import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import {
   PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
   STORE_INITIAL_AMOUNT,
@@ -12,7 +13,6 @@ import {
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { getCardFromId, getCards } from "./cards";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
 
 export type PaymentState = Readonly<{
   rptId: Option<RptId>;

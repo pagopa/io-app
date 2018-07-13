@@ -8,6 +8,12 @@
  */
 
 import {
+  AmountInEuroCents,
+  AmountInEuroCentsFromNumber,
+  PaymentNoticeNumberFromString,
+  RptId
+} from "italia-ts-commons/lib/pagopa";
+import {
   Body,
   Button,
   Container,
@@ -20,17 +26,13 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
-import {
-  AmountInEuroCents,
-  PaymentNoticeNumberFromString,
-  RptId,
-  AmountInEuroCentsFromNumber
-} from "italia-ts-commons/lib/pagopa";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import { confirmSummary } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   currentAmountSelector,
@@ -41,8 +43,6 @@ import {
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import { UNKNOWN_RECIPIENT, UNKNOWN_RPTID } from "../../../types/unknown";
-import { Dispatch } from '../../../store/actions/types';
-import { confirmSummary } from '../../../store/actions/wallet/payment';
 
 type ReduxMappedStateProps = Readonly<{
   paymentRecipient: EnteBeneficiario;

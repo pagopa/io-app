@@ -9,7 +9,11 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, AmountInEuroCentsFromNumber, RptId } from "italia-ts-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  AmountInEuroCentsFromNumber,
+  RptId
+} from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -158,7 +162,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(showPaymentSummary({rptId, initialAmount: amount}))
+    dispatch(showPaymentSummary({ rptId, initialAmount: amount }))
 });
 
 export default connect(

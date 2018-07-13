@@ -2,6 +2,7 @@
  * This screen allows the user to input the code
  * received via text from PagoPA
  */
+import { none, Option, some } from "fp-ts/lib/Option";
 import {
   Body,
   Button,
@@ -17,16 +18,15 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { Dispatch } from "../../../store/actions/types";
+import { verifyOtp } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import { Dispatch } from '../../../store/actions/types';
-import { verifyOtp } from '../../../store/actions/wallet/payment';
-import { connect } from 'react-redux';
-import { Option, none, some } from "fp-ts/lib/Option";
 
 type ReduxMappedProps = Readonly<{
   verifyOtp: (otp: string) => void;
@@ -37,7 +37,7 @@ type OwnProps = Readonly<{
 }>;
 
 type State = Readonly<{
-  otp: Option<string>
+  otp: Option<string>;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -101,15 +101,21 @@ class TextVerificationScreen extends React.Component<Props, State> {
             <Input
               style={styles.bottomBordered}
               keyboardType={"numeric"}
-              onChangeText={value => this.setState({ otp: value !== "" ? some(value) : none })}
-              />
+              onChangeText={value =>
+                this.setState({ otp: value !== "" ? some(value) : none })
+              }
+            />
             <View spacer={true} />
             <Text>{I18n.t("wallet.textMsg.info")}</Text>
           </View>
         </Content>
 
         <View footer={true}>
-          <Button block={true} primary={true} onPress={() => this.props.verifyOtp(this.state.otp.getOrElse("")) }>
+          <Button
+            block={true}
+            primary={true}
+            onPress={() => this.props.verifyOtp(this.state.otp.getOrElse(""))}
+          >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
           <View spacer={true} />
@@ -130,4 +136,7 @@ class TextVerificationScreen extends React.Component<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   verifyOtp: (otp: string) => dispatch(verifyOtp(otp))
 });
-export default connect(undefined, mapDispatchToProps)(TextVerificationScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(TextVerificationScreen);

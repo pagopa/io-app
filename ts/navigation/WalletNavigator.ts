@@ -8,8 +8,8 @@ import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPayment
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import ScanQRCodeScreen from "../screens/wallet/payment/ScanQRCodeScreen";
-import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import TextVerificationScreen from "../screens/wallet/payment/TextVerificationScreen";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";

@@ -24,13 +24,13 @@ import IconFont from "../../components/ui/IconFont";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
 import variables from "../../theme/variables";
 import { UNKNOWN_CARD } from "../../types/unknown";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
-import ROUTES from '../../navigation/routes';
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
 });
 
 export class TransactionDetailsScreen extends React.Component<Props> {
-
   /**
    * It provide the currency EUR symbol
    * TODO: verify how approach the euro notation
