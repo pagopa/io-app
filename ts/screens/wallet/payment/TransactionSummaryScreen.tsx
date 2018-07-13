@@ -42,7 +42,7 @@ import {
   paymentRecipientSelector
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
-import { UNKNOWN_RECIPIENT, UNKNOWN_RPTID } from "../../../types/unknown";
+import { UNKNOWN_RECIPIENT, UNKNOWN_RPTID, UNKNOWN_AMOUNT } from "../../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{
   paymentRecipient: EnteBeneficiario;
@@ -153,10 +153,10 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   paymentReason: paymentReasonSelector(state).getOrElse(""),
   rptId: getRptId(state).getOrElse(UNKNOWN_RPTID),
   originalAmount: getInitialAmount(state).getOrElse(
-    "0000000000" as AmountInEuroCents
+    UNKNOWN_AMOUNT
   ),
   updatedAmount: currentAmountSelector(state).getOrElse(
-    "0000000000" as AmountInEuroCents
+    UNKNOWN_AMOUNT
   )
 });
 

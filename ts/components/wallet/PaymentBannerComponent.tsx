@@ -23,7 +23,7 @@ import {
   paymentReasonSelector,
   paymentRecipientSelector
 } from "../../store/reducers/wallet/payment";
-import { UNKNOWN_RECIPIENT } from "../../types/unknown";
+import { UNKNOWN_RECIPIENT, UNKNOWN_AMOUNT } from "../../types/unknown";
 import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedStateProps = Readonly<{
@@ -89,7 +89,7 @@ class PaymentBannerComponent extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   paymentReason: paymentReasonSelector(state).getOrElse(""),
   currentAmount: currentAmountSelector(state).getOrElse(
-    "0000000000" as AmountInEuroCents
+    UNKNOWN_AMOUNT
   ),
   recipient: paymentRecipientSelector(state).getOrElse(UNKNOWN_RECIPIENT)
 });

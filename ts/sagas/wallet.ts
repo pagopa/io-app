@@ -64,7 +64,11 @@ import {
 } from "../store/actions/wallet/transactions";
 import { getFavoriteCreditCardId } from "../store/reducers/wallet/cards";
 import { getCardId } from "../types/CreditCard";
-import { UNKNOWN_CARD, UNKNOWN_RECIPIENT } from "../types/unknown";
+import {
+  UNKNOWN_CARD,
+  UNKNOWN_RECIPIENT,
+  UNKNOWN_AMOUNT
+} from "../types/unknown";
 import { WalletTransaction } from "../types/wallet";
 
 function* fetchTransactions(
@@ -211,11 +215,11 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
         amount: AmountInEuroCentsFromNumber.encode(
           ((yield select(currentAmountSelector)) as Option<
             AmountInEuroCents
-          >).getOrElse("0000000000" as AmountInEuroCents)
+          >).getOrElse(UNKNOWN_AMOUNT)
         ),
         currency: "EUR",
         transactionCost: AmountInEuroCentsFromNumber.encode(
-          feeExtractor(card).getOrElse("0000000000" as AmountInEuroCents)
+          feeExtractor(card).getOrElse(UNKNOWN_AMOUNT)
         ),
         isNew: true
       };
