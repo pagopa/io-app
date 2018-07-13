@@ -7,10 +7,9 @@ import { combineReducers, Reducer } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
 import { PersistConfig, persistReducer } from "redux-persist";
 
+import { LOGOUT_SUCCESS } from "../actions/constants";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
-import { GlobalState } from "./types";
-
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
@@ -22,6 +21,7 @@ import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
 import profileReducer from "./profile";
+import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
 // A custom configuration to store the authentication into the Keychain
@@ -40,7 +40,10 @@ const authenticationPersistConfig: PersistConfig = {
  * More at
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-const reducer = combineReducers<GlobalState, Action>({
+const appReducer: Reducer<GlobalState, Action> = combineReducers<
+  GlobalState,
+  Action
+>({
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
@@ -70,4 +73,23 @@ const reducer = combineReducers<GlobalState, Action>({
   backendInfo: backendInfoReducer
 });
 
-export default reducer;
+const rootReducer: Reducer<GlobalState, Action> = (
+  state: GlobalState | undefined,
+  action: Action
+): GlobalState => {
+  return appReducer(
+    state ? filterStateOnLogout(state, action) : undefined,
+    action
+  );
+};
+
+// On logout we need to clear the state
+function filterStateOnLogout(
+  state: GlobalState,
+  action: Action
+): GlobalState | undefined {
+  // If the action is LOGOUT_SUCCESS return an empty (undefined) state
+  return action.type === LOGOUT_SUCCESS ? undefined : state;
+}
+
+export default rootReducer;

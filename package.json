@@ -21,7 +21,7 @@
     "email-validator": "^2.0.3",
     "fp-ts": "^1.6.2",
     "io-ts": "^1.1.4",
-    "italia-ts-commons": "^2.5.0",
+    "italia-ts-commons": "^2.9.0",
     "lodash": "^4.17.10",
     "native-base": "^2.4.5",
     "native-base-shoutem-theme": "^0.2.2",
