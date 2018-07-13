@@ -77,17 +77,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     this.props.navigation.goBack();
   }
 
-  /**
-   * It sum the amount to pay and the fee requested to perform the transaction
-   * TO DO: If required, it should be implemented to manage values
-   * of the order of of higher 10^13
-   *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
-   */
   private getTotalAmount() {
-    return (
-      AmountInEuroCentsFromNumber.encode(this.props.amount) +
-      AmountInEuroCentsFromNumber.encode(this.props.fee)
+    const amount: number = AmountInEuroCentsFromNumber.encode(
+      this.props.amount
     );
+    const fee: number = AmountInEuroCentsFromNumber.encode(this.props.fee);
+    return amount + fee;
   }
 
   public render(): React.ReactNode {
