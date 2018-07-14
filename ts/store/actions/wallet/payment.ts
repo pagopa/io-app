@@ -7,8 +7,8 @@ import {
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_OTP,
   PAYMENT_SHOW_SUMMARY,
+  PAYMENT_START,
   PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  START_PAYMENT,
   STORE_INITIAL_AMOUNT,
   STORE_RPTID_DATA,
   STORE_VERIFICA_DATA
@@ -16,7 +16,7 @@ import {
 import { PAYMENT_VERIFY_OTP } from "./../constants";
 
 export type StartPayment = Readonly<{
-  type: typeof START_PAYMENT;
+  type: typeof PAYMENT_START;
 }>;
 
 export type InsertDataManually = Readonly<{
@@ -102,7 +102,7 @@ export const showPaymentSummary = (
 });
 
 export const startPayment = (): StartPayment => ({
-  type: START_PAYMENT
+  type: PAYMENT_START
 });
 
 export const storeVerificaResponse = (
@@ -132,15 +132,15 @@ export const pickPaymentMethod = (): PickPaymentMethod => ({
 });
 
 export const confirmPaymentMethod = (
-  creditCardId: number
+  walletId: number
 ): ConfirmPaymentMethod => ({
   type: PAYMENT_CONFIRM_PAYMENT_METHOD,
-  payload: creditCardId
+  payload: walletId
 });
 
-export const storeSelectedPaymentMethod = (creditCardId: number) => ({
+export const storeSelectedPaymentMethod = (walletId: number) => ({
   type: PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  payload: creditCardId
+  payload: walletId
 });
 
 export const requestOtp = (): RequestOtp => ({

@@ -42,7 +42,11 @@ import {
   paymentRecipientSelector
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
-import { UNKNOWN_RECIPIENT, UNKNOWN_RPTID, UNKNOWN_AMOUNT } from "../../../types/unknown";
+import {
+  UNKNOWN_AMOUNT,
+  UNKNOWN_RECIPIENT,
+  UNKNOWN_RPTID
+} from "../../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{
   paymentRecipient: EnteBeneficiario;
@@ -122,6 +126,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
             updatedAmount={`${AmountInEuroCentsFromNumber.encode(
               this.props.updatedAmount
             )}`}
+            paymentReason={this.props.paymentReason}
           />
           {formatMdRecipient(this.props.paymentRecipient)}
           {formatMdPaymentReason(this.props.paymentReason)}
@@ -152,12 +157,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   ),
   paymentReason: paymentReasonSelector(state).getOrElse(""),
   rptId: getRptId(state).getOrElse(UNKNOWN_RPTID),
-  originalAmount: getInitialAmount(state).getOrElse(
-    UNKNOWN_AMOUNT
-  ),
-  updatedAmount: currentAmountSelector(state).getOrElse(
-    UNKNOWN_AMOUNT
-  )
+  originalAmount: getInitialAmount(state).getOrElse(UNKNOWN_AMOUNT),
+  updatedAmount: currentAmountSelector(state).getOrElse(UNKNOWN_AMOUNT)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

@@ -21,7 +21,7 @@ import TransactionsList, {
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
+import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
 interface ParamType {
@@ -37,7 +37,7 @@ interface OwnProps {
 }
 
 type ReduxMappedProps = Readonly<{
-  selectedCard: Wallet;
+  selectedWallet: Wallet;
 }>;
 
 type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;
@@ -61,13 +61,13 @@ class TransactionsScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         showPayButton={false}
         headerContents={headerContents}
-        cardType={{ type: CardEnum.FULL, card: this.props.selectedCard }}
+        cardType={{ type: CardEnum.FULL, card: this.props.selectedWallet }}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
           navigation={this.props.navigation}
-          display={TransactionsDisplayed.BY_CARD}
+          display={TransactionsDisplayed.BY_WALLET}
         />
       </WalletLayout>
     );
@@ -75,6 +75,6 @@ class TransactionsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
 });
 export default connect(mapStateToProps)(TransactionsScreen);

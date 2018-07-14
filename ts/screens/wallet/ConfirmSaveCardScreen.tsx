@@ -20,14 +20,14 @@ import { connect } from "react-redux";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
-import CreditCardComponent from "../../components/wallet/card";
+import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
+import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{
-  card: Readonly<Wallet>;
+  wallet: Readonly<Wallet>;
 }>;
 
 type OwnProps = Readonly<{
@@ -37,21 +37,21 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedStateProps;
 
 type State = Readonly<{
-  isFavoriteCard: boolean;
+  isFavoriteWallet: boolean;
 }>;
 
 class ConfirmSaveCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isFavoriteCard: true
+      isFavoriteWallet: true
     };
   }
 
   // It supports switch state changes
   private onValueChange = () => {
     this.setState(prevState => ({
-      isFavoriteCard: !prevState.isFavoriteCard
+      isFavoriteWallet: !prevState.isFavoriteWallet
     }));
   };
 
@@ -74,9 +74,9 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
         </AppHeader>
         <Content>
           <H1> {I18n.t("wallet.saveCard.title")} </H1>
-          <CreditCardComponent
+          <CardComponent
             navigation={this.props.navigation}
-            item={this.props.card}
+            item={this.props.wallet}
             menu={false}
             favorite={false}
             lastUsage={false}
@@ -89,7 +89,7 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
             </Col>
             <Col size={1}>
               <Switch
-                value={this.state.isFavoriteCard}
+                value={this.state.isFavoriteWallet}
                 onValueChange={this.onValueChange}
               />
             </Col>
@@ -118,6 +118,6 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
  * selectedCreditCardSelector has to be substitute with the proper selector
  */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+  wallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
 });
 export default connect(mapStateToProps)(ConfirmSaveCardScreen);

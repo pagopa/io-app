@@ -22,7 +22,7 @@ import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
-import CreditCardComponent from "../../../components/wallet/card";
+import CardComponent from "../../../components/wallet/card";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -33,14 +33,14 @@ import {
   showPaymentSummary
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { creditCardsSelector } from "../../../store/reducers/wallet/cards";
+import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 
 type ReduxMappedStateProps = Readonly<{
-  cards: ReadonlyArray<Wallet>;
+  wallets: ReadonlyArray<Wallet>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmPaymentMethod: (cardId: number) => void;
+  confirmPaymentMethod: (walletId: number) => void;
   showPaymentSummary: () => void;
 }>;
 
@@ -79,9 +79,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             <View spacer={true} />
             <List
               removeClippedSubviews={false}
-              dataArray={this.props.cards as any[]} // tslint:disable-line: readonly-array
+              dataArray={this.props.wallets as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
-                <CreditCardComponent
+                <CardComponent
                   navigation={this.props.navigation}
                   item={item}
                   menu={false}
@@ -121,12 +121,12 @@ class PickPaymentMethodScreen extends React.Component<Props> {
  * selectors will be reviewed in next pr
  */
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cards: creditCardsSelector(state)
+  wallets: walletsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmPaymentMethod: (cardId: number) =>
-    dispatch(confirmPaymentMethod(cardId)),
+  confirmPaymentMethod: (walletId: number) =>
+    dispatch(confirmPaymentMethod(walletId)),
   showPaymentSummary: () => dispatch(showPaymentSummary())
 });
 

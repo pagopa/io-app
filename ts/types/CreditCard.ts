@@ -39,7 +39,7 @@ export const getCardType = (w: Wallet): CreditCardType =>
       )
     : "UNKNOWN";
 
-export const getCardId = (w: Wallet): number => w.id;
+export const getWalletId = (w: Wallet): number => w.id;
 
 export const getCardPan = (w: Wallet): string =>
   w.creditCard === undefined

@@ -58,3 +58,4 @@ export const UNKNOWN_CARD: Wallet = {
 };
 
 export const UNKNOWN_AMOUNT = "9999999999" as AmountInEuroCents;
+export const UNKNOWN_PAYMENT_REASON = "";

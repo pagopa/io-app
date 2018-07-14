@@ -21,12 +21,12 @@ import { connect } from "react-redux";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { setFavoriteCard } from "../../../store/actions/wallet/cards";
+import { setFavoriteWallet } from "../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../store/reducers/types";
-import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
+import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
-import { getCardId, getCardPan } from "../../../types/CreditCard";
+import { getCardPan, getWalletId } from "../../../types/CreditCard";
 import IconFont from "../../ui/IconFont";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -101,7 +101,7 @@ type Props = CardProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 /**
  * Credit card component
  */
-class CreditCardComponent extends React.Component<Props> {
+class CardComponent extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {
     menu: true,
     favorite: true,
@@ -119,7 +119,7 @@ class CreditCardComponent extends React.Component<Props> {
     if (this.props.isFavoriteCard) {
       this.props.setFavoriteCard(none);
     } else {
-      this.props.setFavoriteCard(some(getCardId(this.props.item)));
+      this.props.setFavoriteCard(some(getWalletId(this.props.item)));
     }
   };
 
@@ -252,18 +252,18 @@ const mapStateToProps = (
   state: GlobalState,
   props: CardProps
 ): ReduxMappedStateProps => {
-  const favoriteCard = getFavoriteCreditCardId(state);
+  const favoriteCard = getFavoriteWalletId(state);
   return {
     isFavoriteCard:
-      favoriteCard.isSome() && favoriteCard.value === getCardId(props.item)
+      favoriteCard.isSome() && favoriteCard.value === getWalletId(props.item)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteCard(item))
+  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteWallet(item))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreditCardComponent);
+)(CardComponent);

@@ -12,7 +12,7 @@ import {
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
-import { getCardFromId, getCards } from "./cards";
+import { getWalletFromId, getWallets } from "./wallets";
 
 export type PaymentState = Readonly<{
   rptId: Option<RptId>;
@@ -85,8 +85,8 @@ export const feeExtractor = (w: Wallet): Option<AmountInEuroCents> => {
 
 export const selectedPaymentMethodSelector = createSelector(
   getSelectedPaymentMethod,
-  getCards,
-  getCardFromId
+  getWallets,
+  getWalletFromId
 );
 
 export const reducer = (

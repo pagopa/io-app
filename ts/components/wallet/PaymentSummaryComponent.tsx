@@ -14,6 +14,7 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
   amount: string;
   updatedAmount: string;
+  paymentReason: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -91,7 +92,7 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
             <H3 style={WalletStyles.white}>
               {I18n.t("wallet.firstTransactionSummary.title")}
             </H3>
-            <H1 style={WalletStyles.white}>{"Tari 2018"}</H1>
+            <H1 style={WalletStyles.white}>{this.props.paymentReason}</H1>
           </Col>
           <Col
             size={1}

@@ -10,8 +10,6 @@ import { TransactionManager, WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 
-// temporarily making this a variable
-// (to mock the deleteCreditCard() api more easily)
 /**
  * Mocked wallet data
  */
@@ -33,7 +31,7 @@ const managers: ReadonlyArray<TransactionManager> = [
   }
 ];
 
-const cards: ReadonlyArray<Wallet> = [
+const wallets: ReadonlyArray<Wallet> = [
   {
     creditCard: {
       brandLogo: "AMEX",
@@ -273,8 +271,8 @@ const transactionSubject: Readonly<TransactionSubject> = {
 // will actually fetch data from the proxy/pagopa)
 // @https://www.pivotaltracker.com/story/show/157770129
 export class WalletAPI {
-  public static async getCreditCards(): Promise<ReadonlyArray<Wallet>> {
-    return cards;
+  public static async getWallets(): Promise<ReadonlyArray<Wallet>> {
+    return wallets;
   }
 
   public static async getTransactions(): Promise<

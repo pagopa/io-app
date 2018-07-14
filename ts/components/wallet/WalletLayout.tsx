@@ -24,7 +24,7 @@ import { startPayment } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
-import CreditCardComponent from "./card";
+import CardComponent from "./card";
 import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({
@@ -104,7 +104,7 @@ class WalletLayout extends React.Component<Props> {
           <View style={WalletStyles.container}>
             <TouchableHighlight
               onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_CREDITCARDS)
+                this.props.navigation.navigate(ROUTES.WALLET_LIST)
               }
             >
               <Image
@@ -118,7 +118,7 @@ class WalletLayout extends React.Component<Props> {
       case CardEnum.FULL: {
         return (
           <View style={WalletStyles.container}>
-            <CreditCardComponent
+            <CardComponent
               navigation={this.props.navigation}
               item={this.props.cardType.card}
               favorite={false}
@@ -132,7 +132,7 @@ class WalletLayout extends React.Component<Props> {
       case CardEnum.HEADER: {
         return (
           <View style={WalletStyles.container}>
-            <CreditCardComponent
+            <CardComponent
               navigation={this.props.navigation}
               item={this.props.cardType.card}
               logoPosition={LogoPosition.TOP}

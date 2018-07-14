@@ -3,7 +3,6 @@ import { AddCardScreen } from "../screens/wallet/AddCardScreen";
 import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
-import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
@@ -13,6 +12,7 @@ import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSumma
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import CreditCardsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
 
 /**
@@ -24,7 +24,7 @@ const WalletNavigator = createStackNavigator(
     [ROUTES.WALLET_HOME]: {
       screen: WalletHomeScreen
     },
-    [ROUTES.WALLET_CREDITCARDS]: {
+    [ROUTES.WALLET_LIST]: {
       screen: CreditCardsScreen
     },
     [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {

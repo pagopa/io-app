@@ -10,7 +10,7 @@ import {
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_REQUEST,
   MESSAGES_LOAD_SUCCESS,
-  START_PAYMENT
+  PAYMENT_START
 } from "./constants";
 
 export type MessagesLoadRequest = Readonly<{
@@ -37,7 +37,7 @@ export type MessageLoadSuccess = Readonly<{
 }>;
 
 export type StartPayment = Readonly<{
-  type: typeof START_PAYMENT;
+  type: typeof PAYMENT_START;
   payload: PaymentData;
 }>;
 
@@ -76,6 +76,6 @@ export const loadMessageSuccess = (
 });
 
 export const startPayment = (paymentData: PaymentData): StartPayment => ({
-  type: START_PAYMENT,
+  type: PAYMENT_START,
   payload: paymentData
 });

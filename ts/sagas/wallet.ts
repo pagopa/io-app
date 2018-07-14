@@ -33,22 +33,18 @@ import { Wallet } from "../../definitions/pagopa/Wallet";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
-  COMPLETE_PAYMENT,
-  FETCH_CARDS_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
+  FETCH_WALLETS_REQUEST,
+  PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_CONFIRM_SUMMARY,
   PAYMENT_INSERT_DATA_MANUALLY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_OTP,
   PAYMENT_SHOW_SUMMARY,
-  START_PAYMENT
+  PAYMENT_START
 } from "../store/actions/constants";
 import { Action } from "../store/actions/types";
-import {
-  cardsFetched,
-  selectCardForDetails
-} from "../store/actions/wallet/cards";
 import {
   confirmPaymentMethod,
   pickPaymentMethod,
@@ -62,12 +58,16 @@ import {
   storeNewTransaction,
   transactionsFetched
 } from "../store/actions/wallet/transactions";
-import { getFavoriteCreditCardId } from "../store/reducers/wallet/cards";
-import { getCardId } from "../types/CreditCard";
 import {
+  selectWalletForDetails,
+  walletsFetched
+} from "../store/actions/wallet/wallets";
+import { getFavoriteWalletId } from "../store/reducers/wallet/wallets";
+import { getWalletId } from "../types/CreditCard";
+import {
+  UNKNOWN_AMOUNT,
   UNKNOWN_CARD,
-  UNKNOWN_RECIPIENT,
-  UNKNOWN_AMOUNT
+  UNKNOWN_RECIPIENT
 } from "../types/unknown";
 import { WalletTransaction } from "../types/wallet";
 
@@ -84,7 +84,7 @@ function* fetchCreditCards(
   loadCards: () => Promise<ReadonlyArray<Wallet>>
 ): Iterator<Effect> {
   const cards: ReadonlyArray<Wallet> = yield call(loadCards);
-  yield put(cardsFetched(cards));
+  yield put(walletsFetched(cards));
 }
 
 const navigateTo = (routeName: string, params?: object) => {
@@ -103,9 +103,9 @@ function* paymentSaga(): Iterator<Effect> {
       PAYMENT_CONFIRM_PAYMENT_METHOD,
       PAYMENT_REQUEST_OTP,
       PAYMENT_VERIFY_OTP,
-      COMPLETE_PAYMENT
+      PAYMENT_COMPLETED
     ]);
-    if (action.type === COMPLETE_PAYMENT) {
+    if (action.type === PAYMENT_COMPLETED) {
       break;
     }
     yield fork(handlePaymentActions, action);
@@ -169,7 +169,7 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
     // Otherwise, show a list of payment methods available
     // TODO: if no payment method is available (or if the
     // user chooses to do so), allow adding a new one.
-    const favoriteCard: Option<number> = yield select(getFavoriteCreditCardId);
+    const favoriteCard: Option<number> = yield select(getFavoriteWalletId);
     if (favoriteCard.isSome()) {
       // show card
       yield put(confirmPaymentMethod(favoriteCard.value));
@@ -206,7 +206,7 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
       )).getOrElse(UNKNOWN_CARD);
       const transaction: WalletTransaction = {
         id: Math.floor(Math.random() * 1000),
-        cardId: getCardId(card),
+        cardId: getWalletId(card),
         isoDatetime: new Date().toISOString(),
         paymentReason: (yield select(paymentReasonSelector)).getOrElse("???"),
         recipient: (yield select(paymentRecipientSelector)).getOrElse(
@@ -225,13 +225,13 @@ function* handlePaymentActions(action: Action): Iterator<Effect> {
       };
       yield put(storeNewTransaction(transaction));
       yield put(selectTransactionForDetails(transaction));
-      yield put(selectCardForDetails(card.id)); // for the banner
+      yield put(selectWalletForDetails(card.id)); // for the banner
       yield put(
         navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
           paymentCompleted: true
         })
       );
-      yield put({ type: COMPLETE_PAYMENT });
+      yield put({ type: PAYMENT_COMPLETED });
     }
   }
 }
@@ -249,9 +249,9 @@ export default function* root(): Iterator<Effect> {
     WalletAPI.getTransactions
   );
   yield takeLatest(
-    FETCH_CARDS_REQUEST,
+    FETCH_WALLETS_REQUEST,
     fetchCreditCards,
-    WalletAPI.getCreditCards
+    WalletAPI.getWallets
   );
-  yield takeLatest(START_PAYMENT, paymentSaga);
+  yield takeLatest(PAYMENT_START, paymentSaga);
 }

@@ -1,5 +1,8 @@
-import { CardsActions } from "./cards";
 import { PaymentAction } from "./payment";
 import { TransactionsActions } from "./transactions";
+import { WalletsActions } from "./wallets";
 
-export type WalletActions = CardsActions | TransactionsActions | PaymentAction;
+export type WalletActions =
+  | WalletsActions
+  | TransactionsActions
+  | PaymentAction;

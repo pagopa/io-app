@@ -13,7 +13,7 @@ import {
 import { Action } from "../../actions/types";
 import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
-import { getSelectedCreditCardId } from "./cards";
+import { getSelectedWalletId } from "./wallets";
 
 export type TransactionsState = Readonly<{
   transactions: IndexedById<WalletTransaction>;
@@ -55,15 +55,15 @@ export const transactionForDetailsSelector = createSelector(
   }
 );
 
-export const transactionsByCardSelector = createSelector(
+export const transactionsByWalletSelector = createSelector(
   getTransactions,
-  getSelectedCreditCardId,
+  getSelectedWalletId,
   (
     transactions: IndexedById<WalletTransaction>,
-    cardId: Option<number>
+    walletId: Option<number>
   ): ReadonlyArray<WalletTransaction> => {
-    if (cardId.isSome()) {
-      return _.values(transactions).filter(t => t.cardId === cardId.value);
+    if (walletId.isSome()) {
+      return _.values(transactions).filter(t => t.cardId === walletId.value);
     }
     return [];
   }

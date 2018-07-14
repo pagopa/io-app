@@ -26,15 +26,15 @@ import { CardEnum } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { UNKNOWN_CARD } from "../../types/unknown";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
-  selectedCard: Wallet;
+  selectedWallet: Wallet;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
@@ -141,7 +141,7 @@ export class TransactionDetailsScreen extends React.Component<Props> {
         title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
         headerContents={this.getSubHeader()}
-        cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
+        cardType={{ type: CardEnum.HEADER, card: this.props.selectedWallet }}
         showPayButton={false}
         allowGoBack={!this.props.navigation.getParam("paymentCompleted", false)}
       >
@@ -207,7 +207,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   transaction: transactionForDetailsSelector(state).getOrElse(
     UNKNOWN_TRANSACTION
   ),
-  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);
