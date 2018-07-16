@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { entries } from "lodash";
 
 /**
  * IndexedObject helps creating objects that
@@ -39,6 +39,6 @@ export const addToIndexed = <T extends WithId>(
   indexed: IndexedById<T>,
   newObj: T
 ): IndexedById<T> =>
-  _.entries(indexed).reduce((o, [k, v]: [Id, T]) => ({ ...o, [k]: v }), {
+  entries(indexed).reduce((o, [k, v]: [Id, T]) => ({ ...o, [k]: v }), {
     [newObj.id]: newObj
   } as IndexedById<T>);

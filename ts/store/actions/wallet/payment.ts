@@ -8,10 +8,10 @@ import {
   PAYMENT_REQUEST_OTP,
   PAYMENT_SHOW_SUMMARY,
   PAYMENT_START,
+  PAYMENT_STORE_INITIAL_AMOUNT,
+  PAYMENT_STORE_RPTID_DATA,
   PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  STORE_INITIAL_AMOUNT,
-  STORE_RPTID_DATA,
-  STORE_VERIFICA_DATA
+  PAYMENT_STORE_VERIFICA_DATA
 } from "../constants";
 import { PAYMENT_VERIFY_OTP } from "./../constants";
 
@@ -24,7 +24,7 @@ export type InsertDataManually = Readonly<{
 }>;
 
 export type StoreRptIdData = Readonly<{
-  type: typeof STORE_RPTID_DATA;
+  type: typeof PAYMENT_STORE_RPTID_DATA;
   payload: RptId;
 }>;
 
@@ -39,12 +39,12 @@ export type ShowPaymentSummary = Readonly<{
 }>;
 
 export type StoreVerificaResponse = Readonly<{
-  type: typeof STORE_VERIFICA_DATA;
+  type: typeof PAYMENT_STORE_VERIFICA_DATA;
   payload: PaymentRequestsGetResponse;
 }>;
 
 export type StoreInitialAmount = Readonly<{
-  type: typeof STORE_INITIAL_AMOUNT;
+  type: typeof PAYMENT_STORE_INITIAL_AMOUNT;
   payload: AmountInEuroCents;
 }>;
 
@@ -75,7 +75,7 @@ export type VerifyOtp = Readonly<{
   payload: string;
 }>;
 
-export type PaymentAction =
+export type PaymentActions =
   | StartPayment
   | ShowPaymentSummary
   | StoreRptIdData
@@ -90,7 +90,7 @@ export type PaymentAction =
   | VerifyOtp;
 
 export const storeRptIdData = (rptId: RptId): StoreRptIdData => ({
-  type: STORE_RPTID_DATA,
+  type: PAYMENT_STORE_RPTID_DATA,
   payload: rptId
 });
 
@@ -108,14 +108,14 @@ export const startPayment = (): StartPayment => ({
 export const storeVerificaResponse = (
   response: PaymentRequestsGetResponse
 ) => ({
-  type: STORE_VERIFICA_DATA,
+  type: PAYMENT_STORE_VERIFICA_DATA,
   payload: response
 });
 
 export const storeInitialAmount = (
   amount: AmountInEuroCents
 ): StoreInitialAmount => ({
-  type: STORE_INITIAL_AMOUNT,
+  type: PAYMENT_STORE_INITIAL_AMOUNT,
   payload: amount
 });
 

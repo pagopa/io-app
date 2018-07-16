@@ -3,7 +3,7 @@
  * (holder, pan, cvc, expiration date)
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import _ from "lodash";
+import { entries, range, size } from "lodash";
 import { Left } from "native-base";
 import {
   Body,
@@ -189,15 +189,13 @@ export class AddCardScreen extends React.Component<Props, State> {
             <Item last={true} style={styles.noBottomLine}>
               <FlatList
                 numColumns={CARD_LOGOS_COLUMNS}
-                data={_.entries(displayedCards).concat(
+                data={entries(displayedCards).concat(
                   // padding with empty items so as to have a # of cols
                   // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
-                  _
-                    .range(
-                      CARD_LOGOS_COLUMNS -
-                        (_.size(displayedCards) % CARD_LOGOS_COLUMNS)
-                    )
-                    .map((__): [string, any] => ["", undefined])
+                  range(
+                    CARD_LOGOS_COLUMNS -
+                      (size(displayedCards) % CARD_LOGOS_COLUMNS)
+                  ).map((__): [string, any] => ["", undefined])
                 )}
                 renderItem={({ item }) => (
                   <View style={{ flex: 1, flexDirection: "row" }}>

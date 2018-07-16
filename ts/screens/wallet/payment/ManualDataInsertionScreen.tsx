@@ -69,22 +69,38 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.props.navigation.goBack();
   }
 
+  private validateAmount = (value: string) => {
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue)) {
+      this.setState({ amount: some(parsedValue) });
+    }
+  };
+
+  /**
+   * This method collects the data from the form and,
+   * if it is syntactically correct, it dispatches a
+   * request to proceed with the summary of the transaction
+   */
   private proceedToSummary = () => {
+    // first make sure all the elements have been entered correctly
     if (
       this.state.transactionCode.isSome() &&
       this.state.fiscalCode.isSome() &&
       this.state.amount.isSome()
     ) {
+      // extract the rptId object from the "rptId" string
+      // (i.e. the concatenation of fiscal code and notice number)
       const rptId = RptIdFromString.decode(
         `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
       );
+      // get the amount (directly from the input)
       const amount = AmountInEuroCentsFromNumber.decode(
         this.state.amount.value
       );
       if (rptId.isRight() && amount.isRight()) {
         // valid Rpt Id and valid amount were entered
         this.props.showPaymentSummary(rptId.value, amount.value);
-      } // else toast saying that the data entered is invalid
+      } // TODO: else toast saying that the data entered is invalid
     }
   };
 
@@ -131,12 +147,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 value={
                   this.state.amount.isSome() ? `${this.state.amount.value}` : ""
                 }
-                onChangeText={value => {
-                  const parsedValue = parseFloat(value);
-                  if (!isNaN(parsedValue)) {
-                    this.setState({ amount: some(parsedValue) });
-                  }
-                }}
+                onChangeText={this.validateAmount}
               />
             </Item>
           </Form>

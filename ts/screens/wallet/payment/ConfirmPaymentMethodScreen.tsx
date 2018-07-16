@@ -27,7 +27,7 @@ import { AmountInEuroCents } from "../../../../node_modules/italia-ts-commons/li
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
-import CreditCardComponent from "../../../components/wallet/card";
+import CardComponent from "../../../components/wallet/card";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -105,7 +105,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
-            <CreditCardComponent
+            <CardComponent
               navigation={this.props.navigation}
               item={this.props.card}
               menu={false}

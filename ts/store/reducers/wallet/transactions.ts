@@ -2,7 +2,7 @@
  * Reducers, states, selectors and guards for the transactions
  */
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import _ from "lodash";
+import { values } from "lodash";
 import { createSelector } from "reselect";
 import { WalletTransaction } from "../../../types/wallet";
 import {
@@ -35,8 +35,7 @@ export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
 export const latestTransactionsSelector = createSelector(
   getTransactions,
   (transactions: IndexedById<WalletTransaction>) =>
-    _
-      .values(transactions)
+    values(transactions)
       .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
       .slice(0, 5) // WIP no magic numbers
 );
@@ -63,7 +62,7 @@ export const transactionsByWalletSelector = createSelector(
     walletId: Option<number>
   ): ReadonlyArray<WalletTransaction> => {
     if (walletId.isSome()) {
-      return _.values(transactions).filter(t => t.cardId === walletId.value);
+      return values(transactions).filter(t => t.cardId === walletId.value);
     }
     return [];
   }

@@ -5,10 +5,10 @@ import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBenef
 import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import {
+  PAYMENT_STORE_INITIAL_AMOUNT,
+  PAYMENT_STORE_RPTID_DATA,
   PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  STORE_INITIAL_AMOUNT,
-  STORE_RPTID_DATA,
-  STORE_VERIFICA_DATA
+  PAYMENT_STORE_VERIFICA_DATA
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
@@ -93,19 +93,19 @@ export const reducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ): PaymentState => {
-  if (action.type === STORE_RPTID_DATA) {
+  if (action.type === PAYMENT_STORE_RPTID_DATA) {
     return {
       ...state,
       rptId: some(action.payload)
     };
   }
-  if (action.type === STORE_INITIAL_AMOUNT) {
+  if (action.type === PAYMENT_STORE_INITIAL_AMOUNT) {
     return {
       ...state,
       initialAmount: some(action.payload)
     };
   }
-  if (action.type === STORE_VERIFICA_DATA) {
+  if (action.type === PAYMENT_STORE_VERIFICA_DATA) {
     return {
       ...state,
       verificaResponse: some(action.payload)

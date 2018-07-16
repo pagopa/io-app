@@ -127,18 +127,12 @@ const styles = StyleSheet.create({
   }
 });
 
-const rptIdFromQrCodeString = (
-  qrCodeString: string
-): Either<t.Errors, RptId> => {
-  const qrCode = PaymentNoticeQrCodeFromString.decode(qrCodeString);
-  if (qrCode.isRight()) {
-    // the return value is either Left or Right
-    // (should be Right if PaymentNoticeQrCodeFromString is successful)
-    return rptIdFromPaymentNoticeQrCode(qrCode.value);
-  } else {
-    return qrCode; // is Left already
-  }
-};
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 2000;
+
+const rptIdFromQrCodeString = (qrCodeString: string): Either<t.Errors, RptId> =>
+  PaymentNoticeQrCodeFromString.decode(qrCodeString).chain(
+    rptIdFromPaymentNoticeQrCode
+  );
 
 class ScanQRCodeScreen extends React.Component<Props, never> {
   private goBack() {
@@ -147,13 +141,16 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
 
   private qrCodeRead = (data: string) => {
     const rptId = rptIdFromQrCodeString(data);
-    const qrCode = PaymentNoticeQrCodeFromString.decode(data);
-    if (rptId.isRight() && qrCode.isRight()) {
+    const paymentNotice = PaymentNoticeQrCodeFromString.decode(data);
+    if (rptId.isRight() && paymentNotice.isRight()) {
       // successful conversion to RptId
-      this.props.showPaymentSummary(rptId.value, qrCode.value.amount);
+      this.props.showPaymentSummary(rptId.value, paymentNotice.value.amount);
     } // else toast stating that QR code is invalid
     else {
-      setTimeout(() => (this.refs.scanner as QRCodeScanner).reactivate(), 2000);
+      setTimeout(
+        () => (this.refs.scanner as QRCodeScanner).reactivate(),
+        QRCODE_SCANNER_REACTIVATION_TIME_MS
+      );
     }
   };
 

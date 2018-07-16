@@ -2,7 +2,7 @@
  * Reducers, states, selectors and guards for the cards
  */
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import _ from "lodash";
+import { values } from "lodash";
 import { createSelector } from "reselect";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { getWalletId } from "../../../types/CreditCard";
@@ -38,7 +38,7 @@ export const walletsSelector = createSelector(
   getWallets,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (wallets: IndexedById<Wallet>): ReadonlyArray<Wallet> => _.values(wallets)
+  (wallets: IndexedById<Wallet>): ReadonlyArray<Wallet> => values(wallets)
 );
 
 export const getWalletFromId = (
@@ -49,7 +49,7 @@ export const getWalletFromId = (
     return none;
   }
   return fromNullable(
-    _.values(wallets).find(c => getWalletId(c) === walletId.value)
+    values(wallets).find(c => getWalletId(c) === walletId.value)
   );
 };
 
