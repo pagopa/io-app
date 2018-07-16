@@ -86,7 +86,7 @@
     "detox": "^8.0.0",
     "italia-tslint-rules": "^0.1.1",
     "italia-utils": "^3.11.1",
-    "jest": "23.0.1",
+    "jest": "23.4.1",
     "prettier": "1.13.0",
     "react-native-typescript-transformer": "^1.2.5",
     "react-test-renderer": "16.3.1",
