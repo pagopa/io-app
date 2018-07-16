@@ -5,7 +5,7 @@
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
-import { PersistConfig, persistReducer } from "redux-persist";
+import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 
 import { LOGOUT_SUCCESS } from "../actions/constants";
 import { Action } from "../actions/types";
@@ -25,7 +25,7 @@ import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
 // A custom configuration to store the authentication into the Keychain
-const authenticationPersistConfig: PersistConfig = {
+export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
   storage: createSecureStorage()
 };
@@ -73,23 +73,25 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   backendInfo: backendInfoReducer
 });
 
-const rootReducer: Reducer<GlobalState, Action> = (
-  state: GlobalState | undefined,
-  action: Action
-): GlobalState => {
-  return appReducer(
-    state ? filterStateOnLogout(state, action) : undefined,
-    action
-  );
-};
+export function createRootReducer(
+  persistConfigs: ReadonlyArray<PersistConfig>
+) {
+  return (state: GlobalState | undefined, action: Action): GlobalState => {
+    if (action.type === LOGOUT_SUCCESS) {
+      // Purge the stored redux-persist state
+      persistConfigs.forEach(persistConfig => purgeStoredState(persistConfig));
 
-// On logout we need to clear the state
-function filterStateOnLogout(
-  state: GlobalState,
-  action: Action
-): GlobalState | undefined {
-  // If the action is LOGOUT_SUCCESS return an empty (undefined) state
-  return action.type === LOGOUT_SUCCESS ? undefined : state;
+      /**
+       * We can't return undefined for nested persist reducer, we need to return
+       * the basic redux persist content.
+       */
+      state = state
+        ? ({
+            authentication: { _persist: state.authentication._persist }
+          } as GlobalState)
+        : undefined;
+    }
+
+    return appReducer(state, action);
+  };
 }
-
-export default rootReducer;
