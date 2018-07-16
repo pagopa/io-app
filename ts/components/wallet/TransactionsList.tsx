@@ -60,19 +60,17 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  * Transactions List component
  */
 class TransactionsList extends React.Component<Props> {
-  private renderDate(transaction: WalletTransaction) {
-    const dt = new Date(transaction.isoDatetime);
-    const datetime: string = `${dt.toLocaleDateString()} - ${dt.toLocaleTimeString()}`;
+  private renderDate(item: WalletTransaction) {
+    const completedAt = new Date(item.isoDatetime);
+    const datetime: string = `${completedAt.toLocaleDateString()} - ${completedAt.toLocaleTimeString()}`;
     return (
       <Row>
         <Left>
           <Text>
-            {transaction.isNew && (
+            {item.isNew && (
               <IconFont name="io-new" style={WalletStyles.newIconStyle} />
             )}
-            <Text note={true}>
-              {transaction.isNew ? `  ${datetime}` : datetime}
-            </Text>
+            <Text note={true}>{item.isNew ? `  ${datetime}` : datetime}</Text>
           </Text>
         </Left>
       </Row>

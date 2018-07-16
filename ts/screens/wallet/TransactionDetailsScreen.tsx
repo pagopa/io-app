@@ -87,7 +87,11 @@ export class TransactionDetailsScreen extends React.Component<Props> {
    * then the "Thank you message" is displayed
    */
   private getSubHeader() {
-    return this.props.navigation.getParam("paymentCompleted", false) ? (
+    const paymentCompleted = this.props.navigation.getParam(
+      "paymentCompleted",
+      false
+    );
+    return paymentCompleted ? (
       <View>
         <Grid>
           <Col size={1} />
@@ -134,7 +138,11 @@ export class TransactionDetailsScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const { transaction } = this.props;
-    const dt = new Date(transaction.isoDatetime);
+    const completedAt = new Date(transaction.isoDatetime);
+    const paymentCompleted = this.props.navigation.getParam(
+      "paymentCompleted",
+      false
+    );
 
     return (
       <WalletLayout
@@ -143,7 +151,7 @@ export class TransactionDetailsScreen extends React.Component<Props> {
         headerContents={this.getSubHeader()}
         cardType={{ type: CardEnum.HEADER, card: this.props.selectedWallet }}
         showPayButton={false}
-        allowGoBack={!this.props.navigation.getParam("paymentCompleted", false)}
+        allowGoBack={!paymentCompleted}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
@@ -153,7 +161,7 @@ export class TransactionDetailsScreen extends React.Component<Props> {
                 name="io-close"
                 size={variables.iconSizeBase}
                 onPress={() =>
-                  this.props.navigation.getParam("paymentCompleted", false)
+                  paymentCompleted
                     ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
                     : this.props.navigation.goBack()
                 }
@@ -195,8 +203,14 @@ export class TransactionDetailsScreen extends React.Component<Props> {
               I18n.t("wallet.recipient"),
               transaction.recipient
             )}
-            {this.labelValueRow(I18n.t("wallet.date"), dt.toLocaleDateString())}
-            {this.labelValueRow(I18n.t("wallet.time"), dt.toLocaleTimeString())}
+            {this.labelValueRow(
+              I18n.t("wallet.date"),
+              completedAt.toLocaleDateString()
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.time"),
+              completedAt.toLocaleTimeString()
+            )}
           </Grid>
         </Content>
       </WalletLayout>

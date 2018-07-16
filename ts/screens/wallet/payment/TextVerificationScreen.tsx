@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   }
 });
 
+const EMPTY_OTP = "";
 class TextVerificationScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -102,7 +103,7 @@ class TextVerificationScreen extends React.Component<Props, State> {
               style={styles.bottomBordered}
               keyboardType={"numeric"}
               onChangeText={value =>
-                this.setState({ otp: value !== "" ? some(value) : none })
+                this.setState({ otp: value !== EMPTY_OTP ? some(value) : none })
               }
             />
             <View spacer={true} />
@@ -114,7 +115,9 @@ class TextVerificationScreen extends React.Component<Props, State> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.verifyOtp(this.state.otp.getOrElse(""))}
+            onPress={() =>
+              this.props.verifyOtp(this.state.otp.getOrElse(EMPTY_OTP))
+            }
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>

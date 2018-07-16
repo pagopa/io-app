@@ -44,6 +44,7 @@ import {
 import variables from "../../../theme/variables";
 import {
   UNKNOWN_AMOUNT,
+  UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT,
   UNKNOWN_RPTID
 } from "../../../types/unknown";
@@ -155,7 +156,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   paymentRecipient: paymentRecipientSelector(state).getOrElse(
     UNKNOWN_RECIPIENT
   ),
-  paymentReason: paymentReasonSelector(state).getOrElse(""),
+  paymentReason: paymentReasonSelector(state).getOrElse(UNKNOWN_PAYMENT_REASON),
   rptId: getRptId(state).getOrElse(UNKNOWN_RPTID),
   originalAmount: getInitialAmount(state).getOrElse(UNKNOWN_AMOUNT),
   updatedAmount: currentAmountSelector(state).getOrElse(UNKNOWN_AMOUNT)

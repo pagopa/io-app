@@ -56,6 +56,10 @@ const styles = StyleSheet.create({
 });
 
 const CARD_LOGOS_COLUMNS = 4;
+const EMPTY_CARD_HOLDER = "";
+const EMPTY_CARD_PAN = "";
+const EMPTY_CARD_EXPIRATION_DATE = "";
+const EMPTY_CARD_SECURITY_CODE = "";
 
 export class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -113,9 +117,11 @@ export class AddCardScreen extends React.Component<Props, State> {
               placeholder={I18n.t("wallet.dummyCard.values.holder")}
               inputProps={{
                 onChangeText: value => {
-                  this.setState({ holder: some(value) });
+                  this.setState({
+                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+                  });
                 },
-                value: this.state.holder.getOrElse(""),
+                value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 autoCapitalize: "words"
               }}
             />
@@ -128,7 +134,7 @@ export class AddCardScreen extends React.Component<Props, State> {
               placeholder={I18n.t("wallet.dummyCard.values.pan")}
               inputProps={{
                 onChangeText: this.onPanChange,
-                value: this.state.pan.getOrElse(""),
+                value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 keyboardType: "numeric",
                 maxLength: 23
               }}
@@ -143,7 +149,9 @@ export class AddCardScreen extends React.Component<Props, State> {
                   placeholder={I18n.t("wallet.dummyCard.values.expirationDate")}
                   inputProps={{
                     onChangeText: this.onExpirationDateChange,
-                    value: this.state.expirationDate.getOrElse(""),
+                    value: this.state.expirationDate.getOrElse(
+                      EMPTY_CARD_EXPIRATION_DATE
+                    ),
                     keyboardType: "numeric"
                   }}
                 />
@@ -156,9 +164,16 @@ export class AddCardScreen extends React.Component<Props, State> {
                   placeholder={I18n.t("wallet.dummyCard.values.securityCode")}
                   inputProps={{
                     onChangeText: value => {
-                      this.setState({ securityCode: some(value) });
+                      this.setState({
+                        securityCode:
+                          value !== EMPTY_CARD_SECURITY_CODE
+                            ? some(value)
+                            : none
+                      });
                     },
-                    value: this.state.securityCode.getOrElse(""),
+                    value: this.state.securityCode.getOrElse(
+                      EMPTY_CARD_SECURITY_CODE
+                    ),
                     keyboardType: "numeric",
                     maxLength: 4,
                     secureTextEntry: true

@@ -31,13 +31,12 @@ export const CreditCardType = t.union([
   t.literal("UNKNOWN")
 ]);
 export type CreditCardType = t.TypeOf<typeof CreditCardType>;
+export const UNKNWON_CARD_TYPE = "UNKNOWN" as CreditCardType;
 
 export const getCardType = (w: Wallet): CreditCardType =>
   w.creditCard !== undefined
-    ? CreditCardType.decode(w.creditCard.brandLogo).getOrElse(
-        "UNKNOWN" as CreditCardType
-      )
-    : "UNKNOWN";
+    ? CreditCardType.decode(w.creditCard.brandLogo).getOrElse(UNKNWON_CARD_TYPE)
+    : UNKNWON_CARD_TYPE;
 
 export const getWalletId = (w: Wallet): number => w.id;
 
