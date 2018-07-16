@@ -43,6 +43,7 @@ import {
   selectedPaymentMethodSelector
 } from "../../../store/reducers/wallet/payment";
 import { UNKNOWN_AMOUNT, UNKNOWN_CARD } from "../../../types/unknown";
+import { amountBuilder } from "../../../utils/stringBuilder";
 
 type ReduxMappedStateProps = Readonly<{
   card: Wallet;
@@ -86,6 +87,13 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
+    const amount = amountBuilder(
+      AmountInEuroCentsFromNumber.encode(this.props.amount)
+    );
+    const fee = amountBuilder(
+      AmountInEuroCentsFromNumber.encode(this.props.fee)
+    );
+    const totalAmount = amountBuilder(this.getTotalAmount());
     return (
       <Container>
         <AppHeader>
@@ -120,9 +128,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${AmountInEuroCentsFromNumber.encode(
-                      this.props.amount
-                    )} €`}
+                    {amount}
                   </Text>
                 </Col>
               </Row>
@@ -138,7 +144,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${AmountInEuroCentsFromNumber.encode(this.props.fee)} €`}
+                    {fee}
                   </Text>
                 </Col>
               </Row>
@@ -150,9 +156,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <View spacer={true} large={true} />
-                  <H1 style={WalletStyles.textRight}>
-                    {`${this.getTotalAmount()} €`}
-                  </H1>
+                  <H1 style={WalletStyles.textRight}>{totalAmount}</H1>
                 </Col>
               </Row>
               <Row>

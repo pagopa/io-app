@@ -29,6 +29,7 @@ import {
   UNKNOWN_RECIPIENT
 } from "../../types/unknown";
 import { WalletStyles } from "../styles/wallet";
+import { amountBuilder } from '../../utils/stringBuilder';
 
 type ReduxMappedStateProps = Readonly<{
   paymentReason: string;
@@ -64,9 +65,9 @@ class PaymentBannerComponent extends React.Component<Props> {
                 bold={true}
                 style={[WalletStyles.white, WalletStyles.textRight]}
               >
-                {`${AmountInEuroCentsFromNumber.encode(
+                {amountBuilder(AmountInEuroCentsFromNumber.encode(
                   this.props.currentAmount
-                )} €`}
+                ))}
               </Text>
             </Col>
           </Row>

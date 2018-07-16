@@ -55,6 +55,9 @@ type State = Readonly<{
   amount: Option<number>;
 }>;
 
+const EMPTY_NOTICE_NUMBER = "";
+const EMPTY_FISCAL_CODE = "";
+const EMPTY_AMOUNT = "";
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -127,7 +130,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Input
                 keyboardType={"numeric"}
                 onChangeText={value => {
-                  this.setState({ transactionCode: some(value) });
+                  this.setState({
+                    transactionCode:
+                      value === EMPTY_NOTICE_NUMBER ? none : some(value)
+                  });
                 }}
               />
             </Item>
@@ -136,7 +142,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Input
                 keyboardType={"numeric"}
                 onChangeText={value => {
-                  this.setState({ fiscalCode: some(value) });
+                  this.setState({
+                    fiscalCode: value === EMPTY_FISCAL_CODE ? none : some(value)
+                  });
                 }}
               />
             </Item>
@@ -145,7 +153,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Input
                 keyboardType={"numeric"}
                 value={
-                  this.state.amount.isSome() ? `${this.state.amount.value}` : ""
+                  this.state.amount.isSome()
+                    ? `${this.state.amount.value}`
+                    : EMPTY_AMOUNT
                 }
                 onChangeText={this.validateAmount}
               />

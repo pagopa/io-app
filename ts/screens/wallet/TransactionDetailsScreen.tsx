@@ -31,6 +31,7 @@ import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { UNKNOWN_CARD } from "../../types/unknown";
 import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
+import { amountBuilder } from "../../utils/stringBuilder";
 
 type ReduxMappedProps = Readonly<{
   transaction: WalletTransaction;
@@ -58,19 +59,6 @@ const styles = StyleSheet.create({
 });
 
 export class TransactionDetailsScreen extends React.Component<Props> {
-  /**
-   * It provide the currency EUR symbol
-   * TODO: verify how approach the euro notation
-   * @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
-   */
-  private getCurrencySymbol(currency: string) {
-    if (currency === "EUR") {
-      return "€";
-    } else {
-      return currency;
-    }
-  }
-
   /**
    * It sum the amount to pay and the fee requested to perform the transaction
    * TO DO: If required, it should be implemented the proper algorithm to manage values
@@ -172,17 +160,13 @@ export class TransactionDetailsScreen extends React.Component<Props> {
               <Text>
                 {`${I18n.t("wallet.total")}  `}
                 <H3 style={styles.value}>
-                  {`-${this.getTotalAmount(transaction).toFixed(
-                    2
-                  )} ${this.getCurrencySymbol(transaction.currency)}`}
+                  {amountBuilder(this.getTotalAmount(transaction))}
                 </H3>
               </Text>
             </Row>
             {this.labelValueRow(
               I18n.t("wallet.payAmount"),
-              `${transaction.amount.toFixed(2)} ${this.getCurrencySymbol(
-                transaction.currency
-              )}`
+              amountBuilder(transaction.amount)
             )}
             {this.labelValueRow(
               <Text>
@@ -191,9 +175,7 @@ export class TransactionDetailsScreen extends React.Component<Props> {
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              `${transaction.transactionCost.toFixed(
-                2
-              )} ${this.getCurrencySymbol(transaction.currency)}`
+              amountBuilder(transaction.transactionCost)
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),

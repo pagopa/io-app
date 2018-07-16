@@ -67,33 +67,19 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
-const formatMdRecipient = (e: EnteBeneficiario): React.ReactNode => (
-  <Markdown>
-    {`
-  **${I18n.t("wallet.firstTransactionSummary.entity")}**\n
-  ${e.denominazioneBeneficiario} - ${e.denomUnitOperBeneficiario}\n
-  ${e.indirizzoBeneficiario} n. ${e.civicoBeneficiario}\n
-  ${e.capBeneficiario} ${e.localitaBeneficiario} (${e.provinciaBeneficiario})
-  `}
-  </Markdown>
-);
+const formatMdRecipient = (e: EnteBeneficiario): string =>
+  `**${I18n.t("wallet.firstTransactionSummary.entity")}**\n
+${e.denominazioneBeneficiario} - ${e.denomUnitOperBeneficiario}\n
+${e.indirizzoBeneficiario} n. ${e.civicoBeneficiario}\n
+${e.capBeneficiario} ${e.localitaBeneficiario} (${e.provinciaBeneficiario})`;
 
-const formatMdPaymentReason = (p: string): React.ReactNode => (
-  <Markdown>
-    {`
-  **${I18n.t("wallet.firstTransactionSummary.object")}**\n
-  ${p}
-  `}
-  </Markdown>
-);
+const formatMdPaymentReason = (p: string): string =>
+  `**${I18n.t("wallet.firstTransactionSummary.object")}**\n
+${p}`;
 
-const formatMdInfoRpt = (r: RptId): React.ReactNode => (
-  <Markdown>
-    {`
-  **IUV:** ${PaymentNoticeNumberFromString.encode(r.paymentNoticeNumber)}\n
-  **Recipient Fiscal Code:** ${r.organizationFiscalCode}`}
-  </Markdown>
-);
+const formatMdInfoRpt = (r: RptId): string =>
+  `**IUV:** ${PaymentNoticeNumberFromString.encode(r.paymentNoticeNumber)}\n
+**Recipient Fiscal Code:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props, never> {
   constructor(props: Props) {
@@ -121,18 +107,26 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         <Content noPadded={true}>
           <PaymentSummaryComponent
             navigation={this.props.navigation}
-            amount={`${AmountInEuroCentsFromNumber.encode(
+            amount={AmountInEuroCentsFromNumber.encode(
               this.props.originalAmount
-            )}`}
-            updatedAmount={`${AmountInEuroCentsFromNumber.encode(
+            )}
+            updatedAmount={AmountInEuroCentsFromNumber.encode(
               this.props.updatedAmount
-            )}`}
+            )}
             paymentReason={this.props.paymentReason}
           />
-          {formatMdRecipient(this.props.paymentRecipient)}
-          {formatMdPaymentReason(this.props.paymentReason)}
-          {formatMdInfoRpt(this.props.rptId)}
-          <View spacer={true} />
+          <View content={true}>
+            <Markdown>
+              {formatMdRecipient(this.props.paymentRecipient)}
+            </Markdown>
+            <View spacer={true} />
+            <Markdown>
+              {formatMdPaymentReason(this.props.paymentReason)}
+            </Markdown>
+            <View spacer={true} />
+            <Markdown>{formatMdInfoRpt(this.props.rptId)}</Markdown>
+            <View spacer={true} />
+          </View>
         </Content>
         <View footer={true}>
           <Button

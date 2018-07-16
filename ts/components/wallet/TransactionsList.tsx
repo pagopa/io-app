@@ -29,6 +29,7 @@ import {
   transactionsByWalletSelector
 } from "../../store/reducers/wallet/transactions";
 import { WalletTransaction } from "../../types/wallet";
+import { amountBuilder } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedStateProps = Readonly<{
@@ -93,9 +94,7 @@ class TransactionsList extends React.Component<Props> {
               <Text>{item.paymentReason}</Text>
             </Left>
             <Right>
-              <Text>
-                {item.amount} {item.currency}
-              </Text>
+              <Text>{amountBuilder(item.amount)}</Text>
             </Right>
           </Row>
           <Row>
