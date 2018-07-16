@@ -6,6 +6,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
+import { defaultRetryingFetch } from "../utils/fetch";
 
 export type GetServerInfoT = IGetApiRequestType<
   {},
@@ -18,9 +19,13 @@ export type GetServerInfoT = IGetApiRequestType<
 // Create client
 //
 
-export function BackendPublicClient(baseUrl: string) {
+export function BackendPublicClient(
+  baseUrl: string,
+  fetchApi: typeof fetch = defaultRetryingFetch()
+) {
   const options = {
-    baseUrl
+    baseUrl,
+    fetchApi
   };
 
   const getServerInfoT: GetServerInfoT = {

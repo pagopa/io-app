@@ -16,7 +16,7 @@ import { fetchMaxRetries, fetchTimeout } from "../config";
 /**
  * Returns a fetch wrapped with timeout and retry logic
  */
-export function retryingFetch(fetchApi: typeof fetch = fetch): typeof fetch {
+export function retryingFetch(fetchApi: typeof fetch): typeof fetch {
   // a fetch that can be aborted and that gets cancelled after fetchTimeoutMs
   const abortableFetch = AbortableFetch(fetchApi);
   const timeoutFetch = toFetch(setFetchTimeout(fetchTimeout, abortableFetch));
@@ -29,4 +29,11 @@ export function retryingFetch(fetchApi: typeof fetch = fetch): typeof fetch {
     exponentialBackoff
   );
   return retriableFetch(retryLogic)(timeoutFetch);
+}
+
+export function defaultRetryingFetch() {
+  // tslint:disable-next-line:no-object-mutation
+  (global as any).AbortController = require("abort-controller");
+  require("./whatwg-fetch");
+  return retryingFetch((global as any).fetch);
 }

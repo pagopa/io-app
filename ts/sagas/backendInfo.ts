@@ -14,12 +14,19 @@ import {
 // load backend info every hour
 const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 
-// retry loading backend info every 5 seconds on error
-const BACKEND_INFO_RETRY_INTERVAL = 10 * 1000;
+// retry loading backend info every 10 seconds on error
+const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
 
 export function* backendInfoWatcher(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
-  const getServerInfo = backendPublicClient.getServerInfo;
+
+  function getServerInfo(): Promise<BasicResponseType<ServerInfo> | undefined> {
+    return new Promise((resolve, _) =>
+      backendPublicClient
+        .getServerInfo({})
+        .then(resolve, () => resolve(undefined))
+    );
+  }
 
   while (true) {
     const backendInfoResponse:

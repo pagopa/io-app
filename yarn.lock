@@ -707,6 +707,12 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
 
+abort-controller@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-1.0.2.tgz#d326cbea17af071f5313b1eca3f4f3df4eb54431"
+  dependencies:
+    event-target-shim "^3.0.0"
+
 absolute-path@^0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/absolute-path/-/absolute-path-0.0.0.tgz#a78762fbdadfb5297be99b15d35a785b2f095bf7"
@@ -2840,6 +2846,10 @@ event-target-shim@^1.0.5:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
 
+event-target-shim@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-3.0.2.tgz#af25bb55a97c670bbeba985c82647fb64d892153"
+
 eventemitter3@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.0.1.tgz#4ce66c3fc5b5a6b9f2245e359e1938f1ab10f960"
@@ -4048,9 +4058,9 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
-italia-ts-commons@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.9.0.tgz#dfc3561129487f564cc31cfa0a52a56090d18cd7"
+italia-ts-commons@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.10.0.tgz#52045ea4af04231d5a435a870a5766d36ebba15b"
   dependencies:
     fp-ts "^1.6.0"
     io-ts "^1.1.4"
@@ -7889,6 +7899,10 @@ whatwg-fetch@>=0.10.0:
 whatwg-fetch@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-1.1.1.tgz#ac3c9d39f320c6dce5339969d054ef43dd333319"
+
+"whatwg-fetch@git://github.com/github/fetch#141665b1477bb25ac1427b2cb3e05203453e30cb":
+  version "2.0.4"
+  resolved "git://github.com/github/fetch#141665b1477bb25ac1427b2cb3e05203453e30cb"
 
 whatwg-mimetype@^2.0.0, whatwg-mimetype@^2.1.0:
   version "2.1.0"
