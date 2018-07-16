@@ -1,4 +1,4 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
 import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
@@ -44,44 +44,31 @@ export const getSelectedPaymentMethod = (state: GlobalState): Option<number> =>
 
 export const currentAmountSelector = createSelector(
   getVerificaResponse,
-  (rsp: Option<PaymentRequestsGetResponse>): Option<AmountInEuroCents> => {
-    if (rsp.isNone()) {
-      return none;
-    }
-    // TODO: update proxy to return AmountInEuroCents
-    return some((
-      "0".repeat(10) + `${rsp.value.importoSingoloVersamento}`
-    ).slice(-10) as AmountInEuroCents);
-  }
+  (rsp: Option<PaymentRequestsGetResponse>): Option<AmountInEuroCents> =>
+    rsp.map(
+      v =>
+        ("0".repeat(10) + `${v.importoSingoloVersamento}`).slice(
+          -10
+        ) as AmountInEuroCents
+    )
 );
 
 export const paymentRecipientSelector = createSelector(
   getVerificaResponse,
-  (rsp: Option<PaymentRequestsGetResponse>): Option<EnteBeneficiario> => {
-    if (rsp.isNone() || rsp.value.enteBeneficiario === undefined) {
-      return none;
-    }
-    return some(rsp.value.enteBeneficiario);
-  }
+  (rsp: Option<PaymentRequestsGetResponse>): Option<EnteBeneficiario> =>
+    rsp.mapNullable(v => v.enteBeneficiario)
 );
 
 export const paymentReasonSelector = createSelector(
   getVerificaResponse,
-  (rsp: Option<PaymentRequestsGetResponse>): Option<string> => {
-    if (rsp.isNone() || rsp.value.causaleVersamento === undefined) {
-      return none;
-    }
-    return some(rsp.value.causaleVersamento);
-  }
+  (rsp: Option<PaymentRequestsGetResponse>): Option<string> =>
+    rsp.mapNullable(v => v.causaleVersamento)
 );
 
-export const feeExtractor = (w: Wallet): Option<AmountInEuroCents> => {
-  if (w.psp === undefined || w.psp.fixedCost === undefined) {
-    return none;
-  }
-  return some(("0".repeat(10) +
-    `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
-};
+export const feeExtractor = (w: Wallet): Option<AmountInEuroCents> =>
+  fromNullable(w.psp)
+    .chain(psp => fromNullable(psp.fixedCost))
+    .map(fee => ("0".repeat(10) + `${fee.amount}`) as AmountInEuroCents);
 
 export const selectedPaymentMethodSelector = createSelector(
   getSelectedPaymentMethod,

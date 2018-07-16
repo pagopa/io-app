@@ -240,6 +240,7 @@ function* verifyOtpHandler(action: VerifyOtp) {
     // do payment stuff? (-> pagoPA REST)
     // retrieve transaction and store it
     // mocked data here
+    // tslint:disable-next-line saga-yield-return-type
     const card: Wallet = (yield select(
       selectedPaymentMethodSelector
     )).getOrElse(UNKNOWN_CARD);
@@ -247,7 +248,8 @@ function* verifyOtpHandler(action: VerifyOtp) {
       id: Math.floor(Math.random() * 1000),
       cardId: getWalletId(card),
       isoDatetime: new Date().toISOString(),
-      paymentReason: (yield select(paymentReasonSelector)).getOrElse("???"),
+      paymentReason: (yield select(paymentReasonSelector)).getOrElse("???"), // tslint:disable saga-yield-return-type
+      // tslint:disable-next-line saga-yield-return-type
       recipient: (yield select(paymentRecipientSelector)).getOrElse(
         UNKNOWN_RECIPIENT
       ).denominazioneBeneficiario,

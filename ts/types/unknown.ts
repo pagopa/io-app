@@ -3,6 +3,7 @@ import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { EnteBeneficiario } from "../../definitions/pagopa-proxy/EnteBeneficiario";
 import { Wallet } from "../../definitions/pagopa/Wallet";
+import { CreditCardType } from "./CreditCard";
 
 export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
   identificativoUnivocoBeneficiario: "?",
@@ -32,6 +33,9 @@ export const UNKNOWN_RPTID: RptId = {
 
 export const UNKNOWN_CARD_PAN = "0000";
 export const UNKNOWN_CARD_HOLDER = "NO HOLDER";
+export const UNKNWON_CARD_TYPE: CreditCardType = "UNKNOWN";
+export const UNKNOWN_LAST_USAGE = "??";
+export const UNKNOWN_EXPIRATION_DATE = "00/00";
 
 export const UNKNOWN_CARD: Wallet = {
   creditCard: {

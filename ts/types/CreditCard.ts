@@ -1,4 +1,10 @@
-import { UNKNOWN_CARD_PAN } from "./unknown";
+import {
+  UNKNOWN_CARD_HOLDER,
+  UNKNOWN_CARD_PAN,
+  UNKNOWN_EXPIRATION_DATE,
+  UNKNOWN_LAST_USAGE,
+  UNKNWON_CARD_TYPE
+} from "./unknown";
 /**
  * Definition of the CreditCard type, with the
  * properties required for UI purposes.
@@ -9,6 +15,12 @@ import { UNKNOWN_CARD_PAN } from "./unknown";
 import * as t from "io-ts";
 import { tag } from "italia-ts-commons/lib/types";
 import { Wallet } from "../../definitions/pagopa/Wallet";
+import {
+  fromEither,
+  fromNullable,
+  none,
+  some
+} from "../../node_modules/fp-ts/lib/Option";
 
 interface ICreditCardIdTag {
   readonly kind: "CreditCardId";
@@ -30,37 +42,39 @@ export const CreditCardType = t.union([
   t.literal("POSTEPAY"),
   t.literal("UNKNOWN")
 ]);
+
 export type CreditCardType = t.TypeOf<typeof CreditCardType>;
-export const UNKNWON_CARD_TYPE = "UNKNOWN" as CreditCardType;
-
 export const getCardType = (w: Wallet): CreditCardType =>
-  w.creditCard !== undefined
-    ? CreditCardType.decode(w.creditCard.brandLogo).getOrElse(UNKNWON_CARD_TYPE)
-    : UNKNWON_CARD_TYPE;
+  fromNullable(w.creditCard) // tslint:disable no-inferred-empty-object-type (WIP: any clue as to why this occurs?)
+    .chain(card => fromEither(CreditCardType.decode(card.brandLogo)))
+    .getOrElse(UNKNWON_CARD_TYPE);
 
-export const getWalletId = (w: Wallet): number => w.id;
+export const getWalletId = (w: Wallet): number =>
+  fromNullable(w.id).getOrElse(-1);
 
 export const getCardPan = (w: Wallet): string =>
-  w.creditCard === undefined
-    ? UNKNOWN_CARD_PAN
-    : w.creditCard.pan === undefined
-      ? UNKNOWN_CARD_PAN
-      : w.creditCard.pan;
+  fromNullable(w.creditCard)
+    .chain(card => fromNullable(card.pan))
+    .getOrElse(UNKNOWN_CARD_PAN);
 
 export const getCardLastUsage = (w: Wallet): string =>
-  w.lastUsage === undefined ? "?" : w.lastUsage;
+  fromNullable(w.lastUsage).getOrElse(UNKNOWN_LAST_USAGE);
 
 export const getCardExpirationDate = (w: Wallet): string =>
-  w.creditCard === undefined
-    ? "00/00"
-    : w.creditCard.expireMonth === undefined ||
-      w.creditCard.expireYear === undefined
-      ? "00/00"
-      : `${w.creditCard.expireMonth}/${w.creditCard.expireYear}`;
+  fromNullable(w.creditCard)
+    .chain(card => {
+      const values: ReadonlyArray<any> = [
+        fromNullable(card.expireMonth),
+        fromNullable(card.expireYear)
+      ];
+      if (values.every(v => v.isSome())) {
+        return some(values.map(v => v.value).join("/"));
+      }
+      return none;
+    })
+    .getOrElse(UNKNOWN_EXPIRATION_DATE);
 
 export const getCardHolder = (w: Wallet): string =>
-  w.creditCard === undefined
-    ? "NO HOLDER"
-    : w.creditCard.holder === undefined
-      ? "NO HOLDER"
-      : w.creditCard.holder;
+  fromNullable(w.creditCard)
+    .chain(card => fromNullable(card.holder))
+    .getOrElse(UNKNOWN_CARD_HOLDER);

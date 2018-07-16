@@ -46,12 +46,10 @@ export const transactionForDetailsSelector = createSelector(
   (
     transactions: IndexedById<WalletTransaction>,
     selectedTransactionId: Option<number>
-  ): Option<WalletTransaction> => {
-    if (selectedTransactionId.isSome()) {
-      return fromNullable(transactions[selectedTransactionId.value]);
-    }
-    return none;
-  }
+  ): Option<WalletTransaction> =>
+    selectedTransactionId.chain(transactionId =>
+      fromNullable(transactions[transactionId])
+    )
 );
 
 export const transactionsByWalletSelector = createSelector(
@@ -60,12 +58,8 @@ export const transactionsByWalletSelector = createSelector(
   (
     transactions: IndexedById<WalletTransaction>,
     walletId: Option<number>
-  ): ReadonlyArray<WalletTransaction> => {
-    if (walletId.isSome()) {
-      return values(transactions).filter(t => t.cardId === walletId.value);
-    }
-    return [];
-  }
+  ): ReadonlyArray<WalletTransaction> =>
+    walletId.fold([], wId => values(transactions).filter(t => t.cardId === wId))
 );
 
 // reducer

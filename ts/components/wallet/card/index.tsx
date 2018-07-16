@@ -254,8 +254,10 @@ const mapStateToProps = (
 ): ReduxMappedStateProps => {
   const favoriteCard = getFavoriteWalletId(state);
   return {
-    isFavoriteCard:
-      favoriteCard.isSome() && favoriteCard.value === getWalletId(props.item)
+    isFavoriteCard: favoriteCard.fold(
+      false,
+      walletId => walletId === getWalletId(props.item)
+    )
   };
 };
 

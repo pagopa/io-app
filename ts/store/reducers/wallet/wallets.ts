@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
@@ -44,14 +44,10 @@ export const walletsSelector = createSelector(
 export const getWalletFromId = (
   walletId: Option<number>,
   wallets: IndexedById<Wallet>
-): Option<Wallet> => {
-  if (walletId.isNone()) {
-    return none;
-  }
-  return fromNullable(
-    values(wallets).find(c => getWalletId(c) === walletId.value)
+): Option<Wallet> =>
+  walletId.mapNullable(wId =>
+    values(wallets).find(c => getWalletId(c) === wId)
   );
-};
 
 export const selectedWalletSelector = createSelector(
   getSelectedWalletId,
