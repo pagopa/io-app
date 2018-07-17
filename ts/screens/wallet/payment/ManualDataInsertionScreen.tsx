@@ -32,7 +32,7 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { RptIdFromString } from "../../../../definitions/pagopa-proxy/RptIdFromString";
+import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
 import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";

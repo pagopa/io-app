@@ -1,5 +1,5 @@
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_CONFIRM_SUMMARY,

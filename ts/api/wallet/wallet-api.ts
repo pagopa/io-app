@@ -44,8 +44,8 @@ const wallets: ReadonlyArray<Wallet> = [
     },
     favourite: false,
     idPsp: 4,
-    id: 1,
-    lastUsage: "2018-04-17T07:34:00.000Z",
+    idWallet: 1,
+    lastUsage: new Date("2018-07-16T07:34:00.000Z"),
     psp: {
       businessName: "Poste Italiane",
       fixedCost: {
@@ -67,8 +67,8 @@ const wallets: ReadonlyArray<Wallet> = [
     },
     favourite: false,
     idPsp: 3,
-    id: 2,
-    lastUsage: "2018-02-14T10:21:00.000Z",
+    idWallet: 2,
+    lastUsage: new Date("2018-02-14T10:21:00.000Z"),
     psp: {
       businessName: "Visa",
       fixedCost: {
@@ -90,8 +90,8 @@ const wallets: ReadonlyArray<Wallet> = [
     },
     favourite: false,
     idPsp: 2,
-    id: 3,
-    lastUsage: "never",
+    idWallet: 3,
+    lastUsage: new Date("-"),
     psp: {
       businessName: "Mastercard",
       fixedCost: {
@@ -113,8 +113,8 @@ const wallets: ReadonlyArray<Wallet> = [
     },
     favourite: false,
     idPsp: 3,
-    id: 4,
-    lastUsage: "2018-01-22T14:54:00.000Z",
+    idWallet: 4,
+    lastUsage: new Date("2018-01-22T14:54:00.000Z"),
     psp: {
       businessName: "Visa",
       fixedCost: {

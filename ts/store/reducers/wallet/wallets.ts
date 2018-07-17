@@ -69,7 +69,7 @@ const reducer = (
   if (action.type === WALLETS_FETCHED) {
     return {
       ...state,
-      list: toIndexed(action.payload)
+      list: toIndexed(action.payload, "idWallet")
     };
   }
   if (action.type === SELECT_WALLET_FOR_DETAILS) {

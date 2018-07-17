@@ -25,7 +25,7 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
+import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";

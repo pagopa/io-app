@@ -24,11 +24,11 @@ import {
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
-import { CodiceContestoPagamento } from "../../definitions/pagopa-proxy/CodiceContestoPagamento";
-import { EnteBeneficiario } from "../../definitions/pagopa-proxy/EnteBeneficiario";
-import { Iban } from "../../definitions/pagopa-proxy/Iban";
-import { ImportoEuroCents } from "../../definitions/pagopa-proxy/ImportoEuroCents";
-import { PaymentRequestsGetResponse } from "../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
+import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
+import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
+import { Iban } from "../../definitions/backend/Iban";
+import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
+import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { Wallet } from "../../definitions/pagopa/Wallet";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
@@ -266,7 +266,7 @@ function* verifyOtpHandler(action: VerifyOtp) {
     };
     yield put(storeNewTransaction(transaction));
     yield put(selectTransactionForDetails(transaction));
-    yield put(selectWalletForDetails(card.id)); // for the banner
+    yield put(selectWalletForDetails(getWalletId(card))); // for the banner
     yield put(
       navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
         paymentCompleted: true

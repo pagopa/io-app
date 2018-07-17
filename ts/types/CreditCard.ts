@@ -21,6 +21,8 @@ import {
   none,
   some
 } from "../../node_modules/fp-ts/lib/Option";
+import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
+import I18n from "../i18n";
 
 interface ICreditCardIdTag {
   readonly kind: "CreditCardId";
@@ -50,15 +52,28 @@ export const getCardType = (w: Wallet): CreditCardType =>
     .getOrElse(UNKNWON_CARD_TYPE);
 
 export const getWalletId = (w: Wallet): number =>
-  fromNullable(w.id).getOrElse(-1);
+  fromNullable(w.idWallet).getOrElse(-1);
 
 export const getCardPan = (w: Wallet): string =>
   fromNullable(w.creditCard)
     .chain(card => fromNullable(card.pan))
     .getOrElse(UNKNOWN_CARD_PAN);
 
-export const getCardLastUsage = (w: Wallet): string =>
+export const getCardLastUsage = (w: Wallet): Date =>
   fromNullable(w.lastUsage).getOrElse(UNKNOWN_LAST_USAGE);
+
+export const getCardFormattedLastUsage = (w: Wallet): string => {
+  const neverString = "never";
+  const lastUsageString = convertDateToWordDistance(
+    getCardLastUsage(w),
+    I18n.t("datetimes.yesterday"),
+    I18n.t("datetimes.todayAt"),
+    neverString
+  );
+  return lastUsageString === neverString
+    ? I18n.t("cardComponent.neverUsed")
+    : `${I18n.t("cardComponent.lastUsage")} ${lastUsageString}`;
+};
 
 export const getCardExpirationDate = (w: Wallet): string =>
   fromNullable(w.creditCard)

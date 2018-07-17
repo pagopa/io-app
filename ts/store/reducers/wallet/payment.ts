@@ -1,8 +1,8 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
-import { EnteBeneficiario } from "../../../../definitions/pagopa-proxy/EnteBeneficiario";
-import { PaymentRequestsGetResponse } from "../../../../definitions/pagopa-proxy/PaymentRequestsGetResponse";
+import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import {
   PAYMENT_STORE_INITIAL_AMOUNT,

@@ -70,7 +70,7 @@ const reducer = (
   if (action.type === TRANSACTIONS_FETCHED) {
     return {
       ...state,
-      transactions: toIndexed(action.payload)
+      transactions: toIndexed(action.payload, "id")
     };
   }
   if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {
@@ -82,7 +82,7 @@ const reducer = (
   if (action.type === PAYMENT_STORE_NEW_TRANSACTION) {
     return {
       ...state,
-      transactions: addToIndexed(state.transactions, action.payload)
+      transactions: addToIndexed(state.transactions, action.payload, "id")
     };
   }
   return state;
