@@ -12,7 +12,8 @@ import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import {
   getCardExpirationDate,
-  getCardHolder
+  getCardHolder,
+  getWalletId
 } from "../../../types/CreditCard";
 import IconFont from "../../ui/IconFont";
 import FooterRow from "./FooterRow";
@@ -51,7 +52,7 @@ export default class CardBody extends React.Component<CardProps> {
           style={CreditCardStyles.rowStyle}
           onPress={() =>
             mainAction !== undefined
-              ? mainAction(this.props.item.id)
+              ? mainAction(getWalletId(this.props.item))
               : undefined
           }
         >
@@ -99,7 +100,7 @@ export default class CardBody extends React.Component<CardProps> {
         <Text
           style={[CreditCardStyles.textStyle, CreditCardStyles.smallTextStyle]}
         >
-          {`${I18n.t("creditCardComponent.validUntil")} ${getCardExpirationDate(
+          {`${I18n.t("cardComponent.validUntil")} ${getCardExpirationDate(
             item
           )}`}
         </Text>

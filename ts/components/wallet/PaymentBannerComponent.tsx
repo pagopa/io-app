@@ -13,7 +13,7 @@ import { TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { EnteBeneficiario } from "../../../definitions/pagopa-proxy/EnteBeneficiario";
+import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
 import { showPaymentSummary } from "../../store/actions/wallet/payment";

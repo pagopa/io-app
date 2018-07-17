@@ -161,16 +161,16 @@ class CardComponent extends React.Component<Props> {
                   <Text bold={true} style={styles.blueText}>
                     {I18n.t(
                       this.props.isFavoriteCard
-                        ? "creditCardComponent.unsetFavourite"
-                        : "creditCardComponent.setFavourite"
+                        ? "cardComponent.unsetFavourite"
+                        : "cardComponent.setFavourite"
                     )}
                   </Text>
                 </MenuOption>
                 <MenuOption
                   onSelect={() =>
                     Alert.alert(
-                      I18n.t("creditCardComponent.deleteTitle"),
-                      I18n.t("creditCardComponent.deleteMsg"),
+                      I18n.t("cardComponent.deleteTitle"),
+                      I18n.t("cardComponent.deleteMsg"),
                       [
                         {
                           text: I18n.t("global.buttons.cancel"),

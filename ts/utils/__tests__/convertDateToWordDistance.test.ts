@@ -10,6 +10,14 @@ describe("convertDateToWordDistance test plan", () => {
     );
   });
 
+  it("should compare now date with 2 hours earlier, expected 'today, at hh:mm'", () => {
+    const nowDate = new Date();
+    const testDate = addHours(nowDate, -2);
+    expect(convertDateToWordDistance(testDate, "yesterday", "today, at")).toBe(
+      `today, at ${format(testDate, "H.mm")}`
+    );
+  });
+
   it("should compare now date with 24 hours earlier, expected yesterday", () => {
     const nowDate = new Date();
     const testDate = addHours(nowDate, -24);
@@ -22,6 +30,19 @@ describe("convertDateToWordDistance test plan", () => {
     expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
       format(testDate, "DD/MM")
     );
+  });
+
+  it("should return a custom 'invalid date' string if the original date is invalid", () => {
+    const testDate = new Date("?");
+    const customInvalidString = "Invalid date provided";
+    expect(
+      convertDateToWordDistance(
+        testDate,
+        "yesterday",
+        undefined,
+        customInvalidString
+      )
+    ).toBe(customInvalidString);
   });
 
   it("should compare now date with last year date, expected DD/MM/YY", () => {

@@ -16,7 +16,7 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { selectWalletForDetails } from "../../../store/actions/wallet/wallets";
 import variables from "../../../theme/variables";
-import { getCardLastUsage, getWalletId } from "../../../types/CreditCard";
+import { getWalletId, getCardFormattedLastUsage } from "../../../types/CreditCard";
 import IconFont from "../../ui/IconFont";
 import { CreditCardStyles } from "./style";
 
@@ -65,7 +65,7 @@ class FooterRow extends React.Component<Props> {
                 CreditCardStyles.smallTextStyle
               ]}
             >
-              {getCardLastUsage(item)}
+              {getCardFormattedLastUsage(item)}
             </Text>
           </Col>
           <Col size={1} style={styles.rightAligned}>
