@@ -157,6 +157,10 @@
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
+  "datetimes": {
+    "yesterday": "yesterday",
+    "todayAt": "today, at"
+  },
   "wallet": {
     "wallet": "Wallet",
     "creditcards": "Credit Cards",
@@ -257,9 +261,6 @@
     "transaction": "Transaction",
     "noTransactions": "There are no transactions.",
     "noNewTransactions": "There are no new transactions.",
-    "lastUsage": "Last usage",
-    "yesterday": "yesterday at",
-    "today": "today at",
     "payNotice": "Pay notice",
     "latestTransactions": "Latest transactions",
     "creditDebitCards": "Credit/Debit Cards",
@@ -311,13 +312,15 @@
     "favoriteTitle":"Set the cart as favourite payment method",
     "favoriteText":"This payment method will be automatically proposed for the next payment"
   },
-  "creditCardComponent": {
+  "cardComponent": {
     "validUntil": "Valid until",
     "actions": "Actions",
     "setFavourite": "Set as favourite",
     "unsetFavourite": "Remove from favourites",
     "deleteTitle": "Do you want to proceed?",
-    "deleteMsg": "This will delete the payment method"
+    "deleteMsg": "This will delete the payment method",
+    "neverUsed": "Never used",
+    "lastUsage": "Last usage"
   },
   "messages": {
     "counting": {
