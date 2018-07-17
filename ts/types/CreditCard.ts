@@ -21,8 +21,8 @@ import {
   none,
   some
 } from "../../node_modules/fp-ts/lib/Option";
-import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 import I18n from "../i18n";
+import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 
 interface ICreditCardIdTag {
   readonly kind: "CreditCardId";
