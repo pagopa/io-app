@@ -56,6 +56,11 @@
     "errors": {
       "load": "Errore nel caricamento del profilo",
       "upsert": "Errore nella creazione o nell'aggiornamento del profilo"
+    },
+    "main": {
+      "screenTitle": "Profilo",
+      "screenSubtitle": "Qui trovi informazioni e dati legati alla tua identità e ai tuoi dati personali.",
+      "logout": "Logout/Esci"
     }
   },
   "navigation": {
@@ -101,7 +106,8 @@
       "headerTitle": "Accedi"
     },
     "errors": {
-      "notoken": "La sessione non è pronta o non è valida"
+      "notoken": "La sessione non è pronta o non è valida",
+      "logout": "Errore nel logout"
     }
   },
   "onboarding": {

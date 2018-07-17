@@ -7,6 +7,8 @@ import {
   IDP_SELECTED,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  LOGOUT_FAILURE,
+  LOGOUT_SUCCESS,
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_SUCCESS,
   NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
@@ -67,6 +69,8 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case SESSION_LOAD_FAILURE:
         case SESSION_EXPIRED:
         case AUTHENTICATION_COMPLETED:
+        case LOGOUT_SUCCESS:
+        case LOGOUT_FAILURE:
         // onboarding
         case START_ONBOARDING:
         case TOS_ACCEPT_SUCCESS:

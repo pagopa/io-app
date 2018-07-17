@@ -47,6 +47,12 @@ export const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
 
 export type FullProfile = t.TypeOf<typeof FullProfile>;
 
+export const SuccessResponse = t.interface({
+  message: t.string
+});
+
+export type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
+
 //
 // Define the types of the requests
 //
@@ -126,6 +132,13 @@ export type CreateOrUpdateInstallationT = IPutApiRequestType<
   BasicResponseType<NonEmptyString>
 >;
 
+export type LogoutT = IPostApiRequestType<
+  {},
+  "Authorization" | "Content-Type",
+  never,
+  BasicResponseTypeWith401<SuccessResponse>
+>;
+
 export type BackendClientT = ReturnType<typeof BackendClient>;
 
 //
@@ -199,6 +212,15 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
     response_decoder: basicResponseDecoder(NonEmptyString)
   };
 
+  const logoutT: LogoutT = {
+    method: "post",
+    url: () => "/logout",
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    query: _ => ({}),
+    body: _ => JSON.stringify({}),
+    response_decoder: basicResponseDecoderWith401(SuccessResponse)
+  };
+
   return {
     getSession: createFetchRequestForApi(getSessionT, options),
     getService: createFetchRequestForApi(getServiceT, options),
@@ -212,6 +234,7 @@ export function BackendClient(baseUrl: string, token: SessionToken) {
     createOrUpdateInstallation: createFetchRequestForApi(
       createOrUpdateInstallationT,
       options
-    )
+    ),
+    logout: createFetchRequestForApi(logoutT, options)
   };
 }
