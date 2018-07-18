@@ -21,11 +21,14 @@ import {
 import ROUTES from "../navigation/routes";
 import {
   PIN_LOGIN_INITIALIZE,
-  PIN_LOGIN_VALIDATE_FAILURE,
   PIN_LOGIN_VALIDATE_REQUEST
 } from "../store/actions/constants";
-import { clearDeeplink, navigateToDeeplink } from "../store/actions/deeplink";
-import { PinValidateRequest } from "../store/actions/pinlogin";
+import { navigateToDeeplink } from "../store/actions/deeplink";
+import {
+  pinFailure,
+  pinSuccess,
+  PinValidateRequest
+} from "../store/actions/pinlogin";
 import { deeplinkSelector } from "../store/reducers/deeplink";
 import { getPin } from "../utils/keychain";
 
@@ -50,12 +53,11 @@ function* pinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
         deeplinkSelector
       );
       // tslint:disable-next-line:readonly-array array-type
-      const actionsToDispatch: Array<PutEffect<Action>> = [];
+      const actionsToDispatch: Array<PutEffect<Action>> = [put(pinSuccess())];
 
       // If a deeplink has been setted, navigate to deeplink, otherwise to the MainNavigator
       if (deeplink) {
         actionsToDispatch.push(put(navigateToDeeplink(deeplink)));
-        actionsToDispatch.push(put(clearDeeplink()));
       } else {
         actionsToDispatch.push(
           put(
@@ -69,14 +71,10 @@ function* pinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
 
       yield all(actionsToDispatch);
     } else {
-      yield put({
-        type: PIN_LOGIN_VALIDATE_FAILURE
-      });
+      yield put(pinFailure());
     }
   } catch (error) {
-    yield put({
-      type: PIN_LOGIN_VALIDATE_FAILURE
-    });
+    yield put(pinFailure());
   }
 }
 

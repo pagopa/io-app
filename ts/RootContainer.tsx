@@ -20,10 +20,14 @@ import {
   SetDeeplink
 } from "./store/actions/deeplink";
 import { ApplicationState } from "./store/actions/types";
+import { DeeplinkState } from "./store/reducers/deeplink";
+import { PinLoginState } from "./store/reducers/pinlogin";
 import { GlobalState } from "./store/reducers/types";
 
-type StateProps = {
+type ReduxMappedProps = {
   appState: string;
+  pinLoginState: PinLoginState;
+  deeplinkState: DeeplinkState;
 };
 
 type DispatchProps = {
@@ -38,7 +42,7 @@ type DispatchProps = {
   ) => NavigateToDeeplink;
 };
 
-type Props = StateProps & DispatchProps;
+type Props = ReduxMappedProps & DispatchProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
@@ -54,6 +58,16 @@ class RootContainer extends React.Component<Props> {
     }
 
     AppState.addEventListener("change", this.handleApplicationActivityChange);
+  }
+
+  public componentDidUpdate() {
+    const isPinValid =
+      this.props.pinLoginState.PinConfirmed === "PinConfirmedValid";
+    const { deeplink } = this.props.deeplinkState;
+
+    if (deeplink && isPinValid) {
+      this.props.navigateToDeeplink(deeplink);
+    }
   }
 
   public componentWillUnmount() {
@@ -80,11 +94,7 @@ class RootContainer extends React.Component<Props> {
 
     const deeplinkNavigationPayload = { routeName, id };
 
-    if (this.props.appState === "background") {
-      this.props.setDeeplink(deeplinkNavigationPayload);
-    } else {
-      this.props.navigateToDeeplink(deeplinkNavigationPayload);
-    }
+    this.props.setDeeplink(deeplinkNavigationPayload);
   };
 
   public handleApplicationActivityChange = (activity: ApplicationState) => {
@@ -104,7 +114,9 @@ class RootContainer extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  appState: state.appState.appState
+  appState: state.appState.appState,
+  pinLoginState: state.pinlogin,
+  deeplinkState: state.deeplink
 });
 
 const mapDispatchToProps = {

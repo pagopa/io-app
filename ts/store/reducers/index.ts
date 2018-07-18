@@ -28,7 +28,8 @@ import walletReducer from "./wallet";
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
-  storage: createSecureStorage()
+  storage: createSecureStorage(),
+  blacklist: ["deeplink"]
 };
 
 /**
