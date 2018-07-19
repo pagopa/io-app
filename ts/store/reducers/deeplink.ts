@@ -15,9 +15,9 @@ const INITIAL_STATE: DeeplinkState = {
   deeplink: null
 };
 
-export const deeplinkSelector: NavigationNavigateActionPayload | null = (
+export const deeplinkSelector = (
   state: GlobalState
-) => state.deeplink.deeplink;
+): NavigationNavigateActionPayload | null => state.deeplink.deeplink;
 
 export default (
   state: DeeplinkState = INITIAL_STATE,

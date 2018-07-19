@@ -7,6 +7,7 @@ import {
   PIN_LOGIN_VALIDATE_SUCCESS
 } from "../actions/constants";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type PinLoginState = Readonly<{
   PinConfirmed: "PinCheck" | "PinConfirmedInvalid" | "PinConfirmedValid";
@@ -15,6 +16,9 @@ export type PinLoginState = Readonly<{
 export const INITIAL_STATE: PinLoginState = {
   PinConfirmed: "PinCheck"
 };
+
+export const isPinloginValidSelector = (state: GlobalState): boolean =>
+  state.pinlogin.PinConfirmed === "PinConfirmedValid";
 
 const reducer = (
   state: PinLoginState = INITIAL_STATE,

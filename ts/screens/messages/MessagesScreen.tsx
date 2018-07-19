@@ -74,18 +74,6 @@ class MessagesScreen extends React.Component<Props, never> {
     }
   }
 
-  private getServiceName = (senderServiceId: string): string => {
-    return this.props.services.byId[senderServiceId].service_name;
-  };
-
-  private getOrganizationName = (senderServiceId: string): string => {
-    return this.props.services.byId[senderServiceId].organization_name;
-  };
-
-  private getDepartmentName = (senderServiceId: string): string => {
-    return this.props.services.byId[senderServiceId].department_name;
-  };
-
   private refreshList() {
     this.props.dispatch(loadMessages());
   }
@@ -94,19 +82,8 @@ class MessagesScreen extends React.Component<Props, never> {
     return (
       <MessageComponent
         id={messageDetails.item.id}
-        createdAt={messageDetails.item.created_at}
-        paymentData={messageDetails.item.payment_data}
-        serviceOrganizationName={this.getOrganizationName(
-          messageDetails.item.sender_service_id
-        )}
-        serviceDepartmentName={this.getDepartmentName(
-          messageDetails.item.sender_service_id
-        )}
-        subject={messageDetails.item.subject}
         navigation={this.props.navigation}
         senderServiceId={messageDetails.item.sender_service_id}
-        markdown={messageDetails.item.markdown}
-        serviceName={this.getServiceName(messageDetails.item.sender_service_id)}
       />
     );
   };

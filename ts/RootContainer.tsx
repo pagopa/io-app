@@ -21,13 +21,17 @@ import {
 } from "./store/actions/deeplink";
 import { ApplicationState } from "./store/actions/types";
 import { DeeplinkState } from "./store/reducers/deeplink";
-import { PinLoginState } from "./store/reducers/pinlogin";
+import {
+  isPinloginValidSelector,
+  PinLoginState
+} from "./store/reducers/pinlogin";
 import { GlobalState } from "./store/reducers/types";
 
 type ReduxMappedProps = {
   appState: string;
   pinLoginState: PinLoginState;
   deeplinkState: DeeplinkState;
+  isPinValid: boolean;
 };
 
 type DispatchProps = {
@@ -61,9 +65,10 @@ class RootContainer extends React.Component<Props> {
   }
 
   public componentDidUpdate() {
-    const isPinValid =
-      this.props.pinLoginState.PinConfirmed === "PinConfirmedValid";
-    const { deeplink } = this.props.deeplinkState;
+    const {
+      deeplinkState: { deeplink },
+      isPinValid
+    } = this.props;
 
     if (deeplink && isPinValid) {
       this.props.navigateToDeeplink(deeplink);
@@ -116,7 +121,8 @@ class RootContainer extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState) => ({
   appState: state.appState.appState,
   pinLoginState: state.pinlogin,
-  deeplinkState: state.deeplink
+  deeplinkState: state.deeplink,
+  isPinValid: isPinloginValidSelector(state)
 });
 
 const mapDispatchToProps = {

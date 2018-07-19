@@ -6,6 +6,7 @@ import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { debugRemotePushNotification, gcmSenderId } from "../config";
+import { navigateToMessageDetails } from "../store/actions/messages";
 import { updateNotificationsInstallationToken } from "../store/actions/notifications";
 import { Store } from "../store/actions/types";
 
@@ -21,6 +22,10 @@ function configurePushNotifications(store: Store) {
     onNotification: notification => {
       if (debugRemotePushNotification) {
         Alert.alert("Notification", JSON.stringify(notification));
+      }
+
+      if (notification.message_id) {
+        store.dispatch(navigateToMessageDetails(notification.message_id));
       }
 
       // On iOS we need to call this when the remote notification handling is complete
