@@ -7,7 +7,8 @@ import { SessionToken } from "../../types/SessionToken";
 import {
   IDP_SELECTED,
   LOGIN_SUCCESS,
-  LOGOUT,
+  LOGOUT_SUCCESS,
+  SESSION_EXPIRED,
   SESSION_LOAD_SUCCESS
 } from "../actions/constants";
 import { Action } from "../actions/types";
@@ -147,7 +148,10 @@ const reducer = (
     };
   }
 
-  if (action.type === LOGOUT && isLoggedIn(state)) {
+  if (
+    (action.type === SESSION_EXPIRED || action.type === LOGOUT_SUCCESS) &&
+    isLoggedIn(state)
+  ) {
     return {
       kind: "LoggedOutWithIdp",
       idp: state.idp

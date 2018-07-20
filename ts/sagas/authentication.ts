@@ -6,14 +6,20 @@ import { Effect } from "redux-saga";
 import { call, fork, put, select, take, takeLatest } from "redux-saga/effects";
 
 import { PublicSession } from "../../definitions/backend/PublicSession";
-import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
+import {
+  BackendClient,
+  BasicResponseTypeWith401,
+  SuccessResponse
+} from "../api/backend";
 import { apiUrlPrefix } from "../config";
+import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import {
   authenticationCompleted,
   IdpSelected,
   LoginSuccess,
-  logout,
+  logoutFailure,
+  logoutSuccess,
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
@@ -23,6 +29,7 @@ import {
   AUTHENTICATION_COMPLETED,
   IDP_SELECTED,
   LOGIN_SUCCESS,
+  LOGOUT_REQUEST,
   SESSION_EXPIRED,
   SESSION_LOAD_REQUEST,
   SESSION_LOAD_SUCCESS,
@@ -32,12 +39,13 @@ import { navigationRestore } from "../store/actions/navigation";
 import { sessionTokenSelector } from "../store/reducers/authentication";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { SessionToken } from "../types/SessionToken";
+import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
  * Load session info from the Backend
  */
 export function* loadSession(): IterableIterator<Effect> {
-  // Gte the SessionToken from the store
+  // Get the SessionToken from the store
   const sessionToken: SessionToken | undefined = yield select(
     sessionTokenSelector
   );
@@ -85,9 +93,6 @@ export function* watchSessionExpired(): IterableIterator<Effect> {
       navigationStateSelector
     );
 
-    // Logout the user
-    yield put(logout());
-
     // Restart the authentication
     yield put(startAuthentication());
 
@@ -102,6 +107,58 @@ export function* watchSessionExpired(): IterableIterator<Effect> {
 
     // Restore the navigation state to bring the user back to the screen it was before the logout
     yield put(navigationRestore(navigationState));
+  }
+}
+
+// tslint:disable-next-line:cognitive-complexity
+export function* watchLogoutRequest(): IterableIterator<Effect> {
+  while (true) {
+    yield take(LOGOUT_REQUEST);
+
+    // Get the SessionToken from the store
+    const sessionToken: SessionToken | undefined = yield select(
+      sessionTokenSelector
+    );
+
+    // A variable to decide if the user need to be logged out
+    // tslint:disable-next-line:no-let
+    let needLogout = true;
+    if (sessionToken) {
+      const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+      // Call the Backend service
+      const response:
+        | BasicResponseTypeWith401<SuccessResponse>
+        | undefined = yield call(
+        callApiWith401ResponseStatusHandler,
+        backendClient.logout,
+        {}
+      );
+
+      if (!response || response.status !== 200) {
+        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+        const error: Error = response
+          ? response.value
+          : Error(I18n.t("authentication.errors.logout"));
+
+        // The user is already logged out by watchSessionExpired saga on SESSION_EXPIRED
+        if (response && response.status === 401) {
+          needLogout = false;
+        }
+
+        yield put(logoutFailure(error));
+      }
+    } else {
+      yield put(logoutFailure(Error(I18n.t("authentication.errors.notoken"))));
+    }
+
+    /**
+     * The user is logged out in in all the case except when the logout request
+     * returns 401 (SESSION_EXPIRED).
+     */
+    if (needLogout) {
+      yield put(logoutSuccess());
+    }
   }
 }
 
@@ -164,4 +221,5 @@ export default function* root(): IterableIterator<Effect> {
   yield fork(watchStartAuthentication);
   yield takeLatest(SESSION_LOAD_REQUEST, loadSession);
   yield fork(watchSessionExpired);
+  yield fork(watchLogoutRequest);
 }

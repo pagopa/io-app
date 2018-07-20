@@ -56,6 +56,11 @@
     "errors": {
       "load": "Error loading the profile",
       "upsert": "Error creating or updating the profile"
+    },
+    "main": {
+      "screenTitle": "Profile",
+      "screenSubtitle": "Here you will find information and data related to your identity and your personal data.",
+      "logout": "Logout/Exit"
     }
   },
   "navigation": {
@@ -101,7 +106,8 @@
       "headerTitle": "Login"
     },
     "errors": {
-      "notoken": "The session is not ready or is invalid"
+      "notoken": "The session is not ready or is invalid",
+      "logout": "Error on logout"
     }
   },
   "onboarding": {
@@ -168,6 +174,12 @@
       "addButton": "Add payment method",
       "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
+    },
+    "textMsg": {
+      "title":"Text confirmation code",
+      "header":"Confirmation code",
+      "newCode":"Request a new code",
+      "info":"Insert the code that was sent by text to your mobile phone"
     },
     "saveCard": {
       "header":"Save the card",
