@@ -22,6 +22,7 @@
     "email-validator": "^2.0.3",
     "fp-ts": "^1.6.2",
     "io-ts": "^1.2.1",
+    "io-ts-types": "^0.3.6",
     "italia-ts-commons": "^2.10.0",
     "lodash": "^4.17.10",
     "native-base": "^2.4.5",

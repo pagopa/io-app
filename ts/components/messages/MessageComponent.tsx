@@ -1,13 +1,17 @@
-import { Icon, Left, ListItem, Right, Text } from "native-base";
+import * as React from "react";
+
+import { Button, Icon, Left, ListItem, Right, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
-import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+
+import { DateFromISOString } from "io-ts-types";
 
 import { PaymentData } from "../../../definitions/backend/PaymentData";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { formatPaymentAmount } from "../../utils/payment";
 
 export type OwnProps = Readonly<{
   createdAt: string;
@@ -40,6 +44,13 @@ class MessageComponent extends React.Component<Props> {
       serviceOrganizationName,
       subject
     } = this.props;
+
+    // try to convert createdAt to a human representation, fall back to original
+    // value if createdAt cannot be converteed to a Date
+    const uiCreatedAt = DateFromISOString.decode(createdAt)
+      .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
+      .getOrElse(createdAt);
+
     return (
       <ListItem
         key={id}
@@ -57,21 +68,27 @@ class MessageComponent extends React.Component<Props> {
           });
         }}
       >
-        <Left>
-          <Text leftAlign={true} alternativeBold={true}>
-            {`${serviceOrganizationName} -  ${serviceDepartmentName}`}
-          </Text>
-          <Text leftAlign={true}>{subject}</Text>
-        </Left>
-        <Right>
-          <Text formatDate={true}>
-            {convertDateToWordDistance(
-              new Date(createdAt),
-              I18n.t("messages.yesterday")
-            )}
-          </Text>
-          <Icon name="chevron-right" />
-        </Right>
+        <View padded={paymentData !== undefined}>
+          <Left>
+            <Text leftAlign={true} alternativeBold={true}>
+              {`${serviceOrganizationName} - ${serviceDepartmentName}`}
+            </Text>
+            <Text leftAlign={true}>{subject}</Text>
+          </Left>
+          <Right>
+            <Text formatDate={true}>{uiCreatedAt}</Text>
+            <Icon name="chevron-right" />
+          </Right>
+        </View>
+        {paymentData !== undefined && (
+          <Button block={true} small={true}>
+            <Text>
+              {I18n.t("messages.cta.pay", {
+                amount: formatPaymentAmount(paymentData.amount)
+              })}
+            </Text>
+          </Button>
+        )}
       </ListItem>
     );
   }

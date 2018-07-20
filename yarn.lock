@@ -3761,6 +3761,15 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
+io-ts-types@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.3.6.tgz#44c7656aeb833da2ff87b6763ae2143a234e59f8"
+  dependencies:
+    fp-ts "^1.0.0"
+    io-ts "^1.1.4"
+    monocle-ts "^1.0.0"
+    newtype-ts "^0.2.0"
+
 io-ts@^1.1.4, io-ts@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.2.1.tgz#0f3cc43dff08d1656f2c1ad7462650dab4a6bae7"
@@ -5370,6 +5379,12 @@ mock-require@^2.0.2:
   dependencies:
     caller-id "^0.1.0"
 
+monocle-ts@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-1.2.0.tgz#6009deaee379243a1e28651b01a054502258c782"
+  dependencies:
+    fp-ts "^1.0.0"
+
 morgan@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.0.tgz#d01fa6c65859b76fcf31b3cb53a3821a311d8051"
@@ -5461,6 +5476,13 @@ needle@^2.2.0:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+newtype-ts@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/newtype-ts/-/newtype-ts-0.2.1.tgz#9a88a721b2bf3bb4f2ab34db733be359190a634d"
+  dependencies:
+    fp-ts "^1.0.0"
+    monocle-ts "^1.0.0"
 
 node-cleanup@^2.1.2:
   version "2.1.2"
