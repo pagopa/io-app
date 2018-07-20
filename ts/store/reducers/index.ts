@@ -5,12 +5,14 @@
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
-import { PersistConfig, persistReducer } from "redux-persist";
+import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 
+import { LOGOUT_SUCCESS } from "../actions/constants";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
+import backendInfoReducer from "./backendInfo";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
@@ -23,7 +25,7 @@ import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
 // A custom configuration to store the authentication into the Keychain
-const authenticationPersistConfig: PersistConfig = {
+export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
   storage: createSecureStorage()
 };
@@ -38,7 +40,10 @@ const authenticationPersistConfig: PersistConfig = {
  * More at
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-const reducer = combineReducers<GlobalState, Action>({
+const appReducer: Reducer<GlobalState, Action> = combineReducers<
+  GlobalState,
+  Action
+>({
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
@@ -62,7 +67,31 @@ const reducer = combineReducers<GlobalState, Action>({
   pinlogin: pinloginReducer,
 
   // WALLET
-  wallet: walletReducer
+  wallet: walletReducer,
+
+  // BACKEND INFO
+  backendInfo: backendInfoReducer
 });
 
-export default reducer;
+export function createRootReducer(
+  persistConfigs: ReadonlyArray<PersistConfig>
+) {
+  return (state: GlobalState | undefined, action: Action): GlobalState => {
+    if (action.type === LOGOUT_SUCCESS) {
+      // Purge the stored redux-persist state
+      persistConfigs.forEach(persistConfig => purgeStoredState(persistConfig));
+
+      /**
+       * We can't return undefined for nested persist reducer, we need to return
+       * the basic redux persist content.
+       */
+      state = state
+        ? ({
+            authentication: { _persist: state.authentication._persist }
+          } as GlobalState)
+        : undefined;
+    }
+
+    return appReducer(state, action);
+  };
+}

@@ -14,13 +14,16 @@ import createSagaMiddleware from "redux-saga";
 import { analytics } from "../middlewares";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
-import rootReducer from "../store/reducers";
+import {
+  authenticationPersistConfig,
+  createRootReducer
+} from "../store/reducers";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
-const persistConfig: PersistConfig = {
+const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
   /**
@@ -32,7 +35,10 @@ const persistConfig: PersistConfig = {
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   GlobalState,
   Action
->(persistConfig, rootReducer);
+>(
+  rootPersistConfig,
+  createRootReducer([rootPersistConfig, authenticationPersistConfig])
+);
 
 const logger = createLogger({
   predicate: (): boolean => isDebuggingInChrome,
@@ -69,8 +75,8 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
       sagaMiddleware,
       logger,
       navigation,
-      analytics.actionTracking,
-      analytics.screenTracking
+      analytics.actionTracking, // generic tracker for selected redux actions
+      analytics.screenTracking // tracks screen navigation
     )
   );
 

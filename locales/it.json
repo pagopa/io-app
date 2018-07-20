@@ -4,6 +4,9 @@
       "title": "Si è verificato un errore imprevisto",
       "message": "Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!"
     },
+    "markdown": {
+      "decodeError": "Il messaggio non può essere decodificato"
+    },
     "app":  {
       "version": "Versione"
     },
@@ -19,6 +22,9 @@
       "documents": "documenti",
       "preferences": "preferenze",
       "profile": "profilo"
+    },
+    "actions": {
+      "retry": "Si è verificato un errore, si prega di riprovare"
     }
   },
   "connection": {
@@ -46,7 +52,16 @@
       "spid": "PROFILO SPID"
     },
     "unknown": "SCONOSCIUTO",
-    "logout": "Esci da questa identità SPID"
+    "logout": "Esci da questa identità SPID",
+    "errors": {
+      "load": "Errore nel caricamento del profilo",
+      "upsert": "Errore nella creazione o nell'aggiornamento del profilo"
+    },
+    "main": {
+      "screenTitle": "Profilo",
+      "screenSubtitle": "Qui trovi informazioni e dati legati alla tua identità e ai tuoi dati personali.",
+      "logout": "Logout/Esci"
+    }
   },
   "navigation": {
     "messages": "Messaggi",
@@ -89,6 +104,10 @@
     },
     "idp_login": {
       "headerTitle": "Accedi"
+    },
+    "errors": {
+      "notoken": "La sessione non è pronta o non è valida",
+      "logout": "Errore nel logout"
     }
   },
   "onboarding": {
@@ -155,6 +174,13 @@
       "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
     },
+    "textMsg": {
+      "title":"Codice di conferma",
+	    "header":"Codice di Conferma SMS",
+      "newCode":"Richiedi nuovo codice",
+      "info":"Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono"
+    },
+    "transactionDetails": "Dettagli della transazione",
     "saveCard": {
       "header":"Salva la carta",
       "title":"Vuoi salvare questa carta?",
@@ -164,7 +190,6 @@
     },
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
-    "transactionDetails": "Dettagli dell'operazione",
     "addManager": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
@@ -311,7 +336,10 @@
     },
     "contentTitle": "Messaggi",
     "loading": "Caricamento dei messaggi...",
-    "yesterday": "ieri"
+    "yesterday": "ieri",
+    "cta": {
+      "pay": "Paga € {{amount}}"
+    }
   },
   "messageDetails": {
     "headerTitle": "Messaggio",

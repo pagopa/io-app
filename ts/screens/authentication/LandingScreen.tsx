@@ -3,8 +3,10 @@ import * as React from "react";
 import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
+import { environment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
@@ -19,6 +21,10 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
  * A screen where the user can choose to login with SPID or get more informations.
  */
 class LandingScreen extends React.Component<Props, never> {
+  private navigateToMarkdown() {
+    this.props.navigation.navigate(ROUTES.MARKDOWN);
+  }
+
   private navigateToIdpSelection() {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
   }
@@ -36,13 +42,20 @@ class LandingScreen extends React.Component<Props, never> {
             <Text>{DeviceInfo.getApplicationName()}</Text>
           </Body>
         </AppHeader>
-        <Content />
+        <Content>
+          {environment === "DEV" && (
+            <Text link={true} onPress={_ => this.navigateToMarkdown()}>
+              Test Markdown
+            </Text>
+          )}
+        </Content>
         <View footer={true}>
           <Button
             block={true}
             primary={true}
             iconLeft={true}
             onPress={_ => this.navigateToIdpSelection()}
+            testID="landing-button-login"
           >
             <IconFont name="io-profilo" color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.login")}</Text>

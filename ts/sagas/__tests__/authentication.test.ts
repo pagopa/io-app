@@ -5,7 +5,6 @@ import { SpidLevelEnum } from "../../../definitions/backend/SpidLevel";
 import { BackendClient } from "../../api/backend";
 import { apiUrlPrefix } from "../../config";
 import {
-  logout,
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
@@ -83,9 +82,6 @@ describe("authentication", () => {
         // Select the navigation state to restore it after
         .select(navigationStateSelector)
         .next({ index: 0, routes: [] })
-        // Logout the user
-        .put(logout())
-        .next()
         .put(startAuthentication())
         .next()
         // Wait for AUTHENTICATION_COMPLETED

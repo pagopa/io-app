@@ -14,10 +14,12 @@ export type LoadingState = Readonly<
 >;
 
 export const INITIAL_STATE: LoadingState = {
+  TOS_ACCEPT: false,
   PIN_CREATE: false,
   PROFILE_LOAD: false,
-  PROFILE_UPDATE: false,
-  MESSAGES_LOAD: false
+  PROFILE_UPSERT: false,
+  MESSAGES_LOAD: false,
+  LOGOUT: false
 };
 
 /**

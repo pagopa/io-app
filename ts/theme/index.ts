@@ -13,7 +13,6 @@ import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
 import messageComponent from "./components/MessageComponent";
-import messageDetailsComponentTheme from "./components/MessageDetailsComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
 import preferenceItemTheme from "./components/PreferenceItem";
@@ -70,9 +69,6 @@ const theme = (): Theme => {
     },
     "NativeBase.TabContainer": {
       ...tabContainerTheme()
-    },
-    "UIComponent.MessageDetailsComponent": {
-      ...messageDetailsComponentTheme()
     },
     "UIComponent.MessageDetailsInfoComponent": {
       ...messageDetailsInfoComponentTheme()

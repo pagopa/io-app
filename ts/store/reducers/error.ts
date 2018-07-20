@@ -5,7 +5,7 @@
  * - ACTION_NAME_(REQUEST|SUCCESS|FAILURE)
  */
 
-import { isSome, none, Option } from "fp-ts/lib/Option";
+import { isSome, none, Option, some } from "fp-ts/lib/Option";
 
 import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
 import { Action } from "../actions/types";
@@ -16,10 +16,12 @@ export type ErrorState = Readonly<
 >;
 
 export const INITIAL_STATE: ErrorState = {
+  TOS_ACCEPT: none,
   PIN_CREATE: none,
   PROFILE_LOAD: none,
-  PROFILE_UPDATE: none,
-  MESSAGES_LOAD: none
+  PROFILE_UPSERT: none,
+  MESSAGES_LOAD: none,
+  LOGOUT: none
 };
 
 /**
@@ -66,7 +68,7 @@ function reducer(
     // We need to set the error message
     return {
       ...state,
-      [requestName]: (action as any).payload || "Generic error"
+      [requestName]: some((action as any).payload) || "Generic error"
     };
   } else {
     // We need to remove the error message

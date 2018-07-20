@@ -41,7 +41,7 @@ class IdpLoginScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={onPress}>
+            <Button transparent={true} onPress={onPress} testID="back-button">
               <IconFont name="io-back" />
             </Button>
           </Left>
@@ -61,7 +61,7 @@ class IdpLoginScreen extends React.Component<Props, never> {
   public onNavigationStateChange = (navState: NavState) => {
     // Extract the login result from the url.
     // If the url is not related to login this will be `null`
-    if (navState.url) {
+    if (navState.loading && navState.url) {
       const loginResult = extractLoginResult(navState.url);
       if (loginResult) {
         if (loginResult.success) {

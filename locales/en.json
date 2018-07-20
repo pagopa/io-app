@@ -4,6 +4,9 @@
       "title": "Unexpected error occurred",
       "message": "We have reported this to our team! Please close the app and start again!"
     },
+    "markdown": {
+      "decodeError": "Message can't be decoded"
+    },
     "app":  {
       "version": "Version"
     },
@@ -19,6 +22,9 @@
       "documents": "documents",
       "preferences": "preferences",
       "profile": "profile"
+    },
+    "actions": {
+      "retry": "An error occurred, please retry"
     }
   },
   "connection": {
@@ -46,7 +52,16 @@
       "spid": "SPID PROFILE"
     },
     "unknown": "UNKNOWN",
-    "logout": "Logout from this SPID identity"
+    "logout": "Logout from this SPID identity",
+    "errors": {
+      "load": "Error loading the profile",
+      "upsert": "Error creating or updating the profile"
+    },
+    "main": {
+      "screenTitle": "Profile",
+      "screenSubtitle": "Here you will find information and data related to your identity and your personal data.",
+      "logout": "Logout/Exit"
+    }
   },
   "navigation": {
     "messages": "Messages",
@@ -89,6 +104,10 @@
     },
     "idp_login": {
       "headerTitle": "Login"
+    },
+    "errors": {
+      "notoken": "The session is not ready or is invalid",
+      "logout": "Error on logout"
     }
   },
   "onboarding": {
@@ -155,6 +174,12 @@
       "addButton": "Add payment method",
       "newMethod": "Choose another payment method",
       "addDescription": "You can add your payment methods (e.g. credit cards, bank accounts) so that you don't have to re-add them from scratch for every transaction"
+    },
+    "textMsg": {
+      "title":"Text confirmation code",
+      "header":"Confirmation code",
+      "newCode":"Request a new code",
+      "info":"Insert the code that was sent by text to your mobile phone"
     },
     "saveCard": {
       "header":"Save the card",
@@ -312,7 +337,10 @@
     },
     "contentTitle": "Messages",
     "loading": "Loading Messages...",
-    "yesterday": "yesterday"
+    "yesterday": "yesterday",
+    "cta": {
+      "pay": "Pay € {{amount}}"
+    }
   },
   "messageDetails": {
     "headerTitle": "Message",
