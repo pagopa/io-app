@@ -40,7 +40,7 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentRequestTransactionSummary } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentState } from "../../../store/reducers/wallet/payment";
+import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 
 type ReduxMappedStateProps = Readonly<{
   valid: boolean;
@@ -193,7 +193,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  valid: getPaymentState(state).kind === "PaymentStateManualEntry"
+  valid: getPaymentStep(state) === "PaymentStateManualEntry"
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

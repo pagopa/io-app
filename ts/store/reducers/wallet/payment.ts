@@ -1,3 +1,6 @@
+/**
+ * Reducer, available states and selectors for the "payment" state
+ */
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
@@ -22,6 +25,10 @@ import {
   GlobalStateWithVerificaResponse
 } from "../types";
 import { getWalletFromId, getWallets } from "./wallets";
+
+// The following are possible states, identified
+// by a string (kind), and with specific
+// properties depending on the state
 
 export type PaymentStateQrCode = Readonly<{
   kind: "PaymentStateQrCode";
@@ -69,6 +76,7 @@ export type PaymentStateCompleted = Readonly<{
   selectedPaymentMethod: number;
 }>;
 
+// Allowed states
 export type PaymentState =
   | PaymentStateQrCode
   | PaymentStateManualEntry
@@ -128,7 +136,7 @@ export const isGlobalStateWithSelectedPaymentMethod = (
 ): state is GlobalStateWithSelectedPaymentMethod =>
   isPaymentStateWithSelectedPaymentMethod(state.wallet.payment);
 
-export const getPaymentState = (state: GlobalState) => state.wallet.payment;
+export const getPaymentStep = (state: GlobalState) => state.wallet.payment.kind;
 
 export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
   state.wallet.payment.rptId;

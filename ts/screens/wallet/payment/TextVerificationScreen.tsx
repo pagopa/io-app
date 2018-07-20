@@ -27,7 +27,7 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentRequestCompletion } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentState } from "../../../store/reducers/wallet/payment";
+import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 
 type ReduxMappedStateProps = Readonly<{
@@ -147,7 +147,7 @@ class TextVerificationScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  valid: getPaymentState(state).kind === "PaymentStateEnterOtp"
+  valid: getPaymentStep(state) === "PaymentStateEnterOtp"
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

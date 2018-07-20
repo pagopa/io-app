@@ -40,7 +40,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
-  getPaymentState,
+  getPaymentStep,
   isGlobalStateWithSelectedPaymentMethod,
   selectedPaymentMethodSelector
 } from "../../../store/reducers/wallet/payment";
@@ -226,7 +226,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   if (
-    getPaymentState(state).kind === "PaymentStateConfirmPaymentMethod" &&
+    getPaymentStep(state) === "PaymentStateConfirmPaymentMethod" &&
     isGlobalStateWithSelectedPaymentMethod(state)
   ) {
     const wallet = selectedPaymentMethodSelector(state);

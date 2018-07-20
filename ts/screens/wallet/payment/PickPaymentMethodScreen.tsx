@@ -30,7 +30,7 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentRequestConfirmPaymentMethod } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentState } from "../../../store/reducers/wallet/payment";
+import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 
 type ReduxMappedStateProps =
@@ -120,7 +120,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  getPaymentState(state).kind === "PaymentStatePickPaymentMethod"
+  getPaymentStep(state) === "PaymentStatePickPaymentMethod"
     ? {
         valid: true,
         wallets: walletsSelector(state)

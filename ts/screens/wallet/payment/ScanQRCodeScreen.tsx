@@ -34,7 +34,7 @@ import {
   paymentRequestTransactionSummary
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentState } from "../../../store/reducers/wallet/payment";
+import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 
 type ReduxMappedStateProps = Readonly<{
@@ -251,7 +251,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  valid: getPaymentState(state).kind === "PaymentStateQrCode"
+  valid: getPaymentStep(state) === "PaymentStateQrCode"
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

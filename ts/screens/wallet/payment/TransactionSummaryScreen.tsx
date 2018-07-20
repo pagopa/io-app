@@ -39,7 +39,7 @@ import {
   getInitialAmount,
   getPaymentReason,
   getPaymentRecipient,
-  getPaymentState,
+  getPaymentStep,
   getRptId,
   isGlobalStateWithVerificaResponse
 } from "../../../store/reducers/wallet/payment";
@@ -155,7 +155,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  getPaymentState(state).kind === "PaymentStateSummary" &&
+  getPaymentStep(state) === "PaymentStateSummary" &&
   isGlobalStateWithVerificaResponse(state)
     ? {
         valid: true,
