@@ -12,6 +12,8 @@ export default (): Theme => {
         fontWeight: variables.h3FontWeight
       }
     },
+    flex: 0,
+    width: 85,
     backgroundColor: variables.brandPrimaryInverted,
     borderBottomWidth: 0,
     borderColor: variables.brandPrimaryInverted
