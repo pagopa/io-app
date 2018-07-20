@@ -12,7 +12,7 @@ import { Left } from "native-base";
 import { Button } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
-import { Image, StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -30,6 +30,21 @@ const styles = StyleSheet.create({
   },
   noBottomPadding: {
     paddingBottom: 0
+  },
+  firstCard: {
+    flex: 1,
+    transform: [{ rotateX: "-40deg" }, { scaleX: 0.96 }]
+  },
+  secondCard: {
+    flex: 1,
+    transform: [
+      { rotateX: "-40deg" },
+      { translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) },
+      { scaleX: 0.96 }
+    ]
+  },
+  translation: {
+    transform: [{ translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) }]
   }
 });
 
@@ -92,18 +107,32 @@ export class WalletLayout extends React.Component<Props> {
       }
       case CardEnum.FAN: {
         return (
-          <View style={WalletStyles.container}>
-            <TouchableHighlight
-              onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_CREDITCARDS)
-              }
-            >
-              <Image
-                style={WalletStyles.pfCards}
-                source={require("../../../img/wallet/creditcards.png")}
-              />
-            </TouchableHighlight>
-          </View>
+          <TouchableHighlight
+            onPress={(): boolean =>
+              this.props.navigation.navigate(ROUTES.WALLET_CREDITCARDS)
+            }
+          >
+            <View>
+              <View style={styles.firstCard}>
+                <CreditCardComponent
+                  navigation={this.props.navigation}
+                  item={this.props.cardType.cards[0]}
+                  logoPosition={LogoPosition.TOP}
+                  flatBottom={true}
+                  headerOnly={true}
+                />
+              </View>
+              <View style={styles.secondCard}>
+                <CreditCardComponent
+                  navigation={this.props.navigation}
+                  item={this.props.cardType.cards[1]}
+                  logoPosition={LogoPosition.TOP}
+                  flatBottom={true}
+                  headerOnly={true}
+                />
+              </View>
+            </View>
+          </TouchableHighlight>
         );
       }
       case CardEnum.FULL: {
@@ -173,7 +202,7 @@ export class WalletLayout extends React.Component<Props> {
             {this.props.headerContents}
             {this.getLogo()}
           </Content>
-          {this.props.children}
+          <View style={styles.translation}>{this.props.children}</View>
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>

@@ -14,35 +14,33 @@ import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
-import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
+import {
+  CardEnum,
+  CardType,
+  WalletLayout
+} from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
-import { fetchCardsRequest } from "../../store/actions/wallet/cards";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardsSelector } from "../../store/reducers/wallet/cards";
-
-type ScreenProps = {};
+import { CreditCard } from "../../types/CreditCard";
 
 type ReduxMappedStateProps = Readonly<{
-  cardsNumber: number;
+  cards: ReadonlyArray<CreditCard>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   // temporary
   loadTransactions: () => void;
-  loadCards: () => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
-  ScreenProps &
-  OwnProps;
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 const styles = StyleSheet.create({
   twoRowsBanner: {
@@ -149,14 +147,25 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // WIP WIP create pivotal story
-    this.props.loadCards();
     this.props.loadTransactions();
   }
 
-  public render(): React.ReactNode {
-    const showCards = this.props.cardsNumber > 0;
+  // check the cards to display (none, one or two cards)
+  private getCardType(): CardType {
+    const cards = this.props.cards;
 
-    // TODO: cards list is currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
+    switch (this.props.cards.length) {
+      case 0:
+        return { type: CardEnum.NONE };
+      case 1:
+        return { type: CardEnum.HEADER, card: cards[0] };
+      default:
+        return { type: CardEnum.FAN, cards: [cards[0], cards[1]] };
+    }
+  }
+
+  public render(): React.ReactNode {
+    const showCards = this.props.cards.length > 0;
     const headerContents = showCards
       ? this.withCardsHeader()
       : this.withoutCardsHeader();
@@ -166,11 +175,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.wallet")}
         navigation={this.props.navigation}
         headerContents={headerContents}
-        cardType={
-          showCards
-            ? { type: CardEnum.FAN, cards: [] }
-            : { type: CardEnum.NONE }
-        }
+        cardType={this.getCardType()}
         allowGoBack={false}
       >
         <TransactionsList
@@ -185,13 +190,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cardsNumber: creditCardsSelector(state).length
+  cards: creditCardsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadCards: () => dispatch(fetchCardsRequest())
+  loadTransactions: () => dispatch(fetchTransactionsRequest())
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
