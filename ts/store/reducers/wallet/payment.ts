@@ -11,7 +11,6 @@ import { UNKNOWN_CARD } from "../../../types/unknown";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_ENTER_OTP,
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_QR_CODE,
@@ -60,14 +59,6 @@ export type PaymentStateConfirmPaymentMethod = Readonly<{
   selectedPaymentMethod: number;
 }>;
 
-export type PaymentStateEnterOtp = Readonly<{
-  kind: "PaymentStateEnterOtp";
-  rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
-  initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
-}>;
-
 export type PaymentStateCompleted = Readonly<{
   kind: "PaymentStateCompleted";
   rptId: RptId;
@@ -83,7 +74,6 @@ export type PaymentState =
   | PaymentStateSummary
   | PaymentStatePickPaymentMethod
   | PaymentStateConfirmPaymentMethod
-  | PaymentStateEnterOtp
   | PaymentStateCompleted;
 
 export const PAYMENT_INITIAL_STATE: PaymentState = {
@@ -96,7 +86,6 @@ export type PaymentStateWithVerificaResponse =
   | PaymentStateSummary
   | PaymentStatePickPaymentMethod
   | PaymentStateConfirmPaymentMethod
-  | PaymentStateEnterOtp
   | PaymentStateCompleted;
 
 // type guard for *PaymentState*WithVerificaResponse
@@ -106,7 +95,6 @@ export const isPaymentStateWithVerificaResponse = (
   state.kind === "PaymentStateSummary" ||
   state.kind === "PaymentStatePickPaymentMethod" ||
   state.kind === "PaymentStateConfirmPaymentMethod" ||
-  state.kind === "PaymentStateEnterOtp" ||
   state.kind === "PaymentStateCompleted";
 
 // type guard for *GlobalState*WithVerificaResponse
@@ -119,7 +107,6 @@ export const isGlobalStateWithVerificaResponse = (
 // selected payment method
 export type PaymentStateWithSelectedPaymentMethod =
   | PaymentStateConfirmPaymentMethod
-  | PaymentStateEnterOtp
   | PaymentStateCompleted;
 
 // type guard for *PaymentState*WithSelectedPaymentMethod
@@ -127,7 +114,6 @@ export const isPaymentStateWithSelectedPaymentMethod = (
   state: PaymentState
 ): state is PaymentStateWithSelectedPaymentMethod =>
   state.kind === "PaymentStateConfirmPaymentMethod" ||
-  state.kind === "PaymentStateEnterOtp" ||
   state.kind === "PaymentStateCompleted";
 
 // type guard for *GlobalState*WithSelectedPaymentMethod
@@ -225,15 +211,6 @@ export const reducer = (
       ...state,
       kind: "PaymentStateConfirmPaymentMethod",
       selectedPaymentMethod: action.payload
-    };
-  }
-  if (
-    action.type === PAYMENT_ENTER_OTP &&
-    isPaymentStateWithSelectedPaymentMethod(state)
-  ) {
-    return {
-      ...state,
-      kind: "PaymentStateEnterOtp"
     };
   }
   if (

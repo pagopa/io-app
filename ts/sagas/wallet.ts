@@ -32,7 +32,6 @@ import {
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
-  PAYMENT_REQUEST_ENTER_OTP,
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
@@ -40,7 +39,6 @@ import {
 } from "../store/actions/constants";
 import {
   paymentConfirmPaymentMethod,
-  paymentEnterOtp,
   paymentManualEntry,
   paymentPickPaymentMethod,
   paymentQrCode,
@@ -48,7 +46,6 @@ import {
   paymentRequestConfirmPaymentMethod,
   PaymentRequestConfirmPaymentMethod,
   PaymentRequestContinueWithPaymentMethods,
-  PaymentRequestEnterOtp,
   PaymentRequestManualEntry,
   paymentRequestPickPaymentMethod,
   PaymentRequestPickPaymentMethod,
@@ -117,7 +114,6 @@ function* paymentSaga(): Iterator<Effect> {
       PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
       PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
       PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
-      PAYMENT_REQUEST_ENTER_OTP,
       PAYMENT_REQUEST_COMPLETION,
       PAYMENT_COMPLETED
     ]);
@@ -144,10 +140,6 @@ function* paymentSaga(): Iterator<Effect> {
       }
       case PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD: {
         yield fork(confirmPaymentMethodHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_ENTER_OTP: {
-        yield fork(requestOtpHandler, action);
         break;
       }
       case PAYMENT_REQUEST_COMPLETION: {
@@ -247,62 +239,51 @@ function* pickPaymentMethodHandler(_: PaymentRequestPickPaymentMethod) {
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
 }
 
-function* requestOtpHandler(_: PaymentRequestEnterOtp) {
-  // a payment method has been selected.
-  // TODO: figure out when this should occur (before or after otp? -- move accordingly)
-  // TODO -> attiva here
-  // TODO -> Request OTP /v1/users/actions/send-otp ? (-> pagoPA REST)
-  yield put(paymentEnterOtp());
-  yield put(navigateTo(ROUTES.PAYMENT_TEXT_VERIFICATION));
-}
-
-function* completionHandler(action: PaymentRequestCompletion) {
-  // TODO: this will no longer be checking any OTP
+function* completionHandler(_: PaymentRequestCompletion) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
-  if (action.payload !== "") {
-    // do payment stuff (-> pagoPA REST)
-    // retrieve transaction and store it
-    // mocked data here
-    // tslint:disable-next-line saga-yield-return-type
-    const wallet: Wallet = yield select(selectedPaymentMethodSelector);
-    // tslint:disable-next-line saga-yield-return-type
-    const recipient = (yield select(getPaymentRecipient)).getOrElse(
-      UNKNOWN_RECIPIENT
-    );
-    // tslint:disable-next-line saga-yield-return-type
-    const paymentReason = (yield select(getPaymentReason)).getOrElse(
-      UNKNOWN_PAYMENT_REASON
-    );
-    const fee = feeExtractor(wallet);
 
-    const transaction: WalletTransaction = {
-      id: Math.floor(Math.random() * 1000),
-      cardId: wallet.idWallet === undefined ? -1 : wallet.idWallet,
-      isoDatetime: new Date().toISOString(),
-      paymentReason:
-        paymentReason === undefined ? UNKNOWN_PAYMENT_REASON : paymentReason,
-      recipient: (recipient === undefined ? UNKNOWN_RECIPIENT : recipient)
-        .denominazioneBeneficiario,
-      amount: AmountInEuroCentsFromNumber.encode(
-        yield select(getCurrentAmount) // tslint:disable-line saga-yield-return-type
-      ),
-      currency: "EUR",
-      transactionCost: AmountInEuroCentsFromNumber.encode(
-        fee === undefined ? UNKNOWN_AMOUNT : fee
-      ),
-      isNew: true
-    };
-    yield put(storeNewTransaction(transaction));
-    yield put(selectTransactionForDetails(transaction));
-    yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
-    yield put(
-      navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
-        paymentCompleted: true
-      })
-    );
-    yield put({ type: PAYMENT_COMPLETED });
-  }
+  // do payment stuff (-> pagoPA REST)
+  // retrieve transaction and store it
+  // mocked data here
+  // tslint:disable-next-line saga-yield-return-type
+  const wallet: Wallet = yield select(selectedPaymentMethodSelector);
+  // tslint:disable-next-line saga-yield-return-type
+  const recipient = (yield select(getPaymentRecipient)).getOrElse(
+    UNKNOWN_RECIPIENT
+  );
+  // tslint:disable-next-line saga-yield-return-type
+  const paymentReason = (yield select(getPaymentReason)).getOrElse(
+    UNKNOWN_PAYMENT_REASON
+  );
+  const fee = feeExtractor(wallet);
+
+  const transaction: WalletTransaction = {
+    id: Math.floor(Math.random() * 1000),
+    cardId: wallet.idWallet === undefined ? -1 : wallet.idWallet,
+    isoDatetime: new Date().toISOString(),
+    paymentReason:
+      paymentReason === undefined ? UNKNOWN_PAYMENT_REASON : paymentReason,
+    recipient: (recipient === undefined ? UNKNOWN_RECIPIENT : recipient)
+      .denominazioneBeneficiario,
+    amount: AmountInEuroCentsFromNumber.encode(
+      yield select(getCurrentAmount) // tslint:disable-line saga-yield-return-type
+    ),
+    currency: "EUR",
+    transactionCost: AmountInEuroCentsFromNumber.encode(
+      fee === undefined ? UNKNOWN_AMOUNT : fee
+    ),
+    isNew: true
+  };
+  yield put(storeNewTransaction(transaction));
+  yield put(selectTransactionForDetails(transaction));
+  yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
+  yield put(
+    navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
+      paymentCompleted: true
+    })
+  );
+  yield put({ type: PAYMENT_COMPLETED });
 }
 
 /**

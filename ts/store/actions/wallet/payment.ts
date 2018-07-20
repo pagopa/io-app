@@ -3,14 +3,12 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_ENTER_OTP,
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_QR_CODE,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
-  PAYMENT_REQUEST_ENTER_OTP,
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
@@ -73,17 +71,8 @@ export type PaymentConfirmPaymentMethod = Readonly<{
   payload: number; // selected card id
 }>;
 
-export type PaymentRequestEnterOtp = Readonly<{
-  type: typeof PAYMENT_REQUEST_ENTER_OTP;
-}>;
-
-export type PaymentEnterOtp = Readonly<{
-  type: typeof PAYMENT_ENTER_OTP;
-}>;
-
 export type PaymentRequestCompletion = Readonly<{
   type: typeof PAYMENT_REQUEST_COMPLETION;
-  payload: string; // entered OTP
 }>;
 
 export type PaymentCompleted = Readonly<{
@@ -105,8 +94,6 @@ export type PaymentActions =
   | PaymentPickPaymentMethod
   | PaymentRequestConfirmPaymentMethod
   | PaymentConfirmPaymentMethod
-  | PaymentRequestEnterOtp
-  | PaymentEnterOtp
   | PaymentRequestCompletion
   | PaymentCompleted;
 
@@ -169,19 +156,8 @@ export const paymentConfirmPaymentMethod = (
   payload: walletId
 });
 
-export const paymentRequestEnterOtp = (): PaymentRequestEnterOtp => ({
-  type: PAYMENT_REQUEST_ENTER_OTP
-});
-
-export const paymentEnterOtp = (): PaymentEnterOtp => ({
-  type: PAYMENT_ENTER_OTP
-});
-
-export const paymentRequestCompletion = (
-  otp: string
-): PaymentRequestCompletion => ({
-  type: PAYMENT_REQUEST_COMPLETION,
-  payload: otp
+export const paymentRequestCompletion = (): PaymentRequestCompletion => ({
+  type: PAYMENT_REQUEST_COMPLETION
 });
 
 export const paymentCompleted = (): PaymentCompleted => ({

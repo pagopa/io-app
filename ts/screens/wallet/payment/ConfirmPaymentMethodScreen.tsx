@@ -34,7 +34,7 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentRequestEnterOtp,
+  paymentRequestCompletion,
   paymentRequestPickPaymentMethod
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -61,7 +61,7 @@ type ReduxMappedStateProps =
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
-  requestOtp: () => void;
+  requestCompletion: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -198,7 +198,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestOtp()}
+            onPress={() => this.props.requestCompletion()}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -244,7 +244,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
-  requestOtp: () => dispatch(paymentRequestEnterOtp())
+  requestCompletion: () => dispatch(paymentRequestCompletion())
 });
 
 export default connect(
