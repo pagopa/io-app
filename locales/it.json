@@ -137,7 +137,7 @@
       "pinForgot": "Non ricordo il PIN",
       "confirmValid": "PIN corretto",
       "confirmInvalid": "PIN non valido"
-    }   
+    }
   },
   "personal_data_processing": {
     "title": "Regole sul trattamento dei dati personali",
@@ -228,16 +228,16 @@
       "amount":"Importo",
       "expireDate":"Scadenza",
       "tranche":"Rata",
-      "entity":"Ente creditore:",	
+      "entity":"Ente creditore:",
       "info":"Per informazioni:",
-       "tel":"Tel:",
+      "tel":"Tel:",
       "email":"Email:",
       "PEC":"PEC:",
       "recipient":"Destintario:",
       "object":"Oggetto del pagamento:",
       "cbillCode":"Codice CBILL:",
       "iuv":"IUV:",
-      "entityCode2":"Codice Ente/Azienda:",		
+      "entityCode2":"Codice Ente/Azienda:",
       "updatedAmount":"Importo aggiornato",
       "updateInfo":"Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi",
       "moreInfo":"Per saperne di più"
@@ -245,7 +245,7 @@
     "insertManually":{
       "header": "Inserisci dati avviso",
       "title": "Inserisci i dati dell'avviso",
-      "info": "che ci consentono di identificare il pagamento", 
+      "info": "che ci consentono di identificare il pagamento",
       "link": "Dove si trovano?",
       "noticeCode":"Codice Avviso",
       "entityCode":"Codice Fiscale Ente Creditore",

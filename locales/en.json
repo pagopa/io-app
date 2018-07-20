@@ -137,7 +137,7 @@
       "pinForgot": "I do not remember the pin",
       "confirmValid": "Correct PIN",
       "confirmInvalid": "Invalid PIN"
-    } 
+    }
   },
   "personal_data_processing": {
     "title": "Rules on the processing of personal data",
@@ -228,7 +228,7 @@
       "amount":"Amount",
       "expireDate":"Expire date",
       "tranche":"Tranche",
-      "entity":"Entity:",	
+      "entity":"Entity:",
       "info":"More info at:",
       "tel":"Tel:",
       "email":"Email:",
@@ -245,7 +245,7 @@
     "insertManually":{
       "header": "Insert notice data",
       "title": "Insert the notice data",
-      "info": "which allow us to identify the transaction", 
+      "info": "which allow us to identify the transaction",
       "link": "Where are they?",
       "noticeCode":"Notice Code",
       "entityCode":"Entity Fiscal Code",

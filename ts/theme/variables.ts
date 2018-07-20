@@ -171,7 +171,10 @@ const customVariables = Object.assign(materialVariables, {
   spacerLargeWidth: 24,
   spacerExtralargeWidth: 40,
 
-  borderRadiusBase: 4
+  borderRadiusBase: 4,
+
+  // Tabs
+  tabDefaultBg: "#FFFFFF"
 });
 
 export default customVariables;

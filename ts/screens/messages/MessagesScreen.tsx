@@ -12,7 +12,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-
 import MessageComponent from "../../components/messages/MessageComponent";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
