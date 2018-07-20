@@ -13,7 +13,11 @@ import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
 import { ProfileState } from "./profile";
-import { WalletState } from "./wallet";
+import {
+  WalletState,
+  WalletStateWithSelectedPaymentMethod,
+  WalletStateWithVerificaResponse
+} from "./wallet";
 
 export type NetworkState = Readonly<{
   isConnected: boolean;
@@ -36,5 +40,29 @@ export type GlobalState = Readonly<{
   pinlogin: PinLoginState;
   backendInfo: BackendInfoState;
 }>;
+
+/**
+ * This represents a GlobalState where the Wallet state
+ * is guaranteed to store a payment for which the "verifica"
+ * information is available
+ */
+export type GlobalStateWithVerificaResponse = {
+  [T in Exclude<keyof GlobalState, "wallet">]: GlobalState[T]
+} &
+  Readonly<{
+    wallet: WalletStateWithVerificaResponse;
+  }>;
+
+/**
+ * This represents a GlobalState where the Wallet state
+ * is guaranteed to store a payment for which the payment
+ * method has been selected (+ verifica response)
+ */
+export type GlobalStateWithSelectedPaymentMethod = {
+  [T in Exclude<keyof GlobalState, "wallet">]: GlobalState[T]
+} &
+  Readonly<{
+    wallet: WalletStateWithSelectedPaymentMethod;
+  }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

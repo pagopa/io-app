@@ -28,20 +28,22 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
-import {
-  confirmPaymentMethod,
-  showPaymentSummary
-} from "../../../store/actions/wallet/payment";
+import { paymentRequestConfirmPaymentMethod } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
+import { getPaymentState } from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 
-type ReduxMappedStateProps = Readonly<{
-  wallets: ReadonlyArray<Wallet>;
-}>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      valid: false;
+    }>
+  | Readonly<{
+      valid: true;
+      wallets: ReadonlyArray<Wallet>;
+    }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   confirmPaymentMethod: (walletId: number) => void;
-  showPaymentSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -56,6 +58,10 @@ class PickPaymentMethodScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+
     return (
       <Container>
         <AppHeader>
@@ -104,11 +110,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             <Text>{I18n.t("wallet.newPaymentMethod.newMethod")}</Text>
           </Button>
           <View spacer={true} />
-          <Button
-            block={true}
-            cancel={true}
-            onPress={() => this.props.showPaymentSummary()}
-          >
+          <Button block={true} cancel={true}>
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
@@ -117,17 +119,17 @@ class PickPaymentMethodScreen extends React.Component<Props> {
   }
 }
 
-/**
- * selectors will be reviewed in next pr
- */
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  wallets: walletsSelector(state)
-});
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
+  getPaymentState(state).kind === "PaymentStatePickPaymentMethod"
+    ? {
+        valid: true,
+        wallets: walletsSelector(state)
+      }
+    : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmPaymentMethod: (walletId: number) =>
-    dispatch(confirmPaymentMethod(walletId)),
-  showPaymentSummary: () => dispatch(showPaymentSummary())
+    dispatch(paymentRequestConfirmPaymentMethod(walletId))
 });
 
 export default connect(

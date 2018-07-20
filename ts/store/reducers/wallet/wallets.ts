@@ -2,6 +2,7 @@
  * Reducers, states, selectors and guards for the cards
  */
 import { none, Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
@@ -60,6 +61,16 @@ export const favoriteWalletSelector = createSelector(
   getWallets,
   getWalletFromId
 );
+
+export const specificWalletSelector = (walletId: number) =>
+  createSelector(() => some(walletId), getWallets, getWalletFromId);
+
+export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
+  w.psp === undefined ||
+  w.psp.fixedCost === undefined ||
+  w.psp.fixedCost.amount === undefined
+    ? undefined
+    : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
 
 // reducer
 const reducer = (

@@ -15,42 +15,47 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
-import { showPaymentSummary } from "../../store/actions/wallet/payment";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  currentAmountSelector,
-  paymentReasonSelector,
-  paymentRecipientSelector
+  getCurrentAmount,
+  getPaymentReason,
+  getPaymentRecipient,
+  isGlobalStateWithSelectedPaymentMethod
 } from "../../store/reducers/wallet/payment";
-import {
-  UNKNOWN_AMOUNT,
-  UNKNOWN_PAYMENT_REASON,
-  UNKNOWN_RECIPIENT
-} from "../../types/unknown";
+import { UNKNOWN_PAYMENT_REASON, UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { amountBuilder } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
-type ReduxMappedStateProps = Readonly<{
-  paymentReason: string;
-  currentAmount: AmountInEuroCents;
-  recipient: EnteBeneficiario;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  showPaymentSummary: () => void;
-}>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      valid: true;
+      paymentReason: string;
+      currentAmount: AmountInEuroCents;
+      recipient: EnteBeneficiario;
+    }>
+  | Readonly<{
+      valid: false;
+    }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps & ReduxMappedStateProps;
 
 class PaymentBannerComponent extends React.Component<Props> {
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+    const amount = amountBuilder(
+      AmountInEuroCentsFromNumber.encode(this.props.currentAmount)
+    );
+
     return (
-      <TouchableOpacity onPress={() => this.props.showPaymentSummary()}>
+      // TODO: tapping on this TouchableOpacity should return the navigation
+      // to the "payment summary" screen
+      <TouchableOpacity>
         <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
           <Row>
             <Col>
@@ -65,9 +70,7 @@ class PaymentBannerComponent extends React.Component<Props> {
                 bold={true}
                 style={[WalletStyles.white, WalletStyles.textRight]}
               >
-                {amountBuilder(
-                  AmountInEuroCentsFromNumber.encode(this.props.currentAmount)
-                )}
+                {amount}
               </Text>
             </Col>
           </Row>
@@ -91,17 +94,16 @@ class PaymentBannerComponent extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  paymentReason: paymentReasonSelector(state).getOrElse(UNKNOWN_PAYMENT_REASON),
-  currentAmount: currentAmountSelector(state).getOrElse(UNKNOWN_AMOUNT),
-  recipient: paymentRecipientSelector(state).getOrElse(UNKNOWN_RECIPIENT)
-});
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
+  isGlobalStateWithSelectedPaymentMethod(state)
+    ? {
+        valid: true,
+        paymentReason: getPaymentReason(state).getOrElse(
+          UNKNOWN_PAYMENT_REASON
+        ), // this could be empty as per pagoPA definition
+        currentAmount: getCurrentAmount(state),
+        recipient: getPaymentRecipient(state).getOrElse(UNKNOWN_RECIPIENT) // this could be empty as per pagoPA definition
+      }
+    : { valid: false };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showPaymentSummary: () => dispatch(showPaymentSummary())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaymentBannerComponent);
+export default connect(mapStateToProps)(PaymentBannerComponent);

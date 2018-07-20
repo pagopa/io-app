@@ -20,7 +20,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
-import { startPayment } from "../../store/actions/wallet/payment";
+import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
@@ -198,7 +198,7 @@ class WalletLayout extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  startPayment: () => dispatch(startPayment())
+  startPayment: () => dispatch(paymentRequestQrCode())
 });
 
 export default connect(

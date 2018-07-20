@@ -6,7 +6,10 @@
  * - implement the proper navigation
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
  */
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  AmountInEuroCentsFromNumber
+} from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -23,7 +26,6 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
-import { AmountInEuroCents } from "../../../../node_modules/italia-ts-commons/lib/pagopa";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -32,29 +34,34 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  pickPaymentMethod,
-  requestOtp,
-  showPaymentSummary
+  paymentRequestEnterOtp,
+  paymentRequestPickPaymentMethod
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  currentAmountSelector,
-  feeExtractor,
+  getCurrentAmount,
+  getPaymentState,
+  isGlobalStateWithSelectedPaymentMethod,
   selectedPaymentMethodSelector
 } from "../../../store/reducers/wallet/payment";
-import { UNKNOWN_AMOUNT, UNKNOWN_CARD } from "../../../types/unknown";
+import { feeExtractor } from "../../../store/reducers/wallet/wallets";
+import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { amountBuilder } from "../../../utils/stringBuilder";
 
-type ReduxMappedStateProps = Readonly<{
-  card: Wallet;
-  amount: AmountInEuroCents;
-  fee: AmountInEuroCents;
-}>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      valid: false;
+    }>
+  | Readonly<{
+      valid: true;
+      wallet: Wallet;
+      amount: AmountInEuroCents;
+      fee: AmountInEuroCents;
+    }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
   requestOtp: () => void;
-  showPaymentSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -78,22 +85,18 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     this.props.navigation.goBack();
   }
 
-  private getTotalAmount() {
-    const amount: number = AmountInEuroCentsFromNumber.encode(
-      this.props.amount
-    );
-    const fee: number = AmountInEuroCentsFromNumber.encode(this.props.fee);
+  private getTotalAmount(amount: number, fee: number) {
     return amount + fee;
   }
 
   public render(): React.ReactNode {
-    const amount = amountBuilder(
-      AmountInEuroCentsFromNumber.encode(this.props.amount)
-    );
-    const fee = amountBuilder(
-      AmountInEuroCentsFromNumber.encode(this.props.fee)
-    );
-    const totalAmount = amountBuilder(this.getTotalAmount());
+    if (!this.props.valid) {
+      return null;
+    }
+
+    const amount = AmountInEuroCentsFromNumber.encode(this.props.amount);
+    const fee = AmountInEuroCentsFromNumber.encode(this.props.fee);
+    const totalAmount = this.getTotalAmount(amount, fee);
     return (
       <Container>
         <AppHeader>
@@ -115,7 +118,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <CardComponent
               navigation={this.props.navigation}
-              item={this.props.card}
+              item={this.props.wallet}
               menu={false}
               favorite={false}
               lastUsage={false}
@@ -128,7 +131,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {amount}
+                    {amountBuilder(amount)}
                   </Text>
                 </Col>
               </Row>
@@ -144,7 +147,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {fee}
+                    {amountBuilder(fee)}
                   </Text>
                 </Col>
               </Row>
@@ -156,7 +159,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <View spacer={true} large={true} />
-                  <H1 style={WalletStyles.textRight}>{totalAmount}</H1>
+                  <H1 style={WalletStyles.textRight}>
+                    {amountBuilder(totalAmount)}
+                  </H1>
                 </Col>
               </Row>
               <Row>
@@ -209,12 +214,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
             <View hspacer={true} />
-            <Button
-              style={styles.child}
-              block={true}
-              cancel={true}
-              onPress={_ => this.props.showPaymentSummary()}
-            >
+            <Button style={styles.child} block={true} cancel={true}>
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
@@ -225,18 +225,26 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  const card = selectedPaymentMethodSelector(state).getOrElse(UNKNOWN_CARD);
-  return {
-    card,
-    amount: currentAmountSelector(state).getOrElse(UNKNOWN_AMOUNT),
-    fee: feeExtractor(card).getOrElse(UNKNOWN_AMOUNT)
-  };
+  if (
+    getPaymentState(state).kind === "PaymentStateConfirmPaymentMethod" &&
+    isGlobalStateWithSelectedPaymentMethod(state)
+  ) {
+    const wallet = selectedPaymentMethodSelector(state);
+    const feeOrUndefined = feeExtractor(wallet);
+    return {
+      valid: true,
+      wallet,
+      amount: getCurrentAmount(state),
+      fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+    };
+  } else {
+    return { valid: false };
+  }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: () => dispatch(pickPaymentMethod()),
-  requestOtp: () => dispatch(requestOtp()),
-  showPaymentSummary: () => dispatch(showPaymentSummary())
+  pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
+  requestOtp: () => dispatch(paymentRequestEnterOtp())
 });
 
 export default connect(

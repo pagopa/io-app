@@ -36,18 +36,25 @@ import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString
 import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { Dispatch } from "../../../store/actions/types";
-import { showPaymentSummary } from "../../../store/actions/wallet/payment";
 
-type ReduxMappedProps = Readonly<{
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+import { Dispatch } from "../../../store/actions/types";
+import { paymentRequestTransactionSummary } from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPaymentState } from "../../../store/reducers/wallet/payment";
+
+type ReduxMappedStateProps = Readonly<{
+  valid: boolean;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
 
 type State = Readonly<{
   transactionCode: Option<string>;
@@ -102,12 +109,16 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       );
       if (rptId.isRight() && amount.isRight()) {
         // valid Rpt Id and valid amount were entered
-        this.props.showPaymentSummary(rptId.value, amount.value);
+        this.props.showTransactionSummary(rptId.value, amount.value);
       } // TODO: else toast saying that the data entered is invalid
     }
   };
 
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+
     return (
       <Container>
         <AppHeader>
@@ -181,12 +192,16 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(showPaymentSummary({ rptId, initialAmount: amount }))
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  valid: getPaymentState(state).kind === "PaymentStateManualEntry"
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
+    dispatch(paymentRequestTransactionSummary(rptId, amount))
 });
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(ManualDataInsertionScreen);

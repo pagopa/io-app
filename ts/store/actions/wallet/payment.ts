@@ -1,153 +1,189 @@
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
+  PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_CONFIRM_SUMMARY,
-  PAYMENT_INSERT_DATA_MANUALLY,
+  PAYMENT_ENTER_OTP,
+  PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
-  PAYMENT_REQUEST_OTP,
-  PAYMENT_SHOW_SUMMARY,
-  PAYMENT_START,
-  PAYMENT_STORE_INITIAL_AMOUNT,
-  PAYMENT_STORE_RPTID_DATA,
-  PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  PAYMENT_STORE_VERIFICA_DATA
+  PAYMENT_QR_CODE,
+  PAYMENT_REQUEST_COMPLETION,
+  PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
+  PAYMENT_REQUEST_ENTER_OTP,
+  PAYMENT_REQUEST_MANUAL_ENTRY,
+  PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
+  PAYMENT_REQUEST_QR_CODE,
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  PAYMENT_TRANSACTION_SUMMARY
 } from "../constants";
-import { PAYMENT_VERIFY_OTP } from "./../constants";
 
-export type StartPayment = Readonly<{
-  type: typeof PAYMENT_START;
+export type PaymentRequestQrCode = Readonly<{
+  type: typeof PAYMENT_REQUEST_QR_CODE;
 }>;
 
-export type InsertDataManually = Readonly<{
-  type: typeof PAYMENT_INSERT_DATA_MANUALLY;
+export type PaymentQrCode = Readonly<{
+  type: typeof PAYMENT_QR_CODE;
 }>;
 
-export type StoreRptIdData = Readonly<{
-  type: typeof PAYMENT_STORE_RPTID_DATA;
-  payload: RptId;
+export type PaymentRequestManualEntry = Readonly<{
+  type: typeof PAYMENT_REQUEST_MANUAL_ENTRY;
 }>;
 
-export interface PaymentInfoPayload {
-  rptId: RptId;
-  initialAmount: AmountInEuroCents;
-}
-
-export type ShowPaymentSummary = Readonly<{
-  type: typeof PAYMENT_SHOW_SUMMARY;
-  payload?: PaymentInfoPayload;
+export type PaymentManualEntry = Readonly<{
+  type: typeof PAYMENT_MANUAL_ENTRY;
 }>;
 
-export type StoreVerificaResponse = Readonly<{
-  type: typeof PAYMENT_STORE_VERIFICA_DATA;
-  payload: PaymentRequestsGetResponse;
+export type PaymentRequestTransactionSummary = Readonly<{
+  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
+  payload: {
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+  };
 }>;
 
-export type StoreInitialAmount = Readonly<{
-  type: typeof PAYMENT_STORE_INITIAL_AMOUNT;
-  payload: AmountInEuroCents;
+export type PaymentTransactionSummary = Readonly<{
+  type: typeof PAYMENT_TRANSACTION_SUMMARY;
+  payload: {
+    rptId: RptId;
+    verificaResponse: PaymentRequestsGetResponse;
+    initialAmount: AmountInEuroCents;
+  };
 }>;
 
-export type StoreSelectedPaymentMethod = Readonly<{
-  type: typeof PAYMENT_STORE_SELECTED_PAYMENT_METHOD;
-  payload: number;
+export type PaymentRequestContinueWithPaymentMethods = Readonly<{
+  type: typeof PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS;
 }>;
 
-export type ConfirmSummary = Readonly<{
-  type: typeof PAYMENT_CONFIRM_SUMMARY;
+export type PaymentRequestPickPaymentMethod = Readonly<{
+  type: typeof PAYMENT_REQUEST_PICK_PAYMENT_METHOD;
 }>;
 
-export type PickPaymentMethod = Readonly<{
+export type PaymentPickPaymentMethod = Readonly<{
   type: typeof PAYMENT_PICK_PAYMENT_METHOD;
 }>;
 
-export type ConfirmPaymentMethod = Readonly<{
+export type PaymentRequestConfirmPaymentMethod = Readonly<{
+  type: typeof PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD;
+  payload: number; // selected card id
+}>;
+
+export type PaymentConfirmPaymentMethod = Readonly<{
   type: typeof PAYMENT_CONFIRM_PAYMENT_METHOD;
-  payload: number;
+  payload: number; // selected card id
 }>;
 
-export type RequestOtp = Readonly<{
-  type: typeof PAYMENT_REQUEST_OTP;
+export type PaymentRequestEnterOtp = Readonly<{
+  type: typeof PAYMENT_REQUEST_ENTER_OTP;
 }>;
 
-export type VerifyOtp = Readonly<{
-  type: typeof PAYMENT_VERIFY_OTP;
-  payload: string;
+export type PaymentEnterOtp = Readonly<{
+  type: typeof PAYMENT_ENTER_OTP;
 }>;
 
+export type PaymentRequestCompletion = Readonly<{
+  type: typeof PAYMENT_REQUEST_COMPLETION;
+  payload: string; // entered OTP
+}>;
+
+export type PaymentCompleted = Readonly<{
+  type: typeof PAYMENT_COMPLETED;
+}>;
+
+/**
+ * All possible payment actions
+ */
 export type PaymentActions =
-  | StartPayment
-  | ShowPaymentSummary
-  | StoreRptIdData
-  | StoreVerificaResponse
-  | StoreInitialAmount
-  | InsertDataManually
-  | ConfirmSummary
-  | PickPaymentMethod
-  | ConfirmPaymentMethod
-  | StoreSelectedPaymentMethod
-  | RequestOtp
-  | VerifyOtp;
+  | PaymentRequestQrCode
+  | PaymentQrCode
+  | PaymentRequestManualEntry
+  | PaymentManualEntry
+  | PaymentRequestTransactionSummary
+  | PaymentTransactionSummary
+  | PaymentRequestContinueWithPaymentMethods
+  | PaymentRequestPickPaymentMethod
+  | PaymentPickPaymentMethod
+  | PaymentRequestConfirmPaymentMethod
+  | PaymentConfirmPaymentMethod
+  | PaymentRequestEnterOtp
+  | PaymentEnterOtp
+  | PaymentRequestCompletion
+  | PaymentCompleted;
 
-export const storeRptIdData = (rptId: RptId): StoreRptIdData => ({
-  type: PAYMENT_STORE_RPTID_DATA,
-  payload: rptId
+export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
+  type: PAYMENT_REQUEST_QR_CODE
 });
 
-export const showPaymentSummary = (
-  paymentInfo?: PaymentInfoPayload
-): ShowPaymentSummary => ({
-  type: PAYMENT_SHOW_SUMMARY,
-  payload: paymentInfo
+export const paymentQrCode = (): PaymentQrCode => ({
+  type: PAYMENT_QR_CODE
 });
 
-export const startPayment = (): StartPayment => ({
-  type: PAYMENT_START
+export const paymentRequestManualEntry = (): PaymentRequestManualEntry => ({
+  type: PAYMENT_REQUEST_MANUAL_ENTRY
 });
 
-export const storeVerificaResponse = (
-  response: PaymentRequestsGetResponse
-) => ({
-  type: PAYMENT_STORE_VERIFICA_DATA,
-  payload: response
+export const paymentManualEntry = (): PaymentManualEntry => ({
+  type: PAYMENT_MANUAL_ENTRY
 });
 
-export const storeInitialAmount = (
-  amount: AmountInEuroCents
-): StoreInitialAmount => ({
-  type: PAYMENT_STORE_INITIAL_AMOUNT,
-  payload: amount
+export const paymentRequestTransactionSummary = (
+  rptId: RptId,
+  initialAmount: AmountInEuroCents
+): PaymentRequestTransactionSummary => ({
+  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  payload: { rptId, initialAmount }
 });
 
-export const insertDataManually = (): InsertDataManually => ({
-  type: PAYMENT_INSERT_DATA_MANUALLY
+export const paymentTransactionSummary = (
+  rptId: RptId,
+  initialAmount: AmountInEuroCents,
+  verificaResponse: PaymentRequestsGetResponse
+): PaymentTransactionSummary => ({
+  type: PAYMENT_TRANSACTION_SUMMARY,
+  payload: { rptId, verificaResponse, initialAmount }
 });
 
-export const confirmSummary = (): ConfirmSummary => ({
-  type: PAYMENT_CONFIRM_SUMMARY
+export const paymentRequestContinueWithPaymentMethods = (): PaymentRequestContinueWithPaymentMethods => ({
+  type: PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS
 });
 
-export const pickPaymentMethod = (): PickPaymentMethod => ({
+export const paymentRequestPickPaymentMethod = (): PaymentRequestPickPaymentMethod => ({
+  type: PAYMENT_REQUEST_PICK_PAYMENT_METHOD
+});
+
+export const paymentPickPaymentMethod = (): PaymentPickPaymentMethod => ({
   type: PAYMENT_PICK_PAYMENT_METHOD
 });
 
-export const confirmPaymentMethod = (
+export const paymentRequestConfirmPaymentMethod = (
   walletId: number
-): ConfirmPaymentMethod => ({
+): PaymentRequestConfirmPaymentMethod => ({
+  type: PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
+  payload: walletId
+});
+
+export const paymentConfirmPaymentMethod = (
+  walletId: number
+): PaymentConfirmPaymentMethod => ({
   type: PAYMENT_CONFIRM_PAYMENT_METHOD,
   payload: walletId
 });
 
-export const storeSelectedPaymentMethod = (walletId: number) => ({
-  type: PAYMENT_STORE_SELECTED_PAYMENT_METHOD,
-  payload: walletId
+export const paymentRequestEnterOtp = (): PaymentRequestEnterOtp => ({
+  type: PAYMENT_REQUEST_ENTER_OTP
 });
 
-export const requestOtp = (): RequestOtp => ({
-  type: PAYMENT_REQUEST_OTP
+export const paymentEnterOtp = (): PaymentEnterOtp => ({
+  type: PAYMENT_ENTER_OTP
 });
 
-export const verifyOtp = (otp: string): VerifyOtp => ({
-  type: PAYMENT_VERIFY_OTP,
+export const paymentRequestCompletion = (
+  otp: string
+): PaymentRequestCompletion => ({
+  type: PAYMENT_REQUEST_COMPLETION,
   payload: otp
+});
+
+export const paymentCompleted = (): PaymentCompleted => ({
+  type: PAYMENT_COMPLETED
 });

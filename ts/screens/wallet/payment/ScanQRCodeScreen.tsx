@@ -30,13 +30,19 @@ import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  insertDataManually,
-  showPaymentSummary
+  paymentRequestManualEntry,
+  paymentRequestTransactionSummary
 } from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPaymentState } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 
-type ReduxMappedProps = Readonly<{
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+type ReduxMappedStateProps = Readonly<{
+  valid: boolean;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
   insertDataManually: () => void;
 }>;
 
@@ -44,7 +50,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -144,7 +150,10 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
     const paymentNotice = PaymentNoticeQrCodeFromString.decode(data);
     if (rptId.isRight() && paymentNotice.isRight()) {
       // successful conversion to RptId
-      this.props.showPaymentSummary(rptId.value, paymentNotice.value.amount);
+      this.props.showTransactionSummary(
+        rptId.value,
+        paymentNotice.value.amount
+      );
     } // else toast stating that QR code is invalid
     else {
       setTimeout(
@@ -155,6 +164,10 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
   };
 
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+
     return (
       <Container style={styles.white}>
         <AppHeader>
@@ -237,13 +250,17 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  showPaymentSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(showPaymentSummary({ rptId, initialAmount: amount })),
-  insertDataManually: () => dispatch(insertDataManually())
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  valid: getPaymentState(state).kind === "PaymentStateQrCode"
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
+    dispatch(paymentRequestTransactionSummary(rptId, amount)),
+  insertDataManually: () => dispatch(paymentRequestManualEntry())
 });
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(ScanQRCodeScreen);

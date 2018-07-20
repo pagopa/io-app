@@ -4,7 +4,12 @@
  */
 
 import { combineReducers } from "redux";
-import { PAYMENT_INITIAL_STATE, PaymentState } from "./payment";
+import {
+  PAYMENT_INITIAL_STATE,
+  PaymentState,
+  PaymentStateWithSelectedPaymentMethod,
+  PaymentStateWithVerificaResponse
+} from "./payment";
 import paymentReducer from "./payment";
 import { TRANSACTIONS_INITIAL_STATE, TransactionsState } from "./transactions";
 import transactionsReducer from "./transactions";
@@ -16,6 +21,30 @@ export type WalletState = Readonly<{
   wallets: WalletsState;
   payment: PaymentState;
 }>;
+
+/**
+ * This represents a WalletState where the payment
+ * state is guaranteed to have received a "verifica"
+ * response (i.e. it has the payment information stored)
+ */
+export type WalletStateWithVerificaResponse = {
+  [T in Exclude<keyof WalletState, "payment">]: WalletState[T]
+} &
+  Readonly<{
+    payment: PaymentStateWithVerificaResponse;
+  }>;
+
+/**
+ * This represents a WalletState where the payment
+ * state is guaranteed to have a selected payment method
+ * ( + a verifica response)
+ */
+export type WalletStateWithSelectedPaymentMethod = {
+  [T in Exclude<keyof WalletState, "payment">]: WalletState[T]
+} &
+  Readonly<{
+    payment: PaymentStateWithSelectedPaymentMethod;
+  }>;
 
 export const INITIAL_STATE: WalletState = {
   transactions: TRANSACTIONS_INITIAL_STATE,

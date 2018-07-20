@@ -25,10 +25,16 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
-import { verifyOtp } from "../../../store/actions/wallet/payment";
+import { paymentRequestCompletion } from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPaymentState } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 
-type ReduxMappedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  valid: boolean;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
   verifyOtp: (otp: string) => void;
 }>;
 
@@ -40,7 +46,7 @@ type State = Readonly<{
   otp: Option<string>;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 const styles = StyleSheet.create({
   contentPadding: {
@@ -63,6 +69,10 @@ class TextVerificationScreen extends React.Component<Props, State> {
   }
 
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+
     return (
       <Container>
         <AppHeader>
@@ -136,10 +146,14 @@ class TextVerificationScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  verifyOtp: (otp: string) => dispatch(verifyOtp(otp))
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  valid: getPaymentState(state).kind === "PaymentStateEnterOtp"
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  verifyOtp: (otp: string) => dispatch(paymentRequestCompletion(otp))
 });
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(TextVerificationScreen);

@@ -32,30 +32,35 @@ import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { confirmSummary } from "../../../store/actions/wallet/payment";
+import { paymentRequestContinueWithPaymentMethods } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  currentAmountSelector,
+  getCurrentAmount,
   getInitialAmount,
+  getPaymentReason,
+  getPaymentRecipient,
+  getPaymentState,
   getRptId,
-  paymentReasonSelector,
-  paymentRecipientSelector
+  isGlobalStateWithVerificaResponse
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import {
-  UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
-  UNKNOWN_RECIPIENT,
-  UNKNOWN_RPTID
+  UNKNOWN_RECIPIENT
 } from "../../../types/unknown";
 
-type ReduxMappedStateProps = Readonly<{
-  paymentRecipient: EnteBeneficiario;
-  paymentReason: string;
-  rptId: RptId;
-  originalAmount: AmountInEuroCents;
-  updatedAmount: AmountInEuroCents;
-}>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      valid: false;
+    }>
+  | Readonly<{
+      valid: true;
+      initialAmount: AmountInEuroCents;
+      currentAmount: AmountInEuroCents;
+      paymentReason: string;
+      paymentRecipient: EnteBeneficiario;
+      rptId: RptId;
+    }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   confirmSummary: () => void;
@@ -91,6 +96,13 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+    const amount = AmountInEuroCentsFromNumber.encode(this.props.initialAmount);
+    const updatedAmount = AmountInEuroCentsFromNumber.encode(
+      this.props.currentAmount
+    );
     return (
       <Container>
         <AppHeader>
@@ -107,12 +119,8 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         <Content noPadded={true}>
           <PaymentSummaryComponent
             navigation={this.props.navigation}
-            amount={AmountInEuroCentsFromNumber.encode(
-              this.props.originalAmount
-            )}
-            updatedAmount={AmountInEuroCentsFromNumber.encode(
-              this.props.updatedAmount
-            )}
+            amount={amount}
+            updatedAmount={updatedAmount}
             paymentReason={this.props.paymentReason}
           />
           <View content={true}>
@@ -146,18 +154,25 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  paymentRecipient: paymentRecipientSelector(state).getOrElse(
-    UNKNOWN_RECIPIENT
-  ),
-  paymentReason: paymentReasonSelector(state).getOrElse(UNKNOWN_PAYMENT_REASON),
-  rptId: getRptId(state).getOrElse(UNKNOWN_RPTID),
-  originalAmount: getInitialAmount(state).getOrElse(UNKNOWN_AMOUNT),
-  updatedAmount: currentAmountSelector(state).getOrElse(UNKNOWN_AMOUNT)
-});
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
+  getPaymentState(state).kind === "PaymentStateSummary" &&
+  isGlobalStateWithVerificaResponse(state)
+    ? {
+        valid: true,
+        initialAmount: getInitialAmount(state),
+        currentAmount: getCurrentAmount(state),
+        paymentReason: getPaymentReason(state).getOrElse(
+          UNKNOWN_PAYMENT_REASON
+        ), // could be undefined as per pagoPA type definition
+        paymentRecipient: getPaymentRecipient(state).getOrElse(
+          UNKNOWN_RECIPIENT
+        ), // could be undefined as per pagoPA type definition
+        rptId: getRptId(state)
+      }
+    : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmSummary: () => dispatch(confirmSummary())
+  confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods())
 });
 
 export default connect(

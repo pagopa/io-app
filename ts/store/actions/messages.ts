@@ -10,7 +10,7 @@ import {
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_REQUEST,
   MESSAGES_LOAD_SUCCESS,
-  PAYMENT_START
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY
 } from "./constants";
 
 export type MessagesLoadRequest = Readonly<{
@@ -37,7 +37,7 @@ export type MessageLoadSuccess = Readonly<{
 }>;
 
 export type StartPayment = Readonly<{
-  type: typeof PAYMENT_START;
+  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
   payload: PaymentData;
 }>;
 
@@ -75,7 +75,9 @@ export const loadMessageSuccess = (
   payload: message
 });
 
+// TODO: PaymentData is not compatible with the
+// data required (notice #, fiscal code, amount)
 export const startPayment = (paymentData: PaymentData): StartPayment => ({
-  type: PAYMENT_START,
+  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   payload: paymentData
 });
