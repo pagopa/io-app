@@ -11,6 +11,7 @@ import messagesSaga from "./messages";
 import notificationsSaga from "./notifications";
 import onboardingSaga from "./onboarding";
 import pinLoginSaga from "./pinlogin";
+import pinSetSaga from "./pinset";
 import profileSaga from "./profile";
 import startupSaga from "./startup";
 import walletSaga from "./wallet";
@@ -30,6 +31,7 @@ export default function* root(): Iterator<Effect> {
   yield all([
     fork(authenticationSaga),
     fork(notificationsSaga),
+    fork(pinSetSaga),
     fork(onboardingSaga),
     fork(pinLoginSaga),
     fork(mainSaga),

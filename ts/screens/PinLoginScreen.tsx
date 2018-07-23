@@ -34,6 +34,8 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../components/helpers/withContextualHelp";
+import { startPinReset } from "../store/actions/pinset";
+import { PinString } from "../types/PinString";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
@@ -58,14 +60,19 @@ class PinLoginScreen extends React.Component<Props> {
     super(props);
   }
 
+  private onPinReset = () => {
+    this.props.dispatch(startPinReset());
+  };
+
   // Method called when the CodeInput is filled
-  public onPinFulfill(code: string) {
-    this.props.dispatch(validatePin(code));
+  public onPinFulfill = (code: PinString) => {
+    const validatePinAction = validatePin(code);
+    this.props.dispatch(validatePinAction);
     // Clear PIN input
     if (this.pinComponent) {
       this.pinComponent.clear();
     }
-  }
+  };
 
   // Render the PIN match/doesn't match feedback message
   public renderCodeInputConfirmValidation() {
@@ -101,15 +108,6 @@ class PinLoginScreen extends React.Component<Props> {
     );
   }
 
-  // Render the forgot PIN button
-  public renderForgotButton() {
-    return (
-      <Button block={true} primary={true}>
-        <Text>{I18n.t("pin_login.pin.pinForgot")}</Text>
-      </Button>
-    );
-  }
-
   public render() {
     const { pinLoginState } = this.props;
     return (
@@ -128,7 +126,11 @@ class PinLoginScreen extends React.Component<Props> {
           </Text>
           {this.renderCodeInput(pinLoginState)}
           <View spacer={true} extralarge={true} />
-          {this.renderForgotButton()}
+          <Button block={true} primary={true} onPress={this.onPinReset}>
+            <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+          </Button>
+          <View spacer={true} />
+          <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
         </Content>
       </Container>
     );
