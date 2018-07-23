@@ -85,7 +85,7 @@
     "@types/validator": "^9.4.1",
     "babel-jest": "23.2.0",
     "babel-preset-react-native": "4.0.0",
-    "danger": "^3.7.20",
+    "danger": "^3.8.0",
     "danger-plugin-digitalcitizenship": "^0.3.1",
     "detox": "^8.0.0",
     "italia-tslint-rules": "^0.1.1",
