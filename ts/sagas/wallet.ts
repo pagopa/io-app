@@ -50,7 +50,8 @@ import {
   paymentRequestPickPaymentMethod,
   PaymentRequestPickPaymentMethod,
   PaymentRequestTransactionSummary,
-  paymentTransactionSummary
+  paymentTransactionSummaryFromBanner,
+  paymentTransactionSummaryFromRptId
 } from "../store/actions/wallet/payment";
 import {
   selectTransactionForDetails,
@@ -168,7 +169,7 @@ function* showTransactionSummaryHandler(
   // tapping on the payment banner further in the process.
   // in all cases but the last one, a payload will be
   // provided, and it will contain the RptId information
-  if (action.payload !== undefined) {
+  if (action.kind === "fromRptId") {
     // either the QR code has been read, or the
     // data has been entered manually. Store the
     // payload and proceed with showing the
@@ -199,8 +200,10 @@ function* showTransactionSummaryHandler(
       } as EnteBeneficiario
     };
     yield put(
-      paymentTransactionSummary(rptId, initialAmount, verificaResponse)
+      paymentTransactionSummaryFromRptId(rptId, initialAmount, verificaResponse)
     );
+  } else {
+    yield put(paymentTransactionSummaryFromBanner());
   }
   // also, show summary screen
   yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));

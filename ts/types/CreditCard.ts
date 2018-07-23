@@ -5,22 +5,12 @@ import {
   UNKNOWN_LAST_USAGE,
   UNKNWON_CARD_TYPE
 } from "./unknown";
-/**
- * Definition of the CreditCard type, with the
- * properties required for UI purposes.
- */
-// TODO: this type may need to be aligned with the PagoPA one
-// @https://www.pivotaltracker.com/story/show/157769657
+// TODO: define the correct terminology (card vs wallet and when) @https://www.pivotaltracker.com/story/show/159229359
 
+import { fromEither, fromNullable, none, some } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { tag } from "italia-ts-commons/lib/types";
 import { Wallet } from "../../definitions/pagopa/Wallet";
-import {
-  fromEither,
-  fromNullable,
-  none,
-  some
-} from "../../node_modules/fp-ts/lib/Option";
 import I18n from "../i18n";
 import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 

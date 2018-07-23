@@ -13,7 +13,8 @@ import {
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  PAYMENT_TRANSACTION_SUMMARY
+  PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
+  PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
 } from "../constants";
 
 export type PaymentRequestQrCode = Readonly<{
@@ -32,22 +33,44 @@ export type PaymentManualEntry = Readonly<{
   type: typeof PAYMENT_MANUAL_ENTRY;
 }>;
 
-export type PaymentRequestTransactionSummary = Readonly<{
+// for the first time the screen is being shown (i.e. after the
+// rptId has been passed (from qr code/manual entry/message)
+export type PaymentRequestTransactionSummaryFromRptId = Readonly<{
   type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
+  kind: "fromRptId";
   payload: {
     rptId: RptId;
     initialAmount: AmountInEuroCents;
   };
 }>;
 
-export type PaymentTransactionSummary = Readonly<{
-  type: typeof PAYMENT_TRANSACTION_SUMMARY;
+// for when the user taps on the payment banner and gets redirected
+// to the summary of the payment
+export type PaymentRequestTransactionSummaryFromBanner = Readonly<{
+  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
+  kind: "fromBanner";
+}>;
+
+export type PaymentRequestTransactionSummary =
+  | PaymentRequestTransactionSummaryFromRptId
+  | PaymentRequestTransactionSummaryFromBanner;
+
+export type PaymentTransactionSummaryFromRptId = Readonly<{
+  type: typeof PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID;
   payload: {
     rptId: RptId;
     verificaResponse: PaymentRequestsGetResponse;
     initialAmount: AmountInEuroCents;
   };
 }>;
+
+export type PaymentTransactionSummaryFromBanner = Readonly<{
+  type: typeof PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER;
+}>;
+
+export type PaymentTransactionSummary =
+  | PaymentTransactionSummaryFromRptId
+  | PaymentTransactionSummaryFromBanner;
 
 export type PaymentRequestContinueWithPaymentMethods = Readonly<{
   type: typeof PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS;
@@ -113,21 +136,31 @@ export const paymentManualEntry = (): PaymentManualEntry => ({
   type: PAYMENT_MANUAL_ENTRY
 });
 
-export const paymentRequestTransactionSummary = (
+export const paymentRequestTransactionSummaryFromRptId = (
   rptId: RptId,
   initialAmount: AmountInEuroCents
-): PaymentRequestTransactionSummary => ({
+): PaymentRequestTransactionSummaryFromRptId => ({
   type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  kind: "fromRptId",
   payload: { rptId, initialAmount }
 });
 
-export const paymentTransactionSummary = (
+export const paymentRequestTransactionSummaryFromBanner = (): PaymentRequestTransactionSummaryFromBanner => ({
+  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  kind: "fromBanner"
+});
+
+export const paymentTransactionSummaryFromRptId = (
   rptId: RptId,
   initialAmount: AmountInEuroCents,
   verificaResponse: PaymentRequestsGetResponse
-): PaymentTransactionSummary => ({
-  type: PAYMENT_TRANSACTION_SUMMARY,
+): PaymentTransactionSummaryFromRptId => ({
+  type: PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID,
   payload: { rptId, verificaResponse, initialAmount }
+});
+
+export const paymentTransactionSummaryFromBanner = (): PaymentTransactionSummaryFromBanner => ({
+  type: PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER
 });
 
 export const paymentRequestContinueWithPaymentMethods = (): PaymentRequestContinueWithPaymentMethods => ({

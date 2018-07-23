@@ -3,9 +3,10 @@
  * - Numero Avviso, which includes: aux, digit, application code, codice IUV
  * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
  * - amount of the transaction
- *  TO DO:
+ *  TODO:
  *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
+ *  - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
@@ -38,7 +39,7 @@ import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 
 import { Dispatch } from "../../../store/actions/types";
-import { paymentRequestTransactionSummary } from "../../../store/actions/wallet/payment";
+import { paymentRequestTransactionSummaryFromRptId } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 
@@ -198,7 +199,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(paymentRequestTransactionSummary(rptId, amount))
+    dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount))
 });
 
 export default connect(

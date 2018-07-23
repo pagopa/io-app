@@ -1,5 +1,6 @@
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
+ * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 import { Either } from "fp-ts/lib/Either";
 import * as t from "io-ts";
@@ -31,7 +32,7 @@ import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestManualEntry,
-  paymentRequestTransactionSummary
+  paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
@@ -256,7 +257,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(paymentRequestTransactionSummary(rptId, amount)),
+    dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount)),
   insertDataManually: () => dispatch(paymentRequestManualEntry())
 });
 

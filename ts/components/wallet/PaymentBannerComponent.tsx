@@ -1,8 +1,6 @@
 /**
  * This component displays a summary on the transaction.
  * Used for the screens from the identification of the transaction to the end of the procedure.
- * TODO: integrate with walletAPI
- *   @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
  */
 
 import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
@@ -15,12 +13,14 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
+import { Dispatch } from "../../store/actions/types";
+import { paymentRequestTransactionSummaryFromBanner } from "../../store/actions/wallet/payment";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getCurrentAmount,
   getPaymentReason,
   getPaymentRecipient,
-  isGlobalStateWithSelectedPaymentMethod
+  isGlobalStateWithVerificaResponse
 } from "../../store/reducers/wallet/payment";
 import { UNKNOWN_PAYMENT_REASON, UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { amountBuilder } from "../../utils/stringBuilder";
@@ -37,11 +37,15 @@ type ReduxMappedStateProps =
       valid: false;
     }>;
 
+type ReduxMappedDispatchProps = Readonly<{
+  showSummary: () => void;
+}>;
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class PaymentBannerComponent extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -53,9 +57,7 @@ class PaymentBannerComponent extends React.Component<Props> {
     );
 
     return (
-      // TODO: tapping on this TouchableOpacity should return the navigation
-      // to the "payment summary" screen
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.props.showSummary()}>
         <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
           <Row>
             <Col>
@@ -95,7 +97,7 @@ class PaymentBannerComponent extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  isGlobalStateWithSelectedPaymentMethod(state)
+  isGlobalStateWithVerificaResponse(state)
     ? {
         valid: true,
         paymentReason: getPaymentReason(state).getOrElse(
@@ -106,4 +108,11 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
       }
     : { valid: false };
 
-export default connect(mapStateToProps)(PaymentBannerComponent);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentBannerComponent);

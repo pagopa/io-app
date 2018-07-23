@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     android: {
       // do nothing for android -- lineHeight
       // does not work as expected
-      // TODO: figure this out
+      // TODO: figure why this is not working on android @https://www.pivotaltracker.com/story/show/159229134
     }
   })
 });
@@ -150,7 +150,8 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
             </Row>
           </View>
         )}
-        {false && // tslint:disable-line no-redundant-boolean (TODO: gotta define where this information is coming from)
+        {false && // tslint:disable-line no-redundant-boolean
+        // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(
             <H3 style={[WalletStyles.white, styles.noBottomLine]}>
               {I18n.t("wallet.firstTransactionSummary.expireDate")}
@@ -160,7 +161,8 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
             </H1>
           )}
 
-        {false && // tslint:disable-line no-redundant-boolean (TODO: gotta define where this information is coming from)
+        {false && // tslint:disable-line no-redundant-boolean
+        // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(
             <H3 style={[WalletStyles.white, styles.noBottomLine]}>
               {I18n.t("wallet.firstTransactionSummary.tranche")}

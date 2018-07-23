@@ -3,10 +3,10 @@
  */
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { createSelector } from "reselect";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
-import { createSelector } from "../../../../node_modules/reselect";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import {
   PAYMENT_COMPLETED,
@@ -14,7 +14,8 @@ import {
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_QR_CODE,
-  PAYMENT_TRANSACTION_SUMMARY
+  PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
+  PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById } from "../../helpers/indexer";
@@ -177,11 +178,35 @@ export const reducer = (
       kind: "PaymentStateManualEntry"
     };
   }
-  if (action.type === PAYMENT_TRANSACTION_SUMMARY) {
+  if (action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID) {
+    // the summary screen is being requested following
+    // a QR code scan/manual entry/message with payment notice
     return {
       kind: "PaymentStateSummary",
       ...action.payload // rptId, verificaResponse, initialAmount
     };
+  }
+  if (
+    action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER &&
+    isPaymentStateWithVerificaResponse(state)
+  ) {
+    // payment summary being requested from tapping on the "payment banner"
+    // in one of the subsequent screens
+
+    if (isPaymentStateWithSelectedPaymentMethod(state)) {
+      // a payment method has already been selected -- it is
+      // discarded so as to build a valid "summary" state
+      const { selectedPaymentMethod, ...rest } = state;
+      return {
+        ...rest,
+        kind: "PaymentStateSummary"
+      };
+    } else {
+      return {
+        ...state,
+        kind: "PaymentStateSummary"
+      };
+    }
   }
   if (
     action.type === PAYMENT_PICK_PAYMENT_METHOD &&
@@ -198,7 +223,7 @@ export const reducer = (
       };
     } else {
       return {
-        ...state,
+        ...(state as PaymentStatePickPaymentMethod),
         kind: "PaymentStatePickPaymentMethod"
       };
     }
