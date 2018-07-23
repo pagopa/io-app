@@ -23,16 +23,18 @@ import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { TransactionManager } from "../../types/wallet";
 import { amountBuilder } from "../../utils/stringBuilder";
+import { Psp } from '../../../definitions/pagopa/Psp';
+import { getPspId, getPspLogoUrl, getPspFee } from '../../types/wallet';
+import { AmountInEuroCentsFromNumber } from '../../../node_modules/italia-ts-commons/lib/pagopa';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
 const paymentManagers: ReadonlyArray<
-  TransactionManager
-> = WalletAPI.getManagers();
+  Psp
+> = WalletAPI.getPsps();
 
 const style = StyleSheet.create({
   listItem: {
@@ -57,7 +59,7 @@ const style = StyleSheet.create({
   }
 });
 
-export class AddManagerToCardScreen extends React.Component<Props, never> {
+export default class PickPspScreen extends React.Component<Props, never> {
   constructor(props: Props) {
     super(props);
   }
@@ -66,7 +68,10 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
     this.props.navigation.goBack();
   }
 
+  private extractFee = (p: Psp): number => AmountInEuroCentsFromNumber.encode(getPspFee(p));
+
   public render(): React.ReactNode {
+    
     return (
       <Container>
         <AppHeader>
@@ -81,15 +86,15 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content>
-          <H1>{I18n.t("wallet.addManager.title")}</H1>
+          <H1>{I18n.t("wallet.pickPsp.title")}</H1>
           <View spacer={true} />
           <Text>
-            {`${I18n.t("wallet.addManager.info")} `}
+            {`${I18n.t("wallet.pickPsp.info")} `}
             <Text bold={true}>
-              {`${I18n.t("wallet.addManager.infoBold")} `}
+              {`${I18n.t("wallet.pickPsp.infoBold")} `}
             </Text>
-            <Text>{`${I18n.t("wallet.addManager.info2")} `}</Text>
-            <Text link={true}>{I18n.t("wallet.addManager.link")}</Text>
+            <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
+            <Text link={true}>{I18n.t("wallet.pickPsp.link")}</Text>
           </Text>
           <View spacer={true} />
           <FlatList
@@ -99,7 +104,7 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
             removeClippedSubviews={false}
             numColumns={1}
             data={paymentManagers}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => getPspId(item).toString()}
             renderItem={({ item }) => (
               <View style={style.listItem}>
                 <Grid>
@@ -109,14 +114,14 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
                       <Image
                         style={style.flexStart}
                         resizeMode={"contain"}
-                        source={item.icon}
+                        source={{uri: getPspLogoUrl(item)}}
                       />
                     </Row>
                     <Row>
                       <Text style={style.feeText}>
-                        {`${I18n.t("wallet.addManager.maxFee")} `}
+                        {`${I18n.t("wallet.pickPsp.maxFee")} `}
                         <Text bold={true} style={style.feeText}>
-                          {amountBuilder(item.maxFee)}
+                          {amountBuilder(this.extractFee(item))}
                         </Text>
                       </Text>
                     </Row>

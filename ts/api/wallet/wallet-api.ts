@@ -7,26 +7,95 @@
 
 import { Transaction } from "../../../definitions/pagopa/Transaction";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
-import { TransactionManager } from "../../types/wallet";
+import { Psp } from "../../../definitions/pagopa/Psp";
 
 /**
  * Mocked wallet data
  */
-const managers: ReadonlyArray<TransactionManager> = [
+const psps: ReadonlyArray<Psp> = [
   {
+    appChannel: false,
+    businessName: "Poste Italiane",
+    cancelled: false,
+    fixedCost: {
+      amount: 100,
+      decimalDigits: 2,
+      currency: "EUR"
+    },
+    flagStamp: true,
     id: 1,
-    maxFee: 1.3,
-    icon: require("../../../img/wallet/Managers/Poste_Italiane1x.png")
+    idCard: -1,
+    idChannel: "1?",
+    idIntermediary: "2?",
+    idPsp: "1", // same as "id"???
+    lingua: "it",
+    logoPSP:
+      "https://upload.wikimedia.org/wikipedia/commons/4/4f/Logo_Poste_Italiane.png",
+    paymentModel: 16,
+    paymentType: "CREDIT_CARD",
+    serviceAvailability: "",
+    serviceDescription: "Poste Italiane PSP",
+    serviceLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/4/4f/Logo_Poste_Italiane.png",
+    serviceName: "Poste Italiane",
+    tags: ["#PSP", "#posteItaliane"],
+    urlInfoChannel: ""
   },
   {
+    appChannel: false,
+    businessName: "Unicredit",
+    cancelled: false,
+    fixedCost: {
+      amount: 130,
+      decimalDigits: 2,
+      currency: "EUR"
+    },
+    flagStamp: true,
     id: 2,
-    maxFee: 1.0,
-    icon: require("../../../img/wallet/Managers/Unicredit1x.png")
+    idCard: -1,
+    idChannel: "1?",
+    idIntermediary: "2?",
+    idPsp: "2", // same as "id"???
+    lingua: "it",
+    logoPSP:
+      "https://globalfinance.s3.amazonaws.com/CACHE/images/media/image/unicredit-logo-1403715778/57392265e5090ec7e4b8420a0bedf5c9.png",
+    paymentModel: 16,
+    paymentType: "CREDIT_CARD",
+    serviceAvailability: "",
+    serviceDescription: "PSP Unicredit",
+    serviceLogo:
+      "https://globalfinance.s3.amazonaws.com/CACHE/images/media/image/unicredit-logo-1403715778/57392265e5090ec7e4b8420a0bedf5c9.png",
+    serviceName: "Unicredit",
+    tags: [],
+    urlInfoChannel: ""
   },
   {
-    id: 2,
-    maxFee: 0.5,
-    icon: require("../../../img/wallet/Managers/Nexi1x.png")
+    appChannel: false,
+    businessName: "NEXI",
+    cancelled: false,
+    fixedCost: {
+      amount: 150,
+      decimalDigits: 2,
+      currency: "EUR"
+    },
+    flagStamp: true,
+    id: 3,
+    idCard: -1,
+    idChannel: "1?",
+    idIntermediary: "2?",
+    idPsp: "3", // same as "id"???
+    lingua: "it",
+    logoPSP:
+      "https://upload.wikimedia.org/wikipedia/commons/2/2d/Nexi_logo.png",
+    paymentModel: 16,
+    paymentType: "CREDIT_CARD",
+    serviceAvailability: "",
+    serviceDescription: "PSP NEXI",
+    serviceLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/2/2d/Nexi_logo.png",
+    serviceName: "Nexi",
+    tags: [],
+    urlInfoChannel: ""
   }
 ];
 
@@ -193,7 +262,7 @@ const transactions: ReadonlyArray<Transaction> = [
   {
     id: 3,
     amount: {
-      amount: -20000,
+      amount: 20000,
       currency: "EUR",
       currencyNumber: "1",
       decimalDigits: 2
@@ -203,7 +272,7 @@ const transactions: ReadonlyArray<Transaction> = [
     error: false,
     fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
     grandTotal: {
-      amount: -19950,
+      amount: 19950,
       currency: "EUR",
       currencyNumber: "1",
       decimalDigits: 2
@@ -436,7 +505,7 @@ export class WalletAPI {
     return transactions[id];
   }
 
-  public static getManagers(): ReadonlyArray<TransactionManager> {
-    return managers;
+  public static getPsps(): ReadonlyArray<Psp> {
+    return psps;
   }
 }
