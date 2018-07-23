@@ -20,6 +20,19 @@
 	<string>0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>ioit</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ioit</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>22</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -45,7 +58,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>The app needs access to the camera to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>

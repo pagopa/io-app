@@ -7,6 +7,9 @@ import {
   BasicResponseType,
   TypeofApiCall
 } from "italia-ts-commons/lib/requests";
+import { Alert } from "react-native";
+import { NavigationNavigateActionPayload } from "react-navigation";
+import { NavigationActions } from "react-navigation";
 import { Task } from "redux-saga";
 import {
   all,
@@ -17,7 +20,8 @@ import {
   fork,
   put,
   select,
-  take
+  take,
+  takeLatest
 } from "redux-saga/effects";
 
 import { Messages } from "../../definitions/backend/Messages";
@@ -30,28 +34,40 @@ import {
   GetServiceT
 } from "../api/backend";
 import { apiUrlPrefix } from "../config";
+import ROUTES from "../navigation/routes";
 import {
   MESSAGES_LOAD_CANCEL,
-  MESSAGES_LOAD_REQUEST
+  MESSAGES_LOAD_REQUEST,
+  NAVIGATE_TO_MESSAGE_DETAILS
 } from "../store/actions/constants";
+import { setDeepLink } from "../store/actions/deepLink";
 import {
+  loadMessageFailure,
   loadMessagesCancel,
   loadMessagesFailure,
   loadMessagesSuccess,
   loadMessageSuccess,
   MessagesLoadCancel,
-  MessagesLoadRequest
+  MessagesLoadRequest,
+  NavigateToMessageDetails
 } from "../store/actions/messages";
 import { loadServiceSuccess } from "../store/actions/services";
 import { sessionTokenSelector } from "../store/reducers/authentication";
 import {
+  messageByIdSelector,
+  MessageByIdState,
+  messageDetailsByIdSelector,
+  MessageDetailsByIdState,
   messagesByIdSelector,
   MessagesByIdState
 } from "../store/reducers/entities/messages/messagesById";
 import {
+  serviceByIdSelector,
+  ServiceByIdState,
   servicesByIdSelector,
   ServicesByIdState
 } from "../store/reducers/entities/services/servicesById";
+import { isPinLoginValidSelector } from "../store/reducers/pinlogin";
 import { toMessageWithContentPO } from "../types/MessageWithContentPO";
 import { SessionToken } from "../types/SessionToken";
 import { callApiWith401ResponseStatusHandler } from "./api";
@@ -72,11 +88,78 @@ export function* loadMessage(
     | undefined = yield call(getMessage, { id });
 
   if (!response || response.status !== 200) {
-    return response ? response.value : Error();
+    const error: Error = response ? response.value : Error();
+    yield put(loadMessageFailure(error));
+    return error;
   } else {
     // Trigger an action to store the new message (converted to plain object)
     yield put(loadMessageSuccess(toMessageWithContentPO(response.value)));
     return response.value;
+  }
+}
+
+function* navigateToMessageDetailsSaga(
+  action: NavigateToMessageDetails
+): Iterator<Effect> {
+  // Get the SessionToken from the store
+  const sessionToken: SessionToken | undefined = yield select(
+    sessionTokenSelector
+  );
+
+  if (sessionToken) {
+    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+    const messageId = action.payload;
+
+    // tslint:disable-next-line:no-let
+    let message: MessageByIdState = yield select(
+      messageByIdSelector(messageId)
+    );
+
+    if (!message) {
+      try {
+        yield call(loadMessage, backendClient.getMessage, messageId);
+        // tslint:disable-next-line:saga-yield-return-type
+        message = yield select(messageByIdSelector(messageId));
+      } catch (err) {
+        Alert.alert(
+          "An error occured while loading message",
+          JSON.stringify(err)
+        );
+      }
+    }
+
+    // if still no message, bail out now
+    if (!message) {
+      return;
+    }
+
+    const messageService: ServiceByIdState = yield select(
+      serviceByIdSelector(message.sender_service_id)
+    );
+
+    if (!messageService) {
+      yield call(
+        loadService,
+        backendClient.getService,
+        message.sender_service_id
+      );
+    }
+
+    const messageDetails: MessageDetailsByIdState = yield select(
+      messageDetailsByIdSelector(messageId)
+    );
+    const navigationPayload: NavigationNavigateActionPayload = {
+      routeName: ROUTES.MESSAGE_DETAILS,
+      params: { details: messageDetails }
+    };
+
+    const isPinValid: boolean = yield select(isPinLoginValidSelector);
+
+    if (isPinValid) {
+      yield put(NavigationActions.navigate(navigationPayload));
+    } else {
+      yield put(setDeepLink(navigationPayload));
+    }
   }
 }
 
@@ -225,4 +308,5 @@ export function* loadMessagesWatcher(): IterableIterator<Effect> {
 
 export default function* root(): IterableIterator<Effect> {
   yield fork(loadMessagesWatcher);
+  yield takeLatest(NAVIGATE_TO_MESSAGE_DETAILS, navigateToMessageDetailsSaga);
 }

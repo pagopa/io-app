@@ -4,6 +4,14 @@ import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
 
+declare module "native-base" {
+  namespace NativeBase {
+    interface Header {
+      primary?: boolean;
+    }
+  }
+}
+
 export default (): Theme => {
   return {
     "NativeBase.Left": {
@@ -26,6 +34,15 @@ export default (): Theme => {
         backgroundColor: "transparent",
         color: variables.toolbarTextColor,
         fontSize: variables.headerBodyFontSize
+      }
+    },
+
+    ".primary": {
+      backgroundColor: variables.contentPrimaryBackground,
+      "NativeBase.Right": {
+        "UIComponents.IconFont": {
+          color: variables.brandPrimaryInverted
+        }
       }
     },
 
