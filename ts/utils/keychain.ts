@@ -6,22 +6,37 @@
  * @see https://github.com/oblador/react-native-keychain#options
  */
 
+import { fromEither, none, Option } from "fp-ts/lib/Option";
 import * as Keychain from "react-native-keychain";
+
+import { PinString } from "../types/PinString";
 
 const PIN_KEY = "PIN";
 
-// Save the PIN in the Keychain
-export async function setPin(pin: string): Promise<void> {
-  await Keychain.setGenericPassword(PIN_KEY, pin);
+/**
+ * Saves the provided PIN in the Keychain
+ */
+export async function setPin(pin: PinString): Promise<boolean> {
+  return await Keychain.setGenericPassword(PIN_KEY, pin);
 }
 
-// Get the PIN from the Keychain
-export async function getPin(): Promise<string> {
+/**
+ * Removes the PIN from the Keychain
+ */
+export async function deletePin(): Promise<boolean> {
+  return await Keychain.resetGenericPassword();
+}
+
+/**
+ * Returns the PIN from the Keychain.
+ *
+ * The promise fails when there is no valid PIN stored.
+ */
+export async function getPin(): Promise<Option<PinString>> {
   const credentials = await Keychain.getGenericPassword();
-  if (typeof credentials !== "boolean") {
-    return credentials.password;
+  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
+    return fromEither(PinString.decode(credentials.password));
   } else {
-    // Throw error if PIN doesn't exist
-    throw Error("No PIN found");
+    return none;
   }
 }

@@ -4,6 +4,7 @@
  * For a detailed view of the flow check @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
  */
 
+import { isNone, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import { call, Effect, put, takeLatest } from "redux-saga/effects";
 import ROUTES from "../navigation/routes";
@@ -13,6 +14,7 @@ import {
   PIN_LOGIN_VALIDATE_REQUEST
 } from "../store/actions/constants";
 import { PinValidateRequest } from "../store/actions/pinlogin";
+import { PinString } from "../types/PinString";
 import { getPin } from "../utils/keychain";
 
 /**
@@ -29,8 +31,14 @@ function* pinLoginSaga(): Iterator<Effect> {
 function* pinValidateSaga(action: PinValidateRequest): Iterator<Effect> {
   try {
     const userPin = action.payload;
-    const basePin: string = yield call(getPin);
-    if (basePin === userPin) {
+    const basePin: Option<PinString> = yield call(getPin);
+
+    if (isNone(basePin)) {
+      // no PIN has been set!
+      throw Error("Trying to validate a PIN, but the PIN has not been set.");
+    }
+
+    if (basePin.value === userPin) {
       // Navigate to the MainNavigator
       const navigateToPinValidNavigatorAction = NavigationActions.navigate({
         routeName: ROUTES.MAIN,

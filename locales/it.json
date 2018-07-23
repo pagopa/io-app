@@ -134,7 +134,10 @@
   "pin_login":{
     "pin": {
       "pinInfo": "Inserisci il codice PIN",
-      "pinForgot": "Non ricordo il PIN",
+      "reset": {
+        "button": "Ho dimenticato il mio PIN",
+        "tip": "Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID."
+      },
       "confirmValid": "PIN corretto",
       "confirmInvalid": "PIN non valido"
     },

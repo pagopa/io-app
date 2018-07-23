@@ -20,6 +20,7 @@ import { NavigationActions } from "./navigation";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
 import { PinloginActions } from "./pinlogin";
+import { PinSetActions } from "./pinset";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { WalletActions } from "./wallet";
@@ -38,6 +39,7 @@ export type Action =
   | AuthenticationActions
   | OnboardingActions
   | NotificationsActions
+  | PinSetActions
   | PinloginActions
   | ProfileActions
   | MessagesActions
