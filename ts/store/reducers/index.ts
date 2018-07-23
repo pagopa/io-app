@@ -13,6 +13,7 @@ import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
+import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
@@ -27,7 +28,8 @@ import walletReducer from "./wallet";
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
-  storage: createSecureStorage()
+  storage: createSecureStorage(),
+  blacklist: ["deepLink"]
 };
 
 /**
@@ -47,6 +49,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
+  deepLink: deepLinkReducer,
 
   // UI
   loading: loadingReducer,
