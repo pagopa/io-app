@@ -151,7 +151,7 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
           </View>
         )}
         {false && // tslint:disable-line no-redundant-boolean
-        // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
+          // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(
             <H3 style={[WalletStyles.white, styles.noBottomLine]}>
               {I18n.t("wallet.firstTransactionSummary.expireDate")}
@@ -162,7 +162,7 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
           )}
 
         {false && // tslint:disable-line no-redundant-boolean
-        // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
+          // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(
             <H3 style={[WalletStyles.white, styles.noBottomLine]}>
               {I18n.t("wallet.firstTransactionSummary.tranche")}
