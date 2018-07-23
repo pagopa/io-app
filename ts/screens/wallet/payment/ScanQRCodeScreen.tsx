@@ -141,7 +141,7 @@ const rptIdFromQrCodeString = (qrCodeString: string): Either<t.Errors, RptId> =>
     rptIdFromPaymentNoticeQrCode
   );
 
-class ScanQRCodeScreen extends React.Component<Props, never> {
+class ScanQrCodeScreen extends React.Component<Props, never> {
   private goBack() {
     this.props.navigation.goBack();
   }
@@ -155,7 +155,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
         rptId.value,
         paymentNotice.value.amount
       );
-    } // else toast stating that QR code is invalid
+    } // else error stating that QR code is invalid @https://www.pivotaltracker.com/story/show/159003368
     else {
       setTimeout(
         () => (this.refs.scanner as QRCodeScanner).reactivate(),
@@ -264,4 +264,4 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ScanQRCodeScreen);
+)(ScanQrCodeScreen);

@@ -49,7 +49,7 @@ import {
   PaymentRequestManualEntry,
   paymentRequestPickPaymentMethod,
   PaymentRequestPickPaymentMethod,
-  PaymentRequestTransactionSummary,
+  PaymentRequestTransactionSummaryActions,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId
 } from "../store/actions/wallet/payment";
@@ -103,10 +103,10 @@ const navigateTo = (routeName: string, params?: object) => {
 function* paymentSagaFromQrCode(): Iterator<Effect> {
   yield put(paymentQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
-  yield fork(paymentSaga);
+  yield fork(watchPaymentSaga);
 }
 
-function* paymentSaga(): Iterator<Effect> {
+function* watchPaymentSaga(): Iterator<Effect> {
   while (true) {
     const action = yield take([
       PAYMENT_REQUEST_QR_CODE,
@@ -162,7 +162,7 @@ function* enterDataManuallyHandler(
 }
 
 function* showTransactionSummaryHandler(
-  action: PaymentRequestTransactionSummary
+  action: PaymentRequestTransactionSummaryActions
 ) {
   // the user may have gotten here from the QR code,
   // the manual data entry, from a message OR by
@@ -249,7 +249,6 @@ function* completionHandler(_: PaymentRequestCompletion) {
   // do payment stuff (-> pagoPA REST)
   // retrieve transaction and store it
   // mocked data here
-  // tslint:disable-next-line saga-yield-return-type
   const wallet: Wallet = yield select(selectedPaymentMethodSelector);
   // tslint:disable-next-line saga-yield-return-type
   const recipient = (yield select(getPaymentRecipient)).getOrElse(

@@ -51,7 +51,7 @@ export type PaymentRequestTransactionSummaryFromBanner = Readonly<{
   kind: "fromBanner";
 }>;
 
-export type PaymentRequestTransactionSummary =
+export type PaymentRequestTransactionSummaryActions =
   | PaymentRequestTransactionSummaryFromRptId
   | PaymentRequestTransactionSummaryFromBanner;
 
@@ -68,7 +68,7 @@ export type PaymentTransactionSummaryFromBanner = Readonly<{
   type: typeof PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER;
 }>;
 
-export type PaymentTransactionSummary =
+export type PaymentTransactionSummaryActions =
   | PaymentTransactionSummaryFromRptId
   | PaymentTransactionSummaryFromBanner;
 
@@ -110,8 +110,8 @@ export type PaymentActions =
   | PaymentQrCode
   | PaymentRequestManualEntry
   | PaymentManualEntry
-  | PaymentRequestTransactionSummary
-  | PaymentTransactionSummary
+  | PaymentRequestTransactionSummaryActions
+  | PaymentTransactionSummaryActions
   | PaymentRequestContinueWithPaymentMethods
   | PaymentRequestPickPaymentMethod
   | PaymentPickPaymentMethod
