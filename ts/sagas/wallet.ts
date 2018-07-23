@@ -257,25 +257,55 @@ function* completionHandler(_: PaymentRequestCompletion) {
   const paymentReason = (yield select(getPaymentReason)).getOrElse(
     UNKNOWN_PAYMENT_REASON
   );
-  const fee = feeExtractor(wallet);
+  const amount =
+    100 * AmountInEuroCentsFromNumber.encode(yield select(getCurrentAmount));
+  const feeOrUndefined = feeExtractor(wallet);
+  const fee =
+    100 *
+    AmountInEuroCentsFromNumber.encode(
+      feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+    );
+  const now = new Date();
 
-  const transaction: WalletTransaction = {
+  const transaction: Transaction = {
     id: Math.floor(Math.random() * 1000),
-    cardId: wallet.idWallet === undefined ? -1 : wallet.idWallet,
-    isoDatetime: new Date().toISOString(),
-    paymentReason:
-      paymentReason === undefined ? UNKNOWN_PAYMENT_REASON : paymentReason,
-    recipient: (recipient === undefined ? UNKNOWN_RECIPIENT : recipient)
+    amount: {
+      amount,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: now,
+    description: paymentReason,
+    error: false,
+    fee: {
+      amount: fee,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    grandTotal: {
+      amount: amount + fee,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: Math.floor(Math.random() * 1000),
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: getWalletId(wallet),
+    merchant: (yield select(recipient)).getOrElse(UNKNOWN_RECIPIENT)
       .denominazioneBeneficiario,
-    amount: AmountInEuroCentsFromNumber.encode(
-      yield select(getCurrentAmount) // tslint:disable-line saga-yield-return-type
-    ),
-    currency: "EUR",
-    transactionCost: AmountInEuroCentsFromNumber.encode(
-      fee === undefined ? UNKNOWN_AMOUNT : fee
-    ),
-    isNew: true
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: now,
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   };
+
   yield put(storeNewTransaction(transaction));
   yield put(selectTransactionForDetails(transaction));
   yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner

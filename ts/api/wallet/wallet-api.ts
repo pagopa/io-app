@@ -9,6 +9,7 @@ import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { TransactionManager, WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
+import { Transaction } from '../../../definitions/pagopa/Transaction';
 
 /**
  * Mocked wallet data
@@ -126,106 +127,297 @@ const wallets: ReadonlyArray<Wallet> = [
   }
 ];
 
-const transactions: ReadonlyArray<WalletTransaction> = [
+const transactions: ReadonlyArray<Transaction> = [
   {
     id: 1,
-    cardId: 1,
-    isoDatetime: "2018-04-17T07:34:00.000Z",
-    paymentReason: "Certificato di residenza",
-    recipient: "Comune di Gallarate",
-    amount: 20.02,
-    currency: "EUR",
-    transactionCost: 0.5,
-    isNew: true
+    amount: {
+      amount: 2002,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2018-04-17T07:34:00.000Z"),
+    description: "Certificato di residenza",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 2052,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 1,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 1,
+    merchant: "Comune di Gallarate",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2018-04-17T07:34:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 2,
-    cardId: 2,
-    isoDatetime: "2018-04-16T15:01:00.000Z",
-    paymentReason: "Spesa Supermarket",
-    recipient: "Segrate",
-    amount: 74.1,
-    currency: "EUR",
-    transactionCost: 0.5,
-    isNew: true
+    amount: {
+      amount: 7410,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2018-04-16T15:01:00.000Z"),
+    description: "Spesa Supermarket",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 7460,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 2,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 2,
+    merchant: "Segrate",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2018-04-16T15:01:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 3,
-    cardId: 4,
-    isoDatetime: "2018-04-15T08:56:00.000Z",
-    paymentReason: "Prelievo contante",
-    recipient: "Busto Arsizio",
-    amount: -200.0,
-    currency: "EUR",
-    transactionCost: 0.5,
-    isNew: true
+    amount: {
+      amount: -20000,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2018-04-15T08:56:00.000Z"),
+    description: "Prelievo contante",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: -19950,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 3,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 4,
+    merchant: "Busto Arsizio",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2018-04-15T08:56:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 4,
-    cardId: 2,
-    isoDatetime: "2018-02-14T10:21:00.000Z",
-    paymentReason: "Accredito per storno",
-    recipient: "Banca Sella",
-    amount: 100.1,
-    currency: "USD",
-    transactionCost: 0.5,
-    isNew: true
+    amount: {
+      amount: 10010,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2018-02-14T10:21:00.000Z"),
+    description: "Accredito per storno",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 10060,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 4,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 2,
+    merchant: "Banca Sella",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2018-02-14T10:21:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 5,
-    cardId: 4,
-    isoDatetime: "2018-01-22T14:54:00.000Z",
-    paymentReason: "Esecuzione atti notarili",
-    recipient: "Comune di Legnano",
-    transactionCost: 0.5,
-    amount: 56.0,
-    currency: "EUR",
-    isNew: true
+    amount: {
+      amount: 5600,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2018-01-22T14:54:00.000Z"),
+    description: "Esecuzione atti notarili",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 5650,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 5,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 4,
+    merchant: "Comune di Legnano",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2018-01-22T14:54:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 6,
-    cardId: 4,
-    isoDatetime: "2018-01-01T23:34:00.000Z",
-    paymentReason: "Pizzeria Da Gennarino",
-    recipient: "Busto Arsizio",
-    amount: 45.0,
-    currency: "EUR",
-    transactionCost: 0.5,
-    isNew: true
+    amount: {
+      amount: 4500,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2018-01-01T23:34:00.000Z"),
+    description: "Pizzeria Da Gennarino",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 4550,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 6,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 4,
+    merchant: "Busto Arsizio",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2018-01-01T23:34:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 7,
-    cardId: 1,
-    isoDatetime: "2017-12-22T14:23:00.000Z",
-    paymentReason: "Rimborso TARI 2012",
-    recipient: "Comune di Gallarate",
-    amount: 150.2,
-    currency: "EUR",
-    transactionCost: 0,
-    isNew: true
+    amount: {
+      amount: 15020,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2017-12-22T14:23:00.000Z"),
+    description: "Rimborso TARI 2012",
+    error: false,
+    fee: { amount: 0, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 15020,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 7,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 1,
+    merchant: "Comune di Gallarate",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2017-12-22T14:23:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 8,
-    cardId: 1,
-    isoDatetime: "2017-12-17T12:34:00.000Z",
-    paymentReason: "Ristorante I Pini",
-    recipient: "Busto Arsizio",
-    transactionCost: 0,
-    amount: 134.0,
-    currency: "EUR",
-    isNew: true
+    amount: {
+      amount: 13400,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2017-12-17T12:34:00.000Z"),
+    description: "Ristorante I Pini",
+    error: false,
+    fee: { amount: 0, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 13400,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 8,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 1,
+    merchant: "Busto Arsizio",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2017-12-17T12:34:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   },
   {
     id: 9,
-    cardId: 4,
-    isoDatetime: "2017-12-13T10:34:00.000Z",
-    paymentReason: "Estetista Estella",
-    recipient: "Milano - via Parini 12",
-    transactionCost: 0.5,
-    amount: 100.0,
-    currency: "EUR",
-    isNew: true
+    amount: {
+      amount: 10000,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: new Date("2017-12-13T10:34:00.000Z"),
+    description: "Estetista Estella",
+    error: false,
+    fee: { amount: 50, currency: "EUR", currencyNumber: "1", decimalDigits: 2 },
+    grandTotal: {
+      amount: 10050,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: 9,
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: 4,
+    merchant: "Milano - via Parini 12",
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: new Date("2017-12-13T10:34:00.000Z"),
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   }
+];
+
 ];
 
 const transactionSummary: Readonly<TransactionSummary> = {
@@ -276,12 +468,12 @@ export class WalletAPI {
   }
 
   public static async getTransactions(): Promise<
-    ReadonlyArray<WalletTransaction>
+    ReadonlyArray<Transaction>
   > {
     return transactions;
   }
 
-  public static getTransaction(id: number): Readonly<WalletTransaction> {
+  public static getTransaction(id: number): Readonly<Transaction> {
     return transactions[id];
   }
 
