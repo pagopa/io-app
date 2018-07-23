@@ -41,35 +41,6 @@ export type TransactionSubject = Readonly<{
 }>;
 
 /**
- * This type represents a transaction (or payment)
- * carried out by the user; it contains the information
- * needed for UI-related purposes
- */
-export type WalletTransaction = {
-  id: number;
-  cardId: number;
-  isoDatetime: string;
-  paymentReason: string;
-  recipient: string;
-  amount: number;
-  currency: string;
-  transactionCost: number;
-  isNew: boolean;
-};
-
-export const UNKNOWN_TRANSACTION: WalletTransaction = {
-  id: -1,
-  cardId: -1,
-  isoDatetime: "",
-  paymentReason: "UNKNOWN TRANSACTION",
-  recipient: "",
-  amount: 0,
-  currency: "?",
-  transactionCost: 0,
-  isNew: false
-};
-
-/**
  * This type represents a transaction Manager. One manager should be associated to each payment method not handled by PagoPA
  */
 export type TransactionManager = Readonly<{

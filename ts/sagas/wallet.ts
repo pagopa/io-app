@@ -78,14 +78,12 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { WalletTransaction } from "../types/wallet";
+import { Transaction } from "../../definitions/pagopa/Transaction";
 
 function* fetchTransactions(
-  loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>
+  loadTransactions: () => Promise<ReadonlyArray<Transaction>>
 ): Iterator<Effect> {
-  const transactions: ReadonlyArray<WalletTransaction> = yield call(
-    loadTransactions
-  );
+  const transactions: ReadonlyArray<Transaction> = yield call(loadTransactions);
   yield put(transactionsFetched(transactions));
 }
 
