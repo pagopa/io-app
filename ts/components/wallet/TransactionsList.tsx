@@ -17,6 +17,8 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { Transaction } from "../../../definitions/pagopa/Transaction";
+import { AmountInEuroCentsFromNumber } from "../../../node_modules/italia-ts-commons/lib/pagopa";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -28,16 +30,22 @@ import {
   latestTransactionsSelector,
   transactionsByWalletSelector
 } from "../../store/reducers/wallet/transactions";
-import { WalletTransaction } from "../../types/wallet";
+import {
+  getTransactionAmount,
+  getTransactionCreationDate,
+  getTransactionPaymentReason,
+  getTransactionRecipient,
+  getTransactionWalletId
+} from "../../types/wallet";
 import { amountBuilder } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedStateProps = Readonly<{
-  transactions: ReadonlyArray<WalletTransaction>;
+  transactions: ReadonlyArray<Transaction>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  selectTransaction: (i: WalletTransaction) => void;
+  selectTransaction: (i: Transaction) => void;
   selectWallet: (item: number) => void;
 }>;
 
@@ -61,51 +69,60 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  * Transactions List component
  */
 class TransactionsList extends React.Component<Props> {
-  private renderDate(item: WalletTransaction) {
-    const completedAt = new Date(item.isoDatetime);
+  private renderDate(item: Transaction) {
+    const completedAt = getTransactionCreationDate(item);
+    const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
     const datetime: string = `${completedAt.toLocaleDateString()} - ${completedAt.toLocaleTimeString()}`;
     return (
       <Row>
         <Left>
           <Text>
-            {item.isNew && (
+            {isNew && (
               <IconFont name="io-new" style={WalletStyles.newIconStyle} />
             )}
-            <Text note={true}>{item.isNew ? `  ${datetime}` : datetime}</Text>
+            <Text note={true}>{isNew ? `  ${datetime}` : datetime}</Text>
           </Text>
         </Left>
       </Row>
     );
   }
 
-  private renderRow = (item: WalletTransaction): React.ReactElement<any> => (
-    <ListItem
-      onPress={() => {
-        this.props.selectTransaction(item);
-        this.props.selectWallet(item.cardId);
-        this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
-      }}
-    >
-      <Body>
-        <Grid>
-          {this.renderDate(item)}
-          <Row>
-            <Left>
-              <Text>{item.paymentReason}</Text>
-            </Left>
-            <Right>
-              <Text>{amountBuilder(item.amount)}</Text>
-            </Right>
-          </Row>
-          <Row>
-            <Left>
-              <Text note={true}>{item.recipient}</Text>
-            </Left>
-          </Row>
-        </Grid>
-      </Body>
-    </ListItem>
-  );
+  private renderRow = (item: Transaction): React.ReactElement<any> => {
+    const paymentReason = getTransactionPaymentReason(item);
+    const amount = AmountInEuroCentsFromNumber.encode(
+      getTransactionAmount(item)
+    );
+    const recipient = getTransactionRecipient(item);
+
+    return (
+      <ListItem
+        onPress={() => {
+          this.props.selectTransaction(item);
+          this.props.selectWallet(getTransactionWalletId(item));
+          this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+        }}
+      >
+        <Body>
+          <Grid>
+            {this.renderDate(item)}
+            <Row>
+              <Left>
+                <Text>{paymentReason}</Text>
+              </Left>
+              <Right>
+                <Text>{amountBuilder(amount)}</Text>
+              </Right>
+            </Row>
+            <Row>
+              <Left>
+                <Text note={true}>{recipient}</Text>
+              </Left>
+            </Row>
+          </Grid>
+        </Body>
+      </ListItem>
+    );
+  };
 
   public render(): React.ReactNode {
     const { transactions } = this.props;
@@ -133,7 +150,7 @@ class TransactionsList extends React.Component<Props> {
             <List
               scrollEnabled={false}
               removeClippedSubviews={false}
-              dataArray={transactions as WalletTransaction[]} // tslint:disable-line: readonly-array
+              dataArray={transactions as Transaction[]} // tslint:disable-line: readonly-array
               renderRow={this.renderRow}
             />
           </Row>

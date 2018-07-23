@@ -22,6 +22,7 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
+import { Transaction } from "../../definitions/pagopa/Transaction";
 import { Wallet } from "../../definitions/pagopa/Wallet";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
@@ -78,7 +79,6 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { Transaction } from "../../definitions/pagopa/Transaction";
 
 function* fetchTransactions(
   loadTransactions: () => Promise<ReadonlyArray<Transaction>>
@@ -258,7 +258,7 @@ function* completionHandler(_: PaymentRequestCompletion) {
     UNKNOWN_PAYMENT_REASON
   );
   const amount =
-    100 * AmountInEuroCentsFromNumber.encode(yield select(getCurrentAmount));
+    100 * AmountInEuroCentsFromNumber.encode(yield select(getCurrentAmount)); // tslint:disable-line saga-yield-return-type
   const feeOrUndefined = feeExtractor(wallet);
   const fee =
     100 *

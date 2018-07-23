@@ -5,9 +5,9 @@
  * the app to get the required data
  */
 
+import { Transaction } from "../../../definitions/pagopa/Transaction";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { TransactionManager } from "../../types/wallet";
-import { Transaction } from "../../../definitions/pagopa/Transaction";
 
 /**
  * Mocked wallet data

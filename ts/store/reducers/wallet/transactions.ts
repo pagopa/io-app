@@ -4,7 +4,12 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { WalletTransaction } from "../../../types/wallet";
+import { Transaction } from "../../../../definitions/pagopa/Transaction";
+import {
+  getTransactionCreationDate,
+  getTransactionId,
+  getTransactionWalletId
+} from "../../../types/wallet";
 import {
   PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
@@ -16,7 +21,7 @@ import { GlobalState } from "../types";
 import { getSelectedWalletId } from "./wallets";
 
 export type TransactionsState = Readonly<{
-  transactions: IndexedById<WalletTransaction>;
+  transactions: IndexedById<Transaction>;
   selectedTransactionId: Option<number>;
 }>;
 
@@ -26,17 +31,24 @@ export const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
 };
 
 // selectors
-export const getTransactions = (
-  state: GlobalState
-): IndexedById<WalletTransaction> => state.wallet.transactions.transactions;
+export const getTransactions = (state: GlobalState): IndexedById<Transaction> =>
+  state.wallet.transactions.transactions;
 export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
   state.wallet.transactions.selectedTransactionId;
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
-  (transactions: IndexedById<WalletTransaction>) =>
+  (transactions: IndexedById<Transaction>) =>
     values(transactions)
-      .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
+      .sort(
+        (a, b) =>
+          isNaN(getTransactionCreationDate(a) as any) ||
+          isNaN(getTransactionCreationDate(b) as any)
+            ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
+            : getTransactionCreationDate(a)
+                .toISOString()
+                .localeCompare(getTransactionCreationDate(b).toISOString())
+      )
       .slice(0, 5) // WIP no magic numbers
 );
 
@@ -44,9 +56,9 @@ export const transactionForDetailsSelector = createSelector(
   getTransactions,
   getSelectedTransactionId,
   (
-    transactions: IndexedById<WalletTransaction>,
+    transactions: IndexedById<Transaction>,
     selectedTransactionId: Option<number>
-  ): Option<WalletTransaction> =>
+  ): Option<Transaction> =>
     selectedTransactionId.chain(transactionId =>
       fromNullable(transactions[transactionId])
     )
@@ -56,10 +68,12 @@ export const transactionsByWalletSelector = createSelector(
   getTransactions,
   getSelectedWalletId,
   (
-    transactions: IndexedById<WalletTransaction>,
+    transactions: IndexedById<Transaction>,
     walletId: Option<number>
-  ): ReadonlyArray<WalletTransaction> =>
-    walletId.fold([], wId => values(transactions).filter(t => t.cardId === wId))
+  ): ReadonlyArray<Transaction> =>
+    walletId.fold([], wId =>
+      values(transactions).filter(t => getTransactionWalletId(t) === wId)
+    )
 );
 
 // reducer
@@ -76,7 +90,7 @@ const reducer = (
   if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {
     return {
       ...state,
-      selectedTransactionId: some(action.payload.id)
+      selectedTransactionId: some(getTransactionId(action.payload))
     };
   }
   if (action.type === PAYMENT_STORE_NEW_TRANSACTION) {
