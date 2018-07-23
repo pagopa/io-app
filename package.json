@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
+    "postinstall": "patch-package && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest",
     "prettify": "prettier --write 'ts/**/*.ts'",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
@@ -92,6 +92,7 @@
     "italia-utils": "^3.11.1",
     "jest": "23.4.1",
     "node-fetch": "^2.1.2",
+    "patch-package": "^5.1.1",
     "prettier": "1.13.0",
     "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.3.1",
