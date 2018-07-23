@@ -137,6 +137,12 @@
       "pinForgot": "I do not remember the pin",
       "confirmValid": "Correct PIN",
       "confirmInvalid": "Invalid PIN"
+    },
+    "unlock_screen": {
+      "help": {
+        "title": "hello",
+        "content": "hello"
+      }
     }
   },
   "personal_data_processing": {
