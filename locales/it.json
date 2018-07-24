@@ -136,7 +136,9 @@
       "pinInfo": "Inserisci il codice PIN",
       "reset": {
         "button": "Ho dimenticato il mio PIN",
-        "tip": "Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID."
+        "button_short": "Reimposta PIN",
+        "tip": "Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.",
+        "tip_short": "Dovrai accedere nuovamente con SPID."
       },
       "confirmValid": "PIN corretto",
       "confirmInvalid": "PIN non valido"
