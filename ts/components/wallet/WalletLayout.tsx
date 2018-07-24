@@ -33,18 +33,21 @@ const styles = StyleSheet.create({
   },
   firstCard: {
     flex: 1,
-    transform: [{ rotateX: "-40deg" }, { scaleX: 0.96 }]
+    transform: [
+      { rotateX: "-40deg" },
+      { scaleX: 0.98 }
+    ]
   },
   secondCard: {
     flex: 1,
     transform: [
       { rotateX: "-40deg" },
-      { translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) },
-      { scaleX: 0.96 }
+      { translateY: -(58+20) * Math.sin(40/2) * Math.sin(40) },
+      { scaleX: 0.98 }
     ]
   },
   translation: {
-    transform: [{ translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) }]
+    transform: [{ translateY: -(58+20) * Math.sin(40/2) * Math.sin(40) }]
   }
 });
 
@@ -85,6 +88,7 @@ type Props = Readonly<{
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
+  moreCards?: boolean;
 }>;
 
 export class WalletLayout extends React.Component<Props> {
@@ -92,7 +96,8 @@ export class WalletLayout extends React.Component<Props> {
     headerContents: null,
     cardType: { type: CardEnum.NONE },
     showPayButton: true,
-    allowGoBack: true
+    allowGoBack: true,
+    moreCards: false
   };
 
   private getLogo(): React.ReactNode {
@@ -194,6 +199,7 @@ export class WalletLayout extends React.Component<Props> {
             <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
         </AppHeader>
+
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}
@@ -202,7 +208,9 @@ export class WalletLayout extends React.Component<Props> {
             {this.props.headerContents}
             {this.getLogo()}
           </Content>
-          <View style={styles.translation}>{this.props.children}</View>
+          <View style={this.props.moreCards ? styles.translation : {}}>
+            {this.props.children}
+          </View>
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>

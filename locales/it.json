@@ -169,7 +169,7 @@
     "paymentMethods": "Metodi di pagamento",
     "paymentMethod": "Metodo di pagamento",
     "newPaymentMethod": {
-      "add": "AGGIUNGI",
+      "add": "aggiungi",
       "addButton": "Aggiungi un metodo di pagamento",
       "newMethod": "Scegli un altro metodo di pagamento",
       "addDescription": "Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti, ecc.) per non doverli inserire ad ogni transazione"
