@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotatedCard: {
-    transform: [{ rotateX: "-20deg" },{scaleX: 0.98}],
+    transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }],
     marginBottom: -3
   },
   blueText: {

@@ -33,21 +33,18 @@ const styles = StyleSheet.create({
   },
   firstCard: {
     flex: 1,
-    transform: [
-      { rotateX: "-40deg" },
-      { scaleX: 0.98 }
-    ]
+    transform: [{ rotateX: "-40deg" }, { scaleX: 0.98 }]
   },
   secondCard: {
     flex: 1,
     transform: [
       { rotateX: "-40deg" },
-      { translateY: -(58+20) * Math.sin(40/2) * Math.sin(40) },
+      { translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) },
       { scaleX: 0.98 }
     ]
   },
   translation: {
-    transform: [{ translateY: -(58+20) * Math.sin(40/2) * Math.sin(40) }]
+    transform: [{ translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) }]
   }
 });
 
