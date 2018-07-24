@@ -30,25 +30,53 @@ type OwnProps = {
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const idps: ReadonlyArray<IdentityProvider> = [
   {
+    id: "arubaid",
+    name: "Aruba ID",
+    logo: require("../../../img/spid-idp-arubaid.png"),
+    entityID: "arubaid",
+    profileUrl: "http://selfcarespid.aruba.it"
+  },
+  {
     id: "infocertid",
-    name: "Infocert",
+    name: "Infocert ID",
     logo: require("../../../img/spid-idp-infocertid.png"),
     entityID: "infocertid",
     profileUrl: "https://my.infocert.it/selfcare"
   },
   {
+    id: "intesaid",
+    name: "Intesa ID",
+    logo: require("../../../img/spid-idp-intesaid.png"),
+    entityID: "intesaid",
+    profileUrl: "https://spid.intesa.it"
+  },
+  {
+    id: "namirialid",
+    name: "Namirial ID",
+    logo: require("../../../img/spid-idp-namirialid.png"),
+    entityID: "namirialid",
+    profileUrl: "https://idp.namirialtsp.com/idp"
+  },
+  {
     id: "posteid",
-    name: "Poste Italiane",
+    name: "Poste ID",
     logo: require("../../../img/spid-idp-posteid.png"),
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   },
   {
     id: "sielteid",
-    name: "Sielte",
+    name: "Sielte ID",
     logo: require("../../../img/spid-idp-sielteid.png"),
     entityID: "sielteid",
     profileUrl: "https://myid.sieltecloud.it/profile/"
+  },
+  {
+    id: "spiditalia",
+    name: "SPIDItalia Register.it",
+    logo: require("../../../img/spid-idp-spiditalia.png"),
+    entityID: "spiditalia",
+    profileUrl: "https://spid.register.it"
   },
   {
     id: "timid",
@@ -56,15 +84,9 @@ const idps: ReadonlyArray<IdentityProvider> = [
     logo: require("../../../img/spid-idp-timid.png"),
     entityID: "timid",
     profileUrl: "https://id.tim.it/identity/private/"
-  },
-  {
-    id: "arubaid",
-    name: "Aruba.it",
-    logo: require("../../../img/spid-idp-arubaid.png"),
-    entityID: "arubaid",
-    profileUrl: "http://selfcarespid.aruba.it"
   }
 ];
+
 const testIdp = {
   id: "test",
   name: "Test",
@@ -72,7 +94,9 @@ const testIdp = {
   entityID: "spid-testenv-identityserver",
   profileUrl: "https://italia-backend/profile.html"
 };
+
 const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps;
+
 const styles = StyleSheet.create({
   spidLogo: {
     width: 80,
