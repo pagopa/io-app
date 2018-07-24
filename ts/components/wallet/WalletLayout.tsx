@@ -85,6 +85,7 @@ type Props = Readonly<{
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
+  moreCards?: boolean;
 }>;
 
 export class WalletLayout extends React.Component<Props> {
@@ -92,7 +93,8 @@ export class WalletLayout extends React.Component<Props> {
     headerContents: null,
     cardType: { type: CardEnum.NONE },
     showPayButton: true,
-    allowGoBack: true
+    allowGoBack: true,
+    moreCards: false
   };
 
   private getLogo(): React.ReactNode {
@@ -194,6 +196,7 @@ export class WalletLayout extends React.Component<Props> {
             <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
         </AppHeader>
+
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}
@@ -202,7 +205,9 @@ export class WalletLayout extends React.Component<Props> {
             {this.props.headerContents}
             {this.getLogo()}
           </Content>
-          <View style={styles.translation}>{this.props.children}</View>
+          <View style={this.props.moreCards ? styles.translation : {}}>
+            {this.props.children}
+          </View>
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>

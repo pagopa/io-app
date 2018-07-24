@@ -62,11 +62,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
     return (
       <Grid style={styles.threeRowsBanner}>
         <Col size={2}>
-          <Row />
-          <Row style={styles.bottomAlignedItems}>
+          <Row size={5} style={styles.bottomAlignedItems}>
             <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
           </Row>
-          <Row>
+          <Row size={1}>
             <Left>
               <Text bold={true} style={WalletStyles.white}>
                 {I18n.t("wallet.paymentMethods")}
@@ -75,13 +74,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
           </Row>
         </Col>
         <Col>
-          <Row size={2}>
+          <Row size={5}>
             <Image
               source={require("../../../img/wallet/wallet-icon.png")}
               style={WalletStyles.pfImage}
             />
           </Row>
-          <Row>
+          <Row size={1}>
             <Right>
               <Text
                 onPress={(): boolean =>
@@ -119,7 +118,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
             </Row>
           </Col>
         </Grid>
-        <View spacer={true} />
         <Text style={WalletStyles.white}>
           {I18n.t("wallet.newPaymentMethod.addDescription")}
         </Text>
@@ -166,6 +164,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const showCards = this.props.cards.length > 0;
+    const moreCards = this.props.cards.length > 1;
     const headerContents = showCards
       ? this.withCardsHeader()
       : this.withoutCardsHeader();
@@ -177,6 +176,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         headerContents={headerContents}
         cardType={this.getCardType()}
         allowGoBack={false}
+        moreCards={moreCards}
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
