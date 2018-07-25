@@ -3,6 +3,8 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_GO_BACK,
+  PAYMENT_REQUEST_GO_BACK,
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_QR_CODE,
@@ -102,6 +104,14 @@ export type PaymentCompleted = Readonly<{
   type: typeof PAYMENT_COMPLETED;
 }>;
 
+export type PaymentGoBack = Readonly<{
+  type: typeof PAYMENT_GO_BACK;
+}>;
+
+export type PaymentRequestGoBack = Readonly<{
+  type: typeof PAYMENT_REQUEST_GO_BACK;
+}>;
+
 /**
  * All possible payment actions
  */
@@ -118,7 +128,9 @@ export type PaymentActions =
   | PaymentRequestConfirmPaymentMethod
   | PaymentConfirmPaymentMethod
   | PaymentRequestCompletion
-  | PaymentCompleted;
+  | PaymentCompleted
+  | PaymentGoBack
+  | PaymentRequestGoBack;
 
 export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
   type: PAYMENT_REQUEST_QR_CODE
@@ -195,4 +207,12 @@ export const paymentRequestCompletion = (): PaymentRequestCompletion => ({
 
 export const paymentCompleted = (): PaymentCompleted => ({
   type: PAYMENT_COMPLETED
+});
+
+export const paymentGoBack = (): PaymentGoBack => ({
+  type: PAYMENT_GO_BACK
+});
+
+export const paymentRequestGoBack = (): PaymentRequestGoBack => ({
+  type: PAYMENT_REQUEST_GO_BACK
 });

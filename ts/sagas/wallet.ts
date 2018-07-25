@@ -35,7 +35,8 @@ import {
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  PAYMENT_REQUEST_GO_BACK
 } from "../store/actions/constants";
 import {
   paymentConfirmPaymentMethod,
@@ -51,7 +52,9 @@ import {
   PaymentRequestPickPaymentMethod,
   PaymentRequestTransactionSummaryActions,
   paymentTransactionSummaryFromBanner,
-  paymentTransactionSummaryFromRptId
+  paymentTransactionSummaryFromRptId,
+  paymentGoBack,
+  PaymentRequestGoBack
 } from "../store/actions/wallet/payment";
 import {
   selectTransactionForDetails,
@@ -116,6 +119,7 @@ function* watchPaymentSaga(): Iterator<Effect> {
       PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
       PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
       PAYMENT_REQUEST_COMPLETION,
+      PAYMENT_REQUEST_GO_BACK,
       PAYMENT_COMPLETED
     ]);
     if (action.type === PAYMENT_COMPLETED) {
@@ -147,8 +151,17 @@ function* watchPaymentSaga(): Iterator<Effect> {
         yield fork(completionHandler, action);
         break;
       }
+      case PAYMENT_REQUEST_GO_BACK: {
+        yield fork(goBackHandler, action);
+        break;
+      }
     }
   }
+}
+
+function* goBackHandler(_: PaymentRequestGoBack) {
+  yield put(paymentGoBack()); // return to previous state
+  yield put(NavigationActions.back());
 }
 
 function* enterDataManuallyHandler(
@@ -281,6 +294,11 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put(selectTransactionForDetails(transaction));
   yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
   yield put(
+    // TODO: this should use StackActions.reset
+    // to reset the navigation. Right now, the
+    // "back" option is not allowed -- so the user cannot
+    // get back to previous screens, but the navigation
+    // stack should be cleaned right here
     navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
       paymentCompleted: true
     })
