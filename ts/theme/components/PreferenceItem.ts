@@ -12,8 +12,10 @@ export default (): Theme => ({
       flexDirection: "column"
     },
     "NativeBase.Right": {
+      "UIComponents.IconFont": {
+        color: variables.brandPrimary
+      },
       alignSelf: "center",
-      color: variables.contentPrimaryBackground,
       flex: 0,
       flexDirection: "column"
     },

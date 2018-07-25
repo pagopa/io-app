@@ -25,7 +25,14 @@
     },
     "actions": {
       "retry": "An error occurred, please retry"
+    },
+    "remoteStates": {
+      "notAvailable": "Non available"
     }
+  },
+  "locales": {
+    "it": "Italian",
+    "en": "English"
   },
   "connection": {
     "status": {
@@ -381,6 +388,7 @@
     "moreLinkText": "Get more info.",
     "list": {
       "email": "Email address",
+      "mobile_phone": "Mobile number",
       "services": "List of services",
       "services_description": "Enable/disable your services on IO",
       "language": "Language",

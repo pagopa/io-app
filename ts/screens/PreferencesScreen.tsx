@@ -1,27 +1,14 @@
-import {
-  Body,
-  Container,
-  Content,
-  H1,
-  H3,
-  Left,
-  List,
-  ListItem,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Body, Container, Content, H1, List, Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, Alert } from "react-native";
+import { Alert } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 
 import { fromNullable, Option } from "fp-ts/lib/Option";
 
-import I18n from "../i18n";
+import { untag } from "italia-ts-commons/lib/types";
 
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
+import I18n from "../i18n";
 
 import { FetchRequestActions } from "../store/actions/constants";
 import { ReduxProps } from "../store/actions/types";
@@ -29,11 +16,12 @@ import { createErrorSelector } from "../store/reducers/error";
 import { createLoadingSelector } from "../store/reducers/loading";
 import { GlobalState } from "../store/reducers/types";
 
+import PreferenceItem from "../components/PreferenceItem";
 import ScreenHeader from "../components/ScreenHeader";
 import AppHeader from "../components/ui/AppHeader";
-import IconFont from "../components/ui/IconFont";
 
 import { ProfileWithOrWithoutEmail } from "../api/backend";
+import { getLocalePrimary } from "../utils/locale";
 
 type ReduxMappedProps = {
   maybeProfile: Option<ProfileWithOrWithoutEmail>;
@@ -41,48 +29,29 @@ type ReduxMappedProps = {
   isProfileLoadingError: Option<string>;
   isProfileUpserting: boolean;
   isProfileUpsertingError: Option<string>;
+  languages: Option<ReadonlyArray<string>>;
 };
 
 export type Props = ReduxMappedProps & ReduxProps;
 
-interface PreferenceItemBaseProps {
-  title: string;
-  valuePreview: string;
+/**
+ * Translates the primary languages of the provided locales.
+ *
+ * If a locale is not in the XX-YY format, it will be skipped.
+ * If the primary language of a locale doesn't have a translation,
+ * it gets returned verbatim.
+ */
+function translateLocales(
+  locales: ReadonlyArray<string>
+): ReadonlyArray<string> {
+  return locales
+    .map(_ =>
+      getLocalePrimary(_)
+        .map(l => I18n.t(`locales.${l}`, { defaultValue: l }))
+        .getOrElse("")
+    )
+    .filter(_ => _.length > 0);
 }
-
-interface PreferenceItemIconProps extends PreferenceItemBaseProps {
-  kind: "value";
-  icon: ImageSourcePropType;
-}
-
-interface PreferenceItemActionProps extends PreferenceItemBaseProps {
-  kind: "action";
-  onClick: () => void;
-}
-
-type PreferenceItemProps = PreferenceItemIconProps | PreferenceItemActionProps;
-
-const PreferenceItem: React.SFC<PreferenceItemProps> = props => (
-  <ListItem>
-    <Left>
-      <H3>{props.title}</H3>
-      <Text>{props.valuePreview}</Text>
-    </Left>
-    <Right>
-      {props.kind === "value" ? (
-        <Image source={props.icon} />
-      ) : props.kind === "action" ? (
-        <IconFont name="io-right" onClick={() => props.onClick()} />
-      ) : null}
-    </Right>
-  </ListItem>
-);
-
-const StyledPreferenceItem = connectStyle(
-  "UIComponent.PreferenceItem",
-  {},
-  mapPropsToStyleNames
-)(PreferenceItem);
 
 /**
  * Implements the preferences screen where the user can see and update his
@@ -92,17 +61,20 @@ class PreferencesScreen extends React.Component<Props> {
   public render() {
     const maybeProfile = this.props.maybeProfile;
 
-    const profilePreview = maybeProfile
+    const profileData = maybeProfile
       .map(_ => ({
-        spid_email: _.spid_email as string,
-        language: _.preferred_languages
-          ? _.preferred_languages.join(",")
-          : I18n.t("preferences.empty.default")
+        spid_email: untag(_.spid_email),
+        spid_mobile_phone: untag(_.spid_mobile_phone)
       }))
       .getOrElse({
-        spid_email: "-",
-        language: "-"
+        spid_email: I18n.t("remoteStates.notAvailable"),
+        spid_mobile_phone: I18n.t("remoteStates.notAvailable")
       });
+
+    const languages = this.props.languages
+      .filter(_ => _.length > 0)
+      .map(_ => translateLocales(_).join(", "))
+      .getOrElse(I18n.t("remoteStates.notAvailable"));
 
     return (
       <Container>
@@ -125,13 +97,19 @@ class PreferencesScreen extends React.Component<Props> {
             <View spacer={true} />
             <View>
               <List>
-                <StyledPreferenceItem
+                <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.email")}
-                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
-                  valuePreview={profilePreview.spid_email}
+                  icon="email"
+                  valuePreview={profileData.spid_email}
                 />
-                <StyledPreferenceItem
+                <PreferenceItem
+                  kind="value"
+                  title={I18n.t("preferences.list.mobile_phone")}
+                  icon="phone-number"
+                  valuePreview={profileData.spid_mobile_phone}
+                />
+                <PreferenceItem
                   kind="action"
                   title={I18n.t("preferences.list.services")}
                   valuePreview={I18n.t("preferences.list.services_description")}
@@ -139,23 +117,11 @@ class PreferencesScreen extends React.Component<Props> {
                     Alert.alert("Not implemented yet");
                   }}
                 />
-                <StyledPreferenceItem
+                <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.language")}
-                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
-                  valuePreview={profilePreview.language}
-                />
-                <StyledPreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.digitalDomicile")}
-                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
-                  valuePreview={I18n.t("preferences.empty.default")}
-                />
-                <StyledPreferenceItem
-                  kind="value"
-                  title="IBAN"
-                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
-                  valuePreview={I18n.t("preferences.empty.default")}
+                  icon="languages"
+                  valuePreview={languages}
                 />
               </List>
             </View>
@@ -167,6 +133,7 @@ class PreferencesScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  languages: fromNullable(state.preferences.languages),
   maybeProfile: fromNullable(state.profile),
   isProfileLoading: createLoadingSelector([FetchRequestActions.PROFILE_LOAD])(
     state
