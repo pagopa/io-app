@@ -39,7 +39,6 @@ import { navigationRestore } from "../store/actions/navigation";
 import { sessionTokenSelector } from "../store/reducers/authentication";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { SessionToken } from "../types/SessionToken";
-import { deletePin } from "../utils/keychain";
 import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
@@ -152,10 +151,6 @@ export function* watchLogoutRequest(): IterableIterator<Effect> {
     } else {
       yield put(logoutFailure(Error(I18n.t("authentication.errors.notoken"))));
     }
-
-    // Remove the PIN from the KeyChain
-    // tslint:disable-next-line:saga-yield-return-type
-    yield call(deletePin);
 
     /**
      * The user is logged out in in all the case except when the logout request
