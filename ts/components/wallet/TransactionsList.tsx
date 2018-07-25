@@ -17,8 +17,8 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { Transaction } from "../../../definitions/pagopa/Transaction";
-import { AmountInEuroCentsFromNumber } from "../../../node_modules/italia-ts-commons/lib/pagopa";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";

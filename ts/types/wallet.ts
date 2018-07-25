@@ -1,10 +1,11 @@
-import { Amount } from "../../definitions/pagopa/Amount";
-import { Transaction } from "../../definitions/pagopa/Transaction";
-import { fromEither, fromNullable } from "../../node_modules/fp-ts/lib/Option";
+import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
-} from "../../node_modules/italia-ts-commons/lib/pagopa";
+} from "italia-ts-commons/lib/pagopa";
+import { Amount } from "../../definitions/pagopa/Amount";
+import { Psp } from "../../definitions/pagopa/Psp";
+import { Transaction } from "../../definitions/pagopa/Transaction";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_DATE,
@@ -12,7 +13,6 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_STRING
 } from "./unknown";
-import { Psp } from "../../definitions/pagopa/Psp";
 
 const extractAmount = (amountObject: Amount | undefined): AmountInEuroCents =>
   // tslint:disable-next-line no-inferred-empty-object-type

@@ -13,6 +13,7 @@
  */
 import * as React from "react";
 
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { Content, H1, H3, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -20,7 +21,6 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Transaction } from "../../../definitions/pagopa/Transaction";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
-import { AmountInEuroCentsFromNumber } from "../../../node_modules/italia-ts-commons/lib/pagopa";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
 import WalletLayout from "../../components/wallet/WalletLayout";

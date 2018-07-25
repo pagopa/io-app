@@ -5,9 +5,9 @@
  * the app to get the required data
  */
 
+import { Psp } from "../../../definitions/pagopa/Psp";
 import { Transaction } from "../../../definitions/pagopa/Transaction";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
-import { Psp } from "../../../definitions/pagopa/Psp";
 
 /**
  * Mocked wallet data

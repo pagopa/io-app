@@ -1,5 +1,6 @@
 import { createSwitchNavigator } from "react-navigation";
 
+import PickPspScreen from "../screens/wallet/PickPspScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -15,7 +16,7 @@ const navigator = createSwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: MainNavigator
+    screen: PickPspScreen
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users

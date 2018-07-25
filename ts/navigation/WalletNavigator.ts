@@ -1,6 +1,5 @@
 import { createStackNavigator } from "react-navigation";
 import { AddCardScreen } from "../screens/wallet/AddCardScreen";
-import PickPspScreen from "../screens/wallet/PickPspScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
@@ -8,6 +7,7 @@ import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInser
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import ScanQRCodeScreen from "../screens/wallet/payment/ScanQRCodeScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
+import PickPspScreen from "../screens/wallet/PickPspScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
