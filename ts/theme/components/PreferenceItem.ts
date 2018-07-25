@@ -13,7 +13,7 @@ export default (): Theme => ({
     },
     "NativeBase.Right": {
       alignSelf: "center",
-      backgroundColor: variables.brandLightGray,
+      color: variables.contentPrimaryBackground,
       flex: 0,
       flexDirection: "column"
     },

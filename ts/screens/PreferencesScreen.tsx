@@ -1,9 +1,27 @@
-import { Body, Container, Content, H1, Text, View } from "native-base";
+import {
+  Body,
+  Container,
+  Content,
+  H1,
+  H3,
+  Left,
+  List,
+  ListItem,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
+import { Image, ImageSourcePropType, Alert } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 
 import { fromNullable, Option } from "fp-ts/lib/Option";
+
+import I18n from "../i18n";
+
+import { connectStyle } from "native-base-shoutem-theme";
+import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 
 import { FetchRequestActions } from "../store/actions/constants";
 import { ReduxProps } from "../store/actions/types";
@@ -11,13 +29,9 @@ import { createErrorSelector } from "../store/reducers/error";
 import { createLoadingSelector } from "../store/reducers/loading";
 import { GlobalState } from "../store/reducers/types";
 
-import PreferenceList from "../components/PreferencesList";
 import ScreenHeader from "../components/ScreenHeader";
 import AppHeader from "../components/ui/AppHeader";
-
-import I18n from "../i18n";
-
-import { PreferenceItem } from "../types/PreferenceItem";
+import IconFont from "../components/ui/IconFont";
 
 import { ProfileWithOrWithoutEmail } from "../api/backend";
 
@@ -31,28 +45,44 @@ type ReduxMappedProps = {
 
 export type Props = ReduxMappedProps & ReduxProps;
 
-const preferences: ReadonlyArray<PreferenceItem> = [
-  {
-    id: "email",
-    icon: require("../../img/wallet/icon-avviso-pagopa.png"),
-    valuePreview: "mario.rossi@postaelettronica.it"
-  },
-  {
-    id: "servicesNotifications",
-    icon: require("../../img/wallet/icon-avviso-pagopa.png"),
-    valuePreview: "Inps, Comune di Venezia, ..."
-  },
-  {
-    id: "language",
-    icon: require("../../img/wallet/icon-avviso-pagopa.png"),
-    valuePreview: "Italiano"
-  },
-  {
-    id: "digitalDomicile",
-    icon: require("../../img/wallet/icon-avviso-pagopa.png"),
-    valuePreview: "Nessuna preferenza impostata"
-  }
-];
+interface PreferenceItemBaseProps {
+  title: string;
+  valuePreview: string;
+}
+
+interface PreferenceItemIconProps extends PreferenceItemBaseProps {
+  kind: "value";
+  icon: ImageSourcePropType;
+}
+
+interface PreferenceItemActionProps extends PreferenceItemBaseProps {
+  kind: "action";
+  onClick: () => void;
+}
+
+type PreferenceItemProps = PreferenceItemIconProps | PreferenceItemActionProps;
+
+const PreferenceItem: React.SFC<PreferenceItemProps> = props => (
+  <ListItem>
+    <Left>
+      <H3>{props.title}</H3>
+      <Text>{props.valuePreview}</Text>
+    </Left>
+    <Right>
+      {props.kind === "value" ? (
+        <Image source={props.icon} />
+      ) : props.kind === "action" ? (
+        <IconFont name="io-right" onClick={() => props.onClick()} />
+      ) : null}
+    </Right>
+  </ListItem>
+);
+
+const StyledPreferenceItem = connectStyle(
+  "UIComponent.PreferenceItem",
+  {},
+  mapPropsToStyleNames
+)(PreferenceItem);
 
 /**
  * Implements the preferences screen where the user can see and update his
@@ -60,6 +90,20 @@ const preferences: ReadonlyArray<PreferenceItem> = [
  */
 class PreferencesScreen extends React.Component<Props> {
   public render() {
+    const maybeProfile = this.props.maybeProfile;
+
+    const profilePreview = maybeProfile
+      .map(_ => ({
+        spid_email: _.spid_email as string,
+        language: _.preferred_languages
+          ? _.preferred_languages.join(",")
+          : I18n.t("preferences.empty.default")
+      }))
+      .getOrElse({
+        spid_email: "-",
+        language: "-"
+      });
+
     return (
       <Container>
         <AppHeader>
@@ -79,7 +123,42 @@ class PreferencesScreen extends React.Component<Props> {
             <Text link={true}>{I18n.t("preferences.moreLinkText")}</Text>
 
             <View spacer={true} />
-            <PreferenceList preferences={preferences} />
+            <View>
+              <List>
+                <StyledPreferenceItem
+                  kind="value"
+                  title={I18n.t("preferences.list.email")}
+                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
+                  valuePreview={profilePreview.spid_email}
+                />
+                <StyledPreferenceItem
+                  kind="action"
+                  title={I18n.t("preferences.list.services")}
+                  valuePreview={I18n.t("preferences.list.services_description")}
+                  onClick={() => {
+                    Alert.alert("Not implemented yet");
+                  }}
+                />
+                <StyledPreferenceItem
+                  kind="value"
+                  title={I18n.t("preferences.list.language")}
+                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
+                  valuePreview={profilePreview.language}
+                />
+                <StyledPreferenceItem
+                  kind="value"
+                  title={I18n.t("preferences.list.digitalDomicile")}
+                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
+                  valuePreview={I18n.t("preferences.empty.default")}
+                />
+                <StyledPreferenceItem
+                  kind="value"
+                  title="IBAN"
+                  icon={require("../../img/wallet/icon-avviso-pagopa.png")}
+                  valuePreview={I18n.t("preferences.empty.default")}
+                />
+              </List>
+            </View>
           </View>
         </Content>
       </Container>

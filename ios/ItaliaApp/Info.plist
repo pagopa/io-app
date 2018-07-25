@@ -58,7 +58,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>The app needs access to the camera to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>

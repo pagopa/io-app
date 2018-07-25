@@ -381,9 +381,13 @@
     "moreLinkText": "Get more info.",
     "list": {
       "email": "Email address",
-      "servicesNotifications": "Notifications from services",
+      "services": "List of services",
+      "services_description": "Enable/disable your services on IO",
       "language": "Language",
       "digitalDomicile": "Digital domicile"
+    },
+    "empty": {
+      "default": "No preference set"
     }
   }
 }

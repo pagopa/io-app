@@ -380,9 +380,13 @@
     "moreLinkText": "Per saperne di più.",
     "list": {
       "email": "Indirizzo email",
-      "servicesNotifications": "Notifiche dai servizi",
+      "services": "Elenco dei servizi",
+      "services_description": "Attiva/disattiva i tuoi servizi di IO",
       "language": "Lingua",
       "digitalDomicile": "Domicilio digitale"
+    },
+    "empty": {
+      "default": "Nessuna preferenza impostata"
     }
   }
 }
