@@ -32,14 +32,15 @@ import {
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
+  PAYMENT_REQUEST_GO_BACK,
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  PAYMENT_REQUEST_GO_BACK
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY
 } from "../store/actions/constants";
 import {
   paymentConfirmPaymentMethod,
+  paymentGoBack,
   paymentManualEntry,
   paymentPickPaymentMethod,
   paymentQrCode,
@@ -47,14 +48,13 @@ import {
   paymentRequestConfirmPaymentMethod,
   PaymentRequestConfirmPaymentMethod,
   PaymentRequestContinueWithPaymentMethods,
+  PaymentRequestGoBack,
   PaymentRequestManualEntry,
-  paymentRequestPickPaymentMethod,
   PaymentRequestPickPaymentMethod,
+  paymentRequestPickPaymentMethod,
   PaymentRequestTransactionSummaryActions,
   paymentTransactionSummaryFromBanner,
-  paymentTransactionSummaryFromRptId,
-  paymentGoBack,
-  PaymentRequestGoBack
+  paymentTransactionSummaryFromRptId
 } from "../store/actions/wallet/payment";
 import {
   selectTransactionForDetails,

@@ -188,6 +188,33 @@ export const isInAllowedOrigins = (
       (state.stack.length > 0 && state.stack[0].kind === a)
   );
 
+export const popUntil = (
+  stack: ReadonlyArray<PaymentStates>,
+  until: string
+): ReadonlyArray<PaymentStates> =>
+  stack.reduce(
+    (a: ReadonlyArray<PaymentStates>, b: PaymentStates) =>
+      a.length > 0 || b.kind === until ? a.concat([b]) : [],
+    []
+  );
+
+// used to replicate the behavior of
+// the navigator (i.e. when visiting
+// an already available screen, move
+// use that one without generating a new
+// one (and pop screens required to get there)
+// This makes sure that the state does not
+// grow indefinitely when looping through
+// the payment process
+export const popToStateAndPush = (
+  stack: ReadonlyArray<PaymentStates>,
+  state: PaymentStates,
+  until: string
+) =>
+  [state].concat(
+    stack.some(s => s.kind === until) ? popUntil(stack, until).slice(1) : stack
+  );
+
 export const reducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
@@ -197,11 +224,13 @@ export const reducer = (
     isInAllowedOrigins(state, ["none", "PaymentStateManualEntry"])
   ) {
     return {
-      stack: [
+      stack: popToStateAndPush(
+        state.stack,
         {
           kind: "PaymentStateQrCode"
-        } as PaymentStates
-      ].concat(state.stack)
+        },
+        "PaymentStateQrCode"
+      )
     };
   }
   if (
@@ -209,11 +238,13 @@ export const reducer = (
     isInAllowedOrigins(state, ["PaymentStateQrCode"])
   ) {
     return {
-      stack: [
+      stack: popToStateAndPush(
+        state.stack,
         {
           kind: "PaymentStateManualEntry"
-        } as PaymentStates
-      ].concat(state.stack)
+        },
+        "PaymentStateManualEntry"
+      )
     };
   }
   if (
@@ -223,12 +254,14 @@ export const reducer = (
     // the summary screen is being requested following
     // a QR code scan/manual entry/message with payment notice
     return {
-      stack: [
+      stack: popToStateAndPush(
+        state.stack,
         {
           kind: "PaymentStateSummary",
           ...action.payload // rptId, verificaResponse, initialAmount
-        } as PaymentStates
-      ].concat(state.stack)
+        },
+        "PaymentStateSummary"
+      )
     };
   }
   if (
@@ -243,13 +276,7 @@ export const reducer = (
 
     return {
       // pop states until a valid one is reached
-      stack: state.stack.reduce(
-        (stack: ReadonlyArray<PaymentStates>, s: PaymentStates) =>
-          stack.length > 0 || s.kind === "PaymentStateSummary"
-            ? stack.concat([s])
-            : [],
-        []
-      )
+      stack: popUntil(state.stack, "PaymentStateSummary")
     };
   }
   if (
@@ -262,24 +289,28 @@ export const reducer = (
     const prevState = state.stack[0]; // guaranteed to have 1+ elements (from isInAllowedOrigins)
     if (prevState.kind === "PaymentStateSummary") {
       return {
-        stack: [
+        stack: popToStateAndPush(
+          state.stack,
           {
             ...prevState,
             kind: "PaymentStatePickPaymentMethod"
-          } as PaymentStates
-        ].concat(state.stack)
+          },
+          "PaymentStatePickPaymentMethod"
+        )
       };
     } else if (prevState.kind === "PaymentStateConfirmPaymentMethod") {
       // if it's coming from an already-selected-payment-method state,
       // drop the selected method
       const { selectedPaymentMethod, ...rest } = prevState;
       return {
-        stack: [
+        stack: popToStateAndPush(
+          state.stack,
           {
             ...rest,
             kind: "PaymentStatePickPaymentMethod"
-          } as PaymentStates
-        ].concat(state.stack)
+          },
+          "PaymentStatePickPaymentMethod"
+        )
       };
     }
   }
@@ -288,16 +319,19 @@ export const reducer = (
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
       "PaymentStateSummary"
-    ])
+    ]) &&
+    isPaymentStateWithVerificaResponse(state)
   ) {
     return {
-      stack: [
+      stack: popToStateAndPush(
+        state.stack,
         {
           ...state.stack[0],
           kind: "PaymentStateConfirmPaymentMethod",
           selectedPaymentMethod: action.payload
-        } as PaymentStates
-      ].concat(state.stack)
+        },
+        "PaymentStateConfirmPaymentMethod"
+      )
     };
   }
   if (

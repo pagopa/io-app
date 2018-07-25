@@ -26,7 +26,10 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentRequestConfirmPaymentMethod } from "../../../store/actions/wallet/payment";
+import {
+  paymentRequestConfirmPaymentMethod,
+  paymentRequestGoBack
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
@@ -42,6 +45,7 @@ type ReduxMappedStateProps =
 
 type ReduxMappedDispatchProps = Readonly<{
   confirmPaymentMethod: (walletId: number) => void;
+  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -51,10 +55,6 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class PickPaymentMethodScreen extends React.Component<Props> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   public render(): React.ReactNode {
     if (!this.props.valid) {
       return null;
@@ -64,7 +64,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <IconFont name="io-back" />
             </Button>
           </Left>
@@ -127,7 +127,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmPaymentMethod: (walletId: number) =>
-    dispatch(paymentRequestConfirmPaymentMethod(walletId))
+    dispatch(paymentRequestConfirmPaymentMethod(walletId)),
+  goBack: () => dispatch(paymentRequestGoBack())
 });
 
 export default connect(
