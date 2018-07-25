@@ -9,6 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
+  SESSION_INVALID,
   SESSION_LOAD_SUCCESS
 } from "../actions/constants";
 import { Action } from "../actions/types";
@@ -149,7 +150,9 @@ const reducer = (
   }
 
   if (
-    (action.type === SESSION_EXPIRED || action.type === LOGOUT_SUCCESS) &&
+    (action.type === SESSION_EXPIRED ||
+      action.type === SESSION_INVALID ||
+      action.type === LOGOUT_SUCCESS) &&
     isLoggedIn(state)
   ) {
     return {
