@@ -18,19 +18,22 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { setFavoriteCard } from "../../../store/actions/wallet/cards";
+import { setFavoriteWallet } from "../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../store/reducers/types";
-import { getFavoriteCreditCardId } from "../../../store/reducers/wallet/cards";
+import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
-import { CreditCard, CreditCardId } from "../../../types/CreditCard";
+import { getCardPan, getWalletId } from "../../../types/CreditCard";
 import IconFont from "../../ui/IconFont";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
 import { CreditCardStyles } from "./style";
 
+// TODO: the "*" character renders differently (i.e. a larger circle) on
+// some devices @https://www.pivotaltracker.com/story/show/159231780
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
@@ -77,18 +80,18 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  setFavoriteCard: (item: Option<CreditCardId>) => void;
+  setFavoriteCard: (item: Option<number>) => void;
 }>;
 
 export type CardProps = Readonly<{
-  item: CreditCard;
+  item: Wallet;
   navigation: NavigationScreenProp<NavigationState>;
   menu?: boolean;
   favorite?: boolean;
   lastUsage?: boolean;
   whiteLine?: boolean;
   logoPosition?: LogoPosition;
-  mainActionNavigation?: string;
+  mainAction?: (cardId: number) => void;
   flatBottom?: boolean;
   headerOnly?: boolean;
   rotated?: boolean;
@@ -100,14 +103,14 @@ type Props = CardProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 /**
  * Credit card component
  */
-class CreditCardComponent extends React.Component<Props> {
+class CardComponent extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {
     menu: true,
     favorite: true,
     lastUsage: true,
     whiteLine: false,
     logoPosition: LogoPosition.CENTER,
-    mainActionNavigation: undefined,
+    mainAction: undefined,
     flatBottom: false,
     headerOnly: false,
     rotated: false,
@@ -118,7 +121,7 @@ class CreditCardComponent extends React.Component<Props> {
     if (this.props.isFavoriteCard) {
       this.props.setFavoriteCard(none);
     } else {
-      this.props.setFavoriteCard(some(this.props.item.id));
+      this.props.setFavoriteCard(some(getWalletId(this.props.item)));
     }
   };
 
@@ -160,16 +163,16 @@ class CreditCardComponent extends React.Component<Props> {
                   <Text bold={true} style={styles.blueText}>
                     {I18n.t(
                       this.props.isFavoriteCard
-                        ? "creditCardComponent.unsetFavourite"
-                        : "creditCardComponent.setFavourite"
+                        ? "cardComponent.unsetFavourite"
+                        : "cardComponent.setFavourite"
                     )}
                   </Text>
                 </MenuOption>
                 <MenuOption
                   onSelect={() =>
                     Alert.alert(
-                      I18n.t("creditCardComponent.deleteTitle"),
-                      I18n.t("creditCardComponent.deleteMsg"),
+                      I18n.t("cardComponent.deleteTitle"),
+                      I18n.t("cardComponent.deleteMsg"),
                       [
                         {
                           text: I18n.t("global.buttons.cancel"),
@@ -227,7 +230,9 @@ class CreditCardComponent extends React.Component<Props> {
                         CreditCardStyles.largeTextStyle
                       ]}
                     >
-                      {`${HIDDEN_CREDITCARD_NUMBERS}${item.pan.slice(-4)}`}
+                      {`${HIDDEN_CREDITCARD_NUMBERS}${getCardPan(item).slice(
+                        -4
+                      )}`}
                     </Text>
                   </Col>
 
@@ -249,19 +254,20 @@ const mapStateToProps = (
   state: GlobalState,
   props: CardProps
 ): ReduxMappedStateProps => {
-  const favoriteCard = getFavoriteCreditCardId(state);
+  const favoriteCard = getFavoriteWalletId(state);
   return {
-    isFavoriteCard:
-      favoriteCard.isSome() && favoriteCard.value === props.item.id
+    isFavoriteCard: favoriteCard.fold(
+      false,
+      walletId => walletId === getWalletId(props.item)
+    )
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<CreditCardId>) =>
-    dispatch(setFavoriteCard(item))
+  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteWallet(item))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreditCardComponent);
+)(CardComponent);

@@ -2,17 +2,16 @@ import { createStackNavigator } from "react-navigation";
 import { AddCardScreen } from "../screens/wallet/AddCardScreen";
 import { AddManagerToCardScreen } from "../screens/wallet/AddManagerToCardScreen";
 import { AddPaymentMethodScreen } from "../screens/wallet/AddPaymentMethodScreen";
-import ChoosePaymentMethodScreen from "../screens/wallet/ChoosePaymentMethodScreen";
 import ConfirmSaveCardScreen from "../screens/wallet/ConfirmSaveCardScreen";
-import ConfirmToProceedTransactionScreen from "../screens/wallet/ConfirmToProceedTransactionScreen";
-import CreditCardsScreen from "../screens/wallet/CreditCardsScreen";
-import { FirstTransactionSummaryScreen } from "../screens/wallet/FirstTransactionSummaryScreen";
-import { ManuallyIdentifyTransactionScreen } from "../screens/wallet/ManuallyIdentifyTransactionScreen";
-import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquisitionByScannerScreen";
-import { TextVerificationScreen } from "../screens/wallet/TextVerificationScreen";
+import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
+import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
+import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
+import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
 
 /**
@@ -24,8 +23,8 @@ const WalletNavigator = createStackNavigator(
     [ROUTES.WALLET_HOME]: {
       screen: WalletHomeScreen
     },
-    [ROUTES.WALLET_CREDITCARDS]: {
-      screen: CreditCardsScreen
+    [ROUTES.WALLET_LIST]: {
+      screen: WalletsScreen
     },
     [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
       screen: AddPaymentMethodScreen
@@ -36,32 +35,29 @@ const WalletNavigator = createStackNavigator(
     [ROUTES.WALLET_CARD_TRANSACTIONS]: {
       screen: TransactionsScreen
     },
-    [ROUTES.WALLET_TEXT_VERIFICATION]: {
-      screen: TextVerificationScreen
-    },
     [ROUTES.WALLET_ADD_CARD]: {
       screen: AddCardScreen
-    },
-    [ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER]: {
-      screen: QRcodeAcquisitionByScannerScreen
     },
     [ROUTES.WALLET_ADD_MANAGER]: {
       screen: AddManagerToCardScreen
     },
-    [ROUTES.WALLET_CONFIRM_TO_PROCEED]: {
-      screen: ConfirmToProceedTransactionScreen
-    },
-    [ROUTES.WALLET_PAY_WITH]: {
-      screen: ChoosePaymentMethodScreen
-    },
-    [ROUTES.WALLET_FIRST_TRANSACTION_SUMMARY]: {
-      screen: FirstTransactionSummaryScreen
-    },
-    [ROUTES.WALLET_MANUAL_TRANSACTION_IDENTIFICATION]: {
-      screen: ManuallyIdentifyTransactionScreen
-    },
     [ROUTES.WALLET_ASK_SAVE_CARD]: {
       screen: ConfirmSaveCardScreen
+    },
+    [ROUTES.PAYMENT_SCAN_QR_CODE]: {
+      screen: ScanQrCodeScreen
+    },
+    [ROUTES.PAYMENT_MANUAL_DATA_INSERTION]: {
+      screen: ManualDataInsertionScreen
+    },
+    [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
+      screen: TransactionSummaryScreen
+    },
+    [ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD]: {
+      screen: ConfirmPaymentMethodScreen
+    },
+    [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
+      screen: PickPaymentMethodScreen
     }
   },
   {

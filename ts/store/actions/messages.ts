@@ -13,7 +13,7 @@ import {
   MESSAGES_LOAD_REQUEST,
   MESSAGES_LOAD_SUCCESS,
   NAVIGATE_TO_MESSAGE_DETAILS,
-  START_PAYMENT
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY
 } from "./constants";
 
 export type MessagesLoadRequest = Readonly<{
@@ -56,7 +56,7 @@ export type NavigateToMessageDetails = Readonly<{
 }>;
 
 export type StartPayment = Readonly<{
-  type: typeof START_PAYMENT;
+  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
   payload: PaymentData;
 }>;
 
@@ -112,7 +112,10 @@ export const navigateToMessageDetails = (
   payload: messageId
 });
 
+// TODO: PaymentData is not compatible with the
+// data required (notice #, fiscal code, amount)
+// @https://www.pivotaltracker.com/story/show/158285425
 export const startPayment = (paymentData: PaymentData): StartPayment => ({
-  type: START_PAYMENT,
+  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   payload: paymentData
 });

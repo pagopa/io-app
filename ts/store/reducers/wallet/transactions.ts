@@ -2,17 +2,18 @@
  * Reducers, states, selectors and guards for the transactions
  */
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import _ from "lodash";
+import { values } from "lodash";
 import { createSelector } from "reselect";
 import { WalletTransaction } from "../../../types/wallet";
 import {
+  PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
   TRANSACTIONS_FETCHED
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
-import { IndexedById, toIndexed } from "../../helpers/indexer";
+import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
-import { getSelectedCreditCardId } from "./cards";
+import { getSelectedWalletId } from "./wallets";
 
 export type TransactionsState = Readonly<{
   transactions: IndexedById<WalletTransaction>;
@@ -34,8 +35,7 @@ export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
 export const latestTransactionsSelector = createSelector(
   getTransactions,
   (transactions: IndexedById<WalletTransaction>) =>
-    _
-      .values(transactions)
+    values(transactions)
       .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
       .slice(0, 5) // WIP no magic numbers
 );
@@ -46,26 +46,20 @@ export const transactionForDetailsSelector = createSelector(
   (
     transactions: IndexedById<WalletTransaction>,
     selectedTransactionId: Option<number>
-  ): Option<WalletTransaction> => {
-    if (selectedTransactionId.isSome()) {
-      return fromNullable(transactions[selectedTransactionId.value]);
-    }
-    return none;
-  }
+  ): Option<WalletTransaction> =>
+    selectedTransactionId.chain(transactionId =>
+      fromNullable(transactions[transactionId])
+    )
 );
 
-export const transactionsByCardSelector = createSelector(
+export const transactionsByWalletSelector = createSelector(
   getTransactions,
-  getSelectedCreditCardId,
+  getSelectedWalletId,
   (
     transactions: IndexedById<WalletTransaction>,
-    cardId: Option<number>
-  ): ReadonlyArray<WalletTransaction> => {
-    if (cardId.isSome()) {
-      return _.values(transactions).filter(t => t.cardId === cardId.value);
-    }
-    return [];
-  }
+    walletId: Option<number>
+  ): ReadonlyArray<WalletTransaction> =>
+    walletId.fold([], wId => values(transactions).filter(t => t.cardId === wId))
 );
 
 // reducer
@@ -76,13 +70,19 @@ const reducer = (
   if (action.type === TRANSACTIONS_FETCHED) {
     return {
       ...state,
-      transactions: toIndexed(action.payload)
+      transactions: toIndexed(action.payload, "id")
     };
   }
   if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {
     return {
       ...state,
       selectedTransactionId: some(action.payload.id)
+    };
+  }
+  if (action.type === PAYMENT_STORE_NEW_TRANSACTION) {
+    return {
+      ...state,
+      transactions: addToIndexed(state.transactions, action.payload, "id")
     };
   }
   return state;

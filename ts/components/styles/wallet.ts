@@ -17,13 +17,17 @@ export const WalletStyles = StyleSheet.create({
     backgroundColor: variables.brandDarkGray
   },
   white: {
-    color: variables.brandPrimaryInverted
+    color: variables.colorWhite
   },
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
   alignCenter: {
     alignItems: "center"
+  },
+  flexRow: {
+    flex: 1,
+    flexDirection: "row"
   },
   bottomBorder: {
     borderBottomWidth: 1,
@@ -44,9 +48,6 @@ export const WalletStyles = StyleSheet.create({
   whyLink: {
     fontWeight: "bold",
     color: variables.textLinkColor
-  },
-  backContent: {
-    backgroundColor: variables.brandDarkGray
   },
   whiteContent: {
     backgroundColor: variables.colorWhite,
