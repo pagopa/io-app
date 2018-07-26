@@ -327,6 +327,7 @@ function* completionHandler(_: PaymentRequestCompletion) {
     // "back" option is not allowed -- so the user cannot
     // get back to previous screens, but the navigation
     // stack should be cleaned right here
+    // @https://www.pivotaltracker.com/story/show/159300579
     navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
       paymentCompleted: true
     })
