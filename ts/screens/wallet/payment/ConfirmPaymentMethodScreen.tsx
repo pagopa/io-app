@@ -35,6 +35,7 @@ import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCompletion,
+  paymentRequestGoBack,
   paymentRequestPickPaymentMethod
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -62,6 +63,7 @@ type ReduxMappedStateProps =
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
   requestCompletion: () => void;
+  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -81,10 +83,6 @@ const styles = StyleSheet.create({
 });
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   private getTotalAmount(amount: number, fee: number) {
     return amount + fee;
   }
@@ -101,7 +99,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <IconFont name="io-back" />
             </Button>
           </Left>
@@ -244,7 +242,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
-  requestCompletion: () => dispatch(paymentRequestCompletion())
+  requestCompletion: () => dispatch(paymentRequestCompletion()),
+  goBack: () => dispatch(paymentRequestGoBack())
 });
 
 export default connect(

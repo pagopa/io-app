@@ -11,6 +11,7 @@ import { UNKNOWN_CARD } from "../../../types/unknown";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_GO_BACK,
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_QR_CODE,
@@ -29,6 +30,10 @@ import { getWalletFromId, getWallets } from "./wallets";
 // The following are possible states, identified
 // by a string (kind), and with specific
 // properties depending on the state
+
+export type PaymentStateNoState = Readonly<{
+  kind: "PaymentStateNoState";
+}>;
 
 export type PaymentStateQrCode = Readonly<{
   kind: "PaymentStateQrCode";
@@ -60,43 +65,41 @@ export type PaymentStateConfirmPaymentMethod = Readonly<{
   selectedPaymentMethod: number;
 }>;
 
-export type PaymentStateCompleted = Readonly<{
-  kind: "PaymentStateCompleted";
-  rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
-  initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
-}>;
-
 // Allowed states
-export type PaymentState =
+export type PaymentStates =
+  | PaymentStateNoState
   | PaymentStateQrCode
   | PaymentStateManualEntry
   | PaymentStateSummary
   | PaymentStatePickPaymentMethod
-  | PaymentStateConfirmPaymentMethod
-  | PaymentStateCompleted;
+  | PaymentStateConfirmPaymentMethod;
+
+export type PaymentState = Readonly<{
+  stack: ReadonlyArray<PaymentStates>;
+}>;
 
 export const PAYMENT_INITIAL_STATE: PaymentState = {
-  kind: "PaymentStateQrCode"
+  stack: []
 };
 
 // list of states that have a valid
 // "verifica" response
-export type PaymentStateWithVerificaResponse =
+export type PaymentStatesWithVerificaResponse =
   | PaymentStateSummary
   | PaymentStatePickPaymentMethod
-  | PaymentStateConfirmPaymentMethod
-  | PaymentStateCompleted;
+  | PaymentStateConfirmPaymentMethod;
+
+export type PaymentStateWithVerificaResponse = Readonly<{
+  stack: ReadonlyArray<PaymentStatesWithVerificaResponse>;
+}>;
 
 // type guard for *PaymentState*WithVerificaResponse
 export const isPaymentStateWithVerificaResponse = (
   state: PaymentState
 ): state is PaymentStateWithVerificaResponse =>
-  state.kind === "PaymentStateSummary" ||
-  state.kind === "PaymentStatePickPaymentMethod" ||
-  state.kind === "PaymentStateConfirmPaymentMethod" ||
-  state.kind === "PaymentStateCompleted";
+  state.stack[0].kind === "PaymentStateSummary" ||
+  state.stack[0].kind === "PaymentStatePickPaymentMethod" ||
+  state.stack[0].kind === "PaymentStateConfirmPaymentMethod";
 
 // type guard for *GlobalState*WithVerificaResponse
 export const isGlobalStateWithVerificaResponse = (
@@ -106,16 +109,17 @@ export const isGlobalStateWithVerificaResponse = (
 
 // list of states that have a
 // selected payment method
-export type PaymentStateWithSelectedPaymentMethod =
-  | PaymentStateConfirmPaymentMethod
-  | PaymentStateCompleted;
+export type PaymentStatesWithSelectedPaymentMethod = PaymentStateConfirmPaymentMethod;
+
+export type PaymentStateWithSelectedPaymentMethod = Readonly<{
+  stack: ReadonlyArray<PaymentStatesWithSelectedPaymentMethod>;
+}>;
 
 // type guard for *PaymentState*WithSelectedPaymentMethod
 export const isPaymentStateWithSelectedPaymentMethod = (
   state: PaymentState
 ): state is PaymentStateWithSelectedPaymentMethod =>
-  state.kind === "PaymentStateConfirmPaymentMethod" ||
-  state.kind === "PaymentStateCompleted";
+  state.stack[0].kind === "PaymentStateConfirmPaymentMethod";
 
 // type guard for *GlobalState*WithSelectedPaymentMethod
 export const isGlobalStateWithSelectedPaymentMethod = (
@@ -123,36 +127,46 @@ export const isGlobalStateWithSelectedPaymentMethod = (
 ): state is GlobalStateWithSelectedPaymentMethod =>
   isPaymentStateWithSelectedPaymentMethod(state.wallet.payment);
 
-export const getPaymentStep = (state: GlobalState) => state.wallet.payment.kind;
+/**
+ * getPaymentStep returns the current step (i.e. stack[0])
+ * If no step is available (clean stack), return a "NoState"
+ * value -- that can be typeguarded as needed (kind !==/=== "PaymentStateNoState")
+ */
+export const getPaymentStep = (state: GlobalState) =>
+  state.wallet.payment.stack.length > 0
+    ? state.wallet.payment.stack[0].kind
+    : { kind: "PaymentStateNoState" };
 
 export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
-  state.wallet.payment.rptId;
+  state.wallet.payment.stack[0].rptId;
 
 export const getInitialAmount = (
   state: GlobalStateWithVerificaResponse
-): AmountInEuroCents => state.wallet.payment.initialAmount;
+): AmountInEuroCents => state.wallet.payment.stack[0].initialAmount;
 
 export const getSelectedPaymentMethod = (
   state: GlobalStateWithSelectedPaymentMethod
-): number => state.wallet.payment.selectedPaymentMethod;
+): number => state.wallet.payment.stack[0].selectedPaymentMethod;
 
 export const getCurrentAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents =>
   (
     "0".repeat(10) +
-    `${state.wallet.payment.verificaResponse.importoSingoloVersamento}`
+    `${state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento}`
   ).slice(-10) as AmountInEuroCents;
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
 ): Option<EnteBeneficiario> =>
-  fromNullable(state.wallet.payment.verificaResponse.enteBeneficiario);
+  fromNullable(state.wallet.payment.stack[0].verificaResponse.enteBeneficiario);
 
 export const getPaymentReason = (
   state: GlobalStateWithVerificaResponse
 ): Option<string> =>
-  fromNullable(state.wallet.payment.verificaResponse.causaleVersamento);
+  fromNullable(
+    state.wallet.payment.stack[0].verificaResponse.causaleVersamento
+  );
 
 export const selectedPaymentMethodSelector: (
   state: GlobalStateWithSelectedPaymentMethod
@@ -164,87 +178,175 @@ export const selectedPaymentMethodSelector: (
     getWalletFromId(id, wallets).getOrElse(UNKNOWN_CARD)
 );
 
+export const isInAllowedOrigins = (
+  state: PaymentState,
+  allowed: ReadonlyArray<string>
+): boolean =>
+  allowed.some(
+    a =>
+      (a === "none" && state.stack.length === 0) ||
+      (state.stack.length > 0 && state.stack[0].kind === a)
+  );
+
+export const popUntil = (
+  stack: ReadonlyArray<PaymentStates>,
+  until: string
+): ReadonlyArray<PaymentStates> =>
+  stack.reduce(
+    (a: ReadonlyArray<PaymentStates>, b: PaymentStates) =>
+      a.length > 0 || b.kind === until ? a.concat([b]) : [],
+    []
+  );
+
+// used to replicate the behavior of
+// the navigator (i.e. when visiting
+// an already available screen, move
+// use that one without generating a new
+// one (and pop screens required to get there)
+// This makes sure that the state does not
+// grow indefinitely when looping through
+// the payment process
+export const popToStateAndPush = (
+  stack: ReadonlyArray<PaymentStates>,
+  state: PaymentStates,
+  until: string
+) =>
+  [state].concat(
+    stack.some(s => s.kind === until) ? popUntil(stack, until).slice(1) : stack
+  );
+
 export const reducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ): PaymentState => {
-  if (action.type === PAYMENT_QR_CODE) {
+  if (
+    action.type === PAYMENT_QR_CODE &&
+    isInAllowedOrigins(state, ["none", "PaymentStateManualEntry"])
+  ) {
     return {
-      kind: "PaymentStateQrCode"
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          kind: "PaymentStateQrCode"
+        },
+        "PaymentStateQrCode"
+      )
     };
   }
-  if (action.type === PAYMENT_MANUAL_ENTRY) {
+  if (
+    action.type === PAYMENT_MANUAL_ENTRY &&
+    isInAllowedOrigins(state, ["PaymentStateQrCode"])
+  ) {
     return {
-      kind: "PaymentStateManualEntry"
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          kind: "PaymentStateManualEntry"
+        },
+        "PaymentStateManualEntry"
+      )
     };
   }
-  if (action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID) {
+  if (
+    action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID &&
+    isInAllowedOrigins(state, ["PaymentStateQrCode", "PaymentStateManualEntry"])
+  ) {
     // the summary screen is being requested following
     // a QR code scan/manual entry/message with payment notice
     return {
-      kind: "PaymentStateSummary",
-      ...action.payload // rptId, verificaResponse, initialAmount
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          kind: "PaymentStateSummary",
+          ...action.payload // rptId, verificaResponse, initialAmount
+        },
+        "PaymentStateSummary"
+      )
     };
   }
   if (
     action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER &&
-    isPaymentStateWithVerificaResponse(state)
+    isInAllowedOrigins(state, [
+      "PaymentStatePickPaymentMethod",
+      "PaymentStateConfirmPaymentMethod"
+    ])
   ) {
     // payment summary being requested from tapping on the "payment banner"
     // in one of the subsequent screens
 
-    if (isPaymentStateWithSelectedPaymentMethod(state)) {
-      // a payment method has already been selected -- it is
-      // discarded so as to build a valid "summary" state
-      const { selectedPaymentMethod, ...rest } = state;
-      return {
-        ...rest,
-        kind: "PaymentStateSummary"
-      };
-    } else {
-      return {
-        ...state,
-        kind: "PaymentStateSummary"
-      };
-    }
+    return {
+      // pop states until a valid one is reached
+      stack: popUntil(state.stack, "PaymentStateSummary")
+    };
   }
   if (
     action.type === PAYMENT_PICK_PAYMENT_METHOD &&
-    isPaymentStateWithVerificaResponse(state)
+    isInAllowedOrigins(state, [
+      "PaymentStateSummary",
+      "PaymentStateConfirmPaymentMethod"
+    ])
   ) {
-    // if the user is getting here from the "confirm payment
-    // method" screen, the previous state contains an already-
-    // selected payment method, which is discarded here
-    if (isPaymentStateWithSelectedPaymentMethod(state)) {
-      const { selectedPaymentMethod, ...rest } = state;
+    const prevState = state.stack[0]; // guaranteed to have 1+ elements (from isInAllowedOrigins)
+    if (prevState.kind === "PaymentStateSummary") {
       return {
-        ...rest,
-        kind: "PaymentStatePickPaymentMethod"
+        stack: popToStateAndPush(
+          state.stack,
+          {
+            ...prevState,
+            kind: "PaymentStatePickPaymentMethod"
+          },
+          "PaymentStatePickPaymentMethod"
+        )
       };
-    } else {
+    } else if (prevState.kind === "PaymentStateConfirmPaymentMethod") {
+      // if it's coming from an already-selected-payment-method state,
+      // drop the selected method
+      const { selectedPaymentMethod, ...rest } = prevState;
       return {
-        ...(state as PaymentStatePickPaymentMethod),
-        kind: "PaymentStatePickPaymentMethod"
+        stack: popToStateAndPush(
+          state.stack,
+          {
+            ...rest,
+            kind: "PaymentStatePickPaymentMethod"
+          },
+          "PaymentStatePickPaymentMethod"
+        )
       };
     }
   }
   if (
     action.type === PAYMENT_CONFIRM_PAYMENT_METHOD &&
+    isInAllowedOrigins(state, [
+      "PaymentStatePickPaymentMethod",
+      "PaymentStateSummary"
+    ]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
     return {
-      ...state,
-      kind: "PaymentStateConfirmPaymentMethod",
-      selectedPaymentMethod: action.payload
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          ...state.stack[0],
+          kind: "PaymentStateConfirmPaymentMethod",
+          selectedPaymentMethod: action.payload
+        },
+        "PaymentStateConfirmPaymentMethod"
+      )
     };
   }
   if (
     action.type === PAYMENT_COMPLETED &&
-    isPaymentStateWithSelectedPaymentMethod(state)
+    isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"])
   ) {
     return {
-      ...state,
-      kind: "PaymentStateCompleted"
+      stack: [] // cleaning up
+    };
+  }
+  if (action.type === PAYMENT_GO_BACK) {
+    // pop 1 step
+    // ([].slice(1) -> [])
+    return {
+      stack: state.stack.slice(1)
     };
   }
   return state;

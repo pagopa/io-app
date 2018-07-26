@@ -39,7 +39,10 @@ import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 
 import { Dispatch } from "../../../store/actions/types";
-import { paymentRequestTransactionSummaryFromRptId } from "../../../store/actions/wallet/payment";
+import {
+  paymentRequestGoBack,
+  paymentRequestTransactionSummaryFromRptId
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 
@@ -49,6 +52,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -76,15 +80,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     };
   }
 
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   private validateAmount = (value: string) => {
     const parsedValue = parseFloat(value);
-    if (!isNaN(parsedValue)) {
-      this.setState({ amount: some(parsedValue) });
-    }
+    this.setState({ amount: !isNaN(parsedValue) ? some(parsedValue) : none });
   };
 
   /**
@@ -124,7 +122,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -199,7 +197,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount))
+    dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount)),
+  goBack: () => dispatch(paymentRequestGoBack())
 });
 
 export default connect(

@@ -6,6 +6,7 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
@@ -26,19 +27,20 @@ export type NetworkState = Readonly<{
 
 export type GlobalState = Readonly<{
   appState: AppState;
-  network: NetworkState;
-  nav: NavigationState;
-  loading: LoadingState;
+  authentication: PersistedAuthenticationState;
+  backendInfo: BackendInfoState;
+  deepLink: DeepLinkState;
+  entities: EntitiesState;
   error: ErrorState;
   form: FormStateMap;
-  authentication: PersistedAuthenticationState;
-  onboarding: OnboardingState;
+  loading: LoadingState;
+  nav: NavigationState;
+  network: NetworkState;
   notifications: NotificationsState;
+  onboarding: OnboardingState;
+  pinlogin: PinLoginState;
   profile: ProfileState;
   wallet: WalletState;
-  entities: EntitiesState;
-  pinlogin: PinLoginState;
-  backendInfo: BackendInfoState;
 }>;
 
 /**

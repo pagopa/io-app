@@ -33,6 +33,7 @@ import {
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
+  PAYMENT_REQUEST_GO_BACK,
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
@@ -40,6 +41,7 @@ import {
 } from "../store/actions/constants";
 import {
   paymentConfirmPaymentMethod,
+  paymentGoBack,
   paymentManualEntry,
   paymentPickPaymentMethod,
   paymentQrCode,
@@ -47,10 +49,11 @@ import {
   paymentRequestConfirmPaymentMethod,
   PaymentRequestConfirmPaymentMethod,
   PaymentRequestContinueWithPaymentMethods,
+  PaymentRequestGoBack,
   PaymentRequestManualEntry,
-  paymentRequestPickPaymentMethod,
   PaymentRequestPickPaymentMethod,
-  PaymentRequestTransactionSummary,
+  paymentRequestPickPaymentMethod,
+  PaymentRequestTransactionSummaryActions,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId
 } from "../store/actions/wallet/payment";
@@ -101,10 +104,10 @@ const navigateTo = (routeName: string, params?: object) => {
 function* paymentSagaFromQrCode(): Iterator<Effect> {
   yield put(paymentQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
-  yield fork(paymentSaga);
+  yield fork(watchPaymentSaga);
 }
 
-function* paymentSaga(): Iterator<Effect> {
+function* watchPaymentSaga(): Iterator<Effect> {
   while (true) {
     const action = yield take([
       PAYMENT_REQUEST_QR_CODE,
@@ -114,6 +117,7 @@ function* paymentSaga(): Iterator<Effect> {
       PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
       PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
       PAYMENT_REQUEST_COMPLETION,
+      PAYMENT_REQUEST_GO_BACK,
       PAYMENT_COMPLETED
     ]);
     if (action.type === PAYMENT_COMPLETED) {
@@ -145,8 +149,17 @@ function* paymentSaga(): Iterator<Effect> {
         yield fork(completionHandler, action);
         break;
       }
+      case PAYMENT_REQUEST_GO_BACK: {
+        yield fork(goBackHandler, action);
+        break;
+      }
     }
   }
+}
+
+function* goBackHandler(_: PaymentRequestGoBack) {
+  yield put(paymentGoBack()); // return to previous state
+  yield put(NavigationActions.back());
 }
 
 function* enterDataManuallyHandler(
@@ -160,7 +173,7 @@ function* enterDataManuallyHandler(
 }
 
 function* showTransactionSummaryHandler(
-  action: PaymentRequestTransactionSummary
+  action: PaymentRequestTransactionSummaryActions
 ) {
   // the user may have gotten here from the QR code,
   // the manual data entry, from a message OR by
@@ -247,7 +260,6 @@ function* completionHandler(_: PaymentRequestCompletion) {
   // do payment stuff (-> pagoPA REST)
   // retrieve transaction and store it
   // mocked data here
-  // tslint:disable-next-line saga-yield-return-type
   const wallet: Wallet = yield select(selectedPaymentMethodSelector);
   // tslint:disable-next-line saga-yield-return-type
   const recipient = (yield select(getPaymentRecipient)).getOrElse(
@@ -310,6 +322,11 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put(selectTransactionForDetails(transaction));
   yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
   yield put(
+    // TODO: this should use StackActions.reset
+    // to reset the navigation. Right now, the
+    // "back" option is not allowed -- so the user cannot
+    // get back to previous screens, but the navigation
+    // stack should be cleaned right here
     navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
       paymentCompleted: true
     })

@@ -24,7 +24,9 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
-const LOGIN_BASE_URL = `${config.apiUrlPrefix}/login?entityID=`;
+const LOGIN_BASE_URL = `${
+  config.apiUrlPrefix
+}/login?authLevel=SpidL2&entityID=`;
 /**
  * A screen that allow the user to login with an IDP.
  * The IDP page is opened in a WebView

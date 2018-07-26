@@ -2,7 +2,6 @@ import { Container } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-
 import { applicationInitialized } from "../store/actions/application";
 import { ReduxProps } from "../store/actions/types";
 import variables from "../theme/variables";

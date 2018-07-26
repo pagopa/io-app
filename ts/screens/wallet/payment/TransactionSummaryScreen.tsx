@@ -32,7 +32,10 @@ import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentRequestContinueWithPaymentMethods } from "../../../store/actions/wallet/payment";
+import {
+  paymentRequestContinueWithPaymentMethods,
+  paymentRequestGoBack
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -64,6 +67,7 @@ type ReduxMappedStateProps =
 
 type ReduxMappedDispatchProps = Readonly<{
   confirmSummary: () => void;
+  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -91,10 +95,6 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
     super(props);
   }
 
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   public render(): React.ReactNode {
     if (!this.props.valid) {
       return null;
@@ -107,7 +107,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <IconFont name="io-back" size={variables.iconSize3} />
             </Button>
           </Left>
@@ -145,7 +145,11 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
             <Text>{I18n.t("wallet.continue")}</Text>
           </Button>
           <View spacer={true} />
-          <Button block={true} light={true} onPress={(): void => this.goBack()}>
+          <Button
+            block={true}
+            light={true}
+            onPress={(): void => this.props.goBack()}
+          >
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
@@ -172,7 +176,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
     : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods())
+  confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),
+  goBack: () => dispatch(paymentRequestGoBack())
 });
 
 export default connect(

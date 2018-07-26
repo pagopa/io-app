@@ -16,13 +16,13 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
+import { Option } from "fp-ts/lib/Option";
 import ROUTES from "../navigation/routes";
 import {
   ONBOARDING_CHECK_COMPLETE,
   ONBOARDING_CHECK_PIN,
   ONBOARDING_CHECK_TOS,
   PIN_CREATE_FAILURE,
-  PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
   PIN_LOGIN_INITIALIZE,
   PROFILE_UPSERT_FAILURE,
@@ -31,62 +31,54 @@ import {
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
-import { PinCreateRequest } from "../store/actions/onboarding";
+import { startPinSet } from "../store/actions/pinset";
 import {
   ProfileUpsertFailure,
   profileUpsertRequest,
   ProfileUpsertSuccess
 } from "../store/actions/profile";
-import {
-  isPinCreatedSelector,
-  isTosAcceptedSelector
-} from "../store/reducers/onboarding";
+import { isTosAcceptedSelector } from "../store/reducers/onboarding";
 import { profileSelector, ProfileState } from "../store/reducers/profile";
-import { setPin } from "../utils/keychain";
+import { PinString } from "../types/PinString";
+import { getPin } from "../utils/keychain";
 
 /**
  * The PIN step of the Onboarding
  */
 function* pinCheckSaga(): Iterator<Effect> {
   yield take(ONBOARDING_CHECK_PIN);
-  // From the state we check whether the user has already created a PIN
-  const isPinCreated: boolean = yield select(isPinCreatedSelector);
 
-  if (!isPinCreated) {
-    // Navigate to the PinScreen
-    const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
-      routeName: ROUTES.ONBOARDING,
-      action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
-    });
-    yield put(navigateToOnboardingPinScreenAction);
-    // Loop until PIN successfully saved in the Keystore
-    // tslint:disable-next-line:no-constant-condition
-    while (true) {
-      // Here we wait the user to create a PIN
-      const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST);
+  // We check whether the user has already created a PIN by trying to retrieve
+  // it from the Keychain
+  const pinCode: Option<PinString> = yield call(getPin);
+  const doesPinExistInKeyChain = pinCode.isSome();
 
-      try {
-        yield call(setPin, action.payload);
-
-        // Dispatch the action that sets isPinCreated to true into the store
-        yield put({ type: PIN_CREATE_SUCCESS });
-
-        break;
-      } catch (error) {
-        yield put({ type: PIN_CREATE_FAILURE });
-      }
-    }
-  }
-  // if pin was created before
-  if (!isPinCreated) {
-    yield put({
-      type: ONBOARDING_CHECK_COMPLETE
-    });
-  } else {
+  if (doesPinExistInKeyChain) {
+    // since we have an existing PIN code in the keychain,
+    // ask the user to login with it
     yield put({
       type: PIN_LOGIN_INITIALIZE
     });
+    return;
   }
+
+  // here we loop until a PIN is set (PIN_CREATE_SUCCESS)
+  while (true) {
+    // If we don't have a PIN code yet, let's set one by starting the PIN flow
+    yield put(startPinSet());
+
+    // Wait for the PIN to have been created, or a failure to happen
+    const result = yield take([PIN_CREATE_SUCCESS, PIN_CREATE_FAILURE]);
+
+    if (result.type === PIN_CREATE_SUCCESS) {
+      break;
+    }
+  }
+
+  // since we just set a new PIN, we don't ask for it
+  yield put({
+    type: ONBOARDING_CHECK_COMPLETE
+  });
 }
 
 /**

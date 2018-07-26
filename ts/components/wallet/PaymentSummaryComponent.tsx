@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     paddingLeft: variables.contentPadding
   },
 
+  iconStyle: {
+    fontSize: 24,
+    paddingLeft: 10
+  },
+
   strikeThrough: {
     textDecorationLine: "line-through",
     textDecorationStyle: "solid"
@@ -128,10 +133,7 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
                 </H3>
                 <Icon
-                  style={[
-                    WalletStyles.white,
-                    { fontSize: 24, paddingLeft: 10 }
-                  ]}
+                  style={[WalletStyles.white, styles.iconStyle]}
                   name={"alert-circle"}
                   type={"Feather"}
                 />

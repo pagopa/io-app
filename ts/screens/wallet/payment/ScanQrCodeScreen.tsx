@@ -31,6 +31,7 @@ import AppHeader from "../../../components/ui/AppHeader";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentRequestGoBack,
   paymentRequestManualEntry,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
@@ -45,6 +46,7 @@ type ReduxMappedStateProps = Readonly<{
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
   insertDataManually: () => void;
+  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -141,11 +143,7 @@ const rptIdFromQrCodeString = (qrCodeString: string): Either<t.Errors, RptId> =>
     rptIdFromPaymentNoticeQrCode
   );
 
-class ScanQRCodeScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
+class ScanQrCodeScreen extends React.Component<Props, never> {
   private qrCodeRead = (data: string) => {
     const rptId = rptIdFromQrCodeString(data);
     const paymentNotice = PaymentNoticeQrCodeFromString.decode(data);
@@ -155,7 +153,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
         rptId.value,
         paymentNotice.value.amount
       );
-    } // else toast stating that QR code is invalid
+    } // else error stating that QR code is invalid @https://www.pivotaltracker.com/story/show/159003368
     else {
       setTimeout(
         () => (this.refs.scanner as QRCodeScanner).reactivate(),
@@ -173,7 +171,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
       <Container style={styles.white}>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -242,7 +240,7 @@ class ScanQRCodeScreen extends React.Component<Props, never> {
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
           </Button>
           <View spacer={true} />
-          <Button block={true} light={true} onPress={() => this.goBack()}>
+          <Button block={true} light={true} onPress={() => this.props.goBack()}>
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
@@ -258,10 +256,11 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
     dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount)),
-  insertDataManually: () => dispatch(paymentRequestManualEntry())
+  insertDataManually: () => dispatch(paymentRequestManualEntry()),
+  goBack: () => dispatch(paymentRequestGoBack())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ScanQRCodeScreen);
+)(ScanQrCodeScreen);

@@ -1,4 +1,9 @@
+import { Platform } from "react-native";
+
 const ROUTES = {
+  // on Android, the URI prefix contains a host in addition to scheme
+  PREFIX: Platform.OS === "android" ? "ioit://ioit/" : "ioit://",
+
   // Ingress
   INGRESS: "INGRESS",
 
