@@ -10,7 +10,6 @@ import {
   Container,
   Content,
   H1,
-  Icon,
   Left,
   Text,
   View
@@ -19,14 +18,15 @@ import * as React from "react";
 import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { Psp } from "../../../definitions/pagopa/Psp";
-import { WalletAPI } from "../../api/wallet/wallet-api";
-import { WalletStyles } from "../../components/styles/wallet";
-import AppHeader from "../../components/ui/AppHeader";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
-import { getPspFee, getPspId, getPspLogoUrl } from "../../types/wallet";
-import { amountBuilder } from "../../utils/stringBuilder";
+import { Psp } from "../../../../definitions/pagopa/Psp";
+import { WalletAPI } from "../../../api/wallet/wallet-api";
+import { WalletStyles } from "../../../components/styles/wallet";
+import AppHeader from "../../../components/ui/AppHeader";
+import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
+import { getPspFee, getPspId, getPspLogoUrl } from "../../../types/wallet";
+import { amountBuilder } from "../../../utils/stringBuilder";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -53,19 +53,13 @@ const style = StyleSheet.create({
 
   flexStart: {
     flexDirection: "row",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    width: 100,
+    height: 50
   }
 });
 
 export default class PickPspScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
-  }
-
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   private extractFee = (p: Psp): number =>
     AmountInEuroCentsFromNumber.encode(getPspFee(p));
 
@@ -74,8 +68,11 @@ export default class PickPspScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
-              <Icon name="chevron-left" />
+            <Button
+              transparent={true}
+              onPress={() => this.props.navigation.goBack()}
+            >
+              <IconFont name="io-back" />
             </Button>
           </Left>
           <Body>
@@ -124,7 +121,7 @@ export default class PickPspScreen extends React.Component<Props, never> {
                     <View spacer={true} />
                   </Col>
                   <Col size={1} style={style.icon}>
-                    <Icon name="chevron-right" />
+                    <IconFont name="io-right" />
                   </Col>
                 </Grid>
               </View>
