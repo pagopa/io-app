@@ -136,7 +136,9 @@
       "pinInfo": "Enter the PIN",
       "reset": {
         "button": "I forgot my PIN",
-        "tip": "To reset your PIN you will have to login again with your SPID account."
+        "button_short": "Reset PIN",
+        "tip": "To reset your PIN you will have to login again with your SPID account.",
+        "tip_short": "You will have to login again."
       },
       "confirmValid": "Correct PIN",
       "confirmInvalid": "Invalid PIN"
