@@ -14,14 +14,15 @@ import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
-import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
+import { CardEnum } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
-import { fetchCardsRequest } from "../../store/actions/wallet/cards";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
+import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardsSelector } from "../../store/reducers/wallet/cards";
+import { walletsSelector } from "../../store/reducers/wallet/wallets";
 
 type ScreenProps = {};
 
@@ -32,7 +33,7 @@ type ReduxMappedStateProps = Readonly<{
 type ReduxMappedDispatchProps = Readonly<{
   // temporary
   loadTransactions: () => void;
-  loadCards: () => void;
+  loadWallets: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -149,7 +150,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // WIP WIP create pivotal story
-    this.props.loadCards();
+    this.props.loadWallets();
     this.props.loadTransactions();
   }
 
@@ -185,12 +186,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cardsNumber: creditCardsSelector(state).length
+  cardsNumber: walletsSelector(state).length
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadCards: () => dispatch(fetchCardsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequest())
 });
 export default connect(
   mapStateToProps,

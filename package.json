@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
+    "postinstall": "patch-package && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest",
     "prettify": "prettier --write 'ts/**/*.ts'",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
@@ -12,7 +12,8 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.30/api_proxy.yaml --out-dir ./definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.29/api_public.yaml --out-dir ./definitions/backend",
+    "generate:pagopa-api-definitions": "rimraf definitions/pagopa && mkdir -p definitions/pagopa && gen-api-models --api-spec https://acardste.vaservices.eu:1443/pp-restapi/v2/api-docs --out-dir ./definitions/pagopa",
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.40/api_proxy.yaml --out-dir ./definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.0.29/api_public.yaml --out-dir ./definitions/backend",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {
@@ -57,7 +58,7 @@
     "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0",
     "tslib": "^1.9.0",
-    "uuid": "^3.2.1",
+    "uuid": "^3.3.2",
     "validator": "^10.2.0",
     "whatwg-fetch": "git://github.com/github/fetch#141665b1477bb25ac1427b2cb3e05203453e30cb"
   },
@@ -85,13 +86,14 @@
     "@types/validator": "^9.4.1",
     "babel-jest": "23.2.0",
     "babel-preset-react-native": "4.0.0",
-    "danger": "^3.7.20",
+    "danger": "^3.8.0",
     "danger-plugin-digitalcitizenship": "^0.3.1",
     "detox": "^8.0.0",
     "italia-tslint-rules": "^0.1.1",
     "italia-utils": "^3.11.1",
     "jest": "23.4.1",
     "node-fetch": "^2.1.2",
+    "patch-package": "^5.1.1",
     "prettier": "1.13.0",
     "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.3.1",
@@ -103,7 +105,7 @@
     "tslint-immutable": "^4.6.0",
     "tslint-language-service": "^0.9.9",
     "tslint-plugin-prettier": "^1.3.0",
-    "tslint-react": "^3.5.1",
+    "tslint-react": "^3.6.0",
     "tslint-sonarts": "^1.7.0",
     "typescript": "^2.9.1",
     "typestrict": "^0.0.9"

@@ -1,6 +1,15 @@
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
+ * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
+import { Either } from "fp-ts/lib/Either";
+import * as t from "io-ts";
+import {
+  AmountInEuroCents,
+  PaymentNoticeQrCodeFromString,
+  RptId,
+  rptIdFromPaymentNoticeQrCode
+} from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -17,13 +26,34 @@ import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import AppHeader from "../../components/ui/AppHeader";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import { connect } from "react-redux";
+import AppHeader from "../../../components/ui/AppHeader";
+import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import {
+  paymentRequestGoBack,
+  paymentRequestManualEntry,
+  paymentRequestTransactionSummaryFromRptId
+} from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPaymentStep } from "../../../store/reducers/wallet/payment";
+import variables from "../../../theme/variables";
 
-type Props = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  valid: boolean;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  insertDataManually: () => void;
+  goBack: () => void;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -106,20 +136,42 @@ const styles = StyleSheet.create({
   }
 });
 
-export class QRcodeAcquisitionByScannerScreen extends React.Component<
-  Props,
-  never
-> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 2000;
+
+const rptIdFromQrCodeString = (qrCodeString: string): Either<t.Errors, RptId> =>
+  PaymentNoticeQrCodeFromString.decode(qrCodeString).chain(
+    rptIdFromPaymentNoticeQrCode
+  );
+
+class ScanQrCodeScreen extends React.Component<Props, never> {
+  private qrCodeRead = (data: string) => {
+    const rptId = rptIdFromQrCodeString(data);
+    const paymentNotice = PaymentNoticeQrCodeFromString.decode(data);
+    if (rptId.isRight() && paymentNotice.isRight()) {
+      // successful conversion to RptId
+      this.props.showTransactionSummary(
+        rptId.value,
+        paymentNotice.value.amount
+      );
+    } // else error stating that QR code is invalid @https://www.pivotaltracker.com/story/show/159003368
+    else {
+      setTimeout(
+        () => (this.refs.scanner as QRCodeScanner).reactivate(),
+        QRCODE_SCANNER_REACTIVATION_TIME_MS
+      );
+    }
+  };
 
   public render(): React.ReactNode {
+    if (!this.props.valid) {
+      return null;
+    }
+
     return (
       <Container style={styles.white}>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -129,6 +181,10 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
         </AppHeader>
         <ScrollView bounces={false}>
           <QRCodeScanner
+            onRead={(reading: { data: string }) =>
+              this.qrCodeRead(reading.data)
+            }
+            ref="scanner" // tslint:disable-line jsx-no-string-ref
             containerStyle={styles.cameraContainer}
             showMarker={true}
             cameraStyle={styles.camera}
@@ -176,11 +232,15 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
           />
         </ScrollView>
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button
+            block={true}
+            primary={true}
+            onPress={() => this.props.insertDataManually()}
+          >
             <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
           </Button>
           <View spacer={true} />
-          <Button block={true} light={true} onPress={() => this.goBack()}>
+          <Button block={true} light={true} onPress={() => this.props.goBack()}>
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>
         </View>
@@ -188,3 +248,19 @@ export class QRcodeAcquisitionByScannerScreen extends React.Component<
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  valid: getPaymentStep(state) === "PaymentStateQrCode"
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
+    dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount)),
+  insertDataManually: () => dispatch(paymentRequestManualEntry()),
+  goBack: () => dispatch(paymentRequestGoBack())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ScanQrCodeScreen);

@@ -1,29 +1,27 @@
 import * as React from "react";
 
+import { DateFromISOString } from "io-ts-types";
+import pick from "lodash/pick";
 import { Button, Icon, Left, ListItem, Right, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 
-import { DateFromISOString } from "io-ts-types";
-
-import { PaymentData } from "../../../definitions/backend/PaymentData";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import {
+  messageDetailsByIdSelector,
+  MessageDetailsByIdState
+} from "../../store/reducers/entities/messages/messagesById";
+import { GlobalState } from "../../store/reducers/types";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { formatPaymentAmount } from "../../utils/payment";
 
-export type OwnProps = Readonly<{
-  createdAt: string;
-  id: string;
-  markdown: string;
-  navigation: NavigationScreenProp<NavigationState>;
-  paymentData: PaymentData;
-  serviceName: string;
-  serviceOrganizationName: string;
-  serviceDepartmentName: string;
-  subject: string;
-}>;
+export type OwnProps = MessageDetailsByIdState &
+  Readonly<{
+    navigation: NavigationScreenProp<NavigationState>;
+  }>;
 
 export type Props = OwnProps;
 
@@ -31,18 +29,31 @@ export type Props = OwnProps;
  * Implements a component that show a message in the MessagesScreen List
  */
 class MessageComponent extends React.Component<Props> {
-  public render() {
-    const { navigate } = this.props.navigation;
+  private handleOnPress = () => {
+    const params = {
+      details: pick(this.props, [
+        "createdAt",
+        "id",
+        "markdown",
+        "paymentData",
+        "serviceDepartmentName",
+        "serviceName",
+        "serviceOrganizationName",
+        "subject"
+      ])
+    };
 
+    this.props.navigation.navigate(ROUTES.MESSAGE_DETAILS, params);
+  };
+
+  public render() {
     const {
-      createdAt,
       id,
-      markdown,
-      paymentData,
-      serviceDepartmentName,
-      serviceName,
       serviceOrganizationName,
-      subject
+      serviceDepartmentName,
+      subject,
+      createdAt,
+      paymentData
     } = this.props;
 
     // try to convert createdAt to a human representation, fall back to original
@@ -52,22 +63,7 @@ class MessageComponent extends React.Component<Props> {
       .getOrElse(createdAt);
 
     return (
-      <ListItem
-        key={id}
-        onPress={() => {
-          navigate(ROUTES.MESSAGE_DETAILS, {
-            details: {
-              createdAt,
-              markdown,
-              paymentData,
-              serviceName,
-              serviceDepartmentName,
-              serviceOrganizationName,
-              subject
-            }
-          });
-        }}
-      >
+      <ListItem key={id} onPress={this.handleOnPress}>
         <View padded={paymentData !== undefined}>
           <Left>
             <Text leftAlign={true} alternativeBold={true}>
@@ -94,9 +90,17 @@ class MessageComponent extends React.Component<Props> {
   }
 }
 
+const mapStateToProps = (state: GlobalState, { id }: Props) => {
+  const messageDetails = messageDetailsByIdSelector(id)(state);
+
+  return messageDetails || {};
+};
+
+const connectedMessageComponent = connect(mapStateToProps)(MessageComponent);
+
 const StyledMessageComponent = connectStyle(
   "UIComponent.MessageComponent",
   {},
   mapPropsToStyleNames
-)(MessageComponent);
+)(connectedMessageComponent);
 export default StyledMessageComponent;

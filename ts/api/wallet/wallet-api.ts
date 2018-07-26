@@ -5,16 +5,11 @@
  * the app to get the required data
  */
 
-// Required to build user-displayable contents (e.g. "last used ...")
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import I18n from "../../i18n";
-import { CreditCard, CreditCardId } from "../../types/CreditCard";
+import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { TransactionManager, WalletTransaction } from "../../types/wallet";
 import { NotifiedTransaction, TransactionSummary } from "../../types/wallet";
 import { TransactionEntity, TransactionSubject } from "../../types/wallet";
 
-// temporarily making this a variable
-// (to mock the deleteCreditCard() api more easily)
 /**
  * Mocked wallet data
  */
@@ -36,49 +31,105 @@ const managers: ReadonlyArray<TransactionManager> = [
   }
 ];
 
-const cards: ReadonlyArray<CreditCard> = [
+const wallets: ReadonlyArray<Wallet> = [
   {
-    id: 1 as CreditCardId,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
-      "wallet.today"
-    )} 07:34` as NonEmptyString,
-    pan: "375987654302001",
-    owner: "Mario Rossi" as NonEmptyString,
-    expirationDate: "10/20" as NonEmptyString
+    creditCard: {
+      brandLogo: "AMEX",
+      expireMonth: "10",
+      expireYear: "20",
+      flag3dsVerified: false,
+      holder: "Mario Rossi",
+      id: -1,
+      pan: "2001"
+    },
+    favourite: false,
+    idPsp: 4,
+    idWallet: 1,
+    lastUsage: new Date("2018-07-16T07:34:00.000Z"),
+    psp: {
+      businessName: "Poste Italiane",
+      fixedCost: {
+        amount: 50,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   },
   {
-    id: 2 as CreditCardId,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
-      "wallet.yesterday"
-    )} 07:34` as NonEmptyString,
-    pan: "4324520169880454",
-    owner: "John Doe" as NonEmptyString,
-    expirationDate: "11/21" as NonEmptyString
+    creditCard: {
+      brandLogo: "VISA",
+      expireMonth: "11",
+      expireYear: "21",
+      flag3dsVerified: false,
+      holder: "John Doe",
+      id: -1,
+      pan: "4545"
+    },
+    favourite: false,
+    idPsp: 3,
+    idWallet: 2,
+    lastUsage: new Date("2018-02-14T10:21:00.000Z"),
+    psp: {
+      businessName: "Visa",
+      fixedCost: {
+        amount: 150,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   },
   {
-    id: 3 as CreditCardId,
-    lastUsage: I18n.t("wallet.noNewTransactions") as NonEmptyString,
-    pan: "5400470862342849",
-    owner: "Mario Bianchi" as NonEmptyString,
-    expirationDate: "12/22" as NonEmptyString
+    creditCard: {
+      brandLogo: "MASTERCARD",
+      expireMonth: "12",
+      expireYear: "22",
+      flag3dsVerified: false,
+      holder: "Mario Bianchi",
+      id: -1,
+      pan: "2849"
+    },
+    favourite: false,
+    idPsp: 2,
+    idWallet: 3,
+    lastUsage: new Date("-"),
+    psp: {
+      businessName: "Mastercard",
+      fixedCost: {
+        amount: 200,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   },
   {
-    id: 4 as CreditCardId,
-    lastUsage: `${I18n.t("wallet.lastUsage")} ${I18n.t(
-      "wallet.today"
-    )} 09:12` as NonEmptyString,
-    pan: "4000123456789010",
-    owner: "John Smith" as NonEmptyString,
-    expirationDate: "09/19" as NonEmptyString
+    creditCard: {
+      brandLogo: "VISA",
+      expireMonth: "09",
+      expireYear: "19",
+      flag3dsVerified: false,
+      holder: "John Smith",
+      id: -1,
+      pan: "9010"
+    },
+    favourite: false,
+    idPsp: 3,
+    idWallet: 4,
+    lastUsage: new Date("2018-01-22T14:54:00.000Z"),
+    psp: {
+      businessName: "Visa",
+      fixedCost: {
+        amount: 125,
+        currency: "EUR",
+        decimalDigits: 2
+      }
+    }
   }
 ];
 
 const transactions: ReadonlyArray<WalletTransaction> = [
   {
     id: 1,
-    cardId: 1 as CreditCardId,
-    date: "17/04/2018",
-    time: "07:34",
+    cardId: 1,
     isoDatetime: "2018-04-17T07:34:00.000Z",
     paymentReason: "Certificato di residenza",
     recipient: "Comune di Gallarate",
@@ -89,9 +140,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 2,
-    cardId: 2 as CreditCardId,
-    date: "16/04/2018",
-    time: "15:01",
+    cardId: 2,
     isoDatetime: "2018-04-16T15:01:00.000Z",
     paymentReason: "Spesa Supermarket",
     recipient: "Segrate",
@@ -102,9 +151,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 3,
-    cardId: 4 as CreditCardId,
-    date: "15/04/2018",
-    time: "08:56",
+    cardId: 4,
     isoDatetime: "2018-04-15T08:56:00.000Z",
     paymentReason: "Prelievo contante",
     recipient: "Busto Arsizio",
@@ -115,9 +162,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 4,
-    cardId: 2 as CreditCardId,
-    date: "14/02/2018",
-    time: "10:21",
+    cardId: 2,
     isoDatetime: "2018-02-14T10:21:00.000Z",
     paymentReason: "Accredito per storno",
     recipient: "Banca Sella",
@@ -128,9 +173,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 5,
-    cardId: 4 as CreditCardId,
-    date: "22/01/2018",
-    time: "14:54",
+    cardId: 4,
     isoDatetime: "2018-01-22T14:54:00.000Z",
     paymentReason: "Esecuzione atti notarili",
     recipient: "Comune di Legnano",
@@ -141,9 +184,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 6,
-    cardId: 4 as CreditCardId,
-    date: "01/01/2018",
-    time: "23:34",
+    cardId: 4,
     isoDatetime: "2018-01-01T23:34:00.000Z",
     paymentReason: "Pizzeria Da Gennarino",
     recipient: "Busto Arsizio",
@@ -154,9 +195,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 7,
-    cardId: 1 as CreditCardId,
-    date: "22/12/2017",
-    time: "14:23",
+    cardId: 1,
     isoDatetime: "2017-12-22T14:23:00.000Z",
     paymentReason: "Rimborso TARI 2012",
     recipient: "Comune di Gallarate",
@@ -167,9 +206,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 8,
-    cardId: 1 as CreditCardId,
-    date: "17/12/2017",
-    time: "12:34",
+    cardId: 1,
     isoDatetime: "2017-12-17T12:34:00.000Z",
     paymentReason: "Ristorante I Pini",
     recipient: "Busto Arsizio",
@@ -180,9 +217,7 @@ const transactions: ReadonlyArray<WalletTransaction> = [
   },
   {
     id: 9,
-    cardId: 4 as CreditCardId,
-    date: "13/12/2017",
-    time: "10:34",
+    cardId: 4,
     isoDatetime: "2017-12-13T10:34:00.000Z",
     paymentReason: "Estetista Estella",
     recipient: "Milano - via Parini 12",
@@ -236,8 +271,8 @@ const transactionSubject: Readonly<TransactionSubject> = {
 // will actually fetch data from the proxy/pagopa)
 // @https://www.pivotaltracker.com/story/show/157770129
 export class WalletAPI {
-  public static async getCreditCards(): Promise<ReadonlyArray<CreditCard>> {
-    return cards;
+  public static async getWallets(): Promise<ReadonlyArray<Wallet>> {
+    return wallets;
   }
 
   public static async getTransactions(): Promise<

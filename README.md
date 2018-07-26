@@ -267,6 +267,15 @@ L'applicazione utilizza un custom handler per intercettare e notificare errori j
 L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
 
 
+### Deep linking
+
+L'applicazione è in grado di gestire i _deep link_. Lo schema URL è: `ioit://`. Il formato del link varia in base alla piattaforma:
+
+- Android: `ioit://ioit/<route-name>`
+- iOS: `ioit://<route-name>`
+
+`<route-name>` dev'essere un valore contenuto nel file `ts/navigation/routes.ts`.
+
 ### Fonts
 
 L'applicazione utilizza il font `Titillium Web`. I fonts vengono gestiti in modo differente da Android e iOS. Per utilizzare il font `TitilliumWeb-SemiBoldItalic` ad esempio è necessario applicare le seguenti proprietà per Android:

@@ -24,6 +24,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { TransactionManager } from "../../types/wallet";
+import { amountBuilder } from "../../utils/stringBuilder";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -115,7 +116,7 @@ export class AddManagerToCardScreen extends React.Component<Props, never> {
                       <Text style={style.feeText}>
                         {`${I18n.t("wallet.addManager.maxFee")} `}
                         <Text bold={true} style={style.feeText}>
-                          {`${item.maxFee} € `}
+                          {amountBuilder(item.maxFee)}
                         </Text>
                       </Text>
                     </Row>

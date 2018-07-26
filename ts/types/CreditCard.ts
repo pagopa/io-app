@@ -1,13 +1,18 @@
-/**
- * Definition of the CreditCard type, with the
- * properties required for UI purposes.
- */
-// TODO: this type may need to be aligned with the PagoPA one
-// @https://www.pivotaltracker.com/story/show/157769657
+import {
+  UNKNOWN_CARD_HOLDER,
+  UNKNOWN_CARD_PAN,
+  UNKNOWN_EXPIRATION_DATE,
+  UNKNOWN_LAST_USAGE,
+  UNKNWON_CARD_TYPE
+} from "./unknown";
+// TODO: define the correct terminology (card vs wallet and when) @https://www.pivotaltracker.com/story/show/159229359
 
+import { fromEither, fromNullable, none, some } from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import { NonEmptyString, PatternString } from "italia-ts-commons/lib/strings";
 import { tag } from "italia-ts-commons/lib/types";
+import { Wallet } from "../../definitions/pagopa/Wallet";
+import I18n from "../i18n";
+import { convertDateToWordDistance } from "../utils/convertDateToWordDistance";
 
 interface ICreditCardIdTag {
   readonly kind: "CreditCardId";
@@ -16,112 +21,65 @@ interface ICreditCardIdTag {
 export const CreditCardId = tag<ICreditCardIdTag>()(t.number);
 export type CreditCardId = t.TypeOf<typeof CreditCardId>;
 
-export type CreditCardType =
-  | "VISAELECTRON"
-  | "MAESTRO"
-  | "UNIONPAY"
-  | "VISA"
-  | "MASTERCARD"
-  | "AMEX"
-  | "DINERS"
-  | "DISCOVER"
-  | "JCB"
-  | "POSTEPAY"
-  | "UNKNOWN";
-
-const CreditCardUnknown = t.type(
-  {
-    id: CreditCardId,
-    lastUsage: NonEmptyString,
-    pan: PatternString("^[0-9]+$"),
-    owner: NonEmptyString,
-    expirationDate: NonEmptyString
-  },
-  "UNKNOWN"
-);
-
-const newCreditCardType = (pattern: string, name: string) =>
-  t.refinement(
-    CreditCardUnknown,
-    cc => PatternString(pattern).is(cc.pan),
-    name
-  );
-
-const CreditCardElectron = newCreditCardType(
-  "^(4026|417500|4405|4508|4844|4913|4917)[0-9]{12}$",
-  "VISAELECTRON"
-);
-type CreditCardElectron = t.TypeOf<typeof CreditCardElectron>;
-
-const CreditCardMaestro = newCreditCardType(
-  "^(5018|5020|5038|5612|5893|6304|6759|6761|6762|6763|0604|6390)[0-9]{12}$",
-  "MAESTRO"
-);
-type CreditCardMaestro = t.TypeOf<typeof CreditCardMaestro>;
-
-const CreditCardUnionpay = newCreditCardType("^(62|88)d+$", "UNIONPAY");
-type CreditCardUnionpay = t.TypeOf<typeof CreditCardUnionpay>;
-
-const CreditCardVisa = newCreditCardType("^4[0-9]{12}(?:[0-9]{3})?$", "VISA");
-type CreditCardVisa = t.TypeOf<typeof CreditCardVisa>;
-
-const CreditCardMastercard = newCreditCardType(
-  "^5[1-5][0-9]{14}$",
-  "MASTERCARD"
-);
-type CreditCardMastercard = t.TypeOf<typeof CreditCardMastercard>;
-
-const CreditCardAmex = newCreditCardType("^3[47][0-9]{13}$", "AMEX");
-type CreditCardAmex = t.TypeOf<typeof CreditCardAmex>;
-
-const CreditCardDiners = newCreditCardType(
-  "^3(?:0[0-5]|[68][0-9])[0-9]{11}$",
-  "DINERS"
-);
-type CreditCardDiners = t.TypeOf<typeof CreditCardDiners>;
-
-const CreditCardDiscover = newCreditCardType(
-  "^6(?:011|5[0-9]{2})[0-9]{12}$",
-  "DISCOVER"
-);
-type CreditCardDiscover = t.TypeOf<typeof CreditCardDiscover>;
-
-const CreditCardJcb = newCreditCardType("^(?:2131|1800|35d{3})d{11}$", "JCB");
-type CreditCardJcb = t.TypeOf<typeof CreditCardJcb>;
-
-const CreditCardPostepay = newCreditCardType(
-  "^(402360|402361|403035|417631|529948)d{11}$",
-  "POSTEPAY"
-);
-type CreditCardPostepay = t.TypeOf<typeof CreditCardPostepay>;
-
-export const CreditCard = t.union([
-  CreditCardElectron,
-  CreditCardMaestro,
-  CreditCardUnionpay,
-  CreditCardVisa,
-  CreditCardMastercard,
-  CreditCardAmex,
-  CreditCardDiners,
-  CreditCardDiscover,
-  CreditCardJcb,
-  CreditCardPostepay,
-  CreditCardUnknown
+export const CreditCardType = t.union([
+  t.literal("VISAELECTRON"),
+  t.literal("MAESTRO"),
+  t.literal("UNIONPAY"),
+  t.literal("VISA"),
+  t.literal("MASTERCARD"),
+  t.literal("AMEX"),
+  t.literal("DINERS"),
+  t.literal("DISCOVER"),
+  t.literal("JCB"),
+  t.literal("POSTEPAY"),
+  t.literal("UNKNOWN")
 ]);
-export type CreditCard = t.TypeOf<typeof CreditCard>;
 
-export const UNKNOWN_CARD: CreditCard = {
-  owner: "?" as NonEmptyString,
-  pan: "0000000000000000",
-  expirationDate: "??/??" as NonEmptyString,
-  id: -1 as CreditCardId,
-  lastUsage: "?" as NonEmptyString
+export type CreditCardType = t.TypeOf<typeof CreditCardType>;
+export const getCardType = (w: Wallet): CreditCardType =>
+  fromNullable(w.creditCard) // tslint:disable no-inferred-empty-object-type (WIP: any clue as to why this occurs?)
+    .chain(card => fromEither(CreditCardType.decode(card.brandLogo)))
+    .getOrElse(UNKNWON_CARD_TYPE);
+
+export const getWalletId = (w: Wallet): number =>
+  fromNullable(w.idWallet).getOrElse(-1);
+
+export const getCardPan = (w: Wallet): string =>
+  fromNullable(w.creditCard)
+    .chain(card => fromNullable(card.pan))
+    .getOrElse(UNKNOWN_CARD_PAN);
+
+export const getCardLastUsage = (w: Wallet): Date =>
+  fromNullable(w.lastUsage).getOrElse(UNKNOWN_LAST_USAGE);
+
+export const getCardFormattedLastUsage = (w: Wallet): string => {
+  const neverString = "never";
+  const lastUsageString = convertDateToWordDistance(
+    getCardLastUsage(w),
+    I18n.t("datetimes.yesterday"),
+    I18n.t("datetimes.todayAt"),
+    neverString
+  );
+  return lastUsageString === neverString
+    ? I18n.t("cardComponent.neverUsed")
+    : `${I18n.t("cardComponent.lastUsage")} ${lastUsageString}`;
 };
 
-export const getCardType = (cc: CreditCard): CreditCardType =>
-  CreditCard.types
-    .filter(type => type.is(cc) && type.name !== "UNKNOWN")
-    .reduce(
-      (p, c) => (c ? (c.name as CreditCardType) : p),
-      "UNKNOWN" as CreditCardType
-    );
+export const getCardExpirationDate = (w: Wallet): string =>
+  fromNullable(w.creditCard)
+    .chain(card => {
+      const values: ReadonlyArray<any> = [
+        fromNullable(card.expireMonth),
+        fromNullable(card.expireYear)
+      ];
+      if (values.every(v => v.isSome())) {
+        return some(values.map(v => v.value).join("/"));
+      }
+      return none;
+    })
+    .getOrElse(UNKNOWN_EXPIRATION_DATE);
+
+export const getCardHolder = (w: Wallet): string =>
+  fromNullable(w.creditCard)
+    .chain(card => fromNullable(card.holder))
+    .getOrElse(UNKNOWN_CARD_HOLDER);
