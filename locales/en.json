@@ -397,5 +397,9 @@
     "empty": {
       "default": "No preference set"
     }
+  },
+  "services": {
+    "title": "Available services",
+    "subtitle": "Here you can enable/disable each service, access its details, the terms of use and customize the notifications you receive."
   }
 }
