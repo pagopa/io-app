@@ -22,6 +22,7 @@ import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
 import { PinloginActions } from "./pinlogin";
 import { PinSetActions } from "./pinset";
+import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { WalletActions } from "./wallet";
@@ -46,6 +47,7 @@ export type Action =
   | PinSetActions
   | OnboardingActions
   | PinloginActions
+  | PreferencesActions
   | ProfileActions
   | ServicesActions
   | WalletActions;
