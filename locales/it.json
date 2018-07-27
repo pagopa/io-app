@@ -398,6 +398,7 @@
     }
   },
   "services": {
+    "headerTitle": "Servizi",
     "title": "Elenco servizi",
     "subtitle": "Puoi attivare/disattivare ogni servizio, oppure accedere alla sua scheda per scoprirne i dettagli, le condizioni d'uso e personalizzarne le notifiche."
   }

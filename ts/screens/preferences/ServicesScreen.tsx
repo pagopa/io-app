@@ -1,5 +1,6 @@
 import {
   Body,
+  Button,
   Container,
   Content,
   H3,
@@ -11,6 +12,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
@@ -24,15 +26,28 @@ import { GlobalState } from "../../store/reducers/types";
 
 type ReduxMappedProps = Readonly<{}>;
 
-type Props = ReduxMappedProps & ReduxProps;
+type OwnProps = Readonly<{
+  navigation: NavigationScreenProp<NavigationState>;
+}>;
+
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 class ServicesScreen extends React.Component<Props> {
+  private goBack() {
+    this.props.navigation.goBack();
+  }
+
   public render() {
     return (
       <Container>
         <AppHeader>
+          <Left>
+            <Button transparent={true} onPress={_ => this.goBack()}>
+              <IconFont name="io-back" />
+            </Button>
+          </Left>
           <Body>
-            <Text>{DeviceInfo.getApplicationName()}</Text>
+            <Text>{I18n.t("services.headerTitle")}</Text>
           </Body>
         </AppHeader>
 
@@ -46,9 +61,6 @@ class ServicesScreen extends React.Component<Props> {
             <ListItem>
               <Left>
                 <H3>Anagrafe</H3>
-                <Text>
-                  Servizio attivo. Notifiche push attive. Email attive.
-                </Text>
               </Left>
               <Right>
                 <IconFont name="io-right" />
