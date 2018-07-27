@@ -41,16 +41,10 @@ export type Props = ReduxMappedProps & ReduxProps;
  * If the primary language of a locale doesn't have a translation,
  * it gets returned verbatim.
  */
-function translateLocales(
-  locales: ReadonlyArray<string>
-): ReadonlyArray<string> {
-  return locales
-    .map(_ =>
-      getLocalePrimary(_)
-        .map(l => I18n.t(`locales.${l}`, { defaultValue: l }))
-        .getOrElse("")
-    )
-    .filter(_ => _.length > 0);
+function translateLocale(locale: string): string {
+  return getLocalePrimary(locale)
+    .map(l => I18n.t(`locales.${l}`, { defaultValue: l }))
+    .getOrElse(locale);
 }
 
 /**
@@ -73,7 +67,7 @@ class PreferencesScreen extends React.Component<Props> {
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
-      .map(_ => translateLocales(_).join(", "))
+      .map(_ => translateLocale(_[0]))
       .getOrElse(I18n.t("remoteStates.notAvailable"));
 
     return (
@@ -98,6 +92,14 @@ class PreferencesScreen extends React.Component<Props> {
             <View>
               <List>
                 <PreferenceItem
+                  kind="action"
+                  title={I18n.t("preferences.list.services")}
+                  valuePreview={I18n.t("preferences.list.services_description")}
+                  onClick={() => {
+                    Alert.alert("Not implemented yet");
+                  }}
+                />
+                <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.email")}
                   icon="email"
@@ -108,14 +110,6 @@ class PreferencesScreen extends React.Component<Props> {
                   title={I18n.t("preferences.list.mobile_phone")}
                   icon="phone-number"
                   valuePreview={profileData.spid_mobile_phone}
-                />
-                <PreferenceItem
-                  kind="action"
-                  title={I18n.t("preferences.list.services")}
-                  valuePreview={I18n.t("preferences.list.services_description")}
-                  onClick={() => {
-                    Alert.alert("Not implemented yet");
-                  }}
                 />
                 <PreferenceItem
                   kind="value"
