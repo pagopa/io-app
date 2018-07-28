@@ -15,7 +15,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "service-list"
+          "io-service-list"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -33,7 +33,7 @@
       "properties": {
         "order": 99,
         "id": 40,
-        "name": "service-list",
+        "name": "io-service-list",
         "prevSize": 24,
         "code": 59664
       },
@@ -55,7 +55,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "phone-number"
+          "io-phone-number"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -73,7 +73,7 @@
       "properties": {
         "order": 97,
         "id": 39,
-        "name": "phone-number",
+        "name": "io-phone-number",
         "prevSize": 24,
         "code": 59663
       },
@@ -95,7 +95,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "next"
+          "io-next"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -113,7 +113,7 @@
       "properties": {
         "order": 95,
         "id": 38,
-        "name": "next",
+        "name": "io-next",
         "prevSize": 24,
         "code": 59652
       },
@@ -135,7 +135,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "user-fingerprint"
+          "io-user-fingerprint"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -153,7 +153,7 @@
       "properties": {
         "order": 94,
         "id": 37,
-        "name": "user-fingerprint",
+        "name": "io-user-fingerprint",
         "prevSize": 24,
         "code": 59653
       },
@@ -175,7 +175,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "receipt"
+          "io-receipt"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -193,7 +193,7 @@
       "properties": {
         "order": 93,
         "id": 36,
-        "name": "receipt",
+        "name": "io-receipt",
         "prevSize": 24,
         "code": 59654
       },
@@ -215,7 +215,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "pagopa-notice"
+          "io-pagopa-notice"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -233,7 +233,7 @@
       "properties": {
         "order": 92,
         "id": 35,
-        "name": "pagopa-notice",
+        "name": "io-pagopa-notice",
         "prevSize": 24,
         "code": 59655
       },
@@ -259,7 +259,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "notifications"
+          "io-notifications"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -283,7 +283,7 @@
       "properties": {
         "order": 91,
         "id": 34,
-        "name": "notifications",
+        "name": "io-notifications",
         "prevSize": 24,
         "code": 59656
       },
@@ -305,7 +305,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "medical"
+          "io-medical"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -323,7 +323,7 @@
       "properties": {
         "order": 89,
         "id": 33,
-        "name": "medical",
+        "name": "io-medical",
         "prevSize": 24,
         "code": 59657
       },
@@ -345,7 +345,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "languages"
+          "io-languages"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -363,7 +363,7 @@
       "properties": {
         "order": 90,
         "id": 32,
-        "name": "languages",
+        "name": "io-languages",
         "prevSize": 24,
         "code": 59658
       },
@@ -385,7 +385,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "email"
+          "io-email"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -403,7 +403,7 @@
       "properties": {
         "order": 88,
         "id": 31,
-        "name": "email",
+        "name": "io-email",
         "prevSize": 24,
         "code": 59659
       },
@@ -423,7 +423,7 @@
         ],
         "grid": 24,
         "tags": [
-          "domicilio-digitale"
+          "io-domicilio-digitale"
         ],
         "isMulticolor": false,
         "isMulticolor2": false,
@@ -443,7 +443,7 @@
       "properties": {
         "order": 98,
         "id": 30,
-        "name": "domicilio-digitale",
+        "name": "io-domicilio-digitale",
         "prevSize": 24,
         "code": 59660
       },
@@ -465,7 +465,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "certificate"
+          "io-certificate"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -483,7 +483,7 @@
       "properties": {
         "order": 86,
         "id": 29,
-        "name": "certificate",
+        "name": "io-certificate",
         "prevSize": 24,
         "code": 59661
       },
@@ -517,7 +517,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "bank"
+          "io-bank"
         ],
         "colorPermutations": {
           "11523012552552551921111301": [
@@ -553,7 +553,7 @@
       "properties": {
         "order": 85,
         "id": 28,
-        "name": "bank",
+        "name": "io-bank",
         "prevSize": 24,
         "code": 59662
       },
@@ -621,7 +621,7 @@
         "isMulticolor2": false,
         "grid": 24,
         "tags": [
-          "calendar-bg"
+          "io-calendar-bg"
         ],
         "colorPermutations": {
           "11523012552552551921111301": []
@@ -631,7 +631,7 @@
       "properties": {
         "order": 83,
         "id": 26,
-        "name": "calendar-bg",
+        "name": "io-calendar-bg",
         "prevSize": 24,
         "code": 59650
       },
