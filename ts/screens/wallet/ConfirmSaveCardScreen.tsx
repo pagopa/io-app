@@ -19,6 +19,9 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import FooterButtons, {
+  FooterButtonsStyle
+} from "../../components/ui/FooterButtons";
 import IconFont from "../../components/ui/IconFont";
 import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
@@ -60,6 +63,20 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
   }
 
   public render(): React.ReactNode {
+    const primaryButtonProps = {
+      block: true,
+      primary: true,
+      title: I18n.t("wallet.saveCard.save")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      light: true,
+      bordered: true,
+      onPress: () => this.goBack(),
+      title: I18n.t("global.buttons.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
@@ -95,20 +112,11 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
             </Col>
           </Grid>
         </Content>
-        <View footer={true}>
-          <Button block={true} primary={true}>
-            <Text>{I18n.t("wallet.saveCard.save")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            bordered={true}
-            onPress={(): void => this.goBack()}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
+        <FooterButtons
+          leftButton={primaryButtonProps}
+          rightButton={secondaryButtonProps}
+          style={FooterButtonsStyle.HALF}
+        />
       </Container>
     );
   }

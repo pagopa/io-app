@@ -21,6 +21,9 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
+import FooterButtons, {
+  FooterButtonsStyle
+} from "../../components/ui/FooterButtons";
 import IconFont from "../../components/ui/IconFont";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
@@ -93,6 +96,21 @@ export class AddCardScreen extends React.Component<Props, State> {
       POSTEPAY: cardIcons.POSTEPAY,
       DINER: cardIcons.DINERS
     };
+
+    const primaryButtonProps = {
+      block: true,
+      primary: true,
+      onPress: () => this.props.navigation.navigate(ROUTES.WALLET_HOME),
+      title: I18n.t("global.buttons.continue")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      light: true,
+      onPress: () => this.props.navigation.goBack(),
+      title: I18n.t("global.buttons.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
@@ -209,23 +227,12 @@ export class AddCardScreen extends React.Component<Props, State> {
             </Item>
           </Content>
         </ScrollView>
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
-          >
-            <Text>{I18n.t("global.buttons.continue")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
+
+        <FooterButtons
+          leftButton={primaryButtonProps}
+          rightButton={secondaryButtonProps}
+          style={FooterButtonsStyle.HALF}
+        />
       </Container>
     );
   }

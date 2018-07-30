@@ -19,6 +19,9 @@ import { connect } from "react-redux";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
+import FooterButtons, {
+  FooterButtonsStyle
+} from "../../../components/ui/FooterButtons";
 import IconFont from "../../../components/ui/IconFont";
 import CardComponent from "../../../components/wallet/card";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
@@ -60,6 +63,19 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       return null;
     }
 
+    const primaryButtonProps = {
+      block: true,
+      onPress: () =>
+        this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD),
+      title: I18n.t("wallet.newPaymentMethod.newMethod")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      cancel: true,
+      title: I18n.t("global.buttons.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
@@ -98,20 +114,12 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             />
           </View>
         </Content>
-        <View footer={true}>
-          <Button
-            block={true}
-            onPress={() =>
-              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
-            }
-          >
-            <Text>{I18n.t("wallet.newPaymentMethod.newMethod")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button block={true} cancel={true}>
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
+
+        <FooterButtons
+          leftButton={primaryButtonProps}
+          rightButton={secondaryButtonProps}
+          style={FooterButtonsStyle.FULL}
+        />
       </Container>
     );
   }
