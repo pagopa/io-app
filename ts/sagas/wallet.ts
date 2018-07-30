@@ -260,16 +260,20 @@ function* completionHandler(_: PaymentRequestCompletion) {
   // retrieve transaction and store it
   // mocked data here
   const wallet: Wallet = yield select(selectedPaymentMethodSelector);
-  // tslint:disable-next-line saga-yield-return-type
-  const recipient = (yield select(getPaymentRecipient)).getOrElse(
-    UNKNOWN_RECIPIENT
+
+  const selectedRecipient: Option<EnteBeneficiario> = yield select(
+    getPaymentRecipient
   );
-  // tslint:disable-next-line saga-yield-return-type
-  const paymentReason = (yield select(getPaymentReason)).getOrElse(
-    UNKNOWN_PAYMENT_REASON
+  const recipient = selectedRecipient.getOrElse(UNKNOWN_RECIPIENT);
+
+  const selectedPaymentReason: Option<string> = yield select(getPaymentReason);
+  const paymentReason = selectedPaymentReason.getOrElse(UNKNOWN_PAYMENT_REASON);
+
+  const selectedCurrentAmount: AmountInEuroCents = yield select(
+    getCurrentAmount
   );
   const amount =
-    100 * AmountInEuroCentsFromNumber.encode(yield select(getCurrentAmount)); // tslint:disable-line saga-yield-return-type
+    100 * AmountInEuroCentsFromNumber.encode(selectedCurrentAmount);
   const feeOrUndefined = feeExtractor(wallet);
   const fee =
     100 *
