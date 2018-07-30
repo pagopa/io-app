@@ -24,7 +24,6 @@ import {
   ONBOARDING_CHECK_TOS,
   PIN_CREATE_FAILURE,
   PIN_CREATE_SUCCESS,
-  PIN_LOGIN_INITIALIZE,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_SUCCESS,
   START_ONBOARDING,
@@ -53,29 +52,22 @@ function* pinCheckSaga(): Iterator<Effect> {
   const pinCode: Option<PinString> = yield call(getPin);
   const doesPinExistInKeyChain = pinCode.isSome();
 
-  if (doesPinExistInKeyChain) {
-    // since we have an existing PIN code in the keychain,
-    // ask the user to login with it
-    yield put({
-      type: PIN_LOGIN_INITIALIZE
-    });
-    return;
-  }
+  if (!doesPinExistInKeyChain) {
+    // Here we loop until a PIN is set (PIN_CREATE_SUCCESS)
+    while (true) {
+      // If we don't have a PIN code yet, let's set one by starting the PIN flow
+      yield put(startPinSet());
 
-  // here we loop until a PIN is set (PIN_CREATE_SUCCESS)
-  while (true) {
-    // If we don't have a PIN code yet, let's set one by starting the PIN flow
-    yield put(startPinSet());
+      // Wait for the PIN to have been created, or a failure to happen
+      const result = yield take([PIN_CREATE_SUCCESS, PIN_CREATE_FAILURE]);
 
-    // Wait for the PIN to have been created, or a failure to happen
-    const result = yield take([PIN_CREATE_SUCCESS, PIN_CREATE_FAILURE]);
-
-    if (result.type === PIN_CREATE_SUCCESS) {
-      break;
+      if (result.type === PIN_CREATE_SUCCESS) {
+        break;
+      }
     }
   }
 
-  // since we just set a new PIN, we don't ask for it
+  // Dispatch an action to notify that the ONBOARDING is complete
   yield put({
     type: ONBOARDING_CHECK_COMPLETE
   });
