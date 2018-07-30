@@ -26,6 +26,7 @@
     "io-ts-types": "^0.3.6",
     "italia-ts-commons": "^2.10.0",
     "lodash": "^4.17.10",
+    "monocle-ts": "^1.2.0",
     "native-base": "^2.4.5",
     "native-base-shoutem-theme": "^0.2.2",
     "react": "16.3.1",

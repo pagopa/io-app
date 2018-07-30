@@ -8,20 +8,20 @@
  * footer with a button for starting a new payment
  */
 import { Body, Container, Content, Text, View } from "native-base";
-import { Button } from "native-base";
 import { Left } from "native-base";
+import { Button } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Wallet } from "../../../definitions/pagopa/Wallet";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
+import { Wallet } from "../../types/pagopa";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import CardComponent from "./card";

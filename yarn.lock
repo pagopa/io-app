@@ -5506,7 +5506,7 @@ mock-require@^2.0.2:
   dependencies:
     caller-id "^0.1.0"
 
-monocle-ts@^1.0.0:
+monocle-ts@^1.0.0, monocle-ts@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-1.2.0.tgz#6009deaee379243a1e28651b01a054502258c782"
   dependencies:

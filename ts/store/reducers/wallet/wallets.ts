@@ -5,8 +5,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
-import { getWalletId } from "../../../types/CreditCard";
+import { Wallet } from "../../../types/pagopa";
 import {
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
@@ -46,9 +45,7 @@ export const getWalletFromId = (
   walletId: Option<number>,
   wallets: IndexedById<Wallet>
 ): Option<Wallet> =>
-  walletId.mapNullable(wId =>
-    values(wallets).find(c => getWalletId(c) === wId)
-  );
+  walletId.mapNullable(wId => values(wallets).find(c => c.idWallet === wId));
 
 export const selectedWalletSelector = createSelector(
   getSelectedWalletId,
@@ -66,9 +63,7 @@ export const specificWalletSelector = (walletId: number) =>
   createSelector(() => some(walletId), getWallets, getWalletFromId);
 
 export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
-  w.psp === undefined ||
-  w.psp.fixedCost === undefined ||
-  w.psp.fixedCost.amount === undefined
+  w.psp === undefined
     ? undefined
     : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
 

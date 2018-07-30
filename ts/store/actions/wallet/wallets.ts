@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
+import { Wallet } from "../../../types/pagopa";
 import {
   FETCH_WALLETS_REQUEST,
   SELECT_WALLET_FOR_DETAILS,

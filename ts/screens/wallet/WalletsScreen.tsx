@@ -13,11 +13,11 @@ import I18n from "../../i18n";
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Wallet } from "../../../definitions/pagopa/Wallet";
 import CardComponent from "../../components/wallet/card";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import { Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps = Readonly<{
   wallets: ReadonlyArray<Wallet>;

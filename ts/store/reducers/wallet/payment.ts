@@ -6,7 +6,7 @@ import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
+import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import {
   PAYMENT_COMPLETED,

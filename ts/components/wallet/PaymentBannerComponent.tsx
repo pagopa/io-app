@@ -23,7 +23,7 @@ import {
   isGlobalStateWithVerificaResponse
 } from "../../store/reducers/wallet/payment";
 import { UNKNOWN_PAYMENT_REASON, UNKNOWN_RECIPIENT } from "../../types/unknown";
-import { amountBuilder } from "../../utils/stringBuilder";
+import { buildAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedStateProps =
@@ -52,7 +52,7 @@ class PaymentBannerComponent extends React.Component<Props> {
     if (!this.props.valid) {
       return null;
     }
-    const amount = amountBuilder(
+    const amount = buildAmount(
       AmountInEuroCentsFromNumber.encode(this.props.currentAmount)
     );
 

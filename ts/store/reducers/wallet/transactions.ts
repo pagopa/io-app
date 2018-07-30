@@ -4,12 +4,7 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { Transaction } from "../../../../definitions/pagopa/Transaction";
-import {
-  getTransactionCreationDate,
-  getTransactionId,
-  getTransactionWalletId
-} from "../../../types/wallet";
+import { Transaction } from "../../../types/pagopa";
 import {
   PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
@@ -42,12 +37,9 @@ export const latestTransactionsSelector = createSelector(
     values(transactions)
       .sort(
         (a, b) =>
-          isNaN(getTransactionCreationDate(a) as any) ||
-          isNaN(getTransactionCreationDate(b) as any)
+          isNaN(a.created as any) || isNaN(b.created as any)
             ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-            : getTransactionCreationDate(a)
-                .toISOString()
-                .localeCompare(getTransactionCreationDate(b).toISOString())
+            : a.created.toISOString().localeCompare(b.created.toISOString())
       )
       .slice(0, 5) // WIP no magic numbers
 );
@@ -72,7 +64,7 @@ export const transactionsByWalletSelector = createSelector(
     walletId: Option<number>
   ): ReadonlyArray<Transaction> =>
     walletId.fold([], wId =>
-      values(transactions).filter(t => getTransactionWalletId(t) === wId)
+      values(transactions).filter(t => t.idWallet === wId)
     )
 );
 
@@ -90,7 +82,7 @@ const reducer = (
   if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {
     return {
       ...state,
-      selectedTransactionId: some(getTransactionId(action.payload))
+      selectedTransactionId: some(action.payload.id)
     };
   }
   if (action.type === PAYMENT_STORE_NEW_TRANSACTION) {

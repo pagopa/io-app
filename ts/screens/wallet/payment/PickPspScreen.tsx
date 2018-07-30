@@ -3,7 +3,6 @@
  * when it is added to the user wallet
  */
 
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -18,15 +17,14 @@ import * as React from "react";
 import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { Psp } from "../../../../definitions/pagopa/Psp";
 import { WalletAPI } from "../../../api/wallet/wallet-api";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import { getPspFee, getPspId, getPspLogoUrl } from "../../../types/wallet";
-import { amountBuilder } from "../../../utils/stringBuilder";
+import { Psp } from "../../../types/pagopa";
+import { buildAmount, centsToAmount } from "../../../utils/stringBuilder";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -60,9 +58,6 @@ const style = StyleSheet.create({
 });
 
 export default class PickPspScreen extends React.Component<Props, never> {
-  private extractFee = (p: Psp): number =>
-    AmountInEuroCentsFromNumber.encode(getPspFee(p));
-
   public render(): React.ReactNode {
     return (
       <Container>
@@ -97,7 +92,7 @@ export default class PickPspScreen extends React.Component<Props, never> {
             removeClippedSubviews={false}
             numColumns={1}
             data={paymentManagers}
-            keyExtractor={item => getPspId(item).toString()}
+            keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
               <View style={style.listItem}>
                 <Grid>
@@ -107,14 +102,14 @@ export default class PickPspScreen extends React.Component<Props, never> {
                       <Image
                         style={style.flexStart}
                         resizeMode={"contain"}
-                        source={{ uri: getPspLogoUrl(item) }}
+                        source={{ uri: item.logoPSP }}
                       />
                     </Row>
                     <Row>
                       <Text style={style.feeText}>
                         {`${I18n.t("wallet.pickPsp.maxFee")} `}
                         <Text bold={true} style={style.feeText}>
-                          {amountBuilder(this.extractFee(item))}
+                          {buildAmount(centsToAmount(item.fixedCost.amount))}
                         </Text>
                       </Text>
                     </Row>

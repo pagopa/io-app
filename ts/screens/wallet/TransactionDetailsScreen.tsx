@@ -13,33 +13,25 @@
  */
 import * as React from "react";
 
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { Content, H1, H3, Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { Transaction } from "../../../definitions/pagopa/Transaction";
-import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import WalletLayout from "../../components/wallet/WalletLayout";
 import { CardEnum } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
+import { Wallet } from "../../types/pagopa";
+import { Transaction } from "../../types/pagopa";
 import { UNKNOWN_CARD, UNKNOWN_TRANSACTION } from "../../types/unknown";
-import {
-  getTransactionAmount,
-  getTransactionCreationDate,
-  getTransactionFee,
-  getTransactionPaymentReason,
-  getTransactionRecipient
-} from "../../types/wallet";
-import { amountBuilder } from "../../utils/stringBuilder";
+import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 
 type ReduxMappedProps = Readonly<{
   transaction: Transaction;
@@ -124,18 +116,15 @@ export class TransactionDetailsScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const { transaction } = this.props;
-    const completedAt = getTransactionCreationDate(transaction);
     const paymentCompleted = this.props.navigation.getParam(
       "paymentCompleted",
       false
     );
-    const amount: number = AmountInEuroCentsFromNumber.encode(
-      getTransactionAmount(transaction)
+    const amount = buildAmount(centsToAmount(transaction.amount.amount));
+    const fee = buildAmount(centsToAmount(transaction.fee.amount));
+    const totalAmount = buildAmount(
+      centsToAmount(transaction.grandTotal.amount)
     );
-    const fee: number = AmountInEuroCentsFromNumber.encode(
-      getTransactionFee(transaction)
-    );
-    const totalAmount = amount + fee;
 
     return (
       <WalletLayout
@@ -164,13 +153,10 @@ export class TransactionDetailsScreen extends React.Component<Props> {
             <Row>
               <Text>
                 {`${I18n.t("wallet.total")}  `}
-                <H3 style={styles.value}>{amountBuilder(totalAmount)}</H3>
+                <H3 style={styles.value}>{totalAmount}</H3>
               </Text>
             </Row>
-            {this.labelValueRow(
-              I18n.t("wallet.payAmount"),
-              amountBuilder(amount)
-            )}
+            {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(
               <Text>
                 <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
@@ -178,23 +164,23 @@ export class TransactionDetailsScreen extends React.Component<Props> {
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              amountBuilder(fee)
+              fee
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
-              getTransactionPaymentReason(transaction)
+              transaction.description
             )}
             {this.labelValueRow(
               I18n.t("wallet.recipient"),
-              getTransactionRecipient(transaction)
+              transaction.merchant
             )}
             {this.labelValueRow(
               I18n.t("wallet.date"),
-              completedAt.toLocaleDateString()
+              transaction.created.toLocaleDateString()
             )}
             {this.labelValueRow(
               I18n.t("wallet.time"),
-              completedAt.toLocaleTimeString()
+              transaction.created.toLocaleTimeString()
             )}
           </Grid>
         </Content>

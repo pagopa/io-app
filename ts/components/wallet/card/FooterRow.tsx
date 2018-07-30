@@ -11,15 +11,12 @@ import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { selectWalletForDetails } from "../../../store/actions/wallet/wallets";
 import variables from "../../../theme/variables";
-import {
-  getCardFormattedLastUsage,
-  getWalletId
-} from "../../../types/CreditCard";
+import { Wallet } from "../../../types/pagopa";
+import { buildFormattedLastUsage } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
 import { CreditCardStyles } from "./style";
 
@@ -57,7 +54,7 @@ class FooterRow extends React.Component<Props> {
           style={CreditCardStyles.rowStyle}
           size={6}
           onPress={() => {
-            this.props.selectWallet(getWalletId(item));
+            this.props.selectWallet(item.idWallet);
             navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
           }}
         >
@@ -68,7 +65,7 @@ class FooterRow extends React.Component<Props> {
                 CreditCardStyles.smallTextStyle
               ]}
             >
-              {getCardFormattedLastUsage(item)}
+              {buildFormattedLastUsage(item)}
             </Text>
           </Col>
           <Col size={1} style={styles.rightAligned}>

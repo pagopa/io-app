@@ -9,7 +9,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { WalletStyles } from "../../components/styles/wallet";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { amountBuilder } from "../../utils/stringBuilder";
+import { buildAmount } from "../../utils/stringBuilder";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -117,12 +117,10 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
           </H3>,
           this.isAmountUpdated() ? (
             <H3 style={[WalletStyles.white, styles.strikeThrough]}>
-              {amountBuilder(this.props.amount)}
+              {buildAmount(this.props.amount)}
             </H3>
           ) : (
-            <H1 style={WalletStyles.white}>
-              {amountBuilder(this.props.amount)}
-            </H1>
+            <H1 style={WalletStyles.white}>{buildAmount(this.props.amount)}</H1>
           )
         )}
         {this.isAmountUpdated() && (
@@ -139,7 +137,7 @@ export default class PaymentSummaryComponent extends React.Component<Props> {
                 />
               </View>,
               <H1 style={WalletStyles.white}>
-                {amountBuilder(this.props.updatedAmount)}
+                {buildAmount(this.props.updatedAmount)}
               </H1>
             )}
             <Row style={styles.toAlignColumnstart}>

@@ -13,7 +13,6 @@ import {
 } from "react-navigation";
 
 import { connect } from "react-redux";
-import { Wallet } from "../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
@@ -22,6 +21,7 @@ import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
+import { Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
 interface ParamType {

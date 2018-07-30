@@ -2,10 +2,9 @@ import { PaymentNoticeNumber, RptId } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
-import { Amount } from "../../definitions/pagopa/Amount";
-import { Transaction } from "../../definitions/pagopa/Transaction";
-import { Wallet } from "../../definitions/pagopa/Wallet";
-import { CreditCardType } from "./CreditCard";
+import { Amount } from "../types/pagopa";
+import { Transaction } from "../types/pagopa";
+import { Wallet } from "../types/pagopa";
 
 export const UNKNOWN_STRING = "?";
 export const UNKNOWN_NUMBER = -1;
@@ -39,7 +38,7 @@ export const UNKNOWN_RPTID: RptId = {
 
 export const UNKNOWN_CARD_PAN = "0000";
 export const UNKNOWN_CARD_HOLDER = "NO HOLDER";
-export const UNKNWON_CARD_TYPE: CreditCardType = "UNKNOWN";
+export const UNKNWON_CARD_TYPE = "UNKNOWN";
 export const UNKNOWN_LAST_USAGE = UNKNOWN_DATE;
 export const UNKNOWN_EXPIRATION_MONTH = "??";
 export const UNKNOWN_EXPIRATION_YEAR = "??";
@@ -62,13 +61,16 @@ export const UNKNOWN_CARD: Wallet = {
     id: UNKNOWN_NUMBER,
     pan: UNKNOWN_CARD_PAN
   },
+  type: "CREDIT_CARD",
   favourite: false,
   idPsp: UNKNOWN_NUMBER,
   idWallet: UNKNOWN_NUMBER,
   lastUsage: UNKNOWN_LAST_USAGE,
   psp: {
-    businessName: "None",
-    fixedCost: UNKNOWN_AMOUNT_PAGOPA
+    businessName: UNKNOWN_STRING,
+    fixedCost: UNKNOWN_AMOUNT_PAGOPA,
+    id: UNKNOWN_NUMBER,
+    logoPSP: UNKNOWN_STRING
   }
 };
 

@@ -17,8 +17,6 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
-import { Transaction } from "../../../definitions/pagopa/Transaction";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -30,14 +28,8 @@ import {
   latestTransactionsSelector,
   transactionsByWalletSelector
 } from "../../store/reducers/wallet/transactions";
-import {
-  getTransactionAmount,
-  getTransactionCreationDate,
-  getTransactionPaymentReason,
-  getTransactionRecipient,
-  getTransactionWalletId
-} from "../../types/wallet";
-import { amountBuilder } from "../../utils/stringBuilder";
+import { Transaction } from "../../types/pagopa";
+import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedStateProps = Readonly<{
@@ -70,9 +62,8 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  */
 class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const completedAt = getTransactionCreationDate(item);
     const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
-    const datetime: string = `${completedAt.toLocaleDateString()} - ${completedAt.toLocaleTimeString()}`;
+    const datetime: string = `${item.created.toLocaleDateString()} - ${item.created.toLocaleTimeString()}`;
     return (
       <Row>
         <Left>
@@ -88,17 +79,15 @@ class TransactionsList extends React.Component<Props> {
   }
 
   private renderRow = (item: Transaction): React.ReactElement<any> => {
-    const paymentReason = getTransactionPaymentReason(item);
-    const amount = AmountInEuroCentsFromNumber.encode(
-      getTransactionAmount(item)
-    );
-    const recipient = getTransactionRecipient(item);
+    const paymentReason = item.description;
+    const amount = buildAmount(centsToAmount(item.amount.amount));
+    const recipient = item.merchant;
 
     return (
       <ListItem
         onPress={() => {
           this.props.selectTransaction(item);
-          this.props.selectWallet(getTransactionWalletId(item));
+          this.props.selectWallet(item.idWallet);
           this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
         }}
       >
@@ -110,7 +99,7 @@ class TransactionsList extends React.Component<Props> {
                 <Text>{paymentReason}</Text>
               </Left>
               <Right>
-                <Text>{amountBuilder(amount)}</Text>
+                <Text>{amount}</Text>
               </Right>
             </Row>
             <Row>

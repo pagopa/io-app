@@ -22,8 +22,6 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { Transaction } from "../../definitions/pagopa/Transaction";
-import { Wallet } from "../../definitions/pagopa/Wallet";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
@@ -76,7 +74,8 @@ import {
   feeExtractor,
   getFavoriteWalletId
 } from "../store/reducers/wallet/wallets";
-import { getWalletId } from "../types/CreditCard";
+import { Transaction } from "../types/pagopa";
+import { Wallet } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
@@ -305,9 +304,8 @@ function* completionHandler(_: PaymentRequestCompletion) {
     idPayment: Math.floor(Math.random() * 1000),
     idPsp: 1,
     idStatus: 1,
-    idWallet: getWalletId(wallet),
-    merchant: (yield select(recipient)).getOrElse(UNKNOWN_RECIPIENT)
-      .denominazioneBeneficiario,
+    idWallet: wallet.idWallet,
+    merchant: recipient.denominazioneBeneficiario,
     nodoIdPayment: "1",
     paymentModel: 1,
     statusMessage: "OK",
@@ -320,7 +318,7 @@ function* completionHandler(_: PaymentRequestCompletion) {
 
   yield put(storeNewTransaction(transaction));
   yield put(selectTransactionForDetails(transaction));
-  yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
+  yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
   yield put(
     // TODO: this should use StackActions.reset
     // to reset the navigation. Right now, the

@@ -5,9 +5,9 @@
  * the app to get the required data
  */
 
-import { Psp } from "../../../definitions/pagopa/Psp";
-import { Transaction } from "../../../definitions/pagopa/Transaction";
-import { Wallet } from "../../../definitions/pagopa/Wallet";
+import { Psp } from "../../types/pagopa";
+import { Transaction } from "../../types/pagopa";
+import { Wallet } from "../../types/pagopa";
 
 /**
  * Mocked wallet data
@@ -110,18 +110,12 @@ const wallets: ReadonlyArray<Wallet> = [
       id: -1,
       pan: "2001"
     },
+    type: "CREDIT_CARD",
     favourite: false,
     idPsp: 4,
     idWallet: 1,
     lastUsage: new Date("2018-07-16T07:34:00.000Z"),
-    psp: {
-      businessName: "Poste Italiane",
-      fixedCost: {
-        amount: 50,
-        currency: "EUR",
-        decimalDigits: 2
-      }
-    }
+    psp: psps[0]
   },
   {
     creditCard: {
@@ -133,18 +127,12 @@ const wallets: ReadonlyArray<Wallet> = [
       id: -1,
       pan: "4545"
     },
+    type: "CREDIT_CARD",
     favourite: false,
     idPsp: 3,
     idWallet: 2,
     lastUsage: new Date("2018-02-14T10:21:00.000Z"),
-    psp: {
-      businessName: "Visa",
-      fixedCost: {
-        amount: 150,
-        currency: "EUR",
-        decimalDigits: 2
-      }
-    }
+    psp: psps[0]
   },
   {
     creditCard: {
@@ -156,18 +144,12 @@ const wallets: ReadonlyArray<Wallet> = [
       id: -1,
       pan: "2849"
     },
+    type: "CREDIT_CARD",
     favourite: false,
     idPsp: 2,
     idWallet: 3,
     lastUsage: new Date("-"),
-    psp: {
-      businessName: "Mastercard",
-      fixedCost: {
-        amount: 200,
-        currency: "EUR",
-        decimalDigits: 2
-      }
-    }
+    psp: psps[1]
   },
   {
     creditCard: {
@@ -179,18 +161,12 @@ const wallets: ReadonlyArray<Wallet> = [
       id: -1,
       pan: "9010"
     },
+    type: "CREDIT_CARD",
     favourite: false,
     idPsp: 3,
     idWallet: 4,
     lastUsage: new Date("2018-01-22T14:54:00.000Z"),
-    psp: {
-      businessName: "Visa",
-      fixedCost: {
-        amount: 125,
-        currency: "EUR",
-        decimalDigits: 2
-      }
-    }
+    psp: psps[2]
   }
 ];
 

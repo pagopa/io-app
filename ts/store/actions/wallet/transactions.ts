@@ -1,4 +1,4 @@
-import { Transaction } from "../../../../definitions/pagopa/Transaction";
+import { Transaction } from "../../../types/pagopa";
 import {
   FETCH_TRANSACTIONS_REQUEST,
   PAYMENT_STORE_NEW_TRANSACTION,
