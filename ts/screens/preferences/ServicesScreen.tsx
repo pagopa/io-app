@@ -10,7 +10,7 @@ import {
   Text
 } from "native-base";
 import * as React from "react";
-import { FlatList } from "react-native";
+import { FlatList, ListRenderItem, ListRenderItemInfo } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -23,6 +23,9 @@ import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
 import { ServicesState } from "../../store/reducers/entities/services";
 import { GlobalState } from "../../store/reducers/types";
+import { View } from "native-base";
+import ROUTES from "../../navigation/routes";
+import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
 
 type ReduxMappedProps = Readonly<{
   services: ServicesState;
@@ -39,17 +42,34 @@ class ServicesScreen extends React.Component<Props> {
     this.props.navigation.goBack();
   }
 
-  private renderServiceItem = (serviceId: string) => {
-    const service = this.props.services.byId[serviceId];
+  private getServiceKey = (serviceId: string): string => {
+    const servicesById = this.props.services.byId;
+    const service = servicesById[serviceId];
+    const serviceVersion = (service ? service.version : undefined) || 0;
+    return `${serviceId}-${serviceVersion}`;
+  };
+
+  private renderServiceItem: ListRenderItem<string> = (
+    itemInfo: ListRenderItemInfo<string>
+  ) => {
+    const service = this.props.services.byId[itemInfo.item];
+    const onPress = () => {
+      const params: IMessageDetailsScreenParam = {
+        serviceId: itemInfo.item
+      };
+      this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, params);
+    };
     return (
-      <ListItem key={serviceId}>
-        <Left>
-          <H3>{service.service_name}</H3>
-        </Left>
-        <Right>
-          <IconFont name="io-right" />
-        </Right>
-      </ListItem>
+      service && (
+        <ListItem key={itemInfo.item} onPress={onPress}>
+          <Left>
+            <H3>{service.service_name}</H3>
+          </Left>
+          <Right>
+            <IconFont name="io-right" />
+          </Right>
+        </ListItem>
+      )
     );
   };
 
@@ -76,11 +96,14 @@ class ServicesScreen extends React.Component<Props> {
             icon={require("../../../img/icons/gears.png")}
           />
           <Text>{I18n.t("services.subtitle")}</Text>
-          <FlatList
-            data={serviceIds}
-            renderItem={this.renderServiceItem}
-            keyExtractor={item => item}
-          />
+          <View>
+            <FlatList
+              data={serviceIds}
+              renderItem={this.renderServiceItem}
+              keyExtractor={this.getServiceKey}
+              alwaysBounceVertical={false}
+            />
+          </View>
         </Content>
       </Container>
     );
