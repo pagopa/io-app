@@ -100,7 +100,7 @@
     "redux-saga-test-plan": "^3.7.0",
     "ts-jest": "^22.4.6",
     "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.13.0",
+    "tslint-config-prettier": "^1.14.0",
     "tslint-eslint-rules": "^5.3.1",
     "tslint-immutable": "^4.6.0",
     "tslint-language-service": "^0.9.9",
