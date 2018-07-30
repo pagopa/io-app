@@ -1,95 +1,95 @@
+import { Button, NativeBase, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Button, View, Text, NativeBase } from "native-base";
 
 export enum FooterButtonsStyle {
-    HALF,
-    ONETHIRD,
-    FULL
+  HALF, // show inline buttons -  1/2 left, 1/2 right    -> [  b1  ] [  b2  ]
+  ONETHIRD, // show inline buttons - 1/3 left, 2/3 right -> [ b1 ] [   b2   ]
+  FULL // show stacked buttons - full size
 }
 
 type OwnProps = {
-    title: string
-}
+  title: string;
+};
 
 type Props = Readonly<{
-    primaryButton: NativeBase.Button & OwnProps;
-    secondaryButton: NativeBase.Button & OwnProps;
-    style: FooterButtonsStyle;
-  }>;
+  leftButton: NativeBase.Button & OwnProps;
+  rightButton: NativeBase.Button & OwnProps;
+  style: FooterButtonsStyle;
+}>;
 
 const styles = {
-    full: StyleSheet.create({
-        footer: {},
-        primaryButton: {},
-        secondaryButton: {}
-    }),
+  full: StyleSheet.create({
+    footer: {},
+    leftButton: {},
+    rightButton: {}
+  }),
 
-    inlineHalf: StyleSheet.create({
-        footer: {
-            flexDirection: "row"
-        },
-        primaryButton: { 
-            flex: 1,
-            alignContent: "center"
-        },
-        secondaryButton: { 
-            flex: 1,
-            alignContent: "center"
-        }
-    }),
+  inlineHalf: StyleSheet.create({
+    footer: {
+      flexDirection: "row"
+    },
+    leftButton: {
+      flex: 1,
+      alignContent: "center"
+    },
+    rightButton: {
+      flex: 1,
+      alignContent: "center"
+    }
+  }),
 
-    inlineOneThird: StyleSheet.create({
-        footer: {
-            flexDirection: "row"
-        },
-        primaryButton: { 
-            flex: 3,
-            alignContent: "center"
-        },
-        secondaryButton: { 
-            flex: 1,
-            alignContent: "center"
-        }
-    })
+  inlineOneThird: StyleSheet.create({
+    footer: {
+      flexDirection: "row"
+    },
+    leftButton: {
+      flex: 1,
+      alignContent: "center"
+    },
+    rightButton: {
+      flex: 3,
+      alignContent: "center"
+    }
+  })
 };
 
 const styleMapper = (style: FooterButtonsStyle) => {
-    
-    switch (style) {
-        case FooterButtonsStyle.FULL:
-            return styles.full;
-        case FooterButtonsStyle.HALF:
-            return styles.inlineHalf;
-        case FooterButtonsStyle.ONETHIRD:
-            return styles.inlineOneThird;
-        default:
-            return styles.full;
+  switch (style) {
+    case FooterButtonsStyle.FULL:
+      return styles.full;
+    case FooterButtonsStyle.HALF:
+      return styles.inlineHalf;
+    case FooterButtonsStyle.ONETHIRD:
+      return styles.inlineOneThird;
+    default:
+      return styles.full;
+  }
+};
 
-    }
-}
+/**
+ * Implements a component that show 2 buttons in footer with select style FooterButtonsStyle
+ */
+class FooterButtons extends React.Component<Props> {
+  public render() {
+    const footerStyle = styleMapper(this.props.style);
 
-class FooterButtons extends React.Component<Props>{
+    const { style: _, ...externalStyleLB } = this.props.leftButton;
+    const { style: __, ...externalStyleRB } = this.props.rightButton;
 
-    render() {
-
-        const footerStyle = styleMapper(this.props.style);
-
-        this.props.primaryButton.style = footerStyle.primaryButton;
-        this.props.secondaryButton.style = footerStyle.secondaryButton;
-
-        return (
-            <View footer={true} style={footerStyle.footer}>
-                <Button {...this.props.primaryButton}>
-                <Text>{this.props.primaryButton.title}</Text> </Button>
-                <View hspacer={true} />
-                <View spacer={true} />
-                <Button  {...this.props.secondaryButton}>
-                <Text>{this.props.secondaryButton.title}</Text>
-                </Button>
-            </View>
-        );
-    }
+    return (
+      <View footer={true} style={footerStyle.footer}>
+        <Button style={footerStyle.leftButton} {...externalStyleLB}>
+          <Text>{this.props.leftButton.title}</Text>
+        </Button>
+        <View hspacer={true} />
+        <View spacer={true} />
+        <Button style={footerStyle.rightButton} {...externalStyleRB}>
+          <Text>{this.props.rightButton.title}</Text>
+        </Button>
+      </View>
+    );
+  }
 }
 
 export default FooterButtons;
