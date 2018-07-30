@@ -110,19 +110,19 @@ class PreferencesScreen extends React.Component<Props> {
                 <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.email")}
-                  icon="email"
+                  icon="io-email"
                   valuePreview={profileData.spid_email}
                 />
                 <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.mobile_phone")}
-                  icon="phone-number"
+                  icon="io-phone-number"
                   valuePreview={profileData.spid_mobile_phone}
                 />
                 <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.language")}
-                  icon="languages"
+                  icon="io-languages"
                   valuePreview={languages}
                 />
               </List>
