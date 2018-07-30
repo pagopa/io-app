@@ -300,7 +300,10 @@ Per rendere la gestione dei font e delle varianti più sempice sono state create
 
 ### Io-Icon-Font
 
-L'applicazione utilizza un font-icon custom dal nome 'io-icon-font'. Grazie alla libreria [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) inclusa nel progetto è possibile creare nuovi IconSet. In particolare tra i vari metodi esposti nell'[apposita sezione](https://github.com/oblador/react-native-vector-icons#custom-fonts) della documentazione si è scelto di utilizzare quello che prevede di esportare il font tramite [IcoMoon](https://icomoon.io/).
+L'applicazione utilizza un font-icon custom dal nome 'io-icon-font'. Grazie alla libreria [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) inclusa nel progetto è possibile creare nuovi IconSet. In particolare tra i vari metodi esposti nell'[apposita sezione](https://github.com/oblador/react-native-vector-icons#custom-fonts) della documentazione si è scelto di utilizzare quello che prevede di esportare il font tramite [IcoMoon](https://icomoon.io/). Durante l'esportazione da IcoMoon utilizzare la configurazione mostrata nella seguente figura.
+
+![IcoMoon Export Settings][icomoon-export-settings]
+
 Per aggiornare l'icon-font ad una nuova versione è necessario estrarre e posizionare correttamente i seguenti due file dall'archivio '.zip' generatoro da IcoMoon:
 
 * `selection.json` contenuto nella root dell'archivio, da posizionare in `ts/theme/font-icons/io-icon-font/`
@@ -490,3 +493,5 @@ $ detox test
 ## License
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_large)
+
+[icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
