@@ -18,7 +18,6 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { setFavoriteWallet } from "../../../store/actions/wallet/wallets";
@@ -26,7 +25,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
-import { getCardPan, getWalletId } from "../../../types/CreditCard";
+import { Wallet } from "../../../types/pagopa";
 import IconFont from "../../ui/IconFont";
 import CardBody from "./CardBody";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -121,7 +120,7 @@ class CardComponent extends React.Component<Props> {
     if (this.props.isFavoriteCard) {
       this.props.setFavoriteCard(none);
     } else {
-      this.props.setFavoriteCard(some(getWalletId(this.props.item)));
+      this.props.setFavoriteCard(some(this.props.item.idWallet));
     }
   };
 
@@ -230,7 +229,7 @@ class CardComponent extends React.Component<Props> {
                         CreditCardStyles.largeTextStyle
                       ]}
                     >
-                      {`${HIDDEN_CREDITCARD_NUMBERS}${getCardPan(item).slice(
+                      {`${HIDDEN_CREDITCARD_NUMBERS}${item.creditCard.pan.slice(
                         -4
                       )}`}
                     </Text>
@@ -258,7 +257,7 @@ const mapStateToProps = (
   return {
     isFavoriteCard: favoriteCard.fold(
       false,
-      walletId => walletId === getWalletId(props.item)
+      walletId => walletId === props.item.idWallet
     )
   };
 };

@@ -17,13 +17,13 @@ import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Wallet } from "../../../definitions/pagopa/Wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
+import { Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{

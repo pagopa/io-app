@@ -4,7 +4,7 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { WalletTransaction } from "../../../types/wallet";
+import { Transaction } from "../../../types/pagopa";
 import {
   PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
@@ -16,7 +16,7 @@ import { GlobalState } from "../types";
 import { getSelectedWalletId } from "./wallets";
 
 export type TransactionsState = Readonly<{
-  transactions: IndexedById<WalletTransaction>;
+  transactions: IndexedById<Transaction>;
   selectedTransactionId: Option<number>;
 }>;
 
@@ -26,17 +26,21 @@ export const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
 };
 
 // selectors
-export const getTransactions = (
-  state: GlobalState
-): IndexedById<WalletTransaction> => state.wallet.transactions.transactions;
+export const getTransactions = (state: GlobalState): IndexedById<Transaction> =>
+  state.wallet.transactions.transactions;
 export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
   state.wallet.transactions.selectedTransactionId;
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
-  (transactions: IndexedById<WalletTransaction>) =>
+  (transactions: IndexedById<Transaction>) =>
     values(transactions)
-      .sort((a, b) => b.isoDatetime.localeCompare(a.isoDatetime))
+      .sort(
+        (a, b) =>
+          isNaN(a.created as any) || isNaN(b.created as any)
+            ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
+            : a.created.toISOString().localeCompare(b.created.toISOString())
+      )
       .slice(0, 5) // WIP no magic numbers
 );
 
@@ -44,9 +48,9 @@ export const transactionForDetailsSelector = createSelector(
   getTransactions,
   getSelectedTransactionId,
   (
-    transactions: IndexedById<WalletTransaction>,
+    transactions: IndexedById<Transaction>,
     selectedTransactionId: Option<number>
-  ): Option<WalletTransaction> =>
+  ): Option<Transaction> =>
     selectedTransactionId.chain(transactionId =>
       fromNullable(transactions[transactionId])
     )
@@ -56,10 +60,12 @@ export const transactionsByWalletSelector = createSelector(
   getTransactions,
   getSelectedWalletId,
   (
-    transactions: IndexedById<WalletTransaction>,
+    transactions: IndexedById<Transaction>,
     walletId: Option<number>
-  ): ReadonlyArray<WalletTransaction> =>
-    walletId.fold([], wId => values(transactions).filter(t => t.cardId === wId))
+  ): ReadonlyArray<Transaction> =>
+    walletId.fold([], wId =>
+      values(transactions).filter(t => t.idWallet === wId)
+    )
 );
 
 // reducer

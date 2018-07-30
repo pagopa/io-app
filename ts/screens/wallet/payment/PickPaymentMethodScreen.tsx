@@ -16,7 +16,6 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -33,6 +32,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
+import { Wallet } from "../../../types/pagopa";
 
 type ReduxMappedStateProps =
   | Readonly<{

@@ -22,7 +22,6 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { Wallet } from "../../definitions/pagopa/Wallet";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
@@ -75,20 +74,18 @@ import {
   feeExtractor,
   getFavoriteWalletId
 } from "../store/reducers/wallet/wallets";
-import { getWalletId } from "../types/CreditCard";
+import { Transaction } from "../types/pagopa";
+import { Wallet } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { WalletTransaction } from "../types/wallet";
 
 function* fetchTransactions(
-  loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>
+  loadTransactions: () => Promise<ReadonlyArray<Transaction>>
 ): Iterator<Effect> {
-  const transactions: ReadonlyArray<WalletTransaction> = yield call(
-    loadTransactions
-  );
+  const transactions: ReadonlyArray<Transaction> = yield call(loadTransactions);
   yield put(transactionsFetched(transactions));
 }
 
@@ -263,36 +260,69 @@ function* completionHandler(_: PaymentRequestCompletion) {
   // retrieve transaction and store it
   // mocked data here
   const wallet: Wallet = yield select(selectedPaymentMethodSelector);
-  // tslint:disable-next-line saga-yield-return-type
-  const recipient = (yield select(getPaymentRecipient)).getOrElse(
-    UNKNOWN_RECIPIENT
-  );
-  // tslint:disable-next-line saga-yield-return-type
-  const paymentReason = (yield select(getPaymentReason)).getOrElse(
-    UNKNOWN_PAYMENT_REASON
-  );
-  const fee = feeExtractor(wallet);
 
-  const transaction: WalletTransaction = {
+  const selectedRecipient: Option<EnteBeneficiario> = yield select(
+    getPaymentRecipient
+  );
+  const recipient = selectedRecipient.getOrElse(UNKNOWN_RECIPIENT);
+
+  const selectedPaymentReason: Option<string> = yield select(getPaymentReason);
+  const paymentReason = selectedPaymentReason.getOrElse(UNKNOWN_PAYMENT_REASON);
+
+  const selectedCurrentAmount: AmountInEuroCents = yield select(
+    getCurrentAmount
+  );
+  const amount =
+    100 * AmountInEuroCentsFromNumber.encode(selectedCurrentAmount);
+  const feeOrUndefined = feeExtractor(wallet);
+  const fee =
+    100 *
+    AmountInEuroCentsFromNumber.encode(
+      feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+    );
+  const now = new Date();
+
+  const transaction: Transaction = {
     id: Math.floor(Math.random() * 1000),
-    cardId: wallet.idWallet === undefined ? -1 : wallet.idWallet,
-    isoDatetime: new Date().toISOString(),
-    paymentReason:
-      paymentReason === undefined ? UNKNOWN_PAYMENT_REASON : paymentReason,
-    recipient: (recipient === undefined ? UNKNOWN_RECIPIENT : recipient)
-      .denominazioneBeneficiario,
-    amount: AmountInEuroCentsFromNumber.encode(
-      yield select(getCurrentAmount) // tslint:disable-line saga-yield-return-type
-    ),
-    currency: "EUR",
-    transactionCost: AmountInEuroCentsFromNumber.encode(
-      fee === undefined ? UNKNOWN_AMOUNT : fee
-    ),
-    isNew: true
+    amount: {
+      amount,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: now,
+    description: paymentReason,
+    error: false,
+    fee: {
+      amount: fee,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    grandTotal: {
+      amount: amount + fee,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: Math.floor(Math.random() * 1000),
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: wallet.idWallet,
+    merchant: recipient.denominazioneBeneficiario,
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: now,
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   };
+
   yield put(storeNewTransaction(transaction));
   yield put(selectTransactionForDetails(transaction));
-  yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
+  yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
   yield put(
     // TODO: this should use StackActions.reset
     // to reset the navigation. Right now, the
