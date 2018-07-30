@@ -5,7 +5,6 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../components/ui/AppHeader";
 import IconFont from "../components/ui/IconFont";
-import { applicationInitialized } from "../store/actions/application";
 import { ReduxProps } from "../store/actions/types";
 
 type OwnProps = {
@@ -33,11 +32,6 @@ const styles = StyleSheet.create({
  * An error screen to show messages when something went wrong
  */
 class ErrorScreen extends React.Component<Props, never> {
-  public componentDidMount() {
-    // Dispatch APPLICATION_INITIALIZED to start the Startup saga
-    this.props.dispatch(applicationInitialized());
-  }
-
   public render() {
     return (
       <Container>
