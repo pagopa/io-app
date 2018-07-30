@@ -25,7 +25,14 @@
     },
     "actions": {
       "retry": "Si è verificato un errore, si prega di riprovare"
+    },
+    "remoteStates": {
+      "notAvailable": "Non disponibile"
     }
+  },
+  "locales": {
+    "it": "Italiano",
+    "en": "Inglese"
   },
   "connection": {
     "status": {
@@ -380,9 +387,14 @@
     "moreLinkText": "Per saperne di più.",
     "list": {
       "email": "Indirizzo email",
-      "servicesNotifications": "Notifiche dai servizi",
+      "mobile_phone": "Numero di telefono",
+      "services": "Elenco dei servizi",
+      "services_description": "Attiva/disattiva i tuoi servizi di IO",
       "language": "Lingua",
       "digitalDomicile": "Domicilio digitale"
+    },
+    "empty": {
+      "default": "Nessuna preferenza impostata"
     }
   }
 }

@@ -4184,9 +4184,9 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
-italia-ts-commons@^2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.10.0.tgz#52045ea4af04231d5a435a870a5766d36ebba15b"
+italia-ts-commons@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.11.0.tgz#2b59d5b61e41865e11bc005a299676dae2df79ce"
   dependencies:
     fp-ts "^1.6.0"
     io-ts "^1.1.4"
