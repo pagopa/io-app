@@ -581,7 +581,7 @@
   version "4.14.110"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.110.tgz#fb07498f84152947f30ea09d89207ca07123461e"
 
-"@types/node-fetch@^2.1.2":
+"@types/node-fetch@^2.1.1":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.1.2.tgz#8c5da14d70321e4c4ecd5db668e3f93cf6c7399f"
   dependencies:
@@ -5506,7 +5506,7 @@ mock-require@^2.0.2:
   dependencies:
     caller-id "^0.1.0"
 
-monocle-ts@^1.0.0, monocle-ts@^1.2.0:
+monocle-ts@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-1.2.0.tgz#6009deaee379243a1e28651b01a054502258c782"
   dependencies:
