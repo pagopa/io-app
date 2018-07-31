@@ -35,9 +35,7 @@ import { connect } from "react-redux";
 import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
 import AppHeader from "../../../components/ui/AppHeader";
 
-import FooterButtons, {
-  FooterButtonsStyle
-} from "../../../components/ui/FooterButtons";
+import FooterButtons from "../../../components/ui/FooterButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 
@@ -194,7 +192,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         <FooterButtons
           leftButton={primaryButtonProps}
           rightButton={secondaryButtonProps}
-          style={FooterButtonsStyle.FULL}
         />
       </Container>
     );

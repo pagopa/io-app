@@ -19,9 +19,7 @@ import { connect } from "react-redux";
 import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import FooterButtons, {
-  FooterButtonsStyle
-} from "../../../components/ui/FooterButtons";
+import FooterButtons from "../../../components/ui/FooterButtons";
 import IconFont from "../../../components/ui/IconFont";
 import CardComponent from "../../../components/wallet/card";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
@@ -118,7 +116,6 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         <FooterButtons
           leftButton={primaryButtonProps}
           rightButton={secondaryButtonProps}
-          style={FooterButtonsStyle.FULL}
         />
       </Container>
     );

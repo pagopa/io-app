@@ -7,6 +7,7 @@ import merge from "lodash/merge";
 import getTheme from "native-base/src/theme/components";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
+import footerButtonsTheme from "./components/FooterButtons";
 import h1Theme from "./components/H1";
 import h3Theme from "./components/H3";
 import headerTheme from "./components/Header";
@@ -79,6 +80,9 @@ const theme = (): Theme => {
     },
     "UIComponent.ScreenHeader": {
       ...screenHeaderTheme()
+    },
+    "UIComponent.FooterButtons": {
+      ...footerButtonsTheme()
     },
     "NativeBase.ListItem": {
       ...listItemTheme()

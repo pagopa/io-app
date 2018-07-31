@@ -19,9 +19,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Wallet } from "../../../definitions/pagopa/Wallet";
 import AppHeader from "../../components/ui/AppHeader";
-import FooterButtons, {
-  FooterButtonsStyle
-} from "../../components/ui/FooterButtons";
+import FooterButtons from "../../components/ui/FooterButtons";
 import IconFont from "../../components/ui/IconFont";
 import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
@@ -115,7 +113,7 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
         <FooterButtons
           leftButton={primaryButtonProps}
           rightButton={secondaryButtonProps}
-          style={FooterButtonsStyle.HALF}
+          inlineHalf={true}
         />
       </Container>
     );
