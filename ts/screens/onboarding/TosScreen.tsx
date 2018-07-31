@@ -85,6 +85,8 @@ class TosScreen extends React.Component<Props, never> {
   public render() {
     const { isAcceptingTos } = this.props;
 
+    const isProfile = this.props.navigation.getParam("isProfile", false);
+
     return (
       <Container>
         <AppHeader>
@@ -94,7 +96,11 @@ class TosScreen extends React.Component<Props, never> {
             </Button>
           </Left>
           <Body>
-            <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>
+            <Text>
+              {isProfile
+                ? I18n.t("profile.main.screenTitle")
+                : I18n.t("onboarding.tos.headerTitle")}
+            </Text>
           </Body>
         </AppHeader>
         <Content>
@@ -110,16 +116,18 @@ class TosScreen extends React.Component<Props, never> {
           <View spacer={true} />
           <Text>{I18n.t("lipsum.medium")}</Text>
         </Content>
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            disabled={isAcceptingTos}
-            onPress={_ => this.acceptTos()}
-          >
-            <Text>{I18n.t("onboarding.tos.continue")}</Text>
-          </Button>
-        </View>
+        {isProfile === false && (
+          <View footer={true}>
+            <Button
+              block={true}
+              primary={true}
+              disabled={isAcceptingTos}
+              onPress={_ => this.acceptTos()}
+            >
+              <Text>{I18n.t("onboarding.tos.continue")}</Text>
+            </Button>
+          </View>
+        )}
       </Container>
     );
   }
