@@ -21,18 +21,25 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import I18n from "../../i18n";
+
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 
-import I18n from "../../i18n";
-
 import ROUTES from "../../navigation/routes";
-import { contentServiceLoad } from "../../store/actions/content";
+
+import {
+  contentOrganizationLoad,
+  contentServiceLoad
+} from "../../store/actions/content";
 import { ReduxProps } from "../../store/actions/types";
 import { OrganizationNamesByFiscalCodeState } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ServicesState } from "../../store/reducers/entities/services";
 import { GlobalState } from "../../store/reducers/types";
+
 import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
 
 type ReduxMappedProps = Readonly<{
@@ -66,13 +73,19 @@ class ServicesScreen extends React.Component<Props> {
     </ListItem>
   );
 
-  private renderServiceItem: ListRenderItem<string> = (
-    itemInfo: ListRenderItemInfo<string>
+  private renderServiceItem: ListRenderItem<ServiceId> = (
+    itemInfo: ListRenderItemInfo<ServiceId>
   ) => {
     const serviceId = itemInfo.item;
     const service = this.props.services.byId[serviceId];
     const onPress = () => {
+      // when a service gets selected, before navigating to the service detail
+      // screen, we issue a contentServiceLoad and a contentOrganizationLoad
+      // to refresh the service and organization metadata
       this.props.dispatch(contentServiceLoad(serviceId));
+      this.props.dispatch(
+        contentOrganizationLoad(service.organization_fiscal_code)
+      );
       const params: IMessageDetailsScreenParam = {
         serviceId
       };

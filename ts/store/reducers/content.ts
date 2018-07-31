@@ -4,10 +4,13 @@
  * TODO: add eviction of old entries
  */
 
-import { CONTENT_SERVICE_LOAD_SUCCESS } from "../actions/constants";
+import {
+  CONTENT_ORGANIZATION_LOAD_SUCCESS,
+  CONTENT_SERVICE_LOAD_SUCCESS
+} from "../actions/constants";
 import { Action } from "../actions/types";
 
-import { ServiceMetadata } from "../../api/content";
+import { OrganizationMetadata, ServiceMetadata } from "../../api/content";
 
 /**
  * Stores useful content such as services and organizations metadata,
@@ -16,7 +19,12 @@ import { ServiceMetadata } from "../../api/content";
 export type ContentState = Readonly<{
   servicesMetadata: {
     byId: {
-      [key: string]: ServiceMetadata;
+      [key: string]: ServiceMetadata | undefined;
+    };
+  };
+  organizationsMetadata: {
+    byFiscalCode: {
+      [key: string]: OrganizationMetadata | undefined;
     };
   };
 }>;
@@ -24,6 +32,9 @@ export type ContentState = Readonly<{
 export const initialContentState: ContentState = {
   servicesMetadata: {
     byId: {}
+  },
+  organizationsMetadata: {
+    byFiscalCode: {}
   }
 };
 
@@ -38,6 +49,16 @@ export default function content(
         byId: {
           ...state.servicesMetadata.byId,
           [action.serviceId]: action.data
+        }
+      }
+    };
+  } else if (action.type === CONTENT_ORGANIZATION_LOAD_SUCCESS) {
+    return {
+      ...state,
+      organizationsMetadata: {
+        byFiscalCode: {
+          ...state.organizationsMetadata.byFiscalCode,
+          [action.organizationFiscalCode]: action.data
         }
       }
     };

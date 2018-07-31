@@ -1,20 +1,30 @@
-import { Body, Button, Container, Content, H3, Left, Text } from "native-base";
+import {
+  Body,
+  Button,
+  Col,
+  Container,
+  Content,
+  Grid,
+  H1,
+  H2,
+  H3,
+  Left,
+  Row,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { Switch } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
+import { fromNullable } from "fp-ts/lib/Option";
 
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 
 import I18n from "../../i18n";
 
-import { Grid } from "native-base";
-import { View } from "native-base";
-import { H2 } from "native-base";
-import { H1 } from "native-base";
-import { Col } from "native-base";
-import { Row } from "native-base";
 import Markdown from "../../components/ui/Markdown";
 import { ReduxProps } from "../../store/actions/types";
 import { ContentState } from "../../store/reducers/content";
@@ -63,7 +73,18 @@ class ServiceDetailsScreen extends React.Component<Props> {
   public render() {
     const serviceId = this.props.navigation.state.params.serviceId;
     const service = this.props.services.byId[serviceId];
-    const metadata = this.props.content.servicesMetadata.byId[serviceId];
+
+    const serviceMetadata = this.props.content.servicesMetadata.byId[serviceId];
+    const maybeOrganizationMetadata = fromNullable(
+      this.props.content.organizationsMetadata.byFiscalCode[
+        service.organization_fiscal_code
+      ]
+    );
+
+    const orgAddress = maybeOrganizationMetadata
+      .mapNullable(_ => _.Indirizzo)
+      .toNullable();
+
     return (
       <Container>
         <AppHeader>
@@ -97,14 +118,14 @@ class ServiceDetailsScreen extends React.Component<Props> {
               </Col>
             </Row>
             <View spacer={true} large={true} />
-            {metadata && (
+            {serviceMetadata && (
               <Row>
                 <Col>
-                  <Markdown>{metadata.description}</Markdown>
+                  <Markdown>{serviceMetadata.description}</Markdown>
                 </Col>
               </Row>
             )}
-            {metadata && <View spacer={true} large={true} />}
+            {serviceMetadata && <View spacer={true} large={true} />}
             <Row>
               <Col size={6}>
                 <H2>{I18n.t("services.contactsAndInfo")}</H2>
@@ -112,11 +133,8 @@ class ServiceDetailsScreen extends React.Component<Props> {
             </Row>
             <View spacer={true} large={true} />
             {renderInformationRow("C.F.", service.organization_fiscal_code)}
-            <View spacer={true} />
-            {renderInformationRow(
-              "Indirizzo",
-              "Via Larga, 12, 20122 Milano MI"
-            )}
+            {orgAddress && <View spacer={true} />}
+            {orgAddress && renderInformationRow("Indirizzo", orgAddress)}
           </Grid>
           <View spacer={true} large={true} />
         </Content>
