@@ -3,8 +3,8 @@ import {
   Button,
   Container,
   Content,
-  H3,
   H1,
+  H3,
   Left,
   Text,
   View
@@ -59,7 +59,9 @@ export class PrivacyMainScreen extends React.Component<Props, never> {
 
         <Content>
           <View>
-            <Text><H1>{I18n.t("profile.main.mainPrivacy.screenTitle")}</H1></Text>
+            <Text>
+              <H1>{I18n.t("profile.main.mainPrivacy.screenTitle")}</H1>
+            </Text>
 
             <Text>{I18n.t("profile.main.mainPrivacy.screenSubtitle")}</Text>
             <Grid>
