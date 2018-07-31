@@ -1,4 +1,4 @@
-import { call, Effect, fork, put, take } from "redux-saga/effects";
+import { call, Effect, put, take } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 

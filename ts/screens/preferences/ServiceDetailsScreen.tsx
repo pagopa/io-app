@@ -1,14 +1,4 @@
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H3,
-  Left,
-  ListItem,
-  Right,
-  Text
-} from "native-base";
+import { Body, Button, Container, Content, H3, Left, Text } from "native-base";
 import * as React from "react";
 import { Switch } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -100,7 +90,7 @@ class ServiceDetailsScreen extends React.Component<Props> {
             <View spacer={true} large={true} />
             <Row>
               <Col size={5}>
-                <Text>Il Servizio è attivo</Text>
+                <Text>{I18n.t("services.serviceIsEnabled")}</Text>
               </Col>
               <Col size={1}>
                 <Switch value={true} />
@@ -117,7 +107,7 @@ class ServiceDetailsScreen extends React.Component<Props> {
             {metadata && <View spacer={true} large={true} />}
             <Row>
               <Col size={6}>
-                <H2>Contatti ed informazioni</H2>
+                <H2>{I18n.t("services.contactsAndInfo")}</H2>
               </Col>
             </Row>
             <View spacer={true} large={true} />

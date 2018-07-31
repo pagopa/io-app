@@ -401,6 +401,8 @@
   "services": {
     "headerTitle": "Services",
     "title": "Available services",
-    "subtitle": "Here you can enable/disable each service, access its details, the terms of use and customize the notifications you receive."
+    "subtitle": "Here you can enable/disable each service, access its details, the terms of use and customize the notifications you receive.",
+    "serviceIsEnabled": "The service is enabled",
+    "contactsAndInfo": "Contacts and info"
   }
 }

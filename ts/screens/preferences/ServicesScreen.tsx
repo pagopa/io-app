@@ -3,14 +3,21 @@ import {
   Button,
   Container,
   Content,
+  H2,
   H3,
   Left,
   ListItem,
   Right,
-  Text
+  Text,
+  View
 } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItem, ListRenderItemInfo } from "react-native";
+import {
+  ListRenderItem,
+  ListRenderItemInfo,
+  SectionList,
+  SectionListData
+} from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -20,16 +27,17 @@ import IconFont from "../../components/ui/IconFont";
 
 import I18n from "../../i18n";
 
+import ROUTES from "../../navigation/routes";
+import { contentServiceLoad } from "../../store/actions/content";
 import { ReduxProps } from "../../store/actions/types";
+import { OrganizationNamesByFiscalCodeState } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ServicesState } from "../../store/reducers/entities/services";
 import { GlobalState } from "../../store/reducers/types";
-import { View } from "native-base";
-import ROUTES from "../../navigation/routes";
 import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
-import { contentServiceLoad } from "../../store/actions/content";
 
 type ReduxMappedProps = Readonly<{
   services: ServicesState;
+  organizations: OrganizationNamesByFiscalCodeState;
 }>;
 
 type OwnProps = Readonly<{
@@ -49,6 +57,14 @@ class ServicesScreen extends React.Component<Props> {
     const serviceVersion = (service ? service.version : undefined) || 0;
     return `${serviceId}-${serviceVersion}`;
   };
+
+  private renderServiceSectionHeader = (info: {
+    section: SectionListData<string>;
+  }): React.ReactElement<any> | null => (
+    <ListItem itemHeader={true}>
+      <H2>{info.section.title}</H2>
+    </ListItem>
+  );
 
   private renderServiceItem: ListRenderItem<string> = (
     itemInfo: ListRenderItemInfo<string>
@@ -78,7 +94,18 @@ class ServicesScreen extends React.Component<Props> {
 
   public render() {
     // tslint:disable-next-line:readonly-array
-    const serviceIds = this.props.services.allIds as string[];
+    const sections: Array<SectionListData<string>> = Object.keys(
+      this.props.services.byOrgFiscalCode
+    ).map(fiscalCode => {
+      const title = this.props.organizations[fiscalCode] || fiscalCode;
+      // tslint:disable-next-line:readonly-array
+      const data: string[] = (this.props.services.byOrgFiscalCode[fiscalCode] ||
+        []) as any;
+      return {
+        title,
+        data
+      };
+    });
 
     return (
       <Container>
@@ -96,10 +123,12 @@ class ServicesScreen extends React.Component<Props> {
         <Content>
           <DefaultSubscreenHeader screenTitle={I18n.t("services.title")} />
           <Text>{I18n.t("services.subtitle")}</Text>
+          <View spacer={true} />
           <View>
-            <FlatList
-              data={serviceIds}
+            <SectionList
+              sections={sections}
               renderItem={this.renderServiceItem}
+              renderSectionHeader={this.renderServiceSectionHeader}
               keyExtractor={this.getServiceKey}
               alwaysBounceVertical={false}
             />
@@ -111,7 +140,8 @@ class ServicesScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  services: state.entities.services
+  services: state.entities.services,
+  organizations: state.entities.organizations
 });
 
 export default connect(mapStateToProps)(ServicesScreen);

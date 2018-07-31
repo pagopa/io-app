@@ -1,6 +1,5 @@
 import { Body, Container, Content, H1, List, Text, View } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
