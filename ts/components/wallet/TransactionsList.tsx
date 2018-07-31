@@ -6,12 +6,14 @@ import {
   Body,
   Content,
   Grid,
+  H3,
   Left,
   List,
   ListItem,
   Right,
   Row,
-  Text
+  Text,
+  View
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -117,7 +119,14 @@ class TransactionsList extends React.Component<Props> {
     if (transactions.length === 0) {
       return (
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
-          <Text>{I18n.t("wallet.noTransactions")}</Text>
+          <View spacer={true} />
+          <H3>{I18n.t("wallet.noTransactions")}</H3>
+          <View spacer={true} />
+          <Text>
+            {I18n.t("wallet.noTransactionsDetails")}
+            <Text link={true}>{` ${I18n.t("wallet.moreInfo")}`}</Text>
+          </Text>
+          <View spacer={true} large={true} />
         </Content>
       );
     }
@@ -127,7 +136,7 @@ class TransactionsList extends React.Component<Props> {
         <Grid>
           <Row>
             <Left>
-              <Text bold={true}>{this.props.title}</Text>
+              <H3>{this.props.title}</H3>
             </Left>
             <Right>
               <Text>{this.props.totalAmount}</Text>

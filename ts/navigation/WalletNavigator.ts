@@ -12,7 +12,6 @@ import { QRcodeAcquisitionByScannerScreen } from "../screens/wallet/QRcodeAcquis
 import { TextVerificationScreen } from "../screens/wallet/TextVerificationScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
-import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import ROUTES from "./routes";
 
 /**
@@ -21,9 +20,6 @@ import ROUTES from "./routes";
  */
 const WalletNavigator = createStackNavigator(
   {
-    [ROUTES.WALLET_HOME]: {
-      screen: WalletHomeScreen
-    },
     [ROUTES.WALLET_CREDITCARDS]: {
       screen: CreditCardsScreen
     },

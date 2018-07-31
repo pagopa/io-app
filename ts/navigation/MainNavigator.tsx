@@ -13,6 +13,7 @@ import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import PlaceholderScreen from "../screens/PlaceholderScreen";
 import PreferencesScreen from "../screens/PreferencesScreen";
+import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
@@ -81,6 +82,9 @@ const navigation = createBottomTabNavigator(
     },
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator
+    },
+    [ROUTES.WALLET_HOME]: {
+      screen: WalletHomeScreen
     },
     [ROUTES.DOCUMENTS_HOME]: {
       screen: PlaceholderScreen
