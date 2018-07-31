@@ -6,6 +6,7 @@ import { all, Effect, fork } from "redux-saga/effects";
 
 import authenticationSaga from "./authentication";
 import backendInfoSaga from "./backendInfo";
+import { contentSaga } from "./content";
 import deepLink from "./deepLink";
 import mainSaga from "./main";
 import messagesSaga from "./messages";
@@ -44,6 +45,7 @@ export default function* root(): Iterator<Effect> {
     fork(backendInfoSaga),
     fork(networkEventsListenerSaga, connectionMonitorParameters),
     fork(deepLink),
-    fork(preferencesSaga)
+    fork(preferencesSaga),
+    fork(contentSaga)
   ]);
 }

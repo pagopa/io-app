@@ -12,10 +12,10 @@ import { createBottomTabNavigator } from "react-navigation";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import PlaceholderScreen from "../screens/PlaceholderScreen";
-import PreferencesScreen from "../screens/PreferencesScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
+import PreferencesNavigator from "./PreferencesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import WalletNavigator from "./WalletNavigator";
@@ -86,7 +86,7 @@ const navigation = createBottomTabNavigator(
       screen: PlaceholderScreen
     },
     [ROUTES.PREFERENCES_HOME]: {
-      screen: PreferencesScreen
+      screen: PreferencesNavigator
     },
     [ROUTES.PROFILE_NAVIGATOR]: {
       screen: ProfileNavigator

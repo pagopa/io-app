@@ -6,7 +6,7 @@ import { Image, ImageSourcePropType } from "react-native";
 
 type Props = {
   heading: React.ReactNode;
-  icon: ImageSourcePropType;
+  icon?: ImageSourcePropType;
 };
 
 /**
@@ -20,9 +20,11 @@ class ScreenHeader extends React.Component<Props> {
     return (
       <View>
         {heading}
-        <View>
-          <Image source={icon} />
-        </View>
+        {icon && (
+          <View>
+            <Image source={icon} />
+          </View>
+        )}
       </View>
     );
   }

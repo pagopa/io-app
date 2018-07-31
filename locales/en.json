@@ -397,5 +397,14 @@
     "empty": {
       "default": "No preference set"
     }
+  },
+  "services": {
+    "headerTitle": "Services",
+    "title": "Available services",
+    "subtitle": "Here you can enable/disable each service, access its details, the terms of use and customize the notifications you receive.",
+    "serviceIsEnabled": "The service is enabled",
+    "pushNotifications": "Push Notifications",
+    "emailNotifications": "Email Notifications",
+    "contactsAndInfo": "Contacts and info"
   }
 }

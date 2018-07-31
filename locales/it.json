@@ -396,5 +396,14 @@
     "empty": {
       "default": "Nessuna preferenza impostata"
     }
+  },
+  "services": {
+    "headerTitle": "Servizi",
+    "title": "Elenco dei servizi",
+    "subtitle": "Puoi attivare/disattivare ogni servizio, oppure accedere alla sua scheda per scoprirne i dettagli, le condizioni d'uso e personalizzarne le notifiche.",
+    "serviceIsEnabled": "Il servizio è attivo",
+    "pushNotifications": "Notifiche Push",
+    "emailNotifications": "Notifiche Email",
+    "contactsAndInfo": "Contatti ed informazioni"
   }
 }
