@@ -14,6 +14,7 @@ import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
+import { ContentActions } from "./content";
 import { DeepLinkActions } from "./deepLink";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
@@ -50,7 +51,8 @@ export type Action =
   | PreferencesActions
   | ProfileActions
   | ServicesActions
-  | WalletActions;
+  | WalletActions
+  | ContentActions;
 
 export type GetState = () => GlobalState;
 

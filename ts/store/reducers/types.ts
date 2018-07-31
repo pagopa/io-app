@@ -6,6 +6,7 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { ContentState } from "./content";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
@@ -43,6 +44,7 @@ export type GlobalState = Readonly<{
   profile: ProfileState;
   wallet: WalletState;
   preferences: PreferencesState;
+  content: ContentState;
 }>;
 
 /**

@@ -26,6 +26,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { View } from "native-base";
 import ROUTES from "../../navigation/routes";
 import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
+import { contentServiceLoad } from "../../store/actions/content";
 
 type ReduxMappedProps = Readonly<{
   services: ServicesState;
@@ -52,10 +53,12 @@ class ServicesScreen extends React.Component<Props> {
   private renderServiceItem: ListRenderItem<string> = (
     itemInfo: ListRenderItemInfo<string>
   ) => {
-    const service = this.props.services.byId[itemInfo.item];
+    const serviceId = itemInfo.item;
+    const service = this.props.services.byId[serviceId];
     const onPress = () => {
+      this.props.dispatch(contentServiceLoad(serviceId));
       const params: IMessageDetailsScreenParam = {
-        serviceId: itemInfo.item
+        serviceId
       };
       this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, params);
     };
