@@ -56,6 +56,7 @@ function getOrganizationMetadata(
  * A saga that watches for and executes requests to load service metadata.
  *
  * TODO: do not retrieve the content on each request, rely on cache headers
+ * https://www.pivotaltracker.com/story/show/159440224
  */
 export function* contentServiceSaga(): Iterator<Effect> {
   while (true) {
@@ -80,6 +81,7 @@ export function* contentServiceSaga(): Iterator<Effect> {
  * A saga that watches for and executes requests to load organization metadata.
  *
  * TODO: do not retrieve the content on each request, rely on cache headers
+ * https://www.pivotaltracker.com/story/show/159440224
  */
 export function* contentOrganizationSaga(): Iterator<Effect> {
   while (true) {

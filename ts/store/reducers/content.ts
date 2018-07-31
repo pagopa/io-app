@@ -2,6 +2,7 @@
  * Implements the reducers for static content.
  *
  * TODO: add eviction of old entries
+ * https://www.pivotaltracker.com/story/show/159440294
  */
 
 import {

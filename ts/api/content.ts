@@ -23,7 +23,7 @@ import { ServiceId } from "../../definitions/backend/ServiceId";
 //
 // Definition of Service metadata
 //
-// TODO: generate from specs
+// TODO: generate from specs https://www.pivotaltracker.com/story/show/159440146
 
 const ServiceMetadata = t.partial({
   description: NonEmptyString
@@ -51,7 +51,7 @@ const getServiceT: GetServiceT = {
 //
 // Definition of Organization metadata
 //
-// TODO: generate from specs
+// TODO: generate from specs https://www.pivotaltracker.com/story/show/159440146
 
 const OrganizationMetadata = t.partial({
   cod_amm: t.string,
