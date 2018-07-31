@@ -5,6 +5,7 @@ import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import PinNavigator from "./PinNavigator";
 import ROUTES from "./routes";
+import IngressScreen from "../screens/IngressScreen";
 
 /**
  * The main stack of screens of the application.
@@ -15,7 +16,7 @@ const navigator = createSwitchNavigator({
   [ROUTES.INGRESS]: {
     // This screen check if the user is authenticated than perform a redirect to
     // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
-    screen: MainNavigator
+    screen: IngressScreen
   },
   [ROUTES.AUTHENTICATION]: {
     // The navigator used for unauthenticated users
