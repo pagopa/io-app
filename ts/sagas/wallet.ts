@@ -366,7 +366,7 @@ function* watchWalletSaga(): Iterator<Effect> {
 /**
  * saga that manages the wallet (transactions + credit cards)
  */
-// TOOD: currently using the mocked API. This will be wrapped by
+// TODO: currently using the mocked API. This will be wrapped by
 // a saga that retrieves the required token and uses it to build
 // a client to make the requests, @https://www.pivotaltracker.com/story/show/158068259
 export default function* root(): Iterator<Effect> {
