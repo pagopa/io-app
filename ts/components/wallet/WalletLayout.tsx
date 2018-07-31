@@ -33,18 +33,18 @@ const styles = StyleSheet.create({
   },
   firstCard: {
     flex: 1,
-    transform: [{ rotateX: "-40deg" }, { scaleX: 0.98 }]
+    transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }]
   },
   secondCard: {
     flex: 1,
     transform: [
-      { rotateX: "-40deg" },
-      { translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) },
+      { rotateX: "-20deg" },
+      { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) },
       { scaleX: 0.98 }
     ]
   },
   translation: {
-    transform: [{ translateY: -(58 + 20) * Math.sin(40 / 2) * Math.sin(40) }]
+    transform: [{ translateY: -(58 / 2 + 22) * (1 - Math.cos(20)) }]
   }
 });
 
@@ -118,7 +118,7 @@ export class WalletLayout extends React.Component<Props> {
               <View style={styles.firstCard}>
                 <CreditCardComponent
                   navigation={this.props.navigation}
-                  item={this.props.cardType.cards[0]}
+                  item={this.props.cardType.cards[1]}
                   logoPosition={LogoPosition.TOP}
                   flatBottom={true}
                   headerOnly={true}
@@ -127,7 +127,7 @@ export class WalletLayout extends React.Component<Props> {
               <View style={styles.secondCard}>
                 <CreditCardComponent
                   navigation={this.props.navigation}
-                  item={this.props.cardType.cards[1]}
+                  item={this.props.cardType.cards[0]}
                   logoPosition={LogoPosition.TOP}
                   flatBottom={true}
                   headerOnly={true}

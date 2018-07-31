@@ -246,6 +246,10 @@ export class WalletAPI {
     return transactions;
   }
 
+  public static getCards(): ReadonlyArray<CreditCard> {
+    return cards;
+  }
+
   public static getTransaction(id: number): Readonly<WalletTransaction> {
     return transactions[id];
   }

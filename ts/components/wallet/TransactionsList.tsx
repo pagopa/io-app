@@ -81,6 +81,7 @@ class TransactionsList extends React.Component<Props> {
 
   private renderRow = (item: WalletTransaction): React.ReactElement<any> => (
     <ListItem
+      style={WalletStyles.listItem}
       onPress={() => {
         this.props.selectTransaction(item);
         this.props.selectCard(item.cardId);
