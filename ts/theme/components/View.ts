@@ -15,6 +15,7 @@ declare module "native-base" {
       header?: boolean;
       content?: boolean;
       padded?: boolean;
+      noPadded?: boolean;
     }
   }
 }
@@ -59,6 +60,8 @@ export default (): Theme => {
       paddingLeft: variables.footerPaddingLeft,
       paddingRight: variables.footerPaddingRight,
       paddingTop: variables.footerPaddingTop,
+      borderBottomWidth: variables.footerBottomBorderWidth,
+      borderBottomColor: variables.brandGray,
       // iOS shadow
       shadowColor: variables.footerShadowColor,
       shadowOffset: {
@@ -69,6 +72,10 @@ export default (): Theme => {
       shadowRadius: variables.footerShadowRadius,
       // Android shadow
       elevation: variables.footerElevation
+    },
+    ".noPadded": {
+      paddingBottom:0,
+      paddingTop:0
     },
     ".content": {
       padding: variables.contentPadding,
