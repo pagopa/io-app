@@ -25,10 +25,12 @@ import IconFont from "../../components/ui/IconFont";
 
 import I18n from "../../i18n";
 
+import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
 import Markdown from "../../components/ui/Markdown";
 import { ReduxProps } from "../../store/actions/types";
 import { ContentState } from "../../store/reducers/content";
 import { ServicesState } from "../../store/reducers/entities/services";
+import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 export interface IMessageDetailsScreenParam {
@@ -42,6 +44,7 @@ interface INavigationStateWithParams extends NavigationState {
 type ReduxMappedProps = Readonly<{
   services: ServicesState;
   content: ContentState;
+  profile: ProfileState;
 }>;
 
 type OwnProps = Readonly<{
@@ -49,6 +52,10 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+const INBOX_CHANNEL = "INBOX";
+const EMAIL_CHANNEL = "EMAIL";
+const PUSH_CHANNEL = "WEBHOOK";
 
 const renderInformationRow = (label: string, info: string) => (
   <Row>
@@ -71,10 +78,31 @@ class ServiceDetailsScreen extends React.Component<Props> {
   }
 
   public render() {
+    // collect the service
     const serviceId = this.props.navigation.state.params.serviceId;
     const service = this.props.services.byId[serviceId];
 
+    // find out whether the service has been opted out
+    const enabledChannels = fromNullable(this.props.profile)
+      .mapNullable(
+        _ => (ProfileWithEmail.is(_) ? _.blocked_inbox_or_channels : null)
+      )
+      .mapNullable(_ => _[serviceId])
+      .map(_ => ({
+        inbox: _.indexOf(INBOX_CHANNEL) === -1,
+        email: _.indexOf(EMAIL_CHANNEL) === -1,
+        push: _.indexOf(PUSH_CHANNEL) === -1
+      }))
+      .getOrElse({
+        inbox: true,
+        email: true,
+        push: true
+      });
+
+    // collect the service metadata
     const serviceMetadata = this.props.content.servicesMetadata.byId[serviceId];
+
+    // collect the organization metadata
     const maybeOrganizationMetadata = fromNullable(
       this.props.content.organizationsMetadata.byFiscalCode[
         service.organization_fiscal_code
@@ -110,13 +138,37 @@ class ServiceDetailsScreen extends React.Component<Props> {
             </Row>
             <View spacer={true} large={true} />
             <Row>
-              <Col size={5}>
+              <Col size={10}>
                 <Text>{I18n.t("services.serviceIsEnabled")}</Text>
               </Col>
-              <Col size={1}>
-                <Switch value={true} />
+              <Col size={2}>
+                <Switch value={enabledChannels.inbox} />
               </Col>
             </Row>
+            {enabledChannels.inbox && <View spacer={true} />}
+            {enabledChannels.inbox && (
+              <Row>
+                <Col size={1} />
+                <Col size={9}>
+                  <Text>{I18n.t("services.pushNotifications")}</Text>
+                </Col>
+                <Col size={2}>
+                  <Switch value={enabledChannels.push} />
+                </Col>
+              </Row>
+            )}
+            {enabledChannels.inbox && <View spacer={true} />}
+            {enabledChannels.inbox && (
+              <Row>
+                <Col size={1} />
+                <Col size={9}>
+                  <Text>{I18n.t("services.emailNotifications")}</Text>
+                </Col>
+                <Col size={2}>
+                  <Switch value={enabledChannels.email} />
+                </Col>
+              </Row>
+            )}
             <View spacer={true} large={true} />
             {serviceMetadata && (
               <Row>
@@ -145,7 +197,8 @@ class ServiceDetailsScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   services: state.entities.services,
-  content: state.content
+  content: state.content,
+  profile: state.profile
 });
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
