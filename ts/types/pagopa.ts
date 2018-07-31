@@ -4,6 +4,7 @@ import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditC
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
 import { Transaction as TransactionPagoPA } from "../../definitions/pagopa/Transaction";
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
+import { TransactionListResponse as TransactionListResponsePagoPA } from "../../definitions/pagopa/TransactionListResponse";
 
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),
@@ -123,3 +124,14 @@ export type Transaction = {
     fee: Amount;
     grandTotal: Amount;
   }>;
+
+// the response when requesting a list of transactions
+export const TransactionListResponse = t.refinement(
+  TransactionListResponsePagoPA,
+  tlr => tlr.data !== undefined
+);
+type RequiredTransactionListResponseFields = "data";
+export type TransactionListResponse = TransactionListResponsePagoPA &
+  Required<
+    Pick<TransactionListResponsePagoPA, RequiredTransactionListResponseFields>
+  >;
