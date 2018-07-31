@@ -94,7 +94,7 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
     | undefined = yield call(pagoPaClient.getTransactions, {});
   if (response !== undefined && response.status === 200) {
     yield put(transactionsFetched(response.value.data));
-  }
+  } // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
@@ -103,7 +103,7 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
     | undefined = yield call(pagoPaClient.getWallets, {});
   if (response !== undefined && response.status === 200) {
     yield put(walletsFetched(response.value.data));
-  }
+  } // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 const navigateTo = (routeName: string, params?: object) => {
