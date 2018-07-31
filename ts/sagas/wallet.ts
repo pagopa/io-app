@@ -22,7 +22,9 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { WalletAPI } from "../api/wallet/wallet-api";
+import { BasicResponseTypeWith401 } from "../api/backend";
+import { PagoPaClient } from "../api/pagopa";
+import { pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
@@ -74,7 +76,11 @@ import {
   feeExtractor,
   getFavoriteWalletId
 } from "../store/reducers/wallet/wallets";
-import { Transaction } from "../types/pagopa";
+import {
+  Transaction,
+  TransactionListResponse,
+  WalletListResponse
+} from "../types/pagopa";
 import { Wallet } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
@@ -82,18 +88,22 @@ import {
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
 
-function* fetchTransactions(
-  loadTransactions: () => Promise<ReadonlyArray<Transaction>>
-): Iterator<Effect> {
-  const transactions: ReadonlyArray<Transaction> = yield call(loadTransactions);
-  yield put(transactionsFetched(transactions));
+function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
+  const response:
+    | BasicResponseTypeWith401<TransactionListResponse>
+    | undefined = yield call(pagoPaClient.getTransactions, {});
+  if (response !== undefined && response.status === 200) {
+    yield put(transactionsFetched(response.value.data));
+  }
 }
 
-function* fetchCreditCards(
-  loadCards: () => Promise<ReadonlyArray<Wallet>>
-): Iterator<Effect> {
-  const cards: ReadonlyArray<Wallet> = yield call(loadCards);
-  yield put(walletsFetched(cards));
+function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
+  const response:
+    | BasicResponseTypeWith401<WalletListResponse>
+    | undefined = yield call(pagoPaClient.getWallets, {});
+  if (response !== undefined && response.status === 200) {
+    yield put(walletsFetched(response.value.data));
+  }
 }
 
 const navigateTo = (routeName: string, params?: object) => {
@@ -337,6 +347,22 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put({ type: PAYMENT_COMPLETED });
 }
 
+function* watchWalletSaga(): Iterator<Effect> {
+  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix, "TOKEN");
+  while (true) {
+    const action = yield take([
+      FETCH_TRANSACTIONS_REQUEST,
+      FETCH_WALLETS_REQUEST
+    ]);
+    if (action.type === FETCH_TRANSACTIONS_REQUEST) {
+      yield fork(fetchTransactions, pagoPaClient);
+    }
+    if (action.type === FETCH_WALLETS_REQUEST) {
+      yield fork(fetchWallets, pagoPaClient);
+    }
+  }
+}
+
 /**
  * saga that manages the wallet (transactions + credit cards)
  */
@@ -344,15 +370,6 @@ function* completionHandler(_: PaymentRequestCompletion) {
 // a saga that retrieves the required token and uses it to build
 // a client to make the requests, @https://www.pivotaltracker.com/story/show/158068259
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(
-    FETCH_TRANSACTIONS_REQUEST,
-    fetchTransactions,
-    WalletAPI.getTransactions
-  );
-  yield takeLatest(
-    FETCH_WALLETS_REQUEST,
-    fetchCreditCards,
-    WalletAPI.getWallets
-  );
+  yield fork(watchWalletSaga);
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
 }
