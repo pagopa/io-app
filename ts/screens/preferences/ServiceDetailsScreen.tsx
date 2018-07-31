@@ -50,6 +50,21 @@ type OwnProps = Readonly<{
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
+const renderInformationRow = (label: string, info: string) => (
+  <Row>
+    <Col size={2}>
+      <Button light={true} small={true} transparent={true}>
+        <Text>{label}:</Text>
+      </Button>
+    </Col>
+    <Col size={4}>
+      <Button primary={true} small={true}>
+        <Text>{info}</Text>
+      </Button>
+    </Col>
+  </Row>
+);
+
 class ServiceDetailsScreen extends React.Component<Props> {
   private goBack() {
     this.props.navigation.goBack();
@@ -76,15 +91,13 @@ class ServiceDetailsScreen extends React.Component<Props> {
           <Grid>
             <Row>
               <Col>
-                <H3>{service.organization_name}</H3>
+                <H3>
+                  {service.department_name}, {service.organization_name}
+                </H3>
                 <H1>{service.service_name}</H1>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <View spacer={true} large={true} />
-              </Col>
-            </Row>
+            <View spacer={true} large={true} />
             <Row>
               <Col size={5}>
                 <Text>Il Servizio è attivo</Text>
@@ -93,11 +106,7 @@ class ServiceDetailsScreen extends React.Component<Props> {
                 <Switch value={true} />
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <View spacer={true} large={true} />
-              </Col>
-            </Row>
+            <View spacer={true} large={true} />
             {metadata && (
               <Row>
                 <Col>
@@ -105,34 +114,21 @@ class ServiceDetailsScreen extends React.Component<Props> {
                 </Col>
               </Row>
             )}
-            {metadata && (
-              <Row>
-                <Col>
-                  <View spacer={true} large={true} />
-                </Col>
-              </Row>
-            )}
+            {metadata && <View spacer={true} large={true} />}
             <Row>
               <Col size={6}>
                 <H2>Contatti ed informazioni</H2>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <View spacer={true} large={true} />
-              </Col>
-            </Row>
-            <Row>
-              <Col size={2}>
-                <Text>Indirizzo:</Text>
-              </Col>
-              <Col size={4}>
-                <Button primary={true} small={true}>
-                  <Text>Via Larga, 12, 20122 Milano MI</Text>
-                </Button>
-              </Col>
-            </Row>
+            <View spacer={true} large={true} />
+            {renderInformationRow("C.F.", service.organization_fiscal_code)}
+            <View spacer={true} />
+            {renderInformationRow(
+              "Indirizzo",
+              "Via Larga, 12, 20122 Milano MI"
+            )}
           </Grid>
+          <View spacer={true} large={true} />
         </Content>
       </Container>
     );

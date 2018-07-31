@@ -94,10 +94,7 @@ class ServicesScreen extends React.Component<Props> {
         </AppHeader>
 
         <Content>
-          <DefaultSubscreenHeader
-            screenTitle={I18n.t("services.title")}
-            icon={require("../../../img/icons/gears.png")}
-          />
+          <DefaultSubscreenHeader screenTitle={I18n.t("services.title")} />
           <Text>{I18n.t("services.subtitle")}</Text>
           <View>
             <FlatList
