@@ -1,8 +1,10 @@
-import { ProfileState } from "../../store/reducers/profile";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { fromNullable } from "fp-ts/lib/Option";
-import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
+
+import { ProfileState } from "../../store/reducers/profile";
+
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
+import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 /**
  * The enabled/disabled state of each channel.
