@@ -16,6 +16,7 @@ declare module "native-base" {
       alternativeBold?: boolean;
       white?: boolean;
       alignCenter?: boolean;
+      primary?: boolean;
     }
   }
 }
@@ -49,6 +50,9 @@ export default (): Theme => {
     },
     ".alignCenter": {
       textAlign: "center"
+    },
+    ".primary": {
+      color: variables.brandPrimary
     },
     lineHeight: variables.lineHeightBase
   };
