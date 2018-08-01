@@ -21,10 +21,10 @@ declare module "native-base" {
 }
 
 /**
- * TO DO: 
- * if no components are inserted as footer, the following component should be 
+ * TO DO:
+ * if no components are inserted as footer, the following component should be
  * included at the bottom of the screen to show the proper shadow upside the navigation bar:
- * 
+ *
  * <View footer={true} noPadded={true}/>
  */
 
@@ -82,8 +82,8 @@ export default (): Theme => {
       elevation: variables.footerElevation
     },
     ".noPadded": {
-      paddingBottom:0,
-      paddingTop:0
+      paddingBottom: 0,
+      paddingTop: 0
     },
     ".content": {
       padding: variables.contentPadding,

@@ -128,6 +128,7 @@ class PreferencesScreen extends React.Component<Props> {
             </View>
           </View>
         </Content>
+        <View footer={true} noPadded={true} />
       </Container>
     );
   }
