@@ -5,7 +5,7 @@ import { NAVIGATION_RESTORE } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
+export const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
 

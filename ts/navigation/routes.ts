@@ -61,7 +61,10 @@ const ROUTES = {
 
   // Profile
   PROFILE_NAVIGATOR: "PROFILE_NAVIGATOR",
-  PROFILE_MAIN: "PROFILE_MAIN"
+  PROFILE_MAIN: "PROFILE_MAIN",
+
+  // Used when the App is in background
+  BACKGROUND: "BACKGROUND"
 };
 
 export default ROUTES;

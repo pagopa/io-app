@@ -2,7 +2,7 @@
 
 import * as t from "io-ts";
 
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default timeout of fetch (in ms)
@@ -10,6 +10,9 @@ const DEFAULT_FETCH_TIMEOUT_MS = 3000;
 
 // default max retries for fetch
 const DEFAULT_FETCH_MAX_RETRIES = 3;
+
+// default seconds of background activity before asking the PIN login
+const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
 export const environment = Config.ENVIRONMENT;
 export const apiUrlPrefix = Config.API_URL_PREFIX;
@@ -26,6 +29,10 @@ export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
 export const fetchMaxRetries = t.Integer.decode(
   Config.FETCH_MAX_RETRIES
 ).getOrElse(DEFAULT_FETCH_MAX_RETRIES);
+
+export const backgroundActivityTimeout = t.Integer.decode(
+  Config.BACKGROUND_ACTIVITY_TIMEOUT_S
+).getOrElse(DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S) as Second;
 
 export function isDevEnvironment() {
   return environment === "DEV";
