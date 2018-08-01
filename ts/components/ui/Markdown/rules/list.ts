@@ -17,7 +17,7 @@ function rule() {
 
       const listItemText = React.createElement(
         Text,
-        { key: state.key + 1 },
+        { key: (state.key as number) + 1 },
         output(item, state)
       );
 

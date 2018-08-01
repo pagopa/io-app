@@ -8,7 +8,7 @@ function rule() {
   return (node: SingleASTNode, _: ReactOutput, __: State): React.ReactNode => {
     const words = node.content.split(" ");
 
-    const texts = words.map((word: any, i: number) => {
+    return words.map((word: any, i: number) => {
       const text = i !== words.length - 1 ? `${word} ` : word;
       return React.createElement(
         Text,
@@ -18,8 +18,6 @@ function rule() {
         text
       );
     });
-
-    return texts;
   };
 }
 
