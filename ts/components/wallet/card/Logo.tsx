@@ -4,11 +4,8 @@
  */
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import {
-  CreditCard,
-  CreditCardType,
-  getCardType
-} from "../../../types/CreditCard";
+import { Wallet } from "../../../types/pagopa";
+import { CreditCardType } from "../../../types/pagopa";
 
 export enum LogoPosition {
   TOP,
@@ -36,9 +33,8 @@ export const cardIcons: { [key in CreditCardType]: any } = {
   UNKNOWN: require("../../../../img/wallet/cards-icons/unknown.png")
 };
 
-export const getCardIcon = (cc: CreditCard) => {
-  const type = getCardType(cc);
-  return cardIcons[type];
+export const getCardIcon = (w: Wallet) => {
+  return cardIcons[w.creditCard.brandLogo];
 };
 
 const styles = StyleSheet.create({
@@ -50,7 +46,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  item: CreditCard;
+  item: Wallet;
 }>;
 
 export default class Logo extends React.Component<Props> {

@@ -1,29 +1,57 @@
-import { Button, Container, Content, Text, View } from "native-base";
 import * as React from "react";
+
+import {
+  Button,
+  Container,
+  Content,
+  Header,
+  Right,
+  Text,
+  View
+} from "native-base";
+
+import { TouchableHighlight } from "react-native";
+
+import { connect } from "react-redux";
+
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
+
+import I18n from "../i18n";
+
+import variables from "../theme/variables";
+
 import Pinpad from "../components/Pinpad";
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
-import I18n from "../i18n";
+
 import { validatePin } from "../store/actions/pinlogin";
 import { ReduxProps } from "../store/actions/types";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
-import variables from "../theme/variables";
+
+import {
+  ContextualHelpInjectedProps,
+  withContextualHelp
+} from "../components/helpers/withContextualHelp";
+import { startPinReset } from "../store/actions/pinset";
+import { PinString } from "../types/PinString";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
 };
+
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReduxMappedProps &
+  ReduxProps &
+  OwnProps &
+  ContextualHelpInjectedProps;
 
 /**
- * A screen that allow the user to login with the PIN.
+ * A screen that allows the user to unlock the app with a PIN.
  */
 class PinLoginScreen extends React.Component<Props> {
   private pinComponent: CodeInput | null = null;
@@ -32,9 +60,14 @@ class PinLoginScreen extends React.Component<Props> {
     super(props);
   }
 
+  private onPinReset = () => {
+    this.props.dispatch(startPinReset());
+  };
+
   // Method called when the CodeInput is filled
-  public onPinFulfill = (code: string) => {
-    this.props.dispatch(validatePin(code));
+  public onPinFulfill = (code: PinString) => {
+    const validatePinAction = validatePin(code);
+    this.props.dispatch(validatePinAction);
     // Clear PIN input
     if (this.pinComponent) {
       this.pinComponent.clear();
@@ -42,7 +75,7 @@ class PinLoginScreen extends React.Component<Props> {
   };
 
   // Render the PIN match/doesn't match feedback message
-  public renderCodeInputConfirmValidation = () => {
+  public renderCodeInputConfirmValidation() {
     const validationMessage = (
       <TextWithIcon danger={true}>
         <IconFont name="io-close" />
@@ -55,10 +88,11 @@ class PinLoginScreen extends React.Component<Props> {
         {validationMessage}
       </React.Fragment>
     );
-  };
+  }
 
   // Render select/confirm Pinpad component
-  public renderCodeInput = (pinLoginState: PinLoginState) => {
+  public renderCodeInput(pinLoginState: PinLoginState) {
+    const isPinInvalid = pinLoginState.PinConfirmed === "PinConfirmedInvalid";
     return (
       <React.Fragment>
         <Pinpad
@@ -69,38 +103,37 @@ class PinLoginScreen extends React.Component<Props> {
           codeInputRef={pinpad => (this.pinComponent = pinpad)} // tslint:disable-line no-object-mutation
         />
 
-        {pinLoginState.PinConfirmed === "PinConfirmedInvalid" &&
-          this.renderCodeInputConfirmValidation()}
+        {isPinInvalid && this.renderCodeInputConfirmValidation()}
       </React.Fragment>
     );
-  };
-
-  // The Content of the Screen
-  public renderContent = (pinLoginState: PinLoginState) => {
-    return (
-      <Content primary={true}>
-        <View spacer={true} extralarge={true} />
-        <Text white={true} alignCenter={true}>
-          {I18n.t("pin_login.pin.pinInfo")}
-        </Text>
-        {this.renderCodeInput(pinLoginState)}
-        <View spacer={true} extralarge={true} />
-        {this.renderForgotButton()}
-      </Content>
-    );
-  };
-  // Render the forgot PIN button
-  public renderForgotButton = () => {
-    return (
-      <Button block={true} primary={true}>
-        <Text>{I18n.t("pin_login.pin.pinForgot")}</Text>
-      </Button>
-    );
-  };
+  }
 
   public render() {
     const { pinLoginState } = this.props;
-    return <Container>{this.renderContent(pinLoginState)}</Container>;
+    return (
+      <Container>
+        <Header primary={true}>
+          <Right>
+            <TouchableHighlight onPress={this.props.showHelp}>
+              <IconFont name="io-question" />
+            </TouchableHighlight>
+          </Right>
+        </Header>
+        <Content primary={true}>
+          <View spacer={true} extralarge={true} />
+          <Text white={true} alignCenter={true}>
+            {I18n.t("pin_login.pin.pinInfo")}
+          </Text>
+          {this.renderCodeInput(pinLoginState)}
+          <View spacer={true} extralarge={true} />
+          <Button block={true} primary={true} onPress={this.onPinReset}>
+            <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+          </Button>
+          <View spacer={true} />
+          <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
+        </Content>
+      </Container>
+    );
   }
 }
 
@@ -108,4 +141,11 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   // Checks from the store whether there was an error while login with the PIN (e.g. PIN is not valid )
   pinLoginState: state.pinlogin
 });
-export default connect(mapStateToProps)(PinLoginScreen);
+
+export default connect(mapStateToProps)(
+  withContextualHelp(
+    PinLoginScreen,
+    I18n.t("pin_login.unlock_screen.help.title"),
+    I18n.t("pin_login.unlock_screen.help.content")
+  )
+);

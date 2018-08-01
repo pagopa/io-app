@@ -7,20 +7,20 @@ import * as React from "react";
 
 import { Content, List, Text, View } from "native-base";
 import { WalletStyles } from "../../components/styles/wallet";
-import { WalletLayout } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import CreditCardComponent from "../../components/wallet/card";
+import CardComponent from "../../components/wallet/card";
 import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardsSelector } from "../../store/reducers/wallet/cards";
-import { CreditCard } from "../../types/CreditCard";
+import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import { Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps = Readonly<{
-  cards: ReadonlyArray<CreditCard>;
+  wallets: ReadonlyArray<Wallet>;
 }>;
 
 type OwnProps = Readonly<{
@@ -29,7 +29,7 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps & ReduxMappedStateProps;
 
-class CreditCardsScreen extends React.Component<Props, never> {
+class WalletsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const headerContents = (
       <View style={WalletStyles.walletBannerText}>
@@ -44,15 +44,12 @@ class CreditCardsScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         headerContents={headerContents}
       >
-        <Content style={WalletStyles.backContent}>
+        <Content style={WalletStyles.header}>
           <List
             removeClippedSubviews={false}
-            dataArray={this.props.cards as any[]} // tslint:disable-line
+            dataArray={this.props.wallets as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
-              <CreditCardComponent
-                navigation={this.props.navigation}
-                item={item}
-              />
+              <CardComponent navigation={this.props.navigation} item={item} />
             )}
           />
           <View spacer={true} />
@@ -75,6 +72,6 @@ class CreditCardsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cards: creditCardsSelector(state)
+  wallets: walletsSelector(state)
 });
-export default connect(mapStateToProps)(CreditCardsScreen);
+export default connect(mapStateToProps)(WalletsScreen);

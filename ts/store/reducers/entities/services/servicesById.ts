@@ -13,6 +13,8 @@ export type ServicesByIdState = Readonly<{
   [key: string]: ServicePublic;
 }>;
 
+export type ServiceByIdState = Readonly<ServicePublic>;
+
 export const INITIAL_STATE: ServicesByIdState = {};
 
 const reducer = (
@@ -35,5 +37,9 @@ const reducer = (
 export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => {
   return state.entities.services.byId;
 };
+
+export const serviceByIdSelector = (id: string) => (
+  state: GlobalState
+): ServiceByIdState => state.entities.services.byId[id];
 
 export default reducer;

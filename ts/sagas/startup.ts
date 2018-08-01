@@ -2,7 +2,7 @@ import { Effect } from "redux-saga";
 import { fork, put, select, take } from "redux-saga/effects";
 
 import {
-  logoutSuccess,
+  sessionInvalid,
   SessionLoadFailure,
   sessionLoadRequest,
   SessionLoadSuccess,
@@ -11,8 +11,10 @@ import {
 import {
   APPLICATION_INITIALIZED,
   AUTHENTICATION_COMPLETED,
+  PIN_LOGIN_INITIALIZE,
   SESSION_LOAD_FAILURE,
-  SESSION_LOAD_SUCCESS
+  SESSION_LOAD_SUCCESS,
+  START_MAIN
 } from "../store/actions/constants";
 import { startNotificationInstallationUpdate } from "../store/actions/notifications";
 import { startOnboarding } from "../store/actions/onboarding";
@@ -29,6 +31,12 @@ export function* watchApplicationInitialized(): IterableIterator<Effect> {
 
     // Check if the user is logged in or not
     const isAuthenticated: boolean = yield select(isAuthenticatedSelector);
+
+    // Only unauthenticated users need onboarding
+    const needOnboarding = !isAuthenticated;
+
+    // tslint:disable-next-line:no-let
+    let sessionRefreshed = false;
 
     if (!isAuthenticated) {
       // The user is logged out
@@ -55,14 +63,16 @@ export function* watchApplicationInitialized(): IterableIterator<Effect> {
 
       // If we received SESSION_LOAD_FAILURE this means the session is not-valid
       if (action.type === SESSION_LOAD_FAILURE) {
-        // Logout the user (remove the session information from the store)
-        yield put(logoutSuccess());
+        // Remove the session information from the store
+        yield put(sessionInvalid());
 
         // Start the Authentication process
         yield put(startAuthentication());
 
         // Wait for the Authentication to be completed
         yield take(AUTHENTICATION_COMPLETED);
+
+        sessionRefreshed = true;
       }
     }
 
@@ -75,7 +85,23 @@ export function* watchApplicationInitialized(): IterableIterator<Effect> {
     yield put(startNotificationInstallationUpdate());
 
     // Start the Onboarding
-    yield put(startOnboarding());
+    if (needOnboarding) {
+      yield put(startOnboarding());
+    } else {
+      // The Onboarding step is not needed
+
+      // If the session was expired and has been refreshed go straight to the main screen
+      if (sessionRefreshed) {
+        yield put({
+          type: START_MAIN
+        });
+      } else {
+        // The session was valid so let the user enter the PIN before going to the main screen
+        yield put({
+          type: PIN_LOGIN_INITIALIZE
+        });
+      }
+    }
   }
 }
 

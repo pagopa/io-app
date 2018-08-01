@@ -20,18 +20,22 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import { CardEnum, WalletLayout } from "../../components/wallet/WalletLayout";
+import { CardEnum } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
+import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
-import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
+import { Wallet } from "../../types/pagopa";
+import { Transaction } from "../../types/pagopa";
+import { UNKNOWN_CARD, UNKNOWN_TRANSACTION } from "../../types/unknown";
+import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 
 type ReduxMappedProps = Readonly<{
-  transaction: WalletTransaction;
-  selectedCard: CreditCard;
+  transaction: Transaction;
+  selectedWallet: Wallet;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps;
@@ -40,9 +44,6 @@ type Props = ReduxMappedProps & NavigationInjectedProps;
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
  * and he is going to display the detail of the transaction as receipt
  */
-type State = Readonly<{
-  isTransactionStarted: boolean;
-}>;
 
 const styles = StyleSheet.create({
   value: {
@@ -57,49 +58,18 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Details of transaction
- * TODO: implement the proper state control
- * @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
- */
-export class TransactionDetailsScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isTransactionStarted: false
-    };
-  }
-
-  /**
-   * It provide the currency EUR symbol
-   * TODO: verify how approach the euro notation
-   * @https://www.pivotaltracker.com/n/projects/2048617/stories/158330111
-   */
-  private getCurrencySymbol(currency: string) {
-    if (currency === "EUR") {
-      return "€";
-    } else {
-      return currency;
-    }
-  }
-
-  /**
-   * It sum the amount to pay and the fee requested to perform the transaction
-   * TO DO: If required, it should be implemented the proper algorithm to manage values
-   * from 10^13
-   *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
-   */
-  private getTotalAmount(transaction: Readonly<WalletTransaction>) {
-    return transaction.amount + transaction.transactionCost;
-  }
-
+export class TransactionDetailsScreen extends React.Component<Props> {
   /**
    * It provides the proper header to the screen. If isTransactionStarted
    * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
   private getSubHeader() {
-    return this.state.isTransactionStarted ? (
+    const paymentCompleted = this.props.navigation.getParam(
+      "paymentCompleted",
+      false
+    );
+    return paymentCompleted ? (
       <View>
         <Grid>
           <Col size={1} />
@@ -146,38 +116,47 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { transaction } = this.props;
+    const paymentCompleted = this.props.navigation.getParam(
+      "paymentCompleted",
+      false
+    );
+    const amount = buildAmount(centsToAmount(transaction.amount.amount));
+    const fee = buildAmount(centsToAmount(transaction.fee.amount));
+    const totalAmount = buildAmount(
+      centsToAmount(transaction.grandTotal.amount)
+    );
 
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
         navigation={this.props.navigation}
         headerContents={this.getSubHeader()}
-        cardType={{ type: CardEnum.HEADER, card: this.props.selectedCard }}
+        cardType={{ type: CardEnum.HEADER, card: this.props.selectedWallet }}
         showPayButton={false}
+        allowGoBack={!paymentCompleted}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
             <Row style={styles.titleRow}>
               <H3>{I18n.t("wallet.transactionDetails")}</H3>
-              <IconFont name="io-close" size={variables.iconSizeBase} />
+              <IconFont
+                name="io-close"
+                size={variables.iconSizeBase}
+                onPress={() =>
+                  paymentCompleted
+                    ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
+                    : this.props.navigation.goBack()
+                }
+              />
             </Row>
             <View spacer={true} extralarge={true} />
             <Row>
               <Text>
                 {`${I18n.t("wallet.total")}  `}
-                <H3 style={styles.value}>
-                  {`-${this.getTotalAmount(transaction).toFixed(
-                    2
-                  )} ${this.getCurrencySymbol(transaction.currency)}`}
-                </H3>
+                <H3 style={styles.value}>{totalAmount}</H3>
               </Text>
             </Row>
-            {this.labelValueRow(
-              I18n.t("wallet.payAmount"),
-              `${transaction.amount.toFixed(2)} ${this.getCurrencySymbol(
-                transaction.currency
-              )}`
-            )}
+            {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(
               <Text>
                 <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
@@ -185,20 +164,24 @@ export class TransactionDetailsScreen extends React.Component<Props, State> {
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
-              `${transaction.transactionCost.toFixed(
-                2
-              )} ${this.getCurrencySymbol(transaction.currency)}`
+              fee
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
-              transaction.paymentReason
+              transaction.description
             )}
             {this.labelValueRow(
               I18n.t("wallet.recipient"),
-              transaction.recipient
+              transaction.merchant
             )}
-            {this.labelValueRow(I18n.t("wallet.date"), transaction.date)}
-            {this.labelValueRow(I18n.t("wallet.time"), transaction.time)}
+            {this.labelValueRow(
+              I18n.t("wallet.date"),
+              transaction.created.toLocaleDateString()
+            )}
+            {this.labelValueRow(
+              I18n.t("wallet.time"),
+              transaction.created.toLocaleTimeString()
+            )}
           </Grid>
         </Content>
       </WalletLayout>
@@ -209,7 +192,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   transaction: transactionForDetailsSelector(state).getOrElse(
     UNKNOWN_TRANSACTION
   ),
-  selectedCard: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD)
+  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);

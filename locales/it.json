@@ -25,7 +25,14 @@
     },
     "actions": {
       "retry": "Si è verificato un errore, si prega di riprovare"
+    },
+    "remoteStates": {
+      "notAvailable": "Non disponibile"
     }
+  },
+  "locales": {
+    "it": "Italiano",
+    "en": "Inglese"
   },
   "connection": {
     "status": {
@@ -134,9 +141,20 @@
   "pin_login":{
     "pin": {
       "pinInfo": "Inserisci il codice PIN",
-      "pinForgot": "Non ricordo il PIN",
+      "reset": {
+        "button": "Ho dimenticato il mio PIN",
+        "button_short": "Reimposta PIN",
+        "tip": "Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.",
+        "tip_short": "Dovrai accedere nuovamente con SPID."
+      },
       "confirmValid": "PIN corretto",
       "confirmInvalid": "PIN non valido"
+    },
+    "unlock_screen": {
+      "help": {
+        "title": "hello",
+        "content": "hello"
+      }
     }
   },
   "personal_data_processing": {
@@ -162,6 +180,10 @@
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "datetimes": {
+    "yesterday": "ieri",
+    "todayAt": "oggi, alle"
   },
   "wallet": {
     "wallet": "Portafoglio",
@@ -190,7 +212,7 @@
     },
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
-    "addManager": {
+    "pickPsp": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
       "infoBold":"Scegli il soggetto economico",
@@ -262,9 +284,6 @@
     "transaction": "Operazione",
     "noTransactions": "Non ci sono operazioni.",
     "noNewTransactions": "Non ci sono nuove operazioni.",
-    "lastUsage": "Ultimo utilizzo",
-    "yesterday": "ieri alle",
-    "today": "oggi alle",
     "payNotice": "Paga un avviso",
     "latestOperations": "Ultime operazioni",
     "creditDebitCards": "Carte di Credito/Debito",
@@ -316,13 +335,15 @@
     "favoriteTitle":"Imposta la carta come metodo di pagamento preferito",
     "favoriteText":"Al prossimo pagamento ti verrà automaticamente proposto questo metodo di pagamento"
   },
-  "creditCardComponent": {
+  "cardComponent": {
     "validUntil": "Valida fino al",
     "actions": "Azioni",
     "setFavourite": "Imposta come preferita",
     "unsetFavourite": "Rimuovi dai preferiti",
     "deleteTitle": "Procedere con l'operazione?",
-    "deleteMsg": "Questo cancellerà il metodo di pagamento"
+    "deleteMsg": "Questo cancellerà il metodo di pagamento",
+    "neverUsed": "Mai utilizzata",
+    "lastUsage": "Ultimo utilizzo"
   },
   "messages": {
     "counting": {
@@ -366,9 +387,23 @@
     "moreLinkText": "Per saperne di più.",
     "list": {
       "email": "Indirizzo email",
-      "servicesNotifications": "Notifiche dai servizi",
+      "mobile_phone": "Numero di telefono",
+      "services": "Elenco dei servizi",
+      "services_description": "Attiva/disattiva i tuoi servizi di IO",
       "language": "Lingua",
       "digitalDomicile": "Domicilio digitale"
+    },
+    "empty": {
+      "default": "Nessuna preferenza impostata"
     }
+  },
+  "services": {
+    "headerTitle": "Servizi",
+    "title": "Elenco dei servizi",
+    "subtitle": "Puoi attivare/disattivare ogni servizio, oppure accedere alla sua scheda per scoprirne i dettagli, le condizioni d'uso e personalizzarne le notifiche.",
+    "serviceIsEnabled": "Il servizio è attivo",
+    "pushNotifications": "Notifiche Push",
+    "emailNotifications": "Notifiche Email",
+    "contactsAndInfo": "Contatti ed informazioni"
   }
 }

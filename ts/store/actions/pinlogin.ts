@@ -2,6 +2,8 @@
  * Action types and action creator related to the PinLogin.
  */
 
+import { PinString } from "../../types/PinString";
+
 import {
   PIN_LOGIN_VALIDATE_FAILURE,
   PIN_LOGIN_VALIDATE_REQUEST,
@@ -18,7 +20,7 @@ export type PinValidateFailure = Readonly<{
 }>;
 export type PinValidateRequest = Readonly<{
   type: typeof PIN_LOGIN_VALIDATE_REQUEST;
-  payload: string;
+  payload: PinString;
 }>;
 
 export type PinloginActions =
@@ -27,7 +29,15 @@ export type PinloginActions =
   | PinValidateSuccess;
 
 // Send the PIN to be match with the one in the keychain
-export const validatePin = (pin: string): PinValidateRequest => ({
+export const validatePin = (pin: PinString): PinValidateRequest => ({
   type: PIN_LOGIN_VALIDATE_REQUEST,
   payload: pin
+});
+
+export const pinFailure = (): PinValidateFailure => ({
+  type: PIN_LOGIN_VALIDATE_FAILURE
+});
+
+export const pinSuccess = (): PinValidateSuccess => ({
+  type: PIN_LOGIN_VALIDATE_SUCCESS
 });

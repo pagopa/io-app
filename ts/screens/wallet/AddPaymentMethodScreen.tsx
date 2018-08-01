@@ -23,7 +23,6 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { WalletAPI } from "../../api/wallet/wallet-api";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -31,15 +30,10 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { TransactionSummary } from "../../types/wallet";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
-
-const transaction: Readonly<
-  TransactionSummary
-> = WalletAPI.getTransactionSummary();
 
 export class AddPaymentMethodScreen extends React.Component<Props, never> {
   /**
@@ -78,11 +72,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
         </AppHeader>
         {this.isInTransaction() ? (
           <Content noPadded={true}>
-            <PaymentBannerComponent
-              paymentReason={transaction.paymentReason}
-              currentAmount={transaction.totalAmount.toString()}
-              entity={transaction.entityName}
-            />
+            <PaymentBannerComponent navigation={this.props.navigation} />
             <View style={WalletStyles.paddedLR}>
               <View spacer={true} large={true} />
               {this.isInTransaction() && (

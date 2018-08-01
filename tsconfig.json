@@ -15,15 +15,13 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-    "skipLibCheck": true,
-    "plugins": [
-      {
-        "name": "tslint-language-service",
-        "supressWhileTypeErrorsPresent": true
-      }
-    ]
+    "skipLibCheck": true
   },
-  "lib": [ "dom", "es2015", "es2016" ],
+  "lib": [
+    "dom",
+    "es2015",
+    "es2016"
+  ],
   "exclude": [
     "android",
     "ios",
