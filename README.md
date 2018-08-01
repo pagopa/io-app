@@ -267,6 +267,15 @@ L'applicazione utilizza un custom handler per intercettare e notificare errori j
 L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
 
 
+### Deep linking
+
+L'applicazione è in grado di gestire i _deep link_. Lo schema URL è: `ioit://`. Il formato del link varia in base alla piattaforma:
+
+- Android: `ioit://ioit/<route-name>`
+- iOS: `ioit://<route-name>`
+
+`<route-name>` dev'essere un valore contenuto nel file `ts/navigation/routes.ts`.
+
 ### Fonts
 
 L'applicazione utilizza il font `Titillium Web`. I fonts vengono gestiti in modo differente da Android e iOS. Per utilizzare il font `TitilliumWeb-SemiBoldItalic` ad esempio è necessario applicare le seguenti proprietà per Android:
@@ -291,7 +300,10 @@ Per rendere la gestione dei font e delle varianti più sempice sono state create
 
 ### Io-Icon-Font
 
-L'applicazione utilizza un font-icon custom dal nome 'io-icon-font'. Grazie alla libreria [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) inclusa nel progetto è possibile creare nuovi IconSet. In particolare tra i vari metodi esposti nell'[apposita sezione](https://github.com/oblador/react-native-vector-icons#custom-fonts) della documentazione si è scelto di utilizzare quello che prevede di esportare il font tramite [IcoMoon](https://icomoon.io/).
+L'applicazione utilizza un font-icon custom dal nome 'io-icon-font'. Grazie alla libreria [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) inclusa nel progetto è possibile creare nuovi IconSet. In particolare tra i vari metodi esposti nell'[apposita sezione](https://github.com/oblador/react-native-vector-icons#custom-fonts) della documentazione si è scelto di utilizzare quello che prevede di esportare il font tramite [IcoMoon](https://icomoon.io/). Durante l'esportazione da IcoMoon utilizzare la configurazione mostrata nella seguente figura.
+
+![IcoMoon Export Settings][icomoon-export-settings]
+
 Per aggiornare l'icon-font ad una nuova versione è necessario estrarre e posizionare correttamente i seguenti due file dall'archivio '.zip' generatoro da IcoMoon:
 
 * `selection.json` contenuto nella root dell'archivio, da posizionare in `ts/theme/font-icons/io-icon-font/`
@@ -481,3 +493,5 @@ $ detox test
 ## License
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_large)
+
+[icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"

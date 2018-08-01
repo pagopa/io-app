@@ -12,6 +12,7 @@ import h3Theme from "./components/H3";
 import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
+import listItemTheme from "./components/ListItem";
 import messageComponent from "./components/MessageComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import modalTheme from "./components/Modal";
@@ -78,6 +79,9 @@ const theme = (): Theme => {
     },
     "UIComponent.ScreenHeader": {
       ...screenHeaderTheme()
+    },
+    "NativeBase.ListItem": {
+      ...listItemTheme()
     }
   };
 

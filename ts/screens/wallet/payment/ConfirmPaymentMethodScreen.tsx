@@ -3,9 +3,13 @@
  * TODO:
  * - integrate contextual help:
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- * - implement the proper navigation
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
+ * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
+ *
  */
+import {
+  AmountInEuroCents,
+  AmountInEuroCentsFromNumber
+} from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -21,28 +25,52 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { WalletStyles } from "../../components/styles/wallet";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
-import CreditCardComponent from "../../components/wallet/card";
-import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
-import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import { selectedCreditCardSelector } from "../../store/reducers/wallet/cards";
-import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
-import { CreditCard, UNKNOWN_CARD } from "../../types/CreditCard";
-import { UNKNOWN_TRANSACTION, WalletTransaction } from "../../types/wallet";
+import { WalletStyles } from "../../../components/styles/wallet";
+import AppHeader from "../../../components/ui/AppHeader";
+import IconFont from "../../../components/ui/IconFont";
+import CardComponent from "../../../components/wallet/card";
+import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import {
+  paymentRequestCompletion,
+  paymentRequestGoBack,
+  paymentRequestPickPaymentMethod
+} from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
+import {
+  getCurrentAmount,
+  getPaymentStep,
+  isGlobalStateWithSelectedPaymentMethod,
+  selectedPaymentMethodSelector
+} from "../../../store/reducers/wallet/payment";
+import { feeExtractor } from "../../../store/reducers/wallet/wallets";
+import { Wallet } from "../../../types/pagopa";
+import { UNKNOWN_AMOUNT } from "../../../types/unknown";
+import { buildAmount } from "../../../utils/stringBuilder";
 
-type ReduxMappedStateProps = Readonly<{
-  card: Readonly<CreditCard>;
-  transaction: Readonly<WalletTransaction>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      valid: false;
+    }>
+  | Readonly<{
+      valid: true;
+      wallet: Wallet;
+      amount: AmountInEuroCents;
+      fee: AmountInEuroCents;
+    }>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  pickPaymentMethod: () => void;
+  requestCompletion: () => void;
+  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 const styles = StyleSheet.create({
   child: {
@@ -54,29 +82,24 @@ const styles = StyleSheet.create({
   }
 });
 
-class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
-  /**
-   * It sum the amount to pay and the fee requested to perform the transaction
-   * TO DO: If required, it should be implemented to manage values
-   * of the order of of higher 10^13
-   *  @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
-   */
-  private getTotalAmount(transaction: Readonly<WalletTransaction>) {
-    return transaction.amount + transaction.transactionCost;
+class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
+  private getTotalAmount(amount: number, fee: number) {
+    return amount + fee;
   }
 
   public render(): React.ReactNode {
-    const { transaction } = this.props;
+    if (!this.props.valid) {
+      return null;
+    }
 
+    const amount = AmountInEuroCentsFromNumber.encode(this.props.amount);
+    const fee = AmountInEuroCentsFromNumber.encode(this.props.fee);
+    const totalAmount = this.getTotalAmount(amount, fee);
     return (
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
+            <Button transparent={true} onPress={() => this.props.goBack()}>
               <IconFont name="io-back" />
             </Button>
           </Left>
@@ -86,18 +109,14 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentBannerComponent
-            paymentReason={transaction.paymentReason}
-            currentAmount={transaction.amount.toFixed(2).toString()}
-            entity={transaction.recipient}
-          />
+          <PaymentBannerComponent navigation={this.props.navigation} />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
-            <CreditCardComponent
+            <CardComponent
               navigation={this.props.navigation}
-              item={this.props.card}
+              item={this.props.wallet}
               menu={false}
               favorite={false}
               lastUsage={false}
@@ -110,7 +129,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${transaction.amount.toFixed(2)}  €`}
+                    {buildAmount(amount)}
                   </Text>
                 </Col>
               </Row>
@@ -126,7 +145,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {`${transaction.transactionCost.toFixed(2)} €`}
+                    {buildAmount(fee)}
                   </Text>
                 </Col>
               </Row>
@@ -139,7 +158,7 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={WalletStyles.textRight}>
-                    {`${this.getTotalAmount(transaction).toFixed(2)} €`}
+                    {buildAmount(totalAmount)}
                   </H1>
                 </Col>
               </Row>
@@ -174,7 +193,11 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button block={true} primary={true}>
+          <Button
+            block={true}
+            primary={true}
+            onPress={() => this.props.requestCompletion()}
+          >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
           <View spacer={true} />
@@ -184,17 +207,12 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.goBack()}
+              onPress={_ => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
-            <View spacer={true} />
-            <Button
-              style={styles.child}
-              block={true}
-              cancel={true}
-              onPress={_ => this.goBack()}
-            >
+            <View hspacer={true} />
+            <Button style={styles.child} block={true} cancel={true}>
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
@@ -204,14 +222,31 @@ class ConfirmToProceedTransactionScreen extends React.Component<Props, never> {
   }
 }
 
-/**
- * TODO: selectors will be reviewed in next pr
- *  @https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
- */
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  card: selectedCreditCardSelector(state).getOrElse(UNKNOWN_CARD),
-  transaction: transactionForDetailsSelector(state).getOrElse(
-    UNKNOWN_TRANSACTION
-  )
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  if (
+    getPaymentStep(state) === "PaymentStateConfirmPaymentMethod" &&
+    isGlobalStateWithSelectedPaymentMethod(state)
+  ) {
+    const wallet = selectedPaymentMethodSelector(state);
+    const feeOrUndefined = feeExtractor(wallet);
+    return {
+      valid: true,
+      wallet,
+      amount: getCurrentAmount(state),
+      fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+    };
+  } else {
+    return { valid: false };
+  }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
+  requestCompletion: () => dispatch(paymentRequestCompletion()),
+  goBack: () => dispatch(paymentRequestGoBack())
 });
-export default connect(mapStateToProps)(ConfirmToProceedTransactionScreen);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmPaymentMethodScreen);

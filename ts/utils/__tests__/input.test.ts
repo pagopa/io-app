@@ -1,7 +1,7 @@
 import { fixExpirationDate, fixPan } from "../input";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import _ from "lodash";
+import { entries } from "lodash";
 
 describe("fixExpirationDate", () => {
   it("should add a / when needed", () => {
@@ -14,7 +14,7 @@ describe("fixExpirationDate", () => {
       "10": some("10/"), // can't add an additional digit
       "20": some("20") // month out of bounds, ignore
     };
-    _.entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
+    entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
       expect(o).toEqual(fixExpirationDate(i))
     );
   });
@@ -29,7 +29,7 @@ describe("fixExpirationDate", () => {
       "!@#$%/^&*()-=/": some("/"), // get rid of everything but the 1st /
       "!@#$%^&*()-=": none // get rid of it all
     };
-    _.entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
+    entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
       expect(o).toEqual(fixExpirationDate(i))
     );
   });
@@ -42,7 +42,7 @@ describe("fixExpirationDate", () => {
       "01/203": some("01/03"), // 3rd digit, drop 1st one
       "01/2034": some("01/34") // 4 digits, drop first two ones
     };
-    _.entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
+    entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
       expect(o).toEqual(fixExpirationDate(i))
     );
   });
@@ -58,7 +58,7 @@ describe("fixPan", () => {
       "!@#$%/^&*()-=/": none, // get rid of it all
       "0!@#$1%^&*()2-=": some("012") // get rid of all but \d
     };
-    _.entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
+    entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
       expect(o).toEqual(fixPan(i))
     );
   });
@@ -73,7 +73,7 @@ describe("fixPan", () => {
       "01234567": some("0123 4567 "), // add space after second quadruplet
       "0123456789": some("0123 4567 89") // do not add space here
     };
-    _.entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
+    entries(ioMap).forEach(([i, o]: [string, Option<string>]) =>
       expect(o).toEqual(fixPan(i))
     );
   });

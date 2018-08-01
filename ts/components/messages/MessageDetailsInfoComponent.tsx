@@ -13,7 +13,7 @@ export type OwnProps = Readonly<{
   serviceOrganizationName: string;
   serviceDepartmentName: string;
   serviceName: string;
-  createdAt: Date;
+  createdAt: string;
 }>;
 
 export type Props = OwnProps;
@@ -29,7 +29,9 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
       serviceOrganizationName,
       serviceName
     } = this.props;
+
     const localeLanguage = I18n.locale.includes("en") ? enLocale : itLocale;
+
     return (
       <View>
         <View>

@@ -18,11 +18,12 @@ import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
-import { createPin } from "../../store/actions/onboarding";
+import { createPin } from "../../store/actions/pinset";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { PinString } from "../../types/PinString";
 
 type ReduxMappedProps = {
   pinSaveError: Option<string>;
@@ -41,12 +42,12 @@ type PinUnselected = {
 type PinSelected = {
   state: "PinSelected";
   // User selected PIN
-  pin: string;
+  pin: PinString;
 };
 
 type PinConfirmed = {
   state: "PinConfirmed";
-  pin: string;
+  pin: PinString;
   // True if the confirmation PIN match
   isConfirmationPinMatch: boolean;
 };
@@ -79,7 +80,7 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the first CodeInput is filled
-  public onPinFulfill(code: string) {
+  public onPinFulfill(code: PinString) {
     this.setState({
       pinState: {
         state: "PinSelected",
@@ -89,7 +90,7 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the confirmation CodeInput is filled
-  public onPinConfirmFulfill(isValid: boolean, code: string) {
+  public onPinConfirmFulfill(isValid: boolean, code: PinString) {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid) {
       if (this.pinConfirmComponent) {
@@ -117,7 +118,7 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Dispatch the Action that save the PIN in the Keychain
-  public createPin(pin: string) {
+  public createPin(pin: PinString) {
     this.props.dispatch(createPin(pin));
   }
 
@@ -162,7 +163,7 @@ class PinScreen extends React.Component<Props, State> {
           autofocus={true}
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
-          onFulfill={(code: string) => this.onPinFulfill(code)}
+          onFulfill={(code: PinString) => this.onPinFulfill(code)}
         />
       );
     } else {
