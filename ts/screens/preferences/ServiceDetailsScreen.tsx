@@ -14,7 +14,6 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Switch } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -22,6 +21,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
+import Switch from "../../components/ui/Switch";
 
 import I18n from "../../i18n";
 
