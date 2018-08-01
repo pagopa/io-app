@@ -348,7 +348,9 @@ function* completionHandler(_: PaymentRequestCompletion) {
 }
 
 function* watchWalletSaga(): Iterator<Effect> {
-  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix, "TOKEN");
+  const pagoPaClient = new PagoPaClient(pagoPaApiUrlPrefix, "TOKEN");
+  const successfulRefresh = yield call(pagoPaClient.refreshPagoPaSession);
+  console.warn(successfulRefresh);
   while (true) {
     const action = yield take([
       FETCH_TRANSACTIONS_REQUEST,
