@@ -27,8 +27,6 @@ import Switch from "../../components/ui/Switch";
 
 import I18n from "../../i18n";
 
-import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
-import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 import { profileUpsertRequest } from "../../store/actions/profile";
@@ -38,23 +36,18 @@ import { ServicesState } from "../../store/reducers/entities/services";
 import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
+import {
+  EnabledChannels,
+  getBlockedChannels,
+  getEnabledChannelsForService
+} from "./common";
+
 export interface IMessageDetailsScreenParam {
   readonly serviceId: ServiceId;
 }
 
 interface INavigationStateWithParams extends NavigationState {
   readonly params: IMessageDetailsScreenParam;
-}
-
-/**
- * The enabled/disabled state of each channel.
- *
- * Consider generating this map from the API specs.
- */
-interface EnabledChannels {
-  inbox: boolean;
-  email: boolean;
-  push: boolean;
 }
 
 type ReduxMappedProps = Readonly<{
@@ -73,66 +66,6 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
 interface State {
   uiEnabledChannels: EnabledChannels;
 }
-
-const INBOX_CHANNEL = "INBOX";
-const EMAIL_CHANNEL = "EMAIL";
-const PUSH_CHANNEL = "WEBHOOK";
-
-/**
- * Finds out which channels are enabled in the profile for the provided service
- */
-function getEnabledChannelsForService(
-  profileState: ProfileState,
-  serviceId: ServiceId
-): EnabledChannels {
-  return fromNullable(profileState)
-    .mapNullable(
-      profile =>
-        ProfileWithEmail.is(profile) ? profile.blocked_inbox_or_channels : null
-    )
-    .mapNullable(blockedChannels => blockedChannels[serviceId])
-    .map(_ => ({
-      inbox: _.indexOf(INBOX_CHANNEL) === -1,
-      email: _.indexOf(EMAIL_CHANNEL) === -1,
-      push: _.indexOf(PUSH_CHANNEL) === -1
-    }))
-    .getOrElse({
-      inbox: true,
-      email: true,
-      push: true
-    });
-}
-
-/**
- * Returns a function that generates updated blocked channels from the
- * enabled channels
- */
-const getBlockedChannels = (
-  profileState: ProfileState,
-  serviceId: ServiceId
-) => (enabled: EnabledChannels): BlockedInboxOrChannels => {
-  // get the current blocked channels from the profile
-  const profileBlockedChannels = fromNullable(profileState)
-    .mapNullable(
-      profile =>
-        ProfileWithEmail.is(profile) ? profile.blocked_inbox_or_channels : null
-    )
-    .getOrElse({});
-
-  // compute the blocked channels array for this service
-  const blockedChannelsForService = [
-    !enabled.inbox ? INBOX_CHANNEL : "",
-    !enabled.push ? PUSH_CHANNEL : "",
-    !enabled.email ? EMAIL_CHANNEL : ""
-  ].filter(_ => _ !== "");
-
-  // returned the merged current blocked channels with the blocked channels for
-  // this service
-  return {
-    ...profileBlockedChannels,
-    [serviceId]: blockedChannelsForService
-  };
-};
 
 /**
  * Renders a row in the service information panel
@@ -265,7 +198,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <View spacer={true} large={true} />
             <Row>
               <Col size={10}>
-                <Text>{I18n.t("services.serviceIsEnabled")}</Text>
+                <Text
+                  primary={
+                    profileEnabledChannels.inbox !==
+                    this.state.uiEnabledChannels.inbox
+                  }
+                >
+                  {profileEnabledChannels.inbox
+                    ? I18n.t("services.serviceIsEnabled")
+                    : I18n.t("services.serviceNotEnabled")}
+                </Text>
               </Col>
               <Col size={2}>
                 <Switch
@@ -298,7 +240,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <Row>
               <Col size={1} />
               <Col size={9}>
-                <Text>{I18n.t("services.pushNotifications")}</Text>
+                <Text
+                  primary={
+                    profileEnabledChannels.push !==
+                    this.state.uiEnabledChannels.push
+                  }
+                >
+                  {I18n.t("services.pushNotifications")}
+                </Text>
               </Col>
               <Col size={2}>
                 <Switch
@@ -331,7 +280,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <Row>
               <Col size={1} />
               <Col size={9}>
-                <Text>{I18n.t("services.emailNotifications")}</Text>
+                <Text
+                  primary={
+                    profileEnabledChannels.email !==
+                    this.state.uiEnabledChannels.email
+                  }
+                >
+                  {I18n.t("services.emailNotifications")}
+                </Text>
               </Col>
               <Col size={2}>
                 <Switch
