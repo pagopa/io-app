@@ -23,6 +23,8 @@ import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
+import TermOfUse from '../../components/helpers/TermOfUse';
+
 type ReduxMappedProps = {
   isFormValid: boolean;
 };
@@ -78,6 +80,8 @@ class SpidInformationRequestScreen extends React.Component<Props> {
           <Text link={true} onPress={this.props.showHelp}>
             {I18n.t("authentication.spid_information_request.tosLinkText")}
           </Text>
+          <View spacer={true} extralarge={true}/>
+          <View spacer={true} extralarge={true}/>
         </Content>
         <View footer={true}>
           <Button
@@ -106,6 +110,6 @@ export default connect(mapStateToProps)(
   withContextualHelp(
     SpidInformationRequestScreen,
     I18n.t("personal_data_processing.title"),
-    I18n.t("personal_data_processing.content")
+    <TermOfUse/>  
   )
 );
