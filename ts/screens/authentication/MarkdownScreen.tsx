@@ -11,7 +11,7 @@ const MARKDOWN = `
 
 ### I am a Header 3
 
-A simple paragraph.
+A simple paragraph with a [link](http://www.google.it) rendered as a primary button and [another big link](http://www.google.it) also rendered successfully.
 
 Text can be emphasized with *asterisk* or _underscore_.
 

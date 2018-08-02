@@ -11,7 +11,7 @@ function rule() {
     state: State
   ): React.ReactNode => {
     // If we are inside a heading return the plain content
-    if (state.withinHeading) {
+    if (state.withinHeading || state.withinLink) {
       return node.content;
     }
 
