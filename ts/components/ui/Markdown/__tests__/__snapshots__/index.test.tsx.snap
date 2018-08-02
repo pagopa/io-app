@@ -72,7 +72,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       Array [
         Object {},
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "wrap",
           "justifyContent": "flex-start",
@@ -261,7 +261,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       Array [
         Object {},
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "wrap",
           "justifyContent": "flex-start",
@@ -450,7 +450,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       Array [
         Object {},
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "wrap",
           "justifyContent": "flex-start",
