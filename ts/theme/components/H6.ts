@@ -6,9 +6,9 @@ import variables from "../variables";
 
 export default (): Theme => {
   return {
-    ...makeFontStyleObject(Platform.select, variables.h3FontWeight),
-    color: variables.h3Color,
-    fontSize: variables.h3FontSize,
-    lineHeight: variables.h3LineHeight
+    ...makeFontStyleObject(Platform.select, variables.h6FontWeight),
+    color: variables.h6Color,
+    fontSize: variables.h6FontSize,
+    lineHeight: variables.h6LineHeight
   };
 };

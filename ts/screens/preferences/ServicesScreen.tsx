@@ -3,11 +3,13 @@ import {
   Button,
   Container,
   Content,
-  H2,
+  Grid,
+  H1,
   H3,
   Left,
   ListItem,
   Right,
+  Row,
   Text,
   View
 } from "native-base";
@@ -38,11 +40,15 @@ import {
 import { ReduxProps } from "../../store/actions/types";
 import { OrganizationNamesByFiscalCodeState } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ServicesState } from "../../store/reducers/entities/services";
+import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
 
+import { getEnabledChannelsForService } from "./common";
+
 type ReduxMappedProps = Readonly<{
+  profile: ProfileState;
   services: ServicesState;
   organizations: OrganizationNamesByFiscalCodeState;
 }>;
@@ -69,7 +75,7 @@ class ServicesScreen extends React.Component<Props> {
     section: SectionListData<string>;
   }): React.ReactElement<any> | null => (
     <ListItem itemHeader={true}>
-      <H2>{info.section.title}</H2>
+      <H1>{info.section.title}</H1>
     </ListItem>
   );
 
@@ -78,6 +84,11 @@ class ServicesScreen extends React.Component<Props> {
   ) => {
     const serviceId = itemInfo.item;
     const service = this.props.services.byId[serviceId];
+    const enabledChannels = getEnabledChannelsForService(
+      this.props.profile,
+      serviceId
+    );
+
     const onPress = () => {
       // when a service gets selected, before navigating to the service detail
       // screen, we issue a contentServiceLoad and a contentOrganizationLoad
@@ -95,7 +106,18 @@ class ServicesScreen extends React.Component<Props> {
       service && (
         <ListItem key={itemInfo.item} onPress={onPress}>
           <Left>
-            <H3>{service.service_name}</H3>
+            <Grid>
+              <Row>
+                <H3>{service.service_name}</H3>
+              </Row>
+              <Row>
+                <Text italic={true} bold={enabledChannels.inbox}>
+                  {enabledChannels.inbox
+                    ? I18n.t("services.serviceIsEnabled")
+                    : I18n.t("services.serviceNotEnabled")}
+                </Text>
+              </Row>
+            </Grid>
           </Left>
           <Right>
             <IconFont name="io-right" />
@@ -153,6 +175,7 @@ class ServicesScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  profile: state.profile,
   services: state.entities.services,
   organizations: state.entities.organizations
 });
