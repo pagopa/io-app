@@ -14,7 +14,15 @@ function rule() {
     const newState = { ...state, withinLink: true };
 
     // Create the Text element that must go inside <Button>
-    const text = React.createElement(Text, {}, output(node.content, newState));
+    const text = React.createElement(
+      Text,
+      {
+        style: {
+          lineHeight: 22
+        }
+      },
+      output(node.content, newState)
+    );
 
     return React.createElement(
       Button,
@@ -23,7 +31,9 @@ function rule() {
         primary: true,
         small: true,
         style: {
-          height: 26
+          height: 22,
+          marginTop: 1,
+          marginBottom: 1
         },
         onPress: () => Linking.openURL(node.target).catch(_ => undefined)
       },
