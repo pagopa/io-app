@@ -133,7 +133,43 @@ const customVariables = Object.assign(materialVariables, {
 
   // H3
   h3Color: "#17324D",
-  h3FontWeight: "600" as FontWeight,
+  h3FontWeight: "700" as FontWeight,
+  get h3FontSize(): number {
+    return this.fontSize6;
+  },
+  get h3LineHeight(): number {
+    return this.fontSize6 * this.lineHeightFontSizeRatio;
+  },
+
+  // H4
+  h4Color: "#17324D",
+  h4FontWeight: "600" as FontWeight,
+  get h4FontSize(): number {
+    return this.fontSize4;
+  },
+  get h4LineHeight(): number {
+    return this.fontSize4 * this.lineHeightFontSizeRatio;
+  },
+
+  // H5
+  h5Color: "#17324D",
+  h5FontWeight: "600" as FontWeight,
+  get h5FontSize(): number {
+    return this.fontSize3;
+  },
+  get h5LineHeight(): number {
+    return this.fontSize3 * this.lineHeightFontSizeRatio;
+  },
+
+  // H6
+  h6Color: "#17324D",
+  h6FontWeight: "600" as FontWeight,
+  get h6FontSize(): number {
+    return this.fontSize2;
+  },
+  get h6LineHeight(): number {
+    return this.fontSize2 * this.lineHeightFontSizeRatio;
+  },
 
   // Header
   headerPaddingHorizontal: 24,

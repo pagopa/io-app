@@ -25,11 +25,17 @@ Here is a list:
 `;
 
 const MARKDOWN_HEADING = `
-# I am a Header1
+# I am a Header 1
 
 ## I am a Header 2
 
 ### I am a Header 3
+
+#### I am a Header 4
+
+##### I am a Header 5
+
+###### I am a Header 6
 `;
 
 const MARKDOWN_PARAGRAPH = `
