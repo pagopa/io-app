@@ -105,9 +105,11 @@
       "continue": "Continua"
     },
     "spid_information": {
+      "headerTitle": "Non hai SPID?",
       "contentTitle": "Cos'è SPID?",
       "moreLinkText": "Per saperne di più",
       "subtitle": "SPID è sicuro",
+      "paragraph1": "SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale (username e password).",
       "paragraph2-part1": "SPID ti permette di fare online cose che prima potevi fare solo di persona: per registrarti a SPID dovrai quindi ",
       "paragraph2-bold": "certificare la tua identità",
       "paragraph2-part2": "completando il riconoscimento presso un Identity Provider. Ecco cosa dovrai fare:",

@@ -86,7 +86,7 @@
                   </Left>
                   <Body>
                     <Text>
-                      {I18n.t("authentication.spid_information_request.headerTitle")}
+                      {I18n.t("authentication.spid_information.headerTitle")}
                     </Text>
                   </Body>
                 </AppHeader>
@@ -97,7 +97,7 @@
                   </H1>
                   <View spacer={true} />
                   <Text>
-                    {I18n.t("authentication.spid_information_request.paragraph1")}
+                    {I18n.t("authentication.spid_information.paragraph1")}
                   </Text>
                   <Text link={true} onPress={this.props.showHelp}>
                     {I18n.t("authentication.spid_information.moreLinkText")}
