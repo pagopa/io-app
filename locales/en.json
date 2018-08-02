@@ -104,6 +104,23 @@
       "tosLinkText": "rules on the processing of personal data",
       "continue": "Continue"
     },
+    "spid_information": {
+      "contentTitle": "What is SPID?",
+      "moreLinkText": "Learn more",
+      "subtitle": "SPID is safe",
+      "paragraph2-part1": "SPID allows you to do online what was possible only in person: so, to register at SPID you will",
+      "paragraph2-bold": "certiify your identity",
+      "paragraph2-part2": "completing your recognition through an Identity Provider. Here what you shall do:",
+      "point1-value": "1",
+      "point1-content": " Choose your \nIdentity Provider",
+      "point2-value": "2",
+      "point2-content": " Insert your personal data and your mobile phone",
+      "point3-value": "3",
+      "point3-content": " Upload a copy of your identity papers",
+      "point4-value": "4",
+      "point4-content": " Complete the \nrecognition",
+      "knowMore": "Learn more on spid.gov.it"
+    },
     "idp_selection": {
       "headerTitle": "Home",
       "contentTitle": "Select your Identity Provider",

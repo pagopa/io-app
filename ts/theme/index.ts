@@ -8,6 +8,7 @@ import getTheme from "native-base/src/theme/components";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
+import h2Theme from "./components/H2";
 import h3Theme from "./components/H3";
 import h4Theme from "./components/H4";
 import h5Theme from "./components/H5";
@@ -40,6 +41,9 @@ const theme = (): Theme => {
     },
     "NativeBase.H1": {
       ...h1Theme()
+    },
+    "NativeBase.H2": {
+      ...h2Theme()
     },
     "NativeBase.H3": {
       ...h3Theme()

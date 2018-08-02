@@ -104,6 +104,23 @@
       "tosLinkText": "regole sul trattamento dei dati personali",
       "continue": "Continua"
     },
+    "spid_information": {
+      "contentTitle": "Cos'è SPID?",
+      "moreLinkText": "Per saperne di più",
+      "subtitle": "SPID è sicuro",
+      "paragraph2-part1": "SPID ti permette di fare online cose che prima potevi fare solo di persona: per registrarti a SPID dovrai quindi ",
+      "paragraph2-bold": "certificare la tua identità",
+      "paragraph2-part2": "completando il riconoscimento presso un Identity Provider. Ecco cosa dovrai fare:",
+      "point1-value": "1",
+      "point1-content": "Scegli il tuo \nIdentity Provider",
+      "point2-value": "2",
+      "point2-content": "Inserisci i tuoi dati anagrafici ed il tuo cellulare",
+      "point3-value": "3",
+      "point3-content": "Carica una copia dei tuoi documenti d'identità",
+      "point4-value": "4",
+      "point4-content": "Completa il \nriconoscimento",
+      "knowMore": "Puoi saperne di più su spid.gov.it"
+    },
     "idp_selection": {
       "headerTitle": "Home",
       "contentTitle": "Scegli il tuo Identity Provider",
