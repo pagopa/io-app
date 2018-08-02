@@ -7,6 +7,7 @@ import { TransactionListResponse as TransactionListResponsePagoPA } from "../../
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
+import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
 
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),
@@ -165,3 +166,17 @@ export const Session = t.refinement(
 type RequiredSessionFields = "sessionToken";
 export type Session = SessionPagoPA &
   Required<Pick<SessionPagoPA, RequiredSessionFields>>;
+
+export const SessionResponse = t.refinement(SessionResponsePagoPA, sr =>
+  Session.is(sr.data)
+);
+type RequiredSessionResponseFields = "data";
+export type SessionResponse = {
+  [key in Exclude<
+    keyof SessionResponsePagoPA,
+    RequiredSessionResponseFields
+  >]?: SessionResponse[key]
+} &
+  Readonly<{
+    data: Session;
+  }>;

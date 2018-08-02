@@ -6,13 +6,12 @@ import {
   AuthorizationBearerHeaderProducer,
   createFetchRequestForApi,
   IGetApiRequestType,
-  ResponseDecoder,
-  RequestHeaderProducer
+  ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import {
   TransactionListResponse,
   WalletListResponse,
-  Session
+  SessionResponse
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
 import {
@@ -40,7 +39,7 @@ type GetSessionType = IGetApiRequestType<
   TokenParamType,
   never,
   keyof TokenParamType, // ?token=ABC... using the same name as the param
-  BasicResponseTypeWith401<Session>
+  BasicResponseTypeWith401<SessionResponse>
 >;
 
 type GetTransactionsType = IGetApiRequestType<
@@ -57,149 +56,63 @@ type GetWalletsType = IGetApiRequestType<
   BasicResponseTypeWith401<WalletListResponse>
 >;
 
-// export type PagoPaClient = Readonly<{
-//   getSession: (
-//     params: TokenParamType
-//   ) => Promise<BasicResponseTypeWith401<Session> | undefined>;
-//   getTransactions: (
-//     params: {}
-//   ) => Promise<BasicResponseTypeWith401<TransactionListResponse> | undefined>;
-//   getWallets: (
-//     parmas: {}
-//   ) => Promise<BasicResponseTypeWith401<WalletListResponse> | undefined>;
-//   walletToken: Readonly<string>;
-//   // getSession: (params: { token: string })
-//   pagoPaToken: string; // this will be overwritten when needed (i.e. the session expires)
-// }>;
+export type PagoPaClient = Readonly<{
+  getSession: (
+    walletToken: string
+  ) => Promise<BasicResponseTypeWith401<SessionResponse> | undefined>;
+  getTransactions: (
+    pagoPaToken: string
+  ) => Promise<BasicResponseTypeWith401<TransactionListResponse> | undefined>;
+  getWallets: (
+    pagoPaToken: string
+  ) => Promise<BasicResponseTypeWith401<WalletListResponse> | undefined>;
+}>;
 
-export class PagoPaClient {
-  private readonly options: {
-    readonly baseUrl?: string;
-    readonly fetchApi?: typeof fetch;
-  };
-  private readonly walletToken: string; // backend token
-  private pagoPaToken: string; // this is the pagoPA token, might require refreshing
-  private tokenHeaderProducer: RequestHeaderProducer<{}, "Authorization">;
-
-  public constructor(
-    baseUrl: string,
-    token: string,
-    fetchApi: typeof fetch = defaultRetryingFetch()
-  ) {
-    this.options = { baseUrl, fetchApi };
-    this.walletToken = token;
-    this.pagoPaToken = ""; // initially empty
-    this.tokenHeaderProducer = AuthorizationBearerHeaderProducer(
-      this.pagoPaToken
-    );
-  }
-
-  // returns a boolean (true => success, false => error)
-  // this function hides the token-refreshing mechanism
-  // from the caller
-  public async refreshPagoPaSession(): Promise<boolean> {
-    const getSessionT: GetSessionType = {
-      method: "get",
-      url: _ => "/v1/users/actions/start-session",
-      query: t => t,
-      headers: () => ({}),
-      response_decoder: basicResponseDecoderWith401AndCast<Session>(Session)
-    };
-    const response = await createFetchRequestForApi(getSessionT, this.options)({
-      token: this.walletToken
-    });
-    if (response !== undefined && response.status === 200) {
-      // success!
-      this.pagoPaToken = response.value.sessionToken;
-      this.tokenHeaderProducer = AuthorizationBearerHeaderProducer(
-        this.pagoPaToken
-      );
-      return true;
-    }
-    return false; // some problem came up -- fail
-  }
-
-  public getTransactions(): Promise<
-    BasicResponseTypeWith401<TransactionListResponse> | undefined
-  > {
-    const getTransactionsT: GetTransactionsType = {
-      method: "get",
-      url: () => "/v1/transactions",
-      query: () => ({}),
-      headers: this.tokenHeaderProducer,
-      response_decoder: basicResponseDecoderWith401AndCast<
-        TransactionListResponse
-      >(TransactionListResponse)
-    };
-    return createFetchRequestForApi(getTransactionsT, this.options)({});
-  }
-
-  public getWallets(): Promise<
-    BasicResponseTypeWith401<WalletListResponse> | undefined
-  > {
-    const getWalletsT: GetWalletsType = {
-      method: "get",
-      url: () => "/v1/wallet",
-      query: () => ({}),
-      headers: this.tokenHeaderProducer,
-      response_decoder: basicResponseDecoderWith401AndCast<WalletListResponse>(
-        WalletListResponse
-      )
-    };
-    return createFetchRequestForApi(getWalletsT, this.options)({});
-  }
-}
-
-/*
 export const PagoPaClient = (
   baseUrl: string,
-  token: string,
+  // token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ): PagoPaClient => {
-  const options = {
-    baseUrl,
-    fetchApi
-  };
-
-  // header for the "Authorization: Bearer <token>" header
-  const tokenHeaderProducer = AuthorizationBearerHeaderProducer(token);
+  const options = { baseUrl, fetchApi };
 
   const getSession: GetSessionType = {
     method: "get",
     url: _ => "/v1/users/actions/start-session",
     query: t => t,
     headers: () => ({}),
-    response_decoder: basicResponseDecoderWith401AndCast<Session>(Session)
-  };
-
-  const getTransactions: GetTransactionsType = {
-    method: "get",
-    url: () => "/v1/transactions",
-    query: () => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoderWith401AndCast<
-      TransactionListResponse
-    >(TransactionListResponse)
-  };
-
-  const getWallets: GetWalletsType = {
-    method: "get",
-    url: () => "/v1/wallet",
-    query: () => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoderWith401AndCast<WalletListResponse>(
-      WalletListResponse
+    response_decoder: basicResponseDecoderWith401AndCast<SessionResponse>(
+      SessionResponse
     )
   };
 
-  const x = createFetchRequestForApi(getSession, options);
+  const getTransactions: (
+    pagoPaToken: string
+  ) => GetTransactionsType = pagoPaToken => ({
+    method: "get",
+    url: () => "/v1/transactions",
+    query: () => ({}),
+    headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+    response_decoder: basicResponseDecoderWith401AndCast<
+      TransactionListResponse
+    >(TransactionListResponse)
+  });
+
+  const getWallets: (pagoPaToken: string) => GetWalletsType = pagoPaToken => ({
+    method: "get",
+    url: () => "/v1/wallet",
+    query: () => ({}),
+    headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+    response_decoder: basicResponseDecoderWith401AndCast<WalletListResponse>(
+      WalletListResponse
+    )
+  });
 
   return {
-    getSession: createFetchRequestForApi(getSession, options),
-    getTransactions: createFetchRequestForApi(getTransactions, options),
-    getWallets: createFetchRequestForApi(getWallets, options),
-    walletToken: "",
-    pagoPaToken: ""
+    getSession: (walletToken: string) =>
+      createFetchRequestForApi(getSession, options)({ token: walletToken }),
+    getWallets: (pagoPaToken: string) =>
+      createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
+    getTransactions: (pagoPaToken: string) =>
+      createFetchRequestForApi(getTransactions(pagoPaToken), options)({})
   };
 };
-*/
