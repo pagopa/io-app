@@ -1,19 +1,19 @@
-import { Container, H1, Tab, Tabs, View } from "native-base";
+import { Body, Container, Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  RefreshControl,
-  RefreshControlProps,
-  StyleSheet
-} from "react-native";
+import { FlatList, RefreshControl, RefreshControlProps } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+
 import MessageComponent from "../../components/messages/MessageComponent";
+import ScreenHeader from "../../components/ScreenHeader";
+import AppHeader from "../../components/ui/AppHeader";
+
 import I18n from "../../i18n";
+
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
@@ -21,8 +21,12 @@ import { orderedMessagesSelector } from "../../store/reducers/entities/messages"
 import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
+
 import variables from "../../theme/variables";
+
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+
+import { DEFAULT_APPLICATION_NAME } from "../../config";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
@@ -41,24 +45,10 @@ export type IMessageDetails = Readonly<{
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
-const styles = StyleSheet.create({
-  tabBarUnderlineStyle: {
-    width: 0
-  },
-  activeTabStyle: {
-    borderBottomWidth: 2,
-    borderBottomColor: variables.brandPrimaryLight
-  },
-  notActiveTabStyle: {
-    borderBottomWidth: 0,
-    borderBottomColor: variables.brandPrimaryInverted
-  }
-});
-
 /**
  * This screen show the messages to the authenticated user.
  */
-class MessagesScreen extends React.Component<Props, never> {
+class MessagesScreen extends React.Component<Props> {
   private didFocusSubscription?: NavigationEventSubscription;
 
   public componentDidMount() {
@@ -97,52 +87,33 @@ class MessagesScreen extends React.Component<Props, never> {
     );
   }
 
-  private renderMessages = (
-    messages: ReadonlyArray<MessageWithContentPO>
-  ): React.ReactNode => {
-    return (
-      <Tabs
-        tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
-        initialPage={0}
-        locked={true}
-      >
-        <Tab
-          heading={I18n.t("messages.tab.all")}
-          activeTabStyle={styles.activeTabStyle}
-        >
-          <FlatList
-            alwaysBounceVertical={false}
-            scrollEnabled={true}
-            data={messages}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
-            refreshControl={this.refreshControl()}
-          />
-        </Tab>
-        <Tab
-          heading={I18n.t("messages.tab.deadlines")}
-          activeTabStyle={styles.activeTabStyle}
-        >
-          <View spacer={true} large={true} />
-        </Tab>
-        <Tab heading={""} activeTabStyle={styles.notActiveTabStyle}>
-          <View spacer={true} large={true} />
-        </Tab>
-        <Tab heading={" "} activeTabStyle={styles.notActiveTabStyle}>
-          <View spacer={true} large={true} />
-        </Tab>
-      </Tabs>
-    );
-  };
-
   public render() {
     return (
       <Container>
-        <View content={true}>
-          <View spacer={true} />
-          <H1>{I18n.t("messages.contentTitle")}</H1>
-          {this.renderMessages(this.props.messages)}
-        </View>
+        <AppHeader>
+          <Body>
+            <Text>{DEFAULT_APPLICATION_NAME}</Text>
+          </Body>
+        </AppHeader>
+        <Content>
+          <View>
+            <ScreenHeader
+              heading={<H1>{I18n.t("messages.contentTitle")}</H1>}
+              icon={require("../../../img/icons/message-icon.png")}
+            />
+            <View spacer={true} large={true} />
+            <View>
+              <FlatList
+                alwaysBounceVertical={false}
+                scrollEnabled={true}
+                data={this.props.messages}
+                renderItem={this.renderItem}
+                keyExtractor={item => item.id}
+                refreshControl={this.refreshControl()}
+              />
+            </View>
+          </View>
+        </Content>
       </Container>
     );
   }

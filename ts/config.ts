@@ -5,6 +5,9 @@ import * as t from "io-ts";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
+// default application name to show in the header of the topmost screens
+export const DEFAULT_APPLICATION_NAME = "io.italia.it";
+
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 3000;
 
