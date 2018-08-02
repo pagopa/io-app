@@ -3,6 +3,7 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { Image, ImageSourcePropType } from "react-native";
+import customVariables from "../theme/variables";
 
 type Props = {
   heading: React.ReactNode;
@@ -22,7 +23,13 @@ class ScreenHeader extends React.Component<Props> {
         {heading}
         {icon && (
           <View>
-            <Image source={icon} />
+            <Image
+              source={icon}
+              style={{
+                height: customVariables.h1FontSize * 2,
+                resizeMode: "contain"
+              }}
+            />
           </View>
         )}
       </View>
