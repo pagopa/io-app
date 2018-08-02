@@ -116,7 +116,7 @@ export function* watchApplicationActivity(): IterableIterator<Effect> {
     const newUpdateAt = new Date().getTime();
 
     const timeElapsed = newUpdateAt - lastUpdateAt;
-    if (lastState === "active" && newState === "background") {
+    if (lastState !== "background" && newState === "background") {
       // Save the navigation state so we can restore in case the PIN login is needed
       // tslint:disable-next-line:saga-yield-return-type
       navigationState = yield select(navigationStateSelector);
