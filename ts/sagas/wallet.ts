@@ -14,7 +14,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { Option } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
@@ -405,7 +405,7 @@ function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
       | undefined = yield call(pagoPaClient.getSession, token.value);
     if (response !== undefined && response.status === 200) {
       // token fetched successfully, store it
-      yield put(storePagoPaToken(response.value.data.sessionToken));
+      yield put(storePagoPaToken(some(response.value.data.sessionToken)));
     }
   }
 }
@@ -415,7 +415,7 @@ function* watchWalletSaga(): Iterator<Effect> {
     yield take(WALLET_TOKEN_LOAD_SUCCESS);
 
     const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-    yield put(storePagoPaToken("expired token"));
+    yield call(fetchPagoPaToken, pagoPaClient);
 
     while (true) {
       const action = yield take([
@@ -442,11 +442,8 @@ function* watchWalletSaga(): Iterator<Effect> {
 }
 
 /**
- * saga that manages the wallet (transactions + credit cards)
+ * saga that manages the wallet (transactions + wallets + payments)
  */
-// TODO: currently using the mocked API. This will be wrapped by
-// a saga that retrieves the required token and uses it to build
-// a client to make the requests, @https://www.pivotaltracker.com/story/show/158068259
 export default function* root(): Iterator<Effect> {
   yield fork(watchWalletSaga);
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
