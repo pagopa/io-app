@@ -9,6 +9,9 @@ import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
 import h3Theme from "./components/H3";
+import h4Theme from "./components/H4";
+import h5Theme from "./components/H5";
+import h6Theme from "./components/H6";
 import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
@@ -40,6 +43,15 @@ const theme = (): Theme => {
     },
     "NativeBase.H3": {
       ...h3Theme()
+    },
+    "UIComponent.H4": {
+      ...h4Theme()
+    },
+    "UIComponent.H5": {
+      ...h5Theme()
+    },
+    "UIComponent.H6": {
+      ...h6Theme()
     },
     "NativeBase.Header": {
       ...headerTheme()

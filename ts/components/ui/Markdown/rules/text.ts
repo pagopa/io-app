@@ -5,7 +5,16 @@ import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 import { makeReactNativeRule } from ".";
 
 function rule() {
-  return (node: SingleASTNode, _: ReactOutput, __: State): React.ReactNode => {
+  return (
+    node: SingleASTNode,
+    _: ReactOutput,
+    state: State
+  ): React.ReactNode => {
+    // If we are inside a heading return the plain content
+    if (state.withinHeading) {
+      return node.content;
+    }
+
     const words = node.content.split(" ");
 
     return words.map((word: any, i: number) => {
