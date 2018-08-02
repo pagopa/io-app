@@ -2,12 +2,12 @@ import * as t from "io-ts";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
+import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
+import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
 import { Transaction as TransactionPagoPA } from "../../definitions/pagopa/Transaction";
 import { TransactionListResponse as TransactionListResponsePagoPA } from "../../definitions/pagopa/TransactionListResponse";
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
-import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
-import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
 
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),

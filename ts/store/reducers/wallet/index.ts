@@ -4,6 +4,8 @@
  */
 
 import { combineReducers } from "redux";
+import { PAGOPA_INITIAL_STATE, PagoPaState } from "./pagopa";
+import pagoPaReducer from "./pagopa";
 import {
   PAYMENT_INITIAL_STATE,
   PaymentState,
@@ -15,8 +17,6 @@ import { TRANSACTIONS_INITIAL_STATE, TransactionsState } from "./transactions";
 import transactionsReducer from "./transactions";
 import { WALLETS_INITIAL_STATE, WalletsState } from "./wallets";
 import walletsReducer from "./wallets";
-import { PAGOPA_INITIAL_STATE, PagoPaState } from "./pagopa";
-import pagoPaReducer from "./pagopa";
 
 export type WalletState = Readonly<{
   transactions: TransactionsState;

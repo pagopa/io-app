@@ -1,6 +1,6 @@
-import { Option, none, some } from "fp-ts/lib/Option";
-import { Action } from "../../actions/types";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { PAGOPA_STORE_TOKEN } from "../../actions/constants";
+import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 
 export type PagoPaState = Readonly<{

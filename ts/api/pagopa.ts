@@ -9,9 +9,9 @@ import {
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import {
+  SessionResponse,
   TransactionListResponse,
-  WalletListResponse,
-  SessionResponse
+  WalletListResponse
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
 import {

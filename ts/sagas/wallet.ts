@@ -29,6 +29,7 @@ import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
+  LOGOUT_SUCCESS,
   PAYMENT_COMPLETED,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
@@ -38,9 +39,9 @@ import {
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  WALLET_TOKEN_LOAD_SUCCESS,
-  LOGOUT_SUCCESS
+  WALLET_TOKEN_LOAD_SUCCESS
 } from "../store/actions/constants";
+import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
   paymentConfirmPaymentMethod,
   paymentGoBack,
@@ -68,6 +69,8 @@ import {
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
+import { walletTokenSelector } from "../store/reducers/authentication";
+import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
   getPaymentReason,
@@ -78,21 +81,18 @@ import {
   feeExtractor,
   getFavoriteWalletId
 } from "../store/reducers/wallet/wallets";
+import { Wallet } from "../types/pagopa";
 import {
+  SessionResponse,
   Transaction,
   TransactionListResponse,
-  WalletListResponse,
-  SessionResponse
+  WalletListResponse
 } from "../types/pagopa";
-import { Wallet } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { walletTokenSelector } from "../store/reducers/authentication";
-import { storePagoPaToken } from "../store/actions/wallet/pagopa";
-import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -119,9 +119,14 @@ function* fetchTransactions(
       yield call(fetchPagoPaToken, pagoPaClient);
       // retrieve the newly stored token and use it for
       // the following request
-      const token: Option<string> = yield select(getPagoPaToken);
-      if (token.isSome()) {
-        yield call(fetchTransactions, pagoPaClient, token.value, retries - 1);
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(
+          fetchTransactions,
+          pagoPaClient,
+          newToken.value,
+          retries - 1
+        );
       }
     }
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
@@ -142,14 +147,13 @@ function* fetchWallets(
     } else if (response.status === 401) {
       // unauthorized -- try refreshing the token
       yield call(fetchPagoPaToken, pagoPaClient);
-      const token: Option<string> = yield select(getPagoPaToken);
-      if (token.isSome()) {
-        yield call(fetchWallets, pagoPaClient, token.value, retries - 1);
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(fetchWallets, pagoPaClient, newToken.value, retries - 1);
       }
     }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   }
-  if (response !== undefined && response.status === 200) {
-  } // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 const navigateTo = (routeName: string, params?: object) => {
@@ -396,10 +400,9 @@ function* completionHandler(_: PaymentRequestCompletion) {
 function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const token: Option<string> = yield select(walletTokenSelector);
   if (token.isSome()) {
-    const response: BasicResponseTypeWith401<SessionResponse> = yield call(
-      pagoPaClient.getSession,
-      token.value
-    );
+    const response:
+      | BasicResponseTypeWith401<SessionResponse>
+      | undefined = yield call(pagoPaClient.getSession, token.value);
     if (response !== undefined && response.status === 200) {
       // token fetched successfully, store it
       yield put(storePagoPaToken(response.value.data.sessionToken));
@@ -412,7 +415,6 @@ function* watchWalletSaga(): Iterator<Effect> {
     yield take(WALLET_TOKEN_LOAD_SUCCESS);
 
     const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-    // yield call(fetchPagoPaToken, pagoPaClient);
     yield put(storePagoPaToken("expired token"));
 
     while (true) {
@@ -422,7 +424,7 @@ function* watchWalletSaga(): Iterator<Effect> {
         LOGOUT_SUCCESS
       ]);
 
-      const pagoPaToken = yield select(getPagoPaToken);
+      const pagoPaToken: Option<string> = yield select(getPagoPaToken);
 
       if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
         yield fork(fetchTransactions, pagoPaClient, pagoPaToken.value);
