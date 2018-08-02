@@ -104,7 +104,7 @@ export class TransactionDetailsScreen extends React.Component<Props> {
     return (
       <Col>
         <View spacer={true} />
-        <Row style={{alignItems: "center"}}>
+        <Row style={{ alignItems: "center" }}>
           <Text note={labelIsNote}>{label}</Text>
           <Text style={[styles.value, styles.align]} bold={true}>
             {value}
@@ -150,9 +150,10 @@ export class TransactionDetailsScreen extends React.Component<Props> {
               />
             </Row>
             <View spacer={true} large={true} />
-            {this.labelValueRow(I18n.t("wallet.total"), (
+            {this.labelValueRow(
+              I18n.t("wallet.total"),
               <H3 style={styles.value}>{totalAmount}</H3>
-            ))}
+            )}
             {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(
               <Text>
