@@ -2,7 +2,11 @@
  * A collection of sagas to manage the Authentication.
  */
 import { isSome, Option } from "fp-ts/lib/Option";
-import { NavigationActions, NavigationState } from "react-navigation";
+import {
+  NavigationActions,
+  NavigationState,
+  StackActions
+} from "react-navigation";
 import { Effect } from "redux-saga";
 import { call, fork, put, select, take, takeLatest } from "redux-saga/effects";
 
@@ -254,11 +258,13 @@ export function* watchStartAuthentication(): IterableIterator<Effect> {
 
     // Show the Authentication LandingScreen to the user
     yield put(
-      NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION,
-        action: NavigationActions.navigate({
-          routeName: ROUTES.AUTHENTICATION_LANDING
-        })
+      StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: ROUTES.AUTHENTICATION
+          })
+        ]
       })
     );
 
