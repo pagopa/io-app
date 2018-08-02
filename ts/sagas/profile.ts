@@ -30,8 +30,6 @@ import { SessionToken } from "../types/SessionToken";
 
 import { callApiWith401ResponseStatusHandler } from "./api";
 
-import { fromNullable } from "fp-ts/lib/Option";
-
 // A saga to load the Profile.
 function* loadProfile(): Iterator<Effect> {
   const sessionToken: SessionToken | undefined = yield select(
@@ -80,15 +78,15 @@ function* createOrUpdateProfile(
   if (sessionToken) {
     // Get the current Profile from the state
     const profileState: ProfileState = yield select(profileSelector);
-    const currentVersion = fromNullable(profileState)
-      .mapNullable(_ => _.version)
-      .toUndefined();
 
-    // Get the new Profile from the action payload
-    const newProfile = {
-      version: currentVersion,
-      ...action.payload
-    };
+    // If we already have a profile, merge it with the new updated attributes
+    // or else, create a new profile from the provided object
+    const newProfile = profileState
+      ? {
+          ...profileState,
+          ...action.payload
+        }
+      : action.payload;
 
     const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
