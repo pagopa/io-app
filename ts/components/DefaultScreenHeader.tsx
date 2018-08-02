@@ -6,7 +6,7 @@ import ScreenHeader from "./ScreenHeader";
 
 type Props = {
   screenTitle: string;
-  icon: ImageSourcePropType;
+  icon?: ImageSourcePropType;
 };
 
 /**

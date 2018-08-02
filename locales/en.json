@@ -25,7 +25,14 @@
     },
     "actions": {
       "retry": "An error occurred, please retry"
+    },
+    "remoteStates": {
+      "notAvailable": "Non available"
     }
+  },
+  "locales": {
+    "it": "Italian",
+    "en": "English"
   },
   "connection": {
     "status": {
@@ -205,7 +212,7 @@
     },
     "thanks":"✓ Thank you!",
     "endPayment":"Your payment has been completed successfully",
-    "addManager": {
+    "pickPsp": {
       "title":"Choose the manager",
       "info":"This card does not belong to the PagoPA payment network.",
       "infoBold":"Choose the economic operator",
@@ -381,9 +388,23 @@
     "moreLinkText": "Get more info.",
     "list": {
       "email": "Email address",
-      "servicesNotifications": "Notifications from services",
+      "mobile_phone": "Mobile number",
+      "services": "List of services",
+      "services_description": "Enable/disable your services on IO",
       "language": "Language",
       "digitalDomicile": "Digital domicile"
+    },
+    "empty": {
+      "default": "No preference set"
     }
+  },
+  "services": {
+    "headerTitle": "Services",
+    "title": "Available services",
+    "subtitle": "Here you can enable/disable each service, access its details, the terms of use and customize the notifications you receive.",
+    "serviceIsEnabled": "The service is enabled",
+    "pushNotifications": "Push Notifications",
+    "emailNotifications": "Email Notifications",
+    "contactsAndInfo": "Contacts and info"
   }
 }

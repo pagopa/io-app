@@ -25,7 +25,14 @@
     },
     "actions": {
       "retry": "Si è verificato un errore, si prega di riprovare"
+    },
+    "remoteStates": {
+      "notAvailable": "Non disponibile"
     }
+  },
+  "locales": {
+    "it": "Italiano",
+    "en": "Inglese"
   },
   "connection": {
     "status": {
@@ -205,7 +212,7 @@
     },
     "thanks":"✓ Grazie!",
     "endPayment":"Il tuo pagamento è concluso",
-    "addManager": {
+    "pickPsp": {
       "title":"Scegli il gestore",
       "info":"Questa carta non è stata emessa da nessun istituto che fa parte del circuito PagoPA.",
       "infoBold":"Scegli il soggetto economico",
@@ -380,9 +387,24 @@
     "moreLinkText": "Per saperne di più.",
     "list": {
       "email": "Indirizzo email",
-      "servicesNotifications": "Notifiche dai servizi",
+      "mobile_phone": "Numero di telefono",
+      "services": "Elenco dei servizi",
+      "services_description": "Attiva/disattiva i tuoi servizi di IO",
       "language": "Lingua",
       "digitalDomicile": "Domicilio digitale"
+    },
+    "empty": {
+      "default": "Nessuna preferenza impostata"
     }
+  },
+  "services": {
+    "headerTitle": "Servizi",
+    "title": "Elenco dei servizi",
+    "subtitle": "Puoi attivare/disattivare ogni servizio, oppure accedere alla sua scheda per scoprirne i dettagli, le condizioni d'uso e personalizzarne le notifiche.",
+    "serviceIsEnabled": "Il servizio è attivo",
+    "serviceNotEnabled": "Il servizio non è attivo",
+    "pushNotifications": "Notifiche push",
+    "emailNotifications": "Notifiche email",
+    "contactsAndInfo": "Contatti ed informazioni"
   }
 }

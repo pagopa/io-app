@@ -13,6 +13,7 @@ import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
+import contentReducer from "./content";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -21,6 +22,7 @@ import navigationReducer from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
+import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
@@ -68,12 +70,16 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   profile: profileReducer,
   entities: entitiesReducer,
   pinlogin: pinloginReducer,
+  preferences: preferencesReducer,
 
   // WALLET
   wallet: walletReducer,
 
   // BACKEND INFO
-  backendInfo: backendInfoReducer
+  backendInfo: backendInfoReducer,
+
+  // CONTENT
+  content: contentReducer
 });
 
 export function createRootReducer(

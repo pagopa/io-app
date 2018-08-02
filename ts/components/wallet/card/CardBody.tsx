@@ -10,11 +10,7 @@ import { Col, Row } from "react-native-easy-grid";
 import { CardProps } from ".";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import {
-  getCardExpirationDate,
-  getCardHolder,
-  getWalletId
-} from "../../../types/CreditCard";
+import { buildExpirationDate } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
 import FooterRow from "./FooterRow";
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
@@ -52,7 +48,7 @@ export default class CardBody extends React.Component<CardProps> {
           style={CreditCardStyles.rowStyle}
           onPress={() =>
             mainAction !== undefined
-              ? mainAction(getWalletId(this.props.item))
+              ? mainAction(this.props.item.idWallet)
               : undefined
           }
         >
@@ -85,6 +81,7 @@ export default class CardBody extends React.Component<CardProps> {
 
   public render() {
     const { item, navigation } = this.props;
+    const expirationDate = buildExpirationDate(item);
     // returns a list of rows, namely:
     // - the "validity" row displaying when the card expires
     // - the "owner" row, displaying the owner name on the left-end
@@ -100,15 +97,13 @@ export default class CardBody extends React.Component<CardProps> {
         <Text
           style={[CreditCardStyles.textStyle, CreditCardStyles.smallTextStyle]}
         >
-          {`${I18n.t("cardComponent.validUntil")} ${getCardExpirationDate(
-            item
-          )}`}
+          {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
         </Text>
       </Row>,
       <Row key="owner" size={6} style={CreditCardStyles.rowStyle}>
         <Col size={7}>
           <Text style={CreditCardStyles.textStyle}>
-            {getCardHolder(item).toUpperCase()}
+            {item.creditCard.holder.toUpperCase()}
           </Text>
         </Col>
         <Col size={2}>{this.rightPart()}</Col>

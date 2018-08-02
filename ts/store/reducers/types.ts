@@ -6,6 +6,7 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { ContentState } from "./content";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
@@ -13,6 +14,7 @@ import { LoadingState } from "./loading";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
+import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import {
   WalletState,
@@ -41,6 +43,8 @@ export type GlobalState = Readonly<{
   pinlogin: PinLoginState;
   profile: ProfileState;
   wallet: WalletState;
+  preferences: PreferencesState;
+  content: ContentState;
 }>;
 
 /**

@@ -112,6 +112,9 @@ export const sessionInfoSelector = (
     : none;
 };
 
+export const walletTokenSelector = (state: GlobalState): Option<string> =>
+  sessionInfoSelector(state).map(s => s.walletToken);
+
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action

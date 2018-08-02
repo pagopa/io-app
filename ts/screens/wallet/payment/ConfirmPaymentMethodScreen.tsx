@@ -25,7 +25,6 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -46,8 +45,9 @@ import {
   selectedPaymentMethodSelector
 } from "../../../store/reducers/wallet/payment";
 import { feeExtractor } from "../../../store/reducers/wallet/wallets";
+import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
-import { amountBuilder } from "../../../utils/stringBuilder";
+import { buildAmount } from "../../../utils/stringBuilder";
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -129,7 +129,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {amountBuilder(amount)}
+                    {buildAmount(amount)}
                   </Text>
                 </Col>
               </Row>
@@ -145,7 +145,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {amountBuilder(fee)}
+                    {buildAmount(fee)}
                   </Text>
                 </Col>
               </Row>
@@ -158,7 +158,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={WalletStyles.textRight}>
-                    {amountBuilder(totalAmount)}
+                    {buildAmount(totalAmount)}
                   </H1>
                 </Col>
               </Row>

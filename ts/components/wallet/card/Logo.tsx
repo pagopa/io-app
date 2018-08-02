@@ -4,8 +4,8 @@
  */
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { Wallet } from "../../../../definitions/pagopa/Wallet";
-import { CreditCardType, getCardType } from "../../../types/CreditCard";
+import { Wallet } from "../../../types/pagopa";
+import { CreditCardType } from "../../../types/pagopa";
 
 export enum LogoPosition {
   TOP,
@@ -34,8 +34,7 @@ export const cardIcons: { [key in CreditCardType]: any } = {
 };
 
 export const getCardIcon = (w: Wallet) => {
-  const type = getCardType(w);
-  return cardIcons[type];
+  return cardIcons[w.creditCard.brandLogo];
 };
 
 const styles = StyleSheet.create({

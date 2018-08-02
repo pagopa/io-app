@@ -14,7 +14,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { Option } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
@@ -22,12 +22,14 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { Wallet } from "../../definitions/pagopa/Wallet";
-import { WalletAPI } from "../api/wallet/wallet-api";
+import { BasicResponseTypeWith401 } from "../api/backend";
+import { PagoPaClient } from "../api/pagopa";
+import { pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
+  LOGOUT_SUCCESS,
   PAYMENT_COMPLETED,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
@@ -36,8 +38,10 @@ import {
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_QR_CODE,
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  WALLET_TOKEN_LOAD_SUCCESS
 } from "../store/actions/constants";
+import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
   paymentConfirmPaymentMethod,
   paymentGoBack,
@@ -65,6 +69,8 @@ import {
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
+import { walletTokenSelector } from "../store/reducers/authentication";
+import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
   getPaymentReason,
@@ -75,28 +81,79 @@ import {
   feeExtractor,
   getFavoriteWalletId
 } from "../store/reducers/wallet/wallets";
-import { getWalletId } from "../types/CreditCard";
+import { Wallet } from "../types/pagopa";
+import {
+  SessionResponse,
+  Transaction,
+  TransactionListResponse,
+  WalletListResponse
+} from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { WalletTransaction } from "../types/wallet";
+
+// allow refreshing token this number of times
+const MAX_TOKEN_REFRESHES = 2;
 
 function* fetchTransactions(
-  loadTransactions: () => Promise<ReadonlyArray<WalletTransaction>>
+  pagoPaClient: PagoPaClient,
+  token: string,
+  retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
-  const transactions: ReadonlyArray<WalletTransaction> = yield call(
-    loadTransactions
-  );
-  yield put(transactionsFetched(transactions));
+  if (retries === 0) {
+    // max retries reached
+    // show "unauthorized" error @https://www.pivotaltracker.com/story/show/159400682
+    return;
+  }
+  const response:
+    | BasicResponseTypeWith401<TransactionListResponse>
+    | undefined = yield call(pagoPaClient.getTransactions, token);
+  if (response !== undefined) {
+    if (response.status === 200) {
+      // ok, all good
+      yield put(transactionsFetched(response.value.data));
+    } else if (response.status === 401) {
+      // unauthorized -- try refreshing the token
+      yield call(fetchPagoPaToken, pagoPaClient);
+      // retrieve the newly stored token and use it for
+      // the following request
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(
+          fetchTransactions,
+          pagoPaClient,
+          newToken.value,
+          retries - 1
+        );
+      }
+    }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  }
 }
 
-function* fetchCreditCards(
-  loadCards: () => Promise<ReadonlyArray<Wallet>>
+function* fetchWallets(
+  pagoPaClient: PagoPaClient,
+  token: string,
+  retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
-  const cards: ReadonlyArray<Wallet> = yield call(loadCards);
-  yield put(walletsFetched(cards));
+  const response:
+    | BasicResponseTypeWith401<WalletListResponse>
+    | undefined = yield call(pagoPaClient.getWallets, token);
+  if (response !== undefined) {
+    if (response.status === 200) {
+      yield put(walletsFetched(response.value.data));
+    } else if (response.status === 401) {
+      // unauthorized -- try refreshing the token
+      yield call(fetchPagoPaToken, pagoPaClient);
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(fetchWallets, pagoPaClient, newToken.value, retries - 1);
+      }
+    }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  }
 }
 
 const navigateTo = (routeName: string, params?: object) => {
@@ -263,36 +320,69 @@ function* completionHandler(_: PaymentRequestCompletion) {
   // retrieve transaction and store it
   // mocked data here
   const wallet: Wallet = yield select(selectedPaymentMethodSelector);
-  // tslint:disable-next-line saga-yield-return-type
-  const recipient = (yield select(getPaymentRecipient)).getOrElse(
-    UNKNOWN_RECIPIENT
-  );
-  // tslint:disable-next-line saga-yield-return-type
-  const paymentReason = (yield select(getPaymentReason)).getOrElse(
-    UNKNOWN_PAYMENT_REASON
-  );
-  const fee = feeExtractor(wallet);
 
-  const transaction: WalletTransaction = {
+  const selectedRecipient: Option<EnteBeneficiario> = yield select(
+    getPaymentRecipient
+  );
+  const recipient = selectedRecipient.getOrElse(UNKNOWN_RECIPIENT);
+
+  const selectedPaymentReason: Option<string> = yield select(getPaymentReason);
+  const paymentReason = selectedPaymentReason.getOrElse(UNKNOWN_PAYMENT_REASON);
+
+  const selectedCurrentAmount: AmountInEuroCents = yield select(
+    getCurrentAmount
+  );
+  const amount =
+    100 * AmountInEuroCentsFromNumber.encode(selectedCurrentAmount);
+  const feeOrUndefined = feeExtractor(wallet);
+  const fee =
+    100 *
+    AmountInEuroCentsFromNumber.encode(
+      feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+    );
+  const now = new Date();
+
+  const transaction: Transaction = {
     id: Math.floor(Math.random() * 1000),
-    cardId: wallet.idWallet === undefined ? -1 : wallet.idWallet,
-    isoDatetime: new Date().toISOString(),
-    paymentReason:
-      paymentReason === undefined ? UNKNOWN_PAYMENT_REASON : paymentReason,
-    recipient: (recipient === undefined ? UNKNOWN_RECIPIENT : recipient)
-      .denominazioneBeneficiario,
-    amount: AmountInEuroCentsFromNumber.encode(
-      yield select(getCurrentAmount) // tslint:disable-line saga-yield-return-type
-    ),
-    currency: "EUR",
-    transactionCost: AmountInEuroCentsFromNumber.encode(
-      fee === undefined ? UNKNOWN_AMOUNT : fee
-    ),
-    isNew: true
+    amount: {
+      amount,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    created: now,
+    description: paymentReason,
+    error: false,
+    fee: {
+      amount: fee,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    grandTotal: {
+      amount: amount + fee,
+      currency: "EUR",
+      currencyNumber: "1",
+      decimalDigits: 2
+    },
+    idPayment: Math.floor(Math.random() * 1000),
+    idPsp: 1,
+    idStatus: 1,
+    idWallet: wallet.idWallet,
+    merchant: recipient.denominazioneBeneficiario,
+    nodoIdPayment: "1",
+    paymentModel: 1,
+    statusMessage: "OK",
+    success: true,
+    token: "42",
+    updated: now,
+    urlCheckout3ds: "",
+    urlRedirectPSP: ""
   };
+
   yield put(storeNewTransaction(transaction));
   yield put(selectTransactionForDetails(transaction));
-  yield put(selectWalletForDetails(getWalletId(wallet))); // for the banner
+  yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
   yield put(
     // TODO: this should use StackActions.reset
     // to reset the navigation. Right now, the
@@ -307,22 +397,54 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put({ type: PAYMENT_COMPLETED });
 }
 
+function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
+  const token: Option<string> = yield select(walletTokenSelector);
+  if (token.isSome()) {
+    const response:
+      | BasicResponseTypeWith401<SessionResponse>
+      | undefined = yield call(pagoPaClient.getSession, token.value);
+    if (response !== undefined && response.status === 200) {
+      // token fetched successfully, store it
+      yield put(storePagoPaToken(some(response.value.data.sessionToken)));
+    }
+  }
+}
+
+function* watchWalletSaga(): Iterator<Effect> {
+  while (true) {
+    yield take(WALLET_TOKEN_LOAD_SUCCESS);
+
+    const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+    yield call(fetchPagoPaToken, pagoPaClient);
+
+    while (true) {
+      const action = yield take([
+        FETCH_TRANSACTIONS_REQUEST,
+        FETCH_WALLETS_REQUEST,
+        LOGOUT_SUCCESS
+      ]);
+
+      const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+
+      if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
+        yield fork(fetchTransactions, pagoPaClient, pagoPaToken.value);
+      }
+      if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
+        yield fork(fetchWallets, pagoPaClient, pagoPaToken.value);
+      }
+      // if the user logs out, go back to waiting
+      // for a WALLET_TOKEN_LOAD_SUCCESS action
+      if (action.type === LOGOUT_SUCCESS) {
+        break;
+      }
+    }
+  }
+}
+
 /**
- * saga that manages the wallet (transactions + credit cards)
+ * saga that manages the wallet (transactions + wallets + payments)
  */
-// TOOD: currently using the mocked API. This will be wrapped by
-// a saga that retrieves the required token and uses it to build
-// a client to make the requests, @https://www.pivotaltracker.com/story/show/158068259
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(
-    FETCH_TRANSACTIONS_REQUEST,
-    fetchTransactions,
-    WalletAPI.getTransactions
-  );
-  yield takeLatest(
-    FETCH_WALLETS_REQUEST,
-    fetchCreditCards,
-    WalletAPI.getWallets
-  );
+  yield fork(watchWalletSaga);
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
 }
