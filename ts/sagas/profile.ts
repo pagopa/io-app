@@ -8,8 +8,11 @@ import {
   BasicResponseTypeWith401,
   ProfileWithOrWithoutEmail
 } from "../api/backend";
+
 import { apiUrlPrefix } from "../config";
+
 import I18n from "../i18n";
+
 import {
   PROFILE_LOAD_REQUEST,
   PROFILE_UPSERT_REQUEST
@@ -22,7 +25,9 @@ import {
   profileUpsertSuccess
 } from "../store/actions/profile";
 import { sessionTokenSelector } from "../store/reducers/authentication";
+import { profileSelector, ProfileState } from "../store/reducers/profile";
 import { SessionToken } from "../types/SessionToken";
+
 import { callApiWith401ResponseStatusHandler } from "./api";
 
 // A saga to load the Profile.
@@ -65,15 +70,24 @@ function* loadProfile(): Iterator<Effect> {
 function* createOrUpdateProfile(
   action: ProfileUpsertRequest
 ): Iterator<Effect> {
-  // Get the new Profile from the action payload
-  const newProfile = action.payload;
-
   // Get the token from the state
   const sessionToken: SessionToken | undefined = yield select(
     sessionTokenSelector
   );
 
   if (sessionToken) {
+    // Get the current Profile from the state
+    const profileState: ProfileState = yield select(profileSelector);
+
+    // If we already have a profile, merge it with the new updated attributes
+    // or else, create a new profile from the provided object
+    const newProfile = profileState
+      ? {
+          ...profileState,
+          ...action.payload
+        }
+      : action.payload;
+
     const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
     const response:

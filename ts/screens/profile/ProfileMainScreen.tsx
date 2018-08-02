@@ -13,6 +13,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { logoutRequest } from "../../store/actions/authentication";
 import { FetchRequestActions } from "../../store/actions/constants";
+import { startPinReset } from "../../store/actions/pinset";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
@@ -69,6 +70,20 @@ export class ProfileMainScreen extends React.Component<Props, never> {
                     name="io-right"
                     color={variables.contentPrimaryBackground}
                     onPress={() => this.props.dispatch(logoutRequest())}
+                  />
+                </Col>
+              </Row>
+              {/* Reset PIN */}
+              <Row style={styles.gridRow}>
+                <Col size={10}>
+                  <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
+                  <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
+                </Col>
+                <Col size={2}>
+                  <IconFont
+                    name="io-right"
+                    color={variables.contentPrimaryBackground}
+                    onPress={() => this.props.dispatch(startPinReset())}
                   />
                 </Col>
               </Row>

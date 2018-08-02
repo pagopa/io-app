@@ -15,6 +15,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { BackendClient } from "../../api/backend";
 import { apiUrlPrefix } from "../../config";
 import {
+  loadMessageFailure,
   loadMessagesFailure,
   loadMessagesSuccess,
   loadMessageSuccess
@@ -81,15 +82,20 @@ describe("messages", () => {
         .next()
         // Return undefined as getMessage response
         .next(undefined)
+        .put(loadMessageFailure(Error()))
+        .next()
         .returns(Error());
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
+      const error = Error("Backend error");
       testSaga(loadMessage, backendClient.getMessage, testMessageId1)
         .next()
         // Return 500 with an error message as getMessage response
-        .next({ status: 500, value: Error("Backend error") })
-        .returns(Error("Backend error"));
+        .next({ status: 500, value: error })
+        .put(loadMessageFailure(error))
+        .next()
+        .returns(error);
     });
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the getMessage response status is 200", () => {

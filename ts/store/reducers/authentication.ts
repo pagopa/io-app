@@ -9,6 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
+  SESSION_INVALID,
   SESSION_LOAD_SUCCESS
 } from "../actions/constants";
 import { Action } from "../actions/types";
@@ -111,6 +112,9 @@ export const sessionInfoSelector = (
     : none;
 };
 
+export const walletTokenSelector = (state: GlobalState): Option<string> =>
+  sessionInfoSelector(state).map(s => s.walletToken);
+
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action
@@ -149,7 +153,9 @@ const reducer = (
   }
 
   if (
-    (action.type === SESSION_EXPIRED || action.type === LOGOUT_SUCCESS) &&
+    (action.type === SESSION_EXPIRED ||
+      action.type === SESSION_INVALID ||
+      action.type === LOGOUT_SUCCESS) &&
     isLoggedIn(state)
   ) {
     return {

@@ -1,28 +1,49 @@
 import { H3, Left, ListItem, Right, Text } from "native-base";
+import * as React from "react";
+
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
-import * as React from "react";
-import { Image } from "react-native";
-import I18n from "../i18n";
-import { PreferenceItem as PreferenceItemType } from "../types/PreferenceItem";
 
-type Props = PreferenceItemType;
+import IconFont from "../components/ui/IconFont";
+import variables from "../theme/variables";
+
+interface BaseProps {
+  title: string;
+  valuePreview: string;
+}
+
+interface ValueProps extends BaseProps {
+  kind: "value";
+  icon: string;
+}
+
+interface ActionProps extends BaseProps {
+  kind: "action";
+  onClick: () => void;
+}
+
+export type Props = ValueProps | ActionProps;
 
 /**
- * Component that implements the list item of the preferences screen
+ * Renders a single item in the preferences screen
  */
 class PreferenceItem extends React.Component<Props> {
   public render() {
-    const { id, icon, valuePreview } = this.props;
-
+    const props = this.props;
+    // tslint:disable-next-line:no-empty
+    const onClick = props.kind === "action" ? props.onClick : undefined;
     return (
-      <ListItem>
+      <ListItem onPress={onClick}>
         <Left>
-          <H3>{I18n.t(`preferences.list.${id}`)}</H3>
-          <Text>{valuePreview}</Text>
+          <H3>{props.title}</H3>
+          <Text>{props.valuePreview}</Text>
         </Left>
         <Right>
-          <Image source={icon} />
+          {props.kind === "value" ? (
+            <IconFont name={props.icon} size={variables.iconSize6} />
+          ) : props.kind === "action" ? (
+            <IconFont name="io-right" />
+          ) : null}
         </Right>
       </ListItem>
     );

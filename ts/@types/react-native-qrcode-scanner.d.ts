@@ -1,9 +1,9 @@
 /**
- * Bare essential to get things building
+ * *Bare essential* to get things building
  */
 declare module "react-native-qrcode-scanner" {
   export type Props = Readonly<{
-    onRead?: () => void;
+    onRead?: (e: { data: string }) => void;
     reactivate?: boolean;
     reactivateTimeout?: number;
     fadeIn?: boolean;
@@ -22,5 +22,7 @@ declare module "react-native-qrcode-scanner" {
     checkAndroid6Permissions?: boolean;
   }>;
 
-  export default class QRCodeScanner extends React.Component<Props> {}
+  export default class QRCodeScanner extends React.Component<Props> {
+    reactivate: () => void;
+  }
 }

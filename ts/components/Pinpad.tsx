@@ -3,6 +3,7 @@ import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
 
 import variables from "../theme/variables";
+import { PinString } from "../types/PinString";
 import { PIN_LENGTH } from "../utils/constants";
 
 type OwnProps = Readonly<{
@@ -12,8 +13,8 @@ type OwnProps = Readonly<{
   activeColor: string;
   codeInputRef?: React.Ref<CodeInput>;
   onFulfill:
-    | ((code: string) => void)
-    | ((isValid: boolean, code: string) => void);
+    | ((code: PinString) => void)
+    | ((isValid: boolean, code: PinString) => void);
 }>;
 
 type Props = OwnProps;
