@@ -4,7 +4,11 @@ import { DateFromISOString } from "io-ts-types";
 import { Button, Icon, Left, ListItem, Right, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationScreenProp,
+  NavigationState,
+  NavigationInjectedProps
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import I18n from "../../i18n";
@@ -16,6 +20,7 @@ import { GlobalState } from "../../store/reducers/types";
 
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { formatPaymentAmount } from "../../utils/payment";
+import { paymentRequestTransactionSummaryFromRptId } from "../../store/actions/wallet/payment";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
@@ -28,7 +33,7 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = OwnProps & ReduxInjectedProps;
+export type Props = OwnProps & ReduxInjectedProps & NavigationInjectedProps;
 
 /**
  * Implements a component that show a message in the MessagesScreen List
@@ -79,7 +84,18 @@ class MessageComponent extends React.Component<Props> {
           </Right>
         </View>
         {payment_data !== undefined && (
-          <Button block={true} small={true}>
+          <Button
+            block={true}
+            small={true}
+            onPress={() => {
+              this.props.navigation.dispatch(
+                paymentRequestTransactionSummaryFromRptId(
+                  rptId,
+                  payment_data.amount
+                )
+              );
+            }}
+          >
             <Text>
               {I18n.t("messages.cta.pay", {
                 amount: formatPaymentAmount(payment_data.amount)
