@@ -104,7 +104,8 @@ function* tosCheckSaga(): Iterator<Effect> {
         yield put(
           profileUpsertRequest({
             is_inbox_enabled: true,
-            is_webhook_enabled: true
+            is_webhook_enabled: true,
+            email: userProfile.spid_email
           })
         );
 

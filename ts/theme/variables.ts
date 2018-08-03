@@ -148,10 +148,10 @@ const customVariables = Object.assign(materialVariables, {
   h3Color: "#17324D",
   h3FontWeight: "700" as FontWeight,
   get h3FontSize(): number {
-    return this.fontSize6;
+    return this.fontSize5;
   },
   get h3LineHeight(): number {
-    return this.fontSize6 * this.lineHeightFontSizeRatio;
+    return this.fontSize5 * this.lineHeightFontSizeRatio;
   },
 
   // H4
