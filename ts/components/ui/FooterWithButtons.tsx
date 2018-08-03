@@ -10,14 +10,14 @@ type OwnProps = {
 type Props = Readonly<{
   leftButton: NativeBase.Button & OwnProps;
   rightButton: NativeBase.Button & OwnProps;
-  inlineHalf: boolean;
-  inlineOneThird: boolean;
+  inlineHalf: true;
+  inlineOneThird: true;
 }>;
 
 /**
  * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
  */
-class FooterButtons extends React.Component<Props> {
+class FooterWithButtons extends React.Component<Props> {
   public render() {
     const {
       title: leftButtonTitle,
@@ -47,7 +47,7 @@ class FooterButtons extends React.Component<Props> {
 }
 
 export default connectStyle(
-  "UIComponent.FooterButtons",
+  "UIComponent.FooterWithButtons",
   {},
   mapPropsToStyleNames
-)(FooterButtons);
+)(FooterWithButtons);

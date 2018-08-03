@@ -28,7 +28,7 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../../components/ui/AppHeader";
-import FooterButtons from "../../../components/ui/FooterButtons";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -245,7 +245,7 @@ class ScanQrCodeScreen extends React.Component<Props, never> {
             }
           />
         </ScrollView>
-        <FooterButtons
+        <FooterWithButtons
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
           inlineOneThird={true}

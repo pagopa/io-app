@@ -18,7 +18,7 @@ import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../components/ui/AppHeader";
-import FooterButtons from "../../components/ui/FooterButtons";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
@@ -110,7 +110,7 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
             </Col>
           </Grid>
         </Content>
-        <FooterButtons
+        <FooterWithButtons
           leftButton={primaryButtonProps}
           rightButton={secondaryButtonProps}
           inlineHalf={true}

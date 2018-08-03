@@ -27,7 +27,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import AppHeader from "../../../components/ui/AppHeader";
-import FooterButtons from "../../../components/ui/FooterButtons";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
@@ -153,7 +153,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
             <View spacer={true} />
           </View>
         </Content>
-        <FooterButtons
+        <FooterWithButtons
           leftButton={primaryButtonProps}
           rightButton={secondaryButtonProps}
           inlineHalf={true}

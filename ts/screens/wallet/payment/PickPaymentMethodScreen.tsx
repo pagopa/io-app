@@ -18,7 +18,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import FooterButtons from "../../../components/ui/FooterButtons";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import CardComponent from "../../../components/wallet/card";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
@@ -113,7 +113,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           </View>
         </Content>
 
-        <FooterButtons
+        <FooterWithButtons
           leftButton={primaryButtonProps}
           rightButton={secondaryButtonProps}
         />
