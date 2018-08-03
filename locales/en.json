@@ -92,7 +92,15 @@
   "authentication": {
     "landing": {
       "login": "Login with SPID",
-      "nospid": "Don't have SPID? Find out more"
+      "nospid": "Don't have SPID? Find out more",
+      "card1-title": "All messages in one place",
+      "card1-content": "Display all the incoming communications from Public Administrations",
+      "card2-title": "Use your favourite payment methods",
+      "card2-content": "You can pay a tax or a penalty by your bank account and your cards",
+      "card3-title": "MISSED",
+      "card3-content": "missed",
+      "card4-title": "You can use the app by SPID only",
+      "card4-content": "The access is allowed only by SPID (Public Service of Digital Identity) to guarantee your online safety"
     },
     "spid_information_request": {
       "headerTitle": "Insert email address",
