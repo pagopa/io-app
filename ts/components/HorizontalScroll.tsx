@@ -43,7 +43,7 @@ export class HorizontalScroll extends React.PureComponent<Props> {
   private animVal = new Animated.Value(0);
 
   private getBarArray(cards: ReadonlyArray<any>) {
-    const barArray: JSX.Element[] = [];
+    const barArray: ReadonlyArray<JSX.Element> = [];
 
     cards.forEach((_, i) => {
       const scrollBarVal = this.animVal.interpolate({

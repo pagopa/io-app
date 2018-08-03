@@ -94,7 +94,7 @@ class LandingScreen extends React.Component<Props, never> {
   }
 
   private getCardArray() {
-    const cardArray: JSX.Element[] = [];
+    const cardArray: ReadonlyArray<JSX.Element> = [];
     cards.forEach((card, i) => {
       const thisCard = (
         <View key={`card${i}`} style={styles.card}>
