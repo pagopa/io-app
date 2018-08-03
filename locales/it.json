@@ -95,8 +95,8 @@
       "nospid": "Non hai SPID? Scopri di più"
     },
     "spid_information_request": {
-      "headerTitle": "Inserisci indirizzo email",
-      "contentTitle": "Non hai SPID?",
+      "headerTitle": "Non hai SPID?",
+      "contentTitle":"Cos'è SPID?",
       "paragraph1": "SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale (username e password).",
       "paragraph2": "Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria e aggiornamenti su questa app",
       "paragraph3": "Proseguendo dichiari di accettare le",

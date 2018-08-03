@@ -105,8 +105,8 @@
       "continue": "Continue"
     },
     "spid_information": {
-      "headerTitle": "Don't have SPID?",      
-      "contentTitle": "What is SPID?",
+      "headerTitle": "What is SPID?",
+      "contentTitle": "Don't have SPID?",      
       "moreLinkText": "Learn more",
       "subtitle": "SPID is safe",
       "paragraph1": "SPID, the Public System of Digital Identity, allows you to access all the services of the Public Administration with a single Digital Identity (username and password).",
