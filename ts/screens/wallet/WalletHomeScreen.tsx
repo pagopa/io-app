@@ -23,8 +23,8 @@ import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { walletsSelector } from '../../store/reducers/wallet/wallets';
-import { Wallet } from '../../types/pagopa';
+import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import { Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps = Readonly<{
   cards: ReadonlyArray<Wallet>;

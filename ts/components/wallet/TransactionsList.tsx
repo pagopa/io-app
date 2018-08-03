@@ -80,18 +80,17 @@ class TransactionsList extends React.Component<Props> {
     );
   }
 
-private renderRow = (item: Transaction): React.ReactElement<any> => {
-  const paymentReason = item.description;
+  private renderRow = (item: Transaction): React.ReactElement<any> => {
+    const paymentReason = item.description;
     const amount = buildAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
-
       <ListItem
         style={WalletStyles.listItem}
         onPress={() => {
-            this.props.selectTransaction(item);
-            this.props.selectWallet(item.idWallet);
-            this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+          this.props.selectTransaction(item);
+          this.props.selectWallet(item.idWallet);
+          this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
         }}
       >
         <Body>
@@ -102,9 +101,7 @@ private renderRow = (item: Transaction): React.ReactElement<any> => {
                 <Text>{paymentReason}</Text>
               </Left>
               <Right>
-                <Text>
-                  {amount}
-                </Text>
+                <Text>{amount}</Text>
               </Right>
             </Row>
             <Row>
@@ -115,8 +112,8 @@ private renderRow = (item: Transaction): React.ReactElement<any> => {
           </Grid>
         </Body>
       </ListItem>
-    )
-  }
+    );
+  };
 
   public render(): React.ReactNode {
     const { transactions } = this.props;

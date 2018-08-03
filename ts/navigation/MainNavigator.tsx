@@ -11,8 +11,6 @@ import { createBottomTabNavigator } from "react-navigation";
 
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
-import PlaceholderScreen from "../screens/PlaceholderScreen";
-import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
