@@ -13,6 +13,7 @@ import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
+import contentReducer from "./content";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -75,7 +76,10 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   wallet: walletReducer,
 
   // BACKEND INFO
-  backendInfo: backendInfoReducer
+  backendInfo: backendInfoReducer,
+
+  // CONTENT
+  content: contentReducer
 });
 
 export function createRootReducer(

@@ -1,9 +1,13 @@
-import t from "io-ts";
+import * as t from "io-ts";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
+import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
+import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
 import { Transaction as TransactionPagoPA } from "../../definitions/pagopa/Transaction";
+import { TransactionListResponse as TransactionListResponsePagoPA } from "../../definitions/pagopa/TransactionListResponse";
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
+import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),
@@ -110,8 +114,8 @@ type RequiredTransactionFields =
 type UpdatedTransactionFields = "amount" | "fee" | "grandTotal";
 export type Transaction = {
   // all the properties but for the ones that are changing type
-  [key in keyof Exclude<
-    TransactionPagoPA,
+  [key in Exclude<
+    keyof TransactionPagoPA,
     UpdatedTransactionFields
   >]?: TransactionPagoPA[key]
 } &
@@ -122,4 +126,57 @@ export type Transaction = {
     amount: Amount;
     fee: Amount;
     grandTotal: Amount;
+  }>;
+
+// the response when requesting a list of transactions
+export const TransactionListResponse = t.refinement(
+  TransactionListResponsePagoPA,
+  tlr => tlr.data !== undefined
+);
+type RequiredTransactionListResponseFields = "data";
+export type TransactionListResponse = {
+  [key in Exclude<
+    keyof TransactionListResponsePagoPA,
+    RequiredTransactionListResponseFields
+  >]?: TransactionListResponsePagoPA[key]
+} &
+  Readonly<{
+    data: ReadonlyArray<Transaction>;
+  }>;
+
+export const WalletListResponse = t.refinement(
+  WalletListResponsePagoPA,
+  wlr => wlr.data !== undefined
+);
+type RequiredWalletListResponseFields = "data";
+export type WalletListResponse = {
+  [key in Exclude<
+    keyof WalletListResponsePagoPA,
+    RequiredWalletListResponseFields
+  >]?: WalletListResponsePagoPA[key]
+} &
+  Readonly<{
+    data: ReadonlyArray<Wallet>;
+  }>;
+
+export const Session = t.refinement(
+  SessionPagoPA,
+  s => s.sessionToken !== undefined
+);
+type RequiredSessionFields = "sessionToken";
+export type Session = SessionPagoPA &
+  Required<Pick<SessionPagoPA, RequiredSessionFields>>;
+
+export const SessionResponse = t.refinement(SessionResponsePagoPA, sr =>
+  Session.is(sr.data)
+);
+type RequiredSessionResponseFields = "data";
+export type SessionResponse = {
+  [key in Exclude<
+    keyof SessionResponsePagoPA,
+    RequiredSessionResponseFields
+  >]?: SessionResponse[key]
+} &
+  Readonly<{
+    data: Session;
   }>;

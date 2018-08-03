@@ -4,6 +4,8 @@
  */
 
 import { combineReducers } from "redux";
+import { PAGOPA_INITIAL_STATE, PagoPaState } from "./pagopa";
+import pagoPaReducer from "./pagopa";
 import {
   PAYMENT_INITIAL_STATE,
   PaymentState,
@@ -20,6 +22,7 @@ export type WalletState = Readonly<{
   transactions: TransactionsState;
   wallets: WalletsState;
   payment: PaymentState;
+  pagoPa: PagoPaState;
 }>;
 
 /**
@@ -49,13 +52,15 @@ export type WalletStateWithSelectedPaymentMethod = {
 export const INITIAL_STATE: WalletState = {
   transactions: TRANSACTIONS_INITIAL_STATE,
   wallets: WALLETS_INITIAL_STATE,
-  payment: PAYMENT_INITIAL_STATE
+  payment: PAYMENT_INITIAL_STATE,
+  pagoPa: PAGOPA_INITIAL_STATE
 };
 
 const reducer = combineReducers({
   transactions: transactionsReducer,
   wallets: walletsReducer,
-  payment: paymentReducer
+  payment: paymentReducer,
+  pagoPa: pagoPaReducer
 });
 
 export default reducer;

@@ -1,11 +1,15 @@
-import { NavigationActions, NavigationState } from "react-navigation";
+import {
+  NavigationActions,
+  NavigationState,
+  StackActions
+} from "react-navigation";
 
 import AppNavigator from "../../navigation/AppNavigator";
 import { NAVIGATION_RESTORE } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
+export const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
 
@@ -24,6 +28,7 @@ function nextState(state: NavigationState, action: Action): NavigationState {
     case NavigationActions.NAVIGATE:
     case NavigationActions.RESET:
     case NavigationActions.SET_PARAMS:
+    case StackActions.RESET:
       return AppNavigator.router.getStateForAction(action, state);
 
     // Used to restore a saved navigation state

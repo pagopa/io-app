@@ -1,27 +1,30 @@
 import { Body, Container, Content, H1, List, Text, View } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { fromNullable, Option } from "fp-ts/lib/Option";
 
 import { untag } from "italia-ts-commons/lib/types";
 
-import I18n from "../i18n";
+import I18n from "../../i18n";
 
-import { FetchRequestActions } from "../store/actions/constants";
-import { ReduxProps } from "../store/actions/types";
-import { createErrorSelector } from "../store/reducers/error";
-import { createLoadingSelector } from "../store/reducers/loading";
-import { GlobalState } from "../store/reducers/types";
+import { FetchRequestActions } from "../../store/actions/constants";
+import { ReduxProps } from "../../store/actions/types";
+import { createErrorSelector } from "../../store/reducers/error";
+import { createLoadingSelector } from "../../store/reducers/loading";
+import { GlobalState } from "../../store/reducers/types";
 
-import PreferenceItem from "../components/PreferenceItem";
-import ScreenHeader from "../components/ScreenHeader";
-import AppHeader from "../components/ui/AppHeader";
+import PreferenceItem from "../../components/PreferenceItem";
+import ScreenHeader from "../../components/ScreenHeader";
+import AppHeader from "../../components/ui/AppHeader";
 
-import { ProfileWithOrWithoutEmail } from "../api/backend";
-import { getLocalePrimary } from "../utils/locale";
+import ROUTES from "../../navigation/routes";
+
+import { ProfileWithOrWithoutEmail } from "../../api/backend";
+
+import { getLocalePrimary } from "../../utils/locale";
 
 type ReduxMappedProps = {
   maybeProfile: Option<ProfileWithOrWithoutEmail>;
@@ -32,7 +35,11 @@ type ReduxMappedProps = {
   languages: Option<ReadonlyArray<string>>;
 };
 
-export type Props = ReduxMappedProps & ReduxProps;
+type OwnProps = Readonly<{
+  navigation: NavigationScreenProp<NavigationState>;
+}>;
+
+export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * Translates the primary languages of the provided locales.
@@ -82,7 +89,7 @@ class PreferencesScreen extends React.Component<Props> {
           <View>
             <ScreenHeader
               heading={<H1>{I18n.t("preferences.title")}</H1>}
-              icon={require("../../img/icons/gears.png")}
+              icon={require("../../../img/icons/gears.png")}
             />
 
             <Text>{I18n.t("preferences.subtitle")}</Text>
@@ -95,26 +102,26 @@ class PreferencesScreen extends React.Component<Props> {
                   kind="action"
                   title={I18n.t("preferences.list.services")}
                   valuePreview={I18n.t("preferences.list.services_description")}
-                  onClick={() => {
-                    Alert.alert("Not implemented yet");
-                  }}
+                  onClick={() =>
+                    this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
+                  }
                 />
                 <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.email")}
-                  icon="email"
+                  icon="io-email"
                   valuePreview={profileData.spid_email}
                 />
                 <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.mobile_phone")}
-                  icon="phone-number"
+                  icon="io-phone-number"
                   valuePreview={profileData.spid_mobile_phone}
                 />
                 <PreferenceItem
                   kind="value"
                   title={I18n.t("preferences.list.language")}
-                  icon="languages"
+                  icon="io-languages"
                   valuePreview={languages}
                 />
               </List>
