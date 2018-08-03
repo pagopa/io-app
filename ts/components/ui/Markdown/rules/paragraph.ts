@@ -17,7 +17,7 @@ function rule() {
         style: {
           flexWrap: "wrap",
           flexDirection: "row",
-          alignItems: "flex-start",
+          alignItems: "center",
           justifyContent: "flex-start"
         }
       },

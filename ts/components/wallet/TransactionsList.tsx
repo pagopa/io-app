@@ -23,24 +23,24 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
-import { selectCardForDetails } from "../../store/actions/wallet/cards";
 import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
+import { selectWalletForDetails } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
   latestTransactionsSelector,
-  transactionsByCardSelector
+  transactionsByWalletSelector
 } from "../../store/reducers/wallet/transactions";
-import { CreditCardId } from "../../types/CreditCard";
-import { WalletTransaction } from "../../types/wallet";
+import { Transaction } from "../../types/pagopa";
+import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type ReduxMappedStateProps = Readonly<{
-  transactions: ReadonlyArray<WalletTransaction>;
+  transactions: ReadonlyArray<Transaction>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  selectTransaction: (i: WalletTransaction) => void;
-  selectCard: (item: CreditCardId) => void;
+  selectTransaction: (i: Transaction) => void;
+  selectWallet: (item: number) => void;
 }>;
 
 /**
@@ -48,7 +48,7 @@ type ReduxMappedDispatchProps = Readonly<{
  */
 export enum TransactionsDisplayed {
   LATEST, // show the latest transactions
-  BY_CARD // show all the transactions paid with an already-selected credit card (available in the store)
+  BY_WALLET // show all the transactions paid with an already-selected wallet (available in the store)
 }
 
 type OwnProps = Readonly<{
@@ -63,55 +63,60 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  * Transactions List component
  */
 class TransactionsList extends React.Component<Props> {
-  private renderDate(transaction: WalletTransaction) {
-    const datetime: string = `${transaction.date} - ${transaction.time}`;
+  private renderDate(item: Transaction) {
+    const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
+    const datetime: string = `${item.created.toLocaleDateString()} - ${item.created.toLocaleTimeString()}`;
     return (
       <Row>
         <Left>
           <Text>
-            {transaction.isNew && (
+            {isNew && (
               <IconFont name="io-new" style={WalletStyles.newIconStyle} />
             )}
-            <Text note={true}>
-              {transaction.isNew ? `  ${datetime}` : datetime}
-            </Text>
+            <Text note={true}>{isNew ? `  ${datetime}` : datetime}</Text>
           </Text>
         </Left>
       </Row>
     );
   }
 
-  private renderRow = (item: WalletTransaction): React.ReactElement<any> => (
-    <ListItem
-      style={WalletStyles.listItem}
-      onPress={() => {
-        this.props.selectTransaction(item);
-        this.props.selectCard(item.cardId);
-        this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
-      }}
-    >
-      <Body>
-        <Grid>
-          {this.renderDate(item)}
-          <Row>
-            <Left>
-              <Text>{item.paymentReason}</Text>
-            </Left>
-            <Right>
-              <Text>
-                {item.amount} {item.currency}
-              </Text>
-            </Right>
-          </Row>
-          <Row>
-            <Left>
-              <Text note={true}>{item.recipient}</Text>
-            </Left>
-          </Row>
-        </Grid>
-      </Body>
-    </ListItem>
-  );
+private renderRow = (item: Transaction): React.ReactElement<any> => {
+  const paymentReason = item.description;
+    const amount = buildAmount(centsToAmount(item.amount.amount));
+    const recipient = item.merchant;
+    return (
+
+      <ListItem
+        style={WalletStyles.listItem}
+        onPress={() => {
+            this.props.selectTransaction(item);
+            this.props.selectWallet(item.idWallet);
+            this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+        }}
+      >
+        <Body>
+          <Grid>
+            {this.renderDate(item)}
+            <Row>
+              <Left>
+                <Text>{paymentReason}</Text>
+              </Left>
+              <Right>
+                <Text>
+                  {amount}
+                </Text>
+              </Right>
+            </Row>
+            <Row>
+              <Left>
+                <Text note={true}>{recipient}</Text>
+              </Left>
+            </Row>
+          </Grid>
+        </Body>
+      </ListItem>
+    )
+  }
 
   public render(): React.ReactNode {
     const { transactions } = this.props;
@@ -146,7 +151,7 @@ class TransactionsList extends React.Component<Props> {
             <List
               scrollEnabled={false}
               removeClippedSubviews={false}
-              dataArray={transactions as WalletTransaction[]} // tslint:disable-line: readonly-array
+              dataArray={transactions as Transaction[]} // tslint:disable-line: readonly-array
               renderRow={this.renderRow}
             />
           </Row>
@@ -166,9 +171,9 @@ const mapStateToProps = (
         transactions: latestTransactionsSelector(state)
       };
     }
-    case TransactionsDisplayed.BY_CARD: {
+    case TransactionsDisplayed.BY_WALLET: {
       return {
-        transactions: transactionsByCardSelector(state)
+        transactions: transactionsByWalletSelector(state)
       };
     }
   }
@@ -177,7 +182,7 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   selectTransaction: item => dispatch(selectTransactionForDetails(item)),
-  selectCard: item => dispatch(selectCardForDetails(item))
+  selectWallet: item => dispatch(selectWalletForDetails(item))
 });
 
 export default connect(

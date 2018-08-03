@@ -3,7 +3,7 @@
  * (holder, pan, cvc, expiration date)
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import _ from "lodash";
+import { entries, range, size } from "lodash";
 import { Left } from "native-base";
 import {
   Body,
@@ -56,6 +56,10 @@ const styles = StyleSheet.create({
 });
 
 const CARD_LOGOS_COLUMNS = 4;
+const EMPTY_CARD_HOLDER = "";
+const EMPTY_CARD_PAN = "";
+const EMPTY_CARD_EXPIRATION_DATE = "";
+const EMPTY_CARD_SECURITY_CODE = "";
 
 export class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -113,9 +117,11 @@ export class AddCardScreen extends React.Component<Props, State> {
               placeholder={I18n.t("wallet.dummyCard.values.holder")}
               inputProps={{
                 onChangeText: value => {
-                  this.setState({ holder: some(value) });
+                  this.setState({
+                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+                  });
                 },
-                value: this.state.holder.getOrElse(""),
+                value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 autoCapitalize: "words"
               }}
             />
@@ -128,7 +134,7 @@ export class AddCardScreen extends React.Component<Props, State> {
               placeholder={I18n.t("wallet.dummyCard.values.pan")}
               inputProps={{
                 onChangeText: this.onPanChange,
-                value: this.state.pan.getOrElse(""),
+                value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 keyboardType: "numeric",
                 maxLength: 23
               }}
@@ -143,7 +149,9 @@ export class AddCardScreen extends React.Component<Props, State> {
                   placeholder={I18n.t("wallet.dummyCard.values.expirationDate")}
                   inputProps={{
                     onChangeText: this.onExpirationDateChange,
-                    value: this.state.expirationDate.getOrElse(""),
+                    value: this.state.expirationDate.getOrElse(
+                      EMPTY_CARD_EXPIRATION_DATE
+                    ),
                     keyboardType: "numeric"
                   }}
                 />
@@ -156,9 +164,16 @@ export class AddCardScreen extends React.Component<Props, State> {
                   placeholder={I18n.t("wallet.dummyCard.values.securityCode")}
                   inputProps={{
                     onChangeText: value => {
-                      this.setState({ securityCode: some(value) });
+                      this.setState({
+                        securityCode:
+                          value !== EMPTY_CARD_SECURITY_CODE
+                            ? some(value)
+                            : none
+                      });
                     },
-                    value: this.state.securityCode.getOrElse(""),
+                    value: this.state.securityCode.getOrElse(
+                      EMPTY_CARD_SECURITY_CODE
+                    ),
                     keyboardType: "numeric",
                     maxLength: 4,
                     secureTextEntry: true
@@ -174,15 +189,13 @@ export class AddCardScreen extends React.Component<Props, State> {
             <Item last={true} style={styles.noBottomLine}>
               <FlatList
                 numColumns={CARD_LOGOS_COLUMNS}
-                data={_.entries(displayedCards).concat(
+                data={entries(displayedCards).concat(
                   // padding with empty items so as to have a # of cols
                   // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
-                  _
-                    .range(
-                      CARD_LOGOS_COLUMNS -
-                        (_.size(displayedCards) % CARD_LOGOS_COLUMNS)
-                    )
-                    .map((__): [string, any] => ["", undefined])
+                  range(
+                    CARD_LOGOS_COLUMNS -
+                      (size(displayedCards) % CARD_LOGOS_COLUMNS)
+                  ).map((__): [string, any] => ["", undefined])
                 )}
                 renderItem={({ item }) => (
                   <View style={{ flex: 1, flexDirection: "row" }}>

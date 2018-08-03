@@ -16,6 +16,7 @@ declare module "native-base" {
       alternativeBold?: boolean;
       white?: boolean;
       alignCenter?: boolean;
+      primary?: boolean;
     }
   }
 }
@@ -39,7 +40,7 @@ export default (): Theme => {
       textAlign: "right"
     },
     ".alternativeBold": {
-      lineHeight: variables.lineHeight1,
+      lineHeight: variables.lineHeight2,
       fontWeight: variables.textBoldWeight,
       color: variables.h1Color,
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
@@ -49,6 +50,9 @@ export default (): Theme => {
     },
     ".alignCenter": {
       textAlign: "center"
+    },
+    ".primary": {
+      color: variables.brandPrimary
     },
     lineHeight: variables.lineHeightBase
   };

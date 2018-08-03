@@ -16,11 +16,11 @@ import { startPayment } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 
 interface ParamTypeObject {
-  createdAt: Date;
   markdown: string;
   paymentData: PaymentData;
   serviceDepartmentName: string;
   serviceName: string;
+  createdAt: string;
   serviceOrganizationName: string;
   subject: string;
 }

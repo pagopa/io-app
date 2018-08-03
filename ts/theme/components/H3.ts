@@ -8,7 +8,7 @@ export default (): Theme => {
   return {
     ...makeFontStyleObject(Platform.select, variables.h3FontWeight),
     color: variables.h3Color,
-
-    fontSize: variables.fontSizeBase * 1.25
+    fontSize: variables.h3FontSize,
+    lineHeight: variables.h3LineHeight
   };
 };

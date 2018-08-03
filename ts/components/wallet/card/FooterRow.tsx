@@ -13,19 +13,20 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
-import { selectCardForDetails } from "../../../store/actions/wallet/cards";
+import { selectWalletForDetails } from "../../../store/actions/wallet/wallets";
 import variables from "../../../theme/variables";
-import { CreditCard, CreditCardId } from "../../../types/CreditCard";
+import { Wallet } from "../../../types/pagopa";
+import { buildFormattedLastUsage } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
 import { CreditCardStyles } from "./style";
 
 type ReduxMappedProps = Readonly<{
-  selectCard: (item: CreditCardId) => void;
+  selectWallet: (item: number) => void;
 }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-  item: CreditCard;
+  item: Wallet;
   showMsg?: boolean;
 }>;
 
@@ -53,7 +54,7 @@ class FooterRow extends React.Component<Props> {
           style={CreditCardStyles.rowStyle}
           size={6}
           onPress={() => {
-            this.props.selectCard(item.id);
+            this.props.selectWallet(item.idWallet);
             navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
           }}
         >
@@ -64,7 +65,7 @@ class FooterRow extends React.Component<Props> {
                 CreditCardStyles.smallTextStyle
               ]}
             >
-              {item.lastUsage}
+              {buildFormattedLastUsage(item)}
             </Text>
           </Col>
           <Col size={1} style={styles.rightAligned}>
@@ -82,7 +83,7 @@ class FooterRow extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  selectCard: item => dispatch(selectCardForDetails(item))
+  selectWallet: item => dispatch(selectWalletForDetails(item))
 });
 
 export default connect(

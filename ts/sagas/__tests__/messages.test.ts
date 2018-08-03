@@ -1,3 +1,12 @@
+import nodeFetch from "node-fetch";
+
+//
+// We need to override the global fetch to make the tests
+// compatible with node-fetch
+//
+// tslint:disable-next-line:no-object-mutation no-any
+(global as any).fetch = nodeFetch;
+
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 
@@ -6,6 +15,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { BackendClient } from "../../api/backend";
 import { apiUrlPrefix } from "../../config";
 import {
+  loadMessageFailure,
   loadMessagesFailure,
   loadMessagesSuccess,
   loadMessageSuccess
@@ -22,7 +32,7 @@ const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
 const testSessionToken = "5b1ce7390b108b8f42009b0aa900eefa6dbdc574edf1b76960625478a32ed1f17d7b79f80c4cd7477ad9a0630d1dbd00" as SessionToken;
-const backendClient = BackendClient(apiUrlPrefix, testSessionToken);
+const backendClient = BackendClient(apiUrlPrefix, testSessionToken, jest.fn());
 const testMessageWithContent1 = {
   id: testMessageId1,
   created_at: new Date(),
@@ -72,15 +82,20 @@ describe("messages", () => {
         .next()
         // Return undefined as getMessage response
         .next(undefined)
+        .put(loadMessageFailure(Error()))
+        .next()
         .returns(Error());
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
+      const error = Error("Backend error");
       testSaga(loadMessage, backendClient.getMessage, testMessageId1)
         .next()
         // Return 500 with an error message as getMessage response
-        .next({ status: 500, value: Error("Backend error") })
-        .returns(Error("Backend error"));
+        .next({ status: 500, value: error })
+        .put(loadMessageFailure(error))
+        .next()
+        .returns(error);
     });
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the getMessage response status is 200", () => {

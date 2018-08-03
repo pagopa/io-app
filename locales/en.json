@@ -25,7 +25,14 @@
     },
     "actions": {
       "retry": "An error occurred, please retry"
+    },
+    "remoteStates": {
+      "notAvailable": "Non available"
     }
+  },
+  "locales": {
+    "it": "Italian",
+    "en": "English"
   },
   "connection": {
     "status": {
@@ -134,10 +141,21 @@
   "pin_login":{
     "pin": {
       "pinInfo": "Enter the PIN",
-      "pinForgot": "I do not remember the pin",
+      "reset": {
+        "button": "I forgot my PIN",
+        "button_short": "Reset PIN",
+        "tip": "To reset your PIN you will have to login again with your SPID account.",
+        "tip_short": "You will have to login again."
+      },
       "confirmValid": "Correct PIN",
       "confirmInvalid": "Invalid PIN"
-    } 
+    },
+    "unlock_screen": {
+      "help": {
+        "title": "hello",
+        "content": "hello"
+      }
+    }
   },
   "personal_data_processing": {
     "title": "Rules on the processing of personal data",
@@ -162,6 +180,10 @@
   },
   "lipsum": {
     "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
+  },
+  "datetimes": {
+    "yesterday": "yesterday",
+    "todayAt": "today, at"
   },
   "wallet": {
     "wallet": "Wallet",
@@ -188,8 +210,8 @@
       "save":"Save the card"
     },
     "thanks":"✓ Thank you!",
-    "endPayment":"Your transaction is completed",
-    "addManager": {
+    "endPayment":"Your payment has been completed successfully",
+    "pickPsp": {
       "title":"Choose the manager",
       "info":"This card does not belong to the PagoPA payment network.",
       "infoBold":"Choose the economic operator",
@@ -223,7 +245,7 @@
       "amount":"Amount",
       "expireDate":"Expire date",
       "tranche":"Tranche",
-      "entity":"Entity:",	
+      "entity":"Entity:",
       "info":"More info at:",
       "tel":"Tel:",
       "email":"Email:",
@@ -240,7 +262,7 @@
     "insertManually":{
       "header": "Insert notice data",
       "title": "Insert the notice data",
-      "info": "which allow us to identify the transaction", 
+      "info": "which allow us to identify the transaction",
       "link": "Where are they?",
       "noticeCode":"Notice Code",
       "entityCode":"Entity Fiscal Code",
@@ -264,9 +286,6 @@
     "noTransactionsDetails":"You never used IO neither to pay nor to log in with an user registered on PagoPA: check your messages.",
     "moreInfo":"Learn more",
     "noNewTransactions": "There are no new transactions.",
-    "lastUsage": "Last usage",
-    "yesterday": "yesterday at",
-    "today": "today at",
     "payNotice": "Pay notice",
     "latestTransactions": "Latest transactions",
     "creditDebitCards": "Credit/Debit Cards",
@@ -318,13 +337,15 @@
     "favoriteTitle":"Set the cart as favourite payment method",
     "favoriteText":"This payment method will be automatically proposed for the next payment"
   },
-  "creditCardComponent": {
+  "cardComponent": {
     "validUntil": "Valid until",
     "actions": "Actions",
     "setFavourite": "Set as favourite",
     "unsetFavourite": "Remove from favourites",
     "deleteTitle": "Do you want to proceed?",
-    "deleteMsg": "This will delete the payment method"
+    "deleteMsg": "This will delete the payment method",
+    "neverUsed": "Never used",
+    "lastUsage": "Last usage"
   },
   "messages": {
     "counting": {
@@ -368,9 +389,23 @@
     "moreLinkText": "Get more info.",
     "list": {
       "email": "Email address",
-      "servicesNotifications": "Notifications from services",
+      "mobile_phone": "Mobile number",
+      "services": "List of services",
+      "services_description": "Enable/disable your services on IO",
       "language": "Language",
       "digitalDomicile": "Digital domicile"
+    },
+    "empty": {
+      "default": "No preference set"
     }
+  },
+  "services": {
+    "headerTitle": "Services",
+    "title": "Available services",
+    "subtitle": "Here you can enable/disable each service, access its details, the terms of use and customize the notifications you receive.",
+    "serviceIsEnabled": "The service is enabled",
+    "pushNotifications": "Push Notifications",
+    "emailNotifications": "Email Notifications",
+    "contactsAndInfo": "Contacts and info"
   }
 }

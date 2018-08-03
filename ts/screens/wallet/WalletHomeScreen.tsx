@@ -15,26 +15,25 @@ import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
-import {
-  CardEnum,
-  CardType,
-  WalletLayout
-} from "../../components/wallet/WalletLayout";
+import { CardEnum, CardType } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
+import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardsSelector } from "../../store/reducers/wallet/cards";
-import { CreditCard } from "../../types/CreditCard";
+import { walletsSelector } from '../../store/reducers/wallet/wallets';
+import { Wallet } from '../../types/pagopa';
 
 type ReduxMappedStateProps = Readonly<{
-  cards: ReadonlyArray<CreditCard>;
+  cards: ReadonlyArray<Wallet>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   // temporary
   loadTransactions: () => void;
+  loadWallets: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -132,6 +131,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // WIP WIP create pivotal story
+    this.props.loadWallets();
     this.props.loadTransactions();
   }
 
@@ -177,11 +177,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cards: creditCardsSelector(state)
+  cards: walletsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest())
+  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
 export default connect(

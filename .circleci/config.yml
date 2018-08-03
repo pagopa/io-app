@@ -75,6 +75,7 @@ jobs:
 
       # Build app
       - run: yarn generate:api-definitions
+      - run: yarn generate:pagopa-api-definitions
       - run: yarn tsc:noemit
 
       # Run tests

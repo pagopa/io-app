@@ -1,7 +1,12 @@
 /**
  * A collection of sagas to manage the Authentication.
  */
-import { NavigationActions, NavigationState } from "react-navigation";
+import { isSome, Option } from "fp-ts/lib/Option";
+import {
+  NavigationActions,
+  NavigationState,
+  StackActions
+} from "react-navigation";
 import { Effect } from "redux-saga";
 import { call, fork, put, select, take, takeLatest } from "redux-saga/effects";
 
@@ -11,7 +16,7 @@ import {
   BasicResponseTypeWith401,
   SuccessResponse
 } from "../api/backend";
-import { apiUrlPrefix } from "../config";
+import { apiUrlPrefix, backgroundActivityTimeout } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import {
@@ -23,22 +28,38 @@ import {
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
-  startAuthentication
+  startAuthentication,
+  walletTokenLoadSuccess
 } from "../store/actions/authentication";
 import {
+  APP_STATE_CHANGE_ACTION,
   AUTHENTICATION_COMPLETED,
   IDP_SELECTED,
   LOGIN_SUCCESS,
   LOGOUT_REQUEST,
+  PIN_LOGIN_INITIALIZE,
+  PIN_LOGIN_VALIDATE_SUCCESS,
   SESSION_EXPIRED,
   SESSION_LOAD_REQUEST,
   SESSION_LOAD_SUCCESS,
   START_AUTHENTICATION
 } from "../store/actions/constants";
 import { navigationRestore } from "../store/actions/navigation";
-import { sessionTokenSelector } from "../store/reducers/authentication";
-import { navigationStateSelector } from "../store/reducers/navigation";
+import {
+  ApplicationState,
+  ApplicationStateAction
+} from "../store/actions/types";
+import {
+  isAuthenticatedSelector,
+  sessionTokenSelector
+} from "../store/reducers/authentication";
+import {
+  INITIAL_STATE,
+  navigationStateSelector
+} from "../store/reducers/navigation";
+import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
+import { getPin } from "../utils/keychain";
 import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
@@ -66,10 +87,76 @@ export function* loadSession(): IterableIterator<Effect> {
     } else {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       yield put(sessionLoadSuccess(response.value));
+      yield put(walletTokenLoadSuccess()); // inform wallet saga that the token has been made available
     }
   } else {
     // No SessionToken we can't send a SESSION_LOAD_FAILURE action
     yield put(sessionLoadFailure(Error()));
+  }
+}
+
+/**
+ * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to insert the PIN
+ */
+// tslint:disable-next-line:cognitive-complexity
+export function* watchApplicationActivity(): IterableIterator<Effect> {
+  // tslint:disable-next-line:no-let
+  let lastState: ApplicationState = "active";
+  // tslint:disable-next-line:no-let
+  let lastUpdateAt = -1;
+
+  // We will use this to save and then restore the navigation
+  // tslint:disable-next-line:no-let
+  let navigationState: NavigationState = INITIAL_STATE;
+
+  while (true) {
+    const action: ApplicationStateAction = yield take(APP_STATE_CHANGE_ACTION);
+
+    const newState: ApplicationState = action.payload;
+    const newUpdateAt = new Date().getTime();
+
+    const timeElapsed = newUpdateAt - lastUpdateAt;
+    if (lastState !== "background" && newState === "background") {
+      // Save the navigation state so we can restore in case the PIN login is needed
+      // tslint:disable-next-line:saga-yield-return-type
+      navigationState = yield select(navigationStateSelector);
+
+      // Push the BackgroundScreen
+      yield put(
+        NavigationActions.navigate({
+          routeName: ROUTES.BACKGROUND
+        })
+      );
+    } else if (
+      lastState === "background" && // The app was in background
+      newState === "active" // The app is now active
+    ) {
+      if (timeElapsed > backgroundActivityTimeout * 1000) {
+        // Check if the user is logged in or not
+        const isAuthenticated: boolean = yield select(isAuthenticatedSelector);
+
+        // Check if the user set a PIN
+        const basePin: Option<PinString> = yield call(getPin);
+
+        // We need to act only if the user is authenticated and has a PIN set
+        if (isAuthenticated && isSome(basePin)) {
+          // Start the PIN LOGIN
+          yield put({
+            type: PIN_LOGIN_INITIALIZE
+          });
+
+          yield take(PIN_LOGIN_VALIDATE_SUCCESS);
+        }
+      }
+
+      // Restore the navigation state
+      if (navigationState) {
+        yield put(navigationRestore(navigationState));
+      }
+    }
+
+    lastState = newState;
+    lastUpdateAt = newUpdateAt;
   }
 }
 
@@ -171,11 +258,13 @@ export function* watchStartAuthentication(): IterableIterator<Effect> {
 
     // Show the Authentication LandingScreen to the user
     yield put(
-      NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION,
-        action: NavigationActions.navigate({
-          routeName: ROUTES.AUTHENTICATION_LANDING
-        })
+      StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: ROUTES.AUTHENTICATION
+          })
+        ]
       })
     );
 
@@ -218,8 +307,9 @@ export function* watchStartAuthentication(): IterableIterator<Effect> {
 }
 
 export default function* root(): IterableIterator<Effect> {
-  yield fork(watchStartAuthentication);
   yield takeLatest(SESSION_LOAD_REQUEST, loadSession);
+  yield fork(watchStartAuthentication);
+  yield fork(watchApplicationActivity);
   yield fork(watchSessionExpired);
   yield fork(watchLogoutRequest);
 }

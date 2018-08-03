@@ -14,14 +14,17 @@ import * as React from "react";
 import { ScrollView } from "react-native";
 import { StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { Dispatch } from "../../store/actions/types";
+import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
-import { CreditCard } from "../../types/CreditCard";
+import { Wallet } from "../../types/pagopa";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
-import CreditCardComponent from "./card";
+import CardComponent from "./card";
 import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({
@@ -59,17 +62,17 @@ export enum CardEnum {
 
 type FullCard = Readonly<{
   type: CardEnum.FULL;
-  card: CreditCard;
+  card: Wallet;
 }>;
 
 type HeaderCard = Readonly<{
   type: CardEnum.HEADER;
-  card: CreditCard;
+  card: Wallet;
 }>;
 
 type FannedCards = Readonly<{
   type: CardEnum.FAN;
-  cards: ReadonlyArray<CreditCard>;
+  cards: ReadonlyArray<Wallet>;
 }>;
 
 type NoCards = Readonly<{
@@ -78,7 +81,11 @@ type NoCards = Readonly<{
 
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  startPayment: () => void;
+}>;
+
+type OwnProps = Readonly<{
   title: string;
   navigation: NavigationScreenProp<NavigationState>;
   headerContents?: React.ReactNode;
@@ -88,10 +95,12 @@ type Props = Readonly<{
   moreCards?: boolean;
 }>;
 
-export class WalletLayout extends React.Component<Props> {
+type Props = OwnProps & ReduxMappedProps;
+
+class WalletLayout extends React.Component<Props> {
   public static defaultProps = {
     headerContents: null,
-    cardType: { type: CardEnum.NONE },
+    cardType: { type: CardEnum.NONE } as NoCards,
     showPayButton: true,
     allowGoBack: true,
     moreCards: false
@@ -111,12 +120,12 @@ export class WalletLayout extends React.Component<Props> {
         return (
           <TouchableHighlight
             onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_CREDITCARDS)
+              this.props.navigation.navigate(ROUTES.WALLET_LIST)
             }
           >
             <View>
               <View style={styles.firstCard}>
-                <CreditCardComponent
+                <CardComponent
                   navigation={this.props.navigation}
                   item={this.props.cardType.cards[1]}
                   logoPosition={LogoPosition.TOP}
@@ -125,7 +134,7 @@ export class WalletLayout extends React.Component<Props> {
                 />
               </View>
               <View style={styles.secondCard}>
-                <CreditCardComponent
+                <CardComponent
                   navigation={this.props.navigation}
                   item={this.props.cardType.cards[0]}
                   logoPosition={LogoPosition.TOP}
@@ -140,7 +149,7 @@ export class WalletLayout extends React.Component<Props> {
       case CardEnum.FULL: {
         return (
           <View style={WalletStyles.container}>
-            <CreditCardComponent
+            <CardComponent
               navigation={this.props.navigation}
               item={this.props.cardType.card}
               favorite={false}
@@ -154,7 +163,7 @@ export class WalletLayout extends React.Component<Props> {
       case CardEnum.HEADER: {
         return (
           <View style={WalletStyles.container}>
-            <CreditCardComponent
+            <CardComponent
               navigation={this.props.navigation}
               item={this.props.cardType.card}
               logoPosition={LogoPosition.TOP}
@@ -179,7 +188,11 @@ export class WalletLayout extends React.Component<Props> {
           <Left>
             <Button
               transparent={true}
-              onPress={_ => this.props.navigation.goBack()}
+              onPress={_ =>
+                this.props.allowGoBack
+                  ? this.props.navigation.goBack()
+                  : undefined
+              }
             >
               {this.props.allowGoBack && (
                 <IconFont
@@ -211,14 +224,7 @@ export class WalletLayout extends React.Component<Props> {
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
-            <Button
-              block={true}
-              onPress={() =>
-                this.props.navigation.navigate(
-                  ROUTES.WALLET_QRCODE_ACQUISITION_BY_SCANNER
-                )
-              }
-            >
+            <Button block={true} onPress={() => this.props.startPayment()}>
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
@@ -228,3 +234,12 @@ export class WalletLayout extends React.Component<Props> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  startPayment: () => dispatch(paymentRequestQrCode())
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(WalletLayout);

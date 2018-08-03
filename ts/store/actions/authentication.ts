@@ -14,10 +14,12 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
+  SESSION_INVALID,
   SESSION_LOAD_FAILURE,
   SESSION_LOAD_REQUEST,
   SESSION_LOAD_SUCCESS,
-  START_AUTHENTICATION
+  START_AUTHENTICATION,
+  WALLET_TOKEN_LOAD_SUCCESS
 } from "./constants";
 
 // Actions
@@ -77,6 +79,14 @@ export type SessionExpired = Readonly<{
   type: typeof SESSION_EXPIRED;
 }>;
 
+export type SessionInvalid = Readonly<{
+  type: typeof SESSION_INVALID;
+}>;
+
+export type WalletTokenLoadSuccess = Readonly<{
+  type: typeof WALLET_TOKEN_LOAD_SUCCESS;
+}>;
+
 export type AuthenticationActions =
   | StartAuthentication
   | IdpSelected
@@ -89,7 +99,9 @@ export type AuthenticationActions =
   | SessionLoadRequest
   | SessionLoadSuccess
   | SessionLoadFailure
-  | SessionExpired;
+  | SessionExpired
+  | SessionInvalid
+  | WalletTokenLoadSuccess;
 
 // Creators
 
@@ -148,4 +160,12 @@ export const sessionLoadFailure = (error: Error): SessionLoadFailure => ({
 
 export const sessionExpired = (): SessionExpired => ({
   type: SESSION_EXPIRED
+});
+
+export const sessionInvalid = (): SessionInvalid => ({
+  type: SESSION_INVALID
+});
+
+export const walletTokenLoadSuccess = (): WalletTokenLoadSuccess => ({
+  type: WALLET_TOKEN_LOAD_SUCCESS
 });
