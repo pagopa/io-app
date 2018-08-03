@@ -68,6 +68,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
 
   private browseToLink() {
     const url = "https://www.spid.gov.it";
+    // tslint:disable no-floating-promises
     Linking.openURL(url);
   }
 
