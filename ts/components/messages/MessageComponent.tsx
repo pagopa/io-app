@@ -21,6 +21,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { formatPaymentAmount } from "../../utils/payment";
 import { paymentRequestTransactionSummaryFromRptId } from "../../store/actions/wallet/payment";
+import { ReduxProps } from "../../store/actions/types";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
@@ -33,7 +34,10 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = OwnProps & ReduxInjectedProps & NavigationInjectedProps;
+export type Props = OwnProps &
+  ReduxProps &
+  ReduxInjectedProps &
+  NavigationInjectedProps;
 
 /**
  * Implements a component that show a message in the MessagesScreen List
@@ -88,7 +92,7 @@ class MessageComponent extends React.Component<Props> {
             block={true}
             small={true}
             onPress={() => {
-              this.props.navigation.dispatch(
+              this.props.dispatch(
                 paymentRequestTransactionSummaryFromRptId(
                   rptId,
                   payment_data.amount
