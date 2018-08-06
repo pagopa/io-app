@@ -245,6 +245,7 @@ export function* watchLogoutRequest(): IterableIterator<Effect> {
      */
     if (needLogout) {
       yield put(logoutSuccess());
+      yield put(startAuthentication());
     }
   }
 }
