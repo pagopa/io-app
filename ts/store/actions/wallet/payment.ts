@@ -1,11 +1,16 @@
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Psp } from "../../../types/pagopa";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_GO_BACK,
+  PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_INITIAL_PICK_PAYMENT_METHOD,
+  PAYMENT_INITIAL_PICK_PSP,
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
+  PAYMENT_PICK_PSP,
   PAYMENT_QR_CODE,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
@@ -13,10 +18,13 @@ import {
   PAYMENT_REQUEST_GO_BACK,
   PAYMENT_REQUEST_MANUAL_ENTRY,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
+  PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
-  PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
+  PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID,
+  PAYMENT_UPDATE_PSP,
+  PAYMENT_UPDATE_PSP_IN_STATE
 } from "../constants";
 
 export type PaymentRequestQrCode = Readonly<{
@@ -86,14 +94,31 @@ export type PaymentPickPaymentMethod = Readonly<{
   type: typeof PAYMENT_PICK_PAYMENT_METHOD;
 }>;
 
+export type PaymentInitialPickPaymentMethod = Readonly<{
+  type: typeof PAYMENT_INITIAL_PICK_PAYMENT_METHOD;
+  payload: string; // paymentId
+}>;
+
 export type PaymentRequestConfirmPaymentMethod = Readonly<{
   type: typeof PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD;
-  payload: number; // selected card id
+  payload: number; // selected wallet id
 }>;
 
 export type PaymentConfirmPaymentMethod = Readonly<{
   type: typeof PAYMENT_CONFIRM_PAYMENT_METHOD;
-  payload: number; // selected card id
+  payload: {
+    selectedPaymentMethod: number; // selected wallet id
+    pspList: ReadonlyArray<Psp>; // list of available PSPs
+  };
+}>;
+
+export type PaymentInitialConfirmPaymentMethod = Readonly<{
+  type: typeof PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD;
+  payload: {
+    selectedPaymentMethod: number; // selected wallet id
+    paymentId: string;
+    pspList: ReadonlyArray<Psp>; // list of available PSPs
+  };
 }>;
 
 export type PaymentRequestCompletion = Readonly<{
@@ -102,6 +127,44 @@ export type PaymentRequestCompletion = Readonly<{
 
 export type PaymentCompleted = Readonly<{
   type: typeof PAYMENT_COMPLETED;
+}>;
+
+// action for showing the psp list screen
+export type PaymentRequestPickPsp = Readonly<{
+  type: typeof PAYMENT_REQUEST_PICK_PSP;
+}>;
+
+// action for updating the redux state
+// as required by the psp list screen
+export type PaymentPickPsp = Readonly<{
+  type: typeof PAYMENT_PICK_PSP;
+  payload: {
+    selectedPaymentMethod: number; // selected wallet id
+    pspList: ReadonlyArray<Psp>; // list of available PSPs
+  };
+}>;
+
+// action for selecting a PSP
+export type PaymentUpdatePsp = Readonly<{
+  type: typeof PAYMENT_UPDATE_PSP;
+  payload: number; // pspId
+}>;
+
+// TODO: temporary action until integration with pagoPA occurs
+// @https://www.pivotaltracker.com/story/show/159494746
+export type PaymentUpdatePspInState = Readonly<{
+  type: typeof PAYMENT_UPDATE_PSP_IN_STATE;
+  walletId: number;
+  payload: Psp; // pspId
+}>;
+
+export type PaymentInitialPickPsp = Readonly<{
+  type: typeof PAYMENT_INITIAL_PICK_PSP;
+  payload: {
+    selectedPaymentMethod: number; // selected wallet id
+    paymentId: string;
+    pspList: ReadonlyArray<Psp>; // list of available PSPs
+  };
 }>;
 
 export type PaymentGoBack = Readonly<{
@@ -125,8 +188,15 @@ export type PaymentActions =
   | PaymentRequestContinueWithPaymentMethods
   | PaymentRequestPickPaymentMethod
   | PaymentPickPaymentMethod
+  | PaymentInitialPickPaymentMethod
   | PaymentRequestConfirmPaymentMethod
   | PaymentConfirmPaymentMethod
+  | PaymentInitialConfirmPaymentMethod
+  | PaymentRequestPickPsp
+  | PaymentPickPsp
+  | PaymentInitialPickPsp
+  | PaymentUpdatePsp
+  | PaymentUpdatePspInState // TODO: temporary, until integration with pagoPA occurs @https://www.pivotaltracker.com/story/show/159494746
   | PaymentRequestCompletion
   | PaymentCompleted
   | PaymentGoBack
@@ -187,6 +257,13 @@ export const paymentPickPaymentMethod = (): PaymentPickPaymentMethod => ({
   type: PAYMENT_PICK_PAYMENT_METHOD
 });
 
+export const paymentInitialPickPaymentMethod = (
+  paymentId: string
+): PaymentInitialPickPaymentMethod => ({
+  type: PAYMENT_INITIAL_PICK_PAYMENT_METHOD,
+  payload: paymentId
+});
+
 export const paymentRequestConfirmPaymentMethod = (
   walletId: number
 ): PaymentRequestConfirmPaymentMethod => ({
@@ -195,10 +272,46 @@ export const paymentRequestConfirmPaymentMethod = (
 });
 
 export const paymentConfirmPaymentMethod = (
-  walletId: number
+  walletId: number,
+  pspList: ReadonlyArray<Psp>
 ): PaymentConfirmPaymentMethod => ({
   type: PAYMENT_CONFIRM_PAYMENT_METHOD,
-  payload: walletId
+  payload: { selectedPaymentMethod: walletId, pspList }
+});
+
+export const paymentInitialConfirmPaymentMethod = (
+  walletId: number,
+  pspList: ReadonlyArray<Psp>,
+  paymentId: string
+): PaymentInitialConfirmPaymentMethod => ({
+  type: PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD,
+  payload: { selectedPaymentMethod: walletId, pspList, paymentId }
+});
+
+export const paymentRequestPickPsp = (): PaymentRequestPickPsp => ({
+  type: PAYMENT_REQUEST_PICK_PSP
+});
+
+export const paymentInitialPickPsp = (
+  walletId: number,
+  pspList: ReadonlyArray<Psp>,
+  paymentId: string
+): PaymentInitialPickPsp => ({
+  type: PAYMENT_INITIAL_PICK_PSP,
+  payload: { selectedPaymentMethod: walletId, pspList, paymentId }
+});
+
+export const paymentPickPsp = (
+  walletId: number,
+  pspList: ReadonlyArray<Psp>
+): PaymentPickPsp => ({
+  type: PAYMENT_PICK_PSP,
+  payload: { selectedPaymentMethod: walletId, pspList }
+});
+
+export const paymentUpdatePsp = (pspId: number): PaymentUpdatePsp => ({
+  type: PAYMENT_UPDATE_PSP,
+  payload: pspId
 });
 
 export const paymentRequestCompletion = (): PaymentRequestCompletion => ({

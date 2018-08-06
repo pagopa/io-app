@@ -6,14 +6,18 @@ import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Wallet } from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_GO_BACK,
+  PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_INITIAL_PICK_PAYMENT_METHOD,
+  PAYMENT_INITIAL_PICK_PSP,
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
+  PAYMENT_PICK_PSP,
   PAYMENT_QR_CODE,
   PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
   PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
@@ -22,6 +26,7 @@ import { Action } from "../../actions/types";
 import { IndexedById } from "../../helpers/indexer";
 import {
   GlobalState,
+  GlobalStateWithPaymentId,
   GlobalStateWithSelectedPaymentMethod,
   GlobalStateWithVerificaResponse
 } from "../types";
@@ -50,11 +55,23 @@ export type PaymentStateSummary = Readonly<{
   initialAmount: AmountInEuroCents;
 }>;
 
+// state for showing the summary when the "attiva"
+// operation has already been carried out (so the
+// paymentId is already available)
+export type PaymentStateSummaryWithPaymentId = Readonly<{
+  kind: "PaymentStateSummaryWithPaymentId";
+  rptId: RptId;
+  verificaResponse: PaymentRequestsGetResponse;
+  initialAmount: AmountInEuroCents;
+  paymentId: string;
+}>;
+
 export type PaymentStatePickPaymentMethod = Readonly<{
   kind: "PaymentStatePickPaymentMethod";
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
+  paymentId: string;
 }>;
 
 export type PaymentStateConfirmPaymentMethod = Readonly<{
@@ -63,6 +80,18 @@ export type PaymentStateConfirmPaymentMethod = Readonly<{
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
   selectedPaymentMethod: number;
+  pspList: ReadonlyArray<Psp>;
+  paymentId: string;
+}>;
+
+export type PaymentStatePickPsp = Readonly<{
+  kind: "PaymentStatePickPsp";
+  rptId: RptId;
+  verificaResponse: PaymentRequestsGetResponse;
+  initialAmount: AmountInEuroCents;
+  selectedPaymentMethod: number;
+  pspList: ReadonlyArray<Psp>;
+  paymentId: string;
 }>;
 
 // Allowed states
@@ -71,8 +100,10 @@ export type PaymentStates =
   | PaymentStateQrCode
   | PaymentStateManualEntry
   | PaymentStateSummary
+  | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
-  | PaymentStateConfirmPaymentMethod;
+  | PaymentStateConfirmPaymentMethod
+  | PaymentStatePickPsp;
 
 export type PaymentState = Readonly<{
   stack: ReadonlyArray<PaymentStates>;
@@ -86,8 +117,10 @@ export const PAYMENT_INITIAL_STATE: PaymentState = {
 // "verifica" response
 export type PaymentStatesWithVerificaResponse =
   | PaymentStateSummary
+  | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
-  | PaymentStateConfirmPaymentMethod;
+  | PaymentStateConfirmPaymentMethod
+  | PaymentStatePickPsp;
 
 export type PaymentStateWithVerificaResponse = Readonly<{
   stack: ReadonlyArray<PaymentStatesWithVerificaResponse>;
@@ -98,8 +131,10 @@ export const isPaymentStateWithVerificaResponse = (
   state: PaymentState
 ): state is PaymentStateWithVerificaResponse =>
   state.stack[0].kind === "PaymentStateSummary" ||
+  state.stack[0].kind === "PaymentStateSummaryWithPaymentId" ||
   state.stack[0].kind === "PaymentStatePickPaymentMethod" ||
-  state.stack[0].kind === "PaymentStateConfirmPaymentMethod";
+  state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
+  state.stack[0].kind === "PaymentStatePickPsp";
 
 // type guard for *GlobalState*WithVerificaResponse
 export const isGlobalStateWithVerificaResponse = (
@@ -107,9 +142,36 @@ export const isGlobalStateWithVerificaResponse = (
 ): state is GlobalStateWithVerificaResponse =>
   isPaymentStateWithVerificaResponse(state.wallet.payment);
 
+export type PaymentStatesWithPaymentId =
+  | PaymentStateSummaryWithPaymentId
+  | PaymentStatePickPaymentMethod
+  | PaymentStateConfirmPaymentMethod
+  | PaymentStatePickPsp;
+
+export type PaymentStateWithPaymentId = Readonly<{
+  stack: ReadonlyArray<PaymentStatesWithPaymentId>;
+}>;
+
+// type guard for *PaymentState*WithVerificaResponse
+export const isPaymentStateWithPaymentId = (
+  state: PaymentState
+): state is PaymentStateWithPaymentId =>
+  state.stack[0].kind === "PaymentStateSummaryWithPaymentId" ||
+  state.stack[0].kind === "PaymentStatePickPaymentMethod" ||
+  state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
+  state.stack[0].kind === "PaymentStatePickPsp";
+
+// type guard for *GlobalState*WithPaymentId
+export const isGlobalStateWithPaymentId = (
+  state: GlobalState
+): state is GlobalStateWithPaymentId =>
+  isPaymentStateWithPaymentId(state.wallet.payment);
+
 // list of states that have a
 // selected payment method
-export type PaymentStatesWithSelectedPaymentMethod = PaymentStateConfirmPaymentMethod;
+export type PaymentStatesWithSelectedPaymentMethod =
+  | PaymentStateConfirmPaymentMethod
+  | PaymentStatePickPsp;
 
 export type PaymentStateWithSelectedPaymentMethod = Readonly<{
   stack: ReadonlyArray<PaymentStatesWithSelectedPaymentMethod>;
@@ -119,7 +181,8 @@ export type PaymentStateWithSelectedPaymentMethod = Readonly<{
 export const isPaymentStateWithSelectedPaymentMethod = (
   state: PaymentState
 ): state is PaymentStateWithSelectedPaymentMethod =>
-  state.stack[0].kind === "PaymentStateConfirmPaymentMethod";
+  state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
+  state.stack[0].kind === "PaymentStatePickPsp";
 
 // type guard for *GlobalState*WithSelectedPaymentMethod
 export const isGlobalStateWithSelectedPaymentMethod = (
@@ -168,6 +231,10 @@ export const getPaymentReason = (
     state.wallet.payment.stack[0].verificaResponse.causaleVersamento
   );
 
+export const getPspList = (
+  state: GlobalStateWithSelectedPaymentMethod
+): ReadonlyArray<Psp> => state.wallet.payment.stack[0].pspList;
+
 export const selectedPaymentMethodSelector: (
   state: GlobalStateWithSelectedPaymentMethod
 ) => Wallet = createSelector(
@@ -190,11 +257,11 @@ export const isInAllowedOrigins = (
 
 export const popUntil = (
   stack: ReadonlyArray<PaymentStates>,
-  until: string
+  until: ReadonlyArray<string>
 ): ReadonlyArray<PaymentStates> =>
   stack.reduce(
     (a: ReadonlyArray<PaymentStates>, b: PaymentStates) =>
-      a.length > 0 || b.kind === until ? a.concat([b]) : [],
+      a.length > 0 || until.some(u => u === b.kind) ? a.concat([b]) : [],
     []
   );
 
@@ -209,27 +276,30 @@ export const popUntil = (
 export const popToStateAndPush = (
   stack: ReadonlyArray<PaymentStates>,
   state: PaymentStates,
-  until: string
+  until: ReadonlyArray<string>
 ) =>
   [state].concat(
-    stack.some(s => s.kind === until) ? popUntil(stack, until).slice(1) : stack
+    stack.some(s => until.some(u => u === s.kind))
+      ? popUntil(stack, until).slice(1)
+      : stack
   );
 
-export const reducer = (
+type PaymentReducer = (state: PaymentState, action: Action) => PaymentState;
+/**
+ * Reducer for actions for entering data (qr code, manual entry)
+ */
+const dataEntryReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
-): PaymentState => {
-  if (
-    action.type === PAYMENT_QR_CODE &&
-    isInAllowedOrigins(state, ["none", "PaymentStateManualEntry"])
-  ) {
+) => {
+  if (action.type === PAYMENT_QR_CODE && isInAllowedOrigins(state, ["none"])) {
     return {
       stack: popToStateAndPush(
         state.stack,
         {
           kind: "PaymentStateQrCode"
         },
-        "PaymentStateQrCode"
+        ["PaymentStateQrCode"]
       )
     };
   }
@@ -243,10 +313,20 @@ export const reducer = (
         {
           kind: "PaymentStateManualEntry"
         },
-        "PaymentStateManualEntry"
+        ["PaymentStateManualEntry"]
       )
     };
   }
+  return state;
+};
+
+/**
+ * Reducer for actions that show the payment summary
+ */
+const summaryReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
   if (
     action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID &&
     isInAllowedOrigins(state, ["PaymentStateQrCode", "PaymentStateManualEntry"])
@@ -260,7 +340,7 @@ export const reducer = (
           kind: "PaymentStateSummary",
           ...action.payload // rptId, verificaResponse, initialAmount
         },
-        "PaymentStateSummary"
+        ["PaymentStateSummary"]
       )
     };
   }
@@ -268,58 +348,102 @@ export const reducer = (
     action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER &&
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
-      "PaymentStateConfirmPaymentMethod"
-    ])
+      "PaymentStateConfirmPaymentMethod",
+      "PaymentStatePickPsp"
+    ]) &&
+    isPaymentStateWithPaymentId(state)
   ) {
     // payment summary being requested from tapping on the "payment banner"
     // in one of the subsequent screens
+    const prevState = state.stack[0];
 
     return {
       // pop states until a valid one is reached
-      stack: popUntil(state.stack, "PaymentStateSummary")
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          kind: "PaymentStateSummaryWithPaymentId",
+          rptId: prevState.rptId,
+          verificaResponse: prevState.verificaResponse,
+          initialAmount: prevState.initialAmount,
+          paymentId: prevState.paymentId
+        },
+        ["PaymentStateSummaryWithPaymentId", "PaymentStateSummary"]
+      )
+    };
+  }
+  return state;
+};
+
+/**
+ * Reducer for actions that show the list of payment methods
+ */
+const pickMethodReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
+  if (
+    action.type === PAYMENT_INITIAL_PICK_PAYMENT_METHOD &&
+    isInAllowedOrigins(state, [
+      "PaymentStateSummary"
+      // "PaymentStateSummaryWithPaymentId",
+      // "PaymentStateConfirmPaymentMethod"
+    ]) &&
+    isPaymentStateWithVerificaResponse(state)
+  ) {
+    // comes from the initial payment summary, so the
+    // action will contain a paymentId to be stored
+    const prevState = state.stack[0];
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          rptId: prevState.rptId,
+          verificaResponse: prevState.verificaResponse,
+          initialAmount: prevState.initialAmount,
+          paymentId: action.payload,
+          kind: "PaymentStatePickPaymentMethod"
+        },
+        ["PaymentStatePickPaymentMethod"]
+      )
     };
   }
   if (
     action.type === PAYMENT_PICK_PAYMENT_METHOD &&
     isInAllowedOrigins(state, [
-      "PaymentStateSummary",
+      "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod"
-    ])
-  ) {
-    const prevState = state.stack[0]; // guaranteed to have 1+ elements (from isInAllowedOrigins)
-    if (prevState.kind === "PaymentStateSummary") {
-      return {
-        stack: popToStateAndPush(
-          state.stack,
-          {
-            ...prevState,
-            kind: "PaymentStatePickPaymentMethod"
-          },
-          "PaymentStatePickPaymentMethod"
-        )
-      };
-    } else if (prevState.kind === "PaymentStateConfirmPaymentMethod") {
-      // if it's coming from an already-selected-payment-method state,
-      // drop the selected method
-      const { selectedPaymentMethod, ...rest } = prevState;
-      return {
-        stack: popToStateAndPush(
-          state.stack,
-          {
-            ...rest,
-            kind: "PaymentStatePickPaymentMethod"
-          },
-          "PaymentStatePickPaymentMethod"
-        )
-      };
-    }
-  }
-  if (
-    action.type === PAYMENT_CONFIRM_PAYMENT_METHOD &&
-    isInAllowedOrigins(state, [
-      "PaymentStatePickPaymentMethod",
-      "PaymentStateSummary"
     ]) &&
+    isPaymentStateWithPaymentId(state)
+  ) {
+    const prevState = state.stack[0];
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          kind: "PaymentStatePickPaymentMethod",
+          rptId: prevState.rptId,
+          verificaResponse: prevState.verificaResponse,
+          initialAmount: prevState.initialAmount,
+          paymentId: prevState.paymentId
+        },
+        ["PaymentStatePickPaymentMethod"]
+      )
+    };
+  }
+  return state;
+};
+
+/**
+ * Reducer for actions that select a payment method
+ */
+const confirmMethodReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
+  if (
+    action.type === PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD &&
+    isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
     return {
@@ -327,13 +451,133 @@ export const reducer = (
         state.stack,
         {
           ...state.stack[0],
-          kind: "PaymentStateConfirmPaymentMethod",
-          selectedPaymentMethod: action.payload
+          ...action.payload,
+          kind: "PaymentStateConfirmPaymentMethod"
         },
-        "PaymentStateConfirmPaymentMethod"
+        ["PaymentStateConfirmPaymentMethod"]
       )
     };
   }
+  if (
+    action.type === PAYMENT_CONFIRM_PAYMENT_METHOD &&
+    isInAllowedOrigins(state, [
+      "PaymentStatePickPaymentMethod",
+      "PaymentStateSummaryWithPaymentId",
+      "PaymentStatePickPsp"
+    ]) &&
+    isPaymentStateWithPaymentId(state)
+  ) {
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          ...state.stack[0],
+          ...action.payload,
+          kind: "PaymentStateConfirmPaymentMethod"
+        },
+        ["PaymentStateConfirmPaymentMethod"]
+      )
+    };
+  }
+  return state;
+};
+
+/**
+ * Reducer for actions that show a list of PSPs available
+ */
+const pickPspReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
+  if (
+    action.type === PAYMENT_INITIAL_PICK_PSP &&
+    isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
+    isPaymentStateWithVerificaResponse(state)
+  ) {
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          ...state.stack[0],
+          ...action.payload,
+          kind: "PaymentStatePickPsp"
+        },
+        ["PaymentStatePickPsp"]
+      )
+    };
+  }
+  if (
+    action.type === PAYMENT_PICK_PSP &&
+    isInAllowedOrigins(state, [
+      "PaymentStateSummaryWithPaymentId",
+      "PaymentStateConfirmPaymentMethod",
+      "PaymentStatePickPaymentMethod"
+    ]) &&
+    isPaymentStateWithPaymentId(state)
+  ) {
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          ...state.stack[0],
+          ...action.payload,
+          kind: "PaymentStatePickPsp"
+        },
+        ["PaymentStatePickPsp"]
+      )
+    };
+  }
+  return state;
+};
+
+/**
+ * Reducer for going back in the stack of payment steps
+ */
+const goBackReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
+  if (action.type === PAYMENT_GO_BACK) {
+    // if going back means going to the "initial" summary screen
+    // (i.e. where the "attiva" is done and the payment id is fetched,
+    // return to a state that also has the payment Id
+
+    // pop 1 step
+    // ([].slice(1) -> [])
+    const newStack = state.stack.slice(1);
+    if (
+      newStack.length > 0 &&
+      isPaymentStateWithPaymentId(state) &&
+      newStack[0].kind === "PaymentStateSummary"
+    ) {
+      const prevState = state.stack[0];
+
+      return {
+        stack: ([
+          {
+            kind: "PaymentStateSummaryWithPaymentId",
+            verificaResponse: prevState.verificaResponse,
+            rptId: prevState.rptId,
+            paymentId: prevState.paymentId,
+            initialAmount: prevState.initialAmount
+          }
+        ] as ReadonlyArray<PaymentStates>).concat(newStack.slice(1))
+      };
+    }
+    return {
+      stack: newStack
+    };
+  }
+  return state;
+};
+
+/**
+ * Reducer for actions that terminate a payment
+ */
+const endPaymentReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
   if (
     action.type === PAYMENT_COMPLETED &&
     isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"])
@@ -342,14 +586,26 @@ export const reducer = (
       stack: [] // cleaning up
     };
   }
-  if (action.type === PAYMENT_GO_BACK) {
-    // pop 1 step
-    // ([].slice(1) -> [])
-    return {
-      stack: state.stack.slice(1)
-    };
-  }
   return state;
+};
+
+const reducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+): PaymentState => {
+  const reducers: ReadonlyArray<PaymentReducer> = [
+    dataEntryReducer,
+    summaryReducer,
+    pickMethodReducer,
+    confirmMethodReducer,
+    pickPspReducer,
+    goBackReducer,
+    endPaymentReducer
+  ];
+  return reducers.reduce(
+    (s: PaymentState, r: PaymentReducer) => r(s, action),
+    state
+  );
 };
 
 export default reducer;

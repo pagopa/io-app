@@ -18,6 +18,7 @@ import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import {
   WalletState,
+  WalletStateWithPaymentId,
   WalletStateWithSelectedPaymentMethod,
   WalletStateWithVerificaResponse
 } from "./wallet";
@@ -69,6 +70,18 @@ export type GlobalStateWithSelectedPaymentMethod = {
 } &
   Readonly<{
     wallet: WalletStateWithSelectedPaymentMethod;
+  }>;
+
+/**
+ * This represents a GlobalState where the Wallet state
+ * is guaranteed to store a payment for which the payment
+ * id has been fetched (+ verifica response)
+ */
+export type GlobalStateWithPaymentId = {
+  [T in Exclude<keyof GlobalState, "wallet">]: GlobalState[T]
+} &
+  Readonly<{
+    wallet: WalletStateWithPaymentId;
   }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
