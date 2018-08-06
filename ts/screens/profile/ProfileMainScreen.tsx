@@ -46,7 +46,10 @@ export class ProfileMainScreen extends React.Component<Props, never> {
         <Content>
           <Grid>
             {/* Logout/Exit */}
-            <Row style={styles.gridRow}>
+            <Row
+              style={styles.gridRow}
+              onPress={() => this.props.dispatch(logoutRequest())}
+            >
               <Col size={10}>
                 <H3>{I18n.t("profile.main.logout")}</H3>
               </Col>
@@ -54,12 +57,14 @@ export class ProfileMainScreen extends React.Component<Props, never> {
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
-                  onPress={() => this.props.dispatch(logoutRequest())}
                 />
               </Col>
             </Row>
             {/* Reset PIN */}
-            <Row style={styles.gridRow}>
+            <Row
+              style={styles.gridRow}
+              onPress={() => this.props.dispatch(startPinReset())}
+            >
               <Col size={10}>
                 <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
                 <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
@@ -68,7 +73,6 @@ export class ProfileMainScreen extends React.Component<Props, never> {
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
-                  onPress={() => this.props.dispatch(startPinReset())}
                 />
               </Col>
             </Row>
