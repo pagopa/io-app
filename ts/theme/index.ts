@@ -26,6 +26,7 @@ import tabContainerTheme from "./components/TabContainer";
 import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
+import topScreenComponentTheme from "./components/TopScreenComponent";
 import viewTheme from "./components/View";
 import { Theme } from "./types";
 import variables from "./variables";
@@ -98,6 +99,9 @@ const theme = (): Theme => {
     },
     "NativeBase.ListItem": {
       ...listItemTheme()
+    },
+    "UIComponent.TopScreenComponent": {
+      ...topScreenComponentTheme()
     }
   };
 
