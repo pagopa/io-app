@@ -50,7 +50,7 @@ export function getAmountFromPaymentAmount(
 ): Option<AmountInEuroCents> {
   // PaymentAmount is in EURO cents but AmountInEuroCentsFromNumber expects
   // the amount to be in EUROs, thus we must divide by 100
-  return fromEither(AmountInEuroCentsFromNumber.decode(paymentAmount / 100));
+  return fromEither(AmountInEuroCentsFromNumber.decode(paymentAmount / 100.0));
 }
 
 /**
@@ -69,9 +69,7 @@ export function getRptIdAndAmountFromMessage(
           service.organization_fiscal_code,
           paymentData.notice_number
         ).chain(rptId => {
-          console.log(rptId);
           return getAmountFromPaymentAmount(paymentData.amount).map(amount => {
-            console.log(amount);
             return Tuple2(rptId, amount);
           });
         });

@@ -16,7 +16,10 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
 import { ReduxProps } from "../../store/actions/types";
-import { paymentRequestTransactionSummaryFromRptId } from "../../store/actions/wallet/payment";
+import {
+  paymentRequestMessage,
+  paymentRequestTransactionSummaryFromRptId
+} from "../../store/actions/wallet/payment";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 
@@ -68,11 +71,12 @@ class MessageComponent extends React.Component<Props> {
     // dispatchPaymentAction, if defined, will begin the payment flow
     // related to the payment data contained in this message
     const dispatchPaymentAction: (() => void) | undefined = rptIdAndAmount
-      .map(_ => () =>
+      .map(_ => () => {
+        this.props.dispatch(paymentRequestMessage());
         this.props.dispatch(
           paymentRequestTransactionSummaryFromRptId(_.e1, _.e2)
-        )
-      )
+        );
+      })
       .toUndefined();
 
     const handleOnPress = () => {
