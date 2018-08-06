@@ -8,7 +8,7 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import MarkdownScreen from "../screens/authentication/MarkdownScreen";
-import SpidInformationRequestScreen from "../screens/authentication/SpidInformationRequestScreen";
+import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import ROUTES from "./routes";
 
 // Routes loaded in production mode
@@ -22,8 +22,8 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
   },
-  [ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST]: {
-    screen: SpidInformationRequestScreen
+  [ROUTES.AUTHENTICATION_SPID_INFORMATION]: {
+    screen: SpidInformationScreen
   },
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
