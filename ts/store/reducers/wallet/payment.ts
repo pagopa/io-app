@@ -249,7 +249,11 @@ export const reducer = (
   }
   if (
     action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID &&
-    isInAllowedOrigins(state, ["PaymentStateQrCode", "PaymentStateManualEntry"])
+    isInAllowedOrigins(state, [
+      "PaymentStateQrCode",
+      "PaymentStateManualEntry",
+      "none"
+    ])
   ) {
     // the summary screen is being requested following
     // a QR code scan/manual entry/message with payment notice

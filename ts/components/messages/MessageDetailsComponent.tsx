@@ -23,6 +23,7 @@ import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 export type OwnProps = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
+  dispatchPaymentAction: (() => void) | undefined;
 }>;
 
 type State = Readonly<{
@@ -86,10 +87,13 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   };
 
   // Render the Message CTAs if the message contains PaymentData
-  private renderMessageCTA = (paymentData: PaymentData) => {
+  private renderMessageCTA = (
+    paymentData: PaymentData,
+    dispatchPaymentAction: (() => void) | undefined
+  ) => {
     return paymentData ? (
       <View style={styles.messageCTAContainer}>
-        <Button block={true} primary={true}>
+        <Button block={true} primary={true} onPress={dispatchPaymentAction}>
           <Text>
             {I18n.t("messages.cta.pay", {
               amount: formatPaymentAmount(paymentData.amount)
@@ -103,6 +107,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   public render() {
     const message = this.props.message;
     const senderService = this.props.senderService;
+    const dispatchPaymentAction = this.props.dispatchPaymentAction;
     const { subject, markdown, payment_data } = message;
     return (
       <View>
@@ -125,7 +130,9 @@ class MessageDetailsComponent extends React.Component<Props, State> {
             />
           )}
         </View>
-        {payment_data && this.renderMessageCTA(payment_data)}
+        {payment_data &&
+          dispatchPaymentAction &&
+          this.renderMessageCTA(payment_data, dispatchPaymentAction)}
         <View style={styles.messageContentContainer}>
           <Markdown>{markdown}</Markdown>
         </View>

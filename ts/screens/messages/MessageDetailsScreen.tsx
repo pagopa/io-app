@@ -18,9 +18,10 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
-type ParamType = Readonly<{
+export type ParamType = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
+  dispatchPaymentAction: (() => void) | undefined;
 }>;
 
 interface StateParams extends NavigationState {
@@ -58,6 +59,9 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
           <MessageDetailsComponent
             message={this.props.navigation.state.params.message}
             senderService={this.props.navigation.state.params.senderService}
+            dispatchPaymentAction={
+              this.props.navigation.state.params.dispatchPaymentAction
+            }
           />
         </Content>
       </Container>
