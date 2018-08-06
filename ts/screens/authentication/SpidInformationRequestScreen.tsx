@@ -15,6 +15,7 @@ import { isValid } from "redux-form";
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from "../../components/forms/SpidInformationForm";
+import TermOfUse from "../../components/helpers/TermOfUse";
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
@@ -109,6 +110,6 @@ export default connect(mapStateToProps)(
   withContextualHelp(
     SpidInformationRequestScreen,
     I18n.t("personal_data_processing.title"),
-    I18n.t("personal_data_processing.content")
+    <TermOfUse />
   )
 );
