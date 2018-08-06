@@ -5,9 +5,9 @@ import { Button, Icon, Left, ListItem, Right, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import {
+  NavigationInjectedProps,
   NavigationScreenProp,
-  NavigationState,
-  NavigationInjectedProps
+  NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -15,15 +15,20 @@ import I18n from "../../i18n";
 
 import ROUTES from "../../navigation/routes";
 
+import { ReduxProps } from "../../store/actions/types";
+import { paymentRequestTransactionSummaryFromRptId } from "../../store/actions/wallet/payment";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { formatPaymentAmount, getRptIdAndAmountFromMessage } from "../../utils/payment";
-import { paymentRequestTransactionSummaryFromRptId } from "../../store/actions/wallet/payment";
-import { ReduxProps } from "../../store/actions/types";
+import {
+  formatPaymentAmount,
+  getRptIdAndAmountFromMessage
+} from "../../utils/payment";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+
+import { ParamType as MessageDetailsScreenParam } from "../../screens/messages/MessageDetailsScreen";
 
 interface ReduxInjectedProps {
   serviceByIdMap: ServicesByIdState;
@@ -44,20 +49,37 @@ export type Props = OwnProps &
  */
 class MessageComponent extends React.Component<Props> {
   public render() {
+    const message = this.props.message;
     const {
       id,
       subject,
       created_at,
       payment_data,
       sender_service_id
-    } = this.props.message;
+    } = message;
 
     const senderService = this.props.serviceByIdMap[sender_service_id];
 
+    const rptIdAndAmount = getRptIdAndAmountFromMessage(
+      this.props.serviceByIdMap,
+      message
+    );
+
+    // dispatchPaymentAction, if defined, will begin the payment flow
+    // related to the payment data contained in this message
+    const dispatchPaymentAction: (() => void) | undefined = rptIdAndAmount
+      .map(_ => () =>
+        this.props.dispatch(
+          paymentRequestTransactionSummaryFromRptId(_.e1, _.e2)
+        )
+      )
+      .toUndefined();
+
     const handleOnPress = () => {
-      const params = {
-        message: this.props.message,
-        senderService
+      const params: MessageDetailsScreenParam = {
+        message,
+        senderService,
+        dispatchPaymentAction
       };
 
       this.props.navigation.navigate(ROUTES.MESSAGE_DETAILS, params);
@@ -73,12 +95,6 @@ class MessageComponent extends React.Component<Props> {
       .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
       .getOrElse(created_at);
 
-    const dispatchPaymentAction = getRptIdAndAmountFromMessage() () => {
-      this.props.dispatch(
-        paymentRequestTransactionSummaryFromRptId(rptId, paymentData.amount)
-      );
-    };
-
     return (
       <ListItem key={id} onPress={handleOnPress}>
         <View padded={payment_data !== undefined}>
@@ -93,15 +109,16 @@ class MessageComponent extends React.Component<Props> {
             <Icon name="chevron-right" />
           </Right>
         </View>
-        {payment_data !== undefined && (
-          <Button block={true} small={true} onPress={dispatchPaymentAction}>
-            <Text>
-              {I18n.t("messages.cta.pay", {
-                amount: formatPaymentAmount(payment_data.amount)
-              })}
-            </Text>
-          </Button>
-        )}
+        {payment_data !== undefined &&
+          dispatchPaymentAction !== undefined && (
+            <Button block={true} small={true} onPress={dispatchPaymentAction}>
+              <Text>
+                {I18n.t("messages.cta.pay", {
+                  amount: formatPaymentAmount(payment_data.amount)
+                })}
+              </Text>
+            </Button>
+          )}
       </ListItem>
     );
   }

@@ -62,16 +62,20 @@ export function getRptIdAndAmountFromMessage(
   servicesById: ServicesByIdState,
   message: MessageWithContentPO
 ): Option<ITuple2<RptId, AmountInEuroCents>> {
-  return fromNullable(servicesById[message.sender_service_id]).chain(service =>
-    fromNullable(message.payment_data).chain(paymentData =>
-      getRptIdFromNoticeNumber(
-        service.organization_fiscal_code,
-        paymentData.notice_number
-      ).chain(rptId =>
-        getAmountFromPaymentAmount(paymentData.amount).map(amount =>
-          Tuple2(rptId, amount)
-        )
-      )
-    )
+  return fromNullable(servicesById[message.sender_service_id]).chain(
+    service => {
+      return fromNullable(message.payment_data).chain(paymentData => {
+        return getRptIdFromNoticeNumber(
+          service.organization_fiscal_code,
+          paymentData.notice_number
+        ).chain(rptId => {
+          console.log(rptId);
+          return getAmountFromPaymentAmount(paymentData.amount).map(amount => {
+            console.log(amount);
+            return Tuple2(rptId, amount);
+          });
+        });
+      });
+    }
   );
 }
