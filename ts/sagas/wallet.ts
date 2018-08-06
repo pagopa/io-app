@@ -37,6 +37,7 @@ import {
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
   PAYMENT_REQUEST_GO_BACK,
   PAYMENT_REQUEST_MANUAL_ENTRY,
+  PAYMENT_REQUEST_MESSAGE,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
@@ -176,6 +177,10 @@ const navigateTo = (routeName: string, params?: object) => {
 function* paymentSagaFromQrCode(): Iterator<Effect> {
   yield put(paymentQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
+  yield fork(watchPaymentSaga);
+}
+
+function* paymentSagaFromMessage(): Iterator<Effect> {
   yield fork(watchPaymentSaga);
 }
 
@@ -545,4 +550,5 @@ function* watchWalletSaga(): Iterator<Effect> {
 export default function* root(): Iterator<Effect> {
   yield fork(watchWalletSaga);
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
+  yield takeLatest(PAYMENT_REQUEST_MESSAGE, paymentSagaFromMessage);
 }

@@ -5,7 +5,7 @@
  * needed)
  */
 
-import { Content, H1, Text, View } from "native-base";
+import { Content, H1, View } from "native-base";
 import * as React from "react";
 import { TouchableHighlight } from "react-native";
 import IconFont from "../components/ui/IconFont";
@@ -13,7 +13,7 @@ import Modal from "./ui/Modal";
 
 type Props = Readonly<{
   title: string;
-  body: string;
+  body: React.ReactNode;
   isVisible: boolean;
   close: () => void;
 }>;
@@ -30,7 +30,7 @@ export class ContextualHelp extends React.Component<Props> {
         <Content>
           <H1>{this.props.title}</H1>
           <View spacer={true} large={true} />
-          <Text>{this.props.body}</Text>
+          {this.props.body}
         </Content>
       </Modal>
     );

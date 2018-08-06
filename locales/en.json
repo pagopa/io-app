@@ -104,6 +104,25 @@
       "tosLinkText": "rules on the processing of personal data",
       "continue": "Continue"
     },
+    "spid_information": {
+      "headerTitle": "What is SPID?",
+      "contentTitle": "Don't have SPID?",
+      "moreLinkText": "Learn more",
+      "subtitle": "SPID is safe",
+      "paragraph1": "SPID, the Public System of Digital Identity, allows you to access all the services of the Public Administration with a single Digital Identity (username and password).",
+      "paragraph2-part1": "SPID allows you to do online what was possible only in person: so, to register at SPID you will",
+      "paragraph2-bold": "certiify your identity",
+      "paragraph2-part2": "completing your recognition through an Identity Provider. Here what you shall do:",
+      "point1-value": "1",
+      "point1-content": " Choose your \nIdentity Provider",
+      "point2-value": "2",
+      "point2-content": " Insert your personal data and your mobile phone",
+      "point3-value": "3",
+      "point3-content": " Upload a copy of your identity papers",
+      "point4-value": "4",
+      "point4-content": " Complete the \nrecognition",
+      "knowMore": "Learn more on spid.gov.it"
+    },
     "idp_selection": {
       "headerTitle": "Home",
       "contentTitle": "Select your Identity Provider",
@@ -158,8 +177,7 @@
     }
   },
   "personal_data_processing": {
-    "title": "Rules on the processing of personal data",
-    "content": "Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.\nPellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.\nTu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur."
+
   },
   "why_a_fee": {
     "title": "Why do I have to pay a fee?",
@@ -361,7 +379,8 @@
     "yesterday": "yesterday",
     "cta": {
       "pay": "Pay € {{amount}}"
-    }
+    },
+    "unknownSender": "Unknown sender"
   },
   "messageDetails": {
     "headerTitle": "Message",

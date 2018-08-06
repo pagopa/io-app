@@ -17,6 +17,7 @@ import {
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
   PAYMENT_REQUEST_GO_BACK,
   PAYMENT_REQUEST_MANUAL_ENTRY,
+  PAYMENT_REQUEST_MESSAGE,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
@@ -41,6 +42,10 @@ export type PaymentRequestManualEntry = Readonly<{
 
 export type PaymentManualEntry = Readonly<{
   type: typeof PAYMENT_MANUAL_ENTRY;
+}>;
+
+export type PaymentRequestMessage = Readonly<{
+  type: typeof PAYMENT_REQUEST_MESSAGE;
 }>;
 
 // for the first time the screen is being shown (i.e. after the
@@ -182,6 +187,7 @@ export type PaymentActions =
   | PaymentRequestQrCode
   | PaymentQrCode
   | PaymentRequestManualEntry
+  | PaymentRequestMessage
   | PaymentManualEntry
   | PaymentRequestTransactionSummaryActions
   | PaymentTransactionSummaryActions
@@ -212,6 +218,10 @@ export const paymentQrCode = (): PaymentQrCode => ({
 
 export const paymentRequestManualEntry = (): PaymentRequestManualEntry => ({
   type: PAYMENT_REQUEST_MANUAL_ENTRY
+});
+
+export const paymentRequestMessage = (): PaymentRequestMessage => ({
+  type: PAYMENT_REQUEST_MESSAGE
 });
 
 export const paymentManualEntry = (): PaymentManualEntry => ({

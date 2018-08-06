@@ -30,9 +30,7 @@ class LandingScreen extends React.Component<Props, never> {
   }
 
   private navigateToSpidInformationRequest() {
-    this.props.navigation.navigate(
-      ROUTES.AUTHENTICATION_SPID_INFORMATION_REQUEST
-    );
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
   }
   public render() {
     return (

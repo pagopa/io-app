@@ -55,9 +55,6 @@ import { loadServiceSuccess } from "../store/actions/services";
 import { sessionTokenSelector } from "../store/reducers/authentication";
 import {
   messageByIdSelector,
-  MessageByIdState,
-  messageDetailsByIdSelector,
-  MessageDetailsByIdState,
   messagesByIdSelector,
   MessagesByIdState
 } from "../store/reducers/entities/messages/messagesById";
@@ -68,7 +65,10 @@ import {
   ServicesByIdState
 } from "../store/reducers/entities/services/servicesById";
 import { isPinLoginValidSelector } from "../store/reducers/pinlogin";
-import { toMessageWithContentPO } from "../types/MessageWithContentPO";
+import {
+  MessageWithContentPO,
+  toMessageWithContentPO
+} from "../types/MessageWithContentPO";
 import { SessionToken } from "../types/SessionToken";
 import { callApiWith401ResponseStatusHandler } from "./api";
 
@@ -111,16 +111,20 @@ function* navigateToMessageDetailsSaga(
     const messageId = action.payload;
 
     // tslint:disable-next-line:no-let
-    let message: MessageByIdState = yield select(
+    let message: MessageWithContentPO | undefined = yield select(
       messageByIdSelector(messageId)
     );
 
     if (!message) {
       try {
         yield call(loadMessage, backendClient.getMessage, messageId);
-        // tslint:disable-next-line:saga-yield-return-type
-        message = yield select(messageByIdSelector(messageId));
+        const loadedMessage: MessageWithContentPO | undefined = yield select(
+          messageByIdSelector(messageId)
+        );
+        message = loadedMessage;
       } catch (err) {
+        // FIXME: do not show alerts to user, instead show a user friendly
+        // explanation of what happened
         Alert.alert(
           "An error occured while loading message",
           JSON.stringify(err)
@@ -133,11 +137,11 @@ function* navigateToMessageDetailsSaga(
       return;
     }
 
-    const messageService: ServiceByIdState = yield select(
+    const senderService: ServiceByIdState | undefined = yield select(
       serviceByIdSelector(message.sender_service_id)
     );
 
-    if (!messageService) {
+    if (!senderService) {
       yield call(
         loadService,
         backendClient.getService,
@@ -145,12 +149,9 @@ function* navigateToMessageDetailsSaga(
       );
     }
 
-    const messageDetails: MessageDetailsByIdState = yield select(
-      messageDetailsByIdSelector(messageId)
-    );
     const navigationPayload: NavigationNavigateActionPayload = {
       routeName: ROUTES.MESSAGE_DETAILS,
-      params: { details: messageDetails }
+      params: { message, senderService }
     };
 
     const isPinValid: boolean = yield select(isPinLoginValidSelector);
