@@ -30,7 +30,7 @@ const reducer = combineReducers<MessagesState, Action>({
 // Selectors
 
 /**
- * A memoized selector that returns messages lexicallu sorted by ID.
+ * A memoized selector that returns messages lexically sorted by ID.
  */
 export const orderedMessagesSelector = createSelector(
   messagesAllIdsSelector,
