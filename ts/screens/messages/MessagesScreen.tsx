@@ -1,6 +1,11 @@
 import { Body, Container, Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, RefreshControl, RefreshControlProps } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  RefreshControlProps
+} from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -40,11 +45,6 @@ export type OwnProps = Readonly<{
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
-export type IMessageDetails = Readonly<{
-  item: Readonly<MessageWithContentPO>;
-  index: number;
-}>;
-
 /**
  * This screen show the messages to the authenticated user.
  */
@@ -67,12 +67,11 @@ class MessagesScreen extends React.Component<Props> {
     this.props.dispatch(loadMessages());
   }
 
-  public renderItem = (messageDetails: IMessageDetails) => {
+  private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
     return (
       <MessageComponent
-        id={messageDetails.item.id}
+        message={info.item}
         navigation={this.props.navigation}
-        senderServiceId={messageDetails.item.sender_service_id}
       />
     );
   };
@@ -108,7 +107,7 @@ class MessagesScreen extends React.Component<Props> {
                 scrollEnabled={true}
                 data={this.props.messages}
                 renderItem={this.renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={message => message.id}
                 refreshControl={this.refreshControl()}
               />
             </View>

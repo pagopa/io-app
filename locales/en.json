@@ -106,7 +106,7 @@
     },
     "spid_information": {
       "headerTitle": "What is SPID?",
-      "contentTitle": "Don't have SPID?",      
+      "contentTitle": "Don't have SPID?",
       "moreLinkText": "Learn more",
       "subtitle": "SPID is safe",
       "paragraph1": "SPID, the Public System of Digital Identity, allows you to access all the services of the Public Administration with a single Digital Identity (username and password).",
@@ -177,7 +177,7 @@
     }
   },
   "personal_data_processing": {
-    
+
   },
   "why_a_fee": {
     "title": "Why do I have to pay a fee?",
@@ -379,7 +379,8 @@
     "yesterday": "yesterday",
     "cta": {
       "pay": "Pay € {{amount}}"
-    }
+    },
+    "unknownSender": "Unknown sender"
   },
   "messageDetails": {
     "headerTitle": "Message",

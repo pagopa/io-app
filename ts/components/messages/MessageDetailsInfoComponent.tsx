@@ -7,13 +7,15 @@ import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
+
 import I18n from "../../i18n";
 
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+
 export type OwnProps = Readonly<{
-  serviceOrganizationName: string;
-  serviceDepartmentName: string;
-  serviceName: string;
-  createdAt: string;
+  message: MessageWithContentPO;
+  senderService: ServicePublic | undefined;
 }>;
 
 export type Props = OwnProps;
@@ -23,14 +25,11 @@ export type Props = OwnProps;
  */
 class MessageDetailsInfoComponent extends React.Component<Props> {
   public render() {
-    const {
-      createdAt,
-      serviceDepartmentName,
-      serviceOrganizationName,
-      serviceName
-    } = this.props;
+    const { created_at } = this.props.message;
 
     const localeLanguage = I18n.locale.includes("en") ? enLocale : itLocale;
+
+    const senderService = this.props.senderService;
 
     return (
       <View>
@@ -38,30 +37,36 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
           <Text bold={true}>{I18n.t("messageDetails.infoLabels.data")}</Text>
           <Text>
             {` ${capitalize(
-              format(createdAt, "dddd D ", { locale: localeLanguage })
+              format(created_at, "dddd D ", { locale: localeLanguage })
             )}${capitalize(
-              format(createdAt, "MMMM YYYY", { locale: localeLanguage })
+              format(created_at, "MMMM YYYY", { locale: localeLanguage })
             )}`}
           </Text>
         </View>
-        <View>
-          <Text bold={true}>
-            {I18n.t("messageDetails.infoLabels.senderFrom")}:
-          </Text>
-          <Text> {serviceOrganizationName}</Text>
-        </View>
-        <View>
-          <Text bold={true}>
-            {I18n.t("messageDetails.infoLabels.department")}:
-          </Text>
-          <Text> {serviceDepartmentName}</Text>
-        </View>
-        <View>
-          <Text bold={true}>
-            {I18n.t("messageDetails.infoLabels.service")}:
-          </Text>
-          <Text> {serviceName}</Text>
-        </View>
+        {senderService && (
+          <View>
+            <Text bold={true}>
+              {I18n.t("messageDetails.infoLabels.senderFrom")}:
+            </Text>
+            <Text> {senderService.organization_name}</Text>
+          </View>
+        )}
+        {senderService && (
+          <View>
+            <Text bold={true}>
+              {I18n.t("messageDetails.infoLabels.department")}:
+            </Text>
+            <Text> {senderService.department_name}</Text>
+          </View>
+        )}
+        {senderService && (
+          <View>
+            <Text bold={true}>
+              {I18n.t("messageDetails.infoLabels.service")}:
+            </Text>
+            <Text> {senderService.service_name}</Text>
+          </View>
+        )}
       </View>
     );
   }

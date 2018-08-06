@@ -4,24 +4,25 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { PaymentData } from "../../../definitions/backend/PaymentData";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
-import { formatPaymentAmount } from "../../utils/payment";
+
+import { PaymentData } from "../../../definitions/backend/PaymentData";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+
+import IconFont from "../../components/ui/IconFont";
 import Markdown from "../ui/Markdown";
+
+import variables from "../../theme/variables";
+
+import { formatPaymentAmount } from "../../utils/payment";
+
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+
 import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
 export type OwnProps = Readonly<{
-  createdAt: string;
-  id: string;
-  markdown: string;
-  paymentData: PaymentData;
-  serviceDepartmentName: string;
-  serviceName: string;
-  serviceOrganizationName: string;
-  subject: string;
-  onPaymentCTAClick: (paymentData: PaymentData) => void;
+  message: MessageWithContentPO;
+  senderService: ServicePublic | undefined;
 }>;
 
 type State = Readonly<{
@@ -88,11 +89,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   private renderMessageCTA = (paymentData: PaymentData) => {
     return paymentData ? (
       <View style={styles.messageCTAContainer}>
-        <Button
-          block={true}
-          primary={true}
-          onPress={() => this.props.onPaymentCTAClick(paymentData)}
-        >
+        <Button block={true} primary={true}>
           <Text>
             {I18n.t("messages.cta.pay", {
               amount: formatPaymentAmount(paymentData.amount)
@@ -104,15 +101,9 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   };
 
   public render() {
-    const {
-      subject,
-      markdown,
-      createdAt,
-      paymentData,
-      serviceOrganizationName,
-      serviceDepartmentName,
-      serviceName
-    } = this.props;
+    const message = this.props.message;
+    const senderService = this.props.senderService;
+    const { subject, markdown, payment_data } = message;
     return (
       <View>
         <View style={styles.messageHeaderContainer}>
@@ -129,14 +120,12 @@ class MessageDetailsComponent extends React.Component<Props, State> {
           </TouchableOpacity>
           {this.state.isMessageDetailsInfoVisible && (
             <MessageDetailsInfoComponent
-              createdAt={createdAt}
-              serviceName={serviceName}
-              serviceDepartmentName={serviceDepartmentName}
-              serviceOrganizationName={serviceOrganizationName}
+              message={message}
+              senderService={senderService}
             />
           )}
         </View>
-        {this.renderMessageCTA(paymentData)}
+        {payment_data && this.renderMessageCTA(payment_data)}
         <View style={styles.messageContentContainer}>
           <Markdown>{markdown}</Markdown>
         </View>

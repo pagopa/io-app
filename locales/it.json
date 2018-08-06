@@ -401,7 +401,8 @@
     "yesterday": "ieri",
     "cta": {
       "pay": "Paga € {{amount}}"
-    }
+    },
+    "unknownSender": "Mittente sconosciuto"
   },
   "messageDetails": {
     "headerTitle": "Messaggio",
