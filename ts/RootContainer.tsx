@@ -54,7 +54,7 @@ class RootContainer extends React.Component<Props> {
     if (Platform.OS === "android") {
       Linking.getInitialURL()
         .then(this.navigate)
-        .catch(console.error);
+        .catch(console.error); // tslint:disable-line:no-console
     } else {
       Linking.addEventListener("url", this.handleOpenURL);
     }
