@@ -27,8 +27,6 @@ import Switch from "../../components/ui/Switch";
 
 import I18n from "../../i18n";
 
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-
 import { profileUpsertRequest } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { ContentState } from "../../store/reducers/content";
@@ -42,8 +40,10 @@ import {
   getEnabledChannelsForService
 } from "./common";
 
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+
 export interface IMessageDetailsScreenParam {
-  readonly serviceId: ServiceId;
+  readonly service: ServicePublic;
 }
 
 interface INavigationStateWithParams extends NavigationState {
@@ -94,7 +94,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // We initialize the UI by making the states of the channels the same
     // as what is set in the profile. The user will be able to change the state
     // via the UI and the profile will be updated in the background accordingly.
-    const serviceId = this.props.navigation.state.params.serviceId;
+    const serviceId = this.props.navigation.state.params.service.service_id;
     this.state = {
       uiEnabledChannels: getEnabledChannelsForService(
         this.props.profile,
@@ -110,7 +110,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       this.setState({
         uiEnabledChannels: getEnabledChannelsForService(
           nextProps.profile,
-          nextProps.navigation.state.params.serviceId
+          nextProps.navigation.state.params.service.service_id
         )
       });
     }
@@ -127,7 +127,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private dispatchNewEnabledChannels(newUiEnabledChannels: EnabledChannels) {
     const updatedBlockedChannels = getBlockedChannels(
       this.props.profile,
-      this.props.navigation.state.params.serviceId
+      this.props.navigation.state.params.service.service_id
     );
 
     // compute the new blocked channels preference for the user profile
@@ -144,17 +144,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
   public render() {
     // collect the service
-    const serviceId = this.props.navigation.state.params.serviceId;
-    const service = this.props.services.byId[serviceId];
+    const service = this.props.navigation.state.params.service;
 
     // finds out which channels are enabled in the user profile
     const profileEnabledChannels = getEnabledChannelsForService(
       this.props.profile,
-      serviceId
+      service.service_id
     );
 
     // collect the service metadata
-    const serviceMetadata = this.props.content.servicesMetadata.byId[serviceId];
+    const serviceMetadata = this.props.content.servicesMetadata.byId[
+      service.service_id
+    ];
 
     // collect the organization metadata
     const maybeOrganizationMetadata = fromNullable(

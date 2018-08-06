@@ -38,12 +38,12 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
+export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
 export type IMessageDetails = Readonly<{
   item: Readonly<MessageWithContentPO>;
   index: number;
 }>;
-
-export type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * This screen show the messages to the authenticated user.

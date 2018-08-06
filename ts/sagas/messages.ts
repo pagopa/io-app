@@ -111,7 +111,7 @@ function* navigateToMessageDetailsSaga(
     const messageId = action.payload;
 
     // tslint:disable-next-line:no-let
-    let message: MessageByIdState = yield select(
+    let message: MessageByIdState | undefined = yield select(
       messageByIdSelector(messageId)
     );
 
@@ -133,7 +133,7 @@ function* navigateToMessageDetailsSaga(
       return;
     }
 
-    const messageService: ServiceByIdState = yield select(
+    const messageService: ServiceByIdState | undefined = yield select(
       serviceByIdSelector(message.sender_service_id)
     );
 
@@ -145,7 +145,7 @@ function* navigateToMessageDetailsSaga(
       );
     }
 
-    const messageDetails: MessageDetailsByIdState = yield select(
+    const messageDetails: MessageDetailsByIdState | undefined = yield select(
       messageDetailsByIdSelector(messageId)
     );
     const navigationPayload: NavigationNavigateActionPayload = {
