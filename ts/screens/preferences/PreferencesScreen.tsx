@@ -1,6 +1,5 @@
-import { Body, Container, Content, H1, List, Text, View } from "native-base";
+import { Content, List } from "native-base";
 import * as React from "react";
-import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -17,8 +16,7 @@ import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
-import ScreenHeader from "../../components/ScreenHeader";
-import AppHeader from "../../components/ui/AppHeader";
+import TopScreenComponent from "../../components/TopScreenComponent";
 
 import ROUTES from "../../navigation/routes";
 
@@ -78,57 +76,42 @@ class PreferencesScreen extends React.Component<Props> {
       .getOrElse(I18n.t("remoteStates.notAvailable"));
 
     return (
-      <Container>
-        <AppHeader>
-          <Body>
-            <Text>{DeviceInfo.getApplicationName()}</Text>
-          </Body>
-        </AppHeader>
-
+      <TopScreenComponent
+        title={I18n.t("preferences.title")}
+        icon={require("../../../img/icons/gears.png")}
+        subtitle={I18n.t("preferences.subtitle")}
+      >
         <Content>
-          <View>
-            <ScreenHeader
-              heading={<H1>{I18n.t("preferences.title")}</H1>}
-              icon={require("../../../img/icons/gears.png")}
+          <List>
+            <PreferenceItem
+              kind="action"
+              title={I18n.t("preferences.list.services")}
+              valuePreview={I18n.t("preferences.list.services_description")}
+              onClick={() =>
+                this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
+              }
             />
-
-            <Text>{I18n.t("preferences.subtitle")}</Text>
-            <Text link={true}>{I18n.t("preferences.moreLinkText")}</Text>
-
-            <View spacer={true} />
-            <View>
-              <List>
-                <PreferenceItem
-                  kind="action"
-                  title={I18n.t("preferences.list.services")}
-                  valuePreview={I18n.t("preferences.list.services_description")}
-                  onClick={() =>
-                    this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
-                  }
-                />
-                <PreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.email")}
-                  icon="io-email"
-                  valuePreview={profileData.spid_email}
-                />
-                <PreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.mobile_phone")}
-                  icon="io-phone-number"
-                  valuePreview={profileData.spid_mobile_phone}
-                />
-                <PreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.language")}
-                  icon="io-languages"
-                  valuePreview={languages}
-                />
-              </List>
-            </View>
-          </View>
+            <PreferenceItem
+              kind="value"
+              title={I18n.t("preferences.list.email")}
+              icon="io-email"
+              valuePreview={profileData.spid_email}
+            />
+            <PreferenceItem
+              kind="value"
+              title={I18n.t("preferences.list.mobile_phone")}
+              icon="io-phone-number"
+              valuePreview={profileData.spid_mobile_phone}
+            />
+            <PreferenceItem
+              kind="value"
+              title={I18n.t("preferences.list.language")}
+              icon="io-languages"
+              valuePreview={languages}
+            />
+          </List>
         </Content>
-      </Container>
+      </TopScreenComponent>
     );
   }
 }

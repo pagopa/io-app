@@ -1,4 +1,4 @@
-import { Body, Container, Content, H1, Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import {
   FlatList,
@@ -14,8 +14,6 @@ import {
 import { connect } from "react-redux";
 
 import MessageComponent from "../../components/messages/MessageComponent";
-import ScreenHeader from "../../components/ScreenHeader";
-import AppHeader from "../../components/ui/AppHeader";
 
 import I18n from "../../i18n";
 
@@ -31,7 +29,7 @@ import variables from "../../theme/variables";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-import { DEFAULT_APPLICATION_NAME } from "../../config";
+import TopScreenComponent from "../../components/TopScreenComponent";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
@@ -88,32 +86,21 @@ class MessagesScreen extends React.Component<Props> {
 
   public render() {
     return (
-      <Container>
-        <AppHeader>
-          <Body>
-            <Text>{DEFAULT_APPLICATION_NAME}</Text>
-          </Body>
-        </AppHeader>
-        <Content>
-          <View>
-            <ScreenHeader
-              heading={<H1>{I18n.t("messages.contentTitle")}</H1>}
-              icon={require("../../../img/icons/message-icon.png")}
-            />
-            <View spacer={true} large={true} />
-            <View>
-              <FlatList
-                alwaysBounceVertical={false}
-                scrollEnabled={true}
-                data={this.props.messages}
-                renderItem={this.renderItem}
-                keyExtractor={message => message.id}
-                refreshControl={this.refreshControl()}
-              />
-            </View>
-          </View>
-        </Content>
-      </Container>
+      <TopScreenComponent
+        title={I18n.t("messages.contentTitle")}
+        icon={require("../../../img/icons/message-icon.png")}
+      >
+        <View>
+          <FlatList
+            alwaysBounceVertical={false}
+            scrollEnabled={true}
+            data={this.props.messages}
+            renderItem={this.renderItem}
+            keyExtractor={message => message.id}
+            refreshControl={this.refreshControl()}
+          />
+        </View>
+      </TopScreenComponent>
     );
   }
 }
