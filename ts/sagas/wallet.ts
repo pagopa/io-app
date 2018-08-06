@@ -312,6 +312,7 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
   const wallet: Option<Wallet> = yield select(specificWalletSelector(idWallet));
   if (wallet.isSome()) {
     // TODO: fetch list of PSPs available here
+    // @https://www.pivotaltracker.com/story/show/159494746
     const pspList = WalletAPI.getPsps();
 
     // show card
@@ -404,6 +405,7 @@ function* updatePspHandler(action: PaymentUpdatePsp) {
   // TODO: register action.paylod (pspId) as the
   // selected pspId for walletId (from getSelectedPaymentMethod)
   // then, refresh the list of available payment methods.
+  // @https://www.pivotaltracker.com/story/show/159494746
   const pspList = WalletAPI.getPsps();
   const walletId: number = yield select(getSelectedPaymentMethod);
   const psp = pspList.find(p => p.id === action.payload);

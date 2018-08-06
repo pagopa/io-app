@@ -171,12 +171,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Text style={WalletStyles.textCenter}>
                     {/* TODO: the proper UI needs to be defined for changing PSP */}
                     {this.props.wallet.psp !== undefined
-                      ? `Your current psp is ${
+                      ? `${I18n.t("payment.currentPsp")} ${
                           this.props.wallet.psp.businessName
                         } `
-                      : "You have yet to select a PSP "}
+                      : I18n.t("payment.noPsp")}
                     <Text link={true} onPress={() => this.props.pickPsp()}>
-                      Change PSP
+                      {I18n.t("payment.changePsp")}
                     </Text>
                   </Text>
                   <View spacer={true} />
