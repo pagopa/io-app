@@ -26,6 +26,7 @@ export type OwnProps = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
   dispatchPaymentAction: (() => void) | undefined;
+  navigateToServicePreferences: (() => void) | undefined;
 }>;
 
 type State = Readonly<{
@@ -108,14 +109,21 @@ class MessageDetailsComponent extends React.Component<Props, State> {
 
   public render() {
     const message = this.props.message;
+
     const senderService = this.props.senderService;
+
     const dispatchPaymentAction = this.props.dispatchPaymentAction;
+
     const { subject, markdown, payment_data } = message;
     return (
       <View>
         <View style={styles.messageHeaderContainer}>
           {senderService && <H4>{senderService.organization_name}</H4>}
-          {senderService && <H6>{senderService.service_name}</H6>}
+          {senderService && (
+            <H6 link={true} onPress={this.props.navigateToServicePreferences}>
+              {senderService.service_name}
+            </H6>
+          )}
           {senderService && <View spacer={true} />}
           <H1>{subject}</H1>
           <View spacer={true} />
@@ -132,6 +140,9 @@ class MessageDetailsComponent extends React.Component<Props, State> {
             <MessageDetailsInfoComponent
               message={message}
               senderService={senderService}
+              navigateToServicePreferences={
+                this.props.navigateToServicePreferences
+              }
             />
           )}
         </View>

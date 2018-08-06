@@ -17,6 +17,7 @@ import { ReduxProps } from "../../store/actions/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ROUTES from "../../navigation/routes";
 
 export type ParamType = Readonly<{
   message: MessageWithContentPO;
@@ -43,6 +44,20 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
   }
 
   public render() {
+    const {
+      message,
+      senderService,
+      dispatchPaymentAction
+    } = this.props.navigation.state.params;
+
+    // triggers navigation to the service page
+    const navigateToServicePreferences = senderService
+      ? () =>
+          this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, {
+            service: senderService
+          })
+      : undefined;
+
     return (
       <Container>
         <AppHeader>
@@ -57,11 +72,10 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
         </AppHeader>
         <Content noPadded={true}>
           <MessageDetailsComponent
-            message={this.props.navigation.state.params.message}
-            senderService={this.props.navigation.state.params.senderService}
-            dispatchPaymentAction={
-              this.props.navigation.state.params.dispatchPaymentAction
-            }
+            message={message}
+            senderService={senderService}
+            dispatchPaymentAction={dispatchPaymentAction}
+            navigateToServicePreferences={navigateToServicePreferences}
           />
         </Content>
       </Container>
