@@ -14,7 +14,7 @@ import { GlobalState } from "../../types";
 
 // An object containing MessageWithContentPO keyed by id
 export type MessagesByIdState = Readonly<{
-  [key: string]: MessageWithContentPO;
+  [key: string]: MessageWithContentPO | undefined;
 }>;
 
 export type MessageByIdState = Readonly<MessageWithContentPO>;
@@ -55,18 +55,22 @@ export const messagesByIdSelector = (state: GlobalState): MessagesByIdState =>
 
 export const messageByIdSelector = (id: string) => (
   state: GlobalState
-): MessageByIdState => state.entities.messages.byId[id];
+): MessageByIdState | undefined => state.entities.messages.byId[id];
 
 export const messageDetailsByIdSelector = (id: string) => (
   state: GlobalState
-): MessageDetailsByIdState => {
+): MessageDetailsByIdState | undefined => {
   const message = state.entities.messages.byId[id];
 
   if (!message) {
-    return null;
+    return undefined;
   }
 
   const service = state.entities.services.byId[message.sender_service_id];
+
+  if (!service) {
+    return undefined;
+  }
 
   return {
     id: message.id,

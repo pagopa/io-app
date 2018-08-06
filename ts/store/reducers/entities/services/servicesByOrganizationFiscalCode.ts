@@ -10,16 +10,16 @@ import { Action } from "../../../actions/types";
 /**
  * Maps organization fiscal code to serviceId
  */
-export type ServicesByOrganizationFiscalCodeState = Readonly<{
+export type ServiceIdsByOrganizationFiscalCodeState = Readonly<{
   [key: string]: ReadonlyArray<NonEmptyString> | undefined;
 }>;
 
-const INITIAL_STATE: ServicesByOrganizationFiscalCodeState = {};
+const INITIAL_STATE: ServiceIdsByOrganizationFiscalCodeState = {};
 
-export function servicesByOrganizationFiscalCodeReducer(
-  state: ServicesByOrganizationFiscalCodeState = INITIAL_STATE,
+export function serviceIdsByOrganizationFiscalCodeReducer(
+  state: ServiceIdsByOrganizationFiscalCodeState = INITIAL_STATE,
   action: Action
-): ServicesByOrganizationFiscalCodeState {
+): ServiceIdsByOrganizationFiscalCodeState {
   switch (action.type) {
     case SERVICE_LOAD_SUCCESS:
       const service = action.payload;

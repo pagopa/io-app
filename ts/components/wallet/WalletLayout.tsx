@@ -157,7 +157,11 @@ class WalletLayout extends React.Component<Props> {
           <Left>
             <Button
               transparent={true}
-              onPress={_ => this.props.navigation.goBack()}
+              onPress={_ =>
+                this.props.allowGoBack
+                  ? this.props.navigation.goBack()
+                  : undefined
+              }
             >
               {this.props.allowGoBack && (
                 <IconFont

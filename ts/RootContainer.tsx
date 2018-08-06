@@ -1,22 +1,21 @@
 import { Root } from "native-base";
 import * as React from "react";
+import { AppState, Linking, Platform, StatusBar } from "react-native";
+import { NavigationNavigateActionPayload } from "react-navigation";
 import { connect } from "react-redux";
 
-import { AppState, Linking, Platform, StatusBar } from "react-native";
 import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-
-import { NavigationNavigateActionPayload } from "react-navigation";
 import Navigation from "./navigation";
 import {
-  applicationChangeState,
-  ApplicationChangeState
+  ApplicationChangeState,
+  applicationChangeState
 } from "./store/actions/application";
 import {
-  navigateToDeepLink,
   NavigateToDeepLink,
-  setDeepLink,
-  SetDeepLink
+  navigateToDeepLink,
+  SetDeepLink,
+  setDeepLink
 } from "./store/actions/deepLink";
 import { ApplicationState } from "./store/actions/types";
 import { DeepLinkState } from "./store/reducers/deepLink";
@@ -28,7 +27,6 @@ import { GlobalState } from "./store/reducers/types";
 import { getNavigationPayloadFromDeepLink } from "./utils/deepLink";
 
 type ReduxMappedProps = {
-  appState: ApplicationState;
   pinLoginState: PinLoginState;
   deepLinkState: DeepLinkState;
   isPinValid: boolean;
@@ -56,7 +54,7 @@ class RootContainer extends React.Component<Props> {
     if (Platform.OS === "android") {
       Linking.getInitialURL()
         .then(this.navigate)
-        .catch(console.error);
+        .catch(console.error); // tslint:disable-line:no-console
     } else {
       Linking.addEventListener("url", this.handleOpenURL);
     }
@@ -115,7 +113,6 @@ class RootContainer extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  appState: state.appState.appState,
   pinLoginState: state.pinlogin,
   deepLinkState: state.deepLink,
   isPinValid: isPinLoginValidSelector(state)

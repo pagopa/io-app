@@ -72,7 +72,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       Array [
         Object {},
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "wrap",
           "justifyContent": "flex-start",
@@ -93,7 +93,52 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      A simple ordered list
+      A 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      simple 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      ordered 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      list
     </Text>
     <Text
       accessible={true}
@@ -124,7 +169,22 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      . Vue
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      Vue
 2
     </Text>
     <Text
@@ -140,7 +200,22 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      . React
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      React
 3
     </Text>
     <Text
@@ -156,7 +231,22 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      . Angular
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      Angular
     </Text>
   </View>
 </View>
@@ -171,7 +261,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       Array [
         Object {},
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "wrap",
           "justifyContent": "flex-start",
@@ -192,7 +282,52 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      A simple unordered list
+      A 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      simple 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      unordered 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      list
     </Text>
     <Text
       accessible={true}
@@ -223,7 +358,22 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      * Vue
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      Vue
 
     </Text>
     <Text
@@ -239,7 +389,22 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      * React
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      React
 
     </Text>
     <Text
@@ -255,7 +420,22 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      * Angular
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      Angular
     </Text>
   </View>
 </View>
@@ -270,7 +450,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       Array [
         Object {},
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flexDirection": "row",
           "flexWrap": "wrap",
           "justifyContent": "flex-start",
@@ -291,7 +471,37 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       }
       uppercase={false}
     >
-      A simple paragraph
+      A 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      simple 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      paragraph
     </Text>
     <Text
       accessible={true}

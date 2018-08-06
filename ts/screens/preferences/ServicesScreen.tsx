@@ -3,11 +3,13 @@ import {
   Button,
   Container,
   Content,
-  H2,
+  Grid,
+  H1,
   H3,
   Left,
   ListItem,
   Right,
+  Row,
   Text,
   View
 } from "native-base";
@@ -23,7 +25,7 @@ import { connect } from "react-redux";
 
 import I18n from "../../i18n";
 
-import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
 import AppHeader from "../../components/ui/AppHeader";
@@ -38,11 +40,17 @@ import {
 import { ReduxProps } from "../../store/actions/types";
 import { OrganizationNamesByFiscalCodeState } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ServicesState } from "../../store/reducers/entities/services";
+import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
 
+import { getEnabledChannelsForService } from "./common";
+
+import { isDefined } from "../../utils/guards";
+
 type ReduxMappedProps = Readonly<{
+  profile: ProfileState;
   services: ServicesState;
   organizations: OrganizationNamesByFiscalCodeState;
 }>;
@@ -58,44 +66,56 @@ class ServicesScreen extends React.Component<Props> {
     this.props.navigation.goBack();
   }
 
-  private getServiceKey = (serviceId: string): string => {
-    const servicesById = this.props.services.byId;
-    const service = servicesById[serviceId];
-    const serviceVersion = (service ? service.version : undefined) || 0;
-    return `${serviceId}-${serviceVersion}`;
+  private getServiceKey = (service: ServicePublic): string => {
+    return `${service.service_id}-${service.version || 0}`;
   };
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<string>;
   }): React.ReactElement<any> | null => (
     <ListItem itemHeader={true}>
-      <H2>{info.section.title}</H2>
+      <H1>{info.section.title}</H1>
     </ListItem>
   );
 
-  private renderServiceItem: ListRenderItem<ServiceId> = (
-    itemInfo: ListRenderItemInfo<ServiceId>
+  private renderServiceItem: ListRenderItem<ServicePublic> = (
+    itemInfo: ListRenderItemInfo<ServicePublic>
   ) => {
-    const serviceId = itemInfo.item;
-    const service = this.props.services.byId[serviceId];
+    const service = itemInfo.item;
+    const enabledChannels = getEnabledChannelsForService(
+      this.props.profile,
+      service.service_id
+    );
+
     const onPress = () => {
       // when a service gets selected, before navigating to the service detail
       // screen, we issue a contentServiceLoad and a contentOrganizationLoad
       // to refresh the service and organization metadata
-      this.props.dispatch(contentServiceLoad(serviceId));
+      this.props.dispatch(contentServiceLoad(service.service_id));
       this.props.dispatch(
         contentOrganizationLoad(service.organization_fiscal_code)
       );
       const params: IMessageDetailsScreenParam = {
-        serviceId
+        service
       };
       this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, params);
     };
     return (
       service && (
-        <ListItem key={itemInfo.item} onPress={onPress}>
+        <ListItem key={service.service_id} onPress={onPress}>
           <Left>
-            <H3>{service.service_name}</H3>
+            <Grid>
+              <Row>
+                <H3>{service.service_name}</H3>
+              </Row>
+              <Row>
+                <Text italic={true} bold={enabledChannels.inbox}>
+                  {enabledChannels.inbox
+                    ? I18n.t("services.serviceIsEnabled")
+                    : I18n.t("services.serviceNotEnabled")}
+                </Text>
+              </Row>
+            </Grid>
           </Left>
           <Right>
             <IconFont name="io-right" />
@@ -111,12 +131,13 @@ class ServicesScreen extends React.Component<Props> {
       this.props.services.byOrgFiscalCode
     ).map(fiscalCode => {
       const title = this.props.organizations[fiscalCode] || fiscalCode;
-      // tslint:disable-next-line:readonly-array
-      const data: string[] = (this.props.services.byOrgFiscalCode[fiscalCode] ||
-        []) as any;
+      const serviceIds = this.props.services.byOrgFiscalCode[fiscalCode] || [];
+      const services = serviceIds
+        .map(id => this.props.services.byId[id])
+        .filter(isDefined);
       return {
         title,
-        data
+        data: services as any[] // tslint:disable-line:readonly-array
       };
     });
 
@@ -153,6 +174,7 @@ class ServicesScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  profile: state.profile,
   services: state.entities.services,
   organizations: state.entities.organizations
 });

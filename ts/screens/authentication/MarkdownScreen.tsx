@@ -11,7 +11,7 @@ const MARKDOWN = `
 
 ### I am a Header 3
 
-A simple paragraph.
+A simple paragraph with a [link](http://www.google.it) rendered as a primary button and [another big link](http://www.google.it) also rendered successfully.
 
 Text can be emphasized with *asterisk* or _underscore_.
 
@@ -25,11 +25,17 @@ Here is a list:
 `;
 
 const MARKDOWN_HEADING = `
-# I am a Header1
+# I am a Header 1
 
 ## I am a Header 2
 
 ### I am a Header 3
+
+#### I am a Header 4
+
+##### I am a Header 5
+
+###### I am a Header 6
 `;
 
 const MARKDOWN_PARAGRAPH = `

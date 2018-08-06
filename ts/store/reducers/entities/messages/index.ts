@@ -5,6 +5,7 @@
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
+import { isDefined } from "../../../../utils/guards";
 import { messagesComparatorByIdDesc } from "../../../../utils/messages";
 import { Action } from "../../../actions/types";
 import messagesAllIdsReducer, {
@@ -27,19 +28,18 @@ const reducer = combineReducers<MessagesState, Action>({
 });
 
 // Selectors
+
 /**
- * A memoized selector that returns an ordered list of messages.
+ * A memoized selector that returns messages lexically sorted by ID.
  */
 export const orderedMessagesSelector = createSelector(
   messagesAllIdsSelector,
   messagesByIdSelector,
-  (ids, messages) => {
-    return [...ids]
-      .sort((id1, id2) =>
-        messagesComparatorByIdDesc(messages[id1], messages[id2])
-      )
-      .map(id => messages[id]);
-  }
+  (ids, messageByIdMap) =>
+    ids
+      .map(id => messageByIdMap[id])
+      .filter(isDefined)
+      .sort(messagesComparatorByIdDesc)
 );
 
 export default reducer;

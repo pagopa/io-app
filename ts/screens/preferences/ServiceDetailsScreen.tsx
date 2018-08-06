@@ -14,27 +14,36 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Switch } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
+import Markdown from "../../components/ui/Markdown";
+import Switch from "../../components/ui/Switch";
 
 import I18n from "../../i18n";
 
-import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
-import Markdown from "../../components/ui/Markdown";
+import { profileUpsertRequest } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { ContentState } from "../../store/reducers/content";
 import { ServicesState } from "../../store/reducers/entities/services";
 import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
+import {
+  EnabledChannels,
+  getBlockedChannels,
+  getEnabledChannelsForService
+} from "./common";
+
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+
 export interface IMessageDetailsScreenParam {
-  readonly serviceId: string;
+  readonly service: ServicePublic;
 }
 
 interface INavigationStateWithParams extends NavigationState {
@@ -45,6 +54,7 @@ type ReduxMappedProps = Readonly<{
   services: ServicesState;
   content: ContentState;
   profile: ProfileState;
+  profileUpsertError: Option<string>;
 }>;
 
 type OwnProps = Readonly<{
@@ -53,54 +63,99 @@ type OwnProps = Readonly<{
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
-const INBOX_CHANNEL = "INBOX";
-const EMAIL_CHANNEL = "EMAIL";
-const PUSH_CHANNEL = "WEBHOOK";
+interface State {
+  uiEnabledChannels: EnabledChannels;
+}
 
-const renderInformationRow = (label: string, info: string) => (
-  <Row>
-    <Col size={2}>
-      <Button light={true} small={true} transparent={true}>
-        <Text>{label}:</Text>
-      </Button>
-    </Col>
-    <Col size={4}>
-      <Button primary={true} small={true}>
-        <Text>{info}</Text>
-      </Button>
-    </Col>
-  </Row>
-);
+/**
+ * Renders a row in the service information panel
+ */
+function renderInformationRow(label: string, info: string) {
+  return (
+    <Row>
+      <Col size={2}>
+        <Button light={true} small={true} transparent={true}>
+          <Text>{label}:</Text>
+        </Button>
+      </Col>
+      <Col size={4}>
+        <Button primary={true} small={true}>
+          <Text>{info}</Text>
+        </Button>
+      </Col>
+    </Row>
+  );
+}
 
-class ServiceDetailsScreen extends React.Component<Props> {
+class ServiceDetailsScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    // We initialize the UI by making the states of the channels the same
+    // as what is set in the profile. The user will be able to change the state
+    // via the UI and the profile will be updated in the background accordingly.
+    const serviceId = this.props.navigation.state.params.service.service_id;
+    this.state = {
+      uiEnabledChannels: getEnabledChannelsForService(
+        this.props.profile,
+        serviceId
+      )
+    };
+  }
+
+  public componentWillReceiveProps(nextProps: Props) {
+    if (this.props.profileUpsertError !== nextProps.profileUpsertError) {
+      // in case of new or resolved errors while updating the profile, we reset
+      // the UI to match the state of the profile preferences
+      this.setState({
+        uiEnabledChannels: getEnabledChannelsForService(
+          nextProps.profile,
+          nextProps.navigation.state.params.service.service_id
+        )
+      });
+    }
+  }
+
   private goBack() {
     this.props.navigation.goBack();
   }
 
+  /**
+   * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
+   * profile with the new enabled channels
+   */
+  private dispatchNewEnabledChannels(newUiEnabledChannels: EnabledChannels) {
+    const updatedBlockedChannels = getBlockedChannels(
+      this.props.profile,
+      this.props.navigation.state.params.service.service_id
+    );
+
+    // compute the new blocked channels preference for the user profile
+    const newblockedChannels = updatedBlockedChannels(newUiEnabledChannels);
+
+    // dispatch a request to update the profile with the new
+    // blocked channels
+    this.props.dispatch(
+      profileUpsertRequest({
+        blocked_inbox_or_channels: newblockedChannels
+      })
+    );
+  }
+
   public render() {
     // collect the service
-    const serviceId = this.props.navigation.state.params.serviceId;
-    const service = this.props.services.byId[serviceId];
+    const service = this.props.navigation.state.params.service;
 
-    // find out whether the service has been opted out
-    const enabledChannels = fromNullable(this.props.profile)
-      .mapNullable(
-        _ => (ProfileWithEmail.is(_) ? _.blocked_inbox_or_channels : null)
-      )
-      .mapNullable(_ => _[serviceId])
-      .map(_ => ({
-        inbox: _.indexOf(INBOX_CHANNEL) === -1,
-        email: _.indexOf(EMAIL_CHANNEL) === -1,
-        push: _.indexOf(PUSH_CHANNEL) === -1
-      }))
-      .getOrElse({
-        inbox: true,
-        email: true,
-        push: true
-      });
+    // finds out which channels are enabled in the user profile
+    const profileEnabledChannels = getEnabledChannelsForService(
+      this.props.profile,
+      service.service_id
+    );
 
     // collect the service metadata
-    const serviceMetadata = this.props.content.servicesMetadata.byId[serviceId];
+    const serviceMetadata = this.props.content.servicesMetadata.byId[
+      service.service_id
+    ];
 
     // collect the organization metadata
     const maybeOrganizationMetadata = fromNullable(
@@ -112,6 +167,11 @@ class ServiceDetailsScreen extends React.Component<Props> {
     const orgAddress = maybeOrganizationMetadata
       .mapNullable(_ => _.Indirizzo)
       .toNullable();
+
+    // whether last attempt to save the preferences failed
+    const profileVersion = fromNullable(this.props.profile)
+      .mapNullable(_ => _.version)
+      .getOrElse(0 as NonNegativeInteger);
 
     return (
       <Container>
@@ -139,36 +199,124 @@ class ServiceDetailsScreen extends React.Component<Props> {
             <View spacer={true} large={true} />
             <Row>
               <Col size={10}>
-                <Text>{I18n.t("services.serviceIsEnabled")}</Text>
+                <Text
+                  primary={
+                    profileEnabledChannels.inbox !==
+                    this.state.uiEnabledChannels.inbox
+                  }
+                >
+                  {profileEnabledChannels.inbox
+                    ? I18n.t("services.serviceIsEnabled")
+                    : I18n.t("services.serviceNotEnabled")}
+                </Text>
               </Col>
               <Col size={2}>
-                <Switch value={enabledChannels.inbox} />
+                <Switch
+                  key={`switch-inbox-${profileVersion}`}
+                  value={this.state.uiEnabledChannels.inbox}
+                  disabled={
+                    profileEnabledChannels.inbox !==
+                    this.state.uiEnabledChannels.inbox
+                  }
+                  onValueChange={(value: boolean) => {
+                    // compute the updated map of enabled channels
+                    const newUiEnabledChannels = {
+                      ...this.state.uiEnabledChannels,
+                      inbox: value
+                    };
+
+                    // dispatch the update of the profile from the new prefs
+                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+                    // optimistically update the UI while we wait for the
+                    // profile to update
+                    this.setState({
+                      uiEnabledChannels: newUiEnabledChannels
+                    });
+                  }}
+                />
               </Col>
             </Row>
-            {enabledChannels.inbox && <View spacer={true} />}
-            {enabledChannels.inbox && (
-              <Row>
-                <Col size={1} />
-                <Col size={9}>
-                  <Text>{I18n.t("services.pushNotifications")}</Text>
-                </Col>
-                <Col size={2}>
-                  <Switch value={enabledChannels.push} />
-                </Col>
-              </Row>
-            )}
-            {enabledChannels.inbox && <View spacer={true} />}
-            {enabledChannels.inbox && (
-              <Row>
-                <Col size={1} />
-                <Col size={9}>
-                  <Text>{I18n.t("services.emailNotifications")}</Text>
-                </Col>
-                <Col size={2}>
-                  <Switch value={enabledChannels.email} />
-                </Col>
-              </Row>
-            )}
+            <View spacer={true} />
+            <Row>
+              <Col size={1} />
+              <Col size={9}>
+                <Text
+                  primary={
+                    profileEnabledChannels.push !==
+                    this.state.uiEnabledChannels.push
+                  }
+                >
+                  {I18n.t("services.pushNotifications")}
+                </Text>
+              </Col>
+              <Col size={2}>
+                <Switch
+                  key={`switch-push-${profileVersion}`}
+                  value={
+                    this.state.uiEnabledChannels.inbox &&
+                    this.state.uiEnabledChannels.push
+                  }
+                  disabled={!this.state.uiEnabledChannels.inbox}
+                  onValueChange={(value: boolean) => {
+                    // compute the updated map of enabled channels
+                    const newUiEnabledChannels = {
+                      ...this.state.uiEnabledChannels,
+                      push: value
+                    };
+
+                    // dispatch the update of the profile from the new prefs
+                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+                    // optimistically update the UI while we wait for the
+                    // profile to update
+                    this.setState({
+                      uiEnabledChannels: newUiEnabledChannels
+                    });
+                  }}
+                />
+              </Col>
+            </Row>
+            <View spacer={true} />
+            <Row>
+              <Col size={1} />
+              <Col size={9}>
+                <Text
+                  primary={
+                    profileEnabledChannels.email !==
+                    this.state.uiEnabledChannels.email
+                  }
+                >
+                  {I18n.t("services.emailNotifications")}
+                </Text>
+              </Col>
+              <Col size={2}>
+                <Switch
+                  key={`switch-email-${profileVersion}`}
+                  disabled={!this.state.uiEnabledChannels.inbox}
+                  value={
+                    this.state.uiEnabledChannels.inbox &&
+                    this.state.uiEnabledChannels.email
+                  }
+                  onValueChange={(value: boolean) => {
+                    // compute the updated map of enabled channels
+                    const newUiEnabledChannels = {
+                      ...this.state.uiEnabledChannels,
+                      email: value
+                    };
+
+                    // dispatch the update of the profile from the new prefs
+                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+                    // optimistically update the UI while we wait for the
+                    // profile to update
+                    this.setState({
+                      uiEnabledChannels: newUiEnabledChannels
+                    });
+                  }}
+                />
+              </Col>
+            </Row>
             <View spacer={true} large={true} />
             {serviceMetadata && (
               <Row>
@@ -198,7 +346,8 @@ class ServiceDetailsScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   services: state.entities.services,
   content: state.content,
-  profile: state.profile
+  profile: state.profile,
+  profileUpsertError: state.error.PROFILE_UPSERT
 });
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
