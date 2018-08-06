@@ -10,6 +10,8 @@ import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
 import IconFont from "../../components/ui/IconFont";
+import H4 from "../ui/H4";
+import H6 from "../ui/H6";
 import Markdown from "../ui/Markdown";
 
 import variables from "../../theme/variables";
@@ -112,6 +114,9 @@ class MessageDetailsComponent extends React.Component<Props, State> {
     return (
       <View>
         <View style={styles.messageHeaderContainer}>
+          {senderService && <H4>{senderService.organization_name}</H4>}
+          {senderService && <H6>{senderService.service_name}</H6>}
+          {senderService && <View spacer={true} />}
           <H1>{subject}</H1>
           <View spacer={true} />
           <TouchableOpacity
