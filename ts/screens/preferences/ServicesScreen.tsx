@@ -66,11 +66,8 @@ class ServicesScreen extends React.Component<Props> {
     this.props.navigation.goBack();
   }
 
-  private getServiceKey = (serviceId: string): string => {
-    const servicesById = this.props.services.byId;
-    const service = servicesById[serviceId];
-    const serviceVersion = (service ? service.version : undefined) || 0;
-    return `${serviceId}-${serviceVersion}`;
+  private getServiceKey = (service: ServicePublic): string => {
+    return `${service.service_id}-${service.version || 0}`;
   };
 
   private renderServiceSectionHeader = (info: {
