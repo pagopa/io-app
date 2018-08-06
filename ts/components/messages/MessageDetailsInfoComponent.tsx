@@ -16,6 +16,7 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 export type OwnProps = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
+  navigateToServicePreferences: (() => void) | undefined;
 }>;
 
 export type Props = OwnProps;
@@ -46,25 +47,27 @@ class MessageDetailsInfoComponent extends React.Component<Props> {
         {senderService && (
           <View>
             <Text bold={true}>
-              {I18n.t("messageDetails.infoLabels.senderFrom")}:
+              {`${I18n.t("messageDetails.infoLabels.senderFrom")}: `}
             </Text>
-            <Text> {senderService.organization_name}</Text>
+            <Text>{senderService.organization_name}</Text>
           </View>
         )}
         {senderService && (
           <View>
             <Text bold={true}>
-              {I18n.t("messageDetails.infoLabels.department")}:
+              {`${I18n.t("messageDetails.infoLabels.department")}: `}
             </Text>
-            <Text> {senderService.department_name}</Text>
+            <Text>{senderService.department_name}</Text>
           </View>
         )}
         {senderService && (
           <View>
             <Text bold={true}>
-              {I18n.t("messageDetails.infoLabels.service")}:
+              {`${I18n.t("messageDetails.infoLabels.service")}: `}
             </Text>
-            <Text> {senderService.service_name}</Text>
+            <Text link={true} onPress={this.props.navigateToServicePreferences}>
+              {senderService.service_name}
+            </Text>
           </View>
         )}
       </View>
