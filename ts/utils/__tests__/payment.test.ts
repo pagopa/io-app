@@ -19,7 +19,7 @@ describe("getAmountFromPaymentAmount", () => {
     const amountInEuroCents = getAmountFromPaymentAmount(aPaymentAmount);
     expect(isSome(amountInEuroCents)).toBeTruthy();
     if (isSome(amountInEuroCents)) {
-      expect(amountInEuroCents.value).toEqual("1" as AmountInEuroCents);
+      expect(amountInEuroCents.value).toEqual("01" as AmountInEuroCents);
     }
   });
 });
