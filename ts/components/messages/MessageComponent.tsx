@@ -19,7 +19,7 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { GlobalState } from "../../store/reducers/types";
 
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { formatPaymentAmount } from "../../utils/payment";
+import { formatPaymentAmount, getRptIdAndAmountFromMessage } from "../../utils/payment";
 import { paymentRequestTransactionSummaryFromRptId } from "../../store/actions/wallet/payment";
 import { ReduxProps } from "../../store/actions/types";
 
@@ -73,6 +73,12 @@ class MessageComponent extends React.Component<Props> {
       .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
       .getOrElse(created_at);
 
+    const dispatchPaymentAction = getRptIdAndAmountFromMessage() () => {
+      this.props.dispatch(
+        paymentRequestTransactionSummaryFromRptId(rptId, paymentData.amount)
+      );
+    };
+
     return (
       <ListItem key={id} onPress={handleOnPress}>
         <View padded={payment_data !== undefined}>
@@ -88,18 +94,7 @@ class MessageComponent extends React.Component<Props> {
           </Right>
         </View>
         {payment_data !== undefined && (
-          <Button
-            block={true}
-            small={true}
-            onPress={() => {
-              this.props.dispatch(
-                paymentRequestTransactionSummaryFromRptId(
-                  rptId,
-                  payment_data.amount
-                )
-              );
-            }}
-          >
+          <Button block={true} small={true} onPress={dispatchPaymentAction}>
             <Text>
               {I18n.t("messages.cta.pay", {
                 amount: formatPaymentAmount(payment_data.amount)

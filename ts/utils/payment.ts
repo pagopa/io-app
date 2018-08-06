@@ -1,4 +1,4 @@
-import { fromEither, Option, fromNullable } from "fp-ts/lib/Option";
+import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
 
 import {
   AmountInEuroCents,
@@ -13,7 +13,9 @@ import I18n from "../i18n";
 
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
+
 import { MessageWithContentPO } from "../types/MessageWithContentPO";
+
 import { ServicesByIdState } from "../store/reducers/entities/services/servicesById";
 
 /**
@@ -51,16 +53,25 @@ export function getAmountFromPaymentAmount(
   return fromEither(AmountInEuroCentsFromNumber.decode(paymentAmount / 100));
 }
 
-export const getRptIdAndAmountFromMessage = (
-  servicesById: ServicesByIdState
-) => (
+/**
+ * Returns the RptId and the AmountInEuroCents from a Message by extracting and
+ * parsing the PaymentData from the Message and looking up the Organization
+ * FiscalCode from the Message sender.
+ */
+export function getRptIdAndAmountFromMessage(
+  servicesById: ServicesByIdState,
   message: MessageWithContentPO
-): Option<ITuple2<RptId, AmountInEuroCents>> => {
-  return fromNullable(message.payment_data).map(paymentData =>
-    getRptIdFromNoticeNumber(paymentData.notice_number).chain(rptId =>
-      getAmountFromPaymentAmount(paymentData.amount).map(amount =>
-        Tuple2(rptId, amount)
+): Option<ITuple2<RptId, AmountInEuroCents>> {
+  return fromNullable(servicesById[message.sender_service_id]).chain(service =>
+    fromNullable(message.payment_data).chain(paymentData =>
+      getRptIdFromNoticeNumber(
+        service.organization_fiscal_code,
+        paymentData.notice_number
+      ).chain(rptId =>
+        getAmountFromPaymentAmount(paymentData.amount).map(amount =>
+          Tuple2(rptId, amount)
+        )
       )
     )
   );
-};
+}
