@@ -78,7 +78,7 @@ export const Wallet = t.refinement(
     CreditCard.is(w.creditCard) &&
     w.idWallet !== undefined &&
     w.type !== undefined &&
-    Psp.is(w.psp)
+    (w.psp === undefined || Psp.is(w.psp))
 );
 type RequiredWalletFields = "idWallet" | "type";
 type UpdatedWalletFields = "creditCard" | "psp";
@@ -88,7 +88,7 @@ export type Wallet = {
   Required<Pick<WalletPagoPA, RequiredWalletFields>> &
   Readonly<{
     creditCard: CreditCard;
-    psp: Psp;
+    psp?: Psp;
   }>;
 
 export const Transaction = t.refinement(

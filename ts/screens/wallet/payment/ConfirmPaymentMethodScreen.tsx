@@ -35,7 +35,8 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCompletion,
   paymentRequestGoBack,
-  paymentRequestPickPaymentMethod
+  paymentRequestPickPaymentMethod,
+  paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
@@ -62,6 +63,7 @@ type ReduxMappedStateProps =
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
+  pickPsp: () => void;
   requestCompletion: () => void;
   goBack: () => void;
 }>;
@@ -167,9 +169,14 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col size={9}>
                   <View spacer={true} large={true} />
                   <Text style={WalletStyles.textCenter}>
-                    {`${I18n.t("wallet.ConfirmPayment.info2")} `}
-                    <Text link={true}>
-                      {I18n.t("wallet.ConfirmPayment.changeMethod")}
+                    {/* TODO: the proper UI needs to be defined for changing PSP */}
+                    {this.props.wallet.psp !== undefined
+                      ? `${I18n.t("payment.currentPsp")} ${
+                          this.props.wallet.psp.businessName
+                        } `
+                      : I18n.t("payment.noPsp")}
+                    <Text link={true} onPress={() => this.props.pickPsp()}>
+                      {I18n.t("payment.changePsp")}
                     </Text>
                   </Text>
                   <View spacer={true} />
@@ -243,7 +250,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
   requestCompletion: () => dispatch(paymentRequestCompletion()),
-  goBack: () => dispatch(paymentRequestGoBack())
+  goBack: () => dispatch(paymentRequestGoBack()),
+  pickPsp: () => dispatch(paymentRequestPickPsp())
 });
 
 export default connect(
