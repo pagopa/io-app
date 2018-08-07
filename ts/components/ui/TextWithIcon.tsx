@@ -10,11 +10,7 @@ type Props = ViewProperties;
  *
  * More @https://github.com/teamdigitale/italia-app#textwithicon
  */
-class TextWithIcon extends React.Component<Props> {
-  public render() {
-    return <View {...this.props} />;
-  }
-}
+const TextWithIcon: React.SFC<Props> = props => <View {...props} />;
 
 type StyleProps = {
   danger?: boolean;

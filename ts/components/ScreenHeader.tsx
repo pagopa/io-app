@@ -14,28 +14,24 @@ type Props = {
  * Component that implements the screen header with heading to the left
  * and an icon image to the right
  */
-class ScreenHeader extends React.Component<Props> {
-  public render() {
-    const { heading, icon } = this.props;
-
-    return (
-      <View>
-        {heading}
-        {icon && (
-          <View>
-            <Image
-              source={icon}
-              style={{
-                height: customVariables.h1FontSize * 2,
-                resizeMode: "contain"
-              }}
-            />
-          </View>
-        )}
-      </View>
-    );
-  }
-}
+const ScreenHeader: React.SFC<Props> = ({ heading, icon }) => {
+  return (
+    <View>
+      {heading}
+      {icon && (
+        <View>
+          <Image
+            source={icon}
+            style={{
+              height: customVariables.h1FontSize * 2,
+              resizeMode: "contain"
+            }}
+          />
+        </View>
+      )}
+    </View>
+  );
+};
 
 export default connectStyle(
   "UIComponent.ScreenHeader",
