@@ -16,7 +16,7 @@ export default (): Theme => {
   return {
     "NativeBase.Left": {
       "NativeBase.Button": {
-        "UIComponents.IconFont": {
+        "UIComponent.IconFont": {
           color: variables.textColor
         },
         padding: 0,
@@ -40,7 +40,7 @@ export default (): Theme => {
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground,
       "NativeBase.Right": {
-        "UIComponents.IconFont": {
+        "UIComponent.IconFont": {
           color: variables.brandPrimaryInverted
         }
       }

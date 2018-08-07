@@ -65,16 +65,16 @@ const theme = (): Theme => {
     "NativeBase.Item": {
       ...itemTheme()
     },
-    "UIComponents.Modal": {
+    "UIComponent.Modal": {
       ...modalTheme()
     },
     "NativeBase.Text": {
       ...textTheme()
     },
-    "UIComponents.TextWithIcon": {
+    "UIComponent.TextWithIcon": {
       ...textWithIconTheme()
     },
-    "UIComponents.IconFont": {
+    "UIComponent.IconFont": {
       ...iconFontTheme()
     },
     "NativeBase.ViewNB": {
