@@ -2,7 +2,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 export default (): Theme => ({
-  "UIComponents.BaseScreenComponent": {
+  "UIComponent.BaseScreenComponent": {
     "NativeBase.Container": {
       "NativeBase.ViewNB": {
         backgroundColor: variables.contentBackground,
