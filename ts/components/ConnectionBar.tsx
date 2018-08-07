@@ -11,7 +11,6 @@ export type ReduxMappedProps = {
 };
 export type OwnProps = {};
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
-
 const styles = StyleSheet.create({
   container: {
     display: "flex",
@@ -20,11 +19,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20
   }
 });
-
 /**
  * Implements a component that show a message when there is no network connection
  */
-class ConnectionBar extends React.PureComponent<Props> {
+class ConnectionBar extends React.PureComponent<Props, never> {
   public render() {
     const { isConnected } = this.props;
     if (isConnected) {
@@ -37,9 +35,7 @@ class ConnectionBar extends React.PureComponent<Props> {
     );
   }
 }
-
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isConnected: state.network.isConnected
 });
-
 export default connect(mapStateToProps)(ConnectionBar);

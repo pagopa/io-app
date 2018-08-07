@@ -5,6 +5,10 @@ import { Text, TextProps } from "react-native";
 
 type Props = TextProps;
 
-const H6: React.SFC<Props> = props => <Text {...props} />;
+class H6 extends React.Component<Props> {
+  public render() {
+    return <Text {...this.props} />;
+  }
+}
 
 export default connectStyle("UIComponent.H6", {}, mapPropsToStyleNames)(H6);

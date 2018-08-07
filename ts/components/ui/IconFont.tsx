@@ -11,12 +11,14 @@ type Props = Readonly<IconProps>;
  * The class is connected with the native-base StyleProvider using the `connectStyle(...)` method.
  */
 
-const IconFont: React.SFC<Props> = props => {
-  const { color, size, style } = props;
-  const colorStyle = color ? { color } : {};
-  const fontSizeStyle = size ? { fontSize: size } : {};
-  return <Icon {...props} style={[style, colorStyle, fontSizeStyle]} />;
-};
+class IconFont extends React.Component<Props> {
+  public render() {
+    const { color, size, style } = this.props;
+    const colorStyle = color ? { color } : {};
+    const fontSizeStyle = size ? { fontSize: size } : {};
+    return <Icon {...this.props} style={[style, colorStyle, fontSizeStyle]} />;
+  }
+}
 
 const StyledIconFont = connectStyle(
   "UIComponents.IconFont",

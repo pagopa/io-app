@@ -18,17 +18,21 @@ type Props = Readonly<{
   close: () => void;
 }>;
 
-export const ContextualHelp: React.SFC<Props> = props => (
-  <Modal isVisible={props.isVisible} fullscreen={true}>
-    <View header={true}>
-      <TouchableHighlight onPress={_ => props.close()}>
-        <IconFont name="io-close" />
-      </TouchableHighlight>
-    </View>
-    <Content>
-      <H1>{props.title}</H1>
-      <View spacer={true} large={true} />
-      {props.body}
-    </Content>
-  </Modal>
-);
+export class ContextualHelp extends React.Component<Props> {
+  public render(): React.ReactNode {
+    return (
+      <Modal isVisible={this.props.isVisible} fullscreen={true}>
+        <View header={true}>
+          <TouchableHighlight onPress={_ => this.props.close()}>
+            <IconFont name="io-close" />
+          </TouchableHighlight>
+        </View>
+        <Content>
+          <H1>{this.props.title}</H1>
+          <View spacer={true} large={true} />
+          {this.props.body}
+        </Content>
+      </Modal>
+    );
+  }
+}

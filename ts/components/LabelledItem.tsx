@@ -32,24 +32,28 @@ type Props = Readonly<{
   inputProps: TextInputProps;
 }>;
 
-export const LabelledItem: React.SFC<Props> = props => (
-  <View>
-    <Item style={styles.noBottomLine}>
-      <Text>{props.label}</Text>
-    </Item>
-    <Item style={styles.bottomLine}>
-      <IconFont
-        size={variables.iconSize3}
-        color={variables.brandDarkGray}
-        name={props.icon}
-      />
-      <Input
-        placeholderTextColor={color(variables.brandGray)
-          .darken(0.2)
-          .string()}
-        placeholder={props.placeholder}
-        {...props.inputProps}
-      />
-    </Item>
-  </View>
-);
+export class LabelledItem extends React.Component<Props> {
+  public render() {
+    return (
+      <View>
+        <Item style={styles.noBottomLine}>
+          <Text>{this.props.label}</Text>
+        </Item>
+        <Item style={styles.bottomLine}>
+          <IconFont
+            size={variables.iconSize3}
+            color={variables.brandDarkGray}
+            name={this.props.icon}
+          />
+          <Input
+            placeholderTextColor={color(variables.brandGray)
+              .darken(0.2)
+              .string()}
+            placeholder={this.props.placeholder}
+            {...this.props.inputProps}
+          />
+        </Item>
+      </View>
+    );
+  }
+}

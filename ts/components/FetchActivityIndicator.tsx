@@ -21,7 +21,7 @@ export type Props = {
   isVisible: boolean;
 };
 
-export class FetchActivityIndicator extends React.PureComponent<Props> {
+export class FetchActivityIndicator extends React.PureComponent<Props, never> {
   public render() {
     const { isVisible } = this.props;
 
