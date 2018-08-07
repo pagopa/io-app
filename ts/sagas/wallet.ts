@@ -19,13 +19,12 @@ import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
-import { Iban } from "../../definitions/backend/Iban";
-import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
+import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { BasicResponseTypeWith401 } from "../api/backend";
+import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
-import { pagoPaApiUrlPrefix } from "../config";
+import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
@@ -79,13 +78,18 @@ import {
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
-import { walletTokenSelector } from "../store/reducers/authentication";
+import {
+  sessionTokenSelector,
+  walletTokenSelector
+} from "../store/reducers/authentication";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
+  getPaymentContextCode,
   getPaymentReason,
   getPaymentRecipient,
   getPspList,
+  getRptId,
   getSelectedPaymentMethod,
   isGlobalStateWithPaymentId,
   selectedPaymentMethodSelector
@@ -102,6 +106,7 @@ import {
   TransactionListResponse,
   WalletListResponse
 } from "../types/pagopa";
+import { SessionToken } from "../types/SessionToken";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
@@ -278,29 +283,26 @@ function* showTransactionSummaryHandler(
       initialAmount
     }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
 
-    // TODO: fetch the data from the pagoPA proxy
-    // @https://www.pivotaltracker.com/story/show/159494746
-    const verificaResponse: PaymentRequestsGetResponse = {
-      importoSingoloVersamento: 10052 as ImportoEuroCents,
-      codiceContestoPagamento: "6793ad707f9b11e888482902221575ae" as CodiceContestoPagamento,
-      ibanAccredito: "IT17X0605502100000001234567" as Iban,
-      causaleVersamento: "IMU 2018",
-      enteBeneficiario: {
-        identificativoUnivocoBeneficiario: "123",
-        denominazioneBeneficiario: "Comune di Canicattì",
-        codiceUnitOperBeneficiario: "01",
-        denomUnitOperBeneficiario: "CDC",
-        indirizzoBeneficiario: "Via Roma",
-        civicoBeneficiario: "23",
-        capBeneficiario: "92010",
-        localitaBeneficiario: "Canicattì",
-        provinciaBeneficiario: "Agrigento",
-        nazioneBeneficiario: "IT"
-      } as EnteBeneficiario
-    };
-    yield put(
-      paymentTransactionSummaryFromRptId(rptId, initialAmount, verificaResponse)
+    const sessionToken: SessionToken | undefined = yield select(
+      sessionTokenSelector
     );
+    if (sessionToken) {
+      const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+      const response:
+        | BasicResponseTypeWith401<PaymentRequestsGetResponse>
+        | undefined = yield call(backendClient.getVerificaRpt, { rptId });
+      if (response !== undefined && response.status === 200) {
+        // response fetched successfully -- store it
+        // and proceed
+        yield put(
+          paymentTransactionSummaryFromRptId(
+            rptId,
+            initialAmount,
+            response.value
+          )
+        );
+      } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
+    } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
   } else {
     yield put(paymentTransactionSummaryFromBanner());
   }
@@ -343,6 +345,62 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
   }
 }
 
+const MAX_RETRIES_POLLING = 20;
+const DELAY_BETWEEN_RETRIES_MS = 1000;
+
+const delay = (ms: number): Promise<undefined> =>
+  new Promise(resolve => setTimeout(resolve, ms));
+
+const pollForPaymentId = async (
+  backendClient: ReturnType<typeof BackendClient>,
+  p: { paymentContextCode: CodiceContestoPagamento },
+  retries = MAX_RETRIES_POLLING
+): Promise<string | undefined> => {
+  if (retries === 0) {
+    return undefined;
+  }
+  const response = await backendClient.getPaymentId(p);
+  if (response === undefined) {
+    return undefined;
+  }
+  if (response.status === 200) {
+    return response.value.idPagamento;
+  }
+  if (response.status === 404) {
+    await delay(DELAY_BETWEEN_RETRIES_MS);
+    console.warn("waiting");
+    return pollForPaymentId(backendClient, p, retries - 1);
+  }
+  return undefined;
+};
+
+// WIP: is this the appropriate place for this function?
+const attivaRpt = async (
+  sessionToken: SessionToken | undefined,
+  rptId: RptId,
+  paymentContextCode: CodiceContestoPagamento,
+  amount: AmountInEuroCents
+) => {
+  if (sessionToken) {
+    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+    const response:
+      | BasicResponseTypeWith401<PaymentActivationsPostResponse>
+      | undefined = await backendClient.postAttivaRpt({
+      rptId,
+      paymentContextCode,
+      amount
+    });
+    console.warn(response);
+    if (response !== undefined && response.status === 200) {
+      // successfully request the payment activation
+      // now poll until a paymentId is made available
+      return await pollForPaymentId(backendClient, { paymentContextCode });
+    }
+  }
+  return undefined;
+};
+
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods
 ) {
@@ -355,23 +413,42 @@ function* continueWithPaymentMethodsHandler(
   const favoriteWallet: Option<number> = yield select(getFavoriteWalletId);
   const hasPaymentId: boolean = yield select(isGlobalStateWithPaymentId);
 
-  // TODO get this from "attiva" (if hasPaymentId is false)
-  // @https://www.pivotaltracker.com/story/show/159494746
-  const idPayment = "f2737c4448ac1c669049296aa4d09801";
+  /**
+   * get data required to fetch a payment id
+   */
+  const sessionToken: SessionToken | undefined = yield select(
+    sessionTokenSelector
+  );
+  const rptId: RptId = yield select(getRptId);
+  const paymentContextCode: CodiceContestoPagamento = yield select(
+    getPaymentContextCode
+  );
+  const amount: AmountInEuroCents = yield select(getCurrentAmount);
+
+  // if the payment Id not available yet,
+  // do the "attiva" and then poll until
+  // a payment Id shows up
+  const paymentId: string | undefined = hasPaymentId
+    ? undefined
+    : yield call(attivaRpt, sessionToken, rptId, paymentContextCode, amount);
+
+  // in case  (paymentId === undefined && !hasPaymentId),
+  // the payment id could not be fetched successfully. Handle
+  // the error here @https://www.pivotaltracker.com/story/show/159400682
 
   if (favoriteWallet.isSome()) {
     yield call(
       showWalletOrSelectPsp,
       favoriteWallet.value,
-      hasPaymentId ? undefined : idPayment
+      hasPaymentId && paymentId !== undefined ? undefined : paymentId
     );
   } else {
     // no favorite wallet selected
     // show list
     yield put(
-      hasPaymentId
+      hasPaymentId || paymentId === undefined
         ? paymentPickPaymentMethod()
-        : paymentInitialPickPaymentMethod(idPayment)
+        : paymentInitialPickPaymentMethod(paymentId)
     );
     yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
   }

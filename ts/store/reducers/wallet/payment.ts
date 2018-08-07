@@ -4,6 +4,7 @@
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
+import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -203,6 +204,11 @@ export const getPaymentStep = (state: GlobalState) =>
 export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
   state.wallet.payment.stack[0].rptId;
 
+export const getPaymentContextCode = (
+  state: GlobalStateWithVerificaResponse
+): CodiceContestoPagamento =>
+  state.wallet.payment.stack[0].verificaResponse.codiceContestoPagamento;
+
 export const getInitialAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents => state.wallet.payment.stack[0].initialAmount;
@@ -214,10 +220,9 @@ export const getSelectedPaymentMethod = (
 export const getCurrentAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents =>
-  (
-    "0".repeat(10) +
-    `${state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento}`
-  ).slice(-10) as AmountInEuroCents;
+  `${
+    state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento
+  }` as AmountInEuroCents;
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
