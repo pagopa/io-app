@@ -34,19 +34,17 @@ const styles = StyleSheet.create({
   }
 });
 
-class VersionInfoOverlay extends React.Component<Props> {
-  public render() {
-    const appVersion = DeviceInfo.getVersion();
-    const serverInfo = this.props.serverInfo;
-    const serverVersion = serverInfo ? serverInfo.version : "?";
-    return (
-      <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>{appVersion}</Text>
-        <Text style={styles.versionText}>{serverVersion}</Text>
-      </View>
-    );
-  }
-}
+const VersionInfoOverlay: React.SFC<Props> = props => {
+  const appVersion = DeviceInfo.getVersion();
+  const serverInfo = props.serverInfo;
+  const serverVersion = serverInfo ? serverInfo.version : "?";
+  return (
+    <View style={styles.versionContainer}>
+      <Text style={styles.versionText}>{appVersion}</Text>
+      <Text style={styles.versionText}>{serverVersion}</Text>
+    </View>
+  );
+};
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   serverInfo: state.backendInfo.serverInfo

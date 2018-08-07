@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
  * A component that show a Grid with every Identity Provider passed in the idps
  * array property. When an Identity Provider is selected a callback function is called.
  */
-class IdpsGrid extends React.Component<Props> {
+class IdpsGrid extends React.PureComponent<Props> {
   public render() {
     const { idps } = this.props;
     return (
