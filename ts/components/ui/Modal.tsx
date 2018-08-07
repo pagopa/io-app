@@ -13,9 +13,7 @@ class Modal extends React.Component<Props> {
     return <RNModal {...this.props} />;
   }
 }
-const StyledModal = connectStyle(
-  "UIComponents.Modal",
-  {},
-  mapPropsToStyleNames
-)(Modal);
+const StyledModal = connectStyle("UIComponent.Modal", {}, mapPropsToStyleNames)(
+  Modal
+);
 export default StyledModal;

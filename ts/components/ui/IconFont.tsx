@@ -21,7 +21,7 @@ class IconFont extends React.Component<Props> {
 }
 
 const StyledIconFont = connectStyle(
-  "UIComponents.IconFont",
+  "UIComponent.IconFont",
   {},
   mapPropsToStyleNames
 )(IconFont);
