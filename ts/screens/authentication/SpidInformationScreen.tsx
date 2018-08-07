@@ -153,6 +153,6 @@ export default connect()(
   withContextualHelp(
     SpidInformationScreen,
     I18n.t("personal_data_processing.content"),
-    I18n.t("personal_data_processing.content")
+    () => I18n.t("personal_data_processing.content")
   )
 );

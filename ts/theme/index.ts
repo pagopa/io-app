@@ -5,6 +5,7 @@
 
 import merge from "lodash/merge";
 import getTheme from "native-base/src/theme/components";
+import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
 import footerWithButtonsTheme from "./components/FooterWithButtons";
@@ -103,6 +104,9 @@ const theme = (): Theme => {
     },
     "NativeBase.ListItem": {
       ...listItemTheme()
+    },
+    "UIComponent.BaseScreenComponent": {
+      ...baseScreenComponentTheme()
     },
     "UIComponent.TopScreenComponent": {
       ...topScreenComponentTheme()

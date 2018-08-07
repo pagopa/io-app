@@ -13,7 +13,7 @@ import Modal from "./ui/Modal";
 
 type Props = Readonly<{
   title: string;
-  body: React.ReactNode;
+  body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
 }>;
@@ -23,14 +23,14 @@ export class ContextualHelp extends React.Component<Props> {
     return (
       <Modal isVisible={this.props.isVisible} fullscreen={true}>
         <View header={true}>
-          <TouchableHighlight onPress={_ => this.props.close()}>
+          <TouchableHighlight onPress={this.props.close}>
             <IconFont name="io-close" />
           </TouchableHighlight>
         </View>
         <Content>
           <H1>{this.props.title}</H1>
           <View spacer={true} large={true} />
-          {this.props.body}
+          {this.props.body()}
         </Content>
       </Modal>
     );

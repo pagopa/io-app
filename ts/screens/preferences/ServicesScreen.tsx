@@ -61,7 +61,7 @@ type OwnProps = Readonly<{
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
-class ServicesScreen extends React.Component<Props> {
+class ServicesScreen extends React.PureComponent<Props> {
   private goBack() {
     this.props.navigation.goBack();
   }
