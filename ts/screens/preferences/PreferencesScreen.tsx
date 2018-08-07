@@ -16,7 +16,7 @@ import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
-import TopScreenComponent from "../../components/TopScreenComponent";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 import ROUTES from "../../navigation/routes";
 

@@ -29,7 +29,7 @@ import variables from "../../theme/variables";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-import TopScreenComponent from "../../components/TopScreenComponent";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;

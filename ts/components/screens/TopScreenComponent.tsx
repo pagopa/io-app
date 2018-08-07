@@ -4,10 +4,10 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 
-import ScreenHeader from "./ScreenHeader";
+import ScreenHeader from "../ScreenHeader";
 
 import I18n from "i18n-js";
-import BaseScreenComponent from "./screens/BaseScreenComponent";
+import BaseScreenComponent from "./BaseScreenComponent";
 
 interface Props {
   title: string;
@@ -21,7 +21,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
     const { goBack, icon, title, subtitle, onMoreLinkPress } = this.props;
     return (
-      <BaseScreenComponent goBack={goBack}>
+      <BaseScreenComponent goBack={goBack} headerTitle={goBack ? title : null}>
         <ScreenHeader heading={<H1>{title}</H1>} icon={icon} />
         <View>
           {subtitle && <Text>{subtitle}</Text>}

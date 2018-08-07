@@ -1,3 +1,9 @@
 import { Theme } from "../types";
 
-export default (): Theme => ({});
+import variables from "../variables";
+
+export default (): Theme => ({
+  "NativeBase.Container": {
+    backgroundColor: variables.contentBackground
+  }
+});
