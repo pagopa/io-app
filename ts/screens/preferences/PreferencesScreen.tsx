@@ -17,6 +17,7 @@ import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
@@ -58,6 +59,15 @@ function translateLocale(locale: string): string {
  */
 class PreferencesScreen extends React.Component<Props> {
   public render() {
+    const help =
+      I18n.currentLocale() === "en"
+        ? require("../../help/PREFERENCES_HOME.en")
+        : require("../../help/PREFERENCES_HOME.it");
+    const contextualHelp = {
+      title: help.title,
+      body: () => <Markdown>{help.body}</Markdown>
+    };
+
     const maybeProfile = this.props.maybeProfile;
 
     const profileData = maybeProfile
@@ -80,6 +90,7 @@ class PreferencesScreen extends React.Component<Props> {
         title={I18n.t("preferences.title")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("preferences.subtitle")}
+        contextualHelp={contextualHelp}
       >
         <Content>
           <List>

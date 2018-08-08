@@ -8,20 +8,37 @@ import ScreenHeader from "../ScreenHeader";
 
 import I18n from "i18n-js";
 import BaseScreenComponent from "./BaseScreenComponent";
+import { OwnProps as BaseScreenComponentProps } from "./BaseScreenComponent";
 
-interface Props {
+interface OwnProps {
   title: string;
   icon: ImageSourcePropType;
   subtitle?: string;
   onMoreLinkPress?: () => void;
-  goBack?: () => void;
 }
 
+type Props = OwnProps &
+  Pick<BaseScreenComponentProps, "goBack" | "contextualHelp">;
+
+/**
+ * Wraps a BaseScreenComponent with a title and a subtitle
+ */
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
-    const { goBack, icon, title, subtitle, onMoreLinkPress } = this.props;
+    const {
+      goBack,
+      icon,
+      title,
+      subtitle,
+      onMoreLinkPress,
+      contextualHelp
+    } = this.props;
     return (
-      <BaseScreenComponent goBack={goBack} headerTitle={goBack ? title : null}>
+      <BaseScreenComponent
+        goBack={goBack}
+        headerTitle={goBack ? title : null}
+        contextualHelp={contextualHelp}
+      >
         <ScreenHeader heading={<H1>{title}</H1>} icon={icon} />
         <View>
           {subtitle && <Text>{subtitle}</Text>}
