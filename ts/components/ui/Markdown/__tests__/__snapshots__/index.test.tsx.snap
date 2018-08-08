@@ -84,6 +84,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -99,6 +100,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -114,6 +116,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -129,6 +132,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -144,6 +148,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -153,13 +158,13 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      :
-1
+      : 
     </Text>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -169,28 +174,13 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      . 
+      1
     </Text>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
-      style={
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        }
-      }
-      uppercase={false}
-    >
-      Vue
-2
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -206,6 +196,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -215,13 +206,29 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      React
-3
+      Vue 
     </Text>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      2
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -237,6 +244,55 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      React 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      3
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -273,6 +329,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -288,6 +345,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -303,6 +361,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -318,6 +377,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -333,6 +393,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -342,13 +403,13 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      :
-
+      : 
     </Text>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -358,28 +419,13 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      * 
+      
     </Text>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
-      style={
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        }
-      }
-      uppercase={false}
-    >
-      Vue
-
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -395,6 +441,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -404,13 +451,29 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      React
-
+      Vue 
     </Text>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -426,6 +489,55 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      React 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
+      style={
+        Object {
+          "color": "#000",
+          "fontFamily": "System",
+          "fontSize": 16,
+        }
+      }
+      uppercase={false}
+    >
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -462,6 +574,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -477,6 +590,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -492,6 +606,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",
@@ -507,6 +622,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      markdown={true}
       style={
         Object {
           "color": "#000",

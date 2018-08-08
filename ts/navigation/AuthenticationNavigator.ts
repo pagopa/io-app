@@ -7,8 +7,8 @@ import { environment } from "../config";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
-import MarkdownScreen from "../screens/authentication/MarkdownScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
+import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
 
 // Routes loaded in production mode
