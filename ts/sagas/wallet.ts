@@ -1,4 +1,7 @@
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import {
+  AmountInEuroCentsFromNumber,
+  RptIdFromString
+} from "italia-ts-commons/lib/pagopa";
 
 /**
  * A saga that manages the Wallet.
@@ -16,7 +19,6 @@ import {
 
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { timeoutPromise } from "italia-ts-commons/lib/promises";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
@@ -113,8 +115,8 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { amountToImportoWithFallback } from "../utils/amounts";
+import { pollingFetch } from "../utils/fetch";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -349,53 +351,66 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
 }
 
 const MAX_RETRIES_POLLING = 20;
-const DELAY_BETWEEN_RETRIES_MS = 1000 as Millisecond;
+const DELAY_BETWEEN_RETRIES_MS = 1000;
 
-const pollForPaymentId = async (
-  backendClient: ReturnType<typeof BackendClient>,
-  p: { paymentContextCode: CodiceContestoPagamento },
-  retries = MAX_RETRIES_POLLING
-): Promise<string | undefined> => {
-  if (retries === 0) {
-    return undefined;
-  }
-  const response = await backendClient.getPaymentId(p);
-  if (response === undefined) {
-    return undefined;
-  }
-  if (response.status === 200) {
-    return response.value.idPagamento;
-  }
-  if (response.status === 404) {
-    await timeoutPromise(DELAY_BETWEEN_RETRIES_MS);
-    console.warn("waiting");
-    return pollForPaymentId(backendClient, p, retries - 1);
-  }
-  return undefined;
-};
-
+// handle the "attiva" API call
 const attivaRpt = async (
   sessionToken: SessionToken,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
-) => {
+): Promise<boolean> => {
   const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
   const response:
     | BasicResponseTypeWith401<PaymentActivationsPostResponse>
     | undefined = await backendClient.postAttivaRpt({
-    rptId,
+    rptId: RptIdFromString.encode(rptId),
     paymentContextCode,
     amount: amountToImportoWithFallback(amount)
   });
-  console.warn(response);
-  if (response !== undefined && response.status === 200) {
-    // successfully request the payment activation
-    // now poll until a paymentId is made available
-    return await pollForPaymentId(backendClient, { paymentContextCode });
+  return response !== undefined && response.status === 200;
+};
+
+// handle the polling
+const getPaymentId = async (
+  sessionToken: SessionToken,
+  paymentContextCode: CodiceContestoPagamento
+): Promise<string | undefined> => {
+  // successfully request the payment activation
+  // now poll until a paymentId is made available
+  const backendClient = BackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    pollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
+  );
+  const response = await backendClient.getPaymentId({ paymentContextCode });
+  return response !== undefined && response.status === 200
+    ? response.value.idPagamento
+    : undefined;
+};
+
+/**
+ * First do the "attiva" operation then,
+ * if successful, poll until a paymentId
+ * is available
+ */
+const attivaAndGetPaymentId = async (
+  sessionToken: SessionToken,
+  rptId: RptId,
+  paymentContextCode: CodiceContestoPagamento,
+  amount: AmountInEuroCents
+): Promise<string | undefined> => {
+  const attivaRptResult = await attivaRpt(
+    sessionToken,
+    rptId,
+    paymentContextCode,
+    amount
+  );
+  if (!attivaRptResult) {
+    return undefined;
   }
-  return undefined;
+  return await getPaymentId(sessionToken, paymentContextCode);
 };
 
 function* continueWithPaymentMethodsHandler(
@@ -428,7 +443,14 @@ function* continueWithPaymentMethodsHandler(
   const paymentId: string | undefined =
     hasPaymentId || sessionToken === undefined
       ? undefined
-      : yield call(attivaRpt, sessionToken, rptId, paymentContextCode, amount);
+      : yield call(
+          attivaAndGetPaymentId,
+          sessionToken,
+          rptId,
+          paymentContextCode,
+          amount
+        );
+  console.warn(paymentId);
 
   // in case  (paymentId === undefined && !hasPaymentId),
   // the payment id could not be fetched successfully. Handle

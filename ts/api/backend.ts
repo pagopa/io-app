@@ -162,7 +162,7 @@ export type VerificaRptT = IGetApiRequestType<
 
 export type AttivaRptT = IPostApiRequestType<
   {
-    rptId: RptIdFromString;
+    rptId: string;
     paymentContextCode: CodiceContestoPagamento;
     amount: ImportoEuroCents;
   },
