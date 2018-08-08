@@ -5,6 +5,7 @@
 
 import merge from "lodash/merge";
 import getTheme from "native-base/src/theme/components";
+import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
 import footerWithButtonsTheme from "./components/FooterWithButtons";
@@ -20,7 +21,6 @@ import itemTheme from "./components/Item";
 import listItemTheme from "./components/ListItem";
 import messageComponent from "./components/MessageComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
-import modalTheme from "./components/Modal";
 import preferenceItemTheme from "./components/PreferenceItem";
 import screenHeaderTheme from "./components/ScreenHeader";
 import tabContainerTheme from "./components/TabContainer";
@@ -65,9 +65,6 @@ const theme = (): Theme => {
     "NativeBase.Item": {
       ...itemTheme()
     },
-    "UIComponent.Modal": {
-      ...modalTheme()
-    },
     "NativeBase.Text": {
       ...textTheme()
     },
@@ -103,6 +100,9 @@ const theme = (): Theme => {
     },
     "NativeBase.ListItem": {
       ...listItemTheme()
+    },
+    "UIComponent.BaseScreenComponent": {
+      ...baseScreenComponentTheme()
     },
     "UIComponent.TopScreenComponent": {
       ...topScreenComponentTheme()

@@ -1,16 +1,6 @@
 import * as React from "react";
 
-import {
-  Button,
-  Container,
-  Content,
-  Header,
-  Right,
-  Text,
-  View
-} from "native-base";
-
-import { TouchableHighlight } from "react-native";
+import { Button, Content, Text, View } from "native-base";
 
 import { connect } from "react-redux";
 
@@ -22,6 +12,7 @@ import I18n from "../i18n";
 import variables from "../theme/variables";
 
 import Pinpad from "../components/Pinpad";
+import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
 
@@ -30,10 +21,7 @@ import { ReduxProps } from "../store/actions/types";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
 
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../components/helpers/withContextualHelp";
+import { ContextualHelpInjectedProps } from "../components/helpers/withContextualHelp";
 import { startPinReset } from "../store/actions/pinset";
 import { PinString } from "../types/PinString";
 
@@ -110,15 +98,12 @@ class PinLoginScreen extends React.Component<Props> {
 
   public render() {
     const { pinLoginState } = this.props;
+    const contextualHelp = {
+      title: I18n.t("pin_login.unlock_screen.help.title"),
+      body: () => I18n.t("pin_login.unlock_screen.help.content")
+    };
     return (
-      <Container>
-        <Header primary={true}>
-          <Right>
-            <TouchableHighlight onPress={this.props.showHelp}>
-              <IconFont name="io-question" />
-            </TouchableHighlight>
-          </Right>
-        </Header>
+      <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
         <Content primary={true}>
           <View spacer={true} extralarge={true} />
           <Text white={true} alignCenter={true}>
@@ -132,7 +117,7 @@ class PinLoginScreen extends React.Component<Props> {
           <View spacer={true} />
           <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
         </Content>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }
@@ -142,10 +127,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   pinLoginState: state.pinlogin
 });
 
-export default connect(mapStateToProps)(
-  withContextualHelp(
-    PinLoginScreen,
-    I18n.t("pin_login.unlock_screen.help.title"),
-    I18n.t("pin_login.unlock_screen.help.content")
-  )
-);
+export default connect(mapStateToProps)(PinLoginScreen);

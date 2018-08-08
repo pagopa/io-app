@@ -34,7 +34,8 @@ export default (): Theme => {
         backgroundColor: "transparent",
         color: variables.toolbarTextColor,
         fontSize: variables.headerBodyFontSize
-      }
+      },
+      marginLeft: 10
     },
 
     ".primary": {

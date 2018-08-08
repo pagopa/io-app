@@ -1,4 +1,4 @@
-import { Body, Button, Container, Content, Left, Text } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
   NavigationInjectedProps,
@@ -10,8 +10,7 @@ import { connect } from "react-redux";
 import I18n from "../../i18n";
 
 import MessageDetailsComponent from "../../components/messages/MessageDetailsComponent";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { ReduxProps } from "../../store/actions/types";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
@@ -39,9 +38,7 @@ type Props = ReduxProps & NavigationInjectedProps & OwnProps;
  * This screen show the Message Details for a simple message
  */
 export class MessageDetailsScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+  private goBack = () => this.props.navigation.goBack();
 
   public render() {
     const {
@@ -59,17 +56,10 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
       : undefined;
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Text>{I18n.t("messageDetails.headerTitle")}</Text>
-          </Body>
-        </AppHeader>
+      <BaseScreenComponent
+        headerTitle={I18n.t("messageDetails.headerTitle")}
+        goBack={this.goBack}
+      >
         <Content noPadded={true}>
           <MessageDetailsComponent
             message={message}
@@ -78,7 +68,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
             navigateToServicePreferences={navigateToServicePreferences}
           />
         </Content>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

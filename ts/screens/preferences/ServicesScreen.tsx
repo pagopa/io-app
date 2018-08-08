@@ -1,18 +1,4 @@
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  Grid,
-  H1,
-  H3,
-  Left,
-  ListItem,
-  Right,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { Grid, H1, H3, Left, ListItem, Right, Row, Text } from "native-base";
 import * as React from "react";
 import {
   ListRenderItem,
@@ -27,8 +13,6 @@ import I18n from "../../i18n";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
-import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
-import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 
 import ROUTES from "../../navigation/routes";
@@ -49,6 +33,8 @@ import { getEnabledChannelsForService } from "./common";
 
 import { isDefined } from "../../utils/guards";
 
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+
 type ReduxMappedProps = Readonly<{
   profile: ProfileState;
   services: ServicesState;
@@ -61,10 +47,8 @@ type OwnProps = Readonly<{
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
-class ServicesScreen extends React.Component<Props> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+class ServicesScreen extends React.PureComponent<Props> {
+  private goBack = () => this.props.navigation.goBack();
 
   private getServiceKey = (service: ServicePublic): string => {
     return `${service.service_id}-${service.version || 0}`;
@@ -142,33 +126,19 @@ class ServicesScreen extends React.Component<Props> {
     });
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Text>{I18n.t("services.headerTitle")}</Text>
-          </Body>
-        </AppHeader>
-
-        <Content>
-          <DefaultSubscreenHeader screenTitle={I18n.t("services.title")} />
-          <Text>{I18n.t("services.subtitle")}</Text>
-          <View spacer={true} />
-          <View>
-            <SectionList
-              sections={sections}
-              renderItem={this.renderServiceItem}
-              renderSectionHeader={this.renderServiceSectionHeader}
-              keyExtractor={this.getServiceKey}
-              alwaysBounceVertical={false}
-            />
-          </View>
-        </Content>
-      </Container>
+      <TopScreenComponent
+        title={I18n.t("services.headerTitle")}
+        goBack={this.goBack}
+        subtitle={I18n.t("services.subtitle")}
+      >
+        <SectionList
+          sections={sections}
+          renderItem={this.renderServiceItem}
+          renderSectionHeader={this.renderServiceSectionHeader}
+          keyExtractor={this.getServiceKey}
+          alwaysBounceVertical={false}
+        />
+      </TopScreenComponent>
     );
   }
 }
