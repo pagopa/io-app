@@ -66,7 +66,7 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 1.75;
   },
   get fontSize7(): number {
-    return this.fontSizeBase * 3;
+    return this.fontSizeBase * 2;
   },
   lineHeightBase: 24,
   get lineHeightFontSizeRatio(): number {
@@ -128,20 +128,20 @@ const customVariables = Object.assign(materialVariables, {
   h1Color: "#17324D",
   h1FontWeight: "700" as FontWeight,
   get h1FontSize(): number {
-    return this.fontSize6;
+    return this.fontSize7;
   },
   get h1LineHeight(): number {
-    return this.fontSize6 * this.lineHeightFontSizeRatio;
+    return this.fontSize7 * this.lineHeightFontSizeRatio;
   },
 
   // H2
   h2Color: "#17324D",
-  h2FontWeight: "900" as FontWeight,
+  h2FontWeight: "700" as FontWeight,
   get h2FontSize(): number {
-    return this.fontSize7;
+    return this.fontSize6;
   },
   get h2LineHeight(): number {
-    return this.fontSize7 * this.lineHeightFontSizeRatio;
+    return this.fontSize6 * this.lineHeightFontSizeRatio;
   },
 
   // H3
