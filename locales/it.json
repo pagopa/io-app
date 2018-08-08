@@ -92,7 +92,15 @@
   "authentication": {
     "landing": {
       "login": "Entra con SPID",
-      "nospid": "Non hai SPID? Scopri di più"
+      "nospid": "Non hai SPID? Scopri di più",
+      "card1-title": "Tutti i messaggi in un solo posto",
+      "card1-content": "Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni Pubbliche",
+      "card2-title": "Usa i tuoi metodi di pagamento preferiti",
+      "card2-content": "Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte",
+      "card3-title": "Paga velocemente un avviso cartaceo",
+      "card3-content": "Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo",
+      "card4-title": "Potrai utilizzare l'app solo tramite SPID",
+      "card4-content": "L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità Digitale) per garantire la tua sicurezza online"
     },
     "spid_information_request": {
       "headerTitle": "Non hai SPID?",
