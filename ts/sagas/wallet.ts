@@ -112,6 +112,22 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
+import {
+  AbortableFetch,
+  toFetch,
+  setFetchTimeout,
+  retriableFetch
+} from "italia-ts-commons/lib/fetch";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import {
+  withRetries,
+  RetriableTask,
+  MaxRetries,
+  RetryAborted,
+  TransientError
+} from "italia-ts-commons/lib/tasks";
+import { TaskEither, fromEither } from "fp-ts/lib/TaskEither";
+import { left, right } from "fp-ts/lib/Either";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -348,8 +364,47 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
 const MAX_RETRIES_POLLING = 20;
 const DELAY_BETWEEN_RETRIES_MS = 1000;
 
-const delay = (ms: number): Promise<undefined> =>
-  new Promise(resolve => setTimeout(resolve, ms));
+//
+// THIS IS AN EXAMPLE
+//
+// we build a fetch client that can be aborted for timeout
+// most of this code can be shared in utils/fetch.ts, it's here for
+// clarity
+const abortableFetch = AbortableFetch(fetch);
+const timeoutFetch = toFetch(
+  setFetchTimeout(1000 as Millisecond, abortableFetch)
+);
+// use a constant backoff with MAX_RETRIES_POLLING
+const constantBackoff = () => DELAY_BETWEEN_RETRIES_MS as Millisecond;
+const retryLogic = withRetries<Error, Response>(
+  MAX_RETRIES_POLLING,
+  constantBackoff
+);
+// makes the retry logic map 404s to transient errors (by default only
+// timeouts are transient)
+// see also https://github.com/teamdigitale/italia-ts-commons/blob/master/src/fetch.ts#L103
+const retryWithTransient404s: typeof retryLogic = (t, shouldAbort?) =>
+  retryLogic(
+    // when the result of the task is a Response with status 404,
+    // map it to a transient error
+    t.chain(r =>
+      fromEither(
+        r.status === 404
+          ? left<TransientError, never>(TransientError)
+          : right<never, Response>(r)
+      )
+    ),
+    shouldAbort
+  );
+
+// this is a fetch with timeouts, constant backoff and with the logic
+// that handles 404s as transient errors, this "fetch" must be passed to
+// createFetchRequestForApi when creating "getPaymentId"
+const pollingFetch = retriableFetch(retryWithTransient404s)(timeoutFetch);
+
+//
+// ---------
+//
 
 const pollForPaymentId = async (
   backendClient: ReturnType<typeof BackendClient>,
