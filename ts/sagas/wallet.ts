@@ -16,6 +16,7 @@ import {
 
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { timeoutPromise } from "italia-ts-commons/lib/promises";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
@@ -112,6 +113,8 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { amountToImportoWithFallback } from "../utils/amounts";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -346,10 +349,7 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
 }
 
 const MAX_RETRIES_POLLING = 20;
-const DELAY_BETWEEN_RETRIES_MS = 1000;
-
-const delay = (ms: number): Promise<undefined> =>
-  new Promise(resolve => setTimeout(resolve, ms));
+const DELAY_BETWEEN_RETRIES_MS = 1000 as Millisecond;
 
 const pollForPaymentId = async (
   backendClient: ReturnType<typeof BackendClient>,
@@ -367,36 +367,33 @@ const pollForPaymentId = async (
     return response.value.idPagamento;
   }
   if (response.status === 404) {
-    await delay(DELAY_BETWEEN_RETRIES_MS);
+    await timeoutPromise(DELAY_BETWEEN_RETRIES_MS);
     console.warn("waiting");
     return pollForPaymentId(backendClient, p, retries - 1);
   }
   return undefined;
 };
 
-// WIP: is this the appropriate place for this function?
 const attivaRpt = async (
-  sessionToken: SessionToken | undefined,
+  sessionToken: SessionToken,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
 ) => {
-  if (sessionToken) {
-    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
-    const response:
-      | BasicResponseTypeWith401<PaymentActivationsPostResponse>
-      | undefined = await backendClient.postAttivaRpt({
-      rptId,
-      paymentContextCode,
-      amount
-    });
-    console.warn(response);
-    if (response !== undefined && response.status === 200) {
-      // successfully request the payment activation
-      // now poll until a paymentId is made available
-      return await pollForPaymentId(backendClient, { paymentContextCode });
-    }
+  const response:
+    | BasicResponseTypeWith401<PaymentActivationsPostResponse>
+    | undefined = await backendClient.postAttivaRpt({
+    rptId,
+    paymentContextCode,
+    amount: amountToImportoWithFallback(amount)
+  });
+  console.warn(response);
+  if (response !== undefined && response.status === 200) {
+    // successfully request the payment activation
+    // now poll until a paymentId is made available
+    return await pollForPaymentId(backendClient, { paymentContextCode });
   }
   return undefined;
 };
@@ -428,9 +425,10 @@ function* continueWithPaymentMethodsHandler(
   // if the payment Id not available yet,
   // do the "attiva" and then poll until
   // a payment Id shows up
-  const paymentId: string | undefined = hasPaymentId
-    ? undefined
-    : yield call(attivaRpt, sessionToken, rptId, paymentContextCode, amount);
+  const paymentId: string | undefined =
+    hasPaymentId || sessionToken === undefined
+      ? undefined
+      : yield call(attivaRpt, sessionToken, rptId, paymentContextCode, amount);
 
   // in case  (paymentId === undefined && !hasPaymentId),
   // the payment id could not be fetched successfully. Handle

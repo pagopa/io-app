@@ -32,6 +32,7 @@ import {
   GlobalStateWithVerificaResponse
 } from "../types";
 import { getWalletFromId, getWallets } from "./wallets";
+import { AmountToImporto } from "../../../utils/amounts";
 
 // The following are possible states, identified
 // by a string (kind), and with specific
@@ -220,9 +221,9 @@ export const getSelectedPaymentMethod = (
 export const getCurrentAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents =>
-  `${
+  AmountToImporto.encode(
     state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento
-  }` as AmountInEuroCents;
+  );
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
