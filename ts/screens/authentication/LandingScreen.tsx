@@ -26,14 +26,14 @@ type OwnProps = {
 };
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
-export type landingCardType = {
+export type LandingCardProps = {
   id: number;
   image: NodeRequire;
   title: string;
   content: string;
 };
 
-const cards: ReadonlyArray<landingCardType> = [
+const cardProps: ReadonlyArray<LandingCardProps> = [
   {
     id: 1,
     image: require("../../../img/landing/01.png"),
@@ -60,8 +60,27 @@ const cards: ReadonlyArray<landingCardType> = [
   }
 ];
 
+const LandingCardComponent: React.SFC<LandingCardProps> = card => (
+  <View style={styles.card}>
+    <Image source={card.image} style={styles.image} />
+    <View spacer={true} />
+    <Grid>
+      <Col size={1} />
+      <Col size={7}>
+        <Text bold={true} alignCenter={true}>
+          {" "}
+          {card.title}{" "}
+        </Text>
+        <View spacer={true} />
+        <Text alignCenter={true}> {card.content} </Text>
+        <View spacer={true} />
+      </Col>
+      <Col size={1} />
+    </Grid>
+  </View>
+);
+
 const screenWidth = Dimensions.get("screen").width;
-const BAR_SPACE = 10;
 
 const styles = StyleSheet.create({
   card: {
@@ -76,94 +95,60 @@ const styles = StyleSheet.create({
   }
 });
 
-class LandingScreen extends React.Component<Props, never> {
-  public numItems = cards.length;
-  public itemWidth = BAR_SPACE;
-  public animVal = new Animated.Value(0);
+const LandingScreen: React.SFC<Props> = props => {
+  const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
+  const navigateToIdpSelection = () =>
+    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
-  private navigateToMarkdown() {
-    this.props.navigation.navigate(ROUTES.MARKDOWN);
-  }
+  const navigateToSpidInformationRequest = () =>
+    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  private navigateToIdpSelection() {
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
-  }
+  const cardComponents = cardProps.map(p => (
+    <LandingCardComponent key={`card-${p.id}`} {...p} />
+  ));
 
-  private navigateToSpidInformationRequest() {
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
-  }
+  return (
+    <Container>
+      <AppHeader>
+        <Body>
+          <Text>{DeviceInfo.getApplicationName()}</Text>
+        </Body>
+      </AppHeader>
+      <Content noPadded={true}>
+        {environment === "DEV" && (
+          <Text link={true} onPress={navigateToMarkdown}>
+            Test Markdown
+          </Text>
+        )}
 
-  private getCardArray() {
-    const cardArray: ReadonlyArray<JSX.Element> = [];
-    cards.forEach((card, i) => {
-      const thisCard = (
-        <View key={`card${i}`} style={styles.card}>
-          <Image source={card.image} style={styles.image} />
-          <View spacer={true} />
-          <Grid>
-            <Col size={1} />
-            <Col size={7}>
-              <Text bold={true} alignCenter={true}>
-                {" "}
-                {card.title}{" "}
-              </Text>
-              <View spacer={true} />
-              <Text alignCenter={true}> {card.content} </Text>
-              <View spacer={true} />
-            </Col>
-            <Col size={1} />
-          </Grid>
-        </View>
-      );
-      cardArray.push(thisCard);
-    });
-    return cardArray;
-  }
+        <HorizontalScroll cards={cardComponents} />
+      </Content>
 
-  public render() {
-    return (
-      <Container>
-        <AppHeader>
-          <Body>
-            <Text>{DeviceInfo.getApplicationName()}</Text>
-          </Body>
-        </AppHeader>
-        <Content noPadded={true}>
-          {environment === "DEV" && (
-            <Text link={true} onPress={_ => this.navigateToMarkdown()}>
-              Test Markdown
-            </Text>
-          )}
+      <View footer={true}>
+        <Button
+          block={true}
+          primary={true}
+          iconLeft={true}
+          onPress={navigateToIdpSelection}
+          testID="landing-button-login"
+        >
+          <IconFont name="io-profilo" color={variables.colorWhite} />
+          <Text>{I18n.t("authentication.landing.login")}</Text>
+        </Button>
 
-          <HorizontalScroll
-            cardsContent={cards}
-            cardsArray={this.getCardArray()}
-          />
-        </Content>
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            iconLeft={true}
-            onPress={_ => this.navigateToIdpSelection()}
-            testID="landing-button-login"
-          >
-            <IconFont name="io-profilo" color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.login")}</Text>
-          </Button>
-          <View spacer={true} />
+        <View spacer={true} />
 
-          <Button
-            block={true}
-            small={true}
-            transparent={true}
-            onPress={_ => this.navigateToSpidInformationRequest()}
-          >
-            <Text>{I18n.t("authentication.landing.nospid")}</Text>
-          </Button>
-        </View>
-      </Container>
-    );
-  }
-}
+        <Button
+          block={true}
+          small={true}
+          transparent={true}
+          onPress={navigateToSpidInformationRequest}
+        >
+          <Text>{I18n.t("authentication.landing.nospid")}</Text>
+        </Button>
+      </View>
+    </Container>
+  );
+};
+
 export default connect()(LandingScreen);

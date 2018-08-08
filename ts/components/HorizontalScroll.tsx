@@ -4,12 +4,10 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
-import { landingCardType } from "../screens/authentication/LandingScreen";
 import variables from "../theme/variables";
 
 export type Props = {
-  cardsContent: ReadonlyArray<landingCardType> | ReadonlyArray<any>;
-  cardsArray: ReadonlyArray<JSX.Element>;
+  cards: ReadonlyArray<JSX.Element>;
 };
 
 const itemWidth = 10; // Radius of the indicators
@@ -39,64 +37,53 @@ const styles = StyleSheet.create({
   }
 });
 
-export class HorizontalScroll extends React.PureComponent<Props> {
-  private animVal = new Animated.Value(0);
+export const HorizontalScroll: React.SFC<Props> = props => {
+  const animVal = new Animated.Value(0);
 
-  private getBarArray(cards: ReadonlyArray<any>) {
-    const barArray: ReadonlyArray<JSX.Element> = [];
-
-    cards.forEach((_, i) => {
-      const scrollBarVal = this.animVal.interpolate({
-        inputRange: [screenWidth * (i - 1), screenWidth * (i + 1)],
-        outputRange: [-itemWidth, itemWidth],
-        extrapolate: "clamp"
-      });
-
-      const thisBar = (
-        <View
-          key={`bar${i}`}
-          style={[
-            styles.track,
-            {
-              marginLeft: i === 0 ? 0 : itemWidth
-            }
-          ]}
-        >
-          <Animated.View
-            style={[
-              styles.bar,
-              {
-                transform: [{ translateX: scrollBarVal }]
-              }
-            ]}
-          />
-        </View>
-      );
-      barArray.push(thisBar);
+  const barArray = props.cards.map((_, i) => {
+    const scrollBarVal = animVal.interpolate({
+      inputRange: [screenWidth * (i - 1), screenWidth * (i + 1)],
+      outputRange: [-itemWidth, itemWidth],
+      extrapolate: "clamp"
     });
 
-    return barArray;
-  }
-
-  public render() {
     return (
-      <View style={styles.scrollView}>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={this.props.cardsContent.length}
-          pagingEnabled={true}
-          onScroll={Animated.event([
-            { nativeEvent: { contentOffset: { x: this.animVal } } }
-          ])}
-        >
-          {this.props.cardsArray}
-        </ScrollView>
-
-        <View style={styles.barContainer}>
-          {this.getBarArray(this.props.cardsContent)}
-        </View>
+      <View
+        key={`bar${i}`}
+        style={[
+          styles.track,
+          {
+            marginLeft: i === 0 ? 0 : itemWidth
+          }
+        ]}
+      >
+        <Animated.View
+          style={[
+            styles.bar,
+            {
+              transform: [{ translateX: scrollBarVal }]
+            }
+          ]}
+        />
       </View>
     );
-  }
-}
+  });
+
+  return (
+    <View style={styles.scrollView}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={props.cards.length}
+        pagingEnabled={true}
+        onScroll={Animated.event([
+          { nativeEvent: { contentOffset: { x: animVal } } }
+        ])}
+      >
+        {props.cards}
+      </ScrollView>
+
+      <View style={styles.barContainer}>{barArray}</View>
+    </View>
+  );
+};
