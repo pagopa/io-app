@@ -1,14 +1,11 @@
 import {
-  Body,
   Button,
   Col,
-  Container,
   Content,
   Grid,
   H1,
   H2,
   H3,
-  Left,
   Row,
   Text,
   View
@@ -20,8 +17,6 @@ import { connect } from "react-redux";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 
@@ -41,6 +36,7 @@ import {
 } from "./common";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
 export interface IMessageDetailsScreenParam {
   readonly service: ServicePublic;
@@ -116,9 +112,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     }
   }
 
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+  private goBack = () => this.props.navigation.goBack();
 
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
@@ -174,18 +168,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       .getOrElse(0 as NonNegativeInteger);
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Text>{service.service_name}</Text>
-          </Body>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={this.goBack}
+        headerTitle={service.service_name}
+      >
         <Content>
           <Grid>
             <Row>
@@ -338,7 +324,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           </Grid>
           <View spacer={true} large={true} />
         </Content>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

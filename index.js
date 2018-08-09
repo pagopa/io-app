@@ -3,7 +3,7 @@
  */
 
 import { AppRegistry } from "react-native";
-import App from "./ts/App";
+import { App } from "./ts/App";
 
 // Temporary workaround for @https://github.com/facebook/react-native/issues/18868
 // TODO: Remove this as soon as it has been fixed @https://www.pivotaltracker.com/story/show/158144437

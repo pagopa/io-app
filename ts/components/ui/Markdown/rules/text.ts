@@ -15,14 +15,15 @@ function rule() {
       return node.content;
     }
 
-    const words = node.content.split(" ");
+    const words = node.content.split(/[ \n]/);
 
     return words.map((word: any, i: number) => {
       const text = i !== words.length - 1 ? `${word} ` : word;
       return React.createElement(
         Text,
         {
-          key: i
+          key: i,
+          markdown: true
         },
         text
       );

@@ -110,6 +110,6 @@ export default connect(mapStateToProps)(
   withContextualHelp(
     SpidInformationRequestScreen,
     I18n.t("personal_data_processing.title"),
-    <TermOfUse />
+    () => <TermOfUse />
   )
 );

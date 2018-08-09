@@ -5,33 +5,87 @@
  * needed)
  */
 
-import { Content, H1, View } from "native-base";
+import { Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import { TouchableHighlight } from "react-native";
+import {
+  ActivityIndicator,
+  InteractionManager,
+  Modal,
+  TouchableHighlight
+} from "react-native";
+
 import IconFont from "../components/ui/IconFont";
-import Modal from "./ui/Modal";
+import AppHeader from "./ui/AppHeader";
+
+import themeVariables from "../theme/variables";
 
 type Props = Readonly<{
   title: string;
-  body: React.ReactNode;
+  body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
 }>;
 
-export class ContextualHelp extends React.Component<Props> {
+type State = Readonly<{
+  content: React.ReactNode | null;
+}>;
+
+export class ContextualHelp extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      content: null
+    };
+  }
+
   public render(): React.ReactNode {
+    // after the modal is fully visible, render the content -
+    // in case of complex markdown this can take some time and we don't
+    // want to impact the modal animation
+    const onModalShow = () =>
+      this.setState({
+        content: this.props.body()
+      });
+
+    // on close, we set a handler to cleanup the content after all
+    // interactions (animations) are complete
+    const onClose = () => {
+      InteractionManager.runAfterInteractions(() =>
+        this.setState({
+          content: null
+        })
+      );
+      this.props.close();
+    };
+
     return (
-      <Modal isVisible={this.props.isVisible} fullscreen={true}>
-        <View header={true}>
-          <TouchableHighlight onPress={_ => this.props.close()}>
-            <IconFont name="io-close" />
-          </TouchableHighlight>
-        </View>
-        <Content>
-          <H1>{this.props.title}</H1>
-          <View spacer={true} large={true} />
-          {this.props.body}
-        </Content>
+      <Modal
+        visible={this.props.isVisible}
+        onShow={onModalShow}
+        animationType="slide"
+        onRequestClose={onClose}
+      >
+        <Container>
+          <AppHeader>
+            <Right>
+              <TouchableHighlight onPress={onClose}>
+                <IconFont name="io-close" />
+              </TouchableHighlight>
+            </Right>
+          </AppHeader>
+
+          <Content>
+            <H1>{this.props.title}</H1>
+            <View spacer={true} large={true} />
+            {!this.state.content && (
+              <ActivityIndicator
+                size="large"
+                color={themeVariables.brandPrimaryLight}
+              />
+            )}
+            {this.state.content}
+          </Content>
+        </Container>
       </Modal>
     );
   }

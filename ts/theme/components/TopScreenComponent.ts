@@ -2,17 +2,14 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 export default (): Theme => ({
-  "NativeBase.Container": {
-    "UIComponent.ScreenHeader": {
+  "UIComponent.BaseScreenComponent": {
+    "NativeBase.Container": {
       "NativeBase.ViewNB": {
-        backgroundColor: variables.contentBackground
+        backgroundColor: variables.contentBackground,
+        paddingLeft: variables.contentPadding,
+        paddingRight: variables.contentPadding,
+        paddingBottom: variables.spacerLargeHeight
       }
-    },
-    "NativeBase.ViewNB": {
-      backgroundColor: variables.contentBackground,
-      paddingLeft: variables.contentPadding,
-      paddingRight: variables.contentPadding,
-      paddingBottom: variables.spacerLargeHeight
     }
   }
 });

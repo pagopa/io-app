@@ -49,7 +49,7 @@ type Props = ReduxMappedProps & DispatchProps;
 /**
  * The main container of the application with the ConnectionBar and the Navigator
  */
-class RootContainer extends React.Component<Props> {
+class RootContainer extends React.PureComponent<Props> {
   public componentDidMount() {
     if (Platform.OS === "android") {
       Linking.getInitialURL()

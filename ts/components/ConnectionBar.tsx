@@ -6,11 +6,12 @@ import I18n from "../i18n";
 import { ReduxProps } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 
-export type ReduxMappedProps = {
+type ReduxMappedProps = {
   isConnected: boolean;
 };
-export type OwnProps = {};
-export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+type Props = ReduxMappedProps & ReduxProps;
+
 const styles = StyleSheet.create({
   container: {
     display: "flex",
@@ -19,23 +20,23 @@ const styles = StyleSheet.create({
     paddingLeft: 20
   }
 });
+
 /**
  * Implements a component that show a message when there is no network connection
  */
-class ConnectionBar extends React.PureComponent<Props, never> {
-  public render() {
-    const { isConnected } = this.props;
-    if (isConnected) {
-      return null;
-    }
-    return (
-      <View style={styles.container}>
-        <Text>{I18n.t("connection.status.offline")}</Text>
-      </View>
-    );
+const ConnectionBar: React.SFC<Props> = props => {
+  if (props.isConnected) {
+    return null;
   }
-}
+  return (
+    <View style={styles.container}>
+      <Text>{I18n.t("connection.status.offline")}</Text>
+    </View>
+  );
+};
+
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isConnected: state.network.isConnected
 });
+
 export default connect(mapStateToProps)(ConnectionBar);
