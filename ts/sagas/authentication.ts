@@ -1,7 +1,7 @@
 /**
  * A collection of sagas to manage the Authentication.
  */
-import { isSome, Option } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import {
   NavigationActions,
   NavigationState,
@@ -21,8 +21,6 @@ import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import {
   authenticationCompleted,
-  IdpSelected,
-  LoginSuccess,
   logoutFailure,
   logoutSuccess,
   sessionLoadFailure,
@@ -34,7 +32,6 @@ import {
 import {
   APP_STATE_CHANGE_ACTION,
   AUTHENTICATION_COMPLETED,
-  IDP_SELECTED,
   LOGIN_SUCCESS,
   LOGOUT_REQUEST,
   PIN_LOGIN_INITIALIZE,
@@ -308,51 +305,13 @@ export function* watchStartAuthentication(): IterableIterator<Effect> {
       })
     );
 
-    // FIXME: the following take and put are useless as they are handled also
-    // by the following while loop
+    // Wait until the user has successfully logged in with SPID
+    yield take(LOGIN_SUCCESS);
 
-    // Wait the user to select the SPID Identity Provider
-    yield take(IDP_SELECTED);
-
-    // Once the user has selected an IdP, navitate to the login screen
-    yield put(
-      NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
-      })
-    );
-
-    while (true) {
-      /**
-       * The user can finish the login or go back and change the IDP so we need
-       * to wait both actions.
-       * TODO: check whether this take is complete of all possible actions
-       */
-      const action: IdpSelected | LoginSuccess = yield take([
-        IDP_SELECTED,
-        LOGIN_SUCCESS
-      ]);
-
-      // FIXME: why we handle navigatio within the saga? not sure it's a good
-      //        pattern, shouldn't we let the screen handle navigation and
-      //        forward and backward and wait for the LOGIN_SUCCESS action?
-      // If the user changes the IDP
-      if (action.type === IDP_SELECTED) {
-        // Show the user the IdpLoginScreen again
-        yield put(
-          NavigationActions.navigate({
-            routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
-          })
-        );
-
-        continue;
-      }
-
-      // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
-      // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
-      //        LOGIN_SUCCESS?
-      yield put(authenticationCompleted());
-      break;
-    }
+    // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
+    // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
+    //        LOGIN_SUCCESS?
+    yield put(authenticationCompleted());
   }
 }
 
