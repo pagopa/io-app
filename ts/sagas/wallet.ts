@@ -407,11 +407,44 @@ const attivaAndGetPaymentId = async (
     paymentContextCode,
     amount
   );
+  console.warn(attivaRptResult);
   if (!attivaRptResult) {
     return undefined;
   }
   return await getPaymentId(sessionToken, paymentContextCode);
 };
+
+function* checkPayment(
+  pagoPaClient: PagoPaClient,
+  token: string,
+  paymentId: string,
+  retries: number = MAX_TOKEN_REFRESHES
+): Iterator<Effect> {
+  if (retries === 0) {
+    // max retries reached
+    // show "unauthorized" error @https://www.pivotaltracker.com/story/show/159400682
+    return;
+  }
+  const response = yield call(pagoPaClient.checkPayment, token, paymentId);
+  if (response !== undefined) {
+    if (response.status === 200) {
+      console.warn(response);
+      return;
+    } else if (response.status === 401) {
+      yield call(fetchPagoPaToken, pagoPaClient);
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(
+          checkPayment,
+          pagoPaClient,
+          newToken.value,
+          paymentId,
+          retries - 1
+        );
+      }
+    }
+  }
+}
 
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods
@@ -451,6 +484,12 @@ function* continueWithPaymentMethodsHandler(
           amount
         );
   console.warn(paymentId);
+
+  const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+  if (pagoPaToken.isSome() && paymentId !== undefined) {
+    yield call(checkPayment, pagoPaClient, pagoPaToken.value, paymentId);
+  }
 
   // in case  (paymentId === undefined && !hasPaymentId),
   // the payment id could not be fetched successfully. Handle

@@ -17,11 +17,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 
-import {
-  AmountInEuroCents,
-  RptId,
-  RptIdFromString
-} from "italia-ts-commons/lib/pagopa";
+import { RptId, RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { Installation } from "../../definitions/backend/Installation";
