@@ -318,6 +318,13 @@ export function BackendClient(
   };
 }
 
+// WIP: this is a mocked version of the BackendClient
+// used to bypass the temporary non-working pagoPA proxy.
+// any request to the verifica/attiva/getPaymentId functionalities
+// will be replied to with the hardcoded information found here.
+// In order to proceed with a valid payment (i.e. talk to the
+// Payment Manager), a valid paymentId should be returned by
+// getPaymentId
 export const MockedBackendClient = (
   _: string,
   __: SessionToken,
@@ -411,7 +418,7 @@ export const MockedBackendClient = (
         headers: {},
         status: 200,
         value: {
-          idPagamento: "07a6d21d-e3ef-4eb3-8e92-16119e0c748"
+          idPagamento: "556475ef-a1d1-4ba5-a6a3-42479a8646c9"
         } as PaymentActivationsGetResponse
       } as BasicResponseType<PaymentActivationsGetResponse>)
   };

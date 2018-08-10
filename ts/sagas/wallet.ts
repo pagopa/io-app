@@ -573,9 +573,8 @@ function* continueWithPaymentMethodsHandler(
         );
 
   const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-  if (pagoPaToken.isSome() && paymentId !== undefined) {
-    yield call(checkPayment, pagoPaClient, pagoPaToken.value, paymentId);
+  if (paymentId !== undefined) {
+    yield call(checkPayment, pagoPaClient, paymentId);
   }
 
   // in case  (paymentId === undefined && !hasPaymentId),
@@ -672,7 +671,6 @@ function* completionHandler(_: PaymentRequestCompletion) {
   const token: Option<string> = yield select(getPagoPaToken);
   const paymentId: string = yield select(getPaymentId);
 
-  console.warn("OK!");
   if (walletToken.isSome()) {
     const tokenAndResponseOrUndefined:
       | [string, BasicResponseTypeWith401<TransactionResponse>]
