@@ -22,7 +22,7 @@ import ROUTES from "../navigation/routes";
 import {
   authenticationCompleted,
   logoutFailure,
-  logoutSuccess,
+  sessionExpired,
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
@@ -57,7 +57,6 @@ import {
 import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
 import { getPin } from "../utils/keychain";
-import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
  * Load session info from the Backend
@@ -241,7 +240,6 @@ export function* watchLogoutRequest(): IterableIterator<Effect> {
     );
 
     // Whether the user need to be logged out
-    let needLogout = true; // tslint:disable-line:no-let
     if (sessionToken) {
       const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
@@ -250,11 +248,7 @@ export function* watchLogoutRequest(): IterableIterator<Effect> {
       //        block for a while.
       const response:
         | BasicResponseTypeWith401<SuccessResponse>
-        | undefined = yield call(
-        callApiWith401ResponseStatusHandler,
-        backendClient.logout,
-        {}
-      );
+        | undefined = yield call(backendClient.logout, {});
 
       if (!response || response.status !== 200) {
         // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
@@ -262,26 +256,13 @@ export function* watchLogoutRequest(): IterableIterator<Effect> {
           ? response.value
           : Error(I18n.t("authentication.errors.logout"));
         yield put(logoutFailure(error));
-
-        if (response && response.status === 401) {
-          // The user is already logged out by watchSessionExpired saga on
-          // SESSION_EXPIRED
-          needLogout = false;
-        }
       }
     } else {
       yield put(logoutFailure(Error(I18n.t("authentication.errors.notoken"))));
     }
 
-    /**
-     * Handle the cass when the logout request didn't returns 401 (SESSION_EXPIRED).
-     * FIXME: why the double implementation, can't we just issue a
-     *        SESSION_EXPIRED here and have only one saga handle the login?
-     */
-    if (needLogout) {
-      yield put(logoutSuccess());
-      yield put(startAuthentication());
-    }
+    // Force the login by expiring the session
+    yield put(sessionExpired());
   }
 }
 
@@ -297,6 +278,7 @@ export function* watchStartAuthentication(): IterableIterator<Effect> {
     yield put(
       StackActions.reset({
         index: 0,
+        key: null,
         actions: [
           NavigationActions.navigate({
             routeName: ROUTES.AUTHENTICATION

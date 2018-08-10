@@ -14,7 +14,10 @@ import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import {
+  isLoggedIn,
   isLoggedOutWithIdp,
+  LoggedInWithoutSessionInfo,
+  LoggedInWithSessionInfo,
   LoggedOutWithIdp
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
@@ -23,7 +26,8 @@ import { SessionToken } from "../../types/SessionToken";
 import { extractLoginResult } from "../../utils/login";
 
 type ReduxMappedProps = {
-  authentication?: LoggedOutWithIdp;
+  loggedOutWithIdpAuth?: LoggedOutWithIdp;
+  loggedInAuth?: LoggedInWithoutSessionInfo | LoggedInWithSessionInfo;
 };
 
 type OwnProps = {
@@ -61,12 +65,18 @@ const onNavigationStateChange = (
  * The IDP page is opened in a WebView
  */
 const IdpLoginScreen: React.SFC<Props> = props => {
-  const { authentication } = props;
-  if (!authentication) {
+  const { loggedOutWithIdpAuth, loggedInAuth } = props;
+
+  if (loggedInAuth) {
+    // FIXME: show a nice screen with succesful login message
+    return <Text>OK</Text>;
+  }
+
+  if (!loggedOutWithIdpAuth) {
     // FIXME: perhaps as a safe bet, navigate to the IdP selection screen on mount?
     return null;
   }
-  const loginUri = LOGIN_BASE_URL + authentication.idp.entityID;
+  const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
   const goBack = () => props.navigation.goBack();
 
   const navigationStateHandler = onNavigationStateChange(
@@ -85,7 +95,7 @@ const IdpLoginScreen: React.SFC<Props> = props => {
         <Body>
           <Text>
             {`${I18n.t("authentication.idp_login.headerTitle")} - ${
-              authentication.idp.name
+              loggedOutWithIdpAuth.idp.name
             }`}
           </Text>
         </Body>
@@ -101,7 +111,10 @@ const IdpLoginScreen: React.SFC<Props> = props => {
 };
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  authentication: isLoggedOutWithIdp(state.authentication)
+  loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
+    ? state.authentication
+    : undefined,
+  loggedInAuth: isLoggedIn(state.authentication)
     ? state.authentication
     : undefined
 });
