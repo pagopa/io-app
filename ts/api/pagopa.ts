@@ -12,6 +12,7 @@ import {
   IPutApiRequestType,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 import {
   PspListResponse,
   SessionResponse,
@@ -25,7 +26,6 @@ import {
   basicResponseDecoderWith401,
   BasicResponseTypeWith401
 } from "./backend";
-import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 
 // builds on top of basicResponseDecoderWith401 and
 // casts the result to a type T: this is in order to

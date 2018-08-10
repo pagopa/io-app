@@ -14,15 +14,16 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { Option, some, none } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
+import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 import {
-  MockedBackendClient as BackendClient,
-  BasicResponseTypeWith401
+  BasicResponseTypeWith401,
+  MockedBackendClient as BackendClient
 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
@@ -85,33 +86,32 @@ import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
   getPaymentContextCode,
+  getPaymentId,
   getPspList,
   getRptId,
   getSelectedPaymentMethod,
-  isGlobalStateWithPaymentId,
-  getPaymentId
+  isGlobalStateWithPaymentId
 } from "../store/reducers/wallet/payment";
 import {
   getFavoriteWalletId,
   specificWalletSelector
 } from "../store/reducers/wallet/wallets";
 import {
-  Psp,
-  Wallet,
-  PspListResponse,
-  WalletResponse,
-  TransactionResponse
-} from "../types/pagopa";
-import {
   SessionResponse,
   Transaction,
   TransactionListResponse,
   WalletListResponse
 } from "../types/pagopa";
+import {
+  Psp,
+  PspListResponse,
+  TransactionResponse,
+  Wallet,
+  WalletResponse
+} from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { pollingFetch } from "../utils/fetch";
-import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -227,7 +227,6 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
           yield put(storePagoPaToken(some(newToken)));
         }
         yield put(walletsFetched(response.value.data));
-        return;
       }
     }
   }
@@ -518,7 +517,7 @@ function* checkPayment(
       | [string, BasicResponseTypeWith401<PaymentResponse>]
       | undefined = yield call(
       fetchWithTokenRefresh,
-      (token: string) => pagoPaClient.checkPayment(token, paymentId),
+      (t: string) => pagoPaClient.checkPayment(t, paymentId),
       refreshToken,
       walletToken.value,
       token
@@ -685,7 +684,6 @@ function* completionHandler(_: PaymentRequestCompletion) {
       walletToken.value,
       token
     );
-    console.warn(tokenAndResponseOrUndefined);
     if (tokenAndResponseOrUndefined !== undefined) {
       const [newToken, response] = tokenAndResponseOrUndefined;
       if (response.status === 200) {
@@ -721,70 +719,6 @@ function* completionHandler(_: PaymentRequestCompletion) {
     }
   }
 }
-
-  // // do payment stuff (-> pagoPA REST)
-  // // retrieve transaction and store it
-  // // mocked data here
-  // const wallet: Wallet = yield select(selectedPaymentMethodSelector);
-
-  // const selectedRecipient: Option<EnteBeneficiario> = yield select(
-  //   getPaymentRecipient
-  // );
-  // const recipient = selectedRecipient.getOrElse(UNKNOWN_RECIPIENT);
-
-  // const selectedPaymentReason: Option<string> = yield select(getPaymentReason);
-  // const paymentReason = selectedPaymentReason.getOrElse(UNKNOWN_PAYMENT_REASON);
-
-  // const selectedCurrentAmount: AmountInEuroCents = yield select(
-  //   getCurrentAmount
-  // );
-  // const amount =
-  //   100 * AmountInEuroCentsFromNumber.encode(selectedCurrentAmount);
-  // const feeOrUndefined = feeExtractor(wallet);
-  // const fee =
-  //   100 *
-  //   AmountInEuroCentsFromNumber.encode(
-  //     feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
-  //   );
-  // const now = new Date();
-
-  // const transaction: Transaction = {
-  //   id: Math.floor(Math.random() * 1000),
-  //   amount: {
-  //     amount,
-  //     currency: "EUR",
-  //     currencyNumber: "1",
-  //     decimalDigits: 2
-  //   },
-  //   created: now,
-  //   description: paymentReason,
-  //   error: false,
-  //   fee: {
-  //     amount: fee,
-  //     currency: "EUR",
-  //     currencyNumber: "1",
-  //     decimalDigits: 2
-  //   },
-  //   grandTotal: {
-  //     amount: amount + fee,
-  //     currency: "EUR",
-  //     currencyNumber: "1",
-  //     decimalDigits: 2
-  //   },
-  //   idPayment: Math.floor(Math.random() * 1000),
-  //   idPsp: 1,
-  //   idStatus: 1,
-  //   idWallet: wallet.idWallet,
-  //   merchant: recipient.denominazioneBeneficiario,
-  //   nodoIdPayment: "1",
-  //   paymentModel: 1,
-  //   statusMessage: "OK",
-  //   success: true,
-  //   token: "42",
-  //   updated: now,
-  //   urlCheckout3ds: "",
-  //   urlRedirectPSP: ""
-  // };
 
 function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const token: Option<string> = yield select(walletTokenSelector);
