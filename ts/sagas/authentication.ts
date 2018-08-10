@@ -22,13 +22,12 @@ import ROUTES from "../navigation/routes";
 import {
   authenticationCompleted,
   logoutFailure,
-  logoutSuccess,
+  sessionExpired,
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
   startAuthentication,
-  walletTokenLoadSuccess,
-  sessionExpired
+  walletTokenLoadSuccess
 } from "../store/actions/authentication";
 import {
   APP_STATE_CHANGE_ACTION,
