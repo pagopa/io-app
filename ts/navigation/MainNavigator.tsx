@@ -119,6 +119,10 @@ const navigation = createBottomTabNavigator(
             color={tintColor === null ? undefined : tintColor}
           />
         );
+      },
+      tabBarOnPress: ({ defaultHandler }) => {
+        nav.popToTop();
+        defaultHandler();
       }
     }),
     tabBarOptions: {
