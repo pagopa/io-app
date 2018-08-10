@@ -43,7 +43,7 @@ describe("authentication", () => {
         .next()
         .select(sessionTokenSelector)
         .next(undefined)
-        .put(sessionLoadFailure(Error()))
+        .put(sessionLoadFailure(Error("No session token")))
         .next()
         .isDone();
     });
