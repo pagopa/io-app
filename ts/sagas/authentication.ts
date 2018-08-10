@@ -26,8 +26,7 @@ import {
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
-  startAuthentication,
-  walletTokenLoadSuccess
+  startAuthentication
 } from "../store/actions/authentication";
 import {
   APP_STATE_CHANGE_ACTION,
@@ -83,9 +82,6 @@ export function* loadSession(): IterableIterator<Effect> {
     } else {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       yield put(sessionLoadSuccess(response.value));
-      // FIXME: why we need a walletTokenLoadSuccess action? can't the wallet
-      // listen on sessionLoadSuccess?
-      yield put(walletTokenLoadSuccess()); // inform wallet saga that the token has been made available
     }
   } else {
     // No SessionToken

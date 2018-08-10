@@ -8,8 +8,7 @@ import {
   sessionLoadFailure,
   sessionLoadRequest,
   sessionLoadSuccess,
-  startAuthentication,
-  walletTokenLoadSuccess
+  startAuthentication
 } from "../../store/actions/authentication";
 import {
   AUTHENTICATION_COMPLETED,
@@ -68,8 +67,6 @@ describe("authentication", () => {
         .call(mockedBackendClient.getSession, {})
         .next({ status: 200, value: testPublicSession })
         .put(sessionLoadSuccess(testPublicSession))
-        .next()
-        .put(walletTokenLoadSuccess())
         .next()
         .isDone();
     });
