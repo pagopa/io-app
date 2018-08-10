@@ -22,7 +22,8 @@ export default (): Theme => {
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground
     },
-    padding: variables.contentPadding,
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding,
     backgroundColor: variables.contentBackground
   };
 };

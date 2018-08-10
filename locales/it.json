@@ -28,7 +28,8 @@
     },
     "remoteStates": {
       "notAvailable": "Non disponibile"
-    }
+    },
+    "notImplemented": "NON IMPLEMENTATO"
   },
   "locales": {
     "it": "Italiano",

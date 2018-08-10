@@ -28,12 +28,11 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = OwnProps & ReduxMappedProps & ReduxProps;
+type Props = OwnProps & ReduxMappedProps & ReduxProps;
 
 const styles = StyleSheet.create({
   gridRow: {
     paddingTop: variables.contentPadding,
-    paddingBottom: variables.contentPadding,
     alignItems: "center"
   }
 });
@@ -52,7 +51,12 @@ export class ProfileMainScreen extends React.Component<Props, never> {
         <Content>
           <Grid>
             {/* Privacy */}
-            <Row style={styles.gridRow}>
+            <Row
+              style={styles.gridRow}
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)
+              }
+            >
               <Col size={10}>
                 <H3>{I18n.t("profile.main.privacy.title")}</H3>
                 <Text>{I18n.t("profile.main.privacy.description")}</Text>
@@ -61,14 +65,18 @@ export class ProfileMainScreen extends React.Component<Props, never> {
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
-                  onPress={() =>
-                    this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)
-                  }
                 />
               </Col>
             </Row>
             {/* Terms & conditions */}
-            <Row style={styles.gridRow}>
+            <Row
+              style={styles.gridRow}
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.PROFILE_TOS, {
+                  isProfile: true
+                })
+              }
+            >
               <Col size={10}>
                 <H3>{I18n.t("profile.main.termsAndConditions.title")}</H3>
                 <Text>
@@ -79,21 +87,18 @@ export class ProfileMainScreen extends React.Component<Props, never> {
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
-                  onPress={() =>
-                    this.props.navigation.navigate(ROUTES.PROFILE_TOS, {
-                      isProfile: true
-                    })
-                  }
                 />
               </Col>
             </Row>
-            {/* Logout/Exit */}
+
+            {/* Reset PIN */}
             <Row
               style={styles.gridRow}
-              onPress={() => this.props.dispatch(logoutRequest())}
+              onPress={() => this.props.dispatch(startPinReset)}
             >
               <Col size={10}>
-                <H3>{I18n.t("profile.main.logout")}</H3>
+                <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
+                <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
               </Col>
               <Col size={2}>
                 <IconFont
@@ -102,14 +107,14 @@ export class ProfileMainScreen extends React.Component<Props, never> {
                 />
               </Col>
             </Row>
-            {/* Reset PIN */}
+
+            {/* Logout/Exit */}
             <Row
               style={styles.gridRow}
-              onPress={() => this.props.dispatch(startPinReset())}
+              onPress={() => this.props.dispatch(logoutRequest())}
             >
               <Col size={10}>
-                <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
-                <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
+                <H3>{I18n.t("profile.main.logout")}</H3>
               </Col>
               <Col size={2}>
                 <IconFont
