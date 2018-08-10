@@ -6,22 +6,20 @@
  */
 
 import { NavigationActions } from "react-navigation";
-import { call, Effect, fork, put, take } from "redux-saga/effects";
+import { call, Effect, put, take } from "redux-saga/effects";
 
 import ROUTES from "../navigation/routes";
 import {
   PIN_CREATE_FAILURE,
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS,
-  START_PIN_RESET,
   START_PIN_SET
 } from "../store/actions/constants";
 import { PinCreateRequest } from "../store/actions/pinset";
 
-import { logoutRequest } from "../store/actions/authentication";
-import { deletePin, setPin } from "../utils/keychain";
+import { setPin } from "../utils/keychain";
 
-function* watchPinSetSaga(): Iterator<Effect> {
+export default function* root(): Iterator<Effect> {
   while (true) {
     // wait for the PIN set flow to start
     yield take(START_PIN_SET);
@@ -51,26 +49,8 @@ function* watchPinSetSaga(): Iterator<Effect> {
         yield put({ type: PIN_CREATE_FAILURE });
       }
 
+      // FIXME: this while loop looks like broken: it always runs once?
       break;
     }
   }
-}
-
-function* watchPinResetSaga(): Iterator<Effect> {
-  while (true) {
-    // wait for a request to start the PIN reset flow
-    yield take(START_PIN_RESET);
-
-    // Logout the user
-    yield put(logoutRequest());
-
-    // and delete the current PIN from the Keychain
-    // tslint:disable-next-line:saga-yield-return-type
-    yield call(deletePin);
-  }
-}
-
-export default function* root(): Iterator<Effect> {
-  yield fork(watchPinSetSaga);
-  yield fork(watchPinResetSaga);
 }

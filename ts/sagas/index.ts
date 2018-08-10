@@ -11,12 +11,10 @@ import deepLink from "./deepLink";
 import mainSaga from "./main";
 import messagesSaga from "./messages";
 import notificationsSaga from "./notifications";
-import onboardingSaga from "./onboarding";
-import pinLoginSaga from "./pinlogin";
 import pinSetSaga from "./pinset";
 import preferencesSaga from "./preferences";
 import profileSaga from "./profile";
-import startupSaga from "./startup";
+import { startupSaga } from "./startup";
 import walletSaga from "./wallet";
 
 import { apiUrlPrefix } from "../config";
@@ -37,8 +35,6 @@ export default function* root(): Iterator<Effect> {
     fork(authenticationSaga),
     fork(notificationsSaga),
     fork(pinSetSaga),
-    fork(onboardingSaga),
-    fork(pinLoginSaga),
     fork(mainSaga),
     fork(messagesSaga),
     fork(startupSaga),

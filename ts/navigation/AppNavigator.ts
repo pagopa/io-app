@@ -14,8 +14,9 @@ import ROUTES from "./routes";
 const navigator = createStackNavigator(
   {
     [ROUTES.INGRESS]: {
-      // This screen check if the user is authenticated than perform a redirect to
-      // MainNavigator (if authenticated) or AuthenticationNavigator (otherwise)
+      // This is the first screen that gets loaded by the app navigator
+      // On component mount, the screen will dispatch an
+      // APPLICATION_INITIALIZED action that gets handled by the startup saga.
       screen: IngressScreen
     },
     [ROUTES.BACKGROUND]: {

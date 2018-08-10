@@ -9,9 +9,9 @@ export type ApplicationInitialized = Readonly<{
   type: typeof APPLICATION_INITIALIZED;
 }>;
 
-export const applicationInitialized = (): ApplicationInitialized => ({
+export const applicationInitialized: ApplicationInitialized = {
   type: APPLICATION_INITIALIZED
-});
+};
 
 export type ApplicationChangeState = Readonly<{
   type: typeof APP_STATE_CHANGE_ACTION;

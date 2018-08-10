@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-class IngressScreen extends React.Component<Props, never> {
+class IngressScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     // Dispatch APPLICATION_INITIALIZED to start the Startup saga
-    this.props.dispatch(applicationInitialized());
+    this.props.dispatch(applicationInitialized);
   }
   public render() {
     return (

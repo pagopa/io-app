@@ -24,7 +24,7 @@ export function* callApiWith401ResponseStatusHandler<
   );
 
   if (response && response.status === 401) {
-    yield put(sessionExpired());
+    yield put(sessionExpired);
   }
   return response;
 }

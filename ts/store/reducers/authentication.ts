@@ -93,7 +93,7 @@ export function isLoggedIn(
 
 // Selectors
 
-export const isAuthenticatedSelector = (state: GlobalState): boolean =>
+export const isLoggedInSelector = (state: GlobalState): boolean =>
   isLoggedIn(state.authentication);
 
 export const sessionTokenSelector = (

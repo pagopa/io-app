@@ -6,7 +6,6 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import {
-  AUTHENTICATION_COMPLETED,
   IDP_SELECTED,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
@@ -17,15 +16,10 @@ import {
   SESSION_INVALID,
   SESSION_LOAD_FAILURE,
   SESSION_LOAD_REQUEST,
-  SESSION_LOAD_SUCCESS,
-  START_AUTHENTICATION
+  SESSION_LOAD_SUCCESS
 } from "./constants";
 
 // Actions
-
-export type StartAuthentication = Readonly<{
-  type: typeof START_AUTHENTICATION;
-}>;
 
 export type IdpSelected = Readonly<{
   type: typeof IDP_SELECTED;
@@ -55,10 +49,6 @@ export type LogoutFailure = Readonly<{
   error: true;
 }>;
 
-export type AuthenticationCompleted = Readonly<{
-  type: typeof AUTHENTICATION_COMPLETED;
-}>;
-
 export type SessionLoadRequest = Readonly<{
   type: typeof SESSION_LOAD_REQUEST;
 }>;
@@ -83,14 +73,12 @@ export type SessionInvalid = Readonly<{
 }>;
 
 export type AuthenticationActions =
-  | StartAuthentication
   | IdpSelected
   | LoginSuccess
   | LoginFailure
   | LogoutRequest
   | LogoutSuccess
   | LogoutFailure
-  | AuthenticationCompleted
   | SessionLoadRequest
   | SessionLoadSuccess
   | SessionLoadFailure
@@ -98,10 +86,6 @@ export type AuthenticationActions =
   | SessionInvalid;
 
 // Creators
-
-export const startAuthentication = (): StartAuthentication => ({
-  type: START_AUTHENTICATION
-});
 
 export const idpSelected = (idp: IdentityProvider): IdpSelected => ({
   type: IDP_SELECTED,
@@ -121,18 +105,14 @@ export const logoutRequest = (): LogoutRequest => ({
   type: LOGOUT_REQUEST
 });
 
-export const logoutSuccess = (): LogoutSuccess => ({
+export const logoutSuccess: LogoutSuccess = {
   type: LOGOUT_SUCCESS
-});
+};
 
 export const logoutFailure = (error: Error): LogoutFailure => ({
   type: LOGOUT_FAILURE,
   payload: error,
   error: true
-});
-
-export const authenticationCompleted = (): AuthenticationCompleted => ({
-  type: AUTHENTICATION_COMPLETED
 });
 
 export const sessionLoadRequest = (): SessionLoadRequest => ({
@@ -152,10 +132,10 @@ export const sessionLoadFailure = (error: Error): SessionLoadFailure => ({
   error: true
 });
 
-export const sessionExpired = (): SessionExpired => ({
+export const sessionExpired: SessionExpired = {
   type: SESSION_EXPIRED
-});
+};
 
-export const sessionInvalid = (): SessionInvalid => ({
+export const sessionInvalid: SessionInvalid = {
   type: SESSION_INVALID
-});
+};

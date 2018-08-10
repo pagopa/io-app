@@ -7,11 +7,10 @@ import { apiUrlPrefix } from "../../config";
 import {
   sessionLoadFailure,
   sessionLoadRequest,
-  sessionLoadSuccess,
-  startAuthentication
+  sessionLoadSuccess
 } from "../../store/actions/authentication";
 import {
-  AUTHENTICATION_COMPLETED,
+  ANALYTICS_AUTHENTICATION_COMPLETED,
   SESSION_EXPIRED,
   SESSION_LOAD_SUCCESS
 } from "../../store/actions/constants";
@@ -85,7 +84,7 @@ describe("authentication", () => {
         .put(startAuthentication())
         .next()
         // Wait for AUTHENTICATION_COMPLETED
-        .take(AUTHENTICATION_COMPLETED)
+        .take(ANALYTICS_AUTHENTICATION_COMPLETED)
         .next()
         // Load the session info
         .put(sessionLoadRequest())

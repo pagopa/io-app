@@ -32,9 +32,9 @@ export const updateNotificationsInstallationToken = (
   payload: token
 });
 
-export const startNotificationInstallationUpdate = (): StartNotificationInstallationUpdate => ({
+export const startNotificationInstallationUpdate: StartNotificationInstallationUpdate = {
   type: START_NOTIFICATION_INSTALLATION_UPDATE
-});
+};
 
 export const updateNotificationInstallationFailure = (): NotificationInstallationUpdateFailure => ({
   type: NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE

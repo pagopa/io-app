@@ -55,9 +55,9 @@ export type ProfileActions =
 
 // Creators
 
-export const profileLoadRequest = (): ProfileLoadRequest => ({
+export const profileLoadRequest: ProfileLoadRequest = {
   type: PROFILE_LOAD_REQUEST
-});
+};
 
 export const profileLoadSuccess = (
   profile: ProfileWithOrWithoutEmail
