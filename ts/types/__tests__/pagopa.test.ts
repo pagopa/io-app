@@ -1,14 +1,14 @@
 import {
+  Amount,
+  CreditCard,
+  Psp,
+  PspListResponse,
   Transaction,
   TransactionListResponse,
   TransactionResponse,
-  WalletListResponse,
-  WalletResponse,
   Wallet,
-  Psp,
-  PspListResponse,
-  Amount,
-  CreditCard
+  WalletListResponse,
+  WalletResponse
 } from "../pagopa";
 
 const validCreditCard: { [key: string]: any } = {
@@ -25,7 +25,7 @@ const validCreditCard: { [key: string]: any } = {
 // has no pan
 const invalidCreditCard = Object.keys(validCreditCard)
   .filter(k => k !== "pan")
-  .reduce((o, k) => ({ ...o, [k]: validCreditCard[k] }), {});
+  .reduce((o, k) => ({ ...o, [k]: validCreditCard[k] }), {} as object);
 
 const validAmount: { [key: string]: any } = {
   currency: "EUR",
@@ -35,7 +35,7 @@ const validAmount: { [key: string]: any } = {
 // has no amount
 const invalidAmount = Object.keys(validAmount)
   .filter(k => k !== "amount")
-  .reduce((o, k) => ({ ...o, [k]: validAmount[k] }), {});
+  .reduce((o, k) => ({ ...o, [k]: validAmount[k] }), {} as object);
 
 const validPsp: { [key: string]: any } = {
   id: 43188,
@@ -63,7 +63,7 @@ const validPsp: { [key: string]: any } = {
 // has no id
 const invalidPsp = Object.keys(validPsp)
   .filter(k => k !== "id")
-  .reduce((o, k) => ({ ...o, [k]: validPsp[k] }), {});
+  .reduce((o, k) => ({ ...o, [k]: validPsp[k] }), {} as object);
 
 const validTransaction: { [key: string]: any } = {
   id: 2329,
@@ -88,7 +88,7 @@ const validTransaction: { [key: string]: any } = {
 // has no id
 const invalidTransaction = Object.keys(validTransaction)
   .filter(k => k !== "idWallet")
-  .reduce((o, k) => ({ ...o, [k]: validTransaction[k] }), {});
+  .reduce((o, k) => ({ ...o, [k]: validTransaction[k] }), {} as object);
 
 const validWallet: { [key: string]: any } = {
   idWallet: 2345,
@@ -104,7 +104,7 @@ const validWallet: { [key: string]: any } = {
 // has no id
 const invalidWallet = Object.keys(validWallet)
   .filter(k => k !== "idWallet")
-  .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {});
+  .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {} as object);
 
 // Amount testing
 describe("Amount", () => {

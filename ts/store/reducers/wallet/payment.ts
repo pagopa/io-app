@@ -9,6 +9,7 @@ import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiar
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
+import { AmountToImporto } from "../../../utils/amounts";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
@@ -32,7 +33,6 @@ import {
   GlobalStateWithVerificaResponse
 } from "../types";
 import { getWalletFromId, getWallets } from "./wallets";
-import { AmountToImporto } from "../../../utils/amounts";
 
 // The following are possible states, identified
 // by a string (kind), and with specific
@@ -240,6 +240,9 @@ export const getPaymentReason = (
 export const getPspList = (
   state: GlobalStateWithSelectedPaymentMethod
 ): ReadonlyArray<Psp> => state.wallet.payment.stack[0].pspList;
+
+export const getPaymentId = (state: GlobalStateWithPaymentId): string =>
+  state.wallet.payment.stack[0].paymentId;
 
 export const selectedPaymentMethodSelector: (
   state: GlobalStateWithSelectedPaymentMethod

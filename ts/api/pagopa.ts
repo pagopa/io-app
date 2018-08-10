@@ -3,22 +3,22 @@
  * to call the different API available
  */
 import {
+  ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
+  composeHeaderProducers,
   createFetchRequestForApi,
   IGetApiRequestType,
-  ResponseDecoder,
+  IPostApiRequestType,
   IPutApiRequestType,
-  composeHeaderProducers,
-  ApiHeaderJson,
-  IPostApiRequestType
+  ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import {
+  PspListResponse,
   SessionResponse,
   TransactionListResponse,
+  TransactionResponse,
   WalletListResponse,
-  PspListResponse,
-  WalletResponse,
-  TransactionResponse
+  WalletResponse
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
 import {
@@ -75,10 +75,9 @@ type CheckPaymentType = IGetApiRequestType<
 type GetPspsListType = IGetApiRequestType<
   {
     paymentId: string;
-    walletId: number;
   },
   "Authorization",
-  "idPayment" | "idWallet" | "paymentType",
+  "idPayment" | "paymentType",
   BasicResponseTypeWith401<PspListResponse>
 >;
 
@@ -118,8 +117,7 @@ export type PagoPaClient = Readonly<{
   ) => Promise<BasicResponseTypeWith401<PaymentResponse> | undefined>;
   getPspList: (
     pagoPaToken: string,
-    paymentId: string,
-    walletId: number
+    paymentId: string
   ) => Promise<BasicResponseTypeWith401<PspListResponse> | undefined>;
   updateWalletPsp: (
     pagoPaToken: string,
@@ -187,10 +185,9 @@ export const PagoPaClient = (
   const getPspList: (pagoPaToken: string) => GetPspsListType = pagoPaToken => ({
     method: "get",
     url: () => "/v1/psps",
-    query: ({ paymentId, walletId }) => ({
+    query: ({ paymentId }) => ({
       paymentType: "CREDIT_CARD",
-      idPayment: paymentId,
-      idWallet: `${walletId}`
+      idPayment: paymentId
     }),
     headers: AuthorizationBearerHeaderProducer(pagoPaToken),
     response_decoder: basicResponseDecoderWith401AndCast<PspListResponse>(
@@ -253,10 +250,9 @@ export const PagoPaClient = (
       createFetchRequestForApi(checkPayment(pagoPaToken), options)({
         paymentId
       }),
-    getPspList: (pagoPaToken: string, paymentId: string, walletId: number) =>
+    getPspList: (pagoPaToken: string, paymentId: string) =>
       createFetchRequestForApi(getPspList(pagoPaToken), options)({
-        paymentId,
-        walletId
+        paymentId
       }),
     updateWalletPsp: (pagoPaToken: string, walletId: number, pspId: number) =>
       createFetchRequestForApi(updateWalletPsp(pagoPaToken), options)({

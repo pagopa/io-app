@@ -33,8 +33,8 @@ export const cardIcons: { [key in CreditCardType]: any } = {
   UNKNOWN: require("../../../../img/wallet/cards-icons/unknown.png")
 };
 
-export const getCardIcon = (w: Wallet) => {
-  return cardIcons[w.creditCard.brandLogo];
+export const getCardIcon = (_: Wallet) => {
+  return require("../../../../img/wallet/cards-icons/unknown.png");
 };
 
 const styles = StyleSheet.create({
