@@ -3,6 +3,8 @@ import {
   CreditCard,
   Psp,
   PspListResponse,
+  Session,
+  SessionResponse,
   Transaction,
   TransactionListResponse,
   TransactionResponse,
@@ -89,6 +91,25 @@ const validTransaction: { [key: string]: any } = {
 const invalidTransaction = Object.keys(validTransaction)
   .filter(k => k !== "idWallet")
   .reduce((o, k) => ({ ...o, [k]: validTransaction[k] }), {} as object);
+
+const validSession: { [key: string]: any } = {
+  sessionToken:
+    "0r12345j8E1v2w5V1s4t1U0v5v2S6b7y4N6z01smAof3kFse3o3H9b2o4Y7a1o6I1o0r6K1b5z5G7t1m4S4p6h6n5A0r6y1U1m6Y1q9v1C8k2e0U8g12345m2n0J2c8k",
+  user: {
+    email: "mario@rossi.com",
+    status: "REGISTERED_SPID",
+    name: "Mario",
+    surname: "Rossi",
+    acceptTerms: true,
+    username: "mario@rossi.com",
+    registeredDate: "2018-08-07T16:40:54Z",
+    emailVerified: true,
+    cellphoneVerified: true
+  }
+};
+const invalidSession = Object.keys(validSession)
+  .filter(k => k !== "sessionToken")
+  .reduce((o, k) => ({ ...o, [k]: validSession[k] }), {} as object);
 
 const validWallet: { [key: string]: any } = {
   idWallet: 2345,
@@ -244,5 +265,30 @@ describe("WalletResponse", () => {
       data: invalidWallet
     };
     expect(WalletResponse.decode(walletResponse).isRight()).toBeFalsy();
+  });
+});
+
+// Session testing
+describe("Session", () => {
+  it("should recognize a valid Session", () => {
+    expect(Session.decode(validSession).isRight()).toBeTruthy();
+  });
+  it("should NOT recognize an invalid Session", () => {
+    expect(Session.decode(invalidSession).isRight()).toBeFalsy();
+  });
+});
+
+describe("SessionResponse", () => {
+  it("should recognize a valid SessionResponse", () => {
+    const sessionResponse = {
+      data: validSession
+    };
+    expect(SessionResponse.decode(sessionResponse).isRight()).toBeTruthy();
+  });
+  it("should NOT recognize an invalid Session", () => {
+    const sessionResponse = {
+      data: invalidSession
+    };
+    expect(SessionResponse.decode(sessionResponse).isRight()).toBeFalsy();
   });
 });
