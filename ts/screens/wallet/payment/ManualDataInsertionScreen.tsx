@@ -123,7 +123,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       block: true,
       primary: true,
       onPress: this.proceedToSummary,
-      title: I18n.t("wallet.insertManually.proceed")
+      title: I18n.t("global.buttons.continue")
     };
 
     const secondaryButtonProps = {
@@ -131,7 +131,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       light: true,
       bordered: true,
       onPress: () => this.props.navigation.navigate(ROUTES.WALLET_HOME),
-      title: I18n.t("wallet.cancel")
+      title: I18n.t("global.buttons.cancel")
     };
 
     return (
@@ -190,8 +190,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         </Content>
 
         <FooterWithButtons
-          leftButton={primaryButtonProps}
-          rightButton={secondaryButtonProps}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineHalf={true}
         />
       </Container>
     );
