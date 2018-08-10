@@ -25,6 +25,7 @@ import {
   basicResponseDecoderWith401,
   BasicResponseTypeWith401
 } from "./backend";
+import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 
 // builds on top of basicResponseDecoderWith401 and
 // casts the result to a type T: this is in order to
@@ -227,7 +228,7 @@ export const PagoPaClient = (
       JSON.stringify({
         data: {
           tipo: "web",
-          idWallet: walletId
+          idWallet: `${walletId}`
         }
       }),
     headers: composeHeaderProducers(
@@ -247,6 +248,9 @@ export const PagoPaClient = (
     getTransactions: (pagoPaToken: string) =>
       createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
     checkPayment: (pagoPaToken: string, paymentId: string) =>
+      // new Promise(resolve =>
+      //   resolve({ status: 200, value: {} as PaymentResponse, headers: {} })
+      // ),
       createFetchRequestForApi(checkPayment(pagoPaToken), options)({
         paymentId
       }),
@@ -260,6 +264,33 @@ export const PagoPaClient = (
         pspId
       }),
     postPayment: (pagoPaToken: string, paymentId: string, walletId: number) =>
+      // new Promise(resolve =>
+      //   resolve({
+      //     status: 200,
+      //     value: {
+      //       data: {
+      //         id: 2329,
+      //         created: new Date("2018-08-08T20:16:41Z"),
+      //         updated: new Date("2018-08-08T20:16:41Z"),
+      //         amount: { amount: 1000 },
+      //         grandTotal: { amount: 1000 },
+      //         description: "pagamento fotocopie pratica",
+      //         merchant: "Comune di Torino",
+      //         idStatus: 3,
+      //         statusMessage: "Confermato",
+      //         error: false,
+      //         success: true,
+      //         fee: { amount: 1000 },
+      //         token: "MjMyOQ==",
+      //         idWallet: 2345,
+      //         idPsp: 12345,
+      //         idPayment: 4464,
+      //         nodoIdPayment: "eced7084-6c8e-4f03-b3ed-d556692ce090"
+      //       }
+      //     },
+      //     headers: {}
+      //   })
+      // )
       createFetchRequestForApi(postPayment(pagoPaToken), options)({
         paymentId,
         walletId

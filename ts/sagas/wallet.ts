@@ -1,7 +1,4 @@
-import {
-  AmountInEuroCentsFromNumber,
-  RptIdFromString
-} from "italia-ts-commons/lib/pagopa";
+import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 
 /**
  * A saga that manages the Wallet.
@@ -21,12 +18,13 @@ import { Option, some, none } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
+import {
+  MockedBackendClient as BackendClient,
+  BasicResponseTypeWith401
+} from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
-import { WalletAPI } from "../api/wallet/wallet-api";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
@@ -45,7 +43,6 @@ import {
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP,
-  PAYMENT_UPDATE_PSP_IN_STATE,
   WALLET_TOKEN_LOAD_SUCCESS
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
@@ -74,7 +71,6 @@ import {
 } from "../store/actions/wallet/payment";
 import {
   selectTransactionForDetails,
-  storeNewTransaction,
   transactionsFetched
 } from "../store/actions/wallet/transactions";
 import {
@@ -89,21 +85,23 @@ import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
   getPaymentContextCode,
-  getPaymentReason,
-  getPaymentRecipient,
   getPspList,
   getRptId,
   getSelectedPaymentMethod,
   isGlobalStateWithPaymentId,
-  selectedPaymentMethodSelector,
   getPaymentId
 } from "../store/reducers/wallet/payment";
 import {
-  feeExtractor,
   getFavoriteWalletId,
   specificWalletSelector
 } from "../store/reducers/wallet/wallets";
-import { Psp, Wallet, PspListResponse } from "../types/pagopa";
+import {
+  Psp,
+  Wallet,
+  PspListResponse,
+  WalletResponse,
+  TransactionResponse
+} from "../types/pagopa";
 import {
   SessionResponse,
   Transaction,
@@ -111,13 +109,9 @@ import {
   WalletListResponse
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
-import {
-  UNKNOWN_AMOUNT,
-  UNKNOWN_PAYMENT_REASON,
-  UNKNOWN_RECIPIENT
-} from "../types/unknown";
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { pollingFetch } from "../utils/fetch";
+import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -221,7 +215,7 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
       | [string, BasicResponseTypeWith401<WalletListResponse>]
       | undefined = yield call(
       fetchWithTokenRefresh,
-      pagoPaClient.getTransactions,
+      pagoPaClient.getWallets,
       refreshToken,
       walletToken.value,
       token
@@ -382,8 +376,6 @@ function* showWalletOrSelectPsp(
 ): Iterator<Effect> {
   const wallet: Option<Wallet> = yield select(specificWalletSelector(idWallet));
   if (wallet.isSome()) {
-    // TODO: fetch list of PSPs available here
-    // @https://www.pivotaltracker.com/story/show/159494746
     const paymentId =
       paymentIdOrUndefined === undefined
         ? yield select(getPaymentId)
@@ -413,7 +405,6 @@ function* showWalletOrSelectPsp(
         }
       }
     }
-
     // show card
     // if multiple psps are available and one
     // has not yet been selected, show psp list
@@ -422,7 +413,7 @@ function* showWalletOrSelectPsp(
       (wallet.value.psp === undefined ||
         pspList.filter(
           p => wallet.value.psp !== undefined && p.id === wallet.value.psp.id // check for "undefined" only used to correctly typeguard
-        ).length !== undefined)
+        ).length === undefined)
     ) {
       // multiple choices here and no favorite psp exists (or one exists
       // and it is not available for this payment)
@@ -510,7 +501,6 @@ const attivaAndGetPaymentId = async (
     paymentContextCode,
     amount
   );
-  console.warn(attivaRptResult);
   if (!attivaRptResult) {
     return undefined;
   }
@@ -525,7 +515,7 @@ function* checkPayment(
   const token: Option<string> = yield select(getPagoPaToken);
   if (walletToken.isSome()) {
     const tokenAndResponseOrUndefined:
-      | [string, BasicResponseTypeWith401<TransactionListResponse>]
+      | [string, BasicResponseTypeWith401<PaymentResponse>]
       | undefined = yield call(
       fetchWithTokenRefresh,
       (token: string) => pagoPaClient.checkPayment(token, paymentId),
@@ -539,8 +529,6 @@ function* checkPayment(
         if (token.isNone() || token.value !== newToken) {
           yield put(storePagoPaToken(some(newToken)));
         }
-        yield put(transactionsFetched(response.value.data));
-        return;
       }
     }
   }
@@ -584,7 +572,6 @@ function* continueWithPaymentMethodsHandler(
           paymentContextCode,
           amount
         );
-  console.warn(paymentId);
 
   const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   const pagoPaToken: Option<string> = yield select(getPagoPaToken);
@@ -641,17 +628,38 @@ function* pickPspHandler(_: PaymentRequestPickPsp) {
 }
 
 function* updatePspHandler(action: PaymentUpdatePsp) {
-  // TODO: register action.paylod (pspId) as the
-  // selected pspId for walletId (from getSelectedPaymentMethod)
-  // then, refresh the list of available payment methods.
-  // @https://www.pivotaltracker.com/story/show/159494746
-  const pspList = WalletAPI.getPsps();
+  // First update the selected wallet (walletId) with the
+  // new PSP (action.payload); then request a new list
+  // of wallets (which will contain the updated PSP)
   const walletId: number = yield select(getSelectedPaymentMethod);
-  const psp = pspList.find(p => p.id === action.payload);
-  if (psp !== undefined) {
-    yield put({ type: PAYMENT_UPDATE_PSP_IN_STATE, payload: psp, walletId });
+  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+  const walletToken: Option<string> = yield select(walletTokenSelector);
+  const token: Option<string> = yield select(getPagoPaToken);
+  if (walletToken.isSome()) {
+    const tokenAndResponseOrUndefined:
+      | [string, BasicResponseTypeWith401<WalletResponse>]
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (pagoPaToken: string) =>
+        pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
+      refreshToken,
+      walletToken.value,
+      token
+    );
+    if (tokenAndResponseOrUndefined !== undefined) {
+      const [newToken, response] = tokenAndResponseOrUndefined;
+      if (response.status === 200) {
+        if (token.isNone() || newToken !== token.value) {
+          yield put(storePagoPaToken(some(newToken)));
+        }
+        // request new wallets (expecting to get the
+        // same ones as before, with the selected one's
+        // PSP set to the new one)
+        yield call(fetchWallets, pagoPaClient, newToken);
+        yield put(paymentRequestConfirmPaymentMethod(walletId));
+      }
+    }
   }
-  yield put(paymentRequestConfirmPaymentMethod(walletId));
 
   // Finally, return to the list of psp handlers
 }
@@ -659,87 +667,124 @@ function* updatePspHandler(action: PaymentUpdatePsp) {
 function* completionHandler(_: PaymentRequestCompletion) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
+  const walletId: number = yield select(getSelectedPaymentMethod);
+  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+  const walletToken: Option<string> = yield select(walletTokenSelector);
+  const token: Option<string> = yield select(getPagoPaToken);
+  const paymentId: string = yield select(getPaymentId);
 
-  // do payment stuff (-> pagoPA REST)
-  // retrieve transaction and store it
-  // mocked data here
-  const wallet: Wallet = yield select(selectedPaymentMethodSelector);
-
-  const selectedRecipient: Option<EnteBeneficiario> = yield select(
-    getPaymentRecipient
-  );
-  const recipient = selectedRecipient.getOrElse(UNKNOWN_RECIPIENT);
-
-  const selectedPaymentReason: Option<string> = yield select(getPaymentReason);
-  const paymentReason = selectedPaymentReason.getOrElse(UNKNOWN_PAYMENT_REASON);
-
-  const selectedCurrentAmount: AmountInEuroCents = yield select(
-    getCurrentAmount
-  );
-  const amount =
-    100 * AmountInEuroCentsFromNumber.encode(selectedCurrentAmount);
-  const feeOrUndefined = feeExtractor(wallet);
-  const fee =
-    100 *
-    AmountInEuroCentsFromNumber.encode(
-      feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+  console.warn("OK!");
+  if (walletToken.isSome()) {
+    const tokenAndResponseOrUndefined:
+      | [string, BasicResponseTypeWith401<TransactionResponse>]
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (pagoPaToken: string) =>
+        pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
+      refreshToken,
+      walletToken.value,
+      token
     );
-  const now = new Date();
-
-  const transaction: Transaction = {
-    id: Math.floor(Math.random() * 1000),
-    amount: {
-      amount,
-      currency: "EUR",
-      currencyNumber: "1",
-      decimalDigits: 2
-    },
-    created: now,
-    description: paymentReason,
-    error: false,
-    fee: {
-      amount: fee,
-      currency: "EUR",
-      currencyNumber: "1",
-      decimalDigits: 2
-    },
-    grandTotal: {
-      amount: amount + fee,
-      currency: "EUR",
-      currencyNumber: "1",
-      decimalDigits: 2
-    },
-    idPayment: Math.floor(Math.random() * 1000),
-    idPsp: 1,
-    idStatus: 1,
-    idWallet: wallet.idWallet,
-    merchant: recipient.denominazioneBeneficiario,
-    nodoIdPayment: "1",
-    paymentModel: 1,
-    statusMessage: "OK",
-    success: true,
-    token: "42",
-    updated: now,
-    urlCheckout3ds: "",
-    urlRedirectPSP: ""
-  };
-
-  yield put(storeNewTransaction(transaction));
-  yield put(selectTransactionForDetails(transaction));
-  yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
-  yield put(
-    // TODO: this should use StackActions.reset
-    // to reset the navigation. Right now, the
-    // "back" option is not allowed -- so the user cannot
-    // get back to previous screens, but the navigation
-    // stack should be cleaned right here
-    // @https://www.pivotaltracker.com/story/show/159300579
-    navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
-      paymentCompleted: true
-    })
-  );
-  yield put({ type: PAYMENT_COMPLETED });
+    console.warn(tokenAndResponseOrUndefined);
+    if (tokenAndResponseOrUndefined !== undefined) {
+      const [newToken, response] = tokenAndResponseOrUndefined;
+      if (response.status === 200) {
+        if (token.isNone() || newToken !== token.value) {
+          yield put(storePagoPaToken(some(newToken)));
+        }
+        // request all transactions (expecting to get the
+        // same ones as before, plus the newly created one
+        // (the reason for this is because newTransaction contains
+        // a payment with status "processing", while the
+        // value returned here contains the "completed" status
+        // upon successful payment
+        const newTransaction: Transaction = response.value.data;
+        yield call(fetchTransactions, pagoPaClient, newToken);
+        // use "storeNewTransaction(newTransaction) if it's okay
+        // to have the payment as "pending" (this information will
+        // not be shown to the user as of yet)
+        yield put(selectTransactionForDetails(newTransaction));
+        yield put(selectWalletForDetails(walletId)); // for the banner
+        yield put(
+          // TODO: this should use StackActions.reset
+          // to reset the navigation. Right now, the
+          // "back" option is not allowed -- so the user cannot
+          // get back to previous screens, but the navigation
+          // stack should be cleaned right here
+          // @https://www.pivotaltracker.com/story/show/159300579
+          navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
+            paymentCompleted: true
+          })
+        );
+        yield put({ type: PAYMENT_COMPLETED });
+      }
+    }
+  }
 }
+
+  // // do payment stuff (-> pagoPA REST)
+  // // retrieve transaction and store it
+  // // mocked data here
+  // const wallet: Wallet = yield select(selectedPaymentMethodSelector);
+
+  // const selectedRecipient: Option<EnteBeneficiario> = yield select(
+  //   getPaymentRecipient
+  // );
+  // const recipient = selectedRecipient.getOrElse(UNKNOWN_RECIPIENT);
+
+  // const selectedPaymentReason: Option<string> = yield select(getPaymentReason);
+  // const paymentReason = selectedPaymentReason.getOrElse(UNKNOWN_PAYMENT_REASON);
+
+  // const selectedCurrentAmount: AmountInEuroCents = yield select(
+  //   getCurrentAmount
+  // );
+  // const amount =
+  //   100 * AmountInEuroCentsFromNumber.encode(selectedCurrentAmount);
+  // const feeOrUndefined = feeExtractor(wallet);
+  // const fee =
+  //   100 *
+  //   AmountInEuroCentsFromNumber.encode(
+  //     feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+  //   );
+  // const now = new Date();
+
+  // const transaction: Transaction = {
+  //   id: Math.floor(Math.random() * 1000),
+  //   amount: {
+  //     amount,
+  //     currency: "EUR",
+  //     currencyNumber: "1",
+  //     decimalDigits: 2
+  //   },
+  //   created: now,
+  //   description: paymentReason,
+  //   error: false,
+  //   fee: {
+  //     amount: fee,
+  //     currency: "EUR",
+  //     currencyNumber: "1",
+  //     decimalDigits: 2
+  //   },
+  //   grandTotal: {
+  //     amount: amount + fee,
+  //     currency: "EUR",
+  //     currencyNumber: "1",
+  //     decimalDigits: 2
+  //   },
+  //   idPayment: Math.floor(Math.random() * 1000),
+  //   idPsp: 1,
+  //   idStatus: 1,
+  //   idWallet: wallet.idWallet,
+  //   merchant: recipient.denominazioneBeneficiario,
+  //   nodoIdPayment: "1",
+  //   paymentModel: 1,
+  //   statusMessage: "OK",
+  //   success: true,
+  //   token: "42",
+  //   updated: now,
+  //   urlCheckout3ds: "",
+  //   urlRedirectPSP: ""
+  // };
 
 function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const token: Option<string> = yield select(walletTokenSelector);
@@ -767,7 +812,6 @@ function* watchWalletSaga(): Iterator<Effect> {
         FETCH_WALLETS_REQUEST,
         LOGOUT_SUCCESS
       ]);
-
       const pagoPaToken: Option<string> = yield select(getPagoPaToken);
 
       if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {

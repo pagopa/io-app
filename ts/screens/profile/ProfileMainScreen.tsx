@@ -22,7 +22,7 @@ type ReduxMappedProps = {
   logoutError: Option<string>;
 };
 
-export type Props = ReduxMappedProps & ReduxProps;
+type Props = ReduxMappedProps & ReduxProps;
 
 const styles = StyleSheet.create({
   gridRow: {

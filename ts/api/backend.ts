@@ -317,3 +317,102 @@ export function BackendClient(
     getPaymentId: createFetchRequestForApi(getPaymentIdT, options)
   };
 }
+
+export const MockedBackendClient = (
+  _: string,
+  __: SessionToken,
+  ___?: typeof fetch
+): BackendClientT => {
+  return {
+    getSession: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as PublicSession
+      } as BasicResponseType<PublicSession>),
+    getService: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as ServicePublic
+      } as BasicResponseType<ServicePublic>),
+    getMessages: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as Messages
+      } as BasicResponseType<Messages>),
+    getMessage: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as MessageWithContent
+      } as BasicResponseType<MessageWithContent>),
+    getProfile: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as ProfileWithOrWithoutEmail
+      } as BasicResponseType<ProfileWithOrWithoutEmail>),
+    createOrUpdateProfile: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as ProfileWithOrWithoutEmail
+      } as BasicResponseType<ProfileWithOrWithoutEmail>),
+    createOrUpdateInstallation: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as NonEmptyString
+      } as BasicResponseType<NonEmptyString>),
+    logout: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {} as SuccessResponse
+      } as BasicResponseType<SuccessResponse>),
+    getVerificaRpt: () => {
+      return Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {
+          importoSingoloVersamento: 10052,
+          codiceContestoPagamento: "de82ec409c7c11e8b39797ec146b9e06",
+          ibanAccredito: "IT17X0605502100000001234567",
+          causaleVersamento: "IMU 2018",
+          enteBeneficiario: {
+            identificativoUnivocoBeneficiario: "123",
+            denominazioneBeneficiario: "Comune di Canicattì",
+            codiceUnitOperBeneficiario: "01",
+            denomUnitOperBeneficiario: "CDC",
+            indirizzoBeneficiario: "Via Roma",
+            civicoBeneficiario: "23",
+            capBeneficiario: "92010",
+            localitaBeneficiario: "Canicattì",
+            provinciaBeneficiario: "Agrigento",
+            nazioneBeneficiario: "IT"
+          }
+        } as PaymentRequestsGetResponse
+      } as BasicResponseType<PaymentRequestsGetResponse>);
+    },
+    postAttivaRpt: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {
+          rptId: "12345678901001135131330414611",
+          importoSingoloVersamento: 10052 as ImportoEuroCents,
+          codiceContestoPagamento: "de82ec409c7c11e8b39797ec146b9e06"
+        } as PaymentActivationsPostResponse
+      } as BasicResponseType<PaymentActivationsPostResponse>),
+    getPaymentId: () =>
+      Promise.resolve({
+        headers: {},
+        status: 200,
+        value: {
+          idPagamento: "07a6d21d-e3ef-4eb3-8e92-16119e0c748"
+        } as PaymentActivationsGetResponse
+      } as BasicResponseType<PaymentActivationsGetResponse>)
+  };
+};
