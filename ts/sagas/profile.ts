@@ -35,11 +35,7 @@ export function* loadProfile(
 
   const response:
     | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-    | undefined = yield call(
-    callApiWith401ResponseStatusHandler,
-    backendClient.getProfile,
-    {}
-  );
+    | undefined = yield call(backendClient.getProfile, {});
 
   if (!response || response.status !== 200) {
     // We got a error, send a SESSION_LOAD_FAILURE action
@@ -48,11 +44,11 @@ export function* loadProfile(
       : Error(I18n.t("profile.errors.load"));
 
     yield put(profileLoadFailure(error));
-    yield false;
+    return false;
   } else {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
     yield put(profileLoadSuccess(response.value));
-    yield true;
+    return true;
   }
 }
 

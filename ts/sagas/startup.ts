@@ -186,9 +186,9 @@ function* pinLoginSaga(): Iterator<Effect> {
       ]);
 
       const userPin = action.payload;
-      const basePin: Option<PinString> = yield call(getPin);
+      const storedPin: Option<PinString> = yield call(getPin);
 
-      if (isNone(basePin)) {
+      if (isNone(storedPin)) {
         // no PIN has been set!
         // invalidate the session
         yield put(sessionInvalid);
@@ -197,7 +197,7 @@ function* pinLoginSaga(): Iterator<Effect> {
         return;
       }
 
-      if (basePin.value === userPin) {
+      if (storedPin.value === userPin) {
         yield put(pinLoginValidateSuccess());
         break;
       } else {
@@ -363,8 +363,7 @@ function* loadSessionInformationSaga(
   if (response && response.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
     yield put(sessionInformationLoadSuccess(response.value));
-    yield true;
-    return;
+    return true;
   }
 
   // We got a error, send a SESSION_LOAD_FAILURE action
@@ -372,7 +371,7 @@ function* loadSessionInformationSaga(
     ? response.value
     : Error("Invalid server response");
   yield put(sessionInformationLoadFailure(error));
-  yield false;
+  return false;
 }
 
 /**
@@ -495,12 +494,25 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   // Get the profile info
   // FIXME: handle the result
   const loadProfileResult: boolean = yield call(loadProfile, sessionToken);
+  if (loadProfileResult === false) {
+    // Start again if we can't load the profile
+    yield put(applicationInitialized);
+    return;
+  }
 
   // Start the notification installation update
   yield put(startNotificationInstallationUpdate);
 
-  if (!previousSessionToken) {
-    // The user wasn't logged in when the application started, thus we need
+  // Fork the saga that watches for requests to reset the PIN
+  // as we may be going to show the PIN login screen
+  yield fork(pinResetSaga);
+
+  // Whether the user has a PIN
+  const storedPin: Option<PinString> = yield call(getPin);
+
+  if (!previousSessionToken || storedPin.isNone()) {
+    // The user wasn't logged in when the application started or, for some
+    // reason, he was logged in but there is no PIN sed, thus we need
     // to pass through the onboarding process to check whether he has a valid
     // profile.
     yield call(onboardingSaga);
@@ -543,9 +555,6 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
 
   // Logout the user by expiring the session
   yield fork(watchLogoutSaga);
-
-  // Watch for requests to reset the PIN
-  yield fork(pinResetSaga);
 }
 
 export function* startupSaga(): IterableIterator<Effect> {
