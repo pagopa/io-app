@@ -15,9 +15,9 @@ import {
   analyticsAuthenticationStarted
 } from "../store/actions/analytics";
 import {
-  sessionLoadFailure,
-  sessionLoadRequest,
-  sessionLoadSuccess
+  sessionInformationLoadFailure,
+  sessionInformationLoadRequest,
+  sessionInformationLoadSuccess
 } from "../store/actions/authentication";
 import {
   LOGIN_SUCCESS,
@@ -33,7 +33,7 @@ import { SessionToken } from "../types/SessionToken";
 /**
  * Load session info from the Backend
  */
-export function* loadSession(): IterableIterator<Effect> {
+export function* loadSessionInformation(): IterableIterator<Effect> {
   // Get the SessionToken from the store
   const sessionToken: SessionToken | undefined = yield select(
     sessionTokenSelector
@@ -51,15 +51,15 @@ export function* loadSession(): IterableIterator<Effect> {
       // We got a error, send a SESSION_LOAD_FAILURE action
       const error: Error = response ? response.value : Error();
 
-      yield put(sessionLoadFailure(error));
+      yield put(sessionInformationLoadFailure(error));
     } else {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      yield put(sessionLoadSuccess(response.value));
+      yield put(sessionInformationLoadSuccess(response.value));
     }
   } else {
     // No SessionToken
     // FIXME: consider having a specific error? who listens for this?
-    yield put(sessionLoadFailure(Error("No session token")));
+    yield put(sessionInformationLoadFailure(Error("No session token")));
   }
 }
 
@@ -91,7 +91,7 @@ export function* watchSessionExpired(): IterableIterator<Effect> {
     yield call(authenticationSaga);
 
     // Request the session info from the backend
-    yield put(sessionLoadRequest());
+    yield put(sessionInformationLoadRequest);
 
     // Wait until session info is loaded
     //
@@ -138,7 +138,7 @@ export function* authenticationSaga(): Iterator<Effect> {
 export default function* root(): IterableIterator<Effect> {
   // Starts the loadSession saga in the background on each SESSION_LOAD_REQUEST
   // action, if a running loadSession exists, it gets cancelled.
-  yield takeLatest(SESSION_LOAD_REQUEST, loadSession);
+  yield takeLatest(SESSION_LOAD_REQUEST, loadSessionInformation);
 
   // Handles the expiration of the session token
   yield fork(watchSessionExpired);

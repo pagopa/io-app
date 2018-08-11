@@ -12,10 +12,10 @@ import {
   logoutFailure,
   logoutSuccess,
   sessionExpired,
-  sessionInvalid,
-  SessionLoadFailure,
-  sessionLoadRequest,
-  SessionLoadSuccess
+  SessionInformationLoadFailure,
+  sessionInformationLoadRequest,
+  SessionInformationLoadSuccess,
+  sessionInvalid
 } from "../store/actions/authentication";
 import {
   APP_STATE_CHANGE_ACTION,
@@ -24,7 +24,6 @@ import {
   PIN_LOGIN_VALIDATE_REQUEST,
   SESSION_LOAD_FAILURE,
   SESSION_LOAD_SUCCESS,
-  START_MAIN,
   START_PIN_RESET
 } from "../store/actions/constants";
 import { startNotificationInstallationUpdate } from "../store/actions/notifications";
@@ -54,7 +53,7 @@ import {
   PinLoginValidateRequest,
   pinLoginValidateSuccess
 } from "../store/actions/pinlogin";
-import { StartPinReset, startPinSet } from "../store/actions/pinset";
+import { startPinSet } from "../store/actions/pinset";
 import {
   ProfileUpsertFailure,
   profileUpsertRequest,
@@ -348,29 +347,28 @@ function* watchLogoutSaga(): Iterator<Effect> {
  * Saga to handle the application startup
  */
 function* applicationInitializedSaga(): IterableIterator<Effect> {
-  // Whether the user is logged in
-  const isLoggedIn: boolean = yield select(isLoggedInSelector);
-
-  // Only unauthenticated users need onboarding
-  const needOnboarding = !isLoggedIn;
+  // Whether the user is currently logged in.
+  const isLoggedInState: boolean = yield select(isLoggedInSelector);
 
   // tslint:disable-next-line:no-let
   let sessionRefreshed = false;
 
-  if (!isLoggedIn) {
+  if (!isLoggedInState) {
     // The user is not logged in, give control to the authentication saga
     // and wait until the user has successfully logged in
     yield call(authenticationSaga);
     sessionRefreshed = true;
   }
 
-  // The user is now logged in
-
-  // Get the session info
-  yield put(sessionLoadRequest());
+  // The user is logged in, we have a session, let's try to load the session
+  // information from the backend.
+  // Note that by issuing this request, we may find out that the
+  yield put(sessionInformationLoadRequest);
 
   // Wait until the request is completed
-  const action: SessionLoadSuccess | SessionLoadFailure = yield take([
+  const action:
+    | SessionInformationLoadSuccess
+    | SessionInformationLoadFailure = yield take([
     SESSION_LOAD_SUCCESS,
     SESSION_LOAD_FAILURE
   ]);
@@ -394,18 +392,16 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   // Start the notification installation update
   yield put(startNotificationInstallationUpdate);
 
-  if (needOnboarding) {
+  if (!isLoggedInState) {
     // The user wasn't logged in when the application started, thus we need
     // to pass through the onboarding process to check whether he has a valid
     // profile.
     yield call(onboardingSaga);
-  } else {
+  } else if (!sessionRefreshed) {
     // The user was previously logged in, so no onboarding is needed
-    if (!sessionRefreshed) {
-      // The session was valid so the user didn't event had to do a fulllogin,
-      // in this case we ask the user to provide the PIN as a "lighter" login
-      yield call(pinLoginSaga);
-    }
+    // The session was valid so the user didn't event had to do a full login,
+    // in this case we ask the user to provide the PIN as a "lighter" login
+    yield call(pinLoginSaga);
   }
 
   // Finally we decide whether to navigate to the main screen o a specific
@@ -419,14 +415,17 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     yield put(navigateToDeepLink(deepLink));
   } else {
     // ... otherwise to the MainNavigator
-    yield put({
-      type: START_MAIN
+    const navigateToMainNavigatorAction = NavigationActions.navigate({
+      routeName: ROUTES.MAIN,
+      key: undefined
     });
+    yield put(navigateToMainNavigatorAction);
   }
 
   //
   // Startup of the application is complete
-  // Now we start a few background tasks...
+  // Now we fork a few background tasks. Note that the following sagas will
+  // be automatically cancelled each time this parent saga gets restarted.
   //
 
   // Watch for the app going to background/foreground

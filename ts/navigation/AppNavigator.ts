@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator, TransitionConfig } from "react-navigation";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/IngressScreen";
@@ -7,6 +7,36 @@ import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import PinNavigator from "./PinNavigator";
 import ROUTES from "./routes";
+
+import { Animated, Easing } from "react-native";
+
+function transitionConfig(): TransitionConfig {
+  // FIXME: we should be able to skip the blue background
+  //        fading in and out when restoring the app by looking
+  //        at the scene stack
+  // transitionProps: NavigationTransitionProps,
+  // prevTransitionProps: NavigationTransitionProps,
+  // isModal: boolean
+  return {
+    transitionSpec: {
+      duration: 750,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing
+    },
+    screenInterpolator: sceneProps => {
+      const { position, scene } = sceneProps;
+
+      const thisSceneIndex = scene.index;
+
+      const opacity = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+        outputRange: [0, 1, 0]
+      });
+
+      return { opacity };
+    }
+  };
+}
 
 /**
  * The main stack of screens of the Application.
@@ -39,7 +69,8 @@ const navigator = createStackNavigator(
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: "none"
+    headerMode: "none",
+    transitionConfig
   }
 );
 

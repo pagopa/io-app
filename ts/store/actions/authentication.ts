@@ -53,12 +53,12 @@ export type SessionLoadRequest = Readonly<{
   type: typeof SESSION_LOAD_REQUEST;
 }>;
 
-export type SessionLoadSuccess = Readonly<{
+export type SessionInformationLoadSuccess = Readonly<{
   type: typeof SESSION_LOAD_SUCCESS;
   payload: PublicSession;
 }>;
 
-export type SessionLoadFailure = Readonly<{
+export type SessionInformationLoadFailure = Readonly<{
   type: typeof SESSION_LOAD_FAILURE;
   payload: Error;
   error: true;
@@ -80,8 +80,8 @@ export type AuthenticationActions =
   | LogoutSuccess
   | LogoutFailure
   | SessionLoadRequest
-  | SessionLoadSuccess
-  | SessionLoadFailure
+  | SessionInformationLoadSuccess
+  | SessionInformationLoadFailure
   | SessionExpired
   | SessionInvalid;
 
@@ -115,18 +115,20 @@ export const logoutFailure = (error: Error): LogoutFailure => ({
   error: true
 });
 
-export const sessionLoadRequest = (): SessionLoadRequest => ({
+export const sessionInformationLoadRequest: SessionLoadRequest = {
   type: SESSION_LOAD_REQUEST
-});
+};
 
-export const sessionLoadSuccess = (
+export const sessionInformationLoadSuccess = (
   publicSession: PublicSession
-): SessionLoadSuccess => ({
+): SessionInformationLoadSuccess => ({
   type: SESSION_LOAD_SUCCESS,
   payload: publicSession
 });
 
-export const sessionLoadFailure = (error: Error): SessionLoadFailure => ({
+export const sessionInformationLoadFailure = (
+  error: Error
+): SessionInformationLoadFailure => ({
   type: SESSION_LOAD_FAILURE,
   payload: error,
   error: true

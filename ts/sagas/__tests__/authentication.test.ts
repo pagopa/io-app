@@ -5,9 +5,9 @@ import { SpidLevelEnum } from "../../../definitions/backend/SpidLevel";
 import { BackendClient } from "../../api/backend";
 import { apiUrlPrefix } from "../../config";
 import {
-  sessionLoadFailure,
-  sessionLoadRequest,
-  sessionLoadSuccess
+  sessionInformationLoadFailure,
+  sessionInformationLoadRequest,
+  sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
 import {
   ANALYTICS_AUTHENTICATION_COMPLETED,
@@ -18,7 +18,7 @@ import { navigationRestore } from "../../store/actions/navigation";
 import { sessionTokenSelector } from "../../store/reducers/authentication";
 import { navigationStateSelector } from "../../store/reducers/navigation";
 import { SessionToken } from "../../types/SessionToken";
-import { loadSession, watchSessionExpired } from "../authentication";
+import { loadSessionInformation, watchSessionExpired } from "../authentication";
 
 jest.mock("react-native-device-info");
 jest.mock("react-native-camera");
@@ -37,35 +37,35 @@ const testPublicSession: PublicSession = {
 describe("authentication", () => {
   describe("loadSession test plan", () => {
     it("should dispatch SESSION_LOAD_FAILURE action if SessionToken is undefined", () => {
-      testSaga(loadSession)
+      testSaga(loadSessionInformation)
         .next()
         .select(sessionTokenSelector)
         .next(undefined)
-        .put(sessionLoadFailure(Error("No session token")))
+        .put(sessionInformationLoadFailure(Error("No session token")))
         .next()
         .isDone();
     });
 
     it("should dispatch SESSION_LOAD_FAILURE action if can't get the session from the Backend", () => {
-      testSaga(loadSession)
+      testSaga(loadSessionInformation)
         .next()
         .select(sessionTokenSelector)
         .next(testSessionToken)
         .call(mockedBackendClient.getSession, {})
         .next({ status: 500, value: Error("Backend error") })
-        .put(sessionLoadFailure(Error("Backend error")))
+        .put(sessionInformationLoadFailure(Error("Backend error")))
         .next()
         .isDone();
     });
 
     it("should dispatch SESSION_LOAD_SUCCESS action with the data received from the Backend", () => {
-      testSaga(loadSession)
+      testSaga(loadSessionInformation)
         .next()
         .select(sessionTokenSelector)
         .next(testSessionToken)
         .call(mockedBackendClient.getSession, {})
         .next({ status: 200, value: testPublicSession })
-        .put(sessionLoadSuccess(testPublicSession))
+        .put(sessionInformationLoadSuccess(testPublicSession))
         .next()
         .isDone();
     });
@@ -81,13 +81,13 @@ describe("authentication", () => {
         // Select the navigation state to restore it after
         .select(navigationStateSelector)
         .next({ index: 0, routes: [] })
-        .put(startAuthentication())
+        .put(startAuthentication)
         .next()
         // Wait for AUTHENTICATION_COMPLETED
         .take(ANALYTICS_AUTHENTICATION_COMPLETED)
         .next()
         // Load the session info
-        .put(sessionLoadRequest())
+        .put(sessionInformationLoadRequest)
         .next()
         // Wait for SESSION_LOAD_SUCCESS
         .take(SESSION_LOAD_SUCCESS)

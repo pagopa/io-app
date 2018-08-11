@@ -8,7 +8,6 @@ import authenticationSaga from "./authentication";
 import backendInfoSaga from "./backendInfo";
 import { contentSaga } from "./content";
 import deepLink from "./deepLink";
-import mainSaga from "./main";
 import messagesSaga from "./messages";
 import notificationsSaga from "./notifications";
 import pinSetSaga from "./pinset";
@@ -35,7 +34,6 @@ export default function* root(): Iterator<Effect> {
     fork(authenticationSaga),
     fork(notificationsSaga),
     fork(pinSetSaga),
-    fork(mainSaga),
     fork(messagesSaga),
     fork(startupSaga),
     fork(profileSaga),

@@ -25,6 +25,7 @@ export function* callApiWith401ResponseStatusHandler<
 
   if (response && response.status === 401) {
     yield put(sessionExpired);
+    // FIXME: the generator will continue from here!
   }
   return response;
 }
