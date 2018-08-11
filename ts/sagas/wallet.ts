@@ -44,7 +44,7 @@ import {
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP,
   PAYMENT_UPDATE_PSP_IN_STATE,
-  SESSION_LOAD_SUCCESS
+  SESSION_INFO_LOAD_SUCCESS
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
@@ -517,7 +517,7 @@ function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
 
 function* watchWalletSaga(): Iterator<Effect> {
   while (true) {
-    yield take(SESSION_LOAD_SUCCESS);
+    yield take(SESSION_INFO_LOAD_SUCCESS);
 
     const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
     yield call(fetchPagoPaToken, pagoPaClient);

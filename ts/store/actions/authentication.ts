@@ -13,10 +13,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
-  SESSION_INVALID,
-  SESSION_LOAD_FAILURE,
-  SESSION_LOAD_REQUEST,
-  SESSION_LOAD_SUCCESS
+  SESSION_INFO_LOAD_FAILURE,
+  SESSION_INFO_LOAD_SUCCESS,
+  SESSION_INVALID
 } from "./constants";
 
 // Actions
@@ -49,17 +48,13 @@ export type LogoutFailure = Readonly<{
   error: true;
 }>;
 
-export type SessionLoadRequest = Readonly<{
-  type: typeof SESSION_LOAD_REQUEST;
-}>;
-
 export type SessionInformationLoadSuccess = Readonly<{
-  type: typeof SESSION_LOAD_SUCCESS;
+  type: typeof SESSION_INFO_LOAD_SUCCESS;
   payload: PublicSession;
 }>;
 
 export type SessionInformationLoadFailure = Readonly<{
-  type: typeof SESSION_LOAD_FAILURE;
+  type: typeof SESSION_INFO_LOAD_FAILURE;
   payload: Error;
   error: true;
 }>;
@@ -79,7 +74,6 @@ export type AuthenticationActions =
   | LogoutRequest
   | LogoutSuccess
   | LogoutFailure
-  | SessionLoadRequest
   | SessionInformationLoadSuccess
   | SessionInformationLoadFailure
   | SessionExpired
@@ -115,21 +109,17 @@ export const logoutFailure = (error: Error): LogoutFailure => ({
   error: true
 });
 
-export const sessionInformationLoadRequest: SessionLoadRequest = {
-  type: SESSION_LOAD_REQUEST
-};
-
 export const sessionInformationLoadSuccess = (
   publicSession: PublicSession
 ): SessionInformationLoadSuccess => ({
-  type: SESSION_LOAD_SUCCESS,
+  type: SESSION_INFO_LOAD_SUCCESS,
   payload: publicSession
 });
 
 export const sessionInformationLoadFailure = (
   error: Error
 ): SessionInformationLoadFailure => ({
-  type: SESSION_LOAD_FAILURE,
+  type: SESSION_INFO_LOAD_FAILURE,
   payload: error,
   error: true
 });

@@ -4,7 +4,6 @@
 import { networkEventsListenerSaga } from "react-native-offline";
 import { all, Effect, fork } from "redux-saga/effects";
 
-import authenticationSaga from "./authentication";
 import backendInfoSaga from "./backendInfo";
 import { contentSaga } from "./content";
 import deepLink from "./deepLink";
@@ -31,11 +30,10 @@ const connectionMonitorParameters = {
 
 export default function* root(): Iterator<Effect> {
   yield all([
-    fork(authenticationSaga),
+    fork(startupSaga),
     fork(notificationsSaga),
     fork(pinSetSaga),
     fork(messagesSaga),
-    fork(startupSaga),
     fork(profileSaga),
     fork(walletSaga),
     fork(backendInfoSaga),

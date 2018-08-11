@@ -21,8 +21,8 @@ import {
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_SUCCESS,
   SESSION_EXPIRED,
-  SESSION_LOAD_FAILURE,
-  SESSION_LOAD_SUCCESS,
+  SESSION_INFO_LOAD_FAILURE,
+  SESSION_INFO_LOAD_SUCCESS,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
 import { Action, Dispatch, MiddlewareAPI } from "../store/actions/types";
@@ -65,8 +65,8 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case ANALYTICS_AUTHENTICATION_STARTED:
         case LOGIN_SUCCESS:
         case LOGIN_FAILURE:
-        case SESSION_LOAD_SUCCESS:
-        case SESSION_LOAD_FAILURE:
+        case SESSION_INFO_LOAD_SUCCESS:
+        case SESSION_INFO_LOAD_FAILURE:
         case SESSION_EXPIRED:
         case ANALYTICS_AUTHENTICATION_COMPLETED:
         case LOGOUT_SUCCESS:

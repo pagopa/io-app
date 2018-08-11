@@ -10,7 +10,7 @@ import {
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
   SESSION_INVALID,
-  SESSION_LOAD_SUCCESS
+  SESSION_INFO_LOAD_SUCCESS
 } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -141,7 +141,7 @@ const reducer = (
     };
   }
 
-  if (action.type === SESSION_LOAD_SUCCESS && isLoggedIn(state)) {
+  if (action.type === SESSION_INFO_LOAD_SUCCESS && isLoggedIn(state)) {
     // Save the session info in the state
     return {
       ...state,

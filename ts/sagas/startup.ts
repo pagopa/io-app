@@ -12,9 +12,8 @@ import {
   logoutFailure,
   logoutSuccess,
   sessionExpired,
-  SessionInformationLoadFailure,
-  sessionInformationLoadRequest,
-  SessionInformationLoadSuccess,
+  sessionInformationLoadFailure,
+  sessionInformationLoadSuccess,
   sessionInvalid
 } from "../store/actions/authentication";
 import {
@@ -22,14 +21,14 @@ import {
   APPLICATION_INITIALIZED,
   LOGOUT_REQUEST,
   PIN_LOGIN_VALIDATE_REQUEST,
-  SESSION_LOAD_FAILURE,
-  SESSION_LOAD_SUCCESS,
+  SESSION_EXPIRED,
   START_PIN_RESET
 } from "../store/actions/constants";
 import { startNotificationInstallationUpdate } from "../store/actions/notifications";
 import { profileLoadRequest } from "../store/actions/profile";
 import {
   isLoggedInSelector,
+  sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
 
@@ -81,6 +80,7 @@ import {
 } from "../api/backend";
 
 import I18n from "i18n-js";
+import { PublicSession } from "../../definitions/backend/PublicSession";
 import { applicationInitialized } from "../store/actions/application";
 
 // tslint:disable-next-line:cognitive-complexity
@@ -344,6 +344,75 @@ function* watchLogoutSaga(): Iterator<Effect> {
 }
 
 /**
+ * Load session info from the Backend
+ */
+function* loadSessionInformationSaga(): IterableIterator<Effect | boolean> {
+  // Get the SessionToken from the store
+  const sessionToken: SessionToken | undefined = yield select(
+    sessionTokenSelector
+  );
+
+  if (sessionToken) {
+    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+    // Call the Backend service
+    const response:
+      | BasicResponseTypeWith401<PublicSession>
+      | undefined = yield call(backendClient.getSession, {});
+
+    if (response && response.status === 200) {
+      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
+      yield put(sessionInformationLoadSuccess(response.value));
+      yield true;
+      return;
+    }
+
+    // We got a error, send a SESSION_LOAD_FAILURE action
+    const error: Error = response
+      ? response.value
+      : Error("Invalid server response");
+    yield put(sessionInformationLoadFailure(error));
+  } else {
+    // No SessionToken
+    // FIXME: consider having a specific error? who listens for this?
+    yield put(sessionInformationLoadFailure(Error("No session token")));
+  }
+  yield false;
+}
+
+/**
+ * Handles the expiration of session while the user is using the app.
+ *
+ * On session expiration (SESSION_EXPIRED action):
+ * 1) Saves the navigation state
+ * 2) Asks the user to re-authenticate with SPID
+ * 3) Restores the navigation state to bring the user back to the screen he was
+ *
+ * NOTE: This saga handles SESSION_EXPIRED actions one by one, this means that
+ * if more than one SESSION_EXPIRED action get dispatched at the same time, only
+ * one get served.
+ * FIXME: the above statement is not clear, are *all* SESSION_EXPIRED actions
+ * going to be processed one by one, or just the first one, or the latest?
+ */
+export function* watchSessionExpired(): IterableIterator<Effect> {
+  while (true) {
+    // Wait for a SESSION_EXPIRED action
+    yield take(SESSION_EXPIRED);
+
+    // Get the navigation state from the store so we can restore it back
+    const navigationState: NavigationState = yield select(
+      navigationStateSelector
+    );
+
+    // Restart the authentication flow
+    yield call(authenticationSaga);
+
+    // Restore the navigation state to bring the user back to the screen it was before the logout
+    yield put(navigationRestore(navigationState));
+  }
+}
+
+/**
  * Saga to handle the application startup
  */
 function* applicationInitializedSaga(): IterableIterator<Effect> {
@@ -360,31 +429,25 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     sessionRefreshed = true;
   }
 
-  // The user is logged in, we have a session, let's try to load the session
-  // information from the backend.
-  // Note that by issuing this request, we may find out that the
-  yield put(sessionInformationLoadRequest);
+  // The user is logged in, we have a session token, let's see
+  // if have the session info also
 
-  // Wait until the request is completed
-  const action:
-    | SessionInformationLoadSuccess
-    | SessionInformationLoadFailure = yield take([
-    SESSION_LOAD_SUCCESS,
-    SESSION_LOAD_FAILURE
-  ]);
-
-  // If we received SESSION_LOAD_FAILURE this means the session is not-valid
-  if (action.type === SESSION_LOAD_FAILURE) {
-    // Remove the session information from the store
-    yield put(sessionInvalid);
-
-    // We can't do much without a valid session, start the initialization from
-    // scrach
-    yield put(applicationInitialized);
-    return;
+  const maybeSessionInformation: Option<PublicSession> = yield select(
+    sessionInfoSelector
+  );
+  if (maybeSessionInformation.isNone()) {
+    // let's try to load the session information from the backend.
+    const result: boolean = yield call(loadSessionInformationSaga);
+    if (!result) {
+      // we can't go further without session info, let's restart
+      // the initialization process
+      yield put(applicationInitialized);
+      return;
+    }
   }
 
-  // If we are here the user is logged in and the session is loaded and valid
+  // If we are here the user is logged in and the session info is
+  // loaded and valid
 
   // Get the profile info
   yield put(profileLoadRequest);
@@ -430,6 +493,9 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
 
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivity);
+
+  // Handles the expiration of the session token
+  yield fork(watchSessionExpired);
 
   // Logout the user by expiring the session
   yield fork(watchLogoutSaga);
