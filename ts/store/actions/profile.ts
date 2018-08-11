@@ -5,7 +5,6 @@ import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
 import { ProfileWithOrWithoutEmail } from "../../api/backend";
 import {
   PROFILE_LOAD_FAILURE,
-  PROFILE_LOAD_REQUEST,
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_REQUEST,
@@ -13,10 +12,6 @@ import {
 } from "./constants";
 
 // Actions
-
-export type ProfileLoadRequest = Readonly<{
-  type: typeof PROFILE_LOAD_REQUEST;
-}>;
 
 export type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
@@ -46,7 +41,6 @@ export type ProfileUpsertFailure = Readonly<{
 }>;
 
 export type ProfileActions =
-  | ProfileLoadRequest
   | ProfileLoadSuccess
   | ProfileLoadFailure
   | ProfileUpsertRequest
@@ -54,10 +48,6 @@ export type ProfileActions =
   | ProfileUpsertFailure;
 
 // Creators
-
-export const profileLoadRequest: ProfileLoadRequest = {
-  type: PROFILE_LOAD_REQUEST
-};
 
 export const profileLoadSuccess = (
   profile: ProfileWithOrWithoutEmail

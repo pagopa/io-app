@@ -13,10 +13,7 @@ import { apiUrlPrefix } from "../config";
 
 import I18n from "../i18n";
 
-import {
-  PROFILE_LOAD_REQUEST,
-  PROFILE_UPSERT_REQUEST
-} from "../store/actions/constants";
+import { PROFILE_UPSERT_REQUEST } from "../store/actions/constants";
 import {
   profileLoadFailure,
   profileLoadSuccess,
@@ -31,38 +28,31 @@ import { SessionToken } from "../types/SessionToken";
 import { callApiWith401ResponseStatusHandler } from "./api";
 
 // A saga to load the Profile.
-function* loadProfile(): Iterator<Effect> {
-  const sessionToken: SessionToken | undefined = yield select(
-    sessionTokenSelector
+export function* loadProfile(
+  sessionToken: SessionToken
+): Iterator<Effect | boolean> {
+  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+
+  const response:
+    | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
+    | undefined = yield call(
+    callApiWith401ResponseStatusHandler,
+    backendClient.getProfile,
+    {}
   );
 
-  if (sessionToken) {
-    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+  if (!response || response.status !== 200) {
+    // We got a error, send a SESSION_LOAD_FAILURE action
+    const error: Error = response
+      ? response.value
+      : Error(I18n.t("profile.errors.load"));
 
-    const response:
-      | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-      | undefined = yield call(
-      callApiWith401ResponseStatusHandler,
-      backendClient.getProfile,
-      {}
-    );
-
-    if (!response || response.status !== 200) {
-      // We got a error, send a SESSION_LOAD_FAILURE action
-      const error: Error = response
-        ? response.value
-        : Error(I18n.t("profile.errors.load"));
-
-      yield put(profileLoadFailure(error));
-    } else {
-      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      yield put(profileLoadSuccess(response.value));
-    }
+    yield put(profileLoadFailure(error));
+    yield false;
   } else {
-    // No SessionToken can't send the request
-    yield put(
-      profileLoadFailure(Error(I18n.t("authentication.errors.notoken")))
-    );
+    // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
+    yield put(profileLoadSuccess(response.value));
+    yield true;
   }
 }
 
@@ -119,6 +109,5 @@ function* createOrUpdateProfile(
 
 // This function listens for Profile related requests and calls the needed saga.
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(PROFILE_LOAD_REQUEST, loadProfile);
   yield takeLatest(PROFILE_UPSERT_REQUEST, createOrUpdateProfile);
 }
