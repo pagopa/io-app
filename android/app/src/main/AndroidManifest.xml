@@ -24,7 +24,7 @@
         android:resource="@mipmap/ic_notification" />
       <meta-data
         android:name="com.google.firebase.messaging.default_notification_color"
-        android:resource="@color/colorAccent" />
+        android:resource="@color/colorPrimary" />
       <receiver
         android:name="com.google.android.gms.gcm.GcmReceiver"
         android:exported="true"
