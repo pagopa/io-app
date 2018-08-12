@@ -32,7 +32,6 @@ const connectionMonitorParameters = {
 export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
-    call(notificationsSaga),
     call(profileSaga), // FIXME: transform into callable saga
     call(walletSaga),
     call(backendInfoSaga),

@@ -14,7 +14,6 @@ import {
 import {
   NavigateToDeepLink,
   navigateToDeepLink,
-  SetDeepLink,
   setDeepLink
 } from "./store/actions/deepLink";
 import { ApplicationState } from "./store/actions/types";
@@ -24,7 +23,7 @@ import {
   PinLoginState
 } from "./store/reducers/pinlogin";
 import { GlobalState } from "./store/reducers/types";
-import { getNavigationPayloadFromDeepLink } from "./utils/deepLink";
+import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
@@ -33,15 +32,9 @@ type ReduxMappedProps = {
 };
 
 type DispatchProps = {
-  applicationChangeState: (
-    activity: ApplicationState
-  ) => ApplicationChangeState;
-  setDeepLink: (
-    navigationPayload: NavigationNavigateActionPayload
-  ) => SetDeepLink;
-  navigateToDeepLink: (
-    navigationPayload: NavigationNavigateActionPayload
-  ) => NavigateToDeepLink;
+  applicationChangeState: typeof applicationChangeState;
+  setDeepLink: typeof setDeepLink;
+  navigateToDeepLink: typeof navigateToDeepLink;
 };
 
 type Props = ReduxMappedProps & DispatchProps;
@@ -50,55 +43,64 @@ type Props = ReduxMappedProps & DispatchProps;
  * The main container of the application with the ConnectionBar and the Navigator
  */
 class RootContainer extends React.PureComponent<Props> {
+  private handleOpenUrlEvent = (event: { url: string }): void =>
+    this.navigateToUrlHandler(event.url);
+
+  private handleApplicationActivity = (activity: ApplicationState) =>
+    this.props.applicationChangeState(activity);
+
+  private navigateToUrlHandler = (url: string | null) => {
+    if (!url) {
+      return;
+    }
+    const action = getNavigateActionFromDeepLink(url);
+    // immediately navigate to the resolved action
+    this.props.setDeepLink(action, true);
+  };
+
   public componentDidMount() {
     if (Platform.OS === "android") {
       Linking.getInitialURL()
-        .then(this.navigate)
+        .then(this.navigateToUrlHandler)
         .catch(console.error); // tslint:disable-line:no-console
     } else {
-      Linking.addEventListener("url", this.handleOpenURL);
+      Linking.addEventListener("url", this.handleOpenUrlEvent);
     }
 
-    AppState.addEventListener("change", this.handleApplicationActivityChange);
-  }
-
-  public componentDidUpdate() {
-    const {
-      deepLinkState: { deepLink },
-      isPinValid
-    } = this.props;
-
-    if (deepLink && isPinValid) {
-      this.props.navigateToDeepLink(deepLink);
-    }
+    AppState.addEventListener("change", this.handleApplicationActivity);
   }
 
   public componentWillUnmount() {
     if (Platform.OS === "ios") {
-      Linking.removeEventListener("url", this.handleOpenURL);
+      Linking.removeEventListener("url", this.handleOpenUrlEvent);
     }
 
-    AppState.removeEventListener(
-      "change",
-      this.handleApplicationActivityChange
-    );
+    AppState.removeEventListener("change", this.handleApplicationActivity);
   }
 
-  private handleOpenURL = (event: { url: string }) => {
-    this.navigate(event.url);
-  };
+  // public shouldComponentUpdate(_: Props): boolean {
+  //   return false;
+  // }
 
-  private navigate = (url: string | null) => {
-    if (!url) {
-      return;
+  public componentDidUpdate() {
+    // FIXME: the logic here is a bit weird: there is an event handler
+    //        (navigateToUrlHandler) that will dispatch a redux action for
+    //        setting a "deep link" in the redux state - in turn, the update
+    //        of the redux state triggers an update of the RootComponent that
+    //        dispatches a navigate action from componentDidUpdate - can't we
+    //        just listen for SET_DEEPLINK from a saga and dispatch the
+    //        navigate action from there?
+    // FIXME: how does this logic interacts with the logic that handles the deep
+    //        link in the startup saga?
+    const {
+      deepLinkState: { deepLink, immediate },
+      isPinValid
+    } = this.props;
+
+    if (immediate && deepLink && isPinValid) {
+      this.props.navigateToDeepLink(deepLink);
     }
-
-    this.props.setDeepLink(getNavigationPayloadFromDeepLink(url));
-  };
-
-  public handleApplicationActivityChange = (activity: ApplicationState) => {
-    this.props.applicationChangeState(activity);
-  };
+  }
 
   public render() {
     return (

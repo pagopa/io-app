@@ -1,7 +1,9 @@
 import {
   NavigationActions,
   NavigationNavigateActionPayload,
+  NavigationParams,
   NavigationState,
+  NavigationStateRoute,
   StackActions
 } from "react-navigation";
 import { Effect } from "redux-saga";
@@ -34,14 +36,12 @@ import {
   SESSION_EXPIRED,
   START_PIN_RESET
 } from "../store/actions/constants";
-import { startNotificationInstallationUpdate } from "../store/actions/notifications";
 import {
-  isLoggedInSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
 
-import { navigateToDeepLink } from "../store/actions/deepLink";
+import { navigateToDeepLink, setDeepLink } from "../store/actions/deepLink";
 import { deepLinkSelector } from "../store/reducers/deepLink";
 
 import { apiUrlPrefix, backgroundActivityTimeout } from "../config";
@@ -53,7 +53,6 @@ import {
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
-import { navigationRestore } from "../store/actions/navigation";
 import {
   pinLoginValidateFailure,
   PinLoginValidateRequest,
@@ -97,6 +96,7 @@ import {
   watchMessagesLoadOrCancelSaga,
   watchNavigateToMessageDetailsSaga
 } from "./messages";
+import { updateInstallationSaga } from "./notifications";
 import { configurePinSaga } from "./pinset";
 import { loadProfile } from "./profile";
 
@@ -237,7 +237,6 @@ function* watchPinResetSaga(): Iterator<Effect> {
  * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to provide
  * the PIN
  */
-// tslint:disable-next-line:cognitive-complexity
 export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
 
@@ -245,11 +244,6 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   let lastState: ApplicationState = "active";
   // tslint:disable-next-line:no-let
   let lastUpdateAtMillis: number | undefined;
-
-  // We will use this to save and then restore the navigation
-  // FIXME: Navigation's saga INITIAL_STATE should not leak here!
-  // tslint:disable-next-line:no-let
-  let navigationState: NavigationState | undefined;
 
   while (true) {
     // listen for changes in application state
@@ -265,9 +259,9 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
     if (lastState !== "background" && newApplicationState === "background") {
       // The app is going into background
 
-      // Save the navigation state so we can restore in case the PIN login is needed
-      // tslint:disable-next-line:saga-yield-return-type
-      navigationState = yield select(navigationStateSelector);
+      // Save the navigation state so we can restore it later when the app come
+      // back to the active state
+      yield call(saveNavigationStateSaga);
 
       // Make sure that when the app come back active, the BackgrounScreen
       // gets loaded first
@@ -282,41 +276,44 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       // The app is coming back active after being in background
 
       if (timeElapsedMillis > backgroundActivityTimeoutMillis) {
-        // If the app has been in background state for more that the timeout
-        // we may need to ask the user to provide the PIN
-
-        // FIXME: why don't we avoid duplicatin this login and just trigger
-        //        an APPLICATION_INITIALIZED flow? - we may rely on the
-        //        deeplink mechanism to navigate back to the previous screen
-
-        // Whether the user was authenticated
-        const isAuthenticated: boolean = yield select(isLoggedInSelector);
-
-        // Whether the user had a PIN configured
-        const maybePin: Option<PinString> = yield call(getPin);
-        const hasPin = maybePin.isSome();
-
-        if (isAuthenticated && hasPin) {
-          // We ask the user to provide a PIN only of the user was previously
-          // authenticated and he had a PIN configured.
-
-          // Start the PIN authentication and wwait until the user has
-          // successfully provided the PIN
-          yield call(pinLoginSaga);
-        }
-      }
-
-      // Now either the user wasnt's fully authenticated or, if it was, we
-      // asked him to provide the PIN and he did successfully.
-      // We can the navigation to the previous state.
-      if (navigationState) {
-        yield put(navigationRestore(navigationState));
+        // If the app has been in background state for more than the timeout,
+        // re-initialize the app from scratch
+        yield put(applicationInitialized);
+      } else {
+        // Or else, just navigate back to the screen we were at before
+        // going into background
+        yield put(NavigationActions.back());
       }
     }
 
     // Update the last state and update time
     lastState = newApplicationState;
     lastUpdateAtMillis = nowMillis;
+  }
+}
+
+/**
+ * Saves the navigation state in the deep link state so that when the app
+ * goes through the initialization saga, the user gets sent back to the saved
+ * navigation route.
+ */
+function* saveNavigationStateSaga(): Iterator<Effect> {
+  const navigationState: NavigationState = yield select(
+    navigationStateSelector
+  );
+  const currentRoute = navigationState.routes[
+    navigationState.index
+  ] as NavigationStateRoute<NavigationParams>;
+  if (currentRoute.routes && currentRoute.routeName === ROUTES.MAIN) {
+    // only save state when in Main navigator
+    const mainSubRoute = currentRoute.routes[currentRoute.index];
+    yield put(
+      setDeepLink({
+        routeName: mainSubRoute.routeName,
+        params: mainSubRoute.params,
+        key: mainSubRoute.key
+      })
+    );
   }
 }
 
@@ -379,40 +376,19 @@ function* loadSessionInformationSaga(
 
 /**
  * Handles the expiration of session while the user is using the app.
- *
- * On session expiration (SESSION_EXPIRED action):
- * 1) Saves the navigation state
- * 2) Asks the user to re-authenticate with SPID
- * 3) Restores the navigation state to bring the user back to the screen he was
- *
- * NOTE: This saga handles SESSION_EXPIRED actions one by one, this means that
- * if more than one SESSION_EXPIRED action get dispatched at the same time, only
- * one get served.
- * FIXME: the above statement is not clear, are *all* SESSION_EXPIRED actions
- * going to be processed one by one, or just the first one, or the latest?
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   while (true) {
     // Wait for a SESSION_EXPIRED action
     yield take(SESSION_EXPIRED);
 
-    // Get the navigation state from the store so we can restore it back
-    const navigationState: NavigationState = yield select(
-      navigationStateSelector
-    );
+    // Save the navigation state
+    yield call(saveNavigationStateSaga);
 
-    // Restart the authentication flow
-    // Note that in this case it would be nice to make the user go through
-    // the onboarding flow, i.e. to accept updated terms (at least once every
-    // 30 days).
-    // FIXME: consider whether just triggering an APPLICATION_INITIALIZED action
-    //        or a LOGOUT action - we can save the navigation state somewhere
-    //        or perhaps piggy back on the deep link mechanism for nagivating
-    //        back to the previous screen?
-    yield call(authenticationSaga);
-
-    // Restore the navigation state to bring the user back to the screen it was before the logout
-    yield put(navigationRestore(navigationState));
+    // Re-initialize the app
+    // Since there was a SESSION_EXPIRED action, the user will be asked to
+    // authenticate again.
+    yield put(applicationInitialized);
   }
 }
 
@@ -516,7 +492,8 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   }
 
   // Start the notification installation update
-  yield put(startNotificationInstallationUpdate);
+  // FIXME: handle result
+  yield call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // Whether the user has a PIN
   const storedPin: Option<PinString> = yield call(getPin);
@@ -566,7 +543,8 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   yield fork(watchPinResetSaga);
 
   // Finally we decide where to navigate to based on whether we have a deep link
-  // stored in the state (e.g. coming from a push notification)
+  // stored in the state (e.g. coming from a push notification or from a
+  // previously stored navigation state)
   const deepLink: NavigationNavigateActionPayload | null = yield select(
     deepLinkSelector
   );

@@ -9,8 +9,8 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
-  SESSION_INVALID,
-  SESSION_INFO_LOAD_SUCCESS
+  SESSION_INFO_LOAD_SUCCESS,
+  SESSION_INVALID
 } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";

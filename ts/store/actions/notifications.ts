@@ -4,8 +4,7 @@
 
 import {
   NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
-  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
-  START_NOTIFICATION_INSTALLATION_UPDATE
+  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
 } from "./constants";
 
 export type NotificationsTokenUpdate = Readonly<{
@@ -14,10 +13,6 @@ export type NotificationsTokenUpdate = Readonly<{
    * The push notification service token
    */
   payload: string;
-}>;
-
-export type StartNotificationInstallationUpdate = Readonly<{
-  type: typeof START_NOTIFICATION_INSTALLATION_UPDATE;
 }>;
 
 export type NotificationInstallationUpdateFailure = Readonly<{
@@ -32,15 +27,10 @@ export const updateNotificationsInstallationToken = (
   payload: token
 });
 
-export const startNotificationInstallationUpdate: StartNotificationInstallationUpdate = {
-  type: START_NOTIFICATION_INSTALLATION_UPDATE
-};
-
 export const updateNotificationInstallationFailure = (): NotificationInstallationUpdateFailure => ({
   type: NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
 });
 
 export type NotificationsActions =
   | NotificationsTokenUpdate
-  | StartNotificationInstallationUpdate
   | NotificationInstallationUpdateFailure;
