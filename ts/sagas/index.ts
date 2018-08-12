@@ -10,9 +10,7 @@ import {
   serviceContentLoaderSaga
 } from "./contentLoaders";
 import deepLink from "./deepLink";
-import notificationsSaga from "./notifications";
 import preferencesSaga from "./preferences";
-import profileSaga from "./profile";
 import { startupSaga } from "./startup";
 import walletSaga from "./wallet";
 
@@ -32,7 +30,6 @@ const connectionMonitorParameters = {
 export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
-    call(profileSaga), // FIXME: transform into callable saga
     call(walletSaga),
     call(backendInfoSaga),
     call(networkEventsListenerSaga, connectionMonitorParameters),

@@ -98,7 +98,7 @@ import {
 } from "./messages";
 import { updateInstallationSaga } from "./notifications";
 import { configurePinSaga } from "./pinset";
-import { loadProfile } from "./profile";
+import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
 // tslint:disable-next-line:cognitive-complexity
 function* onboardingSaga(): Iterator<Effect> {
@@ -451,6 +451,11 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   // Instantiate a backend client from the session token
   const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  // FIXME: handle result
+  yield fork(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -491,9 +496,12 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     return;
   }
 
-  // Start the notification installation update
-  // FIXME: handle result
-  yield call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  // Start watching for profile update requests as the onboarding
+  // process may need to update the profile
+  yield fork(
+    watchProfileUpsertRequestsSaga,
+    backendClient.createOrUpdateProfile
+  );
 
   // Whether the user has a PIN
   const storedPin: Option<PinString> = yield call(getPin);
