@@ -2,7 +2,7 @@
  * The root saga that forks and includes all the other sagas.
  */
 import { networkEventsListenerSaga } from "react-native-offline";
-import { all, Effect, fork } from "redux-saga/effects";
+import { all, call, Effect, fork } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
 import { contentSaga } from "./content";
@@ -30,16 +30,16 @@ const connectionMonitorParameters = {
 
 export default function* root(): Iterator<Effect> {
   yield all([
-    fork(startupSaga),
-    fork(notificationsSaga),
-    fork(pinSetSaga),
-    fork(messagesSaga),
-    fork(profileSaga),
-    fork(walletSaga),
-    fork(backendInfoSaga),
-    fork(networkEventsListenerSaga, connectionMonitorParameters),
-    fork(deepLink),
-    fork(preferencesSaga),
-    fork(contentSaga)
+    call(startupSaga),
+    call(notificationsSaga),
+    call(pinSetSaga), // FIXME: can go inside onboarding
+    call(messagesSaga), // FIXME: can go inside startup
+    call(profileSaga), // FIXME: transform into callable saga
+    call(walletSaga),
+    call(backendInfoSaga),
+    call(networkEventsListenerSaga, connectionMonitorParameters),
+    call(deepLink),
+    call(preferencesSaga),
+    call(contentSaga) // FIXME: can go inside startup
   ]);
 }

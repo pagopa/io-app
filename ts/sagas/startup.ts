@@ -5,7 +5,16 @@ import {
   StackActions
 } from "react-navigation";
 import { Effect } from "redux-saga";
-import { call, fork, put, select, take, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
+  race,
+  all
+} from "redux-saga/effects";
 
 import { isNone, Option } from "fp-ts/lib/Option";
 
@@ -443,8 +452,7 @@ function* loginUntilValidSessionTokenSaga(): IterableIterator<
       sessionTokenSelector
     );
     if (maybeSessionToken) {
-      yield maybeSessionToken;
-      break;
+      return maybeSessionToken;
     }
   }
 }
@@ -503,10 +511,6 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   // Start the notification installation update
   yield put(startNotificationInstallationUpdate);
 
-  // Fork the saga that watches for requests to reset the PIN
-  // as we may be going to show the PIN login screen
-  yield fork(pinResetSaga);
-
   // Whether the user has a PIN
   const storedPin: Option<PinString> = yield call(getPin);
 
@@ -520,7 +524,7 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     // The user was previously logged in, so no onboarding is needed
     // The session was valid so the user didn't event had to do a full login,
     // in this case we ask the user to provide the PIN as a "lighter" login
-    yield call(pinLoginSaga);
+    yield race({ login: call(pinLoginSaga), reset: call(pinResetSaga) });
   }
 
   // Finally we decide whether to navigate to the main screen o a specific
@@ -543,18 +547,20 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
 
   //
   // Startup of the application is complete
-  // Now we fork a few background tasks. Note that the following sagas will
+  // Now we run a few tasks in parallel. Note that the following sagas will
   // be automatically cancelled each time this parent saga gets restarted.
   //
 
-  // Watch for the app going to background/foreground
-  yield fork(watchApplicationActivity);
-
-  // Handles the expiration of the session token
-  yield fork(watchSessionExpired);
-
-  // Logout the user by expiring the session
-  yield fork(watchLogoutSaga);
+  yield all([
+    // Watch for the app going to background/foreground
+    call(watchApplicationActivity),
+    // Handles the expiration of the session token
+    call(watchSessionExpired),
+    // Logout the user by expiring the session
+    call(watchLogoutSaga),
+    // Watch for requests to reset the PIN
+    call(pinResetSaga)
+  ]);
 }
 
 export function* startupSaga(): IterableIterator<Effect> {
