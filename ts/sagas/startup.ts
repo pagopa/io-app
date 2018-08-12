@@ -271,6 +271,8 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
 
       // Make sure that when the app come back active, the BackgrounScreen
       // gets loaded first
+      // FIXME: not that this creates a quick blue flash in case after restoring
+      //        the app we don't ask a PIN
       yield put(
         NavigationActions.navigate({
           routeName: ROUTES.BACKGROUND
@@ -282,6 +284,10 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       if (timeElapsedMillis > backgroundActivityTimeoutMillis) {
         // If the app has been in background state for more that the timeout
         // we may need to ask the user to provide the PIN
+
+        // FIXME: why don't we avoid duplicatin this login and just trigger
+        //        an APPLICATION_INITIALIZED flow? - we may rely on the
+        //        deeplink mechanism to navigate back to the previous screen
 
         // Whether the user was authenticated
         const isAuthenticated: boolean = yield select(isLoggedInSelector);
@@ -396,6 +402,13 @@ export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
     );
 
     // Restart the authentication flow
+    // Note that in this case it would be nice to make the user go through
+    // the onboarding flow, i.e. to accept updated terms (at least once every
+    // 30 days).
+    // FIXME: consider whether just triggering an APPLICATION_INITIALIZED action
+    //        or a LOGOUT action - we can save the navigation state somewhere
+    //        or perhaps piggy back on the deep link mechanism for nagivating
+    //        back to the previous screen?
     yield call(authenticationSaga);
 
     // Restore the navigation state to bring the user back to the screen it was before the logout
