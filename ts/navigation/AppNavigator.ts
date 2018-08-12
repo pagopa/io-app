@@ -19,22 +19,25 @@ function transitionConfig(): TransitionConfig {
   // isModal: boolean
   return {
     transitionSpec: {
-      duration: 750,
-      easing: Easing.out(Easing.poly(4)),
-      timing: Animated.timing
-    },
-    screenInterpolator: sceneProps => {
-      const { position, scene } = sceneProps;
-
-      const thisSceneIndex = scene.index;
-
-      const opacity = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-        outputRange: [0, 1, 0]
-      });
-
-      return { opacity };
+      duration: 0,
+      timing: Animated.timing,
+      easing: Easing.step0
     }
+    // ---
+    // transitionSpec: {
+    //   duration: 0,
+    //   easing: Easing.out(Easing.poly(4)),
+    //   timing: Animated.timing
+    // },
+    // screenInterpolator: sceneProps => {
+    //   const { position, scene } = sceneProps;
+    //   const thisSceneIndex = scene.index;
+    //   const opacity = position.interpolate({
+    //     inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+    //     outputRange: [0, 1, 0]
+    //   });
+    //   return { opacity };
+    // }
   };
 }
 
