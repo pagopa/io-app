@@ -6,7 +6,6 @@ import {
 } from "react-navigation";
 import { Effect } from "redux-saga";
 import {
-  all,
   call,
   fork,
   put,
@@ -49,8 +48,6 @@ import { apiUrlPrefix, backgroundActivityTimeout } from "../config";
 
 import ROUTES from "../navigation/routes";
 import {
-  PIN_CREATE_FAILURE,
-  PIN_CREATE_SUCCESS,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_SUCCESS,
   TOS_ACCEPT_REQUEST,
@@ -83,10 +80,13 @@ import { SessionToken } from "../types/SessionToken";
 import {
   BackendClient,
   BasicResponseTypeWith401,
+  GetSessionT,
+  LogoutT,
   SuccessResponse
 } from "../api/backend";
 
 import I18n from "i18n-js";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { PublicSession } from "../../definitions/backend/PublicSession";
 import {
   analyticsAuthenticationCompleted,
@@ -318,37 +318,25 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
  * Handles the logout flow
  */
 // tslint:disable-next-line:cognitive-complexity
-function* watchLogoutSaga(): Iterator<Effect> {
+function* watchLogoutSaga(logout: TypeofApiCall<LogoutT>): Iterator<Effect> {
   while (true) {
     yield take(LOGOUT_REQUEST);
 
-    // Get the SessionToken from the store
-    const sessionToken: SessionToken | undefined = yield select(
-      sessionTokenSelector
-    );
+    // Issue a logout request to the backend, asking to delete the session
+    // FIXME: if there's no connectivity to the backend, this request will
+    //        block for a while.
+    const response:
+      | BasicResponseTypeWith401<SuccessResponse>
+      | undefined = yield call(logout, {});
 
-    // Whether the user need to be logged out
-    if (sessionToken) {
-      const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
-      // Issue a logout request to the backend, asking to delete the session
-      // FIXME: if there's no connectivity to the backend, this request will
-      //        block for a while.
-      const response:
-        | BasicResponseTypeWith401<SuccessResponse>
-        | undefined = yield call(backendClient.logout, {});
-
-      if (response && response.status === 200) {
-        yield put(logoutSuccess);
-      } else {
-        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
-        const error: Error = response
-          ? response.value
-          : Error(I18n.t("authentication.errors.logout"));
-        yield put(logoutFailure(error));
-      }
+    if (response && response.status === 200) {
+      yield put(logoutSuccess);
     } else {
-      yield put(logoutFailure(Error(I18n.t("authentication.errors.notoken"))));
+      // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+      const error: Error = response
+        ? response.value
+        : Error(I18n.t("authentication.errors.logout"));
+      yield put(logoutFailure(error));
     }
 
     // Force the login by expiring the session
@@ -362,14 +350,12 @@ function* watchLogoutSaga(): Iterator<Effect> {
  * Load session info from the Backend
  */
 function* loadSessionInformationSaga(
-  sessionToken: SessionToken
+  getSession: TypeofApiCall<GetSessionT>
 ): IterableIterator<Effect | boolean> {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
   // Call the Backend service
   const response:
     | BasicResponseTypeWith401<PublicSession>
-    | undefined = yield call(backendClient.getSession, {});
+    | undefined = yield call(getSession, {});
 
   if (response && response.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
@@ -468,9 +454,13 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     sessionTokenSelector
   );
 
+  // Unless we have a valid session token already, login until we have one.
   const sessionToken: SessionToken = previousSessionToken
     ? previousSessionToken
     : yield call(loginUntilValidSessionTokenSaga);
+
+  // Instantiate a backend client from the session token
+  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
@@ -488,7 +478,7 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     // let's try to load the session information from the backend.
     const result: boolean = yield call(
       loadSessionInformationSaga,
-      sessionToken
+      backendClient.getSession
     );
     if (!result) {
       // we can't go further without session info, let's restart
@@ -502,8 +492,10 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   // loaded and valid
 
   // Get the profile info
-  // FIXME: handle the result
-  const loadProfileResult: boolean = yield call(loadProfile, sessionToken);
+  const loadProfileResult: boolean = yield call(
+    loadProfile,
+    backendClient.getProfile
+  );
   if (loadProfileResult === false) {
     // Start again if we can't load the profile
     yield put(applicationInitialized);
@@ -539,15 +531,24 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
   // this parent saga gets restarted.
 
   // Load messages when requested
-  yield fork(watchMessagesLoadOrCancelSaga, sessionToken);
+  yield fork(
+    watchMessagesLoadOrCancelSaga,
+    backendClient.getMessages,
+    backendClient.getMessage,
+    backendClient.getService
+  );
   // Navigate to message details when requested
-  yield fork(watchNavigateToMessageDetailsSaga, sessionToken);
+  yield fork(
+    watchNavigateToMessageDetailsSaga,
+    backendClient.getMessage,
+    backendClient.getService
+  );
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
   // Handles the expiration of the session token
   yield fork(watchSessionExpiredSaga);
   // Logout the user by expiring the session
-  yield fork(watchLogoutSaga);
+  yield fork(watchLogoutSaga, backendClient.logout);
   // Watch for requests to reset the PIN
   yield fork(watchPinResetSaga);
 

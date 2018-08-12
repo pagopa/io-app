@@ -27,13 +27,7 @@ import {
 import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import {
-  BackendClient,
-  BackendClientT,
-  GetMessageT,
-  GetServiceT
-} from "../api/backend";
-import { apiUrlPrefix } from "../config";
+import { GetMessagesT, GetMessageT, GetServiceT } from "../api/backend";
 import ROUTES from "../navigation/routes";
 import {
   MESSAGES_LOAD_CANCEL,
@@ -68,7 +62,6 @@ import {
   MessageWithContentPO,
   toMessageWithContentPO
 } from "../types/MessageWithContentPO";
-import { SessionToken } from "../types/SessionToken";
 import { callApiWith401ResponseStatusHandler } from "./api";
 
 /**
@@ -98,10 +91,10 @@ export function* loadMessage(
 }
 
 export function* navigateToMessageDetailsSaga(
-  sessionToken: SessionToken,
+  getMessage: TypeofApiCall<GetMessageT>,
+  getService: TypeofApiCall<GetServiceT>,
   action: NavigateToMessageDetails
 ): Iterator<Effect> {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
   const messageId = action.payload;
 
   // tslint:disable-next-line:no-let
@@ -111,7 +104,7 @@ export function* navigateToMessageDetailsSaga(
 
   if (!message) {
     try {
-      yield call(loadMessage, backendClient.getMessage, messageId);
+      yield call(loadMessage, getMessage, messageId);
       const loadedMessage: MessageWithContentPO | undefined = yield select(
         messageByIdSelector(messageId)
       );
@@ -136,11 +129,7 @@ export function* navigateToMessageDetailsSaga(
   );
 
   if (!senderService) {
-    yield call(
-      loadService,
-      backendClient.getService,
-      message.sender_service_id
-    );
+    yield call(loadService, getService, message.sender_service_id);
   }
 
   const navigationPayload: NavigationNavigateActionPayload = {
@@ -158,12 +147,14 @@ export function* navigateToMessageDetailsSaga(
 }
 
 export function* watchNavigateToMessageDetailsSaga(
-  sessionToken: SessionToken
+  getMessage: TypeofApiCall<GetMessageT>,
+  getService: TypeofApiCall<GetServiceT>
 ): IterableIterator<Effect> {
   yield takeLatest(
     NAVIGATE_TO_MESSAGE_DETAILS,
     navigateToMessageDetailsSaga,
-    sessionToken
+    getMessage,
+    getService
   );
 }
 
@@ -198,7 +189,9 @@ export function* loadService(
  * only the details of the messages and services not already in the redux store.
  */
 export function* loadMessages(
-  backendClient: BackendClientT
+  getMessages: TypeofApiCall<GetMessagesT>,
+  getMessage: TypeofApiCall<GetMessageT>,
+  getService: TypeofApiCall<GetServiceT>
 ): IterableIterator<Effect> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
@@ -216,7 +209,7 @@ export function* loadMessages(
     // Request the list of messages from the Backend
     const response: BasicResponseType<Messages> | undefined = yield call(
       callApiWith401ResponseStatusHandler,
-      backendClient.getMessages,
+      getMessages,
       {}
     );
 
@@ -248,20 +241,12 @@ export function* loadMessages(
       // Fetch the services detail in parallel
       // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
       // We fetch services first because to show messages you need the related service info
-      yield all(
-        newServicesIds.map(id =>
-          call(loadService, backendClient.getService, id)
-        )
-      );
+      yield all(newServicesIds.map(id => call(loadService, getService, id)));
 
       // Fetch the messages detail in parallel
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
       // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
-      yield all(
-        newMessagesIds.map(id =>
-          call(loadMessage, backendClient.getMessage, id)
-        )
-      );
+      yield all(newMessagesIds.map(id => call(loadMessage, getMessage, id)));
 
       yield put(loadMessagesSuccess());
     }
@@ -280,7 +265,9 @@ export function* loadMessages(
  * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
  */
 export function* watchMessagesLoadOrCancelSaga(
-  sessionToken: SessionToken
+  getMessages: TypeofApiCall<GetMessagesT>,
+  getMessage: TypeofApiCall<GetMessageT>,
+  getService: TypeofApiCall<GetServiceT>
 ): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line:no-let
@@ -300,9 +287,10 @@ export function* watchMessagesLoadOrCancelSaga(
     // If the action received is a MESSAGES_LOAD_REQUEST send the request
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
     if (action.type === MESSAGES_LOAD_REQUEST) {
-      const backendClient = BackendClient(apiUrlPrefix, sessionToken);
       // Call the generator to load messages
-      lastTask = some(yield fork(loadMessages, backendClient));
+      lastTask = some(
+        yield fork(loadMessages, getMessages, getMessage, getService)
+      );
     }
   }
 }

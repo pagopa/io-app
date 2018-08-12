@@ -6,6 +6,7 @@ import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import {
   BackendClient,
   BasicResponseTypeWith401,
+  GetProfileT,
   ProfileWithOrWithoutEmail
 } from "../api/backend";
 
@@ -27,15 +28,15 @@ import { SessionToken } from "../types/SessionToken";
 
 import { callApiWith401ResponseStatusHandler } from "./api";
 
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+
 // A saga to load the Profile.
 export function* loadProfile(
-  sessionToken: SessionToken
+  getProfile: TypeofApiCall<GetProfileT>
 ): Iterator<Effect | boolean> {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
   const response:
     | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-    | undefined = yield call(backendClient.getProfile, {});
+    | undefined = yield call(getProfile, {});
 
   if (!response || response.status !== 200) {
     // We got a error, send a SESSION_LOAD_FAILURE action
