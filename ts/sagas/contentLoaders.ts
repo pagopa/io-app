@@ -1,4 +1,4 @@
-import { call, Effect, fork, put, take } from "redux-saga/effects";
+import { call, Effect, put, take } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
@@ -58,7 +58,7 @@ function getOrganizationMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* contentServiceSaga(): Iterator<Effect> {
+export function* serviceContentLoaderSaga(): Iterator<Effect> {
   while (true) {
     const loadAction: ContentServiceLoad = yield take(CONTENT_SERVICE_LOAD);
 
@@ -83,7 +83,7 @@ export function* contentServiceSaga(): Iterator<Effect> {
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* contentOrganizationSaga(): Iterator<Effect> {
+export function* organizationContentLoaderSaga(): Iterator<Effect> {
   while (true) {
     const loadAction: ContentOrganizationLoad = yield take(
       CONTENT_ORGANIZATION_LOAD
@@ -103,9 +103,4 @@ export function* contentOrganizationSaga(): Iterator<Effect> {
       yield put(contentOrganizationLoadFailure(organizationFiscalCode));
     }
   }
-}
-
-export function* contentSaga(): Iterator<Effect> {
-  yield fork(contentServiceSaga);
-  yield fork(contentOrganizationSaga);
 }

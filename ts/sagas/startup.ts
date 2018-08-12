@@ -8,6 +8,7 @@ import { Effect } from "redux-saga";
 import {
   all,
   call,
+  fork,
   put,
   race,
   select,
@@ -92,6 +93,10 @@ import {
   analyticsAuthenticationStarted
 } from "../store/actions/analytics";
 import { applicationInitialized } from "../store/actions/application";
+import {
+  watchMessagesLoadOrCancelSaga,
+  watchNavigateToMessageDetailsSaga
+} from "./messages";
 import { configurePinSaga } from "./pinset";
 import { loadProfile } from "./profile";
 
@@ -205,7 +210,7 @@ function* pinLoginSaga(): Iterator<Effect> {
 
       if (storedPin.value === userPin) {
         yield put(pinLoginValidateSuccess());
-        break;
+        return;
       } else {
         yield put(pinLoginValidateFailure());
       }
@@ -215,7 +220,7 @@ function* pinLoginSaga(): Iterator<Effect> {
   }
 }
 
-function* pinResetSaga(): Iterator<Effect> {
+function* watchPinResetSaga(): Iterator<Effect> {
   while (true) {
     yield take(START_PIN_RESET);
     // and delete the current PIN from the Keychain
@@ -233,7 +238,7 @@ function* pinResetSaga(): Iterator<Effect> {
  * the PIN
  */
 // tslint:disable-next-line:cognitive-complexity
-export function* watchApplicationActivity(): IterableIterator<Effect> {
+export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
 
   // tslint:disable-next-line:no-let
@@ -394,7 +399,7 @@ function* loadSessionInformationSaga(
  * FIXME: the above statement is not clear, are *all* SESSION_EXPIRED actions
  * going to be processed one by one, or just the first one, or the latest?
  */
-export function* watchSessionExpired(): IterableIterator<Effect> {
+export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   while (true) {
     // Wait for a SESSION_EXPIRED action
     yield take(SESSION_EXPIRED);
@@ -521,12 +526,33 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     // The user was previously logged in, so no onboarding is needed
     // The session was valid so the user didn't event had to do a full login,
     // in this case we ask the user to provide the PIN as a "lighter" login
-    yield race({ login: call(pinLoginSaga), reset: call(pinResetSaga) });
+    yield race({ login: call(pinLoginSaga), reset: call(watchPinResetSaga) });
   }
 
-  // Finally we decide whether to navigate to the main screen o a specific
-  // screen based on the deep link stored in the state (e.g. coming from a
-  // push notification)
+  //
+  // User is autenticated, session token is valid and profile is up to date.
+  //
+
+  // Now we fork the tasks that will handle the async requests coming from the
+  // UI of the application.
+  // Note that the following sagas will be automatically cancelled each time
+  // this parent saga gets restarted.
+
+  // Load messages when requested
+  yield fork(watchMessagesLoadOrCancelSaga, sessionToken);
+  // Navigate to message details when requested
+  yield fork(watchNavigateToMessageDetailsSaga, sessionToken);
+  // Watch for the app going to background/foreground
+  yield fork(watchApplicationActivitySaga);
+  // Handles the expiration of the session token
+  yield fork(watchSessionExpiredSaga);
+  // Logout the user by expiring the session
+  yield fork(watchLogoutSaga);
+  // Watch for requests to reset the PIN
+  yield fork(watchPinResetSaga);
+
+  // Finally we decide where to navigate to based on whether we have a deep link
+  // stored in the state (e.g. coming from a push notification)
   const deepLink: NavigationNavigateActionPayload | null = yield select(
     deepLinkSelector
   );
@@ -541,23 +567,6 @@ function* applicationInitializedSaga(): IterableIterator<Effect> {
     });
     yield put(navigateToMainNavigatorAction);
   }
-
-  //
-  // Startup of the application is complete
-  // Now we run a few tasks in parallel. Note that the following sagas will
-  // be automatically cancelled each time this parent saga gets restarted.
-  //
-
-  yield all([
-    // Watch for the app going to background/foreground
-    call(watchApplicationActivity),
-    // Handles the expiration of the session token
-    call(watchSessionExpired),
-    // Logout the user by expiring the session
-    call(watchLogoutSaga),
-    // Watch for requests to reset the PIN
-    call(pinResetSaga)
-  ]);
 }
 
 export function* startupSaga(): IterableIterator<Effect> {
