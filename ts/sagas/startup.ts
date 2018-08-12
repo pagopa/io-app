@@ -6,14 +6,13 @@ import {
 } from "react-navigation";
 import { Effect } from "redux-saga";
 import {
+  all,
   call,
-  fork,
   put,
+  race,
   select,
   take,
-  takeLatest,
-  race,
-  all
+  takeLatest
 } from "redux-saga/effects";
 
 import { isNone, Option } from "fp-ts/lib/Option";
@@ -62,7 +61,6 @@ import {
   PinLoginValidateRequest,
   pinLoginValidateSuccess
 } from "../store/actions/pinlogin";
-import { startPinSet } from "../store/actions/pinset";
 import {
   ProfileUpsertFailure,
   profileUpsertRequest,
@@ -94,6 +92,7 @@ import {
   analyticsAuthenticationStarted
 } from "../store/actions/analytics";
 import { applicationInitialized } from "../store/actions/application";
+import { configurePinSaga } from "./pinset";
 import { loadProfile } from "./profile";
 
 // tslint:disable-next-line:cognitive-complexity
@@ -125,6 +124,7 @@ function* onboardingSaga(): Iterator<Effect> {
       // NOTE: `has_profile` is a boolean that is true if the profile is active in the API
       if (userProfile && !userProfile.has_profile) {
         // Upsert the user profile to enable inbox and webhook
+        // FIXME: make this a call to the profileUpsert saga
         yield put(
           profileUpsertRequest({
             is_inbox_enabled: true,
@@ -165,12 +165,9 @@ function* onboardingSaga(): Iterator<Effect> {
     // Here we loop until a PIN is set (PIN_CREATE_SUCCESS)
     while (true) {
       // If we don't have a PIN code yet, let's set one by starting the PIN flow
-      yield put(startPinSet());
-
-      // Wait for the PIN to have been created, or a failure to happen
-      const result = yield take([PIN_CREATE_SUCCESS, PIN_CREATE_FAILURE]);
-
-      if (result.type === PIN_CREATE_SUCCESS) {
+      const configurePinResult: boolean = yield call(configurePinSaga);
+      // FIXME: handle errors
+      if (configurePinResult) {
         break;
       }
     }

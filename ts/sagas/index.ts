@@ -9,7 +9,6 @@ import { contentSaga } from "./content";
 import deepLink from "./deepLink";
 import messagesSaga from "./messages";
 import notificationsSaga from "./notifications";
-import pinSetSaga from "./pinset";
 import preferencesSaga from "./preferences";
 import profileSaga from "./profile";
 import { startupSaga } from "./startup";
@@ -32,7 +31,6 @@ export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
     call(notificationsSaga),
-    call(pinSetSaga), // FIXME: can go inside onboarding
     call(messagesSaga), // FIXME: can go inside startup
     call(profileSaga), // FIXME: transform into callable saga
     call(walletSaga),
