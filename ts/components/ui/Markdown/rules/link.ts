@@ -1,4 +1,4 @@
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
 import { Linking } from "react-native";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
@@ -14,30 +14,15 @@ function rule() {
     const newState = { ...state, withinLink: true };
 
     // Create the Text element that must go inside <Button>
-    const text = React.createElement(
+    return React.createElement(
       Text,
       {
-        style: {
-          lineHeight: 22
-        }
-      },
-      output(node.content, newState)
-    );
-
-    return React.createElement(
-      Button,
-      {
         key: state.key,
-        primary: true,
-        small: true,
-        style: {
-          height: 22,
-          marginTop: 1,
-          marginBottom: 1
-        },
+        markdown: true,
+        link: true,
         onPress: () => Linking.openURL(node.target).catch(_ => undefined)
       },
-      text
+      output(node.content, newState)
     );
   };
 }

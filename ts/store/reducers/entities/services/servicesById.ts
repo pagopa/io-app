@@ -10,7 +10,7 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type ServicesByIdState = Readonly<{
-  [key: string]: ServicePublic;
+  [key: string]: ServicePublic | undefined;
 }>;
 
 export type ServiceByIdState = Readonly<ServicePublic>;
@@ -40,6 +40,6 @@ export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => {
 
 export const serviceByIdSelector = (id: string) => (
   state: GlobalState
-): ServiceByIdState => state.entities.services.byId[id];
+): ServiceByIdState | undefined => state.entities.services.byId[id];
 
 export default reducer;

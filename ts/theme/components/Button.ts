@@ -17,7 +17,7 @@ export default (): Theme => {
   return {
     ".block": {
       ".iconVeryLeft": {
-        "UIComponents.IconFont": {
+        "UIComponent.IconFont": {
           flex: 0,
           borderRightWidth: 1,
           borderColor: "#FFFFFF",

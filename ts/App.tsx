@@ -31,18 +31,14 @@ configurePushNotifications(store);
  *
  * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
-export default class App extends React.Component<{}, never> {
-  public render() {
-    return (
-      <StyleProvider style={theme()}>
-        <Provider store={store}>
-          <PersistGate loading={undefined} persistor={persistor}>
-            <MenuProvider>
-              <RootContainer />
-            </MenuProvider>
-          </PersistGate>
-        </Provider>
-      </StyleProvider>
-    );
-  }
-}
+export const App: React.SFC<never> = () => (
+  <StyleProvider style={theme()}>
+    <Provider store={store}>
+      <PersistGate loading={undefined} persistor={persistor}>
+        <MenuProvider>
+          <RootContainer />
+        </MenuProvider>
+      </PersistGate>
+    </Provider>
+  </StyleProvider>
+);

@@ -9,6 +9,7 @@ import pagoPaReducer from "./pagopa";
 import {
   PAYMENT_INITIAL_STATE,
   PaymentState,
+  PaymentStateWithPaymentId,
   PaymentStateWithSelectedPaymentMethod,
   PaymentStateWithVerificaResponse
 } from "./payment";
@@ -47,6 +48,18 @@ export type WalletStateWithSelectedPaymentMethod = {
 } &
   Readonly<{
     payment: PaymentStateWithSelectedPaymentMethod;
+  }>;
+
+/**
+ * This represents a WalletState where the payment
+ * state is guaranteed to have a paymentId
+ * ( + a verifica response)
+ */
+export type WalletStateWithPaymentId = {
+  [T in Exclude<keyof WalletState, "payment">]: WalletState[T]
+} &
+  Readonly<{
+    payment: PaymentStateWithPaymentId;
   }>;
 
 export const INITIAL_STATE: WalletState = {

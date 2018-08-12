@@ -1,14 +1,11 @@
 import { Option } from "fp-ts/lib/Option";
-import { Body, Container, Content, H3, Text, View } from "native-base";
+import { Content, H3, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { connect } from "react-redux";
 
-import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
-import { FetchActivityIndicator } from "../../components/FetchActivityIndicator";
-import AppHeader from "../../components/ui/AppHeader";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { logoutRequest } from "../../store/actions/authentication";
@@ -40,57 +37,48 @@ const styles = StyleSheet.create({
  */
 export class ProfileMainScreen extends React.Component<Props, never> {
   public render() {
-    const { isLoggingOut } = this.props;
-
     return (
-      <Container>
-        <AppHeader>
-          <Body>
-            <Text>{DeviceInfo.getApplicationName()}</Text>
-          </Body>
-        </AppHeader>
-
+      <TopScreenComponent
+        title={I18n.t("profile.main.screenTitle")}
+        icon={require("../../../img/icons/gears.png")}
+        subtitle={I18n.t("profile.main.screenSubtitle")}
+      >
         <Content>
-          <FetchActivityIndicator isVisible={isLoggingOut} />
-          <View>
-            <DefaultSubscreenHeader
-              screenTitle={I18n.t("profile.main.screenTitle")}
-              icon={require("../../../img/icons/gears.png")}
-            />
-
-            <Text>{I18n.t("profile.main.screenSubtitle")}</Text>
-            <Grid>
-              {/* Logout/Exit */}
-              <Row style={styles.gridRow}>
-                <Col size={10}>
-                  <H3>{I18n.t("profile.main.logout")}</H3>
-                </Col>
-                <Col size={2}>
-                  <IconFont
-                    name="io-right"
-                    color={variables.contentPrimaryBackground}
-                    onPress={() => this.props.dispatch(logoutRequest())}
-                  />
-                </Col>
-              </Row>
-              {/* Reset PIN */}
-              <Row style={styles.gridRow}>
-                <Col size={10}>
-                  <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
-                  <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
-                </Col>
-                <Col size={2}>
-                  <IconFont
-                    name="io-right"
-                    color={variables.contentPrimaryBackground}
-                    onPress={() => this.props.dispatch(startPinReset())}
-                  />
-                </Col>
-              </Row>
-            </Grid>
-          </View>
+          <Grid>
+            {/* Logout/Exit */}
+            <Row
+              style={styles.gridRow}
+              onPress={() => this.props.dispatch(logoutRequest())}
+            >
+              <Col size={10}>
+                <H3>{I18n.t("profile.main.logout")}</H3>
+              </Col>
+              <Col size={2}>
+                <IconFont
+                  name="io-right"
+                  color={variables.contentPrimaryBackground}
+                />
+              </Col>
+            </Row>
+            {/* Reset PIN */}
+            <Row
+              style={styles.gridRow}
+              onPress={() => this.props.dispatch(startPinReset())}
+            >
+              <Col size={10}>
+                <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
+                <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
+              </Col>
+              <Col size={2}>
+                <IconFont
+                  name="io-right"
+                  color={variables.contentPrimaryBackground}
+                />
+              </Col>
+            </Row>
+          </Grid>
         </Content>
-      </Container>
+      </TopScreenComponent>
     );
   }
 }

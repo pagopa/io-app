@@ -3,14 +3,18 @@ import variables from "../variables";
 
 export default (): Theme => ({
   "NativeBase.ViewNB": {
+    "NativeBase.H1": {
+      marginLeft: variables.headerPaddingHorizontal
+    },
     "NativeBase.ViewNB": {
       // margin to align icon to the baseline of the title
-      marginBottom: -variables.h1FontSize / 4,
-      marginRight: 10
+      marginBottom: 0,
+      marginTop: variables.gridGutter,
+      marginRight: variables.headerPaddingHorizontal
     },
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    backgroundColor: variables.contentBackground
   }
 });

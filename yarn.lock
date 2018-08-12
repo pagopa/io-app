@@ -4184,9 +4184,9 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
-italia-ts-commons@^2.12.1:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.12.1.tgz#c03c1c864cf7ae774c31a62f725d7c748f670ca6"
+italia-ts-commons@^2.12.3:
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.12.3.tgz#25799fc10fdec5879d314175e8ecb5a4c43aff6d"
   dependencies:
     fp-ts "^1.6.0"
     io-ts "^1.1.4"
@@ -6158,9 +6158,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.13.0, prettier@^1.12.1:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.0.tgz#054de8d5fb1a4405c845d16183f58a2c301f6f16"
+prettier@1.14.0, prettier@^1.12.1:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.0.tgz#847c235522035fd988100f1f43cf20a7d24f9372"
 
 pretty-format@^22.4.3:
   version "22.4.3"
@@ -6328,12 +6328,6 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-native-animatable@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-camera@1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.1.4.tgz#5a01be906507cc2f232405f903c52c9d99988dba"
@@ -6417,13 +6411,6 @@ react-native-mixpanel@^0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-0.0.16.tgz#1c98e61c07c375efd96b8300ec5813fc5966b9df"
 
-react-native-modal@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-6.4.0.tgz#a6c2599b4c9d53ac99071bc658215367ee81e278"
-  dependencies:
-    prop-types "^15.6.1"
-    react-native-animatable "^1.2.4"
-
 react-native-offline@3.11.0:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-3.11.0.tgz#44405f781860225605364896553792f0e13c1061"
@@ -6435,9 +6422,9 @@ react-native-permissions@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
 
-react-native-popup-menu@^0.13.2:
-  version "0.13.2"
-  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.13.2.tgz#6ea7a7446b04fc3e41d148a908a8a94ad949256f"
+react-native-popup-menu@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.14.0.tgz#8a11e4a78f76f5883fa5eb9d736f0ec2df8765ce"
 
 react-native-push-notification@^3.0.2:
   version "3.0.2"
@@ -7865,9 +7852,9 @@ tslint-sonarts@^1.7.0:
   dependencies:
     immutable "^3.8.2"
 
-tslint@^5.10.0:
-  version "5.10.0"
-  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.10.0.tgz#11e26bccb88afa02dd0d9956cae3d4540b5f54c3"
+tslint@^5.11.0:
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.11.0.tgz#98f30c02eae3cde7006201e4c33cb08b48581eed"
   dependencies:
     babel-code-frame "^6.22.0"
     builtin-modules "^1.1.1"
@@ -7880,7 +7867,7 @@ tslint@^5.10.0:
     resolve "^1.3.2"
     semver "^5.3.0"
     tslib "^1.8.0"
-    tsutils "^2.12.1"
+    tsutils "^2.27.2"
 
 tsutils@2.8.0:
   version "2.8.0"
@@ -7891,6 +7878,12 @@ tsutils@2.8.0:
 tsutils@^2.12.1, tsutils@^2.13.1:
   version "2.26.2"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.26.2.tgz#a9f9f63434a456a5e0c95a45d9a59181cb32d3bf"
+  dependencies:
+    tslib "^1.8.1"
+
+tsutils@^2.27.2:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
   dependencies:
     tslib "^1.8.1"
 

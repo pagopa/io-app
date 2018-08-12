@@ -27,14 +27,15 @@ import {
   Item,
   Label,
   Left,
-  Text,
-  View
+  Text
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
 import AppHeader from "../../../components/ui/AppHeader";
+
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 
@@ -118,6 +119,21 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       return null;
     }
 
+    const primaryButtonProps = {
+      block: true,
+      primary: true,
+      onPress: this.proceedToSummary,
+      title: I18n.t("global.buttons.continue")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      light: true,
+      bordered: true,
+      onPress: () => this.props.navigation.navigate(ROUTES.WALLET_HOME),
+      title: I18n.t("global.buttons.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
@@ -172,20 +188,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             </Item>
           </Form>
         </Content>
-        <View footer={true}>
-          <Button block={true} primary={true} onPress={this.proceedToSummary}>
-            <Text>{I18n.t("wallet.insertManually.proceed")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            bordered={true}
-            onPress={() => this.props.navigation.navigate(ROUTES.WALLET_HOME)}
-          >
-            <Text>{I18n.t("wallet.cancel")}</Text>
-          </Button>
-        </View>
+
+        <FooterWithButtons
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineHalf={true}
+        />
       </Container>
     );
   }

@@ -13,41 +13,48 @@ const BLOCK_END_REGEX = /\n{2,}$/;
 // Merge the default SimpleMarkdown rules with the react native ones
 const rules = merge(SimpleMarkdown.defaultRules, reactNativeRules);
 
-/**
- * A component that accepts "markdown" as child and render react native components.
- */
-class Markdown extends React.Component<{}, never> {
-  public renderChildren(children: React.ReactNode): React.ReactNode {
-    try {
-      /**
-       * Since many rules expect blocks to end in "\n\n", we append that (if needed) to markdown input manually,
-       * in addition to specifying inline: false when creating the syntax tree.
-       */
-      const blockSource = BLOCK_END_REGEX.test(`${children}`)
-        ? `${children}`
-        : `${children}\n\n`;
+// instantiate the Markdown parser
+const markdownParser = SimpleMarkdown.parserFor(rules);
 
-      // Generate the syntax tree
-      const syntaxTree = SimpleMarkdown.parserFor(rules)(blockSource, {
-        inline: false
-      });
+// see https://www.npmjs.com/package/simple-markdown#simplemarkdownruleoutputrules-key
+const ruleOutput = SimpleMarkdown.ruleOutput(rules, "react_native");
+const reactOutput = SimpleMarkdown.reactFor(ruleOutput);
 
-      // Render the syntax tree using the rules and return the value
-      return SimpleMarkdown.reactFor(
-        SimpleMarkdown.ruleOutput(rules, "react_native")
-      )(syntaxTree);
-    } catch (error) {
-      return isDevEnvironment ? (
-        <Text>${children}</Text>
-      ) : (
-        <Text>{I18n.t("global.markdown.decodeError")}</Text>
-      );
-    }
-  }
+function renderMarkdown(children: React.ReactNode): React.ReactNode {
+  try {
+    /**
+     * Since many rules expect blocks to end in "\n\n", we append that
+     * (if needed) to markdown input manually, in addition to specifying
+     * inline: false when creating the syntax tree.
+     */
+    const body = `${children}`;
+    const blockSource = BLOCK_END_REGEX.test(body) ? body : body + "\n\n";
 
-  public render() {
-    return <View>{this.renderChildren(this.props.children)}</View>;
+    // Generate the syntax tree
+    const syntaxTree = markdownParser(blockSource, {
+      inline: false
+    });
+
+    // Render the syntax tree using the rules and return the value
+    return reactOutput(syntaxTree);
+  } catch (error) {
+    return isDevEnvironment ? (
+      <Text>
+        COULD NOT PARSE MARKDOWN:
+        {children}
+      </Text>
+    ) : (
+      <Text>{I18n.t("global.markdown.decodeError")}</Text>
+    );
   }
 }
+
+/**
+ * A component that accepts "markdown" as child and render react native
+ * components.
+ */
+const Markdown: React.SFC<{}> = props => (
+  <View>{renderMarkdown(props.children)}</View>
+);
 
 export default Markdown;

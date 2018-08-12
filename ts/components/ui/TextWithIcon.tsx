@@ -22,7 +22,7 @@ type StyleProps = {
 };
 
 const StyledTextWithIcon = connectStyle<Props, StyleProps>(
-  "UIComponents.TextWithIcon",
+  "UIComponent.TextWithIcon",
   {},
   mapPropsToStyleNames
 )(TextWithIcon);
