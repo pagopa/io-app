@@ -10,7 +10,7 @@ import { saveNavigationStateSaga } from "./saveNavigationStateSaga";
  * Handles the expiration of session while the user is using the app.
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
-  takeLatest(SESSION_EXPIRED, function*() {
+  yield takeLatest(SESSION_EXPIRED, function*() {
     // Save the navigation state
     yield call(saveNavigationStateSaga);
 

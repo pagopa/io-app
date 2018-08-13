@@ -27,7 +27,9 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let lastUpdateAtMillis: number | undefined;
 
-  takeEvery(APP_STATE_CHANGE_ACTION, function*(action: ApplicationStateAction) {
+  yield takeEvery(APP_STATE_CHANGE_ACTION, function*(
+    action: ApplicationStateAction
+  ) {
     // listen for changes in application state
     const newApplicationState: ApplicationState = action.payload;
 

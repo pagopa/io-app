@@ -60,7 +60,7 @@ function getOrganizationMetadata(
  * https://www.pivotaltracker.com/story/show/159440224
  */
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
-  takeEvery(CONTENT_SERVICE_LOAD, function*(action: ContentServiceLoad) {
+  yield takeEvery(CONTENT_SERVICE_LOAD, function*(action: ContentServiceLoad) {
     const serviceId = action.serviceId;
 
     const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
