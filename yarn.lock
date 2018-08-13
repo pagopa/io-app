@@ -6379,9 +6379,9 @@ react-native-easy-grid@0.1.17:
   dependencies:
     lodash "^4.11.1"
 
-react-native-fs@2.9.12:
-  version "2.9.12"
-  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.9.12.tgz#88d6c1e8eb26acbebca955e1cbd9c47d2c9452ba"
+react-native-fs@2.11.15:
+  version "2.11.15"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.15.tgz#b80ac78edf124137624697b4864f834c1caf4f43"
   dependencies:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
