@@ -11,7 +11,9 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
   // FIXME: ToS can change over time, this step should eventually check whether
   //        the user has accepted the latest version of the ToS and store the
   //        information in the user profile.
-  const isTosAccepted: boolean = yield select(isTosAcceptedSelector);
+  const isTosAccepted: ReturnType<typeof isTosAcceptedSelector> = yield select(
+    isTosAcceptedSelector
+  );
 
   if (!isTosAccepted) {
     // Navigate to the TosScreen

@@ -21,7 +21,7 @@ import {
   ProfileUpsertRequest,
   profileUpsertSuccess
 } from "../store/actions/profile";
-import { profileSelector, ProfileState } from "../store/reducers/profile";
+import { profileSelector } from "../store/reducers/profile";
 
 import { callApiWith401ResponseStatusHandler } from "./api";
 
@@ -56,7 +56,9 @@ export function* createOrUpdateProfileSaga(
   action: ProfileUpsertRequest
 ): Iterator<Effect> {
   // Get the current Profile from the state
-  const profileState: ProfileState = yield select(profileSelector);
+  const profileState: ReturnType<typeof profileSelector> = yield select(
+    profileSelector
+  );
 
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object

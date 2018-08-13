@@ -3,8 +3,6 @@ import { call } from "redux-saga/effects";
 
 import { MessageWithContent } from "../../../../definitions/backend/MessageWithContent";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { BackendClient } from "../../../api/backend";
-import { apiUrlPrefix } from "../../../config";
 import {
   loadMessageFailure,
   loadMessagesFailure,
@@ -15,7 +13,6 @@ import { loadServiceSuccess } from "../../../store/actions/services";
 import { messagesByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
-import { SessionToken } from "../../../types/SessionToken";
 import { callApiWith401ResponseStatusHandler } from "../../api";
 import {
   loadMessage,
@@ -26,7 +23,6 @@ import {
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
-const testSessionToken = "5b1ce7390b108b8f42009b0aa900eefa6dbdc574edf1b76960625478a32ed1f17d7b79f80c4cd7477ad9a0630d1dbd00" as SessionToken;
 
 const testMessageWithContent1 = {
   id: testMessageId1,

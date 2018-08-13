@@ -12,10 +12,7 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { CreateOrUpdateInstallationT } from "../api/backend";
 import { updateNotificationInstallationFailure } from "../store/actions/notifications";
-import {
-  InstallationState,
-  notificationsInstallationSelector
-} from "../store/reducers/notifications/installation";
+import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 
 const notificationsPlatform: PlatformEnum = Platform.select({
   ios: PlatformEnum.apns,
@@ -29,9 +26,9 @@ export function* updateInstallationSaga(
   createOrUpdateInstallation: TypeofApiCall<CreateOrUpdateInstallationT>
 ): Iterator<Effect> {
   // Get the notifications installation data from the store
-  const notificationsInstallation: InstallationState = yield select(
-    notificationsInstallationSelector
-  );
+  const notificationsInstallation: ReturnType<
+    typeof notificationsInstallationSelector
+  > = yield select(notificationsInstallationSelector);
 
   // Check if the notification server token is available (non available on iOS simulator)
   if (notificationsInstallation.token) {

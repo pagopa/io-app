@@ -1,8 +1,5 @@
 import { isNone, Option } from "fp-ts/lib/Option";
-import {
-  NavigationActions,
-  NavigationNavigateActionPayload
-} from "react-navigation";
+import { NavigationActions } from "react-navigation";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
@@ -53,9 +50,9 @@ import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
  */
 function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Whether the user is currently logged in.
-  const previousSessionToken: SessionToken | undefined = yield select(
-    sessionTokenSelector
-  );
+  const previousSessionToken: ReturnType<
+    typeof sessionTokenSelector
+  > = yield select(sessionTokenSelector);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SessionToken = previousSessionToken
@@ -79,9 +76,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // FIXME: since it looks like we load the session info every
   //        time we get a session token, think about merging the
   //        two steps.
-  const maybeSessionInformation: Option<PublicSession> = yield select(
-    sessionInfoSelector
-  );
+  const maybeSessionInformation: ReturnType<
+    typeof sessionInfoSelector
+  > = yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
     const maybeSessionInfo: Option<PublicSession> = yield call(
@@ -174,7 +171,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Finally we decide where to navigate to based on whether we have a deep link
   // stored in the state (e.g. coming from a push notification or from a
   // previously stored navigation state)
-  const deepLink: NavigationNavigateActionPayload | null = yield select(
+  const deepLink: ReturnType<typeof deepLinkSelector> = yield select(
     deepLinkSelector
   );
   if (deepLink) {

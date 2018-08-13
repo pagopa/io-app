@@ -1,8 +1,4 @@
-import {
-  NavigationParams,
-  NavigationState,
-  NavigationStateRoute
-} from "react-navigation";
+import { NavigationParams, NavigationStateRoute } from "react-navigation";
 import { Effect } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
@@ -18,9 +14,9 @@ import { navigationStateSelector } from "../../store/reducers/navigation";
  * Saving and restoring routes relies on the deep link mechanism.
  */
 export function* saveNavigationStateSaga(): IterableIterator<Effect> {
-  const navigationState: NavigationState = yield select(
-    navigationStateSelector
-  );
+  const navigationState: ReturnType<
+    typeof navigationStateSelector
+  > = yield select(navigationStateSelector);
   const currentRoute = navigationState.routes[
     navigationState.index
   ] as NavigationStateRoute<NavigationParams>;

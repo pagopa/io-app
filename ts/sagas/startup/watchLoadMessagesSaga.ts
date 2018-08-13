@@ -48,20 +48,14 @@ import {
 import { loadServiceSuccess } from "../../store/actions/services";
 import {
   messageByIdSelector,
-  messagesByIdSelector,
-  MessagesByIdState
+  messagesByIdSelector
 } from "../../store/reducers/entities/messages/messagesById";
 import {
   serviceByIdSelector,
-  ServiceByIdState,
-  servicesByIdSelector,
-  ServicesByIdState
+  servicesByIdSelector
 } from "../../store/reducers/entities/services/servicesById";
 import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
-import {
-  MessageWithContentPO,
-  toMessageWithContentPO
-} from "../../types/MessageWithContentPO";
+import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { callApiWith401ResponseStatusHandler } from "../api";
 
 /**
@@ -96,16 +90,18 @@ export function* navigateToMessageDetailsSaga(
 ): Iterator<Effect> {
   const messageId = action.payload;
 
+  const messageIdSelector = messageByIdSelector(messageId);
+
   // tslint:disable-next-line:no-let
-  let message: MessageWithContentPO | undefined = yield select(
-    messageByIdSelector(messageId)
+  let message: ReturnType<typeof messageIdSelector> = yield select(
+    messageIdSelector
   );
 
   if (!message) {
     try {
       yield call(loadMessage, getMessage, messageId);
-      const loadedMessage: MessageWithContentPO | undefined = yield select(
-        messageByIdSelector(messageId)
+      const loadedMessage: ReturnType<typeof messageIdSelector> = yield select(
+        messageIdSelector
       );
       message = loadedMessage;
     } catch (err) {
@@ -123,8 +119,9 @@ export function* navigateToMessageDetailsSaga(
     return;
   }
 
-  const senderService: ServiceByIdState | undefined = yield select(
-    serviceByIdSelector(message.sender_service_id)
+  const serviceIdSelector = serviceByIdSelector(message.sender_service_id);
+  const senderService: ReturnType<typeof serviceIdSelector> = yield select(
+    serviceIdSelector
   );
 
   if (!senderService) {
@@ -137,7 +134,9 @@ export function* navigateToMessageDetailsSaga(
   };
 
   // FIXME: check this logic
-  const isPinValid: boolean = yield select(isPinLoginValidSelector);
+  const isPinValid: ReturnType<typeof isPinLoginValidSelector> = yield select(
+    isPinLoginValidSelector
+  );
 
   if (isPinValid) {
     yield put(NavigationActions.navigate(navigationPayload));
@@ -197,14 +196,14 @@ export function* loadMessages(
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
     // Load already cached messages from the store
-    const cachedMessagesById: MessagesByIdState = yield select(
-      messagesByIdSelector
-    );
+    const cachedMessagesById: ReturnType<
+      typeof messagesByIdSelector
+    > = yield select(messagesByIdSelector);
 
     // Load already cached services from the store
-    const cachedServicesById: ServicesByIdState = yield select(
-      servicesByIdSelector
-    );
+    const cachedServicesById: ReturnType<
+      typeof servicesByIdSelector
+    > = yield select(servicesByIdSelector);
 
     // Request the list of messages from the Backend
     const response: BasicResponseType<Messages> | undefined = yield call(
