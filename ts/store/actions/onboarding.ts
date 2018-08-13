@@ -18,6 +18,10 @@ export type OnboardingActions = TosAcceptRequest | TosAcceptSuccess;
 
 // Creators
 
-export const acceptTos = (): TosAcceptRequest => ({
+export const tosAcceptRequest: TosAcceptRequest = {
   type: TOS_ACCEPT_REQUEST
-});
+};
+
+export const tosAcceptSuccess: TosAcceptSuccess = {
+  type: TOS_ACCEPT_SUCCESS
+};

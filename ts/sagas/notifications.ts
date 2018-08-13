@@ -7,18 +7,15 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Platform } from "react-native";
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { call, Effect, put, select } from "redux-saga/effects";
 
 import { PlatformEnum } from "../../definitions/backend/Platform";
-import { BackendClient, CreateOrUpdateInstallationT } from "../api/backend";
-import { apiUrlPrefix } from "../config";
+import { CreateOrUpdateInstallationT } from "../api/backend";
 import { updateNotificationInstallationFailure } from "../store/actions/notifications";
-import { sessionTokenSelector } from "../store/reducers/authentication";
 import {
   InstallationState,
   notificationsInstallationSelector
 } from "../store/reducers/notifications/installation";
-import { SessionToken } from "../types/SessionToken";
 
 const notificationsPlatform: PlatformEnum = Platform.select({
   ios: PlatformEnum.apns,

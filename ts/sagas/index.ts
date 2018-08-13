@@ -6,11 +6,11 @@ import { all, call, Effect } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
 import {
-  organizationContentLoaderSaga,
-  serviceContentLoaderSaga
+  watchContentOrganizationLoadSaga,
+  watchContentServiceLoadSaga
 } from "./contentLoaders";
-import deepLink from "./deepLink";
-import preferencesSaga from "./preferences";
+import { watchNavigateToDeepLinkSaga } from "./deepLink";
+import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import walletSaga from "./wallet";
 
@@ -30,12 +30,12 @@ const connectionMonitorParameters = {
 export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
-    call(walletSaga),
+    call(walletSaga), // FIXME: move to startup: the wallet token gets fetched there
     call(backendInfoSaga),
     call(networkEventsListenerSaga, connectionMonitorParameters),
-    call(deepLink),
-    call(preferencesSaga),
-    call(organizationContentLoaderSaga),
-    call(serviceContentLoaderSaga)
+    call(watchNavigateToDeepLinkSaga),
+    call(loadSystemPreferencesSaga),
+    call(watchContentOrganizationLoadSaga),
+    call(watchContentServiceLoadSaga)
   ]);
 }

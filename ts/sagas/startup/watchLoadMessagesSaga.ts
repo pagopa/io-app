@@ -24,17 +24,17 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { Messages } from "../../definitions/backend/Messages";
-import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
-import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import { GetMessagesT, GetMessageT, GetServiceT } from "../api/backend";
-import ROUTES from "../navigation/routes";
+import { Messages } from "../../../definitions/backend/Messages";
+import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
+import ROUTES from "../../navigation/routes";
 import {
   MESSAGES_LOAD_CANCEL,
   MESSAGES_LOAD_REQUEST,
   NAVIGATE_TO_MESSAGE_DETAILS
-} from "../store/actions/constants";
-import { setDeepLink } from "../store/actions/deepLink";
+} from "../../store/actions/constants";
+import { setDeepLink } from "../../store/actions/deepLink";
 import {
   loadMessageFailure,
   loadMessagesCancel,
@@ -44,25 +44,25 @@ import {
   MessagesLoadCancel,
   MessagesLoadRequest,
   NavigateToMessageDetails
-} from "../store/actions/messages";
-import { loadServiceSuccess } from "../store/actions/services";
+} from "../../store/actions/messages";
+import { loadServiceSuccess } from "../../store/actions/services";
 import {
   messageByIdSelector,
   messagesByIdSelector,
   MessagesByIdState
-} from "../store/reducers/entities/messages/messagesById";
+} from "../../store/reducers/entities/messages/messagesById";
 import {
   serviceByIdSelector,
   ServiceByIdState,
   servicesByIdSelector,
   ServicesByIdState
-} from "../store/reducers/entities/services/servicesById";
-import { isPinLoginValidSelector } from "../store/reducers/pinlogin";
+} from "../../store/reducers/entities/services/servicesById";
+import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
 import {
   MessageWithContentPO,
   toMessageWithContentPO
-} from "../types/MessageWithContentPO";
-import { callApiWith401ResponseStatusHandler } from "./api";
+} from "../../types/MessageWithContentPO";
+import { callApiWith401ResponseStatusHandler } from "../api";
 
 /**
  * A generator to load the message detail from the Backend
@@ -83,11 +83,10 @@ export function* loadMessage(
     const error: Error = response ? response.value : Error();
     yield put(loadMessageFailure(error));
     return error;
-  } else {
-    // Trigger an action to store the new message (converted to plain object)
-    yield put(loadMessageSuccess(toMessageWithContentPO(response.value)));
-    return response.value;
   }
+  // Trigger an action to store the new message (converted to plain object)
+  yield put(loadMessageSuccess(toMessageWithContentPO(response.value)));
+  return response.value;
 }
 
 export function* navigateToMessageDetailsSaga(
@@ -137,6 +136,7 @@ export function* navigateToMessageDetailsSaga(
     params: { message, senderService }
   };
 
+  // FIXME: check this logic
   const isPinValid: boolean = yield select(isPinLoginValidSelector);
 
   if (isPinValid) {
@@ -273,6 +273,7 @@ export function* watchMessagesLoadOrCancelSaga(
   // tslint:disable-next-line:no-let
   let lastTask: Option<Task> = none;
   while (true) {
+    // FIXME: why not takeLatest?
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
     const action: MessagesLoadRequest | MessagesLoadCancel = yield take([
       MESSAGES_LOAD_REQUEST,

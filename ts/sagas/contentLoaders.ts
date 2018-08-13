@@ -1,4 +1,4 @@
-import { call, Effect, put, take } from "redux-saga/effects";
+import { call, Effect, put, takeEvery } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
@@ -58,11 +58,9 @@ function getOrganizationMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* serviceContentLoaderSaga(): Iterator<Effect> {
-  while (true) {
-    const loadAction: ContentServiceLoad = yield take(CONTENT_SERVICE_LOAD);
-
-    const serviceId = loadAction.serviceId;
+export function* watchContentServiceLoadSaga(): Iterator<Effect> {
+  takeEvery(CONTENT_SERVICE_LOAD, function*(action: ContentServiceLoad) {
+    const serviceId = action.serviceId;
 
     const response: BasicResponseType<ServiceMetadata> | undefined = yield call(
       getServiceMetadata,
@@ -74,7 +72,7 @@ export function* serviceContentLoaderSaga(): Iterator<Effect> {
     } else {
       yield put(contentServiceLoadFailure(serviceId));
     }
-  }
+  });
 }
 
 /**
@@ -83,13 +81,11 @@ export function* serviceContentLoaderSaga(): Iterator<Effect> {
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* organizationContentLoaderSaga(): Iterator<Effect> {
-  while (true) {
-    const loadAction: ContentOrganizationLoad = yield take(
-      CONTENT_ORGANIZATION_LOAD
-    );
-
-    const organizationFiscalCode = loadAction.organizationFiscalCode;
+export function* watchContentOrganizationLoadSaga(): Iterator<Effect> {
+  yield takeEvery(CONTENT_ORGANIZATION_LOAD, function*(
+    action: ContentOrganizationLoad
+  ) {
+    const organizationFiscalCode = action.organizationFiscalCode;
 
     const response:
       | BasicResponseType<OrganizationMetadata>
@@ -102,5 +98,5 @@ export function* organizationContentLoaderSaga(): Iterator<Effect> {
     } else {
       yield put(contentOrganizationLoadFailure(organizationFiscalCode));
     }
-  }
+  });
 }

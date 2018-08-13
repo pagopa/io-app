@@ -1,6 +1,7 @@
 /**
  * A saga that manages the Profile.
  */
+import { none, Option, some } from "fp-ts/lib/Option";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
@@ -29,24 +30,24 @@ import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: TypeofApiCall<GetProfileT>
-): Iterator<Effect | boolean> {
+): Iterator<Effect | Option<ProfileWithOrWithoutEmail>> {
   const response:
     | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
     | undefined = yield call(getProfile, {});
 
-  if (!response || response.status !== 200) {
-    // We got a error, send a SESSION_LOAD_FAILURE action
-    const error: Error = response
-      ? response.value
-      : Error(I18n.t("profile.errors.load"));
-
-    yield put(profileLoadFailure(error));
-    return false;
-  } else {
+  if (response && response.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
     yield put(profileLoadSuccess(response.value));
-    return true;
+    return some(response.value);
   }
+
+  // We got a error, send a SESSION_LOAD_FAILURE action
+  const error: Error = response
+    ? response.value
+    : Error(I18n.t("profile.errors.load"));
+
+  yield put(profileLoadFailure(error));
+  return none;
 }
 
 // A saga to update the Profile.

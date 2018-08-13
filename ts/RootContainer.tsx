@@ -1,21 +1,13 @@
 import { Root } from "native-base";
 import * as React from "react";
 import { AppState, Linking, Platform, StatusBar } from "react-native";
-import { NavigationNavigateActionPayload } from "react-navigation";
 import { connect } from "react-redux";
 
 import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
-import {
-  ApplicationChangeState,
-  applicationChangeState
-} from "./store/actions/application";
-import {
-  NavigateToDeepLink,
-  navigateToDeepLink,
-  setDeepLink
-} from "./store/actions/deepLink";
+import { applicationChangeState } from "./store/actions/application";
+import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { ApplicationState } from "./store/actions/types";
 import { DeepLinkState } from "./store/reducers/deepLink";
 import {
@@ -103,6 +95,9 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   public render() {
+    // FIXME: perhaps instead of navigating to a "background"
+    //        screen, we can make this screen blue based on
+    //        the redux state (i.e. background)
     return (
       <Root>
         <StatusBar barStyle="dark-content" />

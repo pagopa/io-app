@@ -1,38 +1,33 @@
-import nodeFetch from "node-fetch";
-
-//
-// We need to override the global fetch to make the tests
-// compatible with node-fetch
-//
-// tslint:disable-next-line:no-object-mutation no-any
-(global as any).fetch = nodeFetch;
-
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 
-import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { BackendClient } from "../../api/backend";
-import { apiUrlPrefix } from "../../config";
+import { MessageWithContent } from "../../../../definitions/backend/MessageWithContent";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { BackendClient } from "../../../api/backend";
+import { apiUrlPrefix } from "../../../config";
 import {
   loadMessageFailure,
   loadMessagesFailure,
   loadMessagesSuccess,
   loadMessageSuccess
-} from "../../store/actions/messages";
-import { loadServiceSuccess } from "../../store/actions/services";
-import { messagesByIdSelector } from "../../store/reducers/entities/messages/messagesById";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
-import { SessionToken } from "../../types/SessionToken";
-import { callApiWith401ResponseStatusHandler } from "../api";
-import { loadMessage, loadMessages, loadService } from "../messages";
+} from "../../../store/actions/messages";
+import { loadServiceSuccess } from "../../../store/actions/services";
+import { messagesByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
+import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
+import { SessionToken } from "../../../types/SessionToken";
+import { callApiWith401ResponseStatusHandler } from "../../api";
+import {
+  loadMessage,
+  loadMessages,
+  loadService
+} from "../../startup/watchLoadMessagesSaga";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
 const testSessionToken = "5b1ce7390b108b8f42009b0aa900eefa6dbdc574edf1b76960625478a32ed1f17d7b79f80c4cd7477ad9a0630d1dbd00" as SessionToken;
-const backendClient = BackendClient(apiUrlPrefix, testSessionToken, jest.fn());
+
 const testMessageWithContent1 = {
   id: testMessageId1,
   created_at: new Date(),
@@ -41,6 +36,7 @@ const testMessageWithContent1 = {
   subject: "Lorem ipsum...",
   sender_service_id: testServiceId1
 } as MessageWithContent;
+
 const testMessageWithContent2 = {
   id: testMessageId2,
   created_at: new Date(),
@@ -49,12 +45,14 @@ const testMessageWithContent2 = {
   subject: "Lorem ipsum...",
   sender_service_id: testServiceId1
 } as MessageWithContent;
+
 const testServicePublic = {
   service_id: testServiceId1,
   service_name: "Service name",
   organization_name: "Organization name",
   department_name: "Department name"
 } as ServicePublic;
+
 const testMessages = {
   items: [
     {
@@ -72,13 +70,15 @@ const testMessages = {
 describe("messages", () => {
   describe("loadMessage test plan", () => {
     it("should call getMessage with the right parameters", () => {
-      testSaga(loadMessage, backendClient.getMessage, testMessageId1)
+      const getMessage = jest.fn();
+      testSaga(loadMessage, getMessage, testMessageId1)
         .next()
-        .call(backendClient.getMessage, { id: testMessageId1 });
+        .call(getMessage, { id: testMessageId1 });
     });
 
     it("should only return an empty error if the getMessage response is undefined (can't be decoded)", () => {
-      testSaga(loadMessage, backendClient.getMessage, testMessageId1)
+      const getMessage = jest.fn();
+      testSaga(loadMessage, getMessage, testMessageId1)
         .next()
         // Return undefined as getMessage response
         .next(undefined)
@@ -88,8 +88,9 @@ describe("messages", () => {
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
+      const getMessage = jest.fn();
       const error = Error("Backend error");
-      testSaga(loadMessage, backendClient.getMessage, testMessageId1)
+      testSaga(loadMessage, getMessage, testMessageId1)
         .next()
         // Return 500 with an error message as getMessage response
         .next({ status: 500, value: error })
@@ -99,7 +100,8 @@ describe("messages", () => {
     });
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the getMessage response status is 200", () => {
-      testSaga(loadMessage, backendClient.getMessage, testMessageId1)
+      const getMessage = jest.fn();
+      testSaga(loadMessage, getMessage, testMessageId1)
         .next()
         // Return 200 with a valid message as getMessage response
         .next({ status: 200, value: testMessageWithContent1 })
@@ -113,13 +115,15 @@ describe("messages", () => {
 
   describe("loadService test plan", () => {
     it("should call getService with the right parameters", () => {
-      testSaga(loadService, backendClient.getService, testServiceId1)
+      const getService = jest.fn();
+      testSaga(loadService, getService, testServiceId1)
         .next()
-        .call(backendClient.getService, { id: testServiceId1 });
+        .call(getService, { id: testServiceId1 });
     });
 
     it("should only return an empty error if the getService response is undefined (can't be decoded)", () => {
-      testSaga(loadService, backendClient.getService, testServiceId1)
+      const getService = jest.fn();
+      testSaga(loadService, getService, testServiceId1)
         .next()
         // Return undefined as getService response
         .next(undefined)
@@ -127,7 +131,8 @@ describe("messages", () => {
     });
 
     it("should only return the error if the getService response status is not 200", () => {
-      testSaga(loadService, backendClient.getService, testServiceId1)
+      const getService = jest.fn();
+      testSaga(loadService, getService, testServiceId1)
         .next()
         // Return 500 with an error message as getService response
         .next({ status: 500, value: Error("Backend error") })
@@ -135,7 +140,8 @@ describe("messages", () => {
     });
 
     it("should put SERVICE_LOAD_SUCCESS and return the service if the getService response status is 200", () => {
-      testSaga(loadService, backendClient.getService, testServiceId1)
+      const getService = jest.fn();
+      testSaga(loadService, getService, testServiceId1)
         .next()
         // Return 200 with a valid service as getService response
         .next({ status: 200, value: testServicePublic })
@@ -147,7 +153,10 @@ describe("messages", () => {
 
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
-      testSaga(loadMessages, backendClient)
+      const getMessages = jest.fn();
+      const getMessage = jest.fn();
+      const getService = jest.fn();
+      testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
         .select(messagesByIdSelector)
         // Return an empty object as messagesByIdSelectors response
@@ -155,11 +164,7 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response
         .next({})
-        .call(
-          callApiWith401ResponseStatusHandler,
-          backendClient.getMessages,
-          {}
-        )
+        .call(callApiWith401ResponseStatusHandler, getMessages, {})
         // Return an error message as getMessages response
         .next({ status: 500, value: Error("Backend error") })
         .put(loadMessagesFailure(Error("Backend error")))
@@ -169,7 +174,10 @@ describe("messages", () => {
     });
 
     it("should call the getService saga N times and getMessage M times if the getMessages response contains N new services and M new messages", () => {
-      testSaga(loadMessages, backendClient)
+      const getMessages = jest.fn();
+      const getMessage = jest.fn();
+      const getService = jest.fn();
+      testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
         .select(messagesByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
@@ -177,31 +185,24 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response (no service already stored)
         .next({})
-        .call(
-          callApiWith401ResponseStatusHandler,
-          backendClient.getMessages,
-          {}
-        )
+        .call(callApiWith401ResponseStatusHandler, getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
-        .all([
-          call(
-            loadService,
-            backendClient.getService,
-            "5a563817fcc896087002ea46c49a"
-          )
-        ])
+        .all([call(loadService, getService, "5a563817fcc896087002ea46c49a")])
         .next({ status: 200, value: testServicePublic })
         .all([
-          call(loadMessage, backendClient.getMessage, testMessageId1),
-          call(loadMessage, backendClient.getMessage, testMessageId2)
+          call(loadMessage, getMessage, testMessageId1),
+          call(loadMessage, getMessage, testMessageId2)
         ])
         .next()
         .put(loadMessagesSuccess());
     });
 
     it("should not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
-      testSaga(loadMessages, backendClient)
+      const getMessages = jest.fn();
+      const getMessage = jest.fn();
+      const getService = jest.fn();
+      testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
         .select(messagesByIdSelector)
         // Return an object as messagesByIdSelectors response
@@ -214,11 +215,7 @@ describe("messages", () => {
         .next({
           testServiceId1: testServicePublic
         })
-        .call(
-          callApiWith401ResponseStatusHandler,
-          backendClient.getMessages,
-          {}
-        )
+        .call(callApiWith401ResponseStatusHandler, getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
         .all([])
