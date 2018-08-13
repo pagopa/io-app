@@ -2,8 +2,10 @@ import Mixpanel from "react-native-mixpanel";
 import { NavigationActions } from "react-navigation";
 
 import {
+  ANALYTICS_AUTHENTICATION_COMPLETED,
+  ANALYTICS_AUTHENTICATION_STARTED,
+  ANALYTICS_ONBOARDING_STARTED,
   APP_STATE_CHANGE_ACTION,
-  AUTHENTICATION_COMPLETED,
   IDP_SELECTED,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
@@ -19,10 +21,8 @@ import {
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_SUCCESS,
   SESSION_EXPIRED,
-  SESSION_LOAD_FAILURE,
-  SESSION_LOAD_SUCCESS,
-  START_AUTHENTICATION,
-  START_ONBOARDING,
+  SESSION_INFO_LOAD_FAILURE,
+  SESSION_INFO_LOAD_SUCCESS,
   TOS_ACCEPT_SUCCESS
 } from "../store/actions/constants";
 import { Action, Dispatch, MiddlewareAPI } from "../store/actions/types";
@@ -62,17 +62,17 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         //
 
         // authentication
-        case START_AUTHENTICATION:
+        case ANALYTICS_AUTHENTICATION_STARTED:
         case LOGIN_SUCCESS:
         case LOGIN_FAILURE:
-        case SESSION_LOAD_SUCCESS:
-        case SESSION_LOAD_FAILURE:
+        case SESSION_INFO_LOAD_SUCCESS:
+        case SESSION_INFO_LOAD_FAILURE:
         case SESSION_EXPIRED:
-        case AUTHENTICATION_COMPLETED:
+        case ANALYTICS_AUTHENTICATION_COMPLETED:
         case LOGOUT_SUCCESS:
         case LOGOUT_FAILURE:
         // onboarding
-        case START_ONBOARDING:
+        case ANALYTICS_ONBOARDING_STARTED:
         case TOS_ACCEPT_SUCCESS:
         case PIN_CREATE_SUCCESS:
         case PIN_CREATE_FAILURE:

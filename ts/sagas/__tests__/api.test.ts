@@ -59,7 +59,7 @@ describe("api", () => {
         .next()
         .call(mockedBackendClient.getSession, {})
         .next({ status: 401, value: Error("Backend error") })
-        .put(sessionExpired())
+        .put(sessionExpired)
         .next()
         .returns({ status: 401, value: Error("Backend error") });
     });

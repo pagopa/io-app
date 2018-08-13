@@ -19,7 +19,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
-import { acceptTos } from "../../store/actions/onboarding";
+import { tosAcceptRequest } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
@@ -59,7 +59,7 @@ class TosScreen extends React.Component<Props, never> {
   }
 
   private acceptTos = () => {
-    this.props.dispatch(acceptTos());
+    this.props.dispatch(tosAcceptRequest);
   };
 
   private renderActivityIndicator(animating: boolean) {

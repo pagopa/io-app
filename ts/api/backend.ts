@@ -112,7 +112,7 @@ export type GetProfileT = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseTypeWith401<ProfileWithEmail | ProfileWithoutEmail>
+  BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
 >;
 
 export type CreateOrUpdateProfileT = IPostApiRequestType<

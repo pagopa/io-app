@@ -10,6 +10,7 @@ import {
   backendInfoLoadFailure,
   backendInfoLoadSuccess
 } from "../store/actions/backendInfo";
+import { SagaCallReturnType } from "../types/utils";
 
 // load backend info every hour
 const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
@@ -29,9 +30,9 @@ export function* backendInfoWatcher(): IterableIterator<Effect> {
   }
 
   while (true) {
-    const backendInfoResponse:
-      | BasicResponseType<ServerInfo>
-      | undefined = yield call(getServerInfo, {});
+    const backendInfoResponse: SagaCallReturnType<
+      typeof getServerInfo
+    > = yield call(getServerInfo, {});
 
     if (backendInfoResponse && backendInfoResponse.status === 200) {
       yield put(backendInfoLoadSuccess(backendInfoResponse.value));
