@@ -26,14 +26,16 @@ import { profileSelector } from "../store/reducers/profile";
 import { callApiWith401ResponseStatusHandler } from "./api";
 
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { SagaCallReturnType } from "../types/utils";
 
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: TypeofApiCall<GetProfileT>
 ): Iterator<Effect | Option<ProfileWithOrWithoutEmail>> {
-  const response:
-    | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-    | undefined = yield call(getProfile, {});
+  const response: SagaCallReturnType<typeof getProfile> = yield call(
+    getProfile,
+    {}
+  );
 
   if (response && response.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action

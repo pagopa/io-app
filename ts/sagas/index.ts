@@ -9,10 +9,10 @@ import {
   watchContentOrganizationLoadSaga,
   watchContentServiceLoadSaga
 } from "./contentLoaders";
-import { watchNavigateToDeepLinkSaga } from "./deepLink";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import walletSaga from "./wallet";
+import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 import { apiUrlPrefix } from "../config";
 

@@ -38,6 +38,16 @@ export const resetToAuthenticationRoute: NavigationResetAction = StackActions.re
   }
 );
 
+export const navigateToMainNavigatorAction = NavigationActions.navigate({
+  routeName: ROUTES.MAIN,
+  key: undefined
+});
+
+export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
+});
+
 export const navigateToTosScreen = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })

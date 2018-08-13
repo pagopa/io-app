@@ -5,8 +5,9 @@ import { call } from "redux-saga/effects";
 import { getPin } from "../../utils/keychain";
 
 import { PinString } from "../../types/PinString";
+import { SagaCallReturnType } from "../../types/utils";
 
-import { configurePinSaga } from "../pinset";
+import { configurePinSaga } from "./configurePinSaga";
 
 // tslint:disable-next-line:cognitive-complexity
 export function* checkConfiguredPinSaga(): IterableIterator<Effect> {
@@ -18,7 +19,9 @@ export function* checkConfiguredPinSaga(): IterableIterator<Effect> {
     // If a PIN has not been configured yet...
     while (true) {
       // Go through the PIN configuration flow until a PIN is set.
-      const configurePinResult: boolean = yield call(configurePinSaga);
+      const configurePinResult: SagaCallReturnType<
+        typeof configurePinSaga
+      > = yield call(configurePinSaga);
       // FIXME: handle errors
       if (configurePinResult) {
         break;

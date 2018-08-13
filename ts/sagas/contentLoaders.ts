@@ -23,6 +23,7 @@ import {
 } from "../store/actions/content";
 
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { SagaCallReturnType } from "../types/utils";
 
 const contentClient = ContentClient();
 
@@ -62,7 +63,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   takeEvery(CONTENT_SERVICE_LOAD, function*(action: ContentServiceLoad) {
     const serviceId = action.serviceId;
 
-    const response: BasicResponseType<ServiceMetadata> | undefined = yield call(
+    const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
       getServiceMetadata,
       serviceId
     );
@@ -87,9 +88,9 @@ export function* watchContentOrganizationLoadSaga(): Iterator<Effect> {
   ) {
     const organizationFiscalCode = action.organizationFiscalCode;
 
-    const response:
-      | BasicResponseType<OrganizationMetadata>
-      | undefined = yield call(getOrganizationMetadata, organizationFiscalCode);
+    const response: SagaCallReturnType<
+      typeof getOrganizationMetadata
+    > = yield call(getOrganizationMetadata, organizationFiscalCode);
 
     if (response && response.status === 200) {
       yield put(

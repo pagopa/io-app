@@ -55,7 +55,10 @@ import {
   servicesByIdSelector
 } from "../../store/reducers/entities/services/servicesById";
 import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
+
 import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
+import { SagaCallReturnType } from "../../types/utils";
+
 import { callApiWith401ResponseStatusHandler } from "../api";
 
 /**
@@ -69,9 +72,10 @@ export function* loadMessage(
   getMessage: TypeofApiCall<GetMessageT>,
   id: string
 ): IterableIterator<Effect | Error | MessageWithContent> {
-  const response:
-    | BasicResponseType<MessageWithContent>
-    | undefined = yield call(getMessage, { id });
+  const response: SagaCallReturnType<typeof getMessage> = yield call(
+    getMessage,
+    { id }
+  );
 
   if (!response || response.status !== 200) {
     const error: Error = response ? response.value : Error();
@@ -168,7 +172,7 @@ export function* loadService(
   getService: TypeofApiCall<GetServiceT>,
   id: string
 ): IterableIterator<Effect | Error | ServicePublic> {
-  const response: BasicResponseType<ServicePublic> | undefined = yield call(
+  const response: SagaCallReturnType<typeof getService> = yield call(
     getService,
     { id }
   );

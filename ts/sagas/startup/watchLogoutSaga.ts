@@ -10,11 +10,8 @@ import {
 } from "../../store/actions/authentication";
 import { LOGOUT_REQUEST } from "../../store/actions/constants";
 
-import {
-  BasicResponseTypeWith401,
-  LogoutT,
-  SuccessResponse
-} from "../../api/backend";
+import { LogoutT } from "../../api/backend";
+import { SagaCallReturnType } from "../../types/utils";
 
 /**
  * Handles the logout flow
@@ -27,9 +24,7 @@ export function* watchLogoutSaga(
     // Issue a logout request to the backend, asking to delete the session
     // FIXME: if there's no connectivity to the backend, this request will
     //        block for a while.
-    const response:
-      | BasicResponseTypeWith401<SuccessResponse>
-      | undefined = yield call(logout, {});
+    const response: SagaCallReturnType<typeof logout> = yield call(logout, {});
     if (response && response.status === 200) {
       yield put(logoutSuccess);
     } else {

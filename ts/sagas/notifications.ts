@@ -1,11 +1,7 @@
 /**
  * A saga to manage notifications
  */
-import {
-  BasicResponseType,
-  TypeofApiCall
-} from "italia-ts-commons/lib/requests";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Platform } from "react-native";
 import { call, Effect, put, select } from "redux-saga/effects";
 
@@ -13,6 +9,7 @@ import { PlatformEnum } from "../../definitions/backend/Platform";
 import { CreateOrUpdateInstallationT } from "../api/backend";
 import { updateNotificationInstallationFailure } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
+import { SagaCallReturnType } from "../types/utils";
 
 const notificationsPlatform: PlatformEnum = Platform.select({
   ios: PlatformEnum.apns,
@@ -34,16 +31,15 @@ export function* updateInstallationSaga(
   if (notificationsInstallation.token) {
     // Send the request to the backend
 
-    const response: BasicResponseType<NonEmptyString> | undefined = yield call(
-      createOrUpdateInstallation,
-      {
-        id: notificationsInstallation.uuid,
-        installation: {
-          platform: notificationsPlatform,
-          pushChannel: notificationsInstallation.token
-        }
+    const response: SagaCallReturnType<
+      typeof createOrUpdateInstallation
+    > = yield call(createOrUpdateInstallation, {
+      id: notificationsInstallation.uuid,
+      installation: {
+        platform: notificationsPlatform,
+        pushChannel: notificationsInstallation.token
       }
-    );
+    });
 
     /**
      * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action

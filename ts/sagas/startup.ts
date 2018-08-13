@@ -1,11 +1,11 @@
-import { isNone, Option } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
+import { isNone } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
 import { startApplicationInitialization } from "../store/actions/application";
 import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
 import { navigateToDeepLink } from "../store/actions/deepLink";
+import { navigateToMainNavigatorAction } from "../store/actions/navigation";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -14,16 +14,11 @@ import { deepLinkSelector } from "../store/reducers/deepLink";
 
 import { apiUrlPrefix } from "../config";
 
-import ROUTES from "../navigation/routes";
+import { SagaCallReturnType } from "../types/utils";
 
 import { getPin } from "../utils/keychain";
 
-import { PinString } from "../types/PinString";
-import { SessionToken } from "../types/SessionToken";
-
-import { BackendClient, ProfileWithOrWithoutEmail } from "../api/backend";
-
-import { PublicSession } from "../../definitions/backend/PublicSession";
+import { BackendClient } from "../api/backend";
 
 import {
   watchMessagesLoadOrCancelSaga,
@@ -55,7 +50,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   > = yield select(sessionTokenSelector);
 
   // Unless we have a valid session token already, login until we have one.
-  const sessionToken: SessionToken = previousSessionToken
+  const sessionToken: SagaCallReturnType<
+    typeof authenticationSaga
+  > = previousSessionToken
     ? previousSessionToken
     : yield call(authenticationSaga);
 
@@ -81,10 +78,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   > = yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
-    const maybeSessionInfo: Option<PublicSession> = yield call(
-      loadSessionInformationSaga,
-      backendClient.getSession
-    );
+    const maybeSessionInfo: SagaCallReturnType<
+      typeof loadSessionInformationSaga
+    > = yield call(loadSessionInformationSaga, backendClient.getSession);
     if (maybeSessionInfo.isNone()) {
       // we can't go further without session info, let's restart
       // the initialization process
@@ -97,7 +93,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // loaded and valid
 
   // Get the profile info
-  const maybeUserProfile: Option<ProfileWithOrWithoutEmail> = yield call(
+  const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield call(
     loadProfile,
     backendClient.getProfile
   );
@@ -109,7 +105,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   const userProfile = maybeUserProfile.value;
 
   // Retrieve the configured PIN from the keychain
-  const storedPin: Option<PinString> = yield call(getPin);
+  const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
 
   if (!previousSessionToken || isNone(storedPin)) {
     // The user wasn't logged in when the application started or, for some
@@ -179,10 +175,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield put(navigateToDeepLink(deepLink));
   } else {
     // ... otherwise to the MainNavigator
-    const navigateToMainNavigatorAction = NavigationActions.navigate({
-      routeName: ROUTES.MAIN,
-      key: undefined
-    });
     yield put(navigateToMainNavigatorAction);
   }
 }

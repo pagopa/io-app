@@ -4,11 +4,15 @@ import { Effect } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
-import { BasicResponseTypeWith401, GetSessionT } from "../../api/backend";
+
+import { GetSessionT } from "../../api/backend";
+
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
+
+import { SagaCallReturnType } from "../../types/utils";
 
 /**
  * Load session info from the Backend
@@ -21,9 +25,10 @@ export function* loadSessionInformationSaga(
   getSession: TypeofApiCall<GetSessionT>
 ): IterableIterator<Effect | Option<PublicSession>> {
   // Call the Backend service
-  const response:
-    | BasicResponseTypeWith401<PublicSession>
-    | undefined = yield call(getSession, {});
+  const response: SagaCallReturnType<typeof getSession> = yield call(
+    getSession,
+    {}
+  );
 
   if (response && response.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action

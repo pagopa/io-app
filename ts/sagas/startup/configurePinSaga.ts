@@ -5,32 +5,33 @@
  * @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
  */
 
-import { NavigationActions } from "react-navigation";
 import { call, Effect, put, take } from "redux-saga/effects";
 
-import ROUTES from "../navigation/routes";
 import {
   PIN_CREATE_FAILURE,
   PIN_CREATE_REQUEST,
   PIN_CREATE_SUCCESS
-} from "../store/actions/constants";
-import { PinCreateRequest } from "../store/actions/pinset";
+} from "../../store/actions/constants";
 
-import { setPin } from "../utils/keychain";
+import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
+import { PinCreateRequest } from "../../store/actions/pinset";
+
+import { setPin } from "../../utils/keychain";
+
+import { SagaCallReturnType } from "../../types/utils";
 
 export function* configurePinSaga(): Iterator<Effect | boolean> {
   // Navigate to the PinScreen
-  const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING,
-    action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
-  });
   yield put(navigateToOnboardingPinScreenAction);
 
   // Here we wait the user to complete the UI flow
   const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST);
 
   try {
-    const result: boolean = yield call(setPin, action.payload);
+    const result: SagaCallReturnType<typeof setPin> = yield call(
+      setPin,
+      action.payload
+    );
     if (!result) {
       throw Error("Cannot store PIN");
     }

@@ -7,7 +7,7 @@ import { getPin } from "../../../utils/keychain";
 
 import { PinString } from "../../../types/PinString";
 
-import { configurePinSaga } from "../../pinset";
+import { configurePinSaga } from "../configurePinSaga";
 
 import { checkConfiguredPinSaga } from "../checkConfiguredPinSaga";
 
