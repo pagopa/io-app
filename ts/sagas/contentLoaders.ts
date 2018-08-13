@@ -1,4 +1,4 @@
-import { call, Effect, fork, put, take } from "redux-saga/effects";
+import { call, Effect, put, takeEvery } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
@@ -23,6 +23,7 @@ import {
 } from "../store/actions/content";
 
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { SagaCallReturnType } from "../types/utils";
 
 const contentClient = ContentClient();
 
@@ -58,13 +59,11 @@ function getOrganizationMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* contentServiceSaga(): Iterator<Effect> {
-  while (true) {
-    const loadAction: ContentServiceLoad = yield take(CONTENT_SERVICE_LOAD);
+export function* watchContentServiceLoadSaga(): Iterator<Effect> {
+  yield takeEvery(CONTENT_SERVICE_LOAD, function*(action: ContentServiceLoad) {
+    const serviceId = action.serviceId;
 
-    const serviceId = loadAction.serviceId;
-
-    const response: BasicResponseType<ServiceMetadata> | undefined = yield call(
+    const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
       getServiceMetadata,
       serviceId
     );
@@ -74,7 +73,7 @@ export function* contentServiceSaga(): Iterator<Effect> {
     } else {
       yield put(contentServiceLoadFailure(serviceId));
     }
-  }
+  });
 }
 
 /**
@@ -83,17 +82,15 @@ export function* contentServiceSaga(): Iterator<Effect> {
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* contentOrganizationSaga(): Iterator<Effect> {
-  while (true) {
-    const loadAction: ContentOrganizationLoad = yield take(
-      CONTENT_ORGANIZATION_LOAD
-    );
+export function* watchContentOrganizationLoadSaga(): Iterator<Effect> {
+  yield takeEvery(CONTENT_ORGANIZATION_LOAD, function*(
+    action: ContentOrganizationLoad
+  ) {
+    const organizationFiscalCode = action.organizationFiscalCode;
 
-    const organizationFiscalCode = loadAction.organizationFiscalCode;
-
-    const response:
-      | BasicResponseType<OrganizationMetadata>
-      | undefined = yield call(getOrganizationMetadata, organizationFiscalCode);
+    const response: SagaCallReturnType<
+      typeof getOrganizationMetadata
+    > = yield call(getOrganizationMetadata, organizationFiscalCode);
 
     if (response && response.status === 200) {
       yield put(
@@ -102,10 +99,5 @@ export function* contentOrganizationSaga(): Iterator<Effect> {
     } else {
       yield put(contentOrganizationLoadFailure(organizationFiscalCode));
     }
-  }
-}
-
-export function* contentSaga(): Iterator<Effect> {
-  yield fork(contentServiceSaga);
-  yield fork(contentOrganizationSaga);
+  });
 }

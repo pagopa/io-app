@@ -9,10 +9,12 @@ import { GlobalState } from "./types";
 
 export type DeepLinkState = Readonly<{
   deepLink: NavigationNavigateActionPayload | null;
+  immediate: boolean;
 }>;
 
 const INITIAL_STATE: DeepLinkState = {
-  deepLink: null
+  deepLink: null,
+  immediate: false
 };
 
 export const deepLinkSelector = (

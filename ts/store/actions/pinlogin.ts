@@ -12,32 +12,34 @@ import {
 
 // Actions
 
-export type PinValidateSuccess = Readonly<{
+export type PinLoginValidateSuccess = Readonly<{
   type: typeof PIN_LOGIN_VALIDATE_SUCCESS;
 }>;
-export type PinValidateFailure = Readonly<{
+export type PinLoginValidateFailure = Readonly<{
   type: typeof PIN_LOGIN_VALIDATE_FAILURE;
 }>;
-export type PinValidateRequest = Readonly<{
+export type PinLoginValidateRequest = Readonly<{
   type: typeof PIN_LOGIN_VALIDATE_REQUEST;
   payload: PinString;
 }>;
 
 export type PinloginActions =
-  | PinValidateFailure
-  | PinValidateRequest
-  | PinValidateSuccess;
+  | PinLoginValidateFailure
+  | PinLoginValidateRequest
+  | PinLoginValidateSuccess;
 
 // Send the PIN to be match with the one in the keychain
-export const validatePin = (pin: PinString): PinValidateRequest => ({
+export const pinLoginValidateRequest = (
+  pin: PinString
+): PinLoginValidateRequest => ({
   type: PIN_LOGIN_VALIDATE_REQUEST,
   payload: pin
 });
 
-export const pinFailure = (): PinValidateFailure => ({
+export const pinLoginValidateFailure = (): PinLoginValidateFailure => ({
   type: PIN_LOGIN_VALIDATE_FAILURE
 });
 
-export const pinSuccess = (): PinValidateSuccess => ({
+export const pinLoginValidateSuccess = (): PinLoginValidateSuccess => ({
   type: PIN_LOGIN_VALIDATE_SUCCESS
 });
