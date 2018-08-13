@@ -87,7 +87,7 @@
     "babel-preset-react-native": "4.0.0",
     "danger": "^3.8.0",
     "danger-plugin-digitalcitizenship": "^0.3.1",
-    "detox": "^8.0.0",
+    "detox": "^8.1.4",
     "italia-tslint-rules": "^0.1.1",
     "italia-utils": "^3.11.1",
     "jest": "23.4.1",
