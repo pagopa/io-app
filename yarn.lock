@@ -6347,8 +6347,8 @@ react-native-config@^0.11.2:
     prop-types "^15.5.10"
 
 react-native-device-info@^0.22:
-  version "0.22.2"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.22.2.tgz#ff2829ebe40d75be1d3b6560f0cd48e794a5a287"
+  version "0.22.4"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.22.4.tgz#db7831ad227f7ff9dfb74592e45b58ff3d90ff48"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
