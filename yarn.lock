@@ -573,9 +573,9 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.0.tgz#48a6be13cbe0e56904b301d1f58ce8847f731c44"
 
-"@types/jest@^23.1.4":
-  version "23.1.4"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.1.4.tgz#71e1e2d08b1db742f479ee2795536ebc999a2419"
+"@types/jest@^23.3.1":
+  version "23.3.1"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.1.tgz#a4319aedb071d478e6f407d1c4578ec8156829cf"
 
 "@types/lodash@^4.14.115":
   version "4.14.115"

@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
-    "@types/jest": "^23.1.4",
+    "@types/jest": "^23.3.1",
     "@types/lodash": "^4.14.115",
     "@types/node": "^10.1.0",
     "@types/node-fetch": "^2.1.1",
