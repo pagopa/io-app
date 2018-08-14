@@ -16,7 +16,7 @@ import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
 
-import { validatePin } from "../store/actions/pinlogin";
+import { pinLoginValidateRequest } from "../store/actions/pinlogin";
 import { ReduxProps } from "../store/actions/types";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
@@ -49,12 +49,12 @@ class PinLoginScreen extends React.Component<Props> {
   }
 
   private onPinReset = () => {
-    this.props.dispatch(startPinReset());
+    this.props.dispatch(startPinReset);
   };
 
   // Method called when the CodeInput is filled
   public onPinFulfill = (code: PinString) => {
-    const validatePinAction = validatePin(code);
+    const validatePinAction = pinLoginValidateRequest(code);
     this.props.dispatch(validatePinAction);
     // Clear PIN input
     if (this.pinComponent) {

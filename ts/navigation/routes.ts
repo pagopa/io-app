@@ -1,9 +1,4 @@
-import { Platform } from "react-native";
-
 const ROUTES = {
-  // on Android, the URI prefix contains a host in addition to scheme
-  PREFIX: Platform.OS === "android" ? "ioit://ioit/" : "ioit://",
-
   // Ingress
   INGRESS: "INGRESS",
 
@@ -61,6 +56,9 @@ const ROUTES = {
   // Profile
   PROFILE_NAVIGATOR: "PROFILE_NAVIGATOR",
   PROFILE_MAIN: "PROFILE_MAIN",
+  PROFILE_PRIVACY: "PROFILE_PRIVACY",
+  PROFILE_TOS: "PROFILE_TOS",
+  PROFILE_PRIVACY_MAIN: "PROFILE_PRIVACY_MAIN",
 
   // Used when the App is in background
   BACKGROUND: "BACKGROUND"

@@ -10,6 +10,7 @@ import {
 } from "redux";
 
 import { GlobalState } from "../reducers/types";
+import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
@@ -36,6 +37,7 @@ export type ApplicationStateAction = Readonly<{
 }>;
 
 export type Action =
+  | AnalyticsActions
   | ApplicationActions
   | ApplicationStateAction
   | AuthenticationActions

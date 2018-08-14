@@ -15,6 +15,7 @@ declare module "native-base" {
       header?: boolean;
       content?: boolean;
       padded?: boolean;
+      centerJustified?: boolean;
     }
   }
 }
@@ -74,6 +75,10 @@ export default (): Theme => {
       padding: variables.contentPadding,
       backgroundColor: variables.contentBackground,
       flex: 1
+    },
+    ".centerJustified": {
+      flex: 1,
+      justifyContent: "center"
     }
   };
 };

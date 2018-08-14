@@ -1,17 +1,21 @@
-import { Button, NativeBase, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 
-type OwnProps = {
+import { ComponentProps } from "../../types/react";
+
+type OwnButtonProps = {
   title: string;
 };
 
+type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
+
 type Props = Readonly<{
-  leftButton: NativeBase.Button & OwnProps;
-  rightButton: NativeBase.Button & OwnProps;
-  inlineHalf: true;
-  inlineOneThird: true;
+  leftButton: FooterButtonProps;
+  rightButton: FooterButtonProps;
+  inlineHalf?: true;
+  inlineOneThird?: true;
 }>;
 
 /**
