@@ -1,18 +1,41 @@
-import { Container } from "native-base";
+import {
+  Body,
+  CheckBox,
+  Container,
+  ListItem,
+  Spinner,
+  Text
+} from "native-base";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
+
+import I18n from "../i18n";
+
 import { startApplicationInitialization } from "../store/actions/application";
 import { ReduxProps } from "../store/actions/types";
+import {
+  sessionInfoSelector,
+  sessionTokenSelector
+} from "../store/reducers/authentication";
+import { profileSelector } from "../store/reducers/profile";
+import { GlobalState } from "../store/reducers/types";
+
 import variables from "../theme/variables";
 
-type Props = ReduxProps;
+type ReduxMappedProps = {
+  hasSessionToken: boolean;
+  hasSessionInfo: boolean;
+  hasProfile: boolean;
+  isProfileEnabled: boolean;
+};
+
+type Props = ReduxProps & ReduxMappedProps;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: variables.contentPadding,
     backgroundColor: variables.brandPrimary
   }
 });
@@ -26,12 +49,54 @@ class IngressScreen extends React.PureComponent<Props> {
     this.props.dispatch(startApplicationInitialization);
   }
   public render() {
+    const items = Array(
+      {
+        enabled: this.props.hasSessionToken,
+        label: I18n.t("startup.authentication")
+      },
+      {
+        enabled: this.props.hasSessionInfo,
+        label: I18n.t("startup.sessionInfo")
+      },
+      { enabled: this.props.hasProfile, label: I18n.t("startup.profileInfo") },
+      {
+        enabled: this.props.isProfileEnabled,
+        label: I18n.t("startup.profileEnabled")
+      }
+    );
     return (
       <Container style={styles.container}>
-        <ActivityIndicator color={variables.brandPrimaryInverted} />
+        <Text white={true} alignCenter={true}>
+          {I18n.t("startup.title")}
+        </Text>
+        <Spinner color="white" />
+        {items.map((item, index) => (
+          <ListItem key={`item-${index}`}>
+            <CheckBox checked={item.enabled} />
+            <Body>
+              <Text white={true} bold={item.enabled}>
+                {item.label}
+              </Text>
+            </Body>
+          </ListItem>
+        ))}
       </Container>
     );
   }
 }
 
-export default connect()(IngressScreen);
+// <ActivityIndicator color={variables.brandPrimaryInverted} />
+
+function mapStateToProps(state: GlobalState): ReduxMappedProps {
+  const maybeSessionToken = sessionTokenSelector(state);
+  const maybeSessionInfo = sessionInfoSelector(state);
+  const maybeProfile = profileSelector(state);
+  return {
+    hasSessionToken: maybeSessionToken !== undefined,
+    hasSessionInfo: maybeSessionInfo.isSome(),
+    hasProfile: maybeProfile !== null,
+    isProfileEnabled: maybeProfile !== null && maybeProfile.is_inbox_enabled
+  };
+}
+
+export default connect(mapStateToProps)(IngressScreen);

@@ -6,6 +6,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
 import { navigateToDeepLink } from "../store/actions/deepLink";
 import { navigateToMainNavigatorAction } from "../store/actions/navigation";
+import { resetProfileState } from "../store/actions/profile";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -44,6 +45,10 @@ import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
  * Handles the application startup and the main application logic loop
  */
 function* initializeApplicationSaga(): IterableIterator<Effect> {
+  // Reset the profile cached in redux: at each startup we want to load a fresh
+  // user profile.
+  yield put(resetProfileState);
+
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<
     typeof sessionTokenSelector
@@ -92,7 +97,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // If we are here the user is logged in and the session info is
   // loaded and valid
 
-  // Get the profile info
+  // Load the profile info
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield call(
     loadProfile,
     backendClient.getProfile
