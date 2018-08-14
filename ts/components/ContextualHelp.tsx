@@ -74,17 +74,20 @@ export class ContextualHelp extends React.Component<Props, State> {
             </Right>
           </AppHeader>
 
-          <Content>
-            <H1>{this.props.title}</H1>
-            <View spacer={true} large={true} />
-            {!this.state.content && (
+          {!this.state.content && (
+            <View centerJustified={true}>
               <ActivityIndicator
                 size="large"
                 color={themeVariables.brandPrimaryLight}
               />
-            )}
-            {this.state.content}
-          </Content>
+            </View>
+          )}
+          {this.state.content && (
+            <Content>
+              <H1>{this.props.title}</H1>
+              {this.state.content}
+            </Content>
+          )}
         </Container>
       </Modal>
     );

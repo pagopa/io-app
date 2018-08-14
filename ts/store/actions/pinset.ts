@@ -39,9 +39,9 @@ export type PinSetActions =
 
 // Creators
 
-export const startPinReset = (): StartPinReset => ({
+export const startPinReset: StartPinReset = {
   type: START_PIN_RESET
-});
+};
 
 export const createPin = (pin: PinString): PinCreateRequest => ({
   type: PIN_CREATE_REQUEST,
