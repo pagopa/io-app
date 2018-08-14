@@ -44,6 +44,13 @@
     "loginError": "There was an error in the login, repeat the procedure.",
     "profileUpdateError": "An error occurred while updating your profile."
   },
+  "startup": {
+    "title": "Initialization",
+    "authentication": "User authenticated",
+    "sessionInfo": "SPID attributes loaded",
+    "profileInfo": "User profile loaded",
+    "profileEnabled": "User profile activated"
+  },
   "login": {
     "welcome": {
       "line1": "welcome in your",

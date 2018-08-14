@@ -7,7 +7,8 @@
 import { ProfileWithOrWithoutEmail } from "../../api/backend";
 import {
   PROFILE_LOAD_SUCCESS,
-  PROFILE_UPSERT_SUCCESS
+  PROFILE_UPSERT_SUCCESS,
+  RESET_PROFILE_STATE
 } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -26,6 +27,9 @@ const reducer = (
   action: Action
 ): ProfileState => {
   switch (action.type) {
+    case RESET_PROFILE_STATE:
+      return null;
+
     case PROFILE_LOAD_SUCCESS:
       // Store the loaded Profile in the store
       return action.payload;

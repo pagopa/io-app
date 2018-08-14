@@ -8,10 +8,15 @@ import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_REQUEST,
-  PROFILE_UPSERT_SUCCESS
+  PROFILE_UPSERT_SUCCESS,
+  RESET_PROFILE_STATE
 } from "./constants";
 
 // Actions
+
+export type ResetProfileState = Readonly<{
+  type: typeof RESET_PROFILE_STATE;
+}>;
 
 export type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
@@ -41,6 +46,7 @@ export type ProfileUpsertFailure = Readonly<{
 }>;
 
 export type ProfileActions =
+  | ResetProfileState
   | ProfileLoadSuccess
   | ProfileLoadFailure
   | ProfileUpsertRequest
@@ -48,6 +54,10 @@ export type ProfileActions =
   | ProfileUpsertFailure;
 
 // Creators
+
+export const resetProfileState: ResetProfileState = {
+  type: RESET_PROFILE_STATE
+};
 
 export const profileLoadSuccess = (
   profile: ProfileWithOrWithoutEmail

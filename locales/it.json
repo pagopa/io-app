@@ -44,6 +44,13 @@
     "loginError": "C'è stato un errore in fase di login, ripetere la procedura.",
     "profileUpdateError": "Si è verificato un errore durante l'aggiornamento del tuo profilo."
   },
+  "startup": {
+    "title": "Inizializzazione",
+    "authentication": "Utente autenticato",
+    "sessionInfo": "Attributi SPID caricati",
+    "profileInfo": "Profilo utente caricato",
+    "profileEnabled": "Profilo utente abilitato"
+  },
   "login": {
     "welcome": {
       "line1": "benvenuto nella tua",
