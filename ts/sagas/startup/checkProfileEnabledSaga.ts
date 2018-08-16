@@ -21,13 +21,13 @@ export function* checkProfileEnabledSaga(
     !profile.is_inbox_enabled ||
     !profile.is_webhook_enabled
   ) {
-    // We have the profile info but the user doesn't yet have an active
-    // profile in the CD APIs.
     // NOTE: `has_profile` is a boolean that is true if the profile is
     // active in the API.
+    // FIXME: the `version` field has the same meaning at the `has_profile`
+    //        field, we should get rid of `has_profile`.
+    //        see https://github.com/teamdigitale/italia-backend/blob/v0.0.48/src/types/profile.ts#L33
 
     // Upsert the user profile to enable inbox and webhook
-    // FIXME: make this a call to the profileUpsert saga
     yield put(
       profileUpsertRequest({
         is_inbox_enabled: true,

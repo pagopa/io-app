@@ -45,6 +45,7 @@ export type ProfileWithOrWithoutEmail = t.TypeOf<
 >;
 
 // FullProfile is allOf [ExtendedProfile, LimitedProfile]
+// see https://github.com/teamdigitale/italia-backend/blob/master/api_proxy.yaml#L211
 export const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
 
 export type FullProfile = t.TypeOf<typeof FullProfile>;
@@ -87,7 +88,7 @@ export type GetServiceT = IGetApiRequestType<
   },
   "Authorization",
   never,
-  BasicResponseType<ServicePublic>
+  BasicResponseTypeWith401<ServicePublic>
 >;
 
 export type GetMessagesT = IGetApiRequestType<
@@ -121,7 +122,7 @@ export type CreateOrUpdateProfileT = IPostApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<LimitedProfile | ExtendedProfile>
+  BasicResponseTypeWith401<FullProfile>
 >;
 
 export type CreateOrUpdateInstallationT = IPutApiRequestType<
@@ -131,7 +132,7 @@ export type CreateOrUpdateInstallationT = IPutApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseType<NonEmptyString>
+  BasicResponseTypeWith401<NonEmptyString>
 >;
 
 export type LogoutT = IPostApiRequestType<
@@ -207,7 +208,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.newProfile),
-    response_decoder: basicResponseDecoderWith401(ProfileWithOrWithoutEmail)
+    response_decoder: basicResponseDecoderWith401(FullProfile)
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {

@@ -1,4 +1,4 @@
-import merge from "lodash/merge";
+import { merge } from "lodash";
 import { Text, View } from "native-base";
 import * as React from "react";
 import * as SimpleMarkdown from "simple-markdown";

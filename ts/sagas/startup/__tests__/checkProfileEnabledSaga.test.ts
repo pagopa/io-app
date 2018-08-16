@@ -1,8 +1,16 @@
 import { expectSaga } from "redux-saga-test-plan";
 
-import { ProfileWithOrWithoutEmail } from "../../../api/backend";
+import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
+import {
+  EmailString,
+  FiscalCode,
+  NonEmptyString
+} from "italia-ts-commons/lib/strings";
+
+import { FullProfile, ProfileWithOrWithoutEmail } from "../../../api/backend";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
+import { PROFILE_UPSERT_REQUEST } from "../../../store/actions/constants";
 import {
   profileUpsertFailure,
   profileUpsertRequest,
@@ -17,8 +25,13 @@ describe("checkProfileEnabledSaga", () => {
     is_inbox_enabled: true,
     is_webhook_enabled: true,
     is_email_set: true,
-    spid_email: "test@example.com"
-  } as any;
+    spid_email: "test@example.com" as EmailString,
+    family_name: "Connor",
+    name: "John",
+    fiscal_code: "XYZ" as FiscalCode,
+    spid_mobile_phone: "123" as NonEmptyString,
+    version: 0 as NonNegativeInteger
+  };
 
   const upsertAction = profileUpsertRequest({
     is_inbox_enabled: true,
@@ -26,20 +39,28 @@ describe("checkProfileEnabledSaga", () => {
     email: profile.spid_email
   });
 
+  const updatedProfile: FullProfile = {
+    is_inbox_enabled: true,
+    is_webhook_enabled: true,
+    email: "test@example.com" as EmailString,
+    sender_allowed: true,
+    version: 1 as NonNegativeInteger
+  };
+
   it("should do nothing if profile is enabled", () => {
     return expectSaga(checkProfileEnabledSaga, profile)
-      .not.put(upsertAction)
+      .not.put.like({ action: { type: PROFILE_UPSERT_REQUEST } })
       .run();
   });
 
-  it("should update the profile when the API profile does not exist", () => {
+  it("should create the API profile when the API profile does not exist", () => {
     return expectSaga(checkProfileEnabledSaga, {
       ...profile,
       has_profile: false
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization)
-      .dispatch(profileUpsertSuccess(profile))
+      .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
 
@@ -50,7 +71,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization)
-      .dispatch(profileUpsertSuccess(profile))
+      .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
 
@@ -61,7 +82,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization)
-      .dispatch(profileUpsertSuccess(profile))
+      .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
 
@@ -72,7 +93,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization)
-      .dispatch(profileUpsertSuccess(profile))
+      .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
 
