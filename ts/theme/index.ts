@@ -3,7 +3,7 @@
  * It takes our custom variables and mixes them with each defined component theme.
  */
 
-import merge from "lodash/merge";
+import { merge } from "lodash";
 import getTheme from "native-base/src/theme/components";
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";

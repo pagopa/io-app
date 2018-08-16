@@ -1,4 +1,4 @@
-import color from "color";
+import * as color from "color";
 
 import { Theme } from "../types";
 import variables from "../variables";

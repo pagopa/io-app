@@ -1,6 +1,6 @@
 import { StyleProvider } from "native-base";
 import * as React from "react";
-import Mixpanel from "react-native-mixpanel";
+import * as Mixpanel from "react-native-mixpanel";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 

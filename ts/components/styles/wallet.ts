@@ -4,7 +4,7 @@
 
 import { StyleSheet } from "react-native";
 
-import color from "color";
+import * as color from "color";
 import variables from "../../theme/variables";
 
 // TODO: when all the required screens are added,

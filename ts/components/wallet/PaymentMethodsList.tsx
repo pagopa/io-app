@@ -5,7 +5,7 @@
  *  component @https://www.pivotaltracker.com/story/show/157874540
  */
 
-import color from "color";
+import * as color from "color";
 import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";

@@ -1,4 +1,4 @@
-import * as DeviceInfo from "react-native-device-info";
+import DeviceInfo from "react-native-device-info";
 
 export const APP_NAME = "ItaliaApp";
 

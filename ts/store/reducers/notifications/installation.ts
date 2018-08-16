@@ -2,7 +2,7 @@
  * Notifications installation reducer
  */
 
-import uuid from "uuid/v4";
+import * as uuid from "uuid/v4";
 
 import { NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE } from "../../actions/constants";
 import { Action } from "../../actions/types";

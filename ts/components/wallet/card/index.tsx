@@ -3,7 +3,7 @@
  * with different appearences based on
  * the props passed
  */
-import color from "color";
+import * as color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Body, Card, Text } from "native-base";
 import * as React from "react";
