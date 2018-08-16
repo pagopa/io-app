@@ -9,7 +9,7 @@
  * icon  |
  *       input
  */
-import * as color from "color";
+import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";

@@ -7,7 +7,7 @@
 
 // tslint:disable:no-invalid-this
 
-import * as color from "color";
+import color from "color";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";

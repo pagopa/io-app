@@ -6,7 +6,7 @@
 
 import { createIconSetFromIcoMoon } from "react-native-vector-icons";
 
-import * as fontConfig from "./selection.json";
+import fontConfig from "./selection.json";
 
 const iconSet = createIconSetFromIcoMoon(fontConfig);
 

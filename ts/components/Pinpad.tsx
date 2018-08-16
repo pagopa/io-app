@@ -1,4 +1,4 @@
-import * as color from "color";
+import color from "color";
 import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
 
