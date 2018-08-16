@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "allowJs": false,
