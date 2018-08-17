@@ -3,10 +3,7 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import {
-  BasicResponseType,
-  TypeofApiCall
-} from "italia-ts-commons/lib/requests";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Alert } from "react-native";
 import { NavigationNavigateActionPayload } from "react-navigation";
 import { NavigationActions } from "react-navigation";
@@ -24,11 +21,14 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { Messages } from "../../../definitions/backend/Messages";
+import ROUTES from "../../navigation/routes";
+
+import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
+
 import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
-import ROUTES from "../../navigation/routes";
+
+import { sessionExpired } from "../../store/actions/authentication";
 import {
   MESSAGES_LOAD_CANCEL,
   MESSAGES_LOAD_REQUEST,
@@ -58,8 +58,6 @@ import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
 
 import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
-
-import { callApiWith401ResponseStatusHandler } from "../api";
 
 /**
  * A generator to load the message detail from the Backend
@@ -210,11 +208,16 @@ export function* loadMessages(
     > = yield select(servicesByIdSelector);
 
     // Request the list of messages from the Backend
-    const response: BasicResponseType<Messages> | undefined = yield call(
-      callApiWith401ResponseStatusHandler,
+    const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
       {}
     );
+
+    if (response && response.status === 401) {
+      // on 401, expire the current session and restart the authentication flow
+      yield put(sessionExpired);
+      return;
+    }
 
     /**
      * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action

@@ -22,7 +22,6 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { BasicResponseTypeWith401 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import { pagoPaApiUrlPrefix } from "../config";
@@ -96,17 +95,13 @@ import {
   specificWalletSelector
 } from "../store/reducers/wallet/wallets";
 import { Psp, Wallet } from "../types/pagopa";
-import {
-  SessionResponse,
-  Transaction,
-  TransactionListResponse,
-  WalletListResponse
-} from "../types/pagopa";
+import { Transaction } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
+import { SagaCallReturnType } from "../types/utils";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -121,9 +116,9 @@ function* fetchTransactions(
     // show "unauthorized" error @https://www.pivotaltracker.com/story/show/159400682
     return;
   }
-  const response:
-    | BasicResponseTypeWith401<TransactionListResponse>
-    | undefined = yield call(pagoPaClient.getTransactions, token);
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getTransactions
+  > = yield call(pagoPaClient.getTransactions, token);
   if (response !== undefined) {
     if (response.status === 200) {
       // ok, all good
@@ -152,9 +147,9 @@ function* fetchWallets(
   token: string,
   retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
-  const response:
-    | BasicResponseTypeWith401<WalletListResponse>
-    | undefined = yield call(pagoPaClient.getWallets, token);
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getWallets
+  > = yield call(pagoPaClient.getWallets, token);
   if (response !== undefined) {
     if (response.status === 200) {
       yield put(walletsFetched(response.value.data));
@@ -505,9 +500,9 @@ function* completionHandler(_: PaymentRequestCompletion) {
 function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const token: Option<string> = yield select(walletTokenSelector);
   if (token.isSome()) {
-    const response:
-      | BasicResponseTypeWith401<SessionResponse>
-      | undefined = yield call(pagoPaClient.getSession, token.value);
+    const response: SagaCallReturnType<
+      typeof pagoPaClient.getSession
+    > = yield call(pagoPaClient.getSession, token.value);
     if (response !== undefined && response.status === 200) {
       // token fetched successfully, store it
       yield put(storePagoPaToken(some(response.value.data.sessionToken)));

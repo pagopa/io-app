@@ -1,5 +1,3 @@
-import { ReactNodeOutput } from "simple-markdown";
-
 import brRule from "./br";
 import emRule from "./em";
 import headingRule from "./heading";
@@ -9,12 +7,6 @@ import newlineRule from "./newline";
 import paragraphRule from "./paragraph";
 import strongRule from "./strong";
 import textRule from "./text";
-
-export function makeReactNativeRule(f: ReactNodeOutput) {
-  return {
-    react_native: f
-  };
-}
 
 const rules = {
   br: brRule,

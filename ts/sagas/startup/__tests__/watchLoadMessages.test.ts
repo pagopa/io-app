@@ -13,7 +13,6 @@ import { loadServiceSuccess } from "../../../store/actions/services";
 import { messagesByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
-import { callApiWith401ResponseStatusHandler } from "../../api";
 import {
   loadMessage,
   loadMessages,
@@ -160,7 +159,7 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response
         .next({})
-        .call(callApiWith401ResponseStatusHandler, getMessages, {})
+        .call(getMessages, {})
         // Return an error message as getMessages response
         .next({ status: 500, value: Error("Backend error") })
         .put(loadMessagesFailure(Error("Backend error")))
@@ -181,7 +180,7 @@ describe("messages", () => {
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response (no service already stored)
         .next({})
-        .call(callApiWith401ResponseStatusHandler, getMessages, {})
+        .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
         .all([call(loadService, getService, "5a563817fcc896087002ea46c49a")])
@@ -211,7 +210,7 @@ describe("messages", () => {
         .next({
           testServiceId1: testServicePublic
         })
-        .call(callApiWith401ResponseStatusHandler, getMessages, {})
+        .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
         .all([])

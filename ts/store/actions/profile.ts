@@ -2,16 +2,24 @@
  * Action types and action creator related to the Profile.
  */
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
+import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
+
 import { ProfileWithOrWithoutEmail } from "../../api/backend";
+
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_REQUEST,
-  PROFILE_UPSERT_SUCCESS
+  PROFILE_UPSERT_SUCCESS,
+  RESET_PROFILE_STATE
 } from "./constants";
 
 // Actions
+
+export type ResetProfileState = Readonly<{
+  type: typeof RESET_PROFILE_STATE;
+}>;
 
 export type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
@@ -31,7 +39,7 @@ export type ProfileUpsertRequest = Readonly<{
 
 export type ProfileUpsertSuccess = Readonly<{
   type: typeof PROFILE_UPSERT_SUCCESS;
-  payload: ProfileWithOrWithoutEmail;
+  payload: ProfileWithEmail;
 }>;
 
 export type ProfileUpsertFailure = Readonly<{
@@ -41,6 +49,7 @@ export type ProfileUpsertFailure = Readonly<{
 }>;
 
 export type ProfileActions =
+  | ResetProfileState
   | ProfileLoadSuccess
   | ProfileLoadFailure
   | ProfileUpsertRequest
@@ -48,6 +57,10 @@ export type ProfileActions =
   | ProfileUpsertFailure;
 
 // Creators
+
+export const resetProfileState: ResetProfileState = {
+  type: RESET_PROFILE_STATE
+};
 
 export const profileLoadSuccess = (
   profile: ProfileWithOrWithoutEmail
@@ -70,7 +83,7 @@ export const profileUpsertRequest = (
 });
 
 export const profileUpsertSuccess = (
-  profile: ProfileWithOrWithoutEmail
+  profile: ProfileWithEmail
 ): ProfileUpsertSuccess => ({
   type: PROFILE_UPSERT_SUCCESS,
   payload: profile

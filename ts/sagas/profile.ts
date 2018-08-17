@@ -2,10 +2,10 @@
  * A saga that manages the Profile.
  */
 import { none, Option, some } from "fp-ts/lib/Option";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
-  BasicResponseTypeWith401,
   CreateOrUpdateProfileT,
   GetProfileT,
   ProfileWithOrWithoutEmail
@@ -13,6 +13,7 @@ import {
 
 import I18n from "../i18n";
 
+import { sessionExpired } from "../store/actions/authentication";
 import { PROFILE_UPSERT_REQUEST } from "../store/actions/constants";
 import {
   profileLoadFailure,
@@ -23,32 +24,28 @@ import {
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 
-import { callApiWith401ResponseStatusHandler } from "./api";
-
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { SagaCallReturnType } from "../types/utils";
 
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: TypeofApiCall<GetProfileT>
 ): Iterator<Effect | Option<ProfileWithOrWithoutEmail>> {
-  const response: SagaCallReturnType<typeof getProfile> = yield call(
-    getProfile,
-    {}
-  );
+  try {
+    const response: SagaCallReturnType<typeof getProfile> = yield call(
+      getProfile,
+      {}
+    );
 
-  if (response && response.status === 200) {
-    // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-    yield put(profileLoadSuccess(response.value));
-    return some(response.value);
+    if (response && response.status === 200) {
+      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
+      yield put(profileLoadSuccess(response.value));
+      return some(response.value);
+    }
+
+    throw response ? response.value : Error(I18n.t("profile.errors.load"));
+  } catch (error) {
+    yield put(profileLoadFailure(error));
   }
-
-  // We got a error, send a SESSION_LOAD_FAILURE action
-  const error: Error = response
-    ? response.value
-    : Error(I18n.t("profile.errors.load"));
-
-  yield put(profileLoadFailure(error));
   return none;
 }
 
@@ -72,13 +69,18 @@ export function* createOrUpdateProfileSaga(
       }
     : action.payload;
 
-  const response:
-    | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-    | undefined = yield call(
-    callApiWith401ResponseStatusHandler,
+  const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
     createOrUpdateProfile,
-    { newProfile }
+    {
+      newProfile
+    }
   );
+
+  if (response && response.status === 401) {
+    // on 401, expire the current session and restart the authentication flow
+    yield put(sessionExpired);
+    return;
+  }
 
   if (!response || response.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
