@@ -426,7 +426,8 @@
     "cta": {
       "pay": "Pay € {{amount}}"
     },
-    "unknownSender": "Unknown sender"
+    "unknownSender": "Unknown sender",
+    "noContent": "Content not available"
   },
   "messageDetails": {
     "headerTitle": "Message",
