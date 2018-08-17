@@ -2,7 +2,7 @@ import { Text } from "native-base";
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
-import { makeReactNativeRule } from ".";
+import { makeReactNativeRule } from "./utils";
 
 /**
  * A rule that render `strong` elements using a Text component with the `bold` property
