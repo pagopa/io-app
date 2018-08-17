@@ -122,7 +122,7 @@ export type CreateOrUpdateProfileT = IPostApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<FullProfile>
+  BasicResponseTypeWith401<ProfileWithEmail>
 >;
 
 export type CreateOrUpdateInstallationT = IPutApiRequestType<
@@ -208,7 +208,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.newProfile),
-    response_decoder: basicResponseDecoderWith401(FullProfile)
+    response_decoder: basicResponseDecoderWith401(ProfileWithEmail)
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {

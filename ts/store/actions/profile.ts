@@ -2,8 +2,9 @@
  * Action types and action creator related to the Profile.
  */
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
+import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
 
-import { FullProfile, ProfileWithOrWithoutEmail } from "../../api/backend";
+import { ProfileWithOrWithoutEmail } from "../../api/backend";
 
 import {
   PROFILE_LOAD_FAILURE,
@@ -38,7 +39,7 @@ export type ProfileUpsertRequest = Readonly<{
 
 export type ProfileUpsertSuccess = Readonly<{
   type: typeof PROFILE_UPSERT_SUCCESS;
-  payload: FullProfile;
+  payload: ProfileWithEmail;
 }>;
 
 export type ProfileUpsertFailure = Readonly<{
@@ -82,7 +83,7 @@ export const profileUpsertRequest = (
 });
 
 export const profileUpsertSuccess = (
-  profile: FullProfile
+  profile: ProfileWithEmail
 ): ProfileUpsertSuccess => ({
   type: PROFILE_UPSERT_SUCCESS,
   payload: profile

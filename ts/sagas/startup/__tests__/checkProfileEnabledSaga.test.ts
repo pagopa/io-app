@@ -7,7 +7,9 @@ import {
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
 
-import { FullProfile, ProfileWithOrWithoutEmail } from "../../../api/backend";
+import { ProfileWithEmail } from "../../../../definitions/backend/ProfileWithEmail";
+
+import { ProfileWithOrWithoutEmail } from "../../../api/backend";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
 import { PROFILE_UPSERT_REQUEST } from "../../../store/actions/constants";
@@ -39,11 +41,8 @@ describe("checkProfileEnabledSaga", () => {
     email: profile.spid_email
   });
 
-  const updatedProfile: FullProfile = {
-    is_inbox_enabled: true,
-    is_webhook_enabled: true,
-    email: "test@example.com" as EmailString,
-    sender_allowed: true,
+  const updatedProfile: ProfileWithEmail = {
+    ...profile,
     version: 1 as NonNegativeInteger
   };
 
