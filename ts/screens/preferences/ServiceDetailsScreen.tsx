@@ -304,13 +304,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} large={true} />
-            {serviceMetadata && (
-              <Row>
-                <Col>
-                  <Markdown>{serviceMetadata.description}</Markdown>
-                </Col>
-              </Row>
-            )}
+            {serviceMetadata &&
+              serviceMetadata.description && (
+                <Row>
+                  <Col>
+                    <Markdown>{serviceMetadata.description}</Markdown>
+                  </Col>
+                </Row>
+              )}
             {serviceMetadata && <View spacer={true} large={true} />}
             <Row>
               <Col size={6}>

@@ -448,7 +448,8 @@
     "cta": {
       "pay": "Paga € {{amount}}"
     },
-    "unknownSender": "Mittente sconosciuto"
+    "unknownSender": "Mittente sconosciuto",
+    "noContent": "Contenuto non disponibile"
   },
   "messageDetails": {
     "headerTitle": "Messaggio",
