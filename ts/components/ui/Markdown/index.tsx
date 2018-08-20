@@ -20,14 +20,13 @@ const markdownParser = SimpleMarkdown.parserFor(rules);
 const ruleOutput = SimpleMarkdown.ruleOutput(rules, "react_native");
 const reactOutput = SimpleMarkdown.reactFor(ruleOutput);
 
-function renderMarkdown(children: React.ReactNode): React.ReactNode {
+function renderMarkdown(body: string): React.ReactNode {
   try {
     /**
      * Since many rules expect blocks to end in "\n\n", we append that
      * (if needed) to markdown input manually, in addition to specifying
      * inline: false when creating the syntax tree.
      */
-    const body = `${children}`;
     const blockSource = BLOCK_END_REGEX.test(body) ? body : body + "\n\n";
 
     // Generate the syntax tree
@@ -41,7 +40,7 @@ function renderMarkdown(children: React.ReactNode): React.ReactNode {
     return isDevEnvironment ? (
       <Text>
         COULD NOT PARSE MARKDOWN:
-        {children}
+        {body}
       </Text>
     ) : (
       <Text>{I18n.t("global.markdown.decodeError")}</Text>
@@ -53,8 +52,8 @@ function renderMarkdown(children: React.ReactNode): React.ReactNode {
  * A component that accepts "markdown" as child and render react native
  * components.
  */
-const Markdown: React.SFC<{}> = props => (
-  <View>{renderMarkdown(props.children)}</View>
-);
+const Markdown: React.SFC<{
+  children: string;
+}> = props => <View>{renderMarkdown(props.children)}</View>;
 
 export default Markdown;
