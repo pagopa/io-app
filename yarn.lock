@@ -591,6 +591,12 @@
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.0.tgz#2783ee1b6c47cbd4044f4a233976c1ac5fa9e942"
 
+"@types/prop-types@*":
+  version "15.5.5"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.5.tgz#17038dd322c2325f5da650a94d5f9974943625e3"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native-fs@^2.8.1":
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-fs/-/react-native-fs-2.8.1.tgz#cbe5d5b733490fd75b96b9733dbbc37479b91c23"
@@ -650,10 +656,11 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.3.16":
-  version "16.3.16"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.16.tgz#78fc44a90b45701f50c8a7008f733680ba51fc86"
+"@types/react@*", "@types/react@16.4.11":
+  version "16.4.11"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.11.tgz#330f3d864300f71150dc2d125e48644c098f8770"
   dependencies:
+    "@types/prop-types" "*"
     csstype "^2.2.0"
 
 "@types/redux-form@^7.4.5":
