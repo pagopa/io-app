@@ -11,26 +11,11 @@ import { isEmail } from "validator";
 
 import I18n from "../../i18n";
 
-const getValidatorMessage = (validatorId: string): string => {
-  return I18n.t(`forms.validators.${validatorId}`);
-};
-
 const required = (value: string): string | undefined =>
-  value ? undefined : getValidatorMessage("required");
+  value ? undefined : I18n.t("forms.validators.required");
 
 const email = (value: string): string | undefined =>
-  value && !isEmail(value) ? getValidatorMessage("email") : undefined;
-
-/**
- * A utility function that return the translated value for a property of a form field.
- */
-export const getTraslatedFormFieldPropertyValue = (
-  formId: string
-): ((_: string) => (_: string) => string) => (
-  fieldId: string
-): ((_: string) => string) => (propertyId: string): string => {
-  return I18n.t(`forms.${formId}.fields.${fieldId}.${propertyId}`);
-};
+  value && !isEmail(value) ? I18n.t("forms.validators.email") : undefined;
 
 /**
  * Methods used to validate redux-form `Field` components.

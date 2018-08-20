@@ -74,6 +74,7 @@ jobs:
       - run: yarn lint
 
       # Build app
+      - run: yarn generate:locales
       - run: yarn generate:api-definitions
       - run: yarn generate:pagopa-api-definitions
       - run: yarn tsc:noemit
