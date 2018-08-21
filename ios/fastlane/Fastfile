@@ -79,8 +79,7 @@ platform :ios do
       clean: true,
       export_method: "ad-hoc",
       workspace: "ItaliaApp.xcworkspace",
-      configuration: "Debug",
-      # sdk: "iphoneos8.4",
+      # sdk: "iphoneos8.4"
     )
   end
 
