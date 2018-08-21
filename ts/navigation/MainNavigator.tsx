@@ -66,7 +66,12 @@ const styles = StyleSheet.create({
     paddingRight: 3,
     borderTopWidth: 0,
     paddingTop: 12,
-    paddingBottom: 7
+    paddingBottom: 7,
+    shadowColor: variables.brandDarkGray,
+    shadowOffset: {"width":0,"height":50},
+    shadowOpacity: 0.3,
+    shadowRadius: 50,
+    elevation: 50
   }
 });
 

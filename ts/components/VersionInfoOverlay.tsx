@@ -20,14 +20,15 @@ const styles = StyleSheet.create({
   versionContainer: {
     position: "absolute",
     top: 20,
-    right: 3,
+    right: 160,
+    left: 160,
     zIndex: 1000
   },
 
   versionText: {
     fontSize: 12,
     lineHeight: 12,
-    textAlign: "right",
+    textAlign: "center",
     color: "#000000"
   }
 });
