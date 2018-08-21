@@ -1,17 +1,23 @@
 import { isNone } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
-import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
+import {
+  all,
+  call,
+  fork,
+  put,
+  race,
+  select,
+  takeLatest
+} from "redux-saga/effects";
 
 import { startApplicationInitialization } from "../store/actions/application";
 import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
-import { navigateToDeepLink } from "../store/actions/deepLink";
 import { navigateToMainNavigatorAction } from "../store/actions/navigation";
 import { resetProfileState } from "../store/actions/profile";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { deepLinkSelector } from "../store/reducers/deepLink";
 
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 
@@ -32,6 +38,11 @@ import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
 import { NavigationRoute } from "react-navigation";
 import { PagoPaClient } from "../api/pagopa";
+import { clearDeferredActions } from "../store/actions/deferred";
+import {
+  deferredActionsSelector,
+  DeferredActionsState
+} from "../store/reducers/deferred";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -184,22 +195,18 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Watch for requests to reset the PIN
   yield fork(watchPinResetSaga);
 
-  // Finally we decide where to navigate to based on whether we have a deep link
-  // stored in the state (e.g. coming from a push notification or from a
-  // previously stored navigation state)
-  const deepLink: ReturnType<typeof deepLinkSelector> = yield select(
-    deepLinkSelector
-  );
-
   const currentRoute: NavigationRoute = yield select(currentRouteSelector);
 
-  if (deepLink) {
-    // If a deep link has been set, navigate to deep link...
-    yield put(navigateToDeepLink(deepLink, currentRoute.key));
-  } else {
-    // ... otherwise to the MainNavigator
-    yield put(navigateToMainNavigatorAction(currentRoute.key));
-  }
+  // Navigate to the MainNavigator
+  yield put(navigateToMainNavigatorAction(currentRoute.key));
+
+  // Dispatch deferred actions
+  const deferredActions: DeferredActionsState = yield select(
+    deferredActionsSelector
+  );
+
+  yield all(deferredActions.map(action => put(action)));
+  yield put(clearDeferredActions());
 }
 
 export function* startupSaga(): IterableIterator<Effect> {

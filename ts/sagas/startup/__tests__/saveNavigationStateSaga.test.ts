@@ -3,14 +3,15 @@ import * as matchers from "redux-saga-test-plan/matchers";
 
 import { saveNavigationStateSaga } from "../saveNavigationStateSaga";
 
-import { SET_DEEPLINK } from "../../../store/actions/constants";
-import { setDeepLink } from "../../../store/actions/deepLink";
 import { navigationStateSelector } from "../../../store/reducers/navigation";
 
+import { NavigationActions } from "react-navigation";
 import ROUTES from "../../../navigation/routes";
+import { DEFER_TO_LOGIN } from "../../../store/actions/constants";
+import { deferToLogin } from "../../../store/actions/deferred";
 
 describe("saveNavigationStateSaga", () => {
-  it("should not set a deep link when not in main navigator", () => {
+  it("should not set a deferred navigation action when not in main navigator", () => {
     return expectSaga(saveNavigationStateSaga)
       .provide([
         [
@@ -21,10 +22,10 @@ describe("saveNavigationStateSaga", () => {
           }
         ]
       ])
-      .not.put.like({ action: { type: SET_DEEPLINK } })
+      .not.put.like({ action: { type: DEFER_TO_LOGIN } })
       .run();
   });
-  it("should set a deep link when in main navigator", () => {
+  it("should set a deferred navigation action when in main navigator", () => {
     const subRoute = {
       routeName: "Test",
       params: { myparam: true },
@@ -46,7 +47,7 @@ describe("saveNavigationStateSaga", () => {
           }
         ]
       ])
-      .put(setDeepLink(subRoute))
+      .put(deferToLogin(NavigationActions.navigate(subRoute)))
       .run();
   });
 });

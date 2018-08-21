@@ -34,7 +34,6 @@ import {
   MESSAGES_LOAD_REQUEST,
   NAVIGATE_TO_MESSAGE_DETAILS
 } from "../../store/actions/constants";
-import { setDeepLink } from "../../store/actions/deepLink";
 import {
   loadMessageFailure,
   loadMessagesCancel,
@@ -54,7 +53,6 @@ import {
   serviceByIdSelector,
   servicesByIdSelector
 } from "../../store/reducers/entities/services/servicesById";
-import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
 
 import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
@@ -135,16 +133,7 @@ export function* navigateToMessageDetailsSaga(
     params: { message, senderService }
   };
 
-  // FIXME: check this logic
-  const isPinValid: ReturnType<typeof isPinLoginValidSelector> = yield select(
-    isPinLoginValidSelector
-  );
-
-  if (isPinValid) {
-    yield put(NavigationActions.navigate(navigationPayload));
-  } else {
-    yield put(setDeepLink(navigationPayload));
-  }
+  yield put(NavigationActions.navigate(navigationPayload));
 }
 
 export function* watchNavigateToMessageDetailsSaga(

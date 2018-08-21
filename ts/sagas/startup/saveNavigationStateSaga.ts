@@ -1,17 +1,21 @@
-import { NavigationParams, NavigationStateRoute } from "react-navigation";
+import {
+  NavigationActions,
+  NavigationParams,
+  NavigationStateRoute
+} from "react-navigation";
 import { Effect } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import ROUTES from "../../navigation/routes";
 
-import { setDeepLink } from "../../store/actions/deepLink";
+import { deferToLogin } from "../../store/actions/deferred";
 import { navigationStateSelector } from "../../store/reducers/navigation";
 
 /**
- * Saves the navigation state in the deep link state so that when the app
- * goes through the initialization saga, the user gets sent back to the saved
- * navigation route.
- * Saving and restoring routes relies on the deep link mechanism.
+ * Saves the navigation state in a deferred navigation action so that when
+ * the app  goes through the initialization saga, the user gets sent back
+ * to the saved  navigation route.
+ * Saving and restoring routes relies on the deferred actions mechanism.
  */
 export function* saveNavigationStateSaga(): IterableIterator<Effect> {
   const navigationState: ReturnType<
@@ -24,11 +28,13 @@ export function* saveNavigationStateSaga(): IterableIterator<Effect> {
     // only save state when in Main navigator
     const mainSubRoute = currentRoute.routes[currentRoute.index];
     yield put(
-      setDeepLink({
-        routeName: mainSubRoute.routeName,
-        params: mainSubRoute.params,
-        key: mainSubRoute.key
-      })
+      deferToLogin(
+        NavigationActions.navigate({
+          routeName: mainSubRoute.routeName,
+          params: mainSubRoute.params,
+          key: mainSubRoute.key
+        })
+      )
     );
   }
 }

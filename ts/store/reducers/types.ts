@@ -7,7 +7,7 @@ import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
 import { ContentState } from "./content";
-import { DeepLinkState } from "./deepLink";
+import { DeferredActionsState } from "./deferred";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
@@ -32,7 +32,6 @@ export type GlobalState = Readonly<{
   appState: AppState;
   authentication: PersistedAuthenticationState;
   backendInfo: BackendInfoState;
-  deepLink: DeepLinkState;
   entities: EntitiesState;
   error: ErrorState;
   form: FormStateMap;
@@ -46,6 +45,7 @@ export type GlobalState = Readonly<{
   wallet: WalletState;
   preferences: PreferencesState;
   content: ContentState;
+  deferred: DeferredActionsState;
 }>;
 
 /**

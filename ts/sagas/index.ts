@@ -9,7 +9,7 @@ import { watchContentServiceLoadSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import walletSaga from "./wallet";
-import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
+import { watchDeferredActionsSaga } from "./watchDeferredActionsSaga";
 
 import { apiUrlPrefix } from "../config";
 
@@ -30,8 +30,8 @@ export default function* root(): Iterator<Effect> {
     call(walletSaga), // FIXME: move to startup: the wallet token gets fetched there
     call(backendInfoSaga),
     call(networkEventsListenerSaga, connectionMonitorParameters),
-    call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
-    call(watchContentServiceLoadSaga)
+    call(watchContentServiceLoadSaga),
+    call(watchDeferredActionsSaga)
   ]);
 }

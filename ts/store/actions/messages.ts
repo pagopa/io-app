@@ -66,6 +66,7 @@ export type MessagesActions =
   | MessagesLoadSuccess
   | MessagesLoadFailure
   | MessageLoadSuccess
+  | NavigateToMessageDetails
   | StartPayment;
 
 // Creators

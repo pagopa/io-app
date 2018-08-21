@@ -208,7 +208,13 @@ export const enum FetchRequestActions {
 // Extract keys from object and create a new union type
 export type FetchRequestActionsType = keyof typeof FetchRequestActions;
 
-export const SET_DEEPLINK: "SET_DEEPLINK" = "SET_DEEPLINK";
 export const CLEAR_DEEPLINK: "CLEAR_DEEPLINK" = "CLEAR_DEEPLINK";
 export const NAVIGATE_TO_DEEPLINK: "NAVIGATE_TO_DEEPLINK" =
   "NAVIGATE_TO_DEEPLINK";
+
+// Deferred actions.
+export const DEFER_TO_LOGIN: "DEFER_TO_LOGIN" = "DEFER_TO_LOGIN";
+export const PUSH_TO_DEFERRED_ACTIONS: "PUSH_TO_DEFERRED_ACTIONS" =
+  "PUSH_TO_DEFERRED_ACTIONS";
+export const CLEAR_DEFERRED_ACTIONS: "CLEAR_DEFERRED_ACTIONS" =
+  "CLEAR_DEFERRED_ACTIONS";

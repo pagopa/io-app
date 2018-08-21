@@ -7,29 +7,16 @@ import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { applicationChangeState } from "./store/actions/application";
-import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
+import { deferToLogin } from "./store/actions/deferred";
 import { ApplicationState } from "./store/actions/types";
-import { DeepLinkState } from "./store/reducers/deepLink";
-import {
-  isPinLoginValidSelector,
-  PinLoginState
-} from "./store/reducers/pinlogin";
-import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-
-type ReduxMappedProps = {
-  pinLoginState: PinLoginState;
-  deepLinkState: DeepLinkState;
-  isPinValid: boolean;
-};
 
 type DispatchProps = {
   applicationChangeState: typeof applicationChangeState;
-  setDeepLink: typeof setDeepLink;
-  navigateToDeepLink: typeof navigateToDeepLink;
+  deferToLogin: typeof deferToLogin;
 };
 
-type Props = ReduxMappedProps & DispatchProps;
+type Props = DispatchProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
@@ -45,9 +32,8 @@ class RootContainer extends React.PureComponent<Props> {
     if (!url) {
       return;
     }
-    const action = getNavigateActionFromDeepLink(url);
-    // immediately navigate to the resolved action
-    this.props.setDeepLink(action, true);
+
+    this.props.deferToLogin(getNavigateActionFromDeepLink(url));
   };
 
   public componentDidMount() {
@@ -74,26 +60,6 @@ class RootContainer extends React.PureComponent<Props> {
   //   return false;
   // }
 
-  public componentDidUpdate() {
-    // FIXME: the logic here is a bit weird: there is an event handler
-    //        (navigateToUrlHandler) that will dispatch a redux action for
-    //        setting a "deep link" in the redux state - in turn, the update
-    //        of the redux state triggers an update of the RootComponent that
-    //        dispatches a navigate action from componentDidUpdate - can't we
-    //        just listen for SET_DEEPLINK from a saga and dispatch the
-    //        navigate action from there?
-    // FIXME: how does this logic interacts with the logic that handles the deep
-    //        link in the startup saga?
-    const {
-      deepLinkState: { deepLink, immediate },
-      isPinValid
-    } = this.props;
-
-    if (immediate && deepLink && isPinValid) {
-      this.props.navigateToDeepLink(deepLink);
-    }
-  }
-
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -109,19 +75,12 @@ class RootContainer extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  pinLoginState: state.pinlogin,
-  deepLinkState: state.deepLink,
-  isPinValid: isPinLoginValidSelector(state)
-});
-
 const mapDispatchToProps = {
   applicationChangeState,
-  setDeepLink,
-  navigateToDeepLink
+  deferToLogin
 };
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(RootContainer);

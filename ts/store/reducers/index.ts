@@ -14,7 +14,7 @@ import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import contentReducer from "./content";
-import deepLinkReducer from "./deepLink";
+import deferredReducer from "./deferred";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
@@ -31,7 +31,7 @@ import walletReducer from "./wallet";
 export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
   storage: createSecureStorage(),
-  blacklist: ["deepLink"]
+  blacklist: ["deferred"]
 };
 
 /**
@@ -54,7 +54,6 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
-  deepLink: deepLinkReducer,
   loading: loadingReducer,
   error: errorReducer,
   form: formReducer as Reducer<FormStateMap, Action>,
@@ -63,6 +62,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   content: contentReducer,
   preferences: preferencesReducer,
   pinlogin: pinloginReducer,
+  deferred: deferredReducer,
 
   //
   // persisted state
