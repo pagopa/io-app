@@ -5,28 +5,19 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { entries, range, size } from "lodash";
 import { Left } from "native-base";
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  Item,
-  Text,
-  View
-} from "native-base";
+import { Body, Container, Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import GoBackButton from "../../components/GoBackButton";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import IconFont from "../../components/ui/IconFont";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import variables from "../../theme/variables";
 import { fixExpirationDate, fixPan } from "../../utils/input";
 
 type Props = Readonly<{
@@ -113,12 +104,7 @@ export class AddCardScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={__ => this.props.navigation.goBack()}
-            >
-              <IconFont name="io-back" size={variables.iconSize3} />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.addCardTitle")}</Text>

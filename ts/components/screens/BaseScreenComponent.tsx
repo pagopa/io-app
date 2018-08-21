@@ -1,4 +1,4 @@
-import { Body, Button, Container, Left, Right, Text } from "native-base";
+import { Body, Container, Left, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
@@ -9,6 +9,7 @@ import AppHeader from "../ui/AppHeader";
 
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import { ContextualHelp } from "../ContextualHelp";
+import GoBackButton from "../GoBackButton";
 
 interface ContextualHelpProps {
   title: string;
@@ -49,13 +50,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <AppHeader primary={this.props.primary}>
-          <Left>
-            {goBack && (
-              <Button transparent={true} onPress={goBack}>
-                <IconFont name="io-back" />
-              </Button>
-            )}
-          </Left>
+          {goBack && (
+            <Left>
+              <GoBackButton onPress={goBack} />
+            </Left>
+          )}
           <Body>
             <Text white={this.props.primary}>
               {headerTitle || DEFAULT_APPLICATION_NAME}

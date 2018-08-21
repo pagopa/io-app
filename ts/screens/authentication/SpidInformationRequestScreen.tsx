@@ -79,12 +79,15 @@ class SpidInformationRequestScreen extends React.PureComponent<Props> {
     );
   }
 }
+
+const isFormValidSelector = isValid(SPID_INFORMATION_FORM_NAME);
+
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   /**
    * Our form submit button is outside the `Form` itself so we need to use
    * this selector to check if the form is valid or not.
    */
-  isFormValid: isValid(SPID_INFORMATION_FORM_NAME)(state)
+  isFormValid: isFormValidSelector(state)
 });
 
 export default connect(mapStateToProps)(
