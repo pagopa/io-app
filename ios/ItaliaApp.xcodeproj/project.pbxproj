@@ -1397,7 +1397,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 4RV73SN38W;
 				HEADER_SEARCH_PATHS = (
@@ -1416,8 +1416,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.Italia;
 				PRODUCT_NAME = ItaliaApp;
-				PROVISIONING_PROFILE = "e5434620-126e-4d11-b48b-d365f1520910";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development it.teamdigitale.app.Italia";
+				PROVISIONING_PROFILE = "473575c8-0d7f-46b7-9919-d65a14d26d1c";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc it.teamdigitale.app.Italia";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1429,7 +1429,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 4RV73SN38W;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
