@@ -62,7 +62,8 @@ jobs:
           - v1-dependencies-
 
       # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive
+      - run: npm install --no-save yarn
+      - run: ./node_modules/.bin/yarn install --frozen-lockfile --no-progress --non-interactive
 
       # Save node cache
       - save_cache:
@@ -74,6 +75,7 @@ jobs:
       - run: yarn lint
 
       # Build app
+      - run: yarn generate:locales
       - run: yarn generate:api-definitions
       - run: yarn generate:pagopa-api-definitions
       - run: yarn tsc:noemit
