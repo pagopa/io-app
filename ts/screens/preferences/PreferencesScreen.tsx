@@ -76,14 +76,14 @@ class PreferencesScreen extends React.Component<Props> {
         spid_mobile_phone: untag(_.spid_mobile_phone)
       }))
       .getOrElse({
-        spid_email: I18n.t("remoteStates.notAvailable"),
-        spid_mobile_phone: I18n.t("remoteStates.notAvailable")
+        spid_email: I18n.t("global.remoteStates.notAvailable"),
+        spid_mobile_phone: I18n.t("global.remoteStates.notAvailable")
       });
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
       .map(_ => translateLocale(_[0]))
-      .getOrElse(I18n.t("remoteStates.notAvailable"));
+      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     return (
       <TopScreenComponent

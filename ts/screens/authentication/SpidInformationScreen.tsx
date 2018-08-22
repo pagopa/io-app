@@ -27,6 +27,7 @@ import {
 } from "../../components/helpers/withContextualHelp";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
@@ -152,7 +153,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
 export default connect()(
   withContextualHelp(
     SpidInformationScreen,
-    I18n.t("personal_data_processing.content"),
-    () => I18n.t("personal_data_processing.content")
+    I18n.t("profile.main.privacy.title"),
+    () => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
   )
 );

@@ -136,6 +136,16 @@ Il secondo passo è generare le definizioni dalle specifiche openapi:
 
 ```
 $ yarn generate:api-definitions
+$ yarn generate:pagopa-api-definitions
+```
+
+#### Generazione delle traduzioni
+
+Generiamo poi i dati delle traduzioni dai file YAML presenti
+nella directory `locales`:
+
+```
+$ yarn generate:locales
 ```
 
 #### Configurazione dell'app
@@ -247,15 +257,19 @@ Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react
 
 ### Internazionalizzazione
 
-L'applicazione utilizza [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) per il supporto multilingua.
+Per il supporto multilingua l'applicazione utilizza:
+
+* [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) per l'integrazione delle traduzioni con le preferenze dell'utente
+* Dei file YAML nella directory `locales`
+* Uno script di conversione da YAML a codice Typescript (`generate:locales`).
 
 Per aggiungere una nuova lingua è necessario:
 
-1. Creare un nuovo file all'interno della directory `locales` usando come nome `<langcode>.json` (Es: `es.json`)
-2. Copiare il contenuto di uno degli altri file `.json` già presenti
-3. Procedere con la traduzione
-4. Modificare il file `ts/i18n.ts` aggiungendo tra gli import e nella variabile `I18n.translations` la nuova lingua
-
+1. Creare una nuova directory sotto `locales` usando come nome il codice di lingua (Es: `es`).
+1. Copiare il contenuto dalla lingua di base (`en`).
+1. Procedere con la traduzione.
+1. Eseguire lo script di generazione del codice Typescript (`npm run generate:locales`).
+1. Modificare il file `ts/i18n.ts` aggiungendo la nuova lingua nella variabile `I18n.translations`.
 
 ### Gestione degli errori
 
