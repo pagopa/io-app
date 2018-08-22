@@ -62,6 +62,7 @@ jobs:
           - v1-dependencies-
 
       # Install node dependencies
+      - run: npm install -g yarn
       - run: yarn install --frozen-lockfile --no-progress --non-interactive
 
       # Save node cache
