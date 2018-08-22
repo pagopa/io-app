@@ -631,20 +631,14 @@
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#ab732ada08b18e060e3a53c6ecf67dc9258edfea"
 
-"@types/react-native-vector-icons@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.1.tgz#a9b2ee1a4b297b87a9917337aeee404c36fda8c2"
+"@types/react-native-vector-icons@^4.6.3":
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.3.tgz#eb0e487c1bfbd8c9c68a297eb03d494420bb5e6b"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native@*":
-  version "0.55.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.4.tgz#866005d86490e2fd60543b143b2a5ac208aa925b"
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-native@0.55.17":
+"@types/react-native@*", "@types/react-native@0.55.17":
   version "0.55.17"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.17.tgz#c3ac72096c3dfe26ff58cce820a1ba39c0026564"
   dependencies:
