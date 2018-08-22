@@ -9,6 +9,7 @@ import {
   setNativeExceptionHandler
 } from "react-native-exception-handler";
 import DeviceInfo from "react-native-device-info";
+import Mixpanel from "react-native-mixpanel";
 
 // Configure Mixpanel session
 Mixpanel.sharedInstanceWithToken(Config.MIXPANEL_TOKEN);
