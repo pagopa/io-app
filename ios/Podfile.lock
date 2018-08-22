@@ -53,7 +53,7 @@ PODS:
     - React
   - RNDeviceInfo (0.21.5):
     - React
-  - RNFS (2.9.12):
+  - RNFS (2.11.15):
     - React
   - RNI18n (2.0.12):
     - React

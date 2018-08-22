@@ -1,16 +1,12 @@
 import { Form } from "native-base";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
-import {
-  getTraslatedFormFieldPropertyValue,
-  renderNativeBaseInput,
-  validators
-} from "./utils";
+
+import I18n from "../../i18n";
+
+import { renderNativeBaseInput, validators } from "./utils";
 
 export const FORM_NAME = "spidInformation";
-const getCurrentFormFieldProperty = getTraslatedFormFieldPropertyValue(
-  FORM_NAME
-);
 
 /**
  * A form to collect the user email address
@@ -22,7 +18,7 @@ class SpidInformationForm extends React.Component<InjectedFormProps, never> {
         <Field
           name="email"
           component={renderNativeBaseInput}
-          placeholder={getCurrentFormFieldProperty("email")("placeholder")}
+          placeholder={I18n.t("forms.spidInformation.fields.email.placeholder")}
           validate={[validators.email]}
           showError={true}
           // TODO: Check wich type definition force us to disable tslint
