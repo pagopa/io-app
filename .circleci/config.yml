@@ -62,7 +62,7 @@ jobs:
           - v1-dependencies-
 
       # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive
+      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
       # Save node cache
       - save_cache:
