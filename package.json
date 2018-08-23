@@ -60,7 +60,7 @@
     "stacktrace-js": "^2.0.0",
     "tslib": "^1.9.3",
     "uuid": "^3.3.2",
-    "validator": "^10.2.0",
+    "validator": "^10.6.0",
     "whatwg-fetch": "git://github.com/github/fetch#141665b1477bb25ac1427b2cb3e05203453e30cb"
   },
   "devDependencies": {
@@ -79,7 +79,7 @@
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-mixpanel": "^0.1.0",
     "@types/react-native-push-notification": "^3.0.2",
-    "@types/react-native-vector-icons": "^4.6.1",
+    "@types/react-native-vector-icons": "^4.6.3",
     "@types/react-navigation": "^2.0.16",
     "@types/react-redux": "^5.0.20",
     "@types/react-test-renderer": "^16.0.2",
