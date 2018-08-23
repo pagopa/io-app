@@ -631,20 +631,14 @@
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#ab732ada08b18e060e3a53c6ecf67dc9258edfea"
 
-"@types/react-native-vector-icons@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.1.tgz#a9b2ee1a4b297b87a9917337aeee404c36fda8c2"
+"@types/react-native-vector-icons@^4.6.3":
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.3.tgz#eb0e487c1bfbd8c9c68a297eb03d494420bb5e6b"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native@*":
-  version "0.55.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.4.tgz#866005d86490e2fd60543b143b2a5ac208aa925b"
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-native@0.55.17":
+"@types/react-native@*", "@types/react-native@0.55.17":
   version "0.55.17"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.17.tgz#c3ac72096c3dfe26ff58cce820a1ba39c0026564"
   dependencies:
@@ -6226,9 +6220,9 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-native-camera@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.1.4.tgz#5a01be906507cc2f232405f903c52c9d99988dba"
+react-native-camera@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.2.0.tgz#fa93b39726d15bdbb02fac06f4a23957b0be403a"
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
@@ -6328,9 +6322,9 @@ react-native-popup-menu@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.14.0.tgz#8a11e4a78f76f5883fa5eb9d736f0ec2df8765ce"
 
-react-native-push-notification@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
+react-native-push-notification@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.1.tgz#99ce426e78e95788c298f73750cc4e68db04d7ab"
 
 react-native-qrcode-scanner@^1.0.1:
   version "1.0.1"
@@ -7986,9 +7980,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-validator@^10.1.0, validator@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-10.2.0.tgz#61d6b10c3d5c9f368c75c2ce8ca2b792522eaafa"
+validator@^10.1.0, validator@^10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-10.6.0.tgz#a9bdce685b3c3e8480e7ebbb9eb95c54cd9733b0"
 
 validator@^9.0.0:
   version "9.4.1"
