@@ -297,7 +297,7 @@ jobs:
       - run: npm run postinstall
 
       # Install pods
-      - run: cd ios && pod install --verbose
+      - run: cd ios && bundle exec pod install --verbose
 
       # Install Detox and ios-sim utils
       # see: https://github.com/wix/detox/
