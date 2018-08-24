@@ -20,8 +20,8 @@ defaults_android: &defaults_android
     - image: circleci/android:api-27-node8-alpha
   environment:
     - TERM: "dumb"
-    - ANDROID_SDK_BUILD_TOOLS_REVISION: "26.0.1"
-    - ANDROID_SDK_BUILD_API_LEVEL: "26"
+    - ANDROID_SDK_BUILD_TOOLS_REVISION: "25.0.1"
+    - ANDROID_SDK_BUILD_API_LEVEL: "25"
     - REACT_NATIVE_MAX_WORKERS: 1
 
 # macos builds
