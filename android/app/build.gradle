@@ -102,8 +102,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion System.getenv('ANDROID_SDK_BUILD_API_LEVEL') ? System.getenv('ANDROID_SDK_BUILD_API_LEVEL').toInteger() : 23
+    buildToolsVersion System.getenv('ANDROID_SDK_BUILD_TOOLS_REVISION') ? System.getenv('ANDROID_SDK_BUILD_TOOLS_REVISION') : "23.0.1"
 
     defaultConfig {
         applicationId "it.teamdigitale.app.italiaapp"
