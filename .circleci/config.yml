@@ -21,7 +21,8 @@ defaults_android: &defaults_android
   environment:
     - TERM: "dumb"
     - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
-    - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+    - ANDROID_SDK_BUILD_API_LEVEL: "23"
+    - REACT_NATIVE_MAX_WORKERS: 1
 
 # macos builds
 defaults_macos: &defaults_macos
@@ -161,16 +162,7 @@ jobs:
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
-    <<: *defaults
-
-    docker:
-      - image: circleci/android:api-27-node8-alpha
-
-    environment:
-      - TERM: "dumb"
-      - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
-      - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
-      - REACT_NATIVE_MAX_WORKERS: 1
+    <<: *defaults_android
 
     steps:
       # Restore workflow workspace
