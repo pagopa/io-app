@@ -2,13 +2,13 @@ PODS:
   - Mixpanel (3.2.3)
   - React (0.55.4):
     - React/Core (= 0.55.4)
-  - react-native-camera (1.1.4):
+  - react-native-camera (1.2.0):
     - React
-    - react-native-camera/RCT (= 1.1.4)
-    - react-native-camera/RN (= 1.1.4)
-  - react-native-camera/RCT (1.1.4):
+    - react-native-camera/RCT (= 1.2.0)
+    - react-native-camera/RN (= 1.2.0)
+  - react-native-camera/RCT (1.2.0):
     - React
-  - react-native-camera/RN (1.1.4):
+  - react-native-camera/RN (1.2.0):
     - React
   - react-native-config (0.11.5):
     - React
@@ -119,7 +119,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
   React: aa2040dbb6f317b95314968021bd2888816e03d5
-  react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
+  react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
   react-native-config: 408003951fd9d8b1dfd7ebf535f67c315f44d823
   react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
