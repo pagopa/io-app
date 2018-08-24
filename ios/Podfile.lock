@@ -1,5 +1,5 @@
 PODS:
-  - Mixpanel (3.2.3)
+  - Mixpanel (3.3.3)
   - React (0.55.4):
     - React/Core (= 0.55.4)
   - react-native-camera (1.2.0):
@@ -117,7 +117,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
+  Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
   React: aa2040dbb6f317b95314968021bd2888816e03d5
   react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
   react-native-config: 408003951fd9d8b1dfd7ebf535f67c315f44d823
