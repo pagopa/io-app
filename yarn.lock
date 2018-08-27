@@ -7973,9 +7973,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-validator@^10.1.0, validator@^10.6.0:
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-10.6.0.tgz#a9bdce685b3c3e8480e7ebbb9eb95c54cd9733b0"
+validator@^10.1.0, validator@^10.7.0:
+  version "10.7.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-10.7.0.tgz#2d6443badcf942c86c19dc3deac7b87c0bd9b60d"
 
 validator@^9.0.0:
   version "9.4.1"
