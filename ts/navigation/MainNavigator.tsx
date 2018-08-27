@@ -68,6 +68,18 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     paddingTop: 12,
     paddingBottom: 7
+  },
+  upsideShadow: {
+    // iOS shadow
+    shadowColor: variables.footerShadowColor,
+    shadowOffset: {
+      width: variables.footerShadowOffsetWidth,
+      height: variables.footerShadowOffsetHeight
+    },
+    shadowOpacity: variables.footerShadowOpacity,
+    shadowRadius: variables.footerShadowRadius,
+    // Android shadow
+    elevation: variables.footerElevation
   }
 });
 
@@ -123,7 +135,7 @@ const navigation = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: variables.brandPrimary,
       inactiveTintColor: variables.brandDarkGray,
-      style: styles.tabBarStyle
+      style: [styles.tabBarStyle, styles.upsideShadow]
     },
     animationEnabled: true,
     swipeEnabled: false,
