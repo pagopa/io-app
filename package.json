@@ -45,6 +45,7 @@
     "react-native-push-notification": "3.0.2",
     "react-native-qrcode-scanner": "^1.0.1",
     "react-native-sha256": "^1.0.1",
+    "react-native-splash-screen": "^3.1.1",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.11.2",
     "react-navigation-redux-helpers": "^2.0.5",

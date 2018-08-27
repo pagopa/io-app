@@ -17,7 +17,7 @@ defaults_js: &defaults_js
 defaults_android: &defaults_android
   <<: *defaults
   docker:
-    - image: circleci/android:api-27-node8-alpha
+    - image: circleci/android:api-23-node8-alpha
   environment:
     - TERM: "dumb"
     - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
