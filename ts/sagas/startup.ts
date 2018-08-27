@@ -1,4 +1,4 @@
-import { isNone } from "fp-ts/lib/Option";
+import { isNone, Option } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
@@ -9,7 +9,8 @@ import { navigateToMainNavigatorAction } from "../store/actions/navigation";
 import { resetProfileState } from "../store/actions/profile";
 import {
   sessionInfoSelector,
-  sessionTokenSelector
+  sessionTokenSelector,
+  walletTokenSelector
 } from "../store/reducers/authentication";
 import { deepLinkSelector } from "../store/reducers/deepLink";
 
@@ -40,6 +41,7 @@ import { watchApplicationActivitySaga } from "./startup/watchApplicationActivity
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { watchWalletSaga } from "./wallet";
 
 /**
  * Handles the application startup and the main application logic loop
@@ -131,6 +133,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   //
   // User is autenticated, session token is valid
   //
+
+  const walletToken: Option<string> = yield select(walletTokenSelector);
+  if (walletToken.isSome()) {
+    // the wallet token is available,
+    // proceed with starting the "watch wallet" saga
+    yield fork(watchWalletSaga, walletToken.value);
+  }
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
