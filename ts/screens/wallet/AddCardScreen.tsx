@@ -125,7 +125,11 @@ export class AddCardScreen extends React.Component<Props, State> {
           </Body>
         </AppHeader>
 
-        <ScrollView bounces={false} style={WalletStyles.whiteBg}>
+        <ScrollView
+          bounces={false}
+          style={WalletStyles.whiteBg}
+          keyboardShouldPersistTaps="handled"
+        >
           <Content scrollEnabled={false}>
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.holder")}
