@@ -27,6 +27,7 @@ import { WalletAPI } from "../api/wallet/wallet-api";
 import { pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
+  BACKEND_INFO_LOAD_SUCCESS,
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
   LOGOUT_SUCCESS,
@@ -512,7 +513,7 @@ function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
 
 function* watchWalletSaga(): Iterator<Effect> {
   while (true) {
-    yield take(SESSION_INFO_LOAD_SUCCESS);
+    yield take([SESSION_INFO_LOAD_SUCCESS, BACKEND_INFO_LOAD_SUCCESS]);
 
     const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
     yield call(fetchPagoPaToken, pagoPaClient);
