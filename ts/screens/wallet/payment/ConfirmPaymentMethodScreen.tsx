@@ -38,6 +38,7 @@ import {
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
+import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -49,8 +50,6 @@ import { feeExtractor } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { buildAmount } from "../../../utils/stringBuilder";
-import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
-
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -222,7 +221,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
             <View hspacer={true} />
-            <Button style={styles.child} block={true} cancel={true} onPress={this.props.showSummary}>
+            <Button
+              style={styles.child}
+              block={true}
+              cancel={true}
+              onPress={this.props.showSummary}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
