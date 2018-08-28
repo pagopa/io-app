@@ -38,6 +38,7 @@ import {
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
+import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -66,6 +67,7 @@ type ReduxMappedDispatchProps = Readonly<{
   pickPsp: () => void;
   requestCompletion: () => void;
   goBack: () => void;
+  showSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -219,7 +221,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
             <View hspacer={true} />
-            <Button style={styles.child} block={true} cancel={true}>
+            <Button
+              style={styles.child}
+              block={true}
+              cancel={true}
+              onPress={this.props.showSummary}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
@@ -251,7 +258,8 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
   requestCompletion: () => dispatch(paymentRequestCompletion()),
   goBack: () => dispatch(paymentRequestGoBack()),
-  pickPsp: () => dispatch(paymentRequestPickPsp())
+  pickPsp: () => dispatch(paymentRequestPickPsp()),
+  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
 export default connect(
