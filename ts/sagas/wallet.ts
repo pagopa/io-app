@@ -24,7 +24,6 @@ import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
-import { pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
@@ -517,8 +516,10 @@ function* fetchPagoPaToken(
   }
 }
 
-export function* watchWalletSaga(walletToken: string): Iterator<Effect> {
-  const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+export function* watchWalletSaga(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
   yield call(fetchPagoPaToken, pagoPaClient, walletToken);
 
   while (true) {

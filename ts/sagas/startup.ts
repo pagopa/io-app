@@ -1,4 +1,4 @@
-import { isNone, Option } from "fp-ts/lib/Option";
+import { isNone } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
@@ -9,12 +9,11 @@ import { navigateToMainNavigatorAction } from "../store/actions/navigation";
 import { resetProfileState } from "../store/actions/profile";
 import {
   sessionInfoSelector,
-  sessionTokenSelector,
-  walletTokenSelector
+  sessionTokenSelector
 } from "../store/reducers/authentication";
 import { deepLinkSelector } from "../store/reducers/deepLink";
 
-import { apiUrlPrefix } from "../config";
+import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 
 import { SagaCallReturnType } from "../types/utils";
 
@@ -31,6 +30,7 @@ import { updateInstallationSaga } from "./notifications";
 
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
+import { PagoPaClient } from "../api/pagopa";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -134,11 +134,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // User is autenticated, session token is valid
   //
 
-  const walletToken: Option<string> = yield select(walletTokenSelector);
-  if (walletToken.isSome()) {
+  if (maybeSessionInformation.isSome()) {
     // the wallet token is available,
     // proceed with starting the "watch wallet" saga
-    yield fork(watchWalletSaga, walletToken.value);
+    const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+    yield fork(
+      watchWalletSaga,
+      pagoPaClient,
+      maybeSessionInformation.value.walletToken
+    );
   }
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
