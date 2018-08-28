@@ -80,15 +80,17 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // FIXME: since it looks like we load the session info every
   //        time we get a session token, think about merging the
   //        two steps.
-  const maybeSessionInformation: ReturnType<
+  // tslint:disable-next-line: no-let
+  let maybeSessionInformation: ReturnType<
     typeof sessionInfoSelector
   > = yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
-    const maybeSessionInfo: SagaCallReturnType<
-      typeof loadSessionInformationSaga
-    > = yield call(loadSessionInformationSaga, backendClient.getSession);
-    if (maybeSessionInfo.isNone()) {
+    maybeSessionInformation = yield call(
+      loadSessionInformationSaga,
+      backendClient.getSession
+    );
+    if (maybeSessionInformation.isNone()) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield put(startApplicationInitialization);
