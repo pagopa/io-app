@@ -30,6 +30,7 @@ import { updateInstallationSaga } from "./notifications";
 
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
+import { NavigationActions } from "react-navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -175,6 +176,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   const deepLink: ReturnType<typeof deepLinkSelector> = yield select(
     deepLinkSelector
   );
+
+  // Remove the Pin screen from the navigation history.
+  yield put(NavigationActions.back());
+
   if (deepLink) {
     // If a deep link has been set, navigate to deep link...
     yield put(navigateToDeepLink(deepLink));

@@ -62,7 +62,7 @@ const navigator = createStackNavigator(
     [ROUTES.ONBOARDING]: {
       screen: OnboardingNavigator
     },
-    [ROUTES.PIN_LOGIN]: {
+    [ROUTES.PIN_LOGIN_NAVIGATOR]: {
       screen: PinNavigator
     },
     [ROUTES.MAIN]: {
