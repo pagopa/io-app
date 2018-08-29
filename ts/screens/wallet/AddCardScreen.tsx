@@ -18,7 +18,6 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { fixExpirationDate, fixPan } from "../../utils/input";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -53,7 +52,7 @@ const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
 const EMPTY_CARD_SECURITY_CODE = "";
 
-export class AddCardScreen extends React.Component<Props, State> {
+export default class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -63,16 +62,6 @@ export class AddCardScreen extends React.Component<Props, State> {
       holder: none
     };
   }
-
-  private onExpirationDateChange = (value: string) => {
-    const newValue: Option<string> = fixExpirationDate(value);
-    this.setState({ expirationDate: newValue });
-  };
-
-  private onPanChange = (value: string) => {
-    const newValue: Option<string> = fixPan(value);
-    this.setState({ pan: newValue });
-  };
 
   public render(): React.ReactNode {
     // list of cards to be displayed
@@ -122,13 +111,13 @@ export class AddCardScreen extends React.Component<Props, State> {
               icon="io-titolare"
               placeholder={I18n.t("wallet.dummyCard.values.holder")}
               inputProps={{
-                onChangeText: value => {
-                  this.setState({
-                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-                  });
-                },
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 autoCapitalize: "words"
+              }}
+              onChangeText={value => {
+                this.setState({
+                  holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+                });
               }}
             />
 
@@ -139,11 +128,16 @@ export class AddCardScreen extends React.Component<Props, State> {
               icon="io-carta"
               placeholder={I18n.t("wallet.dummyCard.values.pan")}
               inputProps={{
-                onChangeText: this.onPanChange,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 keyboardType: "numeric",
                 maxLength: 23
               }}
+              mask={"[0000] [0000] [0000] [0000] [999]"}
+              onChangeText={value =>
+                this.setState({
+                  pan: value !== EMPTY_CARD_PAN ? some(value) : none
+                })
+              }
             />
 
             <View spacer={true} />
@@ -154,12 +148,20 @@ export class AddCardScreen extends React.Component<Props, State> {
                   icon="io-calendario"
                   placeholder={I18n.t("wallet.dummyCard.values.expirationDate")}
                   inputProps={{
-                    onChangeText: this.onExpirationDateChange,
                     value: this.state.expirationDate.getOrElse(
                       EMPTY_CARD_EXPIRATION_DATE
                     ),
                     keyboardType: "numeric"
                   }}
+                  mask={"[00]{/}[00]"}
+                  onChangeText={value =>
+                    this.setState({
+                      pan:
+                        value !== EMPTY_CARD_EXPIRATION_DATE
+                          ? some(value)
+                          : none
+                    })
+                  }
                 />
               </Col>
               <Col style={styles.verticalSpacing} />
@@ -169,20 +171,19 @@ export class AddCardScreen extends React.Component<Props, State> {
                   icon="io-lucchetto"
                   placeholder={I18n.t("wallet.dummyCard.values.securityCode")}
                   inputProps={{
-                    onChangeText: value => {
-                      this.setState({
-                        securityCode:
-                          value !== EMPTY_CARD_SECURITY_CODE
-                            ? some(value)
-                            : none
-                      });
-                    },
                     value: this.state.securityCode.getOrElse(
                       EMPTY_CARD_SECURITY_CODE
                     ),
                     keyboardType: "numeric",
                     maxLength: 4,
                     secureTextEntry: true
+                  }}
+                  mask={"[0009]"}
+                  onChangeText={value => {
+                    this.setState({
+                      securityCode:
+                        value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
+                    });
                   }}
                 />
               </Col>
