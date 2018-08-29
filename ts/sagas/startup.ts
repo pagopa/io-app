@@ -13,7 +13,7 @@ import {
 } from "../store/reducers/authentication";
 import { deepLinkSelector } from "../store/reducers/deepLink";
 
-import { apiUrlPrefix } from "../config";
+import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 
 import { SagaCallReturnType } from "../types/utils";
 
@@ -31,6 +31,7 @@ import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
 import { NavigationRoute } from "react-navigation";
+import { PagoPaClient } from "../api/pagopa";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -42,6 +43,7 @@ import { watchApplicationActivitySaga } from "./startup/watchApplicationActivity
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { watchWalletSaga } from "./wallet";
 
 /**
  * Handles the application startup and the main application logic loop
@@ -80,15 +82,17 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // FIXME: since it looks like we load the session info every
   //        time we get a session token, think about merging the
   //        two steps.
-  const maybeSessionInformation: ReturnType<
+  // tslint:disable-next-line: no-let
+  let maybeSessionInformation: ReturnType<
     typeof sessionInfoSelector
   > = yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
-    const maybeSessionInfo: SagaCallReturnType<
-      typeof loadSessionInformationSaga
-    > = yield call(loadSessionInformationSaga, backendClient.getSession);
-    if (maybeSessionInfo.isNone()) {
+    maybeSessionInformation = yield call(
+      loadSessionInformationSaga,
+      backendClient.getSession
+    );
+    if (maybeSessionInformation.isNone()) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield put(startApplicationInitialization);
@@ -133,6 +137,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   //
   // User is autenticated, session token is valid
   //
+
+  // the wallet token is available,
+  // proceed with starting the "watch wallet" saga
+  const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+  yield fork(
+    watchWalletSaga,
+    pagoPaClient,
+    maybeSessionInformation.value.walletToken
+  );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
