@@ -50,7 +50,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       // FIXME: not that this creates a quick blue flash in case after restoring
       //        the app we don't ask a PIN
       yield put(navigateToBackgroundScreen);
-    } else if (lastState !== "active" && newApplicationState === "active") {
+    } else if (lastState === "background" && newApplicationState === "active") {
       // The app is coming back active after being in background
       if (timeElapsedMillis > backgroundActivityTimeoutMillis) {
         // If the app has been in background state for more than the timeout,
