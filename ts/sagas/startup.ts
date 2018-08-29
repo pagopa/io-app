@@ -30,7 +30,11 @@ import { updateInstallationSaga } from "./notifications";
 
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, NavigationState } from "react-navigation";
+import {
+  currentRouteSelector,
+  navigationStateSelector
+} from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -177,15 +181,14 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     deepLinkSelector
   );
 
-  // Remove the Pin screen from the navigation history.
-  yield put(NavigationActions.back());
+  const currentRoute = yield select(currentRouteSelector);
 
   if (deepLink) {
     // If a deep link has been set, navigate to deep link...
-    yield put(navigateToDeepLink(deepLink));
+    yield put(navigateToDeepLink(deepLink, currentRoute.key));
   } else {
     // ... otherwise to the MainNavigator
-    yield put(navigateToMainNavigatorAction);
+    yield put(navigateToMainNavigatorAction(currentRoute.key));
   }
 }
 

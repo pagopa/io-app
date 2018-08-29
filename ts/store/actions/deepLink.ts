@@ -43,10 +43,11 @@ export type NavigateToDeepLink = Readonly<{
 }>;
 
 export const navigateToDeepLink = (
-  navigationPayload: NavigationNavigateActionPayload
+  navigationPayload: NavigationNavigateActionPayload,
+  prevRouteKey: string | undefined
 ): NavigateToDeepLink => ({
   type: NAVIGATE_TO_DEEPLINK,
-  payload: navigationPayload
+  payload: { ...navigationPayload, key: prevRouteKey }
 });
 
 export type DeepLinkActions = SetDeepLink | ClearDeepLink;
