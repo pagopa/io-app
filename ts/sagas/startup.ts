@@ -136,16 +136,14 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // User is autenticated, session token is valid
   //
 
-  if (maybeSessionInformation.isSome()) {
-    // the wallet token is available,
-    // proceed with starting the "watch wallet" saga
-    const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-    yield fork(
-      watchWalletSaga,
-      pagoPaClient,
-      maybeSessionInformation.value.walletToken
-    );
-  }
+  // the wallet token is available,
+  // proceed with starting the "watch wallet" saga
+  const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+  yield fork(
+    watchWalletSaga,
+    pagoPaClient,
+    maybeSessionInformation.value.walletToken
+  );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
