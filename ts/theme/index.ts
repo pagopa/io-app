@@ -29,6 +29,7 @@ import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
 import topScreenComponentTheme from "./components/TopScreenComponent";
 import viewTheme from "./components/View";
+import textInputMaskTheme from "./components/TextInputMask";
 
 import { Theme } from "./types";
 

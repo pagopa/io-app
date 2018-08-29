@@ -158,6 +158,7 @@ export class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 maxLength: 23
               }}
+              mask={"[0000] [0000] [0000] [0000] [999]"}
             />
 
             <View spacer={true} />
@@ -172,8 +173,9 @@ export class AddCardScreen extends React.Component<Props, State> {
                     value: this.state.expirationDate.getOrElse(
                       EMPTY_CARD_EXPIRATION_DATE
                     ),
-                    keyboardType: "numeric"
+                    keyboardType: "numeric",
                   }}
+                  mask={"[00]{/}[00]"}
                 />
               </Col>
               <Col style={styles.verticalSpacing} />
