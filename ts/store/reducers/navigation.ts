@@ -29,7 +29,7 @@ const getCurrentRouteFromState = (route: NavigationState): NavigationState => {
 };
 
 export const currentRouteSelector = ({ nav }: GlobalState) =>
-  getCurrentRouteFromState(nav);
+  getCurrentRouteFromState(nav) as NavigationRoute;
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {

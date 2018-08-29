@@ -44,7 +44,7 @@ export type NavigateToDeepLink = Readonly<{
 
 export const navigateToDeepLink = (
   navigationPayload: NavigationNavigateActionPayload,
-  prevRouteKey: string | undefined
+  prevRouteKey?: string
 ): NavigateToDeepLink => ({
   type: NAVIGATE_TO_DEEPLINK,
   payload: { ...navigationPayload, key: prevRouteKey }

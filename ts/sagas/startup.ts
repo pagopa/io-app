@@ -30,11 +30,8 @@ import { updateInstallationSaga } from "./notifications";
 
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
-import { NavigationActions, NavigationState } from "react-navigation";
-import {
-  currentRouteSelector,
-  navigationStateSelector
-} from "../store/reducers/navigation";
+import { NavigationRoute } from "react-navigation";
+import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -181,7 +178,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     deepLinkSelector
   );
 
-  const currentRoute = yield select(currentRouteSelector);
+  const currentRoute: NavigationRoute = yield select(currentRouteSelector);
 
   if (deepLink) {
     // If a deep link has been set, navigate to deep link...
