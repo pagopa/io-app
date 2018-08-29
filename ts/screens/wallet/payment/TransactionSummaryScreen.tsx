@@ -13,22 +13,14 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  Left,
-  Text,
-  View
-} from "native-base";
+import { Body, Container, Content, Left, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import GoBackButton from "../../../components/GoBackButton";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../../i18n";
@@ -47,7 +39,6 @@ import {
   getRptId,
   isGlobalStateWithVerificaResponse
 } from "../../../store/reducers/wallet/payment";
-import variables from "../../../theme/variables";
 import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
@@ -124,9 +115,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
-              <IconFont name="io-back" size={variables.iconSize3} />
-            </Button>
+            <GoBackButton onPress={this.props.goBack} />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>

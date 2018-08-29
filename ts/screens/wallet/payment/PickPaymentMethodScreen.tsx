@@ -4,7 +4,6 @@
  */
 import {
   Body,
-  Button,
   Container,
   Content,
   H1,
@@ -16,10 +15,10 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import GoBackButton from "../../../components/GoBackButton";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import CardComponent from "../../../components/wallet/card";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -81,9 +80,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton onPress={this.props.goBack} />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.payWith.header")}</Text>

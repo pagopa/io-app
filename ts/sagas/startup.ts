@@ -31,6 +31,8 @@ import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
 import { PagoPaClient } from "../api/pagopa";
+import { NavigationRoute } from "react-navigation";
+import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -188,12 +190,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   const deepLink: ReturnType<typeof deepLinkSelector> = yield select(
     deepLinkSelector
   );
+
+  const currentRoute: NavigationRoute = yield select(currentRouteSelector);
+
   if (deepLink) {
     // If a deep link has been set, navigate to deep link...
-    yield put(navigateToDeepLink(deepLink));
+    yield put(navigateToDeepLink(deepLink, currentRoute.key));
   } else {
     // ... otherwise to the MainNavigator
-    yield put(navigateToMainNavigatorAction);
+    yield put(navigateToMainNavigatorAction(currentRoute.key));
   }
 }
 
