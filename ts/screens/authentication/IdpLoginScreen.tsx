@@ -1,16 +1,13 @@
-import { Body, Container, Left, Text } from "native-base";
+import { Body, Container, Left, Text, View } from "native-base";
 import * as React from "react";
-import { NavState, WebView } from "react-native";
+import { ActivityIndicator, NavState, StyleSheet, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import GoBackButton from "../../components/GoBackButton";
 import AppHeader from "../../components/ui/AppHeader";
-
 import * as config from "../../config";
-
 import I18n from "../../i18n";
-
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import {
@@ -21,8 +18,8 @@ import {
   LoggedOutWithIdp
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
 import { SessionToken } from "../../types/SessionToken";
-
 import { extractLoginResult } from "../../utils/login";
 
 type ReduxMappedProps = {
@@ -39,6 +36,19 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const LOGIN_BASE_URL = `${
   config.apiUrlPrefix
 }/login?authLevel=SpidL2&entityID=`;
+
+const styles = StyleSheet.create({
+  activityIndicatorContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000
+  }
+});
 
 const onNavigationStateChange = (
   onFailure: () => void,
@@ -102,6 +112,11 @@ const IdpLoginScreen: React.SFC<Props> = props => {
         javaScriptEnabled={true}
         startInLoadingState={true}
         onNavigationStateChange={navigationStateHandler}
+        renderLoading={() => (
+          <View style={styles.activityIndicatorContainer}>
+            <ActivityIndicator color={variables.brandPrimary} />
+          </View>
+        )}
       />
     </Container>
   );
