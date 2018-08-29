@@ -1,11 +1,11 @@
-import { Body, Button, Container, Left, Text } from "native-base";
+import { Body, Container, Left, Text } from "native-base";
 import * as React from "react";
 import { NavState, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import GoBackButton from "../../components/GoBackButton";
 import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
 
 import * as config from "../../config";
 
@@ -77,7 +77,6 @@ const IdpLoginScreen: React.SFC<Props> = props => {
     return null;
   }
   const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
-  const goBack = () => props.navigation.goBack();
 
   const navigationStateHandler = onNavigationStateChange(
     () => props.dispatch(loginFailure()),
@@ -88,9 +87,7 @@ const IdpLoginScreen: React.SFC<Props> = props => {
     <Container>
       <AppHeader>
         <Left>
-          <Button transparent={true} onPress={goBack} testID="back-button">
-            <IconFont name="io-back" />
-          </Button>
+          <GoBackButton testID="back-button" />
         </Left>
         <Body>
           <Text>
