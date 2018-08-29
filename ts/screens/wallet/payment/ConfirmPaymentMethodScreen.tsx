@@ -25,9 +25,9 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import GoBackButton from "../../../components/GoBackButton";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import IconFont from "../../../components/ui/IconFont";
 import CardComponent from "../../../components/wallet/card";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -103,9 +103,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton onPress={this.props.goBack} />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.ConfirmPayment.header")}</Text>
