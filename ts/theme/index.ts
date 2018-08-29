@@ -19,6 +19,7 @@ import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
 import listItemTheme from "./components/ListItem";
+import maskedInputTheme from "./components/MaskedInput";
 import messageComponent from "./components/MessageComponent";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import preferenceItemTheme from "./components/PreferenceItem";
@@ -29,7 +30,6 @@ import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
 import topScreenComponentTheme from "./components/TopScreenComponent";
 import viewTheme from "./components/View";
-import textInputMaskTheme from "./components/TextInputMask";
 
 import { Theme } from "./types";
 
@@ -109,6 +109,9 @@ const theme = (): Theme => {
     },
     "UIComponent.TopScreenComponent": {
       ...topScreenComponentTheme()
+    },
+    "UIComponent.MaskedInput": {
+      ...maskedInputTheme()
     }
   };
 
