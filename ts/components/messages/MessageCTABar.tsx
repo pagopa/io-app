@@ -67,10 +67,6 @@ export class MessageCTABar extends React.PureComponent<Props> {
     );
   }
 
-  private renderSeparator() {
-    return <View style={styles.separatorContainer} />;
-  }
-
   private renderPaymentCTA(
     paymentData: PaymentData,
     dispatchPaymentAction: () => void
@@ -102,9 +98,9 @@ export class MessageCTABar extends React.PureComponent<Props> {
           dispatchReminderAction &&
           this.renderDueDateCTA(dueDate, dispatchReminderAction)}
         {dueDate &&
+          dispatchReminderAction &&
           paymentData &&
-          dispatchPaymentAction &&
-          this.renderSeparator()}
+          dispatchPaymentAction && <View style={styles.separatorContainer} />}
         {paymentData !== undefined &&
           dispatchPaymentAction !== undefined &&
           this.renderPaymentCTA(paymentData, dispatchPaymentAction)}
