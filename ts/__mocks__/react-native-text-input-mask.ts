@@ -4,7 +4,7 @@
 import React from "react";
 
 class TextInputMask extends React.Component {
-  render() {
+  public render() {
     return null;
   }
 }
