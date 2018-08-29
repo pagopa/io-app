@@ -30,8 +30,8 @@ import { updateInstallationSaga } from "./notifications";
 
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
-import { PagoPaClient } from "../api/pagopa";
 import { NavigationRoute } from "react-navigation";
+import { PagoPaClient } from "../api/pagopa";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
