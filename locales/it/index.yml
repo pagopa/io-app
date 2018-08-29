@@ -384,6 +384,8 @@ messages:
   yesterday: ieri
   cta:
     pay: Paga € {{amount}}
+    reminder: Promemoria
+    reminderTitle: "Promemoria per: {{subject}}"
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
 messageDetails:
