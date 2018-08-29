@@ -223,14 +223,7 @@ const customVariables = Object.assign(materialVariables, {
   borderRadiusBase: 4,
 
   // Tabs
-  tabDefaultBg: "#FFFFFF",
-
-  // input (& TextInputMask)
-  inputHeightBase: 50,
-  inputColor: "#%C6F82",
-  get inputFontSize(): number {
-    return this.fontSize4;
-  }
+  tabDefaultBg: "#FFFFFF"
 });
 
 export default customVariables;
