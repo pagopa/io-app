@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { StatusBar } from "react-native";
+
 import { Button, Content, Text, View } from "native-base";
 
 import { connect } from "react-redux";
@@ -13,6 +15,7 @@ import variables from "../theme/variables";
 
 import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
+
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
 
@@ -117,6 +120,10 @@ class PinLoginScreen extends React.Component<Props> {
     };
     return (
       <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={variables.contentPrimaryBackground}
+        />
         <Content primary={true}>
           <View spacer={true} extralarge={true} />
           <Text white={true} alignCenter={true}>
