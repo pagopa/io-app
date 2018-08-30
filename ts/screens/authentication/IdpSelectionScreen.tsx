@@ -1,26 +1,23 @@
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  Left,
-  Text,
-  View
-} from "native-base";
+import { Button, Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+
 import * as config from "../../config";
+
 import I18n from "../../i18n";
+
 import { IdentityProvider } from "../../models/IdentityProvider";
+
+import ROUTES from "../../navigation/routes";
+
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
+
 import variables from "../../theme/variables";
 
 type ReduxMappedProps = {};
@@ -114,60 +111,50 @@ const styles = StyleSheet.create({
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-class IdpSelectionScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+const IdpSelectionScreen: React.SFC<Props> = props => {
+  const goBack = () => props.navigation.goBack();
 
-  private onIdpSelected(idp: IdentityProvider): void {
-    this.props.dispatch(idpSelected(idp));
-  }
+  const navigateToSpidInformationRequest = () =>
+    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  public render() {
-    return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Text>{I18n.t("authentication.idp_selection.headerTitle")}</Text>
-          </Body>
-        </AppHeader>
-        <Content noPadded={true} alternative={true}>
-          <View style={styles.subheader}>
-            <Image
-              source={require("../../../img/spid.png")}
-              style={styles.spidLogo}
-            />
-            <View spacer={true} />
-            <H1>{I18n.t("authentication.idp_selection.contentTitle")}</H1>
-          </View>
-          <View style={styles.gridContainer} testID="idps-view">
-            <IdpsGrid
-              idps={enabledIdps}
-              onIdpSelected={idp => this.onIdpSelected(idp)}
-            />
-            <View spacer={true} />
-            <Button
-              block={true}
-              light={true}
-              bordered={true}
-              onPress={_ => this.props.navigation.goBack()}
-            >
-              <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
-            </Button>
-          </View>
-        </Content>
-        <View footer={true}>
-          <Button block={true} transparent={true}>
-            <Text>{I18n.t("authentication.landing.nospid")}</Text>
+  const onIdpSelected = (idp: IdentityProvider) => {
+    props.dispatch(idpSelected(idp));
+    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+  };
+
+  return (
+    <BaseScreenComponent
+      goBack={goBack}
+      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+    >
+      <Content noPadded={true} alternative={true}>
+        <View style={styles.subheader}>
+          <Image
+            source={require("../../../img/spid.png")}
+            style={styles.spidLogo}
+          />
+          <View spacer={true} />
+          <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
+        </View>
+        <View style={styles.gridContainer} testID="idps-view">
+          <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
+          <View spacer={true} />
+          <Button block={true} light={true} bordered={true} onPress={goBack}>
+            <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
           </Button>
         </View>
-      </Container>
-    );
-  }
-}
+      </Content>
+      <View footer={true}>
+        <Button
+          block={true}
+          transparent={true}
+          onPress={navigateToSpidInformationRequest}
+        >
+          <Text>{I18n.t("authentication.landing.nospid")}</Text>
+        </Button>
+      </View>
+    </BaseScreenComponent>
+  );
+};
+
 export default connect()(IdpSelectionScreen);

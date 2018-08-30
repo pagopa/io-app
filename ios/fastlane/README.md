@@ -26,6 +26,11 @@ Runs all the tests
 fastlane ios register_new_device
 ```
 Register new device
+### ios refresh_profiles
+```
+fastlane ios refresh_profiles
+```
+
 ### ios test_build
 ```
 fastlane ios test_build

@@ -2,23 +2,15 @@
  * This screen presents a summary on the credit card after the user
  * inserted the data required to save a new card
  */
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  Left,
-  Text,
-  View
-} from "native-base";
+import { Body, Container, Content, H1, Left, Text, View } from "native-base";
 import * as React from "react";
 import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import GoBackButton from "../../components/GoBackButton";
 import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
@@ -60,13 +52,25 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
   }
 
   public render(): React.ReactNode {
+    const primaryButtonProps = {
+      block: true,
+      primary: true,
+      title: I18n.t("wallet.saveCard.save")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      light: true,
+      bordered: true,
+      onPress: this.goBack,
+      title: I18n.t("global.buttons.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.saveCard.header")}</Text>
@@ -95,20 +99,11 @@ class ConfirmSaveCardScreen extends React.Component<Props, State> {
             </Col>
           </Grid>
         </Content>
-        <View footer={true}>
-          <Button block={true} primary={true}>
-            <Text>{I18n.t("wallet.saveCard.save")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            bordered={true}
-            onPress={(): void => this.goBack()}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
+        <FooterWithButtons
+          leftButton={primaryButtonProps}
+          rightButton={secondaryButtonProps}
+          inlineHalf={true}
+        />
       </Container>
     );
   }

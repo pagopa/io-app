@@ -1,29 +1,21 @@
 import { Option } from "fp-ts/lib/Option";
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  H3,
-  Left,
-  Text,
-  View
-} from "native-base";
+import { Button, Content, H1, H3, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+
 import I18n from "../../i18n";
+
 import { FetchRequestActions } from "../../store/actions/constants";
-import { acceptTos } from "../../store/actions/onboarding";
+import { tosAcceptRequest } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
+
 import variables from "../../theme/variables";
 
 type ReduxMappedProps = {
@@ -53,77 +45,60 @@ const styles = StyleSheet.create({
 /**
  * A screen to show the ToS to the user.
  */
-class TosScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+const TosScreen: React.SFC<Props> = ({
+  profileUpsertError,
+  isAcceptingTos,
+  navigation,
+  dispatch
+}) => {
+  const isProfile = navigation.getParam("isProfile", false);
 
-  private acceptTos = () => {
-    this.props.dispatch(acceptTos());
-  };
-
-  private renderActivityIndicator(animating: boolean) {
-    return (
-      animating && (
-        <View style={styles.activityIndicatorContainer}>
-          <ActivityIndicator size={"large"} color={variables.brandPrimary} />
-        </View>
-      )
-    );
-  }
-
-  private renderErrors = () => {
-    const { profileUpsertError } = this.props;
-
-    return profileUpsertError.isSome() ? (
-      <View padder={true}>
-        <Text>{I18n.t("global.actions.retry")}</Text>
-      </View>
-    ) : null;
-  };
-
-  public render() {
-    const { isAcceptingTos } = this.props;
-
-    return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>
-          </Body>
-        </AppHeader>
-        <Content>
-          {this.renderActivityIndicator(isAcceptingTos)}
-          <H1>{I18n.t("onboarding.tos.contentTitle")}</H1>
-          <View spacer={true} extralarge={true} />
-          {this.renderErrors()}
-          <H3>{I18n.t("onboarding.tos.section1")}</H3>
-          <View spacer={true} />
-          <Text>{I18n.t("lipsum.medium")}</Text>
-          <View spacer={true} extralarge={true} />
-          <H3>{I18n.t("onboarding.tos.section2")}</H3>
-          <View spacer={true} />
-          <Text>{I18n.t("lipsum.medium")}</Text>
-        </Content>
+  return (
+    <BaseScreenComponent
+      goBack={() => navigation.goBack()}
+      headerTitle={
+        isProfile
+          ? I18n.t("profile.main.screenTitle")
+          : I18n.t("onboarding.tos.headerTitle")
+      }
+    >
+      <Content>
+        {isAcceptingTos && (
+          <View style={styles.activityIndicatorContainer}>
+            <ActivityIndicator size={"large"} color={variables.brandPrimary} />
+          </View>
+        )}
+        <H1>{I18n.t("onboarding.tos.contentTitle")}</H1>
+        <View spacer={true} extralarge={true} />
+        {/* FIXME: handle errors */}
+        {profileUpsertError.isSome() && (
+          <View padder={true}>
+            <Text>{I18n.t("global.actions.retry")}</Text>
+          </View>
+        )}
+        <H3>{I18n.t("onboarding.tos.section1")}</H3>
+        <View spacer={true} />
+        <Text>{I18n.t("lipsum.medium")}</Text>
+        <View spacer={true} extralarge={true} />
+        <H3>{I18n.t("onboarding.tos.section2")}</H3>
+        <View spacer={true} />
+        <Text>{I18n.t("lipsum.medium")}</Text>
+      </Content>
+      {isProfile === false && (
         <View footer={true}>
           <Button
             block={true}
             primary={true}
             disabled={isAcceptingTos}
-            onPress={_ => this.acceptTos()}
+            onPress={() => dispatch(tosAcceptRequest)}
           >
             <Text>{I18n.t("onboarding.tos.continue")}</Text>
           </Button>
         </View>
-      </Container>
-    );
-  }
-}
+      )}
+    </BaseScreenComponent>
+  );
+};
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isAcceptingTos: createLoadingSelector([FetchRequestActions.TOS_ACCEPT])(

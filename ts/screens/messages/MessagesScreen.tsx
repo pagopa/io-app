@@ -1,6 +1,12 @@
-import { Body, Container, Content, H1, Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
-import { FlatList, RefreshControl, RefreshControlProps } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  RefreshControlProps,
+  StyleSheet
+} from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -9,8 +15,6 @@ import {
 import { connect } from "react-redux";
 
 import MessageComponent from "../../components/messages/MessageComponent";
-import ScreenHeader from "../../components/ScreenHeader";
-import AppHeader from "../../components/ui/AppHeader";
 
 import I18n from "../../i18n";
 
@@ -26,7 +30,7 @@ import variables from "../../theme/variables";
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-import { DEFAULT_APPLICATION_NAME } from "../../config";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
@@ -38,12 +42,13 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type IMessageDetails = Readonly<{
-  item: Readonly<MessageWithContentPO>;
-  index: number;
-}>;
-
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 /**
  * This screen show the messages to the authenticated user.
@@ -63,16 +68,13 @@ class MessagesScreen extends React.Component<Props> {
     }
   }
 
-  private refreshList() {
-    this.props.dispatch(loadMessages());
-  }
+  private refreshList = () => this.props.dispatch(loadMessages());
 
-  public renderItem = (messageDetails: IMessageDetails) => {
+  private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
     return (
       <MessageComponent
-        id={messageDetails.item.id}
+        message={info.item}
         navigation={this.props.navigation}
-        senderServiceId={messageDetails.item.sender_service_id}
       />
     );
   };
@@ -80,49 +82,41 @@ class MessagesScreen extends React.Component<Props> {
   private refreshControl(): React.ReactElement<RefreshControlProps> {
     return (
       <RefreshControl
-        onRefresh={() => this.refreshList()}
+        onRefresh={this.refreshList}
         refreshing={this.props.isLoadingMessages}
         colors={[variables.brandPrimary]}
       />
     );
   }
 
+  public keyExtractor = ({ id }: MessageWithContentPO) => id;
+
   public render() {
     return (
-      <Container>
-        <AppHeader>
-          <Body>
-            <Text>{DEFAULT_APPLICATION_NAME}</Text>
-          </Body>
-        </AppHeader>
-        <Content>
-          <View>
-            <ScreenHeader
-              heading={<H1>{I18n.t("messages.contentTitle")}</H1>}
-              icon={require("../../../img/icons/message-icon.png")}
-            />
-            <View spacer={true} large={true} />
-            <View>
-              <FlatList
-                alwaysBounceVertical={false}
-                scrollEnabled={true}
-                data={this.props.messages}
-                renderItem={this.renderItem}
-                keyExtractor={item => item.id}
-                refreshControl={this.refreshControl()}
-              />
-            </View>
-          </View>
-        </Content>
-      </Container>
+      <TopScreenComponent
+        title={I18n.t("messages.contentTitle")}
+        icon={require("../../../img/icons/message-icon.png")}
+      >
+        <View style={styles.container}>
+          <FlatList
+            scrollEnabled={true}
+            data={this.props.messages}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            refreshControl={this.refreshControl()}
+          />
+        </View>
+      </TopScreenComponent>
     );
   }
 }
 
+const loadingMessagesSelector = createLoadingSelector([
+  FetchRequestActions.MESSAGES_LOAD
+]);
+
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
-    state
-  ),
+  isLoadingMessages: loadingMessagesSelector(state),
   messages: orderedMessagesSelector(state),
   services: state.entities.services
 });

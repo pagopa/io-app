@@ -8,20 +8,20 @@ import servicesAllIdsReducer, { ServicesAllIdsState } from "./servicesAllIds";
 
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
 import {
-  servicesByOrganizationFiscalCodeReducer,
-  ServicesByOrganizationFiscalCodeState
+  serviceIdsByOrganizationFiscalCodeReducer,
+  ServiceIdsByOrganizationFiscalCodeState
 } from "./servicesByOrganizationFiscalCode";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
   allIds: ServicesAllIdsState;
-  byOrgFiscalCode: ServicesByOrganizationFiscalCodeState;
+  byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
 }>;
 
 const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
   allIds: servicesAllIdsReducer,
-  byOrgFiscalCode: servicesByOrganizationFiscalCodeReducer
+  byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer
 });
 
 export default reducer;

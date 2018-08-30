@@ -2,7 +2,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
-import { makeReactNativeRule } from ".";
+import { makeReactNativeRule } from "./utils";
 
 function rule() {
   return (

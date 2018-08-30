@@ -28,6 +28,7 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import AppHeader from "../../../components/ui/AppHeader";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -166,6 +167,19 @@ class ScanQrCodeScreen extends React.Component<Props, never> {
     if (!this.props.valid) {
       return null;
     }
+    const primaryButtonProps = {
+      block: true,
+      primary: true,
+      onPress: () => this.props.insertDataManually(),
+      title: I18n.t("wallet.QRtoPay.setManually")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      light: true,
+      onPress: () => this.props.goBack(),
+      title: I18n.t("wallet.cancel")
+    };
 
     return (
       <Container style={styles.white}>
@@ -231,19 +245,11 @@ class ScanQrCodeScreen extends React.Component<Props, never> {
             }
           />
         </ScrollView>
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={() => this.props.insertDataManually()}
-          >
-            <Text>{I18n.t("wallet.QRtoPay.setManually")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button block={true} light={true} onPress={() => this.props.goBack()}>
-            <Text>{I18n.t("wallet.cancel")}</Text>
-          </Button>
-        </View>
+        <FooterWithButtons
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineOneThird={true}
+        />
       </Container>
     );
   }

@@ -7,6 +7,7 @@ import { values } from "lodash";
 import { createSelector } from "reselect";
 import { Wallet } from "../../../types/pagopa";
 import {
+  PAYMENT_UPDATE_PSP_IN_STATE,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   WALLETS_FETCHED
@@ -88,6 +89,24 @@ const reducer = (
     return {
       ...state,
       favoriteWalletId: action.payload
+    };
+  }
+  // TODO: temporary, until the integration with pagoPA
+  // (then, the psp will be updated on the server side,
+  // and, by fetching the existing cards the psp will be
+  // automatically updated)
+  if (action.type === PAYMENT_UPDATE_PSP_IN_STATE) {
+    const newWallet = {
+      ...state.list[action.walletId],
+      idPsp: action.payload.id,
+      psp: action.payload
+    };
+    return {
+      ...state,
+      list: {
+        ...state.list,
+        [action.walletId]: newWallet
+      }
     };
   }
   return state;

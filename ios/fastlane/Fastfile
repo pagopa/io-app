@@ -39,10 +39,10 @@ platform :ios do
   end
 
   # A helper lane for refreshing provisioning profiles.
-  private_lane :refresh_profiles do
-    match(
-      type: "development",
-      force: true)
+  lane :refresh_profiles do
+    # match(
+    #   type: "development",
+    #   force: true)
     match(
       type: "adhoc",
       force: true)
@@ -79,7 +79,7 @@ platform :ios do
       clean: true,
       export_method: "ad-hoc",
       workspace: "ItaliaApp.xcworkspace",
-      # sdk: "iphoneos8.4",
+      # sdk: "iphoneos8.4"
     )
   end
 

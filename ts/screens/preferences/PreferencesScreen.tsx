@@ -1,6 +1,5 @@
-import { Body, Container, Content, H1, List, Text, View } from "native-base";
+import { Content, List } from "native-base";
 import * as React from "react";
-import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -17,8 +16,8 @@ import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
-import ScreenHeader from "../../components/ScreenHeader";
-import AppHeader from "../../components/ui/AppHeader";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
@@ -60,6 +59,15 @@ function translateLocale(locale: string): string {
  */
 class PreferencesScreen extends React.Component<Props> {
   public render() {
+    const help =
+      I18n.currentLocale() === "en"
+        ? require("../../help/PREFERENCES_HOME.en")
+        : require("../../help/PREFERENCES_HOME.it");
+    const contextualHelp = {
+      title: help.title,
+      body: () => <Markdown>{help.body}</Markdown>
+    };
+
     const maybeProfile = this.props.maybeProfile;
 
     const profileData = maybeProfile
@@ -68,67 +76,53 @@ class PreferencesScreen extends React.Component<Props> {
         spid_mobile_phone: untag(_.spid_mobile_phone)
       }))
       .getOrElse({
-        spid_email: I18n.t("remoteStates.notAvailable"),
-        spid_mobile_phone: I18n.t("remoteStates.notAvailable")
+        spid_email: I18n.t("global.remoteStates.notAvailable"),
+        spid_mobile_phone: I18n.t("global.remoteStates.notAvailable")
       });
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
       .map(_ => translateLocale(_[0]))
-      .getOrElse(I18n.t("remoteStates.notAvailable"));
+      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     return (
-      <Container>
-        <AppHeader>
-          <Body>
-            <Text>{DeviceInfo.getApplicationName()}</Text>
-          </Body>
-        </AppHeader>
-
+      <TopScreenComponent
+        title={I18n.t("preferences.title")}
+        icon={require("../../../img/icons/gears.png")}
+        subtitle={I18n.t("preferences.subtitle")}
+        contextualHelp={contextualHelp}
+      >
         <Content>
-          <View>
-            <ScreenHeader
-              heading={<H1>{I18n.t("preferences.title")}</H1>}
-              icon={require("../../../img/icons/gears.png")}
+          <List>
+            <PreferenceItem
+              kind="action"
+              title={I18n.t("preferences.list.services")}
+              valuePreview={I18n.t("preferences.list.services_description")}
+              onClick={() =>
+                this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
+              }
             />
-
-            <Text>{I18n.t("preferences.subtitle")}</Text>
-            <Text link={true}>{I18n.t("preferences.moreLinkText")}</Text>
-
-            <View spacer={true} />
-            <View>
-              <List>
-                <PreferenceItem
-                  kind="action"
-                  title={I18n.t("preferences.list.services")}
-                  valuePreview={I18n.t("preferences.list.services_description")}
-                  onClick={() =>
-                    this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
-                  }
-                />
-                <PreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.email")}
-                  icon="io-email"
-                  valuePreview={profileData.spid_email}
-                />
-                <PreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.mobile_phone")}
-                  icon="io-phone-number"
-                  valuePreview={profileData.spid_mobile_phone}
-                />
-                <PreferenceItem
-                  kind="value"
-                  title={I18n.t("preferences.list.language")}
-                  icon="io-languages"
-                  valuePreview={languages}
-                />
-              </List>
-            </View>
-          </View>
+            <PreferenceItem
+              kind="value"
+              title={I18n.t("preferences.list.email")}
+              icon="io-email"
+              valuePreview={profileData.spid_email}
+            />
+            <PreferenceItem
+              kind="value"
+              title={I18n.t("preferences.list.mobile_phone")}
+              icon="io-phone-number"
+              valuePreview={profileData.spid_mobile_phone}
+            />
+            <PreferenceItem
+              kind="value"
+              title={I18n.t("preferences.list.language")}
+              icon="io-languages"
+              valuePreview={languages}
+            />
+          </List>
         </Content>
-      </Container>
+      </TopScreenComponent>
     );
   }
 }

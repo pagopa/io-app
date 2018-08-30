@@ -12,13 +12,21 @@ import {
 export type SetDeepLink = Readonly<{
   type: typeof SET_DEEPLINK;
   payload: NavigationNavigateActionPayload;
+  immediate: boolean;
 }>;
 
+/**
+ * Saves the deep link to navigate to.
+ *
+ * When immediate is true, the app will immediately navigate to the route.
+ */
 export const setDeepLink = (
-  navigationPayload: NavigationNavigateActionPayload
+  navigationPayload: NavigationNavigateActionPayload,
+  immediate: boolean = false
 ): SetDeepLink => ({
   type: SET_DEEPLINK,
-  payload: navigationPayload
+  payload: navigationPayload,
+  immediate
 });
 
 export type ClearDeepLink = Readonly<{
@@ -35,10 +43,11 @@ export type NavigateToDeepLink = Readonly<{
 }>;
 
 export const navigateToDeepLink = (
-  navigationPayload: NavigationNavigateActionPayload
+  navigationPayload: NavigationNavigateActionPayload,
+  prevRouteKey?: string
 ): NavigateToDeepLink => ({
   type: NAVIGATE_TO_DEEPLINK,
-  payload: navigationPayload
+  payload: { ...navigationPayload, key: prevRouteKey }
 });
 
 export type DeepLinkActions = SetDeepLink | ClearDeepLink;

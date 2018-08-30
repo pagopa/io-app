@@ -13,21 +13,14 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  Left,
-  Text,
-  View
-} from "native-base";
+import { Body, Container, Content, Left, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import GoBackButton from "../../../components/GoBackButton";
 import AppHeader from "../../../components/ui/AppHeader";
-import IconFont from "../../../components/ui/IconFont";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../../i18n";
@@ -46,7 +39,6 @@ import {
   getRptId,
   isGlobalStateWithVerificaResponse
 } from "../../../store/reducers/wallet/payment";
-import variables from "../../../theme/variables";
 import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
@@ -99,17 +91,31 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
     if (!this.props.valid) {
       return null;
     }
+
     const amount = AmountInEuroCentsFromNumber.encode(this.props.initialAmount);
     const updatedAmount = AmountInEuroCentsFromNumber.encode(
       this.props.currentAmount
     );
+
+    const primaryButtonProps = {
+      block: true,
+      primary: true,
+      onPress: () => this.props.confirmSummary(),
+      title: I18n.t("wallet.continue")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      light: true,
+      onPress: () => this.props.goBack(),
+      title: I18n.t("wallet.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
-              <IconFont name="io-back" size={variables.iconSize3} />
-            </Button>
+            <GoBackButton onPress={this.props.goBack} />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>
@@ -136,30 +142,19 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
             <View spacer={true} />
           </View>
         </Content>
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={() => this.props.confirmSummary()}
-          >
-            <Text>{I18n.t("wallet.continue")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            onPress={(): void => this.props.goBack()}
-          >
-            <Text>{I18n.t("wallet.cancel")}</Text>
-          </Button>
-        </View>
+        <FooterWithButtons
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineHalf={true}
+        />
       </Container>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  getPaymentStep(state) === "PaymentStateSummary" &&
+  (getPaymentStep(state) === "PaymentStateSummary" ||
+    getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
   isGlobalStateWithVerificaResponse(state)
     ? {
         valid: true,

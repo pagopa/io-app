@@ -2,22 +2,17 @@
  * The root saga that forks and includes all the other sagas.
  */
 import { networkEventsListenerSaga } from "react-native-offline";
-import { all, Effect, fork } from "redux-saga/effects";
+import { all, call, Effect } from "redux-saga/effects";
 
-import authenticationSaga from "./authentication";
 import backendInfoSaga from "./backendInfo";
-import { contentSaga } from "./content";
-import deepLink from "./deepLink";
-import mainSaga from "./main";
-import messagesSaga from "./messages";
-import notificationsSaga from "./notifications";
-import onboardingSaga from "./onboarding";
-import pinLoginSaga from "./pinlogin";
-import pinSetSaga from "./pinset";
-import preferencesSaga from "./preferences";
-import profileSaga from "./profile";
-import startupSaga from "./startup";
+import {
+  watchContentOrganizationLoadSaga,
+  watchContentServiceLoadSaga
+} from "./contentLoaders";
+import { loadSystemPreferencesSaga } from "./preferences";
+import { startupSaga } from "./startup";
 import walletSaga from "./wallet";
+import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 import { apiUrlPrefix } from "../config";
 
@@ -34,20 +29,13 @@ const connectionMonitorParameters = {
 
 export default function* root(): Iterator<Effect> {
   yield all([
-    fork(authenticationSaga),
-    fork(notificationsSaga),
-    fork(pinSetSaga),
-    fork(onboardingSaga),
-    fork(pinLoginSaga),
-    fork(mainSaga),
-    fork(messagesSaga),
-    fork(startupSaga),
-    fork(profileSaga),
-    fork(walletSaga),
-    fork(backendInfoSaga),
-    fork(networkEventsListenerSaga, connectionMonitorParameters),
-    fork(deepLink),
-    fork(preferencesSaga),
-    fork(contentSaga)
+    call(startupSaga),
+    call(walletSaga), // FIXME: move to startup: the wallet token gets fetched there
+    call(backendInfoSaga),
+    call(networkEventsListenerSaga, connectionMonitorParameters),
+    call(watchNavigateToDeepLinkSaga),
+    call(loadSystemPreferencesSaga),
+    call(watchContentOrganizationLoadSaga),
+    call(watchContentServiceLoadSaga)
   ]);
 }
