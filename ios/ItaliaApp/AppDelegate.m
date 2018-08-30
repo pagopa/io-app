@@ -12,6 +12,8 @@
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTLinkingManager.h>
 
+#import "RNSplashScreen.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
@@ -38,6 +40,10 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
+  [RNSplashScreen show];
+
   return YES;
 }
 
