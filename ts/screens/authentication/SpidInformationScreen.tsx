@@ -21,12 +21,12 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
+import GoBackButton from "../../components/GoBackButton";
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
 import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -49,10 +49,6 @@ const styles = StyleSheet.create({
 });
 
 class SpidInformationScreen extends React.Component<Props, never> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
-
   private getValueContent(value: string, content: string) {
     return (
       <Row style={styles.row}>
@@ -78,9 +74,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("authentication.spid_information.headerTitle")}</Text>
@@ -136,11 +130,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={(): void => this.browseToLink()}
-          >
+          <Button block={true} primary={true} onPress={this.browseToLink}>
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
           </Button>
         </View>
