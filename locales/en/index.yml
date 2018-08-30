@@ -56,8 +56,7 @@ profile:
     upsert: Error creating or updating the profile
   main:
     screenTitle: Profile
-    screenSubtitle: Here you will find information and data related to your identity
-      and your personal data.
+    screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     privacy:
       title: Privacy
@@ -68,8 +67,7 @@ profile:
       description: Review Terms & Conditions of the app
     mainPrivacy:
       screenTitle: Privacy
-      screenSubtitle: Here you will find information and data related to your identity
-        and your personal data.
+      screenSubtitle: Here you will find information related to your personal data.
       privacyPolicy:
         title: Privacy policy
         description: review accepted privacy terms
