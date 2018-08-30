@@ -69,7 +69,7 @@ profile:
       description: Rivedi i termini e le condizioni d'uso dell'app
     mainPrivacy:
       screenTitle: Privacy
-      screenSubtitle: Qui trovi informazioni legati ai
+      screenSubtitle: Qui trovi informazioni legate ai
         tuoi dati personali.
       privacyPolicy:
         title: Privacy policy
