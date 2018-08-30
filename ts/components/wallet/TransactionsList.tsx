@@ -122,7 +122,7 @@ class TransactionsList extends React.Component<Props> {
       return (
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <View spacer={true} />
-          <H3>{I18n.t("wallet.noTransactions")}</H3>
+          <H3>{I18n.t("wallet.noneTransactions")}</H3>
           <View spacer={true} />
           <Text>
             {I18n.t("wallet.noTransactionsDetails")}
