@@ -35,11 +35,19 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
+  type: "masked";
   label: string;
   icon: string;
   placeholder: string;
   inputProps: TextInputProps;
-  mask?: string;
+  mask: string;
+  onChangeText: (formatted: string, expected: string) => void;
+}> | Readonly<{
+  type: "text";
+  label: string;
+  icon: string;
+  placeholder: string;
+  inputProps: TextInputProps;
   onChangeText: (value: string) => void;
 }>;
 
@@ -56,7 +64,7 @@ export class LabelledItem extends React.Component<Props> {
             color={variables.brandDarkGray}
             name={this.props.icon}
           />
-          {this.props.mask ? (
+          {this.props.type === "masked" ? (
             <MaskedInput
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
