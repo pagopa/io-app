@@ -11,6 +11,8 @@ import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.vonovak.AddCalendarEventPackage;
+import com.horcrux.svg.SvgPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -38,6 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNTextInputMaskPackage(),
             new SplashScreenReactPackage(),
+            new AddCalendarEventPackage(),
+            new SvgPackage(),
             new ReactNativeExceptionHandlerPackage(),
             new RNCameraPackage(),
             new VectorIconsPackage(),

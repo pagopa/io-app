@@ -1,9 +1,10 @@
-import * as React from "react";
-
+import { fromNullable } from "fp-ts/lib/Option";
 import { DateFromISOString } from "io-ts-types";
-import { Button, Icon, Left, ListItem, Right, Text, View } from "native-base";
+import { Left, ListItem, Right, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
+import * as React from "react";
+import * as AddCalendarEvent from "react-native-add-calendar-event";
 import {
   NavigationInjectedProps,
   NavigationScreenProp,
@@ -12,9 +13,8 @@ import {
 import { connect } from "react-redux";
 
 import I18n from "../../i18n";
-
 import ROUTES from "../../navigation/routes";
-
+import { ParamType as MessageDetailsScreenParam } from "../../screens/messages/MessageDetailsScreen";
 import { ReduxProps } from "../../store/actions/types";
 import {
   paymentRequestMessage,
@@ -22,16 +22,11 @@ import {
 } from "../../store/actions/wallet/payment";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
-
-import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import {
-  formatPaymentAmount,
-  getRptIdAndAmountFromMessage
-} from "../../utils/payment";
-
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-
-import { ParamType as MessageDetailsScreenParam } from "../../screens/messages/MessageDetailsScreen";
+import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { formatDateAsReminder } from "../../utils/dates";
+import { getRptIdAndAmountFromMessage } from "../../utils/payment";
+import { MessageCTABar } from "./MessageCTABar";
 
 interface ReduxInjectedProps {
   serviceByIdMap: ServicesByIdState;
@@ -57,11 +52,25 @@ class MessageComponent extends React.Component<Props> {
       id,
       subject,
       created_at,
+      due_date,
       payment_data,
       sender_service_id
     } = message;
 
     const senderService = this.props.serviceByIdMap[sender_service_id];
+
+    // Create an action that open the Calendar to let the user add an event
+    const dispatchReminderAction = fromNullable(due_date)
+      .map(_ => () => {
+        return AddCalendarEvent.presentEventCreatingDialog({
+          title: I18n.t("messages.cta.reminderTitle", {
+            subject: message.subject
+          }),
+          startDate: formatDateAsReminder(_),
+          allDay: true
+        });
+      })
+      .toUndefined();
 
     const rptIdAndAmount = getRptIdAndAmountFromMessage(
       this.props.serviceByIdMap,
@@ -83,6 +92,7 @@ class MessageComponent extends React.Component<Props> {
       const params: MessageDetailsScreenParam = {
         message,
         senderService,
+        dispatchReminderAction,
         dispatchPaymentAction
       };
 
@@ -101,7 +111,7 @@ class MessageComponent extends React.Component<Props> {
 
     return (
       <ListItem key={id} onPress={handleOnPress}>
-        <View padded={payment_data !== undefined}>
+        <View padded={payment_data !== undefined || due_date !== undefined}>
           <Left>
             <Text leftAlign={true} alternativeBold={true}>
               {senderServiceLabel}
@@ -110,19 +120,14 @@ class MessageComponent extends React.Component<Props> {
           </Left>
           <Right>
             <Text formatDate={true}>{uiCreatedAt}</Text>
-            <Icon name="chevron-right" />
           </Right>
         </View>
-        {payment_data !== undefined &&
-          dispatchPaymentAction !== undefined && (
-            <Button block={true} small={true} onPress={dispatchPaymentAction}>
-              <Text>
-                {I18n.t("messages.cta.pay", {
-                  amount: formatPaymentAmount(payment_data.amount)
-                })}
-              </Text>
-            </Button>
-          )}
+        <MessageCTABar
+          dueDate={due_date}
+          dispatchReminderAction={dispatchReminderAction}
+          paymentData={payment_data}
+          dispatchPaymentAction={dispatchPaymentAction}
+        />
       </ListItem>
     );
   }

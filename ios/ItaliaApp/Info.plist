@@ -57,6 +57,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>The app needs access to the camera to scan QR codes</string>
+  <key>NSCalendarsUsageDescription</key>
+	<string>The app needs access to the calendar to add event reminders</string>
+  <key>NSContactsUsageDescription</key>
+	<string>This app requires contacts access to function properly</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>UIAppFonts</key>
