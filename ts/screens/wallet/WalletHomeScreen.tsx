@@ -10,7 +10,7 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import * as DeviceInfo from "react-native-device-info";
+import { DEFAULT_APPLICATION_NAME } from "../../config";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
@@ -158,7 +158,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     return (
       <WalletLayout
-        title={DeviceInfo.getApplicationName()}
+        title={DEFAULT_APPLICATION_NAME}
         navigation={this.props.navigation}
         headerContents={headerContents}
         cardType={this.getCardType()}
