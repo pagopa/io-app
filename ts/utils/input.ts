@@ -3,8 +3,9 @@ import * as t from "io-ts";
 
 const minPanDigits = 15;
 const maxPanDigits = 19;
+// pagoPA's pan may contain '*'s to hide part of the pan
 export const CreditCardPan = PatternString(
-  `^[0-9]{${minPanDigits},${maxPanDigits}}$`
+  `^[0-9\\*]{${minPanDigits},${maxPanDigits}}$`
 );
 export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 
@@ -17,7 +18,7 @@ export type CreditCardExpirationMonth = t.TypeOf<
 // (possibly check month as well if year == current year)
 export const CreditCardExpirationYear = PatternString("^[0-9]{2}$");
 export type CreditCardExpirationYear = t.TypeOf<
-  typeof CreditCardExpirationMonth
+  typeof CreditCardExpirationYear
 >;
 
 export const CreditCardCVC = PatternString("^[0-9]{3,4}$");

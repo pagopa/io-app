@@ -18,6 +18,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { CreditCardPan, CreditCardExpirationMonth, CreditCardExpirationYear, CreditCardCVC } from '../../utils/input';
+import { CreditCard } from '../../types/pagopa';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -77,7 +78,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
       // invalid pan
       return ;
     }
-    if (!CreditCardExpirationMonth.is(expirationMonth)|| !CreditCardExpirationYear.is(expirationYear)) {
+    if (!CreditCardExpirationMonth.is(expirationMonth) || !CreditCardExpirationYear.is(expirationYear)) {
       // invalid date
       return ;
     }
@@ -87,7 +88,14 @@ export default class AddCardScreen extends React.Component<Props, State> {
       return ;
     }
 
-    
+    const card: CreditCard = {
+      pan: pan.value,
+      holder: holder.value,
+      expireMonth: expirationMonth,
+      expireYear: expirationYear,
+      securityCode: securityCode.value
+    }
+
   }
 
   public render(): React.ReactNode {

@@ -8,6 +8,11 @@
 import { Psp } from "../../types/pagopa";
 import { Transaction } from "../../types/pagopa";
 import { Wallet } from "../../types/pagopa";
+import {
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "../../utils/input";
 
 /**
  * Mocked wallet data
@@ -103,12 +108,12 @@ const wallets: ReadonlyArray<Wallet> = [
   {
     creditCard: {
       brandLogo: "AMEX",
-      expireMonth: "10",
-      expireYear: "20",
+      expireMonth: "10" as CreditCardExpirationMonth,
+      expireYear: "20" as CreditCardExpirationYear,
       flag3dsVerified: false,
       holder: "Mario Rossi",
       id: -1,
-      pan: "2001"
+      pan: "************2001" as CreditCardPan
     },
     type: "CREDIT_CARD",
     favourite: false,
@@ -120,12 +125,12 @@ const wallets: ReadonlyArray<Wallet> = [
   {
     creditCard: {
       brandLogo: "VISA",
-      expireMonth: "11",
-      expireYear: "21",
+      expireMonth: "11" as CreditCardExpirationMonth,
+      expireYear: "21" as CreditCardExpirationYear,
       flag3dsVerified: false,
       holder: "John Doe",
       id: -1,
-      pan: "4545"
+      pan: "************4545" as CreditCardPan
     },
     type: "CREDIT_CARD",
     favourite: false,
@@ -137,12 +142,12 @@ const wallets: ReadonlyArray<Wallet> = [
   {
     creditCard: {
       brandLogo: "MASTERCARD",
-      expireMonth: "12",
-      expireYear: "22",
+      expireMonth: "12" as CreditCardExpirationMonth,
+      expireYear: "22" as CreditCardExpirationYear,
       flag3dsVerified: false,
       holder: "Mario Bianchi",
       id: -1,
-      pan: "2849"
+      pan: "************2849" as CreditCardPan
     },
     type: "CREDIT_CARD",
     favourite: false,
@@ -154,12 +159,12 @@ const wallets: ReadonlyArray<Wallet> = [
   {
     creditCard: {
       brandLogo: "VISA",
-      expireMonth: "09",
-      expireYear: "19",
+      expireMonth: "09" as CreditCardExpirationMonth,
+      expireYear: "19" as CreditCardExpirationYear,
       flag3dsVerified: false,
       holder: "John Smith",
       id: -1,
-      pan: "9010"
+      pan: "************9010" as CreditCardPan
     },
     type: "CREDIT_CARD",
     favourite: false,

@@ -41,7 +41,8 @@ import {
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP,
-  PAYMENT_UPDATE_PSP_IN_STATE
+  PAYMENT_UPDATE_PSP_IN_STATE,
+  ADD_CREDIT_CARD_REQUEST
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
@@ -99,6 +100,7 @@ import {
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
 import { SagaCallReturnType } from "../types/utils";
+import { CreditCard } from "../../definitions/pagopa-old/CreditCard";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -170,6 +172,13 @@ function* fetchWallets(
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   }
 }
+
+function* addCreditCard(
+  creditCard: CreditCard,
+  pagoPaClient: PagoPaClient,
+  walletToken: string,
+  token: string
+): Iterator<Effect> {}
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -526,6 +535,7 @@ export function* watchWalletSaga(
     const action = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
+      ADD_CREDIT_CARD_REQUEST,
       LOGOUT_SUCCESS
     ]);
 
@@ -542,6 +552,17 @@ export function* watchWalletSaga(
     if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
       yield fork(fetchWallets, pagoPaClient, walletToken, pagoPaToken.value);
     }
+
+    if (action.type === ADD_CREDIT_CARD_REQUEST && pagoPaToken.isSome()) {
+      yield fork(
+        addCreditCard,
+        action.payload,
+        pagoPaClient,
+        walletToken,
+        pagoPaToken.value
+      );
+    }
+
     // if the user logs out, go back to waiting
     // for a WALLET_TOKEN_LOAD_SUCCESS action
     if (action.type === LOGOUT_SUCCESS) {

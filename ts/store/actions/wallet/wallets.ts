@@ -1,10 +1,11 @@
 import { Option } from "fp-ts/lib/Option";
-import { Wallet } from "../../../types/pagopa";
+import { Wallet, CreditCard } from "../../../types/pagopa";
 import {
   FETCH_WALLETS_REQUEST,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
-  WALLETS_FETCHED
+  WALLETS_FETCHED,
+  ADD_CREDIT_CARD_REQUEST
 } from "../constants";
 
 export type FetchWalletsRequest = Readonly<{
@@ -26,11 +27,17 @@ export type SetFavoriteWallet = Readonly<{
   payload: Option<number>;
 }>;
 
+export type AddCreditCardRequest = Readonly<{
+  type: typeof ADD_CREDIT_CARD_REQUEST;
+  payload: CreditCard;
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
   | WalletSelectedForDetails
-  | SetFavoriteWallet;
+  | SetFavoriteWallet
+  | AddCreditCardRequest;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -55,4 +62,11 @@ export const setFavoriteWallet = (
 ): SetFavoriteWallet => ({
   type: SET_FAVORITE_WALLET,
   payload: walletId
+});
+
+export const addCreditCardRequest = (
+  card: CreditCard
+): AddCreditCardRequest => ({
+  type: ADD_CREDIT_CARD_REQUEST,
+  payload: card
 });
