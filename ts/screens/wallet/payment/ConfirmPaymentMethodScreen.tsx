@@ -25,9 +25,9 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import GoBackButton from "../../../components/GoBackButton";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import IconFont from "../../../components/ui/IconFont";
 import CardComponent from "../../../components/wallet/card";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -38,6 +38,7 @@ import {
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
+import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -66,6 +67,7 @@ type ReduxMappedDispatchProps = Readonly<{
   pickPsp: () => void;
   requestCompletion: () => void;
   goBack: () => void;
+  showSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -101,9 +103,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton onPress={this.props.goBack} />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.ConfirmPayment.header")}</Text>
@@ -219,7 +219,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
             <View hspacer={true} />
-            <Button style={styles.child} block={true} cancel={true}>
+            <Button
+              style={styles.child}
+              block={true}
+              cancel={true}
+              onPress={this.props.showSummary}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
@@ -251,7 +256,8 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
   requestCompletion: () => dispatch(paymentRequestCompletion()),
   goBack: () => dispatch(paymentRequestGoBack()),
-  pickPsp: () => dispatch(paymentRequestPickPsp())
+  pickPsp: () => dispatch(paymentRequestPickPsp()),
+  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
 export default connect(

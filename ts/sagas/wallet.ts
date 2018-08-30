@@ -24,7 +24,6 @@ import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
-import { pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
@@ -42,8 +41,7 @@ import {
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP,
-  PAYMENT_UPDATE_PSP_IN_STATE,
-  SESSION_INFO_LOAD_SUCCESS
+  PAYMENT_UPDATE_PSP_IN_STATE
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
@@ -78,7 +76,6 @@ import {
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
-import { walletTokenSelector } from "../store/reducers/authentication";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
@@ -108,6 +105,7 @@ const MAX_TOKEN_REFRESHES = 2;
 
 function* fetchTransactions(
   pagoPaClient: PagoPaClient,
+  walletToken: string,
   token: string,
   retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
@@ -125,7 +123,7 @@ function* fetchTransactions(
       yield put(transactionsFetched(response.value.data));
     } else if (response.status === 401) {
       // unauthorized -- try refreshing the token
-      yield call(fetchPagoPaToken, pagoPaClient);
+      yield call(fetchPagoPaToken, pagoPaClient, walletToken);
       // retrieve the newly stored token and use it for
       // the following request
       const newToken: Option<string> = yield select(getPagoPaToken);
@@ -133,6 +131,7 @@ function* fetchTransactions(
         yield call(
           fetchTransactions,
           pagoPaClient,
+          walletToken,
           newToken.value,
           retries - 1
         );
@@ -144,6 +143,7 @@ function* fetchTransactions(
 
 function* fetchWallets(
   pagoPaClient: PagoPaClient,
+  walletToken: string,
   token: string,
   retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
@@ -155,10 +155,16 @@ function* fetchWallets(
       yield put(walletsFetched(response.value.data));
     } else if (response.status === 401) {
       // unauthorized -- try refreshing the token
-      yield call(fetchPagoPaToken, pagoPaClient);
+      yield call(fetchPagoPaToken, pagoPaClient, walletToken);
       const newToken: Option<string> = yield select(getPagoPaToken);
       if (newToken.isSome()) {
-        yield call(fetchWallets, pagoPaClient, newToken.value, retries - 1);
+        yield call(
+          fetchWallets,
+          pagoPaClient,
+          walletToken,
+          newToken.value,
+          retries - 1
+        );
       }
     }
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
@@ -497,46 +503,49 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put({ type: PAYMENT_COMPLETED });
 }
 
-function* fetchPagoPaToken(pagoPaClient: PagoPaClient): Iterator<Effect> {
-  const token: Option<string> = yield select(walletTokenSelector);
-  if (token.isSome()) {
-    const response: SagaCallReturnType<
-      typeof pagoPaClient.getSession
-    > = yield call(pagoPaClient.getSession, token.value);
-    if (response !== undefined && response.status === 200) {
-      // token fetched successfully, store it
-      yield put(storePagoPaToken(some(response.value.data.sessionToken)));
-    }
+function* fetchPagoPaToken(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getSession
+  > = yield call(pagoPaClient.getSession, walletToken);
+  if (response !== undefined && response.status === 200) {
+    // token fetched successfully, store it
+    yield put(storePagoPaToken(some(response.value.data.sessionToken)));
   }
 }
 
-function* watchWalletSaga(): Iterator<Effect> {
+export function* watchWalletSaga(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
+  yield call(fetchPagoPaToken, pagoPaClient, walletToken);
+
   while (true) {
-    yield take(SESSION_INFO_LOAD_SUCCESS);
+    const action = yield take([
+      FETCH_TRANSACTIONS_REQUEST,
+      FETCH_WALLETS_REQUEST,
+      LOGOUT_SUCCESS
+    ]);
 
-    const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-    yield call(fetchPagoPaToken, pagoPaClient);
+    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
 
-    while (true) {
-      const action = yield take([
-        FETCH_TRANSACTIONS_REQUEST,
-        FETCH_WALLETS_REQUEST,
-        LOGOUT_SUCCESS
-      ]);
-
-      const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-
-      if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
-        yield fork(fetchTransactions, pagoPaClient, pagoPaToken.value);
-      }
-      if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
-        yield fork(fetchWallets, pagoPaClient, pagoPaToken.value);
-      }
-      // if the user logs out, go back to waiting
-      // for a WALLET_TOKEN_LOAD_SUCCESS action
-      if (action.type === LOGOUT_SUCCESS) {
-        break;
-      }
+    if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
+      yield fork(
+        fetchTransactions,
+        pagoPaClient,
+        walletToken,
+        pagoPaToken.value
+      );
+    }
+    if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
+      yield fork(fetchWallets, pagoPaClient, walletToken, pagoPaToken.value);
+    }
+    // if the user logs out, go back to waiting
+    // for a WALLET_TOKEN_LOAD_SUCCESS action
+    if (action.type === LOGOUT_SUCCESS) {
+      break;
     }
   }
 }
@@ -545,7 +554,6 @@ function* watchWalletSaga(): Iterator<Effect> {
  * saga that manages the wallet (transactions + wallets + payments)
  */
 export default function* root(): Iterator<Effect> {
-  yield fork(watchWalletSaga);
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
   yield takeLatest(PAYMENT_REQUEST_MESSAGE, paymentSagaFromMessage);
 }

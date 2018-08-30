@@ -13,6 +13,7 @@ import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
+import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
@@ -22,6 +23,14 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: 1
+  },
+  inputStyle: {
+    height: 50,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 17,
+    color: "#5C6F82",
+    flex: 1
   }
 });
 
@@ -30,6 +39,8 @@ type Props = Readonly<{
   icon: string;
   placeholder: string;
   inputProps: TextInputProps;
+  mask?: string;
+  onChangeText: (value: string) => void;
 }>;
 
 export class LabelledItem extends React.Component<Props> {
@@ -45,13 +56,26 @@ export class LabelledItem extends React.Component<Props> {
             color={variables.brandDarkGray}
             name={this.props.icon}
           />
-          <Input
-            placeholderTextColor={color(variables.brandGray)
-              .darken(0.2)
-              .string()}
-            placeholder={this.props.placeholder}
-            {...this.props.inputProps}
-          />
+          {this.props.mask ? (
+            <MaskedInput
+              placeholderTextColor={color(variables.brandGray)
+                .darken(0.2)
+                .string()}
+              placeholder={this.props.placeholder}
+              mask={this.props.mask}
+              onChangeText={this.props.onChangeText}
+              {...this.props.inputProps}
+            />
+          ) : (
+            <Input
+              placeholderTextColor={color(variables.brandGray)
+                .darken(0.2)
+                .string()}
+              placeholder={this.props.placeholder}
+              onChangeText={this.props.onChangeText}
+              {...this.props.inputProps}
+            />
+          )}
         </Item>
       </View>
     );
