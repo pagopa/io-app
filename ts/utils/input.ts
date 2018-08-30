@@ -8,7 +8,7 @@ export const CreditCardPan = PatternString(
 );
 export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 
-export const CreditCardExpirationMonth = PatternString("^(0[1-9])|(1[0-2])$");
+export const CreditCardExpirationMonth = PatternString("^(0[1-9]|1[0-2])$");
 export type CreditCardExpirationMonth = t.TypeOf<
   typeof CreditCardExpirationMonth
 >;

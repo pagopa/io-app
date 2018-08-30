@@ -17,6 +17,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
+import { CreditCardPan, CreditCardExpirationMonth, CreditCardExpirationYear, CreditCardCVC } from '../../utils/input';
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -64,26 +65,29 @@ export default class AddCardScreen extends React.Component<Props, State> {
 
   private submit = () => {
 
-
+    console.warn("let's go!");
     const { pan, expirationDate, securityCode, holder } = this.state;
     if (pan.isNone() || expirationDate.isNone() || securityCode.isNone() || holder.isNone()) {
       return ;
     }
+    
     const [ expirationMonth, expirationYear ] = expirationDate.value.split("/");
 
-    if (!pan.value.match()) {
+    if (!CreditCardPan.is(pan.value)) {
       // invalid pan
       return ;
     }
-    if (expirationMonth.match()
+    if (!CreditCardExpirationMonth.is(expirationMonth)|| !CreditCardExpirationYear.is(expirationYear)) {
+      // invalid date
+      return ;
+    }
 
-    0[1-9]
-    1[012]
+    if(!CreditCardCVC.is(securityCode.value)) {
+      // invalid cvc
+      return ;
+    }
 
     
-    
-    
-
   }
 
   public render(): React.ReactNode {
@@ -101,9 +105,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
     const primaryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => {
-        console.warn(this.state); 
-      },
+      onPress: this.submit,
       title: I18n.t("global.buttons.continue")
     };
 
@@ -184,7 +186,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                   mask={"[00]{/}[00]"}
                   onChangeText={(_,value) =>
                     this.setState({
-                      pan:
+                      expirationDate:
                         value !== EMPTY_CARD_EXPIRATION_DATE
                           ? some(value)
                           : none

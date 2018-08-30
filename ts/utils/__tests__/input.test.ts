@@ -49,10 +49,7 @@ describe("CreditCardExpirationMonth", () => {
 
   it("should reject invalid months", () => {
     const data = ["0", "00", "13", "1", "123", "!1", "1!", "001", "010"];
-    data.forEach(d => {
-      console.log(d);
-      expect(CreditCardExpirationMonth.is(d)).toBeFalsy();
-    });
+    data.forEach(d => expect(CreditCardExpirationMonth.is(d)).toBeFalsy());
   });
 });
 

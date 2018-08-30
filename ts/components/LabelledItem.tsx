@@ -23,14 +23,6 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: 1
-  },
-  inputStyle: {
-    height: 50,
-    paddingLeft: 5,
-    paddingRight: 5,
-    fontSize: 17,
-    color: "#5C6F82",
-    flex: 1
   }
 });
 
