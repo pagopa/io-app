@@ -10,6 +10,7 @@ import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -17,12 +18,26 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
-import { CreditCardPan, CreditCardExpirationMonth, CreditCardExpirationYear, CreditCardCVC } from '../../utils/input';
-import { CreditCard } from '../../types/pagopa';
+import { Dispatch } from "../../store/actions/types";
+import { storeCreditCardData } from "../../store/actions/wallet/wallets";
+import { CreditCard } from "../../types/pagopa";
+import {
+  CreditCardCVC,
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "../../utils/input";
+import ROUTES from '../../navigation/routes';
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  storeCreditCardData: (card: CreditCard) => void;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = ReduxMappedProps & OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -53,7 +68,7 @@ const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
 const EMPTY_CARD_SECURITY_CODE = "";
 
-export default class AddCardScreen extends React.Component<Props, State> {
+class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -65,27 +80,33 @@ export default class AddCardScreen extends React.Component<Props, State> {
   }
 
   private submit = () => {
-
-    console.warn("let's go!");
     const { pan, expirationDate, securityCode, holder } = this.state;
-    if (pan.isNone() || expirationDate.isNone() || securityCode.isNone() || holder.isNone()) {
-      return ;
+    if (
+      pan.isNone() ||
+      expirationDate.isNone() ||
+      securityCode.isNone() ||
+      holder.isNone()
+    ) {
+      return;
     }
-    
-    const [ expirationMonth, expirationYear ] = expirationDate.value.split("/");
+
+    const [expirationMonth, expirationYear] = expirationDate.value.split("/");
 
     if (!CreditCardPan.is(pan.value)) {
       // invalid pan
-      return ;
+      return;
     }
-    if (!CreditCardExpirationMonth.is(expirationMonth) || !CreditCardExpirationYear.is(expirationYear)) {
+    if (
+      !CreditCardExpirationMonth.is(expirationMonth) ||
+      !CreditCardExpirationYear.is(expirationYear)
+    ) {
       // invalid date
-      return ;
+      return;
     }
 
-    if(!CreditCardCVC.is(securityCode.value)) {
+    if (!CreditCardCVC.is(securityCode.value)) {
       // invalid cvc
-      return ;
+      return;
     }
 
     const card: CreditCard = {
@@ -94,9 +115,14 @@ export default class AddCardScreen extends React.Component<Props, State> {
       expireMonth: expirationMonth,
       expireYear: expirationYear,
       securityCode: securityCode.value
-    }
+    };
 
-  }
+    // store data locally and proceed
+    // to the recap screen
+    this.props.storeCreditCardData(card);
+    this.props.navigation.navigate(ROUTES.WALLET_CONFIRM_CARD_DETAILS);
+
+  };
 
   public render(): React.ReactNode {
     // list of cards to be displayed
@@ -150,7 +176,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 autoCapitalize: "words"
               }}
-              onChangeText={(value: string) => 
+              onChangeText={(value: string) =>
                 this.setState({
                   holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
                 })
@@ -192,7 +218,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric"
                   }}
                   mask={"[00]{/}[00]"}
-                  onChangeText={(_,value) =>
+                  onChangeText={(_, value) =>
                     this.setState({
                       expirationDate:
                         value !== EMPTY_CARD_EXPIRATION_DATE
@@ -218,7 +244,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true
                   }}
                   mask={"[0009]"}
-                  onChangeText={(_,value) => 
+                  onChangeText={(_, value) =>
                     this.setState({
                       securityCode:
                         value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
@@ -265,3 +291,12 @@ export default class AddCardScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddCardScreen);

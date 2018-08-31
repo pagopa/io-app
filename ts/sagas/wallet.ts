@@ -22,10 +22,12 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
+
 import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
+  ADD_CREDIT_CARD_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
   LOGOUT_SUCCESS,
@@ -41,8 +43,7 @@ import {
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP,
-  PAYMENT_UPDATE_PSP_IN_STATE,
-  ADD_CREDIT_CARD_REQUEST
+  PAYMENT_UPDATE_PSP_IN_STATE
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
@@ -90,9 +91,20 @@ import {
 import {
   feeExtractor,
   getFavoriteWalletId,
-  specificWalletSelector
+  specificWalletSelector,
+  getNewCreditCard
 } from "../store/reducers/wallet/wallets";
-import { Psp, Wallet } from "../types/pagopa";
+import {
+  Psp,
+  Wallet,
+  SessionResponse,
+  TransactionListResponse,
+  WalletListResponse,
+  NullableWallet,
+  CreditCard,
+  PayRequest,
+  WalletResponse
+} from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
@@ -100,85 +112,159 @@ import {
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
 import { SagaCallReturnType } from "../types/utils";
-import { CreditCard } from "../../definitions/pagopa-old/CreditCard";
+import { BasicResponseTypeWith401 } from "../api/backend";
+import { TransactionResponse } from "../../definitions/pagopa-old/TransactionResponse";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
 
-function* fetchTransactions(
+// this function tries to carry out the provided
+// request, and refreshes the pagoPA token if a 401
+// is returned. Upon refreshing, it tries to
+// re-fetch the contents again for a maximum of
+// MAX_TOKEN_REFRESHES times.
+// If the request is successful (i.e. it does not
+// return a 401), the successful token is returned
+// along with the response (the caller will then
+// decide what to do with it)
+function* fetchWithTokenRefresh<T>(
+  request: (
+    pagoPaToken: string
+  ) => Promise<BasicResponseTypeWith401<T> | undefined>,
   pagoPaClient: PagoPaClient,
   walletToken: string,
-  token: string,
   retries: number = MAX_TOKEN_REFRESHES
-): Iterator<Effect> {
+): Iterator<BasicResponseTypeWith401<T> | undefined | Effect> {
   if (retries === 0) {
-    // max retries reached
-    // show "unauthorized" error @https://www.pivotaltracker.com/story/show/159400682
-    return;
+    return undefined;
   }
-  const response: SagaCallReturnType<
-    typeof pagoPaClient.getTransactions
-  > = yield call(pagoPaClient.getTransactions, token);
+  const pagoPaToken = yield select(getPagoPaToken);
+  const response: BasicResponseTypeWith401<T> | undefined = yield call(
+    request,
+    pagoPaToken.value
+  );
   if (response !== undefined) {
-    if (response.status === 200) {
-      // ok, all good
-      yield put(transactionsFetched(response.value.data));
-    } else if (response.status === 401) {
-      // unauthorized -- try refreshing the token
-      yield call(fetchPagoPaToken, pagoPaClient, walletToken);
-      // retrieve the newly stored token and use it for
-      // the following request
-      const newToken: Option<string> = yield select(getPagoPaToken);
-      if (newToken.isSome()) {
-        yield call(
-          fetchTransactions,
+    if (response.status !== 401) {
+      // return code is not 401, the token
+      // has been "accepted" (the caller will
+      // then handle other error codes)
+      return response;
+    } else {
+      const refreshTokenResponse:
+        | BasicResponseTypeWith401<SessionResponse>
+        | undefined = yield call(pagoPaClient.getSession, walletToken);
+      if (
+        refreshTokenResponse !== undefined &&
+        refreshTokenResponse.status === 200
+      ) {
+        // token fetched successfully, store it
+        yield put(
+          storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
+        );
+
+        // and retry fetching the result
+        return yield call(
+          fetchWithTokenRefresh,
+          request,
           pagoPaClient,
           walletToken,
-          newToken.value,
           retries - 1
         );
       }
     }
-    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   }
+  return undefined;
+}
+
+function* fetchTransactions(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
+  const response:
+    | BasicResponseTypeWith401<TransactionListResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    pagoPaClient.getTransactions,
+    pagoPaClient,
+    walletToken
+  );
+  console.warn(response);
+  if (response !== undefined && response.status === 200) {
+    console.warn(
+      response.value.data[0],
+      response.value.data.map(tr => Transaction.decode(tr).isRight())
+    );
+    yield put(transactionsFetched(response.value.data));
+  }
+  // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 function* fetchWallets(
   pagoPaClient: PagoPaClient,
-  walletToken: string,
-  token: string,
-  retries: number = MAX_TOKEN_REFRESHES
+  walletToken: string
 ): Iterator<Effect> {
-  const response: SagaCallReturnType<
-    typeof pagoPaClient.getWallets
-  > = yield call(pagoPaClient.getWallets, token);
-  if (response !== undefined) {
-    if (response.status === 200) {
-      yield put(walletsFetched(response.value.data));
-    } else if (response.status === 401) {
-      // unauthorized -- try refreshing the token
-      yield call(fetchPagoPaToken, pagoPaClient, walletToken);
-      const newToken: Option<string> = yield select(getPagoPaToken);
-      if (newToken.isSome()) {
-        yield call(
-          fetchWallets,
-          pagoPaClient,
-          walletToken,
-          newToken.value,
-          retries - 1
-        );
-      }
-    }
-    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  const response:
+    | BasicResponseTypeWith401<WalletListResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    pagoPaClient.getWallets,
+    pagoPaClient,
+    walletToken
+  );
+  if (response !== undefined && response.status === 200) {
+    yield put(walletsFetched(response.value.data));
   }
+  // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 function* addCreditCard(
-  creditCard: CreditCard,
+  favorite: boolean,
   pagoPaClient: PagoPaClient,
-  walletToken: string,
-  token: string
-): Iterator<Effect> {}
+  walletToken: string
+): Iterator<Effect> {
+  const card: Option<CreditCard> = yield select(getNewCreditCard);
+  if (card.isSome()) {
+    const wallet: NullableWallet = {
+      idWallet: null,
+      type: "CREDIT_CARD",
+      favourite: null,
+      creditCard: card.value
+    };
+    // 1st call: boarding credit card
+    const responseBoardCC:
+      | BasicResponseTypeWith401<WalletResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (token: string) => pagoPaClient.boardCreditCard(token, wallet),
+      pagoPaClient,
+      walletToken
+    );
+
+    if (responseBoardCC !== undefined && responseBoardCC.status === 200) {
+      // 1st call was successful. Proceed with the 2nd one
+      // (boarding pay)
+      const { idWallet } = responseBoardCC.value.data;
+      const payRequest: PayRequest = {
+        data: {
+          idWallet,
+          tipo: "web",
+          cvv: wallet.creditCard.securityCode
+            ? wallet.creditCard.securityCode
+            : undefined
+        }
+      };
+      const responseBoardPay:
+        | BasicResponseTypeWith401<TransactionResponse>
+        | undefined = yield call(
+        fetchWithTokenRefresh,
+        (token: string) => pagoPaClient.boardPay(token, payRequest),
+        pagoPaClient,
+        walletToken
+      );
+      console.warn(responseBoardPay);
+    }
+  }
+}
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -539,27 +625,19 @@ export function* watchWalletSaga(
       LOGOUT_SUCCESS
     ]);
 
-    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-
-    if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
-      yield fork(
-        fetchTransactions,
-        pagoPaClient,
-        walletToken,
-        pagoPaToken.value
-      );
+    if (action.type === FETCH_TRANSACTIONS_REQUEST) {
+      yield fork(fetchTransactions, pagoPaClient, walletToken);
     }
-    if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
-      yield fork(fetchWallets, pagoPaClient, walletToken, pagoPaToken.value);
+    if (action.type === FETCH_WALLETS_REQUEST) {
+      yield fork(fetchWallets, pagoPaClient, walletToken);
     }
 
-    if (action.type === ADD_CREDIT_CARD_REQUEST && pagoPaToken.isSome()) {
+    if (action.type === ADD_CREDIT_CARD_REQUEST) {
       yield fork(
         addCreditCard,
-        action.payload,
+        action.payload, // should the card be set as favorite?
         pagoPaClient,
-        walletToken,
-        pagoPaToken.value
+        walletToken
       );
     }
 

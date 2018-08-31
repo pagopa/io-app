@@ -1,13 +1,13 @@
 import {
-  CreditCardPan,
   CreditCardCVC,
+  CreditCardExpirationMonth,
   CreditCardExpirationYear,
-  CreditCardExpirationMonth
+  CreditCardPan
 } from "../input";
 
 describe("CreditCardPan", () => {
   it("should accept valid PANs", () => {
-    const data = [
+    const data: ReadonlyArray<any> = [
       "123412341234123",
       "1234123412341234",
       "************1234",
@@ -19,7 +19,7 @@ describe("CreditCardPan", () => {
   });
 
   it("should reject invalid PANs", () => {
-    const data = [
+    const data: ReadonlyArray<any> = [
       "1234 1234 1234 1234",
       "123412341234123_123",
       "12341234123412",
@@ -31,7 +31,7 @@ describe("CreditCardPan", () => {
 
 describe("CreditCardExpirationMonth", () => {
   it("should accept valid months", () => {
-    const data = [
+    const data: ReadonlyArray<any> = [
       "01",
       "02",
       "03",
@@ -49,31 +49,41 @@ describe("CreditCardExpirationMonth", () => {
   });
 
   it("should reject invalid months", () => {
-    const data = ["0", "00", "13", "1", "123", "!1", "1!", "001", "010"];
+    const data: ReadonlyArray<any> = [
+      "0",
+      "00",
+      "13",
+      "1",
+      "123",
+      "!1",
+      "1!",
+      "001",
+      "010"
+    ];
     data.forEach(d => expect(CreditCardExpirationMonth.is(d)).toBeFalsy());
   });
 });
 
 describe("CreditCardExpirationYear", () => {
   it("should accept valid years", () => {
-    const data = ["17", "18", "29", "52", "99"];
+    const data: ReadonlyArray<any> = ["17", "18", "29", "52", "99"];
     data.forEach(d => expect(CreditCardExpirationYear.is(d)).toBeTruthy());
   });
 
   it("should reject invalid years", () => {
-    const data = ["170", "1", "*9", "5*"];
+    const data: ReadonlyArray<any> = ["170", "1", "*9", "5*"];
     data.forEach(d => expect(CreditCardExpirationYear.is(d)).toBeFalsy());
   });
 });
 
 describe("CreditCardCVC", () => {
   it("should accept valid CVCs", () => {
-    const data = ["000", "1234"];
+    const data: ReadonlyArray<any> = ["000", "1234"];
     data.forEach(d => expect(CreditCardCVC.is(d)).toBeTruthy());
   });
 
   it("should reject invalid CVCs", () => {
-    const data = ["00", "12345", "01*", "123*"];
+    const data: ReadonlyArray<any> = ["00", "12345", "01*", "123*"];
     data.forEach(d => expect(CreditCardCVC.is(d)).toBeFalsy());
   });
 });

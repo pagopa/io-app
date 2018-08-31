@@ -6,18 +6,25 @@ import {
   AuthorizationBearerHeaderProducer,
   createFetchRequestForApi,
   IGetApiRequestType,
-  ResponseDecoder
+  ResponseDecoder,
+  IPostApiRequestType,
+  composeHeaderProducers,
+  ApiHeaderJson
 } from "italia-ts-commons/lib/requests";
 import {
   SessionResponse,
   TransactionListResponse,
-  WalletListResponse
+  WalletListResponse,
+  WalletResponse,
+  NullableWallet,
+  PayRequest
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
 import {
   basicResponseDecoderWith401,
   BasicResponseTypeWith401
 } from "./backend";
+import { TransactionResponse } from "../../definitions/pagopa/TransactionResponse";
 
 // builds on top of basicResponseDecoderWith401 and
 // casts the result to a type T: this is in order to
@@ -56,6 +63,20 @@ type GetWalletsType = IGetApiRequestType<
   BasicResponseTypeWith401<WalletListResponse>
 >;
 
+type BoardCreditCardType = IPostApiRequestType<
+  { wallet: NullableWallet },
+  "Authorization" | "Content-Type",
+  never,
+  BasicResponseTypeWith401<WalletResponse>
+>;
+
+type BoardPayType = IPostApiRequestType<
+  { payRequest: PayRequest },
+  "Authorization" | "Content-Type",
+  never,
+  BasicResponseTypeWith401<TransactionResponse>
+>;
+
 export type PagoPaClient = Readonly<{
   getSession: (
     walletToken: string
@@ -66,6 +87,14 @@ export type PagoPaClient = Readonly<{
   getWallets: (
     pagoPaToken: string
   ) => Promise<BasicResponseTypeWith401<WalletListResponse> | undefined>;
+  boardCreditCard: (
+    pagoPaToken: string,
+    wallet: NullableWallet
+  ) => Promise<BasicResponseTypeWith401<WalletResponse> | undefined>;
+  boardPay: (
+    pagoPaToken: string,
+    payRequest: PayRequest
+  ) => Promise<BasicResponseTypeWith401<TransactionResponse> | undefined>;
 }>;
 
 export const PagoPaClient = (
@@ -107,12 +136,53 @@ export const PagoPaClient = (
     )
   });
 
+  const boardCreditCard: (
+    pagoPaToken: string
+  ) => BoardCreditCardType = pagoPaToken => ({
+    method: "post",
+    url: () => "/v1/wallet/cc",
+    query: () => ({}),
+    body: ({ wallet }) =>
+      JSON.stringify({
+        data: wallet
+      }),
+    headers: composeHeaderProducers(
+      AuthorizationBearerHeaderProducer(pagoPaToken),
+      ApiHeaderJson
+    ),
+    response_decoder: basicResponseDecoderWith401AndCast<WalletResponse>(
+      WalletResponse
+    )
+  });
+
+  const boardPay: (pagoPaToken: string) => BoardPayType = pagoPaToken => ({
+    method: "post",
+    url: () => "/v1/payments/cc/actions/pay",
+    query: () => ({}),
+    body: ({ payRequest }) => JSON.stringify(payRequest),
+    headers: composeHeaderProducers(
+      AuthorizationBearerHeaderProducer(pagoPaToken),
+      ApiHeaderJson
+    ),
+    response_decoder: basicResponseDecoderWith401AndCast<TransactionResponse>(
+      TransactionResponse
+    )
+  });
+
   return {
     getSession: (walletToken: string) =>
       createFetchRequestForApi(getSession, options)({ token: walletToken }),
     getWallets: (pagoPaToken: string) =>
       createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
-    getTransactions: (pagoPaToken: string) =>
-      createFetchRequestForApi(getTransactions(pagoPaToken), options)({})
+    getTransactions: async (pagoPaToken: string) =>
+      createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
+    boardCreditCard: (pagoPaToken: string, wallet: NullableWallet) =>
+      createFetchRequestForApi(boardCreditCard(pagoPaToken), options)({
+        wallet
+      }),
+    boardPay: async (pagoPaToken: string, payRequest: PayRequest) =>
+      createFetchRequestForApi(boardPay(pagoPaToken), options)({
+        payRequest
+      })
   };
 };

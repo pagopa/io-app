@@ -5,12 +5,14 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { Wallet } from "../../../types/pagopa";
+import { Wallet, CreditCard } from "../../../types/pagopa";
 import {
   PAYMENT_UPDATE_PSP_IN_STATE,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
-  WALLETS_FETCHED
+  WALLETS_FETCHED,
+  STORE_CREDIT_CARD_DATA,
+  CREDIT_CARD_DATA_CLEANUP
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -20,12 +22,14 @@ export type WalletsState = Readonly<{
   list: IndexedById<Wallet>;
   selectedWalletId: Option<number>;
   favoriteWalletId: Option<number>;
+  newCreditCard: Option<CreditCard>;
 }>;
 
 export const WALLETS_INITIAL_STATE: WalletsState = {
   list: {},
   selectedWalletId: none,
-  favoriteWalletId: none
+  favoriteWalletId: none,
+  newCreditCard: none
 };
 
 // selectors
@@ -34,6 +38,8 @@ export const getSelectedWalletId = (state: GlobalState) =>
   state.wallet.wallets.selectedWalletId;
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
+export const getNewCreditCard = (state: GlobalState) =>
+  state.wallet.wallets.newCreditCard;
 
 export const walletsSelector = createSelector(
   getWallets,
@@ -89,6 +95,26 @@ const reducer = (
     return {
       ...state,
       favoriteWalletId: action.payload
+    };
+  }
+  /**
+   * Store the credit card information locally
+   * before sending it to pagoPA
+   */
+  if (action.type === STORE_CREDIT_CARD_DATA) {
+    return {
+      ...state,
+      newCreditCard: some(action.payload)
+    };
+  }
+  /**
+   * clean up "newCreditCard" after it has been
+   * added to pagoPA
+   */
+  if (action.type === CREDIT_CARD_DATA_CLEANUP) {
+    return {
+      ...state,
+      newCreditCard: none
     };
   }
   // TODO: temporary, until the integration with pagoPA

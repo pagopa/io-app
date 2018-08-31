@@ -11,11 +11,14 @@ import { TransactionResponse as TransactionResponsePagoPA } from "../../definiti
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
+import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
+import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
+
 import {
-  CreditCardPan,
-  CreditCardExpirationYear,
+  CreditCardCVC,
   CreditCardExpirationMonth,
-  CreditCardCVC
+  CreditCardExpirationYear,
+  CreditCardPan
 } from "../utils/input";
 
 export const CreditCardType = t.union([
@@ -40,18 +43,16 @@ export const CreditCard = t.refinement(
     CreditCardExpirationMonth.is(c.expireMonth) &&
     CreditCardExpirationYear.is(c.expireYear) &&
     c.holder !== undefined &&
-    c.id !== undefined &&
     CreditCardPan.is(c.pan) &&
     (c.securityCode === undefined || CreditCardCVC.is(c.securityCode))
 );
 type RequiredCreditCardFields = "holder"; // required field
 type UpdatedCreditCardFields = "expireMonth" | "expireYear" | "pan"; // update fields
-export type CreditCard = {
-  [key in Exclude<
-    keyof CreditCardPagoPA,
-    UpdatedCreditCardFields
-  >]?: CreditCardPagoPA[key]
-} &
+
+export type CreditCard = Pick<
+  CreditCardPagoPA,
+  Exclude<keyof CreditCardPagoPA, UpdatedCreditCardFields>
+> &
   Required<Pick<CreditCardPagoPA, RequiredCreditCardFields>> &
   Readonly<{
     expireMonth: CreditCardExpirationMonth;
@@ -73,9 +74,7 @@ export const Psp = t.refinement(
 );
 type RequiredPspFields = "id" | "logoPSP";
 type UpdatedPspFields = "fixedCost";
-export type Psp = {
-  [key in Exclude<keyof PspPagoPA, UpdatedPspFields>]?: PspPagoPA[key]
-} &
+export type Psp = Pick<PspPagoPA, Exclude<keyof PspPagoPA, UpdatedPspFields>> &
   Required<Pick<PspPagoPA, RequiredPspFields>> &
   Readonly<{
     fixedCost: Amount;
@@ -89,15 +88,27 @@ export const Wallet = t.refinement(
     w.type !== undefined &&
     (w.psp === undefined || Psp.is(w.psp))
 );
-type RequiredWalletFields = "idWallet" | "type";
-type UpdatedWalletFields = "creditCard" | "psp";
-export type Wallet = {
-  [key in Exclude<keyof WalletPagoPA, UpdatedWalletFields>]?: WalletPagoPA[key]
-} &
+type RequiredWalletFields = "idWallet";
+type UpdatedWalletFields = "creditCard" | "psp" | "type";
+export type Wallet = Pick<
+  WalletPagoPA,
+  Exclude<keyof WalletPagoPA, UpdatedWalletFields>
+> &
   Required<Pick<WalletPagoPA, RequiredWalletFields>> &
   Readonly<{
     creditCard: CreditCard;
     psp?: Psp;
+    type: "CREDIT_CARD";
+  }>;
+
+type WalletNullableFields = "idWallet" | "favourite";
+export type NullableWallet = Pick<
+  Wallet,
+  Exclude<keyof Wallet, WalletNullableFields>
+> &
+  Readonly<{
+    idWallet: null;
+    favourite: null;
   }>;
 
 export const Transaction = t.refinement(
@@ -106,12 +117,13 @@ export const Transaction = t.refinement(
     Amount.is(tr.amount) &&
     tr.created !== undefined &&
     tr.description !== undefined &&
-    Amount.is(tr.fee) &&
+    (tr.fee === undefined || Amount.is(tr.fee)) &&
     Amount.is(tr.grandTotal) &&
     tr.id !== undefined &&
     tr.idPayment !== undefined &&
     tr.idWallet !== undefined &&
-    tr.merchant !== undefined
+    tr.merchant !== undefined &&
+    tr.statusMessage !== undefined
 );
 type RequiredTransactionFields =
   | "created"
@@ -121,21 +133,21 @@ type RequiredTransactionFields =
   | "idWallet"
   | "merchant";
 type UpdatedTransactionFields = "amount" | "fee" | "grandTotal";
-export type Transaction = {
+export type Transaction =
   // all the properties but for the ones that are changing type
-  [key in Exclude<
-    keyof TransactionPagoPA,
-    UpdatedTransactionFields
-  >]?: TransactionPagoPA[key]
-} &
-  // setting these as required
-  Required<Pick<TransactionPagoPA, RequiredTransactionFields>> &
-  // changing type (to the new "Amount") and setting are required
-  Readonly<{
-    amount: Amount;
-    fee: Amount;
-    grandTotal: Amount;
-  }>;
+  Pick<
+    TransactionPagoPA,
+    Exclude<keyof TransactionPagoPA, UpdatedTransactionFields>
+  > &
+    // setting these as required
+    Required<Pick<TransactionPagoPA, RequiredTransactionFields>> &
+    // changing type (to the new "Amount") and setting are required
+    Readonly<{
+      amount: Amount;
+      fee?: Amount; // pagoPA isn't providing the "fee" field"
+      grandTotal: Amount;
+      statusMessage: "rifiutato" | "Confermato" | string; // TODO: get a complete list of statuses from pagoPA
+    }>;
 
 // the response when requesting a list of transactions
 export const TransactionListResponse = t.refinement(
@@ -143,12 +155,13 @@ export const TransactionListResponse = t.refinement(
   tlr => t.readonlyArray(Transaction).is(tlr.data)
 );
 type UpdatedTransactionListResponseFields = "data";
-export type TransactionListResponse = {
-  [key in Exclude<
+export type TransactionListResponse = Pick<
+  TransactionListResponsePagoPA,
+  Exclude<
     keyof TransactionListResponsePagoPA,
     UpdatedTransactionListResponseFields
-  >]?: TransactionListResponsePagoPA[key]
-} &
+  >
+> &
   Readonly<{
     data: ReadonlyArray<Transaction>;
   }>;
@@ -157,12 +170,10 @@ export const WalletListResponse = t.refinement(WalletListResponsePagoPA, wlr =>
   t.readonlyArray(Wallet).is(wlr.data)
 );
 type UpdatedWalletListResponseFields = "data";
-export type WalletListResponse = {
-  [key in Exclude<
-    keyof WalletListResponsePagoPA,
-    UpdatedWalletListResponseFields
-  >]?: WalletListResponsePagoPA[key]
-} &
+export type WalletListResponse = Pick<
+  WalletListResponsePagoPA,
+  Exclude<keyof WalletListResponsePagoPA, UpdatedWalletListResponseFields>
+> &
   Readonly<{
     data: ReadonlyArray<Wallet>;
   }>;
@@ -179,12 +190,10 @@ export const SessionResponse = t.refinement(SessionResponsePagoPA, sr =>
   Session.is(sr.data)
 );
 type UpdatedSessionResponseFields = "data";
-export type SessionResponse = {
-  [key in Exclude<
-    keyof SessionResponsePagoPA,
-    UpdatedSessionResponseFields
-  >]?: SessionResponsePagoPA[key]
-} &
+export type SessionResponse = Pick<
+  SessionResponsePagoPA,
+  Exclude<keyof SessionResponsePagoPA, UpdatedSessionResponseFields>
+> &
   Readonly<{
     data: Session;
   }>;
@@ -193,12 +202,10 @@ export const PspListResponse = t.refinement(PspListResponsePagoPA, plr =>
   t.readonlyArray(Psp).is(plr.data)
 );
 type UpdatedPspListResponseFields = "data";
-export type PspListResponse = {
-  [key in Exclude<
-    keyof PspListResponsePagoPA,
-    UpdatedPspListResponseFields
-  >]?: PspListResponsePagoPA[key]
-} &
+export type PspListResponse = Pick<
+  PspListResponsePagoPA,
+  Exclude<keyof PspListResponsePagoPA, UpdatedPspListResponseFields>
+> &
   Readonly<{
     data: ReadonlyArray<Psp>;
   }>;
@@ -207,12 +214,10 @@ export const WalletResponse = t.refinement(WalletResponsePagoPA, wr =>
   Wallet.is(wr.data)
 );
 type UpdatedWalletResponseFields = "data";
-export type WalletResponse = {
-  [key in Exclude<
-    keyof WalletResponsePagoPA,
-    UpdatedWalletResponseFields
-  >]?: WalletResponsePagoPA[key]
-} &
+export type WalletResponse = Pick<
+  WalletResponsePagoPA,
+  Exclude<keyof WalletResponsePagoPA, UpdatedWalletResponseFields>
+> &
   Readonly<{
     data: Wallet;
   }>;
@@ -221,12 +226,32 @@ export const TransactionResponse = t.refinement(TransactionResponsePagoPA, tr =>
   Transaction.is(tr.data)
 );
 type UpdatedTransactionResponseFields = "data";
-export type TransactionResponse = {
-  [key in Exclude<
-    keyof TransactionResponsePagoPA,
-    UpdatedTransactionResponseFields
-  >]?: TransactionResponsePagoPA[key]
-} &
+export type TransactionResponse = Pick<
+  TransactionResponsePagoPA,
+  Exclude<keyof TransactionResponsePagoPA, UpdatedTransactionResponseFields>
+> &
   Readonly<{
     data: Transaction;
+  }>;
+
+export const Pay = t.refinement(
+  PayPagoPA,
+  p => p.idWallet !== undefined && p.tipo === "web"
+);
+type RequiredPayFields = "idWallet";
+type UpdatedPayFields = "tipo";
+export type Pay = Pick<PayPagoPA, Exclude<keyof PayPagoPA, UpdatedPayFields>> &
+  Required<Pick<PayPagoPA, RequiredPayFields>> &
+  Readonly<{
+    tipo: "web";
+  }>;
+
+export const PayRequest = t.refinement(PayRequestPagoPA, pr => Pay.is(pr.data));
+type UpdatedPayRequestFields = "data";
+export type PayRequest = Pick<
+  PayRequestPagoPA,
+  Exclude<keyof PayRequestPagoPA, UpdatedPayRequestFields>
+> &
+  Readonly<{
+    data: Pay;
   }>;

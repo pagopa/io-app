@@ -26,22 +26,24 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = Readonly<{
-  type: "masked";
-  label: string;
-  icon: string;
-  placeholder: string;
-  inputProps: TextInputProps;
-  mask: string;
-  onChangeText: (formatted: string, expected: string) => void;
-}> | Readonly<{
-  type: "text";
-  label: string;
-  icon: string;
-  placeholder: string;
-  inputProps: TextInputProps;
-  onChangeText: (value: string) => void;
-}>;
+type Props =
+  | Readonly<{
+      type: "masked";
+      label: string;
+      icon: string;
+      placeholder: string;
+      inputProps: TextInputProps;
+      mask: string;
+      onChangeText: (formatted: string, expected: string) => void;
+    }>
+  | Readonly<{
+      type: "text";
+      label: string;
+      icon: string;
+      placeholder: string;
+      inputProps: TextInputProps;
+      onChangeText: (value: string) => void;
+    }>;
 
 export class LabelledItem extends React.Component<Props> {
   public render() {

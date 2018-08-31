@@ -121,7 +121,7 @@ export class TransactionDetailsScreen extends React.Component<Props> {
       false
     );
     const amount = buildAmount(centsToAmount(transaction.amount.amount));
-    const fee = buildAmount(centsToAmount(transaction.fee.amount));
+    const fee = buildAmount(centsToAmount(transaction.fee === undefined ? 0 : transaction.fee.amount));
     const totalAmount = buildAmount(
       centsToAmount(transaction.grandTotal.amount)
     );
