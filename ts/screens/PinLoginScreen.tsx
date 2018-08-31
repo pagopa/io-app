@@ -11,12 +11,11 @@ import { StatusBar } from "react-native";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import GoBackLink from "../components/GoBackLink";
-import { ContextualHelpInjectedProps } from "../components/helpers/withContextualHelp";
 import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
+import CancelPaymentLink from "../components/wallet/CanelPaymentLink";
 import I18n from "../i18n";
 import { pinLoginValidateRequest } from "../store/actions/pinlogin";
 import { startPinReset } from "../store/actions/pinset";
@@ -26,6 +25,7 @@ import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import { PinString } from "../types/PinString";
+import { ContextualHelpInjectedProps } from "./../components/helpers/withContextualHelp";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
@@ -133,7 +133,7 @@ class PinScreen extends React.Component<Props> {
           <View spacer={true} />
           <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
           <View spacer={true} />
-          <GoBackLink navigation={this.props.navigation} />
+          <CancelPaymentLink navigation={this.props.navigation} />
         </Content>
       </BaseScreenComponent>
     );

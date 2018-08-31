@@ -6,9 +6,9 @@ import { Text } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import I18n from "../i18n";
-import { Dispatch } from "../store/actions/types";
-import { paymentRequestCancel } from "../store/actions/wallet/payment";
+import I18n from "../../i18n";
+import { Dispatch } from "../../store/actions/types";
+import { paymentRequestCancel } from "../../store/actions/wallet/payment";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
