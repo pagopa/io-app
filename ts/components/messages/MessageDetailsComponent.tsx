@@ -151,7 +151,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
           this.renderMessageCTA(payment_data, dispatchPaymentAction)}
         <View style={styles.messageContentContainer}>
           {markdown ? (
-            <Markdown>{markdown}</Markdown>
+            <Markdown lazy={true}>{markdown}</Markdown>
           ) : (
             <Text>{I18n.t("messages.noContent")}</Text>
           )}
