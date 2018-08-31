@@ -48,12 +48,56 @@ function renderMarkdown(body: string): React.ReactNode {
   }
 }
 
+interface Props {
+  children: string;
+  lazy?: boolean;
+}
+
+interface State {
+  renderedMarkdown: ReturnType<typeof renderMarkdown> | undefined;
+}
+
 /**
  * A component that accepts "markdown" as child and render react native
  * components.
  */
-const Markdown: React.SFC<{
-  children: string;
-}> = props => <View>{renderMarkdown(props.children)}</View>;
+class Markdown extends React.PureComponent<Props, State> {
+  public static defaultProps: Partial<Props> = {
+    lazy: false
+  };
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      renderedMarkdown: undefined
+    };
+  }
+
+  public componentDidMount() {
+    if (this.props.lazy) {
+      // Render the markdown string asynchronously.
+      setTimeout(
+        () =>
+          this.setState({
+            renderedMarkdown: renderMarkdown(this.props.children)
+          }),
+        0
+      );
+    }
+  }
+
+  public render() {
+    if (this.props.lazy) {
+      if (!this.state.renderedMarkdown) {
+        return null;
+      }
+
+      return <View>{this.state.renderedMarkdown}</View>;
+    }
+
+    return <View>{renderMarkdown(this.props.children)}</View>;
+  }
+}
 
 export default Markdown;
