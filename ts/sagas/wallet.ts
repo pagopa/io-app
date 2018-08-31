@@ -116,7 +116,6 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
-import { SagaCallReturnType } from "../types/utils";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -317,6 +316,11 @@ function* addCreditCard(
   const currentCount: number = yield select(walletCountSelector);
   yield call(fetchWallets, pagoPaClient, walletToken);
   const updatedCount: number = yield select(walletCountSelector);
+  /**
+   * TODO: introduce a better way of displaying
+   * info messages (e.g. red/green banner at the
+   * top of the screen)
+   */
   if (updatedCount === currentCount + 1) {
     console.warn("Card added successfully!"); // tslint:disable-line no-console
   } else {
@@ -661,25 +665,10 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put({ type: PAYMENT_COMPLETED });
 }
 
-function* fetchPagoPaToken(
-  pagoPaClient: PagoPaClient,
-  walletToken: string
-): Iterator<Effect> {
-  const response: SagaCallReturnType<
-    typeof pagoPaClient.getSession
-  > = yield call(pagoPaClient.getSession, walletToken);
-  if (response !== undefined && response.status === 200) {
-    // token fetched successfully, store it
-    yield put(storePagoPaToken(some(response.value.data.sessionToken)));
-  }
-}
-
 export function* watchWalletSaga(
   pagoPaClient: PagoPaClient,
   walletToken: string
 ): Iterator<Effect> {
-  yield call(fetchPagoPaToken, pagoPaClient, walletToken);
-
   while (true) {
     const action = yield take([
       FETCH_TRANSACTIONS_REQUEST,
