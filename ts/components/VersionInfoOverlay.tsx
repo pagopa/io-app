@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -20,7 +20,10 @@ type Props = ReduxMappedProps & ReduxProps;
 const styles = StyleSheet.create({
   versionContainer: {
     position: "absolute",
-    top: 0,
+    top: Platform.select({
+      ios: 20,
+      android: 0
+    }),
     left: 0,
     right: 0,
     bottom: 0,
