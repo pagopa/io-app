@@ -156,7 +156,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                   mask={"[00]{/}[00]"}
                   onChangeText={value =>
                     this.setState({
-                      pan:
+                      expirationDate:
                         value !== EMPTY_CARD_EXPIRATION_DATE
                           ? some(value)
                           : none
