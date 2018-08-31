@@ -1,13 +1,14 @@
 import { Option } from "fp-ts/lib/Option";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import {
-  STORE_CREDIT_CARD_DATA,
+  ADD_CREDIT_CARD_COMPLETED,
+  ADD_CREDIT_CARD_REQUEST,
+  CREDIT_CARD_DATA_CLEANUP,
   FETCH_WALLETS_REQUEST,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
-  WALLETS_FETCHED,
-  CREDIT_CARD_DATA_CLEANUP,
-  ADD_CREDIT_CARD_REQUEST
+  STORE_CREDIT_CARD_DATA,
+  WALLETS_FETCHED
 } from "../constants";
 
 export type FetchWalletsRequest = Readonly<{
@@ -43,6 +44,10 @@ export type CreditCardDataCleanup = Readonly<{
   type: typeof CREDIT_CARD_DATA_CLEANUP;
 }>;
 
+export type AddCreditCardCompleted = Readonly<{
+  type: typeof ADD_CREDIT_CARD_COMPLETED;
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
@@ -50,7 +55,8 @@ export type WalletsActions =
   | SetFavoriteWallet
   | StoreCreditCardData
   | CreditCardDataCleanup
-  | AddCreditCardRequest;
+  | AddCreditCardRequest
+  | AddCreditCardCompleted;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -91,4 +97,8 @@ export const addCreditCardRequest = (
 ): AddCreditCardRequest => ({
   type: ADD_CREDIT_CARD_REQUEST,
   payload: favorite
+});
+
+export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
+  type: ADD_CREDIT_CARD_COMPLETED
 });

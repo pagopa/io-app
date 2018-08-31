@@ -3,28 +3,28 @@
  * to call the different API available
  */
 import {
+  ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
+  composeHeaderProducers,
   createFetchRequestForApi,
   IGetApiRequestType,
-  ResponseDecoder,
   IPostApiRequestType,
-  composeHeaderProducers,
-  ApiHeaderJson
+  ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { TransactionResponse } from "../../definitions/pagopa/TransactionResponse";
 import {
+  NullableWallet,
+  PayRequest,
   SessionResponse,
   TransactionListResponse,
   WalletListResponse,
-  WalletResponse,
-  NullableWallet,
-  PayRequest
+  WalletResponse
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
 import {
   basicResponseDecoderWith401,
   BasicResponseTypeWith401
 } from "./backend";
-import { TransactionResponse } from "../../definitions/pagopa/TransactionResponse";
 
 // builds on top of basicResponseDecoderWith401 and
 // casts the result to a type T: this is in order to

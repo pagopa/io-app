@@ -5,14 +5,14 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { Wallet, CreditCard } from "../../../types/pagopa";
+import { CreditCard, Wallet } from "../../../types/pagopa";
 import {
+  CREDIT_CARD_DATA_CLEANUP,
   PAYMENT_UPDATE_PSP_IN_STATE,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
-  WALLETS_FETCHED,
   STORE_CREDIT_CARD_DATA,
-  CREDIT_CARD_DATA_CLEANUP
+  WALLETS_FETCHED
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -73,6 +73,11 @@ export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
   w.psp === undefined
     ? undefined
     : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
+
+export const walletCountSelector = createSelector(
+  getWallets,
+  (wallets: IndexedById<Wallet>) => Object.keys(wallets).length
+);
 
 // reducer
 const reducer = (

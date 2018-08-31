@@ -139,7 +139,7 @@ class TransactionsList extends React.Component<Props> {
             <List
               scrollEnabled={false}
               removeClippedSubviews={false}
-              dataArray={transactions.filter(t => t.statusMessage !== "rifiutato") as Transaction[]} // tslint:disable-line: readonly-array
+              dataArray={transactions as Transaction[]} // tslint:disable-line: readonly-array
               renderRow={this.renderRow}
             />
           </Row>

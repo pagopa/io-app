@@ -13,12 +13,12 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card";
 import I18n from "../../i18n";
+import { Dispatch } from "../../store/actions/types";
+import { addCreditCardRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { getNewCreditCard } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
-import { Dispatch } from '../../store/actions/types';
-import { addCreditCardRequest } from '../../store/actions/wallet/wallets';
 
 type ReduxMappedStateProps = Readonly<{
   wallet: Wallet;
@@ -138,6 +138,9 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduMappedDispatchProps => ({
   addCreditCard: (favorite: boolean) => dispatch(addCreditCardRequest(favorite))
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmCardDetailsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmCardDetailsScreen);

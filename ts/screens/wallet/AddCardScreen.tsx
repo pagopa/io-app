@@ -18,6 +18,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { storeCreditCardData } from "../../store/actions/wallet/wallets";
 import { CreditCard } from "../../types/pagopa";
@@ -27,7 +28,6 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../../utils/input";
-import ROUTES from '../../navigation/routes';
 
 type ReduxMappedProps = Readonly<{
   storeCreditCardData: (card: CreditCard) => void;
@@ -121,7 +121,6 @@ class AddCardScreen extends React.Component<Props, State> {
     // to the recap screen
     this.props.storeCreditCardData(card);
     this.props.navigation.navigate(ROUTES.WALLET_CONFIRM_CARD_DETAILS);
-
   };
 
   public render(): React.ReactNode {

@@ -1,6 +1,8 @@
 import * as t from "io-ts";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
+import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
+import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
 import { PspListResponse as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
@@ -11,8 +13,6 @@ import { TransactionResponse as TransactionResponsePagoPA } from "../../definiti
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
-import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
-import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 
 import {
   CreditCardCVC,

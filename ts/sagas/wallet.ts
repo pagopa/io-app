@@ -23,10 +23,12 @@ import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 
+import { BasicResponseTypeWith401 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
+  ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
@@ -75,6 +77,7 @@ import {
   transactionsFetched
 } from "../store/actions/wallet/transactions";
 import {
+  creditCardDataCleanup,
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
@@ -91,18 +94,20 @@ import {
 import {
   feeExtractor,
   getFavoriteWalletId,
+  getNewCreditCard,
   specificWalletSelector,
-  getNewCreditCard
+  walletCountSelector
 } from "../store/reducers/wallet/wallets";
 import {
+  CreditCard,
+  NullableWallet,
+  PayRequest,
   Psp,
-  Wallet,
   SessionResponse,
   TransactionListResponse,
+  TransactionResponse,
+  Wallet,
   WalletListResponse,
-  NullableWallet,
-  CreditCard,
-  PayRequest,
   WalletResponse
 } from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
@@ -112,11 +117,13 @@ import {
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
 import { SagaCallReturnType } from "../types/utils";
-import { BasicResponseTypeWith401 } from "../api/backend";
-import { TransactionResponse } from "../../definitions/pagopa-old/TransactionResponse";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
+
+const navigateTo = (routeName: string, params?: object) => {
+  return NavigationActions.navigate({ routeName, params });
+};
 
 // this function tries to carry out the provided
 // request, and refreshes the pagoPA token if a 401
@@ -138,10 +145,10 @@ function* fetchWithTokenRefresh<T>(
   if (retries === 0) {
     return undefined;
   }
-  const pagoPaToken = yield select(getPagoPaToken);
+  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
   const response: BasicResponseTypeWith401<T> | undefined = yield call(
     request,
-    pagoPaToken.value
+    pagoPaToken.getOrElse("") // empty token -> pagoPA returns a 401 and the app fetches a new one
   );
   if (response !== undefined) {
     if (response.status !== 401) {
@@ -188,12 +195,7 @@ function* fetchTransactions(
     pagoPaClient,
     walletToken
   );
-  console.warn(response);
   if (response !== undefined && response.status === 200) {
-    console.warn(
-      response.value.data[0],
-      response.value.data.map(tr => Transaction.decode(tr).isRight())
-    );
     yield put(transactionsFetched(response.value.data));
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
@@ -218,57 +220,118 @@ function* fetchWallets(
 }
 
 function* addCreditCard(
-  favorite: boolean,
+  _: boolean, // should the card be set as favorite?
   pagoPaClient: PagoPaClient,
   walletToken: string
 ): Iterator<Effect> {
   const card: Option<CreditCard> = yield select(getNewCreditCard);
-  if (card.isSome()) {
-    const wallet: NullableWallet = {
-      idWallet: null,
-      type: "CREDIT_CARD",
-      favourite: null,
-      creditCard: card.value
-    };
-    // 1st call: boarding credit card
-    const responseBoardCC:
-      | BasicResponseTypeWith401<WalletResponse>
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      (token: string) => pagoPaClient.boardCreditCard(token, wallet),
-      pagoPaClient,
-      walletToken
-    );
 
-    if (responseBoardCC !== undefined && responseBoardCC.status === 200) {
-      // 1st call was successful. Proceed with the 2nd one
-      // (boarding pay)
-      const { idWallet } = responseBoardCC.value.data;
-      const payRequest: PayRequest = {
-        data: {
-          idWallet,
-          tipo: "web",
-          cvv: wallet.creditCard.securityCode
-            ? wallet.creditCard.securityCode
-            : undefined
-        }
-      };
-      const responseBoardPay:
-        | BasicResponseTypeWith401<TransactionResponse>
-        | undefined = yield call(
-        fetchWithTokenRefresh,
-        (token: string) => pagoPaClient.boardPay(token, payRequest),
-        pagoPaClient,
-        walletToken
-      );
-      console.warn(responseBoardPay);
-    }
+  /**
+   * Card data not available. show an error (TODO) and return
+   */
+  if (card.isNone()) {
+    return;
   }
-}
 
-const navigateTo = (routeName: string, params?: object) => {
-  return NavigationActions.navigate({ routeName, params });
-};
+  const wallet: NullableWallet = {
+    idWallet: null,
+    type: "CREDIT_CARD",
+    favourite: null,
+    creditCard: card.value
+  };
+  // 1st call: boarding credit card
+  const responseBoardCC:
+    | BasicResponseTypeWith401<WalletResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (token: string) => pagoPaClient.boardCreditCard(token, wallet),
+    pagoPaClient,
+    walletToken
+  );
+
+  /**
+   * Failed request. show an error (TODO) and return
+   */
+  if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
+    return;
+  }
+
+  // 1st call was successful. Proceed with the 2nd one
+  // (boarding pay)
+  const { idWallet } = responseBoardCC.value.data;
+  const payRequest: PayRequest = {
+    data: {
+      idWallet,
+      tipo: "web",
+      cvv: wallet.creditCard.securityCode
+        ? wallet.creditCard.securityCode
+        : undefined
+    }
+  };
+  const responseBoardPay:
+    | BasicResponseTypeWith401<TransactionResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (token: string) => pagoPaClient.boardPay(token, payRequest),
+    pagoPaClient,
+    walletToken
+  );
+  /**
+   * Failed request. show an error (TODO) and return
+   */
+  if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
+    return;
+  }
+  const url = responseBoardPay.value.data.urlCheckout3ds;
+  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+  if (url === undefined || pagoPaToken.isNone()) {
+    // pagoPA is *always* supposed to pass a URL
+    // for the app to open. if it is not there,
+    // exit with an error (TODO)
+    return;
+  }
+  // a valid URL has been made available
+  // from pagoPA and needs to be opened in a webview
+  const urlWithToken = `${url}&sessionToken=${pagoPaToken.value}`;
+  yield put(
+    navigateTo(ROUTES.WALLET_CHECKOUT_3DS_SCREEN, {
+      url: urlWithToken
+    })
+  );
+
+  /**
+   * Wait for the webview to do its thing
+   * (will trigger an addCreditCardCompleted
+   * action upon finishing)
+   */
+  yield take(ADD_CREDIT_CARD_COMPLETED);
+
+  // There currently is no way of determining
+  // whether the card has been added successfully from
+  // the URL returned in the webview, so the approach here
+  // is: count current number of cards, refresh cards,
+  // check if new number of cards is previous number + 1.
+  // If so, the card has been added.
+  // TODO: find a way of finding out the result of the
+  // request from the URL
+  const currentCount: number = yield select(walletCountSelector);
+  yield call(fetchWallets, pagoPaClient, walletToken);
+  const updatedCount: number = yield select(walletCountSelector);
+  if (updatedCount === currentCount + 1) {
+    console.warn("Card added successfully!"); // tslint:disable-line no-console
+  } else {
+    console.warn("The card could not be added :("); // tslint:disable-line no-console
+  }
+  yield put(creditCardDataCleanup());
+
+  // TODO: this should use StackActions.reset
+  // to reset the navigation. Right now, the
+  // "back" option is not allowed -- so the user cannot
+  // get back to previous screens, but the navigation
+  // stack should be cleaned right here
+  // @https://www.pivotaltracker.com/story/show/159300579
+  yield put(navigateTo(ROUTES.WALLET_HOME));
+}
 
 function* paymentSagaFromQrCode(): Iterator<Effect> {
   yield put(paymentQrCode());
