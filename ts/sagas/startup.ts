@@ -44,6 +44,7 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchWalletSaga } from "./wallet";
+import walletSaga from "./wallet";
 
 /**
  * Handles the application startup and the main application logic loop
@@ -142,6 +143,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // proceed with starting the "watch wallet" saga
   const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   yield fork(
+    walletSaga,
     watchWalletSaga,
     pagoPaClient,
     maybeSessionInformation.value.walletToken

@@ -261,7 +261,7 @@ wallet:
   ConfirmPayment:
     header: Conferma pagamento
     cancel: ANNULLA
-    cancelPayment: Annulla il pagamento
+    cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo da pagare
