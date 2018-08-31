@@ -123,12 +123,20 @@ export function getCurrentRouteName(navNode: any): string | undefined {
     return undefined;
   }
 
-  if (navNode.routeName && typeof navNode.routeName === "string") {
+  if (
+    navNode.index === undefined &&
+    navNode.routeName &&
+    typeof navNode.routeName === "string"
+  ) {
     // navNode is a NavigationLeafRoute
     return navNode.routeName;
   }
 
-  if (navNode.routes && navNode.index && navNode.routes[navNode.index]) {
+  if (
+    navNode.routes &&
+    navNode.index !== undefined &&
+    navNode.routes[navNode.index]
+  ) {
     const route = navNode.routes[navNode.index];
     return getCurrentRouteName(route);
   }
