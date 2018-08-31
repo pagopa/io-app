@@ -37,7 +37,6 @@ import AppHeader from "../../../components/ui/AppHeader";
 
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -130,7 +129,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       bordered: true,
-      onPress: () => this.props.navigation.navigate(ROUTES.WALLET_HOME),
+      onPress: () => this.props.goBack(),
       title: I18n.t("global.buttons.cancel")
     };
 
