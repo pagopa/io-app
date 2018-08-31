@@ -1,22 +1,23 @@
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
-
+import { paymentCancel } from "./../store/actions/wallet/payment";
 /**
  * A saga that manages the Wallet.
  */
 
+import { isNone } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { NavigationActions } from "react-navigation";
 import {
   call,
   Effect,
   fork,
   put,
+  race,
   select,
   take,
   takeLatest
 } from "redux-saga/effects";
-
-import { Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
@@ -30,6 +31,7 @@ import {
   FETCH_WALLETS_REQUEST,
   LOGOUT_SUCCESS,
   PAYMENT_COMPLETED,
+  PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
@@ -54,9 +56,10 @@ import {
   paymentPickPaymentMethod,
   paymentPickPsp,
   paymentQrCode,
+  PaymentRequestCancel,
   PaymentRequestCompletion,
-  paymentRequestConfirmPaymentMethod,
   PaymentRequestConfirmPaymentMethod,
+  paymentRequestConfirmPaymentMethod,
   PaymentRequestContinueWithPaymentMethods,
   PaymentRequestGoBack,
   PaymentRequestManualEntry,
@@ -91,14 +94,17 @@ import {
   getFavoriteWalletId,
   specificWalletSelector
 } from "../store/reducers/wallet/wallets";
-import { Psp, Wallet } from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
+import { Psp, Wallet } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
 import { SagaCallReturnType } from "../types/utils";
+import { getPin } from "../utils/keychain";
+import { loginWithPinSaga } from "./startup/pinLoginSaga";
+import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -198,6 +204,7 @@ function* watchPaymentSaga(): Iterator<Effect> {
       PAYMENT_UPDATE_PSP,
       PAYMENT_REQUEST_COMPLETION,
       PAYMENT_REQUEST_GO_BACK,
+      PAYMENT_REQUEST_CANCEL,
       PAYMENT_COMPLETED
     ]);
     if (action.type === PAYMENT_COMPLETED) {
@@ -241,8 +248,17 @@ function* watchPaymentSaga(): Iterator<Effect> {
         yield fork(goBackHandler, action);
         break;
       }
+      case PAYMENT_REQUEST_CANCEL: {
+        yield fork(cancelPaymentHandler, action);
+        break;
+      }
     }
   }
+}
+
+function* cancelPaymentHandler(_: PaymentRequestCancel) {
+  yield put(paymentCancel()); // empty the stack
+  yield put(navigateTo(ROUTES.WALLET_HOME));
 }
 
 function* goBackHandler(_: PaymentRequestGoBack) {
@@ -347,6 +363,18 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods
 ) {
+  /**
+   * ask and check PIN before procedd with payment
+   */
+  // Retrieve the configured PIN from the keychain
+  const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
+  if (!isNone(storedPin)) {
+    yield race({
+      proceed: call(loginWithPinSaga, storedPin.value),
+      reset: call(watchPinResetSaga)
+    });
+  }
+
   // find out whether a payment method has already
   // been defined as favorite. If so, use it and
   // ask the user to confirm it
@@ -421,6 +449,8 @@ function* updatePspHandler(action: PaymentUpdatePsp) {
 function* completionHandler(_: PaymentRequestCompletion) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
+
+  // PIN REQUEST COULD BE HERE
 
   // do payment stuff (-> pagoPA REST)
   // retrieve transaction and store it

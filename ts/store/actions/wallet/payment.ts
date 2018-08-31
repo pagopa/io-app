@@ -2,6 +2,7 @@ import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp } from "../../../types/pagopa";
 import {
+  PAYMENT_CANCEL,
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_GO_BACK,
@@ -12,6 +13,7 @@ import {
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_PICK_PSP,
   PAYMENT_QR_CODE,
+  PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
@@ -180,6 +182,14 @@ export type PaymentRequestGoBack = Readonly<{
   type: typeof PAYMENT_REQUEST_GO_BACK;
 }>;
 
+export type PaymentCancel = Readonly<{
+  type: typeof PAYMENT_CANCEL;
+}>;
+
+export type PaymentRequestCancel = Readonly<{
+  type: typeof PAYMENT_REQUEST_CANCEL;
+}>;
+
 /**
  * All possible payment actions
  */
@@ -206,7 +216,9 @@ export type PaymentActions =
   | PaymentRequestCompletion
   | PaymentCompleted
   | PaymentGoBack
-  | PaymentRequestGoBack;
+  | PaymentRequestGoBack
+  | PaymentCancel
+  | PaymentRequestCancel;
 
 export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
   type: PAYMENT_REQUEST_QR_CODE
@@ -338,4 +350,12 @@ export const paymentGoBack = (): PaymentGoBack => ({
 
 export const paymentRequestGoBack = (): PaymentRequestGoBack => ({
   type: PAYMENT_REQUEST_GO_BACK
+});
+
+export const paymentCancel = (): PaymentCancel => ({
+  type: PAYMENT_CANCEL
+});
+
+export const paymentRequestCancel = (): PaymentRequestCancel => ({
+  type: PAYMENT_REQUEST_CANCEL
 });

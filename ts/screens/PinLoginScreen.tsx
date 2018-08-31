@@ -1,32 +1,30 @@
-import * as React from "react";
-
-import { StatusBar } from "react-native";
+/**
+ * A screen that allows the user to:
+ * - unlock the app with a PIN
+ * - complete a payment with a PIN
+ * - cancel the payment process from the related link
+ */
 
 import { Button, Content, Text, View } from "native-base";
-
-import { connect } from "react-redux";
-
+import * as React from "react";
+import { StatusBar } from "react-native";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-
-import I18n from "../i18n";
-
-import variables from "../theme/variables";
-
+import { connect } from "react-redux";
+import GoBackLink from "../components/GoBackLink";
+import { ContextualHelpInjectedProps } from "../components/helpers/withContextualHelp";
 import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
-
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
-
+import I18n from "../i18n";
 import { pinLoginValidateRequest } from "../store/actions/pinlogin";
+import { startPinReset } from "../store/actions/pinset";
 import { ReduxProps } from "../store/actions/types";
+import { AppState } from "../store/reducers/appState";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
-
-import { ContextualHelpInjectedProps } from "../components/helpers/withContextualHelp";
-import { startPinReset } from "../store/actions/pinset";
-import { AppState } from "../store/reducers/appState";
+import variables from "../theme/variables";
 import { PinString } from "../types/PinString";
 
 type ReduxMappedProps = {
@@ -44,10 +42,8 @@ type Props = ReduxMappedProps &
   ContextualHelpInjectedProps;
 
 type CodeInputRef = CodeInput | null;
-/**
- * A screen that allows the user to unlock the app with a PIN.
- */
-class PinLoginScreen extends React.Component<Props> {
+
+class PinScreen extends React.Component<Props> {
   private pinComponent: CodeInputRef = null;
 
   public componentDidUpdate(prevProps: Props) {
@@ -136,6 +132,8 @@ class PinLoginScreen extends React.Component<Props> {
           </Button>
           <View spacer={true} />
           <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
+          <View spacer={true} />
+          <GoBackLink navigation={this.props.navigation} />
         </Content>
       </BaseScreenComponent>
     );
@@ -151,4 +149,4 @@ const mapStateToProps = ({
   appState
 });
 
-export default connect(mapStateToProps)(PinLoginScreen);
+export default connect(mapStateToProps)(PinScreen);

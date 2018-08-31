@@ -34,13 +34,11 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
 import AppHeader from "../../../components/ui/AppHeader";
-
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentRequestCancel,
   paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
@@ -54,6 +52,7 @@ type ReduxMappedStateProps = Readonly<{
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
   goBack: () => void;
+  cancelPayment: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -130,7 +129,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       bordered: true,
-      onPress: () => this.props.navigation.navigate(ROUTES.WALLET_HOME),
+      onPress: () => this.props.cancelPayment(),
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -206,7 +205,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
     dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount)),
-  goBack: () => dispatch(paymentRequestGoBack())
+  goBack: () => dispatch(paymentRequestGoBack()),
+  cancelPayment: () => dispatch(paymentRequestCancel())
 });
 
 export default connect(

@@ -9,6 +9,7 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import {
+  PAYMENT_CANCEL,
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_GO_BACK,
@@ -593,6 +594,21 @@ const endPaymentReducer: PaymentReducer = (
   return state;
 };
 
+/**
+ * Reducer for actions that cancel a payment
+ */
+const cancelPaymentReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
+  if (action.type === PAYMENT_CANCEL) {
+    return {
+      stack: [] // cleaning up
+    };
+  }
+  return state;
+};
+
 const reducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
@@ -604,6 +620,7 @@ const reducer = (
     confirmMethodReducer,
     pickPspReducer,
     goBackReducer,
+    cancelPaymentReducer,
     endPaymentReducer
   ];
   return reducers.reduce(
