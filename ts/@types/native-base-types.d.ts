@@ -38,6 +38,11 @@ declare module "native-base/src/theme/components" {
 declare module "native-base/src/theme/variables/material" {
   export default {
     borderWidth: number,
-    inputBorderColor: string
+    inputBorderColor: string,
+
+    // input
+    inputFontSize: number,
+    inputColor: string,
+    inputHeightBase: number
   };
 }

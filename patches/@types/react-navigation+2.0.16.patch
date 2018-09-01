@@ -1,0 +1,13 @@
+patch-package
+--- a/node_modules/@types/react-navigation/index.d.ts
++++ b/node_modules/@types/react-navigation/index.d.ts
+@@ -274,7 +274,8 @@ export interface NavigationInitAction extends NavigationInitActionPayload {
+ }
+ 
+ export interface NavigationReplaceActionPayload {
+-    key: string;
++    key?: string;
++    newKey?: string;
+     routeName: string;
+     params?: NavigationParams;
+     action?: NavigationNavigateAction;
