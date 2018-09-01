@@ -101,17 +101,19 @@ class MessageComponent extends React.Component<Props> {
 
     return (
       <ListItem key={id} onPress={handleOnPress}>
-        <View padded={payment_data !== undefined}>
+        <View>
           <Left>
             <Text leftAlign={true} alternativeBold={true}>
               {senderServiceLabel}
             </Text>
-            <Text leftAlign={true}>{subject}</Text>
           </Left>
           <Right>
             <Text formatDate={true}>{uiCreatedAt}</Text>
             <Icon name="chevron-right" />
           </Right>
+        </View>
+        <View>
+          <Text leftAlign={true}>{subject}</Text>
         </View>
         {payment_data !== undefined &&
           dispatchPaymentAction !== undefined && (

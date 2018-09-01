@@ -1,11 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
 import {
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
-  RefreshControlProps,
-  StyleSheet
+  RefreshControlProps
 } from "react-native";
 import {
   NavigationEventSubscription,
@@ -43,12 +41,6 @@ export type OwnProps = Readonly<{
 }>;
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 /**
  * This screen show the messages to the authenticated user.
@@ -97,15 +89,13 @@ class MessagesScreen extends React.Component<Props> {
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
       >
-        <View style={styles.container}>
-          <FlatList
-            scrollEnabled={true}
-            data={this.props.messages}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            refreshControl={this.refreshControl()}
-          />
-        </View>
+        <FlatList
+          scrollEnabled={true}
+          data={this.props.messages}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+          refreshControl={this.refreshControl()}
+        />
       </TopScreenComponent>
     );
   }
