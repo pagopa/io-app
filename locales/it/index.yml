@@ -380,6 +380,7 @@ messages:
     all: Tutti
     deadlines: Scadenze
   contentTitle: Messaggi
+  refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
   yesterday: ieri
   cta:

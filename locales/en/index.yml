@@ -370,6 +370,7 @@ messages:
     all: All
     deadlines: Deadlines
   contentTitle: Messages
+  refresh: Pull down to refresh
   loading: Loading Messages...
   yesterday: yesterday
   cta:

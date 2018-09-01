@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  RefreshControl,
-  RefreshControlProps
-} from "react-native";
+import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -71,15 +66,14 @@ class MessagesScreen extends React.Component<Props> {
     );
   };
 
-  private refreshControl(): React.ReactElement<RefreshControlProps> {
-    return (
-      <RefreshControl
-        onRefresh={this.refreshList}
-        refreshing={this.props.isLoadingMessages}
-        colors={[variables.brandPrimary]}
-      />
-    );
-  }
+  private refreshControl = (
+    <RefreshControl
+      onRefresh={this.refreshList}
+      refreshing={this.props.isLoadingMessages}
+      colors={[variables.brandPrimary]}
+      title={I18n.t("messages.refresh")}
+    />
+  );
 
   public keyExtractor = ({ id }: MessageWithContentPO) => id;
 
@@ -94,7 +88,7 @@ class MessagesScreen extends React.Component<Props> {
           data={this.props.messages}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
-          refreshControl={this.refreshControl()}
+          refreshControl={this.refreshControl}
         />
       </TopScreenComponent>
     );
