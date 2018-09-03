@@ -115,7 +115,7 @@ platform :ios do
       "ItaliaAppTests/Info.plist"
     ]
     git_add(path: versioning_paths)
-    git_commit(path: versioning_paths, message: "[fastlane] New iOS build v#{version_number} (build #{build_number})")
+    git_commit(path: versioning_paths, message: "[fastlane] New iOS/HockeyApp build v#{version_number} (build #{build_number})")
 
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
@@ -128,6 +128,45 @@ platform :ios do
     hockey(
       api_token: HOCKEYAPP_ALPHA_TOKEN,
       notes: changelog
+    )
+  end
+
+  desc "Submit a new Beta Build to TestFlight"
+  lane :beta_testflight do |options|
+    # Ensure that your git status is not dirty
+    ensure_git_status_clean
+
+    # Increment the build number
+    build_number = increment_build_number
+
+    # Get the current version from the project
+    version_number = get_version_number
+
+    do_build
+
+    # generate the changelog based on last commits
+    changelog = changelog_from_git_commits(
+      tag_match_pattern: "ios/testflight/*"
+    )
+
+    versioning_paths = [
+      "ItaliaApp.xcodeproj/project.pbxproj",
+      "ItaliaApp/Info.plist",
+      "ItaliaAppTests/Info.plist"
+    ]
+    git_add(path: versioning_paths)
+    git_commit(path: versioning_paths, message: "[fastlane] New iOS/TestFlight build v#{version_number} (build #{build_number})")
+
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    add_git_tag(tag: "ios/testflight/#{version_number}/#{build_number}")
+
+    # Push the new commit and tag back to your git remote
+    push_to_git_remote
+
+    # upload to HockeyApp
+    pilot(
+      changelog: changelog
     )
   end
 
