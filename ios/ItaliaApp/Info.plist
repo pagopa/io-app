@@ -39,7 +39,8 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
+  <key>NSAppTransportSecurity</key>
+	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -48,17 +49,26 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>teamdigitale.it</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>The app needs access to the camera to scan QR codes</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+  <key>NSBluetoothPeripheralUsageDescription</key>
+  <string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+  <key>NSCalendarsUsageDescription</key>
+  <string>The app needs NSCalendarsUsageDescription permission</string>
+  <key>NSCameraUsageDescription</key>
+  <string>The app needs access to the camera to scan QR codes</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>The app needs NSLocationWhenInUseUsageDescription permission</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>The app needs NSPhotoLibraryUsageDescription permission</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
+  <key>NSAppleMusicUsageDescription</key>
+  <string>The app needs NSAppleMusicUsageDescription permission</string>
+  <key>NSMotionUsageDescription</key>
+  <string>The app needs NSMotionUsageDescription permission</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>
