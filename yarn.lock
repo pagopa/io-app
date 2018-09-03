@@ -677,9 +677,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/redux-form@^7.4.5":
-  version "7.4.5"
-  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.4.5.tgz#fae0fa6cfbc613867093d1e0f6a84db17177305e"
+"@types/redux-form@^7.4.7":
+  version "7.4.7"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.4.7.tgz#59b7a8375257e5a14f926ed244cbfbc411500bb3"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0 || ^4.0.0"

@@ -86,7 +86,7 @@
     "@types/react-navigation": "^2.0.16",
     "@types/react-redux": "^5.0.20",
     "@types/react-test-renderer": "^16.0.2",
-    "@types/redux-form": "^7.4.5",
+    "@types/redux-form": "^7.4.7",
     "@types/redux-logger": "^3.0.6",
     "@types/redux-saga": "^0.10.5",
     "@types/stacktrace-js": "^0.0.32",
