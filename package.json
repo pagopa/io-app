@@ -38,7 +38,7 @@
     "react-native-exception-handler": "^2.9.0",
     "react-native-fs": "2.11.15",
     "react-native-i18n": "^2.0.12",
-    "react-native-keychain": "^3.0.0-rc.3",
+    "react-native-keychain": "^3.0.0",
     "react-native-mixpanel": "^0.0.16",
     "react-native-offline": "3.11.0",
     "react-native-popup-menu": "^0.14.0",
