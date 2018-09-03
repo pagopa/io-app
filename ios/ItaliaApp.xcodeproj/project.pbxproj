@@ -814,6 +814,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				67E6D9F593398605CCC46E65 /* [CP] Copy Pods Resources */,
 				61CC933C2135818C00206602 /* Embed Frameworks */,
+				7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */,
 			);
 			buildRules = (
 			);
@@ -1377,6 +1378,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Work around InputMask.xcodeproj embedding an extra set of Swift libraries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# see https://github.com/react-native-community/react-native-text-input-mask/issues/22#issuecomment-344765116\n\nEXTRA_DIR=\"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Frameworks/InputMask.framework/Frameworks\"\n\nif [[ -d \"${EXTRA_DIR}\" ]]; then\n  rm -rf \"${EXTRA_DIR}\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
