@@ -36,9 +36,14 @@ fastlane ios refresh_profiles
 fastlane ios test_build
 ```
 
-### ios do_build
+### ios do_adhoc_build
 ```
-fastlane ios do_build
+fastlane ios do_adhoc_build
+```
+
+### ios do_testflight_build
+```
+fastlane ios do_testflight_build
 ```
 
 ### ios beta

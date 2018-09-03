@@ -68,8 +68,8 @@ platform :ios do
     )
   end
 
-  # Builds the app
-  lane :do_build do
+  # Builds the app for ad-hoc releases (e.g. HockeyApp)
+  lane :do_adhoc_build do
     # Install pods
     cocoapods
 
@@ -78,6 +78,23 @@ platform :ios do
       scheme: "ItaliaApp",
       clean: true,
       export_method: "ad-hoc",
+      workspace: "ItaliaApp.xcworkspace",
+      # sdk: "iphoneos8.4"
+    )
+  end
+
+  # Builds the app for TestFlight releases
+  lane :do_testflight_build do
+    sync_code_signing(type: "appstore")
+
+    # Install pods
+    cocoapods
+
+    # build the app
+    gym(
+      scheme: "ItaliaApp",
+      clean: true,
+      export_method: "app-store",
       workspace: "ItaliaApp.xcworkspace",
       # sdk: "iphoneos8.4"
     )
@@ -102,7 +119,7 @@ platform :ios do
       type: "adhoc"
     )
 
-    do_build
+    do_adhoc_build
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
@@ -142,7 +159,7 @@ platform :ios do
     # Get the current version from the project
     version_number = get_version_number
 
-    do_build
+    do_testflight_build
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
@@ -166,7 +183,8 @@ platform :ios do
 
     # upload to HockeyApp
     pilot(
-      changelog: changelog
+      changelog: changelog,
+      skip_waiting_for_build_processing: true
     )
   end
 
