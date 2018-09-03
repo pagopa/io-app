@@ -59,7 +59,7 @@ PODS:
     - React
   - RNI18n (2.0.12):
     - React
-  - RNKeychain (3.0.0-rc.3):
+  - RNKeychain (3.0.0):
     - React
   - RNVectorIcons (4.6.0):
     - React
