@@ -31,6 +31,8 @@ import {
   GlobalStateWithSelectedPaymentMethod,
   GlobalStateWithVerificaResponse
 } from "../types";
+import { WalletStateWithVerificaResponse } from "./../../reducers/wallet";
+import { WalletState } from "./index";
 import { getWalletFromId, getWallets } from "./wallets";
 
 // The following are possible states, identified
@@ -126,6 +128,11 @@ export type PaymentStatesWithVerificaResponse =
 export type PaymentStateWithVerificaResponse = Readonly<{
   stack: ReadonlyArray<PaymentStatesWithVerificaResponse>;
 }>;
+
+export const isPaymentStarted = (
+  wallet: WalletState
+): wallet is WalletStateWithVerificaResponse =>
+  wallet.payment.stack.length !== 0;
 
 // type guard for *PaymentState*WithVerificaResponse
 export const isPaymentStateWithVerificaResponse = (

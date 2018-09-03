@@ -15,7 +15,7 @@ import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
-import CancelPaymentLink from "../components/wallet/CanelPaymentLink";
+import CancelPaymentLink from "../components/wallet/CancelPaymentLink";
 import I18n from "../i18n";
 import { pinLoginValidateRequest } from "../store/actions/pinlogin";
 import { startPinReset } from "../store/actions/pinset";
@@ -26,10 +26,12 @@ import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import { PinString } from "../types/PinString";
 import { ContextualHelpInjectedProps } from "./../components/helpers/withContextualHelp";
+import { isPaymentStarted } from "./../store/reducers/wallet/payment";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
   appState: AppState;
+  inPayment: boolean;
 };
 
 type OwnProps = {
@@ -43,7 +45,7 @@ type Props = ReduxMappedProps &
 
 type CodeInputRef = CodeInput | null;
 
-class PinScreen extends React.Component<Props> {
+class PinLoginScreen extends React.Component<Props> {
   private pinComponent: CodeInputRef = null;
 
   public componentDidUpdate(prevProps: Props) {
@@ -133,7 +135,11 @@ class PinScreen extends React.Component<Props> {
           <View spacer={true} />
           <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
           <View spacer={true} />
-          <CancelPaymentLink navigation={this.props.navigation} />
+          {this.props.inPayment ? (
+            <CancelPaymentLink navigation={this.props.navigation} />
+          ) : (
+            <View />
+          )}
         </Content>
       </BaseScreenComponent>
     );
@@ -142,11 +148,13 @@ class PinScreen extends React.Component<Props> {
 
 const mapStateToProps = ({
   pinlogin,
-  appState
+  appState,
+  wallet
 }: GlobalState): ReduxMappedProps => ({
   // Checks from the store whether there was an error while login with the PIN (e.g. PIN is not valid )
   pinLoginState: pinlogin,
-  appState
+  appState,
+  inPayment: isPaymentStarted(wallet)
 });
 
-export default connect(mapStateToProps)(PinScreen);
+export default connect(mapStateToProps)(PinLoginScreen);

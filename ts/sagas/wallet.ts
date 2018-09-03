@@ -1,9 +1,9 @@
 import { paymentCancel } from "./../store/actions/wallet/payment";
+
 /**
  * A saga that manages the Wallet.
  */
 
-import { isNone } from "fp-ts/lib/Option";
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
@@ -365,10 +365,11 @@ function* continueWithPaymentMethodsHandler(
 ) {
   /**
    * ask and check PIN before procedd with payment
+   * TODO: apply suggestion - https://github.com/teamdigitale/italia-app/pull/446
    */
   // Retrieve the configured PIN from the keychain
   const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
-  if (!isNone(storedPin)) {
+  if (storedPin.isSome()) {
     yield race({
       proceed: call(loginWithPinSaga, storedPin.value),
       reset: call(watchPinResetSaga)

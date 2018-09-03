@@ -1,5 +1,6 @@
 /**
- * description
+ * This component epresent a link that, if pressed,
+ * redirects to the Wallet Home cancelling the started payment process
  */
 
 import { Text } from "native-base";
@@ -20,7 +21,7 @@ type ReduxMappedDispatchProps = Readonly<{
 
 type Props = OwnProps & ReduxMappedDispatchProps;
 
-class GoBackLink extends React.PureComponent<Props> {
+class CancelPaymentLink extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     return (
       <Text
@@ -36,8 +37,8 @@ class GoBackLink extends React.PureComponent<Props> {
 }
 
 /**
- *  goBack should have the same behaviour of the Cancel button of the screens related to the payment.
- *  The effects of the story https://www.pivotaltracker.com/n/projects/2048617/stories/159427678
+ * TO DO: The effects of the story
+ * @https://www.pivotaltracker.com/n/projects/2048617/stories/159427678
  * should be reflected here too
  */
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
@@ -47,4 +48,4 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 export default connect(
   undefined,
   mapDispatchToProps
-)(GoBackLink);
+)(CancelPaymentLink);
