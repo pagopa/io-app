@@ -31,6 +31,7 @@
 		35AB9409319547D49377A8A4 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 957D29404B4D44148A50733B /* Ionicons.ttf */; };
 		41C03DA891C440119D5C8E4A /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99B8910123A0417899F5279C /* TitilliumWeb-LightItalic.ttf */; };
 		4741130A13484E4DAD0AD8B6 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E8E0435329F4914B3330212 /* FontAwesome.ttf */; };
+		4AC4C897483E05C4FE1B9A42 /* Pods_ItaliaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C24491C36ED014803FE22AE /* Pods_ItaliaApp.framework */; };
 		5C48EBF4E1994178BA4A50FB /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7670B65AD2A4A4A901AD6F7 /* io-icon-font.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		61CC93102135818C00206602 /* InputMask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC930F2135818B00206602 /* InputMask.framework */; };
@@ -43,7 +44,6 @@
 		79DF4FF3A90F4FC6BB70D4E3 /* TitilliumWeb-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 735406CD802B4D7FAD8B2CE1 /* TitilliumWeb-Black.ttf */; };
 		7AF92A78A57B48DEBF0759F1 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59B8F6E908444E9CA2DCF7EA /* rubicon-icon-font.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		9C2908B7A16F026BC814D1E9 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACC9BAF6AFD68B36B96AAE5 /* libPods-ItaliaApp.a */; };
 		A2DBFEC58B774D629C9F7C35 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6447932334DC4FE5ACD24BDB /* EvilIcons.ttf */; };
 		A5D0990254744D0498425C09 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D2A13F7C0F4FD383910B1E /* MaterialIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
@@ -424,7 +424,6 @@
 		629702ABB4FC4FCEA5C29455 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		6447932334DC4FE5ACD24BDB /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		6617DD96D0D64B85A5553DB3 /* TitilliumWeb-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-SemiBoldItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		6ACC9BAF6AFD68B36B96AAE5 /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CDD69BDFB984F92AC487997 /* TitilliumWeb-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Light.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Light.ttf"; sourceTree = "<group>"; };
 		6D94E785317A4CE6840C34C0 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeExceptionHandler.a; sourceTree = "<group>"; };
 		6E8E0435329F4914B3330212 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -435,6 +434,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		957D29404B4D44148A50733B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		99B8910123A0417899F5279C /* TitilliumWeb-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-LightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf"; sourceTree = "<group>"; };
+		9C24491C36ED014803FE22AE /* Pods_ItaliaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItaliaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4827A715541433A928083C5 /* RNTextInputMask.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextInputMask.xcodeproj; path = "../node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B7670B65AD2A4A4A901AD6F7 /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
@@ -476,8 +476,8 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				BCC6A5BE7EA743388104A040 /* libreact-native-sha256.a in Frameworks */,
 				F79805F89B1C426B89BF2FD5 /* libReactNativeExceptionHandler.a in Frameworks */,
-				9C2908B7A16F026BC814D1E9 /* libPods-ItaliaApp.a in Frameworks */,
 				1E5E2F92276B4E66A82EB971 /* libRNTextInputMask.a in Frameworks */,
+				4AC4C897483E05C4FE1B9A42 /* Pods_ItaliaApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,7 +777,7 @@
 		D4DC8E1B3B2C5EA1E4968752 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6ACC9BAF6AFD68B36B96AAE5 /* libPods-ItaliaApp.a */,
+				9C24491C36ED014803FE22AE /* Pods_ItaliaApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -812,9 +812,9 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				67E6D9F593398605CCC46E65 /* [CP] Copy Pods Resources */,
 				61CC933C2135818C00206602 /* Embed Frameworks */,
 				7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */,
+				2DB534CD7B00D408BBF2AB9A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1289,6 +1289,50 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		2DB534CD7B00D408BBF2AB9A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Mixpanel/Mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/RNDeviceInfo/RNDeviceInfo.framework",
+				"${BUILT_PRODUCTS_DIR}/RNFS/RNFS.framework",
+				"${BUILT_PRODUCTS_DIR}/RNI18n/RNI18n.framework",
+				"${BUILT_PRODUCTS_DIR}/RNKeychain/RNKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/RNVectorIcons/RNVectorIcons.framework",
+				"${BUILT_PRODUCTS_DIR}/React/React.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactNativePermissions/ReactNativePermissions.framework",
+				"${BUILT_PRODUCTS_DIR}/react-native-config/react_native_config.framework",
+				"${BUILT_PRODUCTS_DIR}/react-native-mixpanel/react_native_mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/react-native-splash-screen/react_native_splash_screen.framework",
+				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNDeviceInfo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNFS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNI18n.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNVectorIcons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativePermissions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/react_native_config.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/react_native_mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/react_native_splash_screen.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		53F7455015FEF25DB3681554 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1305,78 +1349,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		67E6D9F593398605CCC46E65 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowRight.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowRight@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCheckmark.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCheckmark@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton@3x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPDismissKeyboard.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPDismissKeyboard@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPLogo.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPLogo@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/placeholder-image.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~ipad.xib",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphonelandscape.xib",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphoneportrait.xib",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowRight.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowRight@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCheckmark.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCheckmark@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPDismissKeyboard.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPDismissKeyboard@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPLogo.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPLogo@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/placeholder-image.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~ipad.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~iphonelandscape.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~iphoneportrait.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */ = {
