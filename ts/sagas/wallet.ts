@@ -364,7 +364,7 @@ function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods
 ) {
   /**
-   * ask and check PIN before procedd with payment
+   * ask and check PIN before proceed with payment
    * TODO: apply suggestion - https://github.com/teamdigitale/italia-app/pull/446
    */
   // Retrieve the configured PIN from the keychain
