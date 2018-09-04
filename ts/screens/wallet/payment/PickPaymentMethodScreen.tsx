@@ -4,7 +4,6 @@
  */
 import {
   Body,
-  Button,
   Container,
   Content,
   H1,
@@ -16,9 +15,10 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import GoBackButton from "../../../components/GoBackButton";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import IconFont from "../../../components/ui/IconFont";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -27,7 +27,8 @@ import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestConfirmPaymentMethod,
-  paymentRequestGoBack
+  paymentRequestGoBack,
+  paymentRequestTransactionSummaryFromBanner
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
@@ -46,6 +47,7 @@ type ReduxMappedStateProps =
 type ReduxMappedDispatchProps = Readonly<{
   confirmPaymentMethod: (walletId: number) => void;
   goBack: () => void;
+  showSummary: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -60,13 +62,25 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       return null;
     }
 
+    const primaryButtonProps = {
+      block: true,
+      onPress: () =>
+        this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD),
+      title: I18n.t("wallet.newPaymentMethod.newMethod")
+    };
+
+    const secondaryButtonProps = {
+      block: true,
+      cancel: true,
+      onPress: this.props.showSummary,
+      title: I18n.t("global.buttons.cancel")
+    };
+
     return (
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton onPress={this.props.goBack} />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.payWith.header")}</Text>
@@ -98,20 +112,11 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             />
           </View>
         </Content>
-        <View footer={true}>
-          <Button
-            block={true}
-            onPress={() =>
-              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
-            }
-          >
-            <Text>{I18n.t("wallet.newPaymentMethod.newMethod")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button block={true} cancel={true}>
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
+
+        <FooterWithButtons
+          leftButton={primaryButtonProps}
+          rightButton={secondaryButtonProps}
+        />
       </Container>
     );
   }
@@ -128,7 +133,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmPaymentMethod: (walletId: number) =>
     dispatch(paymentRequestConfirmPaymentMethod(walletId)),
-  goBack: () => dispatch(paymentRequestGoBack())
+  goBack: () => dispatch(paymentRequestGoBack()),
+  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
 export default connect(

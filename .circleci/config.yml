@@ -17,11 +17,12 @@ defaults_js: &defaults_js
 defaults_android: &defaults_android
   <<: *defaults
   docker:
-    - image: circleci/android:api-27-node8-alpha
+    - image: circleci/android:api-23-node8-alpha
   environment:
     - TERM: "dumb"
     - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
-    - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
+    - ANDROID_SDK_BUILD_API_LEVEL: "23"
+    - REACT_NATIVE_MAX_WORKERS: 1
 
 # macos builds
 defaults_macos: &defaults_macos
@@ -62,7 +63,7 @@ jobs:
           - v1-dependencies-
 
       # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive
+      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
       # Save node cache
       - save_cache:
@@ -74,6 +75,7 @@ jobs:
       - run: yarn lint
 
       # Build app
+      - run: yarn generate:locales
       - run: yarn generate:api-definitions
       - run: yarn generate:pagopa-api-definitions
       - run: yarn tsc:noemit
@@ -160,16 +162,7 @@ jobs:
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
-    <<: *defaults
-
-    docker:
-      - image: circleci/android:api-27-node8-alpha
-
-    environment:
-      - TERM: "dumb"
-      - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
-      - ANDROID_SDK_BUILD_API_LEVEL="23": "23"
-      - REACT_NATIVE_MAX_WORKERS: 1
+    <<: *defaults_android
 
     steps:
       # Restore workflow workspace
@@ -296,7 +289,7 @@ jobs:
       - run: npm run postinstall
 
       # Install pods
-      - run: cd ios && pod install --verbose
+      - run: cd ios && bundle exec pod install --verbose
 
       # Install Detox and ios-sim utils
       # see: https://github.com/wix/detox/

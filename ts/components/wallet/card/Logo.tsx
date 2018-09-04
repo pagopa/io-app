@@ -33,8 +33,15 @@ export const cardIcons: { [key in CreditCardType]: any } = {
   UNKNOWN: require("../../../../img/wallet/cards-icons/unknown.png")
 };
 
-export const getCardIcon = (w: Wallet) => {
-  return cardIcons[w.creditCard.brandLogo];
+// PagoPA's "brandLogo" is not a string that
+// allows for the identification of a logo,
+// but rather a link to the card logo image
+// As a temporary fix, the "unknown" card will be
+// shown for all cards -- a future story will take
+// care of switching the images to the actual logos
+// @https://www.pivotaltracker.com/story/show/159651239
+export const getCardIcon = (_: Wallet) => {
+  return require("../../../../img/wallet/cards-icons/unknown.png");
 };
 
 const styles = StyleSheet.create({

@@ -4,24 +4,29 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { PaymentData } from "../../../definitions/backend/PaymentData";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
-import { formatPaymentAmount } from "../../utils/payment";
+
+import { PaymentData } from "../../../definitions/backend/PaymentData";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+
+import IconFont from "../../components/ui/IconFont";
+import H4 from "../ui/H4";
+import H6 from "../ui/H6";
 import Markdown from "../ui/Markdown";
+
+import variables from "../../theme/variables";
+
+import { formatPaymentAmount } from "../../utils/payment";
+
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+
 import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
 export type OwnProps = Readonly<{
-  createdAt: string;
-  id: string;
-  markdown: string;
-  paymentData: PaymentData;
-  serviceDepartmentName: string;
-  serviceName: string;
-  serviceOrganizationName: string;
-  subject: string;
-  onPaymentCTAClick: (paymentData: PaymentData) => void;
+  message: MessageWithContentPO;
+  senderService: ServicePublic | undefined;
+  dispatchPaymentAction: (() => void) | undefined;
+  navigateToServicePreferences: (() => void) | undefined;
 }>;
 
 type State = Readonly<{
@@ -85,14 +90,13 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   };
 
   // Render the Message CTAs if the message contains PaymentData
-  private renderMessageCTA = (paymentData: PaymentData) => {
+  private renderMessageCTA = (
+    paymentData: PaymentData,
+    dispatchPaymentAction: (() => void) | undefined
+  ) => {
     return paymentData ? (
       <View style={styles.messageCTAContainer}>
-        <Button
-          block={true}
-          primary={true}
-          onPress={() => this.props.onPaymentCTAClick(paymentData)}
-        >
+        <Button block={true} primary={true} onPress={dispatchPaymentAction}>
           <Text>
             {I18n.t("messages.cta.pay", {
               amount: formatPaymentAmount(paymentData.amount)
@@ -104,18 +108,23 @@ class MessageDetailsComponent extends React.Component<Props, State> {
   };
 
   public render() {
-    const {
-      subject,
-      markdown,
-      createdAt,
-      paymentData,
-      serviceOrganizationName,
-      serviceDepartmentName,
-      serviceName
-    } = this.props;
+    const message = this.props.message;
+
+    const senderService = this.props.senderService;
+
+    const dispatchPaymentAction = this.props.dispatchPaymentAction;
+
+    const { subject, markdown, payment_data } = message;
     return (
       <View>
         <View style={styles.messageHeaderContainer}>
+          {senderService && <H4>{senderService.organization_name}</H4>}
+          {senderService && (
+            <H6 link={true} onPress={this.props.navigateToServicePreferences}>
+              {senderService.service_name}
+            </H6>
+          )}
+          {senderService && <View spacer={true} />}
           <H1>{subject}</H1>
           <View spacer={true} />
           <TouchableOpacity
@@ -129,16 +138,23 @@ class MessageDetailsComponent extends React.Component<Props, State> {
           </TouchableOpacity>
           {this.state.isMessageDetailsInfoVisible && (
             <MessageDetailsInfoComponent
-              createdAt={createdAt}
-              serviceName={serviceName}
-              serviceDepartmentName={serviceDepartmentName}
-              serviceOrganizationName={serviceOrganizationName}
+              message={message}
+              senderService={senderService}
+              navigateToServicePreferences={
+                this.props.navigateToServicePreferences
+              }
             />
           )}
         </View>
-        {this.renderMessageCTA(paymentData)}
+        {payment_data &&
+          dispatchPaymentAction &&
+          this.renderMessageCTA(payment_data, dispatchPaymentAction)}
         <View style={styles.messageContentContainer}>
-          <Markdown>{markdown}</Markdown>
+          {markdown ? (
+            <Markdown>{markdown}</Markdown>
+          ) : (
+            <Text>{I18n.t("messages.noContent")}</Text>
+          )}
         </View>
       </View>
     );

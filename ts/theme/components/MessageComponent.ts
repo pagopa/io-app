@@ -16,25 +16,32 @@ export default (): Theme => {
         "NativeBase.Right": {
           "NativeBase.Text": {
             alignSelf: "flex-end",
-            fontWeight: "bold",
             fontSize: variables.fontSize2,
             lineHeight: variables.lineHeight2
           },
           "NativeBase.Icon": {
             color: variables.brandPrimaryLight,
             alignSelf: "flex-end",
-            paddingTop: 20
+            height: variables.lineHeight2
           },
           flex: 3,
-          flexDirection: "column",
+          flexDirection: "row",
           alignSelf: "flex-start"
         },
+        "NativeBase.Text": {
+          paddingRight: variables.gridGutter
+        },
         flex: 1,
-        flexDirection: "row"
+        flexDirection: "row",
+        alignSelf: "flex-start"
+      },
+      "NativeBase.Button": {
+        marginTop: variables.gridGutter,
+        marginRight: variables.gridGutter * 2
       },
       flex: 1,
       flexDirection: "column",
-      marginLeft: 0,
+      paddingLeft: variables.gridGutter,
       borderBottomColor: variables.brandLightGray,
       borderBottomWidth: 0.5
     }

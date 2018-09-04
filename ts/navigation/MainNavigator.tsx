@@ -11,7 +11,6 @@ import { createBottomTabNavigator } from "react-navigation";
 
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
-import PlaceholderScreen from "../screens/PlaceholderScreen";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
@@ -95,9 +94,11 @@ const navigation = createBottomTabNavigator(
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator
     },
-    [ROUTES.DOCUMENTS_HOME]: {
-      screen: PlaceholderScreen
-    },
+    // FIXME: Documents are temporarily disabled during the experimental phase
+    // see https://www.pivotaltracker.com/story/show/159490857
+    // [ROUTES.DOCUMENTS_HOME]: {
+    //   screen: PlaceholderScreen
+    // },
     [ROUTES.PREFERENCES_HOME]: {
       screen: PreferencesNavigator
     },

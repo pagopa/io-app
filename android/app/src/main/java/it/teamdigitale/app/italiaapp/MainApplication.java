@@ -9,6 +9,9 @@ import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.RNTextInputMask.RNTextInputMaskPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -33,6 +36,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNTextInputMaskPackage(),
+            new SplashScreenReactPackage(),
+            new ReactNativeExceptionHandlerPackage(),
             new RNCameraPackage(),
             new VectorIconsPackage(),
             new ReactNativePushNotificationPackage(),

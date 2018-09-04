@@ -16,7 +16,7 @@ export default (): Theme => {
   return {
     "NativeBase.Left": {
       "NativeBase.Button": {
-        "UIComponents.IconFont": {
+        "UIComponent.IconFont": {
           color: variables.textColor
         },
         padding: 0,
@@ -34,13 +34,14 @@ export default (): Theme => {
         backgroundColor: "transparent",
         color: variables.toolbarTextColor,
         fontSize: variables.headerBodyFontSize
-      }
+      },
+      marginLeft: 10
     },
 
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground,
       "NativeBase.Right": {
-        "UIComponents.IconFont": {
+        "UIComponent.IconFont": {
           color: variables.brandPrimaryInverted
         }
       }

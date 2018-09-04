@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
-import { makeReactNativeRule } from ".";
+import { makeReactNativeRule } from "./utils";
 
 function rule() {
   return (
@@ -17,7 +17,7 @@ function rule() {
         style: {
           flexWrap: "wrap",
           flexDirection: "row",
-          alignItems: "flex-start",
+          alignItems: "center",
           justifyContent: "flex-start"
         }
       },

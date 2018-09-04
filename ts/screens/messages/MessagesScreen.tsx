@@ -1,19 +1,16 @@
-import { Container, H1, Tab, Tabs, View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  RefreshControl,
-  RefreshControlProps,
-  StyleSheet
-} from "react-native";
+import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+
 import MessageComponent from "../../components/messages/MessageComponent";
+
 import I18n from "../../i18n";
+
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
@@ -21,8 +18,12 @@ import { orderedMessagesSelector } from "../../store/reducers/entities/messages"
 import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
+
 import variables from "../../theme/variables";
+
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
@@ -34,31 +35,12 @@ export type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type IMessageDetails = Readonly<{
-  item: Readonly<MessageWithContentPO>;
-  index: number;
-}>;
-
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
-
-const styles = StyleSheet.create({
-  tabBarUnderlineStyle: {
-    width: 0
-  },
-  activeTabStyle: {
-    borderBottomWidth: 2,
-    borderBottomColor: variables.brandPrimaryLight
-  },
-  notActiveTabStyle: {
-    borderBottomWidth: 0,
-    borderBottomColor: variables.brandPrimaryInverted
-  }
-});
 
 /**
  * This screen show the messages to the authenticated user.
  */
-class MessagesScreen extends React.Component<Props, never> {
+class MessagesScreen extends React.Component<Props> {
   private didFocusSubscription?: NavigationEventSubscription;
 
   public componentDidMount() {
@@ -73,85 +55,52 @@ class MessagesScreen extends React.Component<Props, never> {
     }
   }
 
-  private refreshList() {
-    this.props.dispatch(loadMessages());
-  }
+  private refreshList = () => this.props.dispatch(loadMessages());
 
-  public renderItem = (messageDetails: IMessageDetails) => {
+  private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
     return (
       <MessageComponent
-        id={messageDetails.item.id}
+        message={info.item}
         navigation={this.props.navigation}
-        senderServiceId={messageDetails.item.sender_service_id}
       />
     );
   };
 
-  private refreshControl(): React.ReactElement<RefreshControlProps> {
-    return (
-      <RefreshControl
-        onRefresh={() => this.refreshList()}
-        refreshing={this.props.isLoadingMessages}
-        colors={[variables.brandPrimary]}
-      />
-    );
-  }
+  private refreshControl = (
+    <RefreshControl
+      onRefresh={this.refreshList}
+      refreshing={this.props.isLoadingMessages}
+      colors={[variables.brandPrimary]}
+      title={I18n.t("messages.refresh")}
+    />
+  );
 
-  private renderMessages = (
-    messages: ReadonlyArray<MessageWithContentPO>
-  ): React.ReactNode => {
-    return (
-      <Tabs
-        tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
-        initialPage={0}
-        locked={true}
-      >
-        <Tab
-          heading={I18n.t("messages.tab.all")}
-          activeTabStyle={styles.activeTabStyle}
-        >
-          <FlatList
-            alwaysBounceVertical={false}
-            scrollEnabled={true}
-            data={messages}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
-            refreshControl={this.refreshControl()}
-          />
-        </Tab>
-        <Tab
-          heading={I18n.t("messages.tab.deadlines")}
-          activeTabStyle={styles.activeTabStyle}
-        >
-          <View spacer={true} large={true} />
-        </Tab>
-        <Tab heading={""} activeTabStyle={styles.notActiveTabStyle}>
-          <View spacer={true} large={true} />
-        </Tab>
-        <Tab heading={" "} activeTabStyle={styles.notActiveTabStyle}>
-          <View spacer={true} large={true} />
-        </Tab>
-      </Tabs>
-    );
-  };
+  public keyExtractor = ({ id }: MessageWithContentPO) => id;
 
   public render() {
     return (
-      <Container>
-        <View content={true}>
-          <View spacer={true} />
-          <H1>{I18n.t("messages.contentTitle")}</H1>
-          {this.renderMessages(this.props.messages)}
-        </View>
-      </Container>
+      <TopScreenComponent
+        title={I18n.t("messages.contentTitle")}
+        icon={require("../../../img/icons/message-icon.png")}
+      >
+        <FlatList
+          scrollEnabled={true}
+          data={this.props.messages}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+          refreshControl={this.refreshControl}
+        />
+      </TopScreenComponent>
     );
   }
 }
 
+const loadingMessagesSelector = createLoadingSelector([
+  FetchRequestActions.MESSAGES_LOAD
+]);
+
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
-    state
-  ),
+  isLoadingMessages: loadingMessagesSelector(state),
   messages: orderedMessagesSelector(state),
   services: state.entities.services
 });

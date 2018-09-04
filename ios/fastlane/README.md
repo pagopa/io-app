@@ -26,14 +26,24 @@ Runs all the tests
 fastlane ios register_new_device
 ```
 Register new device
+### ios refresh_profiles
+```
+fastlane ios refresh_profiles
+```
+
 ### ios test_build
 ```
 fastlane ios test_build
 ```
 
-### ios do_build
+### ios do_adhoc_build
 ```
-fastlane ios do_build
+fastlane ios do_adhoc_build
+```
+
+### ios do_testflight_build
+```
+fastlane ios do_testflight_build
 ```
 
 ### ios beta
@@ -43,6 +53,11 @@ fastlane ios beta
 Submit a new Beta Build to HockeyApp
 
 This will also make sure the profile is up to date
+### ios beta_testflight
+```
+fastlane ios beta_testflight
+```
+Submit a new Beta Build to TestFlight
 ### ios release
 ```
 fastlane ios release

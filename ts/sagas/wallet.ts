@@ -14,7 +14,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { Option } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
@@ -22,26 +22,37 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Iban } from "../../definitions/backend/Iban";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
+import { PagoPaClient } from "../api/pagopa";
 import { WalletAPI } from "../api/wallet/wallet-api";
 import ROUTES from "../navigation/routes";
 import {
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
+  LOGOUT_SUCCESS,
   PAYMENT_COMPLETED,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
   PAYMENT_REQUEST_GO_BACK,
   PAYMENT_REQUEST_MANUAL_ENTRY,
+  PAYMENT_REQUEST_MESSAGE,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
+  PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  PAYMENT_UPDATE_PSP,
+  PAYMENT_UPDATE_PSP_IN_STATE
 } from "../store/actions/constants";
+import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
   paymentConfirmPaymentMethod,
   paymentGoBack,
+  paymentInitialConfirmPaymentMethod,
+  paymentInitialPickPaymentMethod,
+  paymentInitialPickPsp,
   paymentManualEntry,
   paymentPickPaymentMethod,
+  paymentPickPsp,
   paymentQrCode,
   PaymentRequestCompletion,
   paymentRequestConfirmPaymentMethod,
@@ -50,10 +61,11 @@ import {
   PaymentRequestGoBack,
   PaymentRequestManualEntry,
   PaymentRequestPickPaymentMethod,
-  paymentRequestPickPaymentMethod,
+  PaymentRequestPickPsp,
   PaymentRequestTransactionSummaryActions,
   paymentTransactionSummaryFromBanner,
-  paymentTransactionSummaryFromRptId
+  paymentTransactionSummaryFromRptId,
+  PaymentUpdatePsp
 } from "../store/actions/wallet/payment";
 import {
   selectTransactionForDetails,
@@ -64,36 +76,99 @@ import {
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
+import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
   getPaymentReason,
   getPaymentRecipient,
+  getPspList,
+  getSelectedPaymentMethod,
+  isGlobalStateWithPaymentId,
   selectedPaymentMethodSelector
 } from "../store/reducers/wallet/payment";
 import {
   feeExtractor,
-  getFavoriteWalletId
+  getFavoriteWalletId,
+  specificWalletSelector
 } from "../store/reducers/wallet/wallets";
+import { Psp, Wallet } from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
-import { Wallet } from "../types/pagopa";
 import {
   UNKNOWN_AMOUNT,
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../types/unknown";
+import { SagaCallReturnType } from "../types/utils";
+
+// allow refreshing token this number of times
+const MAX_TOKEN_REFRESHES = 2;
 
 function* fetchTransactions(
-  loadTransactions: () => Promise<ReadonlyArray<Transaction>>
+  pagoPaClient: PagoPaClient,
+  walletToken: string,
+  token: string,
+  retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
-  const transactions: ReadonlyArray<Transaction> = yield call(loadTransactions);
-  yield put(transactionsFetched(transactions));
+  if (retries === 0) {
+    // max retries reached
+    // show "unauthorized" error @https://www.pivotaltracker.com/story/show/159400682
+    return;
+  }
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getTransactions
+  > = yield call(pagoPaClient.getTransactions, token);
+  if (response !== undefined) {
+    if (response.status === 200) {
+      // ok, all good
+      yield put(transactionsFetched(response.value.data));
+    } else if (response.status === 401) {
+      // unauthorized -- try refreshing the token
+      yield call(fetchPagoPaToken, pagoPaClient, walletToken);
+      // retrieve the newly stored token and use it for
+      // the following request
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(
+          fetchTransactions,
+          pagoPaClient,
+          walletToken,
+          newToken.value,
+          retries - 1
+        );
+      }
+    }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  }
 }
 
-function* fetchCreditCards(
-  loadCards: () => Promise<ReadonlyArray<Wallet>>
+function* fetchWallets(
+  pagoPaClient: PagoPaClient,
+  walletToken: string,
+  token: string,
+  retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<Effect> {
-  const cards: ReadonlyArray<Wallet> = yield call(loadCards);
-  yield put(walletsFetched(cards));
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getWallets
+  > = yield call(pagoPaClient.getWallets, token);
+  if (response !== undefined) {
+    if (response.status === 200) {
+      yield put(walletsFetched(response.value.data));
+    } else if (response.status === 401) {
+      // unauthorized -- try refreshing the token
+      yield call(fetchPagoPaToken, pagoPaClient, walletToken);
+      const newToken: Option<string> = yield select(getPagoPaToken);
+      if (newToken.isSome()) {
+        yield call(
+          fetchWallets,
+          pagoPaClient,
+          walletToken,
+          newToken.value,
+          retries - 1
+        );
+      }
+    }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  }
 }
 
 const navigateTo = (routeName: string, params?: object) => {
@@ -106,6 +181,10 @@ function* paymentSagaFromQrCode(): Iterator<Effect> {
   yield fork(watchPaymentSaga);
 }
 
+function* paymentSagaFromMessage(): Iterator<Effect> {
+  yield fork(watchPaymentSaga);
+}
+
 function* watchPaymentSaga(): Iterator<Effect> {
   while (true) {
     const action = yield take([
@@ -115,6 +194,8 @@ function* watchPaymentSaga(): Iterator<Effect> {
       PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
       PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
       PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
+      PAYMENT_REQUEST_PICK_PSP,
+      PAYMENT_UPDATE_PSP,
       PAYMENT_REQUEST_COMPLETION,
       PAYMENT_REQUEST_GO_BACK,
       PAYMENT_COMPLETED
@@ -142,6 +223,14 @@ function* watchPaymentSaga(): Iterator<Effect> {
       }
       case PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD: {
         yield fork(confirmPaymentMethodHandler, action);
+        break;
+      }
+      case PAYMENT_REQUEST_PICK_PSP: {
+        yield fork(pickPspHandler, action);
+        break;
+      }
+      case PAYMENT_UPDATE_PSP: {
+        yield fork(updatePspHandler, action);
         break;
       }
       case PAYMENT_REQUEST_COMPLETION: {
@@ -191,6 +280,7 @@ function* showTransactionSummaryHandler(
     }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
 
     // TODO: fetch the data from the pagoPA proxy
+    // @https://www.pivotaltracker.com/story/show/159494746
     const verificaResponse: PaymentRequestsGetResponse = {
       importoSingoloVersamento: 10052 as ImportoEuroCents,
       codiceContestoPagamento: "6793ad707f9b11e888482902221575ae" as CodiceContestoPagamento,
@@ -219,6 +309,41 @@ function* showTransactionSummaryHandler(
   yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
 }
 
+function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
+  const wallet: Option<Wallet> = yield select(specificWalletSelector(idWallet));
+  if (wallet.isSome()) {
+    // TODO: fetch list of PSPs available here
+    // @https://www.pivotaltracker.com/story/show/159494746
+    const pspList = WalletAPI.getPsps();
+
+    // show card
+    // if multiple psps are available and one
+    // has not yet been selected, show psp list
+    if (pspList.length > 1 && wallet.value.psp === undefined) {
+      // multiple choices here and no favorite wallet exists
+      // show list of psps
+      yield put(
+        paymentId === undefined
+          ? paymentPickPsp(wallet.value.idWallet, pspList)
+          : paymentInitialPickPsp(wallet.value.idWallet, pspList, paymentId)
+      );
+      yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
+    } else {
+      // only 1 choice of psp, or psp already selected (in previous transaction)
+      yield put(
+        paymentId === undefined
+          ? paymentConfirmPaymentMethod(wallet.value.idWallet, pspList)
+          : paymentInitialConfirmPaymentMethod(
+              wallet.value.idWallet,
+              pspList,
+              paymentId
+            )
+      );
+      yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
+    }
+  }
+}
+
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods
 ) {
@@ -228,13 +353,28 @@ function* continueWithPaymentMethodsHandler(
   // Otherwise, show a list of payment methods available
   // TODO: if no payment method is available (or if the
   // user chooses to do so), allow adding a new one.
-  const favoriteCard: Option<number> = yield select(getFavoriteWalletId);
-  if (favoriteCard.isSome()) {
-    // show card
-    yield put(paymentRequestConfirmPaymentMethod(favoriteCard.value));
+  const favoriteWallet: Option<number> = yield select(getFavoriteWalletId);
+  const hasPaymentId: boolean = yield select(isGlobalStateWithPaymentId);
+
+  // TODO get this from "attiva" (if hasPaymentId is false)
+  // @https://www.pivotaltracker.com/story/show/159494746
+  const idPayment = "f2737c4448ac1c669049296aa4d09801";
+
+  if (favoriteWallet.isSome()) {
+    yield call(
+      showWalletOrSelectPsp,
+      favoriteWallet.value,
+      hasPaymentId ? undefined : idPayment
+    );
   } else {
+    // no favorite wallet selected
     // show list
-    yield put(paymentRequestPickPaymentMethod());
+    yield put(
+      hasPaymentId
+        ? paymentPickPaymentMethod()
+        : paymentInitialPickPaymentMethod(idPayment)
+    );
+    yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
   }
 }
 
@@ -242,14 +382,40 @@ function* confirmPaymentMethodHandler(
   action: PaymentRequestConfirmPaymentMethod
 ) {
   const walletId = action.payload;
-  yield put(paymentConfirmPaymentMethod(walletId));
-  yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
+  // this will either show the recap screen (if the selected
+  // wallet already has a PSP), or it will show the
+  // "pick psp" screen
+  yield call(showWalletOrSelectPsp, walletId);
 }
 
 function* pickPaymentMethodHandler(_: PaymentRequestPickPaymentMethod) {
   // show screen with list of payment methods available
   yield put(paymentPickPaymentMethod());
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
+}
+
+function* pickPspHandler(_: PaymentRequestPickPsp) {
+  const walletId: number = yield select(getSelectedPaymentMethod);
+  const pspList: ReadonlyArray<Psp> = yield select(getPspList);
+
+  yield put(paymentPickPsp(walletId, pspList));
+  yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
+}
+
+function* updatePspHandler(action: PaymentUpdatePsp) {
+  // TODO: register action.paylod (pspId) as the
+  // selected pspId for walletId (from getSelectedPaymentMethod)
+  // then, refresh the list of available payment methods.
+  // @https://www.pivotaltracker.com/story/show/159494746
+  const pspList = WalletAPI.getPsps();
+  const walletId: number = yield select(getSelectedPaymentMethod);
+  const psp = pspList.find(p => p.id === action.payload);
+  if (psp !== undefined) {
+    yield put({ type: PAYMENT_UPDATE_PSP_IN_STATE, payload: psp, walletId });
+  }
+  yield put(paymentRequestConfirmPaymentMethod(walletId));
+
+  // Finally, return to the list of psp handlers
 }
 
 function* completionHandler(_: PaymentRequestCompletion) {
@@ -337,22 +503,57 @@ function* completionHandler(_: PaymentRequestCompletion) {
   yield put({ type: PAYMENT_COMPLETED });
 }
 
+function* fetchPagoPaToken(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getSession
+  > = yield call(pagoPaClient.getSession, walletToken);
+  if (response !== undefined && response.status === 200) {
+    // token fetched successfully, store it
+    yield put(storePagoPaToken(some(response.value.data.sessionToken)));
+  }
+}
+
+export function* watchWalletSaga(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
+  yield call(fetchPagoPaToken, pagoPaClient, walletToken);
+
+  while (true) {
+    const action = yield take([
+      FETCH_TRANSACTIONS_REQUEST,
+      FETCH_WALLETS_REQUEST,
+      LOGOUT_SUCCESS
+    ]);
+
+    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+
+    if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
+      yield fork(
+        fetchTransactions,
+        pagoPaClient,
+        walletToken,
+        pagoPaToken.value
+      );
+    }
+    if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
+      yield fork(fetchWallets, pagoPaClient, walletToken, pagoPaToken.value);
+    }
+    // if the user logs out, go back to waiting
+    // for a WALLET_TOKEN_LOAD_SUCCESS action
+    if (action.type === LOGOUT_SUCCESS) {
+      break;
+    }
+  }
+}
+
 /**
- * saga that manages the wallet (transactions + credit cards)
+ * saga that manages the wallet (transactions + wallets + payments)
  */
-// TOOD: currently using the mocked API. This will be wrapped by
-// a saga that retrieves the required token and uses it to build
-// a client to make the requests, @https://www.pivotaltracker.com/story/show/158068259
 export default function* root(): Iterator<Effect> {
-  yield takeLatest(
-    FETCH_TRANSACTIONS_REQUEST,
-    fetchTransactions,
-    WalletAPI.getTransactions
-  );
-  yield takeLatest(
-    FETCH_WALLETS_REQUEST,
-    fetchCreditCards,
-    WalletAPI.getWallets
-  );
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
+  yield takeLatest(PAYMENT_REQUEST_MESSAGE, paymentSagaFromMessage);
 }

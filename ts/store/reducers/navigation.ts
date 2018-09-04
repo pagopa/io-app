@@ -1,4 +1,9 @@
-import { NavigationActions, NavigationState } from "react-navigation";
+import {
+  NavigationActions,
+  NavigationRoute,
+  NavigationState,
+  StackActions
+} from "react-navigation";
 
 import AppNavigator from "../../navigation/AppNavigator";
 import { NAVIGATION_RESTORE } from "../actions/constants";
@@ -11,7 +16,20 @@ export const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAct
 
 // Selectors
 
-export const navigationStateSelector = (state: GlobalState) => state.nav;
+export const navigationStateSelector = (state: GlobalState): NavigationState =>
+  state.nav;
+
+const getCurrentRouteFromState = (route: NavigationState): NavigationState => {
+  if (route.index) {
+    const currentRoute = route.routes[route.index];
+    return getCurrentRouteFromState(currentRoute as NavigationState);
+  }
+
+  return route;
+};
+
+export const currentRouteSelector = ({ nav }: GlobalState) =>
+  getCurrentRouteFromState(nav) as NavigationRoute;
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
@@ -24,6 +42,9 @@ function nextState(state: NavigationState, action: Action): NavigationState {
     case NavigationActions.NAVIGATE:
     case NavigationActions.RESET:
     case NavigationActions.SET_PARAMS:
+    case StackActions.RESET:
+    case StackActions.REPLACE:
+    case StackActions.POP_TO_TOP:
       return AppNavigator.router.getStateForAction(action, state);
 
     // Used to restore a saved navigation state

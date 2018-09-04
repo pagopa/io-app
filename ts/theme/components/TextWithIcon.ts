@@ -8,7 +8,7 @@ export default (): Theme => {
         color: variables.brandDanger
       },
 
-      "UIComponents.IconFont": {
+      "UIComponent.IconFont": {
         color: variables.brandDanger
       }
     },
@@ -18,7 +18,7 @@ export default (): Theme => {
         color: variables.brandSuccess
       },
 
-      "UIComponents.IconFont": {
+      "UIComponent.IconFont": {
         color: variables.brandSuccess
       }
     },

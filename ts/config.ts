@@ -5,6 +5,9 @@ import * as t from "io-ts";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
+// default application name to show in the header of the topmost screens
+export const DEFAULT_APPLICATION_NAME = "io.italia.it";
+
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 3000;
 
@@ -16,6 +19,7 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
 export const environment = Config.ENVIRONMENT;
 export const apiUrlPrefix = Config.API_URL_PREFIX;
+export const pagoPaApiUrlPrefix = Config.PAGOPA_API_URL_PREFIX;
 export const mixpanelToken = Config.MIXPANEL_TOKEN;
 export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId = Config.GCM_SENDER_ID;

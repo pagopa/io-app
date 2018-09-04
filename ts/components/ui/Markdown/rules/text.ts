@@ -2,7 +2,7 @@ import { Text } from "native-base";
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
-import { makeReactNativeRule } from ".";
+import { makeReactNativeRule } from "./utils";
 
 function rule() {
   return (
@@ -10,30 +10,24 @@ function rule() {
     _: ReactOutput,
     state: State
   ): React.ReactNode => {
-    // If we are inside a heading just return the plain content
-    if (state.withinHeading) {
+    // If we are inside a heading return the plain content
+    if (state.withinHeading || state.withinLink) {
       return node.content;
     }
-    // If we are inside a list add proper indentation and numbers/bullets
-    if (state.withinList) {
-      const listLevel = state.listLevel || 0;
-      const symbol = state.listOrdered ? `${state.position}.` : "*";
-      const content = `${" ".repeat(listLevel * 2)}${symbol} ${node.content}`;
+
+    const words = node.content.split(/[ \n]/);
+
+    return words.map((word: any, i: number) => {
+      const text = i !== words.length - 1 ? `${word} ` : word;
       return React.createElement(
         Text,
         {
-          key: state.key
+          key: i,
+          markdown: true
         },
-        content
+        text
       );
-    }
-    return React.createElement(
-      Text,
-      {
-        key: state.key
-      },
-      node.content
-    );
+    });
   };
 }
 

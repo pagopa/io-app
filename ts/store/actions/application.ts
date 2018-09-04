@@ -1,17 +1,20 @@
-import { APP_STATE_CHANGE_ACTION, APPLICATION_INITIALIZED } from "./constants";
+import {
+  APP_STATE_CHANGE_ACTION,
+  START_APPLICATION_INITIALIZATION
+} from "./constants";
 import { ApplicationState } from "./types";
 
 /**
  * Action types and action creator related to the Application.
  */
 
-export type ApplicationInitialized = Readonly<{
-  type: typeof APPLICATION_INITIALIZED;
+export type StartApplicationInitialization = Readonly<{
+  type: typeof START_APPLICATION_INITIALIZATION;
 }>;
 
-export const applicationInitialized = (): ApplicationInitialized => ({
-  type: APPLICATION_INITIALIZED
-});
+export const startApplicationInitialization: StartApplicationInitialization = {
+  type: START_APPLICATION_INITIALIZATION
+};
 
 export type ApplicationChangeState = Readonly<{
   type: typeof APP_STATE_CHANGE_ACTION;
@@ -25,4 +28,4 @@ export const applicationChangeState = (
   payload: activity
 });
 
-export type ApplicationActions = ApplicationInitialized;
+export type ApplicationActions = StartApplicationInitialization;

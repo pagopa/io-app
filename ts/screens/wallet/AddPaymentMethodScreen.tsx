@@ -23,13 +23,12 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import GoBackButton from "../../components/GoBackButton";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -55,12 +54,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={_ => this.props.navigation.goBack()}
-            >
-              <IconFont name="io-back" size={variables.iconSize3} />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             {this.isInTransaction() ? (

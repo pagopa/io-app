@@ -15,7 +15,7 @@ declare module "native-base" {
       header?: boolean;
       content?: boolean;
       padded?: boolean;
-      noPadded?: boolean;
+      centerJustified?: boolean;
     }
   }
 }
@@ -81,14 +81,14 @@ export default (): Theme => {
       // Android shadow
       elevation: variables.footerElevation
     },
-    ".noPadded": {
-      paddingBottom: 0,
-      paddingTop: 0
-    },
     ".content": {
       padding: variables.contentPadding,
       backgroundColor: variables.contentBackground,
       flex: 1
+    },
+    ".centerJustified": {
+      flex: 1,
+      justifyContent: "center"
     }
   };
 };

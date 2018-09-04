@@ -13,6 +13,7 @@ import * as React from "react";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import GoBackButton from "../../components/GoBackButton";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -73,10 +74,6 @@ class PinScreen extends React.Component<Props, State> {
         state: "PinUnselected"
       }
     };
-  }
-
-  private goBack() {
-    this.props.navigation.goBack();
   }
 
   // Method called when the first CodeInput is filled
@@ -266,9 +263,7 @@ class PinScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>

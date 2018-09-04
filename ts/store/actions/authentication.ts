@@ -6,7 +6,6 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import {
-  AUTHENTICATION_COMPLETED,
   IDP_SELECTED,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
@@ -14,18 +13,12 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
-  SESSION_INVALID,
-  SESSION_LOAD_FAILURE,
-  SESSION_LOAD_REQUEST,
-  SESSION_LOAD_SUCCESS,
-  START_AUTHENTICATION
+  SESSION_INFO_LOAD_FAILURE,
+  SESSION_INFO_LOAD_SUCCESS,
+  SESSION_INVALID
 } from "./constants";
 
 // Actions
-
-export type StartAuthentication = Readonly<{
-  type: typeof START_AUTHENTICATION;
-}>;
 
 export type IdpSelected = Readonly<{
   type: typeof IDP_SELECTED;
@@ -55,21 +48,13 @@ export type LogoutFailure = Readonly<{
   error: true;
 }>;
 
-export type AuthenticationCompleted = Readonly<{
-  type: typeof AUTHENTICATION_COMPLETED;
-}>;
-
-export type SessionLoadRequest = Readonly<{
-  type: typeof SESSION_LOAD_REQUEST;
-}>;
-
-export type SessionLoadSuccess = Readonly<{
-  type: typeof SESSION_LOAD_SUCCESS;
+export type SessionInformationLoadSuccess = Readonly<{
+  type: typeof SESSION_INFO_LOAD_SUCCESS;
   payload: PublicSession;
 }>;
 
-export type SessionLoadFailure = Readonly<{
-  type: typeof SESSION_LOAD_FAILURE;
+export type SessionInformationLoadFailure = Readonly<{
+  type: typeof SESSION_INFO_LOAD_FAILURE;
   payload: Error;
   error: true;
 }>;
@@ -83,25 +68,18 @@ export type SessionInvalid = Readonly<{
 }>;
 
 export type AuthenticationActions =
-  | StartAuthentication
   | IdpSelected
   | LoginSuccess
   | LoginFailure
   | LogoutRequest
   | LogoutSuccess
   | LogoutFailure
-  | AuthenticationCompleted
-  | SessionLoadRequest
-  | SessionLoadSuccess
-  | SessionLoadFailure
+  | SessionInformationLoadSuccess
+  | SessionInformationLoadFailure
   | SessionExpired
   | SessionInvalid;
 
 // Creators
-
-export const startAuthentication = (): StartAuthentication => ({
-  type: START_AUTHENTICATION
-});
 
 export const idpSelected = (idp: IdentityProvider): IdpSelected => ({
   type: IDP_SELECTED,
@@ -121,9 +99,9 @@ export const logoutRequest = (): LogoutRequest => ({
   type: LOGOUT_REQUEST
 });
 
-export const logoutSuccess = (): LogoutSuccess => ({
+export const logoutSuccess: LogoutSuccess = {
   type: LOGOUT_SUCCESS
-});
+};
 
 export const logoutFailure = (error: Error): LogoutFailure => ({
   type: LOGOUT_FAILURE,
@@ -131,31 +109,25 @@ export const logoutFailure = (error: Error): LogoutFailure => ({
   error: true
 });
 
-export const authenticationCompleted = (): AuthenticationCompleted => ({
-  type: AUTHENTICATION_COMPLETED
-});
-
-export const sessionLoadRequest = (): SessionLoadRequest => ({
-  type: SESSION_LOAD_REQUEST
-});
-
-export const sessionLoadSuccess = (
+export const sessionInformationLoadSuccess = (
   publicSession: PublicSession
-): SessionLoadSuccess => ({
-  type: SESSION_LOAD_SUCCESS,
+): SessionInformationLoadSuccess => ({
+  type: SESSION_INFO_LOAD_SUCCESS,
   payload: publicSession
 });
 
-export const sessionLoadFailure = (error: Error): SessionLoadFailure => ({
-  type: SESSION_LOAD_FAILURE,
+export const sessionInformationLoadFailure = (
+  error: Error
+): SessionInformationLoadFailure => ({
+  type: SESSION_INFO_LOAD_FAILURE,
   payload: error,
   error: true
 });
 
-export const sessionExpired = (): SessionExpired => ({
+export const sessionExpired: SessionExpired = {
   type: SESSION_EXPIRED
-});
+};
 
-export const sessionInvalid = (): SessionInvalid => ({
+export const sessionInvalid: SessionInvalid = {
   type: SESSION_INVALID
-});
+};

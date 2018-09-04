@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 export function withContextualHelp<P extends ContextualHelpInjectedProps>(
   WrappedComponent: React.ComponentType<P>,
   title: string,
-  body: string
+  body: () => React.ReactNode
 ) {
   return class extends React.Component<P, State> {
     constructor(props: P) {
