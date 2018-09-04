@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
       width: variables.footerShadowOffsetWidth,
       height: variables.footerShadowOffsetHeight
     },
+    zIndex: 999,
     shadowOpacity: variables.footerShadowOpacity,
     shadowRadius: variables.footerShadowRadius,
     // Android shadow
