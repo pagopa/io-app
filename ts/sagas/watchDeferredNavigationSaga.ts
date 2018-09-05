@@ -1,7 +1,5 @@
 import { all, Effect, put, select, takeEvery } from "redux-saga/effects";
-import {
-  NAVIGATE_IF_LOGGED_IN
-} from "../store/actions/constants";
+import { NAVIGATE_IF_LOGGED_IN } from "../store/actions/constants";
 import {
   NavigateIfLoggedIn,
   saveNavigationWhenLoggedIn
