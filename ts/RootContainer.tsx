@@ -49,10 +49,7 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   public componentWillUnmount() {
-    if (Platform.OS === "ios") {
-      Linking.removeEventListener("url", this.handleOpenUrlEvent);
-    }
-
+    Linking.removeEventListener("url", this.handleOpenUrlEvent);
     AppState.removeEventListener("change", this.handleApplicationActivity);
   }
 
