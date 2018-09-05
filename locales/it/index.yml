@@ -57,7 +57,7 @@ profile:
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
     screenTitle: Profilo
-    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
+    screenSubtitle: "Qui trovi tutte le informazioni e dati legati al tuo account: identità, sicurezza, tuoi
       dati personali, etc."
     logout: Logout/Esci
     privacy:
