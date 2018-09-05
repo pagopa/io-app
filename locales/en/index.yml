@@ -413,4 +413,12 @@ services:
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
   emailNotifications: Email Notifications
+  tosLink: Terms and conditions
+  privacyLink: Privacy information
+  otherAppsInfo: You can find this service also
+  otherAppWeb: Online on
+  otherAppIos: With the iOS app
+  otherAppAndroid: With the Android app
   contactsAndInfo: Contacts and info
+  contactAddress: Address
+  contactPhone: Phone

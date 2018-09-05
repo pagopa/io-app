@@ -425,4 +425,12 @@ services:
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
   emailNotifications: Notifiche email
+  tosLink: Termini e condizioni d'uso
+  privacyLink: Informativa sulla privacy
+  otherAppsInfo: Puoi usare questo servizio anche
+  otherAppWeb: Online su
+  otherAppIos: Con l'app per iOS
+  otherAppAndroid: Con l'app per Android
   contactsAndInfo: Contatti ed informazioni
+  contactAddress: Indirizzo
+  contactPhone: Telefono
