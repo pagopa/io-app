@@ -407,8 +407,8 @@ preferences:
 services:
   headerTitle: Services
   title: Available services
-  subtitle: Here you can enable/disable each service, access its details, the terms
-    of use and customize the notifications you receive.
+  subTitle: Enable or disable the services that are allowed to send you messages
+  servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications

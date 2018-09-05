@@ -1,4 +1,4 @@
-import { Grid, H1, H3, Left, ListItem, Right, Row, Text } from "native-base";
+import { Grid, H3, Left, ListItem, Right, Row, Text } from "native-base";
 import * as React from "react";
 import {
   ListRenderItem,
@@ -34,6 +34,8 @@ import { getEnabledChannelsForService } from "./common";
 import { isDefined } from "../../utils/guards";
 
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import H4 from "../../components/ui/H4";
+import Markdown from "../../components/ui/Markdown";
 
 type ReduxMappedProps = Readonly<{
   profile: ProfileState;
@@ -58,7 +60,7 @@ class ServicesScreen extends React.PureComponent<Props> {
     section: SectionListData<string>;
   }): React.ReactElement<any> | null => (
     <ListItem itemHeader={true}>
-      <H1>{info.section.title}</H1>
+      <H3>{info.section.title}</H3>
     </ListItem>
   );
 
@@ -90,10 +92,10 @@ class ServicesScreen extends React.PureComponent<Props> {
           <Left>
             <Grid>
               <Row>
-                <H3>{service.service_name}</H3>
+                <H4>{service.service_name}</H4>
               </Row>
               <Row>
-                <Text italic={true} bold={enabledChannels.inbox}>
+                <Text italic={true}>
                   {enabledChannels.inbox
                     ? I18n.t("services.serviceIsEnabled")
                     : I18n.t("services.serviceNotEnabled")}
@@ -127,15 +129,20 @@ class ServicesScreen extends React.PureComponent<Props> {
 
     return (
       <TopScreenComponent
-        title={I18n.t("services.headerTitle")}
+        title={I18n.t("services.title")}
         goBack={this.goBack}
-        subtitle={I18n.t("services.subtitle")}
+        subtitle={I18n.t("services.subTitle")}
+        contextualHelp={{
+          title: I18n.t("services.title"),
+          body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+        }}
       >
         <SectionList
           sections={sections}
           renderItem={this.renderServiceItem}
           renderSectionHeader={this.renderServiceSectionHeader}
           keyExtractor={this.getServiceKey}
+          stickySectionHeadersEnabled={false}
           alwaysBounceVertical={false}
         />
       </TopScreenComponent>

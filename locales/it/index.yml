@@ -419,8 +419,8 @@ preferences:
 services:
   headerTitle: Servizi
   title: Elenco dei servizi
-  subtitle: Puoi attivare/disattivare ogni servizio, oppure accedere alla sua scheda
-    per scoprirne i dettagli, le condizioni d'uso e personalizzarne le notifiche.
+  subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
+  servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
