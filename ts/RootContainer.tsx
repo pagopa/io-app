@@ -38,13 +38,13 @@ class RootContainer extends React.PureComponent<Props> {
 
   public componentDidMount() {
     if (Platform.OS === "android") {
+      // If the application is summoned from a deep link intent.
       Linking.getInitialURL()
         .then(this.navigateToUrlHandler)
         .catch(console.error); // tslint:disable-line:no-console
-    } else {
-      Linking.addEventListener("url", this.handleOpenUrlEvent);
     }
 
+    Linking.addEventListener("url", this.handleOpenUrlEvent);
     AppState.addEventListener("change", this.handleApplicationActivity);
   }
 
