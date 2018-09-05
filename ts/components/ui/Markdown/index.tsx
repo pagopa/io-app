@@ -3,8 +3,10 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import * as SimpleMarkdown from "simple-markdown";
 
+import { ActivityIndicator, InteractionManager } from "react-native";
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 import reactNativeRules from "./rules";
 
 // A regex to test if a string ends with `/n/n`
@@ -77,12 +79,10 @@ class Markdown extends React.PureComponent<Props, State> {
   public componentDidMount() {
     if (this.props.lazy) {
       // Render the markdown string asynchronously.
-      setTimeout(
-        () =>
-          this.setState({
-            renderedMarkdown: renderMarkdown(this.props.children)
-          }),
-        0
+      InteractionManager.runAfterInteractions(() =>
+        this.setState({
+          renderedMarkdown: renderMarkdown(this.props.children)
+        })
       );
     }
   }
@@ -90,7 +90,14 @@ class Markdown extends React.PureComponent<Props, State> {
   public render() {
     if (this.props.lazy) {
       if (!this.state.renderedMarkdown) {
-        return null;
+        return (
+          <View centerJustified={true}>
+            <ActivityIndicator
+              size="large"
+              color={variables.brandPrimaryLight}
+            />
+          </View>
+        );
       }
 
       return <View>{this.state.renderedMarkdown}</View>;
