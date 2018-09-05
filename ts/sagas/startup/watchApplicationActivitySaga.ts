@@ -34,7 +34,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
     const newApplicationState: ApplicationState = action.payload;
 
     // get the time elapsed from the last change in state
-    const nowMillis = new Date().getTime();
+    const nowMillis = Date.now();
     const timeElapsedMillis = lastUpdateAtMillis
       ? nowMillis - lastUpdateAtMillis
       : nowMillis;
@@ -48,7 +48,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       // Make sure that when the app come back active, the BackgrounScreen
       // gets loaded first
       // FIXME: not that this creates a quick blue flash in case after restoring
-      //        the app we don't ask a PIN
+      // the app we don't ask a PIN
       yield put(navigateToBackgroundScreen);
     } else if (lastState === "background" && newApplicationState === "active") {
       // The app is coming back active after being in background

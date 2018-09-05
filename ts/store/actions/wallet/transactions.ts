@@ -4,7 +4,7 @@ import {
   PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
   TRANSACTIONS_FETCHED
-} from "../../actions/constants";
+} from "../constants";
 
 export type TransactionsFetched = Readonly<{
   type: typeof TRANSACTIONS_FETCHED;

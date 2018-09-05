@@ -3,12 +3,12 @@ import * as matchers from "redux-saga-test-plan/matchers";
 
 import { saveNavigationStateSaga } from "../saveNavigationStateSaga";
 
+import { NAVIGATE_IF_LOGGED_IN } from "../../../store/actions/constants";
+import { navigateIfLoggedIn } from "../../../store/actions/deferred-navigation";
 import { navigationStateSelector } from "../../../store/reducers/navigation";
 
 import { NavigationActions } from "react-navigation";
 import ROUTES from "../../../navigation/routes";
-import { DEFER_TO_LOGIN } from "../../../store/actions/constants";
-import { deferToLogin } from "../../../store/actions/deferred";
 
 describe("saveNavigationStateSaga", () => {
   it("should not set a deferred navigation action when not in main navigator", () => {
@@ -22,7 +22,7 @@ describe("saveNavigationStateSaga", () => {
           }
         ]
       ])
-      .not.put.like({ action: { type: DEFER_TO_LOGIN } })
+      .not.put.like({ action: { type: NAVIGATE_IF_LOGGED_IN } })
       .run();
   });
   it("should set a deferred navigation action when in main navigator", () => {
@@ -47,7 +47,7 @@ describe("saveNavigationStateSaga", () => {
           }
         ]
       ])
-      .put(deferToLogin(NavigationActions.navigate(subRoute)))
+      .put(navigateIfLoggedIn(NavigationActions.navigate(subRoute)))
       .run();
   });
 });

@@ -1,14 +1,6 @@
 import { isNone } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
-import {
-  all,
-  call,
-  fork,
-  put,
-  race,
-  select,
-  takeLatest
-} from "redux-saga/effects";
+import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
 import { startApplicationInitialization } from "../store/actions/application";
 import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
@@ -38,11 +30,11 @@ import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
 import { NavigationRoute } from "react-navigation";
 import { PagoPaClient } from "../api/pagopa";
-import { clearDeferredActions } from "../store/actions/deferred";
+import { clearDeferredNavigationAction } from "../store/actions/deferred-navigation";
 import {
-  deferredActionsSelector,
-  DeferredActionsState
-} from "../store/reducers/deferred";
+  deferredNavigationActionSelector,
+  DeferredNavigationActionState
+} from "../store/reducers/deferred-navigation";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -195,18 +187,22 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Watch for requests to reset the PIN
   yield fork(watchPinResetSaga);
 
-  const currentRoute: NavigationRoute = yield select(currentRouteSelector);
-
-  // Navigate to the MainNavigator
-  yield put(navigateToMainNavigatorAction(currentRoute.key));
-
-  // Dispatch deferred actions
-  const deferredActions: DeferredActionsState = yield select(
-    deferredActionsSelector
+  const deferredNavigationState: DeferredNavigationActionState = yield select(
+    deferredNavigationActionSelector
   );
 
-  yield all(deferredActions.map(action => put(action)));
-  yield put(clearDeferredActions());
+  if (deferredNavigationState.navigation) {
+    yield put(deferredNavigationState.navigation);
+    yield put(clearDeferredNavigationAction());
+  } else if (deferredNavigationState.navigationState) {
+    yield put(deferredNavigationState.navigationState);
+    yield put(clearDeferredNavigationAction());
+  } else {
+    const currentRoute: NavigationRoute = yield select(currentRouteSelector);
+
+    // Navigate to the MainNavigator
+    yield put(navigateToMainNavigatorAction(currentRoute.key));
+  }
 }
 
 export function* startupSaga(): IterableIterator<Effect> {

@@ -7,7 +7,7 @@ import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
 import { ContentState } from "./content";
-import { DeferredActionsState } from "./deferred";
+import { DeferredNavigationActionState } from "./deferred-navigation";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
@@ -45,7 +45,7 @@ export type GlobalState = Readonly<{
   wallet: WalletState;
   preferences: PreferencesState;
   content: ContentState;
-  deferred: DeferredActionsState;
+  deferredNavigation: DeferredNavigationActionState;
 }>;
 
 /**

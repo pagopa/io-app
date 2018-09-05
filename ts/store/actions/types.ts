@@ -16,7 +16,7 @@ import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
 import { ContentActions } from "./content";
-import { DeferredActions } from "./deferred";
+import { DeferredNavigationActions } from "./deferred-navigation";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
@@ -54,7 +54,7 @@ export type Action =
   | ServicesActions
   | WalletActions
   | ContentActions
-  | DeferredActions;
+  | DeferredNavigationActions;
 
 export type GetState = () => GlobalState;
 

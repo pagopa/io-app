@@ -7,13 +7,13 @@ import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { applicationChangeState } from "./store/actions/application";
-import { deferToLogin } from "./store/actions/deferred";
+import { navigateIfLoggedIn } from "./store/actions/deferred-navigation";
 import { ApplicationState } from "./store/actions/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 type DispatchProps = {
   applicationChangeState: typeof applicationChangeState;
-  deferToLogin: typeof deferToLogin;
+  navigateIfLoggedIn: typeof navigateIfLoggedIn;
 };
 
 type Props = DispatchProps;
@@ -33,7 +33,7 @@ class RootContainer extends React.PureComponent<Props> {
       return;
     }
 
-    this.props.deferToLogin(getNavigateActionFromDeepLink(url));
+    this.props.navigateIfLoggedIn(getNavigateActionFromDeepLink(url));
   };
 
   public componentDidMount() {
@@ -77,7 +77,7 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapDispatchToProps = {
   applicationChangeState,
-  deferToLogin
+  navigateIfLoggedIn
 };
 
 export default connect(
