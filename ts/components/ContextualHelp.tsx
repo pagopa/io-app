@@ -5,87 +5,73 @@
  * needed)
  */
 
-import { Container, Content, H1, Right, View } from "native-base";
+import { Container, Content, H1, Right } from "native-base";
 import * as React from "react";
-import {
-  ActivityIndicator,
-  InteractionManager,
-  Modal,
-  TouchableHighlight
-} from "react-native";
+import { InteractionManager, Modal, TouchableHighlight } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
 import AppHeader from "./ui/AppHeader";
 
-import themeVariables from "../theme/variables";
-
 type Props = Readonly<{
   title: string;
-  body: () => React.ReactNode;
+  body: React.ReactNode;
   isVisible: boolean;
   close: () => void;
 }>;
 
 type State = Readonly<{
-  content: React.ReactNode | null;
+  isOpen: boolean;
 }>;
 
 export class ContextualHelp extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      content: null
+      isOpen: false
     };
   }
 
-  public render(): React.ReactNode {
-    // after the modal is fully visible, render the content -
-    // in case of complex markdown this can take some time and we don't
-    // want to impact the modal animation
-    const onModalShow = () =>
+  // after the modal is fully visible, render the content -
+  // in case of complex markdown this can take some time and we don't
+  // want to impact the modal animation
+  public onModalShow = () => {
+    this.setState({
+      isOpen: true
+    });
+  };
+
+  // on close, we set a handler to cleanup the content after all
+  // interactions (animations) are complete
+  public onClose = () => {
+    InteractionManager.runAfterInteractions(() =>
       this.setState({
-        content: this.props.body()
-      });
+        isOpen: false
+      })
+    );
+    this.props.close();
+  };
 
-    // on close, we set a handler to cleanup the content after all
-    // interactions (animations) are complete
-    const onClose = () => {
-      InteractionManager.runAfterInteractions(() =>
-        this.setState({
-          content: null
-        })
-      );
-      this.props.close();
-    };
-
+  public render(): React.ReactNode {
     return (
       <Modal
         visible={this.props.isVisible}
-        onShow={onModalShow}
+        onShow={this.onModalShow}
         animationType="slide"
-        onRequestClose={onClose}
+        onRequestClose={this.onClose}
       >
         <Container>
           <AppHeader>
             <Right>
-              <TouchableHighlight onPress={onClose}>
+              <TouchableHighlight onPress={this.onClose}>
                 <IconFont name="io-close" />
               </TouchableHighlight>
             </Right>
           </AppHeader>
 
-          {!this.state.content && (
-            <View centerJustified={true}>
-              <ActivityIndicator
-                size="large"
-                color={themeVariables.brandPrimaryLight}
-              />
-            </View>
-          )}
-          {this.state.content && (
+          {this.state.isOpen && (
             <Content>
               <H1>{this.props.title}</H1>
-              {this.state.content}
+              {this.props.body}
             </Content>
           )}
         </Container>

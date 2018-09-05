@@ -94,6 +94,6 @@ export default connect(mapStateToProps)(
   withContextualHelp(
     SpidInformationRequestScreen,
     I18n.t("profile.main.privacy.title"),
-    () => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
+    <Markdown lazy={true}>{I18n.t("profile.main.privacy.text")}</Markdown>
   )
 );
