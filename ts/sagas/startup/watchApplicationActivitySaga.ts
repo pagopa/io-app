@@ -4,7 +4,6 @@ import { call, put, select, take, takeEvery } from "redux-saga/effects";
 
 import { backgroundActivityTimeout } from "../../config";
 
-import { InteractionManager } from "react-native";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
 import { clearDeferredNavigationAction } from "../../store/actions/deferred-navigation";
