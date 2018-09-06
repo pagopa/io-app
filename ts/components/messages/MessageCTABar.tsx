@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   mainContainer: {
     display: "flex",
     flex: 1,
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: 16
   },
   dueDateContainer: {
     display: "flex",
@@ -96,20 +97,26 @@ class MessageCTABar extends React.Component<Props> {
       dispatchPaymentAction,
       containerStyle
     } = this.props;
-    return (
-      <View style={[styles.mainContainer, containerStyle]}>
-        {dueDate &&
-          dispatchReminderAction &&
-          this.renderDueDateCTA(dueDate, dispatchReminderAction)}
-        {dueDate &&
-          dispatchReminderAction &&
-          paymentData &&
-          dispatchPaymentAction && <View style={styles.separatorContainer} />}
-        {paymentData !== undefined &&
-          dispatchPaymentAction !== undefined &&
-          this.renderPaymentCTA(paymentData, dispatchPaymentAction)}
-      </View>
-    );
+    if (
+      (dueDate && dispatchReminderAction) ||
+      (paymentData && dispatchPaymentAction)
+    ) {
+      return (
+        <View style={[styles.mainContainer, containerStyle]}>
+          {dueDate &&
+            dispatchReminderAction &&
+            this.renderDueDateCTA(dueDate, dispatchReminderAction)}
+          {dueDate &&
+            dispatchReminderAction &&
+            paymentData &&
+            dispatchPaymentAction && <View style={styles.separatorContainer} />}
+          {paymentData !== undefined &&
+            dispatchPaymentAction !== undefined &&
+            this.renderPaymentCTA(paymentData, dispatchPaymentAction)}
+        </View>
+      );
+    }
+    return null;
   }
 }
 

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding,
-    paddingBottom: 26,
+    paddingBottom: 16,
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 23
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   },
 
   subjectRow: {
-    paddingBottom: 16,
     paddingTop: 10
   }
 });
