@@ -1,5 +1,6 @@
 import { Content } from "native-base";
 import * as React from "react";
+import { EventCreationResult } from "react-native-add-calendar-event";
 import {
   NavigationInjectedProps,
   NavigationScreenProp,
@@ -7,20 +8,18 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import I18n from "../../i18n";
-
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailsComponent from "../../components/messages/MessageDetailsComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { ReduxProps } from "../../store/actions/types";
-
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { ReduxProps } from "../../store/actions/types";
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 export type ParamType = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
+  dispatchReminderAction: (() => Promise<EventCreationResult>) | undefined;
   dispatchPaymentAction: (() => void) | undefined;
 }>;
 
@@ -44,6 +43,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
     const {
       message,
       senderService,
+      dispatchReminderAction,
       dispatchPaymentAction
     } = this.props.navigation.state.params;
 
@@ -64,6 +64,7 @@ export class MessageDetailsScreen extends React.Component<Props, never> {
           <MessageDetailsComponent
             message={message}
             senderService={senderService}
+            dispatchReminderAction={dispatchReminderAction}
             dispatchPaymentAction={dispatchPaymentAction}
             navigateToServicePreferences={navigateToServicePreferences}
           />
