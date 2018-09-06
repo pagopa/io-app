@@ -130,11 +130,12 @@ export type PagoPaClient = Readonly<{
     paymentId: string,
     walletId: number
   ) => Promise<BasicResponseTypeWith401<TransactionResponse> | undefined>;
+  walletToken: string;
 }>;
 
 export const PagoPaClient = (
   baseUrl: string,
-  // token: string,
+  walletToken: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ): PagoPaClient => {
   const options = { baseUrl, fetchApi };
@@ -241,6 +242,7 @@ export const PagoPaClient = (
   });
 
   return {
+    walletToken,
     getSession: (walletToken: string) =>
       createFetchRequestForApi(getSession, options)({ token: walletToken }),
     getWallets: (pagoPaToken: string) =>

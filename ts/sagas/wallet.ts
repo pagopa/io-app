@@ -108,7 +108,6 @@ import {
 import { Transaction } from "../types/pagopa";
 import { Psp, Wallet } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
-import { SagaCallReturnType } from "../types/utils";
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { pollingFetch } from "../utils/fetch";
 
@@ -129,7 +128,6 @@ function* fetchWithTokenRefresh<T>(
     pagoPaToken: string
   ) => Promise<BasicResponseTypeWith401<T> | undefined>,
   pagoPaClient: PagoPaClient,
-  walletToken: string,
   retries: number = MAX_TOKEN_REFRESHES
 ): Iterator<BasicResponseTypeWith401<T> | undefined | Effect> {
   if (retries === 0) {
@@ -149,7 +147,10 @@ function* fetchWithTokenRefresh<T>(
     } else {
       const refreshTokenResponse:
         | BasicResponseTypeWith401<SessionResponse>
-        | undefined = yield call(pagoPaClient.getSession, walletToken);
+        | undefined = yield call(
+        pagoPaClient.getSession,
+        pagoPaClient.walletToken
+      );
       if (
         refreshTokenResponse !== undefined &&
         refreshTokenResponse.status === 200
@@ -164,7 +165,6 @@ function* fetchWithTokenRefresh<T>(
           fetchWithTokenRefresh,
           request,
           pagoPaClient,
-          walletToken,
           retries - 1
         );
       }
@@ -173,17 +173,13 @@ function* fetchWithTokenRefresh<T>(
   return undefined;
 }
 
-function* fetchTransactions(
-  pagoPaClient: PagoPaClient,
-  walletToken: string
-): Iterator<Effect> {
+function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const response:
     | BasicResponseTypeWith401<TransactionListResponse>
     | undefined = yield call(
     fetchWithTokenRefresh,
     pagoPaClient.getTransactions,
-    pagoPaClient,
-    walletToken
+    pagoPaClient
   );
   if (response !== undefined && response.status === 200) {
     yield put(transactionsFetched(response.value.data));
@@ -191,17 +187,13 @@ function* fetchTransactions(
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
-function* fetchWallets(
-  pagoPaClient: PagoPaClient,
-  walletToken: string
-): Iterator<Effect> {
+function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const response:
     | BasicResponseTypeWith401<WalletListResponse>
     | undefined = yield call(
     fetchWithTokenRefresh,
     pagoPaClient.getWallets,
-    pagoPaClient,
-    walletToken
+    pagoPaClient
   );
   if (response !== undefined && response.status === 200) {
     yield put(walletsFetched(response.value.data));
@@ -242,42 +234,50 @@ function* watchPaymentSaga(): Iterator<Effect> {
       break;
     }
 
-    switch (action.type) {
-      case PAYMENT_REQUEST_MANUAL_ENTRY: {
-        yield fork(enterDataManuallyHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_TRANSACTION_SUMMARY: {
-        yield fork(showTransactionSummaryHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS: {
-        yield fork(continueWithPaymentMethodsHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_PICK_PAYMENT_METHOD: {
-        yield fork(pickPaymentMethodHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD: {
-        yield fork(confirmPaymentMethodHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_PICK_PSP: {
-        yield fork(pickPspHandler, action);
-        break;
-      }
-      case PAYMENT_UPDATE_PSP: {
-        yield fork(updatePspHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_COMPLETION: {
-        yield fork(completionHandler, action);
-        break;
-      }
-      case PAYMENT_REQUEST_GO_BACK: {
-        yield fork(goBackHandler, action);
-        break;
+    const maybeWalletToken: Option<string> = yield select(walletTokenSelector);
+    if (maybeWalletToken.isSome()) {
+      const pagoPaClient = PagoPaClient(
+        pagoPaApiUrlPrefix,
+        maybeWalletToken.value
+      );
+
+      switch (action.type) {
+        case PAYMENT_REQUEST_MANUAL_ENTRY: {
+          yield fork(enterDataManuallyHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_TRANSACTION_SUMMARY: {
+          yield fork(showTransactionSummaryHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS: {
+          yield fork(continueWithPaymentMethodsHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_PICK_PAYMENT_METHOD: {
+          yield fork(pickPaymentMethodHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD: {
+          yield fork(confirmPaymentMethodHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_PICK_PSP: {
+          yield fork(pickPspHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_UPDATE_PSP: {
+          yield fork(updatePspHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_COMPLETION: {
+          yield fork(completionHandler, action, pagoPaClient);
+          break;
+        }
+        case PAYMENT_REQUEST_GO_BACK: {
+          yield fork(goBackHandler, action, pagoPaClient);
+          break;
+        }
       }
     }
   }
@@ -289,7 +289,8 @@ function* goBackHandler(_: PaymentRequestGoBack) {
 }
 
 function* enterDataManuallyHandler(
-  _: PaymentRequestManualEntry
+  _: PaymentRequestManualEntry,
+  __: PagoPaClient
 ): Iterator<Effect> {
   // from the QR code screen the user selected
   // the option for entering the data manually
@@ -299,7 +300,8 @@ function* enterDataManuallyHandler(
 }
 
 function* showTransactionSummaryHandler(
-  action: PaymentRequestTransactionSummaryActions
+  action: PaymentRequestTransactionSummaryActions,
+  _: PagoPaClient
 ) {
   // the user may have gotten here from the QR code,
   // the manual data entry, from a message OR by
@@ -397,22 +399,19 @@ function* fetchPspList(
   } else {
     paymentId = paymentIdOrUndefined;
   }
-  const walletToken: Option<string> = yield select(walletTokenSelector);
+
   let pspList: ReadonlyArray<Psp> = []; // tslint:disable-line: no-let
 
-  if (walletToken.isSome()) {
-    const response:
-      | BasicResponseTypeWith401<PspListResponse>
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
-      pagoPaClient,
-      walletToken.value
-    );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        pspList = response.value.data;
-      }
+  const response:
+    | BasicResponseTypeWith401<PspListResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
+    pagoPaClient
+  );
+  if (response !== undefined) {
+    if (response.status === 200) {
+      pspList = response.value.data;
     }
   }
   return pspList;
@@ -517,29 +516,26 @@ function* checkPayment(
   pagoPaClient: PagoPaClient,
   paymentId: string
 ): Iterator<Effect> {
-  const walletToken: Option<string> = yield select(walletTokenSelector);
-  if (walletToken.isSome()) {
-    const response:
-      | BasicResponseTypeWith401<PaymentResponse>
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      (t: string) => pagoPaClient.checkPayment(t, paymentId),
-      pagoPaClient,
-      walletToken.value
-    );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // all is well
-        // this does not provide any useful information and
-        // it is only required by pagoPA b/c of their internal logics
-      }
+  const response:
+    | BasicResponseTypeWith401<PaymentResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (t: string) => pagoPaClient.checkPayment(t, paymentId),
+    pagoPaClient
+  );
+  if (response !== undefined) {
+    if (response.status === 200) {
+      // all is well
+      // this does not provide any useful information and
+      // it is only required by pagoPA b/c of their internal logics
     }
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 function* continueWithPaymentMethodsHandler(
-  _: PaymentRequestContinueWithPaymentMethods
+  _: PaymentRequestContinueWithPaymentMethods,
+  pagoPaClient: PagoPaClient
 ) {
   // find out whether a payment method has already
   // been defined as favorite. If so, use it and
@@ -576,7 +572,6 @@ function* continueWithPaymentMethodsHandler(
     );
     paymentId = tmp;
   }
-  const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   if (paymentId !== undefined) {
     yield call(checkPayment, pagoPaClient, paymentId);
   }
@@ -605,10 +600,10 @@ function* continueWithPaymentMethodsHandler(
 }
 
 function* confirmPaymentMethodHandler(
-  action: PaymentRequestConfirmPaymentMethod
+  action: PaymentRequestConfirmPaymentMethod,
+  pagoPaClient: PagoPaClient
 ) {
   const walletId = action.payload;
-  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   // this will either show the recap screen (if the selected
   // wallet already has a PSP), or it will show the
   // "pick psp" screen
@@ -621,7 +616,7 @@ function* pickPaymentMethodHandler(_: PaymentRequestPickPaymentMethod) {
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
 }
 
-function* pickPspHandler(_: PaymentRequestPickPsp) {
+function* pickPspHandler(_: PaymentRequestPickPsp, __: PagoPaClient) {
   const walletId: number = yield select(getSelectedPaymentMethod);
   const pspList: ReadonlyArray<Psp> = yield select(getPspList);
 
@@ -629,106 +624,82 @@ function* pickPspHandler(_: PaymentRequestPickPsp) {
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 
-function* updatePspHandler(action: PaymentUpdatePsp) {
+function* updatePspHandler(
+  action: PaymentUpdatePsp,
+  pagoPaClient: PagoPaClient
+) {
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
   const walletId: number = yield select(getSelectedPaymentMethod);
-  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-  const walletToken: Option<string> = yield select(walletTokenSelector);
-  if (walletToken.isSome()) {
-    const response:
-      | BasicResponseTypeWith401<WalletResponse>
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      (pagoPaToken: string) =>
-        pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
-      pagoPaClient,
-      walletToken.value
-    );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // request new wallets (expecting to get the
-        // same ones as before, with the selected one's
-        // PSP set to the new one)
-        yield call(fetchWallets, pagoPaClient, walletToken.value);
-        yield put(paymentRequestConfirmPaymentMethod(walletId));
-      }
+  const response:
+    | BasicResponseTypeWith401<WalletResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (pagoPaToken: string) =>
+      pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
+    pagoPaClient
+  );
+  if (response !== undefined) {
+    if (response.status === 200) {
+      // request new wallets (expecting to get the
+      // same ones as before, with the selected one's
+      // PSP set to the new one)
+      yield call(fetchWallets, pagoPaClient);
+      yield put(paymentRequestConfirmPaymentMethod(walletId));
     }
   }
-
-  // Finally, return to the list of psp handlers
 }
 
-function* completionHandler(_: PaymentRequestCompletion) {
+function* completionHandler(
+  _: PaymentRequestCompletion,
+  pagoPaClient: PagoPaClient
+) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
   const walletId: number = yield select(getSelectedPaymentMethod);
-  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-  const walletToken: Option<string> = yield select(walletTokenSelector);
   const paymentId: string = yield select(getPaymentId);
 
-  if (walletToken.isSome()) {
-    const response:
-      | BasicResponseTypeWith401<TransactionResponse>
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      (pagoPaToken: string) =>
-        pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
-      pagoPaClient,
-      walletToken.value
-    );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // request all transactions (expecting to get the
-        // same ones as before, plus the newly created one
-        // (the reason for this is because newTransaction contains
-        // a payment with status "processing", while the
-        // value returned here contains the "completed" status
-        // upon successful payment
-        const newTransaction: Transaction = response.value.data;
-        yield call(fetchTransactions, pagoPaClient, walletToken.value);
-        // use "storeNewTransaction(newTransaction) if it's okay
-        // to have the payment as "pending" (this information will
-        // not be shown to the user as of yet)
-        yield put(selectTransactionForDetails(newTransaction));
-        yield put(selectWalletForDetails(walletId)); // for the banner
-        yield put(
-          // TODO: this should use StackActions.reset
-          // to reset the navigation. Right now, the
-          // "back" option is not allowed -- so the user cannot
-          // get back to previous screens, but the navigation
-          // stack should be cleaned right here
-          // @https://www.pivotaltracker.com/story/show/159300579
-          navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
-            paymentCompleted: true
-          })
-        );
-        yield put({ type: PAYMENT_COMPLETED });
-      }
+  const response:
+    | BasicResponseTypeWith401<TransactionResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (pagoPaToken: string) =>
+      pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
+    pagoPaClient
+  );
+  if (response !== undefined) {
+    if (response.status === 200) {
+      // request all transactions (expecting to get the
+      // same ones as before, plus the newly created one
+      // (the reason for this is because newTransaction contains
+      // a payment with status "processing", while the
+      // value returned here contains the "completed" status
+      // upon successful payment
+      const newTransaction: Transaction = response.value.data;
+      yield call(fetchTransactions, pagoPaClient);
+      // use "storeNewTransaction(newTransaction) if it's okay
+      // to have the payment as "pending" (this information will
+      // not be shown to the user as of yet)
+      yield put(selectTransactionForDetails(newTransaction));
+      yield put(selectWalletForDetails(walletId)); // for the banner
+      yield put(
+        // TODO: this should use StackActions.reset
+        // to reset the navigation. Right now, the
+        // "back" option is not allowed -- so the user cannot
+        // get back to previous screens, but the navigation
+        // stack should be cleaned right here
+        // @https://www.pivotaltracker.com/story/show/159300579
+        navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
+          paymentCompleted: true
+        })
+      );
+      yield put({ type: PAYMENT_COMPLETED });
     }
   }
 }
 
-function* fetchPagoPaToken(
-  pagoPaClient: PagoPaClient,
-  walletToken: string
-): Iterator<Effect> {
-  const response: SagaCallReturnType<
-    typeof pagoPaClient.getSession
-  > = yield call(pagoPaClient.getSession, walletToken);
-  if (response !== undefined && response.status === 200) {
-    // token fetched successfully, store it
-    yield put(storePagoPaToken(some(response.value.data.sessionToken)));
-  }
-}
-
-export function* watchWalletSaga(
-  pagoPaClient: PagoPaClient,
-  walletToken: string
-): Iterator<Effect> {
-  yield call(fetchPagoPaToken, pagoPaClient, walletToken);
-
+export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
   while (true) {
     const action = yield take([
       FETCH_TRANSACTIONS_REQUEST,
@@ -736,18 +707,11 @@ export function* watchWalletSaga(
       LOGOUT_SUCCESS
     ]);
 
-    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-
-    if (action.type === FETCH_TRANSACTIONS_REQUEST && pagoPaToken.isSome()) {
-      yield fork(
-        fetchTransactions,
-        pagoPaClient,
-        walletToken,
-        pagoPaToken.value
-      );
+    if (action.type === FETCH_TRANSACTIONS_REQUEST) {
+      yield fork(fetchTransactions, pagoPaClient);
     }
-    if (action.type === FETCH_WALLETS_REQUEST && pagoPaToken.isSome()) {
-      yield fork(fetchWallets, pagoPaClient, walletToken, pagoPaToken.value);
+    if (action.type === FETCH_WALLETS_REQUEST) {
+      yield fork(fetchWallets, pagoPaClient);
     }
     // if the user logs out, go back to waiting
     // for a WALLET_TOKEN_LOAD_SUCCESS action
@@ -761,6 +725,8 @@ export function* watchWalletSaga(
  * saga that manages the wallet (transactions + wallets + payments)
  */
 export default function* root(): Iterator<Effect> {
+  // FIXME: these should be handled by watchWalletSaga (which should
+  // provide the pagoPaClient instance)
   yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
   yield takeLatest(PAYMENT_REQUEST_MESSAGE, paymentSagaFromMessage);
 }
