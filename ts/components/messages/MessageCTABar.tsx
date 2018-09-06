@@ -62,7 +62,7 @@ class MessageCTABar extends React.Component<Props> {
           <Button
             block={true}
             bordered={true}
-            onPress={() => dispatchReminderAction().catch()}
+            onPress={() => dispatchReminderAction().catch(_ => undefined)}
           >
             <Text>{I18n.t("messages.cta.reminder")}</Text>
           </Button>
