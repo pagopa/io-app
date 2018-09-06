@@ -3,7 +3,12 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import * as SimpleMarkdown from "simple-markdown";
 
-import { ActivityIndicator, InteractionManager } from "react-native";
+import {
+  ActivityIndicator,
+  InteractionManager,
+  LayoutAnimation,
+  UIManager
+} from "react-native";
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -50,13 +55,28 @@ function renderMarkdown(body: string): React.ReactNode {
   }
 }
 
-interface Props {
+interface BaseProps {
   children: string;
-  lazy?: boolean;
 }
+
+interface NonLazyProps extends BaseProps {
+  lazy?: false;
+}
+
+interface LazyProps extends BaseProps {
+  lazy: true;
+
+  // Animates the layout, useful when there are other components below the
+  // Markdown component: enabling this will animate the growth of the
+  // Markdown component once the content gets rendered.
+  animated?: boolean;
+}
+
+type Props = NonLazyProps | LazyProps;
 
 interface State {
   renderedMarkdown: ReturnType<typeof renderMarkdown> | undefined;
+  cancelRender?: () => void;
 }
 
 /**
@@ -77,13 +97,32 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    if (this.props.lazy) {
+    const props = this.props;
+    if (props.lazy) {
       // Render the markdown string asynchronously.
-      InteractionManager.runAfterInteractions(() =>
+      const cancelRender = InteractionManager.runAfterInteractions(() => {
+        if (props.animated) {
+          // animate the layout change
+          // see https://facebook.github.io/react-native/docs/layoutanimation.html
+          if (UIManager.setLayoutAnimationEnabledExperimental) {
+            UIManager.setLayoutAnimationEnabledExperimental(true);
+          }
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        }
         this.setState({
-          renderedMarkdown: renderMarkdown(this.props.children)
-        })
-      );
+          renderedMarkdown: renderMarkdown(props.children)
+        });
+      }).cancel;
+      this.setState({
+        cancelRender
+      });
+    }
+  }
+
+  public componentWillUnmount() {
+    if (this.state.cancelRender) {
+      // before unmounting, cancel the delayed rendering
+      this.state.cancelRender();
     }
   }
 
