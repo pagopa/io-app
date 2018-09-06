@@ -1,16 +1,12 @@
-import {
-  Button,
-  Col,
-  Content,
-  Grid,
-  H1,
-  H2,
-  H3,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
+import {
+  Clipboard,
+  Image,
+  Linking,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -36,7 +32,10 @@ import {
 } from "./common";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import H4 from "../../components/ui/H4";
+import customVariables from "../../theme/variables";
 
 export interface IMessageDetailsScreenParam {
   readonly service: ServicePublic;
@@ -63,23 +62,35 @@ interface State {
   uiEnabledChannels: EnabledChannels;
 }
 
+const styles = StyleSheet.create({
+  infoHeader: {
+    marginTop: customVariables.spacerLargeHeight
+  },
+  infoItem: {
+    flexDirection: "column",
+    marginTop: customVariables.spacerHeight
+  },
+  badgeLogo: {
+    width: 150,
+    height: 50
+  }
+});
+
 /**
  * Renders a row in the service information panel
  */
-function renderInformationRow(label: string, info: string) {
+function renderInformationRow(
+  label: string,
+  info: string,
+  onPress?: () => void
+) {
   return (
-    <Row>
-      <Col size={2}>
-        <Button light={true} small={true} transparent={true}>
-          <Text>{label}:</Text>
-        </Button>
-      </Col>
-      <Col size={4}>
-        <Button primary={true} small={true}>
-          <Text>{info}</Text>
-        </Button>
-      </Col>
-    </Row>
+    <View style={styles.infoItem}>
+      <Text>{label}</Text>
+      <Button primary={true} small={true} onPress={onPress}>
+        <Text>{info}</Text>
+      </Button>
+    </View>
   );
 }
 
@@ -136,6 +147,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   }
 
+  // tslint:disable-next-line:cognitive-complexity no-big-function
   public render() {
     // collect the service
     const service = this.props.navigation.state.params.service;
@@ -147,20 +159,22 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
 
     // collect the service metadata
-    const serviceMetadata = this.props.content.servicesMetadata.byId[
-      service.service_id
-    ];
+    const serviceMetadata = fromNullable(
+      this.props.content.servicesMetadata.byId[service.service_id]
+    ).getOrElse({});
 
-    // collect the organization metadata
-    const maybeOrganizationMetadata = fromNullable(
-      this.props.content.organizationsMetadata.byFiscalCode[
-        service.organization_fiscal_code
-      ]
-    );
-
-    const orgAddress = maybeOrganizationMetadata
-      .mapNullable(_ => _.Indirizzo)
-      .toNullable();
+    const {
+      description,
+      web_url,
+      app_ios,
+      app_android,
+      tos_url,
+      privacy_url,
+      address,
+      phone,
+      email,
+      pec
+    } = serviceMetadata;
 
     // whether last attempt to save the preferences failed
     const profileVersion = fromNullable(this.props.profile)
@@ -176,10 +190,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <Grid>
             <Row>
               <Col>
-                <H3>
-                  {service.department_name}, {service.organization_name}
-                </H3>
-                <H1>{service.service_name}</H1>
+                <H4>{service.organization_name}</H4>
+                <H2>{service.service_name}</H2>
               </Col>
             </Row>
             <View spacer={true} large={true} />
@@ -304,26 +316,109 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} large={true} />
-            {serviceMetadata &&
-              serviceMetadata.description && (
-                <Row>
-                  <Col>
-                    <Markdown>{serviceMetadata.description}</Markdown>
-                  </Col>
-                </Row>
+            {description && <Markdown>{description}</Markdown>}
+            {description && <View spacer={true} large={true} />}
+            {tos_url && (
+              <TouchableOpacity
+                style={styles.infoItem}
+                onPress={() => Linking.openURL(tos_url).then(() => 0, () => 0)}
+              >
+                <Text link={true}>{I18n.t("services.tosLink")}</Text>
+              </TouchableOpacity>
+            )}
+            {privacy_url && (
+              <TouchableOpacity
+                style={styles.infoItem}
+                onPress={() =>
+                  Linking.openURL(privacy_url).then(() => 0, () => 0)
+                }
+              >
+                <Text link={true}>{I18n.t("services.privacyLink")}</Text>
+              </TouchableOpacity>
+            )}
+            {(app_android || app_ios || web_url) && (
+              <H4 style={styles.infoHeader}>
+                {I18n.t("services.otherAppsInfo")}
+              </H4>
+            )}
+            {web_url && (
+              <View style={styles.infoItem}>
+                <Text>{I18n.t("services.otherAppWeb")}</Text>
+                <Button
+                  small={true}
+                  onPress={() =>
+                    Linking.openURL(web_url).then(() => 0, () => 0)
+                  }
+                >
+                  <Text>{web_url}</Text>
+                </Button>
+              </View>
+            )}
+            {app_ios && (
+              <View style={styles.infoItem}>
+                <Text>{I18n.t("services.otherAppIos")}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(app_ios).then(() => 0, () => 0)
+                  }
+                >
+                  <Image
+                    style={styles.badgeLogo}
+                    alignSelf="flex-start"
+                    resizeMode="contain"
+                    source={require("../../../img/badges/app-store-badge.png")}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+            {app_android && (
+              <View style={styles.infoItem}>
+                <Text>{I18n.t("services.otherAppAndroid")}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(app_android).then(() => 0, () => 0)
+                  }
+                >
+                  <Image
+                    style={styles.badgeLogo}
+                    resizeMode="contain"
+                    source={require("../../../img/badges/google-play-badge.png")}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+            <H4 style={styles.infoHeader}>
+              {I18n.t("services.contactsAndInfo")}
+            </H4>
+            {renderInformationRow(
+              "C.F.",
+              service.organization_fiscal_code,
+              () => Clipboard.setString(service.organization_fiscal_code)
+            )}
+            {address &&
+              renderInformationRow(
+                I18n.t("services.contactAddress"),
+                address,
+                () => Clipboard.setString(address)
               )}
-            {serviceMetadata && <View spacer={true} large={true} />}
-            <Row>
-              <Col size={6}>
-                <H2>{I18n.t("services.contactsAndInfo")}</H2>
-              </Col>
-            </Row>
+            {phone &&
+              renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
+                Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
+              )}
+            {email &&
+              renderInformationRow("EMail", email, () =>
+                Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
+              )}
+            {pec && renderInformationRow("PEC", pec)}
+            {web_url &&
+              renderInformationRow("Web", web_url, () =>
+                Linking.openURL(web_url).then(() => 0, () => 0)
+              )}
+            {renderInformationRow("ID", service.service_id, () =>
+              Clipboard.setString(service.service_id)
+            )}
             <View spacer={true} large={true} />
-            {renderInformationRow("C.F.", service.organization_fiscal_code)}
-            {orgAddress && <View spacer={true} />}
-            {orgAddress && renderInformationRow("Indirizzo", orgAddress)}
           </Grid>
-          <View spacer={true} large={true} />
         </Content>
       </BaseScreenComponent>
     );

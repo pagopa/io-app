@@ -2,11 +2,15 @@
 
 import * as t from "io-ts";
 
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default application name to show in the header of the topmost screens
 export const DEFAULT_APPLICATION_NAME = "io.italia.it";
+
+// default repository for fetching app content (e.g. services metadata)
+const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/teamdigitale/italia-services-metadata/master" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 3000;
@@ -37,6 +41,10 @@ export const fetchMaxRetries = t.Integer.decode(
 export const backgroundActivityTimeout = t.Integer.decode(
   Config.BACKGROUND_ACTIVITY_TIMEOUT_S
 ).getOrElse(DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S) as Second;
+
+export const contentRepoUrl = NonEmptyString.decode(
+  Config.CONTENT_REPO_URL
+).getOrElse(DEFAULT_CONTENT_REPO_URL);
 
 export function isDevEnvironment() {
   return environment === "DEV";
