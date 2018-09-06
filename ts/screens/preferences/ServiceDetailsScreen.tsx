@@ -1,6 +1,12 @@
 import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import { Clipboard, Linking, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Clipboard,
+  Image,
+  Linking,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -63,6 +69,10 @@ const styles = StyleSheet.create({
   infoItem: {
     flexDirection: "column",
     marginTop: customVariables.spacerHeight
+  },
+  badgeLogo: {
+    width: 150,
+    height: 50
   }
 });
 
@@ -137,6 +147,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   }
 
+  // tslint:disable-next-line:cognitive-complexity no-big-function
   public render() {
     // collect the service
     const service = this.props.navigation.state.params.service;
@@ -346,27 +357,34 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {app_ios && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppIos")}</Text>
-                <Button
-                  small={true}
+                <TouchableOpacity
                   onPress={() =>
                     Linking.openURL(app_ios).then(() => 0, () => 0)
                   }
                 >
-                  <Text>logo ios</Text>
-                </Button>
+                  <Image
+                    style={styles.badgeLogo}
+                    alignSelf="flex-start"
+                    resizeMode="contain"
+                    source={require("../../../img/badges/app-store-badge.png")}
+                  />
+                </TouchableOpacity>
               </View>
             )}
             {app_android && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppAndroid")}</Text>
-                <Button
-                  small={true}
+                <TouchableOpacity
                   onPress={() =>
                     Linking.openURL(app_android).then(() => 0, () => 0)
                   }
                 >
-                  <Text>logo android</Text>
-                </Button>
+                  <Image
+                    style={styles.badgeLogo}
+                    resizeMode="contain"
+                    source={require("../../../img/badges/google-play-badge.png")}
+                  />
+                </TouchableOpacity>
               </View>
             )}
             <H4 style={styles.infoHeader}>
