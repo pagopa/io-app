@@ -14,7 +14,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import { none, Option, some } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
@@ -124,110 +124,87 @@ const MAX_TOKEN_REFRESHES = 2;
 // return a 401), the successful token is returned
 // along with the response (the caller will then
 // decide what to do with it)
-const fetchWithTokenRefresh = async <T>(
+function* fetchWithTokenRefresh<T>(
   request: (
     pagoPaToken: string
   ) => Promise<BasicResponseTypeWith401<T> | undefined>,
-  tokenRefresher: (walletToken: string) => Promise<Option<string>>,
+  pagoPaClient: PagoPaClient,
   walletToken: string,
-  token: Option<string>,
   retries: number = MAX_TOKEN_REFRESHES
-): Promise<[string, BasicResponseTypeWith401<T>] | undefined> => {
+): Iterator<BasicResponseTypeWith401<T> | undefined | Effect> {
   if (retries === 0) {
     return undefined;
   }
-  const pagoPaToken = token.isNone()
-    ? await tokenRefresher(walletToken)
-    : token;
-  if (pagoPaToken.isNone()) {
-    return undefined;
-  }
-  const response: BasicResponseTypeWith401<T> | undefined = await request(
-    pagoPaToken.value
+  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+  const response: BasicResponseTypeWith401<T> | undefined = yield call(
+    request,
+    pagoPaToken.getOrElse("") // empty token -> pagoPA returns a 401 and the app fetches a new one
   );
   if (response !== undefined) {
     if (response.status !== 401) {
       // return code is not 401, the token
       // has been "accepted" (the caller will
       // then handle other error codes)
-      return [pagoPaToken.value, response];
+      return response;
     } else {
-      const newToken = await tokenRefresher(walletToken);
-      if (newToken.isSome()) {
-        return await fetchWithTokenRefresh(
+      const refreshTokenResponse:
+        | BasicResponseTypeWith401<SessionResponse>
+        | undefined = yield call(pagoPaClient.getSession, walletToken);
+      if (
+        refreshTokenResponse !== undefined &&
+        refreshTokenResponse.status === 200
+      ) {
+        // token fetched successfully, store it
+        yield put(
+          storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
+        );
+
+        // and retry fetching the result
+        return yield call(
+          fetchWithTokenRefresh,
           request,
-          tokenRefresher,
+          pagoPaClient,
           walletToken,
-          newToken,
           retries - 1
         );
       }
     }
   }
   return undefined;
-};
+}
 
-const refreshToken = async (walletToken: string): Promise<Option<string>> => {
-  const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
+function* fetchTransactions(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
   const response:
-    | BasicResponseTypeWith401<SessionResponse>
-    | undefined = await pagoPaClient.getSession(walletToken);
+    | BasicResponseTypeWith401<TransactionListResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    pagoPaClient.getTransactions,
+    pagoPaClient,
+    walletToken
+  );
   if (response !== undefined && response.status === 200) {
-    // token fetched successfully, return it
-    return some(response.value.data.sessionToken);
-  }
-  return none;
-};
-
-function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
-  const walletToken: Option<string> = yield select(walletTokenSelector);
-  const token: Option<string> = yield select(getPagoPaToken);
-  if (walletToken.isSome()) {
-    const tokenAndResponseOrUndefined:
-      | [string, BasicResponseTypeWith401<TransactionListResponse>]
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      pagoPaClient.getTransactions,
-      refreshToken,
-      walletToken.value,
-      token
-    );
-    if (tokenAndResponseOrUndefined !== undefined) {
-      const [newToken, response] = tokenAndResponseOrUndefined;
-      if (response.status === 200) {
-        if (token.isNone() || newToken !== token.value) {
-          yield put(storePagoPaToken(some(newToken)));
-        }
-        yield put(transactionsFetched(response.value.data));
-        return;
-      }
-    }
+    yield put(transactionsFetched(response.value.data));
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
-function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
-  const walletToken: Option<string> = yield select(walletTokenSelector);
-  const token: Option<string> = yield select(getPagoPaToken);
-  if (walletToken.isSome()) {
-    const tokenAndResponseOrUndefined:
-      | [string, BasicResponseTypeWith401<WalletListResponse>]
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      pagoPaClient.getWallets,
-      refreshToken,
-      walletToken.value,
-      token
-    );
-    if (tokenAndResponseOrUndefined !== undefined) {
-      const [newToken, response] = tokenAndResponseOrUndefined;
-      if (response.status === 200) {
-        if (token.isNone() || newToken !== token.value) {
-          yield put(storePagoPaToken(some(newToken)));
-        }
-        yield put(walletsFetched(response.value.data));
-      }
-    }
+function* fetchWallets(
+  pagoPaClient: PagoPaClient,
+  walletToken: string
+): Iterator<Effect> {
+  const response:
+    | BasicResponseTypeWith401<WalletListResponse>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    pagoPaClient.getWallets,
+    pagoPaClient,
+    walletToken
+  );
+  if (response !== undefined && response.status === 200) {
+    yield put(walletsFetched(response.value.data));
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
@@ -367,6 +344,80 @@ function* showTransactionSummaryHandler(
   yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
 }
 
+function* showConfirmPaymentMethod(
+  paymentIdOrUndefined: string | undefined,
+  wallet: Wallet,
+  pspList: ReadonlyArray<Psp>
+) {
+  yield put(
+    paymentIdOrUndefined === undefined
+      ? paymentConfirmPaymentMethod(wallet.idWallet, pspList)
+      : paymentInitialConfirmPaymentMethod(
+          wallet.idWallet,
+          pspList,
+          paymentIdOrUndefined
+        )
+  );
+  yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
+}
+
+function* showPickPsp(
+  paymentIdOrUndefined: string | undefined,
+  wallet: Wallet,
+  pspList: ReadonlyArray<Psp>
+) {
+  yield put(
+    paymentIdOrUndefined === undefined
+      ? paymentPickPsp(wallet.idWallet, pspList)
+      : paymentInitialPickPsp(wallet.idWallet, pspList, paymentIdOrUndefined)
+  );
+  yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
+}
+
+const shouldShowPspList = (
+  wallet: Wallet,
+  pspList: ReadonlyArray<Psp>
+): boolean =>
+  pspList.length > 1 &&
+  (wallet.psp === undefined ||
+    pspList.filter(
+      p => wallet.psp !== undefined && p.id === wallet.psp.id // check for "undefined" only used to correctly typeguard
+    ).length === undefined);
+
+function* fetchPspList(
+  pagoPaClient: PagoPaClient,
+  paymentIdOrUndefined: string | undefined
+) {
+  // WIP: this could be done via the ternary operator, but lint raises some
+  // error about ignoring the return value of a call()
+  let paymentId: string; // tslint:disable-line: no-let
+  if (paymentIdOrUndefined === undefined) {
+    const tmp: string = yield select(getPaymentId);
+    paymentId = tmp;
+  } else {
+    paymentId = paymentIdOrUndefined;
+  }
+  const walletToken: Option<string> = yield select(walletTokenSelector);
+  let pspList: ReadonlyArray<Psp> = []; // tslint:disable-line: no-let
+
+  if (walletToken.isSome()) {
+    const response:
+      | BasicResponseTypeWith401<PspListResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
+      pagoPaClient,
+      walletToken.value
+    );
+    if (response !== undefined) {
+      if (response.status === 200) {
+        pspList = response.value.data;
+      }
+    }
+  }
+  return pspList;
+}
+
 function* showWalletOrSelectPsp(
   pagoPaClient: PagoPaClient,
   idWallet: number,
@@ -374,70 +425,27 @@ function* showWalletOrSelectPsp(
 ): Iterator<Effect> {
   const wallet: Option<Wallet> = yield select(specificWalletSelector(idWallet));
   if (wallet.isSome()) {
-    const paymentId =
-      paymentIdOrUndefined === undefined
-        ? yield select(getPaymentId)
-        : paymentIdOrUndefined;
-    const walletToken: Option<string> = yield select(walletTokenSelector);
-    const token: Option<string> = yield select(getPagoPaToken);
-    let pspList: ReadonlyArray<Psp> = []; // tslint:disable-line: no-let
-
-    if (walletToken.isSome()) {
-      const tokenAndResponseOrUndefined:
-        | [string, BasicResponseTypeWith401<PspListResponse>]
-        | undefined = yield call(
-        fetchWithTokenRefresh,
-        (pagoPaToken: string) =>
-          pagoPaClient.getPspList(pagoPaToken, paymentId),
-        refreshToken,
-        walletToken.value,
-        token
-      );
-      if (tokenAndResponseOrUndefined !== undefined) {
-        const [newToken, response] = tokenAndResponseOrUndefined;
-        if (response.status === 200) {
-          if (token.isNone() || newToken !== token.value) {
-            yield put(storePagoPaToken(some(newToken)));
-          }
-          pspList = response.value.data;
-        }
-      }
-    }
+    const pspList: ReadonlyArray<Psp> = yield call(
+      fetchPspList,
+      pagoPaClient,
+      paymentIdOrUndefined
+    );
     // show card
     // if multiple psps are available and one
     // has not yet been selected, show psp list
-    if (
-      pspList.length > 1 &&
-      (wallet.value.psp === undefined ||
-        pspList.filter(
-          p => wallet.value.psp !== undefined && p.id === wallet.value.psp.id // check for "undefined" only used to correctly typeguard
-        ).length === undefined)
-    ) {
+    if (shouldShowPspList(wallet.value, pspList)) {
       // multiple choices here and no favorite psp exists (or one exists
       // and it is not available for this payment)
       // show list of psps
-      yield put(
-        paymentIdOrUndefined === undefined
-          ? paymentPickPsp(wallet.value.idWallet, pspList)
-          : paymentInitialPickPsp(
-              wallet.value.idWallet,
-              pspList,
-              paymentIdOrUndefined
-            )
-      );
-      yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
+      yield call(showPickPsp, paymentIdOrUndefined, wallet.value, pspList);
     } else {
       // only 1 choice of psp, or psp already selected (in previous transaction)
-      yield put(
-        paymentIdOrUndefined === undefined
-          ? paymentConfirmPaymentMethod(wallet.value.idWallet, pspList)
-          : paymentInitialConfirmPaymentMethod(
-              wallet.value.idWallet,
-              pspList,
-              paymentIdOrUndefined
-            )
+      yield call(
+        showConfirmPaymentMethod,
+        paymentIdOrUndefined,
+        wallet.value,
+        pspList
       );
-      yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
     }
   }
 }
@@ -510,23 +518,20 @@ function* checkPayment(
   paymentId: string
 ): Iterator<Effect> {
   const walletToken: Option<string> = yield select(walletTokenSelector);
-  const token: Option<string> = yield select(getPagoPaToken);
   if (walletToken.isSome()) {
-    const tokenAndResponseOrUndefined:
-      | [string, BasicResponseTypeWith401<PaymentResponse>]
+    const response:
+      | BasicResponseTypeWith401<PaymentResponse>
       | undefined = yield call(
       fetchWithTokenRefresh,
       (t: string) => pagoPaClient.checkPayment(t, paymentId),
-      refreshToken,
-      walletToken.value,
-      token
+      pagoPaClient,
+      walletToken.value
     );
-    if (tokenAndResponseOrUndefined !== undefined) {
-      const [newToken, response] = tokenAndResponseOrUndefined;
+    if (response !== undefined) {
       if (response.status === 200) {
-        if (token.isNone() || token.value !== newToken) {
-          yield put(storePagoPaToken(some(newToken)));
-        }
+        // all is well
+        // this does not provide any useful information and
+        // it is only required by pagoPA b/c of their internal logics
       }
     }
   }
@@ -560,17 +565,17 @@ function* continueWithPaymentMethodsHandler(
   // if the payment Id not available yet,
   // do the "attiva" and then poll until
   // a payment Id shows up
-  const paymentId: string | undefined =
-    hasPaymentId || sessionToken === undefined
-      ? undefined
-      : yield call(
-          attivaAndGetPaymentId,
-          sessionToken,
-          rptId,
-          paymentContextCode,
-          amount
-        );
-
+  let paymentId: string | undefined; // tslint:disable-line no-let
+  if (!hasPaymentId && sessionToken !== undefined) {
+    const tmp: string | undefined = yield call(
+      attivaAndGetPaymentId,
+      sessionToken,
+      rptId,
+      paymentContextCode,
+      amount
+    );
+    paymentId = tmp;
+  }
   const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   if (paymentId !== undefined) {
     yield call(checkPayment, pagoPaClient, paymentId);
@@ -631,28 +636,22 @@ function* updatePspHandler(action: PaymentUpdatePsp) {
   const walletId: number = yield select(getSelectedPaymentMethod);
   const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   const walletToken: Option<string> = yield select(walletTokenSelector);
-  const token: Option<string> = yield select(getPagoPaToken);
   if (walletToken.isSome()) {
-    const tokenAndResponseOrUndefined:
-      | [string, BasicResponseTypeWith401<WalletResponse>]
+    const response:
+      | BasicResponseTypeWith401<WalletResponse>
       | undefined = yield call(
       fetchWithTokenRefresh,
       (pagoPaToken: string) =>
         pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
-      refreshToken,
-      walletToken.value,
-      token
+      pagoPaClient,
+      walletToken.value
     );
-    if (tokenAndResponseOrUndefined !== undefined) {
-      const [newToken, response] = tokenAndResponseOrUndefined;
+    if (response !== undefined) {
       if (response.status === 200) {
-        if (token.isNone() || newToken !== token.value) {
-          yield put(storePagoPaToken(some(newToken)));
-        }
         // request new wallets (expecting to get the
         // same ones as before, with the selected one's
         // PSP set to the new one)
-        yield call(fetchWallets, pagoPaClient, newToken);
+        yield call(fetchWallets, pagoPaClient, walletToken.value);
         yield put(paymentRequestConfirmPaymentMethod(walletId));
       }
     }
@@ -667,26 +666,20 @@ function* completionHandler(_: PaymentRequestCompletion) {
   const walletId: number = yield select(getSelectedPaymentMethod);
   const pagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
   const walletToken: Option<string> = yield select(walletTokenSelector);
-  const token: Option<string> = yield select(getPagoPaToken);
   const paymentId: string = yield select(getPaymentId);
 
   if (walletToken.isSome()) {
-    const tokenAndResponseOrUndefined:
-      | [string, BasicResponseTypeWith401<TransactionResponse>]
+    const response:
+      | BasicResponseTypeWith401<TransactionResponse>
       | undefined = yield call(
       fetchWithTokenRefresh,
       (pagoPaToken: string) =>
         pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
-      refreshToken,
-      walletToken.value,
-      token
+      pagoPaClient,
+      walletToken.value
     );
-    if (tokenAndResponseOrUndefined !== undefined) {
-      const [newToken, response] = tokenAndResponseOrUndefined;
+    if (response !== undefined) {
       if (response.status === 200) {
-        if (token.isNone() || newToken !== token.value) {
-          yield put(storePagoPaToken(some(newToken)));
-        }
         // request all transactions (expecting to get the
         // same ones as before, plus the newly created one
         // (the reason for this is because newTransaction contains
@@ -694,7 +687,7 @@ function* completionHandler(_: PaymentRequestCompletion) {
         // value returned here contains the "completed" status
         // upon successful payment
         const newTransaction: Transaction = response.value.data;
-        yield call(fetchTransactions, pagoPaClient, newToken);
+        yield call(fetchTransactions, pagoPaClient, walletToken.value);
         // use "storeNewTransaction(newTransaction) if it's okay
         // to have the payment as "pending" (this information will
         // not be shown to the user as of yet)
