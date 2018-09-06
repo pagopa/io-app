@@ -243,8 +243,9 @@ export const PagoPaClient = (
 
   return {
     walletToken,
-    getSession: (walletToken: string) =>
-      createFetchRequestForApi(getSession, options)({ token: walletToken }),
+    getSession: (
+      wt: string // wallet token
+    ) => createFetchRequestForApi(getSession, options)({ token: wt }),
     getWallets: (pagoPaToken: string) =>
       createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
     getTransactions: (pagoPaToken: string) =>
