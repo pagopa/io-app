@@ -5,8 +5,8 @@ import * as React from "react";
 import {
   Platform,
   StyleSheet,
-  TouchableHighlight,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  TouchableWithoutFeedback
 } from "react-native";
 import * as AddCalendarEvent from "react-native-add-calendar-event";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -50,7 +50,7 @@ export type Props = OwnProps &
   NavigationInjectedProps;
 
 const TouchableFeedbackComponent = Platform.select({
-  ios: { Class: TouchableHighlight },
+  ios: { Class: TouchableWithoutFeedback },
   android: { Class: TouchableNativeFeedback }
 });
 
