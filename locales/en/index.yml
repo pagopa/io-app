@@ -56,8 +56,7 @@ profile:
     upsert: Error creating or updating the profile
   main:
     screenTitle: Profile
-    screenSubtitle: Here you will find information and data related to your identity
-      and your personal data.
+    screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     privacy:
       title: Privacy
@@ -68,8 +67,7 @@ profile:
       description: Review Terms & Conditions of the app
     mainPrivacy:
       screenTitle: Privacy
-      screenSubtitle: Here you will find information and data related to your identity
-        and your personal data.
+      screenSubtitle: Here you will find information related to your personal data.
       privacyPolicy:
         title: Privacy policy
         description: review accepted privacy terms
@@ -375,6 +373,7 @@ messages:
     all: All
     deadlines: Deadlines
   contentTitle: Messages
+  refresh: Pull down to refresh
   loading: Loading Messages...
   yesterday: yesterday
   cta:
@@ -411,10 +410,18 @@ preferences:
 services:
   headerTitle: Services
   title: Available services
-  subtitle: Here you can enable/disable each service, access its details, the terms
-    of use and customize the notifications you receive.
+  subTitle: Enable or disable the services that are allowed to send you messages
+  servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
   emailNotifications: Email Notifications
+  tosLink: Terms and conditions
+  privacyLink: Privacy information
+  otherAppsInfo: You can find this service also
+  otherAppWeb: Online on
+  otherAppIos: With the iOS app
+  otherAppAndroid: With the Android app
   contactsAndInfo: Contacts and info
+  contactAddress: Address
+  contactPhone: Phone

@@ -57,8 +57,8 @@ profile:
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
     screenTitle: Profilo
-    screenSubtitle: Qui trovi informazioni e dati legati alla tua identità e ai tuoi
-      dati personali.
+    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
+      dati personali, etc."
     logout: Logout/Esci
     privacy:
       title: Privacy
@@ -68,8 +68,8 @@ profile:
       title: Termini e condizioni d'uso
       description: Rivedi i termini e le condizioni d'uso dell'app
     mainPrivacy:
-      screenTitle: Profilo
-      screenSubtitle: Qui trovi informazioni e dati legati alla tua identità e ai
+      screenTitle: Privacy
+      screenSubtitle: Qui trovi informazioni legate ai
         tuoi dati personali.
       privacyPolicy:
         title: Privacy policy
@@ -383,6 +383,7 @@ messages:
     all: Tutti
     deadlines: Scadenze
   contentTitle: Messaggi
+  refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
   yesterday: ieri
   cta:
@@ -421,10 +422,18 @@ preferences:
 services:
   headerTitle: Servizi
   title: Elenco dei servizi
-  subtitle: Puoi attivare/disattivare ogni servizio, oppure accedere alla sua scheda
-    per scoprirne i dettagli, le condizioni d'uso e personalizzarne le notifiche.
+  subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
+  servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
   emailNotifications: Notifiche email
+  tosLink: Termini e condizioni d'uso
+  privacyLink: Informativa sulla privacy
+  otherAppsInfo: Puoi usare questo servizio anche
+  otherAppWeb: Online su
+  otherAppIos: Con l'app per iOS
+  otherAppAndroid: Con l'app per Android
   contactsAndInfo: Contatti ed informazioni
+  contactAddress: Indirizzo
+  contactPhone: Telefono
