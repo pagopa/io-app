@@ -13,10 +13,8 @@ const styles = StyleSheet.create({
 /**
  * An screen used when the App is in background.
  */
-class BackgroundScreen extends React.Component<never, never> {
-  public render() {
-    return <Container style={styles.container} />;
-  }
-}
+const BackgroundScreen: React.SFC<never> = () => (
+  <Container style={styles.container} />
+);
 
 export default BackgroundScreen;

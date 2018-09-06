@@ -5,23 +5,21 @@
  */
 
 declare module "native-base-shoutem-theme" {
-  import * as React from "react";
-
   export interface IConnectStyleOptions {
     withRef?: boolean;
   }
 
-  export type MapPropsToStyleNames<P> = (
+  export type MapPropsToStyleNames = <P>(
     styleNames: string[],
     props: P
   ) => ReadonlyArray<string>;
 
-  export function connectStyle<P, E = {}>(
+  export function connectStyle(
     componentStyleName: string,
     componentStyle = {},
-    mapPropsToStyleNames: MapPropsToStyleNames<P>,
+    mapPropsToStyleNames: MapPropsToStyleNames,
     options?: IConnectStyleOptions
-  ): <S>(c: React.ComponentClass<P, S>) => React.ComponentClass<P & E, S>;
+  ): <C, O = C>(c: C) => O;
 }
 
 declare module "native-base/src/utils/mapPropsToStyleNames" {
@@ -40,6 +38,11 @@ declare module "native-base/src/theme/components" {
 declare module "native-base/src/theme/variables/material" {
   export default {
     borderWidth: number,
-    inputBorderColor: string
+    inputBorderColor: string,
+
+    // input
+    inputFontSize: number,
+    inputColor: string,
+    inputHeightBase: number
   };
 }

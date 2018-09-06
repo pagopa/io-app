@@ -1,5 +1,4 @@
 import * as t from "io-ts";
-
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
@@ -15,7 +14,6 @@ import {
   IResponseType,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
 
 import { RptId, RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
@@ -51,6 +49,7 @@ export type ProfileWithOrWithoutEmail = t.TypeOf<
 >;
 
 // FullProfile is allOf [ExtendedProfile, LimitedProfile]
+// see https://github.com/teamdigitale/italia-backend/blob/master/api_proxy.yaml#L211
 export const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
 
 export type FullProfile = t.TypeOf<typeof FullProfile>;
@@ -93,7 +92,7 @@ export type GetServiceT = IGetApiRequestType<
   },
   "Authorization",
   never,
-  BasicResponseType<ServicePublic>
+  BasicResponseTypeWith401<ServicePublic>
 >;
 
 export type GetMessagesT = IGetApiRequestType<
@@ -118,7 +117,7 @@ export type GetProfileT = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseTypeWith401<ProfileWithEmail | ProfileWithoutEmail>
+  BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
 >;
 
 export type CreateOrUpdateProfileT = IPostApiRequestType<
@@ -127,7 +126,7 @@ export type CreateOrUpdateProfileT = IPostApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<LimitedProfile | ExtendedProfile>
+  BasicResponseTypeWith401<ProfileWithEmail>
 >;
 
 export type CreateOrUpdateInstallationT = IPutApiRequestType<
@@ -137,7 +136,7 @@ export type CreateOrUpdateInstallationT = IPutApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseType<NonEmptyString>
+  BasicResponseTypeWith401<SuccessResponse>
 >;
 
 export type LogoutT = IPostApiRequestType<
@@ -242,7 +241,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.newProfile),
-    response_decoder: basicResponseDecoderWith401(ProfileWithOrWithoutEmail)
+    response_decoder: basicResponseDecoderWith401(ProfileWithEmail)
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
@@ -251,7 +250,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.installation),
-    response_decoder: basicResponseDecoder(NonEmptyString)
+    response_decoder: basicResponseDecoder(SuccessResponse)
   };
 
   const logoutT: LogoutT = {
@@ -371,8 +370,8 @@ export const MockedBackendClient = (
       Promise.resolve({
         headers: {},
         status: 200,
-        value: {} as NonEmptyString
-      } as BasicResponseType<NonEmptyString>),
+        value: {} as SuccessResponse
+      } as BasicResponseType<SuccessResponse>),
     logout: () =>
       Promise.resolve({
         headers: {},

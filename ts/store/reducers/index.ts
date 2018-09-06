@@ -48,38 +48,37 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   GlobalState,
   Action
 >({
+  //
+  // ephemeral state
+  //
   appState: appStateReducer,
   network: networkReducer,
   nav: navigationReducer,
   deepLink: deepLinkReducer,
-
-  // UI
   loading: loadingReducer,
   error: errorReducer,
-
-  // FORM
   form: formReducer as Reducer<FormStateMap, Action>,
+  wallet: walletReducer,
+  backendInfo: backendInfoReducer,
+  content: contentReducer,
+  preferences: preferencesReducer,
+  pinlogin: pinloginReducer,
 
-  // DATA
+  //
+  // persisted state
+  //
+
+  // custom persistor (uses secure storage)
   authentication: persistReducer<AuthenticationState, Action>(
     authenticationPersistConfig,
     authenticationReducer
   ),
+
+  // standard persistor, see configureStoreAndPersistor.ts
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
-  entities: entitiesReducer,
-  pinlogin: pinloginReducer,
-  preferences: preferencesReducer,
-
-  // WALLET
-  wallet: walletReducer,
-
-  // BACKEND INFO
-  backendInfo: backendInfoReducer,
-
-  // CONTENT
-  content: contentReducer
+  entities: entitiesReducer
 });
 
 export function createRootReducer(

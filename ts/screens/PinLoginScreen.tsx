@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { StatusBar } from "react-native";
+
 import { Button, Content, Text, View } from "native-base";
 
 import { connect } from "react-redux";
@@ -13,20 +15,23 @@ import variables from "../theme/variables";
 
 import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
+
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
 
-import { validatePin } from "../store/actions/pinlogin";
+import { pinLoginValidateRequest } from "../store/actions/pinlogin";
 import { ReduxProps } from "../store/actions/types";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
 
 import { ContextualHelpInjectedProps } from "../components/helpers/withContextualHelp";
 import { startPinReset } from "../store/actions/pinset";
+import { AppState } from "../store/reducers/appState";
 import { PinString } from "../types/PinString";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
+  appState: AppState;
 };
 
 type OwnProps = {
@@ -38,23 +43,31 @@ type Props = ReduxMappedProps &
   OwnProps &
   ContextualHelpInjectedProps;
 
+type CodeInputRef = CodeInput | null;
 /**
  * A screen that allows the user to unlock the app with a PIN.
  */
 class PinLoginScreen extends React.Component<Props> {
-  private pinComponent: CodeInput | null = null;
+  private pinComponent: CodeInputRef = null;
 
-  constructor(props: Props) {
-    super(props);
+  public componentDidUpdate(prevProps: Props) {
+    // Clear pin input when the application state changes from non-active to active
+    if (
+      !!this.pinComponent &&
+      prevProps.appState.appState !== "active" &&
+      this.props.appState.appState === "active"
+    ) {
+      this.pinComponent.clear();
+    }
   }
 
   private onPinReset = () => {
-    this.props.dispatch(startPinReset());
+    this.props.dispatch(startPinReset);
   };
 
   // Method called when the CodeInput is filled
   public onPinFulfill = (code: PinString) => {
-    const validatePinAction = validatePin(code);
+    const validatePinAction = pinLoginValidateRequest(code);
     this.props.dispatch(validatePinAction);
     // Clear PIN input
     if (this.pinComponent) {
@@ -62,12 +75,15 @@ class PinLoginScreen extends React.Component<Props> {
     }
   };
 
+  public handleCodeInputRef = (pinpad: CodeInputRef) =>
+    (this.pinComponent = pinpad); // tslint:disable-line no-object-mutation
+
   // Render the PIN match/doesn't match feedback message
   public renderCodeInputConfirmValidation() {
     const validationMessage = (
       <TextWithIcon danger={true}>
-        <IconFont name="io-close" />
-        <Text>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
+        <IconFont name="io-close" color={variables.colorWhite} />
+        <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );
     return (
@@ -88,7 +104,7 @@ class PinLoginScreen extends React.Component<Props> {
           onFulfill={this.onPinFulfill}
           activeColor={variables.colorWhite}
           inactiveColor={variables.colorWhite}
-          codeInputRef={pinpad => (this.pinComponent = pinpad)} // tslint:disable-line no-object-mutation
+          codeInputRef={this.handleCodeInputRef}
         />
 
         {isPinInvalid && this.renderCodeInputConfirmValidation()}
@@ -104,6 +120,10 @@ class PinLoginScreen extends React.Component<Props> {
     };
     return (
       <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={variables.contentPrimaryBackground}
+        />
         <Content primary={true}>
           <View spacer={true} extralarge={true} />
           <Text white={true} alignCenter={true}>
@@ -122,9 +142,13 @@ class PinLoginScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = ({
+  pinlogin,
+  appState
+}: GlobalState): ReduxMappedProps => ({
   // Checks from the store whether there was an error while login with the PIN (e.g. PIN is not valid )
-  pinLoginState: state.pinlogin
+  pinLoginState: pinlogin,
+  appState
 });
 
 export default connect(mapStateToProps)(PinLoginScreen);

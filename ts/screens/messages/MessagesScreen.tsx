@@ -1,11 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  RefreshControl,
-  RefreshControlProps
-} from "react-native";
+import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -61,9 +55,7 @@ class MessagesScreen extends React.Component<Props> {
     }
   }
 
-  private refreshList() {
-    this.props.dispatch(loadMessages());
-  }
+  private refreshList = () => this.props.dispatch(loadMessages());
 
   private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
     return (
@@ -74,15 +66,16 @@ class MessagesScreen extends React.Component<Props> {
     );
   };
 
-  private refreshControl(): React.ReactElement<RefreshControlProps> {
-    return (
-      <RefreshControl
-        onRefresh={() => this.refreshList()}
-        refreshing={this.props.isLoadingMessages}
-        colors={[variables.brandPrimary]}
-      />
-    );
-  }
+  private refreshControl = (
+    <RefreshControl
+      onRefresh={this.refreshList}
+      refreshing={this.props.isLoadingMessages}
+      colors={[variables.brandPrimary]}
+      title={I18n.t("messages.refresh")}
+    />
+  );
+
+  public keyExtractor = ({ id }: MessageWithContentPO) => id;
 
   public render() {
     return (
@@ -90,25 +83,24 @@ class MessagesScreen extends React.Component<Props> {
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
       >
-        <View>
-          <FlatList
-            alwaysBounceVertical={false}
-            scrollEnabled={true}
-            data={this.props.messages}
-            renderItem={this.renderItem}
-            keyExtractor={message => message.id}
-            refreshControl={this.refreshControl()}
-          />
-        </View>
+        <FlatList
+          scrollEnabled={true}
+          data={this.props.messages}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+          refreshControl={this.refreshControl}
+        />
       </TopScreenComponent>
     );
   }
 }
 
+const loadingMessagesSelector = createLoadingSelector([
+  FetchRequestActions.MESSAGES_LOAD
+]);
+
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  isLoadingMessages: createLoadingSelector([FetchRequestActions.MESSAGES_LOAD])(
-    state
-  ),
+  isLoadingMessages: loadingMessagesSelector(state),
   messages: orderedMessagesSelector(state),
   services: state.entities.services
 });

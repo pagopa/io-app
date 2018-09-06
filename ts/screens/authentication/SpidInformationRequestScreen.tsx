@@ -1,13 +1,4 @@
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  Left,
-  Text,
-  View
-} from "native-base";
+import { Button, Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -15,13 +6,12 @@ import { isValid } from "redux-form";
 import SpidInformationForm, {
   FORM_NAME as SPID_INFORMATION_FORM_NAME
 } from "../../components/forms/SpidInformationForm";
-import TermOfUse from "../../components/helpers/TermOfUse";
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
-import AppHeader from "../../components/ui/AppHeader";
-import IconFont from "../../components/ui/IconFont";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 
@@ -37,26 +27,17 @@ type Props = ReduxMappedProps & OwnProps & ContextualHelpInjectedProps;
 /**
  * A screen where the user can insert an email to receive information about SPID.
  */
-class SpidInformationRequestScreen extends React.Component<Props> {
-  private goBack() {
-    this.props.navigation.goBack();
-  }
+class SpidInformationRequestScreen extends React.PureComponent<Props> {
+  private goBack = () => this.props.navigation.goBack();
 
   public render() {
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <Button transparent={true} onPress={_ => this.goBack()}>
-              <IconFont name="io-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Text>
-              {I18n.t("authentication.spid_information_request.headerTitle")}
-            </Text>
-          </Body>
-        </AppHeader>
+      <BaseScreenComponent
+        goBack={this.goBack}
+        headerTitle={I18n.t(
+          "authentication.spid_information_request.headerTitle"
+        )}
+      >
         <Content>
           <H1>
             {I18n.t("authentication.spid_information_request.contentTitle")}
@@ -94,22 +75,25 @@ class SpidInformationRequestScreen extends React.Component<Props> {
             </Text>
           </Button>
         </View>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }
+
+const isFormValidSelector = isValid(SPID_INFORMATION_FORM_NAME);
+
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   /**
    * Our form submit button is outside the `Form` itself so we need to use
    * this selector to check if the form is valid or not.
    */
-  isFormValid: isValid(SPID_INFORMATION_FORM_NAME)(state)
+  isFormValid: isFormValidSelector(state)
 });
 
 export default connect(mapStateToProps)(
   withContextualHelp(
     SpidInformationRequestScreen,
-    I18n.t("personal_data_processing.title"),
-    () => <TermOfUse />
+    I18n.t("profile.main.privacy.title"),
+    () => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
   )
 );

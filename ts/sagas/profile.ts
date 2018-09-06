@@ -1,22 +1,20 @@
 /**
  * A saga that manages the Profile.
  */
+import { none, Option, some } from "fp-ts/lib/Option";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
-  BackendClient,
-  BasicResponseTypeWith401,
+  CreateOrUpdateProfileT,
+  GetProfileT,
   ProfileWithOrWithoutEmail
 } from "../api/backend";
 
-import { apiUrlPrefix } from "../config";
-
 import I18n from "../i18n";
 
-import {
-  PROFILE_LOAD_REQUEST,
-  PROFILE_UPSERT_REQUEST
-} from "../store/actions/constants";
+import { sessionExpired } from "../store/actions/authentication";
+import { PROFILE_UPSERT_REQUEST } from "../store/actions/constants";
 import {
   profileLoadFailure,
   profileLoadSuccess,
@@ -24,101 +22,86 @@ import {
   ProfileUpsertRequest,
   profileUpsertSuccess
 } from "../store/actions/profile";
-import { sessionTokenSelector } from "../store/reducers/authentication";
-import { profileSelector, ProfileState } from "../store/reducers/profile";
-import { SessionToken } from "../types/SessionToken";
+import { profileSelector } from "../store/reducers/profile";
 
-import { callApiWith401ResponseStatusHandler } from "./api";
+import { SagaCallReturnType } from "../types/utils";
 
 // A saga to load the Profile.
-function* loadProfile(): Iterator<Effect> {
-  const sessionToken: SessionToken | undefined = yield select(
-    sessionTokenSelector
-  );
-
-  if (sessionToken) {
-    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
-    const response:
-      | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-      | undefined = yield call(
-      callApiWith401ResponseStatusHandler,
-      backendClient.getProfile,
+export function* loadProfile(
+  getProfile: TypeofApiCall<GetProfileT>
+): Iterator<Effect | Option<ProfileWithOrWithoutEmail>> {
+  try {
+    const response: SagaCallReturnType<typeof getProfile> = yield call(
+      getProfile,
       {}
     );
 
-    if (!response || response.status !== 200) {
-      // We got a error, send a SESSION_LOAD_FAILURE action
-      const error: Error = response
-        ? response.value
-        : Error(I18n.t("profile.errors.load"));
-
-      yield put(profileLoadFailure(error));
-    } else {
+    if (response && response.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       yield put(profileLoadSuccess(response.value));
+      return some(response.value);
     }
-  } else {
-    // No SessionToken can't send the request
-    yield put(
-      profileLoadFailure(Error(I18n.t("authentication.errors.notoken")))
-    );
+
+    throw response ? response.value : Error(I18n.t("profile.errors.load"));
+  } catch (error) {
+    yield put(profileLoadFailure(error));
   }
+  return none;
 }
 
 // A saga to update the Profile.
-function* createOrUpdateProfile(
+export function* createOrUpdateProfileSaga(
+  createOrUpdateProfile: TypeofApiCall<CreateOrUpdateProfileT>,
   action: ProfileUpsertRequest
 ): Iterator<Effect> {
-  // Get the token from the state
-  const sessionToken: SessionToken | undefined = yield select(
-    sessionTokenSelector
+  // Get the current Profile from the state
+  const profileState: ReturnType<typeof profileSelector> = yield select(
+    profileSelector
   );
 
-  if (sessionToken) {
-    // Get the current Profile from the state
-    const profileState: ProfileState = yield select(profileSelector);
+  // If we already have a profile, merge it with the new updated attributes
+  // or else, create a new profile from the provided object
+  // FIXME: perhaps this is responsibility of the caller?
+  const newProfile = profileState
+    ? {
+        ...profileState,
+        ...action.payload
+      }
+    : action.payload;
 
-    // If we already have a profile, merge it with the new updated attributes
-    // or else, create a new profile from the provided object
-    const newProfile = profileState
-      ? {
-          ...profileState,
-          ...action.payload
-        }
-      : action.payload;
-
-    const backendClient = BackendClient(apiUrlPrefix, sessionToken);
-
-    const response:
-      | BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
-      | undefined = yield call(
-      callApiWith401ResponseStatusHandler,
-      backendClient.createOrUpdateProfile,
-      { newProfile }
-    );
-
-    if (!response || response.status !== 200) {
-      // We got a error, send a SESSION_UPSERT_FAILURE action
-      const error: Error = response
-        ? response.value
-        : Error(I18n.t("profile.errors.upsert"));
-
-      yield put(profileUpsertFailure(error));
-    } else {
-      // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-      yield put(profileUpsertSuccess(response.value));
+  const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
+    createOrUpdateProfile,
+    {
+      newProfile
     }
+  );
+
+  if (response && response.status === 401) {
+    // on 401, expire the current session and restart the authentication flow
+    yield put(sessionExpired);
+    return;
+  }
+
+  if (!response || response.status !== 200) {
+    // We got a error, send a SESSION_UPSERT_FAILURE action
+    const error: Error = response
+      ? response.value
+      : Error(I18n.t("profile.errors.upsert"));
+
+    yield put(profileUpsertFailure(error));
   } else {
-    // No SessionToken can't send the request
-    yield put(
-      profileUpsertFailure(Error(I18n.t("authentication.errors.notoken")))
-    );
+    // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
+    yield put(profileUpsertSuccess(response.value));
   }
 }
 
 // This function listens for Profile related requests and calls the needed saga.
-export default function* root(): Iterator<Effect> {
-  yield takeLatest(PROFILE_LOAD_REQUEST, loadProfile);
-  yield takeLatest(PROFILE_UPSERT_REQUEST, createOrUpdateProfile);
+export function* watchProfileUpsertRequestsSaga(
+  createOrUpdateProfile: TypeofApiCall<CreateOrUpdateProfileT>
+): Iterator<Effect> {
+  yield takeLatest(
+    PROFILE_UPSERT_REQUEST,
+    createOrUpdateProfileSaga,
+    createOrUpdateProfile
+  );
 }

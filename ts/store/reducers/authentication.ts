@@ -9,8 +9,8 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   SESSION_EXPIRED,
-  SESSION_INVALID,
-  SESSION_LOAD_SUCCESS
+  SESSION_INFO_LOAD_SUCCESS,
+  SESSION_INVALID
 } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -93,7 +93,7 @@ export function isLoggedIn(
 
 // Selectors
 
-export const isAuthenticatedSelector = (state: GlobalState): boolean =>
+export const isLoggedInSelector = (state: GlobalState): boolean =>
   isLoggedIn(state.authentication);
 
 export const sessionTokenSelector = (
@@ -141,7 +141,7 @@ const reducer = (
     };
   }
 
-  if (action.type === SESSION_LOAD_SUCCESS && isLoggedIn(state)) {
+  if (action.type === SESSION_INFO_LOAD_SUCCESS && isLoggedIn(state)) {
     // Save the session info in the state
     return {
       ...state,

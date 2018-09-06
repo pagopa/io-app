@@ -1,0 +1,424 @@
+---
+global:
+  jserror:
+    title: Unexpected error occurred
+    message: We have reported this to our team! Please close the app and start again!
+  markdown:
+    decodeError: Message can't be decoded
+  app:
+    version: Version
+  buttons:
+    delete: Delete
+    cancel: Cancel
+    ok: OK
+    continue: Continue
+  navigator:
+    messages: messages
+    wallet: wallet
+    documents: documents
+    preferences: preferences
+    profile: profile
+  actions:
+    retry: An error occurred, please retry
+  remoteStates:
+    notAvailable: Non available
+  notImplemented: NOT IMPLEMENTED
+locales:
+  it: Italian
+  en: English
+connection:
+  status:
+    offline: You are offline!
+errors:
+  loginError: There was an error in the login, repeat the procedure.
+  profileUpdateError: An error occurred while updating your profile.
+startup:
+  title: Initialization
+  authentication: User authenticated
+  sessionInfo: SPID attributes loaded
+  profileInfo: User profile loaded
+  profileEnabled: User profile activated
+login:
+  welcome:
+    line1: welcome in your
+    line2: Digital Citizenship
+inbox:
+  enableButton: Enable Inbox
+  disableButton: Disable Inbox
+  enableCallToActionDescription: Enable the inbox to view messages
+profile:
+  sections:
+    spid: SPID PROFILE
+  unknown: UNKNOWN
+  logout: Logout from this SPID identity
+  errors:
+    load: Error loading the profile
+    upsert: Error creating or updating the profile
+  main:
+    screenTitle: Profile
+    screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
+    logout: Logout/Exit
+    privacy:
+      title: Privacy
+      description: Export data, Remove account
+      text: !include privacy.md
+    termsAndConditions:
+      title: Terms and Conditions
+      description: Review Terms & Conditions of the app
+    mainPrivacy:
+      screenTitle: Privacy
+      screenSubtitle: Here you will find information related to your personal data.
+      privacyPolicy:
+        title: Privacy policy
+        description: review accepted privacy terms
+      removeAccount:
+        title: Cancella il tuo account
+        description: remove all data associated to your account from your phone and
+          our systems (SPID required)
+      exportData:
+        title: Esporta i tuoi dati
+        description: send to your email all your account’s data in an open format
+navigation:
+  messages: Messages
+  profile: Profile
+spid:
+  login: LOGIN
+  loginButton: LOGIN WITH
+  selectIdp: To continue to login, select your SPID identity provider
+  selectDemoIdp: If you do not have your own SPID identity yet, browse the app in
+    demo mode
+  loginErrorAlert:
+    title: Login error
+    message: Sorry, there was an error while logging in, could you try again?
+    okLabel: Ok
+  subscription:
+    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
+      Amministrazione Italiana.
+    line2: Inserisci la tua e-mail per attivarla.
+authentication:
+  landing:
+    login: Login with SPID
+    nospid: Don't have SPID? Find out more
+    card1-title: All messages in one place
+    card1-content: Display all the incoming communications from Public Administrations
+    card2-title: Use your favourite payment methods
+    card2-content: You can pay a tax or a penalty by your bank account and your cards
+    card3-title: Quickly pay a physical notice
+    card3-content: You can pay a notice also by scanning the QR code on the physical
+      notice
+    card4-title: You can use the app by SPID only
+    card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
+      to guarantee your online safety
+  spid_information_request:
+    headerTitle: Insert email address
+    contentTitle: Don't have SPID?
+    paragraph1: SPID, the Public System of Digital Identity, allows you to access
+      all the services of the Public Administration with a single Digital Identity
+      (username and password).
+    paragraph2: If you like, leave us your email address to receive reminders and
+      updates on this app
+    paragraph3: Continuing you declare to accept the
+    moreLinkText: To know more
+    tosLinkText: rules on the processing of personal data
+    continue: Continue
+  spid_information:
+    headerTitle: What is SPID?
+    contentTitle: Don't have SPID?
+    moreLinkText: Learn more
+    subtitle: SPID is safe
+    paragraph1: SPID, the Public System of Digital Identity, allows you to access
+      all the services of the Public Administration with a single Digital Identity
+      (username and password).
+    paragraph2-part1: 'SPID allows you to do online what was possible only in person:
+      so, to register at SPID you will'
+    paragraph2-bold: certiify your identity
+    paragraph2-part2: 'completing your recognition through an Identity Provider. Here
+      what you shall do:'
+    point1-value: '1'
+    point1-content: " Choose your \nIdentity Provider"
+    point2-value: '2'
+    point2-content: " Insert your personal data and your mobile phone"
+    point3-value: '3'
+    point3-content: " Upload a copy of your identity papers"
+    point4-value: '4'
+    point4-content: " Complete the \nrecognition"
+    knowMore: Learn more on spid.gov.it
+  idp_selection:
+    headerTitle: Home
+    contentTitle: Select your Identity Provider
+    cancel: Cancel
+  idp_login:
+    headerTitle: Login
+  errors:
+    notoken: The session is not ready or is invalid
+    logout: Error on logout
+onboarding:
+  tos:
+    headerTitle: Activation
+    contentTitle: Terms of service and personal data
+    section1: Terms and conditions of use of the service
+    section2: Rules on the processing of personal data
+    continue: Continue
+  pin:
+    headerTitle: Activation
+    contentTitle: Choose a PIN code
+    contentTitleConfirm: Insert your PIN again
+    pinInfo: This code will be requested each time you open the app and when you need
+      to view sensitive data or make dispositive transactions. It must be composed
+      of 5 digits. Remember it carefully. You can change it at any time by entering
+      with SPID.
+    pinInfoSelected: This code will be requested each time you open the app and when
+      you need to view sensitive data or make dispositive transactions.
+    moreLinkText: Get more info
+    continue: Continue
+    reset: Change the code
+    confirmValid: thanks, you can continue
+    confirmInvalid: the two pins do not match
+pin_login:
+  pin:
+    pinInfo: Enter the PIN
+    reset:
+      button: I forgot my PIN
+      button_short: Reset PIN
+      tip: To reset your PIN you will have to login again with your SPID account.
+      tip_short: You will have to login again.
+    confirmValid: Correct PIN
+    confirmInvalid: Invalid PIN
+  unlock_screen:
+    help:
+      title: hello
+      content: hello
+why_a_fee:
+  title: Why do I have to pay a fee?
+  content: |-
+    Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
+    Pellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.
+    Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
+forms:
+  validators:
+    required: Required value
+    email: Invalid email address
+  spidInformation:
+    fields:
+      email:
+        placeholder: email address
+lipsum:
+  medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
+    id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
+    Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
+    totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
+    Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis,
+    obscuris et malesuada fames.
+datetimes:
+  yesterday: yesterday
+  todayAt: today, at
+payment:
+  currentPsp: Your current PSP is
+  noPsp: You have yet to select a PSP
+  changePsp: Change PSP
+wallet:
+  wallet: Wallet
+  creditcards: Credit Cards
+  paymentMethods: Payment methods
+  paymentMethod: Payment method
+  add: add
+  newPaymentMethod:
+    add: add
+    addButton: Add payment method
+    newMethod: Choose another payment method
+    addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
+      so that you don't have to re-add them from scratch for every transaction
+  textMsg:
+    title: Text confirmation code
+    header: Confirmation code
+    newCode: Request a new code
+    info: Insert the code that was sent by text to your mobile phone
+  saveCard:
+    header: Save the card
+    title: Do you want to save this card?
+    infoTitle: Set the card as favourite payment method
+    info: This payment method will be automatically proposed for the next payment
+    save: Save the card
+  thanks: "✓ Thank you!"
+  endPayment: Your payment has been completed successfully
+  pickPsp:
+    title: Choose the manager
+    info: This card does not belong to the PagoPA payment network.
+    infoBold: Choose the economic operator
+    info2: which will have to manage yout payment.
+    link: Find out more
+    maxFee: Maximum fee
+  ConfirmPayment:
+    header: Confirm transaction
+    cancel: CANCEL
+    cancelPayment: Cancel the transaction
+    goToPay: Confirm and pay
+    askConfirm: Want to proceed with the transaction?
+    partialAmount: Amount to pay
+    fee: Fee
+    why: Why?
+    totalAmount: Total amount
+    info: 'Warning: after this step it will not be possible to come back'
+    info2: You are using your favourite payment method.
+    changeMethod: Change the payment method
+    change: Change method
+  payWith:
+    header: Choose payment method
+    title: Pay with
+    info: Choose one saved payment method or add a new one
+  firstTransactionSummary:
+    header: Transaction notice summary
+    title: Transaction notice
+    amount: Amount
+    expireDate: Expire date
+    tranche: Tranche
+    entity: 'Entity:'
+    info: 'More info at:'
+    tel: 'Tel:'
+    email: 'Email:'
+    PEC: 'PEC:'
+    recipient: 'Recipient:'
+    object: 'Transaction object:'
+    cbillCode: 'CBILL code:'
+    iuv: 'IUV:'
+    entityCode2: 'Entity/Company code:'
+    updatedAmount: Updated amount
+    updateInfo: 'The pagoPa system updates automatically the amount to ensure you
+      pay the exact amount and to avoid you arrears or additional interests '
+    moreInfo: More details
+  insertManually:
+    header: Insert notice data
+    title: Insert the notice data
+    info: which allow us to identify the transaction
+    link: Where are they?
+    noticeCode: Notice Code
+    entityCode: Entity Fiscal Code
+    amount: Amount (€)
+    proceed: Proceed with the transaction
+  transactionDetails: Transaction details
+  total: Total
+  payAmount: Amount to pay
+  transactionFee: Transaction fee
+  why: Why?
+  paymentReason: Reason
+  recipient: Recipient
+  date: Date
+  time: Time
+  receipt: Receipt
+  seeReceipt: See Receipt
+  transactions: Transactions
+  transaction: Transaction
+  noTransactions: There are no transactions.
+  noNewTransactions: There are no new transactions.
+  payNotice: Pay notice
+  latestTransactions: Latest transactions
+  creditDebitCards: Credit/Debit Cards
+  addPaymentMethodTitle: Add payment method
+  cancel: Cancel
+  continue: Continue
+  methods:
+    card:
+      name: Credit/debit card
+      maxFee: Maximum fee of 0.50€
+    bank:
+      name: Bank account
+      maxFee: Maximum fee of 0.50€
+    mobile:
+      name: Other payment methods
+      maxFee: Maximum fee of 0.50€
+  addCardTitle: Card details
+  dummyCard:
+    labels:
+      holder: Card holder
+      pan: Card number
+      expirationDate: Expiration date
+      securityCode: Card security code
+    values:
+      holder: John Doe
+      pan: 0000 0000 0000 0000
+      expirationDate: mm/yy
+      securityCode: "•••"
+  acceptedCards: Accepted cards
+  whyFee: Why a fee?
+  chooseMethod: Select the desired method
+  QRtoPay:
+    byCameraTitle: Notice QR Code
+    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
+      manually insert the transaction-related data (IUV and the entity/company code).
+    setManually: Insert data manually
+saveCard:
+  saveCard: Save the card
+  cancel: Cancel
+  header: Do you whant to save this card?
+  favoriteTitle: Set the cart as favourite payment method
+  favoriteText: This payment method will be automatically proposed for the next payment
+cardComponent:
+  validUntil: Valid until
+  actions: Actions
+  setFavourite: Set as favourite
+  unsetFavourite: Remove from favourites
+  deleteTitle: Do you want to proceed?
+  deleteMsg: This will delete the payment method
+  neverUsed: Never used
+  lastUsage: Last usage
+messages:
+  counting:
+    zero: No message
+    one: You have 1 message
+    other: You have {{count}} messages
+  tab:
+    all: All
+    deadlines: Deadlines
+  contentTitle: Messages
+  refresh: Pull down to refresh
+  loading: Loading Messages...
+  yesterday: yesterday
+  cta:
+    pay: Pay € {{amount}}
+  unknownSender: Unknown sender
+  noContent: Content not available
+messageDetails:
+  headerTitle: Message
+  detailsLink:
+    showLabel: Details of the message
+    hideLabel: Close details
+  infoLabels:
+    data: 'Data:'
+    senderFrom: Sender from
+    department: Department
+    service: Service
+notifications:
+  installation:
+    errorTitle: Push notifications
+    errorMessage: Registration with the push notifications service generated an error
+preferences:
+  title: Preferences
+  subtitle: This settings will be used by all services of the Public Amministration.
+  moreLinkText: Get more info.
+  list:
+    email: Email address
+    mobile_phone: Mobile number
+    services: List of services
+    services_description: Enable/disable your services on IO
+    language: Language
+    digitalDomicile: Digital domicile
+  empty:
+    default: No preference set
+services:
+  headerTitle: Services
+  title: Available services
+  subTitle: Enable or disable the services that are allowed to send you messages
+  servicesHelp: !include preferences_services_help.md
+  serviceIsEnabled: The service is enabled
+  serviceNotEnabled: The service is not enabled
+  pushNotifications: Push Notifications
+  emailNotifications: Email Notifications
+  tosLink: Terms and conditions
+  privacyLink: Privacy information
+  otherAppsInfo: You can find this service also
+  otherAppWeb: Online on
+  otherAppIos: With the iOS app
+  otherAppAndroid: With the Android app
+  contactsAndInfo: Contacts and info
+  contactAddress: Address
+  contactPhone: Phone
