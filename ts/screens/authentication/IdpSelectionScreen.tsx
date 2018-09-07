@@ -115,64 +115,57 @@ const styles = StyleSheet.create({
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-class IdpSelectionScreen extends React.PureComponent<Props, {}> {
-  private goBack = () => this.props.navigation.goBack();
+const IdpSelectionScreen: React.SFC<Props> = props => {
+  const goBack = () => props.navigation.goBack();
 
-  private navigateToSpidInformationRequest = () =>
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+  const navigateToSpidInformationRequest = () =>
+    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  private onIdpSelected = (idp: IdentityProvider) => {
-    this.props.dispatch(idpSelected(idp));
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+  const onIdpSelected = (idp: IdentityProvider) => {
+    props.dispatch(idpSelected(idp));
+    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  public render() {
-    return (
-      <BaseScreenComponent
-        goBack={this.goBack}
-        headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-      >
-        {this.props.isSessionExpired && (
-          <AlertBanner
-            title={I18n.t("expiredSession.title")}
-            message={I18n.t("expiredSession.message")}
+  return (
+    <BaseScreenComponent
+      goBack={goBack}
+      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+    >
+      {props.isSessionExpired && (
+        <AlertBanner
+          title={I18n.t("expiredSession.title")}
+          message={I18n.t("expiredSession.message")}
+        />
+      )}
+      <Content noPadded={true} alternative={true}>
+        <View style={styles.subheader}>
+          <Image
+            source={require("../../../img/spid.png")}
+            style={styles.spidLogo}
           />
-        )}
-        <Content noPadded={true} alternative={true}>
-          <View style={styles.subheader}>
-            <Image
-              source={require("../../../img/spid.png")}
-              style={styles.spidLogo}
-            />
-            <View spacer={true} />
-            <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
-          </View>
-          <View style={styles.gridContainer} testID="idps-view">
-            <IdpsGrid idps={enabledIdps} onIdpSelected={this.onIdpSelected} />
-            <View spacer={true} />
-            <Button
-              block={true}
-              light={true}
-              bordered={true}
-              onPress={this.goBack}
-            >
-              <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
-            </Button>
-          </View>
-        </Content>
-        <View footer={true}>
-          <Button
-            block={true}
-            transparent={true}
-            onPress={this.navigateToSpidInformationRequest}
-          >
-            <Text>{I18n.t("authentication.landing.nospid")}</Text>
+          <View spacer={true} />
+          <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
+        </View>
+        <View style={styles.gridContainer} testID="idps-view">
+          <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
+          <View spacer={true} />
+          <Button block={true} light={true} bordered={true} onPress={goBack}>
+            <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
           </Button>
         </View>
-      </BaseScreenComponent>
-    );
-  }
-}
+      </Content>
+      <View footer={true}>
+        <Button
+          block={true}
+          transparent={true}
+          onPress={navigateToSpidInformationRequest}
+        >
+          <Text>{I18n.t("authentication.landing.nospid")}</Text>
+        </Button>
+      </View>
+    </BaseScreenComponent>
+  );
+};
 
 const mapStateToProps = ({ authentication }: GlobalState) => ({
   isSessionExpired: !!authentication.isSessionExpired
