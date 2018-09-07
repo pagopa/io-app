@@ -21,10 +21,7 @@ import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContest
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
-import {
-  BasicResponseTypeWith401,
-  MockedBackendClient as BackendClient
-} from "../api/backend";
+import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
@@ -145,32 +142,33 @@ function* fetchWithTokenRefresh<T>(
       // then handle other error codes)
       return response;
     } else {
-      const refreshTokenResponse:
-        | BasicResponseTypeWith401<SessionResponse>
-        | undefined = yield call(
-        pagoPaClient.getSession,
-        pagoPaClient.walletToken
-      );
-      if (
-        refreshTokenResponse !== undefined &&
-        refreshTokenResponse.status === 200
-      ) {
-        // token fetched successfully, store it
-        yield put(
-          storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
-        );
+      yield call(fetchAndStorePagoPaToken, pagoPaClient);
 
-        // and retry fetching the result
-        return yield call(
-          fetchWithTokenRefresh,
-          request,
-          pagoPaClient,
-          retries - 1
-        );
-      }
+      // and retry fetching the result
+      return yield call(
+        fetchWithTokenRefresh,
+        request,
+        pagoPaClient,
+        retries - 1
+      );
     }
   }
   return undefined;
+}
+
+function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
+  const refreshTokenResponse:
+    | BasicResponseTypeWith401<SessionResponse>
+    | undefined = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
+  if (
+    refreshTokenResponse !== undefined &&
+    refreshTokenResponse.status === 200
+  ) {
+    // token fetched successfully, store it
+    yield put(
+      storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
+    );
+  }
 }
 
 function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
@@ -700,6 +698,7 @@ function* completionHandler(
 }
 
 export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
+  yield call(fetchAndStorePagoPaToken, pagoPaClient);
   while (true) {
     const action = yield take([
       FETCH_TRANSACTIONS_REQUEST,

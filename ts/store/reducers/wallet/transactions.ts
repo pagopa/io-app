@@ -39,7 +39,7 @@ export const latestTransactionsSelector = createSelector(
         (a, b) =>
           isNaN(a.created as any) || isNaN(b.created as any)
             ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-            : a.created.toISOString().localeCompare(b.created.toISOString())
+            : b.created.toISOString().localeCompare(a.created.toISOString())
       )
       .slice(0, 5) // WIP no magic numbers
 );
