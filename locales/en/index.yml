@@ -42,6 +42,9 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
+expiredSession:
+  title: Security
+  message: Per un maggior livello di sicurezza e per controlli di routine, ti chiediamo di autenticarti nuovamente, inserendo le tue credenziali SPID.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox

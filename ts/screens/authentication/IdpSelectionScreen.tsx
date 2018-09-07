@@ -18,12 +18,16 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
+import { ExpiredSessionBanner } from "../../components/ExpiredSessionBanner";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-type ReduxMappedProps = {};
-type OwnProps = {
+interface ReduxMappedProps {
+  isSessionExpired: boolean;
+}
+interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
-};
+}
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const idps: ReadonlyArray<IdentityProvider> = [
   {
@@ -111,50 +115,62 @@ const styles = StyleSheet.create({
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-const IdpSelectionScreen: React.SFC<Props> = props => {
-  const goBack = () => props.navigation.goBack();
+class IdpSelectionScreen extends React.PureComponent<Props, {}> {
+  public goBack = () => this.props.navigation.goBack();
 
-  const navigateToSpidInformationRequest = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+  public navigateToSpidInformationRequest = () =>
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  const onIdpSelected = (idp: IdentityProvider) => {
-    props.dispatch(idpSelected(idp));
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+  public onIdpSelected = (idp: IdentityProvider) => {
+    this.props.dispatch(idpSelected(idp));
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  return (
-    <BaseScreenComponent
-      goBack={goBack}
-      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-    >
-      <Content noPadded={true} alternative={true}>
-        <View style={styles.subheader}>
-          <Image
-            source={require("../../../img/spid.png")}
-            style={styles.spidLogo}
-          />
-          <View spacer={true} />
-          <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
-        </View>
-        <View style={styles.gridContainer} testID="idps-view">
-          <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
-          <View spacer={true} />
-          <Button block={true} light={true} bordered={true} onPress={goBack}>
-            <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
+  public render() {
+    return (
+      <BaseScreenComponent
+        goBack={this.goBack}
+        headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+      >
+        {this.props.isSessionExpired && <ExpiredSessionBanner />}
+        <Content noPadded={true} alternative={true}>
+          <View style={styles.subheader}>
+            <Image
+              source={require("../../../img/spid.png")}
+              style={styles.spidLogo}
+            />
+            <View spacer={true} />
+            <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
+          </View>
+          <View style={styles.gridContainer} testID="idps-view">
+            <IdpsGrid idps={enabledIdps} onIdpSelected={this.onIdpSelected} />
+            <View spacer={true} />
+            <Button
+              block={true}
+              light={true}
+              bordered={true}
+              onPress={this.goBack}
+            >
+              <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
+            </Button>
+          </View>
+        </Content>
+        <View footer={true}>
+          <Button
+            block={true}
+            transparent={true}
+            onPress={this.navigateToSpidInformationRequest}
+          >
+            <Text>{I18n.t("authentication.landing.nospid")}</Text>
           </Button>
         </View>
-      </Content>
-      <View footer={true}>
-        <Button
-          block={true}
-          transparent={true}
-          onPress={navigateToSpidInformationRequest}
-        >
-          <Text>{I18n.t("authentication.landing.nospid")}</Text>
-        </Button>
-      </View>
-    </BaseScreenComponent>
-  );
-};
+      </BaseScreenComponent>
+    );
+  }
+}
 
-export default connect()(IdpSelectionScreen);
+const mapStateToProps = ({ authentication }: GlobalState) => ({
+  isSessionExpired: !!authentication.isSessionExpired
+});
+
+export default connect(mapStateToProps)(IdpSelectionScreen);

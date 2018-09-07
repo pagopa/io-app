@@ -17,31 +17,47 @@ import { GlobalState } from "./types";
 
 // Types
 
+type AuthenticationKinds =
+  | "LoggedOutWithoutIdp"
+  | "LoggedOutWithIdp"
+  | "LoggedInWithoutSessionInfo"
+  | "LoggedInWithSessionInfo";
+
+interface AuthenticationStateBaseInterface {
+  kind: AuthenticationKinds;
+  sessionToken?: SessionToken;
+  sessionInfo?: PublicSession;
+  isSessionExpired?: boolean;
+}
+
 // The user is logged out and hasn't selected an IDP
-export type LoggedOutWithoutIdp = Readonly<{
+export interface LoggedOutWithoutIdp extends AuthenticationStateBaseInterface {
   kind: "LoggedOutWithoutIdp";
-}>;
+}
 
 // The user is logged out but has already selected an IDP
-export type LoggedOutWithIdp = Readonly<{
+export interface LoggedOutWithIdp extends AuthenticationStateBaseInterface {
   kind: "LoggedOutWithIdp";
   idp: IdentityProvider;
-}>;
+  isSessionExpired: boolean;
+}
 
 // The user is logged in but we still have to request the addition session info to the Backend
-export type LoggedInWithoutSessionInfo = Readonly<{
+export interface LoggedInWithoutSessionInfo
+  extends AuthenticationStateBaseInterface {
   kind: "LoggedInWithoutSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
-}>;
+}
 
 // The user is logged in and we also have all session info
-export type LoggedInWithSessionInfo = Readonly<{
+export interface LoggedInWithSessionInfo
+  extends AuthenticationStateBaseInterface {
   kind: "LoggedInWithSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
   sessionInfo: PublicSession;
-}>;
+}
 
 export type AuthenticationState =
   | LoggedOutWithoutIdp
@@ -125,7 +141,8 @@ const reducer = (
       ...state,
       ...{
         kind: "LoggedOutWithIdp",
-        idp: action.payload
+        idp: action.payload,
+        isSessionExpired: false
       }
     };
   }
@@ -160,7 +177,8 @@ const reducer = (
   ) {
     return {
       kind: "LoggedOutWithIdp",
-      idp: state.idp
+      idp: state.idp,
+      isSessionExpired: action.type === SESSION_EXPIRED
     };
   }
 
