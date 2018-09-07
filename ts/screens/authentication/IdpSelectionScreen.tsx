@@ -168,7 +168,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
 };
 
 const mapStateToProps = ({ authentication }: GlobalState) => ({
-  isSessionExpired: !!authentication.isSessionExpired
+  isSessionExpired: authentication.reason === "SESSION_EXPIRED"
 });
 
 export default connect(mapStateToProps)(IdpSelectionScreen);

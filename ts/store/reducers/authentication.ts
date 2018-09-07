@@ -23,23 +23,26 @@ type AuthenticationKinds =
   | "LoggedInWithoutSessionInfo"
   | "LoggedInWithSessionInfo";
 
+type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
+
 interface AuthenticationStateBaseInterface {
   kind: AuthenticationKinds;
   sessionToken?: SessionToken;
   sessionInfo?: PublicSession;
-  isSessionExpired?: boolean;
+  reason?: LoggedOutReason;
 }
 
 // The user is logged out and hasn't selected an IDP
 export interface LoggedOutWithoutIdp extends AuthenticationStateBaseInterface {
   kind: "LoggedOutWithoutIdp";
+  reason: LoggedOutReason;
 }
 
 // The user is logged out but has already selected an IDP
 export interface LoggedOutWithIdp extends AuthenticationStateBaseInterface {
   kind: "LoggedOutWithIdp";
   idp: IdentityProvider;
-  isSessionExpired: boolean;
+  reason: LoggedOutReason;
 }
 
 // The user is logged in but we still have to request the addition session info to the Backend
@@ -70,7 +73,8 @@ export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
 export const INITIAL_STATE: LoggedOutWithoutIdp = {
-  kind: "LoggedOutWithoutIdp"
+  kind: "LoggedOutWithoutIdp",
+  reason: "NOT_LOGGED_IN"
 };
 
 // Type guards
@@ -141,8 +145,7 @@ const reducer = (
       ...state,
       ...{
         kind: "LoggedOutWithIdp",
-        idp: action.payload,
-        isSessionExpired: false
+        idp: action.payload
       }
     };
   }
@@ -178,7 +181,8 @@ const reducer = (
     return {
       kind: "LoggedOutWithIdp",
       idp: state.idp,
-      isSessionExpired: action.type === SESSION_EXPIRED
+      reason:
+        action.type === SESSION_EXPIRED ? "SESSION_EXPIRED" : "NOT_LOGGED_IN"
     };
   }
 
