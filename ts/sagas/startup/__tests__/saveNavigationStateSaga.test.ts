@@ -4,7 +4,7 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import { saveNavigationStateSaga } from "../saveNavigationStateSaga";
 
 import { NAVIGATE_IF_LOGGED_IN } from "../../../store/actions/constants";
-import { navigateIfLoggedIn } from "../../../store/actions/deferred-navigation";
+import { navigateIfLoggedIn } from "../../../store/actions/deferredNavigation";
 import { navigationStateSelector } from "../../../store/reducers/navigation";
 
 import { NavigationActions } from "react-navigation";

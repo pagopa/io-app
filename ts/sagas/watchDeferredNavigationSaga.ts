@@ -3,7 +3,7 @@ import { NAVIGATE_IF_LOGGED_IN } from "../store/actions/constants";
 import {
   NavigateIfLoggedIn,
   saveNavigationWhenLoggedIn
-} from "../store/actions/deferred-navigation";
+} from "../store/actions/deferredNavigation";
 import { ApplicationState } from "../store/actions/types";
 import { applicationStateSelector } from "../store/reducers/appState";
 import { isPinLoginValidSelector } from "../store/reducers/pinlogin";

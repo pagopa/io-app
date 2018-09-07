@@ -6,7 +6,7 @@ import { backgroundActivityTimeout } from "../../config";
 
 import { startApplicationInitialization } from "../../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
-import { clearDeferredNavigationAction } from "../../store/actions/deferred-navigation";
+import { clearDeferredNavigationAction } from "../../store/actions/deferredNavigation";
 import { navigateToBackgroundScreen } from "../../store/actions/navigation";
 import {
   ApplicationState,
@@ -15,8 +15,8 @@ import {
 import {
   deferredNavigationActionSelector,
   DeferredNavigationActionState
-} from "../../store/reducers/deferred-navigation";
-import { saveNavigationStateSaga } from "../startup/saveNavigationStateSaga";
+} from "../../store/reducers/deferredNavigation";
+import { saveNavigationStateSaga } from "./saveNavigationStateSaga";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to provide
@@ -52,7 +52,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       // Make sure that when the app come back active, the BackgrounScreen
       // gets loaded first
       // FIXME: not that this creates a quick blue flash in case after restoring
-      // the app we don't ask a PIN
+      //        the app we don't ask a PIN
       yield put(navigateToBackgroundScreen);
     } else if (lastState === "background" && newApplicationState === "active") {
       // The app is coming back active after being in background

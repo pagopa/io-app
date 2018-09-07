@@ -6,7 +6,7 @@ import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { debugRemotePushNotification, gcmSenderId } from "../config";
-import { navigateIfLoggedIn } from "../store/actions/deferred-navigation";
+import { navigateIfLoggedIn } from "../store/actions/deferredNavigation";
 import { navigateToMessageDetails } from "../store/actions/messages";
 import { updateNotificationsInstallationToken } from "../store/actions/notifications";
 import { Store } from "../store/actions/types";

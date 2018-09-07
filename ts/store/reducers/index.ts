@@ -14,7 +14,7 @@ import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import contentReducer from "./content";
-import deferredNavigationReducer from "./deferred-navigation";
+import deferredNavigationReducer from "./deferredNavigation";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
@@ -30,8 +30,7 @@ import walletReducer from "./wallet";
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
-  storage: createSecureStorage(),
-  blacklist: ["deferred-navigation"]
+  storage: createSecureStorage()
 };
 
 /**

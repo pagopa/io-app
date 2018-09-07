@@ -208,10 +208,6 @@ export const enum FetchRequestActions {
 // Extract keys from object and create a new union type
 export type FetchRequestActionsType = keyof typeof FetchRequestActions;
 
-export const CLEAR_DEEPLINK: "CLEAR_DEEPLINK" = "CLEAR_DEEPLINK";
-export const NAVIGATE_TO_DEEPLINK: "NAVIGATE_TO_DEEPLINK" =
-  "NAVIGATE_TO_DEEPLINK";
-
 export const NAVIGATE_IF_LOGGED_IN: "NAVIGATE_IF_LOGGED_IN" =
   "NAVIGATE_IF_LOGGED_IN";
 export const SAVE_NAVIGATION_STATE: "SAVE_NAVIGATION_STATE" =

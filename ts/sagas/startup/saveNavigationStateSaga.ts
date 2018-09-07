@@ -8,13 +8,13 @@ import { put, select } from "redux-saga/effects";
 
 import ROUTES from "../../navigation/routes";
 
-import { saveNavigationState } from "../../store/actions/deferred-navigation";
+import { saveNavigationState } from "../../store/actions/deferredNavigation";
 import { navigationStateSelector } from "../../store/reducers/navigation";
 
 /**
  * Saves the navigation state in a deferred navigation action so that when
- * the app  goes through the initialization saga, the user gets sent back
- * to the saved  navigation route.
+ * the app  goes through the startup saga, the user gets sent back
+ * to the saved navigation route.
  * Saving and restoring routes relies on the deferred navigation actions mechanism.
  */
 export function* saveNavigationStateSaga(): IterableIterator<Effect> {

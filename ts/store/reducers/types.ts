@@ -7,7 +7,7 @@ import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
 import { ContentState } from "./content";
-import { DeferredNavigationActionState } from "./deferred-navigation";
+import { DeferredNavigationActionState } from "./deferredNavigation";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";

@@ -30,11 +30,11 @@ import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 
 import { NavigationRoute } from "react-navigation";
 import { PagoPaClient } from "../api/pagopa";
-import { clearDeferredNavigationAction } from "../store/actions/deferred-navigation";
+import { clearDeferredNavigationAction } from "../store/actions/deferredNavigation";
 import {
   deferredNavigationActionSelector,
   DeferredNavigationActionState
-} from "../store/reducers/deferred-navigation";
+} from "../store/reducers/deferredNavigation";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -187,15 +187,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Watch for requests to reset the PIN
   yield fork(watchPinResetSaga);
 
-  const deferredNavigationState: DeferredNavigationActionState = yield select(
+  const deferredNavigationActionState: DeferredNavigationActionState = yield select(
     deferredNavigationActionSelector
   );
 
-  if (deferredNavigationState.navigation) {
-    yield put(deferredNavigationState.navigation);
+  if (deferredNavigationActionState.navigation) {
+    yield put(deferredNavigationActionState.navigation);
     yield put(clearDeferredNavigationAction());
-  } else if (deferredNavigationState.navigationState) {
-    yield put(deferredNavigationState.navigationState);
+  } else if (deferredNavigationActionState.navigationState) {
+    yield put(deferredNavigationActionState.navigationState);
     yield put(clearDeferredNavigationAction());
   } else {
     const currentRoute: NavigationRoute = yield select(currentRouteSelector);

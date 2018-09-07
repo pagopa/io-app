@@ -16,7 +16,7 @@ import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
 import { APP_STATE_CHANGE_ACTION } from "./constants";
 import { ContentActions } from "./content";
-import { DeferredNavigationActions } from "./deferred-navigation";
+import { DeferredNavigationActions } from "./deferredNavigation";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";

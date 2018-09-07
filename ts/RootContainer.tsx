@@ -7,7 +7,7 @@ import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { applicationChangeState } from "./store/actions/application";
-import { navigateIfLoggedIn } from "./store/actions/deferred-navigation";
+import { navigateIfLoggedIn } from "./store/actions/deferredNavigation";
 import { ApplicationState } from "./store/actions/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
