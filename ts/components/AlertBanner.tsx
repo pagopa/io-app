@@ -2,7 +2,6 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import I18n from "../i18n";
 import variables from "../theme/variables";
 
 const styles = StyleSheet.create({
@@ -12,11 +11,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ExpiredSessionBanner: React.SFC<{}> = () => (
+interface Props {
+  title: string;
+  message: string;
+}
+
+export const AlertBanner: React.SFC<Props> = ({ title, message }) => (
   <View style={styles.content}>
     <Text white={true} bold={true}>
-      {I18n.t("expiredSession.title")}
+      {title}
     </Text>
-    <Text white={true}>{I18n.t("expiredSession.message")}</Text>
+    <Text white={true}>{message}</Text>
   </View>
 );

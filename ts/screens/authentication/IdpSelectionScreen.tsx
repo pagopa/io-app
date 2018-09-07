@@ -4,6 +4,7 @@ import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { AlertBanner } from "../../components/AlertBanner";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
@@ -18,7 +19,6 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
-import { ExpiredSessionBanner } from "../../components/ExpiredSessionBanner";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
@@ -132,7 +132,12 @@ class IdpSelectionScreen extends React.PureComponent<Props, {}> {
         goBack={this.goBack}
         headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
       >
-        {this.props.isSessionExpired && <ExpiredSessionBanner />}
+        {this.props.isSessionExpired && (
+          <AlertBanner
+            title={I18n.t("expiredSession.title")}
+            message={I18n.t("expiredSession.message")}
+          />
+        )}
         <Content noPadded={true} alternative={true}>
           <View style={styles.subheader}>
             <Image
