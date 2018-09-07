@@ -116,12 +116,12 @@ const styles = StyleSheet.create({
  * A screen where the user choose the SPID IPD to login with.
  */
 class IdpSelectionScreen extends React.PureComponent<Props, {}> {
-  public goBack = () => this.props.navigation.goBack();
+  private goBack = () => this.props.navigation.goBack();
 
-  public navigateToSpidInformationRequest = () =>
+  private navigateToSpidInformationRequest = () =>
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  public onIdpSelected = (idp: IdentityProvider) => {
+  private onIdpSelected = (idp: IdentityProvider) => {
     this.props.dispatch(idpSelected(idp));
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
