@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,
-    paddingTop: 12,
-    paddingBottom: 7
+    paddingTop: 8,
+    paddingBottom: 10
   },
   upsideShadow: {
     // iOS shadow
