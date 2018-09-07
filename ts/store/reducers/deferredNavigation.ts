@@ -11,8 +11,10 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export interface DeferredNavigationActionState {
-  // Navigation saved before going to background.
+  // Navigation action saved just before the application goes into background.
   navigationState: Action | undefined;
+  // Navigation action that could come from a deep link navigation
+  // or a push notification intent.
   navigation: Action | undefined;
 }
 

@@ -53,10 +53,6 @@ class RootContainer extends React.PureComponent<Props> {
     AppState.removeEventListener("change", this.handleApplicationActivity);
   }
 
-  // public shouldComponentUpdate(_: Props): boolean {
-  //   return false;
-  // }
-
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
