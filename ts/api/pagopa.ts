@@ -10,7 +10,8 @@ import {
   IGetApiRequestType,
   IPostApiRequestType,
   IPutApiRequestType,
-  ResponseDecoder
+  ResponseDecoder,
+  TypeofApiCall
 } from "italia-ts-commons/lib/requests";
 import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 import {
@@ -105,31 +106,31 @@ type PostPaymentType = IPostApiRequestType<
 export type PagoPaClient = Readonly<{
   getSession: (
     walletToken: string
-  ) => Promise<BasicResponseTypeWith401<SessionResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<GetSessionType>>;
   getTransactions: (
     pagoPaToken: string
-  ) => Promise<BasicResponseTypeWith401<TransactionListResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<GetTransactionsType>>;
   getWallets: (
     pagoPaToken: string
-  ) => Promise<BasicResponseTypeWith401<WalletListResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<GetWalletsType>>;
   checkPayment: (
     pagoPaToken: string,
     paymentId: string
-  ) => Promise<BasicResponseTypeWith401<PaymentResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<CheckPaymentType>>;
   getPspList: (
     pagoPaToken: string,
     paymentId: string
-  ) => Promise<BasicResponseTypeWith401<PspListResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<GetPspsListType>>;
   updateWalletPsp: (
     pagoPaToken: string,
     walletId: number,
     pspId: number
-  ) => Promise<BasicResponseTypeWith401<WalletResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<UpdateWalletPspType>>;
   postPayment: (
     pagoPaToken: string,
     paymentId: string,
     walletId: number
-  ) => Promise<BasicResponseTypeWith401<TransactionResponse> | undefined>;
+  ) => ReturnType<TypeofApiCall<PostPaymentType>>;
   walletToken: string;
 }>;
 
