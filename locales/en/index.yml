@@ -42,9 +42,6 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-expiredSession:
-  title: Security
-  message: Per un maggior livello di sicurezza e per controlli di routine, ti chiediamo di autenticarti nuovamente, inserendo le tue credenziali SPID.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -155,6 +152,9 @@ authentication:
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
+  expiredSessionBanner:
+    title: Security notice
+    message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
   tos:
     headerTitle: Activation

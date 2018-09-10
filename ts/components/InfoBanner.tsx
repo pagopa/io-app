@@ -16,7 +16,10 @@ interface Props {
   message: string;
 }
 
-export const AlertBanner: React.SFC<Props> = ({ title, message }) => (
+/**
+ * Renders an information banner (with blue background)
+ */
+export const InfoBanner: React.SFC<Props> = ({ title, message }) => (
   <View style={styles.content}>
     <Text white={true} bold={true}>
       {title}

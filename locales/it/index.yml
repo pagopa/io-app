@@ -43,9 +43,6 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
-expiredSession:
-  title: Sicurezza
-  message: Per un maggior livello di sicurezza e per controlli di routine, ti chiediamo di autenticarti nuovamente, inserendo le tue credenziali SPID.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -161,6 +158,9 @@ authentication:
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
+  expiredSessionBanner:
+    title: Avviso di sicurezza
+    message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 onboarding:
   tos:
     headerTitle: Attivazione

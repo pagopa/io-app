@@ -17,50 +17,36 @@ import { GlobalState } from "./types";
 
 // Types
 
-type AuthenticationKinds =
-  | "LoggedOutWithoutIdp"
-  | "LoggedOutWithIdp"
-  | "LoggedInWithoutSessionInfo"
-  | "LoggedInWithSessionInfo";
-
+// reason for the user to be in the unauthenticated state
 type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
 
-interface AuthenticationStateBaseInterface {
-  kind: AuthenticationKinds;
-  sessionToken?: SessionToken;
-  sessionInfo?: PublicSession;
-  reason?: LoggedOutReason;
-}
-
 // The user is logged out and hasn't selected an IDP
-export interface LoggedOutWithoutIdp extends AuthenticationStateBaseInterface {
+export type LoggedOutWithoutIdp = Readonly<{
   kind: "LoggedOutWithoutIdp";
   reason: LoggedOutReason;
-}
+}>;
 
 // The user is logged out but has already selected an IDP
-export interface LoggedOutWithIdp extends AuthenticationStateBaseInterface {
+export type LoggedOutWithIdp = Readonly<{
   kind: "LoggedOutWithIdp";
   idp: IdentityProvider;
   reason: LoggedOutReason;
-}
+}>;
 
 // The user is logged in but we still have to request the addition session info to the Backend
-export interface LoggedInWithoutSessionInfo
-  extends AuthenticationStateBaseInterface {
+export type LoggedInWithoutSessionInfo = Readonly<{
   kind: "LoggedInWithoutSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
-}
+}>;
 
 // The user is logged in and we also have all session info
-export interface LoggedInWithSessionInfo
-  extends AuthenticationStateBaseInterface {
+export type LoggedInWithSessionInfo = Readonly<{
   kind: "LoggedInWithSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
   sessionInfo: PublicSession;
-}
+}>;
 
 export type AuthenticationState =
   | LoggedOutWithoutIdp
@@ -153,11 +139,9 @@ const reducer = (
   if (action.type === LOGIN_SUCCESS && isLoggedOutWithIdp(state)) {
     // Save the SessionToken (got from the WebView redirect url) in the state
     return {
-      ...state,
-      ...{
-        kind: "LoggedInWithoutSessionInfo",
-        sessionToken: action.payload
-      }
+      kind: "LoggedInWithoutSessionInfo",
+      idp: state.idp,
+      sessionToken: action.payload
     };
   }
 
