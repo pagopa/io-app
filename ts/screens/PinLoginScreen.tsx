@@ -7,7 +7,7 @@
 
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -15,11 +15,11 @@ import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
-import CancelPaymentLink from "../components/wallet/CancelPaymentLink";
 import I18n from "../i18n";
 import { pinLoginValidateRequest } from "../store/actions/pinlogin";
 import { startPinReset } from "../store/actions/pinset";
 import { ReduxProps } from "../store/actions/types";
+import { paymentRequestCancel } from "../store/actions/wallet/payment";
 import { AppState } from "../store/reducers/appState";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
@@ -31,7 +31,7 @@ import { isPaymentStarted } from "./../store/reducers/wallet/payment";
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
   appState: AppState;
-  inPayment: boolean;
+  isPaymentStarted: boolean;
 };
 
 type OwnProps = {
@@ -44,6 +44,31 @@ type Props = ReduxMappedProps &
   ContextualHelpInjectedProps;
 
 type CodeInputRef = CodeInput | null;
+
+const styles = StyleSheet.create({
+  buttonsContainer: {
+    flex: 1,
+    flexWrap: "nowrap",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "stretch"
+  },
+  buttons: {
+    flex: 1,
+    flexGrow: 1
+  },
+  buttonText: {
+    flexWrap: "wrap",
+    textAlign: "center"
+  },
+  leftButton: {
+    marginRight: 2,
+    backgroundColor: "white"
+  },
+  rightButton: {
+    marginRight: 2
+  }
+});
 
 class PinLoginScreen extends React.Component<Props> {
   private pinComponent: CodeInputRef = null;
@@ -61,6 +86,10 @@ class PinLoginScreen extends React.Component<Props> {
 
   private onPinReset = () => {
     this.props.dispatch(startPinReset);
+  };
+
+  private onPaymentCancel = () => {
+    this.props.dispatch(paymentRequestCancel());
   };
 
   // Method called when the CodeInput is filled
@@ -129,17 +158,42 @@ class PinLoginScreen extends React.Component<Props> {
           </Text>
           {this.renderCodeInput(pinLoginState)}
           <View spacer={true} extralarge={true} />
-          <Button block={true} primary={true} onPress={this.onPinReset}>
-            <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-          </Button>
+          {this.props.isPaymentStarted ? (
+            <View style={styles.buttonsContainer}>
+              <Button
+                light={true}
+                bordered={true}
+                block={true}
+                primary={true}
+                style={[styles.buttons, styles.leftButton]}
+                onPress={this.onPaymentCancel}
+              >
+                <Text style={styles.buttonText}>
+                  {" "}
+                  {I18n.t("global.buttons.cancel")}{" "}
+                </Text>
+              </Button>
+
+              <Button
+                style={[styles.buttons, styles.rightButton]}
+                block={true}
+                primary={true}
+                onPress={this.onPinReset}
+              >
+                <Text style={styles.buttonText}>
+                  {" "}
+                  {I18n.t("pin_login.pin.reset.button")}{" "}
+                </Text>
+              </Button>
+            </View>
+          ) : (
+            <Button block={true} primary={true} onPress={this.onPinReset}>
+              <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+            </Button>
+          )}
           <View spacer={true} />
           <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
           <View spacer={true} />
-          {this.props.inPayment ? (
-            <CancelPaymentLink navigation={this.props.navigation} />
-          ) : (
-            <View />
-          )}
         </Content>
       </BaseScreenComponent>
     );
@@ -154,7 +208,7 @@ const mapStateToProps = ({
   // Checks from the store whether there was an error while login with the PIN (e.g. PIN is not valid )
   pinLoginState: pinlogin,
   appState,
-  inPayment: isPaymentStarted(wallet)
+  isPaymentStarted: isPaymentStarted(wallet)
 });
 
 export default connect(mapStateToProps)(PinLoginScreen);
