@@ -585,9 +585,9 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.0.tgz#48a6be13cbe0e56904b301d1f58ce8847f731c44"
 
-"@types/jest@^23.3.1":
-  version "23.3.1"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.1.tgz#a4319aedb071d478e6f407d1c4578ec8156829cf"
+"@types/jest@^23.3.2":
+  version "23.3.2"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.2.tgz#07b90f6adf75d42c34230c026a2529e56c249dbb"
 
 "@types/js-yaml@^3.11.2":
   version "3.11.2"

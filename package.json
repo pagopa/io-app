@@ -73,7 +73,7 @@
     "@types/chalk": "^2.2.0",
     "@types/color": "^3.0.0",
     "@types/fs-extra": "^5.0.4",
-    "@types/jest": "^23.3.1",
+    "@types/jest": "^23.3.2",
     "@types/js-yaml": "^3.11.2",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.1.0",
