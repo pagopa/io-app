@@ -26,18 +26,22 @@ const testServiceId1 = "5a563817fcc896087002ea46c49a";
 const testMessageWithContent1 = {
   id: testMessageId1,
   created_at: new Date(),
-  markdown:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue.",
-  subject: "Lorem ipsum...",
+  content: {
+    markdown:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue.",
+    subject: "Lorem ipsum..."
+  },
   sender_service_id: testServiceId1
 } as MessageWithContent;
 
 const testMessageWithContent2 = {
   id: testMessageId2,
   created_at: new Date(),
-  markdown:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue.",
-  subject: "Lorem ipsum...",
+  content: {
+    markdown:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue.",
+    subject: "Lorem ipsum..."
+  },
   sender_service_id: testServiceId1
 } as MessageWithContent;
 
