@@ -33,7 +33,7 @@ import { defaultRetryingFetch } from "../utils/fetch";
 //
 
 // ProfileWithOrWithoutEmail is oneOf [InitializedProfile, AuthenticatedProfile]
-const AuthenticatedOrInitializedProfile = t.taggedUnion("has_profile", [
+const AuthenticatedOrInitializedProfile = t.union([
   t.intersection([
     InitializedProfile,
     t.interface({ has_profile: t.literal(true) })
