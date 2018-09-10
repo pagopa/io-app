@@ -158,6 +158,9 @@ authentication:
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
+  expiredSessionBanner:
+    title: Avviso di sicurezza
+    message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 onboarding:
   tos:
     headerTitle: Attivazione
