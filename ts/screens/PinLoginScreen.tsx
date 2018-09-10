@@ -1,8 +1,8 @@
 /**
  * A screen that allows the user to:
  * - unlock the app with a PIN
- * - complete a payment with a PIN
- * - cancel the payment process from the related link
+ * - confirm to proceed with a payment by a PIN
+ * - cancel the payment process from the screen
  */
 
 import { Button, Content, Text, View } from "native-base";
@@ -19,7 +19,7 @@ import I18n from "../i18n";
 import { pinLoginValidateRequest } from "../store/actions/pinlogin";
 import { startPinReset } from "../store/actions/pinset";
 import { ReduxProps } from "../store/actions/types";
-import { paymentRequestCancel } from "../store/actions/wallet/payment";
+import { paymentRequestTransactionSummaryFromBanner } from "../store/actions/wallet/payment";
 import { AppState } from "../store/reducers/appState";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
@@ -88,8 +88,8 @@ class PinLoginScreen extends React.Component<Props> {
     this.props.dispatch(startPinReset);
   };
 
-  private onPaymentCancel = () => {
-    this.props.dispatch(paymentRequestCancel());
+  private goToPaymentSummary = () => {
+    this.props.dispatch(paymentRequestTransactionSummaryFromBanner());
   };
 
   // Method called when the CodeInput is filled
@@ -166,7 +166,7 @@ class PinLoginScreen extends React.Component<Props> {
                 block={true}
                 primary={true}
                 style={[styles.buttons, styles.leftButton]}
-                onPress={this.onPaymentCancel}
+                onPress={this.goToPaymentSummary}
               >
                 <Text style={styles.buttonText}>
                   {" "}
