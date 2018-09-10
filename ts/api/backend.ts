@@ -1,5 +1,4 @@
 import * as t from "io-ts";
-
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
@@ -15,7 +14,6 @@ import {
   IResponseType,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
 
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { Installation } from "../../definitions/backend/Installation";
@@ -132,7 +130,7 @@ export type CreateOrUpdateInstallationT = IPutApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<NonEmptyString>
+  BasicResponseTypeWith401<SuccessResponse>
 >;
 
 export type LogoutT = IPostApiRequestType<
@@ -217,7 +215,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.installation),
-    response_decoder: basicResponseDecoder(NonEmptyString)
+    response_decoder: basicResponseDecoder(SuccessResponse)
   };
 
   const logoutT: LogoutT = {

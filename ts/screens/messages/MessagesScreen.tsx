@@ -1,12 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  RefreshControl,
-  RefreshControlProps,
-  StyleSheet
-} from "react-native";
+import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -15,9 +8,8 @@ import {
 import { connect } from "react-redux";
 
 import MessageComponent from "../../components/messages/MessageComponent";
-
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessages } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
@@ -25,12 +17,8 @@ import { orderedMessagesSelector } from "../../store/reducers/entities/messages"
 import { ServicesState } from "../../store/reducers/entities/services";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
-
 import variables from "../../theme/variables";
-
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 type ReduxMappedProps = Readonly<{
   isLoadingMessages: boolean;
@@ -43,12 +31,6 @@ export type OwnProps = Readonly<{
 }>;
 
 export type Props = ReduxMappedProps & ReduxProps & OwnProps;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 /**
  * This screen show the messages to the authenticated user.
@@ -79,15 +61,14 @@ class MessagesScreen extends React.Component<Props> {
     );
   };
 
-  private refreshControl(): React.ReactElement<RefreshControlProps> {
-    return (
-      <RefreshControl
-        onRefresh={this.refreshList}
-        refreshing={this.props.isLoadingMessages}
-        colors={[variables.brandPrimary]}
-      />
-    );
-  }
+  private refreshControl = (
+    <RefreshControl
+      onRefresh={this.refreshList}
+      refreshing={this.props.isLoadingMessages}
+      colors={[variables.brandPrimary]}
+      title={I18n.t("messages.refresh")}
+    />
+  );
 
   public keyExtractor = ({ id }: MessageWithContentPO) => id;
 
@@ -97,15 +78,13 @@ class MessagesScreen extends React.Component<Props> {
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
       >
-        <View style={styles.container}>
-          <FlatList
-            scrollEnabled={true}
-            data={this.props.messages}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            refreshControl={this.refreshControl()}
-          />
-        </View>
+        <FlatList
+          scrollEnabled={true}
+          data={this.props.messages}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+          refreshControl={this.refreshControl}
+        />
       </TopScreenComponent>
     );
   }

@@ -33,6 +33,10 @@ type OwnProps = {
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
+type State = {
+  isWebViewLoading: boolean;
+};
+
 const LOGIN_BASE_URL = `${
   config.apiUrlPrefix
 }/login?authLevel=SpidL2&entityID=`;
@@ -74,53 +78,69 @@ const onNavigationStateChange = (
  * A screen that allow the user to login with an IDP.
  * The IDP page is opened in a WebView
  */
-const IdpLoginScreen: React.SFC<Props> = props => {
-  const { loggedOutWithIdpAuth, loggedInAuth } = props;
+class IdpLoginScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
 
-  if (loggedInAuth) {
-    // FIXME: show a nice screen with succesful login message
-    return <Text>OK</Text>;
+    this.state = {
+      isWebViewLoading: true
+    };
   }
 
-  if (!loggedOutWithIdpAuth) {
-    // FIXME: perhaps as a safe bet, navigate to the IdP selection screen on mount?
-    return null;
-  }
-  const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+  public render() {
+    const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
+    const { isWebViewLoading } = this.state;
 
-  const navigationStateHandler = onNavigationStateChange(
-    () => props.dispatch(loginFailure()),
-    token => props.dispatch(loginSuccess(token))
-  );
+    if (loggedInAuth) {
+      // FIXME: show a nice screen with succesful login message
+      return <Text>OK</Text>;
+    }
 
-  return (
-    <Container>
-      <AppHeader>
-        <Left>
-          <GoBackButton testID="back-button" />
-        </Left>
-        <Body>
-          <Text>
-            {`${I18n.t("authentication.idp_login.headerTitle")} - ${
-              loggedOutWithIdpAuth.idp.name
-            }`}
-          </Text>
-        </Body>
-      </AppHeader>
-      <WebView
-        source={{ uri: loginUri }}
-        javaScriptEnabled={true}
-        startInLoadingState={true}
-        onNavigationStateChange={navigationStateHandler}
-        renderLoading={() => (
+    if (!loggedOutWithIdpAuth) {
+      // FIXME: perhaps as a safe bet, navigate to the IdP selection screen on mount?
+      return null;
+    }
+    const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+
+    const handleNavigationStateChange = (event: NavState): void => {
+      this.setState({
+        isWebViewLoading: event.loading ? event.loading : false
+      });
+
+      onNavigationStateChange(
+        () => this.props.dispatch(loginFailure()),
+        token => this.props.dispatch(loginSuccess(token))
+      )(event);
+    };
+
+    return (
+      <Container>
+        <AppHeader>
+          <Left>
+            <GoBackButton testID="back-button" />
+          </Left>
+          <Body>
+            <Text>
+              {`${I18n.t("authentication.idp_login.headerTitle")} - ${
+                loggedOutWithIdpAuth.idp.name
+              }`}
+            </Text>
+          </Body>
+        </AppHeader>
+        <WebView
+          source={{ uri: loginUri }}
+          javaScriptEnabled={true}
+          onNavigationStateChange={handleNavigationStateChange}
+        />
+        {isWebViewLoading && (
           <View style={styles.activityIndicatorContainer}>
             <ActivityIndicator color={variables.brandPrimary} />
           </View>
         )}
-      />
-    </Container>
-  );
-};
+      </Container>
+    );
+  }
+}
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)

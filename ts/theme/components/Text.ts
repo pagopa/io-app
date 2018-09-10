@@ -10,7 +10,6 @@ declare module "native-base" {
       link?: boolean;
       bold?: boolean;
       italic?: boolean;
-      formatDate?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
       alternativeBold?: boolean;

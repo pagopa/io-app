@@ -3,8 +3,15 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import * as SimpleMarkdown from "simple-markdown";
 
+import {
+  ActivityIndicator,
+  InteractionManager,
+  LayoutAnimation,
+  UIManager
+} from "react-native";
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 import reactNativeRules from "./rules";
 
 // A regex to test if a string ends with `/n/n`
@@ -48,12 +55,95 @@ function renderMarkdown(body: string): React.ReactNode {
   }
 }
 
+interface BaseProps {
+  children: string;
+}
+
+interface NonLazyProps extends BaseProps {
+  lazy?: false;
+}
+
+interface LazyProps extends BaseProps {
+  lazy: true;
+
+  // Animates the layout, useful when there are other components below the
+  // Markdown component: enabling this will animate the growth of the
+  // Markdown component once the content gets rendered.
+  animated?: boolean;
+}
+
+type Props = NonLazyProps | LazyProps;
+
+interface State {
+  renderedMarkdown: ReturnType<typeof renderMarkdown> | undefined;
+  cancelRender?: () => void;
+}
+
 /**
  * A component that accepts "markdown" as child and render react native
  * components.
  */
-const Markdown: React.SFC<{
-  children: string;
-}> = props => <View>{renderMarkdown(props.children)}</View>;
+class Markdown extends React.PureComponent<Props, State> {
+  public static defaultProps: Partial<Props> = {
+    lazy: false
+  };
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      renderedMarkdown: undefined
+    };
+  }
+
+  public componentDidMount() {
+    const props = this.props;
+    if (props.lazy) {
+      // Render the markdown string asynchronously.
+      const cancelRender = InteractionManager.runAfterInteractions(() => {
+        if (props.animated) {
+          // animate the layout change
+          // see https://facebook.github.io/react-native/docs/layoutanimation.html
+          if (UIManager.setLayoutAnimationEnabledExperimental) {
+            UIManager.setLayoutAnimationEnabledExperimental(true);
+          }
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        }
+        this.setState({
+          renderedMarkdown: renderMarkdown(props.children)
+        });
+      }).cancel;
+      this.setState({
+        cancelRender
+      });
+    }
+  }
+
+  public componentWillUnmount() {
+    if (this.state.cancelRender) {
+      // before unmounting, cancel the delayed rendering
+      this.state.cancelRender();
+    }
+  }
+
+  public render() {
+    if (this.props.lazy) {
+      if (!this.state.renderedMarkdown) {
+        return (
+          <View centerJustified={true}>
+            <ActivityIndicator
+              size="large"
+              color={variables.brandPrimaryLight}
+            />
+          </View>
+        );
+      }
+
+      return <View>{this.state.renderedMarkdown}</View>;
+    }
+
+    return <View>{renderMarkdown(this.props.children)}</View>;
+  }
+}
 
 export default Markdown;
