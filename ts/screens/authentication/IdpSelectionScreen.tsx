@@ -5,6 +5,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
+import { InfoBanner } from "../../components/InfoBanner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
 import * as config from "../../config";
@@ -18,12 +19,17 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
+import { isLoggedIn } from "../../store/reducers/authentication";
+import { GlobalState } from "../../store/reducers/types";
+
 import variables from "../../theme/variables";
 
-type ReduxMappedProps = {};
-type OwnProps = {
+interface ReduxMappedProps {
+  isSessionExpired: boolean;
+}
+interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
-};
+}
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const idps: ReadonlyArray<IdentityProvider> = [
   {
@@ -127,6 +133,12 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
       goBack={goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
+      {props.isSessionExpired && (
+        <InfoBanner
+          title={I18n.t("authentication.expiredSessionBanner.title")}
+          message={I18n.t("authentication.expiredSessionBanner.message")}
+        />
+      )}
       <Content noPadded={true} alternative={true}>
         <View style={styles.subheader}>
           <Image
@@ -157,4 +169,9 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   );
 };
 
-export default connect()(IdpSelectionScreen);
+const mapStateToProps = ({ authentication }: GlobalState) => ({
+  isSessionExpired:
+    !isLoggedIn(authentication) && authentication.reason === "SESSION_EXPIRED"
+});
+
+export default connect(mapStateToProps)(IdpSelectionScreen);

@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>33</string>
+	<string>39</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -48,17 +48,30 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>teamdigitale.it</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>The app needs NSCalendarsUsageDescription permission</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The app needs access to the camera to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>The app needs NSLocationWhenInUseUsageDescription permission</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The app needs NSPhotoLibraryUsageDescription permission</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>The app needs NSSpeechRecognitionUsageDescription permission</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>The app needs NSAppleMusicUsageDescription permission</string>
+	<key>NSMotionUsageDescription</key>
+	<string>The app needs NSMotionUsageDescription permission</string>
+  <key>NSCalendarsUsageDescription</key>
+	<string>The app needs access to the calendar to add event reminders</string>
+  <key>NSContactsUsageDescription</key>
+	<string>This app requires contacts access to add them in calendar events</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>

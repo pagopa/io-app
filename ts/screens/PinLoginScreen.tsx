@@ -80,8 +80,8 @@ class PinLoginScreen extends React.Component<Props> {
   public renderCodeInputConfirmValidation() {
     const validationMessage = (
       <TextWithIcon danger={true}>
-        <IconFont name="io-close" />
-        <Text>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
+        <IconFont name="io-close" color={variables.colorWhite} />
+        <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
       </TextWithIcon>
     );
     return (

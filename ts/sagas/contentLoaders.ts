@@ -1,22 +1,13 @@
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
-import {
-  ContentClient,
-  OrganizationMetadata,
-  ServiceMetadata
-} from "../api/content";
+import { ContentClient } from "../api/content";
 
+import { Service as ServiceMetadata } from "../../definitions/content/Service";
+
+import { CONTENT_SERVICE_LOAD } from "../store/actions/constants";
 import {
-  CONTENT_ORGANIZATION_LOAD,
-  CONTENT_SERVICE_LOAD
-} from "../store/actions/constants";
-import {
-  ContentOrganizationLoad,
-  contentOrganizationLoadFailure,
-  contentOrganizationLoadSuccess,
   ContentServiceLoad,
   contentServiceLoadFailure,
   contentServiceLoadSuccess
@@ -41,19 +32,6 @@ function getServiceMetadata(
 }
 
 /**
- * Retrieves an organization metadata from the static content repository
- */
-function getOrganizationMetadata(
-  organizationFiscalCode: OrganizationFiscalCode
-): Promise<BasicResponseType<OrganizationMetadata> | undefined> {
-  return new Promise((resolve, _) =>
-    contentClient
-      .getOrganization({ organizationFiscalCode })
-      .then(resolve, () => resolve(undefined))
-  );
-}
-
-/**
  * A saga that watches for and executes requests to load service metadata.
  *
  * TODO: do not retrieve the content on each request, rely on cache headers
@@ -72,32 +50,6 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       yield put(contentServiceLoadSuccess(serviceId, response.value));
     } else {
       yield put(contentServiceLoadFailure(serviceId));
-    }
-  });
-}
-
-/**
- * A saga that watches for and executes requests to load organization metadata.
- *
- * TODO: do not retrieve the content on each request, rely on cache headers
- * https://www.pivotaltracker.com/story/show/159440224
- */
-export function* watchContentOrganizationLoadSaga(): Iterator<Effect> {
-  yield takeEvery(CONTENT_ORGANIZATION_LOAD, function*(
-    action: ContentOrganizationLoad
-  ) {
-    const organizationFiscalCode = action.organizationFiscalCode;
-
-    const response: SagaCallReturnType<
-      typeof getOrganizationMetadata
-    > = yield call(getOrganizationMetadata, organizationFiscalCode);
-
-    if (response && response.status === 200) {
-      yield put(
-        contentOrganizationLoadSuccess(organizationFiscalCode, response.value)
-      );
-    } else {
-      yield put(contentOrganizationLoadFailure(organizationFiscalCode));
     }
   });
 }

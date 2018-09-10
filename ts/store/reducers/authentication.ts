@@ -17,15 +17,20 @@ import { GlobalState } from "./types";
 
 // Types
 
+// reason for the user to be in the unauthenticated state
+type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
+
 // The user is logged out and hasn't selected an IDP
 export type LoggedOutWithoutIdp = Readonly<{
   kind: "LoggedOutWithoutIdp";
+  reason: LoggedOutReason;
 }>;
 
 // The user is logged out but has already selected an IDP
 export type LoggedOutWithIdp = Readonly<{
   kind: "LoggedOutWithIdp";
   idp: IdentityProvider;
+  reason: LoggedOutReason;
 }>;
 
 // The user is logged in but we still have to request the addition session info to the Backend
@@ -54,7 +59,8 @@ export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
 export const INITIAL_STATE: LoggedOutWithoutIdp = {
-  kind: "LoggedOutWithoutIdp"
+  kind: "LoggedOutWithoutIdp",
+  reason: "NOT_LOGGED_IN"
 };
 
 // Type guards
@@ -133,11 +139,9 @@ const reducer = (
   if (action.type === LOGIN_SUCCESS && isLoggedOutWithIdp(state)) {
     // Save the SessionToken (got from the WebView redirect url) in the state
     return {
-      ...state,
-      ...{
-        kind: "LoggedInWithoutSessionInfo",
-        sessionToken: action.payload
-      }
+      kind: "LoggedInWithoutSessionInfo",
+      idp: state.idp,
+      sessionToken: action.payload
     };
   }
 
@@ -160,7 +164,9 @@ const reducer = (
   ) {
     return {
       kind: "LoggedOutWithIdp",
-      idp: state.idp
+      idp: state.idp,
+      reason:
+        action.type === SESSION_EXPIRED ? "SESSION_EXPIRED" : "NOT_LOGGED_IN"
     };
   }
 

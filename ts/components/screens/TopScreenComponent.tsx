@@ -1,14 +1,21 @@
+import I18n from "i18n-js";
 import { H1, Text, View } from "native-base";
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 
+import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
+import BaseScreenComponent, {
+  OwnProps as BaseScreenComponentProps
+} from "./BaseScreenComponent";
 
-import I18n from "i18n-js";
-import BaseScreenComponent from "./BaseScreenComponent";
-import { OwnProps as BaseScreenComponentProps } from "./BaseScreenComponent";
+const defaultStyle = {
+  subheaderContainer: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding,
+    paddingBottom: variables.spacerLargeHeight
+  }
+};
 
 interface OwnProps {
   title: string;
@@ -25,6 +32,8 @@ type Props = OwnProps &
  */
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
+    const styles = defaultStyle;
+
     const {
       goBack,
       icon,
@@ -40,7 +49,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         contextualHelp={contextualHelp}
       >
         <ScreenHeader heading={<H1>{title}</H1>} icon={icon} />
-        <View>
+        <View style={styles.subheaderContainer}>
           {subtitle && <Text>{subtitle}</Text>}
           {onMoreLinkPress && (
             <Text link={true} onPress={onMoreLinkPress}>
@@ -54,8 +63,4 @@ class TopScreenComponent extends React.PureComponent<Props> {
   }
 }
 
-export default connectStyle(
-  "UIComponent.TopScreenComponent",
-  {},
-  mapPropsToStyleNames
-)(TopScreenComponent);
+export default TopScreenComponent;

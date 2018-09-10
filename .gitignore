@@ -77,5 +77,8 @@ buck-out/
 # Bundler
 vendor
 
+# MITMProxy
+__pycache__
+
 # Auto generated definitions
 definitions

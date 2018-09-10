@@ -1,3 +1,5 @@
+platform :ios, '9.0'
+
 target 'ItaliaApp' do
 
   pod 'React', :path => "../node_modules/react-native", :subspecs => [
@@ -38,6 +40,10 @@ target 'ItaliaApp' do
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'react-native-add-calendar-event', :path => '../node_modules/react-native-add-calendar-event'
 
 end
 

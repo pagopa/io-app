@@ -40,7 +40,6 @@ function nextState(state: NavigationState, action: Action): NavigationState {
     case NavigationActions.BACK:
     case NavigationActions.INIT:
     case NavigationActions.NAVIGATE:
-    case NavigationActions.RESET:
     case NavigationActions.SET_PARAMS:
     case StackActions.RESET:
     case StackActions.REPLACE:
