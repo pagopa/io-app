@@ -14,6 +14,7 @@ import { fromNullable, Option } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
 import Markdown from "../../components/ui/Markdown";
+import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
 
 import I18n from "../../i18n";
@@ -36,6 +37,8 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
 import customVariables from "../../theme/variables";
+
+import { logosForService } from "../../utils/services";
 
 export interface IMessageDetailsScreenParam {
   readonly service: ServicePublic;
@@ -151,16 +154,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   public render() {
     // collect the service
     const service = this.props.navigation.state.params.service;
+    const serviceId = service.service_id;
 
     // finds out which channels are enabled in the user profile
     const profileEnabledChannels = getEnabledChannelsForService(
       this.props.profile,
-      service.service_id
+      serviceId
     );
 
     // collect the service metadata
     const serviceMetadata = fromNullable(
-      this.props.content.servicesMetadata.byId[service.service_id]
+      this.props.content.servicesMetadata.byId[serviceId]
     ).getOrElse({});
 
     const {
@@ -181,6 +185,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       .mapNullable(_ => (_.has_profile ? _.version : null))
       .getOrElse(0 as NonNegativeInteger);
 
+    // URIs for the service logo
+    const logoUris = logosForService(service);
+
     return (
       <BaseScreenComponent
         goBack={this.goBack}
@@ -192,6 +199,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               <Col>
                 <H4>{service.organization_name}</H4>
                 <H2>{service.service_name}</H2>
+              </Col>
+              <Col style={{ width: 60 }}>
+                <MultiImage
+                  style={{ width: 60, height: 60 }}
+                  source={logoUris}
+                />
               </Col>
             </Row>
             <View spacer={true} large={true} />
