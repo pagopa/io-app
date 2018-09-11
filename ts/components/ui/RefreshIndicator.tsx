@@ -15,8 +15,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const isAndroid = Platform.OS === "android";
+
 export const RefreshIndicator: React.SFC<{}> = () => (
-  <View style={Platform.OS === "android" && styles.androidIndicatorInner}>
-    <ActivityIndicator size={24} color={variables.brandPrimary} />
+  <View style={isAndroid && styles.androidIndicatorInner}>
+    <ActivityIndicator
+      size={isAndroid ? 24 : "large"}
+      color={isAndroid ? variables.brandPrimary : undefined}
+    />
   </View>
 );
