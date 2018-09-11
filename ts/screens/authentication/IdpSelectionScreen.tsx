@@ -19,7 +19,7 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
-import { isLoggedIn } from "../../store/reducers/authentication";
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 
 import variables from "../../theme/variables";
@@ -169,9 +169,8 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   );
 };
 
-const mapStateToProps = ({ authentication }: GlobalState) => ({
-  isSessionExpired:
-    !isLoggedIn(authentication) && authentication.reason === "SESSION_EXPIRED"
+const mapStateToProps = (state: GlobalState) => ({
+  isSessionExpired: isSessionExpiredSelector(state)
 });
 
 export default connect(mapStateToProps)(IdpSelectionScreen);
