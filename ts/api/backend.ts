@@ -16,10 +16,10 @@ import {
 } from "italia-ts-commons/lib/requests";
 
 import { RptId, RptIdFromString } from "italia-ts-commons/lib/pagopa";
-import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
+import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Installation } from "../../definitions/backend/Installation";
 import { LimitedProfile } from "../../definitions/backend/LimitedProfile";
