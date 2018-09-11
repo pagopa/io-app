@@ -7,7 +7,7 @@
 
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StatusBar, StyleSheet } from "react-native";
+import { StatusBar } from "react-native";
 import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -44,31 +44,6 @@ type Props = ReduxMappedProps &
   ContextualHelpInjectedProps;
 
 type CodeInputRef = CodeInput | null;
-
-const styles = StyleSheet.create({
-  buttonsContainer: {
-    flex: 1,
-    flexWrap: "nowrap",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "stretch"
-  },
-  buttons: {
-    flex: 1,
-    flexGrow: 1
-  },
-  buttonText: {
-    flexWrap: "wrap",
-    textAlign: "center"
-  },
-  leftButton: {
-    marginRight: 2,
-    backgroundColor: "white"
-  },
-  rightButton: {
-    marginRight: 2
-  }
-});
 
 class PinLoginScreen extends React.Component<Props> {
   private pinComponent: CodeInputRef = null;
@@ -159,41 +134,25 @@ class PinLoginScreen extends React.Component<Props> {
           {this.renderCodeInput(pinLoginState)}
           <View spacer={true} extralarge={true} />
           {this.props.isPaymentStarted ? (
-            <View style={styles.buttonsContainer}>
-              <Button
-                light={true}
-                bordered={true}
-                block={true}
-                primary={true}
-                style={[styles.buttons, styles.leftButton]}
-                onPress={this.goToPaymentSummary}
-              >
-                <Text style={styles.buttonText}>
-                  {" "}
-                  {I18n.t("global.buttons.cancel")}{" "}
-                </Text>
-              </Button>
-
-              <Button
-                style={[styles.buttons, styles.rightButton]}
-                block={true}
-                primary={true}
-                onPress={this.onPinReset}
-              >
-                <Text style={styles.buttonText}>
-                  {" "}
-                  {I18n.t("pin_login.pin.reset.button")}{" "}
-                </Text>
-              </Button>
-            </View>
-          ) : (
-            <Button block={true} primary={true} onPress={this.onPinReset}>
-              <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+            <Button
+              light={true}
+              bordered={true}
+              block={true}
+              primary={true}
+              white={true}
+              onPress={this.goToPaymentSummary}
+            >
+              <Text>{I18n.t("wallet.ConfirmPayment.cancelPayment")}</Text>
             </Button>
+          ) : (
+            <View>
+              <Button block={true} primary={true} onPress={this.onPinReset}>
+                <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+              </Button>
+              <View spacer={true} />
+              <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
+            </View>
           )}
-          <View spacer={true} />
-          <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
-          <View spacer={true} />
         </Content>
       </BaseScreenComponent>
     );

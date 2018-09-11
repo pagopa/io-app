@@ -580,7 +580,7 @@ export function* watchWalletSaga(
     if (action.type === PAYMENT_REQUEST_QR_CODE) {
       yield fork(paymentSagaFromQrCode);
     }
-    if (action.type == PAYMENT_REQUEST_MESSAGE) {
+    if (action.type === PAYMENT_REQUEST_MESSAGE) {
       yield fork(paymentSagaFromMessage);
     }
   }
