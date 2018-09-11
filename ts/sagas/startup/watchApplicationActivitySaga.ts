@@ -1,21 +1,16 @@
-import { NavigationActions, StackActions } from "react-navigation";
 import { Effect } from "redux-saga";
-import { call, put, select, take, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 
 import { backgroundActivityTimeout } from "../../config";
 
 import { startApplicationInitialization } from "../../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
-import { clearDeferredNavigationAction } from "../../store/actions/deferredNavigation";
 import { navigateToBackgroundScreen } from "../../store/actions/navigation";
 import {
   ApplicationState,
   ApplicationStateAction
 } from "../../store/actions/types";
-import {
-  deferredNavigationActionSelector,
-  DeferredNavigationActionState
-} from "../../store/reducers/deferredNavigation";
+import { navigateOnAppRestoreSaga } from "./navigateOnAppRestoreSaga";
 import { saveNavigationStateSaga } from "./saveNavigationStateSaga";
 
 /**
@@ -61,21 +56,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         // re-initialize the app from scratch
         yield put(startApplicationInitialization);
       } else {
-        // Or else, just navigate back to the screen we were at before
-        // going into background
-        yield put(NavigationActions.back());
-
-        const deferredNavigationState: DeferredNavigationActionState = yield select(
-          deferredNavigationActionSelector
-        );
-
-        if (deferredNavigationState.navigation) {
-          // Wait for the back navigation transition to be completed
-          yield take(StackActions.COMPLETE_TRANSITION);
-
-          yield put(deferredNavigationState.navigation);
-          yield put(clearDeferredNavigationAction());
-        }
+        yield call(navigateOnAppRestoreSaga);
       }
     }
 
