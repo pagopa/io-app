@@ -34,13 +34,12 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>38</string>
+	<string>40</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-  <key>NSAppTransportSecurity</key>
-	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
+	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -69,6 +68,10 @@
 	<string>The app needs NSAppleMusicUsageDescription permission</string>
 	<key>NSMotionUsageDescription</key>
 	<string>The app needs NSMotionUsageDescription permission</string>
+  <key>NSCalendarsUsageDescription</key>
+	<string>The app needs access to the calendar to add event reminders</string>
+  <key>NSContactsUsageDescription</key>
+	<string>This app requires contacts access to add them in calendar events</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>

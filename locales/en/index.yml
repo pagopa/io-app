@@ -152,6 +152,9 @@ authentication:
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
+  expiredSessionBanner:
+    title: Security notice
+    message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
   tos:
     headerTitle: Activation
@@ -375,6 +378,8 @@ messages:
   yesterday: yesterday
   cta:
     pay: Pay € {{amount}}
+    reminder: Reminder
+    reminderTitle: "Reminder for: {{subject}}"
   unknownSender: Unknown sender
   noContent: Content not available
 messageDetails:
@@ -407,10 +412,18 @@ preferences:
 services:
   headerTitle: Services
   title: Available services
-  subtitle: Here you can enable/disable each service, access its details, the terms
-    of use and customize the notifications you receive.
+  subTitle: Enable or disable the services that are allowed to send you messages
+  servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
   emailNotifications: Email Notifications
+  tosLink: Terms and conditions
+  privacyLink: Privacy information
+  otherAppsInfo: You can find this service also
+  otherAppWeb: Online on
+  otherAppIos: With the iOS app
+  otherAppAndroid: With the Android app
   contactsAndInfo: Contacts and info
+  contactAddress: Address
+  contactPhone: Phone

@@ -10,6 +10,7 @@ import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -18,10 +19,25 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { Dispatch } from "../../store/actions/types";
+import { storeCreditCardData } from "../../store/actions/wallet/wallets";
+import { CreditCard } from "../../types/pagopa";
+import {
+  CreditCardCVC,
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "../../utils/input";
 
-type Props = Readonly<{
+type ReduxMappedProps = Readonly<{
+  storeCreditCardData: (card: CreditCard) => void;
+}>;
+
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = ReduxMappedProps & OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -52,7 +68,7 @@ const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
 const EMPTY_CARD_SECURITY_CODE = "";
 
-export default class AddCardScreen extends React.Component<Props, State> {
+class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -62,6 +78,50 @@ export default class AddCardScreen extends React.Component<Props, State> {
       holder: none
     };
   }
+
+  private submit = () => {
+    const { pan, expirationDate, securityCode, holder } = this.state;
+    if (
+      pan.isNone() ||
+      expirationDate.isNone() ||
+      securityCode.isNone() ||
+      holder.isNone()
+    ) {
+      return;
+    }
+
+    const [expirationMonth, expirationYear] = expirationDate.value.split("/");
+
+    if (!CreditCardPan.is(pan.value)) {
+      // invalid pan
+      return;
+    }
+    if (
+      !CreditCardExpirationMonth.is(expirationMonth) ||
+      !CreditCardExpirationYear.is(expirationYear)
+    ) {
+      // invalid date
+      return;
+    }
+
+    if (!CreditCardCVC.is(securityCode.value)) {
+      // invalid cvc
+      return;
+    }
+
+    const card: CreditCard = {
+      pan: pan.value,
+      holder: holder.value,
+      expireMonth: expirationMonth,
+      expireYear: expirationYear,
+      securityCode: securityCode.value
+    };
+
+    // store data locally and proceed
+    // to the recap screen
+    this.props.storeCreditCardData(card);
+    this.props.navigation.navigate(ROUTES.WALLET_CONFIRM_CARD_DETAILS);
+  };
 
   public render(): React.ReactNode {
     // list of cards to be displayed
@@ -78,7 +138,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
     const primaryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => this.props.navigation.navigate(ROUTES.WALLET_HOME),
+      onPress: this.submit,
       title: I18n.t("global.buttons.continue")
     };
 
@@ -107,6 +167,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
         >
           <Content scrollEnabled={false}>
             <LabelledItem
+              type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
               placeholder={I18n.t("wallet.dummyCard.values.holder")}
@@ -114,16 +175,17 @@ export default class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 autoCapitalize: "words"
               }}
-              onChangeText={value => {
+              onChangeText={(value: string) =>
                 this.setState({
                   holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-                });
-              }}
+                })
+              }
             />
 
             <View spacer={true} />
 
             <LabelledItem
+              type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
               placeholder={I18n.t("wallet.dummyCard.values.pan")}
@@ -133,7 +195,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                 maxLength: 23
               }}
               mask={"[0000] [0000] [0000] [0000] [999]"}
-              onChangeText={value =>
+              onChangeText={(_, value) =>
                 this.setState({
                   pan: value !== EMPTY_CARD_PAN ? some(value) : none
                 })
@@ -144,6 +206,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
             <Grid>
               <Col>
                 <LabelledItem
+                  type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
                   placeholder={I18n.t("wallet.dummyCard.values.expirationDate")}
@@ -154,7 +217,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric"
                   }}
                   mask={"[00]{/}[00]"}
-                  onChangeText={value =>
+                  onChangeText={(_, value) =>
                     this.setState({
                       expirationDate:
                         value !== EMPTY_CARD_EXPIRATION_DATE
@@ -167,6 +230,7 @@ export default class AddCardScreen extends React.Component<Props, State> {
               <Col style={styles.verticalSpacing} />
               <Col>
                 <LabelledItem
+                  type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
                   placeholder={I18n.t("wallet.dummyCard.values.securityCode")}
@@ -179,12 +243,12 @@ export default class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true
                   }}
                   mask={"[0009]"}
-                  onChangeText={value => {
+                  onChangeText={(_, value) =>
                     this.setState({
                       securityCode:
                         value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
-                    });
-                  }}
+                    })
+                  }
                 />
               </Col>
             </Grid>
@@ -226,3 +290,12 @@ export default class AddCardScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+  storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddCardScreen);

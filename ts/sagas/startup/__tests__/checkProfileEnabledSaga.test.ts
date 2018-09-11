@@ -7,9 +7,9 @@ import {
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
 
-import { ProfileWithEmail } from "../../../../definitions/backend/ProfileWithEmail";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 
-import { ProfileWithOrWithoutEmail } from "../../../api/backend";
+import { AuthenticatedOrInitializedProfile } from "../../../api/backend";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
 import { PROFILE_UPSERT_REQUEST } from "../../../store/actions/constants";
@@ -22,11 +22,11 @@ import {
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
 describe("checkProfileEnabledSaga", () => {
-  const profile: ProfileWithOrWithoutEmail = {
+  const profile: AuthenticatedOrInitializedProfile = {
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
-    is_email_set: true,
+    email: "test@example.com" as EmailString,
     spid_email: "test@example.com" as EmailString,
     family_name: "Connor",
     name: "John",
@@ -41,7 +41,7 @@ describe("checkProfileEnabledSaga", () => {
     email: profile.spid_email
   });
 
-  const updatedProfile: ProfileWithEmail = {
+  const updatedProfile: InitializedProfile = {
     ...profile,
     version: 1 as NonNegativeInteger
   };
@@ -88,7 +88,7 @@ describe("checkProfileEnabledSaga", () => {
   it("should update the profile when the email is not set", () => {
     return expectSaga(checkProfileEnabledSaga, {
       ...profile,
-      is_email_set: false
+      email: undefined
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization)
