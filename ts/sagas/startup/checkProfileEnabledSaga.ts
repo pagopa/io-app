@@ -1,6 +1,6 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { ProfileWithOrWithoutEmail } from "../../api/backend";
+import { AuthenticatedOrInitializedProfile } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
   PROFILE_UPSERT_FAILURE,
@@ -13,11 +13,11 @@ import {
 } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
-  profile: ProfileWithOrWithoutEmail
+  profile: AuthenticatedOrInitializedProfile
 ): IterableIterator<Effect> {
   if (
     !profile.has_profile ||
-    !profile.is_email_set ||
+    !profile.email ||
     !profile.is_inbox_enabled ||
     !profile.is_webhook_enabled
   ) {

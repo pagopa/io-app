@@ -15,13 +15,13 @@ import {
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 
+import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Installation } from "../../definitions/backend/Installation";
 import { LimitedProfile } from "../../definitions/backend/LimitedProfile";
 import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
-import { ProfileWithEmail } from "../../definitions/backend/ProfileWithEmail";
-import { ProfileWithoutEmail } from "../../definitions/backend/ProfileWithoutEmail";
 import { PublicSession } from "../../definitions/backend/PublicSession";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { SessionToken } from "../types/SessionToken";
@@ -32,14 +32,20 @@ import { defaultRetryingFetch } from "../utils/fetch";
 // gen-api-models
 //
 
-// ProfileWithOrWithoutEmail is oneOf [ProfileWithEmail, ProfileWithoutEmail]
-const ProfileWithOrWithoutEmail = t.union([
-  ProfileWithEmail,
-  ProfileWithoutEmail
+// ProfileWithOrWithoutEmail is oneOf [InitializedProfile, AuthenticatedProfile]
+const AuthenticatedOrInitializedProfile = t.union([
+  t.intersection([
+    InitializedProfile,
+    t.interface({ has_profile: t.literal(true) })
+  ]),
+  t.intersection([
+    AuthenticatedProfile,
+    t.interface({ has_profile: t.literal(false) })
+  ])
 ]);
 
-export type ProfileWithOrWithoutEmail = t.TypeOf<
-  typeof ProfileWithOrWithoutEmail
+export type AuthenticatedOrInitializedProfile = t.TypeOf<
+  typeof AuthenticatedOrInitializedProfile
 >;
 
 // FullProfile is allOf [ExtendedProfile, LimitedProfile]
@@ -111,7 +117,7 @@ export type GetProfileT = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseTypeWith401<ProfileWithOrWithoutEmail>
+  BasicResponseTypeWith401<AuthenticatedOrInitializedProfile>
 >;
 
 export type CreateOrUpdateProfileT = IPostApiRequestType<
@@ -120,7 +126,7 @@ export type CreateOrUpdateProfileT = IPostApiRequestType<
   },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<ProfileWithEmail>
+  BasicResponseTypeWith401<InitializedProfile>
 >;
 
 export type CreateOrUpdateInstallationT = IPutApiRequestType<
@@ -197,7 +203,9 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoderWith401(ProfileWithOrWithoutEmail)
+    response_decoder: basicResponseDecoderWith401(
+      AuthenticatedOrInitializedProfile
+    )
   };
 
   const createOrUpdateProfileT: CreateOrUpdateProfileT = {
@@ -206,7 +214,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.newProfile),
-    response_decoder: basicResponseDecoderWith401(ProfileWithEmail)
+    response_decoder: basicResponseDecoderWith401(InitializedProfile)
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {

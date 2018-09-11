@@ -100,7 +100,10 @@ function mapStateToProps(state: GlobalState): ReduxMappedProps {
     hasSessionToken: maybeSessionToken !== undefined,
     hasSessionInfo: maybeSessionInfo.isSome(),
     hasProfile: maybeProfile !== null,
-    isProfileEnabled: maybeProfile !== null && maybeProfile.is_inbox_enabled
+    isProfileEnabled:
+      maybeProfile !== null &&
+      maybeProfile.has_profile &&
+      maybeProfile.is_inbox_enabled
   };
 }
 

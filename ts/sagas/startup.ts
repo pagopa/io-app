@@ -108,6 +108,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadProfile,
     backendClient.getProfile
   );
+
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile
     yield put(startApplicationInitialization);

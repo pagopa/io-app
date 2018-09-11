@@ -6,9 +6,9 @@ import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
+  AuthenticatedOrInitializedProfile,
   CreateOrUpdateProfileT,
-  GetProfileT,
-  ProfileWithOrWithoutEmail
+  GetProfileT
 } from "../api/backend";
 
 import I18n from "../i18n";
@@ -26,10 +26,12 @@ import { profileSelector } from "../store/reducers/profile";
 
 import { SagaCallReturnType } from "../types/utils";
 
+import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: TypeofApiCall<GetProfileT>
-): Iterator<Effect | Option<ProfileWithOrWithoutEmail>> {
+): Iterator<Effect | Option<AuthenticatedOrInitializedProfile>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -59,15 +61,31 @@ export function* createOrUpdateProfileSaga(
     profileSelector
   );
 
+  if (!profileState) {
+    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
+    // the used didn't yet authenticated: ignore this upsert request.
+    return;
+  }
+
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
   // FIXME: perhaps this is responsibility of the caller?
-  const newProfile = profileState
+  const newProfile: ExtendedProfile = profileState.has_profile
     ? {
-        ...profileState,
+        is_inbox_enabled: profileState.is_inbox_enabled,
+        is_webhook_enabled: profileState.is_webhook_enabled,
+        version: profileState.version,
+        email: profileState.email,
+        preferred_languages: profileState.preferred_languages,
+        blocked_inbox_or_channels: profileState.blocked_inbox_or_channels,
         ...action.payload
       }
-    : action.payload;
+    : {
+        is_inbox_enabled: false,
+        is_webhook_enabled: false,
+        ...action.payload,
+        version: 0
+      };
 
   const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
     createOrUpdateProfile,
