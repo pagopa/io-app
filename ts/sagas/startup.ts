@@ -192,14 +192,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     deepLinkSelector
   );
 
-  const currentRoute: NavigationRoute = yield select(currentRouteSelector);
-
   if (deepLink) {
+    const currentRoute: NavigationRoute = yield select(currentRouteSelector);
     // If a deep link has been set, navigate to deep link...
     yield put(navigateToDeepLink(deepLink, currentRoute.key));
   } else {
     // ... otherwise to the MainNavigator
-    yield put(navigateToMainNavigatorAction(currentRoute.key));
+    yield put(navigateToMainNavigatorAction());
   }
 }
 
