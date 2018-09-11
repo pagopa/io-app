@@ -14,6 +14,13 @@ import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
 
+import {
+  CreditCardCVC,
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "../utils/input";
+
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),
   t.literal("MAESTRO"),
@@ -33,15 +40,25 @@ export const CreditCard = t.refinement(
   CreditCardPagoPA,
   c =>
     c.brandLogo !== undefined &&
-    c.expireMonth !== undefined &&
-    c.expireYear !== undefined &&
+    CreditCardExpirationMonth.is(c.expireMonth) &&
+    CreditCardExpirationYear.is(c.expireYear) &&
     c.holder !== undefined &&
-    c.id !== undefined &&
-    c.pan !== undefined
+    CreditCardPan.is(c.pan) &&
+    (c.securityCode === undefined || CreditCardCVC.is(c.securityCode))
 );
-type RequiredCreditCardFields = "expireMonth" | "expireYear" | "holder" | "pan"; // required fields
-export type CreditCard = CreditCardPagoPA &
-  Required<Pick<CreditCardPagoPA, RequiredCreditCardFields>>;
+type RequiredCreditCardFields = "holder"; // required field
+type UpdatedCreditCardFields = "expireMonth" | "expireYear" | "pan"; // update fields
+
+export type CreditCard = Pick<
+  CreditCardPagoPA,
+  Exclude<keyof CreditCardPagoPA, UpdatedCreditCardFields>
+> &
+  Required<Pick<CreditCardPagoPA, RequiredCreditCardFields>> &
+  Readonly<{
+    expireMonth: CreditCardExpirationMonth;
+    expireYear: CreditCardExpirationYear;
+    pan: CreditCardPan;
+  }>;
 
 // using EUR and 2 decimal digits anyway, so
 // those two fields (currency, decimalDigits)

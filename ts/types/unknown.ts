@@ -5,6 +5,11 @@ import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Amount } from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
 import { Wallet } from "../types/pagopa";
+import {
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "../utils/input";
 
 export const UNKNOWN_STRING = "?";
 export const UNKNOWN_NUMBER = -1;
@@ -36,13 +41,12 @@ export const UNKNOWN_RPTID: RptId = {
   paymentNoticeNumber: UNKNOWN_PAYMENT_NOTICE_NUMBER
 };
 
-export const UNKNOWN_CARD_PAN = "0000";
+export const UNKNOWN_CARD_PAN = "****************" as CreditCardPan;
 export const UNKNOWN_CARD_HOLDER = "NO HOLDER";
 export const UNKNWON_CARD_TYPE = "UNKNOWN";
 export const UNKNOWN_LAST_USAGE = UNKNOWN_DATE;
-export const UNKNOWN_EXPIRATION_MONTH = "??";
-export const UNKNOWN_EXPIRATION_YEAR = "??";
-export const UNKNOWN_EXPIRATION_DATE = `${UNKNOWN_EXPIRATION_MONTH}/${UNKNOWN_EXPIRATION_YEAR}`;
+export const UNKNOWN_EXPIRATION_MONTH = "01" as CreditCardExpirationMonth;
+export const UNKNOWN_EXPIRATION_YEAR = "00" as CreditCardExpirationYear;
 
 export const UNKNOWN_AMOUNT_PAGOPA: Amount = {
   amount: 0,

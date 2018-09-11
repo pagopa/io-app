@@ -15,6 +15,8 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 import {
+  NullableWallet,
+  PayRequest,
   PspListResponse,
   SessionResponse,
   TransactionListResponse,
@@ -103,6 +105,20 @@ type PostPaymentType = IPostApiRequestType<
   BasicResponseTypeWith401<TransactionResponse>
 >;
 
+type BoardCreditCardType = IPostApiRequestType<
+  { wallet: NullableWallet },
+  "Authorization" | "Content-Type",
+  never,
+  BasicResponseTypeWith401<WalletResponse>
+>;
+
+type BoardPayType = IPostApiRequestType<
+  { payRequest: PayRequest },
+  "Authorization" | "Content-Type",
+  never,
+  BasicResponseTypeWith401<TransactionResponse>
+>;
+
 export type PagoPaClient = Readonly<{
   getSession: (
     walletToken: string
@@ -132,6 +148,14 @@ export type PagoPaClient = Readonly<{
     walletId: number
   ) => ReturnType<TypeofApiCall<PostPaymentType>>;
   walletToken: string;
+  boardCreditCard: (
+    pagoPaToken: string,
+    wallet: NullableWallet
+  ) => ReturnType<TypeofApiCall<BoardCreditCardType>>;
+  boardPay: (
+    pagoPaToken: string,
+    payRequest: PayRequest
+  ) => ReturnType<TypeofApiCall<BoardPayType>>;
 }>;
 
 export const PagoPaClient = (
@@ -220,6 +244,25 @@ export const PagoPaClient = (
     )
   });
 
+  const boardCreditCard: (
+    pagoPaToken: string
+  ) => BoardCreditCardType = pagoPaToken => ({
+    method: "post",
+    url: () => "/v1/wallet/cc",
+    query: () => ({}),
+    body: ({ wallet }) =>
+      JSON.stringify({
+        data: wallet
+      }),
+    headers: composeHeaderProducers(
+      AuthorizationBearerHeaderProducer(pagoPaToken),
+      ApiHeaderJson
+    ),
+    response_decoder: basicResponseDecoderWith401AndCast<WalletResponse>(
+      WalletResponse
+    )
+  });
+
   const postPayment: (
     pagoPaToken: string
   ) => PostPaymentType = pagoPaToken => ({
@@ -233,6 +276,20 @@ export const PagoPaClient = (
           idWallet: `${walletId}`
         }
       }),
+    headers: composeHeaderProducers(
+      AuthorizationBearerHeaderProducer(pagoPaToken),
+      ApiHeaderJson
+    ),
+    response_decoder: basicResponseDecoderWith401AndCast<TransactionResponse>(
+      TransactionResponse
+    )
+  });
+
+  const boardPay: (pagoPaToken: string) => BoardPayType = pagoPaToken => ({
+    method: "post",
+    url: () => "/v1/payments/cc/actions/pay",
+    query: () => ({}),
+    body: ({ payRequest }) => JSON.stringify(payRequest),
     headers: composeHeaderProducers(
       AuthorizationBearerHeaderProducer(pagoPaToken),
       ApiHeaderJson
@@ -268,6 +325,14 @@ export const PagoPaClient = (
       createFetchRequestForApi(postPayment(pagoPaToken), options)({
         paymentId,
         walletId
+      }),
+    boardCreditCard: (pagoPaToken: string, wallet: NullableWallet) =>
+      createFetchRequestForApi(boardCreditCard(pagoPaToken), options)({
+        wallet
+      }),
+    boardPay: (pagoPaToken: string, payRequest: PayRequest) =>
+      createFetchRequestForApi(boardPay(pagoPaToken), options)({
+        payRequest
       })
   };
 };

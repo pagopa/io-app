@@ -41,7 +41,8 @@ export const latestTransactionsSelector = createSelector(
             ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
             : b.created.toISOString().localeCompare(a.created.toISOString())
       )
-      .slice(0, 5) // WIP no magic numbers
+      .filter(t => t.statusMessage !== "rifiutato")
+      .slice(0, 50) // WIP no magic numbers
 );
 
 export const transactionForDetailsSelector = createSelector(

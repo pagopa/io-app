@@ -23,25 +23,27 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: 1
-  },
-  inputStyle: {
-    height: 50,
-    paddingLeft: 5,
-    paddingRight: 5,
-    fontSize: 17,
-    color: "#5C6F82",
-    flex: 1
   }
 });
 
-type Props = Readonly<{
-  label: string;
-  icon: string;
-  placeholder: string;
-  inputProps: TextInputProps;
-  mask?: string;
-  onChangeText: (value: string) => void;
-}>;
+type Props =
+  | Readonly<{
+      type: "masked";
+      label: string;
+      icon: string;
+      placeholder: string;
+      inputProps: TextInputProps;
+      mask: string;
+      onChangeText: (formatted: string, expected: string) => void;
+    }>
+  | Readonly<{
+      type: "text";
+      label: string;
+      icon: string;
+      placeholder: string;
+      inputProps: TextInputProps;
+      onChangeText: (value: string) => void;
+    }>;
 
 export class LabelledItem extends React.Component<Props> {
   public render() {
@@ -56,7 +58,7 @@ export class LabelledItem extends React.Component<Props> {
             color={variables.brandDarkGray}
             name={this.props.icon}
           />
-          {this.props.mask ? (
+          {this.props.type === "masked" ? (
             <MaskedInput
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
