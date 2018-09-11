@@ -1,5 +1,5 @@
 import { Effect } from "redux-saga";
-import { put, take } from "redux-saga/effects";
+import { put, select, take } from "redux-saga/effects";
 
 import {
   analyticsAuthenticationCompleted,
@@ -9,6 +9,9 @@ import { LoginSuccess } from "../../store/actions/authentication";
 import { LOGIN_SUCCESS } from "../../store/actions/constants";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 
+import { NavigationActions } from "react-navigation";
+import ROUTES from "../../navigation/routes";
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { SessionToken } from "../../types/SessionToken";
 
 /**
@@ -18,8 +21,21 @@ import { SessionToken } from "../../types/SessionToken";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted);
 
+  const isSessionExpired: boolean = yield select(isSessionExpiredSelector);
+
   // Reset the navigation stack and navigate to the authentication screen
-  yield put(resetToAuthenticationRoute);
+  if (isSessionExpired) {
+    // If the user is unauthenticated because of the expired session,
+    // navigate directly to the IDP selection screen.
+    yield put(
+      NavigationActions.navigate({
+        routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+      })
+    );
+  } else {
+    // Otherwise, navigate to the landing screen.
+    yield put(resetToAuthenticationRoute);
+  }
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?

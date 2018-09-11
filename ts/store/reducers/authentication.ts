@@ -97,6 +97,9 @@ export function isLoggedIn(
   );
 }
 
+export const isSessionExpiredSelector = ({ authentication }: GlobalState) =>
+  !isLoggedIn(authentication) && authentication.reason === "SESSION_EXPIRED";
+
 // Selectors
 
 export const isLoggedInSelector = (state: GlobalState): boolean =>
