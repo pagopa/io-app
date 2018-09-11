@@ -13,22 +13,27 @@ import ROUTES from "../../navigation/routes";
 import { logoutRequest } from "../../store/actions/authentication";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { startPinReset } from "../../store/actions/pinset";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-type ReduxMappedProps = {
+type ReduxMappedStateProps = {
   isLoggingOut: boolean;
   logoutError: Option<string>;
+};
+
+type ReduxMappedDispatchProps = {
+  resetPin: () => void;
+  logout: () => void;
 };
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedProps & ReduxProps;
+type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
 
 const styles = StyleSheet.create({
   gridRow: {
@@ -92,10 +97,7 @@ export class ProfileMainScreen extends React.Component<Props, never> {
             </Row>
 
             {/* Reset PIN */}
-            <Row
-              style={styles.gridRow}
-              onPress={() => this.props.dispatch(startPinReset)}
-            >
+            <Row style={styles.gridRow} onPress={() => this.props.resetPin()}>
               <Col size={10}>
                 <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
                 <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
@@ -109,10 +111,7 @@ export class ProfileMainScreen extends React.Component<Props, never> {
             </Row>
 
             {/* Logout/Exit */}
-            <Row
-              style={styles.gridRow}
-              onPress={() => this.props.dispatch(logoutRequest())}
-            >
+            <Row style={styles.gridRow} onPress={() => this.props.logout()}>
               <Col size={10}>
                 <H3>{I18n.t("profile.main.logout")}</H3>
               </Col>
@@ -130,9 +129,17 @@ export class ProfileMainScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   isLoggingOut: createLoadingSelector([FetchRequestActions.LOGOUT])(state),
   logoutError: createErrorSelector([FetchRequestActions.LOGOUT])(state)
 });
 
-export default connect(mapStateToProps)(ProfileMainScreen);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  resetPin: () => dispatch(startPinReset),
+  logout: () => dispatch(logoutRequest())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileMainScreen);
