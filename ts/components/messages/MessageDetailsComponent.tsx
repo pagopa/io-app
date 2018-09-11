@@ -106,13 +106,22 @@ class MessageDetailsComponent extends React.Component<Props, State> {
               <Row>
                 <Col>
                   <H4>{senderService.organization_name}</H4>
-                  <H6>{senderService.service_name}</H6>
+                  <H6
+                    link={true}
+                    onPress={this.props.navigateToServicePreferences}
+                  >
+                    {senderService.service_name}
+                  </H6>
                 </Col>
                 <Col style={{ width: 60 }}>
-                  <MultiImage
-                    style={{ width: 60, height: 60 }}
-                    source={logosForService(senderService)}
-                  />
+                  <TouchableOpacity
+                    onPress={this.props.navigateToServicePreferences}
+                  >
+                    <MultiImage
+                      style={{ width: 60, height: 60 }}
+                      source={logosForService(senderService)}
+                    />
+                  </TouchableOpacity>
                 </Col>
               </Row>
             </Grid>
