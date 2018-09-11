@@ -64,7 +64,7 @@ export function getRptIdAndAmountFromMessage(
 ): Option<ITuple2<RptId, AmountInEuroCents>> {
   return fromNullable(servicesById[message.sender_service_id]).chain(
     service => {
-      return fromNullable(message.payment_data).chain(paymentData => {
+      return fromNullable(message.content.payment_data).chain(paymentData => {
         return getRptIdFromNoticeNumber(
           service.organization_fiscal_code,
           paymentData.notice_number

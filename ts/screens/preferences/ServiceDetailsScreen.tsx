@@ -178,7 +178,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     // whether last attempt to save the preferences failed
     const profileVersion = fromNullable(this.props.profile)
-      .mapNullable(_ => _.version)
+      .mapNullable(_ => (_.has_profile ? _.version : null))
       .getOrElse(0 as NonNegativeInteger);
 
     return (

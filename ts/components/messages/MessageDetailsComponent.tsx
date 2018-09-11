@@ -93,7 +93,7 @@ class MessageDetailsComponent extends React.Component<Props, State> {
 
     const dispatchPaymentAction = this.props.dispatchPaymentAction;
 
-    const { subject, markdown, due_date, payment_data } = message;
+    const { subject, markdown, due_date, payment_data } = message.content;
     return (
       <View>
         <View style={styles.messageHeaderContainer}>
