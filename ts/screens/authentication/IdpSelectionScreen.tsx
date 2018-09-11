@@ -94,7 +94,7 @@ const testIdp = {
   id: "test",
   name: "Test",
   logo: require("../../../img/spid.png"),
-  entityID: "spid-testenv-identityserver",
+  entityID: "xx_testenv2",
   profileUrl: "https://italia-backend/profile.html"
 };
 
