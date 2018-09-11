@@ -3,15 +3,11 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import * as SimpleMarkdown from "simple-markdown";
 
-import {
-  ActivityIndicator,
-  InteractionManager,
-  LayoutAnimation,
-  UIManager
-} from "react-native";
+import { InteractionManager, LayoutAnimation, UIManager } from "react-native";
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import ActivityIndicator from "../activityIndicator";
 import reactNativeRules from "./rules";
 
 // A regex to test if a string ends with `/n/n`
@@ -131,10 +127,7 @@ class Markdown extends React.PureComponent<Props, State> {
       if (!this.state.renderedMarkdown) {
         return (
           <View centerJustified={true}>
-            <ActivityIndicator
-              size="large"
-              color={variables.brandPrimaryLight}
-            />
+            <ActivityIndicator color={variables.brandPrimaryLight} />
           </View>
         );
       }

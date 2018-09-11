@@ -1,11 +1,12 @@
 import { Option } from "fp-ts/lib/Option";
 import { Button, Content, H1, H3, Text, View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import ActivityIndicator from "../../components/ui/activityIndicator";
 
 import I18n from "../../i18n";
 
@@ -15,8 +16,6 @@ import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
-
-import variables from "../../theme/variables";
 
 type ReduxMappedProps = {
   isAcceptingTos: boolean;
@@ -65,7 +64,7 @@ const TosScreen: React.SFC<Props> = ({
       <Content>
         {isAcceptingTos && (
           <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator size={"large"} color={variables.brandPrimary} />
+            <ActivityIndicator />
           </View>
         )}
         <H1>{I18n.t("onboarding.tos.contentTitle")}</H1>
