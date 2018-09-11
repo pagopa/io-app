@@ -1,9 +1,13 @@
 import { Option } from "fp-ts/lib/Option";
-import { Wallet } from "../../../types/pagopa";
+import { CreditCard, Wallet } from "../../../types/pagopa";
 import {
+  ADD_CREDIT_CARD_COMPLETED,
+  ADD_CREDIT_CARD_REQUEST,
+  CREDIT_CARD_DATA_CLEANUP,
   FETCH_WALLETS_REQUEST,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
+  STORE_CREDIT_CARD_DATA,
   WALLETS_FETCHED
 } from "../constants";
 
@@ -26,11 +30,33 @@ export type SetFavoriteWallet = Readonly<{
   payload: Option<number>;
 }>;
 
+export type AddCreditCardRequest = Readonly<{
+  type: typeof ADD_CREDIT_CARD_REQUEST;
+  payload: boolean; // <= should the card be set as the favorite payment method?
+}>;
+
+export type StoreCreditCardData = Readonly<{
+  type: typeof STORE_CREDIT_CARD_DATA;
+  payload: CreditCard;
+}>;
+
+export type CreditCardDataCleanup = Readonly<{
+  type: typeof CREDIT_CARD_DATA_CLEANUP;
+}>;
+
+export type AddCreditCardCompleted = Readonly<{
+  type: typeof ADD_CREDIT_CARD_COMPLETED;
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
   | WalletSelectedForDetails
-  | SetFavoriteWallet;
+  | SetFavoriteWallet
+  | StoreCreditCardData
+  | CreditCardDataCleanup
+  | AddCreditCardRequest
+  | AddCreditCardCompleted;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -55,4 +81,24 @@ export const setFavoriteWallet = (
 ): SetFavoriteWallet => ({
   type: SET_FAVORITE_WALLET,
   payload: walletId
+});
+
+export const storeCreditCardData = (card: CreditCard): StoreCreditCardData => ({
+  type: STORE_CREDIT_CARD_DATA,
+  payload: card
+});
+
+export const creditCardDataCleanup = (): CreditCardDataCleanup => ({
+  type: CREDIT_CARD_DATA_CLEANUP
+});
+
+export const addCreditCardRequest = (
+  favorite: boolean
+): AddCreditCardRequest => ({
+  type: ADD_CREDIT_CARD_REQUEST,
+  payload: favorite
+});
+
+export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
+  type: ADD_CREDIT_CARD_COMPLETED
 });
