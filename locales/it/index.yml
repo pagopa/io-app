@@ -187,7 +187,7 @@ pin_login:
   pin:
     pinInfo: Inserisci il codice PIN
     reset:
-      button: Ho dimenticato il mio PIN
+      button: Ho dimenticato il PIN
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.

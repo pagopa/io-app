@@ -362,19 +362,6 @@ function* showWalletOrSelectPsp(idWallet: number, paymentId?: string) {
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods
 ) {
-  /**
-   * ask and check PIN before proceed with payment
-   * TODO: apply suggestion - https://github.com/teamdigitale/italia-app/pull/446
-   */
-  // Retrieve the configured PIN from the keychain
-  const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
-  if (storedPin.isSome()) {
-    yield race({
-      proceed: call(loginWithPinSaga, storedPin.value),
-      reset: call(watchPinResetSaga)
-    });
-  }
-
   // find out whether a payment method has already
   // been defined as favorite. If so, use it and
   // ask the user to confirm it
@@ -450,7 +437,18 @@ function* completionHandler(_: PaymentRequestCompletion) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
 
-  // PIN REQUEST COULD BE HERE
+  /**
+   * ask and check PIN before proceed with payment
+   * TODO: apply suggestion - https://github.com/teamdigitale/italia-app/pull/446
+   */
+  // Retrieve the configured PIN from the keychain
+  const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
+  if (storedPin.isSome()) {
+    yield race({
+      proceed: call(loginWithPinSaga, storedPin.value),
+      reset: call(watchPinResetSaga)
+    });
+  }
 
   // do payment stuff (-> pagoPA REST)
   // retrieve transaction and store it
