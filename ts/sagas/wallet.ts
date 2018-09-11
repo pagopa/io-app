@@ -15,8 +15,7 @@ import {
   put,
   race,
   select,
-  take,
-  takeLatest
+  take
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
@@ -557,7 +556,9 @@ export function* watchWalletSaga(
     const action = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
-      LOGOUT_SUCCESS
+      LOGOUT_SUCCESS,
+      PAYMENT_REQUEST_QR_CODE,
+      PAYMENT_REQUEST_MESSAGE
     ]);
 
     const pagoPaToken: Option<string> = yield select(getPagoPaToken);
@@ -578,13 +579,11 @@ export function* watchWalletSaga(
     if (action.type === LOGOUT_SUCCESS) {
       break;
     }
+    if (action.type === PAYMENT_REQUEST_QR_CODE) {
+      yield fork(paymentSagaFromQrCode);
+    }
+    if (action.type == PAYMENT_REQUEST_MESSAGE) {
+      yield fork(paymentSagaFromMessage);
+    }
   }
-}
-
-/**
- * saga that manages the wallet (transactions + wallets + payments)
- */
-export default function* root(): Iterator<Effect> {
-  yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
-  yield takeLatest(PAYMENT_REQUEST_MESSAGE, paymentSagaFromMessage);
 }
