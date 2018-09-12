@@ -1,3 +1,5 @@
+// tslint:disable:max-union-size
+
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 
 /**
@@ -46,6 +48,7 @@ import {
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
+  PaymentCompleted,
   paymentConfirmPaymentMethod,
   paymentGoBack,
   paymentInitialConfirmPaymentMethod,
@@ -63,7 +66,9 @@ import {
   PaymentRequestManualEntry,
   PaymentRequestPickPaymentMethod,
   PaymentRequestPickPsp,
+  PaymentRequestQrCode,
   PaymentRequestTransactionSummaryActions,
+  PaymentRequestTransactionSummaryFromBanner,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId,
   PaymentUpdatePsp
@@ -338,7 +343,18 @@ function* paymentSagaFromMessage(): Iterator<Effect> {
 
 function* watchPaymentSaga(): Iterator<Effect> {
   while (true) {
-    const action = yield take([
+    const action:
+      | PaymentRequestQrCode
+      | PaymentRequestManualEntry
+      | PaymentRequestTransactionSummaryFromBanner
+      | PaymentRequestContinueWithPaymentMethods
+      | PaymentRequestPickPaymentMethod
+      | PaymentRequestConfirmPaymentMethod
+      | PaymentRequestPickPsp
+      | PaymentUpdatePsp
+      | PaymentRequestCompletion
+      | PaymentRequestGoBack
+      | PaymentCompleted = yield take([
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MANUAL_ENTRY,
       PAYMENT_REQUEST_TRANSACTION_SUMMARY,
