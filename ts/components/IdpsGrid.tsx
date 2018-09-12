@@ -1,6 +1,12 @@
 import { Button, View } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  ListRenderItemInfo,
+  StyleSheet
+} from "react-native";
 
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
@@ -24,14 +30,8 @@ const GRID_GUTTER = variables.gridGutter;
  * than a padding to each item.
  */
 const styles = StyleSheet.create({
-  gridContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    margin: -GRID_GUTTER
-  },
   gridItem: {
-    padding: GRID_GUTTER,
+    padding: GRID_GUTTER / 2,
     // Calculate the real width of each item
 
     width: (windowWidth - (2 * variables.contentPadding - 2 * GRID_GUTTER)) / 2
@@ -51,28 +51,35 @@ class IdpsGrid extends React.Component<Props> {
   public render() {
     const { idps } = this.props;
     return (
-      <View style={styles.gridContainer}>
-        {idps.map(idp => this.renderGridItem(idp))}
-      </View>
+      <FlatList
+        data={idps}
+        numColumns={2}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+      />
     );
   }
 
-  public keyExtractor = (idp: IdentityProvider): string => {
+  private keyExtractor = (idp: IdentityProvider): string => {
     return idp.id;
   };
 
-  public renderGridItem = (idp: IdentityProvider): React.ReactElement<any> => {
+  private renderItem = (
+    info: ListRenderItemInfo<IdentityProvider>
+  ): React.ReactElement<any> => {
     const { onIdpSelected } = this.props;
-    const onPress = () => onIdpSelected(idp);
+    const { item } = info;
+    const onPress = () => onIdpSelected(item);
     return (
-      <View key={idp.id} style={styles.gridItem}>
+      <View key={item.id} style={styles.gridItem}>
         <Button
+          transparent={true}
           block={true}
           white={true}
           onPress={onPress}
-          testID={`idp-${idp.id}-button`}
+          testID={`idp-${item.id}-button`}
         >
-          <Image source={idp.logo} style={styles.idpLogo} />
+          <Image source={item.logo} style={styles.idpLogo} />
         </Button>
       </View>
     );
