@@ -4,10 +4,12 @@
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
+import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
+import { AmountToImporto } from "../../../utils/amounts";
 import {
   PAYMENT_CANCEL,
   PAYMENT_COMPLETED,
@@ -211,6 +213,11 @@ export const getPaymentStep = (state: GlobalState) =>
 export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
   state.wallet.payment.stack[0].rptId;
 
+export const getPaymentContextCode = (
+  state: GlobalStateWithVerificaResponse
+): CodiceContestoPagamento =>
+  state.wallet.payment.stack[0].verificaResponse.codiceContestoPagamento;
+
 export const getInitialAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents => state.wallet.payment.stack[0].initialAmount;
@@ -222,10 +229,9 @@ export const getSelectedPaymentMethod = (
 export const getCurrentAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents =>
-  (
-    "0".repeat(10) +
-    `${state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento}`
-  ).slice(-10) as AmountInEuroCents;
+  AmountToImporto.encode(
+    state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento
+  );
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
@@ -242,6 +248,9 @@ export const getPaymentReason = (
 export const getPspList = (
   state: GlobalStateWithSelectedPaymentMethod
 ): ReadonlyArray<Psp> => state.wallet.payment.stack[0].pspList;
+
+export const getPaymentId = (state: GlobalStateWithPaymentId): string =>
+  state.wallet.payment.stack[0].paymentId;
 
 export const selectedPaymentMethodSelector: (
   state: GlobalStateWithSelectedPaymentMethod

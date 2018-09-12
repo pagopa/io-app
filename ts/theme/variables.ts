@@ -110,7 +110,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Footer
   footerBackground: "#FFFFFF",
-  footerElevation: 50,
+  footerElevation: 20,
   footerPaddingTop: 16,
   footerPaddingLeft: 24,
   footerPaddingBottom: 16,
@@ -118,8 +118,9 @@ const customVariables = Object.assign(materialVariables, {
   footerShadowColor: "#000000",
   footerShadowOffsetWidth: 0,
   footerShadowOffsetHeight: 50,
-  footerShadowOpacity: 0.3,
-  footerShadowRadius: 50,
+  footerShadowOpacity: 0.5,
+  footerShadowRadius: 37,
+  footerBottomBorderWidth: 1,
 
   // Grid
   gridGutter: 10,

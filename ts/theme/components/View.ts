@@ -20,6 +20,14 @@ declare module "native-base" {
   }
 }
 
+/**
+ * TO DO:
+ * if no components are inserted as footer, the following component should be
+ * included at the bottom of the screen to show the proper shadow upside the navigation bar:
+ *
+ * <View footer={true} noPadded={true}/>
+ */
+
 export default (): Theme => {
   return {
     ".spacer": {
@@ -60,6 +68,8 @@ export default (): Theme => {
       paddingLeft: variables.footerPaddingLeft,
       paddingRight: variables.footerPaddingRight,
       paddingTop: variables.footerPaddingTop,
+      borderBottomWidth: variables.footerBottomBorderWidth,
+      borderBottomColor: variables.brandGray,
       // iOS shadow
       shadowColor: variables.footerShadowColor,
       shadowOffset: {
