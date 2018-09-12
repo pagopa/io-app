@@ -1,8 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
-import variables from "../theme/variables";
+import ActivityIndicator from "./ui/ActivityIndicator";
 
 const styles = StyleSheet.create({
   activityIndicatorContainer: {
@@ -28,7 +28,7 @@ export class FetchActivityIndicator extends React.PureComponent<Props, never> {
     return (
       isVisible && (
         <View style={styles.activityIndicatorContainer}>
-          <ActivityIndicator size={"large"} color={variables.brandPrimary} />
+          <ActivityIndicator />
         </View>
       )
     );
