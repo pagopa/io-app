@@ -28,7 +28,7 @@ import {
   PAYMENT_UPDATE_PSP_IN_STATE
 } from "../constants";
 
-type PaymentRequestQrCode = Readonly<{
+export type PaymentRequestQrCode = Readonly<{
   type: typeof PAYMENT_REQUEST_QR_CODE;
 }>;
 
@@ -61,7 +61,7 @@ type PaymentRequestTransactionSummaryFromRptId = Readonly<{
 
 // for when the user taps on the payment banner and gets redirected
 // to the summary of the payment
-type PaymentRequestTransactionSummaryFromBanner = Readonly<{
+export type PaymentRequestTransactionSummaryFromBanner = Readonly<{
   type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
   kind: "fromBanner";
 }>;
@@ -130,7 +130,7 @@ export type PaymentRequestCompletion = Readonly<{
   type: typeof PAYMENT_REQUEST_COMPLETION;
 }>;
 
-type PaymentCompleted = Readonly<{
+export type PaymentCompleted = Readonly<{
   type: typeof PAYMENT_COMPLETED;
 }>;
 
