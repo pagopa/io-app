@@ -32,7 +32,9 @@ type SetFavoriteWallet = Readonly<{
 
 export type AddCreditCardRequest = Readonly<{
   type: typeof ADD_CREDIT_CARD_REQUEST;
-  payload: boolean; // <= should the card be set as the favorite payment method?
+  creditCard: CreditCard;
+  // should the card be set as the favorite payment method?
+  setAsFavorite: boolean;
 }>;
 
 type StoreCreditCardData = Readonly<{
@@ -93,10 +95,12 @@ export const creditCardDataCleanup = (): CreditCardDataCleanup => ({
 });
 
 export const addCreditCardRequest = (
-  favorite: boolean
+  creditCard: CreditCard,
+  setAsFavorite: boolean
 ): AddCreditCardRequest => ({
   type: ADD_CREDIT_CARD_REQUEST,
-  payload: favorite
+  creditCard,
+  setAsFavorite
 });
 
 export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
