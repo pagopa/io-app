@@ -6,7 +6,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import ActivityIndicator from "../../components/ui/activityIndicator";
+import ActivityIndicator from "../../components/ui/ActivityIndicator";
 
 import I18n from "../../i18n";
 

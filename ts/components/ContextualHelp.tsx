@@ -10,7 +10,7 @@ import * as React from "react";
 import { InteractionManager, Modal, TouchableHighlight } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
-import ActivityIndicator from "./ui/activityIndicator";
+import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";

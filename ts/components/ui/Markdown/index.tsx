@@ -7,7 +7,7 @@ import { InteractionManager, LayoutAnimation, UIManager } from "react-native";
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import ActivityIndicator from "../activityIndicator";
+import ActivityIndicator from "../ActivityIndicator";
 import reactNativeRules from "./rules";
 
 // A regex to test if a string ends with `/n/n`

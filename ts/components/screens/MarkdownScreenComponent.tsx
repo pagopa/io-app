@@ -2,7 +2,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { InteractionManager } from "react-native";
 
-import ActivityIndicator from "../ui/activityIndicator";
+import ActivityIndicator from "../ui/ActivityIndicator";
 import Markdown from "../ui/Markdown";
 
 import BaseScreenComponent from "./BaseScreenComponent";

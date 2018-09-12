@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import ActivityIndicator from "./ui/activityIndicator";
+import ActivityIndicator from "./ui/ActivityIndicator";
 
 const styles = StyleSheet.create({
   activityIndicatorContainer: {
