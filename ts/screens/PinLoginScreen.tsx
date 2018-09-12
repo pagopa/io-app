@@ -100,11 +100,10 @@ class PinLoginScreen extends React.Component<Props> {
     return (
       <React.Fragment>
         <Pinpad
-          autofocus={true}
           onFulfill={this.onPinFulfill}
           activeColor={variables.colorWhite}
           inactiveColor={variables.colorWhite}
-          codeInputRef={this.handleCodeInputRef}
+          ref={this.handleCodeInputRef}
         />
 
         {isPinInvalid && this.renderCodeInputConfirmValidation()}

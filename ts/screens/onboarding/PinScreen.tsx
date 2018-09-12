@@ -87,7 +87,7 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the confirmation CodeInput is filled
-  public onPinConfirmFulfill(isValid: boolean, code: PinString) {
+  public onPinConfirmFulfill(code: PinString, isValid: boolean) {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid) {
       if (this.pinConfirmComponent) {
@@ -157,10 +157,9 @@ class PinScreen extends React.Component<Props, State> {
        */
       return (
         <Pinpad
-          autofocus={true}
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
-          onFulfill={(code: PinString) => this.onPinFulfill(code)}
+          onFulfill={this.onPinFulfill}
         />
       );
     } else {
@@ -170,14 +169,11 @@ class PinScreen extends React.Component<Props, State> {
       return (
         <React.Fragment>
           <Pinpad
-            autofocus={true}
             inactiveColor={variables.brandLightGray}
             activeColor={variables.brandDarkGray}
             compareWithCode={pinState.pin}
-            onFulfill={(isValid, code) =>
-              this.onPinConfirmFulfill(isValid, code)
-            }
-            codeInputRef={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
+            onFulfill={this.onPinConfirmFulfill}
+            ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
           />
 
           {pinState.state === "PinConfirmed" &&
