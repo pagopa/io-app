@@ -11,7 +11,7 @@ type TransactionsFetched = Readonly<{
   payload: ReadonlyArray<Transaction>;
 }>;
 
-type FetchTransactionsRequest = Readonly<{
+export type FetchTransactionsRequest = Readonly<{
   type: typeof FETCH_TRANSACTIONS_REQUEST;
 }>;
 
