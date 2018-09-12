@@ -13,13 +13,13 @@ import I18n from "../../i18n";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-export type OwnProps = Readonly<{
+type OwnProps = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
   navigateToServicePreferences: (() => void) | undefined;
 }>;
 
-export type Props = OwnProps;
+type Props = OwnProps;
 
 /**
  * Implements a component that show the message details info when the link is click

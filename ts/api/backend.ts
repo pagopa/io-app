@@ -22,7 +22,6 @@ import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Installation } from "../../definitions/backend/Installation";
-import { LimitedProfile } from "../../definitions/backend/LimitedProfile";
 import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
 import { PaymentActivationsGetResponse } from "../../definitions/backend/PaymentActivationsGetResponse";
@@ -54,17 +53,11 @@ export type AuthenticatedOrInitializedProfile = t.TypeOf<
   typeof AuthenticatedOrInitializedProfile
 >;
 
-// FullProfile is allOf [ExtendedProfile, LimitedProfile]
-// see https://github.com/teamdigitale/italia-backend/blob/master/api_proxy.yaml#L211
-export const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
-
-export type FullProfile = t.TypeOf<typeof FullProfile>;
-
-export const SuccessResponse = t.interface({
+const SuccessResponse = t.interface({
   message: t.string
 });
 
-export type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
+type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
 
 //
 // Define the types of the requests
@@ -152,7 +145,7 @@ export type LogoutT = IPostApiRequestType<
   BasicResponseTypeWith401<SuccessResponse>
 >;
 
-export type VerificaRptT = IGetApiRequestType<
+type VerificaRptT = IGetApiRequestType<
   {
     rptId: RptId;
   },
@@ -161,7 +154,7 @@ export type VerificaRptT = IGetApiRequestType<
   BasicResponseTypeWith401<PaymentRequestsGetResponse>
 >;
 
-export type AttivaRptT = IPostApiRequestType<
+type AttivaRptT = IPostApiRequestType<
   {
     rptId: string;
     paymentContextCode: CodiceContestoPagamento;
@@ -172,7 +165,7 @@ export type AttivaRptT = IPostApiRequestType<
   BasicResponseTypeWith401<PaymentActivationsPostResponse>
 >;
 
-export type GetPaymentIdT = IGetApiRequestType<
+type GetPaymentIdT = IGetApiRequestType<
   {
     paymentContextCode: CodiceContestoPagamento;
   },
@@ -180,8 +173,6 @@ export type GetPaymentIdT = IGetApiRequestType<
   never,
   BasicResponseTypeWith401<PaymentActivationsGetResponse>
 >;
-
-export type BackendClientT = ReturnType<typeof BackendClient>;
 
 //
 // Create client

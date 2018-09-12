@@ -38,7 +38,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * Translates the primary languages of the provided locales.
@@ -59,13 +59,9 @@ function translateLocale(locale: string): string {
  */
 class PreferencesScreen extends React.Component<Props> {
   public render() {
-    const help =
-      I18n.currentLocale() === "en"
-        ? require("../../help/PREFERENCES_HOME.en")
-        : require("../../help/PREFERENCES_HOME.it");
     const contextualHelp = {
-      title: help.title,
-      body: () => <Markdown>{help.body}</Markdown>
+      title: I18n.t("preferences.title"),
+      body: () => <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
     };
 
     const maybeProfile = this.props.maybeProfile;

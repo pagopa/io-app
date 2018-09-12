@@ -17,9 +17,9 @@ export interface EnabledChannels {
   push: boolean;
 }
 
-export const INBOX_CHANNEL = "INBOX";
-export const EMAIL_CHANNEL = "EMAIL";
-export const PUSH_CHANNEL = "WEBHOOK";
+const INBOX_CHANNEL = "INBOX";
+const EMAIL_CHANNEL = "EMAIL";
+const PUSH_CHANNEL = "WEBHOOK";
 
 /**
  * Finds out which channels are enabled in the profile for the provided service

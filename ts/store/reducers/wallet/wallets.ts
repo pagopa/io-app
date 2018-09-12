@@ -25,7 +25,7 @@ export type WalletsState = Readonly<{
   newCreditCard: Option<CreditCard>;
 }>;
 
-export const WALLETS_INITIAL_STATE: WalletsState = {
+const WALLETS_INITIAL_STATE: WalletsState = {
   list: {},
   selectedWalletId: none,
   favoriteWalletId: none,
@@ -56,12 +56,6 @@ export const getWalletFromId = (
 
 export const selectedWalletSelector = createSelector(
   getSelectedWalletId,
-  getWallets,
-  getWalletFromId
-);
-
-export const favoriteWalletSelector = createSelector(
-  getFavoriteWalletId,
   getWallets,
   getWalletFromId
 );

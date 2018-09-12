@@ -19,21 +19,21 @@ const fonts = {
   })
 };
 
-export const fontWeights = {
+const fontWeights = {
   "300": "Light",
   "400": "Regular",
   "600": "SemiBold",
   "700": "Bold"
 };
 
-export type FontFamily = keyof typeof fonts;
+type FontFamily = keyof typeof fonts;
 export type FontWeight = keyof typeof fontWeights;
-export const enum FontStyle {
+const enum FontStyle {
   "normal" = "normal",
   "italic" = "italic"
 }
 
-export type FontStyleObject = {
+type FontStyleObject = {
   fontFamily: string;
   fontWeight?: FontWeight;
   fontStyle?: FontStyle;
@@ -42,7 +42,7 @@ export type FontStyleObject = {
 /**
  * Get the correct fontFamily name on both Android and iOS
  */
-export const makeFontFamilyName = (
+const makeFontFamilyName = (
   osSelect: PlatformSelectType,
   font: FontFamily,
   weight: FontWeight | undefined,

@@ -78,13 +78,13 @@ Ordered list:
 3. Angular
 `;
 
-export type Props = {};
+type Props = {};
 
-export type State = {
+type State = {
   markdown: string;
 };
 
-export const INITIAL_STATE: State = {
+const INITIAL_STATE: State = {
   markdown: ""
 };
 

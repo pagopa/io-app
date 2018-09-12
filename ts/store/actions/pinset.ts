@@ -13,7 +13,7 @@ import {
 
 // Actions
 
-export type StartPinReset = Readonly<{
+type StartPinReset = Readonly<{
   type: typeof START_PIN_RESET;
 }>;
 
@@ -23,11 +23,11 @@ export type PinCreateRequest = Readonly<{
   payload: PinString;
 }>;
 
-export type PinCreateSuccess = Readonly<{
+type PinCreateSuccess = Readonly<{
   type: typeof PIN_CREATE_SUCCESS;
 }>;
 
-export type PinCreateFailure = Readonly<{
+type PinCreateFailure = Readonly<{
   type: typeof PIN_CREATE_FAILURE;
 }>;
 

@@ -9,7 +9,7 @@ import {
   SET_DEEPLINK
 } from "./constants";
 
-export type SetDeepLink = Readonly<{
+type SetDeepLink = Readonly<{
   type: typeof SET_DEEPLINK;
   payload: NavigationNavigateActionPayload;
   immediate: boolean;
@@ -29,7 +29,7 @@ export const setDeepLink = (
   immediate
 });
 
-export type ClearDeepLink = Readonly<{
+type ClearDeepLink = Readonly<{
   type: typeof CLEAR_DEEPLINK;
 }>;
 

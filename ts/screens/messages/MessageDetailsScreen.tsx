@@ -36,7 +36,7 @@ type Props = ReduxProps & NavigationInjectedProps & OwnProps;
 /**
  * This screen show the Message Details for a simple message
  */
-export class MessageDetailsScreen extends React.Component<Props, never> {
+class MessageDetailsScreen extends React.Component<Props, never> {
   private goBack = () => this.props.navigation.goBack();
 
   public render() {

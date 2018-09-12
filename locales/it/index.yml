@@ -424,6 +424,7 @@ preferences:
     digitalDomicile: Domicilio digitale
   empty:
     default: Nessuna preferenza impostata
+  preferencesHelp: !include preferences_home_help.md
 services:
   headerTitle: Servizi
   title: Elenco dei servizi

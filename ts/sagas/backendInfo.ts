@@ -18,7 +18,7 @@ const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 // retry loading backend info every 10 seconds on error
 const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
 
-export function* backendInfoWatcher(): IterableIterator<Effect> {
+function* backendInfoWatcher(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
   function getServerInfo(): Promise<BasicResponseType<ServerInfo> | undefined> {
