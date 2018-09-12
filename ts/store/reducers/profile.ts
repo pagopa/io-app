@@ -19,7 +19,7 @@ import { GlobalState } from "./types";
 
 export type ProfileState = AuthenticatedOrInitializedProfile | null;
 
-export const INITIAL_STATE: ProfileState = null;
+const INITIAL_STATE: ProfileState = null;
 
 // Selectors
 

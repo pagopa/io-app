@@ -14,7 +14,7 @@ export type BackendInfoState = Readonly<{
   serverInfo: ServerInfo | undefined;
 }>;
 
-export const initialBackendInfoState: BackendInfoState = {
+const initialBackendInfoState: BackendInfoState = {
   serverInfo: undefined
 };
 

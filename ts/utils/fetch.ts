@@ -19,7 +19,7 @@ import { fetchMaxRetries, fetchTimeout } from "../config";
 /**
  * Returns a fetch wrapped with timeout and retry logic
  */
-export function retryingFetch(fetchApi: typeof fetch): typeof fetch {
+function retryingFetch(fetchApi: typeof fetch): typeof fetch {
   // a fetch that can be aborted and that gets cancelled after fetchTimeoutMs
   const abortableFetch = AbortableFetch(fetchApi);
   const timeoutFetch = toFetch(setFetchTimeout(fetchTimeout, abortableFetch));

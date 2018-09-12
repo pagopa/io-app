@@ -13,13 +13,13 @@ export type ContentServiceLoad = Readonly<{
   serviceId: ServiceId;
 }>;
 
-export type ContentServiceLoadSuccess = Readonly<{
+type ContentServiceLoadSuccess = Readonly<{
   type: typeof CONTENT_SERVICE_LOAD_SUCCESS;
   serviceId: ServiceId;
   data: ServiceMetadata;
 }>;
 
-export type ContentServiceLoadFailure = Readonly<{
+type ContentServiceLoadFailure = Readonly<{
   type: typeof CONTENT_SERVICE_LOAD_FAILURE;
   serviceId: ServiceId;
 }>;

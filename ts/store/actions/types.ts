@@ -56,8 +56,6 @@ export type Action =
   | WalletActions
   | ContentActions;
 
-export type GetState = () => GlobalState;
-
 export type Dispatch = DispatchAPI<Action>;
 
 export type Store = ReduxStore<GlobalState>;

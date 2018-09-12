@@ -13,7 +13,7 @@ export type InstallationState = Readonly<{
   token: string | undefined;
 }>;
 
-export function getInitialState(): InstallationState {
+function getInitialState(): InstallationState {
   return {
     uuid: uuid(),
     token: undefined

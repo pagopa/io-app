@@ -23,7 +23,7 @@ import {
   WalletStateWithVerificaResponse
 } from "./wallet";
 
-export type NetworkState = Readonly<{
+type NetworkState = Readonly<{
   isConnected: boolean;
   actionQueue: ReadonlyArray<Action>;
 }>;

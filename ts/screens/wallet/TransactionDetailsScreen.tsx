@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class TransactionDetailsScreen extends React.Component<Props> {
+class TransactionDetailsScreen extends React.Component<Props> {
   /**
    * It provides the proper header to the screen. If isTransactionStarted
    * (the user displays the screen during the process of identify and accept a transaction)

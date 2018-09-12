@@ -19,7 +19,7 @@ import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
 import { logosForService } from "../../utils/services";
 
-export type OwnProps = Readonly<{
+type OwnProps = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
   dispatchReminderAction: (() => Promise<EventCreationResult>) | undefined;
@@ -31,7 +31,7 @@ type State = Readonly<{
   isMessageDetailsInfoVisible: boolean;
 }>;
 
-export type Props = OwnProps;
+type Props = OwnProps;
 
 const styles = StyleSheet.create({
   messageHeaderContainer: {

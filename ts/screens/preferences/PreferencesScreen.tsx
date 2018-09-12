@@ -38,7 +38,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * Translates the primary languages of the provided locales.

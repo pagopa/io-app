@@ -8,7 +8,7 @@ import { ApplicationState } from "./types";
  * Action types and action creator related to the Application.
  */
 
-export type StartApplicationInitialization = Readonly<{
+type StartApplicationInitialization = Readonly<{
   type: typeof START_APPLICATION_INITIALIZATION;
 }>;
 
@@ -16,7 +16,7 @@ export const startApplicationInitialization: StartApplicationInitialization = {
   type: START_APPLICATION_INITIALIZATION
 };
 
-export type ApplicationChangeState = Readonly<{
+type ApplicationChangeState = Readonly<{
   type: typeof APP_STATE_CHANGE_ACTION;
   payload: ApplicationState;
 }>;
