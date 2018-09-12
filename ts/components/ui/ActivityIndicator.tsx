@@ -8,12 +8,7 @@ interface Props {
 }
 
 const ActivityIndicator: React.SFC<Props> = ({ color }) => (
-  <RNActivityIndicator size="large" color={color} />
+  <RNActivityIndicator size="large" color={color || variables.brandPrimary} />
 );
-
-// tslint:disable-next-line no-object-mutation
-ActivityIndicator.defaultProps = {
-  color: variables.brandPrimary
-};
 
 export default ActivityIndicator;
