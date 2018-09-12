@@ -32,7 +32,7 @@ export type PaymentRequestQrCode = Readonly<{
   type: typeof PAYMENT_REQUEST_QR_CODE;
 }>;
 
-export type PaymentQrCode = Readonly<{
+type PaymentQrCode = Readonly<{
   type: typeof PAYMENT_QR_CODE;
 }>;
 
@@ -40,17 +40,17 @@ export type PaymentRequestManualEntry = Readonly<{
   type: typeof PAYMENT_REQUEST_MANUAL_ENTRY;
 }>;
 
-export type PaymentManualEntry = Readonly<{
+type PaymentManualEntry = Readonly<{
   type: typeof PAYMENT_MANUAL_ENTRY;
 }>;
 
-export type PaymentRequestMessage = Readonly<{
+type PaymentRequestMessage = Readonly<{
   type: typeof PAYMENT_REQUEST_MESSAGE;
 }>;
 
 // for the first time the screen is being shown (i.e. after the
 // rptId has been passed (from qr code/manual entry/message)
-export type PaymentRequestTransactionSummaryFromRptId = Readonly<{
+type PaymentRequestTransactionSummaryFromRptId = Readonly<{
   type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
   kind: "fromRptId";
   payload: {
@@ -70,7 +70,7 @@ export type PaymentRequestTransactionSummaryActions =
   | PaymentRequestTransactionSummaryFromRptId
   | PaymentRequestTransactionSummaryFromBanner;
 
-export type PaymentTransactionSummaryFromRptId = Readonly<{
+type PaymentTransactionSummaryFromRptId = Readonly<{
   type: typeof PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID;
   payload: {
     rptId: RptId;
@@ -79,11 +79,11 @@ export type PaymentTransactionSummaryFromRptId = Readonly<{
   };
 }>;
 
-export type PaymentTransactionSummaryFromBanner = Readonly<{
+type PaymentTransactionSummaryFromBanner = Readonly<{
   type: typeof PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER;
 }>;
 
-export type PaymentTransactionSummaryActions =
+type PaymentTransactionSummaryActions =
   | PaymentTransactionSummaryFromRptId
   | PaymentTransactionSummaryFromBanner;
 
@@ -95,11 +95,11 @@ export type PaymentRequestPickPaymentMethod = Readonly<{
   type: typeof PAYMENT_REQUEST_PICK_PAYMENT_METHOD;
 }>;
 
-export type PaymentPickPaymentMethod = Readonly<{
+type PaymentPickPaymentMethod = Readonly<{
   type: typeof PAYMENT_PICK_PAYMENT_METHOD;
 }>;
 
-export type PaymentInitialPickPaymentMethod = Readonly<{
+type PaymentInitialPickPaymentMethod = Readonly<{
   type: typeof PAYMENT_INITIAL_PICK_PAYMENT_METHOD;
   payload: string; // paymentId
 }>;
@@ -109,7 +109,7 @@ export type PaymentRequestConfirmPaymentMethod = Readonly<{
   payload: number; // selected wallet id
 }>;
 
-export type PaymentConfirmPaymentMethod = Readonly<{
+type PaymentConfirmPaymentMethod = Readonly<{
   type: typeof PAYMENT_CONFIRM_PAYMENT_METHOD;
   payload: {
     selectedPaymentMethod: number; // selected wallet id
@@ -117,7 +117,7 @@ export type PaymentConfirmPaymentMethod = Readonly<{
   };
 }>;
 
-export type PaymentInitialConfirmPaymentMethod = Readonly<{
+type PaymentInitialConfirmPaymentMethod = Readonly<{
   type: typeof PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD;
   payload: {
     selectedPaymentMethod: number; // selected wallet id
@@ -141,7 +141,7 @@ export type PaymentRequestPickPsp = Readonly<{
 
 // action for updating the redux state
 // as required by the psp list screen
-export type PaymentPickPsp = Readonly<{
+type PaymentPickPsp = Readonly<{
   type: typeof PAYMENT_PICK_PSP;
   payload: {
     selectedPaymentMethod: number; // selected wallet id
@@ -157,13 +157,13 @@ export type PaymentUpdatePsp = Readonly<{
 
 // TODO: temporary action until integration with pagoPA occurs
 // @https://www.pivotaltracker.com/story/show/159494746
-export type PaymentUpdatePspInState = Readonly<{
+type PaymentUpdatePspInState = Readonly<{
   type: typeof PAYMENT_UPDATE_PSP_IN_STATE;
   walletId: number;
   payload: Psp; // pspId
 }>;
 
-export type PaymentInitialPickPsp = Readonly<{
+type PaymentInitialPickPsp = Readonly<{
   type: typeof PAYMENT_INITIAL_PICK_PSP;
   payload: {
     selectedPaymentMethod: number; // selected wallet id
@@ -172,7 +172,7 @@ export type PaymentInitialPickPsp = Readonly<{
   };
 }>;
 
-export type PaymentGoBack = Readonly<{
+type PaymentGoBack = Readonly<{
   type: typeof PAYMENT_GO_BACK;
 }>;
 
@@ -326,10 +326,6 @@ export const paymentUpdatePsp = (pspId: number): PaymentUpdatePsp => ({
 
 export const paymentRequestCompletion = (): PaymentRequestCompletion => ({
   type: PAYMENT_REQUEST_COMPLETION
-});
-
-export const paymentCompleted = (): PaymentCompleted => ({
-  type: PAYMENT_COMPLETED
 });
 
 export const paymentGoBack = (): PaymentGoBack => ({

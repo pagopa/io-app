@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 /**
  * A component to show the main screen of the Profile section
  */
-export class ProfileMainScreen extends React.Component<Props, never> {
+class ProfileMainScreen extends React.Component<Props, never> {
   public render() {
     return (
       <TopScreenComponent

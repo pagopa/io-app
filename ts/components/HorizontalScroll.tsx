@@ -6,7 +6,7 @@ import * as React from "react";
 import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
 import variables from "../theme/variables";
 
-export type Props = {
+type Props = {
   cards: ReadonlyArray<JSX.Element>;
 };
 

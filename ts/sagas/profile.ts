@@ -52,7 +52,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
-export function* createOrUpdateProfileSaga(
+function* createOrUpdateProfileSaga(
   createOrUpdateProfile: TypeofApiCall<CreateOrUpdateProfileT>,
   action: ProfileUpsertRequest
 ): Iterator<Effect> {

@@ -13,7 +13,7 @@ export type PinLoginState = Readonly<{
   PinConfirmed: "PinCheck" | "PinConfirmedInvalid" | "PinConfirmedValid";
 }>;
 
-export const INITIAL_STATE: PinLoginState = {
+const INITIAL_STATE: PinLoginState = {
   PinConfirmed: "PinCheck"
 };
 

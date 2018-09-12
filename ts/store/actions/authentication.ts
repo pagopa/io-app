@@ -20,7 +20,7 @@ import {
 
 // Actions
 
-export type IdpSelected = Readonly<{
+type IdpSelected = Readonly<{
   type: typeof IDP_SELECTED;
   payload: IdentityProvider;
 }>;
@@ -30,40 +30,40 @@ export type LoginSuccess = Readonly<{
   payload: SessionToken;
 }>;
 
-export type LoginFailure = Readonly<{
+type LoginFailure = Readonly<{
   type: typeof LOGIN_FAILURE;
 }>;
 
-export type LogoutRequest = Readonly<{
+type LogoutRequest = Readonly<{
   type: typeof LOGOUT_REQUEST;
 }>;
 
-export type LogoutSuccess = Readonly<{
+type LogoutSuccess = Readonly<{
   type: typeof LOGOUT_SUCCESS;
 }>;
 
-export type LogoutFailure = Readonly<{
+type LogoutFailure = Readonly<{
   type: typeof LOGOUT_FAILURE;
   payload: Error;
   error: true;
 }>;
 
-export type SessionInformationLoadSuccess = Readonly<{
+type SessionInformationLoadSuccess = Readonly<{
   type: typeof SESSION_INFO_LOAD_SUCCESS;
   payload: PublicSession;
 }>;
 
-export type SessionInformationLoadFailure = Readonly<{
+type SessionInformationLoadFailure = Readonly<{
   type: typeof SESSION_INFO_LOAD_FAILURE;
   payload: Error;
   error: true;
 }>;
 
-export type SessionExpired = Readonly<{
+type SessionExpired = Readonly<{
   type: typeof SESSION_EXPIRED;
 }>;
 
-export type SessionInvalid = Readonly<{
+type SessionInvalid = Readonly<{
   type: typeof SESSION_INVALID;
 }>;
 

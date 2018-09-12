@@ -4,16 +4,16 @@ import { SessionToken } from "../types/SessionToken";
  * Helper functions for handling the SPID login flow through a webview.
  */
 
-export type LoginSuccess = {
+type LoginSuccess = {
   success: true;
   token: SessionToken;
 };
 
-export type LoginFailure = {
+type LoginFailure = {
   success: false;
 };
 
-export type LoginResult = LoginSuccess | LoginFailure;
+type LoginResult = LoginSuccess | LoginFailure;
 
 // Prefixes for LOGIN SUCCESS/ERROR
 const LOGIN_SUCCESS_PREFIX = "/profile.html?token=";

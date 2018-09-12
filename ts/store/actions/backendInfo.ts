@@ -8,13 +8,13 @@ import {
   BACKEND_INFO_LOAD_SUCCESS
 } from "./constants";
 
-export type BackendInfoLoadFailure = Readonly<{
+type BackendInfoLoadFailure = Readonly<{
   type: typeof BACKEND_INFO_LOAD_FAILURE;
   payload: Error;
   error: true;
 }>;
 
-export type BackendInfoLoadSuccess = Readonly<{
+type BackendInfoLoadSuccess = Readonly<{
   type: typeof BACKEND_INFO_LOAD_SUCCESS;
   payload: ServerInfo;
 }>;

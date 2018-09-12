@@ -20,15 +20,15 @@ export type TransactionsState = Readonly<{
   selectedTransactionId: Option<number>;
 }>;
 
-export const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
+const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
   transactions: {},
   selectedTransactionId: none
 };
 
 // selectors
-export const getTransactions = (state: GlobalState): IndexedById<Transaction> =>
+const getTransactions = (state: GlobalState): IndexedById<Transaction> =>
   state.wallet.transactions.transactions;
-export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
+const getSelectedTransactionId = (state: GlobalState): Option<number> =>
   state.wallet.transactions.selectedTransactionId;
 
 export const latestTransactionsSelector = createSelector(

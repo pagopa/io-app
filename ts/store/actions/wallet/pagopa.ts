@@ -1,7 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import { PAGOPA_STORE_TOKEN } from "../constants";
 
-export type StorePagoPaToken = Readonly<{
+type StorePagoPaToken = Readonly<{
   type: typeof PAGOPA_STORE_TOKEN;
   payload: Option<string>;
 }>;
