@@ -21,6 +21,7 @@ interface OwnProps {
   title: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
+  headerTitle?: string;
   onMoreLinkPress?: () => void;
 }
 
@@ -39,13 +40,14 @@ class TopScreenComponent extends React.PureComponent<Props> {
       icon,
       title,
       subtitle,
+      headerTitle,
       onMoreLinkPress,
       contextualHelp
     } = this.props;
     return (
       <BaseScreenComponent
         goBack={goBack}
-        headerTitle={goBack ? title : undefined}
+        headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
       >
         <ScreenHeader heading={<H1>{title}</H1>} icon={icon} />
