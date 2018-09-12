@@ -40,7 +40,7 @@ export const cardIcons: { [key in CreditCardType]: any } = {
 // shown for all cards -- a future story will take
 // care of switching the images to the actual logos
 // @https://www.pivotaltracker.com/story/show/159651239
-export const getCardIcon = (_: Wallet) => {
+const getCardIcon = (_: Wallet) => {
   return require("../../../../img/wallet/cards-icons/unknown.png");
 };
 

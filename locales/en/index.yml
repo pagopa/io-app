@@ -409,6 +409,7 @@ preferences:
     digitalDomicile: Digital domicile
   empty:
     default: No preference set
+  preferencesHelp: !include preferences_home_help.md
 services:
   headerTitle: Services
   title: Available services

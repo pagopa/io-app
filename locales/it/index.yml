@@ -199,7 +199,7 @@ pin_login:
       title: hello
       content: hello
 why_a_fee:
-  title: Perchè devo pagare una commissione?
+  title: Perché devo pagare una commissione?
   content: |-
     Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
     Pellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.
@@ -269,7 +269,7 @@ wallet:
     askConfirm: Confermi il pagamento?
     partialAmount: Importo da pagare
     fee: Costi di commissione
-    why: Perchè?
+    why: Perché?
     totalAmount: Totale
     info: 'Attenzione: dopo questo passaggio non sarà più possibile annullare'
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
@@ -351,7 +351,7 @@ wallet:
       expirationDate: mm/aa
       securityCode: "•••"
   acceptedCards: Carte accettate
-  whyFee: Perchè la commissione?
+  whyFee: Perché la commissione?
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     byCameraTitle: QR Code avviso
@@ -421,6 +421,7 @@ preferences:
     digitalDomicile: Domicilio digitale
   empty:
     default: Nessuna preferenza impostata
+  preferencesHelp: !include preferences_home_help.md
 services:
   headerTitle: Servizi
   title: Elenco dei servizi

@@ -26,11 +26,11 @@ type ReduxMappedProps = Readonly<{
   services: ServicesState;
 }>;
 
-export type OwnProps = Readonly<{
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 /**
  * This screen show the messages to the authenticated user.

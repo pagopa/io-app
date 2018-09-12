@@ -13,9 +13,9 @@ export type ServicesByIdState = Readonly<{
   [key: string]: ServicePublic | undefined;
 }>;
 
-export type ServiceByIdState = Readonly<ServicePublic>;
+type ServiceByIdState = Readonly<ServicePublic>;
 
-export const INITIAL_STATE: ServicesByIdState = {};
+const INITIAL_STATE: ServicesByIdState = {};
 
 const reducer = (
   state: ServicesByIdState = INITIAL_STATE,

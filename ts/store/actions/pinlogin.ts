@@ -12,10 +12,10 @@ import {
 
 // Actions
 
-export type PinLoginValidateSuccess = Readonly<{
+type PinLoginValidateSuccess = Readonly<{
   type: typeof PIN_LOGIN_VALIDATE_SUCCESS;
 }>;
-export type PinLoginValidateFailure = Readonly<{
+type PinLoginValidateFailure = Readonly<{
   type: typeof PIN_LOGIN_VALIDATE_FAILURE;
 }>;
 export type PinLoginValidateRequest = Readonly<{

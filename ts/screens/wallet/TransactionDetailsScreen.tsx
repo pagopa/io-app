@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class TransactionDetailsScreen extends React.Component<Props> {
+class TransactionDetailsScreen extends React.Component<Props> {
   /**
    * It provides the proper header to the screen. If isTransactionStarted
    * (the user displays the screen during the process of identify and accept a transaction)
@@ -122,7 +122,11 @@ export class TransactionDetailsScreen extends React.Component<Props> {
     );
     const amount = buildAmount(centsToAmount(transaction.amount.amount));
     const fee = buildAmount(
-      centsToAmount(transaction.fee === undefined ? 0 : transaction.fee.amount)
+      centsToAmount(
+        transaction.fee === undefined
+          ? transaction.grandTotal.amount - transaction.amount.amount
+          : transaction.fee.amount
+      )
     );
     const totalAmount = buildAmount(
       centsToAmount(transaction.grandTotal.amount)

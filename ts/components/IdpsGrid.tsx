@@ -5,7 +5,7 @@ import { Dimensions, Image, StyleSheet } from "react-native";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 
-export type OwnProps = {
+type OwnProps = {
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<IdentityProvider>;
   // A callback function called when an Identity Provider is selected
@@ -13,7 +13,7 @@ export type OwnProps = {
   testID?: string;
 };
 
-export type Props = OwnProps;
+type Props = OwnProps;
 
 const { width: windowWidth } = Dimensions.get("window");
 

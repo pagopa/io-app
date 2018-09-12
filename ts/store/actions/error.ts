@@ -1,17 +1,9 @@
 import { ERROR_CLEAR, FetchRequestActionsType } from "./constants";
 
 // Actions
-export type ErrorClear = Readonly<{
+type ErrorClear = Readonly<{
   type: typeof ERROR_CLEAR;
   payload: FetchRequestActionsType;
 }>;
 
 export type ErrorActions = ErrorClear;
-
-// Creators
-export const clearError = (
-  actionType: FetchRequestActionsType
-): ErrorClear => ({
-  type: ERROR_CLEAR,
-  payload: actionType
-});

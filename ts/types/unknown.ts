@@ -1,6 +1,4 @@
-import { PaymentNoticeNumber, RptId } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Amount } from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
@@ -11,9 +9,9 @@ import {
   CreditCardPan
 } from "../utils/input";
 
-export const UNKNOWN_STRING = "?";
-export const UNKNOWN_NUMBER = -1;
-export const UNKNOWN_DATE = new Date("?");
+const UNKNOWN_STRING = "?";
+const UNKNOWN_NUMBER = -1;
+const UNKNOWN_DATE = new Date("?");
 
 export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
   identificativoUnivocoBeneficiario: UNKNOWN_STRING,
@@ -28,27 +26,14 @@ export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
   nazioneBeneficiario: UNKNOWN_STRING
 };
 
-export const UNKNOWN_ORGANIZATION_FISCAL_CODE = "00000000000" as OrganizationFiscalCode;
+const UNKNOWN_CARD_PAN = "****************" as CreditCardPan;
+const UNKNOWN_CARD_HOLDER = "NO HOLDER";
+const UNKNWON_CARD_TYPE = "UNKNOWN";
+const UNKNOWN_LAST_USAGE = UNKNOWN_DATE;
+const UNKNOWN_EXPIRATION_MONTH = "01" as CreditCardExpirationMonth;
+const UNKNOWN_EXPIRATION_YEAR = "00" as CreditCardExpirationYear;
 
-export const UNKNOWN_PAYMENT_NOTICE_NUMBER = {
-  auxDigit: "0",
-  applicationCode: "00",
-  iuv13: "0000000000000"
-} as PaymentNoticeNumber;
-
-export const UNKNOWN_RPTID: RptId = {
-  organizationFiscalCode: UNKNOWN_ORGANIZATION_FISCAL_CODE,
-  paymentNoticeNumber: UNKNOWN_PAYMENT_NOTICE_NUMBER
-};
-
-export const UNKNOWN_CARD_PAN = "****************" as CreditCardPan;
-export const UNKNOWN_CARD_HOLDER = "NO HOLDER";
-export const UNKNWON_CARD_TYPE = "UNKNOWN";
-export const UNKNOWN_LAST_USAGE = UNKNOWN_DATE;
-export const UNKNOWN_EXPIRATION_MONTH = "01" as CreditCardExpirationMonth;
-export const UNKNOWN_EXPIRATION_YEAR = "00" as CreditCardExpirationYear;
-
-export const UNKNOWN_AMOUNT_PAGOPA: Amount = {
+const UNKNOWN_AMOUNT_PAGOPA: Amount = {
   amount: 0,
   currency: "EUR",
   currencyNumber: "0",

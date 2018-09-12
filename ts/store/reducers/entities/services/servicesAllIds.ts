@@ -10,7 +10,7 @@ import { Action } from "../../../actions/types";
 // An array of services id
 export type ServicesAllIdsState = ReadonlyArray<string>;
 
-export const INITIAL_STATE: ServicesAllIdsState = [];
+const INITIAL_STATE: ServicesAllIdsState = [];
 
 const reducer = (
   state: ServicesAllIdsState = INITIAL_STATE,

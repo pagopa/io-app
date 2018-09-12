@@ -20,15 +20,15 @@ export type TransactionsState = Readonly<{
   selectedTransactionId: Option<number>;
 }>;
 
-export const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
+const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
   transactions: {},
   selectedTransactionId: none
 };
 
 // selectors
-export const getTransactions = (state: GlobalState): IndexedById<Transaction> =>
+const getTransactions = (state: GlobalState): IndexedById<Transaction> =>
   state.wallet.transactions.transactions;
-export const getSelectedTransactionId = (state: GlobalState): Option<number> =>
+const getSelectedTransactionId = (state: GlobalState): Option<number> =>
   state.wallet.transactions.selectedTransactionId;
 
 export const latestTransactionsSelector = createSelector(
@@ -39,7 +39,7 @@ export const latestTransactionsSelector = createSelector(
         (a, b) =>
           isNaN(a.created as any) || isNaN(b.created as any)
             ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-            : a.created.toISOString().localeCompare(b.created.toISOString())
+            : b.created.toISOString().localeCompare(a.created.toISOString())
       )
       .filter(t => t.statusMessage !== "rifiutato")
       .slice(0, 50) // WIP no magic numbers

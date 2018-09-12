@@ -5,7 +5,7 @@
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { SERVICE_LOAD_SUCCESS } from "./constants";
 
-export type ServiceLoadSuccess = Readonly<{
+type ServiceLoadSuccess = Readonly<{
   type: typeof SERVICE_LOAD_SUCCESS;
   payload: ServicePublic;
 }>;

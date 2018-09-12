@@ -13,7 +13,7 @@ export type LoadingState = Readonly<
   { [key in FetchRequestActionsType]: boolean }
 >;
 
-export const INITIAL_STATE: LoadingState = {
+const INITIAL_STATE: LoadingState = {
   TOS_ACCEPT: false,
   PIN_CREATE: false,
   PROFILE_LOAD: false,

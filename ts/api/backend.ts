@@ -15,13 +15,18 @@ import {
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 
+import { RptId, RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
+import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Installation } from "../../definitions/backend/Installation";
-import { LimitedProfile } from "../../definitions/backend/LimitedProfile";
 import { Messages } from "../../definitions/backend/Messages";
 import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
+import { PaymentActivationsGetResponse } from "../../definitions/backend/PaymentActivationsGetResponse";
+import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
+import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { PublicSession } from "../../definitions/backend/PublicSession";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { SessionToken } from "../types/SessionToken";
@@ -48,17 +53,11 @@ export type AuthenticatedOrInitializedProfile = t.TypeOf<
   typeof AuthenticatedOrInitializedProfile
 >;
 
-// FullProfile is allOf [ExtendedProfile, LimitedProfile]
-// see https://github.com/teamdigitale/italia-backend/blob/master/api_proxy.yaml#L211
-export const FullProfile = t.intersection([ExtendedProfile, LimitedProfile]);
-
-export type FullProfile = t.TypeOf<typeof FullProfile>;
-
-export const SuccessResponse = t.interface({
+const SuccessResponse = t.interface({
   message: t.string
 });
 
-export type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
+type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
 
 //
 // Define the types of the requests
@@ -146,7 +145,34 @@ export type LogoutT = IPostApiRequestType<
   BasicResponseTypeWith401<SuccessResponse>
 >;
 
-export type BackendClientT = ReturnType<typeof BackendClient>;
+type VerificaRptT = IGetApiRequestType<
+  {
+    rptId: RptId;
+  },
+  "Authorization",
+  never,
+  BasicResponseTypeWith401<PaymentRequestsGetResponse>
+>;
+
+type AttivaRptT = IPostApiRequestType<
+  {
+    rptId: string;
+    paymentContextCode: CodiceContestoPagamento;
+    amount: ImportoEuroCents;
+  },
+  "Authorization" | "Content-Type",
+  never,
+  BasicResponseTypeWith401<PaymentActivationsPostResponse>
+>;
+
+type GetPaymentIdT = IGetApiRequestType<
+  {
+    paymentContextCode: CodiceContestoPagamento;
+  },
+  "Authorization",
+  never,
+  BasicResponseTypeWith401<PaymentActivationsGetResponse>
+>;
 
 //
 // Create client
@@ -235,6 +261,40 @@ export function BackendClient(
     response_decoder: basicResponseDecoderWith401(SuccessResponse)
   };
 
+  const verificaRptT: VerificaRptT = {
+    method: "get",
+    url: ({ rptId }) =>
+      `/api/v1/payment-requests/${RptIdFromString.encode(rptId)}`,
+    headers: tokenHeaderProducer,
+    query: _ => ({}),
+    response_decoder: basicResponseDecoderWith401(PaymentRequestsGetResponse)
+  };
+
+  const attivaRptT: AttivaRptT = {
+    method: "post",
+    url: () => "/api/v1/payment-activations",
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    query: () => ({}),
+    body: ({ rptId, paymentContextCode, amount }) =>
+      JSON.stringify({
+        rptId,
+        codiceContestoPagamento: paymentContextCode,
+        importoSingoloVersamento: amount
+      }),
+    response_decoder: basicResponseDecoderWith401(
+      PaymentActivationsPostResponse
+    )
+  };
+
+  const getPaymentIdT: GetPaymentIdT = {
+    method: "get",
+    url: ({ paymentContextCode }) =>
+      `/api/v1/payment-activations/${paymentContextCode}`,
+    headers: tokenHeaderProducer,
+    query: () => ({}),
+    response_decoder: basicResponseDecoderWith401(PaymentActivationsGetResponse)
+  };
+
   return {
     getSession: createFetchRequestForApi(getSessionT, options),
     getService: createFetchRequestForApi(getServiceT, options),
@@ -249,6 +309,9 @@ export function BackendClient(
       createOrUpdateInstallationT,
       options
     ),
-    logout: createFetchRequestForApi(logoutT, options)
+    logout: createFetchRequestForApi(logoutT, options),
+    getVerificaRpt: createFetchRequestForApi(verificaRptT, options),
+    postAttivaRpt: createFetchRequestForApi(attivaRptT, options),
+    getPaymentId: createFetchRequestForApi(getPaymentIdT, options)
   };
 }

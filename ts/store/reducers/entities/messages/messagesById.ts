@@ -14,7 +14,7 @@ export type MessagesByIdState = Readonly<{
   [key: string]: MessageWithContentPO | undefined;
 }>;
 
-export const INITIAL_STATE: MessagesByIdState = {};
+const INITIAL_STATE: MessagesByIdState = {};
 
 const reducer = (
   state: MessagesByIdState = INITIAL_STATE,

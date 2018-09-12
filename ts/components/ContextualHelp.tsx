@@ -7,14 +7,10 @@
 
 import { Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import {
-  ActivityIndicator,
-  InteractionManager,
-  Modal,
-  TouchableHighlight
-} from "react-native";
+import { InteractionManager, Modal, TouchableHighlight } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
+import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";
@@ -76,10 +72,7 @@ export class ContextualHelp extends React.Component<Props, State> {
 
           {!this.state.content && (
             <View centerJustified={true}>
-              <ActivityIndicator
-                size="large"
-                color={themeVariables.brandPrimaryLight}
-              />
+              <ActivityIndicator color={themeVariables.brandPrimaryLight} />
             </View>
           )}
           {this.state.content && (

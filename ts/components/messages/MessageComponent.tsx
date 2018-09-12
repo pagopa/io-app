@@ -39,12 +39,12 @@ interface ReduxInjectedProps {
   serviceByIdMap: ServicesByIdState;
 }
 
-export type OwnProps = Readonly<{
+type OwnProps = Readonly<{
   message: MessageWithContentPO;
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export type Props = OwnProps &
+type Props = OwnProps &
   ReduxProps &
   ReduxInjectedProps &
   NavigationInjectedProps;
