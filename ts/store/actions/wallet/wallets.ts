@@ -11,7 +11,7 @@ import {
   WALLETS_FETCHED
 } from "../constants";
 
-type FetchWalletsRequest = Readonly<{
+export type FetchWalletsRequest = Readonly<{
   type: typeof FETCH_WALLETS_REQUEST;
 }>;
 
@@ -30,7 +30,7 @@ type SetFavoriteWallet = Readonly<{
   payload: Option<number>;
 }>;
 
-type AddCreditCardRequest = Readonly<{
+export type AddCreditCardRequest = Readonly<{
   type: typeof ADD_CREDIT_CARD_REQUEST;
   payload: boolean; // <= should the card be set as the favorite payment method?
 }>;

@@ -27,6 +27,7 @@ import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
+import { LogoutSuccess } from "../store/actions/authentication";
 import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
@@ -74,11 +75,14 @@ import {
   PaymentUpdatePsp
 } from "../store/actions/wallet/payment";
 import {
+  FetchTransactionsRequest,
   selectTransactionForDetails,
   transactionsFetched
 } from "../store/actions/wallet/transactions";
 import {
+  AddCreditCardRequest,
   creditCardDataCleanup,
+  FetchWalletsRequest,
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
@@ -839,7 +843,11 @@ function* completionHandler(
 export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
   while (true) {
-    const action = yield take([
+    const action:
+      | FetchTransactionsRequest
+      | FetchWalletsRequest
+      | AddCreditCardRequest
+      | LogoutSuccess = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
       ADD_CREDIT_CARD_REQUEST,

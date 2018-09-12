@@ -38,7 +38,7 @@ type LogoutRequest = Readonly<{
   type: typeof LOGOUT_REQUEST;
 }>;
 
-type LogoutSuccess = Readonly<{
+export type LogoutSuccess = Readonly<{
   type: typeof LOGOUT_SUCCESS;
 }>;
 
