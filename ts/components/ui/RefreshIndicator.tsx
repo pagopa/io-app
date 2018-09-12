@@ -17,11 +17,16 @@ const styles = StyleSheet.create({
 
 const isAndroid = Platform.OS === "android";
 
-export const RefreshIndicator: React.SFC<{}> = () => (
-  <View style={isAndroid && styles.androidIndicatorInner}>
+export const RefreshIndicator: React.SFC<{}> = () => {
+  const activityIndicator = (
     <ActivityIndicator
       size={isAndroid ? 24 : "large"}
       color={isAndroid ? variables.brandPrimary : undefined}
     />
-  </View>
-);
+  );
+  return isAndroid ? (
+    <View style={styles.androidIndicatorInner}>{activityIndicator}</View>
+  ) : (
+    activityIndicator
+  );
+};
