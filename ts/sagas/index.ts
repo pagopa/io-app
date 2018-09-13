@@ -8,7 +8,6 @@ import backendInfoSaga from "./backendInfo";
 import { watchContentServiceLoadSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
-import walletSaga from "./wallet";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 import { apiUrlPrefix } from "../config";
@@ -27,7 +26,6 @@ const connectionMonitorParameters = {
 export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
-    call(walletSaga), // FIXME: move to startup: the wallet token gets fetched there
     call(backendInfoSaga),
     call(networkEventsListenerSaga, connectionMonitorParameters),
     call(watchNavigateToDeepLinkSaga),
