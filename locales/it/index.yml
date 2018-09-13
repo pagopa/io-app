@@ -82,6 +82,8 @@ profile:
         title: Esporta i tuoi dati
         description: ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
+    developersSectionHeader: Sviluppatori
+    accountSectionHeader: Account
 navigation:
   messages: Messaggi
   profile: Profilo

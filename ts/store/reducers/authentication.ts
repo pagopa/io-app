@@ -77,7 +77,7 @@ function isLoggedInWithoutSessionInfo(
   return state.kind === "LoggedInWithoutSessionInfo";
 }
 
-function isLoggedInWithSessionInfo(
+export function isLoggedInWithSessionInfo(
   state: AuthenticationState
 ): state is LoggedInWithSessionInfo {
   return state.kind === "LoggedInWithSessionInfo";
