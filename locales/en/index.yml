@@ -78,6 +78,8 @@ profile:
       exportData:
         title: Esporta i tuoi dati
         description: send to your email all your account’s data in an open format
+    developersSectionHeader: Developers
+    accountSectionHeader: Account
 navigation:
   messages: Messages
   profile: Profile
