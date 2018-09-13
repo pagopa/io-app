@@ -122,7 +122,7 @@ import {
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 import { amountToImportoWithFallback } from "../utils/amounts";
-import { pollingFetch } from "../utils/fetch";
+import { constantPollingFetch } from "../utils/fetch";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -622,7 +622,7 @@ const fetchPaymentId = async (
   const backendClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
-    pollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
+    constantPollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
   );
   const response = await backendClient.getPaymentId({ paymentContextCode });
   return response !== undefined && response.status === 200
