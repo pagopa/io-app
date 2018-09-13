@@ -18,6 +18,9 @@ const DEFAULT_FETCH_TIMEOUT_MS = 3000;
 // default max retries for fetch
 const DEFAULT_FETCH_MAX_RETRIES = 3;
 
+// default timeout of fetch for calling the PagoPA SOAP APIs
+const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 15000;
+
 // default seconds of background activity before asking the PIN login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
@@ -37,6 +40,10 @@ export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
 export const fetchMaxRetries = t.Integer.decode(
   Config.FETCH_MAX_RETRIES
 ).getOrElse(DEFAULT_FETCH_MAX_RETRIES);
+
+export const fetchPagoPaTimeout = t.Integer.decode(
+  Config.FETCH_PAGOPA_TIMEOUT_MS
+).getOrElse(DEFAULT_FETCH_PAGOPA_TIMEOUT_MS) as Millisecond;
 
 export const backgroundActivityTimeout = t.Integer.decode(
   Config.BACKGROUND_ACTIVITY_TIMEOUT_S
