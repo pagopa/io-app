@@ -3,7 +3,6 @@ import * as React from "react";
 import { AppState, Linking, Platform, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
-import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { applicationChangeState } from "./store/actions/application";
@@ -101,7 +100,6 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
-        <ConnectionBar />
         <VersionInfoOverlay />
         <Navigation />
       </Root>

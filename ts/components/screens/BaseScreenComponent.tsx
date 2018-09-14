@@ -2,8 +2,9 @@ import { Body, Container, Left, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { TouchableHighlight } from "react-native";
+import { TouchableHighlight, View } from "react-native";
 
+import ConnectionBar from "../../components/ConnectionBar";
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
 
@@ -68,7 +69,10 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             )}
           </Right>
         </AppHeader>
-        {this.props.children}
+        <View style={{ flex: 1 }}>
+          <ConnectionBar />
+          {this.props.children}
+        </View>
         {contextualHelp && (
           <ContextualHelp
             title={contextualHelp.title}
