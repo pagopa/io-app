@@ -22,7 +22,7 @@ export type ContentState = Readonly<{
   };
 }>;
 
-export const initialContentState: ContentState = {
+const initialContentState: ContentState = {
   servicesMetadata: {
     byId: {}
   }

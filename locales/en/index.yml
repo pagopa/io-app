@@ -78,6 +78,8 @@ profile:
       exportData:
         title: Esporta i tuoi dati
         description: send to your email all your account’s data in an open format
+    developersSectionHeader: Developers
+    accountSectionHeader: Account
 navigation:
   messages: Messages
   profile: Profile
@@ -146,12 +148,18 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
+    subtitle: "The Identity Providers provide several authentication methods
+      and, toghether with SPID, they provide several services: find out more
+      at each one's website."
     cancel: Cancel
   idp_login:
     headerTitle: Login
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
+  expiredSessionBanner:
+    title: Security notice
+    message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
   tos:
     headerTitle: Activation
@@ -378,6 +386,8 @@ messages:
   yesterday: yesterday
   cta:
     pay: Pay € {{amount}}
+    reminder: Reminder
+    reminderTitle: "Reminder for: {{subject}}"
   unknownSender: Unknown sender
   noContent: Content not available
 messageDetails:
@@ -407,6 +417,7 @@ preferences:
     digitalDomicile: Digital domicile
   empty:
     default: No preference set
+  preferencesHelp: !include preferences_home_help.md
 services:
   headerTitle: Services
   title: Available services

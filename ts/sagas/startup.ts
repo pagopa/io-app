@@ -108,6 +108,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadProfile,
     backendClient.getProfile
   );
+
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile
     yield put(startApplicationInitialization);
@@ -140,12 +141,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
-  const pagoPaClient: PagoPaClient = PagoPaClient(pagoPaApiUrlPrefix);
-  yield fork(
-    watchWalletSaga,
-    pagoPaClient,
+  const pagoPaClient: PagoPaClient = PagoPaClient(
+    pagoPaApiUrlPrefix,
     maybeSessionInformation.value.walletToken
   );
+  yield fork(watchWalletSaga, pagoPaClient);
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.

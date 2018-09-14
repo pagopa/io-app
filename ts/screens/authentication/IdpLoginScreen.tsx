@@ -1,11 +1,12 @@
 import { Body, Container, Left, Text, View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, NavState, StyleSheet, WebView } from "react-native";
+import { NavState, StyleSheet, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import GoBackButton from "../../components/GoBackButton";
 import AppHeader from "../../components/ui/AppHeader";
+import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
@@ -18,7 +19,6 @@ import {
   LoggedOutWithIdp
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 import { SessionToken } from "../../types/SessionToken";
 import { extractLoginResult } from "../../utils/login";
 
@@ -42,7 +42,7 @@ const LOGIN_BASE_URL = `${
 }/login?authLevel=SpidL2&entityID=`;
 
 const styles = StyleSheet.create({
-  activityIndicatorContainer: {
+  refreshIndicatorContainer: {
     position: "absolute",
     left: 0,
     right: 0,
@@ -133,8 +133,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
           onNavigationStateChange={handleNavigationStateChange}
         />
         {isWebViewLoading && (
-          <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator color={variables.brandPrimary} />
+          <View style={styles.refreshIndicatorContainer}>
+            <RefreshIndicator />
           </View>
         )}
       </Container>

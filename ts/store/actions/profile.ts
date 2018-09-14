@@ -1,10 +1,11 @@
 /**
  * Action types and action creator related to the Profile.
  */
-import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
-import { ProfileWithEmail } from "../../../definitions/backend/ProfileWithEmail";
 
-import { ProfileWithOrWithoutEmail } from "../../api/backend";
+import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+
+import { AuthenticatedOrInitializedProfile } from "../../api/backend";
 
 import {
   PROFILE_LOAD_FAILURE,
@@ -15,18 +16,20 @@ import {
   RESET_PROFILE_STATE
 } from "./constants";
 
+import { Omit } from "../../types/utils";
+
 // Actions
 
-export type ResetProfileState = Readonly<{
+type ResetProfileState = Readonly<{
   type: typeof RESET_PROFILE_STATE;
 }>;
 
-export type ProfileLoadSuccess = Readonly<{
+type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
-  payload: ProfileWithOrWithoutEmail;
+  payload: AuthenticatedOrInitializedProfile;
 }>;
 
-export type ProfileLoadFailure = Readonly<{
+type ProfileLoadFailure = Readonly<{
   type: typeof PROFILE_LOAD_FAILURE;
   payload: Error;
   error: true;
@@ -34,12 +37,12 @@ export type ProfileLoadFailure = Readonly<{
 
 export type ProfileUpsertRequest = Readonly<{
   type: typeof PROFILE_UPSERT_REQUEST;
-  payload: ExtendedProfile;
+  payload: Partial<Omit<ExtendedProfile, "version">>;
 }>;
 
 export type ProfileUpsertSuccess = Readonly<{
   type: typeof PROFILE_UPSERT_SUCCESS;
-  payload: ProfileWithEmail;
+  payload: InitializedProfile;
 }>;
 
 export type ProfileUpsertFailure = Readonly<{
@@ -63,7 +66,7 @@ export const resetProfileState: ResetProfileState = {
 };
 
 export const profileLoadSuccess = (
-  profile: ProfileWithOrWithoutEmail
+  profile: AuthenticatedOrInitializedProfile
 ): ProfileLoadSuccess => ({
   type: PROFILE_LOAD_SUCCESS,
   payload: profile
@@ -76,14 +79,14 @@ export const profileLoadFailure = (error: Error): ProfileLoadFailure => ({
 });
 
 export const profileUpsertRequest = (
-  newProfile: ExtendedProfile
+  newProfile: ProfileUpsertRequest["payload"]
 ): ProfileUpsertRequest => ({
   type: PROFILE_UPSERT_REQUEST,
   payload: newProfile
 });
 
 export const profileUpsertSuccess = (
-  profile: ProfileWithEmail
+  profile: InitializedProfile
 ): ProfileUpsertSuccess => ({
   type: PROFILE_UPSERT_SUCCESS,
   payload: profile

@@ -8,7 +8,7 @@ import {
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
 
-export type GetServerInfoT = IGetApiRequestType<
+type GetServerInfoT = IGetApiRequestType<
   {},
   never,
   never,

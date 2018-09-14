@@ -17,7 +17,7 @@ import { defaultRetryingFetch } from "../utils/fetch";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 
-export type GetServiceT = IGetApiRequestType<
+type GetServiceT = IGetApiRequestType<
   {
     serviceId: ServiceId;
   },

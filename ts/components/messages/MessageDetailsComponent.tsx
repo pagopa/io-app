@@ -1,30 +1,28 @@
-import { Button, H1, Text, View } from "native-base";
+import { Col, Grid, H1, Row, Text, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { EventCreationResult } from "react-native-add-calendar-event";
 
-import I18n from "../../i18n";
-
-import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-
 import IconFont from "../../components/ui/IconFont";
+import I18n from "../../i18n";
+import variables from "../../theme/variables";
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import Markdown from "../ui/Markdown";
-
-import variables from "../../theme/variables";
-
-import { formatPaymentAmount } from "../../utils/payment";
-
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-
+import { MultiImage } from "../ui/MultiImage";
+import MessageCTABar from "./MessageCTABar";
 import MessageDetailsInfoComponent from "./MessageDetailsInfoComponent";
 
-export type OwnProps = Readonly<{
+import { logosForService } from "../../utils/services";
+
+type OwnProps = Readonly<{
   message: MessageWithContentPO;
   senderService: ServicePublic | undefined;
+  dispatchReminderAction: (() => Promise<EventCreationResult>) | undefined;
   dispatchPaymentAction: (() => void) | undefined;
   navigateToServicePreferences: (() => void) | undefined;
 }>;
@@ -33,7 +31,7 @@ type State = Readonly<{
   isMessageDetailsInfoVisible: boolean;
 }>;
 
-export type Props = OwnProps;
+type Props = OwnProps;
 
 const styles = StyleSheet.create({
   messageHeaderContainer: {
@@ -89,40 +87,44 @@ class MessageDetailsComponent extends React.Component<Props, State> {
     }
   };
 
-  // Render the Message CTAs if the message contains PaymentData
-  private renderMessageCTA = (
-    paymentData: PaymentData,
-    dispatchPaymentAction: (() => void) | undefined
-  ) => {
-    return paymentData ? (
-      <View style={styles.messageCTAContainer}>
-        <Button block={true} primary={true} onPress={dispatchPaymentAction}>
-          <Text>
-            {I18n.t("messages.cta.pay", {
-              amount: formatPaymentAmount(paymentData.amount)
-            })}
-          </Text>
-        </Button>
-      </View>
-    ) : null;
-  };
-
   public render() {
     const message = this.props.message;
 
     const senderService = this.props.senderService;
 
+    const dispatchReminderAction = this.props.dispatchReminderAction;
+
     const dispatchPaymentAction = this.props.dispatchPaymentAction;
 
-    const { subject, markdown, payment_data } = message;
+    const { subject, markdown, due_date, payment_data } = message.content;
+
     return (
       <View>
         <View style={styles.messageHeaderContainer}>
-          {senderService && <H4>{senderService.organization_name}</H4>}
           {senderService && (
-            <H6 link={true} onPress={this.props.navigateToServicePreferences}>
-              {senderService.service_name}
-            </H6>
+            <Grid>
+              <Row>
+                <Col>
+                  <H4>{senderService.organization_name}</H4>
+                  <H6
+                    link={true}
+                    onPress={this.props.navigateToServicePreferences}
+                  >
+                    {senderService.service_name}
+                  </H6>
+                </Col>
+                <Col style={{ width: 60 }}>
+                  <TouchableOpacity
+                    onPress={this.props.navigateToServicePreferences}
+                  >
+                    <MultiImage
+                      style={{ width: 60, height: 60 }}
+                      source={logosForService(senderService)}
+                    />
+                  </TouchableOpacity>
+                </Col>
+              </Row>
+            </Grid>
           )}
           {senderService && <View spacer={true} />}
           <H1>{subject}</H1>
@@ -146,12 +148,16 @@ class MessageDetailsComponent extends React.Component<Props, State> {
             />
           )}
         </View>
-        {payment_data &&
-          dispatchPaymentAction &&
-          this.renderMessageCTA(payment_data, dispatchPaymentAction)}
+        <MessageCTABar
+          dueDate={due_date}
+          dispatchReminderAction={dispatchReminderAction}
+          paymentData={payment_data}
+          dispatchPaymentAction={dispatchPaymentAction}
+          containerStyle={styles.messageCTAContainer}
+        />
         <View style={styles.messageContentContainer}>
           {markdown ? (
-            <Markdown>{markdown}</Markdown>
+            <Markdown lazy={true}>{markdown}</Markdown>
           ) : (
             <Text>{I18n.t("messages.noContent")}</Text>
           )}

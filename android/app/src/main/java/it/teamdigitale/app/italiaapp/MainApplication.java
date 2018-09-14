@@ -9,6 +9,8 @@ import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.vonovak.AddCalendarEventPackage;
+import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
@@ -36,6 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AddCalendarEventPackage(),
+            new SvgPackage(),
             new RNTextInputMaskPackage(),
             new SplashScreenReactPackage(),
             new ReactNativeExceptionHandlerPackage(),

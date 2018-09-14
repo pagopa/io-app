@@ -7,7 +7,7 @@ import { Storage } from "redux-persist";
  * use the service as key. Each value is stored as a new service and a constant username
  * is set.
  */
-export const USERNAME = "REDUX_PERSIST";
+const USERNAME = "REDUX_PERSIST";
 
 export default function createSecureStorage(): Storage {
   return {

@@ -41,6 +41,10 @@ target 'ItaliaApp' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'react-native-add-calendar-event', :path => '../node_modules/react-native-add-calendar-event'
+
 end
 
 # Fix a open bug in react-native-config

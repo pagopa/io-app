@@ -6,11 +6,11 @@ import { TOS_ACCEPT_REQUEST, TOS_ACCEPT_SUCCESS } from "./constants";
 
 // Actions
 
-export type TosAcceptRequest = Readonly<{
+type TosAcceptRequest = Readonly<{
   type: typeof TOS_ACCEPT_REQUEST;
 }>;
 
-export type TosAcceptSuccess = Readonly<{
+type TosAcceptSuccess = Readonly<{
   type: typeof TOS_ACCEPT_SUCCESS;
 }>;
 

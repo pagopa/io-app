@@ -1,7 +1,8 @@
 import { Content, View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, InteractionManager } from "react-native";
+import { InteractionManager } from "react-native";
 
+import ActivityIndicator from "../ui/ActivityIndicator";
 import Markdown from "../ui/Markdown";
 
 import BaseScreenComponent from "./BaseScreenComponent";
@@ -46,10 +47,7 @@ export class MarkdownScreenComponent extends React.PureComponent<Props, State> {
       <BaseScreenComponent {...this.props}>
         {!this.state.content && (
           <View centerJustified={true}>
-            <ActivityIndicator
-              size="large"
-              color={themeVariables.brandPrimaryLight}
-            />
+            <ActivityIndicator color={themeVariables.brandPrimaryLight} />
           </View>
         )}
         {this.state.content && <Content>{this.state.content}</Content>}

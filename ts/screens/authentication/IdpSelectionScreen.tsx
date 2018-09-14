@@ -1,11 +1,11 @@
-import { Button, Content, H3, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { InfoBanner } from "../../components/InfoBanner";
 
 import * as config from "../../config";
 
@@ -18,12 +18,19 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
+import { GlobalState } from "../../store/reducers/types";
+
 import variables from "../../theme/variables";
 
-type ReduxMappedProps = {};
-type OwnProps = {
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+
+interface ReduxMappedProps {
+  isSessionExpired: boolean;
+}
+interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
-};
+}
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 const idps: ReadonlyArray<IdentityProvider> = [
   {
@@ -88,7 +95,7 @@ const testIdp = {
   id: "test",
   name: "Test",
   logo: require("../../../img/spid.png"),
-  entityID: "spid-testenv-identityserver",
+  entityID: "xx_testenv2",
   profileUrl: "https://italia-backend/profile.html"
 };
 
@@ -114,28 +121,25 @@ const styles = StyleSheet.create({
 const IdpSelectionScreen: React.SFC<Props> = props => {
   const goBack = () => props.navigation.goBack();
 
-  const navigateToSpidInformationRequest = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
-
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
   return (
-    <BaseScreenComponent
+    <TopScreenComponent
       goBack={goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+      title={I18n.t("authentication.idp_selection.contentTitle")}
+      subtitle={I18n.t("authentication.idp_selection.subtitle")}
     >
+      {props.isSessionExpired && (
+        <InfoBanner
+          title={I18n.t("authentication.expiredSessionBanner.title")}
+          message={I18n.t("authentication.expiredSessionBanner.message")}
+        />
+      )}
       <Content noPadded={true} alternative={true}>
-        <View style={styles.subheader}>
-          <Image
-            source={require("../../../img/spid.png")}
-            style={styles.spidLogo}
-          />
-          <View spacer={true} />
-          <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
-        </View>
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
@@ -144,17 +148,12 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           </Button>
         </View>
       </Content>
-      <View footer={true}>
-        <Button
-          block={true}
-          transparent={true}
-          onPress={navigateToSpidInformationRequest}
-        >
-          <Text>{I18n.t("authentication.landing.nospid")}</Text>
-        </Button>
-      </View>
-    </BaseScreenComponent>
+    </TopScreenComponent>
   );
 };
 
-export default connect()(IdpSelectionScreen);
+const mapStateToProps = (state: GlobalState) => ({
+  isSessionExpired: isSessionExpiredSelector(state)
+});
+
+export default connect(mapStateToProps)(IdpSelectionScreen);

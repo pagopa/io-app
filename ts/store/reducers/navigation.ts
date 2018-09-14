@@ -10,7 +10,7 @@ import { NAVIGATION_RESTORE } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-export const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
+const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
 
@@ -40,7 +40,6 @@ function nextState(state: NavigationState, action: Action): NavigationState {
     case NavigationActions.BACK:
     case NavigationActions.INIT:
     case NavigationActions.NAVIGATE:
-    case NavigationActions.RESET:
     case NavigationActions.SET_PARAMS:
     case StackActions.RESET:
     case StackActions.REPLACE:

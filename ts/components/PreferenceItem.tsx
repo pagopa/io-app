@@ -22,7 +22,7 @@ interface ActionProps extends BaseProps {
   onClick: () => void;
 }
 
-export type Props = ValueProps | ActionProps;
+type Props = ValueProps | ActionProps;
 
 /**
  * Renders a single item in the preferences screen

@@ -6,7 +6,6 @@ import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import {
   MESSAGE_LOAD_FAILURE,
-  MESSAGE_LOAD_REQUEST,
   MESSAGE_LOAD_SUCCESS,
   MESSAGES_LOAD_CANCEL,
   MESSAGES_LOAD_FAILURE,
@@ -24,27 +23,22 @@ export type MessagesLoadCancel = Readonly<{
   type: typeof MESSAGES_LOAD_CANCEL;
 }>;
 
-export type MessagesLoadSuccess = Readonly<{
+type MessagesLoadSuccess = Readonly<{
   type: typeof MESSAGES_LOAD_SUCCESS;
 }>;
 
-export type MessagesLoadFailure = Readonly<{
+type MessagesLoadFailure = Readonly<{
   type: typeof MESSAGES_LOAD_FAILURE;
   payload: Error;
   error: true;
 }>;
 
-export type MessageLoadRequest = Readonly<{
-  type: typeof MESSAGE_LOAD_REQUEST;
-  payload: string;
-}>;
-
-export type MessageLoadSuccess = Readonly<{
+type MessageLoadSuccess = Readonly<{
   type: typeof MESSAGE_LOAD_SUCCESS;
   payload: MessageWithContentPO;
 }>;
 
-export type MessageLoadFailure = Readonly<{
+type MessageLoadFailure = Readonly<{
   type: typeof MESSAGE_LOAD_FAILURE;
   payload: Error;
   error: true;
@@ -55,7 +49,7 @@ export type NavigateToMessageDetails = Readonly<{
   payload: string;
 }>;
 
-export type StartPayment = Readonly<{
+type StartPayment = Readonly<{
   type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
   payload: PaymentData;
 }>;
@@ -87,11 +81,6 @@ export const loadMessagesFailure = (error: Error): MessagesLoadFailure => ({
   error: true
 });
 
-export const loadMessage = (id: string): MessageLoadRequest => ({
-  type: MESSAGE_LOAD_REQUEST,
-  payload: id
-});
-
 export const loadMessageSuccess = (
   message: MessageWithContentPO
 ): MessageLoadSuccess => ({
@@ -110,12 +99,4 @@ export const navigateToMessageDetails = (
 ): NavigateToMessageDetails => ({
   type: NAVIGATE_TO_MESSAGE_DETAILS,
   payload: messageId
-});
-
-// TODO: PaymentData is not compatible with the
-// data required (notice #, fiscal code, amount)
-// @https://www.pivotaltracker.com/story/show/158285425
-export const startPayment = (paymentData: PaymentData): StartPayment => ({
-  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  payload: paymentData
 });

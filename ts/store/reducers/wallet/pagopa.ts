@@ -7,7 +7,7 @@ export type PagoPaState = Readonly<{
   token: Option<string>;
 }>;
 
-export const PAGOPA_INITIAL_STATE = {
+const PAGOPA_INITIAL_STATE = {
   token: none
 };
 

@@ -5,11 +5,13 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { Wallet } from "../../../types/pagopa";
+import { CreditCard, Wallet } from "../../../types/pagopa";
 import {
+  CREDIT_CARD_DATA_CLEANUP,
   PAYMENT_UPDATE_PSP_IN_STATE,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
+  STORE_CREDIT_CARD_DATA,
   WALLETS_FETCHED
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
@@ -20,12 +22,14 @@ export type WalletsState = Readonly<{
   list: IndexedById<Wallet>;
   selectedWalletId: Option<number>;
   favoriteWalletId: Option<number>;
+  newCreditCard: Option<CreditCard>;
 }>;
 
-export const WALLETS_INITIAL_STATE: WalletsState = {
+const WALLETS_INITIAL_STATE: WalletsState = {
   list: {},
   selectedWalletId: none,
-  favoriteWalletId: none
+  favoriteWalletId: none,
+  newCreditCard: none
 };
 
 // selectors
@@ -34,6 +38,8 @@ export const getSelectedWalletId = (state: GlobalState) =>
   state.wallet.wallets.selectedWalletId;
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
+export const getNewCreditCard = (state: GlobalState) =>
+  state.wallet.wallets.newCreditCard;
 
 export const walletsSelector = createSelector(
   getWallets,
@@ -54,12 +60,6 @@ export const selectedWalletSelector = createSelector(
   getWalletFromId
 );
 
-export const favoriteWalletSelector = createSelector(
-  getFavoriteWalletId,
-  getWallets,
-  getWalletFromId
-);
-
 export const specificWalletSelector = (walletId: number) =>
   createSelector(() => some(walletId), getWallets, getWalletFromId);
 
@@ -67,6 +67,11 @@ export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
   w.psp === undefined
     ? undefined
     : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
+
+export const walletCountSelector = createSelector(
+  getWallets,
+  (wallets: IndexedById<Wallet>) => Object.keys(wallets).length
+);
 
 // reducer
 const reducer = (
@@ -89,6 +94,26 @@ const reducer = (
     return {
       ...state,
       favoriteWalletId: action.payload
+    };
+  }
+  /**
+   * Store the credit card information locally
+   * before sending it to pagoPA
+   */
+  if (action.type === STORE_CREDIT_CARD_DATA) {
+    return {
+      ...state,
+      newCreditCard: some(action.payload)
+    };
+  }
+  /**
+   * clean up "newCreditCard" after it has been
+   * added to pagoPA
+   */
+  if (action.type === CREDIT_CARD_DATA_CLEANUP) {
+    return {
+      ...state,
+      newCreditCard: none
     };
   }
   // TODO: temporary, until the integration with pagoPA
