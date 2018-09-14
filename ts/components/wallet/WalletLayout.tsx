@@ -7,21 +7,16 @@
  * wrapped in a ScrollView, and optionally a
  * footer with a button for starting a new payment
  */
-import { Body, Container, Content, Text, View } from "native-base";
-import { Button } from "native-base";
-import { Left } from "native-base";
+import { Button, Left, Body, Container, Content, Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView } from "react-native";
-import { StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
 import GoBackButton from "../GoBackButton";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
 import CardComponent from "./card";
 import { LogoPosition } from "./card/Logo";
-
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
@@ -49,8 +44,8 @@ const styles = StyleSheet.create({
       { scaleX: 0.98 }
     ]
   },
-  translation: {
-    transform: [{ translateY: -(58 / 2 + 22) * (1 - Math.cos(20)) }]
+  shiftDown: {
+    marginBottom: -(58/2 + 1)
   }
 });
 
@@ -121,12 +116,12 @@ class WalletLayout extends React.Component<Props> {
       }
       case CardEnum.FAN: {
         return (
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.WALLET_LIST)
             }
           >
-            <View>
+            <View style={styles.shiftDown}>
               <View style={styles.firstCard}>
                 <CardComponent
                   navigation={this.props.navigation}
@@ -146,7 +141,7 @@ class WalletLayout extends React.Component<Props> {
                 />
               </View>
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
         );
       }
       case CardEnum.FULL: {
@@ -206,9 +201,7 @@ class WalletLayout extends React.Component<Props> {
             {this.props.headerContents}
             {this.getLogo()}
           </Content>
-          <View style={this.props.moreCards ? styles.translation : {}}>
-            {this.props.children}
-          </View>
+          {this.props.children}
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
