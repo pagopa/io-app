@@ -29,7 +29,8 @@ locales:
   en: Inglese
 connection:
   status:
-    offline: Connessione assente!
+    offline: Connessione in corso...
+    online: Connesso
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
