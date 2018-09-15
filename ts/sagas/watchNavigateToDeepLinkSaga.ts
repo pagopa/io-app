@@ -8,9 +8,16 @@ export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {
     action: NavigateToDeepLink,
     replace: boolean = false
   ) {
-    const navigationAction = replace
-      ? StackActions.replace(action.payload)
-      : NavigationActions.navigate(action.payload);
+    const payload = action.payload;
+    const navigationAction =
+      replace && payload.key !== undefined
+        ? StackActions.replace({
+            routeName: payload.routeName,
+            params: payload.params,
+            action: payload.action,
+            key: payload.key
+          })
+        : NavigationActions.navigate(action.payload);
 
     yield all([put(navigationAction), put(clearDeepLink())]);
   });
