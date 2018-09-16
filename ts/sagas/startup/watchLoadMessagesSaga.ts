@@ -5,8 +5,10 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Alert } from "react-native";
-import { NavigationNavigateActionPayload } from "react-navigation";
-import { NavigationActions } from "react-navigation";
+import {
+  NavigationActions,
+  NavigationNavigateActionPayload
+} from "react-navigation";
 import { Task } from "redux-saga";
 import {
   all,
@@ -21,13 +23,9 @@ import {
   takeLatest
 } from "redux-saga/effects";
 
-import ROUTES from "../../navigation/routes";
-
-import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
-
-import { MessageWithContent } from "../../../definitions/backend/MessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-
+import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
+import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   MESSAGES_LOAD_CANCEL,
@@ -45,7 +43,10 @@ import {
   MessagesLoadRequest,
   NavigateToMessageDetails
 } from "../../store/actions/messages";
-import { loadServiceSuccess } from "../../store/actions/services";
+import {
+  loadServiceFailure,
+  loadServiceSuccess
+} from "../../store/actions/services";
 import {
   messageByIdSelector,
   messagesByIdSelector
@@ -55,8 +56,10 @@ import {
   servicesByIdSelector
 } from "../../store/reducers/entities/services/servicesById";
 import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
-
-import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
+import {
+  MessageWithContentPO,
+  toMessageWithContentPO
+} from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -64,12 +67,20 @@ import { SagaCallReturnType } from "../../types/utils";
  *
  * @param {function} getMessage - The function that makes the Backend request
  * @param {string} id - The id of the message to load
- * @returns {IterableIterator<Effect | Error | MessageWithContent>}
+ * @returns {IterableIterator<Effect | Error | MessageWithContentPO>}
  */
 export function* loadMessage(
   getMessage: TypeofApiCall<GetMessageT>,
   id: string
-): IterableIterator<Effect | Error | MessageWithContent> {
+): IterableIterator<Effect | Error | MessageWithContentPO> {
+  // If we already have the message in the store just return it
+  const cachedMessage: ReturnType<
+    ReturnType<typeof messageByIdSelector>
+  > = yield select(messageByIdSelector(id));
+  if (cachedMessage) {
+    return cachedMessage;
+  }
+
   const response: SagaCallReturnType<typeof getMessage> = yield call(
     getMessage,
     { id }
@@ -80,9 +91,11 @@ export function* loadMessage(
     yield put(loadMessageFailure(error));
     return error;
   }
-  // Trigger an action to store the new message (converted to plain object)
-  yield put(loadMessageSuccess(toMessageWithContentPO(response.value)));
-  return response.value;
+
+  // Trigger an action to store the new message (converted to plain object) and return it
+  const messageWithContentPO = toMessageWithContentPO(response.value);
+  yield put(loadMessageSuccess(messageWithContentPO));
+  return messageWithContentPO;
 }
 
 function* navigateToMessageDetailsSaga(
@@ -131,7 +144,7 @@ function* navigateToMessageDetailsSaga(
   }
 
   const navigationPayload: NavigationNavigateActionPayload = {
-    routeName: ROUTES.MESSAGE_DETAILS,
+    routeName: ROUTES.MESSAGE_DETAIL,
     params: { message, senderService }
   };
 
@@ -170,18 +183,28 @@ export function* loadService(
   getService: TypeofApiCall<GetServiceT>,
   id: string
 ): IterableIterator<Effect | Error | ServicePublic> {
+  // If we already have the service in the store just return it
+  const cachedService: ReturnType<
+    ReturnType<typeof serviceByIdSelector>
+  > = yield select(serviceByIdSelector(id));
+  if (cachedService) {
+    return cachedService;
+  }
+
   const response: SagaCallReturnType<typeof getService> = yield call(
     getService,
     { id }
   );
 
   if (!response || response.status !== 200) {
-    return response ? response.value : Error();
-  } else {
-    // Trigger an action to store the new service
-    yield put(loadServiceSuccess(response.value));
-    return response.value;
+    const error: Error = response ? response.value : Error();
+    yield put(loadServiceFailure(error));
+    return error;
   }
+
+  // Trigger an action to store the new service and return it
+  yield put(loadServiceSuccess(response.value));
+  return response.value;
 }
 
 /**

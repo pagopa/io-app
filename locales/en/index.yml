@@ -392,14 +392,18 @@ messages:
   noContent: Content not available
 messageDetails:
   headerTitle: Message
-  detailsLink:
+  invalidText: Invalid parameters!
+  loadingText: Loading message details in progress...
+  errorText: An error occurred while loading the message details.
+  retryText: Retry
+  rawInfoLink:
     showLabel: Details of the message
     hideLabel: Close details
-  infoLabels:
-    data: 'Data:'
-    senderFrom: Sender from
-    department: Department
-    service: Service
+  rawInfoLabels:
+    createdAt: Date
+    organizationName: Sent by
+    departmentName: Department
+    serviceName: Service
 notifications:
   installation:
     errorTitle: Push notifications
