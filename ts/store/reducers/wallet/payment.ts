@@ -10,6 +10,7 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
+import { Pot } from "../../../utils/pot";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
@@ -53,7 +54,7 @@ type PaymentStateManualEntry = Readonly<{
 type PaymentStateSummary = Readonly<{
   kind: "PaymentStateSummary";
   rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
+  verificaResponse: Pot<PaymentRequestsGetResponse, Error>;
   initialAmount: AmountInEuroCents;
 }>;
 
