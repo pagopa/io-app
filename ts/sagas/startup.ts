@@ -32,10 +32,7 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
-import {
-  watchMessagesLoadOrCancelSaga,
-  watchNavigateToMessageDetailsSaga
-} from "./startup/watchLoadMessagesSaga";
+import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
@@ -174,12 +171,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.getService
   );
 
-  // Navigate to message details when requested
-  yield fork(
-    watchNavigateToMessageDetailsSaga,
-    backendClient.getMessage,
-    backendClient.getService
-  );
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
   // Handles the expiration of the session token

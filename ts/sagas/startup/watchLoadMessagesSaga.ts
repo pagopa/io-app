@@ -4,11 +4,6 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { Alert } from "react-native";
-import {
-  NavigationActions,
-  NavigationNavigateActionPayload
-} from "react-navigation";
 import { Task } from "redux-saga";
 import {
   all,
@@ -19,20 +14,16 @@ import {
   fork,
   put,
   select,
-  take,
-  takeLatest
+  take
 } from "redux-saga/effects";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
-import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   MESSAGES_LOAD_CANCEL,
-  MESSAGES_LOAD_REQUEST,
-  NAVIGATE_TO_MESSAGE_DETAILS
+  MESSAGES_LOAD_REQUEST
 } from "../../store/actions/constants";
-import { setDeepLink } from "../../store/actions/deepLink";
 import {
   loadMessageFailure,
   loadMessagesCancel,
@@ -40,8 +31,7 @@ import {
   loadMessagesSuccess,
   loadMessageSuccess,
   MessagesLoadCancel,
-  MessagesLoadRequest,
-  NavigateToMessageDetails
+  MessagesLoadRequest
 } from "../../store/actions/messages";
 import {
   loadServiceFailure,
@@ -55,7 +45,6 @@ import {
   serviceByIdSelector,
   servicesByIdSelector
 } from "../../store/reducers/entities/services/servicesById";
-import { isPinLoginValidSelector } from "../../store/reducers/pinlogin";
 import {
   MessageWithContentPO,
   toMessageWithContentPO
@@ -96,80 +85,6 @@ export function* loadMessage(
   const messageWithContentPO = toMessageWithContentPO(response.value);
   yield put(loadMessageSuccess(messageWithContentPO));
   return messageWithContentPO;
-}
-
-function* navigateToMessageDetailsSaga(
-  getMessage: TypeofApiCall<GetMessageT>,
-  getService: TypeofApiCall<GetServiceT>,
-  action: NavigateToMessageDetails
-): Iterator<Effect> {
-  const messageId = action.payload;
-
-  const messageIdSelector = messageByIdSelector(messageId);
-
-  // tslint:disable-next-line:no-let
-  let message: ReturnType<typeof messageIdSelector> = yield select(
-    messageIdSelector
-  );
-
-  if (!message) {
-    try {
-      yield call(loadMessage, getMessage, messageId);
-      const loadedMessage: ReturnType<typeof messageIdSelector> = yield select(
-        messageIdSelector
-      );
-      message = loadedMessage;
-    } catch (err) {
-      // FIXME: do not show alerts to user, instead show a user friendly
-      // explanation of what happened
-      Alert.alert(
-        "An error occured while loading message",
-        JSON.stringify(err)
-      );
-    }
-  }
-
-  // if still no message, bail out now
-  if (!message) {
-    return;
-  }
-
-  const serviceIdSelector = serviceByIdSelector(message.sender_service_id);
-  const senderService: ReturnType<typeof serviceIdSelector> = yield select(
-    serviceIdSelector
-  );
-
-  if (!senderService) {
-    yield call(loadService, getService, message.sender_service_id);
-  }
-
-  const navigationPayload: NavigationNavigateActionPayload = {
-    routeName: ROUTES.MESSAGE_DETAIL,
-    params: { message, senderService }
-  };
-
-  // FIXME: check this logic
-  const isPinValid: ReturnType<typeof isPinLoginValidSelector> = yield select(
-    isPinLoginValidSelector
-  );
-
-  if (isPinValid) {
-    yield put(NavigationActions.navigate(navigationPayload));
-  } else {
-    yield put(setDeepLink(navigationPayload));
-  }
-}
-
-export function* watchNavigateToMessageDetailsSaga(
-  getMessage: TypeofApiCall<GetMessageT>,
-  getService: TypeofApiCall<GetServiceT>
-): IterableIterator<Effect> {
-  yield takeLatest(
-    NAVIGATE_TO_MESSAGE_DETAILS,
-    navigateToMessageDetailsSaga,
-    getMessage,
-    getService
-  );
 }
 
 /**
