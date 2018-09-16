@@ -10,7 +10,7 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
-import { Pot } from "../../../utils/pot";
+import { Pot, pot } from "../../../utils/pot";
 import {
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
@@ -22,6 +22,7 @@ import {
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_PICK_PSP,
   PAYMENT_QR_CODE,
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
   PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
 } from "../../actions/constants";
@@ -54,7 +55,7 @@ type PaymentStateManualEntry = Readonly<{
 type PaymentStateSummary = Readonly<{
   kind: "PaymentStateSummary";
   rptId: RptId;
-  verificaResponse: Pot<PaymentRequestsGetResponse, Error>;
+  verificaResponse: Pot<PaymentRequestsGetResponse>;
   initialAmount: AmountInEuroCents;
 }>;
 
@@ -64,7 +65,7 @@ type PaymentStateSummary = Readonly<{
 type PaymentStateSummaryWithPaymentId = Readonly<{
   kind: "PaymentStateSummaryWithPaymentId";
   rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
+  verificaResponse: Pot<PaymentRequestsGetResponse>;
   initialAmount: AmountInEuroCents;
   paymentId: string;
 }>;
@@ -72,7 +73,7 @@ type PaymentStateSummaryWithPaymentId = Readonly<{
 type PaymentStatePickPaymentMethod = Readonly<{
   kind: "PaymentStatePickPaymentMethod";
   rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
+  verificaResponse: Pot<PaymentRequestsGetResponse>;
   initialAmount: AmountInEuroCents;
   paymentId: string;
 }>;
@@ -80,7 +81,7 @@ type PaymentStatePickPaymentMethod = Readonly<{
 type PaymentStateConfirmPaymentMethod = Readonly<{
   kind: "PaymentStateConfirmPaymentMethod";
   rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
+  verificaResponse: Pot<PaymentRequestsGetResponse>;
   initialAmount: AmountInEuroCents;
   selectedPaymentMethod: number;
   pspList: ReadonlyArray<Psp>;
@@ -90,7 +91,7 @@ type PaymentStateConfirmPaymentMethod = Readonly<{
 type PaymentStatePickPsp = Readonly<{
   kind: "PaymentStatePickPsp";
   rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
+  verificaResponse: Pot<PaymentRequestsGetResponse>;
   initialAmount: AmountInEuroCents;
   selectedPaymentMethod: number;
   pspList: ReadonlyArray<Psp>;
@@ -208,8 +209,11 @@ export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
 
 export const getPaymentContextCode = (
   state: GlobalStateWithVerificaResponse
-): CodiceContestoPagamento =>
-  state.wallet.payment.stack[0].verificaResponse.codiceContestoPagamento;
+): Pot<CodiceContestoPagamento> =>
+  pot.map(
+    state.wallet.payment.stack[0].verificaResponse,
+    _ => _.codiceContestoPagamento
+  );
 
 export const getInitialAmount = (
   state: GlobalStateWithVerificaResponse
@@ -221,21 +225,23 @@ export const getSelectedPaymentMethod = (
 
 export const getCurrentAmount = (
   state: GlobalStateWithVerificaResponse
-): AmountInEuroCents =>
-  AmountToImporto.encode(
-    state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento
+): Pot<AmountInEuroCents> =>
+  pot.map(state.wallet.payment.stack[0].verificaResponse, _ =>
+    AmountToImporto.encode(_.importoSingoloVersamento)
   );
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
-): Option<EnteBeneficiario> =>
-  fromNullable(state.wallet.payment.stack[0].verificaResponse.enteBeneficiario);
+): Pot<Option<EnteBeneficiario>> =>
+  pot.map(state.wallet.payment.stack[0].verificaResponse, _ =>
+    fromNullable(_.enteBeneficiario)
+  );
 
 export const getPaymentReason = (
   state: GlobalStateWithVerificaResponse
-): Option<string> =>
-  fromNullable(
-    state.wallet.payment.stack[0].verificaResponse.causaleVersamento
+): Pot<Option<string>> =>
+  pot.map(state.wallet.payment.stack[0].verificaResponse, _ =>
+    fromNullable(_.causaleVersamento)
   );
 
 export const getPspList = (
@@ -337,6 +343,30 @@ const summaryReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
+  if (
+    action.type === PAYMENT_REQUEST_TRANSACTION_SUMMARY &&
+    action.kind === "fromRptId" &&
+    isInAllowedOrigins(state, [
+      "PaymentStateQrCode",
+      "PaymentStateManualEntry",
+      "none"
+    ])
+  ) {
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          kind: "PaymentStateSummary",
+          rptId: action.payload.rptId,
+          initialAmount: action.payload.initialAmount,
+          verificaResponse: {
+            kind: "PotPending"
+          }
+        },
+        ["PaymentStateSummary"]
+      )
+    };
+  }
   if (
     action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID &&
     isInAllowedOrigins(state, [
