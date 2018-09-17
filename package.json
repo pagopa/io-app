@@ -49,7 +49,7 @@
     "react-native-qrcode-scanner": "^1.0.1",
     "react-native-sha256": "^1.0.1",
     "react-native-splash-screen": "^3.1.1",
-    "react-native-svg": "^6.5.2",
+    "react-native-svg": "^7.0.2",
     "react-native-text-input-mask": "^0.8.0",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.11.2",
