@@ -124,10 +124,7 @@ class TransactionsList extends React.Component<Props> {
           <View spacer={true} />
           <H3>{I18n.t("wallet.noneTransactions")}</H3>
           <View spacer={true} />
-          <Text>
-            {I18n.t("wallet.noTransactionsDetails")}
-            <Text link={true}>{` ${I18n.t("wallet.moreInfo")}`}</Text>
-          </Text>
+          <Text>{I18n.t("wallet.noTransactionsDetails")}</Text>
           <View spacer={true} large={true} />
         </Content>
       );
