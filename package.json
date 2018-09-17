@@ -124,7 +124,7 @@
     "tslint-react": "^3.6.0",
     "tslint-sonarts": "^1.7.0",
     "typescript": "^3.0.1",
-    "typestrict": "^0.0.9"
+    "typestrict": "^1.0.0"
   },
   "jest": {
     "preset": "react-native",
