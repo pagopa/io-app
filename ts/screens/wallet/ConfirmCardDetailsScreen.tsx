@@ -17,7 +17,7 @@ import { Dispatch } from "../../store/actions/types";
 import { addCreditCardRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { getNewCreditCard } from "../../store/reducers/wallet/wallets";
-import { Wallet } from "../../types/pagopa";
+import { CreditCard, Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
 type ReduxMappedStateProps = Readonly<{
@@ -25,7 +25,7 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduMappedDispatchProps = Readonly<{
-  addCreditCard: (favorite: boolean) => void;
+  addCreditCard: (creditCard: CreditCard, favorite: boolean) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -61,7 +61,11 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     const primaryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => this.props.addCreditCard(this.state.favorite),
+      onPress: () =>
+        this.props.addCreditCard(
+          this.props.wallet.creditCard,
+          this.state.favorite
+        ),
       title: I18n.t("wallet.saveCard.save")
     };
 
@@ -137,7 +141,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduMappedDispatchProps => ({
-  addCreditCard: (favorite: boolean) => dispatch(addCreditCardRequest(favorite))
+  addCreditCard: (creditCard: CreditCard, favorite: boolean) =>
+    dispatch(addCreditCardRequest(creditCard, favorite))
 });
 
 export default connect(
