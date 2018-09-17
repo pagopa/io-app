@@ -10,7 +10,6 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
@@ -63,7 +62,7 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  private pinConfirmComponent: CodeInput | null = null;
+  private pinConfirmComponent: Pinpad | null = null;
 
   constructor(props: Props) {
     super(props);
@@ -77,17 +76,16 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the first CodeInput is filled
-  public onPinFulfill(code: PinString) {
+  public onPinFulfill = (code: PinString) =>
     this.setState({
       pinState: {
         state: "PinSelected",
         pin: code
       }
     });
-  }
 
   // Method called when the confirmation CodeInput is filled
-  public onPinConfirmFulfill(isValid: boolean, code: PinString) {
+  public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid) {
       if (this.pinConfirmComponent) {
@@ -101,7 +99,7 @@ class PinScreen extends React.Component<Props, State> {
         isConfirmationPinMatch: isValid
       }
     });
-  }
+  };
 
   public onPinReset() {
     if (this.pinConfirmComponent) {
@@ -157,10 +155,9 @@ class PinScreen extends React.Component<Props, State> {
        */
       return (
         <Pinpad
-          autofocus={true}
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
-          onFulfill={(code: PinString) => this.onPinFulfill(code)}
+          onFulfill={this.onPinFulfill}
         />
       );
     } else {
@@ -170,14 +167,11 @@ class PinScreen extends React.Component<Props, State> {
       return (
         <React.Fragment>
           <Pinpad
-            autofocus={true}
             inactiveColor={variables.brandLightGray}
             activeColor={variables.brandDarkGray}
             compareWithCode={pinState.pin}
-            onFulfill={(isValid, code) =>
-              this.onPinConfirmFulfill(isValid, code)
-            }
-            codeInputRef={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
+            onFulfill={this.onPinConfirmFulfill}
+            ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
           />
 
           {pinState.state === "PinConfirmed" &&

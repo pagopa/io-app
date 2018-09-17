@@ -36,7 +36,6 @@
     "react-native-add-calendar-event": "^2.1.0",
     "react-native-camera": "1.2.0",
     "react-native-config": "^0.11.2",
-    "react-native-confirmation-code-input": "git://github.com/teamdigitale/react-native-confirmation-code-input.git#io",
     "react-native-device-info": "^0.22",
     "react-native-exception-handler": "^2.9.0",
     "react-native-fs": "2.11.15",
