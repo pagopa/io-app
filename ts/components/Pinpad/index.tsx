@@ -29,6 +29,7 @@ interface State {
  */
 class Pinpad extends React.PureComponent<Props, State> {
   private inputRef: React.RefObject<TextInput>;
+  private onFulfillTimeoutId?: number;
 
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
@@ -63,11 +64,22 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       // Fire the callback asynchronously, otherwise this component
       // will be unmounted before the render of the last bullet placeholder.
-      setTimeout(() => this.props.onFulfill(inputValue as PinString, isValid));
+      // tslint:disable-next-line no-object-mutation
+      this.onFulfillTimeoutId = setTimeout(() =>
+        this.props.onFulfill(inputValue as PinString, isValid)
+      );
     }
   };
 
   private handlePlaceholderPress = () => this.foldInputRef(focusElement);
+
+  public clear = () => this.setState({ value: "" as PinString });
+
+  public componentWillUnmount() {
+    if (this.onFulfillTimeoutId) {
+      clearTimeout(this.onFulfillTimeoutId);
+    }
+  }
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
@@ -83,8 +95,6 @@ class Pinpad extends React.PureComponent<Props, State> {
       </TouchableOpacity>
     );
   };
-
-  public clear = () => this.setState({ value: "" as PinString });
 
   public render() {
     return (
