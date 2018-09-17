@@ -29,6 +29,9 @@ interface State {
  */
 class Pinpad extends React.PureComponent<Props, State> {
   private inputRef: React.RefObject<TextInput>;
+
+  // Utility array of as many elements as how many digits the pin has.
+  // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
 
   constructor(props: Props) {
