@@ -5114,9 +5114,9 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
-lodash@4.x.x, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.10"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+lodash@4.x.x, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
 lodash@^3.5.0:
   version "3.10.1"
@@ -7280,9 +7280,9 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-simple-markdown@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/simple-markdown/-/simple-markdown-0.4.1.tgz#dcea6afee54c964327f9c1e91b7ea22efd08cf04"
+simple-markdown@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/simple-markdown/-/simple-markdown-0.4.2.tgz#98fd72bd4f8ced9705f3e72c4cb4a00261a5eca0"
 
 simple-plist@^0.2.1:
   version "0.2.1"
@@ -7986,9 +7986,9 @@ typescript@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
-typestrict@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/typestrict/-/typestrict-0.0.9.tgz#e4c882afb55a698e6f8b1ca125c50c229593d72c"
+typestrict@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typestrict/-/typestrict-1.0.0.tgz#8545c45a319de4d399e192353d1d87928befa964"
   dependencies:
     tslint-microsoft-contrib "^5.0.3"
     tslint-sonarts "^1.7.0"

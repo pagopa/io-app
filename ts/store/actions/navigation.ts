@@ -33,9 +33,7 @@ export const resetToAuthenticationRoute: NavigationResetAction = StackActions.re
   }
 );
 
-export const navigateToMainNavigatorAction = (
-  prevRouteKey: string | undefined
-) =>
+export const navigateToMainNavigatorAction = (prevRouteKey: string) =>
   StackActions.replace({
     routeName: ROUTES.MAIN,
     key: prevRouteKey
