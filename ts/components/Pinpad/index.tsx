@@ -9,7 +9,7 @@ import { PIN_LENGTH } from "../../utils/constants";
 import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
 
-const fucusElement = (el: TextInput) => el.focus();
+const focusElement = (el: TextInput) => el.focus();
 const blurElement = (el: TextInput) => el.blur();
 const current = (ref: React.RefObject<TextInput>) => ref.current;
 
@@ -65,7 +65,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
-  private handlePlaceholderPress = () => this.foldInputRef(fucusElement);
+  private handlePlaceholderPress = () => this.foldInputRef(focusElement);
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
