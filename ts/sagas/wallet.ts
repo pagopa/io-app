@@ -122,7 +122,7 @@ import {
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 import { amountToImportoWithFallback } from "../utils/amounts";
-import { constantPollingFetch } from "../utils/fetch";
+import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -464,7 +464,11 @@ function* showTransactionSummaryHandler(
       sessionTokenSelector
     );
     if (sessionToken) {
-      const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+      const backendClient = BackendClient(
+        apiUrlPrefix,
+        sessionToken,
+        pagopaFetch()
+      );
       const response:
         | BasicResponseTypeWith401<PaymentRequestsGetResponse>
         | undefined = yield call(backendClient.getVerificaRpt, { rptId });
@@ -600,7 +604,11 @@ const attivaRpt = async (
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
 ): Promise<boolean> => {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+  const backendClient = BackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    pagopaFetch()
+  );
 
   const response:
     | BasicResponseTypeWith401<PaymentActivationsPostResponse>
