@@ -52,7 +52,7 @@
     "react-native-svg": "^6.5.2",
     "react-native-text-input-mask": "^0.8.0",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^2.11.2",
+    "react-navigation": "^2.14.2",
     "react-navigation-redux-helpers": "^2.0.5",
     "react-redux": "5.0.7",
     "redux": "4.0.0",
