@@ -33,8 +33,8 @@ function configurePushNotifications(store: Store) {
           // The App is in foreground so just refresh the messages list
           store.dispatch(loadMessages());
         } else {
-          // The App was in background and has been now opened clicking on the push notification
           /**
+           * The App was closed/in background and has been now opened clicking on the push notification.
            * Save the message id of the notification in the store so the App can navigate to the message detail screen
            * as soon as possible (if needed after the user login/insert the unlock PIN)
            */

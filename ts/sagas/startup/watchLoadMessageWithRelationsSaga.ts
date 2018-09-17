@@ -30,15 +30,16 @@ export function* loadMessageWithRelationsSaga(
     messageId
   );
 
-  if (!(messageOrError instanceof Error)) {
+  if (messageOrError.isRight()) {
+    const message = messageOrError.value;
     // We have the message try to load also the sender service
     const serviceOrError = yield call(
       loadService,
       getService,
-      messageOrError.sender_service_id
+      message.sender_service_id
     );
 
-    if (!(serviceOrError instanceof Error)) {
+    if (serviceOrError.isRight()) {
       yield put(loadMessageWithRelationsSuccessAction());
 
       return;

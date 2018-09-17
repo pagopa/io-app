@@ -15,25 +15,25 @@ export type OwnProps = {
 
 export type Props = OwnProps;
 
+const makeRenderItem = (
+  servicesById: ServicesByIdState,
+  onListItemPress?: (messageId: string) => void
+) => (info: ListRenderItemInfo<MessageWithContentPO>) => {
+  const message = info.item;
+  const service = servicesById[message.sender_service_id];
+
+  return (
+    <MessageListItemComponent
+      message={message}
+      service={service}
+      onItemPress={onListItemPress}
+    />
+  );
+};
+
+const keyExtractor = (message: MessageWithContentPO) => message.id;
+
 export class MessageListComponent extends React.PureComponent<Props, never> {
-  private makeRenderItem = (
-    servicesById: ServicesByIdState,
-    onListItemPress?: (messageId: string) => void
-  ) => (info: ListRenderItemInfo<MessageWithContentPO>) => {
-    const message = info.item;
-    const service = servicesById[message.sender_service_id];
-
-    return (
-      <MessageListItemComponent
-        message={message}
-        service={service}
-        onItemPress={onListItemPress}
-      />
-    );
-  };
-
-  private keyExtractor = (message: MessageWithContentPO) => message.id;
-
   public render() {
     const {
       messages,
@@ -51,8 +51,8 @@ export class MessageListComponent extends React.PureComponent<Props, never> {
       <FlatList
         scrollEnabled={true}
         data={messages}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.makeRenderItem(servicesById, onListItemPress)}
+        keyExtractor={keyExtractor}
+        renderItem={makeRenderItem(servicesById, onListItemPress)}
         refreshControl={refreshControl}
       />
     );

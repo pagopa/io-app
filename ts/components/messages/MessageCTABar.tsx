@@ -62,56 +62,52 @@ const styles = StyleSheet.create({
 });
 
 function needReminderCTA(message: MessageWithContentPO) {
-  return !!message.content.due_date;
+  return message.content.due_date !== undefined;
 }
 
 function needPaymentCTA(
   message: MessageWithContentPO,
   service?: ServicePublic
 ) {
-  return !!message.content.payment_data && !!service;
+  return message.content.payment_data !== undefined && service !== undefined;
 }
 
 class MessageCTABar extends React.PureComponent<Props> {
   private renderReminderCTA(message: MessageWithContentPO) {
-    if (message.content.due_date) {
-      const { subject, due_date } = message.content;
-      // Create an action that open the Calendar to let the user add an event
-      const dispatchReminderAction = () =>
-        AddCalendarEvent.presentEventCreatingDialog({
-          title: I18n.t("messages.cta.reminderTitle", {
-            subject
-          }),
-          startDate: formatDateAsReminder(due_date),
-          endDate: formatDateAsReminder(due_date),
-          allDay: true
-        }).catch(_ => undefined);
-
-      return (
-        <View style={styles.reminderContainer}>
-          <CalendarIconComponent
-            height="48"
-            width="48"
-            month={formatDateAsMonth(due_date)}
-            day={formatDateAsDay(due_date)}
-            backgroundColor={variables.brandDarkGray}
-            textColor={variables.colorWhite}
-          />
-
-          <View style={styles.reminderButtonContainer}>
-            <Button
-              block={true}
-              bordered={true}
-              onPress={dispatchReminderAction}
-            >
-              <Text>{I18n.t("messages.cta.reminder")}</Text>
-            </Button>
-          </View>
-        </View>
-      );
+    if (message.content.due_date === undefined) {
+      return null;
     }
 
-    return null;
+    const { subject, due_date } = message.content;
+    // Create an action that open the Calendar to let the user add an event
+    const onPressHandler = () =>
+      AddCalendarEvent.presentEventCreatingDialog({
+        title: I18n.t("messages.cta.reminderTitle", {
+          subject
+        }),
+        startDate: formatDateAsReminder(due_date),
+        endDate: formatDateAsReminder(due_date),
+        allDay: true
+      }).catch(_ => undefined);
+
+    return (
+      <View style={styles.reminderContainer}>
+        <CalendarIconComponent
+          height="48"
+          width="48"
+          month={formatDateAsMonth(due_date)}
+          day={formatDateAsDay(due_date)}
+          backgroundColor={variables.brandDarkGray}
+          textColor={variables.colorWhite}
+        />
+
+        <View style={styles.reminderButtonContainer}>
+          <Button block={true} bordered={true} onPress={onPressHandler}>
+            <Text>{I18n.t("messages.cta.reminder")}</Text>
+          </Button>
+        </View>
+      </View>
+    );
   }
 
   private renderPaymentCTA(

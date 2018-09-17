@@ -1,3 +1,4 @@
+import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 
@@ -88,7 +89,7 @@ describe("messages", () => {
         .next(undefined)
         .put(loadMessageFailure(Error()))
         .next()
-        .returns(Error());
+        .returns(left(Error()));
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
@@ -101,7 +102,7 @@ describe("messages", () => {
         .next({ status: 500, value: error })
         .put(loadMessageFailure(error))
         .next()
-        .returns(error);
+        .returns(left(error));
     });
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the getMessage response status is 200", () => {
@@ -115,7 +116,7 @@ describe("messages", () => {
           loadMessageSuccess(toMessageWithContentPO(testMessageWithContent1))
         )
         .next()
-        .returns(toMessageWithContentPO(testMessageWithContent1));
+        .returns(right(toMessageWithContentPO(testMessageWithContent1)));
     });
   });
 
@@ -137,7 +138,7 @@ describe("messages", () => {
         .next(undefined)
         .put(loadServiceFailure(Error()))
         .next()
-        .returns(Error());
+        .returns(left(Error()));
     });
 
     it("should only return the error if the getService response status is not 200", () => {
@@ -150,7 +151,7 @@ describe("messages", () => {
         .next({ status: 500, value: Error("Backend error") })
         .put(loadServiceFailure(error))
         .next()
-        .returns(Error("Backend error"));
+        .returns(left(Error("Backend error")));
     });
 
     it("should put SERVICE_LOAD_SUCCESS and return the service if the getService response status is 200", () => {
@@ -162,7 +163,7 @@ describe("messages", () => {
         .next({ status: 200, value: testServicePublic })
         .put(loadServiceSuccess(testServicePublic))
         .next()
-        .returns(testServicePublic);
+        .returns(right(testServicePublic));
     });
   });
 

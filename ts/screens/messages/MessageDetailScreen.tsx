@@ -19,6 +19,10 @@ import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
+/**
+ * The react-navigation getParam function requires a fallback value to use when the parameter
+ * is not available.
+ */
 const NO_MESSAGE_ID_PARAM = "NO_MESSAGE_ID_PARAM";
 
 type MessageDetailScreenNavigationParams = {
@@ -27,12 +31,70 @@ type MessageDetailScreenNavigationParams = {
 
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
 
-type ReduxMapStateToProps = {
-  isLoading: boolean;
-  hasError: boolean;
-  messageId?: string;
-  message?: MessageWithContentPO;
+type InvalidScreenState = {
+  kind: "InvalidState";
+};
+
+const isInvalidState = (
+  screenState: ScreenState
+): screenState is InvalidScreenState => {
+  return screenState.kind === "InvalidState";
+};
+
+type NeedLoadingScreenState = {
+  kind: "NeedLoadingState";
+  messageId: string;
+};
+
+const isNeedLoadingState = (
+  screenState: ScreenState
+): screenState is NeedLoadingScreenState => {
+  return screenState.kind === "NeedLoadingState";
+};
+
+type LoadingScreenState = {
+  kind: "LoadingState";
+};
+
+const isLoadingState = (
+  screenState: ScreenState
+): screenState is LoadingScreenState => {
+  return screenState.kind === "LoadingState";
+};
+
+type ErrorScreenState = {
+  kind: "ErrorState";
+  messageId: string;
+};
+
+const isErrorState = (
+  screenState: ScreenState
+): screenState is ErrorScreenState => {
+  return screenState.kind === "ErrorState";
+};
+
+type FullScreenState = {
+  kind: "FullState";
+  messageId: string;
+  message: MessageWithContentPO;
   service?: ServicePublic;
+};
+
+const isFullState = (
+  screenState: ScreenState
+): screenState is FullScreenState => {
+  return screenState.kind === "FullState";
+};
+
+type ScreenState =
+  | InvalidScreenState
+  | NeedLoadingScreenState
+  | LoadingScreenState
+  | ErrorScreenState
+  | FullScreenState;
+
+type ReduxMapStateToProps = {
+  screenState: ScreenState;
 };
 
 type Props = OwnProps & ReduxMapStateToProps & ReduxProps;
@@ -52,13 +114,10 @@ const styles = StyleSheet.create({
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private goBack = () => this.props.navigation.goBack();
 
-  private onServiceLinkPressHandler = () => {
-    const service = this.props.service;
-    if (service) {
-      this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, {
-        service
-      });
-    }
+  private onServiceLinkPressHandler = (service: ServicePublic) => {
+    this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, {
+      service
+    });
   };
 
   /**
@@ -123,7 +182,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         <MessageDetailComponent
           message={message}
           service={service}
-          onServiceLinkPress={this.onServiceLinkPressHandler}
+          onServiceLinkPress={
+            service ? () => this.onServiceLinkPressHandler(service) : undefined
+          }
         />
       </Content>
     );
@@ -131,16 +192,16 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const { isLoading, hasError, messageId, message, service } = this.props;
+    const screenState = this.props.screenState;
 
-    if (!messageId) {
+    if (isInvalidState(screenState)) {
       return this.renderInvalidState();
-    } else if (isLoading) {
+    } else if (isLoadingState(screenState)) {
       return this.renderLoadingState();
-    } else if (hasError) {
-      return this.renderErrorState(messageId);
-    } else if (message) {
-      return this.renderFullState(message, service);
+    } else if (isErrorState(screenState)) {
+      return this.renderErrorState(screenState.messageId);
+    } else if (isFullState(screenState)) {
+      return this.renderFullState(screenState.message, screenState.service);
     }
 
     // Fallback to invalid state
@@ -148,14 +209,16 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   public componentDidMount() {
-    const { messageId, message } = this.props;
+    const { screenState } = this.props;
 
     /**
      * If the message in not in the store (ex. coming from a push notification or deep link)
      * try to load it.
      */
-    if (messageId && !message) {
-      this.props.dispatch(loadMessageWithRelationsAction(messageId));
+    if (isNeedLoadingState(screenState)) {
+      this.props.dispatch(
+        loadMessageWithRelationsAction(screenState.messageId)
+      );
     }
   }
 
@@ -183,6 +246,9 @@ const mapStateToProps = (
   state: GlobalState,
   ownProps: OwnProps
 ): ReduxMapStateToProps => {
+  /**
+   * Try to get the messageId from the navigation parameters.
+   */
   const messageId = ownProps.navigation.getParam(
     "messageId",
     NO_MESSAGE_ID_PARAM
@@ -190,27 +256,55 @@ const mapStateToProps = (
 
   if (messageId === NO_MESSAGE_ID_PARAM) {
     return {
-      isLoading: false,
-      hasError: false
+      screenState: {
+        kind: "InvalidState"
+      }
     };
   }
 
   const isLoading = messageWithRelationsLoadLoadingSelector(state);
 
+  if (isLoading) {
+    return {
+      screenState: {
+        kind: "LoadingState"
+      }
+    };
+  }
+
   const hasError = messageWithRelationsLoadErrorSelector(state).isSome();
+
+  if (hasError) {
+    return {
+      screenState: {
+        kind: "ErrorState",
+        messageId
+      }
+    };
+  }
 
   const message = messageByIdSelector(messageId)(state);
 
-  const service = message
-    ? serviceByIdSelector(message.sender_service_id)(state)
-    : undefined;
+  if (message !== undefined) {
+    const service = message
+      ? serviceByIdSelector(message.sender_service_id)(state)
+      : undefined;
+
+    return {
+      screenState: {
+        kind: "FullState",
+        messageId,
+        message,
+        service
+      }
+    };
+  }
 
   return {
-    isLoading,
-    hasError,
-    messageId,
-    message,
-    service
+    screenState: {
+      kind: "NeedLoadingState",
+      messageId
+    }
   };
 };
 

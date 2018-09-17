@@ -2,6 +2,7 @@
  * Generators to manage messages and related services.
  */
 
+import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Task } from "redux-saga";
@@ -61,13 +62,13 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* loadMessage(
   getMessage: TypeofApiCall<GetMessageT>,
   id: string
-): IterableIterator<Effect | Error | MessageWithContentPO> {
+): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
   // If we already have the message in the store just return it
   const cachedMessage: ReturnType<
     ReturnType<typeof messageByIdSelector>
   > = yield select(messageByIdSelector(id));
   if (cachedMessage) {
-    return cachedMessage;
+    return right(cachedMessage);
   }
 
   const response: SagaCallReturnType<typeof getMessage> = yield call(
@@ -78,13 +79,13 @@ export function* loadMessage(
   if (!response || response.status !== 200) {
     const error: Error = response ? response.value : Error();
     yield put(loadMessageFailure(error));
-    return error;
+    return left(error);
   }
 
   // Trigger an action to store the new message (converted to plain object) and return it
   const messageWithContentPO = toMessageWithContentPO(response.value);
   yield put(loadMessageSuccess(messageWithContentPO));
-  return messageWithContentPO;
+  return right(messageWithContentPO);
 }
 
 /**
@@ -92,18 +93,18 @@ export function* loadMessage(
  *
  * @param {function} getService - The function that makes the Backend request
  * @param {string} id - The id of the service to load
- * @returns {IterableIterator<Effect | Error | ServicePublic>}
+ * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
 export function* loadService(
   getService: TypeofApiCall<GetServiceT>,
   id: string
-): IterableIterator<Effect | Error | ServicePublic> {
+): IterableIterator<Effect | Either<Error, ServicePublic>> {
   // If we already have the service in the store just return it
   const cachedService: ReturnType<
     ReturnType<typeof serviceByIdSelector>
   > = yield select(serviceByIdSelector(id));
   if (cachedService) {
-    return cachedService;
+    return right(cachedService);
   }
 
   const response: SagaCallReturnType<typeof getService> = yield call(
@@ -114,12 +115,12 @@ export function* loadService(
   if (!response || response.status !== 200) {
     const error: Error = response ? response.value : Error();
     yield put(loadServiceFailure(error));
-    return error;
+    return left(error);
   }
 
   // Trigger an action to store the new service and return it
   yield put(loadServiceSuccess(response.value));
-  return response.value;
+  return right(response.value);
 }
 
 /**
