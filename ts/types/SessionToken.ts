@@ -2,7 +2,7 @@
  * Defines a tagged type for SessionToken
  */
 
-export interface ISessionTokenTag {
+interface ISessionTokenTag {
   kind: "session-token";
 }
 

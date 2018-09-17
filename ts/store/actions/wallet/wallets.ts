@@ -15,17 +15,17 @@ export type FetchWalletsRequest = Readonly<{
   type: typeof FETCH_WALLETS_REQUEST;
 }>;
 
-export type WalletsFetched = Readonly<{
+type WalletsFetched = Readonly<{
   type: typeof WALLETS_FETCHED;
   payload: ReadonlyArray<Wallet>;
 }>;
 
-export type WalletSelectedForDetails = Readonly<{
+type WalletSelectedForDetails = Readonly<{
   type: typeof SELECT_WALLET_FOR_DETAILS;
   payload: number;
 }>;
 
-export type SetFavoriteWallet = Readonly<{
+type SetFavoriteWallet = Readonly<{
   type: typeof SET_FAVORITE_WALLET;
   payload: Option<number>;
 }>;
@@ -35,16 +35,16 @@ export type AddCreditCardRequest = Readonly<{
   payload: boolean; // <= should the card be set as the favorite payment method?
 }>;
 
-export type StoreCreditCardData = Readonly<{
+type StoreCreditCardData = Readonly<{
   type: typeof STORE_CREDIT_CARD_DATA;
   payload: CreditCard;
 }>;
 
-export type CreditCardDataCleanup = Readonly<{
+type CreditCardDataCleanup = Readonly<{
   type: typeof CREDIT_CARD_DATA_CLEANUP;
 }>;
 
-export type AddCreditCardCompleted = Readonly<{
+type AddCreditCardCompleted = Readonly<{
   type: typeof ADD_CREDIT_CARD_COMPLETED;
 }>;
 

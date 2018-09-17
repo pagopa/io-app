@@ -85,7 +85,7 @@ export function* loadMessage(
   return response.value;
 }
 
-export function* navigateToMessageDetailsSaga(
+function* navigateToMessageDetailsSaga(
   getMessage: TypeofApiCall<GetMessageT>,
   getService: TypeofApiCall<GetServiceT>,
   action: NavigateToMessageDetails

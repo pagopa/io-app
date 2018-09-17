@@ -7,7 +7,7 @@ import {
   NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
 } from "./constants";
 
-export type NotificationsTokenUpdate = Readonly<{
+type NotificationsTokenUpdate = Readonly<{
   type: typeof NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE;
   /**
    * The push notification service token
@@ -15,7 +15,7 @@ export type NotificationsTokenUpdate = Readonly<{
   payload: string;
 }>;
 
-export type NotificationInstallationUpdateFailure = Readonly<{
+type NotificationInstallationUpdateFailure = Readonly<{
   type: typeof NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE;
 }>;
 

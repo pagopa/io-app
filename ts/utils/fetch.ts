@@ -19,7 +19,7 @@ import { fetchMaxRetries, fetchTimeout } from "../config";
 /**
  * Returns a fetch wrapped with timeout and retry logic
  */
-export function retryingFetch(fetchApi: typeof fetch): typeof fetch {
+function retryingFetch(fetchApi: typeof fetch): typeof fetch {
   // a fetch that can be aborted and that gets cancelled after fetchTimeoutMs
   const abortableFetch = AbortableFetch(fetchApi);
   const timeoutFetch = toFetch(setFetchTimeout(fetchTimeout, abortableFetch));
@@ -41,12 +41,19 @@ export function defaultRetryingFetch() {
   return retryingFetch((global as any).fetch);
 }
 
-export const pollingFetch = (retries: number, delay: number) => {
+/**
+ * This is a fetch with timeouts, constant backoff and with the logic
+ * that handles 404s as transient errors, this "fetch" must be passed to
+ * createFetchRequestForApi when creating "getPaymentId"
+ */
+export const constantPollingFetch = (
+  retries: number,
+  delay: number,
+  timeout: Millisecond = 1000 as Millisecond
+) => {
   // fetch client that can be aborted for timeout
   const abortableFetch = AbortableFetch(fetch);
-  const timeoutFetch = toFetch(
-    setFetchTimeout(1000 as Millisecond, abortableFetch)
-  );
+  const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
   // use a constant backoff
   const constantBackoff = () => delay as Millisecond;
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
@@ -67,8 +74,5 @@ export const pollingFetch = (retries: number, delay: number) => {
       shouldAbort
     );
 
-  // this is a fetch with timeouts, constant backoff and with the logic
-  // that handles 404s as transient errors, this "fetch" must be passed to
-  // createFetchRequestForApi when creating "getPaymentId"
   return retriableFetch(retryWithTransient404s)(timeoutFetch);
 };

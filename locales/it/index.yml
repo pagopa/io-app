@@ -82,6 +82,8 @@ profile:
         title: Esporta i tuoi dati
         description: ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
+    developersSectionHeader: Sviluppatori
+    accountSectionHeader: Account
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -152,6 +154,9 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
+    subtitle: "I diversi Identity Provider permettono diverse modalità di
+      riconoscimento e offrono insieme a SPID servizi diversi: scopri i
+      dettagli di ciascuno"
     cancel: Annulla
   idp_login:
     headerTitle: Accedi
@@ -421,6 +426,7 @@ preferences:
     digitalDomicile: Domicilio digitale
   empty:
     default: Nessuna preferenza impostata
+  preferencesHelp: !include preferences_home_help.md
 services:
   headerTitle: Servizi
   title: Elenco dei servizi

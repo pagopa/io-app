@@ -41,19 +41,19 @@ import { getWalletFromId, getWallets } from "./wallets";
 // by a string (kind), and with specific
 // properties depending on the state
 
-export type PaymentStateNoState = Readonly<{
+type PaymentStateNoState = Readonly<{
   kind: "PaymentStateNoState";
 }>;
 
-export type PaymentStateQrCode = Readonly<{
+type PaymentStateQrCode = Readonly<{
   kind: "PaymentStateQrCode";
 }>;
 
-export type PaymentStateManualEntry = Readonly<{
+type PaymentStateManualEntry = Readonly<{
   kind: "PaymentStateManualEntry";
 }>;
 
-export type PaymentStateSummary = Readonly<{
+type PaymentStateSummary = Readonly<{
   kind: "PaymentStateSummary";
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
@@ -63,7 +63,7 @@ export type PaymentStateSummary = Readonly<{
 // state for showing the summary when the "attiva"
 // operation has already been carried out (so the
 // paymentId is already available)
-export type PaymentStateSummaryWithPaymentId = Readonly<{
+type PaymentStateSummaryWithPaymentId = Readonly<{
   kind: "PaymentStateSummaryWithPaymentId";
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
@@ -71,7 +71,7 @@ export type PaymentStateSummaryWithPaymentId = Readonly<{
   paymentId: string;
 }>;
 
-export type PaymentStatePickPaymentMethod = Readonly<{
+type PaymentStatePickPaymentMethod = Readonly<{
   kind: "PaymentStatePickPaymentMethod";
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
@@ -79,7 +79,7 @@ export type PaymentStatePickPaymentMethod = Readonly<{
   paymentId: string;
 }>;
 
-export type PaymentStateConfirmPaymentMethod = Readonly<{
+type PaymentStateConfirmPaymentMethod = Readonly<{
   kind: "PaymentStateConfirmPaymentMethod";
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
@@ -89,7 +89,7 @@ export type PaymentStateConfirmPaymentMethod = Readonly<{
   paymentId: string;
 }>;
 
-export type PaymentStatePickPsp = Readonly<{
+type PaymentStatePickPsp = Readonly<{
   kind: "PaymentStatePickPsp";
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
@@ -100,7 +100,7 @@ export type PaymentStatePickPsp = Readonly<{
 }>;
 
 // Allowed states
-export type PaymentStates =
+type PaymentStates =
   | PaymentStateNoState
   | PaymentStateQrCode
   | PaymentStateManualEntry
@@ -114,13 +114,13 @@ export type PaymentState = Readonly<{
   stack: ReadonlyArray<PaymentStates>;
 }>;
 
-export const PAYMENT_INITIAL_STATE: PaymentState = {
+const PAYMENT_INITIAL_STATE: PaymentState = {
   stack: []
 };
 
 // list of states that have a valid
 // "verifica" response
-export type PaymentStatesWithVerificaResponse =
+type PaymentStatesWithVerificaResponse =
   | PaymentStateSummary
   | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
@@ -137,7 +137,7 @@ export const isPaymentStarted = (
   wallet.payment.stack.length !== 0;
 
 // type guard for *PaymentState*WithVerificaResponse
-export const isPaymentStateWithVerificaResponse = (
+const isPaymentStateWithVerificaResponse = (
   state: PaymentState
 ): state is PaymentStateWithVerificaResponse =>
   state.stack[0].kind === "PaymentStateSummary" ||
@@ -152,7 +152,7 @@ export const isGlobalStateWithVerificaResponse = (
 ): state is GlobalStateWithVerificaResponse =>
   isPaymentStateWithVerificaResponse(state.wallet.payment);
 
-export type PaymentStatesWithPaymentId =
+type PaymentStatesWithPaymentId =
   | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
   | PaymentStateConfirmPaymentMethod
@@ -163,7 +163,7 @@ export type PaymentStateWithPaymentId = Readonly<{
 }>;
 
 // type guard for *PaymentState*WithVerificaResponse
-export const isPaymentStateWithPaymentId = (
+const isPaymentStateWithPaymentId = (
   state: PaymentState
 ): state is PaymentStateWithPaymentId =>
   state.stack[0].kind === "PaymentStateSummaryWithPaymentId" ||
@@ -179,7 +179,7 @@ export const isGlobalStateWithPaymentId = (
 
 // list of states that have a
 // selected payment method
-export type PaymentStatesWithSelectedPaymentMethod =
+type PaymentStatesWithSelectedPaymentMethod =
   | PaymentStateConfirmPaymentMethod
   | PaymentStatePickPsp;
 
@@ -188,7 +188,7 @@ export type PaymentStateWithSelectedPaymentMethod = Readonly<{
 }>;
 
 // type guard for *PaymentState*WithSelectedPaymentMethod
-export const isPaymentStateWithSelectedPaymentMethod = (
+const isPaymentStateWithSelectedPaymentMethod = (
   state: PaymentState
 ): state is PaymentStateWithSelectedPaymentMethod =>
   state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
@@ -262,7 +262,7 @@ export const selectedPaymentMethodSelector: (
     getWalletFromId(id, wallets).getOrElse(UNKNOWN_CARD)
 );
 
-export const isInAllowedOrigins = (
+const isInAllowedOrigins = (
   state: PaymentState,
   allowed: ReadonlyArray<string>
 ): boolean =>
@@ -272,7 +272,7 @@ export const isInAllowedOrigins = (
       (state.stack.length > 0 && state.stack[0].kind === a)
   );
 
-export const popUntil = (
+const popUntil = (
   stack: ReadonlyArray<PaymentStates>,
   until: ReadonlyArray<string>
 ): ReadonlyArray<PaymentStates> =>
@@ -290,7 +290,7 @@ export const popUntil = (
 // This makes sure that the state does not
 // grow indefinitely when looping through
 // the payment process
-export const popToStateAndPush = (
+const popToStateAndPush = (
   stack: ReadonlyArray<PaymentStates>,
   state: PaymentStates,
   until: ReadonlyArray<string>

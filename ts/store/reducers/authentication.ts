@@ -21,7 +21,7 @@ import { GlobalState } from "./types";
 type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
 
 // The user is logged out and hasn't selected an IDP
-export type LoggedOutWithoutIdp = Readonly<{
+type LoggedOutWithoutIdp = Readonly<{
   kind: "LoggedOutWithoutIdp";
   reason: LoggedOutReason;
 }>;
@@ -58,18 +58,12 @@ export type AuthenticationState =
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
-export const INITIAL_STATE: LoggedOutWithoutIdp = {
+const INITIAL_STATE: LoggedOutWithoutIdp = {
   kind: "LoggedOutWithoutIdp",
   reason: "NOT_LOGGED_IN"
 };
 
 // Type guards
-
-export function isLoggedOutWithoutIdp(
-  state: AuthenticationState
-): state is LoggedOutWithoutIdp {
-  return state.kind === "LoggedOutWithoutIdp";
-}
 
 export function isLoggedOutWithIdp(
   state: AuthenticationState
@@ -77,7 +71,7 @@ export function isLoggedOutWithIdp(
   return state.kind === "LoggedOutWithIdp";
 }
 
-export function isLoggedInWithoutSessionInfo(
+function isLoggedInWithoutSessionInfo(
   state: AuthenticationState
 ): state is LoggedInWithoutSessionInfo {
   return state.kind === "LoggedInWithoutSessionInfo";
@@ -101,9 +95,6 @@ export const isSessionExpiredSelector = ({ authentication }: GlobalState) =>
   !isLoggedIn(authentication) && authentication.reason === "SESSION_EXPIRED";
 
 // Selectors
-
-export const isLoggedInSelector = (state: GlobalState): boolean =>
-  isLoggedIn(state.authentication);
 
 export const sessionTokenSelector = (
   state: GlobalState

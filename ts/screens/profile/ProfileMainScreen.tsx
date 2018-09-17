@@ -1,8 +1,16 @@
 import { Option } from "fp-ts/lib/Option";
-import { Content, H3, Text } from "native-base";
+import {
+  Button,
+  Content,
+  H3,
+  Left,
+  List,
+  ListItem,
+  Right,
+  Text
+} from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { Clipboard, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -14,6 +22,10 @@ import { logoutRequest } from "../../store/actions/authentication";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { startPinReset } from "../../store/actions/pinset";
 import { Dispatch } from "../../store/actions/types";
+import {
+  isLoggedIn,
+  isLoggedInWithSessionInfo
+} from "../../store/reducers/authentication";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
@@ -22,6 +34,8 @@ import variables from "../../theme/variables";
 type ReduxMappedStateProps = {
   isLoggingOut: boolean;
   logoutError: Option<string>;
+  sessionToken?: string;
+  walletToken?: string;
 };
 
 type ReduxMappedDispatchProps = {
@@ -36,93 +50,139 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
 
 const styles = StyleSheet.create({
-  gridRow: {
-    paddingTop: variables.contentPadding,
-    alignItems: "center"
+  itemLeft: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  itemLeftText: {
+    alignSelf: "flex-start"
   }
 });
 
 /**
  * A component to show the main screen of the Profile section
  */
-export class ProfileMainScreen extends React.Component<Props, never> {
+class ProfileMainScreen extends React.PureComponent<Props> {
   public render() {
+    const {
+      navigation,
+      resetPin,
+      logout,
+      sessionToken,
+      walletToken
+    } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
       >
-        <Content>
-          <Grid>
+        <Content noPadded={true}>
+          <List>
             {/* Privacy */}
-            <Row
-              style={styles.gridRow}
-              onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)
-              }
+            <ListItem
+              first={true}
+              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
             >
-              <Col size={10}>
+              <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.privacy.title")}</H3>
-                <Text>{I18n.t("profile.main.privacy.description")}</Text>
-              </Col>
-              <Col size={2}>
+                <Text style={styles.itemLeftText}>
+                  {I18n.t("profile.main.privacy.description")}
+                </Text>
+              </Left>
+              <Right>
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
                 />
-              </Col>
-            </Row>
+              </Right>
+            </ListItem>
+
             {/* Terms & conditions */}
-            <Row
-              style={styles.gridRow}
+            <ListItem
               onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_TOS, {
+                navigation.navigate(ROUTES.PROFILE_TOS, {
                   isProfile: true
                 })
               }
             >
-              <Col size={10}>
+              <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.termsAndConditions.title")}</H3>
-                <Text>
+                <Text style={styles.itemLeftText}>
                   {I18n.t("profile.main.termsAndConditions.description")}
                 </Text>
-              </Col>
-              <Col size={2}>
+              </Left>
+              <Right>
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
                 />
-              </Col>
-            </Row>
+              </Right>
+            </ListItem>
+
+            <ListItem itemDivider={true}>
+              <Text>{I18n.t("profile.main.accountSectionHeader")}</Text>
+            </ListItem>
 
             {/* Reset PIN */}
-            <Row style={styles.gridRow} onPress={() => this.props.resetPin()}>
-              <Col size={10}>
+            <ListItem onPress={resetPin}>
+              <Left style={styles.itemLeft}>
                 <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
-                <Text>{I18n.t("pin_login.pin.reset.tip_short")}</Text>
-              </Col>
-              <Col size={2}>
+                <Text style={styles.itemLeftText}>
+                  {I18n.t("pin_login.pin.reset.tip_short")}
+                </Text>
+              </Left>
+              <Right>
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
                 />
-              </Col>
-            </Row>
+              </Right>
+            </ListItem>
 
             {/* Logout/Exit */}
-            <Row style={styles.gridRow} onPress={() => this.props.logout()}>
-              <Col size={10}>
+            <ListItem onPress={logout}>
+              <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.logout")}</H3>
-              </Col>
-              <Col size={2}>
+                <Text style={styles.itemLeftText}>
+                  {I18n.t("profile.logout")}
+                </Text>
+              </Left>
+              <Right>
                 <IconFont
                   name="io-right"
                   color={variables.contentPrimaryBackground}
                 />
-              </Col>
-            </Row>
-          </Grid>
+              </Right>
+            </ListItem>
+
+            <ListItem itemDivider={true}>
+              <Text>{I18n.t("profile.main.developersSectionHeader")}</Text>
+            </ListItem>
+
+            <ListItem last={true}>
+              <Left style={styles.itemLeft}>
+                {sessionToken && (
+                  <Button
+                    transparent={true}
+                    info={true}
+                    onPress={() => Clipboard.setString(sessionToken)}
+                  >
+                    <Text>{`Session: ${sessionToken}`}</Text>
+                  </Button>
+                )}
+                {walletToken && (
+                  <Button
+                    transparent={true}
+                    info={true}
+                    onPress={() => Clipboard.setString(walletToken)}
+                  >
+                    <Text>{`Wallet: ${walletToken}`}</Text>
+                  </Button>
+                )}
+              </Left>
+            </ListItem>
+          </List>
         </Content>
       </TopScreenComponent>
     );
@@ -131,7 +191,13 @@ export class ProfileMainScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   isLoggingOut: createLoadingSelector([FetchRequestActions.LOGOUT])(state),
-  logoutError: createErrorSelector([FetchRequestActions.LOGOUT])(state)
+  logoutError: createErrorSelector([FetchRequestActions.LOGOUT])(state),
+  sessionToken: isLoggedIn(state.authentication)
+    ? state.authentication.sessionToken
+    : undefined,
+  walletToken: isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.walletToken
+    : undefined
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

@@ -11,7 +11,7 @@ export type OnboardingState = Readonly<{
   isTosAccepted: boolean;
 }>;
 
-export const INITIAL_STATE: OnboardingState = {
+const INITIAL_STATE: OnboardingState = {
   isTosAccepted: false
 };
 

@@ -234,13 +234,13 @@ export type TransactionResponse = Pick<
     data: Transaction;
   }>;
 
-export const Pay = t.refinement(
+const Pay = t.refinement(
   PayPagoPA,
   p => p.idWallet !== undefined && p.tipo === "web"
 );
 type RequiredPayFields = "idWallet";
 type UpdatedPayFields = "tipo";
-export type Pay = Pick<PayPagoPA, Exclude<keyof PayPagoPA, UpdatedPayFields>> &
+type Pay = Pick<PayPagoPA, Exclude<keyof PayPagoPA, UpdatedPayFields>> &
   Required<Pick<PayPagoPA, RequiredPayFields>> &
   Readonly<{
     tipo: "web";

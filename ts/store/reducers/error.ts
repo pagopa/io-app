@@ -15,7 +15,7 @@ export type ErrorState = Readonly<
   { [key in FetchRequestActionsType]: Option<string> }
 >;
 
-export const INITIAL_STATE: ErrorState = {
+const INITIAL_STATE: ErrorState = {
   TOS_ACCEPT: none,
   PIN_CREATE: none,
   PROFILE_LOAD: none,

@@ -12,7 +12,7 @@ import ROUTES from "../../navigation/routes";
 
 // Actions
 
-export type NavigationRestore = Readonly<{
+type NavigationRestore = Readonly<{
   type: typeof NAVIGATION_RESTORE;
   payload: NavigationState;
 }>;
@@ -20,11 +20,6 @@ export type NavigationRestore = Readonly<{
 export type NavigationActions = NavigationAction | NavigationRestore;
 
 // Creators
-
-export const navigationRestore = (navigationState: NavigationState) => ({
-  type: NAVIGATION_RESTORE,
-  payload: navigationState
-});
 
 export const resetToAuthenticationRoute: NavigationResetAction = StackActions.reset(
   {
@@ -38,9 +33,7 @@ export const resetToAuthenticationRoute: NavigationResetAction = StackActions.re
   }
 );
 
-export const navigateToMainNavigatorAction = (
-  prevRouteKey: string | undefined
-) =>
+export const navigateToMainNavigatorAction = (prevRouteKey: string) =>
   StackActions.replace({
     routeName: ROUTES.MAIN,
     key: prevRouteKey

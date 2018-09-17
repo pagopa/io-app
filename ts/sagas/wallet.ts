@@ -1,5 +1,10 @@
+// tslint:disable:max-union-size
+
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
-import { paymentCancel } from "./../store/actions/wallet/payment";
+import {
+  paymentCancel,
+  PaymentRequestMessage
+} from "./../store/actions/wallet/payment";
 
 /**
  * A saga that manages the Wallet.
@@ -25,6 +30,7 @@ import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
+import { LogoutSuccess } from "../store/actions/authentication";
 import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
@@ -47,6 +53,7 @@ import {
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
+  PaymentCompleted,
   paymentConfirmPaymentMethod,
   paymentGoBack,
   paymentInitialConfirmPaymentMethod,
@@ -65,17 +72,22 @@ import {
   PaymentRequestManualEntry,
   PaymentRequestPickPaymentMethod,
   PaymentRequestPickPsp,
+  PaymentRequestQrCode,
   PaymentRequestTransactionSummaryActions,
+  PaymentRequestTransactionSummaryFromBanner,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId,
   PaymentUpdatePsp
 } from "../store/actions/wallet/payment";
 import {
+  FetchTransactionsRequest,
   selectTransactionForDetails,
   transactionsFetched
 } from "../store/actions/wallet/transactions";
 import {
+  AddCreditCardRequest,
   creditCardDataCleanup,
+  FetchWalletsRequest,
   selectWalletForDetails,
   walletsFetched
 } from "../store/actions/wallet/wallets";
@@ -116,7 +128,7 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { SagaCallReturnType } from "../types/utils";
 import { amountToImportoWithFallback } from "../utils/amounts";
-import { pollingFetch } from "../utils/fetch";
+import { constantPollingFetch } from "../utils/fetch";
 import { getPin } from "../utils/keychain";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
@@ -344,7 +356,19 @@ function* paymentSagaFromMessage(): Iterator<Effect> {
 
 function* watchPaymentSaga(): Iterator<Effect> {
   while (true) {
-    const action = yield take([
+    const action:
+      | PaymentRequestQrCode
+      | PaymentRequestManualEntry
+      | PaymentRequestTransactionSummaryFromBanner
+      | PaymentRequestContinueWithPaymentMethods
+      | PaymentRequestPickPaymentMethod
+      | PaymentRequestConfirmPaymentMethod
+      | PaymentRequestPickPsp
+      | PaymentUpdatePsp
+      | PaymentRequestCompletion
+      | PaymentRequestGoBack
+      | PaymentRequestCancel
+      | PaymentCompleted = yield take([
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MANUAL_ENTRY,
       PAYMENT_REQUEST_TRANSACTION_SUMMARY,
@@ -618,7 +642,7 @@ const fetchPaymentId = async (
   const backendClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
-    pollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
+    constantPollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
   );
   const response = await backendClient.getPaymentId({ paymentContextCode });
   return response !== undefined && response.status === 200
@@ -852,7 +876,13 @@ function* completionHandler(
 export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
   while (true) {
-    const action = yield take([
+    const action:
+      | FetchTransactionsRequest
+      | FetchWalletsRequest
+      | AddCreditCardRequest
+      | LogoutSuccess
+      | PaymentRequestQrCode
+      | PaymentRequestMessage = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
       LOGOUT_SUCCESS,

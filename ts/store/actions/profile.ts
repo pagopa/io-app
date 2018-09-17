@@ -20,16 +20,16 @@ import { Omit } from "../../types/utils";
 
 // Actions
 
-export type ResetProfileState = Readonly<{
+type ResetProfileState = Readonly<{
   type: typeof RESET_PROFILE_STATE;
 }>;
 
-export type ProfileLoadSuccess = Readonly<{
+type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
   payload: AuthenticatedOrInitializedProfile;
 }>;
 
-export type ProfileLoadFailure = Readonly<{
+type ProfileLoadFailure = Readonly<{
   type: typeof PROFILE_LOAD_FAILURE;
   payload: Error;
   error: true;

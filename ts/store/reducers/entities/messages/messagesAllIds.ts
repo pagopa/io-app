@@ -11,7 +11,7 @@ import { GlobalState } from "../../types";
 // An array of messages id
 export type MessagesAllIdsState = ReadonlyArray<string>;
 
-export const INITIAL_STATE: MessagesAllIdsState = [];
+const INITIAL_STATE: MessagesAllIdsState = [];
 
 const reducer = (
   state: MessagesAllIdsState = INITIAL_STATE,

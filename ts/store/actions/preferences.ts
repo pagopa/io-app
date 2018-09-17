@@ -1,6 +1,6 @@
 import { PREFERENCES_LANGUAGES_LOAD_SUCCESS } from "./constants";
 
-export type PreferencesLanguagesLoadSuccess = Readonly<{
+type PreferencesLanguagesLoadSuccess = Readonly<{
   type: typeof PREFERENCES_LANGUAGES_LOAD_SUCCESS;
   payload: ReadonlyArray<string>;
 }>;
