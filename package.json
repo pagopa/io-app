@@ -94,7 +94,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/stacktrace-js": "^0.0.32",
     "@types/uuid": "^3.4.4",
-    "@types/validator": "^9.4.1",
+    "@types/validator": "^9.4.2",
     "babel-jest": "23.4.2",
     "babel-preset-react-native": "4.0.0",
     "chalk": "^2.4.1",
