@@ -1,38 +1,13 @@
 import { View } from "native-base";
 import * as React from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity
-} from "react-native";
+import { TextInput, TouchableOpacity } from "react-native";
 import CodeInput from "react-native-confirmation-code-input";
 
-import { PinString } from "../types/PinString";
-import { PIN_LENGTH } from "../utils/constants";
+import { PinString } from "../../types/PinString";
+import { PIN_LENGTH } from "../../utils/constants";
 
-const deviceWidth = Dimensions.get("window").height;
-
-const styles = StyleSheet.create({
-  placeholder: {
-    height: 40,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 10,
-    width: 24,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  placeholderBullet: {
-    borderRadius: 24,
-    height: 18,
-    width: 18
-  },
-  placeholderBaseline: {
-    borderBottomWidth: 2,
-    marginTop: 10
-  }
-});
+import { styles } from "./Pinpad.style";
+import { Baseline, Bullet } from "./Placeholders";
 
 interface Props {
   compareWithCode?: string;
@@ -66,11 +41,14 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handleChangeText = (inputValue: string) => {
     this.setState({ value: inputValue as PinString });
+    const pinValue = inputValue;
 
-    if (inputValue.length === PIN_LENGTH) {
-      const isValid = inputValue === this.props.compareWithCode;
+    if (pinValue.length === PIN_LENGTH) {
+      const isValid = pinValue === this.props.compareWithCode;
 
-      this.props.onFulfill(inputValue as PinString, isValid);
+      // Fire the callback asynchronously, otherwise this component
+      // will be unmounted before the render of the last bullet placeholder.
+      setTimeout(() => this.props.onFulfill(pinValue as PinString, isValid));
     }
   };
 
@@ -105,7 +83,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         </View>
         <TextInput
           ref={this.inputRef}
-          style={{ position: "absolute", left: -deviceWidth }}
+          style={styles.input}
           keyboardType="numeric"
           autoFocus={true}
           value={this.state.value}
@@ -116,25 +94,5 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
   }
 }
-
-interface PlaceholderProps {
-  color: string;
-}
-
-const Bullet: React.SFC<PlaceholderProps> = ({ color }) => (
-  <View style={styles.placeholder}>
-    <View style={[styles.placeholderBullet, { backgroundColor: color }]} />
-  </View>
-);
-
-const Baseline: React.SFC<PlaceholderProps> = ({ color }) => (
-  <View
-    style={[
-      styles.placeholder,
-      styles.placeholderBaseline,
-      { borderBottomColor: color }
-    ]}
-  />
-);
 
 export default Pinpad;
