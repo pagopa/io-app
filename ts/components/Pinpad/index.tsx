@@ -89,7 +89,7 @@ class Pinpad extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <TextInput

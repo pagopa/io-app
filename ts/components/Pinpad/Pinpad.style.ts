@@ -7,6 +7,10 @@ export const styles = StyleSheet.create({
     position: "absolute",
     left: -deviceWidth
   },
+  placeholderContainer: {
+    flexDirection: "row",
+    justifyContent: "center"
+  },
   placeholder: {
     height: 40,
     marginLeft: 8,
