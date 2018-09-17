@@ -77,17 +77,16 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the first CodeInput is filled
-  public onPinFulfill(code: PinString) {
+  public onPinFulfill = (code: PinString) =>
     this.setState({
       pinState: {
         state: "PinSelected",
         pin: code
       }
     });
-  }
 
   // Method called when the confirmation CodeInput is filled
-  public onPinConfirmFulfill(code: PinString, isValid: boolean) {
+  public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid) {
       if (this.pinConfirmComponent) {
@@ -101,7 +100,7 @@ class PinScreen extends React.Component<Props, State> {
         isConfirmationPinMatch: isValid
       }
     });
-  }
+  };
 
   public onPinReset() {
     if (this.pinConfirmComponent) {
