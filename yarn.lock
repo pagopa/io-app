@@ -7986,9 +7986,9 @@ typescript@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
-typestrict@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/typestrict/-/typestrict-0.0.9.tgz#e4c882afb55a698e6f8b1ca125c50c229593d72c"
+typestrict@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typestrict/-/typestrict-1.0.0.tgz#8545c45a319de4d399e192353d1d87928befa964"
   dependencies:
     tslint-microsoft-contrib "^5.0.3"
     tslint-sonarts "^1.7.0"
