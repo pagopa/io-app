@@ -85,7 +85,7 @@ type NoCards = Readonly<{
   type: CardEnum.NONE;
 }>;
 
-type CardType = FullCard | HeaderCard | FannedCards | NoCards;
+export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
 type ReduxMappedProps = Readonly<{
   startPayment: () => void;
