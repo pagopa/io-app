@@ -7,23 +7,31 @@
  * wrapped in a ScrollView, and optionally a
  * footer with a button for starting a new payment
  */
-import { Button, Left, Body, Container, Content, Text, View } from "native-base";
+import {
+  Body,
+  Button,
+  Container,
+  Content,
+  Left,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
-import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import GoBackButton from "../GoBackButton";
-import AppHeader from "../ui/AppHeader";
-import IconFont from "../ui/IconFont";
-import CardComponent from "./card";
-import { LogoPosition } from "./card/Logo";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
+import GoBackButton from "../GoBackButton";
 import { WalletStyles } from "../styles/wallet";
+import AppHeader from "../ui/AppHeader";
+import IconFont from "../ui/IconFont";
+import CardComponent from "./card";
+import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -45,7 +53,7 @@ const styles = StyleSheet.create({
     ]
   },
   shiftDown: {
-    marginBottom: -(58/2 + 1)
+    marginBottom: -(58 / 2 + 1)
   }
 });
 
