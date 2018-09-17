@@ -6,7 +6,6 @@ import { Button, Content, Text, View } from "native-base";
 
 import { connect } from "react-redux";
 
-import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import I18n from "../i18n";
@@ -43,7 +42,7 @@ type Props = ReduxMappedProps &
   OwnProps &
   ContextualHelpInjectedProps;
 
-type CodeInputRef = CodeInput | null;
+type CodeInputRef = Pinpad | null;
 /**
  * A screen that allows the user to unlock the app with a PIN.
  */

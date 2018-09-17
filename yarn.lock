@@ -6353,13 +6353,6 @@ react-native-config@^0.11.2:
   version "0.11.5"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.5.tgz#516cb7b6ec437c7739236ca075971db3aabdcb95"
 
-"react-native-confirmation-code-input@git://github.com/teamdigitale/react-native-confirmation-code-input.git#io":
-  version "1.0.1"
-  resolved "git://github.com/teamdigitale/react-native-confirmation-code-input.git#eaec9fdeaaf64029e5fcf6fbae7a0e7732c52147"
-  dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
-
 react-native-device-info@^0.22:
   version "0.22.5"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.22.5.tgz#9b1882cbb030f2926cff77336e7cd2e87edf52bf"

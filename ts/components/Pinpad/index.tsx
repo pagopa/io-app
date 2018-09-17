@@ -1,7 +1,7 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { TextInput, TouchableOpacity } from "react-native";
-import CodeInput from "react-native-confirmation-code-input";
 
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
@@ -9,11 +9,14 @@ import { PIN_LENGTH } from "../../utils/constants";
 import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
 
+const fucusElement = (el: TextInput) => el.focus();
+const blurElement = (el: TextInput) => el.blur();
+const current = (ref: React.RefObject<TextInput>) => ref.current;
+
 interface Props {
   compareWithCode?: string;
   inactiveColor: string;
   activeColor: string;
-  codeInputRef?: React.Ref<CodeInput>;
   onFulfill: (code: PinString, isValid: boolean) => void;
 }
 
@@ -39,12 +42,22 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
   }
 
+  public foldInputRef = (fn: (el: TextInput) => void) =>
+    fromNullable(this.inputRef)
+      .mapNullable(current)
+      .fold(undefined, fn);
+
   private handleChangeText = (inputValue: string) => {
     this.setState({ value: inputValue as PinString });
     const pinValue = inputValue;
 
+    // Pin is fulfilled
     if (pinValue.length === PIN_LENGTH) {
       const isValid = pinValue === this.props.compareWithCode;
+
+      if (isValid) {
+        this.foldInputRef(blurElement);
+      }
 
       // Fire the callback asynchronously, otherwise this component
       // will be unmounted before the render of the last bullet placeholder.
@@ -52,11 +65,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
-  private handlePlaceholderPress = () => {
-    if (this.inputRef && this.inputRef.current) {
-      this.inputRef.current.focus();
-    }
-  };
+  private handlePlaceholderPress = () => this.foldInputRef(fucusElement);
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;

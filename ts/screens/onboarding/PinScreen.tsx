@@ -10,7 +10,6 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import CodeInput from "react-native-confirmation-code-input";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
@@ -63,7 +62,7 @@ type State = {
  * A screen that allow the user to set the PIN.
  */
 class PinScreen extends React.Component<Props, State> {
-  private pinConfirmComponent: CodeInput | null = null;
+  private pinConfirmComponent: Pinpad | null = null;
 
   constructor(props: Props) {
     super(props);
