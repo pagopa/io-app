@@ -14,6 +14,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
+import { WalletStyles } from "../styles/wallet";
 import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
@@ -52,8 +53,6 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   paymentMethodEntry: {
-    marginLeft: 0,
-    paddingRight: 0,
     height: 75
   },
   transactionText: {
@@ -85,7 +84,7 @@ export default class PaymentMethodsList extends React.Component<Props, never> {
           keyExtractor={item => item.name}
           renderItem={itemInfo => (
             <ListItem
-              style={AddMethodStyle.paymentMethodEntry}
+              style={[AddMethodStyle.paymentMethodEntry, WalletStyles.listItem]}
               onPress={() =>
                 itemInfo.item.navigateTo
                   ? navigate(itemInfo.item.navigateTo)

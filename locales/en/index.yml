@@ -318,6 +318,9 @@ wallet:
   transaction: Transaction
   noTransactions: There are no transactions.
   noNewTransactions: There are no new transactions.
+  noneTransactions: There are no transactions
+  noTransactionsDetails: You never used IO neither to pay nor to log in with an user registered on PagoPA, check your messages.
+  moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Latest transactions
   creditDebitCards: Credit/Debit Cards

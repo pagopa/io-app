@@ -6,12 +6,14 @@ import {
   Body,
   Content,
   Grid,
+  H3,
   Left,
   List,
   ListItem,
   Right,
   Row,
-  Text
+  Text,
+  View
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -82,9 +84,9 @@ class TransactionsList extends React.Component<Props> {
     const paymentReason = item.description;
     const amount = buildAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
-
     return (
       <ListItem
+        style={WalletStyles.listItem}
         onPress={() => {
           this.props.selectTransaction(item);
           this.props.selectWallet(item.idWallet);
@@ -119,7 +121,11 @@ class TransactionsList extends React.Component<Props> {
     if (transactions.length === 0) {
       return (
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
-          <Text>{I18n.t("wallet.noTransactions")}</Text>
+          <View spacer={true} />
+          <H3>{I18n.t("wallet.noneTransactions")}</H3>
+          <View spacer={true} />
+          <Text>{I18n.t("wallet.noTransactionsDetails")}</Text>
+          <View spacer={true} large={true} />
         </Content>
       );
     }
@@ -129,7 +135,7 @@ class TransactionsList extends React.Component<Props> {
         <Grid>
           <Row>
             <Left>
-              <Text bold={true}>{this.props.title}</Text>
+              <H3>{this.props.title}</H3>
             </Left>
             <Right>
               <Text>{this.props.totalAmount}</Text>

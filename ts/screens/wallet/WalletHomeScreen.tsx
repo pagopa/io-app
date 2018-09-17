@@ -6,7 +6,7 @@
 import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -14,8 +14,9 @@ import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
-import { CardEnum } from "../../components/wallet/WalletLayout";
+import { CardEnum, CardType } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
@@ -23,11 +24,10 @@ import { fetchTransactionsRequest } from "../../store/actions/wallet/transaction
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-
-type ScreenProps = {};
+import { Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps = Readonly<{
-  cardsNumber: number;
+  cards: ReadonlyArray<Wallet>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -40,20 +40,15 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
-  ScreenProps &
-  OwnProps;
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 const styles = StyleSheet.create({
-  twoRowsBanner: {
-    height: 120 // 60 x 2
+  flex: {
+    alignItems: "flex-end",
+    justifyContent: "space-between"
   },
-  threeRowsBanner: {
-    height: 180 // 60 x 3
-  },
-  bottomAlignedItems: {
-    alignItems: "flex-end"
+  inLineSpace: {
+    lineHeight: 20
   }
 });
 
@@ -61,88 +56,74 @@ const styles = StyleSheet.create({
  * Wallet Home Screen
  */
 class WalletHomeScreen extends React.Component<Props, never> {
+  private header() {
+    return (
+      <Row style={styles.flex}>
+        <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
+        <Image source={require("../../../img/wallet/bank.png")} />
+      </Row>
+    );
+  }
+
   private withCardsHeader() {
     return (
-      <Grid style={styles.threeRowsBanner}>
-        <Col size={2}>
-          <Row />
-          <Row style={styles.bottomAlignedItems}>
-            <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
-          </Row>
-          <Row>
-            <Left>
-              <Text bold={true} style={WalletStyles.white}>
-                {I18n.t("wallet.paymentMethods")}
-              </Text>
-            </Left>
-          </Row>
-        </Col>
-        <Col>
-          <Row size={2}>
-            <Image
-              source={require("../../../img/wallet/wallet-icon.png")}
-              style={WalletStyles.pfImage}
-            />
-          </Row>
-          <Row>
-            <Right>
-              <Text
-                onPress={(): boolean =>
-                  this.props.navigation.navigate(
-                    ROUTES.WALLET_ADD_PAYMENT_METHOD
-                  )
-                }
-                style={WalletStyles.white}
-              >
-                {I18n.t("wallet.newPaymentMethod.add")}
-              </Text>
-            </Right>
-          </Row>
-        </Col>
+      <Grid>
+        {this.header()}
+        <View spacer={true} />
+        <Row>
+          <Left>
+            <Text bold={true} style={WalletStyles.white}>
+              {I18n.t("wallet.paymentMethods")}
+            </Text>
+          </Left>
+          <Right>
+            <Text
+              onPress={(): boolean =>
+                this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+              }
+              style={WalletStyles.white}
+            >
+              {`+ ${I18n.t("wallet.newPaymentMethod.add")}`}
+            </Text>
+          </Right>
+        </Row>
       </Grid>
     );
   }
 
   private withoutCardsHeader() {
     return (
-      <View>
-        <Grid style={styles.twoRowsBanner}>
-          <Col size={2}>
-            <Row />
-            <Row style={styles.bottomAlignedItems}>
-              <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
-            </Row>
-          </Col>
-          <Col>
-            <Row size={2}>
-              <Image
-                source={require("../../../img/wallet/wallet-icon.png")}
-                style={WalletStyles.pfImage}
-              />
-            </Row>
-          </Col>
-        </Grid>
+      <Grid>
+        {this.header()}
         <View spacer={true} />
-        <Text style={WalletStyles.white}>
-          {I18n.t("wallet.newPaymentMethod.addDescription")}
-        </Text>
-        <View spacer={true} />
-        <View style={WalletStyles.container}>
-          <Button
-            bordered={true}
-            block={true}
-            style={WalletStyles.addPaymentMethodButton}
-            onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
-            }
-          >
-            <Text style={WalletStyles.addPaymentMethodText}>
-              {I18n.t("wallet.newPaymentMethod.addButton")}
-            </Text>
-          </Button>
+        <Row>
+          <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+            {I18n.t("wallet.newPaymentMethod.addDescription")}
+          </Text>
+        </Row>
+        <Row>
           <View spacer={true} />
-        </View>
-      </View>
+        </Row>
+        <Row>
+          <View style={WalletStyles.container}>
+            <Button
+              bordered={true}
+              block={true}
+              style={WalletStyles.addPaymentMethodButton}
+              onPress={(): boolean =>
+                this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+              }
+            >
+              <Text style={WalletStyles.addPaymentMethodText}>
+                {I18n.t("wallet.newPaymentMethod.addButton")}
+              </Text>
+            </Button>
+          </View>
+        </Row>
+        <Row>
+          <View spacer={true} />
+        </Row>
+      </Grid>
     );
   }
 
@@ -154,25 +135,35 @@ class WalletHomeScreen extends React.Component<Props, never> {
     this.props.loadTransactions();
   }
 
-  public render(): React.ReactNode {
-    const showCards = this.props.cardsNumber > 0;
+  // check the cards to display (none, one or two cards)
+  private getCardType(): CardType {
+    const cards = this.props.cards;
 
-    // TODO: cards list is currently mocked, will be implemented properly @https://www.pivotaltracker.com/story/show/157422715
+    switch (this.props.cards.length) {
+      case 0:
+        return { type: CardEnum.NONE };
+      case 1:
+        return { type: CardEnum.HEADER, card: cards[0] };
+      default:
+        return { type: CardEnum.FAN, cards: [cards[0], cards[1]] };
+    }
+  }
+
+  public render(): React.ReactNode {
+    const showCards = this.props.cards.length > 0;
+    const moreCards = this.props.cards.length > 1;
     const headerContents = showCards
       ? this.withCardsHeader()
       : this.withoutCardsHeader();
 
     return (
       <WalletLayout
-        title={I18n.t("wallet.wallet")}
+        title={DEFAULT_APPLICATION_NAME}
         navigation={this.props.navigation}
         headerContents={headerContents}
-        cardType={
-          showCards
-            ? { type: CardEnum.FAN, cards: [] }
-            : { type: CardEnum.NONE }
-        }
+        cardType={this.getCardType()}
         allowGoBack={false}
+        moreCards={moreCards}
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
@@ -186,13 +177,14 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  cardsNumber: walletsSelector(state).length
+  cards: walletsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
