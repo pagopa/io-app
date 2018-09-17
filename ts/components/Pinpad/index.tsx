@@ -21,7 +21,7 @@ interface Props {
 }
 
 interface State {
-  value: PinString;
+  value: string;
 }
 
 /**
@@ -39,7 +39,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      value: "" as PinString
+      value: ""
     };
 
     this.inputRef = React.createRef();
@@ -52,7 +52,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       .fold(undefined, fn);
 
   private handleChangeText = (inputValue: string) => {
-    this.setState({ value: inputValue as PinString });
+    this.setState({ value: inputValue });
 
     // Pin is fulfilled
     if (inputValue.length === PIN_LENGTH) {
@@ -73,7 +73,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handlePlaceholderPress = () => this.foldInputRef(focusElement);
 
-  public clear = () => this.setState({ value: "" as PinString });
+  public clear = () => this.setState({ value: "" });
 
   public componentWillUnmount() {
     if (this.onFulfillTimeoutId) {
