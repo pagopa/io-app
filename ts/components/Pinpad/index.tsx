@@ -49,11 +49,10 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handleChangeText = (inputValue: string) => {
     this.setState({ value: inputValue as PinString });
-    const pinValue = inputValue;
 
     // Pin is fulfilled
-    if (pinValue.length === PIN_LENGTH) {
-      const isValid = pinValue === this.props.compareWithCode;
+    if (inputValue.length === PIN_LENGTH) {
+      const isValid = inputValue === this.props.compareWithCode;
 
       if (isValid) {
         this.foldInputRef(blurElement);
@@ -61,7 +60,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       // Fire the callback asynchronously, otherwise this component
       // will be unmounted before the render of the last bullet placeholder.
-      setTimeout(() => this.props.onFulfill(pinValue as PinString, isValid));
+      setTimeout(() => this.props.onFulfill(inputValue as PinString, isValid));
     }
   };
 
