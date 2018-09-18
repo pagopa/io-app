@@ -2,37 +2,29 @@ import { isNone } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
+import { BackendClient } from "../api/backend";
+import { PagoPaClient } from "../api/pagopa";
+import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import { startApplicationInitialization } from "../store/actions/application";
 import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
-import { navigateToDeepLink } from "../store/actions/deepLink";
-import { navigateToMainNavigatorAction } from "../store/actions/navigation";
+import {
+  navigateToMainNavigatorAction,
+  navigateToMessageDetailScreenAction
+} from "../store/actions/navigation";
+import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { deepLinkSelector } from "../store/reducers/deepLink";
-
-import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
-
-import { SagaCallReturnType } from "../types/utils";
-
-import { getPin } from "../utils/keychain";
-
-import { BackendClient } from "../api/backend";
-
 import {
-  watchMessagesLoadOrCancelSaga,
-  watchNavigateToMessageDetailsSaga
-} from "./startup/watchLoadMessagesSaga";
-
+  PendingMessageState,
+  pendingMessageStateSelector
+} from "../store/reducers/notifications/pendingMessage";
+import { SagaCallReturnType } from "../types/utils";
+import { getPin } from "../utils/keychain";
 import { updateInstallationSaga } from "./notifications";
-
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
-
-import { NavigationRoute } from "react-navigation";
-import { PagoPaClient } from "../api/pagopa";
-import { currentRouteSelector } from "../store/reducers/navigation";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -40,6 +32,8 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
+import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
+import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -169,12 +163,14 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.getMessage,
     backendClient.getService
   );
-  // Navigate to message details when requested
+
+  // Load message and related entities (ex. the sender service)
   yield fork(
-    watchNavigateToMessageDetailsSaga,
+    watchLoadMessageWithRelationsSaga,
     backendClient.getMessage,
     backendClient.getService
   );
+
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
   // Handles the expiration of the session token
@@ -184,21 +180,22 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Watch for requests to reset the PIN
   yield fork(watchPinResetSaga);
 
-  // Finally we decide where to navigate to based on whether we have a deep link
-  // stored in the state (e.g. coming from a push notification or from a
-  // previously stored navigation state)
-  const deepLink: ReturnType<typeof deepLinkSelector> = yield select(
-    deepLinkSelector
+  // Check if we have a pending notification message
+  const pendingMessageState: PendingMessageState = yield select(
+    pendingMessageStateSelector
   );
 
-  const currentRoute: NavigationRoute = yield select(currentRouteSelector);
+  if (pendingMessageState) {
+    // We have a pending notification message to handle
+    const messageId = pendingMessageState.id;
 
-  if (deepLink) {
-    // If a deep link has been set, navigate to deep link...
-    yield put(navigateToDeepLink(deepLink, currentRoute.key));
+    // Remove the pending message from the notification state
+    yield put(clearNotificationPendingMessage());
+
+    // Navigate to message details screen
+    yield put(navigateToMessageDetailScreenAction(messageId));
   } else {
-    // ... otherwise to the MainNavigator
-    yield put(navigateToMainNavigatorAction(currentRoute.key));
+    yield put(navigateToMainNavigatorAction);
   }
 }
 
