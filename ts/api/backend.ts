@@ -145,7 +145,7 @@ export type LogoutT = IPostApiRequestType<
   BasicResponseTypeWith401<SuccessResponse>
 >;
 
-type VerificaRptT = IGetApiRequestType<
+export type VerificaRptT = IGetApiRequestType<
   {
     rptId: RptId;
   },
@@ -154,7 +154,7 @@ type VerificaRptT = IGetApiRequestType<
   BasicResponseTypeWith401<PaymentRequestsGetResponse>
 >;
 
-type AttivaRptT = IPostApiRequestType<
+export type AttivaRptT = IPostApiRequestType<
   {
     rptId: string;
     paymentContextCode: CodiceContestoPagamento;
@@ -165,7 +165,7 @@ type AttivaRptT = IPostApiRequestType<
   BasicResponseTypeWith401<PaymentActivationsPostResponse>
 >;
 
-type GetPaymentIdT = IGetApiRequestType<
+export type GetPaymentIdT = IGetApiRequestType<
   {
     paymentContextCode: CodiceContestoPagamento;
   },

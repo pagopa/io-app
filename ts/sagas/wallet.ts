@@ -18,12 +18,19 @@ import {
 
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
-import { BackendClient, BasicResponseTypeWith401 } from "../api/backend";
+import {
+  AttivaRptT,
+  BackendClient,
+  BasicResponseTypeWith401,
+  GetPaymentIdT,
+  VerificaRptT
+} from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import ROUTES from "../navigation/routes";
@@ -326,17 +333,29 @@ function* addCreditCard(
   yield put(navigateTo(ROUTES.WALLET_HOME));
 }
 
-function* paymentSagaFromQrCode(): Iterator<Effect> {
+function* paymentSagaFromQrCode(
+  getVerificaRpt: TypeofApiCall<VerificaRptT>,
+  postAttivaRpt: TypeofApiCall<AttivaRptT>,
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+): Iterator<Effect> {
   yield put(paymentQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
-  yield fork(watchPaymentSaga);
+  yield fork(watchPaymentSaga, getVerificaRpt, postAttivaRpt, getPaymentIdApi);
 }
 
-function* paymentSagaFromMessage(): Iterator<Effect> {
-  yield fork(watchPaymentSaga);
+function* paymentSagaFromMessage(
+  getVerificaRpt: TypeofApiCall<VerificaRptT>,
+  postAttivaRpt: TypeofApiCall<AttivaRptT>,
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+): Iterator<Effect> {
+  yield fork(watchPaymentSaga, getVerificaRpt, postAttivaRpt, getPaymentIdApi);
 }
 
-function* watchPaymentSaga(): Iterator<Effect> {
+function* watchPaymentSaga(
+  getVerificaRpt: TypeofApiCall<VerificaRptT>,
+  postAttivaRpt: TypeofApiCall<AttivaRptT>,
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+): Iterator<Effect> {
   while (true) {
     const action:
       | PaymentRequestQrCode
@@ -379,11 +398,22 @@ function* watchPaymentSaga(): Iterator<Effect> {
           break;
         }
         case PAYMENT_REQUEST_TRANSACTION_SUMMARY: {
-          yield fork(showTransactionSummaryHandler, action, pagoPaClient);
+          yield fork(
+            showTransactionSummaryHandler,
+            action,
+            pagoPaClient,
+            getVerificaRpt
+          );
           break;
         }
         case PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS: {
-          yield fork(continueWithPaymentMethodsHandler, action, pagoPaClient);
+          yield fork(
+            continueWithPaymentMethodsHandler,
+            action,
+            pagoPaClient,
+            postAttivaRpt,
+            getPaymentIdApi
+          );
           break;
         }
         case PAYMENT_REQUEST_PICK_PAYMENT_METHOD: {
@@ -433,7 +463,8 @@ function* enterDataManuallyHandler(
 
 function* showTransactionSummaryHandler(
   action: PaymentRequestTransactionSummaryActions,
-  _: PagoPaClient
+  _: PagoPaClient,
+  getVerificaRpt: TypeofApiCall<VerificaRptT>
 ) {
   // the user may have gotten here from the QR code,
   // the manual data entry, from a message OR by
@@ -451,29 +482,15 @@ function* showTransactionSummaryHandler(
       initialAmount
     }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
 
-    const sessionToken: SessionToken | undefined = yield select(
-      sessionTokenSelector
-    );
-    if (sessionToken) {
-      const backendClient = BackendClient(
-        apiUrlPrefix,
-        sessionToken,
-        pagopaFetch()
+    const response:
+      | BasicResponseTypeWith401<PaymentRequestsGetResponse>
+      | undefined = yield call(getVerificaRpt, { rptId });
+    if (response !== undefined && response.status === 200) {
+      // response fetched successfully -- store it
+      // and proceed
+      yield put(
+        paymentTransactionSummaryFromRptId(rptId, initialAmount, response.value)
       );
-      const response:
-        | BasicResponseTypeWith401<PaymentRequestsGetResponse>
-        | undefined = yield call(backendClient.getVerificaRpt, { rptId });
-      if (response !== undefined && response.status === 200) {
-        // response fetched successfully -- store it
-        // and proceed
-        yield put(
-          paymentTransactionSummaryFromRptId(
-            rptId,
-            initialAmount,
-            response.value
-          )
-        );
-      } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
     } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
   } else {
     yield put(paymentTransactionSummaryFromBanner());
@@ -590,20 +607,14 @@ const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 // handle the "attiva" API call
 const attivaRpt = async (
-  sessionToken: SessionToken,
+  postAttivaRpt: TypeofApiCall<AttivaRptT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
 ): Promise<boolean> => {
-  const backendClient = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    pagopaFetch()
-  );
-
   const response:
     | BasicResponseTypeWith401<PaymentActivationsPostResponse>
-    | undefined = await backendClient.postAttivaRpt({
+    | undefined = await postAttivaRpt({
     rptId: RptIdFromString.encode(rptId),
     paymentContextCode,
     amount: amountToImportoWithFallback(amount)
@@ -613,17 +624,13 @@ const attivaRpt = async (
 
 // handle the polling
 const fetchPaymentId = async (
-  sessionToken: SessionToken,
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
   paymentContextCode: CodiceContestoPagamento
 ): Promise<string | undefined> => {
   // successfully request the payment activation
   // now poll until a paymentId is made available
-  const backendClient = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    constantPollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
-  );
-  const response = await backendClient.getPaymentId({ paymentContextCode });
+
+  const response = await getPaymentIdApi({ paymentContextCode });
   return response !== undefined && response.status === 200
     ? response.value.idPagamento
     : undefined;
@@ -635,13 +642,14 @@ const fetchPaymentId = async (
  * is available
  */
 const attivaAndGetPaymentId = async (
-  sessionToken: SessionToken,
+  postAttivaRpt: TypeofApiCall<AttivaRptT>,
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
 ): Promise<string | undefined> => {
   const attivaRptResult = await attivaRpt(
-    sessionToken,
+    postAttivaRpt,
     rptId,
     paymentContextCode,
     amount
@@ -649,7 +657,7 @@ const attivaAndGetPaymentId = async (
   if (!attivaRptResult) {
     return undefined;
   }
-  return await fetchPaymentId(sessionToken, paymentContextCode);
+  return await fetchPaymentId(getPaymentIdApi, paymentContextCode);
 };
 
 function* checkPayment(
@@ -675,7 +683,9 @@ function* checkPayment(
 
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  postAttivaRpt: TypeofApiCall<AttivaRptT>,
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
 ) {
   // find out whether a payment method has already
   // been defined as favorite. If so, use it and
@@ -705,7 +715,8 @@ function* continueWithPaymentMethodsHandler(
   if (!hasPaymentId && sessionToken !== undefined) {
     const tmp: string | undefined = yield call(
       attivaAndGetPaymentId,
-      sessionToken,
+      postAttivaRpt,
+      getPaymentIdApi,
       rptId,
       paymentContextCode,
       amount
@@ -839,8 +850,40 @@ function* completionHandler(
   }
 }
 
-export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
+export function* watchWalletSaga(
+  sessionToken: SessionToken,
+  pagoPaClient: PagoPaClient
+): Iterator<Effect> {
+  const backendClient = BackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    pagopaFetch()
+  );
+
+  // backend client for polling for paymentId
+  const pollingBackendClient = BackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    constantPollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
+  );
+
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
+
+  yield takeLatest(
+    PAYMENT_REQUEST_QR_CODE,
+    paymentSagaFromQrCode,
+    backendClient.getVerificaRpt,
+    backendClient.postAttivaRpt,
+    pollingBackendClient.getPaymentId
+  );
+  yield takeLatest(
+    PAYMENT_REQUEST_MESSAGE,
+    paymentSagaFromMessage,
+    backendClient.getVerificaRpt,
+    backendClient.postAttivaRpt,
+    pollingBackendClient.getPaymentId
+  );
+
   while (true) {
     const action:
       | FetchTransactionsRequest
@@ -873,14 +916,4 @@ export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
       break;
     }
   }
-}
-
-/**
- * saga that manages the wallet (transactions + wallets + payments)
- */
-export default function* root(): Iterator<Effect> {
-  // FIXME: these should be handled by watchWalletSaga (which should
-  // provide the pagoPaClient instance)
-  yield takeLatest(PAYMENT_REQUEST_QR_CODE, paymentSagaFromQrCode);
-  yield takeLatest(PAYMENT_REQUEST_MESSAGE, paymentSagaFromMessage);
 }

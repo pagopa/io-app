@@ -139,7 +139,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     pagoPaApiUrlPrefix,
     maybeSessionInformation.value.walletToken
   );
-  yield fork(watchWalletSaga, pagoPaClient);
+  yield fork(watchWalletSaga, sessionToken, pagoPaClient);
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
