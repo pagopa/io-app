@@ -1,6 +1,10 @@
 /**
  * Reducer, available states and selectors for the "payment" state
  */
+import {
+  fromArray as toNonEmptyArray,
+  NonEmptyArray
+} from "fp-ts/lib/NonEmptyArray";
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
@@ -108,11 +112,11 @@ type PaymentStates =
   | PaymentStatePickPsp;
 
 export type PaymentState = Readonly<{
-  stack: ReadonlyArray<PaymentStates>;
+  stack: NonEmptyArray<PaymentStates> | null;
 }>;
 
 const PAYMENT_INITIAL_STATE: PaymentState = {
-  stack: []
+  stack: null
 };
 
 // list of states that have a valid
@@ -125,18 +129,19 @@ type PaymentStatesWithVerificaResponse =
   | PaymentStatePickPsp;
 
 export type PaymentStateWithVerificaResponse = Readonly<{
-  stack: ReadonlyArray<PaymentStatesWithVerificaResponse>;
+  stack: NonEmptyArray<PaymentStatesWithVerificaResponse>;
 }>;
 
 // type guard for *PaymentState*WithVerificaResponse
 const isPaymentStateWithVerificaResponse = (
   state: PaymentState
 ): state is PaymentStateWithVerificaResponse =>
-  state.stack[0].kind === "PaymentStateSummary" ||
-  state.stack[0].kind === "PaymentStateSummaryWithPaymentId" ||
-  state.stack[0].kind === "PaymentStatePickPaymentMethod" ||
-  state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
-  state.stack[0].kind === "PaymentStatePickPsp";
+  state.stack !== null &&
+  (state.stack.head.kind === "PaymentStateSummary" ||
+    state.stack.head.kind === "PaymentStateSummaryWithPaymentId" ||
+    state.stack.head.kind === "PaymentStatePickPaymentMethod" ||
+    state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
+    state.stack.head.kind === "PaymentStatePickPsp");
 
 // type guard for *GlobalState*WithVerificaResponse
 export const isGlobalStateWithVerificaResponse = (
@@ -151,17 +156,18 @@ type PaymentStatesWithPaymentId =
   | PaymentStatePickPsp;
 
 export type PaymentStateWithPaymentId = Readonly<{
-  stack: ReadonlyArray<PaymentStatesWithPaymentId>;
+  stack: NonEmptyArray<PaymentStatesWithPaymentId>;
 }>;
 
 // type guard for *PaymentState*WithVerificaResponse
 const isPaymentStateWithPaymentId = (
   state: PaymentState
 ): state is PaymentStateWithPaymentId =>
-  state.stack[0].kind === "PaymentStateSummaryWithPaymentId" ||
-  state.stack[0].kind === "PaymentStatePickPaymentMethod" ||
-  state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
-  state.stack[0].kind === "PaymentStatePickPsp";
+  state.stack !== null &&
+  (state.stack.head.kind === "PaymentStateSummaryWithPaymentId" ||
+    state.stack.head.kind === "PaymentStatePickPaymentMethod" ||
+    state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
+    state.stack.head.kind === "PaymentStatePickPsp");
 
 // type guard for *GlobalState*WithPaymentId
 export const isGlobalStateWithPaymentId = (
@@ -176,15 +182,16 @@ type PaymentStatesWithSelectedPaymentMethod =
   | PaymentStatePickPsp;
 
 export type PaymentStateWithSelectedPaymentMethod = Readonly<{
-  stack: ReadonlyArray<PaymentStatesWithSelectedPaymentMethod>;
+  stack: NonEmptyArray<PaymentStatesWithSelectedPaymentMethod>;
 }>;
 
 // type guard for *PaymentState*WithSelectedPaymentMethod
 const isPaymentStateWithSelectedPaymentMethod = (
   state: PaymentState
 ): state is PaymentStateWithSelectedPaymentMethod =>
-  state.stack[0].kind === "PaymentStateConfirmPaymentMethod" ||
-  state.stack[0].kind === "PaymentStatePickPsp";
+  state.stack !== null &&
+  (state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
+    state.stack.head.kind === "PaymentStatePickPsp");
 
 // type guard for *GlobalState*WithSelectedPaymentMethod
 export const isGlobalStateWithSelectedPaymentMethod = (
@@ -193,56 +200,58 @@ export const isGlobalStateWithSelectedPaymentMethod = (
   isPaymentStateWithSelectedPaymentMethod(state.wallet.payment);
 
 /**
- * getPaymentStep returns the current step (i.e. stack[0])
+ * getPaymentStep returns the current step (i.e. stack.head)
  * If no step is available (clean stack), return a "NoState"
  * value -- that can be typeguarded as needed (kind !==/=== "PaymentStateNoState")
  */
 export const getPaymentStep = (state: GlobalState) =>
-  state.wallet.payment.stack.length > 0
-    ? state.wallet.payment.stack[0].kind
+  state.wallet.payment.stack !== null
+    ? state.wallet.payment.stack.head.kind
     : { kind: "PaymentStateNoState" };
 
 export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
-  state.wallet.payment.stack[0].rptId;
+  state.wallet.payment.stack.head.rptId;
 
 export const getPaymentContextCode = (
   state: GlobalStateWithVerificaResponse
 ): CodiceContestoPagamento =>
-  state.wallet.payment.stack[0].verificaResponse.codiceContestoPagamento;
+  state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento;
 
 export const getInitialAmount = (
   state: GlobalStateWithVerificaResponse
-): AmountInEuroCents => state.wallet.payment.stack[0].initialAmount;
+): AmountInEuroCents => state.wallet.payment.stack.head.initialAmount;
 
 export const getSelectedPaymentMethod = (
   state: GlobalStateWithSelectedPaymentMethod
-): number => state.wallet.payment.stack[0].selectedPaymentMethod;
+): number => state.wallet.payment.stack.head.selectedPaymentMethod;
 
 export const getCurrentAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents =>
   AmountToImporto.encode(
-    state.wallet.payment.stack[0].verificaResponse.importoSingoloVersamento
+    state.wallet.payment.stack.head.verificaResponse.importoSingoloVersamento
   );
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
 ): Option<EnteBeneficiario> =>
-  fromNullable(state.wallet.payment.stack[0].verificaResponse.enteBeneficiario);
+  fromNullable(
+    state.wallet.payment.stack.head.verificaResponse.enteBeneficiario
+  );
 
 export const getPaymentReason = (
   state: GlobalStateWithVerificaResponse
 ): Option<string> =>
   fromNullable(
-    state.wallet.payment.stack[0].verificaResponse.causaleVersamento
+    state.wallet.payment.stack.head.verificaResponse.causaleVersamento
   );
 
 export const getPspList = (
   state: GlobalStateWithSelectedPaymentMethod
-): ReadonlyArray<Psp> => state.wallet.payment.stack[0].pspList;
+): ReadonlyArray<Psp> => state.wallet.payment.stack.head.pspList;
 
 export const getPaymentId = (state: GlobalStateWithPaymentId): string =>
-  state.wallet.payment.stack[0].paymentId;
+  state.wallet.payment.stack.head.paymentId;
 
 export const selectedPaymentMethodSelector: (
   state: GlobalStateWithSelectedPaymentMethod
@@ -260,8 +269,8 @@ const isInAllowedOrigins = (
 ): boolean =>
   allowed.some(
     a =>
-      (a === "none" && state.stack.length === 0) ||
-      (state.stack.length > 0 && state.stack[0].kind === a)
+      (state.stack === null && a === "none") ||
+      (state.stack !== null && state.stack.head.kind === a)
   );
 
 const popUntil = (
@@ -283,15 +292,20 @@ const popUntil = (
 // grow indefinitely when looping through
 // the payment process
 const popToStateAndPush = (
-  stack: ReadonlyArray<PaymentStates>,
+  stack: PaymentState["stack"],
   state: PaymentStates,
   until: ReadonlyArray<string>
-) =>
-  [state].concat(
-    stack.some(s => until.some(u => u === s.kind))
-      ? popUntil(stack, until).slice(1)
-      : stack
-  );
+): NonEmptyArray<PaymentStates> => {
+  if (stack === null) {
+    // stack is empty
+    return new NonEmptyArray(state, []);
+  }
+  const shouldClean = stack.toArray().some(s => until.some(u => u === s.kind));
+  const cleanedStack = shouldClean
+    ? popUntil(stack.toArray(), until).slice(1)
+    : stack.toArray();
+  return new NonEmptyArray(state, cleanedStack);
+};
 
 type PaymentReducer = (state: PaymentState, action: Action) => PaymentState;
 /**
@@ -368,7 +382,7 @@ const summaryReducer: PaymentReducer = (
   ) {
     // payment summary being requested from tapping on the "payment banner"
     // in one of the subsequent screens
-    const prevState = state.stack[0];
+    const prevState = state.stack.head;
 
     return {
       // pop states until a valid one is reached
@@ -406,7 +420,7 @@ const pickMethodReducer: PaymentReducer = (
   ) {
     // comes from the initial payment summary, so the
     // action will contain a paymentId to be stored
-    const prevState = state.stack[0];
+    const prevState = state.stack.head;
     return {
       stack: popToStateAndPush(
         state.stack,
@@ -429,7 +443,7 @@ const pickMethodReducer: PaymentReducer = (
     ]) &&
     isPaymentStateWithPaymentId(state)
   ) {
-    const prevState = state.stack[0];
+    const prevState = state.stack.head;
     return {
       stack: popToStateAndPush(
         state.stack,
@@ -463,7 +477,7 @@ const confirmMethodReducer: PaymentReducer = (
       stack: popToStateAndPush(
         state.stack,
         {
-          ...state.stack[0],
+          ...state.stack.head,
           ...action.payload,
           kind: "PaymentStateConfirmPaymentMethod"
         },
@@ -484,7 +498,7 @@ const confirmMethodReducer: PaymentReducer = (
       stack: popToStateAndPush(
         state.stack,
         {
-          ...state.stack[0],
+          ...state.stack.head,
           ...action.payload,
           kind: "PaymentStateConfirmPaymentMethod"
         },
@@ -511,7 +525,7 @@ const pickPspReducer: PaymentReducer = (
       stack: popToStateAndPush(
         state.stack,
         {
-          ...state.stack[0],
+          ...state.stack.head,
           ...action.payload,
           kind: "PaymentStatePickPsp"
         },
@@ -532,7 +546,7 @@ const pickPspReducer: PaymentReducer = (
       stack: popToStateAndPush(
         state.stack,
         {
-          ...state.stack[0],
+          ...state.stack.head,
           ...action.payload,
           kind: "PaymentStatePickPsp"
         },
@@ -557,24 +571,29 @@ const goBackReducer: PaymentReducer = (
 
     // pop 1 step
     // ([].slice(1) -> [])
-    const newStack = state.stack.slice(1);
+    const newStack =
+      state.stack === null
+        ? null
+        : toNonEmptyArray(state.stack.tail).toNullable();
+
     if (
-      newStack.length > 0 &&
+      newStack !== null &&
       isPaymentStateWithPaymentId(state) &&
-      newStack[0].kind === "PaymentStateSummary"
+      newStack.head.kind === "PaymentStateSummary"
     ) {
-      const prevState = state.stack[0];
+      const prevState = state.stack.head;
 
       return {
-        stack: ([
+        stack: new NonEmptyArray(
           {
             kind: "PaymentStateSummaryWithPaymentId",
             verificaResponse: prevState.verificaResponse,
             rptId: prevState.rptId,
             paymentId: prevState.paymentId,
             initialAmount: prevState.initialAmount
-          }
-        ] as ReadonlyArray<PaymentStates>).concat(newStack.slice(1))
+          },
+          newStack.tail
+        )
       };
     }
     return {
@@ -596,7 +615,7 @@ const endPaymentReducer: PaymentReducer = (
     isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"])
   ) {
     return {
-      stack: [] // cleaning up
+      stack: null // cleaning up
     };
   }
   return state;
