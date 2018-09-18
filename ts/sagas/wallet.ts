@@ -102,7 +102,6 @@ import {
 } from "../store/reducers/wallet/payment";
 import {
   getFavoriteWalletId,
-  getNewCreditCard,
   specificWalletSelector,
   walletCountSelector
 } from "../store/reducers/wallet/wallets";
@@ -122,7 +121,7 @@ import {
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 import { amountToImportoWithFallback } from "../utils/amounts";
-import { constantPollingFetch } from "../utils/fetch";
+import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -220,23 +219,15 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
 }
 
 function* addCreditCard(
+  creditCard: CreditCard,
   _: boolean, // should the card be set as favorite?
   pagoPaClient: PagoPaClient
 ): Iterator<Effect> {
-  const card: Option<CreditCard> = yield select(getNewCreditCard);
-
-  /**
-   * Card data not available. show an error (TODO) and return
-   */
-  if (card.isNone()) {
-    return;
-  }
-
   const wallet: NullableWallet = {
     idWallet: null,
     type: "CREDIT_CARD",
     favourite: null,
-    creditCard: card.value
+    creditCard
   };
   // 1st call: boarding credit card
   const responseBoardCC:
@@ -464,7 +455,11 @@ function* showTransactionSummaryHandler(
       sessionTokenSelector
     );
     if (sessionToken) {
-      const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+      const backendClient = BackendClient(
+        apiUrlPrefix,
+        sessionToken,
+        pagopaFetch()
+      );
       const response:
         | BasicResponseTypeWith401<PaymentRequestsGetResponse>
         | undefined = yield call(backendClient.getVerificaRpt, { rptId });
@@ -600,7 +595,11 @@ const attivaRpt = async (
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
 ): Promise<boolean> => {
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+  const backendClient = BackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    pagopaFetch()
+  );
 
   const response:
     | BasicResponseTypeWith401<PaymentActivationsPostResponse>
@@ -863,7 +862,8 @@ export function* watchWalletSaga(pagoPaClient: PagoPaClient): Iterator<Effect> {
     if (action.type === ADD_CREDIT_CARD_REQUEST) {
       yield fork(
         addCreditCard,
-        action.payload, // should the card be set as favorite?
+        action.creditCard,
+        action.setAsFavorite, // should the card be set as favorite?
         pagoPaClient
       );
     }

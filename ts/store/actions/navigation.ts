@@ -33,11 +33,15 @@ export const resetToAuthenticationRoute: NavigationResetAction = StackActions.re
   }
 );
 
-export const navigateToMainNavigatorAction = (prevRouteKey: string) =>
-  StackActions.replace({
-    routeName: ROUTES.MAIN,
-    key: prevRouteKey
-  });
+export const navigateToMainNavigatorAction = StackActions.reset({
+  key: "StackRouterRoot",
+  index: 0,
+  actions: [
+    NavigationActions.navigate({
+      routeName: ROUTES.MAIN
+    })
+  ]
+});
 
 export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
@@ -57,3 +61,23 @@ export const navigateToPinLogin = NavigationActions.navigate({
 export const navigateToBackgroundScreen = NavigationActions.navigate({
   routeName: ROUTES.BACKGROUND
 });
+
+export const navigateToMessageDetailScreenAction = (messageId: string) =>
+  StackActions.reset({
+    key: "StackRouterRoot",
+    index: 0,
+    actions: [
+      NavigationActions.navigate({
+        routeName: ROUTES.MAIN,
+        action: NavigationActions.navigate({
+          routeName: ROUTES.MESSAGES_NAVIGATOR,
+          action: NavigationActions.navigate({
+            routeName: ROUTES.MESSAGE_DETAIL,
+            params: {
+              messageId
+            }
+          })
+        })
+      })
+    ]
+  });

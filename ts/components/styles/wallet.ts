@@ -128,5 +128,9 @@ export const WalletStyles = StyleSheet.create({
     height: 50,
     alignItems: "flex-end",
     flexDirection: "row"
+  },
+  listItem: {
+    marginLeft: 0,
+    paddingRight: 0
   }
 });

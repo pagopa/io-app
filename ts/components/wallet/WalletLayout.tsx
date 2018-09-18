@@ -7,28 +7,31 @@
  * wrapped in a ScrollView, and optionally a
  * footer with a button for starting a new payment
  */
-import { Body, Container, Content, Text, View } from "native-base";
-import { Button } from "native-base";
-import { Left } from "native-base";
+import {
+  Body,
+  Button,
+  Container,
+  Content,
+  Left,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
-import { ScrollView } from "react-native";
-import { Image, StyleSheet, TouchableHighlight } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import GoBackButton from "../GoBackButton";
-import AppHeader from "../ui/AppHeader";
-import IconFont from "../ui/IconFont";
-import CardComponent from "./card";
-import { LogoPosition } from "./card/Logo";
-
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
+import GoBackButton from "../GoBackButton";
 import { WalletStyles } from "../styles/wallet";
+import AppHeader from "../ui/AppHeader";
+import IconFont from "../ui/IconFont";
+import CardComponent from "./card";
+import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -36,6 +39,21 @@ const styles = StyleSheet.create({
   },
   noBottomPadding: {
     paddingBottom: 0
+  },
+  firstCard: {
+    flex: 1,
+    transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }]
+  },
+  secondCard: {
+    flex: 1,
+    transform: [
+      { rotateX: "-20deg" },
+      { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) },
+      { scaleX: 0.98 }
+    ]
+  },
+  shiftDown: {
+    marginBottom: -(58 / 2 + 1)
   }
 });
 
@@ -67,7 +85,7 @@ type NoCards = Readonly<{
   type: CardEnum.NONE;
 }>;
 
-type CardType = FullCard | HeaderCard | FannedCards | NoCards;
+export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
 type ReduxMappedProps = Readonly<{
   startPayment: () => void;
@@ -80,6 +98,7 @@ type OwnProps = Readonly<{
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
+  moreCards?: boolean;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -89,7 +108,8 @@ class WalletLayout extends React.Component<Props> {
     headerContents: null,
     cardType: { type: CardEnum.NONE } as NoCards,
     showPayButton: true,
-    allowGoBack: true
+    allowGoBack: true,
+    moreCards: false
   };
 
   private getLogo(): React.ReactNode {
@@ -104,18 +124,32 @@ class WalletLayout extends React.Component<Props> {
       }
       case CardEnum.FAN: {
         return (
-          <View style={WalletStyles.container}>
-            <TouchableHighlight
-              onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_LIST)
-              }
-            >
-              <Image
-                style={WalletStyles.pfCards}
-                source={require("../../../img/wallet/creditcards.png")}
-              />
-            </TouchableHighlight>
-          </View>
+          <TouchableOpacity
+            onPress={(): boolean =>
+              this.props.navigation.navigate(ROUTES.WALLET_LIST)
+            }
+          >
+            <View style={styles.shiftDown}>
+              <View style={styles.firstCard}>
+                <CardComponent
+                  navigation={this.props.navigation}
+                  item={this.props.cardType.cards[1]}
+                  logoPosition={LogoPosition.TOP}
+                  flatBottom={true}
+                  headerOnly={true}
+                />
+              </View>
+              <View style={styles.secondCard}>
+                <CardComponent
+                  navigation={this.props.navigation}
+                  item={this.props.cardType.cards[0]}
+                  logoPosition={LogoPosition.TOP}
+                  flatBottom={true}
+                  headerOnly={true}
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
         );
       }
       case CardEnum.FULL: {
@@ -166,6 +200,7 @@ class WalletLayout extends React.Component<Props> {
             <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
         </AppHeader>
+
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}

@@ -20,6 +20,7 @@ const INITIAL_STATE: ErrorState = {
   PIN_CREATE: none,
   PROFILE_LOAD: none,
   PROFILE_UPSERT: none,
+  MESSAGE_WITH_RELATIONS_LOAD: none,
   MESSAGES_LOAD: none,
   LOGOUT: none
 };
