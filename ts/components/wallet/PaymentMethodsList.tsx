@@ -16,10 +16,14 @@ import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 import { WalletStyles } from "../styles/wallet";
 import IconFont from "../ui/IconFont";
+import { withContextualHelp, ContextualHelpInjectedProps } from '../helpers/withContextualHelp';
+import Markdown from '../ui/Markdown';
 
-type Props = Readonly<{
+type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
+
+type Props = OwnProps & ContextualHelpInjectedProps;
 
 type Route = keyof typeof ROUTES;
 
@@ -70,7 +74,7 @@ const AddMethodStyle = StyleSheet.create({
   }
 });
 
-export default class PaymentMethodsList extends React.Component<Props, never> {
+class PaymentMethodsList extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { navigate } = this.props.navigation;
 
@@ -114,8 +118,14 @@ export default class PaymentMethodsList extends React.Component<Props, never> {
           )}
         />
         <View spacer={true} large={true} />
-        <Text link={true}>{I18n.t("wallet.whyFee")}</Text>
+        <Text link={true} onPress={this.props.showHelp}>{I18n.t("wallet.whyAFee.title")}</Text>
       </View>
     );
   }
 }
+
+export default withContextualHelp(
+  PaymentMethodsList,
+  I18n.t("wallet.whyAFee.title"),
+  () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
+);
