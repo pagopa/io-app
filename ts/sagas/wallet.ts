@@ -133,11 +133,10 @@ import {
   WalletListResponse,
   WalletResponse
 } from "../types/pagopa";
+import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
-import { SagaCallReturnType } from "../types/utils";
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
-import { getPin } from "../utils/keychain";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 
@@ -347,25 +346,40 @@ function* addCreditCard(
 function* paymentSagaFromQrCode(
   getVerificaRpt: TypeofApiCall<VerificaRptT>,
   postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  storedPin: PinString
 ): Iterator<Effect> {
   yield put(paymentQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
-  yield fork(watchPaymentSaga, getVerificaRpt, postAttivaRpt, getPaymentIdApi);
+  yield fork(
+    watchPaymentSaga,
+    getVerificaRpt,
+    postAttivaRpt,
+    getPaymentIdApi,
+    storedPin
+  );
 }
 
 function* paymentSagaFromMessage(
   getVerificaRpt: TypeofApiCall<VerificaRptT>,
   postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  storedPin: PinString
 ): Iterator<Effect> {
-  yield fork(watchPaymentSaga, getVerificaRpt, postAttivaRpt, getPaymentIdApi);
+  yield fork(
+    watchPaymentSaga,
+    getVerificaRpt,
+    postAttivaRpt,
+    getPaymentIdApi,
+    storedPin
+  );
 }
 
 function* watchPaymentSaga(
   getVerificaRpt: TypeofApiCall<VerificaRptT>,
   postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  storedPin: PinString
 ): Iterator<Effect> {
   while (true) {
     const action:
@@ -446,7 +460,7 @@ function* watchPaymentSaga(
           break;
         }
         case PAYMENT_REQUEST_COMPLETION: {
-          yield fork(completionHandler, action, pagoPaClient);
+          yield fork(completionHandler, action, pagoPaClient, storedPin);
           break;
         }
         case PAYMENT_REQUEST_GO_BACK: {
@@ -826,19 +840,18 @@ function* updatePspHandler(
 
 function* completionHandler(
   _: PaymentRequestCompletion,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  storedPin: PinString
 ) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
 
   // Retrieve the configured PIN from the keychain
-  const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
-  if (storedPin.isSome()) {
-    yield race({
-      proceed: call(loginWithPinSaga, storedPin.value),
-      reset: call(watchPinResetSaga)
-    });
-  }
+  yield race({
+    proceed: call(loginWithPinSaga, storedPin),
+    reset: call(watchPinResetSaga)
+  });
+
   const walletId: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);
 
@@ -883,7 +896,8 @@ function* completionHandler(
 
 export function* watchWalletSaga(
   sessionToken: SessionToken,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  storedPin: PinString
 ): Iterator<Effect> {
   const backendClient = BackendClient(
     apiUrlPrefix,
@@ -905,14 +919,16 @@ export function* watchWalletSaga(
     paymentSagaFromQrCode,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
-    pollingBackendClient.getPaymentId
+    pollingBackendClient.getPaymentId,
+    storedPin
   );
   yield takeLatest(
     PAYMENT_REQUEST_MESSAGE,
     paymentSagaFromMessage,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
-    pollingBackendClient.getPaymentId
+    pollingBackendClient.getPaymentId,
+    storedPin
   );
 
   while (true) {
