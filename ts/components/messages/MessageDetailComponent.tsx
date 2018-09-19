@@ -97,7 +97,9 @@ class MessageDetailComponent extends React.PureComponent<Props, never> {
         />
 
         <View style={styles.markdownContainer}>
-          <Markdown lazy={true}>{message.content.markdown}</Markdown>
+          <Markdown lazyOptions={{ lazy: true }}>
+            {message.content.markdown}
+          </Markdown>
         </View>
       </View>
     );
