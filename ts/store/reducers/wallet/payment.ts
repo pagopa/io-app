@@ -137,8 +137,7 @@ export type PaymentStateWithVerificaResponse = Readonly<{
 
 export const isPaymentStarted = (
   wallet: WalletState
-): wallet is WalletStateWithVerificaResponse =>
-  wallet.payment.stack.length !== 0;
+): wallet is WalletStateWithVerificaResponse => wallet.payment.stack !== null;
 
 // type guard for *PaymentState*WithVerificaResponse
 const isPaymentStateWithVerificaResponse = (
@@ -638,7 +637,7 @@ const cancelPaymentReducer: PaymentReducer = (
 ) => {
   if (action.type === PAYMENT_CANCEL) {
     return {
-      stack: [] // cleaning up
+      stack: null // cleaning up
     };
   }
   return state;
