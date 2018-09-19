@@ -5,6 +5,7 @@
  * @https://docs.google.com/document/d/1le-IdjcGWtmfrMzh6d_qTwsnhVNCExbCd6Pt4gX7VGo/edit
  */
 
+import { Either, left, right } from "fp-ts/lib/Either";
 import { call, Effect, put, take } from "redux-saga/effects";
 
 import {
@@ -18,9 +19,12 @@ import { PinCreateRequest } from "../../store/actions/pinset";
 
 import { setPin } from "../../utils/keychain";
 
+import { PinString } from "../../types/PinString";
 import { SagaCallReturnType } from "../../types/utils";
 
-export function* configurePinSaga(): Iterator<Effect | boolean> {
+export function* configurePinSaga(): Iterator<
+  Effect | Either<Error, PinString>
+> {
   // Navigate to the PinScreen
   yield put(navigateToOnboardingPinScreenAction);
 
@@ -37,10 +41,10 @@ export function* configurePinSaga(): Iterator<Effect | boolean> {
     }
     // We created a PIN, trigger a success
     yield put({ type: PIN_CREATE_SUCCESS });
-    return true;
+    return right(action.payload);
   } catch (error) {
     // We couldn't set a new PIN, trigger a failure
     yield put({ type: PIN_CREATE_FAILURE });
-    return false;
+    return left(error);
   }
 }

@@ -13,6 +13,7 @@ import {
   LOGOUT_SUCCESS,
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_SUCCESS,
+  NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
   NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
   PIN_CREATE_FAILURE,
   PIN_CREATE_SUCCESS,
@@ -85,6 +86,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case MESSAGES_LOAD_SUCCESS:
         case MESSAGES_LOAD_FAILURE:
         // other
+        case NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE:
         case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE:
           Mixpanel.track(nextAction.type);
           break;
