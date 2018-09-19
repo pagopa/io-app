@@ -15,6 +15,7 @@ import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import {
+  PAYMENT_CANCEL,
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_GO_BACK,
@@ -36,6 +37,8 @@ import {
   GlobalStateWithSelectedPaymentMethod,
   GlobalStateWithVerificaResponse
 } from "../types";
+import { WalletStateWithVerificaResponse } from "./../../reducers/wallet";
+import { WalletState } from "./index";
 import { getWalletFromId, getWallets } from "./wallets";
 
 // The following are possible states, identified
@@ -131,6 +134,10 @@ type PaymentStatesWithVerificaResponse =
 export type PaymentStateWithVerificaResponse = Readonly<{
   stack: NonEmptyArray<PaymentStatesWithVerificaResponse>;
 }>;
+
+export const isPaymentStarted = (
+  wallet: WalletState
+): wallet is WalletStateWithVerificaResponse => wallet.payment.stack !== null;
 
 // type guard for *PaymentState*WithVerificaResponse
 const isPaymentStateWithVerificaResponse = (
@@ -621,6 +628,21 @@ const endPaymentReducer: PaymentReducer = (
   return state;
 };
 
+/**
+ * Reducer for actions that cancel a payment
+ */
+const cancelPaymentReducer: PaymentReducer = (
+  state: PaymentState = PAYMENT_INITIAL_STATE,
+  action: Action
+) => {
+  if (action.type === PAYMENT_CANCEL) {
+    return {
+      stack: null // cleaning up
+    };
+  }
+  return state;
+};
+
 const reducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
@@ -632,6 +654,7 @@ const reducer = (
     confirmMethodReducer,
     pickPspReducer,
     goBackReducer,
+    cancelPaymentReducer,
     endPaymentReducer
   ];
   return reducers.reduce(

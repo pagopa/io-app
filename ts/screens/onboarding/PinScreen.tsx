@@ -1,3 +1,7 @@
+/**
+ * A screen that allow the user to set the PIN.
+ */
+
 import { Option } from "fp-ts/lib/Option";
 import {
   Body,
@@ -58,9 +62,6 @@ type State = {
   pinState: PinState;
 };
 
-/**
- * A screen that allow the user to set the PIN.
- */
 class PinScreen extends React.Component<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
 
