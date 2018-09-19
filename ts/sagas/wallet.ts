@@ -136,10 +136,10 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { SagaCallReturnType } from "../types/utils";
 import { amountToImportoWithFallback } from "../utils/amounts";
+import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 import { getPin } from "../utils/keychain";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
-import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
