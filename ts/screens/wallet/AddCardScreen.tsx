@@ -4,8 +4,16 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import { entries, range, size } from "lodash";
-import { Left } from "native-base";
-import { Body, Container, Content, Item, Text, View } from "native-base";
+import {
+  Body,
+  Container,
+  Content,
+  Item,
+  Left,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -13,6 +21,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../components/InstabugButtons";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
@@ -171,6 +180,9 @@ class AddCardScreen extends React.Component<Props, State> {
           <Body>
             <Text>{I18n.t("wallet.addCardTitle")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
 
         <ScrollView

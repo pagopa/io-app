@@ -18,12 +18,15 @@ import {
   Content,
   H1,
   Left,
+  Right,
   Text,
   View
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+
 import GoBackButton from "../../components/GoBackButton";
+import { InstabugButtons } from "../../components/InstabugButtons";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
@@ -63,6 +66,9 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
               <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
             )}
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
         {this.isInTransaction() ? (
           <Content noPadded={true}>

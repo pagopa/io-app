@@ -2,13 +2,23 @@
  * This screen presents a summary on the credit card after the user
  * inserted the data required to save a new card
  */
-import { Body, Container, Content, H1, Left, Text, View } from "native-base";
+import {
+  Body,
+  Container,
+  Content,
+  H1,
+  Left,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
+import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card";
@@ -86,6 +96,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           <Body>
             <Text>{I18n.t("wallet.saveCard.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
         <Content>
           <H1> {I18n.t("wallet.saveCard.title")} </H1>

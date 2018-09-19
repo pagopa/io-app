@@ -9,6 +9,7 @@ import {
   H1,
   Left,
   List,
+  Right,
   Text,
   View
 } from "native-base";
@@ -16,6 +17,7 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -94,6 +96,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           <Body>
             <Text>{I18n.t("wallet.payWith.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
         <Content noPadded={true}>
           <PaymentBannerComponent navigation={this.props.navigation} />

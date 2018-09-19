@@ -1,9 +1,8 @@
-import Instabug, { invocationMode } from "instabug-reactnative";
-import { Body, Button, Container, Left, Right, Text } from "native-base";
+import { Body, Container, Left, Right, Text } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { TouchableHighlight } from "react-native";
+import { StyleSheet, TouchableHighlight } from "react-native";
 
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
@@ -11,6 +10,13 @@ import AppHeader from "../ui/AppHeader";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import { ContextualHelp } from "../ContextualHelp";
 import GoBackButton from "../GoBackButton";
+import { InstabugButtons } from "../InstabugButtons";
+
+const styles = StyleSheet.create({
+  helpButton: {
+    paddingLeft: 10
+  }
+});
 
 interface ContextualHelpProps {
   title: string;
@@ -46,14 +52,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     this.setState({ isHelpVisible: false });
   };
 
-  private handleIBChatPress() {
-    Instabug.invokeWithInvocationMode(invocationMode.chatsList);
-  }
-
-  private handleIBBugPress() {
-    Instabug.invokeWithInvocationMode(invocationMode.newBug);
-  }
-
   public render() {
     const { goBack, headerTitle, contextualHelp } = this.props;
     return (
@@ -70,14 +68,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             </Text>
           </Body>
           <Right>
-            <Button onPress={this.handleIBChatPress}>
-              <Text>IBChat</Text>
-            </Button>
-            <Button onPress={this.handleIBBugPress}>
-              <Text>IBBug</Text>
-            </Button>
+            <InstabugButtons />
             {contextualHelp && (
-              <TouchableHighlight onPress={this.showHelp}>
+              <TouchableHighlight
+                onPress={this.showHelp}
+                style={styles.helpButton}
+              >
                 <IconFont name="io-question" />
               </TouchableHighlight>
             )}

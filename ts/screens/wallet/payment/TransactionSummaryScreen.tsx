@@ -13,13 +13,14 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
-import { Body, Container, Content, Left, Text, View } from "native-base";
+import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
@@ -131,6 +132,9 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
           <Body>
             <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
 
         <Content noPadded={true}>
