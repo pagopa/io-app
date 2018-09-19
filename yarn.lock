@@ -581,12 +581,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/hoist-non-react-statics@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.0.1.tgz#dde7c53101912dae8f45a1807f9857a59ddf3919"
-  dependencies:
-    "@types/react" "*"
-
 "@types/i18n-js@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.0.tgz#48a6be13cbe0e56904b301d1f58ce8847f731c44"
@@ -628,13 +622,6 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-i18n/-/react-native-i18n-2.0.0.tgz#2df92b3392d813b39530bd126aad429eedc9c3de"
   dependencies:
     "@types/i18n-js" "*"
-
-"@types/react-native-loading-spinner-overlay@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@types/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.1.tgz#4dcbe9cc71763ea2b7e89533402734a70d6def59"
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
 
 "@types/react-native-mixpanel@^0.1.0":
   version "0.1.0"
@@ -719,9 +706,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/validator@^9.4.2":
-  version "9.4.2"
-  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-9.4.2.tgz#9fec264b35f0ea21d0967eeec2dcd6a798b34350"
+"@types/validator@^9.4.1":
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-9.4.1.tgz#bea5a290e61f1cbf12af3fd878706aeec2ba0087"
 
 a-sync-waterfall@^1.0.0:
   version "1.0.0"
@@ -3713,12 +3700,6 @@ hoist-non-react-statics@^2.5.4:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
-hoist-non-react-statics@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.0.1.tgz#fba3e7df0210eb9447757ca1a7cb607162f0a364"
-  dependencies:
-    react-is "^16.3.2"
-
 home-or-tmp@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-2.0.0.tgz#e36c3f2d2cae7d746a857e38d18d5f32a7882db8"
@@ -3897,6 +3878,10 @@ inquirer@^3.0.6:
     string-width "^2.1.0"
     strip-ansi "^4.0.0"
     through "^2.3.6"
+
+instabug-reactnative@^8.0.12:
+  version "8.0.12"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.0.12.tgz#881bc5c3403b050f65d7286fa03e43033cc4fa22"
 
 invariant@^2.0.0, invariant@^2.2.0:
   version "2.2.3"
@@ -6176,10 +6161,6 @@ postinstall-build@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/postinstall-build/-/postinstall-build-5.0.1.tgz#b917a9079b26178d9a24af5a5cd8cb4a991d11b9"
 
-postinstall-postinstall@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/postinstall-postinstall/-/postinstall-postinstall-1.0.0.tgz#49c8c6dcc95fe02f1ffc8edfb35b83f1e6616be5"
-
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -6353,10 +6334,6 @@ react-devtools-core@3.1.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-is@^16.3.2:
-  version "16.5.1"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.1.tgz#c6e8734fd548a22e1cef4fd0833afbeb433b85ee"
-
 react-is@^16.4.2:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
@@ -6379,6 +6356,13 @@ react-native-camera@1.2.0:
 react-native-config@^0.11.2:
   version "0.11.5"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.5.tgz#516cb7b6ec437c7739236ca075971db3aabdcb95"
+
+"react-native-confirmation-code-input@git://github.com/teamdigitale/react-native-confirmation-code-input.git#io":
+  version "1.0.1"
+  resolved "git://github.com/teamdigitale/react-native-confirmation-code-input.git#eaec9fdeaaf64029e5fcf6fbae7a0e7732c52147"
+  dependencies:
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
 
 react-native-device-info@^0.22:
   version "0.22.5"
@@ -6444,10 +6428,6 @@ react-native-keyboard-aware-scroll-view@0.5.0:
 react-native-keychain@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-3.0.0.tgz#29da1dfa43c2581f76bf9420914fd38a1558cf18"
-
-react-native-loading-spinner-overlay@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.2.tgz#b7bcd277476d596615fd7feee601789f9bdc7acc"
 
 react-native-mixpanel@^0.0.16:
   version "0.0.16"

@@ -9,6 +9,7 @@ import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.vonovak.AddCalendarEventPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
@@ -37,22 +38,26 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new AddCalendarEventPackage(),
-            new SvgPackage(),
-            new RNTextInputMaskPackage(),
-            new SplashScreenReactPackage(),
-            new ReactNativeExceptionHandlerPackage(),
-            new RNCameraPackage(),
-            new VectorIconsPackage(),
-            new ReactNativePushNotificationPackage(),
-            new KeychainPackage(),
-            new RNI18nPackage(),
-            new Sha256Package(),
-            new RNMixpanel(),
-            new RNFSPackage(),
-            new RNDeviceInfo(),
-            new ReactNativeConfigPackage()
+        new MainReactPackage(),
+        new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
+          .setInvocationEvent("none")
+          .setPrimaryColor("#0073E6")
+          .build(),
+        new AddCalendarEventPackage(),
+        new SvgPackage(),
+        new RNTextInputMaskPackage(),
+        new SplashScreenReactPackage(),
+        new ReactNativeExceptionHandlerPackage(),
+        new RNCameraPackage(),
+        new VectorIconsPackage(),
+        new ReactNativePushNotificationPackage(),
+        new KeychainPackage(),
+        new RNI18nPackage(),
+        new Sha256Package(),
+        new RNMixpanel(),
+        new RNFSPackage(),
+        new RNDeviceInfo(),
+        new ReactNativeConfigPackage()
       );
     }
 

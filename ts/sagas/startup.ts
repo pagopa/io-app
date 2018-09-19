@@ -1,4 +1,4 @@
-import { isNone } from "fp-ts/lib/Option";
+import { isNone, Option } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 
@@ -15,6 +15,7 @@ import {
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
 import {
+  idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -27,6 +28,9 @@ import { SagaCallReturnType } from "../types/utils";
 import { getPin } from "../utils/keychain";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
+
+import { setInstabugProfileAttributes } from "../boot/configureInstabug";
+import { IdentityProvider } from "../models/IdentityProvider";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -123,6 +127,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     return;
   }
   const userProfile = maybeUserProfile.value;
+  const maybeIdp: Option<IdentityProvider> = yield select(idpSelector);
+
+  setInstabugProfileAttributes(userProfile, maybeIdp);
 
   // Retrieve the configured PIN from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
