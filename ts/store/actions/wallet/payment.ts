@@ -2,6 +2,7 @@ import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp } from "../../../types/pagopa";
 import {
+  PAYMENT_CANCEL,
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
   PAYMENT_GO_BACK,
@@ -12,6 +13,7 @@ import {
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_PICK_PSP,
   PAYMENT_QR_CODE,
+  PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
@@ -46,7 +48,7 @@ type PaymentManualEntry = Readonly<{
   type: typeof PAYMENT_MANUAL_ENTRY;
 }>;
 
-type PaymentRequestMessage = Readonly<{
+export type PaymentRequestMessage = Readonly<{
   type: typeof PAYMENT_REQUEST_MESSAGE;
 }>;
 
@@ -190,6 +192,14 @@ export type PaymentResetLoadingState = Readonly<{
   type: typeof PAYMENT_RESET_LOADING;
 }>;
 
+export type PaymentCancel = Readonly<{
+  type: typeof PAYMENT_CANCEL;
+}>;
+
+export type PaymentRequestCancel = Readonly<{
+  type: typeof PAYMENT_REQUEST_CANCEL;
+}>;
+
 /**
  * All possible payment actions
  */
@@ -218,7 +228,9 @@ export type PaymentActions =
   | PaymentGoBack
   | PaymentRequestGoBack
   | PaymentSetLoadingState
-  | PaymentResetLoadingState;
+  | PaymentResetLoadingState
+  | PaymentCancel
+  | PaymentRequestCancel;
 
 export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
   type: PAYMENT_REQUEST_QR_CODE
@@ -354,4 +366,12 @@ export const paymentSetLoadingState = (): PaymentSetLoadingState => ({
 
 export const paymentResetLoadingState = (): PaymentResetLoadingState => ({
   type: PAYMENT_RESET_LOADING
+});
+
+export const paymentCancel = (): PaymentCancel => ({
+  type: PAYMENT_CANCEL
+});
+
+export const paymentRequestCancel = (): PaymentRequestCancel => ({
+  type: PAYMENT_REQUEST_CANCEL
 });

@@ -192,7 +192,7 @@ pin_login:
   pin:
     pinInfo: Inserisci il codice PIN
     reset:
-      button: Ho dimenticato il mio PIN
+      button: Ho dimenticato il PIN
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.
@@ -203,12 +203,6 @@ pin_login:
     help:
       title: hello
       content: hello
-why_a_fee:
-  title: Perché devo pagare una commissione?
-  content: |-
-    Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
-    Pellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.
-    Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
 forms:
   validators:
     required: Valore richiesto
@@ -269,7 +263,7 @@ wallet:
   ConfirmPayment:
     header: Conferma pagamento
     cancel: ANNULLA
-    cancelPayment: Annulla il pagamento
+    cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo da pagare
@@ -359,13 +353,15 @@ wallet:
       expirationDate: mm/aa
       securityCode: "•••"
   acceptedCards: Carte accettate
-  whyFee: Perché la commissione?
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     byCameraTitle: QR Code avviso
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codive ente/azienda).
     setManually: Inserisci i dati manualmente
+  whyAFee:
+    title: Perchè devo pagare le commissioni?
+    text: !include why_a_fee.md
 saveCard:
   saveCard: Salva la carta
   cancel: Annulla

@@ -1,6 +1,10 @@
 // tslint:disable:max-union-size
 
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
+import {
+  paymentCancel,
+  PaymentRequestMessage
+} from "./../store/actions/wallet/payment";
 
 /**
  * A saga that manages the Wallet.
@@ -11,6 +15,7 @@ import {
   Effect,
   fork,
   put,
+  race,
   select,
   take,
   takeLatest
@@ -42,6 +47,7 @@ import {
   FETCH_WALLETS_REQUEST,
   LOGOUT_SUCCESS,
   PAYMENT_COMPLETED,
+  PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
   PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
   PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
@@ -66,9 +72,10 @@ import {
   paymentPickPaymentMethod,
   paymentPickPsp,
   paymentQrCode,
+  PaymentRequestCancel,
   PaymentRequestCompletion,
-  paymentRequestConfirmPaymentMethod,
   PaymentRequestConfirmPaymentMethod,
+  paymentRequestConfirmPaymentMethod,
   PaymentRequestContinueWithPaymentMethods,
   PaymentRequestGoBack,
   PaymentRequestManualEntry,
@@ -128,9 +135,12 @@ import {
   WalletListResponse,
   WalletResponse
 } from "../types/pagopa";
+import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
+import { loginWithPinSaga } from "./startup/pinLoginSaga";
+import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -338,25 +348,40 @@ function* addCreditCard(
 function* paymentSagaFromQrCode(
   getVerificaRpt: TypeofApiCall<VerificaRptT>,
   postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  storedPin: PinString
 ): Iterator<Effect> {
   yield put(paymentQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
-  yield fork(watchPaymentSaga, getVerificaRpt, postAttivaRpt, getPaymentIdApi);
+  yield fork(
+    watchPaymentSaga,
+    getVerificaRpt,
+    postAttivaRpt,
+    getPaymentIdApi,
+    storedPin
+  );
 }
 
 function* paymentSagaFromMessage(
   getVerificaRpt: TypeofApiCall<VerificaRptT>,
   postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  storedPin: PinString
 ): Iterator<Effect> {
-  yield fork(watchPaymentSaga, getVerificaRpt, postAttivaRpt, getPaymentIdApi);
+  yield fork(
+    watchPaymentSaga,
+    getVerificaRpt,
+    postAttivaRpt,
+    getPaymentIdApi,
+    storedPin
+  );
 }
 
 function* watchPaymentSaga(
   getVerificaRpt: TypeofApiCall<VerificaRptT>,
   postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  storedPin: PinString
 ): Iterator<Effect> {
   while (true) {
     const action:
@@ -370,6 +395,7 @@ function* watchPaymentSaga(
       | PaymentUpdatePsp
       | PaymentRequestCompletion
       | PaymentRequestGoBack
+      | PaymentRequestCancel
       | PaymentCompleted = yield take([
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MANUAL_ENTRY,
@@ -381,6 +407,7 @@ function* watchPaymentSaga(
       PAYMENT_UPDATE_PSP,
       PAYMENT_REQUEST_COMPLETION,
       PAYMENT_REQUEST_GO_BACK,
+      PAYMENT_REQUEST_CANCEL,
       PAYMENT_COMPLETED
     ]);
     if (action.type === PAYMENT_COMPLETED) {
@@ -435,16 +462,25 @@ function* watchPaymentSaga(
           break;
         }
         case PAYMENT_REQUEST_COMPLETION: {
-          yield fork(completionHandler, action, pagoPaClient);
+          yield fork(completionHandler, action, pagoPaClient, storedPin);
           break;
         }
         case PAYMENT_REQUEST_GO_BACK: {
           yield fork(goBackHandler, action, pagoPaClient);
           break;
         }
+        case PAYMENT_REQUEST_CANCEL: {
+          yield fork(cancelPaymentHandler, action);
+          break;
+        }
       }
     }
   }
+}
+
+function* cancelPaymentHandler(_: PaymentRequestCancel) {
+  yield put(paymentCancel()); // empty the stack
+  yield put(navigateTo(ROUTES.WALLET_HOME));
 }
 
 function* goBackHandler(_: PaymentRequestGoBack) {
@@ -858,10 +894,18 @@ function* updatePspHandler(
 
 function* completionHandler(
   _: PaymentRequestCompletion,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  storedPin: PinString
 ) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
+
+  // Retrieve the configured PIN from the keychain
+  yield race({
+    proceed: call(loginWithPinSaga, storedPin),
+    reset: call(watchPinResetSaga)
+  });
+
   const walletId: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);
 
@@ -916,7 +960,8 @@ function* completionHandler(
 
 export function* watchWalletSaga(
   sessionToken: SessionToken,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  storedPin: PinString
 ): Iterator<Effect> {
   const backendClient = BackendClient(
     apiUrlPrefix,
@@ -938,14 +983,16 @@ export function* watchWalletSaga(
     paymentSagaFromQrCode,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
-    pollingBackendClient.getPaymentId
+    pollingBackendClient.getPaymentId,
+    storedPin
   );
   yield takeLatest(
     PAYMENT_REQUEST_MESSAGE,
     paymentSagaFromMessage,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
-    pollingBackendClient.getPaymentId
+    pollingBackendClient.getPaymentId,
+    storedPin
   );
 
   while (true) {
@@ -953,9 +1000,14 @@ export function* watchWalletSaga(
       | FetchTransactionsRequest
       | FetchWalletsRequest
       | AddCreditCardRequest
-      | LogoutSuccess = yield take([
+      | LogoutSuccess
+      | PaymentRequestQrCode
+      | PaymentRequestMessage = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
+      LOGOUT_SUCCESS,
+      PAYMENT_REQUEST_QR_CODE,
+      PAYMENT_REQUEST_MESSAGE,
       ADD_CREDIT_CARD_REQUEST,
       LOGOUT_SUCCESS
     ]);

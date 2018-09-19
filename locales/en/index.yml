@@ -196,12 +196,6 @@ pin_login:
     help:
       title: hello
       content: hello
-why_a_fee:
-  title: Why do I have to pay a fee?
-  content: |-
-    Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
-    Pellentesque habitant morbi tristique senectus et netus. Sed haec quis possit intrepidus aestimare tellus. Cum ceteris in veneratione tui montes, nascetur mus. Me non paenitet nullum festiviorem excogitasse ad hoc. Etiam habebis sem dicantur magna mollis euismod. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Mercedem aut nummos unde unde extricat, amaras. Curabitur est gravida et libero vitae dictum. Fabio vel iudice vincam, sunt in culpa qui officia. Tityre, tu patulae recubans sub tegmine fagi dolor. Me non paenitet nullum festiviorem excogitasse ad hoc.
-    Tu quoque, Brute, fili mi, nihil timor populi, nihil! Donec sed odio operae, eu vulputate felis rhoncus. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Hi omnes lingua, institutis, legibus inter se differunt. Magna pars studiorum, prodita quaerimus. Quae vero auctorem tractata ab fiducia dicuntur.
 forms:
   validators:
     required: Required value
@@ -224,7 +218,7 @@ payment:
   currentPsp: Your current PSP is
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
-wallet:
+wallet:  
   wallet: Wallet
   creditcards: Credit Cards
   paymentMethods: Payment methods
@@ -350,13 +344,15 @@ wallet:
       expirationDate: mm/yy
       securityCode: "•••"
   acceptedCards: Accepted cards
-  whyFee: Why a fee?
   chooseMethod: Select the desired method
   QRtoPay:
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
+  whyAFee:
+    title: Why do I have to pay a fee?
+    text: !include why_a_fee.md
 saveCard:
   saveCard: Save the card
   cancel: Cancel

@@ -27,6 +27,7 @@ import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryCo
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentRequestCancel,
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack
 } from "../../../store/actions/wallet/payment";
@@ -62,6 +63,7 @@ type ReduxMappedStateProps =
 type ReduxMappedDispatchProps = Readonly<{
   confirmSummary: () => void;
   goBack: () => void;
+  cancelPayment: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -109,7 +111,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
     const secondaryButtonProps = {
       block: true,
       light: true,
-      onPress: () => this.props.goBack(),
+      onPress: () => this.props.cancelPayment(),
       title: I18n.t("wallet.cancel")
     };
 
@@ -174,7 +176,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),
-  goBack: () => dispatch(paymentRequestGoBack())
+  goBack: () => dispatch(paymentRequestGoBack()),
+  cancelPayment: () => dispatch(paymentRequestCancel())
 });
 
 export default withLoadingSpinner(

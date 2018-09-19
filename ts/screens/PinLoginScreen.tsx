@@ -1,36 +1,36 @@
-import * as React from "react";
-
-import { StatusBar } from "react-native";
+/**
+ * A screen that allows the user to:
+ * - unlock the app with a PIN
+ * - confirm to proceed with a payment by a PIN
+ * - cancel the payment process from the screen
+ */
 
 import { Button, Content, Text, View } from "native-base";
-
-import { connect } from "react-redux";
-
+import * as React from "react";
+import { StatusBar } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-
-import I18n from "../i18n";
-
-import variables from "../theme/variables";
-
+import { connect } from "react-redux";
 import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
-
 import IconFont from "../components/ui/IconFont";
 import TextWithIcon from "../components/ui/TextWithIcon";
-
+import I18n from "../i18n";
 import { pinLoginValidateRequest } from "../store/actions/pinlogin";
+import { startPinReset } from "../store/actions/pinset";
 import { ReduxProps } from "../store/actions/types";
+import { paymentRequestTransactionSummaryFromBanner } from "../store/actions/wallet/payment";
+import { AppState } from "../store/reducers/appState";
 import { PinLoginState } from "../store/reducers/pinlogin";
 import { GlobalState } from "../store/reducers/types";
-
-import { ContextualHelpInjectedProps } from "../components/helpers/withContextualHelp";
-import { startPinReset } from "../store/actions/pinset";
-import { AppState } from "../store/reducers/appState";
+import variables from "../theme/variables";
 import { PinString } from "../types/PinString";
+import { ContextualHelpInjectedProps } from "./../components/helpers/withContextualHelp";
+import { isPaymentStarted } from "./../store/reducers/wallet/payment";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
   appState: AppState;
+  isPaymentStarted: boolean;
 };
 
 type OwnProps = {
@@ -62,6 +62,10 @@ class PinLoginScreen extends React.Component<Props> {
 
   private onPinReset = () => {
     this.props.dispatch(startPinReset);
+  };
+
+  private goToPaymentSummary = () => {
+    this.props.dispatch(paymentRequestTransactionSummaryFromBanner());
   };
 
   // Method called when the CodeInput is filled
@@ -129,11 +133,26 @@ class PinLoginScreen extends React.Component<Props> {
           </Text>
           {this.renderCodeInput(pinLoginState)}
           <View spacer={true} extralarge={true} />
-          <Button block={true} primary={true} onPress={this.onPinReset}>
-            <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
+          {this.props.isPaymentStarted ? (
+            <Button
+              light={true}
+              bordered={true}
+              block={true}
+              primary={true}
+              white={true}
+              onPress={this.goToPaymentSummary}
+            >
+              <Text>{I18n.t("wallet.ConfirmPayment.cancelPayment")}</Text>
+            </Button>
+          ) : (
+            <View>
+              <Button block={true} primary={true} onPress={this.onPinReset}>
+                <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+              </Button>
+              <View spacer={true} />
+              <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
+            </View>
+          )}
         </Content>
       </BaseScreenComponent>
     );
@@ -142,11 +161,13 @@ class PinLoginScreen extends React.Component<Props> {
 
 const mapStateToProps = ({
   pinlogin,
-  appState
+  appState,
+  wallet
 }: GlobalState): ReduxMappedProps => ({
   // Checks from the store whether there was an error while login with the PIN (e.g. PIN is not valid )
   pinLoginState: pinlogin,
-  appState
+  appState,
+  isPaymentStarted: isPaymentStarted(wallet)
 });
 
 export default connect(mapStateToProps)(PinLoginScreen);

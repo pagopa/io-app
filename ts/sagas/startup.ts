@@ -22,6 +22,7 @@ import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../store/reducers/notifications/pendingMessage";
+import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { getPin } from "../utils/keychain";
 import { updateInstallationSaga } from "./notifications";
@@ -124,22 +125,28 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   const userProfile = maybeUserProfile.value;
 
   // Retrieve the configured PIN from the keychain
-  const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
+  const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
 
-  if (!previousSessionToken || isNone(storedPin)) {
+  // tslint:disable-next-line:no-let
+  let storedPin: PinString;
+
+  if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN sed, thus we need
     // to pass through the onboarding process.
     yield call(checkAcceptedTosSaga);
-    yield call(checkConfiguredPinSaga);
-  } else if (!isSessionRefreshed) {
-    // The user was previously logged in, so no onboarding is needed
-    // The session was valid so the user didn't event had to do a full login,
-    // in this case we ask the user to provide the PIN as a "lighter" login
-    yield race({
-      login: call(loginWithPinSaga, storedPin.value),
-      reset: call(watchPinResetSaga)
-    });
+    storedPin = yield call(checkConfiguredPinSaga);
+  } else {
+    storedPin = maybeStoredPin.value;
+    if (!isSessionRefreshed) {
+      // The user was previously logged in, so no onboarding is needed
+      // The session was valid so the user didn't event had to do a full login,
+      // in this case we ask the user to provide the PIN as a "lighter" login
+      yield race({
+        login: call(loginWithPinSaga, storedPin),
+        reset: call(watchPinResetSaga)
+      });
+    }
   }
 
   //
@@ -152,7 +159,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     pagoPaApiUrlPrefix,
     maybeSessionInformation.value.walletToken
   );
-  yield fork(watchWalletSaga, sessionToken, pagoPaClient);
+  yield fork(watchWalletSaga, sessionToken, pagoPaClient, storedPin);
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
