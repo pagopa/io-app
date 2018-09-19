@@ -330,7 +330,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             </Row>
             <View spacer={true} large={true} />
             {description && (
-              <Markdown lazy={true} animated={true}>
+              <Markdown lazyOptions={{ lazy: true, animated: true }}>
                 {description}
               </Markdown>
             )}
