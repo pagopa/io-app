@@ -19,6 +19,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
@@ -29,6 +30,7 @@ import {
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -43,8 +45,6 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../../../types/unknown";
-import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
-import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -177,10 +177,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
-export default
-withLoadingSpinner(
+export default withLoadingSpinner(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )(TransactionSummaryScreen),
-createLoadingSelector(["PAYMENT_LOAD"]), {});
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

@@ -10,6 +10,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -19,6 +20,7 @@ import {
   paymentRequestGoBack,
   paymentUpdatePsp
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getPaymentStep,
@@ -28,8 +30,6 @@ import {
 import variables from "../../../theme/variables";
 import { Psp } from "../../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../../utils/stringBuilder";
-import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
-import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -159,7 +159,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPsp: (pspId: number) => dispatch(paymentUpdatePsp(pspId)),
   goBack: () => dispatch(paymentRequestGoBack())
 });
-export default withLoadingSpinner(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PickPspScreen), createLoadingSelector(["PAYMENT_LOAD"]), {});
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PickPspScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

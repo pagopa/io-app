@@ -26,6 +26,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import CardComponent from "../../../components/wallet/card";
@@ -39,6 +40,7 @@ import {
   paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
 import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -50,8 +52,6 @@ import { feeExtractor } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { buildAmount } from "../../../utils/stringBuilder";
-import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
-import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -262,7 +262,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
-export default withLoadingSpinner(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConfirmPaymentMethodScreen), createLoadingSelector(["PAYMENT_LOAD"]), {});
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ConfirmPaymentMethodScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

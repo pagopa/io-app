@@ -7,8 +7,8 @@
 
 import {
   FetchRequestActionsType,
-  PAYMENT_SET_LOADING,
-  PAYMENT_RESET_LOADING
+  PAYMENT_RESET_LOADING,
+  PAYMENT_SET_LOADING
 } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";

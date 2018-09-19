@@ -39,15 +39,15 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
-import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
-import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps = Readonly<{
   valid: boolean;
@@ -216,4 +216,6 @@ export default withLoadingSpinner(
     mapStateToProps,
     mapDispatchToProps
   )(ManualDataInsertionScreen),
-createLoadingSelector(["PAYMENT_LOAD"]), {});
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);
