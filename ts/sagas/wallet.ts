@@ -644,10 +644,6 @@ const attivaRpt = async (
     paymentContextCode,
     amount: amountToImportoWithFallback(amount)
   });
-  console.warn(
-    paymentContextCode,
-    response !== undefined && response.status === 200
-  );
   return response !== undefined && response.status === 200;
 };
 
@@ -761,7 +757,6 @@ function* continueWithPaymentMethodsHandler(
         paymentContextCode,
         amount
       );
-      console.warn(paymentId);
       paymentId = tmp;
     } catch {
       /**
