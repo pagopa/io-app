@@ -25,7 +25,9 @@ import {
   PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
   PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID,
   PAYMENT_UPDATE_PSP,
-  PAYMENT_UPDATE_PSP_IN_STATE
+  PAYMENT_UPDATE_PSP_IN_STATE,
+  PAYMENT_RESET_LOADING,
+  PAYMENT_SET_LOADING
 } from "../constants";
 
 export type PaymentRequestQrCode = Readonly<{
@@ -180,6 +182,14 @@ export type PaymentRequestGoBack = Readonly<{
   type: typeof PAYMENT_REQUEST_GO_BACK;
 }>;
 
+export type PaymentSetLoadingState = Readonly<{
+  type: typeof PAYMENT_SET_LOADING;
+}>;
+
+export type PaymentResetLoadingState = Readonly<{
+  type: typeof PAYMENT_RESET_LOADING;
+}>;
+
 /**
  * All possible payment actions
  */
@@ -206,7 +216,9 @@ export type PaymentActions =
   | PaymentRequestCompletion
   | PaymentCompleted
   | PaymentGoBack
-  | PaymentRequestGoBack;
+  | PaymentRequestGoBack
+  | PaymentSetLoadingState
+  | PaymentResetLoadingState;
 
 export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
   type: PAYMENT_REQUEST_QR_CODE
@@ -334,4 +346,12 @@ export const paymentGoBack = (): PaymentGoBack => ({
 
 export const paymentRequestGoBack = (): PaymentRequestGoBack => ({
   type: PAYMENT_REQUEST_GO_BACK
+});
+
+export const paymentSetLoadingState = (): PaymentSetLoadingState => ({
+  type: PAYMENT_SET_LOADING
+});
+
+export const paymentResetLoadingState = (): PaymentResetLoadingState => ({
+  type: PAYMENT_RESET_LOADING
 });

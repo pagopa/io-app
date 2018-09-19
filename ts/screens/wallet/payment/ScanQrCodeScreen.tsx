@@ -39,6 +39,8 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
+import { createLoadingSelector } from '../../../store/reducers/loading';
+import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
 
 type ReduxMappedStateProps = Readonly<{
   valid: boolean;
@@ -266,7 +268,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
-export default connect(
+export default withLoadingSpinner(connect(
   mapStateToProps,
   mapDispatchToProps
-)(ScanQrCodeScreen);
+)(ScanQrCodeScreen), createLoadingSelector(["PAYMENT_LOAD"]), {});

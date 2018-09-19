@@ -43,6 +43,8 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../../../types/unknown";
+import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
+import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -175,7 +177,10 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TransactionSummaryScreen);
+export default
+withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TransactionSummaryScreen),
+createLoadingSelector(["PAYMENT_LOAD"]), {});

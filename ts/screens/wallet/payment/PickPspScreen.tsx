@@ -28,6 +28,8 @@ import {
 import variables from "../../../theme/variables";
 import { Psp } from "../../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../../utils/stringBuilder";
+import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
+import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -157,7 +159,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPsp: (pspId: number) => dispatch(paymentUpdatePsp(pspId)),
   goBack: () => dispatch(paymentRequestGoBack())
 });
-export default connect(
+export default withLoadingSpinner(connect(
   mapStateToProps,
   mapDispatchToProps
-)(PickPspScreen);
+)(PickPspScreen), createLoadingSelector(["PAYMENT_LOAD"]), {});

@@ -50,6 +50,8 @@ import { feeExtractor } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { buildAmount } from "../../../utils/stringBuilder";
+import { withLoadingSpinner } from '../../../components/helpers/withLoadingSpinner';
+import { createLoadingSelector } from '../../../store/reducers/loading';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -260,7 +262,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
-export default connect(
+export default withLoadingSpinner(connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConfirmPaymentMethodScreen);
+)(ConfirmPaymentMethodScreen), createLoadingSelector(["PAYMENT_LOAD"]), {});

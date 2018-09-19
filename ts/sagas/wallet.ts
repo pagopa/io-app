@@ -79,7 +79,9 @@ import {
   PaymentRequestTransactionSummaryFromBanner,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId,
-  PaymentUpdatePsp
+  PaymentUpdatePsp,
+  paymentSetLoadingState,
+  paymentResetLoadingState
 } from "../store/actions/wallet/payment";
 import {
   FetchTransactionsRequest,
@@ -482,9 +484,12 @@ function* showTransactionSummaryHandler(
       initialAmount
     }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
 
+    yield put(paymentSetLoadingState());
     const response:
       | BasicResponseTypeWith401<PaymentRequestsGetResponse>
       | undefined = yield call(getVerificaRpt, { rptId });
+    yield put(paymentResetLoadingState());
+
     if (response !== undefined && response.status === 200) {
       // response fetched successfully -- store it
       // and proceed
@@ -555,6 +560,7 @@ function* fetchPspList(
 
   let pspList: ReadonlyArray<Psp> = []; // tslint:disable-line: no-let
 
+  yield put(paymentSetLoadingState());
   const response:
     | BasicResponseTypeWith401<PspListResponse>
     | undefined = yield call(
@@ -562,6 +568,8 @@ function* fetchPspList(
     (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
     pagoPaClient
   );
+  yield put(paymentResetLoadingState());
+
   if (response !== undefined) {
     if (response.status === 200) {
       pspList = response.value.data;
@@ -664,6 +672,7 @@ function* checkPayment(
   pagoPaClient: PagoPaClient,
   paymentId: string
 ): Iterator<Effect> {
+  yield put(paymentSetLoadingState());
   const response:
     | BasicResponseTypeWith401<PaymentResponse>
     | undefined = yield call(
@@ -671,6 +680,8 @@ function* checkPayment(
     (t: string) => pagoPaClient.checkPayment(t, paymentId),
     pagoPaClient
   );
+  yield put(paymentResetLoadingState());
+
   if (response !== undefined) {
     if (response.status === 200) {
       // all is well
@@ -713,6 +724,7 @@ function* continueWithPaymentMethodsHandler(
   // a payment Id shows up
   let paymentId: string | undefined; // tslint:disable-line no-let
   if (!hasPaymentId && sessionToken !== undefined) {
+    yield put(paymentSetLoadingState());
     const tmp: string | undefined = yield call(
       attivaAndGetPaymentId,
       postAttivaRpt,
@@ -721,6 +733,8 @@ function* continueWithPaymentMethodsHandler(
       paymentContextCode,
       amount
     );
+    yield put(paymentResetLoadingState());
+    console.warn(paymentId);
     paymentId = tmp;
   }
   if (paymentId !== undefined) {
@@ -783,6 +797,8 @@ function* updatePspHandler(
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
   const walletId: number = yield select(getSelectedPaymentMethod);
+
+  yield put(paymentSetLoadingState());
   const response:
     | BasicResponseTypeWith401<WalletResponse>
     | undefined = yield call(
@@ -791,6 +807,8 @@ function* updatePspHandler(
       pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
     pagoPaClient
   );
+  yield put(paymentResetLoadingState());
+
   if (response !== undefined) {
     if (response.status === 200) {
       // request new wallets (expecting to get the
@@ -811,6 +829,7 @@ function* completionHandler(
   const walletId: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);
 
+  yield put(paymentSetLoadingState());
   const response:
     | BasicResponseTypeWith401<TransactionResponse>
     | undefined = yield call(
@@ -819,6 +838,8 @@ function* completionHandler(
       pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
     pagoPaClient
   );
+  yield put(paymentResetLoadingState());
+
   if (response !== undefined) {
     if (response.status === 200) {
       // request all transactions (expecting to get the
