@@ -139,9 +139,8 @@ class SpidInformationScreen extends React.Component<Props, never> {
   }
 }
 
-// TODO: set the proper title and content for the contextual help
 export default connect()(
-  withContextualHelp(
+  withContextualHelp<Props>(
     SpidInformationScreen,
     I18n.t("profile.main.privacy.title"),
     () => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
