@@ -19,7 +19,7 @@ const DEFAULT_FETCH_TIMEOUT_MS = 3000;
 const DEFAULT_FETCH_MAX_RETRIES = 3;
 
 // default timeout of fetch for calling the PagoPA SOAP APIs
-const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 15000;
+const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 60000;
 
 // default seconds of background activity before asking the PIN login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;

@@ -610,7 +610,7 @@ function* showWalletOrSelectPsp(
   }
 }
 
-const MAX_RETRIES_POLLING = 20;
+const MAX_RETRIES_POLLING = 180;
 const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 // handle the "attiva" API call
@@ -627,6 +627,10 @@ const attivaRpt = async (
     paymentContextCode,
     amount: amountToImportoWithFallback(amount)
   });
+  console.warn(
+    paymentContextCode,
+    response !== undefined && response.status === 200
+  );
   return response !== undefined && response.status === 200;
 };
 
