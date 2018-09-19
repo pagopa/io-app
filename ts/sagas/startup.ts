@@ -6,6 +6,7 @@ import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import { startApplicationInitialization } from "../store/actions/application";
+import { sessionExpired } from "../store/actions/authentication";
 import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
 import {
   navigateToMainNavigatorAction,
@@ -64,8 +65,20 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
-  // FIXME: handle result
-  yield fork(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  const installationResponseStatus: SagaCallReturnType<
+    typeof updateInstallationSaga
+  > = yield fork(
+    updateInstallationSaga,
+    backendClient.createOrUpdateInstallation
+  );
+  if (installationResponseStatus === 401) {
+    // This is the first API call we make to the backend, it may happen that
+    // when we're using the previous session token, that session has expired
+    // so we need to reset the session token and restart from scratch.
+    yield put(sessionExpired);
+    yield put(startApplicationInitialization);
+    return;
+  }
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;

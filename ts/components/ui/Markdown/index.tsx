@@ -1,11 +1,13 @@
 import merge from "lodash/merge";
 import { Text, View } from "native-base";
 import * as React from "react";
+import { InteractionManager, LayoutAnimation, UIManager } from "react-native";
+import { connect } from "react-redux";
 import * as SimpleMarkdown from "simple-markdown";
 
-import { InteractionManager, LayoutAnimation, UIManager } from "react-native";
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
+import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import ActivityIndicator from "../ActivityIndicator";
 import reactNativeRules from "./rules";
@@ -23,7 +25,11 @@ const markdownParser = SimpleMarkdown.parserFor(rules);
 const ruleOutput = SimpleMarkdown.ruleOutput(rules, "react_native");
 const reactOutput = SimpleMarkdown.reactFor(ruleOutput);
 
-function renderMarkdown(body: string): React.ReactNode {
+function renderMarkdown(
+  body: string,
+  dispatch: Dispatch,
+  initialState: SimpleMarkdown.State = {}
+): React.ReactNode {
   try {
     /**
      * Since many rules expect blocks to end in "\n\n", we append that
@@ -32,13 +38,20 @@ function renderMarkdown(body: string): React.ReactNode {
      */
     const blockSource = BLOCK_END_REGEX.test(body) ? body : body + "\n\n";
 
+    // We merge the initialState with always needed attributes
+    const state: SimpleMarkdown.State = {
+      ...initialState,
+      inline: false,
+      dispatch
+    };
+
     // Generate the syntax tree
     const syntaxTree = markdownParser(blockSource, {
       inline: false
     });
 
     // Render the syntax tree using the rules and return the value
-    return reactOutput(syntaxTree);
+    return reactOutput(syntaxTree, state);
   } catch (error) {
     return isDevEnvironment ? (
       <Text>
@@ -51,24 +64,22 @@ function renderMarkdown(body: string): React.ReactNode {
   }
 }
 
-interface BaseProps {
-  children: string;
-}
+type NotLazy = {
+  lazy: false;
+};
 
-interface NonLazyProps extends BaseProps {
-  lazy?: false;
-}
-
-interface LazyProps extends BaseProps {
+type Lazy = {
   lazy: true;
-
-  // Animates the layout, useful when there are other components below the
-  // Markdown component: enabling this will animate the growth of the
-  // Markdown component once the content gets rendered.
   animated?: boolean;
-}
+};
 
-type Props = NonLazyProps | LazyProps;
+type OwnProps = {
+  children: string;
+  lazyOptions?: NotLazy | Lazy;
+  initialState?: SimpleMarkdown.State;
+};
+
+type Props = OwnProps & ReduxProps;
 
 interface State {
   renderedMarkdown: ReturnType<typeof renderMarkdown> | undefined;
@@ -79,9 +90,11 @@ interface State {
  * A component that accepts "markdown" as child and render react native
  * components.
  */
-class Markdown extends React.PureComponent<Props, State> {
-  public static defaultProps: Partial<Props> = {
-    lazy: false
+export class Markdown extends React.PureComponent<Props, State> {
+  public static defaultProps: Pick<Props, "lazyOptions"> = {
+    lazyOptions: {
+      lazy: false
+    }
   };
 
   constructor(props: Props) {
@@ -93,11 +106,11 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const props = this.props;
-    if (props.lazy) {
+    const { lazyOptions, children, initialState, dispatch } = this.props;
+    if (lazyOptions && lazyOptions.lazy) {
       // Render the markdown string asynchronously.
       const cancelRender = InteractionManager.runAfterInteractions(() => {
-        if (props.animated) {
+        if (lazyOptions.animated) {
           // animate the layout change
           // see https://facebook.github.io/react-native/docs/layoutanimation.html
           if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -106,7 +119,7 @@ class Markdown extends React.PureComponent<Props, State> {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         }
         this.setState({
-          renderedMarkdown: renderMarkdown(props.children)
+          renderedMarkdown: renderMarkdown(children, dispatch, initialState)
         });
       }).cancel;
       this.setState({
@@ -123,7 +136,8 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    if (this.props.lazy) {
+    const { lazyOptions, children, initialState, dispatch } = this.props;
+    if (lazyOptions && lazyOptions.lazy) {
       if (!this.state.renderedMarkdown) {
         return (
           <View centerJustified={true}>
@@ -135,8 +149,8 @@ class Markdown extends React.PureComponent<Props, State> {
       return <View>{this.state.renderedMarkdown}</View>;
     }
 
-    return <View>{renderMarkdown(this.props.children)}</View>;
+    return <View>{renderMarkdown(children, dispatch, initialState)}</View>;
   }
 }
 
-export default Markdown;
+export default connect()(Markdown);

@@ -2,14 +2,11 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { InteractionManager } from "react-native";
 
+import themeVariables from "../../theme/variables";
+import { ComponentProps } from "../../types/react";
 import ActivityIndicator from "../ui/ActivityIndicator";
 import Markdown from "../ui/Markdown";
-
 import BaseScreenComponent from "./BaseScreenComponent";
-
-import { ComponentProps } from "../../types/react";
-
-import themeVariables from "../../theme/variables";
 
 interface OwnProps {
   readonly markdown: string;
