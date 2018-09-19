@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
  * the props showHelp, hideHelp and isHelpVisible
  * @param WrappedComponent Component using the ContextualHelp
  */
-export function withContextualHelp<P extends ContextualHelpInjectedProps>(
-  WrappedComponent: React.ComponentType<P>,
+export function withContextualHelp<P>(
+  WrappedComponent: React.ComponentType<P & ContextualHelpInjectedProps>,
   title: string,
   body: () => React.ReactNode
 ) {

@@ -37,19 +37,23 @@ platform :android do
   lane :alpha do
     # Ensure that your git status is not dirty
     # ensure_git_status_clean
-    
+
     gradle(
       task: "assemble",
       build_type: "Release",
       flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
 
-    # Generate the changelog based on commit messages since your last tag
-    changelog_from_git_commits
+    # Generate the changelog from the last commit message
+    changelog_from_git_commits(
+      commits_count: 1
+    )
 
     upload_to_play_store(
       track: "alpha",
-      apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+      apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}",
+      skip_upload_screenshots: true,
+      skip_upload_images: true
     )
   end
 
