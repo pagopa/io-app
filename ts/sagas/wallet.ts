@@ -831,10 +831,6 @@ function* completionHandler(
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
 
-  /**
-   * ask and check PIN before proceed with payment
-   * TODO: apply suggestion - https://github.com/teamdigitale/italia-app/pull/446
-   */
   // Retrieve the configured PIN from the keychain
   const storedPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
   if (storedPin.isSome()) {
