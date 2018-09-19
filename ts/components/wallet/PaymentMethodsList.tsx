@@ -14,10 +14,13 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
+import {
+  ContextualHelpInjectedProps,
+  withContextualHelp
+} from "../helpers/withContextualHelp";
 import { WalletStyles } from "../styles/wallet";
 import IconFont from "../ui/IconFont";
-import { withContextualHelp, ContextualHelpInjectedProps } from '../helpers/withContextualHelp';
-import Markdown from '../ui/Markdown';
+import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -118,7 +121,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
           )}
         />
         <View spacer={true} large={true} />
-        <Text link={true} onPress={this.props.showHelp}>{I18n.t("wallet.whyAFee.title")}</Text>
+        <Text link={true} onPress={this.props.showHelp}>
+          {I18n.t("wallet.whyAFee.title")}
+        </Text>
       </View>
     );
   }
