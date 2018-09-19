@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		003166291676479E902515D2 /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792875ED868845B580CD999A /* TitilliumWeb-Regular.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -392,7 +393,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ItaliaAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItaliaAppTests.m; sourceTree = "<group>"; };
 		070859D00BAB4567BE8D6065 /* TitilliumWeb-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Bold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf"; sourceTree = "<group>"; };
-		07DC040F34AE44AE9DFCB718 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		07DC040F34AE44AE9DFCB718 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		113AB84EBCC249D4891E88DA /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		13302F61209B350200C9B38F /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		133638FB213D788900B0C079 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -434,6 +435,7 @@
 		735406CD802B4D7FAD8B2CE1 /* TitilliumWeb-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Black.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Black.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		792875ED868845B580CD999A /* TitilliumWeb-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Regular.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Regular.ttf"; sourceTree = "<group>"; };
+		7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaApp.entitlements; path = ItaliaApp/ItaliaApp.entitlements; sourceTree = "<group>"; };
 		7D9DAC32BFB74BB1AA623021 /* TitilliumWeb-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLight.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		957D29404B4D44148A50733B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 		13B07FAE1A68108700A75B9A /* ItaliaApp */ = {
 			isa = PBXGroup;
 			children = (
+				7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */,
 				133638FC213D788900B0C079 /* InfoPlist.strings */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -848,6 +851,11 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 4RV73SN38W;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1335,8 +1343,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
@@ -1369,8 +1375,6 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft@2x.png",
@@ -1524,9 +1528,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 46;
+				CURRENT_PROJECT_VERSION = 47;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 4RV73SN38W;
 				HEADER_SEARCH_PATHS = (
@@ -1559,9 +1564,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 46;
+				CURRENT_PROJECT_VERSION = 47;
 				DEVELOPMENT_TEAM = 4RV73SN38W;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
