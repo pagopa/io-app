@@ -139,7 +139,6 @@ class SpidInformationScreen extends React.Component<Props, never> {
   }
 }
 
-// TODO: set the proper title and content for the contextual help
 export default connect()(
   withContextualHelp<Props>(
     SpidInformationScreen,
