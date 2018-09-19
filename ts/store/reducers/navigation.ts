@@ -44,6 +44,7 @@ function nextState(state: NavigationState, action: Action): NavigationState {
     case StackActions.RESET:
     case StackActions.REPLACE:
     case StackActions.POP_TO_TOP:
+    case StackActions.COMPLETE_TRANSITION:
       return AppNavigator.router.getStateForAction(action, state);
 
     // Used to restore a saved navigation state

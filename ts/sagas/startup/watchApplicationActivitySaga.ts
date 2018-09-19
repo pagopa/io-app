@@ -1,23 +1,30 @@
 import { NavigationActions } from "react-navigation";
 import { Effect } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { backgroundActivityTimeout } from "../../config";
-
 import { startApplicationInitialization } from "../../store/actions/application";
 import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
-import { navigateToBackgroundScreen } from "../../store/actions/navigation";
+import {
+  navigateToBackgroundScreen,
+  navigateToMessageDetailScreenAction
+} from "../../store/actions/navigation";
+import { clearNotificationPendingMessage } from "../../store/actions/notifications";
 import {
   ApplicationState,
   ApplicationStateAction
 } from "../../store/actions/types";
-
+import {
+  PendingMessageState,
+  pendingMessageStateSelector
+} from "../../store/reducers/notifications/pendingMessage";
 import { saveNavigationStateSaga } from "../startup/saveNavigationStateSaga";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to provide
  * the PIN
  */
+// tslint:disable-next-line:cognitive-complexity
 export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
 
@@ -57,9 +64,22 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         // re-initialize the app from scratch
         yield put(startApplicationInitialization);
       } else {
-        // Or else, just navigate back to the screen we were at before
-        // going into background
-        yield put(NavigationActions.back());
+        // Check if we have a pending notification message
+        const pendingMessageState: PendingMessageState = yield select(
+          pendingMessageStateSelector
+        );
+        if (pendingMessageState) {
+          // We have a pending notification message to handle
+          const messageId = pendingMessageState.id;
+          // Remove the pending message from the notification state
+          yield put(clearNotificationPendingMessage());
+          // Navigate to message details screen
+          yield put(navigateToMessageDetailScreenAction(messageId));
+        } else {
+          // Or else, just navigate back to the screen we were at before
+          // going into background
+          yield put(NavigationActions.back());
+        }
       }
     }
 

@@ -8,9 +8,8 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { StatusBar } from "react-native";
-import CodeInput from "react-native-confirmation-code-input";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import Pinpad from "../components/Pinpad";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import IconFont from "../components/ui/IconFont";
@@ -43,8 +42,10 @@ type Props = ReduxMappedProps &
   OwnProps &
   ContextualHelpInjectedProps;
 
-type CodeInputRef = CodeInput | null;
-
+type CodeInputRef = Pinpad | null;
+/**
+ * A screen that allows the user to unlock the app with a PIN.
+ */
 class PinLoginScreen extends React.Component<Props> {
   private pinComponent: CodeInputRef = null;
 
@@ -102,11 +103,10 @@ class PinLoginScreen extends React.Component<Props> {
     return (
       <React.Fragment>
         <Pinpad
-          autofocus={true}
           onFulfill={this.onPinFulfill}
           activeColor={variables.colorWhite}
           inactiveColor={variables.colorWhite}
-          codeInputRef={this.handleCodeInputRef}
+          ref={this.handleCodeInputRef}
         />
 
         {isPinInvalid && this.renderCodeInputConfirmValidation()}

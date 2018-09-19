@@ -66,6 +66,7 @@ export class LabelledItem extends React.Component<Props> {
               placeholder={this.props.placeholder}
               mask={this.props.mask}
               onChangeText={this.props.onChangeText}
+              underlineColorAndroid="transparent"
               {...this.props.inputProps}
             />
           ) : (
@@ -75,6 +76,7 @@ export class LabelledItem extends React.Component<Props> {
                 .string()}
               placeholder={this.props.placeholder}
               onChangeText={this.props.onChangeText}
+              underlineColorAndroid="transparent"
               {...this.props.inputProps}
             />
           )}

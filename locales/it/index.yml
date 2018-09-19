@@ -327,6 +327,9 @@ wallet:
   transaction: Operazione
   noTransactions: Non ci sono operazioni.
   noNewTransactions: Non ci sono nuove operazioni.
+  noneTransactions: Nessuna operazione
+  noTransactionsDetails: Non hai ancora pagato nulla con IO o utilizzato un utente registrato su PagoPA, controlla i tuoi messaggi.
+  moreInfo: Per saperne di più
   payNotice: Paga un avviso
   latestTransactions: Ultime operazioni
   creditDebitCards: Carte di Credito/Debito
@@ -399,14 +402,18 @@ messages:
   noContent: Contenuto non disponibile
 messageDetails:
   headerTitle: Messaggio
-  detailsLink:
+  invalidText: Parametri non validi!
+  loadingText: Caricamento dei dettagli del messagio in corso...
+  errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
+  retryText: Riprova
+  rawInfoLink:
     showLabel: Dettagli del messaggio
     hideLabel: Chiudi dettagli
-  infoLabels:
-    data: 'Data:'
-    senderFrom: Inviato da
-    department: Dipartimento
-    service: Servizio
+  rawInfoLabels:
+    createdAt: Data
+    organizationName: Inviato da
+    departmentName: Dipartimento
+    serviceName: Servizio
 notifications:
   installation:
     errorTitle: Notifiche push

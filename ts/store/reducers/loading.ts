@@ -18,6 +18,7 @@ const INITIAL_STATE: LoadingState = {
   PIN_CREATE: false,
   PROFILE_LOAD: false,
   PROFILE_UPSERT: false,
+  MESSAGE_WITH_RELATIONS_LOAD: false,
   MESSAGES_LOAD: false,
   LOGOUT: false
 };

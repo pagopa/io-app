@@ -706,9 +706,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/validator@^9.4.1":
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-9.4.1.tgz#bea5a290e61f1cbf12af3fd878706aeec2ba0087"
+"@types/validator@^9.4.2":
+  version "9.4.2"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-9.4.2.tgz#9fec264b35f0ea21d0967eeec2dcd6a798b34350"
 
 a-sync-waterfall@^1.0.0:
   version "1.0.0"
@@ -6157,6 +6157,10 @@ postinstall-build@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/postinstall-build/-/postinstall-build-5.0.1.tgz#b917a9079b26178d9a24af5a5cd8cb4a991d11b9"
 
+postinstall-postinstall@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/postinstall-postinstall/-/postinstall-postinstall-1.0.0.tgz#49c8c6dcc95fe02f1ffc8edfb35b83f1e6616be5"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -6352,13 +6356,6 @@ react-native-camera@1.2.0:
 react-native-config@^0.11.2:
   version "0.11.5"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.5.tgz#516cb7b6ec437c7739236ca075971db3aabdcb95"
-
-"react-native-confirmation-code-input@git://github.com/teamdigitale/react-native-confirmation-code-input.git#io":
-  version "1.0.1"
-  resolved "git://github.com/teamdigitale/react-native-confirmation-code-input.git#eaec9fdeaaf64029e5fcf6fbae7a0e7732c52147"
-  dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
 
 react-native-device-info@^0.22:
   version "0.22.5"
