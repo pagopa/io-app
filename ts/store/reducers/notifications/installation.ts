@@ -15,7 +15,7 @@ export type InstallationState = Readonly<{
 
 function getInitialState(): InstallationState {
   return {
-    uuid: uuid(),
+    uuid: uuid().replace("-", ""),
     token: undefined
   };
 }
