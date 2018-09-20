@@ -37,6 +37,7 @@ type ReduxMappedStateProps = {
   logoutError: Option<string>;
   sessionToken?: string;
   walletToken?: string;
+  notificationId: string;
   notificationToken?: string;
 };
 
@@ -72,7 +73,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       logout,
       sessionToken,
       walletToken,
-      notificationToken
+      notificationToken,
+      notificationId
     } = this.props;
     return (
       <TopScreenComponent
@@ -164,7 +166,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <Text>Copy tokens to clipboard</Text>
+              <Text>Touch code to copy to clipboard.</Text>
             </ListItem>
 
             {sessionToken && (
@@ -174,7 +176,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   small={true}
                   onPress={() => Clipboard.setString(sessionToken)}
                 >
-                  <Text>{`SESSION ${sessionToken.slice(0, 6)}`}</Text>
+                  <Text>{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
                 </Button>
               </ListItem>
             )}
@@ -185,10 +187,21 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   small={true}
                   onPress={() => Clipboard.setString(walletToken)}
                 >
-                  <Text>{`WALLET ${walletToken.slice(0, 6)}`}</Text>
+                  <Text>{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
                 </Button>
               </ListItem>
             )}
+
+            <ListItem>
+              <Button
+                info={true}
+                small={true}
+                onPress={() => Clipboard.setString(notificationId)}
+              >
+                <Text>{`Notification ID ${notificationId.slice(0, 6)}`}</Text>
+              </Button>
+            </ListItem>
+
             {notificationToken && (
               <ListItem>
                 <Button
@@ -196,10 +209,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   small={true}
                   onPress={() => Clipboard.setString(notificationToken)}
                 >
-                  <Text>{`NOTIFICATIONS ${notificationToken.slice(
+                  <Text>{`Notification token ${notificationToken.slice(
                     0,
                     6
-                  )}...`}</Text>
+                  )}`}</Text>
                 </Button>
               </ListItem>
             )}
@@ -219,6 +232,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   walletToken: isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.walletToken
     : undefined,
+  notificationId: notificationsInstallationSelector(state).uuid,
   notificationToken: notificationsInstallationSelector(state).token
 });
 
