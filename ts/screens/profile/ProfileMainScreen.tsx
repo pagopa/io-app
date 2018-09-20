@@ -28,6 +28,7 @@ import {
 } from "../../store/reducers/authentication";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
+import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
@@ -36,6 +37,7 @@ type ReduxMappedStateProps = {
   logoutError: Option<string>;
   sessionToken?: string;
   walletToken?: string;
+  notificationToken?: string;
 };
 
 type ReduxMappedDispatchProps = {
@@ -69,7 +71,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       resetPin,
       logout,
       sessionToken,
-      walletToken
+      walletToken,
+      notificationToken
     } = this.props;
     return (
       <TopScreenComponent
@@ -160,28 +163,46 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               <Text>{I18n.t("profile.main.developersSectionHeader")}</Text>
             </ListItem>
 
-            <ListItem last={true}>
-              <Left style={styles.itemLeft}>
-                {sessionToken && (
-                  <Button
-                    transparent={true}
-                    info={true}
-                    onPress={() => Clipboard.setString(sessionToken)}
-                  >
-                    <Text>{`Session: ${sessionToken}`}</Text>
-                  </Button>
-                )}
-                {walletToken && (
-                  <Button
-                    transparent={true}
-                    info={true}
-                    onPress={() => Clipboard.setString(walletToken)}
-                  >
-                    <Text>{`Wallet: ${walletToken}`}</Text>
-                  </Button>
-                )}
-              </Left>
+            <ListItem>
+              <Text>Copy tokens to clipboard</Text>
             </ListItem>
+
+            {sessionToken && (
+              <ListItem>
+                <Button
+                  info={true}
+                  small={true}
+                  onPress={() => Clipboard.setString(sessionToken)}
+                >
+                  <Text>{`SESSION ${sessionToken.slice(0, 6)}`}</Text>
+                </Button>
+              </ListItem>
+            )}
+            {walletToken && (
+              <ListItem>
+                <Button
+                  info={true}
+                  small={true}
+                  onPress={() => Clipboard.setString(walletToken)}
+                >
+                  <Text>{`WALLET ${walletToken.slice(0, 6)}`}</Text>
+                </Button>
+              </ListItem>
+            )}
+            {notificationToken && (
+              <ListItem>
+                <Button
+                  info={true}
+                  small={true}
+                  onPress={() => Clipboard.setString(notificationToken)}
+                >
+                  <Text>{`NOTIFICATIONS ${notificationToken.slice(
+                    0,
+                    6
+                  )}...`}</Text>
+                </Button>
+              </ListItem>
+            )}
           </List>
         </Content>
       </TopScreenComponent>
@@ -197,7 +218,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
     : undefined,
   walletToken: isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.walletToken
-    : undefined
+    : undefined,
+  notificationToken: notificationsInstallationSelector(state).token
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
