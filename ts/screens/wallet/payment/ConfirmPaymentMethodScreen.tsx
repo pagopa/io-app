@@ -93,6 +93,13 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     return amount + fee;
   }
 
+  public shouldComponentUpdate(nextProps: Props) {
+    // avoids updating the component on invalid props to avoid having the screen
+    // become blank during transitions from one payment state to another
+    // FIXME: this is quite fragile, we should instead avoid having a shared state
+    return nextProps.valid;
+  }
+
   public render(): React.ReactNode {
     if (!this.props.valid) {
       return null;
