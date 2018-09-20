@@ -24,6 +24,8 @@ import {
   PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
+  PAYMENT_RESET_LOADING,
+  PAYMENT_SET_LOADING,
   PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
   PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID,
   PAYMENT_UPDATE_PSP,
@@ -182,6 +184,14 @@ export type PaymentRequestGoBack = Readonly<{
   type: typeof PAYMENT_REQUEST_GO_BACK;
 }>;
 
+export type PaymentSetLoadingState = Readonly<{
+  type: typeof PAYMENT_SET_LOADING;
+}>;
+
+export type PaymentResetLoadingState = Readonly<{
+  type: typeof PAYMENT_RESET_LOADING;
+}>;
+
 export type PaymentCancel = Readonly<{
   type: typeof PAYMENT_CANCEL;
 }>;
@@ -217,6 +227,8 @@ export type PaymentActions =
   | PaymentCompleted
   | PaymentGoBack
   | PaymentRequestGoBack
+  | PaymentSetLoadingState
+  | PaymentResetLoadingState
   | PaymentCancel
   | PaymentRequestCancel;
 
@@ -346,6 +358,14 @@ export const paymentGoBack = (): PaymentGoBack => ({
 
 export const paymentRequestGoBack = (): PaymentRequestGoBack => ({
   type: PAYMENT_REQUEST_GO_BACK
+});
+
+export const paymentSetLoadingState = (): PaymentSetLoadingState => ({
+  type: PAYMENT_SET_LOADING
+});
+
+export const paymentResetLoadingState = (): PaymentResetLoadingState => ({
+  type: PAYMENT_RESET_LOADING
 });
 
 export const paymentCancel = (): PaymentCancel => ({

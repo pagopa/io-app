@@ -22,7 +22,8 @@ const INITIAL_STATE: ErrorState = {
   PROFILE_UPSERT: none,
   MESSAGE_WITH_RELATIONS_LOAD: none,
   MESSAGES_LOAD: none,
-  LOGOUT: none
+  LOGOUT: none,
+  PAYMENT_LOAD: none
 };
 
 /**

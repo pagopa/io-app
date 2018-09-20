@@ -27,6 +27,7 @@ import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -36,6 +37,7 @@ import {
   paymentRequestManualEntry,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
@@ -273,7 +275,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ScanQrCodeScreen);
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ScanQrCodeScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

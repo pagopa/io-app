@@ -84,6 +84,8 @@ import {
   PaymentRequestQrCode,
   PaymentRequestTransactionSummaryActions,
   PaymentRequestTransactionSummaryFromBanner,
+  paymentResetLoadingState,
+  paymentSetLoadingState,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId,
   PaymentUpdatePsp
@@ -518,16 +520,29 @@ function* showTransactionSummaryHandler(
       initialAmount
     }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
 
-    const response:
-      | BasicResponseTypeWith401<PaymentRequestsGetResponse>
-      | undefined = yield call(getVerificaRpt, { rptId });
-    if (response !== undefined && response.status === 200) {
-      // response fetched successfully -- store it
-      // and proceed
-      yield put(
-        paymentTransactionSummaryFromRptId(rptId, initialAmount, response.value)
-      );
-    } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
+    try {
+      yield put(paymentSetLoadingState());
+      const response:
+        | BasicResponseTypeWith401<PaymentRequestsGetResponse>
+        | undefined = yield call(getVerificaRpt, { rptId });
+      if (response !== undefined && response.status === 200) {
+        // response fetched successfully -- store it
+        // and proceed
+        yield put(
+          paymentTransactionSummaryFromRptId(
+            rptId,
+            initialAmount,
+            response.value
+          )
+        );
+      } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
+    } catch {
+      /**
+       * TODO handle error
+       */
+    } finally {
+      yield put(paymentResetLoadingState());
+    }
   } else {
     yield put(paymentTransactionSummaryFromBanner());
   }
@@ -591,18 +606,28 @@ function* fetchPspList(
 
   let pspList: ReadonlyArray<Psp> = []; // tslint:disable-line: no-let
 
-  const response:
-    | BasicResponseTypeWith401<PspListResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
-    pagoPaClient
-  );
-  if (response !== undefined) {
-    if (response.status === 200) {
-      pspList = response.value.data;
+  try {
+    yield put(paymentSetLoadingState());
+    const response:
+      | BasicResponseTypeWith401<PspListResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
+      pagoPaClient
+    );
+    if (response !== undefined) {
+      if (response.status === 200) {
+        pspList = response.value.data;
+      }
     }
+  } catch {
+    /**
+     * TODO handle error
+     */
+  } finally {
+    yield put(paymentResetLoadingState());
   }
+
   return pspList;
 }
 
@@ -638,7 +663,7 @@ function* showWalletOrSelectPsp(
   }
 }
 
-const MAX_RETRIES_POLLING = 20;
+const MAX_RETRIES_POLLING = 180;
 const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 // handle the "attiva" API call
@@ -700,21 +725,30 @@ function* checkPayment(
   pagoPaClient: PagoPaClient,
   paymentId: string
 ): Iterator<Effect> {
-  const response:
-    | BasicResponseTypeWith401<PaymentResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (t: string) => pagoPaClient.checkPayment(t, paymentId),
-    pagoPaClient
-  );
-  if (response !== undefined) {
-    if (response.status === 200) {
-      // all is well
-      // this does not provide any useful information and
-      // it is only required by pagoPA b/c of their internal logics
+  try {
+    yield put(paymentSetLoadingState());
+    const response:
+      | BasicResponseTypeWith401<PaymentResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (t: string) => pagoPaClient.checkPayment(t, paymentId),
+      pagoPaClient
+    );
+    if (response !== undefined) {
+      if (response.status === 200) {
+        // all is well
+        // this does not provide any useful information and
+        // it is only required by pagoPA b/c of their internal logics
+      }
     }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  } catch {
+    /**
+     * TODO handle error
+     */
+  } finally {
+    yield put(paymentResetLoadingState());
   }
-  // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 function* continueWithPaymentMethodsHandler(
@@ -749,15 +783,24 @@ function* continueWithPaymentMethodsHandler(
   // a payment Id shows up
   let paymentId: string | undefined; // tslint:disable-line no-let
   if (!hasPaymentId && sessionToken !== undefined) {
-    const tmp: string | undefined = yield call(
-      attivaAndGetPaymentId,
-      postAttivaRpt,
-      getPaymentIdApi,
-      rptId,
-      paymentContextCode,
-      amount
-    );
-    paymentId = tmp;
+    try {
+      yield put(paymentSetLoadingState());
+      const tmp: string | undefined = yield call(
+        attivaAndGetPaymentId,
+        postAttivaRpt,
+        getPaymentIdApi,
+        rptId,
+        paymentContextCode,
+        amount
+      );
+      paymentId = tmp;
+    } catch {
+      /**
+       * TODO handle error
+       */
+    } finally {
+      yield put(paymentResetLoadingState());
+    }
   }
   if (paymentId !== undefined) {
     yield call(checkPayment, pagoPaClient, paymentId);
@@ -819,22 +862,33 @@ function* updatePspHandler(
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
   const walletId: number = yield select(getSelectedPaymentMethod);
-  const response:
-    | BasicResponseTypeWith401<WalletResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (pagoPaToken: string) =>
-      pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
-    pagoPaClient
-  );
-  if (response !== undefined) {
-    if (response.status === 200) {
-      // request new wallets (expecting to get the
-      // same ones as before, with the selected one's
-      // PSP set to the new one)
-      yield call(fetchWallets, pagoPaClient);
-      yield put(paymentRequestConfirmPaymentMethod(walletId));
+
+  try {
+    yield put(paymentSetLoadingState());
+    const response:
+      | BasicResponseTypeWith401<WalletResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (pagoPaToken: string) =>
+        pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
+      pagoPaClient
+    );
+
+    if (response !== undefined) {
+      if (response.status === 200) {
+        // request new wallets (expecting to get the
+        // same ones as before, with the selected one's
+        // PSP set to the new one)
+        yield call(fetchWallets, pagoPaClient);
+        yield put(paymentRequestConfirmPaymentMethod(walletId));
+      }
     }
+  } catch {
+    /**
+     * TODO handle error
+     */
+  } finally {
+    yield put(paymentResetLoadingState());
   }
 }
 
@@ -855,42 +909,52 @@ function* completionHandler(
   const walletId: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);
 
-  const response:
-    | BasicResponseTypeWith401<TransactionResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (pagoPaToken: string) =>
-      pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
-    pagoPaClient
-  );
-  if (response !== undefined) {
-    if (response.status === 200) {
-      // request all transactions (expecting to get the
-      // same ones as before, plus the newly created one
-      // (the reason for this is because newTransaction contains
-      // a payment with status "processing", while the
-      // value returned here contains the "completed" status
-      // upon successful payment
-      const newTransaction: Transaction = response.value.data;
-      yield call(fetchTransactions, pagoPaClient);
-      // use "storeNewTransaction(newTransaction) if it's okay
-      // to have the payment as "pending" (this information will
-      // not be shown to the user as of yet)
-      yield put(selectTransactionForDetails(newTransaction));
-      yield put(selectWalletForDetails(walletId)); // for the banner
-      yield put(
-        // TODO: this should use StackActions.reset
-        // to reset the navigation. Right now, the
-        // "back" option is not allowed -- so the user cannot
-        // get back to previous screens, but the navigation
-        // stack should be cleaned right here
-        // @https://www.pivotaltracker.com/story/show/159300579
-        navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
-          paymentCompleted: true
-        })
-      );
-      yield put({ type: PAYMENT_COMPLETED });
+  try {
+    yield put(paymentSetLoadingState());
+    const response:
+      | BasicResponseTypeWith401<TransactionResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (pagoPaToken: string) =>
+        pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
+      pagoPaClient
+    );
+
+    if (response !== undefined) {
+      if (response.status === 200) {
+        // request all transactions (expecting to get the
+        // same ones as before, plus the newly created one
+        // (the reason for this is because newTransaction contains
+        // a payment with status "processing", while the
+        // value returned here contains the "completed" status
+        // upon successful payment
+        const newTransaction: Transaction = response.value.data;
+        yield call(fetchTransactions, pagoPaClient);
+        // use "storeNewTransaction(newTransaction) if it's okay
+        // to have the payment as "pending" (this information will
+        // not be shown to the user as of yet)
+        yield put(selectTransactionForDetails(newTransaction));
+        yield put(selectWalletForDetails(walletId)); // for the banner
+        yield put(
+          // TODO: this should use StackActions.reset
+          // to reset the navigation. Right now, the
+          // "back" option is not allowed -- so the user cannot
+          // get back to previous screens, but the navigation
+          // stack should be cleaned right here
+          // @https://www.pivotaltracker.com/story/show/159300579
+          navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
+            paymentCompleted: true
+          })
+        );
+        yield put({ type: PAYMENT_COMPLETED });
+      }
     }
+  } catch {
+    /**
+     * TODO handle error
+     */
+  } finally {
+    yield put(paymentResetLoadingState());
   }
 }
 
