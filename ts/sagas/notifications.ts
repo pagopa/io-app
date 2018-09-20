@@ -42,7 +42,7 @@ export function* updateInstallationSaga(
   > = yield call(createOrUpdateInstallation, {
     // We need to remove dashes from here as well to convert the UUIDs that have
     // been already stored.
-    id: notificationsInstallation.uuid.replace("-", ""),
+    id: notificationsInstallation.uuid.replace(/-/g, ""),
     installation: {
       platform: notificationsPlatform,
       pushChannel: notificationsInstallation.token
