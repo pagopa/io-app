@@ -7,6 +7,7 @@ import {
   AuthorizationBearerHeaderProducer,
   composeHeaderProducers,
   createFetchRequestForApi,
+  IDeleteApiRequestType,
   IGetApiRequestType,
   IPostApiRequestType,
   IPutApiRequestType,
@@ -29,6 +30,7 @@ import {
   basicResponseDecoderWith401,
   BasicResponseTypeWith401
 } from "./backend";
+import * as t from "io-ts";
 
 // builds on top of basicResponseDecoderWith401 and
 // casts the result to a type T: this is in order to
@@ -119,6 +121,15 @@ type BoardPayType = IPostApiRequestType<
   BasicResponseTypeWith401<TransactionResponse>
 >;
 
+type DeleteWalletType = IDeleteApiRequestType<
+  {
+    walletId: number;
+  },
+  "Authorization",
+  never,
+  BasicResponseTypeWith401<t.TypeOf<typeof t.voidType>>
+>;
+
 export type PagoPaClient = Readonly<{
   getSession: (
     walletToken: string
@@ -156,6 +167,10 @@ export type PagoPaClient = Readonly<{
     pagoPaToken: string,
     payRequest: PayRequest
   ) => ReturnType<TypeofApiCall<BoardPayType>>;
+  deleteWallet: (
+    pagoPaToken: string,
+    walletId: number
+  ) => ReturnType<TypeofApiCall<DeleteWalletType>>;
 }>;
 
 export const PagoPaClient = (
@@ -299,6 +314,16 @@ export const PagoPaClient = (
     )
   });
 
+  const deleteWallet: (
+    pagoPaToken: string
+  ) => DeleteWalletType = pagoPaToken => ({
+    method: "delete",
+    url: ({ walletId }) => `/v1/wallet/${walletId}`,
+    query: () => ({}),
+    headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+    response_decoder: basicResponseDecoderWith401(t.voidType)
+  });
+
   return {
     walletToken,
     getSession: (
@@ -333,6 +358,10 @@ export const PagoPaClient = (
     boardPay: (pagoPaToken: string, payRequest: PayRequest) =>
       createFetchRequestForApi(boardPay(pagoPaToken), options)({
         payRequest
+      }),
+    deleteWallet: (pagoPaToken: string, walletId: number) =>
+      createFetchRequestForApi(deleteWallet(pagoPaToken), options)({
+        walletId
       })
   };
 };

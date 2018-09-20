@@ -8,7 +8,8 @@ import {
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   STORE_CREDIT_CARD_DATA,
-  WALLETS_FETCHED
+  WALLETS_FETCHED,
+  DELETE_WALLET_REQUEST
 } from "../constants";
 
 export type FetchWalletsRequest = Readonly<{
@@ -50,6 +51,11 @@ type AddCreditCardCompleted = Readonly<{
   type: typeof ADD_CREDIT_CARD_COMPLETED;
 }>;
 
+export type DeleteWalletRequest = Readonly<{
+  type: typeof DELETE_WALLET_REQUEST;
+  payload: number; // wallet id
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
@@ -58,7 +64,8 @@ export type WalletsActions =
   | StoreCreditCardData
   | CreditCardDataCleanup
   | AddCreditCardRequest
-  | AddCreditCardCompleted;
+  | AddCreditCardCompleted
+  | DeleteWalletRequest;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -105,4 +112,9 @@ export const addCreditCardRequest = (
 
 export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
   type: ADD_CREDIT_CARD_COMPLETED
+});
+
+export const deleteWalletRequest = (walletId: number): DeleteWalletRequest => ({
+  type: DELETE_WALLET_REQUEST,
+  payload: walletId
 });

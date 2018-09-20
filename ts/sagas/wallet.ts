@@ -58,7 +58,8 @@ import {
   PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  PAYMENT_UPDATE_PSP
+  PAYMENT_UPDATE_PSP,
+  DELETE_WALLET_REQUEST
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
@@ -98,7 +99,8 @@ import {
   creditCardDataCleanup,
   FetchWalletsRequest,
   selectWalletForDetails,
-  walletsFetched
+  walletsFetched,
+  DeleteWalletRequest
 } from "../store/actions/wallet/wallets";
 import {
   sessionTokenSelector,
@@ -139,6 +141,7 @@ import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
+import * as t from "io-ts";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -341,6 +344,27 @@ function* addCreditCard(
   // stack should be cleaned right here
   // @https://www.pivotaltracker.com/story/show/159300579
   yield put(navigateTo(ROUTES.WALLET_HOME));
+}
+
+function* deleteWallet(
+  walletId: number,
+  pagoPaClient: PagoPaClient
+): Iterator<Effect> {
+  const response:
+    | BasicResponseTypeWith401<t.TypeOf<typeof t.voidType>>
+    | undefined = yield call(
+    fetchWithTokenRefresh,
+    (token: string) => pagoPaClient.deleteWallet(token, walletId),
+    pagoPaClient
+  );
+  if (response !== undefined && response.status === 200) {
+    // wallet was successfully deleted
+    console.warn("Card successfully deleted!"); // tslint:disable-line no-console
+    yield call(fetchWallets, pagoPaClient); // refresh cards list
+  } else {
+    // a problem occurred
+    console.warn("Could not delete card"); // tslint:disable-line no-console
+  }
 }
 
 function* paymentSagaFromQrCode(
@@ -938,13 +962,15 @@ export function* watchWalletSaga(
       | AddCreditCardRequest
       | LogoutSuccess
       | PaymentRequestQrCode
-      | PaymentRequestMessage = yield take([
+      | PaymentRequestMessage
+      | DeleteWalletRequest = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
       LOGOUT_SUCCESS,
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MESSAGE,
       ADD_CREDIT_CARD_REQUEST,
+      DELETE_WALLET_REQUEST,
       LOGOUT_SUCCESS
     ]);
 
@@ -961,6 +987,9 @@ export function* watchWalletSaga(
         action.setAsFavorite, // should the card be set as favorite?
         pagoPaClient
       );
+    }
+    if (action.type === DELETE_WALLET_REQUEST) {
+      yield fork(deleteWallet, action.payload, pagoPaClient);
     }
     // if the user logs out, go back to waiting
     // for a WALLET_TOKEN_LOAD_SUCCESS action
