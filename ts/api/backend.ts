@@ -18,12 +18,12 @@ import {
 import { RptId, RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
+import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Installation } from "../../definitions/backend/Installation";
 import { Messages } from "../../definitions/backend/Messages";
-import { MessageWithContent } from "../../definitions/backend/MessageWithContent";
 import { PaymentActivationsGetResponse } from "../../definitions/backend/PaymentActivationsGetResponse";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
@@ -109,7 +109,7 @@ export type GetMessageT = IGetApiRequestType<
   },
   "Authorization",
   never,
-  BasicResponseType<MessageWithContent>
+  BasicResponseType<CreatedMessageWithContent>
 >;
 
 export type GetProfileT = IGetApiRequestType<
@@ -221,7 +221,7 @@ export function BackendClient(
     url: params => `/api/v1/messages/${params.id}`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoder(MessageWithContent)
+    response_decoder: basicResponseDecoder(CreatedMessageWithContent)
   };
 
   const getProfileT: GetProfileT = {
