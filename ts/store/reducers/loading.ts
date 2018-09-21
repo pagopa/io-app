@@ -8,7 +8,9 @@
 import {
   FetchRequestActionsType,
   PAYMENT_RESET_LOADING,
-  PAYMENT_SET_LOADING
+  PAYMENT_SET_LOADING,
+  WALLET_MANAGEMENT_RESET_LOADING_STATE,
+  WALLET_MANAGEMENT_SET_LOADING_STATE
 } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -25,7 +27,8 @@ const INITIAL_STATE: LoadingState = {
   MESSAGE_WITH_RELATIONS_LOAD: false,
   MESSAGES_LOAD: false,
   LOGOUT: false,
-  PAYMENT_LOAD: false
+  PAYMENT_LOAD: false,
+  WALLET_MANAGEMENT_LOAD: false
 };
 
 /**
@@ -69,6 +72,25 @@ const reducer = (
       PAYMENT_LOAD: false
     };
   }
+
+  /**
+   * The wallet management processes are aggregated
+   * under WALLET_MANAGEMENT (it currently includes
+   * deletion and "setting as favourite" of wallets)
+   */
+  if (type === WALLET_MANAGEMENT_SET_LOADING_STATE) {
+    return {
+      ...state,
+      WALLET_MANAGEMENT_LOAD: true
+    };
+  }
+  if (type === WALLET_MANAGEMENT_RESET_LOADING_STATE) {
+    return {
+      ...state,
+      WALLET_MANAGEMENT_LOAD: false
+    };
+  }
+
   const matches = /(.*)_(REQUEST|CANCEL|SUCCESS|FAILURE)/.exec(type);
 
   // Not a *_REQUEST / *_CANCEL / *_SUCCESS /  *_FAILURE action, so we ignore it
