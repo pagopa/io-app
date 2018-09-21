@@ -227,7 +227,8 @@ export const enum FetchRequestActions {
   MESSAGES_LOAD = "MESSAGES_LOAD",
   MESSAGE_WITH_RELATIONS_LOAD = "MESSAGE_WITH_RELATIONS_LOAD",
   LOGOUT = "LOGOUT",
-  PAYMENT_LOAD = "PAYMENT_LOAD"
+  PAYMENT_LOAD = "PAYMENT_LOAD",
+  WALLET_MANAGEMENT_LOAD = "WALLET_MANAGEMENT_LOAD"
 }
 
 // Extract keys from object and create a new union type

@@ -103,6 +103,8 @@ import {
   DeleteWalletRequest,
   FetchWalletsRequest,
   selectWalletForDetails,
+  walletManagementResetLoadingState,
+  walletManagementSetLoadingState,
   walletsFetched
 } from "../store/actions/wallet/wallets";
 import {
@@ -352,20 +354,35 @@ function* deleteWallet(
   walletId: number,
   pagoPaClient: PagoPaClient
 ): Iterator<Effect> {
-  const response:
-    | BasicResponseTypeWith401<t.TypeOf<typeof t.voidType>>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (token: string) => pagoPaClient.deleteWallet(token, walletId),
-    pagoPaClient
-  );
-  if (response !== undefined && response.status === 200) {
-    // wallet was successfully deleted
-    console.warn("Card successfully deleted!"); // tslint:disable-line no-console
-    yield call(fetchWallets, pagoPaClient); // refresh cards list
-  } else {
-    // a problem occurred
-    console.warn("Could not delete card"); // tslint:disable-line no-console
+  try {
+    yield put(walletManagementSetLoadingState());
+    const response:
+      | BasicResponseTypeWith401<t.TypeOf<typeof t.voidType>>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (token: string) => pagoPaClient.deleteWallet(token, walletId),
+      pagoPaClient
+    );
+    if (response !== undefined && response.status === 200) {
+      // wallet was successfully deleted
+      console.warn("Card successfully deleted!"); // tslint:disable-line no-console
+      yield call(fetchWallets, pagoPaClient); // refresh cards list
+      const count: number = yield select(walletCountSelector);
+      if (count > 0) {
+        yield put(navigateTo(ROUTES.WALLET_LIST));
+      } else {
+        yield put(navigateTo(ROUTES.WALLET_HOME));
+      }
+    } else {
+      // a problem occurred
+      console.warn("Could not delete card"); // tslint:disable-line no-console
+    }
+  } catch {
+    /**
+     * TODO: Handle error here
+     */
+  } finally {
+    yield put(walletManagementResetLoadingState());
   }
 }
 
