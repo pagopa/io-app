@@ -2,26 +2,9 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
-import { Either } from "fp-ts/lib/Either";
-import * as t from "io-ts";
-import {
-  AmountInEuroCents,
-  PaymentNoticeQrCodeFromString,
-  RptId,
-  rptIdFromPaymentNoticeQrCode
-} from "italia-ts-commons/lib/pagopa";
-import {
-  Body,
-  Button,
-  Col,
-  Container,
-  Grid,
-  Icon,
-  Left,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { Body, Button, Container, Icon, Left, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -41,6 +24,9 @@ import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
+import { ComponentProps } from "../../../types/react";
+import { decodePagoPaQrCode } from "../../../utils/payment";
+import { CameraMarker } from "./CameraMarker";
 
 type ReduxMappedStateProps = Readonly<{
   valid: boolean;
@@ -57,6 +43,10 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+
+type State = {
+  scanningState: ComponentProps<typeof CameraMarker>["state"];
+};
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -86,90 +76,72 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: (screenWidth * 4) / 3,
     width: screenWidth
-  },
-
-  rectangleContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent"
-  },
-
-  rectangle: {
-    height: screenWidth / 2,
-    width: screenWidth / 2,
-    borderWidth: 0,
-    backgroundColor: "transparent"
-  },
-
-  smallBorded: {
-    height: screenWidth / 6,
-    width: screenWidth / 6,
-    borderColor: variables.brandPrimaryInverted,
-    backgroundColor: "transparent",
-    position: "absolute"
-  },
-
-  topRightCorner: {
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    top: 0,
-    right: 0
-  },
-
-  topLeftCorner: {
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    top: 0,
-    left: 0
-  },
-
-  bottomLeftCorner: {
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    bottom: 0,
-    left: 0
-  },
-
-  bottomRightCorner: {
-    borderBottomWidth: 2,
-    borderRightWidth: 2,
-    bottom: 0,
-    right: 0
   }
 });
 
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 2000;
+/**
+ * Delay for reactivating the QR scanner after a scan
+ */
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
 
-const rptIdFromQrCodeString = (qrCodeString: string): Either<t.Errors, RptId> =>
-  PaymentNoticeQrCodeFromString.decode(qrCodeString).chain(
-    rptIdFromPaymentNoticeQrCode
-  );
+class ScanQrCodeScreen extends React.PureComponent<Props, State> {
+  private scannerReactivateTimeoutHandler: number | undefined;
 
-class ScanQrCodeScreen extends React.Component<Props, never> {
-  private qrCodeRead = (data: string) => {
-    const rptId = rptIdFromQrCodeString(data);
-    const paymentNotice = PaymentNoticeQrCodeFromString.decode(data);
-    if (rptId.isRight() && paymentNotice.isRight()) {
-      // successful conversion to RptId
-      this.props.showTransactionSummary(
-        rptId.value,
-        paymentNotice.value.amount
-      );
-    } // else error stating that QR code is invalid @https://www.pivotaltracker.com/story/show/159003368
-    else {
-      setTimeout(
-        () => (this.refs.scanner as QRCodeScanner).reactivate(),
-        QRCODE_SCANNER_REACTIVATION_TIME_MS
-      );
-    }
+  /**
+   * Handles valid PagoPA QR codes
+   */
+  private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
+    this.setState({
+      scanningState: "VALID"
+    });
+    this.props.showTransactionSummary(data.e1, data.e2);
   };
+
+  /**
+   * Handles invalid PagoPA QR codes
+   */
+  private onInvalidQrCode = () => {
+    this.setState({
+      scanningState: "INVALID"
+    });
+    // tslint:disable-next-line:no-object-mutation
+    this.scannerReactivateTimeoutHandler = setTimeout(() => {
+      // tslint:disable-next-line:no-object-mutation
+      this.scannerReactivateTimeoutHandler = undefined;
+      (this.refs.scanner as QRCodeScanner).reactivate();
+      this.setState({
+        scanningState: "SCANNING"
+      });
+    }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
+  };
+
+  /**
+   * Gets called by the QR code reader on new QR code reads
+   */
+  private onQrCodeData = (data: string) => {
+    const resultOrError = decodePagoPaQrCode(data);
+    resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
+  };
+
+  public constructor(props: Props) {
+    super(props);
+    this.state = {
+      scanningState: "SCANNING"
+    };
+  }
 
   public shouldComponentUpdate(nextProps: Props) {
     // avoids updating the component on invalid props to avoid having the screen
     // become blank during transitions from one payment state to another
     // FIXME: this is quite fragile, we should instead avoid having a shared state
     return nextProps.valid;
+  }
+
+  public componentWillUnmount() {
+    if (this.scannerReactivateTimeoutHandler) {
+      // cancel the QR scanner reactivation before unmounting the component
+      clearTimeout(this.scannerReactivateTimeoutHandler);
+    }
   }
 
   public render(): React.ReactNode {
@@ -205,43 +177,17 @@ class ScanQrCodeScreen extends React.Component<Props, never> {
         <ScrollView bounces={false}>
           <QRCodeScanner
             onRead={(reading: { data: string }) =>
-              this.qrCodeRead(reading.data)
+              this.onQrCodeData(reading.data)
             }
             ref="scanner" // tslint:disable-line jsx-no-string-ref
             containerStyle={styles.cameraContainer}
             showMarker={true}
             cameraStyle={styles.camera}
             customMarker={
-              <View style={styles.rectangleContainer}>
-                <View style={styles.rectangle}>
-                  <Grid>
-                    <Row>
-                      <Col>
-                        <View
-                          style={[styles.topLeftCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                      <Col>
-                        <View
-                          style={[styles.topRightCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <View
-                          style={[styles.bottomLeftCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                      <Col>
-                        <View
-                          style={[styles.bottomRightCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                    </Row>
-                  </Grid>
-                </View>
-              </View>
+              <CameraMarker
+                screenWidth={screenWidth}
+                state={this.state.scanningState}
+              />
             }
             bottomContent={
               <View>

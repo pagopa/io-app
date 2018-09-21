@@ -3,7 +3,9 @@ import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
+  PaymentNoticeQrCodeFromString,
   RptId,
+  rptIdFromPaymentNoticeQrCode,
   RptIdFromString
 } from "italia-ts-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
@@ -75,5 +77,18 @@ export function getRptIdAndAmountFromMessage(
         });
       });
     }
+  );
+}
+
+export function decodePagoPaQrCode(
+  data: string
+): Option<ITuple2<RptId, AmountInEuroCents>> {
+  const paymentNoticeOrError = PaymentNoticeQrCodeFromString.decode(data);
+  return fromEither(
+    paymentNoticeOrError.chain(paymentNotice =>
+      rptIdFromPaymentNoticeQrCode(paymentNotice).map(rptId =>
+        Tuple2(rptId, paymentNotice.amount)
+      )
+    )
   );
 }
