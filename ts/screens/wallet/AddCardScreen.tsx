@@ -4,14 +4,15 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import { entries, range, size } from "lodash";
-import { Left } from "native-base";
 import { Body, Container, Content, Item, Text, View } from "native-base";
+import { Left } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
@@ -21,6 +22,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { storeCreditCardData } from "../../store/actions/wallet/wallets";
+import { createLoadingSelector } from "../../store/reducers/loading";
 import { CreditCard } from "../../types/pagopa";
 import {
   CreditCardCVC,
@@ -295,7 +297,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
   storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(AddCardScreen);
+export default withLoadingSpinner(
+  connect(
+    undefined,
+    mapDispatchToProps
+  )(AddCardScreen),
+  createLoadingSelector(["WALLET_MANAGEMENT_LOAD"]),
+  {}
+);

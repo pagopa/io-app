@@ -284,35 +284,44 @@ function* addCreditCard(
         : undefined
     }
   };
-  const responseBoardPay:
-    | BasicResponseTypeWith401<TransactionResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (token: string) => pagoPaClient.boardPay(token, payRequest),
-    pagoPaClient
-  );
-  /**
-   * Failed request. show an error (TODO) and return
-   */
-  if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
-    return;
+  try {
+    yield put(walletManagementSetLoadingState());
+    const responseBoardPay:
+      | BasicResponseTypeWith401<TransactionResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (token: string) => pagoPaClient.boardPay(token, payRequest),
+      pagoPaClient
+    );
+    /**
+     * Failed request. show an error (TODO) and return
+     */
+    if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
+      return;
+    }
+    const url = responseBoardPay.value.data.urlCheckout3ds;
+    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+    if (url === undefined || pagoPaToken.isNone()) {
+      // pagoPA is *always* supposed to pass a URL
+      // for the app to open. if it is not there,
+      // exit with an error (TODO)
+      return;
+    }
+    // a valid URL has been made available
+    // from pagoPA and needs to be opened in a webview
+    const urlWithToken = `${url}&sessionToken=${pagoPaToken.value}`;
+    yield put(
+      navigateTo(ROUTES.WALLET_CHECKOUT_3DS_SCREEN, {
+        url: urlWithToken
+      })
+    );
+  } catch {
+    /**
+     * TODO handle errors
+     */
+  } finally {
+    yield put(walletManagementResetLoadingState());
   }
-  const url = responseBoardPay.value.data.urlCheckout3ds;
-  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-  if (url === undefined || pagoPaToken.isNone()) {
-    // pagoPA is *always* supposed to pass a URL
-    // for the app to open. if it is not there,
-    // exit with an error (TODO)
-    return;
-  }
-  // a valid URL has been made available
-  // from pagoPA and needs to be opened in a webview
-  const urlWithToken = `${url}&sessionToken=${pagoPaToken.value}`;
-  yield put(
-    navigateTo(ROUTES.WALLET_CHECKOUT_3DS_SCREEN, {
-      url: urlWithToken
-    })
-  );
 
   /**
    * Wait for the webview to do its thing

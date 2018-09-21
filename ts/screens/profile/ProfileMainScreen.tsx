@@ -232,7 +232,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   walletToken: isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.walletToken
     : undefined,
-  notificationId: notificationsInstallationSelector(state).uuid,
+  notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token
 });
 

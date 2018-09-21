@@ -4,13 +4,17 @@ import { createReactNavigationReduxMiddleware } from "react-navigation-redux-hel
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
 import {
+  createMigrate,
+  MigrationManifest,
   PersistConfig,
+  PersistedState,
   Persistor,
   persistReducer,
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 
+import { isDevEnvironment } from "../config";
 import { analytics } from "../middlewares";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
@@ -18,14 +22,35 @@ import {
   authenticationPersistConfig,
   createRootReducer
 } from "../store/reducers";
+import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+
+/**
+ * Redux persist will migrate the store to the current version
+ */
+const CURRENT_REDUX_STORE_VERSION = 0;
+
+// see redux-persist documentation:
+// https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
+const migrations: MigrationManifest = {
+  "0": (state: PersistedState): PersistedState =>
+    ({
+      ...state,
+      notifications: {
+        ...((state as any).notifications ? (state as any).notifications : {}),
+        installation: getInstallationInitialState()
+      }
+    } as PersistedState)
+};
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 
 const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
+  version: CURRENT_REDUX_STORE_VERSION,
+  migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
   /**
    * Sections of the store that must be persisted and rehydrated with this storage.
    */
