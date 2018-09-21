@@ -40,7 +40,9 @@ export function* updateInstallationSaga(
   const response: SagaCallReturnType<
     typeof createOrUpdateInstallation
   > = yield call(createOrUpdateInstallation, {
-    id: notificationsInstallation.uuid,
+    // We need to remove dashes from here as well to convert the UUIDs that have
+    // been already stored.
+    id: notificationsInstallation.uuid.replace(/-/g, ""),
     installation: {
       platform: notificationsPlatform,
       pushChannel: notificationsInstallation.token

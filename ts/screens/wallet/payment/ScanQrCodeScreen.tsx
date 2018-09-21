@@ -27,6 +27,7 @@ import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -36,6 +37,7 @@ import {
   paymentRequestManualEntry,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
@@ -163,6 +165,13 @@ class ScanQrCodeScreen extends React.Component<Props, never> {
     }
   };
 
+  public shouldComponentUpdate(nextProps: Props) {
+    // avoids updating the component on invalid props to avoid having the screen
+    // become blank during transitions from one payment state to another
+    // FIXME: this is quite fragile, we should instead avoid having a shared state
+    return nextProps.valid;
+  }
+
   public render(): React.ReactNode {
     if (!this.props.valid) {
       return null;
@@ -266,7 +275,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ScanQrCodeScreen);
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ScanQrCodeScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

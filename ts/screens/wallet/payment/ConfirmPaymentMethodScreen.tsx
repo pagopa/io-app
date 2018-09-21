@@ -26,6 +26,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import CardComponent from "../../../components/wallet/card";
@@ -39,6 +40,7 @@ import {
   paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
 import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -89,6 +91,13 @@ const styles = StyleSheet.create({
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private getTotalAmount(amount: number, fee: number) {
     return amount + fee;
+  }
+
+  public shouldComponentUpdate(nextProps: Props) {
+    // avoids updating the component on invalid props to avoid having the screen
+    // become blank during transitions from one payment state to another
+    // FIXME: this is quite fragile, we should instead avoid having a shared state
+    return nextProps.valid;
   }
 
   public render(): React.ReactNode {
@@ -260,7 +269,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConfirmPaymentMethodScreen);
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ConfirmPaymentMethodScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

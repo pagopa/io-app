@@ -82,3 +82,8 @@ __pycache__
 
 # Auto generated definitions
 definitions
+
+# Certificates
+**/*.p12
+**/*.pem
+**/*.pkey

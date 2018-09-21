@@ -19,6 +19,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
@@ -30,6 +31,7 @@ import {
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmount,
@@ -87,6 +89,13 @@ const formatMdInfoRpt = (r: RptId): string =>
 class TransactionSummaryScreen extends React.Component<Props, never> {
   constructor(props: Props) {
     super(props);
+  }
+
+  public shouldComponentUpdate(nextProps: Props) {
+    // avoids updating the component on invalid props to avoid having the screen
+    // become blank during transitions from one payment state to another
+    // FIXME: this is quite fragile, we should instead avoid having a shared state
+    return nextProps.valid;
   }
 
   public render(): React.ReactNode {
@@ -178,7 +187,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   cancelPayment: () => dispatch(paymentRequestCancel())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TransactionSummaryScreen);
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TransactionSummaryScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

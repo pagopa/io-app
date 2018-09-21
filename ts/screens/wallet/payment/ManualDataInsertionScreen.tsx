@@ -33,6 +33,7 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -42,6 +43,7 @@ import {
   paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 
@@ -112,6 +114,13 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       } // TODO: else toast saying that the data entered is invalid
     }
   };
+
+  public shouldComponentUpdate(nextProps: Props) {
+    // avoids updating the component on invalid props to avoid having the screen
+    // become blank during transitions from one payment state to another
+    // FIXME: this is quite fragile, we should instead avoid having a shared state
+    return nextProps.valid;
+  }
 
   public render(): React.ReactNode {
     if (!this.props.valid) {
@@ -209,7 +218,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   cancelPayment: () => dispatch(paymentRequestCancel())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ManualDataInsertionScreen);
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ManualDataInsertionScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

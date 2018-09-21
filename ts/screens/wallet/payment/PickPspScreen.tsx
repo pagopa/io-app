@@ -10,6 +10,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -19,6 +20,7 @@ import {
   paymentRequestGoBack,
   paymentUpdatePsp
 } from "../../../store/actions/wallet/payment";
+import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getPaymentStep,
@@ -73,6 +75,13 @@ const style = StyleSheet.create({
 });
 
 class PickPspScreen extends React.Component<Props, never> {
+  public shouldComponentUpdate(nextProps: Props) {
+    // avoids updating the component on invalid props to avoid having the screen
+    // become blank during transitions from one payment state to another
+    // FIXME: this is quite fragile, we should instead avoid having a shared state
+    return nextProps.valid;
+  }
+
   public render(): React.ReactNode {
     if (!this.props.valid) {
       return null;
@@ -157,7 +166,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPsp: (pspId: number) => dispatch(paymentUpdatePsp(pspId)),
   goBack: () => dispatch(paymentRequestGoBack())
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PickPspScreen);
+export default withLoadingSpinner(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PickPspScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);

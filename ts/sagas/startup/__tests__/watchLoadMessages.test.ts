@@ -2,7 +2,7 @@ import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 
-import { MessageWithContent } from "../../../../definitions/backend/MessageWithContent";
+import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
   loadMessageFailure,
@@ -36,7 +36,7 @@ const testMessageWithContent1 = {
     subject: "Lorem ipsum..."
   },
   sender_service_id: testServiceId1
-} as MessageWithContent;
+} as CreatedMessageWithContent;
 
 const testMessageWithContent2 = {
   id: testMessageId2,
@@ -47,7 +47,7 @@ const testMessageWithContent2 = {
     subject: "Lorem ipsum..."
   },
   sender_service_id: testServiceId1
-} as MessageWithContent;
+} as CreatedMessageWithContent;
 
 const testServicePublic = {
   service_id: testServiceId1,
