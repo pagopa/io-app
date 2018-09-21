@@ -8,6 +8,8 @@ import {
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   STORE_CREDIT_CARD_DATA,
+  WALLET_MANAGEMENT_RESET_LOADING_STATE,
+  WALLET_MANAGEMENT_SET_LOADING_STATE,
   WALLETS_FETCHED
 } from "../constants";
 
@@ -50,6 +52,14 @@ type AddCreditCardCompleted = Readonly<{
   type: typeof ADD_CREDIT_CARD_COMPLETED;
 }>;
 
+export type WalletManagementSetLoadingState = Readonly<{
+  type: typeof WALLET_MANAGEMENT_SET_LOADING_STATE;
+}>;
+
+export type WalletManagementResetLoadingState = Readonly<{
+  type: typeof WALLET_MANAGEMENT_RESET_LOADING_STATE;
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
@@ -58,7 +68,9 @@ export type WalletsActions =
   | StoreCreditCardData
   | CreditCardDataCleanup
   | AddCreditCardRequest
-  | AddCreditCardCompleted;
+  | AddCreditCardCompleted
+  | WalletManagementSetLoadingState
+  | WalletManagementResetLoadingState;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -105,4 +117,12 @@ export const addCreditCardRequest = (
 
 export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
   type: ADD_CREDIT_CARD_COMPLETED
+});
+
+export const walletManagementSetLoadingState = (): WalletManagementSetLoadingState => ({
+  type: WALLET_MANAGEMENT_SET_LOADING_STATE
+});
+
+export const walletManagementResetLoadingState = (): WalletManagementResetLoadingState => ({
+  type: WALLET_MANAGEMENT_RESET_LOADING_STATE
 });
