@@ -39,10 +39,9 @@ class Checkout3DsScreen extends React.Component<Props, State> {
     };
   }
 
+  private updateLoadingState = (isLoading: boolean) => this.setState({ isWebViewLoading: isLoading });
+
   private navigationStateChanged = (navState: NavState) => {
-    this.setState({
-      isWebViewLoading: navState.loading ? navState.loading : false
-    });
 
     // pagoPA-designated URL for exiting the webview
     // (visisted when the user taps the "close" button)
@@ -63,6 +62,8 @@ class Checkout3DsScreen extends React.Component<Props, State> {
           source={{ uri: url }}
           onNavigationStateChange={this.navigationStateChanged}
           javaScriptEnabled={true}
+          onLoadStart={ () => this.updateLoadingState(true) }
+          onLoadEnd={ () => this.updateLoadingState(false) }
         />
         {this.state.isWebViewLoading && (
           <View style={styles.refreshIndicatorContainer}>
