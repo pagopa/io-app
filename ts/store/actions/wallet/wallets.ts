@@ -4,12 +4,14 @@ import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
   CREDIT_CARD_DATA_CLEANUP,
+  DELETE_WALLET_REQUEST,
   FETCH_WALLETS_REQUEST,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   STORE_CREDIT_CARD_DATA,
   WALLETS_FETCHED,
-  DELETE_WALLET_REQUEST
+  WALLET_MANAGEMENT_SET_LOADING_STATE,
+  WALLET_MANAGEMENT_RESET_LOADING_STATE
 } from "../constants";
 
 export type FetchWalletsRequest = Readonly<{
@@ -56,6 +58,14 @@ export type DeleteWalletRequest = Readonly<{
   payload: number; // wallet id
 }>;
 
+export type WalletManagementSetLoadingState = Readonly<{
+  type: typeof WALLET_MANAGEMENT_SET_LOADING_STATE;
+}>;
+
+export type WalletManagementResetLoadingState = Readonly<{
+  type: typeof WALLET_MANAGEMENT_RESET_LOADING_STATE;
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
@@ -65,7 +75,9 @@ export type WalletsActions =
   | CreditCardDataCleanup
   | AddCreditCardRequest
   | AddCreditCardCompleted
-  | DeleteWalletRequest;
+  | DeleteWalletRequest
+  | WalletManagementSetLoadingState
+  | WalletManagementResetLoadingState;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -117,4 +129,12 @@ export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
 export const deleteWalletRequest = (walletId: number): DeleteWalletRequest => ({
   type: DELETE_WALLET_REQUEST,
   payload: walletId
+});
+
+export const walletManagementSetLoadingState = (): WalletManagementSetLoadingState => ({
+  type: WALLET_MANAGEMENT_SET_LOADING_STATE
+});
+
+export const walletManagementResetLoadingState = (): WalletManagementResetLoadingState => ({
+  type: WALLET_MANAGEMENT_RESET_LOADING_STATE
 });

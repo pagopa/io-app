@@ -20,7 +20,10 @@ import { connect } from "react-redux";
 
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { setFavoriteWallet, deleteWalletRequest } from "../../../store/actions/wallet/wallets";
+import {
+  deleteWalletRequest,
+  setFavoriteWallet
+} from "../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { makeFontStyleObject } from "../../../theme/fonts";
@@ -170,7 +173,7 @@ class CardComponent extends React.Component<Props> {
                   </Text>
                 </MenuOption>
                 <MenuOption
-                  onSelect={() => 
+                  onSelect={() =>
                     Alert.alert(
                       I18n.t("cardComponent.deleteTitle"),
                       I18n.t("cardComponent.deleteMsg"),

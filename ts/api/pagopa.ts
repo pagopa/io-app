@@ -5,12 +5,15 @@
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
+  basicErrorResponseDecoder,
   composeHeaderProducers,
+  composeResponseDecoders,
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
   IPostApiRequestType,
   IPutApiRequestType,
+  IResponseType,
   ResponseDecoder,
   TypeofApiCall
 } from "italia-ts-commons/lib/requests";
@@ -30,7 +33,42 @@ import {
   basicResponseDecoderWith401,
   BasicResponseTypeWith401
 } from "./backend";
-import * as t from "io-ts";
+
+export function emptyResponseDecoder<
+  S extends number,
+  H extends string = never
+>(status: S): ResponseDecoder<IResponseType<S, undefined, H>> {
+  return async (response: Response) => {
+    if (response.status !== status) {
+      return undefined;
+    }
+    const text = await response.text();
+    if (text !== "") {
+      return undefined;
+    }
+    return {
+      // tslint:disable-next-line:no-any
+      headers: response.headers as any,
+      status,
+      value: undefined
+    };
+  };
+}
+
+export function emptyResponseDecoderWithErrors<
+  H extends string = never
+>(): ResponseDecoder<BasicResponseTypeWith401<undefined>> {
+  return composeResponseDecoders(
+    composeResponseDecoders(
+      composeResponseDecoders(
+        emptyResponseDecoder<200, H>(200),
+        basicErrorResponseDecoder<404, H>(404)
+      ),
+      basicErrorResponseDecoder<500, H>(500)
+    ),
+    basicErrorResponseDecoder(401)
+  );
+}
 
 // builds on top of basicResponseDecoderWith401 and
 // casts the result to a type T: this is in order to
@@ -127,7 +165,7 @@ type DeleteWalletType = IDeleteApiRequestType<
   },
   "Authorization",
   never,
-  BasicResponseTypeWith401<t.TypeOf<typeof t.voidType>>
+  BasicResponseTypeWith401<undefined>
 >;
 
 export type PagoPaClient = Readonly<{
@@ -321,7 +359,7 @@ export const PagoPaClient = (
     url: ({ walletId }) => `/v1/wallet/${walletId}`,
     query: () => ({}),
     headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-    response_decoder: basicResponseDecoderWith401(t.voidType)
+    response_decoder: emptyResponseDecoderWithErrors()
   });
 
   return {

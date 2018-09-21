@@ -22,6 +22,7 @@ import {
 } from "redux-saga/effects";
 
 import { Option, some } from "fp-ts/lib/Option";
+import * as t from "io-ts";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { NavigationActions } from "react-navigation";
@@ -43,6 +44,7 @@ import { LogoutSuccess } from "../store/actions/authentication";
 import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
+  DELETE_WALLET_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
   LOGOUT_SUCCESS,
@@ -58,8 +60,7 @@ import {
   PAYMENT_REQUEST_PICK_PSP,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  PAYMENT_UPDATE_PSP,
-  DELETE_WALLET_REQUEST
+  PAYMENT_UPDATE_PSP
 } from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
@@ -97,10 +98,10 @@ import {
 import {
   AddCreditCardRequest,
   creditCardDataCleanup,
+  DeleteWalletRequest,
   FetchWalletsRequest,
   selectWalletForDetails,
-  walletsFetched,
-  DeleteWalletRequest
+  walletsFetched
 } from "../store/actions/wallet/wallets";
 import {
   sessionTokenSelector,
@@ -141,7 +142,6 @@ import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
-import * as t from "io-ts";
 
 // allow refreshing token this number of times
 const MAX_TOKEN_REFRESHES = 2;
@@ -728,7 +728,7 @@ function* checkPayment(
     | BasicResponseTypeWith401<PaymentResponse>
     | undefined = yield call(
     fetchWithTokenRefresh,
-    (t: string) => pagoPaClient.checkPayment(t, paymentId),
+    (token: string) => pagoPaClient.checkPayment(token, paymentId),
     pagoPaClient
   );
   if (response !== undefined) {
