@@ -227,7 +227,9 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
-function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect | number> {
+function* fetchWallets(
+  pagoPaClient: PagoPaClient
+): Iterator<Effect | number | undefined> {
   const response:
     | BasicResponseTypeWith401<WalletListResponse>
     | undefined = yield call(
@@ -240,6 +242,7 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect | number> {
     return response.value.data.length;
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  return undefined;
 }
 
 function* addCreditCard(
@@ -327,13 +330,16 @@ function* addCreditCard(
   // TODO: find a way of finding out the result of the
   // request from the URL
   const currentCount: number = yield select(walletCountSelector);
-  const updatedCount: number = yield call(fetchWallets, pagoPaClient);
+  const updatedCount: number | undefined = yield call(
+    fetchWallets,
+    pagoPaClient
+  );
   /**
    * TODO: introduce a better way of displaying
    * info messages (e.g. red/green banner at the
    * top of the screen)
    */
-  if (updatedCount === currentCount + 1) {
+  if (updatedCount !== undefined && updatedCount === currentCount + 1) {
     console.warn("Card added successfully!"); // tslint:disable-line no-console
   } else {
     console.warn("The card could not be added :("); // tslint:disable-line no-console
@@ -365,8 +371,8 @@ function* deleteWallet(
     if (response !== undefined && response.status === 200) {
       // wallet was successfully deleted
       console.warn("Card successfully deleted!"); // tslint:disable-line no-console
-      const count: number = yield call(fetchWallets, pagoPaClient); // refresh cards list
-      if (count > 0) {
+      const count: number | undefined = yield call(fetchWallets, pagoPaClient); // refresh cards list
+      if (count !== undefined && count > 0) {
         yield put(navigateTo(ROUTES.WALLET_LIST));
       } else {
         yield put(navigateTo(ROUTES.WALLET_HOME));
