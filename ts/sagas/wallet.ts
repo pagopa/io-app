@@ -227,7 +227,7 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
-function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
+function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect | number> {
   const response:
     | BasicResponseTypeWith401<WalletListResponse>
     | undefined = yield call(
@@ -237,6 +237,7 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
   );
   if (response !== undefined && response.status === 200) {
     yield put(walletsFetched(response.value.data));
+    return response.value.data.length;
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
@@ -326,8 +327,7 @@ function* addCreditCard(
   // TODO: find a way of finding out the result of the
   // request from the URL
   const currentCount: number = yield select(walletCountSelector);
-  yield call(fetchWallets, pagoPaClient);
-  const updatedCount: number = yield select(walletCountSelector);
+  const updatedCount: number = yield call(fetchWallets, pagoPaClient);
   /**
    * TODO: introduce a better way of displaying
    * info messages (e.g. red/green banner at the
@@ -365,8 +365,7 @@ function* deleteWallet(
     if (response !== undefined && response.status === 200) {
       // wallet was successfully deleted
       console.warn("Card successfully deleted!"); // tslint:disable-line no-console
-      yield call(fetchWallets, pagoPaClient); // refresh cards list
-      const count: number = yield select(walletCountSelector);
+      const count: number = yield call(fetchWallets, pagoPaClient); // refresh cards list
       if (count > 0) {
         yield put(navigateTo(ROUTES.WALLET_LIST));
       } else {
