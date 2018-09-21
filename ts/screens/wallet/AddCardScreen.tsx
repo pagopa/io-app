@@ -4,8 +4,8 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import { entries, range, size } from "lodash";
-import { Body, Container, Content, Item, Text, View } from "native-base";
 import { Left } from "native-base";
+import { Body, Container, Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -24,6 +24,7 @@ import { Dispatch } from "../../store/actions/types";
 import { storeCreditCardData } from "../../store/actions/wallet/wallets";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { CreditCard } from "../../types/pagopa";
+import { ComponentProps } from "../../types/react";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
@@ -70,6 +71,47 @@ const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
 const EMPTY_CARD_SECURITY_CODE = "";
 
+function getCardFromState(state: State): Option<CreditCard> {
+  const { pan, expirationDate, securityCode, holder } = state;
+  if (
+    pan.isNone() ||
+    expirationDate.isNone() ||
+    securityCode.isNone() ||
+    holder.isNone()
+  ) {
+    return none;
+  }
+
+  const [expirationMonth, expirationYear] = expirationDate.value.split("/");
+
+  if (!CreditCardPan.is(pan.value)) {
+    // invalid pan
+    return none;
+  }
+  if (
+    !CreditCardExpirationMonth.is(expirationMonth) ||
+    !CreditCardExpirationYear.is(expirationYear)
+  ) {
+    // invalid date
+    return none;
+  }
+
+  if (!CreditCardCVC.is(securityCode.value)) {
+    // invalid cvc
+    return none;
+  }
+
+  const card: CreditCard = {
+    pan: pan.value,
+    holder: holder.value,
+    expireMonth: expirationMonth,
+    expireYear: expirationYear,
+    securityCode: securityCode.value
+  };
+
+  return some(card);
+}
+
 class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -81,44 +123,7 @@ class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
-  private submit = () => {
-    const { pan, expirationDate, securityCode, holder } = this.state;
-    if (
-      pan.isNone() ||
-      expirationDate.isNone() ||
-      securityCode.isNone() ||
-      holder.isNone()
-    ) {
-      return;
-    }
-
-    const [expirationMonth, expirationYear] = expirationDate.value.split("/");
-
-    if (!CreditCardPan.is(pan.value)) {
-      // invalid pan
-      return;
-    }
-    if (
-      !CreditCardExpirationMonth.is(expirationMonth) ||
-      !CreditCardExpirationYear.is(expirationYear)
-    ) {
-      // invalid date
-      return;
-    }
-
-    if (!CreditCardCVC.is(securityCode.value)) {
-      // invalid cvc
-      return;
-    }
-
-    const card: CreditCard = {
-      pan: pan.value,
-      holder: holder.value,
-      expireMonth: expirationMonth,
-      expireYear: expirationYear,
-      securityCode: securityCode.value
-    };
-
+  private submit = (card: CreditCard) => {
     // store data locally and proceed
     // to the recap screen
     this.props.storeCreditCardData(card);
@@ -137,11 +142,17 @@ class AddCardScreen extends React.Component<Props, State> {
       DINER: cardIcons.DINERS
     };
 
-    const primaryButtonProps = {
-      block: true,
-      primary: true,
-      onPress: this.submit,
-      title: I18n.t("global.buttons.continue")
+    const primaryButtonPropsFromState = (
+      state: State
+    ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
+      const maybeCard = getCardFromState(state);
+      return {
+        block: true,
+        primary: true,
+        onPress: maybeCard.map(card => () => this.submit(card)).toUndefined(),
+        disabled: maybeCard.isNone(),
+        title: I18n.t("global.buttons.continue")
+      };
     };
 
     const secondaryButtonProps = {
@@ -284,7 +295,7 @@ class AddCardScreen extends React.Component<Props, State> {
         </ScrollView>
 
         <FooterWithButtons
-          leftButton={primaryButtonProps}
+          leftButton={primaryButtonPropsFromState(this.state)}
           rightButton={secondaryButtonProps}
           inlineHalf={true}
         />
