@@ -1,5 +1,6 @@
 import * as React from "react";
 import { NavState, WebView, View, StyleSheet } from "react-native";
+import { Container } from "native-base";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "../../store/actions/types";
@@ -57,15 +58,18 @@ class Checkout3DsScreen extends React.Component<Props, State> {
   public render() {
     const url = this.props.navigation.getParam("url", "https://www.google.com");
     return (
-      <WebView
-        source={{ uri: url }}
-        onNavigationStateChange={this.navigationStateChanged}
-      >
-      {this.state.isWebViewLoading && (
-        <View style={styles.refreshIndicatorContainer}>
-          <RefreshIndicator />
-      </View>)}
-      </WebView>
+      <Container>
+        <WebView
+          source={{ uri: url }}
+          onNavigationStateChange={this.navigationStateChanged}
+          javaScriptEnabled={true}
+        />
+        {this.state.isWebViewLoading && (
+          <View style={styles.refreshIndicatorContainer}>
+            <RefreshIndicator />
+          </View>
+          )}
+      </Container>
     );
   }
 }
