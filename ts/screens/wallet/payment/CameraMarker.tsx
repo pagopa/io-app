@@ -1,4 +1,4 @@
-import { Col, Grid, Row, View } from "native-base";
+import { Col, Grid, Icon, Row, View } from "native-base";
 import * as React from "react";
 
 import { StyleSheet } from "react-native";
@@ -8,11 +8,18 @@ import variables from "../../../theme/variables";
 type MarkerState = "SCANNING" | "VALID" | "INVALID";
 
 type Props = {
-  width: number;
+  screenWidth: number;
   state: MarkerState;
 };
 
-export const CameraMarker: React.SFC<Props> = ({ width, state }) => {
+export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
+  const iconName =
+    state === "INVALID" ? "times" : state === "VALID" ? "check" : undefined;
+
+  const sideLength = screenWidth / 2;
+
+  const borderLength = screenWidth / 6;
+
   const styles = StyleSheet.create({
     rectangleContainer: {
       flex: 1,
@@ -22,15 +29,15 @@ export const CameraMarker: React.SFC<Props> = ({ width, state }) => {
     },
 
     rectangle: {
-      height: width / 2,
-      width: width / 2,
+      height: sideLength,
+      width: sideLength,
       borderWidth: 0,
       backgroundColor: "transparent"
     },
 
     smallBorded: {
-      height: width / 6,
-      width: width / 6,
+      height: borderLength,
+      width: borderLength,
       borderColor: variables.brandPrimaryInverted,
       backgroundColor: "transparent",
       position: "absolute"
@@ -62,11 +69,47 @@ export const CameraMarker: React.SFC<Props> = ({ width, state }) => {
       borderRightWidth: 2,
       bottom: 0,
       right: 0
+    },
+
+    iconContainer: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      left: 0,
+      bottom: 0,
+      justifyContent: "center",
+      alignItems: "center"
+    },
+
+    icon: {
+      fontSize: sideLength,
+      lineHeight: sideLength,
+      opacity: 0.7
+    },
+
+    iconValid: {
+      color: variables.brandSuccess
+    },
+
+    iconInvalid: {
+      color: variables.brandDanger
     }
   });
   return (
     <View style={styles.rectangleContainer}>
       <View style={styles.rectangle}>
+        {iconName && (
+          <View style={styles.iconContainer}>
+            <Icon
+              type="FontAwesome"
+              name={iconName}
+              style={[
+                styles.icon,
+                state === "VALID" ? styles.iconValid : styles.iconInvalid
+              ]}
+            />
+          </View>
+        )}
         <Grid>
           <Row>
             <Col>

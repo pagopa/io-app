@@ -24,6 +24,7 @@ import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
+import { ComponentProps } from "../../../types/react";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { CameraMarker } from "./CameraMarker";
 
@@ -42,6 +43,10 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+
+type State = {
+  scanningState: ComponentProps<typeof CameraMarker>["state"];
+};
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -74,13 +79,21 @@ const styles = StyleSheet.create({
   }
 });
 
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 2000;
+/**
+ * Delay for reactivating the QR scanner after a scan
+ */
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
 
-class ScanQrCodeScreen extends React.PureComponent<Props> {
+class ScanQrCodeScreen extends React.PureComponent<Props, State> {
+  private scannerReactivateTimeoutHandler: number | undefined;
+
   /**
    * Handles valid PagoPA QR codes
    */
   private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
+    this.setState({
+      scanningState: "VALID"
+    });
     this.props.showTransactionSummary(data.e1, data.e2);
   };
 
@@ -88,12 +101,18 @@ class ScanQrCodeScreen extends React.PureComponent<Props> {
    * Handles invalid PagoPA QR codes
    */
   private onInvalidQrCode = () => {
-    // FIXME: must cancel timeout on component unmount
-    // @see https://www.pivotaltracker.com/story/show/160482002
-    setTimeout(
-      () => (this.refs.scanner as QRCodeScanner).reactivate(),
-      QRCODE_SCANNER_REACTIVATION_TIME_MS
-    );
+    this.setState({
+      scanningState: "INVALID"
+    });
+    // tslint:disable-next-line:no-object-mutation
+    this.scannerReactivateTimeoutHandler = setTimeout(() => {
+      // tslint:disable-next-line:no-object-mutation
+      this.scannerReactivateTimeoutHandler = undefined;
+      (this.refs.scanner as QRCodeScanner).reactivate();
+      this.setState({
+        scanningState: "SCANNING"
+      });
+    }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
   };
 
   /**
@@ -104,11 +123,25 @@ class ScanQrCodeScreen extends React.PureComponent<Props> {
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
+  public constructor(props: Props) {
+    super(props);
+    this.state = {
+      scanningState: "SCANNING"
+    };
+  }
+
   public shouldComponentUpdate(nextProps: Props) {
     // avoids updating the component on invalid props to avoid having the screen
     // become blank during transitions from one payment state to another
     // FIXME: this is quite fragile, we should instead avoid having a shared state
     return nextProps.valid;
+  }
+
+  public componentWillUnmount() {
+    if (this.scannerReactivateTimeoutHandler) {
+      // cancel the QR scanner reactivation before unmounting the component
+      clearTimeout(this.scannerReactivateTimeoutHandler);
+    }
   }
 
   public render(): React.ReactNode {
@@ -150,7 +183,12 @@ class ScanQrCodeScreen extends React.PureComponent<Props> {
             containerStyle={styles.cameraContainer}
             showMarker={true}
             cameraStyle={styles.camera}
-            customMarker={<CameraMarker width={screenWidth} />}
+            customMarker={
+              <CameraMarker
+                screenWidth={screenWidth}
+                state={this.state.scanningState}
+              />
+            }
             bottomContent={
               <View>
                 <View spacer={true} large={true} />
