@@ -1,11 +1,11 @@
-import * as React from "react";
-import { NavState, WebView, View, StyleSheet } from "react-native";
 import { Container } from "native-base";
+import * as React from "react";
+import { NavState, StyleSheet, View, WebView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { Dispatch } from "../../store/actions/types";
 import { addCreditCardCompleted } from "../../store/actions/wallet/wallets";
-import { RefreshIndicator } from '../../components/ui/RefreshIndicator';
 
 type ReduxMappedProps = Readonly<{
   addCreditCardCompleted: () => void;
@@ -31,18 +31,17 @@ const styles = StyleSheet.create({
 });
 
 class Checkout3DsScreen extends React.Component<Props, State> {
-
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       isWebViewLoading: true
     };
   }
 
-  private updateLoadingState = (isLoading: boolean) => this.setState({ isWebViewLoading: isLoading });
+  private updateLoadingState = (isLoading: boolean) =>
+    this.setState({ isWebViewLoading: isLoading });
 
   private navigationStateChanged = (navState: NavState) => {
-
     // pagoPA-designated URL for exiting the webview
     // (visisted when the user taps the "close" button)
     const exitUrl = "/wallet/loginMethod";
@@ -62,14 +61,14 @@ class Checkout3DsScreen extends React.Component<Props, State> {
           source={{ uri: url }}
           onNavigationStateChange={this.navigationStateChanged}
           javaScriptEnabled={true}
-          onLoadStart={ () => this.updateLoadingState(true) }
-          onLoadEnd={ () => this.updateLoadingState(false) }
+          onLoadStart={() => this.updateLoadingState(true)}
+          onLoadEnd={() => this.updateLoadingState(false)}
         />
         {this.state.isWebViewLoading && (
           <View style={styles.refreshIndicatorContainer}>
             <RefreshIndicator />
           </View>
-          )}
+        )}
       </Container>
     );
   }
