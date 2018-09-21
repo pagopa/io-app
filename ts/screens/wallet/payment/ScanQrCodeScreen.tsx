@@ -2,26 +2,9 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
-import { Either } from "fp-ts/lib/Either";
-import * as t from "io-ts";
-import {
-  AmountInEuroCents,
-  PaymentNoticeQrCodeFromString,
-  RptId,
-  rptIdFromPaymentNoticeQrCode
-} from "italia-ts-commons/lib/pagopa";
-import {
-  Body,
-  Button,
-  Col,
-  Container,
-  Grid,
-  Icon,
-  Left,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { Body, Button, Container, Icon, Left, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -41,6 +24,8 @@ import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
+import { decodePagoPaQrCode } from "../../../utils/payment";
+import { CameraMarker } from "./CameraMarker";
 
 type ReduxMappedStateProps = Readonly<{
   valid: boolean;
@@ -86,83 +71,37 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: (screenWidth * 4) / 3,
     width: screenWidth
-  },
-
-  rectangleContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent"
-  },
-
-  rectangle: {
-    height: screenWidth / 2,
-    width: screenWidth / 2,
-    borderWidth: 0,
-    backgroundColor: "transparent"
-  },
-
-  smallBorded: {
-    height: screenWidth / 6,
-    width: screenWidth / 6,
-    borderColor: variables.brandPrimaryInverted,
-    backgroundColor: "transparent",
-    position: "absolute"
-  },
-
-  topRightCorner: {
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    top: 0,
-    right: 0
-  },
-
-  topLeftCorner: {
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    top: 0,
-    left: 0
-  },
-
-  bottomLeftCorner: {
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    bottom: 0,
-    left: 0
-  },
-
-  bottomRightCorner: {
-    borderBottomWidth: 2,
-    borderRightWidth: 2,
-    bottom: 0,
-    right: 0
   }
 });
 
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 2000;
 
-const rptIdFromQrCodeString = (qrCodeString: string): Either<t.Errors, RptId> =>
-  PaymentNoticeQrCodeFromString.decode(qrCodeString).chain(
-    rptIdFromPaymentNoticeQrCode
-  );
+class ScanQrCodeScreen extends React.PureComponent<Props> {
+  /**
+   * Handles valid PagoPA QR codes
+   */
+  private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
+    this.props.showTransactionSummary(data.e1, data.e2);
+  };
 
-class ScanQrCodeScreen extends React.Component<Props, never> {
-  private qrCodeRead = (data: string) => {
-    const rptId = rptIdFromQrCodeString(data);
-    const paymentNotice = PaymentNoticeQrCodeFromString.decode(data);
-    if (rptId.isRight() && paymentNotice.isRight()) {
-      // successful conversion to RptId
-      this.props.showTransactionSummary(
-        rptId.value,
-        paymentNotice.value.amount
-      );
-    } // else error stating that QR code is invalid @https://www.pivotaltracker.com/story/show/159003368
-    else {
-      setTimeout(
-        () => (this.refs.scanner as QRCodeScanner).reactivate(),
-        QRCODE_SCANNER_REACTIVATION_TIME_MS
-      );
-    }
+  /**
+   * Handles invalid PagoPA QR codes
+   */
+  private onInvalidQrCode = () => {
+    // FIXME: must cancel timeout on component unmount
+    // @see https://www.pivotaltracker.com/story/show/160482002
+    setTimeout(
+      () => (this.refs.scanner as QRCodeScanner).reactivate(),
+      QRCODE_SCANNER_REACTIVATION_TIME_MS
+    );
+  };
+
+  /**
+   * Gets called by the QR code reader on new QR code reads
+   */
+  private onQrCodeData = (data: string) => {
+    const resultOrError = decodePagoPaQrCode(data);
+    resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
   public shouldComponentUpdate(nextProps: Props) {
@@ -205,44 +144,13 @@ class ScanQrCodeScreen extends React.Component<Props, never> {
         <ScrollView bounces={false}>
           <QRCodeScanner
             onRead={(reading: { data: string }) =>
-              this.qrCodeRead(reading.data)
+              this.onQrCodeData(reading.data)
             }
             ref="scanner" // tslint:disable-line jsx-no-string-ref
             containerStyle={styles.cameraContainer}
             showMarker={true}
             cameraStyle={styles.camera}
-            customMarker={
-              <View style={styles.rectangleContainer}>
-                <View style={styles.rectangle}>
-                  <Grid>
-                    <Row>
-                      <Col>
-                        <View
-                          style={[styles.topLeftCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                      <Col>
-                        <View
-                          style={[styles.topRightCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <View
-                          style={[styles.bottomLeftCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                      <Col>
-                        <View
-                          style={[styles.bottomRightCorner, styles.smallBorded]}
-                        />
-                      </Col>
-                    </Row>
-                  </Grid>
-                </View>
-              </View>
-            }
+            customMarker={<CameraMarker width={screenWidth} />}
             bottomContent={
               <View>
                 <View spacer={true} large={true} />
