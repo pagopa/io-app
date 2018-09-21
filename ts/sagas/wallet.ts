@@ -22,7 +22,6 @@ import {
 } from "redux-saga/effects";
 
 import { Option, some } from "fp-ts/lib/Option";
-import * as t from "io-ts";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { NavigationActions } from "react-navigation";
@@ -357,7 +356,7 @@ function* deleteWallet(
   try {
     yield put(walletManagementSetLoadingState());
     const response:
-      | BasicResponseTypeWith401<t.TypeOf<typeof t.voidType>>
+      | BasicResponseTypeWith401<undefined>
       | undefined = yield call(
       fetchWithTokenRefresh,
       (token: string) => pagoPaClient.deleteWallet(token, walletId),
