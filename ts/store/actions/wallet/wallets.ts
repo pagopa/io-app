@@ -8,6 +8,8 @@ import {
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   STORE_CREDIT_CARD_DATA,
+  WALLET_HOME_LOAD_REQUEST,
+  WALLET_HOME_LOAD_SUCCESS,
   WALLET_MANAGEMENT_RESET_LOADING_STATE,
   WALLET_MANAGEMENT_SET_LOADING_STATE,
   WALLETS_FETCHED
@@ -60,6 +62,14 @@ export type WalletManagementResetLoadingState = Readonly<{
   type: typeof WALLET_MANAGEMENT_RESET_LOADING_STATE;
 }>;
 
+export type WalletHomeLoadRequest = Readonly<{
+  type: typeof WALLET_HOME_LOAD_REQUEST;
+}>;
+
+export type WalletHomeLoadSuccess = Readonly<{
+  type: typeof WALLET_HOME_LOAD_SUCCESS;
+}>;
+
 export type WalletsActions =
   | FetchWalletsRequest
   | WalletsFetched
@@ -70,7 +80,9 @@ export type WalletsActions =
   | AddCreditCardRequest
   | AddCreditCardCompleted
   | WalletManagementSetLoadingState
-  | WalletManagementResetLoadingState;
+  | WalletManagementResetLoadingState
+  | WalletHomeLoadRequest
+  | WalletHomeLoadSuccess;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -125,4 +137,12 @@ export const walletManagementSetLoadingState = (): WalletManagementSetLoadingSta
 
 export const walletManagementResetLoadingState = (): WalletManagementResetLoadingState => ({
   type: WALLET_MANAGEMENT_RESET_LOADING_STATE
+});
+
+export const walletHomeLoadRequest = (): WalletHomeLoadRequest => ({
+  type: WALLET_HOME_LOAD_REQUEST
+});
+
+export const walletHomeLoadSuccess = (): WalletHomeLoadSuccess => ({
+  type: WALLET_HOME_LOAD_SUCCESS
 });

@@ -28,7 +28,8 @@ const INITIAL_STATE: LoadingState = {
   MESSAGES_LOAD: false,
   LOGOUT: false,
   PAYMENT_LOAD: false,
-  WALLET_MANAGEMENT_LOAD: false
+  WALLET_MANAGEMENT_LOAD: false,
+  WALLET_HOME_LOAD: false
 };
 
 /**

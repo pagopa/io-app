@@ -10,6 +10,7 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
@@ -19,9 +20,7 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { Dispatch } from "../../store/actions/types";
-import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
-import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
@@ -30,17 +29,11 @@ type ReduxMappedStateProps = Readonly<{
   cards: ReadonlyArray<Wallet>;
 }>;
 
-type ReduxMappedDispatchProps = Readonly<{
-  // temporary
-  loadTransactions: () => void;
-  loadWallets: () => void;
-}>;
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
+type Props = ReduxMappedStateProps & OwnProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -127,14 +120,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  public componentDidMount() {
-    // WIP loadTransactions should not be called from here
-    // (transactions should be persisted & fetched periodically)
-    // WIP WIP create pivotal story
-    this.props.loadWallets();
-    this.props.loadTransactions();
-  }
-
   // check the cards to display (none, one or two cards)
   private getCardType(): CardType {
     const cards = this.props.cards;
@@ -180,12 +165,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   cards: walletsSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadWallets: () => dispatch(fetchWalletsRequest())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WalletHomeScreen);
+export default withLoadingSpinner(
+  connect(mapStateToProps)(WalletHomeScreen),
+  createLoadingSelector(["WALLET_HOME_LOAD"]),
+  {}
+);

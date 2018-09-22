@@ -24,7 +24,8 @@ const INITIAL_STATE: ErrorState = {
   MESSAGES_LOAD: none,
   LOGOUT: none,
   PAYMENT_LOAD: none,
-  WALLET_MANAGEMENT_LOAD: none
+  WALLET_MANAGEMENT_LOAD: none,
+  WALLET_HOME_LOAD: none
 };
 
 /**

@@ -11,6 +11,7 @@ import {
  */
 
 import {
+  all,
   call,
   Effect,
   fork,
@@ -100,6 +101,8 @@ import {
   creditCardDataCleanup,
   FetchWalletsRequest,
   selectWalletForDetails,
+  walletHomeLoadRequest,
+  walletHomeLoadSuccess,
   walletManagementResetLoadingState,
   walletManagementSetLoadingState,
   walletsFetched
@@ -197,32 +200,47 @@ function* fetchWithTokenRefresh<T>(
 }
 
 function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
-  const refreshTokenResponse:
-    | BasicResponseTypeWith401<SessionResponse>
-    | undefined = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
-  if (
-    refreshTokenResponse !== undefined &&
-    refreshTokenResponse.status === 200
-  ) {
-    // token fetched successfully, store it
-    yield put(
-      storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
+  try {
+    const refreshTokenResponse:
+      | BasicResponseTypeWith401<SessionResponse>
+      | undefined = yield call(
+      pagoPaClient.getSession,
+      pagoPaClient.walletToken
     );
+    if (
+      refreshTokenResponse !== undefined &&
+      refreshTokenResponse.status === 200
+    ) {
+      // token fetched successfully, store it
+      yield put(
+        storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
+      );
+    }
+  } catch {
+    /**
+     * TODO: handle error (max-retries), show non-invasive message (toast?)
+     */
   }
 }
 
 function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
-  const response:
-    | BasicResponseTypeWith401<TransactionListResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    pagoPaClient.getTransactions,
-    pagoPaClient
-  );
-  if (response !== undefined && response.status === 200) {
-    yield put(transactionsFetched(response.value.data));
+  try {
+    const response:
+      | BasicResponseTypeWith401<TransactionListResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      pagoPaClient.getTransactions,
+      pagoPaClient
+    );
+    if (response !== undefined && response.status === 200) {
+      yield put(transactionsFetched(response.value.data));
+    }
+    // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  } catch {
+    /**
+     * TODO: handle error (max-retries), show non-invasive message (toast?)
+     */
   }
-  // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
 function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
@@ -969,6 +987,15 @@ function* completionHandler(
   }
 }
 
+export function* loadWalletHome(pagoPaClient: PagoPaClient) {
+  yield put(walletHomeLoadRequest());
+  yield all([
+    call(fetchWallets, pagoPaClient),
+    call(fetchTransactions, pagoPaClient)
+  ]);
+  yield put(walletHomeLoadSuccess());
+}
+
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   pagoPaClient: PagoPaClient,
@@ -988,6 +1015,10 @@ export function* watchWalletSaga(
   );
 
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
+
+  // first, load wallets & transactions a first time
+  // (might be refreshed afterwards)
+  yield fork(loadWalletHome, pagoPaClient);
 
   yield takeLatest(
     PAYMENT_REQUEST_QR_CODE,
