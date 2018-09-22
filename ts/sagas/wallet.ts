@@ -10,6 +10,11 @@ import {
  * A saga that manages the Wallet.
  */
 
+import { Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { Toast } from "native-base";
+import { NavigationActions } from "react-navigation";
 import {
   call,
   Effect,
@@ -20,11 +25,6 @@ import {
   take,
   takeLatest
 } from "redux-saga/effects";
-
-import { Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
@@ -38,11 +38,13 @@ import {
 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
+import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import { LogoutSuccess } from "../store/actions/authentication";
 import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
+  DELETE_WALLET_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
   LOGOUT_SUCCESS,
@@ -98,6 +100,7 @@ import {
 import {
   AddCreditCardRequest,
   creditCardDataCleanup,
+  DeleteWalletRequest,
   FetchWalletsRequest,
   selectWalletForDetails,
   walletManagementResetLoadingState,
@@ -225,7 +228,9 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
 
-function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
+function* fetchWallets(
+  pagoPaClient: PagoPaClient
+): Iterator<Effect | number | undefined> {
   const response:
     | BasicResponseTypeWith401<WalletListResponse>
     | undefined = yield call(
@@ -235,8 +240,10 @@ function* fetchWallets(pagoPaClient: PagoPaClient): Iterator<Effect> {
   );
   if (response !== undefined && response.status === 200) {
     yield put(walletsFetched(response.value.data));
+    return response.value.data.length;
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
+  return undefined;
 }
 
 function* addCreditCard(
@@ -333,14 +340,16 @@ function* addCreditCard(
   // TODO: find a way of finding out the result of the
   // request from the URL
   const currentCount: number = yield select(walletCountSelector);
-  yield call(fetchWallets, pagoPaClient);
-  const updatedCount: number = yield select(walletCountSelector);
+  const updatedCount: number | undefined = yield call(
+    fetchWallets,
+    pagoPaClient
+  );
   /**
    * TODO: introduce a better way of displaying
    * info messages (e.g. red/green banner at the
    * top of the screen)
    */
-  if (updatedCount === currentCount + 1) {
+  if (updatedCount !== undefined && updatedCount === currentCount + 1) {
     console.warn("Card added successfully!"); // tslint:disable-line no-console
   } else {
     console.warn("The card could not be added :("); // tslint:disable-line no-console
@@ -354,6 +363,47 @@ function* addCreditCard(
   // stack should be cleaned right here
   // @https://www.pivotaltracker.com/story/show/159300579
   yield put(navigateTo(ROUTES.WALLET_HOME));
+}
+
+function* deleteWallet(
+  walletId: number,
+  pagoPaClient: PagoPaClient
+): Iterator<Effect> {
+  try {
+    yield put(walletManagementSetLoadingState());
+    const response:
+      | BasicResponseTypeWith401<undefined>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (token: string) => pagoPaClient.deleteWallet(token, walletId),
+      pagoPaClient
+    );
+    if (response !== undefined && response.status === 200) {
+      // wallet was successfully deleted
+      Toast.show({
+        text: I18n.t("wallet.delete.successful"),
+        type: "success"
+      });
+      const count: number | undefined = yield call(fetchWallets, pagoPaClient); // refresh cards list
+      if (count !== undefined && count > 0) {
+        yield put(navigateTo(ROUTES.WALLET_LIST));
+      } else {
+        yield put(navigateTo(ROUTES.WALLET_HOME));
+      }
+    } else {
+      // a problem occurred
+      Toast.show({
+        text: I18n.t("wallet.delete.failed"),
+        type: "danger"
+      });
+    }
+  } catch {
+    /**
+     * TODO: Handle error here
+     */
+  } finally {
+    yield put(walletManagementResetLoadingState());
+  }
 }
 
 function* paymentSagaFromQrCode(
@@ -742,7 +792,7 @@ function* checkPayment(
       | BasicResponseTypeWith401<PaymentResponse>
       | undefined = yield call(
       fetchWithTokenRefresh,
-      (t: string) => pagoPaClient.checkPayment(t, paymentId),
+      (token: string) => pagoPaClient.checkPayment(token, paymentId),
       pagoPaClient
     );
     if (response !== undefined) {
@@ -1013,13 +1063,15 @@ export function* watchWalletSaga(
       | AddCreditCardRequest
       | LogoutSuccess
       | PaymentRequestQrCode
-      | PaymentRequestMessage = yield take([
+      | PaymentRequestMessage
+      | DeleteWalletRequest = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
       LOGOUT_SUCCESS,
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MESSAGE,
       ADD_CREDIT_CARD_REQUEST,
+      DELETE_WALLET_REQUEST,
       LOGOUT_SUCCESS
     ]);
 
@@ -1036,6 +1088,9 @@ export function* watchWalletSaga(
         action.setAsFavorite, // should the card be set as favorite?
         pagoPaClient
       );
+    }
+    if (action.type === DELETE_WALLET_REQUEST) {
+      yield fork(deleteWallet, action.payload, pagoPaClient);
     }
     // if the user logs out, go back to waiting
     // for a WALLET_TOKEN_LOAD_SUCCESS action
