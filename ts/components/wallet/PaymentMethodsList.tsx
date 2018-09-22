@@ -8,7 +8,7 @@
 import color from "color";
 import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet, Alert } from "react-native";
+import { Alert, FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
@@ -38,7 +38,11 @@ type IPaymentMethod = Readonly<{
   icon: any;
 }>;
 
-const unavailableAlert = () => Alert.alert(I18n.t("wallet.pickPaymentMethod.unavailable.title"), I18n.t("wallet.pickPaymentMethod.unavailable.message"));
+const unavailableAlert = () =>
+  Alert.alert(
+    I18n.t("wallet.pickPaymentMethod.unavailable.title"),
+    I18n.t("wallet.pickPaymentMethod.unavailable.message")
+  );
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
