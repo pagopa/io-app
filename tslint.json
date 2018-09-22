@@ -25,7 +25,6 @@
     "no-small-switch": false,
     "no-useless-intersection": false,
     "no-submodule-imports": false,
-    "jsx-no-lambda": false,
     "member-ordering": false,
 
     // custom rules
