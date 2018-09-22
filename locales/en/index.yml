@@ -230,8 +230,8 @@ wallet:
     newMethod: Choose another payment method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
       so that you don't have to re-add them from scratch for every transaction
-    successful: The wallet was added successfully!
-    failed: The wallet could not be added
+    successful: The card was added successfully!
+    failed: The card could not be added
   textMsg:
     title: Text confirmation code
     header: Confirmation code
