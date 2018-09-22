@@ -4,6 +4,7 @@ import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
   CREDIT_CARD_DATA_CLEANUP,
+  DELETE_WALLET_REQUEST,
   FETCH_WALLETS_REQUEST,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
@@ -52,6 +53,11 @@ type AddCreditCardCompleted = Readonly<{
   type: typeof ADD_CREDIT_CARD_COMPLETED;
 }>;
 
+export type DeleteWalletRequest = Readonly<{
+  type: typeof DELETE_WALLET_REQUEST;
+  payload: number; // wallet id
+}>;
+
 export type WalletManagementSetLoadingState = Readonly<{
   type: typeof WALLET_MANAGEMENT_SET_LOADING_STATE;
 }>;
@@ -69,6 +75,7 @@ export type WalletsActions =
   | CreditCardDataCleanup
   | AddCreditCardRequest
   | AddCreditCardCompleted
+  | DeleteWalletRequest
   | WalletManagementSetLoadingState
   | WalletManagementResetLoadingState;
 
@@ -117,6 +124,11 @@ export const addCreditCardRequest = (
 
 export const addCreditCardCompleted = (): AddCreditCardCompleted => ({
   type: ADD_CREDIT_CARD_COMPLETED
+});
+
+export const deleteWalletRequest = (walletId: number): DeleteWalletRequest => ({
+  type: DELETE_WALLET_REQUEST,
+  payload: walletId
 });
 
 export const walletManagementSetLoadingState = (): WalletManagementSetLoadingState => ({

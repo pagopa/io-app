@@ -224,6 +224,9 @@ wallet:
   paymentMethods: Payment methods
   paymentMethod: Payment method
   add: add
+  delete:
+    successful: Card successfully deleted
+    failed: The card could not be deleted
   newPaymentMethod:
     add: add
     addButton: Add payment method

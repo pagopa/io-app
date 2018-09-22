@@ -13,8 +13,10 @@ import I18n from "../../i18n";
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import CardComponent from "../../components/wallet/card";
 import ROUTES from "../../navigation/routes";
+import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
@@ -74,4 +76,9 @@ class WalletsScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   wallets: walletsSelector(state)
 });
-export default connect(mapStateToProps)(WalletsScreen);
+
+export default withLoadingSpinner(
+  connect(mapStateToProps)(WalletsScreen),
+  createLoadingSelector(["WALLET_MANAGEMENT_LOAD"]),
+  {}
+);
