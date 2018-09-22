@@ -86,10 +86,9 @@ export const Wallet = t.refinement(
     CreditCard.is(w.creditCard) &&
     w.idWallet !== undefined &&
     w.type !== undefined &&
-    (w.psp === undefined || Psp.is(w.psp)) &&
-    w.lastUsage !== undefined // when a card is created, it is "used" immediately, so this will never be empty
+    (w.psp === undefined || Psp.is(w.psp))
 );
-type RequiredWalletFields = "idWallet" | "lastUsage";
+type RequiredWalletFields = "idWallet";
 type UpdatedWalletFields = "creditCard" | "psp" | "type";
 export type Wallet = Pick<
   WalletPagoPA,
@@ -102,7 +101,7 @@ export type Wallet = Pick<
     type: "CREDIT_CARD";
   }>;
 
-type WalletNullableFields = "idWallet" | "favourite" | "lastUsage";
+type WalletNullableFields = "idWallet" | "favourite";
 export type NullableWallet = Pick<
   Wallet,
   Exclude<keyof Wallet, WalletNullableFields>
@@ -110,7 +109,6 @@ export type NullableWallet = Pick<
   Readonly<{
     idWallet: null;
     favourite: null;
-    lastUsage: null;
   }>;
 
 export const Transaction = t.refinement(
