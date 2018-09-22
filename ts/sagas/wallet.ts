@@ -350,9 +350,15 @@ function* addCreditCard(
    * top of the screen)
    */
   if (updatedCount !== undefined && updatedCount === currentCount + 1) {
-    console.warn("Card added successfully!"); // tslint:disable-line no-console
+    Toast.show({
+      text: I18n.t("wallet.newPaymentMethod.successful"),
+      type: "success"
+    });
   } else {
-    console.warn("The card could not be added :("); // tslint:disable-line no-console
+    Toast.show({
+      text: I18n.t("wallet.newPaymentMethod.failed"),
+      type: "danger"
+    });
   }
   yield put(creditCardDataCleanup());
 
