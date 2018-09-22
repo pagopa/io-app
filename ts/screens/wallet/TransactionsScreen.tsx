@@ -13,12 +13,14 @@ import {
 } from "react-navigation";
 
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList, {
   TransactionsDisplayed
 } from "../../components/wallet/TransactionsList";
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
@@ -77,4 +79,9 @@ class TransactionsScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
 });
-export default connect(mapStateToProps)(TransactionsScreen);
+
+export default withLoadingSpinner(
+  connect(mapStateToProps)(TransactionsScreen),
+  createLoadingSelector(["WALLET_MANAGEMENT_LOAD"]),
+  {}
+);
