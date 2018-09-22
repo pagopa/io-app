@@ -143,7 +143,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       case 0:
         return { type: CardEnum.NONE };
       case 1:
-        return { type: CardEnum.HEADER, card: cards[0] };
+        return { type: CardEnum.FAN , cards: [cards[0]] };
       default:
         return { type: CardEnum.FAN, cards: [cards[0], cards[1]] };
     }

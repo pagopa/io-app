@@ -123,32 +123,50 @@ class WalletLayout extends React.Component<Props> {
         return null;
       }
       case CardEnum.FAN: {
+        const { cards } = this.props.cardType;
         return (
           <TouchableOpacity
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.WALLET_LIST)
             }
           >
-            <View style={styles.shiftDown}>
-              <View style={styles.firstCard}>
-                <CardComponent
-                  navigation={this.props.navigation}
-                  item={this.props.cardType.cards[1]}
-                  logoPosition={LogoPosition.TOP}
-                  flatBottom={true}
-                  headerOnly={true}
-                />
-              </View>
-              <View style={styles.secondCard}>
-                <CardComponent
-                  navigation={this.props.navigation}
-                  item={this.props.cardType.cards[0]}
-                  logoPosition={LogoPosition.TOP}
-                  flatBottom={true}
-                  headerOnly={true}
-                />
-              </View>
-            </View>
+           {cards.length == 1
+              ? (
+                <View style={WalletStyles.container}>
+                  <CardComponent
+                    navigation={this.props.navigation}
+                    item={cards[0]}
+                    logoPosition={LogoPosition.TOP}
+                    flatBottom={true}
+                    headerOnly={true}
+                    rotated={true}
+                  />
+                </View>
+              )
+              : (
+                <View style={styles.shiftDown}>
+                  <View style={styles.firstCard}>
+                    <CardComponent
+                      navigation={this.props.navigation}
+                      item={cards[1]}
+                      logoPosition={LogoPosition.TOP}
+                      flatBottom={true}
+                      headerOnly={true}
+                    />
+                  </View>
+                  <View style={styles.secondCard}>
+                    <CardComponent
+                      navigation={this.props.navigation}
+                      item={cards[0]}
+                      logoPosition={LogoPosition.TOP}
+                      flatBottom={true}
+                      headerOnly={true}
+                    />
+                  </View>
+                </View>
+              )
+            }
+
           </TouchableOpacity>
         );
       }
