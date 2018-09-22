@@ -230,6 +230,10 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  pickPaymentMethod:
+    unavailable:
+      title: Metodo di pagamento non disponibile!
+      message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   newPaymentMethod:
     add: aggiungi
