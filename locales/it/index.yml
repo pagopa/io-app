@@ -237,6 +237,8 @@ wallet:
     newMethod: Scegli un altro metodo di pagamento
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
       ecc.) per non doverli inserire ad ogni transazione
+    successful: Portafoglio aggiunto con successo
+    failed: Impossibile aggiungere il portafoglio
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS

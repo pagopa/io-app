@@ -10,6 +10,11 @@ import {
  * A saga that manages the Wallet.
  */
 
+import { Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { Toast } from "native-base";
+import { NavigationActions } from "react-navigation";
 import {
   call,
   Effect,
@@ -20,11 +25,6 @@ import {
   take,
   takeLatest
 } from "redux-saga/effects";
-
-import { Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
@@ -38,6 +38,7 @@ import {
 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
+import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import { LogoutSuccess } from "../store/actions/authentication";
 import {
@@ -335,15 +336,16 @@ function* addCreditCard(
   const currentCount: number = yield select(walletCountSelector);
   yield call(fetchWallets, pagoPaClient);
   const updatedCount: number = yield select(walletCountSelector);
-  /**
-   * TODO: introduce a better way of displaying
-   * info messages (e.g. red/green banner at the
-   * top of the screen)
-   */
   if (updatedCount === currentCount + 1) {
-    console.warn("Card added successfully!"); // tslint:disable-line no-console
+    Toast.show({
+      text: I18n.t("wallet.newPaymentMethod.successful"),
+      type: "success"
+    });
   } else {
-    console.warn("The card could not be added :("); // tslint:disable-line no-console
+    Toast.show({
+      text: I18n.t("wallet.newPaymentMethod.failed"),
+      type: "danger"
+    });
   }
   yield put(creditCardDataCleanup());
 
