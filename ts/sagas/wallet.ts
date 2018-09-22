@@ -10,6 +10,11 @@ import {
  * A saga that manages the Wallet.
  */
 
+import { Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { Toast } from "native-base";
+import { NavigationActions } from "react-navigation";
 import {
   call,
   Effect,
@@ -20,11 +25,6 @@ import {
   take,
   takeLatest
 } from "redux-saga/effects";
-
-import { Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { NavigationActions } from "react-navigation";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
@@ -38,6 +38,7 @@ import {
 } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
+import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import { LogoutSuccess } from "../store/actions/authentication";
 import {
@@ -379,7 +380,10 @@ function* deleteWallet(
     );
     if (response !== undefined && response.status === 200) {
       // wallet was successfully deleted
-      console.warn("Card successfully deleted!"); // tslint:disable-line no-console
+      Toast.show({
+        text: I18n.t("wallet.delete.successful"),
+        type: "success"
+      });
       const count: number | undefined = yield call(fetchWallets, pagoPaClient); // refresh cards list
       if (count !== undefined && count > 0) {
         yield put(navigateTo(ROUTES.WALLET_LIST));
@@ -388,7 +392,10 @@ function* deleteWallet(
       }
     } else {
       // a problem occurred
-      console.warn("Could not delete card"); // tslint:disable-line no-console
+      Toast.show({
+        text: I18n.t("wallet.delete.failed"),
+        type: "danger"
+      });
     }
   } catch {
     /**

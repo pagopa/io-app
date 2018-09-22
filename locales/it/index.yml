@@ -231,6 +231,9 @@ wallet:
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
   add: aggiungi
+  delete:
+    successful: Carta cancellata correttamente
+    failed: Impossibile cancellare la carta
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo di pagamento
