@@ -248,6 +248,7 @@ function* addCreditCard(
     idWallet: null,
     type: "CREDIT_CARD",
     favourite: null,
+    lastUsage: null,
     creditCard
   };
   // 1st call: boarding credit card
