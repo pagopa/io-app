@@ -5,7 +5,13 @@
 
 import { Body, Container, Content, H1, Left, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  Image,
+  ListRenderItemInfo,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -74,7 +80,41 @@ const style = StyleSheet.create({
   }
 });
 
-class PickPspScreen extends React.Component<Props, never> {
+class PickPspScreen extends React.Component<Props> {
+  private itemSeparator = () => <View style={WalletStyles.bottomBorder} />;
+  private itemKey = (item: Psp) => item.id.toString();
+  private pickPsp = (item: Psp) => () => this.props.pickPsp(item.id);
+  private renderItem = (itemInfo: ListRenderItemInfo<Psp>) => (
+    <TouchableOpacity onPress={this.pickPsp(itemInfo.item)}>
+      <View style={style.listItem}>
+        <Grid>
+          <Col size={6}>
+            <View spacer={true} />
+            <Row>
+              <Image
+                style={style.flexStart}
+                resizeMode={"contain"}
+                source={{ uri: itemInfo.item.logoPSP }}
+              />
+            </Row>
+            <Row>
+              <Text style={style.feeText}>
+                {`${I18n.t("wallet.pickPsp.maxFee")} `}
+                <Text bold={true} style={style.feeText}>
+                  {buildAmount(centsToAmount(itemInfo.item.fixedCost.amount))}
+                </Text>
+              </Text>
+            </Row>
+            <View spacer={true} />
+          </Col>
+          <Col size={1} style={style.icon}>
+            <IconFont name="io-right" />
+          </Col>
+        </Grid>
+      </View>
+    </TouchableOpacity>
+  );
+
   public shouldComponentUpdate(nextProps: Props) {
     // avoids updating the component on invalid props to avoid having the screen
     // become blank during transitions from one payment state to another
@@ -109,43 +149,12 @@ class PickPspScreen extends React.Component<Props, never> {
           </Text>
           <View spacer={true} />
           <FlatList
-            ItemSeparatorComponent={() => (
-              <View style={WalletStyles.bottomBorder} />
-            )}
+            ItemSeparatorComponent={this.itemSeparator}
             removeClippedSubviews={false}
             numColumns={1}
             data={this.props.pspList}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => this.props.pickPsp(item.id)}>
-                <View style={style.listItem}>
-                  <Grid>
-                    <Col size={6}>
-                      <View spacer={true} />
-                      <Row>
-                        <Image
-                          style={style.flexStart}
-                          resizeMode={"contain"}
-                          source={{ uri: item.logoPSP }}
-                        />
-                      </Row>
-                      <Row>
-                        <Text style={style.feeText}>
-                          {`${I18n.t("wallet.pickPsp.maxFee")} `}
-                          <Text bold={true} style={style.feeText}>
-                            {buildAmount(centsToAmount(item.fixedCost.amount))}
-                          </Text>
-                        </Text>
-                      </Row>
-                      <View spacer={true} />
-                    </Col>
-                    <Col size={1} style={style.icon}>
-                      <IconFont name="io-right" />
-                    </Col>
-                  </Grid>
-                </View>
-              </TouchableOpacity>
-            )}
+            keyExtractor={this.itemKey}
+            renderItem={this.renderItem}
           />
         </Content>
       </Container>

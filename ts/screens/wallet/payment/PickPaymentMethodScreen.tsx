@@ -57,6 +57,18 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class PickPaymentMethodScreen extends React.Component<Props> {
+  private renderCardItem = (item: Wallet) => (
+    <CardComponent
+      navigation={this.props.navigation}
+      item={item}
+      menu={false}
+      favorite={false}
+      lastUsage={false}
+      mainAction={this.props.confirmPaymentMethod}
+      logoPosition={LogoPosition.TOP}
+    />
+  );
+
   public shouldComponentUpdate(nextProps: Props) {
     // avoids updating the component on invalid props to avoid having the screen
     // become blank during transitions from one payment state to another
@@ -105,17 +117,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             <List
               removeClippedSubviews={false}
               dataArray={this.props.wallets as any[]} // tslint:disable-line: readonly-array
-              renderRow={(item): React.ReactElement<any> => (
-                <CardComponent
-                  navigation={this.props.navigation}
-                  item={item}
-                  menu={false}
-                  favorite={false}
-                  lastUsage={false}
-                  mainAction={this.props.confirmPaymentMethod}
-                  logoPosition={LogoPosition.TOP}
-                />
-              )}
+              renderRow={this.renderCardItem}
             />
           </View>
         </Content>

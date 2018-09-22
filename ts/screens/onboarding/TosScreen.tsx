@@ -51,10 +51,11 @@ const TosScreen: React.SFC<Props> = ({
   dispatch
 }) => {
   const isProfile = navigation.getParam("isProfile", false);
+  const dispatchTosAcceptRequest = () => dispatch(tosAcceptRequest);
 
   return (
     <BaseScreenComponent
-      goBack={() => navigation.goBack()}
+      goBack={navigation.goBack}
       headerTitle={
         isProfile
           ? I18n.t("profile.main.screenTitle")
@@ -89,7 +90,7 @@ const TosScreen: React.SFC<Props> = ({
             block={true}
             primary={true}
             disabled={isAcceptingTos}
-            onPress={() => dispatch(tosAcceptRequest)}
+            onPress={dispatchTosAcceptRequest}
           >
             <Text>{I18n.t("onboarding.tos.continue")}</Text>
           </Button>

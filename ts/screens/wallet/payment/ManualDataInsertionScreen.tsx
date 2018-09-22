@@ -82,6 +82,17 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     };
   }
 
+  private onChangeTransactionCode = (value: string) =>
+    this.setState({
+      transactionCode: value === EMPTY_NOTICE_NUMBER ? none : some(value)
+    });
+
+  private onChangeFiscalCode = (value: string) => {
+    this.setState({
+      fiscalCode: value === EMPTY_FISCAL_CODE ? none : some(value)
+    });
+  };
+
   private validateAmount = (value: string) => {
     const parsedValue = parseFloat(value);
     this.setState({ amount: !isNaN(parsedValue) ? some(parsedValue) : none });
@@ -146,7 +157,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
+            <Button transparent={true} onPress={this.props.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -163,23 +174,14 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
               <Input
                 keyboardType={"numeric"}
-                onChangeText={value => {
-                  this.setState({
-                    transactionCode:
-                      value === EMPTY_NOTICE_NUMBER ? none : some(value)
-                  });
-                }}
+                onChangeText={this.onChangeTransactionCode}
               />
             </Item>
             <Item floatingLabel={true}>
               <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
               <Input
                 keyboardType={"numeric"}
-                onChangeText={value => {
-                  this.setState({
-                    fiscalCode: value === EMPTY_FISCAL_CODE ? none : some(value)
-                  });
-                }}
+                onChangeText={this.onChangeFiscalCode}
               />
             </Item>
             <Item floatingLabel={true}>

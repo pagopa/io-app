@@ -26,75 +26,86 @@ const styles = StyleSheet.create({
   }
 });
 
+const alertNotImplemented = () => Alert.alert(I18n.t("global.notImplemented"));
+
 /**
  * A component to show the main screen of the Privacy section
  */
-export const PrivacyMainScreen: React.SFC<Props> = props => (
-  <BaseScreenComponent
-    goBack={() => props.navigation.goBack()}
-    headerTitle={I18n.t("profile.main.screenTitle")}
-  >
-    <Content>
-      <View>
-        <H1>{I18n.t("profile.main.mainPrivacy.screenTitle")}</H1>
-        <Text>{I18n.t("profile.main.mainPrivacy.screenSubtitle")}</Text>
-        <Grid>
-          {/* Privacy Policy*/}
-          <Row
-            style={styles.gridRow}
-            onPress={() => props.navigation.navigate(ROUTES.PROFILE_PRIVACY)}
-          >
-            <Col size={10}>
-              <H3>{I18n.t("profile.main.mainPrivacy.privacyPolicy.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.privacyPolicy.description")}
-              </Text>
-            </Col>
-            <Col size={2}>
-              <IconFont
-                name="io-right"
-                color={variables.contentPrimaryBackground}
-              />
-            </Col>
-          </Row>
-          {/* Remove account */}
-          <Row
-            style={styles.gridRow}
-            onPress={() => Alert.alert(I18n.t("global.notImplemented"))}
-          >
-            <Col size={10}>
-              <H3>{I18n.t("profile.main.mainPrivacy.removeAccount.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.removeAccount.description")}
-              </Text>
-            </Col>
-            <Col size={2}>
-              <IconFont
-                name="io-right"
-                color={variables.contentPrimaryBackground}
-              />
-            </Col>
-          </Row>
-          {/* Export your data */}
-          <Row
-            style={styles.gridRow}
-            onPress={() => Alert.alert(I18n.t("global.notImplemented"))}
-          >
-            <Col size={10}>
-              <H3>{I18n.t("profile.main.mainPrivacy.exportData.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.exportData.description")}
-              </Text>
-            </Col>
-            <Col size={2}>
-              <IconFont
-                name="io-right"
-                color={variables.contentPrimaryBackground}
-              />
-            </Col>
-          </Row>
-        </Grid>
-      </View>
-    </Content>
-  </BaseScreenComponent>
-);
+export class PrivacyMainScreen extends React.Component<Props> {
+  private navigateToProfilePrivacy = () =>
+    this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY);
+
+  public render() {
+    return (
+      <BaseScreenComponent
+        goBack={this.props.navigation.goBack}
+        headerTitle={I18n.t("profile.main.screenTitle")}
+      >
+        <Content>
+          <View>
+            <H1>{I18n.t("profile.main.mainPrivacy.screenTitle")}</H1>
+            <Text>{I18n.t("profile.main.mainPrivacy.screenSubtitle")}</Text>
+            <Grid>
+              {/* Privacy Policy*/}
+              <Row
+                style={styles.gridRow}
+                onPress={this.navigateToProfilePrivacy}
+              >
+                <Col size={10}>
+                  <H3>
+                    {I18n.t("profile.main.mainPrivacy.privacyPolicy.title")}
+                  </H3>
+                  <Text>
+                    {I18n.t(
+                      "profile.main.mainPrivacy.privacyPolicy.description"
+                    )}
+                  </Text>
+                </Col>
+                <Col size={2}>
+                  <IconFont
+                    name="io-right"
+                    color={variables.contentPrimaryBackground}
+                  />
+                </Col>
+              </Row>
+              {/* Remove account */}
+              <Row style={styles.gridRow} onPress={alertNotImplemented}>
+                <Col size={10}>
+                  <H3>
+                    {I18n.t("profile.main.mainPrivacy.removeAccount.title")}
+                  </H3>
+                  <Text>
+                    {I18n.t(
+                      "profile.main.mainPrivacy.removeAccount.description"
+                    )}
+                  </Text>
+                </Col>
+                <Col size={2}>
+                  <IconFont
+                    name="io-right"
+                    color={variables.contentPrimaryBackground}
+                  />
+                </Col>
+              </Row>
+              {/* Export your data */}
+              <Row style={styles.gridRow} onPress={alertNotImplemented}>
+                <Col size={10}>
+                  <H3>{I18n.t("profile.main.mainPrivacy.exportData.title")}</H3>
+                  <Text>
+                    {I18n.t("profile.main.mainPrivacy.exportData.description")}
+                  </Text>
+                </Col>
+                <Col size={2}>
+                  <IconFont
+                    name="io-right"
+                    color={variables.contentPrimaryBackground}
+                  />
+                </Col>
+              </Row>
+            </Grid>
+          </View>
+        </Content>
+      </BaseScreenComponent>
+    );
+  }
+}

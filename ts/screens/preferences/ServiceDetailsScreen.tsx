@@ -188,6 +188,76 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // URIs for the service logo
     const logoUris = logosForService(service);
 
+    // Switches handling
+
+    const onInboxSwitchChange = (value: boolean) => {
+      // compute the updated map of enabled channels
+      const newUiEnabledChannels = {
+        ...this.state.uiEnabledChannels,
+        inbox: value
+      };
+
+      // dispatch the update of the profile from the new prefs
+      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+      // optimistically update the UI while we wait for the
+      // profile to update
+      this.setState({
+        uiEnabledChannels: newUiEnabledChannels
+      });
+    };
+
+    const onPushSwitchChange = (value: boolean) => {
+      // compute the updated map of enabled channels
+      const newUiEnabledChannels = {
+        ...this.state.uiEnabledChannels,
+        push: value
+      };
+
+      // dispatch the update of the profile from the new prefs
+      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+      // optimistically update the UI while we wait for the
+      // profile to update
+      this.setState({
+        uiEnabledChannels: newUiEnabledChannels
+      });
+    };
+
+    const onEmailSwitchChange = (value: boolean) => {
+      // compute the updated map of enabled channels
+      const newUiEnabledChannels = {
+        ...this.state.uiEnabledChannels,
+        email: value
+      };
+
+      // dispatch the update of the profile from the new prefs
+      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+      // optimistically update the UI while we wait for the
+      // profile to update
+      this.setState({
+        uiEnabledChannels: newUiEnabledChannels
+      });
+    };
+
+    // Links handling
+    const openWebUrl = web_url
+      ? () => Linking.openURL(web_url).then(() => 0, () => 0)
+      : undefined;
+    const openPrivacyUrl = privacy_url
+      ? () => Linking.openURL(privacy_url).then(() => 0, () => 0)
+      : undefined;
+    const openTosUrl = tos_url
+      ? () => Linking.openURL(tos_url).then(() => 0, () => 0)
+      : undefined;
+    const openAppIos = app_ios
+      ? () => Linking.openURL(app_ios).then(() => 0, () => 0)
+      : undefined;
+    const openAppAndroid = app_android
+      ? () => Linking.openURL(app_android).then(() => 0, () => 0)
+      : undefined;
+
     return (
       <BaseScreenComponent
         goBack={this.goBack}
@@ -229,22 +299,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     profileEnabledChannels.inbox !==
                     this.state.uiEnabledChannels.inbox
                   }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      inbox: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
-                  }}
+                  onValueChange={onInboxSwitchChange}
                 />
               </Col>
             </Row>
@@ -269,22 +324,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     this.state.uiEnabledChannels.push
                   }
                   disabled={!this.state.uiEnabledChannels.inbox}
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      push: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
-                  }}
+                  onValueChange={onPushSwitchChange}
                 />
               </Col>
             </Row>
@@ -309,22 +349,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email
                   }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      email: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
-                  }}
+                  onValueChange={onEmailSwitchChange}
                 />
               </Col>
             </Row>
@@ -336,19 +361,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             )}
             {description && <View spacer={true} large={true} />}
             {tos_url && (
-              <TouchableOpacity
-                style={styles.infoItem}
-                onPress={() => Linking.openURL(tos_url).then(() => 0, () => 0)}
-              >
+              <TouchableOpacity style={styles.infoItem} onPress={openTosUrl}>
                 <Text link={true}>{I18n.t("services.tosLink")}</Text>
               </TouchableOpacity>
             )}
             {privacy_url && (
               <TouchableOpacity
                 style={styles.infoItem}
-                onPress={() =>
-                  Linking.openURL(privacy_url).then(() => 0, () => 0)
-                }
+                onPress={openPrivacyUrl}
               >
                 <Text link={true}>{I18n.t("services.privacyLink")}</Text>
               </TouchableOpacity>
@@ -361,12 +381,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {web_url && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppWeb")}</Text>
-                <Button
-                  small={true}
-                  onPress={() =>
-                    Linking.openURL(web_url).then(() => 0, () => 0)
-                  }
-                >
+                <Button small={true} onPress={openWebUrl}>
                   <Text>{web_url}</Text>
                 </Button>
               </View>
@@ -374,11 +389,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {app_ios && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppIos")}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(app_ios).then(() => 0, () => 0)
-                  }
-                >
+                <TouchableOpacity onPress={openAppIos}>
                   <Image
                     style={styles.badgeLogo}
                     alignSelf="flex-start"
@@ -391,11 +402,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {app_android && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppAndroid")}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(app_android).then(() => 0, () => 0)
-                  }
-                >
+                <TouchableOpacity onPress={openAppAndroid}>
                   <Image
                     style={styles.badgeLogo}
                     resizeMode="contain"

@@ -14,10 +14,13 @@ type Props = OwnProps;
 /**
  * A screen to show the Privacy policy to the user.
  */
-export const PrivacyScreen: React.SFC<Props> = props => (
-  <MarkdownScreenComponent
-    goBack={() => props.navigation.goBack()}
-    markdown={I18n.t("profile.main.privacy.text")}
-    headerTitle={I18n.t("profile.main.mainPrivacy.screenTitle")}
-  />
-);
+export const PrivacyScreen: React.SFC<Props> = props => {
+  const goBack = () => props.navigation.goBack();
+  return (
+    <MarkdownScreenComponent
+      goBack={goBack}
+      markdown={I18n.t("profile.main.privacy.text")}
+      headerTitle={I18n.t("profile.main.mainPrivacy.screenTitle")}
+    />
+  );
+};

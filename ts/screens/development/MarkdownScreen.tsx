@@ -100,6 +100,13 @@ class MarkdownScreen extends React.Component<Props, State> {
     });
   }
 
+  private setMarkdownHeading = () => this.setMarkdown(MARKDOWN_HEADING);
+  private setMarkdownParagraph = () => this.setMarkdown(MARKDOWN_PARAGRAPH);
+  private setMarkdownList = () => this.setMarkdown(MARKDOWN_LIST);
+  private setMarkdownMixed = () => this.setMarkdown(MARKDOWN);
+
+  private onChangeText = (text: string) => this.setState({ markdown: text });
+
   public render() {
     return (
       <Container>
@@ -107,32 +114,23 @@ class MarkdownScreen extends React.Component<Props, State> {
           <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
-            <Button
-              small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_HEADING)}
-            >
+            <Button small={true} onPress={this.setMarkdownHeading}>
               <Text>Heading</Text>
             </Button>
-            <Button
-              small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_PARAGRAPH)}
-            >
+            <Button small={true} onPress={this.setMarkdownParagraph}>
               <Text>Paragraph</Text>
             </Button>
-            <Button
-              small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_LIST)}
-            >
+            <Button small={true} onPress={this.setMarkdownList}>
               <Text>List</Text>
             </Button>
-            <Button small={true} onPress={() => this.setMarkdown(MARKDOWN)}>
+            <Button small={true} onPress={this.setMarkdownMixed}>
               <Text>Mixed</Text>
             </Button>
           </View>
           <View spacer={true} />
           <TextInput
             style={{ borderColor: "gray", borderWidth: 1, width: "100%" }}
-            onChangeText={text => this.setState({ markdown: text })}
+            onChangeText={this.onChangeText}
             value={this.state.markdown}
             multiline={true}
             numberOfLines={10}

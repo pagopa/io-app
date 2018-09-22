@@ -34,7 +34,9 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-export class AddPaymentMethodScreen extends React.Component<Props, never> {
+export class AddPaymentMethodScreen extends React.Component<Props> {
+  private goBack = (): boolean => this.props.navigation.goBack();
+
   /**
    * if it return true, the screen includes:
    * - a different title inside the header
@@ -86,7 +88,7 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
             block={true}
             light={true}
             bordered={true}
-            onPress={(): boolean => this.props.navigation.goBack()}
+            onPress={this.goBack}
           >
             <Text>{I18n.t("wallet.cancel")}</Text>
           </Button>

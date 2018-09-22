@@ -102,7 +102,7 @@ class PinScreen extends React.Component<Props, State> {
     });
   };
 
-  public onPinReset() {
+  private onPinReset = () => {
     if (this.pinConfirmComponent) {
       this.pinConfirmComponent.clear();
     }
@@ -111,7 +111,7 @@ class PinScreen extends React.Component<Props, State> {
         state: "PinUnselected"
       }
     });
-  }
+  };
 
   // Dispatch the Action that save the PIN in the Keychain
   public createPin(pin: PinString) {
@@ -238,11 +238,7 @@ class PinScreen extends React.Component<Props, State> {
 
         {pinState.state !== "PinUnselected" && (
           <React.Fragment>
-            <Button
-              block={true}
-              bordered={true}
-              onPress={_ => this.onPinReset()}
-            >
+            <Button block={true} bordered={true} onPress={this.onPinReset}>
               <Text>{I18n.t("onboarding.pin.reset")}</Text>
             </Button>
           </React.Fragment>

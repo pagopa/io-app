@@ -31,7 +31,14 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps & ReduxMappedStateProps;
 
-class WalletsScreen extends React.Component<Props, never> {
+class WalletsScreen extends React.Component<Props> {
+  private renderWalletRow = (item: Wallet) => (
+    <CardComponent navigation={this.props.navigation} item={item} />
+  );
+
+  private navigateToAddPaymentMethod = (): boolean =>
+    this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD);
+
   public render(): React.ReactNode {
     const headerContents = (
       <View style={WalletStyles.walletBannerText}>
@@ -50,18 +57,14 @@ class WalletsScreen extends React.Component<Props, never> {
           <List
             removeClippedSubviews={false}
             dataArray={this.props.wallets as any[]} // tslint:disable-line
-            renderRow={(item): React.ReactElement<any> => (
-              <CardComponent navigation={this.props.navigation} item={item} />
-            )}
+            renderRow={this.renderWalletRow}
           />
           <View spacer={true} />
           <Button
             bordered={true}
             block={true}
             style={WalletStyles.addPaymentMethodButton}
-            onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
-            }
+            onPress={this.navigateToAddPaymentMethod}
           >
             <Text style={WalletStyles.addPaymentMethodText}>
               {I18n.t("wallet.newPaymentMethod.addButton")}

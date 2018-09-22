@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
 });
 
 export default class CardBody extends React.Component<CardProps> {
+  private onPressRightPart = () =>
+    this.props.mainAction !== undefined
+      ? this.props.mainAction(this.props.item.idWallet)
+      : undefined;
+
   /**
    * Display the right-end part of the
    * card body. This will be the card
@@ -35,7 +40,7 @@ export default class CardBody extends React.Component<CardProps> {
    * is shown
    */
   private rightPart() {
-    const { logoPosition, mainAction } = this.props;
+    const { logoPosition } = this.props;
     if (logoPosition === LogoPosition.TOP) {
       // the ">" icon can be displayed since
       // the logo is being positioned on the
@@ -44,14 +49,7 @@ export default class CardBody extends React.Component<CardProps> {
       // ">" icon is not to be shown must be
       // handled here)
       return (
-        <Row
-          style={CreditCardStyles.rowStyle}
-          onPress={() =>
-            mainAction !== undefined
-              ? mainAction(this.props.item.idWallet)
-              : undefined
-          }
-        >
+        <Row style={CreditCardStyles.rowStyle} onPress={this.onPressRightPart}>
           <Right>
             <IconFont
               name="io-right"

@@ -66,9 +66,16 @@ const styles = StyleSheet.create({
  * A component to show the main screen of the Profile section
  */
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private navigateToProfilePrivacy = () =>
+    this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN);
+
+  private navigateToProfileTos = () =>
+    this.props.navigation.navigate(ROUTES.PROFILE_TOS, {
+      isProfile: true
+    });
+
   public render() {
     const {
-      navigation,
       resetPin,
       logout,
       sessionToken,
@@ -76,6 +83,21 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       notificationToken,
       notificationId
     } = this.props;
+
+    const copySessionToken = sessionToken
+      ? () => Clipboard.setString(sessionToken)
+      : undefined;
+
+    const copyWalletToken = walletToken
+      ? () => Clipboard.setString(walletToken)
+      : undefined;
+
+    const copyNotificationId = () => Clipboard.setString(notificationId);
+
+    const copyNotificationToken = notificationToken
+      ? () => Clipboard.setString(notificationToken)
+      : undefined;
+
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
@@ -85,10 +107,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         <Content noPadded={true}>
           <List>
             {/* Privacy */}
-            <ListItem
-              first={true}
-              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
-            >
+            <ListItem first={true} onPress={this.navigateToProfilePrivacy}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.privacy.title")}</H3>
                 <Text style={styles.itemLeftText}>
@@ -104,13 +123,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             {/* Terms & conditions */}
-            <ListItem
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_TOS, {
-                  isProfile: true
-                })
-              }
-            >
+            <ListItem onPress={this.navigateToProfileTos}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.termsAndConditions.title")}</H3>
                 <Text style={styles.itemLeftText}>
@@ -171,33 +184,21 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             {sessionToken && (
               <ListItem>
-                <Button
-                  info={true}
-                  small={true}
-                  onPress={() => Clipboard.setString(sessionToken)}
-                >
+                <Button info={true} small={true} onPress={copySessionToken}>
                   <Text>{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
                 </Button>
               </ListItem>
             )}
             {walletToken && (
               <ListItem>
-                <Button
-                  info={true}
-                  small={true}
-                  onPress={() => Clipboard.setString(walletToken)}
-                >
+                <Button info={true} small={true} onPress={copyWalletToken}>
                   <Text>{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
                 </Button>
               </ListItem>
             )}
 
             <ListItem>
-              <Button
-                info={true}
-                small={true}
-                onPress={() => Clipboard.setString(notificationId)}
-              >
+              <Button info={true} small={true} onPress={copyNotificationId}>
                 <Text>{`Notification ID ${notificationId.slice(0, 6)}`}</Text>
               </Button>
             </ListItem>
@@ -207,7 +208,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 <Button
                   info={true}
                   small={true}
-                  onPress={() => Clipboard.setString(notificationToken)}
+                  onPress={copyNotificationToken}
                 >
                   <Text>{`Notification token ${notificationToken.slice(
                     0,

@@ -8,7 +8,7 @@
 import color from "color";
 import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
@@ -77,10 +77,46 @@ const AddMethodStyle = StyleSheet.create({
   }
 });
 
-class PaymentMethodsList extends React.Component<Props, never> {
-  public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
+function paymentMethodName(paymentMethod: IPaymentMethod): string {
+  return paymentMethod.name;
+}
 
+class PaymentMethodsList extends React.Component<Props> {
+  private onPressItem = (item: IPaymentMethod) => {
+    const route = item.navigateTo;
+    return route !== undefined
+      ? () => this.props.navigation.navigate(route)
+      : () => undefined;
+  };
+
+  private renderItem = (itemInfo: ListRenderItemInfo<IPaymentMethod>) => (
+    <ListItem
+      style={[AddMethodStyle.paymentMethodEntry, WalletStyles.listItem]}
+      onPress={this.onPressItem(itemInfo.item)}
+    >
+      <Left>
+        <Grid>
+          <Row>
+            <Text bold={true}>{itemInfo.item.name}</Text>
+          </Row>
+          <Row>
+            <Text style={AddMethodStyle.transactionText}>
+              {itemInfo.item.maxFee}
+            </Text>
+          </Row>
+        </Grid>
+      </Left>
+      <Right style={AddMethodStyle.centeredContents}>
+        <IconFont
+          name={itemInfo.item.icon}
+          color={variables.brandPrimary}
+          size={variables.iconSize6}
+        />
+      </Right>
+    </ListItem>
+  );
+
+  public render(): React.ReactNode {
     return (
       <View>
         <Text>{I18n.t("wallet.chooseMethod")}</Text>
@@ -88,37 +124,8 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <FlatList
           removeClippedSubviews={false}
           data={paymentMethods}
-          keyExtractor={item => item.name}
-          renderItem={itemInfo => (
-            <ListItem
-              style={[AddMethodStyle.paymentMethodEntry, WalletStyles.listItem]}
-              onPress={() =>
-                itemInfo.item.navigateTo
-                  ? navigate(itemInfo.item.navigateTo)
-                  : undefined
-              }
-            >
-              <Left>
-                <Grid>
-                  <Row>
-                    <Text bold={true}>{itemInfo.item.name}</Text>
-                  </Row>
-                  <Row>
-                    <Text style={AddMethodStyle.transactionText}>
-                      {itemInfo.item.maxFee}
-                    </Text>
-                  </Row>
-                </Grid>
-              </Left>
-              <Right style={AddMethodStyle.centeredContents}>
-                <IconFont
-                  name={itemInfo.item.icon}
-                  color={variables.brandPrimary}
-                  size={variables.iconSize6}
-                />
-              </Right>
-            </ListItem>
-          )}
+          keyExtractor={paymentMethodName}
+          renderItem={this.renderItem}
         />
         <View spacer={true} large={true} />
         <Text link={true} onPress={this.props.showHelp}>

@@ -107,6 +107,24 @@ type Props = CardProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  * Credit card component
  */
 class CardComponent extends React.Component<Props> {
+  private onDeleteWalletMenu = () =>
+    Alert.alert(
+      I18n.t("cardComponent.deleteTitle"),
+      I18n.t("cardComponent.deleteMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.ok"),
+          style: "destructive",
+          onPress: () => this.props.deleteWallet(this.props.item.idWallet)
+        }
+      ],
+      { cancelable: false }
+    );
+
   public static defaultProps: Partial<Props> = {
     menu: true,
     favorite: true,
@@ -172,26 +190,7 @@ class CardComponent extends React.Component<Props> {
                     )}
                   </Text>
                 </MenuOption>
-                <MenuOption
-                  onSelect={() =>
-                    Alert.alert(
-                      I18n.t("cardComponent.deleteTitle"),
-                      I18n.t("cardComponent.deleteMsg"),
-                      [
-                        {
-                          text: I18n.t("global.buttons.cancel"),
-                          style: "cancel"
-                        },
-                        {
-                          text: I18n.t("global.buttons.ok"),
-                          style: "destructive",
-                          onPress: () => this.props.deleteWallet(item.idWallet)
-                        }
-                      ],
-                      { cancelable: false }
-                    )
-                  }
-                >
+                <MenuOption onSelect={this.onDeleteWalletMenu}>
                   <Text bold={true} style={styles.blueText}>
                     {I18n.t("global.buttons.delete")}
                   </Text>

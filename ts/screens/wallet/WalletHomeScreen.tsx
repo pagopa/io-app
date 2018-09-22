@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
 /**
  * Wallet Home Screen
  */
-class WalletHomeScreen extends React.Component<Props, never> {
+class WalletHomeScreen extends React.Component<Props> {
+  private navigateToAddPaymentMethod = () =>
+    this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD);
+
   private header() {
     return (
       <Row style={styles.flex}>
@@ -78,9 +81,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           </Left>
           <Right>
             <Text
-              onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
-              }
+              onPress={this.navigateToAddPaymentMethod}
               style={WalletStyles.white}
             >
               {`+ ${I18n.t("wallet.newPaymentMethod.add")}`}
@@ -110,9 +111,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
               bordered={true}
               block={true}
               style={WalletStyles.addPaymentMethodButton}
-              onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
-              }
+              onPress={this.navigateToAddPaymentMethod}
             >
               <Text style={WalletStyles.addPaymentMethodText}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}

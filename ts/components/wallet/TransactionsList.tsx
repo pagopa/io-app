@@ -80,19 +80,18 @@ class TransactionsList extends React.Component<Props> {
     );
   }
 
+  private onSelect = (item: Transaction) => () => {
+    this.props.selectTransaction(item);
+    this.props.selectWallet(item.idWallet);
+    this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+  };
+
   private renderRow = (item: Transaction): React.ReactElement<any> => {
     const paymentReason = item.description;
     const amount = buildAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
-      <ListItem
-        style={WalletStyles.listItem}
-        onPress={() => {
-          this.props.selectTransaction(item);
-          this.props.selectWallet(item.idWallet);
-          this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
-        }}
-      >
+      <ListItem style={WalletStyles.listItem} onPress={this.onSelect(item)}>
         <Body>
           <Grid>
             {this.renderDate(item)}

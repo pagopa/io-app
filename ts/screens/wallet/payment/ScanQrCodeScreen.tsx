@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
  */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
 
-class ScanQrCodeScreen extends React.PureComponent<Props, State> {
+class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler: number | undefined;
 
   /**
@@ -118,8 +118,8 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
   /**
    * Gets called by the QR code reader on new QR code reads
    */
-  private onQrCodeData = (data: string) => {
-    const resultOrError = decodePagoPaQrCode(data);
+  private onQrCodeData = (reading: { data: string }) => {
+    const resultOrError = decodePagoPaQrCode(reading.data);
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
@@ -166,7 +166,7 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
       <Container style={styles.white}>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
+            <Button transparent={true} onPress={this.props.goBack}>
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -176,9 +176,7 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
         </AppHeader>
         <ScrollView bounces={false}>
           <QRCodeScanner
-            onRead={(reading: { data: string }) =>
-              this.onQrCodeData(reading.data)
-            }
+            onRead={this.onQrCodeData}
             ref="scanner" // tslint:disable-line jsx-no-string-ref
             containerStyle={styles.cameraContainer}
             showMarker={true}

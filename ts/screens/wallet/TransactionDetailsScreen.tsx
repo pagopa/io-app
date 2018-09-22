@@ -114,12 +114,19 @@ class TransactionDetailsScreen extends React.Component<Props> {
     );
   }
 
+  private paymentCompleted = this.props.navigation.getParam(
+    "paymentCompleted",
+    false
+  );
+
+  private onClose = () =>
+    this.paymentCompleted
+      ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
+      : this.props.navigation.goBack();
+
   public render(): React.ReactNode {
     const { transaction } = this.props;
-    const paymentCompleted = this.props.navigation.getParam(
-      "paymentCompleted",
-      false
-    );
+
     const amount = buildAmount(centsToAmount(transaction.amount.amount));
     const fee = buildAmount(
       centsToAmount(
@@ -139,7 +146,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         headerContents={this.getSubHeader()}
         cardType={{ type: CardEnum.HEADER, card: this.props.selectedWallet }}
         showPayButton={false}
-        allowGoBack={!paymentCompleted}
+        allowGoBack={!this.paymentCompleted}
       >
         <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
           <Grid>
@@ -148,11 +155,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
-                onPress={() =>
-                  paymentCompleted
-                    ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
-                    : this.props.navigation.goBack()
-                }
+                onPress={this.onClose}
               />
             </Row>
             <View spacer={true} large={true} />

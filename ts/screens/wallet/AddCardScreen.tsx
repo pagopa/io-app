@@ -3,11 +3,10 @@
  * (holder, pan, cvc, expiration date)
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import { entries, range, size } from "lodash";
 import { Left } from "native-base";
 import { Body, Container, Content, Item, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -17,7 +16,7 @@ import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { cardIcons } from "../../components/wallet/card/Logo";
+import { CardList } from "../../components/wallet/CardList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
@@ -123,6 +122,26 @@ class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
+  private onChangeHolder = (value: string) =>
+    this.setState({
+      holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+    });
+
+  private onChangePan = (_: string, value: string) =>
+    this.setState({
+      pan: value !== EMPTY_CARD_PAN ? some(value) : none
+    });
+
+  private onChangeExpirationDate = (_: string, value: string) =>
+    this.setState({
+      expirationDate: value !== EMPTY_CARD_EXPIRATION_DATE ? some(value) : none
+    });
+
+  private onChangeSecurityCode = (_: string, value: string) =>
+    this.setState({
+      securityCode: value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
+    });
+
   private submit = (card: CreditCard) => {
     // store data locally and proceed
     // to the recap screen
@@ -131,17 +150,6 @@ class AddCardScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
-    // list of cards to be displayed
-    const displayedCards: { [key: string]: any } = {
-      MASTERCARD: cardIcons.MASTERCARD,
-      MAESTRO: cardIcons.MAESTRO,
-      VISA: cardIcons.VISA,
-      VISAELECTRON: cardIcons.VISAELECTRON,
-      AMEX: cardIcons.AMEX,
-      POSTEPAY: cardIcons.POSTEPAY,
-      DINER: cardIcons.DINERS
-    };
-
     const primaryButtonPropsFromState = (
       state: State
     ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
@@ -188,11 +196,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 autoCapitalize: "words"
               }}
-              onChangeText={(value: string) =>
-                this.setState({
-                  holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-                })
-              }
+              onChangeText={this.onChangeHolder}
             />
 
             <View spacer={true} />
@@ -208,11 +212,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 maxLength: 23
               }}
               mask={"[0000] [0000] [0000] [0000] [999]"}
-              onChangeText={(_, value) =>
-                this.setState({
-                  pan: value !== EMPTY_CARD_PAN ? some(value) : none
-                })
-              }
+              onChangeText={this.onChangePan}
             />
 
             <View spacer={true} />
@@ -230,14 +230,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric"
                   }}
                   mask={"[00]{/}[00]"}
-                  onChangeText={(_, value) =>
-                    this.setState({
-                      expirationDate:
-                        value !== EMPTY_CARD_EXPIRATION_DATE
-                          ? some(value)
-                          : none
-                    })
-                  }
+                  onChangeText={this.onChangeExpirationDate}
                 />
               </Col>
               <Col style={styles.verticalSpacing} />
@@ -256,12 +249,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true
                   }}
                   mask={"[0009]"}
-                  onChangeText={(_, value) =>
-                    this.setState({
-                      securityCode:
-                        value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
-                    })
-                  }
+                  onChangeText={this.onChangeSecurityCode}
                 />
               </Col>
             </Grid>
@@ -271,25 +259,7 @@ class AddCardScreen extends React.Component<Props, State> {
               <Text>{I18n.t("wallet.acceptedCards")}</Text>
             </Item>
             <Item last={true} style={styles.noBottomLine}>
-              <FlatList
-                numColumns={CARD_LOGOS_COLUMNS}
-                data={entries(displayedCards).concat(
-                  // padding with empty items so as to have a # of cols
-                  // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
-                  range(
-                    CARD_LOGOS_COLUMNS -
-                      (size(displayedCards) % CARD_LOGOS_COLUMNS)
-                  ).map((__): [string, any] => ["", undefined])
-                )}
-                renderItem={({ item }) => (
-                  <View style={{ flex: 1, flexDirection: "row" }}>
-                    {item[1] && (
-                      <Image style={styles.addCardImage} source={item[1]} />
-                    )}
-                  </View>
-                )}
-                keyExtractor={item => item[0]}
-              />
+              <CardList columns={CARD_LOGOS_COLUMNS} />
             </Item>
           </Content>
         </ScrollView>

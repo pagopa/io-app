@@ -148,6 +148,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     );
   };
 
+  private loadMessageWithRelations = (messageId: string) => () =>
+    this.props.dispatch(loadMessageWithRelationsAction(messageId));
+
   /**
    * Used when something went wrong but there is a way to recover.
    * (ex. the loading of the message/service failed but we can retry)
@@ -160,9 +163,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         </Text>
         <Button
           primary={true}
-          onPress={() =>
-            this.props.dispatch(loadMessageWithRelationsAction(messageId))
-          }
+          onPress={this.loadMessageWithRelations(messageId)}
         >
           <Text>{I18n.t("messageDetails.retryText")}</Text>
         </Button>

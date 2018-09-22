@@ -58,12 +58,15 @@ function translateLocale(locale: string): string {
  * email, mobile number, preferred language and digital address.
  */
 class PreferencesScreen extends React.Component<Props> {
-  public render() {
-    const contextualHelp = {
-      title: I18n.t("preferences.title"),
-      body: () => <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
-    };
+  private navigateToServices = () =>
+    this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES);
 
+  private contextualHelp = {
+    title: I18n.t("preferences.title"),
+    body: () => <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
+  };
+
+  public render() {
     const maybeProfile = this.props.maybeProfile;
 
     const profileData = maybeProfile
@@ -86,7 +89,7 @@ class PreferencesScreen extends React.Component<Props> {
         title={I18n.t("preferences.title")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("preferences.subtitle")}
-        contextualHelp={contextualHelp}
+        contextualHelp={this.contextualHelp}
       >
         <Content>
           <List>
@@ -94,9 +97,7 @@ class PreferencesScreen extends React.Component<Props> {
               kind="action"
               title={I18n.t("preferences.list.services")}
               valuePreview={I18n.t("preferences.list.services_description")}
-              onClick={() =>
-                this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
-              }
+              onClick={this.navigateToServices}
             />
             <PreferenceItem
               kind="value"

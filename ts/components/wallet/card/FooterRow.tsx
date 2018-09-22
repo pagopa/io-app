@@ -40,12 +40,16 @@ const styles = StyleSheet.create({
 });
 
 class FooterRow extends React.Component<Props> {
+  private onSelectWallet = () => {
+    this.props.selectWallet(this.props.item.idWallet);
+    this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
+  };
+
   public static defaultProps: Partial<Props> = {
     showMsg: true
   };
 
   public render() {
-    const { navigate } = this.props.navigation;
     const { item } = this.props;
     if (this.props.showMsg) {
       // show "last usage" row
@@ -53,10 +57,7 @@ class FooterRow extends React.Component<Props> {
         <Row
           style={CreditCardStyles.rowStyle}
           size={6}
-          onPress={() => {
-            this.props.selectWallet(item.idWallet);
-            navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
-          }}
+          onPress={this.onSelectWallet}
         >
           <Col size={8}>
             <Text

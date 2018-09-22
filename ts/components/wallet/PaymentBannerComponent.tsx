@@ -48,6 +48,8 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class PaymentBannerComponent extends React.Component<Props> {
+  private onShowSummary = () => this.props.showSummary();
+
   public shouldComponentUpdate(nextProps: Props) {
     // avoids updating the component on invalid props to avoid having the screen
     // become blank during transitions from one payment state to another
@@ -64,7 +66,7 @@ class PaymentBannerComponent extends React.Component<Props> {
     );
 
     return (
-      <TouchableOpacity onPress={() => this.props.showSummary()}>
+      <TouchableOpacity onPress={this.onShowSummary}>
         <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
           <Row>
             <Col>

@@ -104,6 +104,9 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ReduxMappedProps;
 
 class WalletLayout extends React.Component<Props> {
+  private navigateToWalletList = () =>
+    this.props.navigation.navigate(ROUTES.WALLET_LIST);
+
   public static defaultProps = {
     headerContents: null,
     cardType: { type: CardEnum.NONE } as NoCards,
@@ -124,11 +127,7 @@ class WalletLayout extends React.Component<Props> {
       }
       case CardEnum.FAN: {
         return (
-          <TouchableOpacity
-            onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_LIST)
-            }
-          >
+          <TouchableOpacity onPress={this.navigateToWalletList}>
             <View style={styles.shiftDown}>
               <View style={styles.firstCard}>
                 <CardComponent
@@ -213,7 +212,7 @@ class WalletLayout extends React.Component<Props> {
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
-            <Button block={true} onPress={() => this.props.startPayment()}>
+            <Button block={true} onPress={this.props.startPayment}>
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>

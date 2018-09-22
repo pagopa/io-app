@@ -184,7 +184,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           this.props.wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <Text link={true} onPress={() => this.props.pickPsp()}>
+                    <Text link={true} onPress={this.props.pickPsp}>
                       {I18n.t("payment.changePsp")}
                     </Text>
                   </Text>
@@ -212,7 +212,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestCompletion()}
+            onPress={this.props.requestCompletion}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -223,7 +223,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.props.pickPaymentMethod()}
+              onPress={this.props.pickPaymentMethod}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
