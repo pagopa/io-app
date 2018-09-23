@@ -130,43 +130,39 @@ class WalletLayout extends React.Component<Props> {
               this.props.navigation.navigate(ROUTES.WALLET_LIST)
             }
           >
-           {cards.length == 1
-              ? (
-                <View style={WalletStyles.container}>
+            {cards.length === 1 ? (
+              <View style={WalletStyles.container}>
+                <CardComponent
+                  navigation={this.props.navigation}
+                  item={cards[0]}
+                  logoPosition={LogoPosition.TOP}
+                  flatBottom={true}
+                  headerOnly={true}
+                  rotated={true}
+                />
+              </View>
+            ) : (
+              <View style={styles.shiftDown}>
+                <View style={styles.firstCard}>
+                  <CardComponent
+                    navigation={this.props.navigation}
+                    item={cards[1]}
+                    logoPosition={LogoPosition.TOP}
+                    flatBottom={true}
+                    headerOnly={true}
+                  />
+                </View>
+                <View style={styles.secondCard}>
                   <CardComponent
                     navigation={this.props.navigation}
                     item={cards[0]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
-                    rotated={true}
                   />
                 </View>
-              )
-              : (
-                <View style={styles.shiftDown}>
-                  <View style={styles.firstCard}>
-                    <CardComponent
-                      navigation={this.props.navigation}
-                      item={cards[1]}
-                      logoPosition={LogoPosition.TOP}
-                      flatBottom={true}
-                      headerOnly={true}
-                    />
-                  </View>
-                  <View style={styles.secondCard}>
-                    <CardComponent
-                      navigation={this.props.navigation}
-                      item={cards[0]}
-                      logoPosition={LogoPosition.TOP}
-                      flatBottom={true}
-                      headerOnly={true}
-                    />
-                  </View>
-                </View>
-              )
-            }
-
+              </View>
+            )}
           </TouchableOpacity>
         );
       }
