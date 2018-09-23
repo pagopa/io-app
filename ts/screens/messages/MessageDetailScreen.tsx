@@ -5,6 +5,7 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -308,4 +309,8 @@ const mapStateToProps = (
   };
 };
 
-export default connect(mapStateToProps)(MessageDetailScreen);
+export default withLoadingSpinner(
+  connect(mapStateToProps)(MessageDetailScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);
