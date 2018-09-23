@@ -98,7 +98,6 @@ type OwnProps = Readonly<{
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
-  moreCards?: boolean;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -108,11 +107,10 @@ class WalletLayout extends React.Component<Props> {
     headerContents: null,
     cardType: { type: CardEnum.NONE } as NoCards,
     showPayButton: true,
-    allowGoBack: true,
-    moreCards: false
+    allowGoBack: true
   };
 
-  private getLogo(): React.ReactNode {
+  private displayedWallets(): React.ReactNode {
     if (!this.props.cardType) {
       return null;
     }
@@ -207,7 +205,7 @@ class WalletLayout extends React.Component<Props> {
             style={[styles.darkGrayBg, styles.noBottomPadding]}
           >
             {this.props.headerContents}
-            {this.getLogo()}
+            {this.displayedWallets()}
           </Content>
           {this.props.children}
         </ScrollView>

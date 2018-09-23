@@ -6,20 +6,20 @@ import {
   CREDIT_CARD_DATA_CLEANUP,
   DELETE_WALLET_REQUEST,
   FETCH_WALLETS_REQUEST,
+  FETCH_WALLETS_SUCCESS,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   STORE_CREDIT_CARD_DATA,
   WALLET_MANAGEMENT_RESET_LOADING_STATE,
-  WALLET_MANAGEMENT_SET_LOADING_STATE,
-  WALLETS_FETCHED
+  WALLET_MANAGEMENT_SET_LOADING_STATE
 } from "../constants";
 
 export type FetchWalletsRequest = Readonly<{
   type: typeof FETCH_WALLETS_REQUEST;
 }>;
 
-type WalletsFetched = Readonly<{
-  type: typeof WALLETS_FETCHED;
+type FetchWalletsSuccess = Readonly<{
+  type: typeof FETCH_WALLETS_SUCCESS;
   payload: ReadonlyArray<Wallet>;
 }>;
 
@@ -68,7 +68,7 @@ export type WalletManagementResetLoadingState = Readonly<{
 
 export type WalletsActions =
   | FetchWalletsRequest
-  | WalletsFetched
+  | FetchWalletsSuccess
   | WalletSelectedForDetails
   | SetFavoriteWallet
   | StoreCreditCardData
@@ -83,10 +83,10 @@ export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
 });
 
-export const walletsFetched = (
+export const fetchWalletsSuccess = (
   wallets: ReadonlyArray<Wallet>
-): WalletsFetched => ({
-  type: WALLETS_FETCHED,
+): FetchWalletsSuccess => ({
+  type: FETCH_WALLETS_SUCCESS,
   payload: wallets
 });
 
