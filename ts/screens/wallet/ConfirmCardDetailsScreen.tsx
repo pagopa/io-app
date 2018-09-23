@@ -135,8 +135,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     wallet: {
       creditCard: card.value,
       type: "CREDIT_CARD",
-      idWallet: -1,
-      lastUsage: new Date()
+      idWallet: -1
     }
   };
 };
