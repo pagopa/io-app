@@ -94,18 +94,18 @@ import {
 } from "../store/actions/wallet/payment";
 import {
   FetchTransactionsRequest,
-  selectTransactionForDetails,
-  fetchTransactionsSuccess
+  fetchTransactionsSuccess,
+  selectTransactionForDetails
 } from "../store/actions/wallet/transactions";
 import {
   AddCreditCardRequest,
   creditCardDataCleanup,
   DeleteWalletRequest,
   FetchWalletsRequest,
+  fetchWalletsSuccess,
   selectWalletForDetails,
   walletManagementResetLoadingState,
-  walletManagementSetLoadingState,
-  fetchWalletsSuccess
+  walletManagementSetLoadingState
 } from "../store/actions/wallet/wallets";
 import {
   sessionTokenSelector,

@@ -8,11 +8,11 @@ import { createSelector } from "reselect";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import {
   CREDIT_CARD_DATA_CLEANUP,
+  FETCH_WALLETS_SUCCESS,
   PAYMENT_UPDATE_PSP_IN_STATE,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
-  STORE_CREDIT_CARD_DATA,
-  FETCH_WALLETS_SUCCESS
+  STORE_CREDIT_CARD_DATA
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";

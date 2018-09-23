@@ -25,6 +25,7 @@ import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
 import { selectWalletForDetails } from "../../store/actions/wallet/wallets";
+import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import {
   latestTransactionsSelector,
@@ -33,16 +34,16 @@ import {
 import { Transaction } from "../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
-import { createLoadingSelector } from '../../store/reducers/loading';
-import { RefreshIndicator } from '../ui/RefreshIndicator';
-import { StyleSheet } from 'react-native';
+import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 
-type ReduxMappedStateProps = Readonly<{
-  transactions: ReadonlyArray<Transaction>;
-  isLoading: false;
-}> | Readonly<{
-  isLoading: true;
-}>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      transactions: ReadonlyArray<Transaction>;
+      isLoading: false;
+    }>
+  | Readonly<{
+      isLoading: true;
+    }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   selectTransaction: (i: Transaction) => void;
@@ -69,14 +70,6 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
  * Transactions List component
  */
 
-const styles = StyleSheet.create({
-  refreshBox: {
-    height: 100,
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center"
-  }
-})
 class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
     const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
@@ -132,11 +125,7 @@ class TransactionsList extends React.Component<Props> {
 
   public render(): React.ReactNode {
     if (this.props.isLoading) {
-      return (
-        <View style={styles.refreshBox}>
-          <RefreshIndicator />
-        </View>
-      );
+      return <BoxedRefreshIndicator />;
     }
 
     const { transactions } = this.props;
@@ -184,7 +173,7 @@ const mapStateToProps = (
 ): ReduxMappedStateProps => {
   const isLoading = createLoadingSelector(["FETCH_TRANSACTIONS"])(state);
   if (isLoading) {
-    return { isLoading }
+    return { isLoading };
   }
   switch (props.display) {
     case TransactionsDisplayed.LATEST: {

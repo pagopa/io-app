@@ -6,9 +6,9 @@ import { values } from "lodash";
 import { createSelector } from "reselect";
 import { Transaction } from "../../../types/pagopa";
 import {
+  FETCH_TRANSACTIONS_SUCCESS,
   PAYMENT_STORE_NEW_TRANSACTION,
-  SELECT_TRANSACTION_FOR_DETAILS,
-  FETCH_TRANSACTIONS_SUCCESS
+  SELECT_TRANSACTION_FOR_DETAILS
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";

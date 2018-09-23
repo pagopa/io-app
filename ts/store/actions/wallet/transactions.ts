@@ -1,9 +1,9 @@
 import { Transaction } from "../../../types/pagopa";
 import {
   FETCH_TRANSACTIONS_REQUEST,
+  FETCH_TRANSACTIONS_SUCCESS,
   PAYMENT_STORE_NEW_TRANSACTION,
-  SELECT_TRANSACTION_FOR_DETAILS,
-  FETCH_TRANSACTIONS_SUCCESS
+  SELECT_TRANSACTION_FOR_DETAILS
 } from "../../actions/constants";
 
 type FetchTransactionsSuccess = Readonly<{
