@@ -141,7 +141,10 @@ class TransactionDetailsScreen extends React.Component<Props> {
         showPayButton={false}
         allowGoBack={!paymentCompleted}
       >
-        <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+        <Content
+          scrollEnabled={false}
+          style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+        >
           <Grid>
             <Row style={styles.titleRow}>
               <H3>{I18n.t("wallet.transactionDetails")}</H3>
