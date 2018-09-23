@@ -46,7 +46,7 @@ class WalletsScreen extends React.Component<Props, never> {
         navigation={this.props.navigation}
         headerContents={headerContents}
       >
-        <Content style={WalletStyles.header}>
+        <Content style={[WalletStyles.padded, WalletStyles.header]}>
           <List
             removeClippedSubviews={false}
             dataArray={this.props.wallets as any[]} // tslint:disable-line
