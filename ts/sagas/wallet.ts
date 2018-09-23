@@ -272,7 +272,6 @@ function* addCreditCard(
      * Failed request. show an error (TODO) and return
      */
     if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
-      console.warn(responseBoardCC);
       return;
     }
     // 1st call was successful. Proceed with the 2nd one
