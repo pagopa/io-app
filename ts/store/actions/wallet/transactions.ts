@@ -3,11 +3,11 @@ import {
   FETCH_TRANSACTIONS_REQUEST,
   PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
-  TRANSACTIONS_FETCHED
+  FETCH_TRANSACTIONS_SUCCESS
 } from "../../actions/constants";
 
-type TransactionsFetched = Readonly<{
-  type: typeof TRANSACTIONS_FETCHED;
+type FetchTransactionsSuccess = Readonly<{
+  type: typeof FETCH_TRANSACTIONS_SUCCESS;
   payload: ReadonlyArray<Transaction>;
 }>;
 
@@ -26,15 +26,15 @@ type StoreNewTransaction = Readonly<{
 }>;
 
 export type TransactionsActions =
-  | TransactionsFetched
+  | FetchTransactionsSuccess
   | FetchTransactionsRequest
   | SelectTransactionForDetails
   | StoreNewTransaction;
 
-export const transactionsFetched = (
+export const fetchTransactionsSuccess = (
   transactions: ReadonlyArray<Transaction>
-): TransactionsFetched => ({
-  type: TRANSACTIONS_FETCHED,
+): FetchTransactionsSuccess => ({
+  type: FETCH_TRANSACTIONS_SUCCESS,
   payload: transactions
 });
 

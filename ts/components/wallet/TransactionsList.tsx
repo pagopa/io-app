@@ -33,9 +33,15 @@ import {
 import { Transaction } from "../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
+import { createLoadingSelector } from '../../store/reducers/loading';
+import { RefreshIndicator } from '../ui/RefreshIndicator';
+import { StyleSheet } from 'react-native';
 
 type ReduxMappedStateProps = Readonly<{
   transactions: ReadonlyArray<Transaction>;
+  isLoading: false;
+}> | Readonly<{
+  isLoading: true;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -62,6 +68,15 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 /**
  * Transactions List component
  */
+
+const styles = StyleSheet.create({
+  refreshBox: {
+    height: 100,
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center"
+  }
+})
 class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
     const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
@@ -116,6 +131,14 @@ class TransactionsList extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
+    if (this.props.isLoading) {
+      return (
+        <View style={styles.refreshBox}>
+          <RefreshIndicator />
+        </View>
+      );
+    }
+
     const { transactions } = this.props;
 
     if (transactions.length === 0) {
@@ -159,19 +182,25 @@ const mapStateToProps = (
   state: GlobalState,
   props: OwnProps
 ): ReduxMappedStateProps => {
+  const isLoading = createLoadingSelector(["FETCH_TRANSACTIONS"])(state);
+  if (isLoading) {
+    return { isLoading }
+  }
   switch (props.display) {
     case TransactionsDisplayed.LATEST: {
       return {
-        transactions: latestTransactionsSelector(state)
+        transactions: latestTransactionsSelector(state),
+        isLoading
       };
     }
     case TransactionsDisplayed.BY_WALLET: {
       return {
-        transactions: transactionsByWalletSelector(state)
+        transactions: transactionsByWalletSelector(state),
+        isLoading
       };
     }
   }
-  return { transactions: [] };
+  return { transactions: [], isLoading };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

@@ -12,7 +12,7 @@ import {
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
   STORE_CREDIT_CARD_DATA,
-  WALLETS_FETCHED
+  FETCH_WALLETS_SUCCESS
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -78,7 +78,7 @@ const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
 ): WalletsState => {
-  if (action.type === WALLETS_FETCHED) {
+  if (action.type === FETCH_WALLETS_SUCCESS) {
     return {
       ...state,
       list: toIndexed(action.payload, "idWallet")

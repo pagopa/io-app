@@ -95,7 +95,7 @@ import {
 import {
   FetchTransactionsRequest,
   selectTransactionForDetails,
-  transactionsFetched
+  fetchTransactionsSuccess
 } from "../store/actions/wallet/transactions";
 import {
   AddCreditCardRequest,
@@ -105,7 +105,7 @@ import {
   selectWalletForDetails,
   walletManagementResetLoadingState,
   walletManagementSetLoadingState,
-  walletsFetched
+  fetchWalletsSuccess
 } from "../store/actions/wallet/wallets";
 import {
   sessionTokenSelector,
@@ -223,7 +223,7 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
     pagoPaClient
   );
   if (response !== undefined && response.status === 200) {
-    yield put(transactionsFetched(response.value.data));
+    yield put(fetchTransactionsSuccess(response.value.data));
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
@@ -239,7 +239,7 @@ function* fetchWallets(
     pagoPaClient
   );
   if (response !== undefined && response.status === 200) {
-    yield put(walletsFetched(response.value.data));
+    yield put(fetchWalletsSuccess(response.value.data));
     return response.value.data.length;
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682

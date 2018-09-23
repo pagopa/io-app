@@ -8,7 +8,7 @@ import { Transaction } from "../../../types/pagopa";
 import {
   PAYMENT_STORE_NEW_TRANSACTION,
   SELECT_TRANSACTION_FOR_DETAILS,
-  TRANSACTIONS_FETCHED
+  FETCH_TRANSACTIONS_SUCCESS
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";
@@ -74,7 +74,7 @@ const reducer = (
   state: TransactionsState = TRANSACTIONS_INITIAL_STATE,
   action: Action
 ): TransactionsState => {
-  if (action.type === TRANSACTIONS_FETCHED) {
+  if (action.type === FETCH_TRANSACTIONS_SUCCESS) {
     return {
       ...state,
       transactions: toIndexed(action.payload, "id")
