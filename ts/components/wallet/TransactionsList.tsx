@@ -120,7 +120,10 @@ class TransactionsList extends React.Component<Props> {
 
     if (transactions.length === 0) {
       return (
-        <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+        <Content
+          scrollEnabled={false}
+          style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+        >
           <View spacer={true} />
           <H3>{I18n.t("wallet.noneTransactions")}</H3>
           <View spacer={true} />
@@ -131,7 +134,10 @@ class TransactionsList extends React.Component<Props> {
     }
     // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
     return (
-      <Content scrollEnabled={false} style={WalletStyles.whiteContent}>
+      <Content
+        scrollEnabled={false}
+        style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+      >
         <Grid>
           <Row>
             <Left>

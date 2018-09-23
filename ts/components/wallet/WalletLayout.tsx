@@ -37,9 +37,6 @@ const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
-  noBottomPadding: {
-    paddingBottom: 0
-  },
   firstCard: {
     flex: 1,
     transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }]
@@ -204,7 +201,7 @@ class WalletLayout extends React.Component<Props> {
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}
-            style={[styles.darkGrayBg, styles.noBottomPadding]}
+            style={[styles.darkGrayBg, WalletStyles.noBottomPadding]}
           >
             {this.props.headerContents}
             {this.getLogo()}
