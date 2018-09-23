@@ -236,8 +236,7 @@ wallet:
     failed: Impossibile cancellare la carta
   newPaymentMethod:
     add: aggiungi
-    addButton: Aggiungi un metodo di pagamento
-    newMethod: Scegli un altro metodo di pagamento
+    addButton: Aggiungi una carta
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
       ecc.) per non doverli inserire ad ogni transazione
     successful: Carta aggiunta con successo
@@ -280,9 +279,12 @@ wallet:
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
   payWith:
+    noWallets:
+      title: Nessuna carta salvata
+      text: Aggiungi una carta per procedere con il pagamento
     header: Scelta metodo di pagamamento
     title: Paga con
-    info: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
+    text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
