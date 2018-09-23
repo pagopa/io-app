@@ -42,15 +42,22 @@ const styles = StyleSheet.create({
   },
   firstCard: {
     flex: 1,
-    transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }]
+    shadowRadius: 10,
+    shadowOpacity: 0.15,
+    transform: [{ perspective: 700 }, { rotateX: "-20deg" }, { scaleX: 0.98 }],
+    zIndex: -10
   },
   secondCard: {
     flex: 1,
+    shadowRadius: 10,
+    shadowOpacity: 0.15,
     transform: [
+      { perspective: 700 },
       { rotateX: "-20deg" },
       { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) },
       { scaleX: 0.98 }
-    ]
+    ],
+    zIndex: -10
   },
   shiftDown: {
     marginBottom: -(58 / 2 + 1)
