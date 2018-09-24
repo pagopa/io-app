@@ -270,6 +270,7 @@ function* addCreditCard(
 
     /**
      * Failed request. show an error (TODO) and return
+     * @https://www.pivotaltracker.com/story/show/160521051
      */
     if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
       return;
