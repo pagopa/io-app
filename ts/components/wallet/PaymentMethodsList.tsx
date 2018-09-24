@@ -8,7 +8,7 @@
 import color from "color";
 import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { Alert, FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
@@ -31,11 +31,18 @@ type Props = OwnProps & ContextualHelpInjectedProps;
 type Route = keyof typeof ROUTES;
 
 type IPaymentMethod = Readonly<{
-  navigateTo: Route | undefined;
+  navigateTo?: Route;
+  onPress?: () => void;
   name: string;
   maxFee: string;
   icon: any;
 }>;
+
+const unavailableAlert = () =>
+  Alert.alert(
+    I18n.t("wallet.pickPaymentMethod.unavailable.title"),
+    I18n.t("wallet.pickPaymentMethod.unavailable.message")
+  );
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
@@ -48,13 +55,15 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
     navigateTo: undefined, // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
     name: I18n.t("wallet.methods.bank.name"),
     maxFee: I18n.t("wallet.methods.bank.maxFee"),
-    icon: "io-48-bank"
+    icon: "io-48-bank",
+    onPress: unavailableAlert
   },
   {
     navigateTo: undefined,
     name: I18n.t("wallet.methods.mobile.name"),
     maxFee: I18n.t("wallet.methods.mobile.maxFee"),
-    icon: "io-48-phone"
+    icon: "io-48-phone",
+    onPress: unavailableAlert
   }
 ];
 
@@ -95,7 +104,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
               onPress={() =>
                 itemInfo.item.navigateTo
                   ? navigate(itemInfo.item.navigateTo)
-                  : undefined
+                  : itemInfo.item.onPress
+                    ? itemInfo.item.onPress()
+                    : undefined
               }
             >
               <Left>

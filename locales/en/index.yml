@@ -223,6 +223,10 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
+  pickPaymentMethod:
+    unavailable:
+      title: This payment method is not available at this time
+      message: This payment method will be available in a future release
   add: add
   delete:
     successful: Card successfully deleted

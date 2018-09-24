@@ -230,6 +230,10 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  pickPaymentMethod:
+    unavailable:
+      title: Questo metodo di pagamento non è ancora disponibile
+      message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
     successful: Carta cancellata correttamente
