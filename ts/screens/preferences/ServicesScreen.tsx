@@ -4,7 +4,8 @@ import {
   ListRenderItem,
   ListRenderItemInfo,
   SectionList,
-  SectionListData
+  SectionListData,
+  StyleSheet
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -33,6 +34,15 @@ import { isDefined } from "../../utils/guards";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
+import variables from "../../theme/variables";
+
+const styles = StyleSheet.create({
+  fixCroppedItalic: {
+    // Leave a little bit of space in order to avoid cropped characters
+    // due to italic style.
+    paddingRight: variables.fontSizeBase / 3
+  }
+});
 
 type ReduxMappedProps = Readonly<{
   profile: ProfileState;
@@ -89,7 +99,7 @@ class ServicesScreen extends React.PureComponent<Props> {
                 <H4>{service.service_name}</H4>
               </Row>
               <Row>
-                <Text italic={true}>
+                <Text italic={true} style={styles.fixCroppedItalic}>
                   {enabledChannels.inbox
                     ? I18n.t("services.serviceIsEnabled")
                     : I18n.t("services.serviceNotEnabled")}
