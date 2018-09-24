@@ -1,4 +1,4 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
@@ -23,7 +23,6 @@ type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
 // The user is logged out and hasn't selected an IDP
 type LoggedOutWithoutIdp = Readonly<{
   kind: "LoggedOutWithoutIdp";
-  idp: undefined;
   reason: LoggedOutReason;
 }>;
 
@@ -55,13 +54,17 @@ export type AuthenticationState =
   | LoggedInWithoutSessionInfo
   | LoggedInWithSessionInfo;
 
+type AuthenticationStateWithIdp =
+  | LoggedOutWithIdp
+  | LoggedInWithoutSessionInfo
+  | LoggedInWithSessionInfo;
+
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
 const INITIAL_STATE: LoggedOutWithoutIdp = {
   kind: "LoggedOutWithoutIdp",
-  idp: undefined,
   reason: "NOT_LOGGED_IN"
 };
 
@@ -117,8 +120,22 @@ export const sessionInfoSelector = (
 export const walletTokenSelector = (state: GlobalState): Option<string> =>
   sessionInfoSelector(state).map(s => s.walletToken);
 
-export const idpSelector = (state: GlobalState): Option<IdentityProvider> =>
-  fromNullable(state.authentication.idp);
+function matchWithIdp<O>(
+  state: AuthenticationState,
+  whenWithoutIdp: O,
+  whenWithIdp: (state: AuthenticationStateWithIdp) => O
+): O {
+  if (state.kind === "LoggedOutWithoutIdp") {
+    return whenWithoutIdp;
+  }
+
+  return whenWithIdp(state);
+}
+
+export const idpSelector = ({
+  authentication
+}: GlobalState): Option<IdentityProvider> =>
+  matchWithIdp(authentication, none, ({ idp }) => some(idp));
 
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,
