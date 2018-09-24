@@ -53,6 +53,13 @@ export const WalletStyles = StyleSheet.create({
     backgroundColor: variables.colorWhite,
     flex: 1
   },
+  padded: {
+    padding: variables.contentPadding
+  },
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
+  },
   pfImage: {
     height: "100%",
     width: "100%",

@@ -228,12 +228,17 @@ wallet:
       title: Method unavailable!
       message: This payment method will be available in a future release
   add: add
+  delete:
+    successful: Card successfully deleted
+    failed: The card could not be deleted
   newPaymentMethod:
     add: add
     addButton: Add payment method
     newMethod: Choose another payment method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
       so that you don't have to re-add them from scratch for every transaction
+    successful: The card was added successfully!
+    failed: The card could not be added
   textMsg:
     title: Text confirmation code
     header: Confirmation code

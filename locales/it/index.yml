@@ -235,12 +235,17 @@ wallet:
       title: Metodo di pagamento non disponibile!
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
+  delete:
+    successful: Carta cancellata correttamente
+    failed: Impossibile cancellare la carta
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo di pagamento
     newMethod: Scegli un altro metodo di pagamento
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
       ecc.) per non doverli inserire ad ogni transazione
+    successful: Carta aggiunta con successo
+    failed: Impossibile aggiungere la carta
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS

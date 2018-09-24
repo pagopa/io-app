@@ -20,7 +20,10 @@ import { connect } from "react-redux";
 
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { setFavoriteWallet } from "../../../store/actions/wallet/wallets";
+import {
+  deleteWalletRequest,
+  setFavoriteWallet
+} from "../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { makeFontStyleObject } from "../../../theme/fonts";
@@ -61,7 +64,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotatedCard: {
-    transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }],
+    shadowRadius: 10,
+    shadowOpacity: 0.15,
+    transform: [{ perspective: 700 }, { rotateX: "-20deg" }, { scaleX: 0.98 }],
     marginBottom: -3
   },
   blueText: {
@@ -80,6 +85,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   setFavoriteCard: (item: Option<number>) => void;
+  deleteWallet: (walletId: number) => void;
 }>;
 
 export type CardProps = Readonly<{
@@ -125,11 +131,12 @@ class CardComponent extends React.Component<Props> {
   };
 
   private topRightCorner() {
+    const { item } = this.props;
     if (this.props.logoPosition === LogoPosition.TOP) {
       return (
         <Col size={2}>
           {shouldRenderLogo(LogoPosition.TOP, this.props.logoPosition) && (
-            <Logo item={this.props.item} />
+            <Logo item={item} />
           )}
         </Col>
       );
@@ -179,7 +186,8 @@ class CardComponent extends React.Component<Props> {
                         },
                         {
                           text: I18n.t("global.buttons.ok"),
-                          style: "destructive"
+                          style: "destructive",
+                          onPress: () => this.props.deleteWallet(item.idWallet)
                         }
                       ],
                       { cancelable: false }
@@ -263,7 +271,8 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteWallet(item))
+  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteWallet(item)),
+  deleteWallet: (walletId: number) => dispatch(deleteWalletRequest(walletId))
 });
 
 export default connect(
