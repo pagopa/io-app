@@ -78,7 +78,7 @@
     "@types/jest": "^23.3.2",
     "@types/js-yaml": "^3.11.2",
     "@types/lodash": "^4.14.116",
-    "@types/node": "^10.1.0",
+    "@types/node": "^10.10.3",
     "@types/node-fetch": "^2.1.1",
     "@types/prettier": "^1.13.2",
     "@types/react": "16.3.16",
