@@ -233,8 +233,7 @@ wallet:
     failed: The card could not be deleted
   newPaymentMethod:
     add: add
-    addButton: Add payment method
-    newMethod: Choose another payment method
+    addButton: Add a new card
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
       so that you don't have to re-add them from scratch for every transaction
     successful: The card was added successfully!
@@ -274,9 +273,12 @@ wallet:
     changeMethod: Change the payment method
     change: Change method
   payWith:
+    noWallets:
+      title: No card found
+      text: Add a new card to proceed with the payment
     header: Choose payment method
     title: Pay with
-    info: Choose one saved payment method or add a new one
+    text: Choose one saved payment method or add a new one
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
