@@ -118,9 +118,9 @@ authentication:
     card4-content: L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
     card5-title: Benvenuto nella versione beta di IO!
-    card5-content: In questa versione sperimentale trovi in alto a destra le icone
-      che ti permettono di segnalare bug o di aprire una chat con il team di sviluppo.
-      Aspettiamo i tuoi feedback!
+    card5-content: In questa versione sperimentale trovi in alto a destra
+      le icone per segnalare bug e aprire una chat con il team di IO.
+      Aspettiamo i tuoi feedback!.
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
