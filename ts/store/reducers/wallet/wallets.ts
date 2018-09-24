@@ -45,7 +45,21 @@ export const walletsSelector = createSelector(
   getWallets,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (wallets: IndexedById<Wallet>): ReadonlyArray<Wallet> => values(wallets)
+  (wallets: IndexedById<Wallet>): ReadonlyArray<Wallet> =>
+    values(wallets).sort(
+      // sort by date, descending
+      // if both dates are undefined -> 0
+      // if either is undefined, it is considered as used "infinitely" long ago
+      // (i.e. the non-undefined one is considered as used more recently)
+      (a, b) =>
+        -(a.lastUsage === undefined
+          ? b.lastUsage === undefined
+            ? 0
+            : -1
+          : b.lastUsage === undefined
+            ? 1
+            : a.lastUsage.getTime() - b.lastUsage.getTime())
+    )
 );
 
 export const getWalletFromId = (

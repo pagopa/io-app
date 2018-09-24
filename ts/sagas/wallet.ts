@@ -251,42 +251,42 @@ function* addCreditCard(
   _: boolean, // should the card be set as favorite?
   pagoPaClient: PagoPaClient
 ): Iterator<Effect> {
-  const wallet: NullableWallet = {
-    idWallet: null,
-    type: "CREDIT_CARD",
-    favourite: null,
-    creditCard
-  };
-  // 1st call: boarding credit card
-  const responseBoardCC:
-    | BasicResponseTypeWith401<WalletResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    (token: string) => pagoPaClient.boardCreditCard(token, wallet),
-    pagoPaClient
-  );
-
-  /**
-   * Failed request. show an error (TODO) and return
-   */
-  if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
-    return;
-  }
-
-  // 1st call was successful. Proceed with the 2nd one
-  // (boarding pay)
-  const { idWallet } = responseBoardCC.value.data;
-  const payRequest: PayRequest = {
-    data: {
-      idWallet,
-      tipo: "web",
-      cvv: wallet.creditCard.securityCode
-        ? wallet.creditCard.securityCode
-        : undefined
-    }
-  };
   try {
     yield put(walletManagementSetLoadingState());
+    const wallet: NullableWallet = {
+      idWallet: null,
+      type: "CREDIT_CARD",
+      favourite: null,
+      creditCard
+    };
+    // 1st call: boarding credit card
+    const responseBoardCC:
+      | BasicResponseTypeWith401<WalletResponse>
+      | undefined = yield call(
+      fetchWithTokenRefresh,
+      (token: string) => pagoPaClient.boardCreditCard(token, wallet),
+      pagoPaClient
+    );
+
+    /**
+     * Failed request. show an error (TODO) and return
+     * @https://www.pivotaltracker.com/story/show/160521051
+     */
+    if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
+      return;
+    }
+    // 1st call was successful. Proceed with the 2nd one
+    // (boarding pay)
+    const { idWallet } = responseBoardCC.value.data;
+    const payRequest: PayRequest = {
+      data: {
+        idWallet,
+        tipo: "web",
+        cvv: wallet.creditCard.securityCode
+          ? wallet.creditCard.securityCode
+          : undefined
+      }
+    };
     const responseBoardPay:
       | BasicResponseTypeWith401<TransactionResponse>
       | undefined = yield call(
