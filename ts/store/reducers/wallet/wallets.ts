@@ -8,11 +8,11 @@ import { createSelector } from "reselect";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import {
   CREDIT_CARD_DATA_CLEANUP,
+  FETCH_WALLETS_SUCCESS,
   PAYMENT_UPDATE_PSP_IN_STATE,
   SELECT_WALLET_FOR_DETAILS,
   SET_FAVORITE_WALLET,
-  STORE_CREDIT_CARD_DATA,
-  WALLETS_FETCHED
+  STORE_CREDIT_CARD_DATA
 } from "../../actions/constants";
 import { Action } from "../../actions/types";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -92,7 +92,7 @@ const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
 ): WalletsState => {
-  if (action.type === WALLETS_FETCHED) {
+  if (action.type === FETCH_WALLETS_SUCCESS) {
     return {
       ...state,
       list: toIndexed(action.payload, "idWallet")

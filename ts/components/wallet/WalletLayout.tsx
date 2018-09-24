@@ -37,20 +37,24 @@ const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
-  noBottomPadding: {
-    paddingBottom: 0
-  },
   firstCard: {
     flex: 1,
-    transform: [{ rotateX: "-20deg" }, { scaleX: 0.98 }]
+    shadowRadius: 10,
+    shadowOpacity: 0.15,
+    transform: [{ perspective: 700 }, { rotateX: "-20deg" }, { scaleX: 0.98 }],
+    zIndex: -10
   },
   secondCard: {
     flex: 1,
+    shadowRadius: 10,
+    shadowOpacity: 0.15,
     transform: [
+      { perspective: 700 },
       { rotateX: "-20deg" },
       { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) },
       { scaleX: 0.98 }
-    ]
+    ],
+    zIndex: -10
   },
   shiftDown: {
     marginBottom: -(58 / 2 + 1)
@@ -98,7 +102,6 @@ type OwnProps = Readonly<{
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
-  moreCards?: boolean;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -108,11 +111,10 @@ class WalletLayout extends React.Component<Props> {
     headerContents: null,
     cardType: { type: CardEnum.NONE } as NoCards,
     showPayButton: true,
-    allowGoBack: true,
-    moreCards: false
+    allowGoBack: true
   };
 
-  private getLogo(): React.ReactNode {
+  private displayedWallets(): React.ReactNode {
     if (!this.props.cardType) {
       return null;
     }
@@ -123,32 +125,46 @@ class WalletLayout extends React.Component<Props> {
         return null;
       }
       case CardEnum.FAN: {
+        const { cards } = this.props.cardType;
         return (
           <TouchableOpacity
             onPress={(): boolean =>
               this.props.navigation.navigate(ROUTES.WALLET_LIST)
             }
           >
-            <View style={styles.shiftDown}>
-              <View style={styles.firstCard}>
+            {cards.length === 1 ? (
+              <View style={WalletStyles.container}>
                 <CardComponent
                   navigation={this.props.navigation}
-                  item={this.props.cardType.cards[1]}
+                  item={cards[0]}
                   logoPosition={LogoPosition.TOP}
                   flatBottom={true}
                   headerOnly={true}
+                  rotated={true}
                 />
               </View>
-              <View style={styles.secondCard}>
-                <CardComponent
-                  navigation={this.props.navigation}
-                  item={this.props.cardType.cards[0]}
-                  logoPosition={LogoPosition.TOP}
-                  flatBottom={true}
-                  headerOnly={true}
-                />
+            ) : (
+              <View style={styles.shiftDown}>
+                <View style={styles.firstCard}>
+                  <CardComponent
+                    navigation={this.props.navigation}
+                    item={cards[1]}
+                    logoPosition={LogoPosition.TOP}
+                    flatBottom={true}
+                    headerOnly={true}
+                  />
+                </View>
+                <View style={styles.secondCard}>
+                  <CardComponent
+                    navigation={this.props.navigation}
+                    item={cards[0]}
+                    logoPosition={LogoPosition.TOP}
+                    flatBottom={true}
+                    headerOnly={true}
+                  />
+                </View>
               </View>
-            </View>
+            )}
           </TouchableOpacity>
         );
       }
@@ -204,10 +220,10 @@ class WalletLayout extends React.Component<Props> {
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>
           <Content
             scrollEnabled={false}
-            style={[styles.darkGrayBg, styles.noBottomPadding]}
+            style={[styles.darkGrayBg, WalletStyles.noBottomPadding]}
           >
             {this.props.headerContents}
-            {this.getLogo()}
+            {this.displayedWallets()}
           </Content>
           {this.props.children}
         </ScrollView>
