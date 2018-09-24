@@ -36,9 +36,9 @@ export const setInstabugProfileAttributes = (
     `${profile.name} ${profile.family_name}`
   );
 
-  Instabug.setUserAttribute("Fiscal code", profile.fiscal_code);
+  Instabug.setUserAttribute("fiscalcode", profile.fiscal_code);
 
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
-    Instabug.setUserAttribute("Identity provider", idp.entityID)
+    Instabug.setUserAttribute("identityProvider", idp.entityID)
   );
 };
