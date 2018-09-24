@@ -232,7 +232,7 @@ wallet:
   paymentMethod: Metodo di pagamento
   pickPaymentMethod:
     unavailable:
-      title: Metodo di pagamento non disponibile!
+      title: Questo metodo di pagamento non è ancora disponibile
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
