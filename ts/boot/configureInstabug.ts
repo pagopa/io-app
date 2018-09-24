@@ -33,7 +33,7 @@ export const setInstabugProfileAttributes = (
 ) => {
   Instabug.identifyUserWithEmail(
     profile.spid_email,
-    `${profile.family_name} ${profile.name}`
+    `${profile.name} ${profile.family_name}`
   );
 
   Instabug.setUserAttribute("Fiscal code", profile.fiscal_code);
