@@ -1,3 +1,4 @@
+import { Option } from "fp-ts/lib/Option";
 import { Button, H2, Text } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet, View } from "react-native";
@@ -9,7 +10,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
 export type WithErrorModalInjectedProps = {
-  error: string | undefined;
+  error: Option<string>;
 };
 
 export type WithErrorModalProps<P> = P &
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
  */
 export function withErrorModal<P>(
   WrappedComponent: React.ComponentType<P>,
-  errorSelector: (state: GlobalState) => string | undefined,
+  errorSelector: (state: GlobalState) => Option<string>,
   errorMessage: string,
   cancelActionCreator: (
     props: Readonly<WithErrorModalProps<P>>
@@ -94,7 +95,7 @@ export function withErrorModal<P>(
       return (
         <React.Fragment>
           <WrappedComponent {...this.props} />
-          <Modal visible={error !== undefined} onRequestClose={() => undefined}>
+          <Modal visible={error.isSome()} onRequestClose={() => undefined}>
             <View style={styles.contentWrapper}>
               <View style={styles.imageAndMessageContainer}>
                 <Image
