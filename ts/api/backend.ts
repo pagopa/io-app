@@ -249,7 +249,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.installation),
-    response_decoder: basicResponseDecoder(SuccessResponse)
+    response_decoder: basicResponseDecoderWith401(SuccessResponse)
   };
 
   const logoutT: LogoutT = {
