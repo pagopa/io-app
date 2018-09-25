@@ -6,10 +6,9 @@ import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
 import {
-  AuthenticatedOrInitializedProfile,
-  CreateOrUpdateProfileT,
-  GetProfileT
-} from "../api/backend";
+  GetUserProfileT,
+  UpsertProfileT
+} from "../../definitions/backend/requestTypes";
 
 import I18n from "../i18n";
 
@@ -27,11 +26,12 @@ import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
 
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+import { UserProfile } from "../../definitions/backend/UserProfile";
 
 // A saga to load the Profile.
 export function* loadProfile(
-  getProfile: TypeofApiCall<GetProfileT>
-): Iterator<Effect | Option<AuthenticatedOrInitializedProfile>> {
+  getProfile: TypeofApiCall<GetUserProfileT>
+): Iterator<Effect | Option<UserProfile>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -53,7 +53,7 @@ export function* loadProfile(
 
 // A saga to update the Profile.
 function* createOrUpdateProfileSaga(
-  createOrUpdateProfile: TypeofApiCall<CreateOrUpdateProfileT>,
+  createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
   action: ProfileUpsertRequest
 ): Iterator<Effect> {
   // Get the current Profile from the state
@@ -90,7 +90,7 @@ function* createOrUpdateProfileSaga(
   const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
     createOrUpdateProfile,
     {
-      newProfile
+      extendedProfile: newProfile
     }
   );
 
@@ -103,7 +103,7 @@ function* createOrUpdateProfileSaga(
   if (!response || response.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
     const error: Error = response
-      ? response.value
+      ? Error(response.value.title)
       : Error(I18n.t("profile.errors.upsert"));
 
     yield put(profileUpsertFailure(error));
@@ -115,7 +115,7 @@ function* createOrUpdateProfileSaga(
 
 // This function listens for Profile related requests and calls the needed saga.
 export function* watchProfileUpsertRequestsSaga(
-  createOrUpdateProfile: TypeofApiCall<CreateOrUpdateProfileT>
+  createOrUpdateProfile: TypeofApiCall<UpsertProfileT>
 ): Iterator<Effect> {
   yield takeLatest(
     PROFILE_UPSERT_REQUEST,

@@ -29,10 +29,7 @@ import {
   WalletResponse
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
-import {
-  basicResponseDecoderWith401,
-  BasicResponseTypeWith401
-} from "./backend";
+import { basicResponseDecoderWith401, BaseResponseType } from "./backend";
 
 export function emptyResponseDecoder<
   S extends number,
@@ -57,7 +54,7 @@ export function emptyResponseDecoder<
 
 export function emptyResponseDecoderWithErrors<
   H extends string = never
->(): ResponseDecoder<BasicResponseTypeWith401<undefined>> {
+>(): ResponseDecoder<BaseResponseType<undefined>> {
   return composeResponseDecoders(
     composeResponseDecoders(
       composeResponseDecoders(
@@ -79,8 +76,7 @@ export function emptyResponseDecoderWithErrors<
 // const a: Amount = Amount.decode({ ... }).getOrElse({ ... })
 const basicResponseDecoderWith401AndCast = <T>(
   type: any
-): ResponseDecoder<BasicResponseTypeWith401<T>> =>
-  basicResponseDecoderWith401(type);
+): ResponseDecoder<BaseResponseType<T>> => basicResponseDecoderWith401(type);
 
 type TokenParamType = Readonly<{
   token: string;
@@ -90,21 +86,21 @@ type GetSessionType = IGetApiRequestType<
   TokenParamType,
   never,
   keyof TokenParamType, // ?token=ABC... using the same name as the param
-  BasicResponseTypeWith401<SessionResponse>
+  BaseResponseType<SessionResponse>
 >;
 
 type GetTransactionsType = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseTypeWith401<TransactionListResponse>
+  BaseResponseType<TransactionListResponse>
 >;
 
 type GetWalletsType = IGetApiRequestType<
   {},
   "Authorization",
   never,
-  BasicResponseTypeWith401<WalletListResponse>
+  BaseResponseType<WalletListResponse>
 >;
 
 type CheckPaymentType = IGetApiRequestType<
@@ -113,7 +109,7 @@ type CheckPaymentType = IGetApiRequestType<
   },
   "Authorization",
   never,
-  BasicResponseTypeWith401<PaymentResponse>
+  BaseResponseType<PaymentResponse>
 >;
 
 type GetPspsListType = IGetApiRequestType<
@@ -122,7 +118,7 @@ type GetPspsListType = IGetApiRequestType<
   },
   "Authorization",
   "idPayment" | "paymentType",
-  BasicResponseTypeWith401<PspListResponse>
+  BaseResponseType<PspListResponse>
 >;
 
 type UpdateWalletPspType = IPutApiRequestType<
@@ -132,7 +128,7 @@ type UpdateWalletPspType = IPutApiRequestType<
   },
   "Content-Type" | "Authorization",
   never,
-  BasicResponseTypeWith401<WalletResponse>
+  BaseResponseType<WalletResponse>
 >;
 
 type PostPaymentType = IPostApiRequestType<
@@ -142,21 +138,21 @@ type PostPaymentType = IPostApiRequestType<
   },
   "Content-Type" | "Authorization",
   never,
-  BasicResponseTypeWith401<TransactionResponse>
+  BaseResponseType<TransactionResponse>
 >;
 
 type BoardCreditCardType = IPostApiRequestType<
   { wallet: NullableWallet },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<WalletResponse>
+  BaseResponseType<WalletResponse>
 >;
 
 type BoardPayType = IPostApiRequestType<
   { payRequest: PayRequest },
   "Authorization" | "Content-Type",
   never,
-  BasicResponseTypeWith401<TransactionResponse>
+  BaseResponseType<TransactionResponse>
 >;
 
 type DeleteWalletType = IDeleteApiRequestType<
@@ -165,7 +161,7 @@ type DeleteWalletType = IDeleteApiRequestType<
   },
   "Authorization",
   never,
-  BasicResponseTypeWith401<undefined>
+  BaseResponseType<undefined>
 >;
 
 export type PagoPaClient = Readonly<{

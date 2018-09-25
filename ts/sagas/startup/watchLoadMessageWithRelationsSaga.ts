@@ -2,7 +2,10 @@ import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GetMessageT, GetServiceT } from "../../api/backend";
+import {
+  GetServiceT,
+  GetUserMessageT
+} from "../../../definitions/backend/requestTypes";
 import I18n from "../../i18n";
 import { MESSAGE_WITH_RELATIONS_LOAD_REQUEST } from "../../store/actions/constants";
 import {
@@ -17,7 +20,7 @@ import { loadMessage, loadService } from "./watchLoadMessagesSaga";
  * Load message with related entities (ex. the sender service).
  */
 export function* loadMessageWithRelationsSaga(
-  getMessage: TypeofApiCall<GetMessageT>,
+  getMessage: TypeofApiCall<GetUserMessageT>,
   getService: TypeofApiCall<GetServiceT>,
   messageWithRelationsLoadRequest: MessageWithRelationsLoadRequest
 ): IterableIterator<Effect> {
@@ -57,7 +60,7 @@ export function* loadMessageWithRelationsSaga(
  * A saga that waits for MESSAGE_WITH_RELATIONS_LOAD_REQUEST action and call loadMessageWithRelationsSaga.
  */
 export function* watchLoadMessageWithRelationsSaga(
-  getMessage: TypeofApiCall<GetMessageT>,
+  getMessage: TypeofApiCall<GetUserMessageT>,
   getService: TypeofApiCall<GetServiceT>
 ) {
   yield takeEvery(

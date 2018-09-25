@@ -4267,11 +4267,12 @@ italia-tslint-rules@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/italia-tslint-rules/-/italia-tslint-rules-0.1.1.tgz#b150373925a268ff892a545229708484ac0533ba"
 
-italia-utils@^3.13.0:
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.13.0.tgz#153dbc233645d5ba42609e75dabc6f01980990bc"
+italia-utils@^3.14.5:
+  version "3.14.5"
+  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.14.5.tgz#cbb3dd164e75c907e0a58564a0f3c0539e298bae"
   dependencies:
     fs-extra "^6.0.0"
+    italia-ts-commons "^2.14.0"
     nunjucks "^3.1.2"
     prettier "^1.12.1"
     swagger-parser "^4.1.0"

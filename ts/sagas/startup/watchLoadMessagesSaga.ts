@@ -18,8 +18,12 @@ import {
   take
 } from "redux-saga/effects";
 
+import {
+  GetServiceT,
+  GetUserMessagesT,
+  GetUserMessageT
+} from "../../../definitions/backend/requestTypes";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { GetMessagesT, GetMessageT, GetServiceT } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   MESSAGES_LOAD_CANCEL,
@@ -60,7 +64,7 @@ import { SagaCallReturnType } from "../../types/utils";
  * @returns {IterableIterator<Effect | Error | MessageWithContentPO>}
  */
 export function* loadMessage(
-  getMessage: TypeofApiCall<GetMessageT>,
+  getMessage: TypeofApiCall<GetUserMessageT>,
   id: string
 ): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
   // If we already have the message in the store just return it
@@ -77,7 +81,10 @@ export function* loadMessage(
   );
 
   if (!response || response.status !== 200) {
-    const error: Error = response ? response.value : Error();
+    const error: Error =
+      response && response.status === 500
+        ? Error(response.value.title)
+        : Error();
     yield put(loadMessageFailure(error));
     return left(error);
   }
@@ -109,11 +116,14 @@ export function* loadService(
 
   const response: SagaCallReturnType<typeof getService> = yield call(
     getService,
-    { id }
+    { service_id: id }
   );
 
   if (!response || response.status !== 200) {
-    const error: Error = response ? response.value : Error();
+    const error: Error =
+      response && response.status === 500
+        ? Error(response.value.title)
+        : Error();
     yield put(loadServiceFailure(error));
     return left(error);
   }
@@ -129,8 +139,8 @@ export function* loadService(
  * only the details of the messages and services not already in the redux store.
  */
 export function* loadMessages(
-  getMessages: TypeofApiCall<GetMessagesT>,
-  getMessage: TypeofApiCall<GetMessageT>,
+  getMessages: TypeofApiCall<GetUserMessagesT>,
+  getMessage: TypeofApiCall<GetUserMessageT>,
   getService: TypeofApiCall<GetServiceT>
 ): IterableIterator<Effect> {
   // We are using try...finally to manage task cancellation
@@ -162,7 +172,10 @@ export function* loadMessages(
      * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
      */
     if (!response || response.status !== 200) {
-      const error: Error = response ? response.value : Error();
+      const error: Error =
+        response && response.status === 500
+          ? Error(response.value.title)
+          : Error();
 
       // Dispatch failure action
       yield put(loadMessagesFailure(error));
@@ -210,8 +223,8 @@ export function* loadMessages(
  * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
  */
 export function* watchMessagesLoadOrCancelSaga(
-  getMessages: TypeofApiCall<GetMessagesT>,
-  getMessage: TypeofApiCall<GetMessageT>,
+  getMessages: TypeofApiCall<GetUserMessagesT>,
+  getMessage: TypeofApiCall<GetUserMessageT>,
   getService: TypeofApiCall<GetServiceT>
 ): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it

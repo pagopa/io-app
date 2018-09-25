@@ -4,8 +4,7 @@ import { Effect } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
-
-import { GetSessionT } from "../../api/backend";
+import { GetSessionStateT } from "../../../definitions/backend/requestTypes";
 
 import {
   sessionInformationLoadFailure,
@@ -22,7 +21,7 @@ import { SagaCallReturnType } from "../../types/utils";
  *        a saga.
  */
 export function* loadSessionInformationSaga(
-  getSession: TypeofApiCall<GetSessionT>
+  getSession: TypeofApiCall<GetSessionStateT>
 ): IterableIterator<Effect | Option<PublicSession>> {
   // Call the Backend service
   const response: SagaCallReturnType<typeof getSession> = yield call(
@@ -37,9 +36,10 @@ export function* loadSessionInformationSaga(
   }
 
   // We got a error, send a SESSION_LOAD_FAILURE action
-  const error: Error = response
-    ? response.value
-    : Error("Invalid server response");
+  const error: Error =
+    response && response.status === 500
+      ? Error(response.value.title)
+      : Error("Invalid server response");
   yield put(sessionInformationLoadFailure(error));
   return none;
 }
