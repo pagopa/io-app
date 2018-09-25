@@ -177,6 +177,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:26.0.1"
     compile ("com.facebook.react:react-native:0.55.4") { force = true } // From node_modules
     compile "com.google.android.gms:play-services-gcm:8.1.0"
+    compile "com.android.support:multidex:1.0.3"
 }
 
 // Run this once to be able to run the application with BUCK
