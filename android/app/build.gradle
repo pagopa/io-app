@@ -105,6 +105,10 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
     defaultConfig {
         applicationId "it.teamdigitale.app.italiaapp"
         minSdkVersion rootProject.ext.minSdkVersion
