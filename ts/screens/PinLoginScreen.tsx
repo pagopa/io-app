@@ -25,12 +25,12 @@ import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import { PinString } from "../types/PinString";
 import { ContextualHelpInjectedProps } from "./../components/helpers/withContextualHelp";
-import { isPaymentStarted } from "./../store/reducers/wallet/payment";
+import { isPaymentRequestingPinLogin } from "./../store/reducers/wallet/payment";
 
 type ReduxMappedProps = {
   pinLoginState: PinLoginState;
   appState: AppState;
-  isPaymentStarted: boolean;
+  isPaymentRequestingPinLogin: boolean;
 };
 
 type OwnProps = {
@@ -133,7 +133,7 @@ class PinLoginScreen extends React.Component<Props> {
           </Text>
           {this.renderCodeInput(pinLoginState)}
           <View spacer={true} extralarge={true} />
-          {this.props.isPaymentStarted ? (
+          {this.props.isPaymentRequestingPinLogin ? (
             <Button
               light={true}
               bordered={true}
@@ -167,7 +167,7 @@ const mapStateToProps = ({
   // Checks from the store whether there was an error while login with the PIN (e.g. PIN is not valid )
   pinLoginState: pinlogin,
   appState,
-  isPaymentStarted: isPaymentStarted(wallet)
+  isPaymentRequestingPinLogin: isPaymentRequestingPinLogin(wallet)
 });
 
 export default connect(mapStateToProps)(PinLoginScreen);

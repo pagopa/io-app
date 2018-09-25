@@ -25,6 +25,7 @@ import {
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_PICK_PSP,
+  PAYMENT_PIN_LOGIN,
   PAYMENT_QR_CODE,
   PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
   PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
@@ -37,7 +38,6 @@ import {
   GlobalStateWithSelectedPaymentMethod,
   GlobalStateWithVerificaResponse
 } from "../types";
-import { WalletStateWithVerificaResponse } from "./../../reducers/wallet";
 import { WalletState } from "./index";
 import { getWalletFromId, getWallets } from "./wallets";
 
@@ -103,6 +103,16 @@ type PaymentStatePickPsp = Readonly<{
   paymentId: string;
 }>;
 
+type PaymentStatePinLogin = Readonly<{
+  kind: "PaymentStatePinLogin";
+  rptId: RptId;
+  verificaResponse: PaymentRequestsGetResponse;
+  initialAmount: AmountInEuroCents;
+  selectedPaymentMethod: number;
+  pspList: ReadonlyArray<Psp>;
+  paymentId: string;
+}>;
+
 // Allowed states
 type PaymentStates =
   | PaymentStateNoState
@@ -112,7 +122,8 @@ type PaymentStates =
   | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
   | PaymentStateConfirmPaymentMethod
-  | PaymentStatePickPsp;
+  | PaymentStatePickPsp
+  | PaymentStatePinLogin;
 
 export type PaymentState = Readonly<{
   stack: NonEmptyArray<PaymentStates> | null;
@@ -129,15 +140,16 @@ type PaymentStatesWithVerificaResponse =
   | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
   | PaymentStateConfirmPaymentMethod
-  | PaymentStatePickPsp;
+  | PaymentStatePickPsp
+  | PaymentStatePinLogin;
 
 export type PaymentStateWithVerificaResponse = Readonly<{
   stack: NonEmptyArray<PaymentStatesWithVerificaResponse>;
 }>;
 
-export const isPaymentStarted = (
-  wallet: WalletState
-): wallet is WalletStateWithVerificaResponse => wallet.payment.stack !== null;
+export const isPaymentRequestingPinLogin = (wallet: WalletState) =>
+  wallet.payment.stack !== null &&
+  wallet.payment.stack.head.kind === "PaymentStatePinLogin";
 
 // type guard for *PaymentState*WithVerificaResponse
 const isPaymentStateWithVerificaResponse = (
@@ -148,7 +160,8 @@ const isPaymentStateWithVerificaResponse = (
     state.stack.head.kind === "PaymentStateSummaryWithPaymentId" ||
     state.stack.head.kind === "PaymentStatePickPaymentMethod" ||
     state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
-    state.stack.head.kind === "PaymentStatePickPsp");
+    state.stack.head.kind === "PaymentStatePickPsp" ||
+    state.stack.head.kind === "PaymentStatePinLogin");
 
 // type guard for *GlobalState*WithVerificaResponse
 export const isGlobalStateWithVerificaResponse = (
@@ -160,7 +173,8 @@ type PaymentStatesWithPaymentId =
   | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
   | PaymentStateConfirmPaymentMethod
-  | PaymentStatePickPsp;
+  | PaymentStatePickPsp
+  | PaymentStatePinLogin;
 
 export type PaymentStateWithPaymentId = Readonly<{
   stack: NonEmptyArray<PaymentStatesWithPaymentId>;
@@ -174,7 +188,8 @@ const isPaymentStateWithPaymentId = (
   (state.stack.head.kind === "PaymentStateSummaryWithPaymentId" ||
     state.stack.head.kind === "PaymentStatePickPaymentMethod" ||
     state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
-    state.stack.head.kind === "PaymentStatePickPsp");
+    state.stack.head.kind === "PaymentStatePickPsp" ||
+    state.stack.head.kind === "PaymentStatePinLogin");
 
 // type guard for *GlobalState*WithPaymentId
 export const isGlobalStateWithPaymentId = (
@@ -186,7 +201,8 @@ export const isGlobalStateWithPaymentId = (
 // selected payment method
 type PaymentStatesWithSelectedPaymentMethod =
   | PaymentStateConfirmPaymentMethod
-  | PaymentStatePickPsp;
+  | PaymentStatePickPsp
+  | PaymentStatePinLogin;
 
 export type PaymentStateWithSelectedPaymentMethod = Readonly<{
   stack: NonEmptyArray<PaymentStatesWithSelectedPaymentMethod>;
@@ -198,7 +214,8 @@ const isPaymentStateWithSelectedPaymentMethod = (
 ): state is PaymentStateWithSelectedPaymentMethod =>
   state.stack !== null &&
   (state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
-    state.stack.head.kind === "PaymentStatePickPsp");
+    state.stack.head.kind === "PaymentStatePickPsp" ||
+    state.stack.head.kind === "PaymentStatePinLogin");
 
 // type guard for *GlobalState*WithSelectedPaymentMethod
 export const isGlobalStateWithSelectedPaymentMethod = (
@@ -617,6 +634,22 @@ const endPaymentReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
+  if (
+    action.type === PAYMENT_PIN_LOGIN &&
+    isInAllowedOrigins(state, [""]) &&
+    isPaymentStateWithSelectedPaymentMethod(state)
+  ) {
+    return {
+      stack: popToStateAndPush(
+        state.stack,
+        {
+          ...state.stack.head,
+          kind: "PaymentStatePinLogin"
+        },
+        ["PaymentStatePinLogin"]
+      )
+    };
+  }
   if (
     action.type === PAYMENT_COMPLETED &&
     isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"])

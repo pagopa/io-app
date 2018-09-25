@@ -34,10 +34,10 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentRequestCompletion,
   paymentRequestGoBack,
   paymentRequestPickPaymentMethod,
-  paymentRequestPickPsp
+  paymentRequestPickPsp,
+  paymentRequestPinLogin
 } from "../../../store/actions/wallet/payment";
 import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import { createLoadingSelector } from "../../../store/reducers/loading";
@@ -67,7 +67,8 @@ type ReduxMappedStateProps =
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
   pickPsp: () => void;
-  requestCompletion: () => void;
+  // requestCompletion: () => void;
+  requestPinLogin: () => void;
   goBack: () => void;
   showSummary: () => void;
 }>;
@@ -212,7 +213,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestCompletion()}
+            onPress={() => this.props.requestPinLogin()}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -263,7 +264,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
-  requestCompletion: () => dispatch(paymentRequestCompletion()),
+  // requestCompletion: () => dispatch(paymentRequestCompletion()),
+  requestPinLogin: () => dispatch(paymentRequestPinLogin()),
   goBack: () => dispatch(paymentRequestGoBack()),
   pickPsp: () => dispatch(paymentRequestPickPsp()),
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
