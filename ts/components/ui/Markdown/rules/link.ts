@@ -14,11 +14,15 @@ const INTERNAL_TARGET_PREFIX = "ioit://";
 // Here we put all the allowed screen name with the mapping to the react-navigation route
 // TODO: Add the other allowed route names
 const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
-  ROUTES.MESSAGES_NAVIGATOR,
+  ROUTES.MESSAGE_LIST,
   ROUTES.PREFERENCES_HOME,
   ROUTES.PREFERENCES_SERVICES,
   ROUTES.PROFILE_MAIN,
-  ROUTES.WALLET_HOME
+  ROUTES.PROFILE_PRIVACY,
+  ROUTES.PROFILE_PRIVACY_MAIN,
+  ROUTES.PROFILE_TOS,
+  ROUTES.WALLET_HOME,
+  ROUTES.WALLET_LIST
 ];
 
 function getInternalRoute(target: string): Option<string> {
@@ -28,7 +32,7 @@ function getInternalRoute(target: string): Option<string> {
     const routeName = parsed[1];
 
     // Return if available the react-navigation route
-    if (ALLOWED_ROUTE_NAMES.indexOf(routeName) > -1) {
+    if (ALLOWED_ROUTE_NAMES.indexOf(routeName.toUpperCase()) > -1) {
       return some(routeName);
     }
   }
