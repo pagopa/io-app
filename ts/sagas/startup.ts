@@ -72,7 +72,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // possible to begin receiving push notifications
   const installationResponseStatus: SagaCallReturnType<
     typeof updateInstallationSaga
-  > = yield fork(
+  > = yield call(
     updateInstallationSaga,
     backendClient.createOrUpdateInstallation
   );
