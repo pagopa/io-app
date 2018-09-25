@@ -4,13 +4,23 @@
  */
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Body, Button, Container, Icon, Left, Text, View } from "native-base";
+import {
+  Body,
+  Button,
+  Container,
+  Icon,
+  Left,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -173,6 +183,9 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
           <Body>
             <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
         <ScrollView bounces={false}>
           <QRCodeScanner

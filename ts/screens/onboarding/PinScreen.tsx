@@ -10,6 +10,7 @@ import {
   Content,
   H1,
   Left,
+  Right,
   Text,
   View
 } from "native-base";
@@ -17,6 +18,7 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
+import { InstabugButtons } from "../../components/InstabugButtons";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
@@ -263,6 +265,9 @@ class PinScreen extends React.Component<Props, State> {
           <Body>
             <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
         {this.renderContent(pinState)}
         {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}

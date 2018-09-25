@@ -13,6 +13,7 @@ import {
   Container,
   Content,
   Left,
+  Right,
   Text,
   View
 } from "native-base";
@@ -20,6 +21,7 @@ import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
@@ -27,6 +29,7 @@ import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import GoBackButton from "../GoBackButton";
+import { InstabugButtons } from "../InstabugButtons";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
@@ -215,6 +218,9 @@ class WalletLayout extends React.Component<Props> {
           <Body>
             <Text style={WalletStyles.white}>{this.props.title}</Text>
           </Body>
+          <Right>
+            <InstabugButtons color={variables.colorWhite} />
+          </Right>
         </AppHeader>
 
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>

@@ -3,7 +3,16 @@
  * when it is added to the user wallet
  */
 
-import { Body, Container, Content, H1, Left, Text, View } from "native-base";
+import {
+  Body,
+  Container,
+  Content,
+  H1,
+  Left,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -11,6 +20,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
@@ -96,6 +106,9 @@ class PickPspScreen extends React.Component<Props, never> {
           <Body>
             <Text>{I18n.t("saveCard.saveCard")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
 
         <Content>

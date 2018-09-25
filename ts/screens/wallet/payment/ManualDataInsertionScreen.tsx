@@ -27,13 +27,16 @@ import {
   Item,
   Label,
   Left,
+  Right,
   Text
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
+
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -153,6 +156,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Body>
             <Text>{I18n.t("wallet.insertManually.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
         <Content>
           <H1>{I18n.t("wallet.insertManually.title")}</H1>
