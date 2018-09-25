@@ -148,7 +148,7 @@ class WalletLayout extends React.Component<Props> {
                 <View style={styles.firstCard}>
                   <CardComponent
                     navigation={this.props.navigation}
-                    item={cards[1]}
+                    item={cards[0]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
@@ -157,7 +157,7 @@ class WalletLayout extends React.Component<Props> {
                 <View style={styles.secondCard}>
                   <CardComponent
                     navigation={this.props.navigation}
-                    item={cards[0]}
+                    item={cards[1]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
