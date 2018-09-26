@@ -1,40 +1,39 @@
 /**
  * This component will display the transaction details if updates on the amount are identified
  */
+import {
+  AmountInEuroCents,
+  AmountInEuroCentsFromNumber
+} from "italia-ts-commons/lib/pagopa";
 import { H1, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
-import { buildAmount } from "../../utils/stringBuilder";
-import { GlobalState } from '../../store/reducers/types';
+import { GlobalState } from "../../store/reducers/types";
 import {
   getCurrentAmount,
   getInitialAmount,
   getPaymentReason,
   isGlobalStateWithVerificaResponse
 } from "../../store/reducers/wallet/payment";
-import {
-  UNKNOWN_PAYMENT_REASON
-} from "../../types/unknown";
-import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber
-} from "italia-ts-commons/lib/pagopa";
-import { connect } from 'react-redux';
+import variables from "../../theme/variables";
+import { UNKNOWN_PAYMENT_REASON } from "../../types/unknown";
+import { buildAmount } from "../../utils/stringBuilder";
 
-
-type ReduxMappedStateProps = Readonly<{
-  amount: AmountInEuroCents;
-  updatedAmount: AmountInEuroCents;
-  paymentReason: string;
-  hasVerificaResponse: true;
-}> | Readonly<{
-  hasVerificaResponse: false;
-}>;
+type ReduxMappedStateProps =
+  | Readonly<{
+      amount: AmountInEuroCents;
+      updatedAmount: AmountInEuroCents;
+      paymentReason: string;
+      hasVerificaResponse: true;
+    }>
+  | Readonly<{
+      hasVerificaResponse: false;
+    }>;
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -91,7 +90,6 @@ const styles = StyleSheet.create({
 });
 
 class PaymentSummaryComponent extends React.Component<Props> {
-
   private labelValueRow(label: React.ReactNode, value: React.ReactNode) {
     return (
       <Row style={WalletStyles.alignCenter}>
@@ -106,10 +104,18 @@ class PaymentSummaryComponent extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const amount = this.props.hasVerificaResponse ? AmountInEuroCentsFromNumber.encode(this.props.amount) : undefined;
-    const updatedAmount = this.props.hasVerificaResponse ? AmountInEuroCentsFromNumber.encode(this.props.updatedAmount) : undefined;
-    const paymentReason = this.props.hasVerificaResponse ? this.props.paymentReason : undefined;
-    const amountIsUpdated = this.props.hasVerificaResponse && this.props.amount !== this.props.updatedAmount;
+    const amount = this.props.hasVerificaResponse
+      ? AmountInEuroCentsFromNumber.encode(this.props.amount)
+      : undefined;
+    const updatedAmount = this.props.hasVerificaResponse
+      ? AmountInEuroCentsFromNumber.encode(this.props.updatedAmount)
+      : undefined;
+    const paymentReason = this.props.hasVerificaResponse
+      ? this.props.paymentReason
+      : undefined;
+    const amountIsUpdated =
+      this.props.hasVerificaResponse &&
+      this.props.amount !== this.props.updatedAmount;
     return (
       <Grid style={[WalletStyles.header, styles.padded]}>
         <View spacer={true} large={true} />
@@ -118,7 +124,9 @@ class PaymentSummaryComponent extends React.Component<Props> {
             <H3 style={WalletStyles.white}>
               {I18n.t("wallet.firstTransactionSummary.title")}
             </H3>
-            <H1 style={WalletStyles.white}>{paymentReason !== undefined ? paymentReason : "..." }</H1>
+            <H1 style={WalletStyles.white}>
+              {paymentReason !== undefined ? paymentReason : "..."}
+            </H1>
           </Col>
           <Col
             size={1}
@@ -140,7 +148,9 @@ class PaymentSummaryComponent extends React.Component<Props> {
               {amount !== undefined ? buildAmount(amount) : "..."}
             </H3>
           ) : (
-            <H1 style={WalletStyles.white}>{amount !== undefined ? buildAmount(amount) : "..."}</H1>
+            <H1 style={WalletStyles.white}>
+              {amount !== undefined ? buildAmount(amount) : "..."}
+            </H1>
           )
         )}
         {amountIsUpdated && (
@@ -157,7 +167,9 @@ class PaymentSummaryComponent extends React.Component<Props> {
                 />
               </View>,
               <H1 style={WalletStyles.white}>
-                {updatedAmount !== undefined ? buildAmount(updatedAmount) : "..." }
+                {updatedAmount !== undefined
+                  ? buildAmount(updatedAmount)
+                  : "..."}
               </H1>
             )}
             <Row style={styles.toAlignColumnstart}>
@@ -195,18 +207,16 @@ class PaymentSummaryComponent extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => 
-  isGlobalStateWithVerificaResponse(state) ? {
-    hasVerificaResponse: true,
-    amount: getInitialAmount(state),
-    updatedAmount: getCurrentAmount(state),
-    paymentReason: getPaymentReason(state).getOrElse(
-      UNKNOWN_PAYMENT_REASON
-    )    
-  } : 
-  {
-    hasVerificaResponse: false
-  }
-;
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
+  isGlobalStateWithVerificaResponse(state)
+    ? {
+        hasVerificaResponse: true,
+        amount: getInitialAmount(state),
+        updatedAmount: getCurrentAmount(state),
+        paymentReason: getPaymentReason(state).getOrElse(UNKNOWN_PAYMENT_REASON)
+      }
+    : {
+        hasVerificaResponse: false
+      };
 
 export default connect(mapStateToProps)(PaymentSummaryComponent);

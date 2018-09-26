@@ -129,19 +129,23 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentSummaryComponent
-            navigation={this.props.navigation}
-          />
+          <PaymentSummaryComponent navigation={this.props.navigation} />
           <View content={true}>
             <Markdown>
-              { paymentRecipient !== undefined ? formatMdRecipient(paymentRecipient) : "..." }
+              {paymentRecipient !== undefined
+                ? formatMdRecipient(paymentRecipient)
+                : "..."}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              { paymentReason !== undefined ? formatMdPaymentReason(paymentReason) : "..." }
+              {paymentReason !== undefined
+                ? formatMdPaymentReason(paymentReason)
+                : "..."}
             </Markdown>
             <View spacer={true} />
-            <Markdown>{ rptId !== undefined ? formatMdInfoRpt(rptId) : "..." }</Markdown>
+            <Markdown>
+              {rptId !== undefined ? formatMdInfoRpt(rptId) : "..."}
+            </Markdown>
             <View spacer={true} />
           </View>
         </Content>
@@ -155,7 +159,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => 
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
   (getPaymentStep(state) === "PaymentStateSummary" ||
     getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
   isGlobalStateWithVerificaResponse(state)
@@ -169,14 +173,16 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
         ), // could be undefined as per pagoPA type definition
         rptId: getRptId(state)
       }
-    : (getPaymentStep(state) === "PaymentStateNoState" || getPaymentStep(state) === "PaymentStateQrCode" || getPaymentStep(state) === "PaymentStateManualEntry") ?
-    {
-      valid: true, 
-      paymentReason: undefined,
-      paymentRecipient: undefined,
-      rptId: undefined
-    }
-    : { valid: false };
+    : getPaymentStep(state) === "PaymentStateNoState" ||
+      getPaymentStep(state) === "PaymentStateQrCode" ||
+      getPaymentStep(state) === "PaymentStateManualEntry"
+      ? {
+          valid: true,
+          paymentReason: undefined,
+          paymentRecipient: undefined,
+          rptId: undefined
+        }
+      : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),
