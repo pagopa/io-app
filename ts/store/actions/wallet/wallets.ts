@@ -5,6 +5,7 @@ import {
   ADD_CREDIT_CARD_REQUEST,
   CREDIT_CARD_DATA_CLEANUP,
   DELETE_WALLET_REQUEST,
+  FETCH_WALLETS_FAILURE,
   FETCH_WALLETS_REQUEST,
   FETCH_WALLETS_SUCCESS,
   SELECT_WALLET_FOR_DETAILS,
@@ -21,6 +22,11 @@ export type FetchWalletsRequest = Readonly<{
 type FetchWalletsSuccess = Readonly<{
   type: typeof FETCH_WALLETS_SUCCESS;
   payload: ReadonlyArray<Wallet>;
+}>;
+
+type FetchWalletsFailure = Readonly<{
+  type: typeof FETCH_WALLETS_FAILURE;
+  payload: Error;
 }>;
 
 type WalletSelectedForDetails = Readonly<{
@@ -77,7 +83,8 @@ export type WalletsActions =
   | AddCreditCardCompleted
   | DeleteWalletRequest
   | WalletManagementSetLoadingState
-  | WalletManagementResetLoadingState;
+  | WalletManagementResetLoadingState
+  | FetchWalletsFailure;
 
 export const fetchWalletsRequest = (): FetchWalletsRequest => ({
   type: FETCH_WALLETS_REQUEST
@@ -88,6 +95,11 @@ export const fetchWalletsSuccess = (
 ): FetchWalletsSuccess => ({
   type: FETCH_WALLETS_SUCCESS,
   payload: wallets
+});
+
+export const fetchWalletsFailure = (error: Error): FetchWalletsFailure => ({
+  type: FETCH_WALLETS_FAILURE,
+  payload: error
 });
 
 export const selectWalletForDetails = (
