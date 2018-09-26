@@ -93,6 +93,7 @@ import {
   PaymentUpdatePsp
 } from "../store/actions/wallet/payment";
 import {
+  fetchTransactionsFailure,
   FetchTransactionsRequest,
   fetchTransactionsSuccess,
   selectTransactionForDetails
@@ -101,6 +102,7 @@ import {
   AddCreditCardRequest,
   creditCardDataCleanup,
   DeleteWalletRequest,
+  fetchWalletsFailure,
   FetchWalletsRequest,
   fetchWalletsSuccess,
   selectWalletForDetails,
@@ -224,6 +226,8 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   );
   if (response !== undefined && response.status === 200) {
     yield put(fetchTransactionsSuccess(response.value.data));
+  } else {
+    yield put(fetchTransactionsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
 }
@@ -241,6 +245,8 @@ function* fetchWallets(
   if (response !== undefined && response.status === 200) {
     yield put(fetchWalletsSuccess(response.value.data));
     return response.value.data.length;
+  } else {
+    yield put(fetchWalletsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   return undefined;
