@@ -8,8 +8,6 @@
  */
 
 import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
@@ -35,8 +33,6 @@ import {
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  getCurrentAmount,
-  getInitialAmount,
   getPaymentReason,
   getPaymentRecipient,
   getPaymentStep,
@@ -54,8 +50,6 @@ type ReduxMappedStateProps =
     }>
   | Readonly<{
       valid: true;
-      initialAmount: AmountInEuroCents;
-      currentAmount: AmountInEuroCents;
       paymentReason: string;
       paymentRecipient: EnteBeneficiario;
       rptId: RptId;
@@ -104,11 +98,6 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       return null;
     }
 
-    const amount = AmountInEuroCentsFromNumber.encode(this.props.initialAmount);
-    const updatedAmount = AmountInEuroCentsFromNumber.encode(
-      this.props.currentAmount
-    );
-
     const primaryButtonProps = {
       block: true,
       primary: true,
@@ -140,9 +129,6 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         <Content noPadded={true}>
           <PaymentSummaryComponent
             navigation={this.props.navigation}
-            amount={amount}
-            updatedAmount={updatedAmount}
-            paymentReason={this.props.paymentReason}
           />
           <View content={true}>
             <Markdown>
@@ -173,8 +159,6 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
   isGlobalStateWithVerificaResponse(state)
     ? {
         valid: true,
-        initialAmount: getInitialAmount(state),
-        currentAmount: getCurrentAmount(state),
         paymentReason: getPaymentReason(state).getOrElse(
           UNKNOWN_PAYMENT_REASON
         ), // could be undefined as per pagoPA type definition
