@@ -50,9 +50,9 @@ type ReduxMappedStateProps =
     }>
   | Readonly<{
       valid: true;
-      paymentReason: string;
-      paymentRecipient: EnteBeneficiario;
-      rptId: RptId;
+      paymentReason: string | undefined;
+      paymentRecipient: EnteBeneficiario | undefined;
+      rptId: RptId | undefined;
     }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -112,6 +112,8 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       title: I18n.t("wallet.cancel")
     };
 
+    const { paymentRecipient, paymentReason, rptId } = this.props;
+
     return (
       <Container>
         <AppHeader>
@@ -132,14 +134,14 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
           />
           <View content={true}>
             <Markdown>
-              {formatMdRecipient(this.props.paymentRecipient)}
+              { paymentRecipient !== undefined ? formatMdRecipient(paymentRecipient) : "..." }
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {formatMdPaymentReason(this.props.paymentReason)}
+              { paymentReason !== undefined ? formatMdPaymentReason(paymentReason) : "..." }
             </Markdown>
             <View spacer={true} />
-            <Markdown>{formatMdInfoRpt(this.props.rptId)}</Markdown>
+            <Markdown>{ rptId !== undefined ? formatMdInfoRpt(rptId) : "..." }</Markdown>
             <View spacer={true} />
           </View>
         </Content>
@@ -167,6 +169,13 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
         ), // could be undefined as per pagoPA type definition
         rptId: getRptId(state)
       }
+    : (getPaymentStep(state) === "PaymentStateNoState" || getPaymentStep(state) === "PaymentStateQrCode" || getPaymentStep(state) === "PaymentStateManualEntry") ?
+    {
+      valid: true, 
+      paymentReason: undefined,
+      paymentRecipient: undefined,
+      rptId: undefined
+    }
     : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
