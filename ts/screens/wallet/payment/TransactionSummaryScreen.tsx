@@ -8,8 +8,6 @@
  */
 
 import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
@@ -35,8 +33,6 @@ import {
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  getCurrentAmount,
-  getInitialAmount,
   getPaymentReason,
   getPaymentRecipient,
   getPaymentStep,
@@ -54,11 +50,9 @@ type ReduxMappedStateProps =
     }>
   | Readonly<{
       valid: true;
-      initialAmount: AmountInEuroCents;
-      currentAmount: AmountInEuroCents;
-      paymentReason: string;
-      paymentRecipient: EnteBeneficiario;
-      rptId: RptId;
+      paymentReason: string | undefined;
+      paymentRecipient: EnteBeneficiario | undefined;
+      rptId: RptId | undefined;
     }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -104,11 +98,6 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       return null;
     }
 
-    const amount = AmountInEuroCentsFromNumber.encode(this.props.initialAmount);
-    const updatedAmount = AmountInEuroCentsFromNumber.encode(
-      this.props.currentAmount
-    );
-
     const primaryButtonProps = {
       block: true,
       primary: true,
@@ -122,6 +111,8 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       onPress: () => this.props.cancelPayment(),
       title: I18n.t("wallet.cancel")
     };
+
+    const { paymentRecipient, paymentReason, rptId } = this.props;
 
     return (
       <Container>
@@ -138,22 +129,23 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentSummaryComponent
-            navigation={this.props.navigation}
-            amount={amount}
-            updatedAmount={updatedAmount}
-            paymentReason={this.props.paymentReason}
-          />
+          <PaymentSummaryComponent navigation={this.props.navigation} />
           <View content={true}>
             <Markdown>
-              {formatMdRecipient(this.props.paymentRecipient)}
+              {paymentRecipient !== undefined
+                ? formatMdRecipient(paymentRecipient)
+                : "..."}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {formatMdPaymentReason(this.props.paymentReason)}
+              {paymentReason !== undefined
+                ? formatMdPaymentReason(paymentReason)
+                : "..."}
             </Markdown>
             <View spacer={true} />
-            <Markdown>{formatMdInfoRpt(this.props.rptId)}</Markdown>
+            <Markdown>
+              {rptId !== undefined ? formatMdInfoRpt(rptId) : "..."}
+            </Markdown>
             <View spacer={true} />
           </View>
         </Content>
@@ -173,8 +165,6 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
   isGlobalStateWithVerificaResponse(state)
     ? {
         valid: true,
-        initialAmount: getInitialAmount(state),
-        currentAmount: getCurrentAmount(state),
         paymentReason: getPaymentReason(state).getOrElse(
           UNKNOWN_PAYMENT_REASON
         ), // could be undefined as per pagoPA type definition
@@ -183,7 +173,16 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
         ), // could be undefined as per pagoPA type definition
         rptId: getRptId(state)
       }
-    : { valid: false };
+    : getPaymentStep(state) === "PaymentStateNoState" ||
+      getPaymentStep(state) === "PaymentStateQrCode" ||
+      getPaymentStep(state) === "PaymentStateManualEntry"
+      ? {
+          valid: true,
+          paymentReason: undefined,
+          paymentRecipient: undefined,
+          rptId: undefined
+        }
+      : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),

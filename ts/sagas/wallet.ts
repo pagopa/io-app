@@ -588,6 +588,10 @@ function* showTransactionSummaryHandler(
     // payload and proceed with showing the
     // transaction information fetched from the
     // pagoPA proxy
+
+    // First, navigate to the summary screen
+    yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
+
     const {
       rptId,
       initialAmount
@@ -617,10 +621,10 @@ function* showTransactionSummaryHandler(
       yield put(paymentResetLoadingState());
     }
   } else {
+    // also, show summary screen
     yield put(paymentTransactionSummaryFromBanner());
+    yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
   }
-  // also, show summary screen
-  yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
 }
 
 function* showConfirmPaymentMethod(
