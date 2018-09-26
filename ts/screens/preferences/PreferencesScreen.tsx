@@ -21,12 +21,12 @@ import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
-import { AuthenticatedOrInitializedProfile } from "../../api/backend";
+import { UserProfileUnion } from "../../api/backend";
 
 import { getLocalePrimary } from "../../utils/locale";
 
 type ReduxMappedProps = {
-  maybeProfile: Option<AuthenticatedOrInitializedProfile>;
+  maybeProfile: Option<UserProfileUnion>;
   isProfileLoading: boolean;
   isProfileLoadingError: Option<string>;
   isProfileUpserting: boolean;

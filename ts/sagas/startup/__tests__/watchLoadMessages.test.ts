@@ -99,7 +99,7 @@ describe("messages", () => {
         .next()
         .next()
         // Return 500 with an error message as getMessage response
-        .next({ status: 500, value: error })
+        .next({ status: 500, value: { title: error.message } })
         .put(loadMessageFailure(error))
         .next()
         .returns(left(error));
@@ -126,7 +126,7 @@ describe("messages", () => {
       testSaga(loadService, getService, testServiceId1)
         .next()
         .next()
-        .call(getService, { id: testServiceId1 });
+        .call(getService, { service_id: testServiceId1 });
     });
 
     it("should only return an empty error if the getService response is undefined (can't be decoded)", () => {
@@ -148,7 +148,7 @@ describe("messages", () => {
         .next()
         .next()
         // Return 500 with an error message as getService response
-        .next({ status: 500, value: Error("Backend error") })
+        .next({ status: 500, value: { title: error.message } })
         .put(loadServiceFailure(error))
         .next()
         .returns(left(Error("Backend error")));
@@ -182,7 +182,7 @@ describe("messages", () => {
         .next({})
         .call(getMessages, {})
         // Return an error message as getMessages response
-        .next({ status: 500, value: Error("Backend error") })
+        .next({ status: 500, value: { title: "Backend error" } })
         .put(loadMessagesFailure(Error("Backend error")))
         .next()
         .next()

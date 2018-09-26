@@ -12,7 +12,11 @@ import {
 
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import {
+  IResponseType,
+  TypeofApiCall,
+  TypeofApiResponse
+} from "italia-ts-commons/lib/requests";
 import { Toast } from "native-base";
 import { NavigationActions } from "react-navigation";
 import {
@@ -26,16 +30,12 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
-import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 import {
-  AttivaRptT,
-  BackendClient,
-  BasicResponseTypeWith401,
-  GetPaymentIdT,
-  VerificaRptT
-} from "../api/backend";
+  ActivatePaymentT,
+  GetActivationStatusT,
+  GetPaymentInfoT
+} from "../../definitions/backend/requestTypes";
+import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
@@ -133,17 +133,12 @@ import {
   NullableWallet,
   PayRequest,
   Psp,
-  PspListResponse,
-  SessionResponse,
   Transaction,
-  TransactionListResponse,
-  TransactionResponse,
-  Wallet,
-  WalletListResponse,
-  WalletResponse
+  Wallet
 } from "../types/pagopa";
 import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
+import { SagaCallReturnType } from "../types/utils";
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
@@ -168,20 +163,23 @@ const navigateTo = (routeName: string, params?: object) => {
 function* fetchWithTokenRefresh<T>(
   request: (
     pagoPaToken: string
-  ) => Promise<BasicResponseTypeWith401<T> | undefined>,
+  ) => Promise<IResponseType<401, undefined> | undefined | T>,
   pagoPaClient: PagoPaClient,
   retries: number = MAX_TOKEN_REFRESHES
-): Iterator<BasicResponseTypeWith401<T> | undefined | Effect> {
+): Iterator<T | undefined | Effect> {
   if (retries === 0) {
     return undefined;
   }
   const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-  const response: BasicResponseTypeWith401<T> | undefined = yield call(
+  const response: SagaCallReturnType<typeof request> = yield call(
     request,
     pagoPaToken.getOrElse("") // empty token -> pagoPA returns a 401 and the app fetches a new one
   );
   if (response !== undefined) {
-    if (response.status !== 401) {
+    // BEWARE: since there is not an easy way to restrict T to an arbitrary union
+    // of IResponseType(s), we kind of take a leap of faith here and assume that T
+    // is always a union of IResponseType(s) together with undefined.
+    if ((response as any).status !== 401) {
       // return code is not 401, the token
       // has been "accepted" (the caller will
       // then handle other error codes)
@@ -202,9 +200,9 @@ function* fetchWithTokenRefresh<T>(
 }
 
 function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
-  const refreshTokenResponse:
-    | BasicResponseTypeWith401<SessionResponse>
-    | undefined = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
+  const refreshTokenResponse: SagaCallReturnType<
+    typeof pagoPaClient.getSession
+  > = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
   if (
     refreshTokenResponse !== undefined &&
     refreshTokenResponse.status === 200
@@ -218,7 +216,7 @@ function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
 
 function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const response:
-    | BasicResponseTypeWith401<TransactionListResponse>
+    | SagaCallReturnType<typeof pagoPaClient.getTransactions>
     | undefined = yield call(
     fetchWithTokenRefresh,
     pagoPaClient.getTransactions,
@@ -235,13 +233,9 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
 function* fetchWallets(
   pagoPaClient: PagoPaClient
 ): Iterator<Effect | number | undefined> {
-  const response:
-    | BasicResponseTypeWith401<WalletListResponse>
-    | undefined = yield call(
-    fetchWithTokenRefresh,
-    pagoPaClient.getWallets,
-    pagoPaClient
-  );
+  const response: SagaCallReturnType<
+    typeof pagoPaClient.getWallets
+  > = yield call(fetchWithTokenRefresh, pagoPaClient.getWallets, pagoPaClient);
   if (response !== undefined && response.status === 200) {
     yield put(fetchWalletsSuccess(response.value.data));
     return response.value.data.length;
@@ -266,13 +260,11 @@ function* addCreditCard(
       creditCard
     };
     // 1st call: boarding credit card
-    const responseBoardCC:
-      | BasicResponseTypeWith401<WalletResponse>
-      | undefined = yield call(
-      fetchWithTokenRefresh,
-      (token: string) => pagoPaClient.boardCreditCard(token, wallet),
-      pagoPaClient
-    );
+    const boardCreditCard = (token: string) =>
+      pagoPaClient.boardCreditCard(token, wallet);
+    const responseBoardCC: SagaCallReturnType<
+      typeof boardCreditCard
+    > = yield call(fetchWithTokenRefresh, boardCreditCard, pagoPaClient);
 
     /**
      * Failed request. show an error (TODO) and return
@@ -293,11 +285,11 @@ function* addCreditCard(
           : undefined
       }
     };
-    const responseBoardPay:
-      | BasicResponseTypeWith401<TransactionResponse>
-      | undefined = yield call(
+    const boardPay = (token: string) =>
+      pagoPaClient.boardPay(token, payRequest);
+    const responseBoardPay: SagaCallReturnType<typeof boardPay> = yield call(
       fetchWithTokenRefresh,
-      (token: string) => pagoPaClient.boardPay(token, payRequest),
+      boardPay,
       pagoPaClient
     );
     /**
@@ -383,11 +375,11 @@ function* deleteWallet(
 ): Iterator<Effect> {
   try {
     yield put(walletManagementSetLoadingState());
-    const response:
-      | BasicResponseTypeWith401<undefined>
-      | undefined = yield call(
+    const apiDeleteWallet = (token: string) =>
+      pagoPaClient.deleteWallet(token, walletId);
+    const response: SagaCallReturnType<typeof apiDeleteWallet> = yield call(
       fetchWithTokenRefresh,
-      (token: string) => pagoPaClient.deleteWallet(token, walletId),
+      apiDeleteWallet,
       pagoPaClient
     );
     if (response !== undefined && response.status === 200) {
@@ -419,9 +411,9 @@ function* deleteWallet(
 }
 
 function* paymentSagaFromQrCode(
-  getVerificaRpt: TypeofApiCall<VerificaRptT>,
-  postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   storedPin: PinString
 ): Iterator<Effect> {
   yield put(paymentQrCode());
@@ -436,9 +428,9 @@ function* paymentSagaFromQrCode(
 }
 
 function* paymentSagaFromMessage(
-  getVerificaRpt: TypeofApiCall<VerificaRptT>,
-  postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   storedPin: PinString
 ): Iterator<Effect> {
   yield fork(
@@ -451,9 +443,9 @@ function* paymentSagaFromMessage(
 }
 
 function* watchPaymentSaga(
-  getVerificaRpt: TypeofApiCall<VerificaRptT>,
-  postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   storedPin: PinString
 ): Iterator<Effect> {
   while (true) {
@@ -575,7 +567,7 @@ function* enterDataManuallyHandler(
 function* showTransactionSummaryHandler(
   action: PaymentRequestTransactionSummaryActions,
   _: PagoPaClient,
-  getVerificaRpt: TypeofApiCall<VerificaRptT>
+  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>
 ) {
   // the user may have gotten here from the QR code,
   // the manual data entry, from a message OR by
@@ -599,9 +591,12 @@ function* showTransactionSummaryHandler(
 
     try {
       yield put(paymentSetLoadingState());
-      const response:
-        | BasicResponseTypeWith401<PaymentRequestsGetResponse>
-        | undefined = yield call(getVerificaRpt, { rptId });
+      const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
+        getVerificaRpt,
+        {
+          rptId: RptIdFromString.encode(rptId)
+        }
+      );
       if (response !== undefined && response.status === 200) {
         // response fetched successfully -- store it
         // and proceed
@@ -685,11 +680,11 @@ function* fetchPspList(
 
   try {
     yield put(paymentSetLoadingState());
-    const response:
-      | BasicResponseTypeWith401<PspListResponse>
-      | undefined = yield call(
+    const apiGetPspList = (pagoPaToken: string) =>
+      pagoPaClient.getPspList(pagoPaToken, paymentId);
+    const response: SagaCallReturnType<typeof apiGetPspList> = yield call(
       fetchWithTokenRefresh,
-      (pagoPaToken: string) => pagoPaClient.getPspList(pagoPaToken, paymentId),
+      apiGetPspList,
       pagoPaClient
     );
     if (response !== undefined) {
@@ -745,30 +740,34 @@ const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 // handle the "attiva" API call
 const attivaRpt = async (
-  postAttivaRpt: TypeofApiCall<AttivaRptT>,
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
 ): Promise<boolean> => {
   const response:
-    | BasicResponseTypeWith401<PaymentActivationsPostResponse>
+    | TypeofApiResponse<ActivatePaymentT>
     | undefined = await postAttivaRpt({
-    rptId: RptIdFromString.encode(rptId),
-    paymentContextCode,
-    amount: amountToImportoWithFallback(amount)
+    paymentActivationsPostRequest: {
+      rptId: RptIdFromString.encode(rptId),
+      codiceContestoPagamento: paymentContextCode,
+      importoSingoloVersamento: amountToImportoWithFallback(amount)
+    }
   });
   return response !== undefined && response.status === 200;
 };
 
 // handle the polling
 const fetchPaymentId = async (
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   paymentContextCode: CodiceContestoPagamento
 ): Promise<string | undefined> => {
   // successfully request the payment activation
   // now poll until a paymentId is made available
 
-  const response = await getPaymentIdApi({ paymentContextCode });
+  const response = await getPaymentIdApi({
+    codiceContestoPagamento: paymentContextCode
+  });
   return response !== undefined && response.status === 200
     ? response.value.idPagamento
     : undefined;
@@ -780,8 +779,8 @@ const fetchPaymentId = async (
  * is available
  */
 const attivaAndGetPaymentId = async (
-  postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>,
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
@@ -804,11 +803,11 @@ function* checkPayment(
 ): Iterator<Effect> {
   try {
     yield put(paymentSetLoadingState());
-    const response:
-      | BasicResponseTypeWith401<PaymentResponse>
-      | undefined = yield call(
+    const apiCheckPayment = (token: string) =>
+      pagoPaClient.checkPayment(token, paymentId);
+    const response: SagaCallReturnType<typeof apiCheckPayment> = yield call(
       fetchWithTokenRefresh,
-      (token: string) => pagoPaClient.checkPayment(token, paymentId),
+      apiCheckPayment,
       pagoPaClient
     );
     if (response !== undefined) {
@@ -831,8 +830,8 @@ function* checkPayment(
 function* continueWithPaymentMethodsHandler(
   _: PaymentRequestContinueWithPaymentMethods,
   pagoPaClient: PagoPaClient,
-  postAttivaRpt: TypeofApiCall<AttivaRptT>,
-  getPaymentIdApi: TypeofApiCall<GetPaymentIdT>
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>
 ) {
   // find out whether a payment method has already
   // been defined as favorite. If so, use it and
@@ -942,12 +941,11 @@ function* updatePspHandler(
 
   try {
     yield put(paymentSetLoadingState());
-    const response:
-      | BasicResponseTypeWith401<WalletResponse>
-      | undefined = yield call(
+    const apiUpdateWalletPsp = (pagoPaToken: string) =>
+      pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload);
+    const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
       fetchWithTokenRefresh,
-      (pagoPaToken: string) =>
-        pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload),
+      apiUpdateWalletPsp,
       pagoPaClient
     );
 
@@ -988,12 +986,11 @@ function* completionHandler(
 
   try {
     yield put(paymentSetLoadingState());
-    const response:
-      | BasicResponseTypeWith401<TransactionResponse>
-      | undefined = yield call(
+    const apiPostPayment = (pagoPaToken: string) =>
+      pagoPaClient.postPayment(pagoPaToken, paymentId, walletId);
+    const response: SagaCallReturnType<typeof apiPostPayment> = yield call(
       fetchWithTokenRefresh,
-      (pagoPaToken: string) =>
-        pagoPaClient.postPayment(pagoPaToken, paymentId, walletId),
+      apiPostPayment,
       pagoPaClient
     );
 

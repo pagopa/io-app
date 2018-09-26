@@ -5,7 +5,7 @@
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 
-import { AuthenticatedOrInitializedProfile } from "../../api/backend";
+import { UserProfileUnion } from "../../api/backend";
 
 import {
   PROFILE_LOAD_FAILURE,
@@ -26,7 +26,7 @@ type ResetProfileState = Readonly<{
 
 type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
-  payload: AuthenticatedOrInitializedProfile;
+  payload: UserProfileUnion;
 }>;
 
 type ProfileLoadFailure = Readonly<{
@@ -66,7 +66,7 @@ export const resetProfileState: ResetProfileState = {
 };
 
 export const profileLoadSuccess = (
-  profile: AuthenticatedOrInitializedProfile
+  profile: UserProfileUnion
 ): ProfileLoadSuccess => ({
   type: PROFILE_LOAD_SUCCESS,
   payload: profile

@@ -9,7 +9,7 @@ import {
 
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 
-import { AuthenticatedOrInitializedProfile } from "../../../api/backend";
+import { UserProfile } from "../../../../definitions/backend/UserProfile";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
 import { PROFILE_UPSERT_REQUEST } from "../../../store/actions/constants";
@@ -22,7 +22,7 @@ import {
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
 describe("checkProfileEnabledSaga", () => {
-  const profile: AuthenticatedOrInitializedProfile = {
+  const profile: UserProfile = {
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
