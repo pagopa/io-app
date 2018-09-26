@@ -2,6 +2,7 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
+import * as t from "io-ts";
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
@@ -11,12 +12,14 @@ import {
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
+  ioResponseDecoder,
   IPostApiRequestType,
   IPutApiRequestType,
   IResponseType,
   ResponseDecoder,
   TypeofApiCall
 } from "italia-ts-commons/lib/requests";
+
 import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 import {
   NullableWallet,
@@ -29,7 +32,23 @@ import {
   WalletResponse
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { basicResponseDecoderWith401, BaseResponseType } from "./backend";
+
+type BaseResponseType<R> =
+  | IResponseType<200, R>
+  | IResponseType<401, Error>
+  | IResponseType<500, Error>;
+
+function baseResponseDecoder<R, O = R>(
+  type: t.Type<R, O>
+): ResponseDecoder<BaseResponseType<R>> {
+  return composeResponseDecoders(
+    composeResponseDecoders(
+      ioResponseDecoder<200, R, O>(200, type),
+      basicErrorResponseDecoder<401>(401)
+    ),
+    basicErrorResponseDecoder<500>(500)
+  );
+}
 
 export function emptyResponseDecoder<
   S extends number,
@@ -52,18 +71,18 @@ export function emptyResponseDecoder<
   };
 }
 
-export function emptyResponseDecoderWithErrors<
-  H extends string = never
->(): ResponseDecoder<BaseResponseType<undefined>> {
+export function emptyResponseDecoderWithErrors(): ResponseDecoder<
+  BaseResponseType<undefined> | IResponseType<404, Error>
+> {
   return composeResponseDecoders(
     composeResponseDecoders(
       composeResponseDecoders(
-        emptyResponseDecoder<200, H>(200),
-        basicErrorResponseDecoder<404, H>(404)
+        emptyResponseDecoder<200>(200),
+        basicErrorResponseDecoder<401>(401)
       ),
-      basicErrorResponseDecoder<500, H>(500)
+      basicErrorResponseDecoder<500>(500)
     ),
-    basicErrorResponseDecoder(401)
+    basicErrorResponseDecoder<404>(404)
   );
 }
 
@@ -76,7 +95,7 @@ export function emptyResponseDecoderWithErrors<
 // const a: Amount = Amount.decode({ ... }).getOrElse({ ... })
 const basicResponseDecoderWith401AndCast = <T>(
   type: any
-): ResponseDecoder<BaseResponseType<T>> => basicResponseDecoderWith401(type);
+): ResponseDecoder<BaseResponseType<T>> => baseResponseDecoder(type);
 
 type TokenParamType = Readonly<{
   token: string;
@@ -161,7 +180,7 @@ type DeleteWalletType = IDeleteApiRequestType<
   },
   "Authorization",
   never,
-  BaseResponseType<undefined>
+  BaseResponseType<undefined> | IResponseType<404, Error>
 >;
 
 export type PagoPaClient = Readonly<{
@@ -217,7 +236,7 @@ export const PagoPaClient = (
   const getSession: GetSessionType = {
     method: "get",
     url: _ => "/v1/users/actions/start-session",
-    query: t => t,
+    query: _ => _,
     headers: () => ({}),
     response_decoder: basicResponseDecoderWith401AndCast<SessionResponse>(
       SessionResponse

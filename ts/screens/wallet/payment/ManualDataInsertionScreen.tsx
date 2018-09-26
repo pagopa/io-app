@@ -13,7 +13,8 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
-  RptId
+  RptId,
+  RptIdFromString
 } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
@@ -33,7 +34,6 @@ import {
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
 
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";

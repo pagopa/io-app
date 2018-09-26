@@ -2,8 +2,8 @@ import Instabug, { LocaleKey } from "instabug-reactnative";
 import { processColor } from "react-native";
 
 import { Option } from "fp-ts/lib/Option";
+import { UserProfile } from "../../definitions/backend/UserProfile";
 import { Locales } from "../../locales/locales";
-import { AuthenticatedOrInitializedProfile } from "../api/backend";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
@@ -28,7 +28,7 @@ export const initialiseInstabug = () => {
 };
 
 export const setInstabugProfileAttributes = (
-  profile: AuthenticatedOrInitializedProfile,
+  profile: UserProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
   Instabug.identifyUserWithEmail(

@@ -9,7 +9,7 @@ import { Platform } from "react-native";
 import { call, Effect, put, select } from "redux-saga/effects";
 
 import { PlatformEnum } from "../../definitions/backend/Platform";
-import { CreateOrUpdateInstallationT } from "../api/backend";
+import { CreateOrUpdateInstallationT } from "../../definitions/backend/requestTypes";
 import { updateNotificationInstallationFailure } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
@@ -40,7 +40,7 @@ export function* updateInstallationSaga(
   const response: SagaCallReturnType<
     typeof createOrUpdateInstallation
   > = yield call(createOrUpdateInstallation, {
-    id: notificationsInstallation.id,
+    installationID: notificationsInstallation.id,
     installation: {
       platform: notificationsPlatform,
       pushChannel: notificationsInstallation.token

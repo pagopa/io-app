@@ -26,12 +26,12 @@ import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
 
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UserProfile } from "../../definitions/backend/UserProfile";
+import { UserProfileUnion } from "../api/backend";
 
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: TypeofApiCall<GetUserProfileT>
-): Iterator<Effect | Option<UserProfile>> {
+): Iterator<Effect | Option<UserProfileUnion>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -40,7 +40,10 @@ export function* loadProfile(
 
     if (response && response.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      yield put(profileLoadSuccess(response.value));
+      // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
+      // discriminated union!
+      // tslint:disable-next-line:no-useless-cast
+      yield put(profileLoadSuccess(response.value as UserProfileUnion));
       return some(response.value);
     }
 

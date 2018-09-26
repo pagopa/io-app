@@ -29,9 +29,10 @@ export function* watchLogoutSaga(
       yield put(logoutSuccess);
     } else {
       // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
-      const error: Error = response
-        ? response.value
-        : Error(I18n.t("authentication.errors.logout"));
+      const error: Error =
+        response && response.status === 500
+          ? Error(response.value.title || "Unknown error")
+          : Error(I18n.t("authentication.errors.logout"));
       yield put(logoutFailure(error));
     }
     // Force the login by expiring the session

@@ -26,7 +26,10 @@ describe("loadSessionInformationSaga", () => {
     const getSession = jest.fn();
     return expectSaga(loadSessionInformationSaga, getSession)
       .provide([
-        [matchers.call.fn(getSession), { status: 500, value: Error("Error") }]
+        [
+          matchers.call.fn(getSession),
+          { status: 500, value: { title: "Error" } }
+        ]
       ])
       .put(sessionInformationLoadFailure(Error("Error")))
       .run();

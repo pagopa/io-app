@@ -1,6 +1,6 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { AuthenticatedOrInitializedProfile } from "../../api/backend";
+import { UserProfileUnion } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
   PROFILE_UPSERT_FAILURE,
@@ -13,7 +13,7 @@ import {
 } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
-  profile: AuthenticatedOrInitializedProfile
+  profile: UserProfileUnion
 ): IterableIterator<Effect> {
   if (
     !profile.has_profile ||
