@@ -155,7 +155,7 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => 
   (getPaymentStep(state) === "PaymentStateSummary" ||
     getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
   isGlobalStateWithVerificaResponse(state)
