@@ -1,4 +1,6 @@
 rootProject.name = 'ItaliaApp'
+include ':instabug-reactnative'
+project(':instabug-reactnative').projectDir = new File(rootProject.projectDir, '../node_modules/instabug-reactnative/android')
 include ':react-native-add-calendar-event'
 project(':react-native-add-calendar-event').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-add-calendar-event/android')
 include ':react-native-svg'

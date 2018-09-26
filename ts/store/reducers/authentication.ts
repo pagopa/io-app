@@ -54,6 +54,11 @@ export type AuthenticationState =
   | LoggedInWithoutSessionInfo
   | LoggedInWithSessionInfo;
 
+type AuthenticationStateWithIdp =
+  | LoggedOutWithIdp
+  | LoggedInWithoutSessionInfo
+  | LoggedInWithSessionInfo;
+
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 
@@ -114,6 +119,23 @@ export const sessionInfoSelector = (
 
 export const walletTokenSelector = (state: GlobalState): Option<string> =>
   sessionInfoSelector(state).map(s => s.walletToken);
+
+function matchWithIdp<O>(
+  state: AuthenticationState,
+  whenWithoutIdp: O,
+  whenWithIdp: (state: AuthenticationStateWithIdp) => O
+): O {
+  if (state.kind === "LoggedOutWithoutIdp") {
+    return whenWithoutIdp;
+  }
+
+  return whenWithIdp(state);
+}
+
+export const idpSelector = ({
+  authentication
+}: GlobalState): Option<IdentityProvider> =>
+  matchWithIdp(authentication, none, ({ idp }) => some(idp));
 
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,

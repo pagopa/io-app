@@ -11,6 +11,7 @@ import {
   H1,
   H2,
   Left,
+  Right,
   Row,
   Text,
   View
@@ -26,6 +27,7 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -79,6 +81,9 @@ class SpidInformationScreen extends React.Component<Props, never> {
           <Body>
             <Text>{I18n.t("authentication.spid_information.headerTitle")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
 
         <Content>
