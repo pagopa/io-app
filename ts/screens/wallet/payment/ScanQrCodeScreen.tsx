@@ -12,6 +12,7 @@ import {
   Left,
   Right,
   Text,
+  Toast,
   View
 } from "native-base";
 import * as React from "react";
@@ -111,6 +112,10 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
    * Handles invalid PagoPA QR codes
    */
   private onInvalidQrCode = () => {
+    Toast.show({
+      text: "Invalid QR code"
+    });
+
     this.setState({
       scanningState: "INVALID"
     });
