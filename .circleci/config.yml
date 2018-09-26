@@ -23,6 +23,7 @@ defaults_android: &defaults_android
     - ANDROID_SDK_BUILD_TOOLS_REVISION: "23.0.1"
     - ANDROID_SDK_BUILD_API_LEVEL: "23"
     - REACT_NATIVE_MAX_WORKERS: 1
+    - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+HeapDumpOnOutOfMemoryError"'
 
 # macos builds
 defaults_macos: &defaults_macos
