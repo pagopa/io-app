@@ -113,7 +113,7 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
    */
   private onInvalidQrCode = () => {
     Toast.show({
-      text: "Invalid QR code"
+      text: I18n.t("wallet.QRtoPay.wrongQrCode")
     });
 
     this.setState({
