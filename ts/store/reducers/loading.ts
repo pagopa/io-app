@@ -27,7 +27,7 @@ const INITIAL_STATE: LoadingState = {
   MESSAGE_WITH_RELATIONS_LOAD: false,
   MESSAGES_LOAD: false,
   LOGOUT: false,
-  PAYMENT_LOAD: false,
+  PAYMENT: false,
   WALLET_MANAGEMENT_LOAD: false,
   FETCH_WALLETS: false,
   FETCH_TRANSACTIONS: false
@@ -65,13 +65,13 @@ const reducer = (
   if (type === PAYMENT_SET_LOADING) {
     return {
       ...state,
-      PAYMENT_LOAD: true
+      PAYMENT: true
     };
   }
   if (type === PAYMENT_RESET_LOADING) {
     return {
       ...state,
-      PAYMENT_LOAD: false
+      PAYMENT: false
     };
   }
 
