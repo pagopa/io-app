@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
-    height: (screenWidth * 4) / 3,
+    height: screenWidth,
     width: screenWidth
   }
 });
@@ -215,6 +215,9 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
                 <View spacer={true} extralarge={true} />
               </View>
             }
+            cameraProps={{
+              ratio: "1:1"
+            }}
           />
         </ScrollView>
         <FooterWithButtons
