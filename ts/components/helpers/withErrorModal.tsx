@@ -8,11 +8,11 @@ import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-export type WithErrorModalInjectedProps = {
-  error: Option<string>;
+export type WithErrorModalInjectedProps<E> = {
+  error: Option<E>;
 };
 
-export type WithErrorModalProps<P> = P & WithErrorModalInjectedProps;
+export type WithErrorModalProps<P, E> = P & WithErrorModalInjectedProps<E>;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -59,29 +59,24 @@ const styles = StyleSheet.create({
  *
  * @param WrappedComponent The react component you want to wrap
  * @param errorSelector A redux selector that returns the error (as string) or undefined
- * @param errorMessagesMapping A map that converts an error code from the store (selected by errorSelector) into a
- *                             human-readable message
- * @param fallbackError If the error in the store cannot be found in `errorMessagesMapping`, this fallback error is shown
+ * @param errorMapping A mapping function that converts the extracted error (if any) into a user-readable string
  * @param onCancel Function that will be called if the user presses the "cancel" button. This will need to clear the
  *                 stored error to hide the modal
  * @param onRetry Function that will be called if the user presses the "retry" button. This will need to clear the
  *                stored error to hide the modal
  */
-export function withErrorModal<P>(
+export function withErrorModal<P, E = string>(
   WrappedComponent: React.ComponentType<P>,
-  errorSelector: (state: GlobalState) => Option<string>,
-  errorMessagesMapping: { [key: string]: string },
-  fallbackError: string,
+  errorSelector: (state: GlobalState) => Option<E>,
+  errorMapping: (t: E) => string,
   onCancel?: () => void,
   onRetry?: () => void
 ) {
-  class WithErrorModal extends React.Component<WithErrorModalProps<P>> {
+  class WithErrorModal extends React.Component<WithErrorModalProps<P, E>> {
     public render() {
       const { error } = this.props;
 
-      const errorMessage = error.isSome()
-        ? errorMessagesMapping[error.value] || fallbackError
-        : "";
+      const errorMessage = error.fold("", e => errorMapping(e));
 
       return (
         <React.Fragment>
