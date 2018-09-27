@@ -63,7 +63,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     }));
   };
 
-  private goBack() {
+  private goBack = () => {
     this.props.navigation.goBack();
   }
 
