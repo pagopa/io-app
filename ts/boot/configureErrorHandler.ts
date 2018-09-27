@@ -4,45 +4,17 @@
  * TODO: Improve this using external libraries @https://www.pivotaltracker.com/story/show/155392873
  */
 
+import Instabug from "instabug-reactnative";
 import { Alert } from "react-native";
-import DeviceInfo from "react-native-device-info";
-
-import { mixpanel } from "../mixpanel";
 
 import I18n from "../i18n";
-import {
-  createSourceMapper,
-  getStackTrace,
-  ISourceMapsOptions,
-  SourceMapper
-} from "../react-native-source-maps";
 
 const isDev = __DEV__;
-const version = DeviceInfo.getReadableVersion();
-const souceMapperOptions: ISourceMapsOptions = {
-  sourceMapBundle: "main.jsbundle.map"
-};
 
 // Custom error handler for unhandled js exceptions
-async function customErrorHandler(
-  sourceMapper: SourceMapper,
-  options: ISourceMapsOptions,
-  error: Error,
-  isFatal?: boolean
-): Promise<void> {
+function customErrorHandler(error: Error, isFatal?: boolean) {
   if (isFatal) {
-    const errorWithStack = {
-      ...error,
-      stack: await getStackTrace(sourceMapper, options, error)
-    };
-    // Send a remote event that contains the error stack trace
-    if (mixpanel) {
-      await mixpanel.track("APPLICATION_ERROR", {
-        ERROR: JSON.stringify(errorWithStack),
-        ERROR_STACK_TRACE: JSON.stringify(errorWithStack.stack),
-        APP_VERSION: version
-      });
-    }
+    Instabug.reportJSException(error);
 
     // Inform the user about the unfortunate event
     Alert.alert(
@@ -52,17 +24,9 @@ async function customErrorHandler(
   }
 }
 
-export default async function configureErrorHandler(): Promise<void> {
+export default function configureErrorHandler() {
   if (!isDev) {
-    const sourceMapper = await createSourceMapper(souceMapperOptions);
     // Overrides the default error handler in BUNDLED MODE
-    ErrorUtils.setGlobalHandler(async (error, isFatal?) => {
-      await customErrorHandler(
-        sourceMapper,
-        souceMapperOptions,
-        error,
-        isFatal
-      );
-    });
+    ErrorUtils.setGlobalHandler(customErrorHandler);
   }
 }

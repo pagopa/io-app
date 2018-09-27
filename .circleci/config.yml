@@ -209,6 +209,27 @@ jobs:
           path: android/app/build/outputs/apk
           destination: apks/release
 
+  # Build Android sourcemap and upload to Instabug
+  instabug-upload-sourcemap-android:
+    <<: *defaults_js
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
+
+      - run:
+          name: Build sourcemap
+          command: yarn bundle:android-sourcemap
+      
+      - run:
+          name: Install jq
+          command: apt-get install -y jq
+
+      - run:
+          name: Build sourcemap and upload it to Instabug
+          command: ./scripts/instabug-upload-sourcemap.sh android
+
   # Test ios build
   test-ios:
     <<: *defaults_macos
@@ -339,6 +360,27 @@ jobs:
       # store detox artifacts
       - store_artifacts:
           path: /tmp/detox_artifacts
+
+  # Build iOS sourcemap and upload to Instabug
+  instabug-upload-sourcemap-ios:
+    <<: *defaults_js
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
+
+      - run:
+          name: Build sourcemap
+          command: yarn bundle:ios-sourcemap
+      
+      - run:
+          name: Install jq
+          command: apt-get install -y jq
+
+      - run:
+          name: Build sourcemap and upload it to Instabug
+          command: ./scripts/instabug-upload-sourcemap.sh ios
 
 workflows:
   version: 2

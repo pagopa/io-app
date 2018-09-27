@@ -4,16 +4,14 @@ import { MenuProvider } from "react-native-popup-menu";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
-import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
-import RootContainer from "./RootContainer";
 import theme from "./theme";
 
+import configureErrorHandler from "./boot/configureErrorHandler";
+import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
+import RootContainer from "./RootContainer";
+
 // Configure the global js error handler
-// configureErrorHandler()
-//   // tslint:disable-next-line:no-empty
-//   .then(() => {})
-//   // tslint:disable-next-line:no-empty
-//   .catch(() => {});
+configureErrorHandler();
 
 const { store, persistor } = configureStoreAndPersistor();
 
