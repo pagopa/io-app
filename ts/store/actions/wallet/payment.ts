@@ -1,6 +1,6 @@
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { NodoErrors } from "../../../sagas/wallet";
+import { PagoPaErrors } from "../../../sagas/wallet";
 import { Psp } from "../../../types/pagopa";
 import {
   PAYMENT_CANCEL,
@@ -204,7 +204,7 @@ export type PaymentRequestCancel = Readonly<{
 
 export type PaymentFailure = Readonly<{
   type: typeof PAYMENT_FAILURE;
-  payload: NodoErrors;
+  payload: PagoPaErrors;
 }>;
 
 /**
@@ -384,7 +384,7 @@ export const paymentRequestCancel = (): PaymentRequestCancel => ({
   type: PAYMENT_REQUEST_CANCEL
 });
 
-export const paymentFailure = (error: NodoErrors): PaymentFailure => ({
+export const paymentFailure = (error: PagoPaErrors): PaymentFailure => ({
   type: PAYMENT_FAILURE,
   payload: error
 });

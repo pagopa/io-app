@@ -33,10 +33,11 @@ import {
 } from "../types/pagopa";
 import { defaultRetryingFetch } from "../utils/fetch";
 
-type BaseResponseType<R> =
-  | IResponseType<200, R>
+export type PaymentManagerErrorType =
   | IResponseType<401, Error>
   | IResponseType<500, Error>;
+
+type BaseResponseType<R> = IResponseType<200, R> | PaymentManagerErrorType;
 
 function baseResponseDecoder<R, O = R>(
   type: t.Type<R, O>

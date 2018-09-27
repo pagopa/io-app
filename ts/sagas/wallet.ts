@@ -39,7 +39,7 @@ import {
   GetPaymentInfoT
 } from "../../definitions/backend/requestTypes";
 import { BackendClient, NodoErrorResponseType } from "../api/backend";
-import { PagoPaClient } from "../api/pagopa";
+import { PagoPaClient, PaymentManagerErrorType } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
@@ -155,7 +155,10 @@ const navigateTo = (routeName: string, params?: object) => {
 };
 
 export type NodoErrors = detailEnum | "GENERIC_ERROR" | "MISSING_PAYMENT_ID";
-const extractErrorTitle = (
+export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
+export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
+
+const extractNodoError = (
   response: NodoErrorResponseType | undefined
 ): NodoErrors => {
   const maybeDetail = fromNullable(response).mapNullable(
@@ -166,6 +169,10 @@ const extractErrorTitle = (
   }
   return "GENERIC_ERROR";
 };
+
+const extractPaymentManagerError = (
+  _: PaymentManagerErrorType | undefined
+): PaymentManagerErrors => "GENERIC_ERROR";
 
 // this function tries to carry out the provided
 // request, and refreshes the pagoPA token if a 401
@@ -624,7 +631,7 @@ function* showTransactionSummaryHandler(
           )
         );
       } else {
-        yield put(paymentFailure(extractErrorTitle(response)));
+        yield put(paymentFailure(extractNodoError(response)));
       }
     } catch {
       yield put(paymentFailure("GENERIC_ERROR"));
@@ -772,7 +779,7 @@ const attivaRpt = async (
   });
   return response !== undefined && response.status === 200
     ? none // none if everything works out fine
-    : some(extractErrorTitle(response));
+    : some(extractNodoError(response));
 };
 
 // handle the polling
@@ -790,7 +797,7 @@ const fetchPaymentId = async (
     ? right(response.value.idPagamento)
     : response !== undefined && response.status === 404
       ? left<NodoErrors, string>("MISSING_PAYMENT_ID")
-      : left(extractErrorTitle(response));
+      : left(extractNodoError(response));
 };
 
 /**
@@ -830,18 +837,12 @@ function* checkPayment(
       apiCheckPayment,
       pagoPaClient
     );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // all is well
-        // this does not provide any useful information and
-        // it is only required by pagoPA b/c of their internal logics
-      }
+    if (response === undefined || response.status !== 200) {
+      yield put(paymentFailure(extractPaymentManagerError(response)));
     }
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   } catch {
-    /**
-     * TODO handle error
-     */
+    yield put(paymentFailure("GENERIC_ERROR"));
   } finally {
     yield put(paymentResetLoadingState());
   }
@@ -970,19 +971,17 @@ function* updatePspHandler(
       pagoPaClient
     );
 
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // request new wallets (expecting to get the
-        // same ones as before, with the selected one's
-        // PSP set to the new one)
-        yield call(fetchWallets, pagoPaClient);
-        yield put(paymentRequestConfirmPaymentMethod(walletId));
-      }
+    if (response !== undefined && response.status === 200) {
+      // request new wallets (expecting to get the
+      // same ones as before, with the selected one's
+      // PSP set to the new one)
+      yield call(fetchWallets, pagoPaClient);
+      yield put(paymentRequestConfirmPaymentMethod(walletId));
+    } else {
+      yield put(paymentFailure(extractPaymentManagerError(response)));
     }
   } catch {
-    /**
-     * TODO handle error
-     */
+    yield put(paymentFailure("GENERIC_ERROR"));
   } finally {
     yield put(paymentResetLoadingState());
   }
@@ -1011,39 +1010,37 @@ function* completionHandler(pagoPaClient: PagoPaClient, storedPin: PinString) {
       pagoPaClient
     );
 
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // request all transactions (expecting to get the
-        // same ones as before, plus the newly created one
-        // (the reason for this is because newTransaction contains
-        // a payment with status "processing", while the
-        // value returned here contains the "completed" status
-        // upon successful payment
-        const newTransaction: Transaction = response.value.data;
-        yield call(fetchTransactions, pagoPaClient);
-        // use "storeNewTransaction(newTransaction) if it's okay
-        // to have the payment as "pending" (this information will
-        // not be shown to the user as of yet)
-        yield put(selectTransactionForDetails(newTransaction));
-        yield put(selectWalletForDetails(walletId)); // for the banner
-        yield put(
-          // TODO: this should use StackActions.reset
-          // to reset the navigation. Right now, the
-          // "back" option is not allowed -- so the user cannot
-          // get back to previous screens, but the navigation
-          // stack should be cleaned right here
-          // @https://www.pivotaltracker.com/story/show/159300579
-          navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
-            paymentCompleted: true
-          })
-        );
-        yield put({ type: PAYMENT_COMPLETED });
-      }
+    if (response !== undefined && response.status === 200) {
+      // request all transactions (expecting to get the
+      // same ones as before, plus the newly created one
+      // (the reason for this is because newTransaction contains
+      // a payment with status "processing", while the
+      // value returned here contains the "completed" status
+      // upon successful payment
+      const newTransaction: Transaction = response.value.data;
+      yield call(fetchTransactions, pagoPaClient);
+      // use "storeNewTransaction(newTransaction) if it's okay
+      // to have the payment as "pending" (this information will
+      // not be shown to the user as of yet)
+      yield put(selectTransactionForDetails(newTransaction));
+      yield put(selectWalletForDetails(walletId)); // for the banner
+      yield put(
+        // TODO: this should use StackActions.reset
+        // to reset the navigation. Right now, the
+        // "back" option is not allowed -- so the user cannot
+        // get back to previous screens, but the navigation
+        // stack should be cleaned right here
+        // @https://www.pivotaltracker.com/story/show/159300579
+        navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
+          paymentCompleted: true
+        })
+      );
+      yield put({ type: PAYMENT_COMPLETED });
+    } else {
+      yield put(paymentFailure(extractPaymentManagerError(response)));
     }
   } catch {
-    /**
-     * TODO handle error
-     */
+    yield put(paymentFailure("GENERIC_ERROR"));
   } finally {
     yield put(paymentResetLoadingState());
   }
