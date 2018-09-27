@@ -78,8 +78,10 @@ const formatMdPaymentReason = (p: string): string =>
 ${p}`;
 
 const formatMdInfoRpt = (r: RptId): string =>
-  `**${I18n.t("wallet.payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(r.paymentNoticeNumber)}\n
-**${I18n.t("wallet.payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
+  `**${I18n.t("payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(
+    r.paymentNoticeNumber
+  )}\n
+**${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props, never> {
   constructor(props: Props) {
