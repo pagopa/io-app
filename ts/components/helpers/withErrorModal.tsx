@@ -5,17 +5,14 @@ import { Image, Modal, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
 import I18n from "../../i18n";
-import { Action, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-export type WithErrorModalInjectedProps = {
-  error: Option<string>;
+export type WithErrorModalInjectedProps<E> = {
+  error: Option<E>;
 };
 
-export type WithErrorModalProps<P> = P &
-  WithErrorModalInjectedProps &
-  ReduxProps;
+export type WithErrorModalProps<P, E> = P & WithErrorModalInjectedProps<E>;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -62,35 +59,24 @@ const styles = StyleSheet.create({
  *
  * @param WrappedComponent The react component you want to wrap
  * @param errorSelector A redux selector that returns the error (as string) or undefined
- * @param errorMessage The error message to show when errorSelector returns a value
- * @param cancelActionCreator A function that accept the WrappedComponent props and return a redux Action to dispatch.
- *                            We pass in props to make possible to create action like cancelSomething(props.id)
- * @param retryActionCreator A function that accept the WrappedComponent props and return a redux Action to dispatch.
- *                           We pass in props to make possible to create action like loadSomething(props.id)
+ * @param errorMapping A mapping function that converts the extracted error (if any) into a user-readable string
+ * @param onCancel Function that will be called if the user presses the "cancel" button. This will need to clear the
+ *                 stored error to hide the modal
+ * @param onRetry Function that will be called if the user presses the "retry" button. This will need to clear the
+ *                stored error to hide the modal
  */
-export function withErrorModal<P>(
+export function withErrorModal<P, E = string>(
   WrappedComponent: React.ComponentType<P>,
-  errorSelector: (state: GlobalState) => Option<string>,
-  errorMessage: string,
-  cancelActionCreator: (
-    props: Readonly<WithErrorModalProps<P>>
-  ) => Action | undefined,
-  retryActionCreator: (
-    props: Readonly<WithErrorModalProps<P>>
-  ) => Action | undefined
+  errorSelector: (state: GlobalState) => Option<E>,
+  errorMapping: (t: E) => string,
+  onCancel?: () => void,
+  onRetry?: () => void
 ) {
-  class WithErrorModal extends React.Component<WithErrorModalProps<P>> {
+  class WithErrorModal extends React.Component<WithErrorModalProps<P, E>> {
     public render() {
-      const { error, dispatch } = this.props;
+      const { error } = this.props;
 
-      const cancelAction = cancelActionCreator(this.props);
-      const onCancelPressHandler = cancelAction
-        ? () => dispatch(cancelAction)
-        : undefined;
-      const retryAction = retryActionCreator(this.props);
-      const onRetryPressHandler = retryAction
-        ? () => dispatch(retryAction)
-        : undefined;
+      const errorMessage = error.fold("", e => errorMapping(e));
 
       return (
         <React.Fragment>
@@ -104,29 +90,23 @@ export function withErrorModal<P>(
                 />
                 <H2>{errorMessage}</H2>
               </View>
-              {this.renderButtons(onCancelPressHandler, onRetryPressHandler)}
+              {this.renderButtons()}
             </View>
           </Modal>
         </React.Fragment>
       );
     }
 
-    private renderButtons = (
-      onCancelPressHandler?: () => Action,
-      onRetryPressHandler?: () => Action
-    ) => {
-      if (
-        onCancelPressHandler === undefined &&
-        onRetryPressHandler === undefined
-      ) {
+    private renderButtons = () => {
+      if (onCancel === undefined && onRetry === undefined) {
         return null;
       }
 
       return (
         <View style={styles.buttonsContainer}>
-          {onCancelPressHandler && (
+          {onCancel && (
             <Button
-              onPress={onCancelPressHandler}
+              onPress={onCancel}
               style={styles.buttonCancel}
               light={true}
               block={true}
@@ -136,13 +116,12 @@ export function withErrorModal<P>(
               </Text>
             </Button>
           )}
-          {onCancelPressHandler &&
-            onRetryPressHandler && <View style={styles.separator} />}
-          {onRetryPressHandler && (
+          {onCancel && onRetry && <View style={styles.separator} />}
+          {onRetry && (
             <Button
               primary={true}
               block={true}
-              onPress={onRetryPressHandler}
+              onPress={onRetry}
               style={styles.buttonRetry}
             >
               <Text>{I18n.t("global.buttons.retry")}</Text>
