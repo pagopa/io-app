@@ -146,6 +146,19 @@ function extraResponseDecoder<R>(
   );
 }
 
+export type ExtraResponseTypeWith404<R> =
+  | ExtraResponseType<R>
+  | IResponseType<404, ProblemJson>;
+
+function extraResponseDecoderWith404<R>(
+  type: t.Type<R, R>
+): ResponseDecoder<ExtraResponseTypeWith404<R>> {
+  return composeResponseDecoders(
+    extraResponseDecoder(type),
+    ioResponseDecoder<404, ProblemJson>(404, ProblemJson)
+  );
+}
+
 /**
  * A response decoder for extra response types
  */
@@ -272,7 +285,7 @@ export function BackendClient(
       `/api/v1/payment-activations/${codiceContestoPagamento}`,
     headers: tokenHeaderProducer,
     query: () => ({}),
-    response_decoder: extraNodoResponseDecoder(PaymentActivationsGetResponse)
+    response_decoder: extraResponseDecoderWith404(PaymentActivationsGetResponse)
   };
 
   return {

@@ -161,13 +161,10 @@ export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
 const extractNodoError = (
   response: NodoErrorResponseType | undefined
 ): NodoErrors => {
-  const maybeDetail = fromNullable(response).mapNullable(
+  const maybeDetail: Option<NodoErrors> = fromNullable(response).mapNullable(
     r => (r.status === 400 || r.status === 500 ? r.value.detail : undefined)
   );
-  if (maybeDetail.isSome()) {
-    return maybeDetail.value;
-  }
-  return "GENERIC_ERROR";
+  return maybeDetail.getOrElse("GENERIC_ERROR");
 };
 
 const extractPaymentManagerError = (
@@ -897,6 +894,7 @@ function* continueWithPaymentMethodsHandler(
       }
     } catch {
       yield put(paymentFailure("GENERIC_ERROR"));
+      return;
     } finally {
       yield put(paymentResetLoadingState());
     }
@@ -916,10 +914,7 @@ function* continueWithPaymentMethodsHandler(
   } else {
     // no favorite wallet selected
     // show list
-    yield call(
-      pickPaymentMethodHandler,
-      paymentId === undefined ? false : paymentId
-    );
+    yield call(pickPaymentMethodHandler, paymentId);
   }
 }
 
@@ -934,7 +929,7 @@ function* confirmPaymentMethodHandler(
   yield call(showWalletOrSelectPsp, pagoPaClient, walletId, undefined);
 }
 
-function* pickPaymentMethodHandler(paymentId: false | string = false) {
+function* pickPaymentMethodHandler(paymentId?: string) {
   // show screen with list of payment methods available
   yield put(
     paymentId
