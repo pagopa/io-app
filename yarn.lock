@@ -4263,13 +4263,23 @@ italia-ts-commons@^2.14.0:
     validator "^10.1.0"
     winston "^3.0.0"
 
+italia-ts-commons@^2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.14.1.tgz#4196a9c369181260c8f4eb65a3db10cd90c7f63b"
+  dependencies:
+    fp-ts "^1.6.0"
+    io-ts "^1.1.4"
+    json-set-map "^1.0.2"
+    validator "^10.1.0"
+    winston "^3.0.0"
+
 italia-tslint-rules@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/italia-tslint-rules/-/italia-tslint-rules-0.1.1.tgz#b150373925a268ff892a545229708484ac0533ba"
 
-italia-utils@^3.14.5:
-  version "3.14.5"
-  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.14.5.tgz#cbb3dd164e75c907e0a58564a0f3c0539e298bae"
+italia-utils@^3.14.10:
+  version "3.14.10"
+  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.14.10.tgz#a7619df50c69a307f2d3e7455ad1b28568bb2f57"
   dependencies:
     fs-extra "^6.0.0"
     italia-ts-commons "^2.14.0"

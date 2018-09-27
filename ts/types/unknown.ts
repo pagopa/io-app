@@ -4,6 +4,7 @@ import { Amount } from "../types/pagopa";
 import { Transaction } from "../types/pagopa";
 import { Wallet } from "../types/pagopa";
 import {
+  CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
@@ -32,6 +33,7 @@ const UNKNWON_CARD_TYPE = "UNKNOWN";
 const UNKNOWN_LAST_USAGE = UNKNOWN_DATE;
 const UNKNOWN_EXPIRATION_MONTH = "01" as CreditCardExpirationMonth;
 const UNKNOWN_EXPIRATION_YEAR = "00" as CreditCardExpirationYear;
+const UNKNOWN_SECURITY_CODE = "000" as CreditCardCVC;
 
 const UNKNOWN_AMOUNT_PAGOPA: Amount = {
   amount: 0,
@@ -48,7 +50,8 @@ export const UNKNOWN_CARD: Wallet = {
     flag3dsVerified: false,
     holder: UNKNOWN_CARD_HOLDER,
     id: UNKNOWN_NUMBER,
-    pan: UNKNOWN_CARD_PAN
+    pan: UNKNOWN_CARD_PAN,
+    securityCode: UNKNOWN_SECURITY_CODE
   },
   type: "CREDIT_CARD",
   favourite: false,

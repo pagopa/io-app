@@ -5,6 +5,7 @@ import {
   basicResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders,
+  constantResponseDecoder,
   createFetchRequestForApi,
   ioResponseDecoder,
   IPostApiRequestType,
@@ -74,25 +75,6 @@ type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
 //
 
 /**
- * A response decoder that ignores the payload and returns undefined
- */
-function undefinedResponseDecoder<S extends number, H extends string = never>(
-  status: S
-): ResponseDecoder<IResponseType<S, undefined, H>> {
-  return async response => {
-    if (response.status !== status) {
-      return undefined;
-    }
-    return {
-      // tslint:disable-next-line:no-any
-      headers: response.headers as any,
-      status,
-      value: undefined
-    };
-  };
-}
-
-/**
  *  The base response type defines 200, 401 and 500 statuses
  */
 type BaseResponseType<R> =
@@ -109,7 +91,7 @@ function baseResponseDecoder<R, O = R>(
   return composeResponseDecoders(
     composeResponseDecoders(
       ioResponseDecoder<200, R, O>(200, type),
-      undefinedResponseDecoder<401>(401)
+      constantResponseDecoder<undefined, 401>(401, undefined)
     ),
     ioResponseDecoder<500, ProblemJson>(500, ProblemJson)
   );
