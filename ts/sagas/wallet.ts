@@ -891,6 +891,7 @@ function* continueWithPaymentMethodsHandler(
         paymentId = result.value;
       } else {
         yield put(paymentFailure(result.value));
+        return;
       }
     } catch {
       yield put(paymentFailure("GENERIC_ERROR"));
