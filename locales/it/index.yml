@@ -229,6 +229,8 @@ payment:
   currentPsp: Il PSP scelto è
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
+  IUV: IUV
+  recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
   creditcards: Carte di Credito
