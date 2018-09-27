@@ -39,6 +39,7 @@ import {
 
 import { SessionToken } from "../types/SessionToken";
 
+import { GetPaymentProblemJson } from "../../definitions/backend/GetPaymentProblemJson";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 /**
@@ -123,6 +124,17 @@ export type ExtraResponseType<R> =
   | IResponseType<400, ProblemJson>;
 
 /**
+ * Specific for the nodo-related requests
+ */
+
+export type NodoErrorResponseType =
+  | IResponseType<400, GetPaymentProblemJson>
+  | IResponseType<401, undefined>
+  | IResponseType<500, GetPaymentProblemJson>;
+
+export type NodoResponseType<R> = IResponseType<200, R> | NodoErrorResponseType;
+
+/**
  * A response decoder for extra response types
  */
 function extraResponseDecoder<R>(
@@ -131,6 +143,18 @@ function extraResponseDecoder<R>(
   return composeResponseDecoders(
     baseResponseDecoder(type),
     ioResponseDecoder<400, ProblemJson>(400, ProblemJson)
+  );
+}
+
+/**
+ * A response decoder for extra response types
+ */
+function extraNodoResponseDecoder<R>(
+  type: t.Type<R, R>
+): ResponseDecoder<NodoResponseType<R>> {
+  return composeResponseDecoders(
+    baseResponseDecoder(type),
+    ioResponseDecoder<400, GetPaymentProblemJson>(400, GetPaymentProblemJson)
   );
 }
 
@@ -229,7 +253,7 @@ export function BackendClient(
     url: ({ rptId }) => `/api/v1/payment-requests/${rptId}`,
     headers: tokenHeaderProducer,
     query: _ => ({}),
-    response_decoder: extraResponseDecoder(PaymentRequestsGetResponse)
+    response_decoder: extraNodoResponseDecoder(PaymentRequestsGetResponse)
   };
 
   const attivaRptT: ActivatePaymentT = {
@@ -239,7 +263,7 @@ export function BackendClient(
     query: () => ({}),
     body: ({ paymentActivationsPostRequest }) =>
       JSON.stringify(paymentActivationsPostRequest),
-    response_decoder: extraResponseDecoder(PaymentActivationsPostResponse)
+    response_decoder: extraNodoResponseDecoder(PaymentActivationsPostResponse)
   };
 
   const getPaymentIdT: GetActivationStatusT = {
@@ -248,7 +272,7 @@ export function BackendClient(
       `/api/v1/payment-activations/${codiceContestoPagamento}`,
     headers: tokenHeaderProducer,
     query: () => ({}),
-    response_decoder: extraResponseDecoder(PaymentActivationsGetResponse)
+    response_decoder: extraNodoResponseDecoder(PaymentActivationsGetResponse)
   };
 
   return {

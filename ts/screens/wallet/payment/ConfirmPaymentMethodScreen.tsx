@@ -279,6 +279,6 @@ export default withLoadingSpinner(
     mapStateToProps,
     mapDispatchToProps
   )(ConfirmPaymentMethodScreen),
-  createLoadingSelector(["PAYMENT_LOAD"]),
+  createLoadingSelector(["PAYMENT"]),
   {}
 );
