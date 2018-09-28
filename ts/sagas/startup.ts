@@ -41,6 +41,7 @@ import { watchApplicationActivitySaga } from "./startup/watchApplicationActivity
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
+import { watchResetOnboardingSaga } from "./startup/watchOnboardResetSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchWalletSaga } from "./wallet";
@@ -52,6 +53,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield put(resetProfileState);
+
+  // Watch for bail outs during the onboarding.
+  yield fork(watchResetOnboardingSaga);
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<

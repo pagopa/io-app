@@ -193,6 +193,8 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
+  resetConfirm: Sei sicuro di interrompere l'attivazione di IO?
+    Potrai riprenderla in ogni momento facendo di nuovo login con SPID.
 pin_login:
   pin:
     pinInfo: Inserisci il codice PIN

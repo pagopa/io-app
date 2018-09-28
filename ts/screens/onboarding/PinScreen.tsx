@@ -15,31 +15,43 @@ import {
   View
 } from "native-base";
 import * as React from "react";
+import { Modal, StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import Pinpad from "../../components/Pinpad";
 import AppHeader from "../../components/ui/AppHeader";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
+import { resetOnboarding } from "../../store/actions/onboarding";
 import { createPin } from "../../store/actions/pinset";
-import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 
+const styles = StyleSheet.create({
+  contentContainer: { flex: 1, justifyContent: "center" }
+});
+
 type ReduxMappedProps = {
   pinSaveError: Option<string>;
 };
+
+interface ReduxMappedDispatches {
+  createPin: typeof createPin;
+  resetOnboarding: typeof resetOnboarding;
+}
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReduxMappedProps & ReduxMappedDispatches & OwnProps;
 
 type PinUnselected = {
   state: "PinUnselected";
@@ -62,6 +74,7 @@ type PinState = PinUnselected | PinSelected | PinConfirmed;
 
 type State = {
   pinState: PinState;
+  showRunAwayModal: boolean;
 };
 
 class PinScreen extends React.Component<Props, State> {
@@ -74,7 +87,8 @@ class PinScreen extends React.Component<Props, State> {
     this.state = {
       pinState: {
         state: "PinUnselected"
-      }
+      },
+      showRunAwayModal: false
     };
   }
 
@@ -115,9 +129,52 @@ class PinScreen extends React.Component<Props, State> {
     });
   }
 
-  // Dispatch the Action that save the PIN in the Keychain
-  public createPin(pin: PinString) {
-    this.props.dispatch(createPin(pin));
+  private handleGoBack = () => this.setState({ showRunAwayModal: true });
+
+  private handleModalClose = () => this.setState({ showRunAwayModal: false });
+
+  private handleConfirmPress = () => {
+    this.handleModalClose();
+    this.props.resetOnboarding();
+  };
+
+  private renderModal() {
+    return (
+      <Modal
+        visible={this.state.showRunAwayModal}
+        onRequestClose={this.handleModalClose}
+      >
+        <Container>
+          <AppHeader>
+            <Right>
+              <TouchableHighlight onPress={this.handleModalClose}>
+                <IconFont name="io-close" />
+              </TouchableHighlight>
+            </Right>
+          </AppHeader>
+
+          <Content contentContainerStyle={styles.contentContainer}>
+            <Text>{I18n.t("onboarding.resetConfirm")}</Text>
+          </Content>
+
+          <FooterWithButtons
+            leftButton={{
+              block: true,
+              bordered: true,
+              onPress: this.handleModalClose,
+              title: I18n.t("global.buttons.cancel")
+            }}
+            rightButton={{
+              block: true,
+              primary: true,
+              onPress: this.handleConfirmPress,
+              title: I18n.t("global.buttons.continue")
+            }}
+            inlineHalf={true}
+          />
+        </Container>
+      </Modal>
+    );
   }
 
   // Render a different header when the user need to confirm the PIN
@@ -210,7 +267,7 @@ class PinScreen extends React.Component<Props, State> {
       const { pin, isConfirmationPinMatch } = pinState;
 
       if (isConfirmationPinMatch) {
-        const onPress = () => this.createPin(pin);
+        const onPress = () => this.props.createPin(pin);
         return (
           <React.Fragment>
             <Button
@@ -260,7 +317,7 @@ class PinScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton />
+            <GoBackButton onPress={this.handleGoBack} />
           </Left>
           <Body>
             <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>
@@ -271,6 +328,8 @@ class PinScreen extends React.Component<Props, State> {
         </AppHeader>
         {this.renderContent(pinState)}
         {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
+
+        {this.renderModal()}
       </Container>
     );
   }
@@ -281,4 +340,12 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   pinSaveError: createErrorSelector(["PIN_CREATE"])(state)
 });
 
-export default connect(mapStateToProps)(PinScreen);
+const mapDispatchToProps = {
+  createPin,
+  resetOnboarding
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PinScreen);

@@ -187,6 +187,8 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
+  resetConfirm: Are you sure you want to interrupt the IO activation?
+    You can do this again at any time logging in with your SPID account.
 pin_login:
   pin:
     pinInfo: Enter the PIN
