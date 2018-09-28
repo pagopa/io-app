@@ -15,9 +15,9 @@ import {
 import createSagaMiddleware from "redux-saga";
 
 import { isDevEnvironment } from "../config";
-import { analytics } from "../middlewares";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
+import { analytics } from "../store/middlewares";
 import {
   authenticationPersistConfig,
   createRootReducer
