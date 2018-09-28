@@ -171,7 +171,7 @@ class ScanQrCodeScreen extends React.PureComponent<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
+      bordered: true,
       onPress: () => this.props.goBack(),
       title: I18n.t("wallet.cancel")
     };
