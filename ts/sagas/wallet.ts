@@ -133,7 +133,6 @@ import {
   NullableWallet,
   PayRequest,
   Psp,
-  Transaction,
   Wallet
 } from "../types/pagopa";
 import { PinString } from "../types/PinString";
@@ -205,9 +204,7 @@ function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
   > = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
   if (
     refreshTokenResponse !== undefined &&
-    refreshTokenResponse.status === 200 &&
-    refreshTokenResponse.value.data !== undefined &&
-    refreshTokenResponse.value.data.sessionToken !== undefined
+    refreshTokenResponse.status === 200
   ) {
     // token fetched successfully, store it
     yield put(
@@ -224,16 +221,8 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
     pagoPaClient.getTransactions,
     pagoPaClient
   );
-  if (
-    response !== undefined &&
-    response.status === 200 &&
-    response.value.data !== undefined
-  ) {
-    // validate API response against our own restricted Transaction model
-    const transactions: ReadonlyArray<Transaction> = response.value.data.filter(
-      Transaction.is
-    );
-    yield put(fetchTransactionsSuccess(transactions));
+  if (response !== undefined && response.status === 200) {
+    yield put(fetchTransactionsSuccess(response.value.data));
   } else {
     yield put(fetchTransactionsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)
   }
@@ -306,11 +295,7 @@ function* addCreditCard(
     /**
      * Failed request. show an error (TODO) and return
      */
-    if (
-      responseBoardPay === undefined ||
-      responseBoardPay.status !== 200 ||
-      responseBoardPay.value.data === undefined
-    ) {
+    if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
@@ -702,12 +687,8 @@ function* fetchPspList(
       apiGetPspList,
       pagoPaClient
     );
-    if (
-      response !== undefined &&
-      response.status === 200 &&
-      response.value.data !== undefined
-    ) {
-      pspList = response.value.data.filter(Psp.is);
+    if (response !== undefined && response.status === 200) {
+      pspList = response.value.data;
     }
   } catch {
     /**
@@ -1013,12 +994,7 @@ function* completionHandler(
       pagoPaClient
     );
 
-    if (
-      response !== undefined &&
-      response.status === 200 &&
-      response.value.data !== undefined &&
-      Transaction.is(response.value.data)
-    ) {
+    if (response !== undefined && response.status === 200) {
       // request all transactions (expecting to get the
       // same ones as before, plus the newly created one
       // (the reason for this is because newTransaction contains
