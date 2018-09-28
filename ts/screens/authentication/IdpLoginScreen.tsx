@@ -5,6 +5,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import GoBackButton from "../../components/GoBackButton";
+import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -93,8 +94,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     const { isWebViewLoading } = this.state;
 
     if (loggedInAuth) {
-      // FIXME: show a nice screen with succesful login message
-      return <Text>OK</Text>;
+      return <IdpSuccessfulAuthentication />;
     }
 
     if (!loggedOutWithIdpAuth) {
