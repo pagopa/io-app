@@ -69,7 +69,7 @@ export function withErrorModal<P, E = string>(
   WrappedComponent: React.ComponentType<P>,
   errorSelector: (state: GlobalState) => Option<E>,
   errorMapping: (t: E) => string,
-  onCancel?: () => void,
+  onCancel: () => void,
   onRetry?: () => void
 ) {
   class WithErrorModal extends React.Component<WithErrorModalProps<P, E>> {
@@ -98,25 +98,19 @@ export function withErrorModal<P, E = string>(
     }
 
     private renderButtons = () => {
-      if (onCancel === undefined && onRetry === undefined) {
-        return null;
-      }
-
       return (
         <View style={styles.buttonsContainer}>
-          {onCancel && (
-            <Button
-              onPress={onCancel}
-              style={styles.buttonCancel}
-              light={true}
-              block={true}
-            >
-              <Text style={styles.buttonCancelText}>
-                {I18n.t("global.buttons.cancel")}
-              </Text>
-            </Button>
-          )}
-          {onCancel && onRetry && <View style={styles.separator} />}
+          <Button
+            onPress={onCancel}
+            style={styles.buttonCancel}
+            light={true}
+            block={true}
+          >
+            <Text style={styles.buttonCancelText}>
+              {I18n.t("global.buttons.cancel")}
+            </Text>
+          </Button>
+          {onRetry && <View style={styles.separator} />}
           {onRetry && (
             <Button
               primary={true}
