@@ -26,7 +26,7 @@
     "email-validator": "^2.0.4",
     "fp-ts": "^1.6.2",
     "hoist-non-react-statics": "^3.0.1",
-    "instabug-reactnative": "^8.0.12",
+    "instabug-reactnative": "^8.0.14",
     "io-ts": "^1.3.0",
     "io-ts-types": "^0.3.11",
     "italia-ts-commons": "^2.14.0",
