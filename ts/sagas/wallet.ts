@@ -246,16 +246,8 @@ function* fetchWallets(
   const response: SagaCallReturnType<
     typeof pagoPaClient.getWallets
   > = yield call(fetchWithTokenRefresh, pagoPaClient.getWallets, pagoPaClient);
-  if (
-    response !== undefined &&
-    response.status === 200 &&
-    response.value.data !== undefined
-  ) {
-    // validate API response against our own restricted Wallet model
-    const wallets: ReadonlyArray<Wallet> = response.value.data.filter(
-      Wallet.is
-    );
-    yield put(fetchWalletsSuccess(wallets));
+  if (response !== undefined && response.status === 200) {
+    yield put(fetchWalletsSuccess(response.value.data));
     return response.value.data.length;
   } else {
     yield put(fetchWalletsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)

@@ -4,10 +4,10 @@ import {
   AuthorizationBearerHeaderProducer,
   basicResponseDecoder,
   composeHeaderProducers,
-  composeResponseDecoders,
-  constantResponseDecoder,
+  composeResponseDecoders as compD,
+  constantResponseDecoder as constD,
   createFetchRequestForApi,
-  ioResponseDecoder,
+  ioResponseDecoder as ioD,
   IPostApiRequestType,
   IResponseType,
   ResponseDecoder
@@ -19,7 +19,7 @@ import { CreateOrUpdateInstallationResponse } from "../../definitions/backend/Cr
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Messages } from "../../definitions/backend/Messages";
 import { PaymentActivationsGetResponse } from "../../definitions/backend/PaymentActivationsGetResponse";
-import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
+import { PaymentProblemJson } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import { PublicSession } from "../../definitions/backend/PublicSession";
@@ -88,12 +88,9 @@ type BaseResponseType<R> =
 function baseResponseDecoder<R, O = R>(
   type: t.Type<R, O>
 ): ResponseDecoder<BaseResponseType<R>> {
-  return composeResponseDecoders(
-    composeResponseDecoders(
-      ioResponseDecoder<200, R, O>(200, type),
-      constantResponseDecoder<undefined, 401>(401, undefined)
-    ),
-    ioResponseDecoder<500, ProblemJson>(500, ProblemJson)
+  return compD(
+    compD(ioD<200, R, O>(200, type), constD<undefined, 401>(401, undefined)),
+    ioD<500, ProblemJson>(500, ProblemJson)
   );
 }
 
@@ -110,11 +107,22 @@ export type ExtraResponseType<R> =
 function extraResponseDecoder<R>(
   type: t.Type<R, R>
 ): ResponseDecoder<ExtraResponseType<R>> {
-  return composeResponseDecoders(
+  return compD(
     baseResponseDecoder(type),
-    ioResponseDecoder<400, ProblemJson>(400, ProblemJson)
+    ioD<400, ProblemJson>(400, ProblemJson)
   );
 }
+
+const paymentResponseDecoder = compD(
+  compD(
+    compD(
+      ioD<200, PaymentRequestsGetResponse>(200, PaymentRequestsGetResponse),
+      ioD<400, ProblemJson>(400, ProblemJson)
+    ),
+    constD<undefined, 401>(401, undefined)
+  ),
+  ioD<500, PaymentProblemJson>(500, PaymentProblemJson)
+);
 
 export type LogoutT = IPostApiRequestType<
   {},
@@ -211,7 +219,7 @@ export function BackendClient(
     url: ({ rptId }) => `/api/v1/payment-requests/${rptId}`,
     headers: tokenHeaderProducer,
     query: _ => ({}),
-    response_decoder: extraResponseDecoder(PaymentRequestsGetResponse)
+    response_decoder: paymentResponseDecoder
   };
 
   const attivaRptT: ActivatePaymentT = {
@@ -221,7 +229,7 @@ export function BackendClient(
     query: () => ({}),
     body: ({ paymentActivationsPostRequest }) =>
       JSON.stringify(paymentActivationsPostRequest),
-    response_decoder: extraResponseDecoder(PaymentActivationsPostResponse)
+    response_decoder: paymentResponseDecoder
   };
 
   const getPaymentIdT: GetActivationStatusT = {

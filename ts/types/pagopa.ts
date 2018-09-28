@@ -53,7 +53,7 @@ export const CreditCard = repP(
   repP(
     repP(
       repP(
-        reqP(reqP(CreditCardPagoPA, "holder"), "brandLogo"),
+        reqP(CreditCardPagoPA, "holder"),
         "expireMonth",
         CreditCardExpirationMonth
       ),
@@ -160,7 +160,7 @@ export type TransactionListResponse = t.TypeOf<typeof TransactionListResponse>;
 export const WalletListResponse = repP(
   WalletListResponsePagoPA,
   "data",
-  t.readonlyArray(Transaction),
+  t.readonlyArray(Wallet),
   "WalletListResponse"
 );
 
