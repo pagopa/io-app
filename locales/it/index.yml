@@ -13,6 +13,7 @@ global:
     cancel: Annulla
     ok: OK
     continue: Continua
+    retry: Riprova
   navigator:
     messages: messaggi
     wallet: portafoglio
