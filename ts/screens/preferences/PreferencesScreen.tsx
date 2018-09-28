@@ -1,4 +1,4 @@
-import { Content, List } from "native-base";
+import { Content, List, ListItem } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -88,34 +88,43 @@ class PreferencesScreen extends React.Component<Props> {
         subtitle={I18n.t("preferences.subtitle")}
         contextualHelp={contextualHelp}
       >
-        <Content>
+        <Content noPadded={true}>
           <List>
-            <PreferenceItem
-              kind="action"
-              title={I18n.t("preferences.list.services")}
-              valuePreview={I18n.t("preferences.list.services_description")}
-              onClick={() =>
+            <ListItem
+              onPress={() =>
                 this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
               }
-            />
-            <PreferenceItem
-              kind="value"
-              title={I18n.t("preferences.list.email")}
-              icon="io-email"
-              valuePreview={profileData.spid_email}
-            />
-            <PreferenceItem
-              kind="value"
-              title={I18n.t("preferences.list.mobile_phone")}
-              icon="io-phone-number"
-              valuePreview={profileData.spid_mobile_phone}
-            />
-            <PreferenceItem
-              kind="value"
-              title={I18n.t("preferences.list.language")}
-              icon="io-languages"
-              valuePreview={languages}
-            />
+            >
+              <PreferenceItem
+                kind="action"
+                title={I18n.t("preferences.list.services")}
+                valuePreview={I18n.t("preferences.list.services_description")}
+              />
+            </ListItem>
+            <ListItem>
+              <PreferenceItem
+                kind="value"
+                title={I18n.t("preferences.list.email")}
+                icon="io-email"
+                valuePreview={profileData.spid_email}
+              />
+            </ListItem>
+            <ListItem>
+              <PreferenceItem
+                kind="value"
+                title={I18n.t("preferences.list.mobile_phone")}
+                icon="io-phone-number"
+                valuePreview={profileData.spid_mobile_phone}
+              />
+            </ListItem>
+            <ListItem>
+              <PreferenceItem
+                kind="value"
+                title={I18n.t("preferences.list.language")}
+                icon="io-languages"
+                valuePreview={languages}
+              />
+            </ListItem>
           </List>
         </Content>
       </TopScreenComponent>

@@ -1,4 +1,4 @@
-import { H3, Left, ListItem, Right, Text } from "native-base";
+import { H3, Left, Right, Text } from "native-base";
 import * as React from "react";
 
 import { connectStyle } from "native-base-shoutem-theme";
@@ -19,7 +19,6 @@ interface ValueProps extends BaseProps {
 
 interface ActionProps extends BaseProps {
   kind: "action";
-  onClick: () => void;
 }
 
 type Props = ValueProps | ActionProps;
@@ -29,23 +28,22 @@ type Props = ValueProps | ActionProps;
  */
 class PreferenceItem extends React.Component<Props> {
   public render() {
-    const props = this.props;
-    // tslint:disable-next-line:no-empty
-    const onClick = props.kind === "action" ? props.onClick : undefined;
+    const { title, valuePreview } = this.props;
+
     return (
-      <ListItem onPress={onClick}>
+      <React.Fragment>
         <Left>
-          <H3>{props.title}</H3>
-          <Text>{props.valuePreview}</Text>
+          <H3>{title}</H3>
+          <Text>{valuePreview}</Text>
         </Left>
         <Right>
-          {props.kind === "value" ? (
-            <IconFont name={props.icon} size={variables.iconSize6} />
-          ) : props.kind === "action" ? (
+          {this.props.kind === "value" ? (
+            <IconFont name={this.props.icon} size={variables.iconSize6} />
+          ) : this.props.kind === "action" ? (
             <IconFont name="io-right" />
           ) : null}
         </Right>
-      </ListItem>
+      </React.Fragment>
     );
   }
 }
