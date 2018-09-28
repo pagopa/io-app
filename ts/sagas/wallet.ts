@@ -804,7 +804,7 @@ const fetchPaymentId = async (
     ? right(response.value.idPagamento)
     : response !== undefined && response.status === 404
       ? left<NodoErrors, string>("MISSING_PAYMENT_ID")
-      : left(extractNodoError(response));
+      : left<NodoErrors, string>("GENERIC_ERROR");
 };
 
 /**
