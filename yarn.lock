@@ -6439,10 +6439,6 @@ react-native-easy-grid@0.2.0:
   dependencies:
     lodash "^4.11.1"
 
-react-native-exception-handler@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.9.0.tgz#d29da023154059416ebf5798b8d2664bfe22941f"
-
 react-native-fs@2.11.15:
   version "2.11.15"
   resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.15.tgz#b80ac78edf124137624697b4864f834c1caf4f43"
