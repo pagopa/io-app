@@ -64,7 +64,7 @@ export const CreditCard = repP(
     CreditCardPan
   ),
   "securityCode",
-  CreditCardCVC,
+  t.union([CreditCardCVC, t.undefined]),
   "CreditCard"
 );
 
