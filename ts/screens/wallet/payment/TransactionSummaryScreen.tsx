@@ -43,6 +43,9 @@ import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../../../types/unknown";
+import { withErrorModal } from '../../../components/helpers/withErrorModal';
+import { some } from 'fp-ts/lib/Option';
+import { createErrorSelector } from '../../../store/reducers/error';
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -192,11 +195,19 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   cancelPayment: () => dispatch(paymentRequestCancel())
 });
 
-export default withLoadingSpinner(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TransactionSummaryScreen),
-  createLoadingSelector(["PAYMENT"]),
-  {}
+export default 
+withErrorModal(
+  withLoadingSpinner(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(TransactionSummaryScreen),
+    createLoadingSelector(["PAYMENT"]),
+    {}
+  ),
+  createErrorSelector(["PAYMENT"]), 
+  x => x,
+  () => {
+    console.warn("cancel")
+  }
 );
