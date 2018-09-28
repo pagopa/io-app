@@ -1,6 +1,10 @@
 import * as t from "io-ts";
 
-import { ReplaceProp1, RequiredProp1 } from "../types/utils";
+import {
+  ReplaceProp1,
+  replaceProp1 as repP,
+  requiredProp1 as reqP
+} from "../types/utils";
 
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
@@ -45,51 +49,26 @@ export type CreditCardType = t.TypeOf<typeof CreditCardType>;
 /**
  * A refined CreditCard type
  */
-export type CreditCard = ReplaceProp1<
-  ReplaceProp1<
-    ReplaceProp1<
-      ReplaceProp1<
-        RequiredProp1<RequiredProp1<CreditCardPagoPA, "holder">, "brandLogo">,
+export const CreditCard = repP(
+  repP(
+    repP(
+      repP(
+        reqP(reqP(CreditCardPagoPA, "holder"), "brandLogo"),
         "expireMonth",
         CreditCardExpirationMonth
-      >,
+      ),
       "expireYear",
       CreditCardExpirationYear
-    >,
+    ),
     "pan",
     CreditCardPan
-  >,
+  ),
   "securityCode",
-  CreditCardCVC
->;
-
-function isCreditCard(o: any): o is CreditCard {
-  return (
-    CreditCardPagoPA.is(o) &&
-    (o.brandLogo !== undefined &&
-      CreditCardExpirationMonth.is(o.expireMonth) &&
-      CreditCardExpirationYear.is(o.expireYear) &&
-      o.holder !== undefined &&
-      CreditCardPan.is(o.pan) &&
-      (o.securityCode === undefined || CreditCardCVC.is(o.securityCode)))
-  );
-}
-
-export const CreditCard = new t.Type<CreditCard, typeof CreditCardPagoPA>(
-  "CreditCard",
-  isCreditCard,
-  (i, c) => {
-    const validation = CreditCardPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<CreditCard>;
-    }
-    const value = validation.value;
-    return isCreditCard(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  CreditCardCVC,
+  "CreditCard"
 );
+
+export type CreditCard = t.TypeOf<typeof CreditCard>;
 
 /**
  * An refined Amount
@@ -97,98 +76,30 @@ export const CreditCard = new t.Type<CreditCard, typeof CreditCardPagoPA>(
  * We are using EUR and 2 decimal digits anyway, so
  * "currency" and "decimalDigits" can safely be ignored
  */
-export type Amount = RequiredProp1<AmountPagoPA, "amount">;
-
-function isAmount(o: any): o is Amount {
-  return AmountPagoPA.is(o) && o.amount !== undefined;
-}
-
-export const Amount = new t.Type<Amount, typeof AmountPagoPA>(
-  "Amount",
-  isAmount,
-  (i, c) => {
-    const validation = AmountPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<Amount>;
-    }
-    const value = validation.value;
-    return isAmount(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
-);
+export const Amount = reqP(AmountPagoPA, "amount", "Amount");
+export type Amount = t.TypeOf<typeof Amount>;
 
 /**
  * A refined Psp
  */
-export type Psp = ReplaceProp1<
-  RequiredProp1<RequiredProp1<PspPagoPA, "id">, "logoPSP">,
+export const Psp = repP(
+  reqP(reqP(PspPagoPA, "id"), "logoPSP"),
   "fixedCost",
-  Amount
->;
-
-function isPsp(o: any): o is Psp {
-  return (
-    PspPagoPA.is(o) &&
-    (Amount.is(o.fixedCost) && o.id !== undefined && o.logoPSP !== undefined)
-  );
-}
-
-export const Psp = new t.Type<Psp, typeof PspPagoPA>(
-  "Psp",
-  isPsp,
-  (i, c) => {
-    const validation = PspPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<Psp>;
-    }
-    const value = validation.value;
-    return isPsp(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  Amount,
+  "Psp"
 );
+export type Psp = t.TypeOf<typeof Psp>;
 
 /**
  * A refined Wallet
  */
-export type Wallet = ReplaceProp1<
-  ReplaceProp1<
-    RequiredProp1<RequiredProp1<WalletPagoPA, "idWallet">, "type">,
-    "creditCard",
-    CreditCard
-  >,
+export const Wallet = repP(
+  repP(reqP(reqP(WalletPagoPA, "idWallet"), "type"), "creditCard", CreditCard),
   "psp",
-  Psp | undefined
->;
-
-function isWallet(o: any): o is Wallet {
-  return (
-    WalletPagoPA.is(o) &&
-    (CreditCard.is(o.creditCard) &&
-      o.idWallet !== undefined &&
-      o.type !== undefined &&
-      (o.psp === undefined || Psp.is(o.psp)))
-  );
-}
-
-export const Wallet = new t.Type<Wallet, typeof WalletPagoPA>(
-  "Wallet",
-  isWallet,
-  (i, c) => {
-    const validation = WalletPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<Wallet>;
-    }
-    const value = validation.value;
-    return isWallet(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  t.union([Psp, t.undefined]),
+  "Wallet"
 );
+export type Wallet = t.TypeOf<typeof Wallet>;
 
 export type NullableWallet = ReplaceProp1<
   Wallet,
@@ -196,340 +107,135 @@ export type NullableWallet = ReplaceProp1<
   null
 >;
 
-export type Transaction = ReplaceProp1<
-  ReplaceProp1<
-    ReplaceProp1<
-      RequiredProp1<
-        RequiredProp1<
-          RequiredProp1<
-            RequiredProp1<
-              RequiredProp1<
-                RequiredProp1<
-                  RequiredProp1<TransactionPagoPA, "created">,
-                  "description"
-                >,
+/**
+ * A refined Transaction
+ */
+export const Transaction = repP(
+  repP(
+    repP(
+      reqP(
+        reqP(
+          reqP(
+            reqP(
+              reqP(
+                reqP(reqP(TransactionPagoPA, "created"), "description"),
                 "id"
-              >,
+              ),
               "idPayment"
-            >,
+            ),
             "idWallet"
-          >,
+          ),
           "merchant"
-        >,
+        ),
         "statusMessage"
-      >,
+      ),
       "amount",
       Amount
-    >,
+    ),
     "fee",
-    Amount | undefined
-  >,
+    t.union([Amount, t.undefined])
+  ),
   "grandTotal",
-  Amount
->;
-
-function isTransaction(o: any): o is Transaction {
-  return (
-    TransactionPagoPA.is(o) &&
-    (Amount.is(o.amount) &&
-      o.created !== undefined &&
-      o.description !== undefined &&
-      (o.fee === undefined || Amount.is(o.fee)) &&
-      Amount.is(o.grandTotal) &&
-      o.id !== undefined &&
-      o.idPayment !== undefined &&
-      o.idWallet !== undefined &&
-      o.merchant !== undefined &&
-      o.statusMessage !== undefined)
-  );
-}
-
-export const Transaction = new t.Type<Transaction, typeof TransactionPagoPA>(
-  "Transaction",
-  isTransaction,
-  (i, c) => {
-    const validation = TransactionPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<Transaction>;
-    }
-    const value = validation.value;
-    return isTransaction(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  Amount,
+  "Transaction"
 );
+
+export type Transaction = t.TypeOf<typeof Transaction>;
 
 /**
  * A refined TransactionListResponse
  */
-export type TransactionListResponse = ReplaceProp1<
+export const TransactionListResponse = repP(
   TransactionListResponsePagoPA,
   "data",
-  ReadonlyArray<Transaction>
->;
-
-function isTransactionListResponse(o: any): o is TransactionListResponse {
-  return (
-    TransactionListResponsePagoPA.is(o) &&
-    t.readonlyArray(Transaction).is(o.data)
-  );
-}
-
-export const TransactionListResponse = new t.Type<
-  TransactionListResponse,
-  typeof TransactionListResponsePagoPA
->(
-  "TransactionListResponse",
-  isTransactionListResponse,
-  (i, c) => {
-    const validation = TransactionListResponsePagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<TransactionListResponse>;
-    }
-    const value = validation.value;
-    return isTransactionListResponse(value)
-      ? t.success(value)
-      : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  t.readonlyArray(Transaction),
+  "TransactionListResponse"
 );
+
+export type TransactionListResponse = t.TypeOf<typeof TransactionListResponse>;
 
 /**
  * A refined WalletListResponse
  */
-export type WalletListResponse = ReplaceProp1<
+export const WalletListResponse = repP(
   WalletListResponsePagoPA,
   "data",
-  ReadonlyArray<Wallet>
->;
-
-function isWalletListResponse(o: any): o is WalletListResponse {
-  return WalletListResponsePagoPA.is(o) && t.readonlyArray(Wallet).is(o.data);
-}
-
-export const WalletListResponse = new t.Type<
-  WalletListResponse,
-  typeof WalletListResponsePagoPA
->(
-  "WalletListResponse",
-  isWalletListResponse,
-  (i, c) => {
-    const validation = WalletListResponsePagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<WalletListResponse>;
-    }
-    const value = validation.value;
-    return isWalletListResponse(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  t.readonlyArray(Transaction),
+  "WalletListResponse"
 );
+
+export type WalletListResponse = t.TypeOf<typeof WalletListResponse>;
 
 /**
  * A Session
  */
-export type Session = RequiredProp1<SessionPagoPA, "sessionToken">;
+export const Session = reqP(SessionPagoPA, "sessionToken", "Session");
 
-function isSession(o: any): o is Session {
-  return SessionPagoPA.is(o) && o.sessionToken !== undefined;
-}
-
-export const Session = new t.Type<Session, typeof SessionPagoPA>(
-  "Session",
-  isSession,
-  (i, c) => {
-    const validation = SessionPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<Session>;
-    }
-    const value = validation.value;
-    return isSession(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
-);
+export type Session = t.TypeOf<typeof Session>;
 
 /**
  * A refined SessionResponse
  */
-export type SessionResponse = ReplaceProp1<
+export const SessionResponse = repP(
   SessionResponsePagoPA,
   "data",
-  Session
->;
-
-function isSessionResponse(o: any): o is SessionResponse {
-  return SessionResponsePagoPA.is(o) && Session.is(o.data);
-}
-
-export const SessionResponse = new t.Type<
-  SessionResponse,
-  typeof SessionResponsePagoPA
->(
-  "SessionResponse",
-  isSessionResponse,
-  (i, c) => {
-    const validation = SessionResponsePagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<SessionResponse>;
-    }
-    const value = validation.value;
-    return isSessionResponse(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  Session,
+  "SessionResponse"
 );
+
+export type SessionResponse = t.TypeOf<typeof SessionResponse>;
 
 /**
  * A refined PspListResponse
  */
-export type PspListResponse = ReplaceProp1<
+export const PspListResponse = repP(
   PspListResponsePagoPA,
   "data",
-  ReadonlyArray<Psp>
->;
-
-function isPspListResponse(o: any): o is PspListResponse {
-  return PspListResponsePagoPA.is(o) && t.readonlyArray(Psp).is(o.data);
-}
-
-export const PspListResponse = new t.Type<
-  PspListResponse,
-  typeof PspListResponsePagoPA
->(
-  "PspListResponse",
-  isPspListResponse,
-  (i, c) => {
-    const validation = PspListResponsePagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<PspListResponse>;
-    }
-    const value = validation.value;
-    return isPspListResponse(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  t.readonlyArray(Psp),
+  "PspListResponse"
 );
+
+export type PspListResponse = t.TypeOf<typeof PspListResponse>;
 
 /**
  * A refined WalletResponse
  */
-export type WalletResponse = ReplaceProp1<WalletResponsePagoPA, "data", Wallet>;
-
-function isWalletResponse(o: any): o is WalletResponse {
-  return WalletResponsePagoPA.is(o) && Wallet.is(o.data);
-}
-
-export const WalletResponse = new t.Type<
-  WalletResponse,
-  typeof WalletResponsePagoPA
->(
-  "WalletResponse",
-  isWalletResponse,
-  (i, c) => {
-    const validation = WalletResponsePagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<WalletResponse>;
-    }
-    const value = validation.value;
-    return isWalletResponse(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+export const WalletResponse = repP(
+  WalletResponsePagoPA,
+  "data",
+  Wallet,
+  "WalletResponse"
 );
+
+export type WalletResponse = t.TypeOf<typeof WalletResponse>;
 
 /**
  * A refined TransactionResponse
  */
-export type TransactionResponse = ReplaceProp1<
+export const TransactionResponse = repP(
   TransactionResponsePagoPA,
   "data",
-  Transaction
->;
-
-function isTransactionResponse(o: any): o is TransactionResponse {
-  return TransactionResponsePagoPA.is(o) && Transaction.is(o.data);
-}
-
-export const TransactionResponse = new t.Type<
-  TransactionResponse,
-  typeof TransactionResponsePagoPA
->(
-  "TransactionResponse",
-  isTransactionResponse,
-  (i, c) => {
-    const validation = TransactionResponsePagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<TransactionResponse>;
-    }
-    const value = validation.value;
-    return isTransactionResponse(value)
-      ? t.success(value)
-      : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  Transaction,
+  "TransactionResponse"
 );
+
+export type TransactionResponse = t.TypeOf<typeof TransactionResponse>;
 
 /**
  * A refined Pay
  */
-export type Pay = ReplaceProp1<
-  RequiredProp1<PayPagoPA, "idWallet">,
+export const Pay = repP(
+  reqP(PayPagoPA, "idWallet"),
   "tipo",
-  "web"
->;
-
-function isPay(o: any): o is Pay {
-  return PayPagoPA.is(o) && o.idWallet !== undefined && o.tipo === "web";
-}
-
-export const Pay = new t.Type<Pay, typeof PayPagoPA>(
-  "Pay",
-  isPay,
-  (i, c) => {
-    const validation = PayPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<Pay>;
-    }
-    const value = validation.value;
-    return isPay(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
+  t.literal("web"),
+  "Pay"
 );
+
+export type Pay = t.TypeOf<typeof Pay>;
 
 /**
  * A refined PayRequest
  */
-export type PayRequest = ReplaceProp1<PayRequestPagoPA, "data", Pay>;
+export const PayRequest = repP(PayRequestPagoPA, "data", Pay, "PayRequest");
 
-function isPayRequest(o: any): o is PayRequest {
-  return PayRequestPagoPA.is(o) && Pay.is(o.data);
-}
-
-export const PayRequest = new t.Type<PayRequest, typeof PayRequestPagoPA>(
-  "PayRequest",
-  isPayRequest,
-  (i, c) => {
-    const validation = PayRequestPagoPA.validate(i, c);
-    if (validation.isLeft()) {
-      // tslint:disable-next-line:no-useless-cast
-      return validation as t.Validation<PayRequest>;
-    }
-    const value = validation.value;
-    return isPayRequest(value) ? t.success(value) : t.failure(value, c);
-  },
-  // tslint:disable-next-line:no-useless-cast
-  a => a as any
-);
+export type PayRequest = t.TypeOf<typeof PayRequest>;
