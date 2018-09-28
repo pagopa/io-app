@@ -8,6 +8,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import MessageListComponent from "../../components/messages/MessageListComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -122,4 +123,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   servicesById: servicesByIdSelector(state)
 });
 
-export default connect(mapStateToProps)(MessageListScreen);
+export default withLoadingSpinner(
+  connect(mapStateToProps)(MessageListScreen),
+  createLoadingSelector(["PAYMENT_LOAD"]),
+  {}
+);
