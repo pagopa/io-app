@@ -32,7 +32,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { detailEnum } from "../../definitions/backend/GetPaymentProblemJson";
+import { detailEnum } from "../../definitions/backend/PaymentProblemJson";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
@@ -162,7 +162,7 @@ const extractNodoError = (
   response: NodoErrorResponseType | undefined
 ): NodoErrors => {
   const maybeDetail: Option<NodoErrors> = fromNullable(response).mapNullable(
-    r => (r.status === 400 || r.status === 500 ? r.value.detail : undefined)
+    r => (r.status === 500 ? r.value.detail : undefined)
   );
   return maybeDetail.getOrElse("GENERIC_ERROR");
 };
@@ -794,7 +794,7 @@ const fetchPaymentId = async (
     ? right(response.value.idPagamento)
     : response !== undefined && response.status === 404
       ? left<NodoErrors, string>("MISSING_PAYMENT_ID")
-      : left(extractNodoError(response));
+      : left<NodoErrors, string>("GENERIC_ERROR");
 };
 
 /**
