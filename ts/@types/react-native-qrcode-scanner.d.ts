@@ -20,6 +20,7 @@ declare module "react-native-qrcode-scanner" {
     permissionDialogTitle?: string;
     permissionDialogMessage?: string;
     checkAndroid6Permissions?: boolean;
+    cameraProps?: object;
   }>;
 
   export default class QRCodeScanner extends React.Component<Props> {

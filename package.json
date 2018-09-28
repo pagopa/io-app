@@ -48,7 +48,7 @@
     "react-native-offline": "3.11.0",
     "react-native-popup-menu": "^0.14.0",
     "react-native-push-notification": "3.0.2",
-    "react-native-qrcode-scanner": "^1.0.1",
+    "react-native-qrcode-scanner": "^1.1.0",
     "react-native-sha256": "^1.0.1",
     "react-native-splash-screen": "^3.1.1",
     "react-native-svg": "^6.5.2",

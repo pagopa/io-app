@@ -184,6 +184,6 @@ export default withLoadingSpinner(
     mapStateToProps,
     mapDispatchToProps
   )(PickPspScreen),
-  createLoadingSelector(["PAYMENT_LOAD"]),
+  createLoadingSelector(["PAYMENT"]),
   {}
 );
