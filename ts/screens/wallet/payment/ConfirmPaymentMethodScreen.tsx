@@ -269,7 +269,6 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
-  // requestCompletion: () => dispatch(paymentRequestCompletion()),
   requestPinLogin: () => dispatch(paymentRequestPinLogin()),
   goBack: () => dispatch(paymentRequestGoBack()),
   pickPsp: () => dispatch(paymentRequestPickPsp()),

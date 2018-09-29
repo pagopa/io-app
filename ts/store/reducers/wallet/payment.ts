@@ -636,7 +636,7 @@ const endPaymentReducer: PaymentReducer = (
 ) => {
   if (
     action.type === PAYMENT_PIN_LOGIN &&
-    isInAllowedOrigins(state, [""]) &&
+    isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"]) &&
     isPaymentStateWithSelectedPaymentMethod(state)
   ) {
     return {
