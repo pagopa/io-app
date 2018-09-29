@@ -21,6 +21,7 @@ export const extractPaymentManagerError = (
 ): PaymentManagerErrors => "GENERIC_ERROR";
 
 export const mapErrorCodeToMessage = (error: string): string => {
+  // TODO: create adequate messages & translate them
   const mapping: { [key: string]: string } = {
     PAYMENT_DUPLICATED: "PAYMENT_DUPLICATED",
     INVALID_AMOUNT: "INVALID_AMOUNT",
