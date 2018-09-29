@@ -36,7 +36,6 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { detailEnum } from "../../definitions/backend/PaymentProblemJson";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
@@ -137,6 +136,11 @@ import {
   walletCountSelector
 } from "../store/reducers/wallet/wallets";
 import {
+  extractNodoError,
+  extractPaymentManagerError,
+  NodoErrors
+} from "../types/errors";
+import {
   CreditCard,
   NullableWallet,
   PayRequest,
@@ -158,6 +162,7 @@ const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
 };
 
+<<<<<<< HEAD
 export type NodoErrors =
   | keyof typeof detailEnum
   | "GENERIC_ERROR"
@@ -176,6 +181,8 @@ const extractPaymentManagerError = (
   _: string | undefined
 ): PaymentManagerErrors => "GENERIC_ERROR";
 
+=======
+>>>>>>> making HOCs unaware of redux, introducing screen errors in UI, minor fixes
 // this function tries to carry out the provided
 // request, and refreshes the pagoPA token if a 401
 // is returned. Upon refreshing, it tries to

@@ -1,6 +1,6 @@
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { PagoPaErrors } from "../../../sagas/wallet";
+import { PagoPaErrors } from "../../../types/errors";
 import { Psp } from "../../../types/pagopa";
 import {
   PAYMENT_CANCEL,

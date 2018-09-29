@@ -7,6 +7,7 @@
  * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
+import { Option } from "fp-ts/lib/Option";
 import {
   PaymentNoticeNumberFromString,
   RptId
@@ -17,6 +18,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
+import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
@@ -30,6 +32,7 @@ import {
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack
 } from "../../../store/actions/wallet/payment";
+import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
@@ -39,29 +42,32 @@ import {
   getRptId,
   isGlobalStateWithVerificaResponse
 } from "../../../store/reducers/wallet/payment";
+import { mapErrorCodeToMessage } from "../../../types/errors";
 import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../../../types/unknown";
-import { withErrorModal } from '../../../components/helpers/withErrorModal';
-import { some } from 'fp-ts/lib/Option';
-import { createErrorSelector } from '../../../store/reducers/error';
 
-type ReduxMappedStateProps =
-  | Readonly<{
-      valid: false;
-    }>
-  | Readonly<{
-      valid: true;
-      paymentReason: string | undefined;
-      paymentRecipient: EnteBeneficiario | undefined;
-      rptId: RptId | undefined;
-    }>;
+type ReduxMappedStateProps = Readonly<{
+  error: Option<string>;
+  isLoading: boolean;
+}> &
+  (
+    | Readonly<{
+        valid: false;
+      }>
+    | Readonly<{
+        valid: true;
+        paymentReason: string | undefined;
+        paymentRecipient: EnteBeneficiario | undefined;
+        rptId: RptId | undefined;
+      }>);
 
 type ReduxMappedDispatchProps = Readonly<{
   confirmSummary: () => void;
   goBack: () => void;
   cancelPayment: () => void;
+  onCancel: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -164,8 +170,10 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  (getPaymentStep(state) === "PaymentStateSummary" ||
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  error: createErrorSelector(["PAYMENT"])(state),
+  isLoading: createLoadingSelector(["PAYMENT"])(state),
+  ...((getPaymentStep(state) === "PaymentStateSummary" ||
     getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
   isGlobalStateWithVerificaResponse(state)
     ? {
@@ -183,31 +191,31 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
       getPaymentStep(state) === "PaymentStateManualEntry"
       ? {
           valid: true,
+          error: createErrorSelector(["PAYMENT"])(state),
+          isLoading: createLoadingSelector(["PAYMENT"])(state),
           paymentReason: undefined,
           paymentRecipient: undefined,
           rptId: undefined
         }
-      : { valid: false };
-
+      : {
+          valid: false,
+          error: createErrorSelector(["PAYMENT"])(state),
+          isLoading: createLoadingSelector(["PAYMENT"])(state)
+        })
+});
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),
   goBack: () => dispatch(paymentRequestGoBack()),
-  cancelPayment: () => dispatch(paymentRequestCancel())
+  cancelPayment: () => dispatch(paymentRequestCancel()),
+  onCancel: () => dispatch(paymentRequestCancel())
 });
 
-export default 
-withErrorModal(
-  withLoadingSpinner(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(TransactionSummaryScreen),
-    createLoadingSelector(["PAYMENT"]),
-    {}
-  ),
-  createErrorSelector(["PAYMENT"]), 
-  x => x,
-  () => {
-    console.warn("cancel")
-  }
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  withErrorModal(
+    withLoadingSpinner(TransactionSummaryScreen, {}),
+    mapErrorCodeToMessage
+  )
 );

@@ -3,6 +3,7 @@
  * when it is added to the user wallet
  */
 
+import { Option } from "fp-ts/lib/Option";
 import {
   Body,
   Container,
@@ -19,6 +20,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
@@ -27,9 +29,11 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentRequestCancel,
   paymentRequestGoBack,
   paymentUpdatePsp
 } from "../../../store/actions/wallet/payment";
+import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
@@ -38,19 +42,25 @@ import {
   isGlobalStateWithSelectedPaymentMethod
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
+import { mapErrorCodeToMessage } from "../../../types/errors";
 import { Psp } from "../../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../../utils/stringBuilder";
 
-type ReduxMappedStateProps =
-  | Readonly<{
-      valid: true;
-      pspList: ReadonlyArray<Psp>;
-    }>
-  | Readonly<{ valid: false }>;
+type ReduxMappedStateProps = Readonly<{
+  isLoading: boolean;
+  error: Option<string>;
+}> &
+  (
+    | Readonly<{
+        valid: true;
+        pspList: ReadonlyArray<Psp>;
+      }>
+    | Readonly<{ valid: false }>);
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPsp: (pspId: number) => void;
   goBack: () => void;
+  onCancel: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -166,24 +176,25 @@ class PickPspScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  getPaymentStep(state) === "PaymentStatePickPsp" &&
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  error: createErrorSelector(["PAYMENT"])(state),
+  isLoading: createLoadingSelector(["PAYMENT"])(state),
+  ...(getPaymentStep(state) === "PaymentStatePickPsp" &&
   isGlobalStateWithSelectedPaymentMethod(state)
     ? {
         valid: true,
         pspList: getPspList(state)
       }
-    : { valid: false };
+    : { valid: false })
+});
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPsp: (pspId: number) => dispatch(paymentUpdatePsp(pspId)),
-  goBack: () => dispatch(paymentRequestGoBack())
+  goBack: () => dispatch(paymentRequestGoBack()),
+  onCancel: () => dispatch(paymentRequestCancel())
 });
-export default withLoadingSpinner(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(PickPspScreen),
-  createLoadingSelector(["PAYMENT"]),
-  {}
-);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorModal(withLoadingSpinner(PickPspScreen, {}), mapErrorCodeToMessage));
