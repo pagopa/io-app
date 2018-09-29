@@ -652,7 +652,7 @@ const endPaymentReducer: PaymentReducer = (
   }
   if (
     action.type === PAYMENT_COMPLETED &&
-    isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"])
+    isInAllowedOrigins(state, ["PaymentStatePinLogin"])
   ) {
     return {
       stack: null // cleaning up

@@ -6,7 +6,8 @@ import {
   paymentFailure,
   paymentRequestCompletion,
   PaymentRequestMessage,
-  PaymentRequestPinLogin
+  PaymentRequestPinLogin,
+  paymentPinLogin
 } from "./../store/actions/wallet/payment";
 
 /**
@@ -993,6 +994,7 @@ function* updatePspHandler(
 }
 
 function* pinLoginHandler(storedPin: PinString) {
+  yield put(paymentPinLogin());
   // Retrieve the configured PIN from the keychain
   yield race({
     proceed: call(loginWithPinSaga, storedPin),
