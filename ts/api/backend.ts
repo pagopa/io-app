@@ -39,7 +39,7 @@ import {
 
 import { SessionToken } from "../types/SessionToken";
 
-import { GetPaymentProblemJson } from "../../definitions/backend/GetPaymentProblemJson";
+import { PaymentProblemJson } from "../../definitions/backend/PaymentProblemJson";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 /**
@@ -128,9 +128,9 @@ export type ExtraResponseType<R> =
  */
 
 export type NodoErrorResponseType =
-  | IResponseType<400, GetPaymentProblemJson>
+  | IResponseType<400, ProblemJson>
   | IResponseType<401, undefined>
-  | IResponseType<500, GetPaymentProblemJson>;
+  | IResponseType<500, PaymentProblemJson>;
 
 export type NodoResponseType<R> = IResponseType<200, R> | NodoErrorResponseType;
 
@@ -162,12 +162,20 @@ function extraResponseDecoderWith404<R>(
 /**
  * A response decoder for extra response types
  */
+
+// 401, 400, 500
 function extraNodoResponseDecoder<R>(
   type: t.Type<R, R>
 ): ResponseDecoder<NodoResponseType<R>> {
   return composeResponseDecoders(
-    baseResponseDecoder(type),
-    ioResponseDecoder<400, GetPaymentProblemJson>(400, GetPaymentProblemJson)
+    composeResponseDecoders(
+      composeResponseDecoders(
+        ioResponseDecoder<200, R>(200, type),
+        ioResponseDecoder<400, ProblemJson>(400, ProblemJson)
+      ),
+      undefinedResponseDecoder<401>(401)
+    ),
+    ioResponseDecoder<500, PaymentProblemJson>(500, PaymentProblemJson)
   );
 }
 
