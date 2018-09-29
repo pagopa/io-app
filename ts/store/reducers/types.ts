@@ -11,6 +11,7 @@ import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
 import { LoadingState } from "./loading";
+import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
@@ -46,6 +47,7 @@ export type GlobalState = Readonly<{
   wallet: WalletState;
   preferences: PreferencesState;
   content: ContentState;
+  navigationHistory: NavigationHistoryState;
 }>;
 
 /**
