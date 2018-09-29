@@ -4,10 +4,10 @@ import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import {
   paymentCancel,
   paymentFailure,
+  paymentPinLogin,
   paymentRequestCompletion,
   PaymentRequestMessage,
-  PaymentRequestPinLogin,
-  paymentPinLogin
+  PaymentRequestPinLogin
 } from "./../store/actions/wallet/payment";
 
 /**
