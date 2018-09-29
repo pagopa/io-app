@@ -1,13 +1,13 @@
 import { NavigationState } from "react-navigation";
 
 import {
-  NAVIGATION_HISTORY_BACK,
-  NAVIGATION_HISTORY_RESET,
-  NAVIGATION_HISTORY_UPDATE
+  NAVIGATION_HISTORY_POP,
+  NAVIGATION_HISTORY_PUSH,
+  NAVIGATION_HISTORY_RESET
 } from "./constants";
 
-type NavigationHistoryUpdate = {
-  type: typeof NAVIGATION_HISTORY_UPDATE;
+type NavigationHistoryPush = {
+  type: typeof NAVIGATION_HISTORY_PUSH;
   payload: NavigationState;
 };
 
@@ -15,20 +15,20 @@ type NavigationHistoryReset = {
   type: typeof NAVIGATION_HISTORY_RESET;
 };
 
-type NavigationHistoryBack = {
-  type: typeof NAVIGATION_HISTORY_BACK;
+type NavigationHistoryPop = {
+  type: typeof NAVIGATION_HISTORY_POP;
 };
 
 export type NavigationHistoryActions =
-  | NavigationHistoryUpdate
+  | NavigationHistoryPush
   | NavigationHistoryReset
-  | NavigationHistoryBack;
+  | NavigationHistoryPop;
 
 // Creators
-export const navigationHistoryUpdateAction = (
+export const navigationHistoryPushAction = (
   navigationState: NavigationState
-): NavigationHistoryUpdate => ({
-  type: NAVIGATION_HISTORY_UPDATE,
+): NavigationHistoryPush => ({
+  type: NAVIGATION_HISTORY_PUSH,
   payload: navigationState
 });
 
@@ -36,6 +36,6 @@ export const navigationHistoryResetAction = (): NavigationHistoryReset => ({
   type: NAVIGATION_HISTORY_RESET
 });
 
-export const navigationHistoryBackAction = (): NavigationHistoryBack => ({
-  type: NAVIGATION_HISTORY_BACK
+export const navigationHistoryPopAction = (): NavigationHistoryPop => ({
+  type: NAVIGATION_HISTORY_POP
 });

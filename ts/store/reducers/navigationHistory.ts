@@ -5,9 +5,9 @@
 import { NavigationState } from "react-navigation";
 
 import {
-  NAVIGATION_HISTORY_BACK,
-  NAVIGATION_HISTORY_RESET,
-  NAVIGATION_HISTORY_UPDATE
+  NAVIGATION_HISTORY_POP,
+  NAVIGATION_HISTORY_PUSH,
+  NAVIGATION_HISTORY_RESET
 } from "../actions/constants";
 import { Action } from "../actions/types";
 
@@ -20,13 +20,13 @@ const reducer = (
   action: Action
 ): NavigationHistoryState => {
   switch (action.type) {
-    case NAVIGATION_HISTORY_UPDATE:
+    case NAVIGATION_HISTORY_PUSH:
       return [...state, action.payload];
 
     case NAVIGATION_HISTORY_RESET:
       return INITIAL_STATE;
 
-    case NAVIGATION_HISTORY_BACK:
+    case NAVIGATION_HISTORY_POP:
       return state.slice(0, -1);
 
     default:
