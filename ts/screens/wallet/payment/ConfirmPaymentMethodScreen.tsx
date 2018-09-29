@@ -6,6 +6,7 @@
  * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  *
  */
+import { Option } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
@@ -27,6 +28,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
+import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
@@ -35,13 +37,15 @@ import CardComponent from "../../../components/wallet/card";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
+import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import {
+  paymentRequestCancel,
   paymentRequestCompletion,
   paymentRequestGoBack,
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp
 } from "../../../store/actions/wallet/payment";
-import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
+import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
@@ -51,20 +55,25 @@ import {
   selectedPaymentMethodSelector
 } from "../../../store/reducers/wallet/payment";
 import { feeExtractor } from "../../../store/reducers/wallet/wallets";
+import { mapErrorCodeToMessage } from "../../../types/errors";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { buildAmount } from "../../../utils/stringBuilder";
 
-type ReduxMappedStateProps =
-  | Readonly<{
-      valid: false;
-    }>
-  | Readonly<{
-      valid: true;
-      wallet: Wallet;
-      amount: AmountInEuroCents;
-      fee: AmountInEuroCents;
-    }>;
+type ReduxMappedStateProps = Readonly<{
+  isLoading: boolean;
+  error: Option<string>;
+}> &
+  (
+    | Readonly<{
+        valid: false;
+      }>
+    | Readonly<{
+        valid: true;
+        wallet: Wallet;
+        amount: AmountInEuroCents;
+        fee: AmountInEuroCents;
+      }>);
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
@@ -72,6 +81,7 @@ type ReduxMappedDispatchProps = Readonly<{
   requestCompletion: () => void;
   goBack: () => void;
   showSummary: () => void;
+  onCancel: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -256,13 +266,19 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     const wallet = selectedPaymentMethodSelector(state);
     const feeOrUndefined = feeExtractor(wallet);
     return {
+      isLoading: createLoadingSelector(["PAYMENT"])(state),
+      error: createErrorSelector(["PAYMENT"])(state),
       valid: true,
       wallet,
       amount: getCurrentAmount(state),
       fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
     };
   } else {
-    return { valid: false };
+    return {
+      isLoading: createLoadingSelector(["PAYMENT"])(state),
+      error: createErrorSelector(["PAYMENT"])(state),
+      valid: false
+    };
   }
 };
 
@@ -271,14 +287,16 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   requestCompletion: () => dispatch(paymentRequestCompletion()),
   goBack: () => dispatch(paymentRequestGoBack()),
   pickPsp: () => dispatch(paymentRequestPickPsp()),
-  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
+  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
+  onCancel: () => dispatch(paymentRequestCancel())
 });
 
-export default withLoadingSpinner(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ConfirmPaymentMethodScreen),
-  createLoadingSelector(["PAYMENT"]),
-  {}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  withErrorModal(
+    withLoadingSpinner(ConfirmPaymentMethodScreen, {}),
+    mapErrorCodeToMessage
+  )
 );

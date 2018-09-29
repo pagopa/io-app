@@ -40,6 +40,7 @@ interface OwnProps {
 
 type ReduxMappedProps = Readonly<{
   selectedWallet: Wallet;
+  isLoading: boolean;
 }>;
 
 type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;
@@ -77,11 +78,10 @@ class TransactionsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
+  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD),
+  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
 });
 
-export default withLoadingSpinner(
-  connect(mapStateToProps)(TransactionsScreen),
-  createLoadingSelector(["WALLET_MANAGEMENT_LOAD"]),
-  {}
+export default connect(mapStateToProps)(
+  withLoadingSpinner(TransactionsScreen, {})
 );

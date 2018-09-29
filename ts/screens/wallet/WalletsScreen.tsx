@@ -23,6 +23,7 @@ import { Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps = Readonly<{
   wallets: ReadonlyArray<Wallet>;
+  isLoading: boolean;
 }>;
 
 type OwnProps = Readonly<{
@@ -74,11 +75,8 @@ class WalletsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  wallets: walletsSelector(state)
+  wallets: walletsSelector(state),
+  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
 });
 
-export default withLoadingSpinner(
-  connect(mapStateToProps)(WalletsScreen),
-  createLoadingSelector(["WALLET_MANAGEMENT_LOAD"]),
-  {}
-);
+export default connect(mapStateToProps)(withLoadingSpinner(WalletsScreen, {}));

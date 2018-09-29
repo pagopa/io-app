@@ -12,7 +12,7 @@ import {
  */
 
 import { Either, left, right } from "fp-ts/lib/Either";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   IResponseType,
@@ -32,14 +32,13 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { detailEnum } from "../../definitions/backend/PaymentProblemJson";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
   GetPaymentInfoT
 } from "../../definitions/backend/requestTypes";
-import { BackendClient, NodoErrorResponseType } from "../api/backend";
-import { PagoPaClient, PaymentManagerErrorType } from "../api/pagopa";
+import { BackendClient } from "../api/backend";
+import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
@@ -132,6 +131,11 @@ import {
   walletCountSelector
 } from "../store/reducers/wallet/wallets";
 import {
+  extractNodoError,
+  extractPaymentManagerError,
+  NodoErrors
+} from "../types/errors";
+import {
   CreditCard,
   NullableWallet,
   PayRequest,
@@ -153,23 +157,6 @@ const MAX_TOKEN_REFRESHES = 2;
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
 };
-
-export type NodoErrors = detailEnum | "GENERIC_ERROR" | "MISSING_PAYMENT_ID";
-export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
-export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
-
-const extractNodoError = (
-  response: NodoErrorResponseType | undefined
-): NodoErrors => {
-  const maybeDetail: Option<NodoErrors> = fromNullable(response).mapNullable(
-    r => (r.status === 500 ? r.value.detail : undefined)
-  );
-  return maybeDetail.getOrElse("GENERIC_ERROR");
-};
-
-const extractPaymentManagerError = (
-  _: PaymentManagerErrorType | undefined
-): PaymentManagerErrors => "GENERIC_ERROR";
 
 // this function tries to carry out the provided
 // request, and refreshes the pagoPA token if a 401
