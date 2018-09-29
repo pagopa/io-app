@@ -37,7 +37,6 @@ function nextState(state: NavigationState, action: Action): NavigationState {
      * The getStateForAction method only accepts NavigationActions so we need to
      * check the action type.
      */
-    case NavigationActions.BACK:
     case NavigationActions.INIT:
     case NavigationActions.NAVIGATE:
     case NavigationActions.SET_PARAMS:

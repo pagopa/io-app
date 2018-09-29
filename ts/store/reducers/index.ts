@@ -19,6 +19,7 @@ import entitiesReducer from "./entities";
 import errorReducer from "./error";
 import loadingReducer from "./loading";
 import navigationReducer from "./navigation";
+import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import pinloginReducer from "./pinlogin";
@@ -78,7 +79,8 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
-  entities: entitiesReducer
+  entities: entitiesReducer,
+  navigationHistory: navigationHistoryReducer
 });
 
 export function createRootReducer(
