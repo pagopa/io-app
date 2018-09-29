@@ -8,18 +8,17 @@
  */
 
 import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
-import { Body, Container, Content, Left, Text, View } from "native-base";
+import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
@@ -34,8 +33,6 @@ import {
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  getCurrentAmount,
-  getInitialAmount,
   getPaymentReason,
   getPaymentRecipient,
   getPaymentStep,
@@ -53,11 +50,9 @@ type ReduxMappedStateProps =
     }>
   | Readonly<{
       valid: true;
-      initialAmount: AmountInEuroCents;
-      currentAmount: AmountInEuroCents;
-      paymentReason: string;
-      paymentRecipient: EnteBeneficiario;
-      rptId: RptId;
+      paymentReason: string | undefined;
+      paymentRecipient: EnteBeneficiario | undefined;
+      rptId: RptId | undefined;
     }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -83,8 +78,10 @@ const formatMdPaymentReason = (p: string): string =>
 ${p}`;
 
 const formatMdInfoRpt = (r: RptId): string =>
-  `**IUV:** ${PaymentNoticeNumberFromString.encode(r.paymentNoticeNumber)}\n
-**Recipient Fiscal Code:** ${r.organizationFiscalCode}`;
+  `**${I18n.t("payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(
+    r.paymentNoticeNumber
+  )}\n
+**${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props, never> {
   constructor(props: Props) {
@@ -103,11 +100,6 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       return null;
     }
 
-    const amount = AmountInEuroCentsFromNumber.encode(this.props.initialAmount);
-    const updatedAmount = AmountInEuroCentsFromNumber.encode(
-      this.props.currentAmount
-    );
-
     const primaryButtonProps = {
       block: true,
       primary: true,
@@ -122,6 +114,8 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       title: I18n.t("wallet.cancel")
     };
 
+    const { paymentRecipient, paymentReason, rptId } = this.props;
+
     return (
       <Container>
         <AppHeader>
@@ -131,25 +125,29 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
           <Body>
             <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentSummaryComponent
-            navigation={this.props.navigation}
-            amount={amount}
-            updatedAmount={updatedAmount}
-            paymentReason={this.props.paymentReason}
-          />
+          <PaymentSummaryComponent navigation={this.props.navigation} />
           <View content={true}>
             <Markdown>
-              {formatMdRecipient(this.props.paymentRecipient)}
+              {paymentRecipient !== undefined
+                ? formatMdRecipient(paymentRecipient)
+                : "..."}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {formatMdPaymentReason(this.props.paymentReason)}
+              {paymentReason !== undefined
+                ? formatMdPaymentReason(paymentReason)
+                : "..."}
             </Markdown>
             <View spacer={true} />
-            <Markdown>{formatMdInfoRpt(this.props.rptId)}</Markdown>
+            <Markdown>
+              {rptId !== undefined ? formatMdInfoRpt(rptId) : "..."}
+            </Markdown>
             <View spacer={true} />
           </View>
         </Content>
@@ -169,8 +167,6 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
   isGlobalStateWithVerificaResponse(state)
     ? {
         valid: true,
-        initialAmount: getInitialAmount(state),
-        currentAmount: getCurrentAmount(state),
         paymentReason: getPaymentReason(state).getOrElse(
           UNKNOWN_PAYMENT_REASON
         ), // could be undefined as per pagoPA type definition
@@ -179,7 +175,16 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
         ), // could be undefined as per pagoPA type definition
         rptId: getRptId(state)
       }
-    : { valid: false };
+    : getPaymentStep(state) === "PaymentStateNoState" ||
+      getPaymentStep(state) === "PaymentStateQrCode" ||
+      getPaymentStep(state) === "PaymentStateManualEntry"
+      ? {
+          valid: true,
+          paymentReason: undefined,
+          paymentRecipient: undefined,
+          rptId: undefined
+        }
+      : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),
@@ -192,6 +197,6 @@ export default withLoadingSpinner(
     mapStateToProps,
     mapDispatchToProps
   )(TransactionSummaryScreen),
-  createLoadingSelector(["PAYMENT_LOAD"]),
+  createLoadingSelector(["PAYMENT"]),
   {}
 );

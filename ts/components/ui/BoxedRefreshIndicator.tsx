@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
   refreshBox: {
     height: 100,
     flex: 1,
-    alignContent: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

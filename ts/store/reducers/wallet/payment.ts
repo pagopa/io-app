@@ -231,7 +231,7 @@ export const isGlobalStateWithSelectedPaymentMethod = (
 export const getPaymentStep = (state: GlobalState) =>
   state.wallet.payment.stack !== null
     ? state.wallet.payment.stack.head.kind
-    : { kind: "PaymentStateNoState" };
+    : "PaymentStateNoState";
 
 export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
   state.wallet.payment.stack.head.rptId;

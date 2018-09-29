@@ -3,6 +3,7 @@ import * as React from "react";
 import { AppState, Linking, Platform, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
+import { initialiseInstabug } from "./boot/configureInstabug";
 import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
@@ -49,6 +50,10 @@ class RootContainer extends React.PureComponent<Props> {
     // immediately navigate to the resolved action
     this.props.setDeepLink(action, true);
   };
+
+  public componentWillMount() {
+    initialiseInstabug();
+  }
 
   public componentDidMount() {
     if (Platform.OS === "android") {

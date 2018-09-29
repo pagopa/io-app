@@ -12,6 +12,7 @@ global:
     cancel: Cancel
     ok: OK
     continue: Continue
+    retry: Retry
   navigator:
     messages: messages
     wallet: wallet
@@ -111,6 +112,10 @@ authentication:
     card4-title: You can use the app by SPID only
     card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
       to guarantee your online safety
+    card5-title: Welcome to the beta version of IO!
+    card5-content: In this experimental version you can find in the upper-right corner
+      the icons to report bugs or start a chat with the development team.
+      We're waiting for your feedbacks!
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -218,6 +223,8 @@ payment:
   currentPsp: Your current PSP is
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
+  IUV: IUV
+  recipientFiscalCode: Recipient fiscal code
 wallet:  
   wallet: Wallet
   creditcards: Credit Cards
@@ -233,7 +240,7 @@ wallet:
     failed: The card could not be deleted
   newPaymentMethod:
     add: add
-    addButton: Add a new card
+    addButton: Add a new method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
       so that you don't have to re-add them from scratch for every transaction
     successful: The card was added successfully!
@@ -274,8 +281,8 @@ wallet:
     change: Change method
   payWith:
     noWallets:
-      title: No card found
-      text: Add a new card to proceed with the payment
+      title: No payment methods found
+      text: Add a new payment method to proceed with the payment
     header: Choose payment method
     title: Pay with
     text: Choose one saved payment method or add a new one
@@ -357,6 +364,7 @@ wallet:
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
+    wrongQrCode: Not a PagoPA QR Code!
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).

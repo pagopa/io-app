@@ -17,6 +17,7 @@ import {
   Content,
   H1,
   Left,
+  Right,
   Text,
   View
 } from "native-base";
@@ -27,6 +28,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import CardComponent from "../../../components/wallet/card";
@@ -118,6 +120,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Body>
             <Text>{I18n.t("wallet.ConfirmPayment.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
 
         <Content noPadded={true}>
@@ -276,6 +281,6 @@ export default withLoadingSpinner(
     mapStateToProps,
     mapDispatchToProps
   )(ConfirmPaymentMethodScreen),
-  createLoadingSelector(["PAYMENT_LOAD"]),
+  createLoadingSelector(["PAYMENT"]),
   {}
 );

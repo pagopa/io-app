@@ -1,10 +1,12 @@
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { PagoPaErrors } from "../../../sagas/wallet";
 import { Psp } from "../../../types/pagopa";
 import {
   PAYMENT_CANCEL,
   PAYMENT_COMPLETED,
   PAYMENT_CONFIRM_PAYMENT_METHOD,
+  PAYMENT_FAILURE,
   PAYMENT_GO_BACK,
   PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD,
   PAYMENT_INITIAL_PICK_PAYMENT_METHOD,
@@ -210,6 +212,11 @@ export type PaymentPinLogin = Readonly<{
   type: typeof PAYMENT_PIN_LOGIN;
 }>;
 
+export type PaymentFailure = Readonly<{
+  type: typeof PAYMENT_FAILURE;
+  payload: PagoPaErrors;
+}>;
+
 /**
  * All possible payment actions
  */
@@ -242,7 +249,8 @@ export type PaymentActions =
   | PaymentCancel
   | PaymentRequestCancel
   | PaymentRequestPinLogin
-  | PaymentPinLogin;
+  | PaymentPinLogin
+  | PaymentFailure;
 
 export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
   type: PAYMENT_REQUEST_QR_CODE
@@ -394,4 +402,9 @@ export const paymentRequestPinLogin = (): PaymentRequestPinLogin => ({
 
 export const paymentPinLogin = (): PaymentPinLogin => ({
   type: PAYMENT_PIN_LOGIN
+});
+
+export const paymentFailure = (error: PagoPaErrors): PaymentFailure => ({
+  type: PAYMENT_FAILURE,
+  payload: error
 });

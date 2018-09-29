@@ -13,6 +13,7 @@ global:
     cancel: Annulla
     ok: OK
     continue: Continua
+    retry: Riprova
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -117,6 +118,10 @@ authentication:
     card4-title: Potrai utilizzare l'app solo tramite SPID
     card4-content: L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
+    card5-title: Benvenuto nella versione beta di IO!
+    card5-content: In questa versione sperimentale trovi in alto a destra
+      le icone per segnalare bug e aprire una chat con il team di IO.
+      Aspettiamo i tuoi feedback!.
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -225,6 +230,8 @@ payment:
   currentPsp: Il PSP scelto è
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
+  IUV: IUV
+  recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
   creditcards: Carte di Credito
@@ -240,7 +247,7 @@ wallet:
     failed: Impossibile cancellare la carta
   newPaymentMethod:
     add: aggiungi
-    addButton: Aggiungi una carta
+    addButton: Aggiungi un metodo
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
       ecc.) per non doverli inserire ad ogni transazione
     successful: Carta aggiunta con successo
@@ -284,8 +291,8 @@ wallet:
     change: Cambia metodo
   payWith:
     noWallets:
-      title: Nessuna carta salvata
-      text: Aggiungi una carta per procedere con il pagamento
+      title: Nessun metodo di pagamento salvato
+      text: Aggiungi un metodo di pagamento per procedere con il pagamento
     header: Scelta metodo di pagamamento
     title: Paga con
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
@@ -366,6 +373,7 @@ wallet:
   acceptedCards: Carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
+    wrongQrCode: Non è un QR Code PagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codive ente/azienda).

@@ -35,6 +35,12 @@ type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
+    id: 5,
+    image: require("../../../img/landing/05.png"),
+    title: I18n.t("authentication.landing.card5-title"),
+    content: I18n.t("authentication.landing.card5-content")
+  },
+  {
     id: 1,
     image: require("../../../img/landing/01.png"),
     title: I18n.t("authentication.landing.card1-title"),

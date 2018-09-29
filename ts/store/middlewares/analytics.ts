@@ -25,8 +25,8 @@ import {
   SESSION_INFO_LOAD_FAILURE,
   SESSION_INFO_LOAD_SUCCESS,
   TOS_ACCEPT_SUCCESS
-} from "../store/actions/constants";
-import { Action, Dispatch, MiddlewareAPI } from "../store/actions/types";
+} from "../actions/constants";
+import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action

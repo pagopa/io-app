@@ -13,7 +13,8 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
-  RptId
+  RptId,
+  RptIdFromString
 } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
@@ -27,13 +28,16 @@ import {
   Item,
   Label,
   Left,
+  Right,
   Text
 } from "native-base";
 import * as React from "react";
+import { ScrollView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { RptIdFromString } from "../../../../definitions/backend/RptIdFromString";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+
+import { InstabugButtons } from "../../../components/InstabugButtons";
+import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -43,7 +47,6 @@ import {
   paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
-import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 
@@ -153,49 +156,59 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Body>
             <Text>{I18n.t("wallet.insertManually.header")}</Text>
           </Body>
+          <Right>
+            <InstabugButtons />
+          </Right>
         </AppHeader>
-        <Content>
-          <H1>{I18n.t("wallet.insertManually.title")}</H1>
-          <Text>{I18n.t("wallet.insertManually.info")}</Text>
-          <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
-          <Form>
-            <Item floatingLabel={true}>
-              <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
-              <Input
-                keyboardType={"numeric"}
-                onChangeText={value => {
-                  this.setState({
-                    transactionCode:
-                      value === EMPTY_NOTICE_NUMBER ? none : some(value)
-                  });
-                }}
-              />
-            </Item>
-            <Item floatingLabel={true}>
-              <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
-              <Input
-                keyboardType={"numeric"}
-                onChangeText={value => {
-                  this.setState({
-                    fiscalCode: value === EMPTY_FISCAL_CODE ? none : some(value)
-                  });
-                }}
-              />
-            </Item>
-            <Item floatingLabel={true}>
-              <Label>{I18n.t("wallet.insertManually.amount")}</Label>
-              <Input
-                keyboardType={"numeric"}
-                value={
-                  this.state.amount.isSome()
-                    ? `${this.state.amount.value}`
-                    : EMPTY_AMOUNT
-                }
-                onChangeText={this.validateAmount}
-              />
-            </Item>
-          </Form>
-        </Content>
+
+        <ScrollView
+          style={WalletStyles.whiteBg}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Content scrollEnabled={false}>
+            <H1>{I18n.t("wallet.insertManually.title")}</H1>
+            <Text>{I18n.t("wallet.insertManually.info")}</Text>
+            <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
+            <Form>
+              <Item floatingLabel={true}>
+                <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
+                <Input
+                  keyboardType={"numeric"}
+                  onChangeText={value => {
+                    this.setState({
+                      transactionCode:
+                        value === EMPTY_NOTICE_NUMBER ? none : some(value)
+                    });
+                  }}
+                />
+              </Item>
+              <Item floatingLabel={true}>
+                <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
+                <Input
+                  keyboardType={"numeric"}
+                  onChangeText={value => {
+                    this.setState({
+                      fiscalCode:
+                        value === EMPTY_FISCAL_CODE ? none : some(value)
+                    });
+                  }}
+                />
+              </Item>
+              <Item floatingLabel={true}>
+                <Label>{I18n.t("wallet.insertManually.amount")}</Label>
+                <Input
+                  keyboardType={"numeric"}
+                  value={
+                    this.state.amount.isSome()
+                      ? `${this.state.amount.value}`
+                      : EMPTY_AMOUNT
+                  }
+                  onChangeText={this.validateAmount}
+                />
+              </Item>
+            </Form>
+          </Content>
+        </ScrollView>
 
         <FooterWithButtons
           leftButton={secondaryButtonProps}
@@ -218,11 +231,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   cancelPayment: () => dispatch(paymentRequestCancel())
 });
 
-export default withLoadingSpinner(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ManualDataInsertionScreen),
-  createLoadingSelector(["PAYMENT_LOAD"]),
-  {}
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManualDataInsertionScreen);

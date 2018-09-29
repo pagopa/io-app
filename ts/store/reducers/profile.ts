@@ -6,7 +6,7 @@
 
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
-import { AuthenticatedOrInitializedProfile } from "../../api/backend";
+import { UserProfileUnion } from "../../api/backend";
 
 import {
   PROFILE_LOAD_SUCCESS,
@@ -17,7 +17,7 @@ import { Action } from "../actions/types";
 
 import { GlobalState } from "./types";
 
-export type ProfileState = AuthenticatedOrInitializedProfile | null;
+export type ProfileState = UserProfileUnion | null;
 
 const INITIAL_STATE: ProfileState = null;
 
