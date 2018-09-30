@@ -40,6 +40,7 @@ import {
 
 import { SessionToken } from "../types/SessionToken";
 
+import { GetPaymentProblemJson } from "../../definitions/backend/GetPaymentProblemJson";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 /**
@@ -100,6 +101,17 @@ function baseResponseDecoder<R, O = R>(
 export type ExtraResponseType<R> =
   | BaseResponseType<R>
   | IResponseType<400, ProblemJson>;
+
+/**
+ * Specific for the nodo-related requests
+ */
+
+export type NodoErrorResponseType =
+  | IResponseType<400, GetPaymentProblemJson>
+  | IResponseType<401, undefined>
+  | IResponseType<500, GetPaymentProblemJson>;
+
+export type NodoResponseType<R> = IResponseType<200, R> | NodoErrorResponseType;
 
 /**
  * A response decoder for extra response types
@@ -238,7 +250,7 @@ export function BackendClient(
       `/api/v1/payment-activations/${codiceContestoPagamento}`,
     headers: tokenHeaderProducer,
     query: () => ({}),
-    response_decoder: extraResponseDecoder(PaymentActivationsGetResponse)
+    response_decoder: extraResponseDecoderWith404(PaymentActivationsGetResponse)
   };
 
   return {

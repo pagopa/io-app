@@ -73,6 +73,8 @@ type BaseResponseType<R> =
   | IResponseType<403, Error>
   | IResponseType<404, Error>;
 
+type BaseResponseType<R> = IResponseType<200, R> | PaymentManagerErrorType;
+
 function baseResponseDecoder<R, O = R>(
   type: t.Type<R, O>
 ): ResponseDecoder<BaseResponseType<R>> {

@@ -15,9 +15,10 @@ import {
 import createSagaMiddleware from "redux-saga";
 
 import { isDevEnvironment } from "../config";
-import { analytics } from "../middlewares";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
+import { analytics } from "../store/middlewares";
+import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
 import {
   authenticationPersistConfig,
   createRootReducer
@@ -88,6 +89,8 @@ const navigation = createReactNavigationReduxMiddleware(
   (state: GlobalState): NavigationState => state.nav
 );
 
+const navigationHistory = createNavigationHistoryMiddleware();
+
 function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   /**
    * If available use redux-devtool version of the compose function that allow
@@ -99,6 +102,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     applyMiddleware(
       sagaMiddleware,
       logger,
+      navigationHistory,
       navigation,
       analytics.actionTracking, // generic tracker for selected redux actions
       analytics.screenTracking // tracks screen navigation

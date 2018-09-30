@@ -3,14 +3,19 @@
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import {
   paymentCancel,
-  PaymentRequestMessage
+  paymentFailure,
+  paymentPinLogin,
+  paymentRequestCompletion,
+  PaymentRequestMessage,
+  PaymentRequestPinLogin
 } from "./../store/actions/wallet/payment";
 
 /**
  * A saga that manages the Wallet.
  */
 
-import { Option, some } from "fp-ts/lib/Option";
+import { Either, left, right } from "fp-ts/lib/Either";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   IResponseType,
@@ -30,13 +35,14 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
+import { detailEnum } from "../../definitions/backend/GetPaymentProblemJson";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
   GetPaymentInfoT
 } from "../../definitions/backend/requestTypes";
-import { BackendClient } from "../api/backend";
-import { PagoPaClient } from "../api/pagopa";
+import { BackendClient, NodoErrorResponseType } from "../api/backend";
+import { PagoPaClient, PaymentManagerErrorType } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
@@ -58,6 +64,7 @@ import {
   PAYMENT_REQUEST_MESSAGE,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_PICK_PSP,
+  PAYMENT_REQUEST_PIN_LOGIN,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP
@@ -149,6 +156,23 @@ const MAX_TOKEN_REFRESHES = 2;
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
 };
+
+export type NodoErrors = detailEnum | "GENERIC_ERROR" | "MISSING_PAYMENT_ID";
+export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
+export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
+
+const extractNodoError = (
+  response: NodoErrorResponseType | undefined
+): NodoErrors => {
+  const maybeDetail: Option<NodoErrors> = fromNullable(response).mapNullable(
+    r => (r.status === 400 || r.status === 500 ? r.value.detail : undefined)
+  );
+  return maybeDetail.getOrElse("GENERIC_ERROR");
+};
+
+const extractPaymentManagerError = (
+  _: PaymentManagerErrorType | undefined
+): PaymentManagerErrors => "GENERIC_ERROR";
 
 // this function tries to carry out the provided
 // request, and refreshes the pagoPA token if a 401
@@ -461,7 +485,8 @@ function* watchPaymentSaga(
       | PaymentRequestCompletion
       | PaymentRequestGoBack
       | PaymentRequestCancel
-      | PaymentCompleted = yield take([
+      | PaymentCompleted
+      | PaymentRequestPinLogin = yield take([
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MANUAL_ENTRY,
       PAYMENT_REQUEST_TRANSACTION_SUMMARY,
@@ -473,6 +498,7 @@ function* watchPaymentSaga(
       PAYMENT_REQUEST_COMPLETION,
       PAYMENT_REQUEST_GO_BACK,
       PAYMENT_REQUEST_CANCEL,
+      PAYMENT_REQUEST_PIN_LOGIN,
       PAYMENT_COMPLETED
     ]);
     if (action.type === PAYMENT_COMPLETED) {
@@ -511,7 +537,7 @@ function* watchPaymentSaga(
           break;
         }
         case PAYMENT_REQUEST_PICK_PAYMENT_METHOD: {
-          yield fork(pickPaymentMethodHandler, action, pagoPaClient);
+          yield fork(pickPaymentMethodHandler);
           break;
         }
         case PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD: {
@@ -527,7 +553,7 @@ function* watchPaymentSaga(
           break;
         }
         case PAYMENT_REQUEST_COMPLETION: {
-          yield fork(completionHandler, action, pagoPaClient, storedPin);
+          yield fork(completionHandler, pagoPaClient);
           break;
         }
         case PAYMENT_REQUEST_GO_BACK: {
@@ -536,6 +562,10 @@ function* watchPaymentSaga(
         }
         case PAYMENT_REQUEST_CANCEL: {
           yield fork(cancelPaymentHandler, action);
+          break;
+        }
+        case PAYMENT_REQUEST_PIN_LOGIN: {
+          yield fork(pinLoginHandler, storedPin);
           break;
         }
       }
@@ -607,11 +637,11 @@ function* showTransactionSummaryHandler(
             response.value
           )
         );
-      } // TODO else manage errors @https://www.pivotaltracker.com/story/show/159400682
+      } else {
+        yield put(paymentFailure(extractNodoError(response)));
+      }
     } catch {
-      /**
-       * TODO handle error
-       */
+      yield put(paymentFailure("GENERIC_ERROR"));
     } finally {
       yield put(paymentResetLoadingState());
     }
@@ -742,7 +772,7 @@ const attivaRpt = async (
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
-): Promise<boolean> => {
+): Promise<Option<NodoErrors>> => {
   const response:
     | TypeofApiResponse<ActivatePaymentT>
     | undefined = await postAttivaRpt({
@@ -752,14 +782,16 @@ const attivaRpt = async (
       importoSingoloVersamento: amountToImportoWithFallback(amount)
     }
   });
-  return response !== undefined && response.status === 200;
+  return response !== undefined && response.status === 200
+    ? none // none if everything works out fine
+    : some(extractNodoError(response));
 };
 
 // handle the polling
 const fetchPaymentId = async (
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   paymentContextCode: CodiceContestoPagamento
-): Promise<string | undefined> => {
+): Promise<Either<NodoErrors, string>> => {
   // successfully request the payment activation
   // now poll until a paymentId is made available
 
@@ -767,8 +799,10 @@ const fetchPaymentId = async (
     codiceContestoPagamento: paymentContextCode
   });
   return response !== undefined && response.status === 200
-    ? response.value.idPagamento
-    : undefined;
+    ? right(response.value.idPagamento)
+    : response !== undefined && response.status === 404
+      ? left<NodoErrors, string>("MISSING_PAYMENT_ID")
+      : left(extractNodoError(response));
 };
 
 /**
@@ -782,15 +816,15 @@ const attivaAndGetPaymentId = async (
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
-): Promise<string | undefined> => {
+): Promise<Either<NodoErrors, string>> => {
   const attivaRptResult = await attivaRpt(
     postAttivaRpt,
     rptId,
     paymentContextCode,
     amount
   );
-  if (!attivaRptResult) {
-    return undefined;
+  if (attivaRptResult.isSome()) {
+    return left(attivaRptResult.value);
   }
   return await fetchPaymentId(getPaymentIdApi, paymentContextCode);
 };
@@ -808,18 +842,12 @@ function* checkPayment(
       apiCheckPayment,
       pagoPaClient
     );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // all is well
-        // this does not provide any useful information and
-        // it is only required by pagoPA b/c of their internal logics
-      }
+    if (response === undefined || response.status !== 200) {
+      yield put(paymentFailure(extractPaymentManagerError(response)));
     }
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   } catch {
-    /**
-     * TODO handle error
-     */
+    yield put(paymentFailure("GENERIC_ERROR"));
   } finally {
     yield put(paymentResetLoadingState());
   }
@@ -859,7 +887,7 @@ function* continueWithPaymentMethodsHandler(
   if (!hasPaymentId && sessionToken !== undefined) {
     try {
       yield put(paymentSetLoadingState());
-      const tmp: string | undefined = yield call(
+      const result: Either<NodoErrors, string> = yield call(
         attivaAndGetPaymentId,
         postAttivaRpt,
         getPaymentIdApi,
@@ -867,11 +895,15 @@ function* continueWithPaymentMethodsHandler(
         paymentContextCode,
         amount
       );
-      paymentId = tmp;
+      if (result.isRight()) {
+        paymentId = result.value;
+      } else {
+        yield put(paymentFailure(result.value));
+        return;
+      }
     } catch {
-      /**
-       * TODO handle error
-       */
+      yield put(paymentFailure("GENERIC_ERROR"));
+      return;
     } finally {
       yield put(paymentResetLoadingState());
     }
@@ -880,10 +912,7 @@ function* continueWithPaymentMethodsHandler(
     yield call(checkPayment, pagoPaClient, paymentId);
   }
 
-  // in case  (paymentId === undefined && !hasPaymentId),
-  // the payment id could not be fetched successfully. Handle
-  // the error here @https://www.pivotaltracker.com/story/show/159400682
-
+  // redirect as needed
   if (favoriteWallet.isSome()) {
     yield call(
       showWalletOrSelectPsp,
@@ -894,12 +923,7 @@ function* continueWithPaymentMethodsHandler(
   } else {
     // no favorite wallet selected
     // show list
-    yield put(
-      hasPaymentId || paymentId === undefined
-        ? paymentPickPaymentMethod()
-        : paymentInitialPickPaymentMethod(paymentId)
-    );
-    yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
+    yield call(pickPaymentMethodHandler, paymentId);
   }
 }
 
@@ -914,13 +938,17 @@ function* confirmPaymentMethodHandler(
   yield call(showWalletOrSelectPsp, pagoPaClient, walletId, undefined);
 }
 
-function* pickPaymentMethodHandler(_: PaymentRequestPickPaymentMethod) {
+function* pickPaymentMethodHandler(paymentId?: string) {
   // show screen with list of payment methods available
-  yield put(paymentPickPaymentMethod());
+  yield put(
+    paymentId
+      ? paymentInitialPickPaymentMethod(paymentId)
+      : paymentPickPaymentMethod()
+  );
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
 }
 
-function* pickPspHandler(_: PaymentRequestPickPsp, __: PagoPaClient) {
+function* pickPspHandler() {
   const walletId: number = yield select(getSelectedPaymentMethod);
   const pspList: ReadonlyArray<Psp> = yield select(getPspList);
 
@@ -947,39 +975,38 @@ function* updatePspHandler(
       pagoPaClient
     );
 
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // request new wallets (expecting to get the
-        // same ones as before, with the selected one's
-        // PSP set to the new one)
-        yield call(fetchWallets, pagoPaClient);
-        yield put(paymentRequestConfirmPaymentMethod(walletId));
-      }
+    if (response !== undefined && response.status === 200) {
+      // request new wallets (expecting to get the
+      // same ones as before, with the selected one's
+      // PSP set to the new one)
+      yield call(fetchWallets, pagoPaClient);
+      yield put(paymentRequestConfirmPaymentMethod(walletId));
+    } else {
+      yield put(paymentFailure(extractPaymentManagerError(response)));
     }
   } catch {
-    /**
-     * TODO handle error
-     */
+    yield put(paymentFailure("GENERIC_ERROR"));
   } finally {
     yield put(paymentResetLoadingState());
   }
 }
 
-function* completionHandler(
-  _: PaymentRequestCompletion,
-  pagoPaClient: PagoPaClient,
-  storedPin: PinString
-) {
-  // -> it should proceed with the required operations
-  // and terminate with the "new payment" screen
-
+function* pinLoginHandler(storedPin: PinString) {
+  yield put(paymentPinLogin());
   // Retrieve the configured PIN from the keychain
   yield race({
     proceed: call(loginWithPinSaga, storedPin),
     reset: call(watchPinResetSaga)
   });
 
-  const idWallet: number = yield select(getSelectedPaymentMethod);
+  yield put(paymentRequestCompletion());
+}
+
+function* completionHandler(pagoPaClient: PagoPaClient) {
+  // -> it should proceed with the required operations
+  // and terminate with the "new payment" screen
+
+  const walletId: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);
 
   try {
@@ -1020,11 +1047,11 @@ function* completionHandler(
         })
       );
       yield put({ type: PAYMENT_COMPLETED });
+    } else {
+      yield put(paymentFailure(extractPaymentManagerError(response)));
     }
   } catch {
-    /**
-     * TODO handle error
-     */
+    yield put(paymentFailure("GENERIC_ERROR"));
   } finally {
     yield put(paymentResetLoadingState());
   }

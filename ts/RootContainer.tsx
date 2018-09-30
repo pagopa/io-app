@@ -1,6 +1,12 @@
 import { Root } from "native-base";
 import * as React from "react";
-import { AppState, Linking, Platform, StatusBar } from "react-native";
+import {
+  AppState,
+  BackHandler,
+  Linking,
+  Platform,
+  StatusBar
+} from "react-native";
 import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
@@ -9,6 +15,7 @@ import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { applicationChangeState } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
+import { navigateBack } from "./store/actions/navigation";
 import { ApplicationState } from "./store/actions/types";
 import { DeepLinkState } from "./store/reducers/deepLink";
 import {
@@ -28,6 +35,7 @@ type DispatchProps = {
   applicationChangeState: typeof applicationChangeState;
   setDeepLink: typeof setDeepLink;
   navigateToDeepLink: typeof navigateToDeepLink;
+  navigateBack: typeof navigateBack;
 };
 
 type Props = ReduxMappedProps & DispatchProps;
@@ -36,6 +44,11 @@ type Props = ReduxMappedProps & DispatchProps;
  * The main container of the application with the ConnectionBar and the Navigator
  */
 class RootContainer extends React.PureComponent<Props> {
+  private handleBackButton = () => {
+    this.props.navigateBack();
+    return true;
+  };
+
   private handleOpenUrlEvent = (event: { url: string }): void =>
     this.navigateToUrlHandler(event.url);
 
@@ -56,6 +69,8 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+
     if (Platform.OS === "android") {
       Linking.getInitialURL()
         .then(this.navigateToUrlHandler)
@@ -68,6 +83,8 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
+
     if (Platform.OS === "ios") {
       Linking.removeEventListener("url", this.handleOpenUrlEvent);
     }
@@ -123,7 +140,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = {
   applicationChangeState,
   setDeepLink,
-  navigateToDeepLink
+  navigateToDeepLink,
+  navigateBack
 };
 
 export default connect(

@@ -6,8 +6,8 @@ import { NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
-import { getCurrentRouteName } from "../middlewares/analytics";
 import { ReduxProps } from "../store/actions/types";
+import { getCurrentRouteName } from "../store/middlewares/analytics";
 import { GlobalState } from "../store/reducers/types";
 
 interface ReduxMappedProps {

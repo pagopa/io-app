@@ -12,6 +12,7 @@ global:
     cancel: Cancel
     ok: OK
     continue: Continue
+    retry: Retry
   navigator:
     messages: messages
     wallet: wallet
@@ -222,6 +223,8 @@ payment:
   currentPsp: Your current PSP is
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
+  IUV: IUV
+  recipientFiscalCode: Recipient fiscal code
 wallet:  
   wallet: Wallet
   creditcards: Credit Cards

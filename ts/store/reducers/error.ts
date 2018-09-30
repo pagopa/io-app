@@ -23,7 +23,7 @@ const INITIAL_STATE: ErrorState = {
   MESSAGE_WITH_RELATIONS_LOAD: none,
   MESSAGES_LOAD: none,
   LOGOUT: none,
-  PAYMENT_LOAD: none,
+  PAYMENT: none,
   WALLET_MANAGEMENT_LOAD: none,
   FETCH_WALLETS: none,
   FETCH_TRANSACTIONS: none

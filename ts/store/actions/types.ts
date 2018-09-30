@@ -20,6 +20,7 @@ import { DeepLinkActions } from "./deepLink";
 import { ErrorActions } from "./error";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
+import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
 import { PinloginActions } from "./pinlogin";
@@ -54,11 +55,12 @@ export type Action =
   | ProfileActions
   | ServicesActions
   | WalletActions
-  | ContentActions;
+  | ContentActions
+  | NavigationHistoryActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
-export type Store = ReduxStore<GlobalState>;
+export type Store = ReduxStore<GlobalState, Action>;
 
 export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;
 

@@ -62,6 +62,8 @@ export const navigateToBackgroundScreen = NavigationActions.navigate({
   routeName: ROUTES.BACKGROUND
 });
 
+export const navigateBack = NavigationActions.back;
+
 export const navigateToMessageDetailScreenAction = (messageId: string) =>
   StackActions.reset({
     key: "StackRouterRoot",
