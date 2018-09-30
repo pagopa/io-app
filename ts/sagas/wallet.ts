@@ -4,7 +4,10 @@ import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import {
   paymentCancel,
   paymentFailure,
-  PaymentRequestMessage
+  paymentPinLogin,
+  paymentRequestCompletion,
+  PaymentRequestMessage,
+  PaymentRequestPinLogin
 } from "./../store/actions/wallet/payment";
 
 /**
@@ -61,6 +64,7 @@ import {
   PAYMENT_REQUEST_MESSAGE,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_PICK_PSP,
+  PAYMENT_REQUEST_PIN_LOGIN,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_UPDATE_PSP
@@ -481,7 +485,8 @@ function* watchPaymentSaga(
       | PaymentRequestCompletion
       | PaymentRequestGoBack
       | PaymentRequestCancel
-      | PaymentCompleted = yield take([
+      | PaymentCompleted
+      | PaymentRequestPinLogin = yield take([
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MANUAL_ENTRY,
       PAYMENT_REQUEST_TRANSACTION_SUMMARY,
@@ -493,6 +498,7 @@ function* watchPaymentSaga(
       PAYMENT_REQUEST_COMPLETION,
       PAYMENT_REQUEST_GO_BACK,
       PAYMENT_REQUEST_CANCEL,
+      PAYMENT_REQUEST_PIN_LOGIN,
       PAYMENT_COMPLETED
     ]);
     if (action.type === PAYMENT_COMPLETED) {
@@ -547,7 +553,7 @@ function* watchPaymentSaga(
           break;
         }
         case PAYMENT_REQUEST_COMPLETION: {
-          yield fork(completionHandler, pagoPaClient, storedPin);
+          yield fork(completionHandler, pagoPaClient);
           break;
         }
         case PAYMENT_REQUEST_GO_BACK: {
@@ -556,6 +562,10 @@ function* watchPaymentSaga(
         }
         case PAYMENT_REQUEST_CANCEL: {
           yield fork(cancelPaymentHandler, action);
+          break;
+        }
+        case PAYMENT_REQUEST_PIN_LOGIN: {
+          yield fork(pinLoginHandler, storedPin);
           break;
         }
       }
@@ -983,15 +993,20 @@ function* updatePspHandler(
   }
 }
 
-function* completionHandler(pagoPaClient: PagoPaClient, storedPin: PinString) {
-  // -> it should proceed with the required operations
-  // and terminate with the "new payment" screen
-
+function* pinLoginHandler(storedPin: PinString) {
+  yield put(paymentPinLogin());
   // Retrieve the configured PIN from the keychain
   yield race({
     proceed: call(loginWithPinSaga, storedPin),
     reset: call(watchPinResetSaga)
   });
+
+  yield put(paymentRequestCompletion());
+}
+
+function* completionHandler(pagoPaClient: PagoPaClient) {
+  // -> it should proceed with the required operations
+  // and terminate with the "new payment" screen
 
   const walletId: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);

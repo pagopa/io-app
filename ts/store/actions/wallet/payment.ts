@@ -14,6 +14,7 @@ import {
   PAYMENT_MANUAL_ENTRY,
   PAYMENT_PICK_PAYMENT_METHOD,
   PAYMENT_PICK_PSP,
+  PAYMENT_PIN_LOGIN,
   PAYMENT_QR_CODE,
   PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
@@ -24,6 +25,7 @@ import {
   PAYMENT_REQUEST_MESSAGE,
   PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
   PAYMENT_REQUEST_PICK_PSP,
+  PAYMENT_REQUEST_PIN_LOGIN,
   PAYMENT_REQUEST_QR_CODE,
   PAYMENT_REQUEST_TRANSACTION_SUMMARY,
   PAYMENT_RESET_LOADING,
@@ -202,6 +204,14 @@ export type PaymentRequestCancel = Readonly<{
   type: typeof PAYMENT_REQUEST_CANCEL;
 }>;
 
+export type PaymentRequestPinLogin = Readonly<{
+  type: typeof PAYMENT_REQUEST_PIN_LOGIN;
+}>;
+
+export type PaymentPinLogin = Readonly<{
+  type: typeof PAYMENT_PIN_LOGIN;
+}>;
+
 export type PaymentFailure = Readonly<{
   type: typeof PAYMENT_FAILURE;
   payload: PagoPaErrors;
@@ -238,6 +248,8 @@ export type PaymentActions =
   | PaymentResetLoadingState
   | PaymentCancel
   | PaymentRequestCancel
+  | PaymentRequestPinLogin
+  | PaymentPinLogin
   | PaymentFailure;
 
 export const paymentRequestQrCode = (): PaymentRequestQrCode => ({
@@ -382,6 +394,14 @@ export const paymentCancel = (): PaymentCancel => ({
 
 export const paymentRequestCancel = (): PaymentRequestCancel => ({
   type: PAYMENT_REQUEST_CANCEL
+});
+
+export const paymentRequestPinLogin = (): PaymentRequestPinLogin => ({
+  type: PAYMENT_REQUEST_PIN_LOGIN
+});
+
+export const paymentPinLogin = (): PaymentPinLogin => ({
+  type: PAYMENT_PIN_LOGIN
 });
 
 export const paymentFailure = (error: PagoPaErrors): PaymentFailure => ({
