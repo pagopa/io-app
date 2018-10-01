@@ -9,18 +9,17 @@ import {
   setNativeExceptionHandler
 } from "react-native-exception-handler";
 import DeviceInfo from "react-native-device-info";
-import Mixpanel from "react-native-mixpanel";
-
-// Configure Mixpanel session
-Mixpanel.sharedInstanceWithToken(Config.MIXPANEL_TOKEN);
+import { mixpanel } from "./ts/mixpanel";
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
-    Mixpanel.trackWithProperties("APPLICATION_ERROR", {
-      TYPE: "js",
-      ERROR: JSON.stringify(e),
-      APP_VERSION: DeviceInfo.getReadableVersion()
-    });
+    if (mixpanel) {
+      mixpanel.track("APPLICATION_ERROR", {
+        TYPE: "js",
+        ERROR: JSON.stringify(e),
+        APP_VERSION: DeviceInfo.getReadableVersion()
+      });
+    }
     Alert.alert(
       "Unexpected error occurred",
       `
@@ -35,11 +34,13 @@ const errorHandler = (e, isFatal) => {
 
 setJSExceptionHandler(errorHandler);
 setNativeExceptionHandler(exceptionString => {
-  Mixpanel.trackWithProperties("APPLICATION_ERROR", {
-    TYPE: "native",
-    ERROR: exceptionString,
-    APP_VERSION: DeviceInfo.getReadableVersion()
-  });
+  if (mixpanel) {
+    mixpanel.track("APPLICATION_ERROR", {
+      TYPE: "native",
+      ERROR: exceptionString,
+      APP_VERSION: DeviceInfo.getReadableVersion()
+    });
+  }
 });
 
 import { App } from "./ts/App";
