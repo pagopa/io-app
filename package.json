@@ -41,7 +41,7 @@
     "react-native-device-info": "^0.22",
     "react-native-exception-handler": "^2.9.0",
     "react-native-fs": "2.11.15",
-    "react-native-i18n": "^2.0.12",
+    "react-native-i18n": "^2.0.15",
     "react-native-keychain": "^3.0.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-mixpanel": "^0.0.16",
