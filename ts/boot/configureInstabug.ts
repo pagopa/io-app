@@ -24,7 +24,9 @@ export const initialiseInstabug = () => {
   Instabug.setPrimaryColor(processColor(variables.contentPrimaryBackground));
 
   Instabug.setColorTheme(Instabug.colorTheme.light);
-  Instabug.setLocale(instabugLocales[I18n.currentLocale()]);
+  Instabug.setLocale(
+    instabugLocales[I18n.currentLocale().startsWith("it") ? "it" : "en"]
+  );
 };
 
 export const setInstabugProfileAttributes = (
