@@ -1,3 +1,4 @@
+import { PaymentProblemJson } from "./../../definitions/backend/PaymentProblemJson";
 // tslint:disable:max-union-size
 
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
@@ -15,7 +16,7 @@ import {
  */
 
 import { Either, left, right } from "fp-ts/lib/Either";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   IResponseType,
@@ -35,14 +36,14 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
-import { detailEnum } from "../../definitions/backend/GetPaymentProblemJson";
+import { detailEnum } from "../../definitions/backend/PaymentProblemJson";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
   GetPaymentInfoT
 } from "../../definitions/backend/requestTypes";
-import { BackendClient, NodoErrorResponseType } from "../api/backend";
-import { PagoPaClient, PaymentManagerErrorType } from "../api/pagopa";
+import { BackendClient } from "../api/backend";
+import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
@@ -140,7 +141,6 @@ import {
   NullableWallet,
   PayRequest,
   Psp,
-  Transaction,
   Wallet
 } from "../types/pagopa";
 import { PinString } from "../types/PinString";
@@ -158,21 +158,22 @@ const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
 };
 
-export type NodoErrors = detailEnum | "GENERIC_ERROR" | "MISSING_PAYMENT_ID";
+export type NodoErrors =
+  | keyof typeof detailEnum
+  | "GENERIC_ERROR"
+  | "MISSING_PAYMENT_ID";
 export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
 export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
 
 const extractNodoError = (
-  response: NodoErrorResponseType | undefined
-): NodoErrors => {
-  const maybeDetail: Option<NodoErrors> = fromNullable(response).mapNullable(
-    r => (r.status === 400 || r.status === 500 ? r.value.detail : undefined)
-  );
-  return maybeDetail.getOrElse("GENERIC_ERROR");
-};
+  response: IResponseType<number, any> | undefined
+): NodoErrors =>
+  response && PaymentProblemJson.is(response.value)
+    ? response.value.detail
+    : "GENERIC_ERROR";
 
 const extractPaymentManagerError = (
-  _: PaymentManagerErrorType | undefined
+  _: string | undefined
 ): PaymentManagerErrors => "GENERIC_ERROR";
 
 // this function tries to carry out the provided
@@ -281,7 +282,8 @@ function* addCreditCard(
       idWallet: null,
       type: "CREDIT_CARD",
       favourite: null,
-      creditCard
+      creditCard,
+      psp: undefined
     };
     // 1st call: boarding credit card
     const boardCreditCard = (token: string) =>
@@ -717,10 +719,8 @@ function* fetchPspList(
       apiGetPspList,
       pagoPaClient
     );
-    if (response !== undefined) {
-      if (response.status === 200) {
-        pspList = response.value.data;
-      }
+    if (response !== undefined && response.status === 200) {
+      pspList = response.value.data;
     }
   } catch {
     /**
@@ -845,7 +845,13 @@ function* checkPayment(
       pagoPaClient
     );
     if (response === undefined || response.status !== 200) {
-      yield put(paymentFailure(extractPaymentManagerError(response)));
+      yield put(
+        paymentFailure(
+          extractPaymentManagerError(
+            response ? response.value.message : undefined
+          )
+        )
+      );
     }
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   } catch {
@@ -984,7 +990,13 @@ function* updatePspHandler(
       yield call(fetchWallets, pagoPaClient);
       yield put(paymentRequestConfirmPaymentMethod(walletId));
     } else {
-      yield put(paymentFailure(extractPaymentManagerError(response)));
+      yield put(
+        paymentFailure(
+          extractPaymentManagerError(
+            response ? response.value.message : undefined
+          )
+        )
+      );
     }
   } catch {
     yield put(paymentFailure("GENERIC_ERROR"));
@@ -1008,13 +1020,15 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
 
-  const walletId: number = yield select(getSelectedPaymentMethod);
+  const idWallet: number = yield select(getSelectedPaymentMethod);
   const paymentId: string = yield select(getPaymentId);
 
   try {
     yield put(paymentSetLoadingState());
     const apiPostPayment = (pagoPaToken: string) =>
-      pagoPaClient.postPayment(pagoPaToken, paymentId, walletId);
+      pagoPaClient.postPayment(pagoPaToken, paymentId, {
+        data: { tipo: "web", idWallet }
+      });
     const response: SagaCallReturnType<typeof apiPostPayment> = yield call(
       fetchWithTokenRefresh,
       apiPostPayment,
@@ -1028,13 +1042,13 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
       // a payment with status "processing", while the
       // value returned here contains the "completed" status
       // upon successful payment
-      const newTransaction: Transaction = response.value.data;
+      const newTransaction = response.value.data;
       yield call(fetchTransactions, pagoPaClient);
       // use "storeNewTransaction(newTransaction) if it's okay
       // to have the payment as "pending" (this information will
       // not be shown to the user as of yet)
       yield put(selectTransactionForDetails(newTransaction));
-      yield put(selectWalletForDetails(walletId)); // for the banner
+      yield put(selectWalletForDetails(idWallet)); // for the banner
       yield put(
         // TODO: this should use StackActions.reset
         // to reset the navigation. Right now, the
@@ -1048,7 +1062,13 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
       );
       yield put({ type: PAYMENT_COMPLETED });
     } else {
-      yield put(paymentFailure(extractPaymentManagerError(response)));
+      yield put(
+        paymentFailure(
+          extractPaymentManagerError(
+            response ? response.value.message : undefined
+          )
+        )
+      );
     }
   } catch {
     yield put(paymentFailure("GENERIC_ERROR"));

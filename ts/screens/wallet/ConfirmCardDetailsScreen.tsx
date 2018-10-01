@@ -148,7 +148,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     wallet: {
       creditCard: card.value,
       type: "CREDIT_CARD",
-      idWallet: -1
+      idWallet: -1,
+      psp: undefined
     }
   };
 };
