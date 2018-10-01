@@ -32,6 +32,7 @@ import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { storeCreditCardData } from "../../store/actions/wallet/wallets";
 import { createLoadingSelector } from "../../store/reducers/loading";
+import { GlobalState } from "../../store/reducers/types";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -41,7 +42,11 @@ import {
   CreditCardPan
 } from "../../utils/input";
 
-type ReduxMappedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
+  isLoading: boolean;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
   storeCreditCardData: (card: CreditCard) => void;
 }>;
 
@@ -49,7 +54,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedProps & OwnProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -316,15 +321,15 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
+});
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
 });
 
-export default withLoadingSpinner(
-  connect(
-    undefined,
-    mapDispatchToProps
-  )(AddCardScreen),
-  createLoadingSelector(["WALLET_MANAGEMENT_LOAD"]),
-  {}
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLoadingSpinner(AddCardScreen, {}));

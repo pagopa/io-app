@@ -11,6 +11,8 @@ import { ERROR_CLEAR, FetchRequestActionsType } from "../actions/constants";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
+// FIXME: by using string as the type of errors we loose type info in case we
+//        have enums (e.g. PaymentError)
 export type ErrorState = Readonly<
   { [key in FetchRequestActionsType]: Option<string> }
 >;

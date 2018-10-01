@@ -2,17 +2,9 @@ import { Option } from "fp-ts/lib/Option";
 import { Button, H2, Text } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
 
 import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-
-export type WithErrorModalInjectedProps<E> = {
-  error: Option<E>;
-};
-
-export type WithErrorModalProps<P, E> = P & WithErrorModalInjectedProps<E>;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -60,19 +52,16 @@ const styles = StyleSheet.create({
  * @param WrappedComponent The react component you want to wrap
  * @param errorSelector A redux selector that returns the error (as string) or undefined
  * @param errorMapping A mapping function that converts the extracted error (if any) into a user-readable string
- * @param onCancel Function that will be called if the user presses the "cancel" button. This will need to clear the
- *                 stored error to hide the modal
- * @param onRetry Function that will be called if the user presses the "retry" button. This will need to clear the
- *                stored error to hide the modal
  */
-export function withErrorModal<P, E = string>(
-  WrappedComponent: React.ComponentType<P>,
-  errorSelector: (state: GlobalState) => Option<E>,
-  errorMapping: (t: E) => string,
-  onCancel: () => void,
-  onRetry?: () => void
-) {
-  class WithErrorModal extends React.Component<WithErrorModalProps<P, E>> {
+export function withErrorModal<
+  E,
+  P extends Readonly<{
+    error: Option<E>;
+    onCancel: () => void;
+    onRetry?: () => void;
+  }>
+>(WrappedComponent: React.ComponentType<P>, errorMapping: (t: E) => string) {
+  class WithErrorModal extends React.Component<P> {
     public render() {
       const { error } = this.props;
 
@@ -101,7 +90,7 @@ export function withErrorModal<P, E = string>(
       return (
         <View style={styles.buttonsContainer}>
           <Button
-            onPress={onCancel}
+            onPress={this.props.onCancel}
             style={styles.buttonCancel}
             light={true}
             block={true}
@@ -110,12 +99,12 @@ export function withErrorModal<P, E = string>(
               {I18n.t("global.buttons.cancel")}
             </Text>
           </Button>
-          {onRetry && <View style={styles.separator} />}
-          {onRetry && (
+          {this.props.onRetry && <View style={styles.separator} />}
+          {this.props.onRetry && (
             <Button
               primary={true}
               block={true}
-              onPress={onRetry}
+              onPress={this.props.onRetry}
               style={styles.buttonRetry}
             >
               <Text>{I18n.t("global.buttons.retry")}</Text>
@@ -126,9 +115,5 @@ export function withErrorModal<P, E = string>(
     };
   }
 
-  const mapStateToProps = (state: GlobalState) => ({
-    error: errorSelector(state)
-  });
-
-  return connect(mapStateToProps)(WithErrorModal);
+  return WithErrorModal;
 }
