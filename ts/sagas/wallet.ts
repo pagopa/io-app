@@ -1,15 +1,4 @@
-import { PaymentProblemJson } from "./../../definitions/backend/PaymentProblemJson";
 // tslint:disable:max-union-size
-
-import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
-import {
-  paymentCancel,
-  paymentFailure,
-  paymentPinLogin,
-  paymentRequestCompletion,
-  PaymentRequestMessage,
-  PaymentRequestPinLogin
-} from "./../store/actions/wallet/payment";
 
 /**
  * A saga that manages the Wallet.
@@ -17,6 +6,7 @@ import {
 
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
+import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   IResponseType,
@@ -35,17 +25,20 @@ import {
   take,
   takeLatest
 } from "redux-saga/effects";
+
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
   GetPaymentInfoT
 } from "../../definitions/backend/requestTypes";
+
 import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
+
 import { LogoutSuccess } from "../store/actions/authentication";
 import {
   ADD_CREDIT_CARD_COMPLETED,
@@ -136,6 +129,15 @@ import {
   walletCountSelector
 } from "../store/reducers/wallet/wallets";
 import {
+  paymentCancel,
+  paymentFailure,
+  paymentPinLogin,
+  paymentRequestCompletion,
+  PaymentRequestMessage,
+  PaymentRequestPinLogin
+} from "./../store/actions/wallet/payment";
+
+import {
   extractNodoError,
   extractPaymentManagerError,
   NodoErrors
@@ -150,8 +152,10 @@ import {
 import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
 import { SagaCallReturnType } from "../types/utils";
+
 import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
+
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 
@@ -162,27 +166,6 @@ const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
 };
 
-<<<<<<< HEAD
-export type NodoErrors =
-  | keyof typeof detailEnum
-  | "GENERIC_ERROR"
-  | "MISSING_PAYMENT_ID";
-export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
-export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
-
-const extractNodoError = (
-  response: IResponseType<number, any> | undefined
-): NodoErrors =>
-  response && PaymentProblemJson.is(response.value)
-    ? response.value.detail
-    : "GENERIC_ERROR";
-
-const extractPaymentManagerError = (
-  _: string | undefined
-): PaymentManagerErrors => "GENERIC_ERROR";
-
-=======
->>>>>>> making HOCs unaware of redux, introducing screen errors in UI, minor fixes
 // this function tries to carry out the provided
 // request, and refreshes the pagoPA token if a 401
 // is returned. Upon refreshing, it tries to

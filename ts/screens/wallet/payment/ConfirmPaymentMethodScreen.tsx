@@ -40,7 +40,6 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import {
   paymentRequestCancel,
-  paymentRequestCompletion,
   paymentRequestGoBack,
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp,

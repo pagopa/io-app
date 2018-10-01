@@ -1,23 +1,25 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import { detailEnum } from "../../definitions/backend/PaymentProblemJson";
-import { NodoErrorResponseType } from "../api/backend";
-import { PaymentManagerErrorType } from "../api/pagopa";
+import { fromNullable } from "fp-ts/lib/Option";
+import { IResponseType } from "italia-ts-commons/lib/requests";
 
-export type NodoErrors = detailEnum | "GENERIC_ERROR" | "MISSING_PAYMENT_ID";
+import { detailEnum } from "../../definitions/backend/PaymentProblemJson";
+import { PaymentProblemJson } from "./../../definitions/backend/PaymentProblemJson";
+
+export type NodoErrors =
+  | keyof typeof detailEnum
+  | "GENERIC_ERROR"
+  | "MISSING_PAYMENT_ID";
 export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
 export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
 
 export const extractNodoError = (
-  response: NodoErrorResponseType | undefined
-): NodoErrors => {
-  const maybeDetail: Option<NodoErrors> = fromNullable(response).mapNullable(
-    r => (r.status === 500 ? r.value.detail : undefined)
-  );
-  return maybeDetail.getOrElse("GENERIC_ERROR");
-};
+  response: IResponseType<number, any> | undefined
+): NodoErrors =>
+  response && PaymentProblemJson.is(response.value)
+    ? response.value.detail
+    : "GENERIC_ERROR";
 
 export const extractPaymentManagerError = (
-  _: PaymentManagerErrorType | undefined
+  _: string | undefined
 ): PaymentManagerErrors => "GENERIC_ERROR";
 
 export const mapErrorCodeToMessage = (error: string): string => {
