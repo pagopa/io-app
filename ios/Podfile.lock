@@ -59,7 +59,7 @@ PODS:
     - React
   - RNFS (2.11.15):
     - React
-  - RNI18n (2.0.12):
+  - RNI18n (2.0.15):
     - React
   - RNKeychain (3.0.0):
     - React
@@ -142,7 +142,7 @@ SPEC CHECKSUMS:
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
-  RNI18n: db9be06a40336f04d136f24dd5de3f5eb9f3207c
+  RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
   RNKeychain: 627c6095cef215dd3d9804a9a9cf45ab96aa3997
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
