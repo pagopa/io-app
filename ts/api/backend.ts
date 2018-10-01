@@ -2,7 +2,6 @@ import * as t from "io-ts";
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
-  basicResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders as compD,
   constantResponseDecoder as constD,
@@ -14,33 +13,35 @@ import {
 } from "italia-ts-commons/lib/requests";
 
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
-import { CreateOrUpdateInstallationResponse } from "../../definitions/backend/CreateOrUpdateInstallationResponse";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { Messages } from "../../definitions/backend/Messages";
-import { PaymentActivationsGetResponse } from "../../definitions/backend/PaymentActivationsGetResponse";
 import { PaymentProblemJson } from "../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
-import { PublicSession } from "../../definitions/backend/PublicSession";
-import { ServicePublic } from "../../definitions/backend/ServicePublic";
 
 import {
+  activatePaymentDefaultDecoder,
   ActivatePaymentT,
+  createOrUpdateInstallationDefaultDecoder,
   CreateOrUpdateInstallationT,
+  getActivationStatusDefaultDecoder,
   GetActivationStatusT,
+  getPaymentInfoDefaultDecoder,
   GetPaymentInfoT,
+  getServiceDefaultDecoder,
   GetServiceT,
+  getSessionStateDefaultDecoder,
   GetSessionStateT,
+  getUserMessageDefaultDecoder,
+  getUserMessagesDefaultDecoder,
   GetUserMessagesT,
   GetUserMessageT,
+  getUserProfileDecoder,
   GetUserProfileT,
+  upsertProfileDefaultDecoder,
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
 
 import { SessionToken } from "../types/SessionToken";
 
-import { GetPaymentProblemJson } from "../../definitions/backend/GetPaymentProblemJson";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 /**
@@ -96,45 +97,15 @@ function baseResponseDecoder<R, O = R>(
 }
 
 /**
- *  The extra response type adds the 400 status to the base response type
- */
-export type ExtraResponseType<R> =
-  | BaseResponseType<R>
-  | IResponseType<400, ProblemJson>;
-
-/**
  * Specific for the nodo-related requests
  */
 
 export type NodoErrorResponseType =
-  | IResponseType<400, GetPaymentProblemJson>
+  | IResponseType<400, PaymentProblemJson>
   | IResponseType<401, undefined>
-  | IResponseType<500, GetPaymentProblemJson>;
+  | IResponseType<500, PaymentProblemJson>;
 
 export type NodoResponseType<R> = IResponseType<200, R> | NodoErrorResponseType;
-
-/**
- * A response decoder for extra response types
- */
-function extraResponseDecoder<R>(
-  type: t.Type<R, R>
-): ResponseDecoder<ExtraResponseType<R>> {
-  return compD(
-    baseResponseDecoder(type),
-    ioD<400, ProblemJson>(400, ProblemJson)
-  );
-}
-
-const paymentResponseDecoder = compD(
-  compD(
-    compD(
-      ioD<200, PaymentRequestsGetResponse>(200, PaymentRequestsGetResponse),
-      ioD<400, ProblemJson>(400, ProblemJson)
-    ),
-    constD<undefined, 401>(401, undefined)
-  ),
-  ioD<500, PaymentProblemJson>(500, PaymentProblemJson)
-);
 
 export type LogoutT = IPostApiRequestType<
   {},
@@ -164,7 +135,7 @@ export function BackendClient(
     url: () => "/api/v1/session",
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    response_decoder: baseResponseDecoder(PublicSession)
+    response_decoder: getSessionStateDefaultDecoder()
   };
 
   const getServiceT: GetServiceT = {
@@ -172,7 +143,7 @@ export function BackendClient(
     url: params => `/api/v1/services/${params.service_id}`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: baseResponseDecoder(ServicePublic)
+    response_decoder: getServiceDefaultDecoder()
   };
 
   const getMessagesT: GetUserMessagesT = {
@@ -180,7 +151,7 @@ export function BackendClient(
     url: () => `/api/v1/messages`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: baseResponseDecoder(Messages)
+    response_decoder: getUserMessagesDefaultDecoder()
   };
 
   const getMessageT: GetUserMessageT = {
@@ -188,7 +159,7 @@ export function BackendClient(
     url: params => `/api/v1/messages/${params.id}`,
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: basicResponseDecoder(CreatedMessageWithContent)
+    response_decoder: getUserMessageDefaultDecoder()
   };
 
   const getProfileT: GetUserProfileT = {
@@ -196,7 +167,7 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: baseResponseDecoder(UserProfileUnion)
+    response_decoder: getUserProfileDecoder(UserProfileUnion)
   };
 
   const createOrUpdateProfileT: UpsertProfileT = {
@@ -205,7 +176,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.extendedProfile),
-    response_decoder: extraResponseDecoder(InitializedProfile)
+    response_decoder: upsertProfileDefaultDecoder()
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
@@ -214,7 +185,7 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.installation),
-    response_decoder: baseResponseDecoder(CreateOrUpdateInstallationResponse)
+    response_decoder: createOrUpdateInstallationDefaultDecoder()
   };
 
   const logoutT: LogoutT = {
@@ -231,7 +202,7 @@ export function BackendClient(
     url: ({ rptId }) => `/api/v1/payment-requests/${rptId}`,
     headers: tokenHeaderProducer,
     query: _ => ({}),
-    response_decoder: paymentResponseDecoder
+    response_decoder: getPaymentInfoDefaultDecoder()
   };
 
   const attivaRptT: ActivatePaymentT = {
@@ -241,7 +212,7 @@ export function BackendClient(
     query: () => ({}),
     body: ({ paymentActivationsPostRequest }) =>
       JSON.stringify(paymentActivationsPostRequest),
-    response_decoder: paymentResponseDecoder
+    response_decoder: activatePaymentDefaultDecoder()
   };
 
   const getPaymentIdT: GetActivationStatusT = {
@@ -250,7 +221,7 @@ export function BackendClient(
       `/api/v1/payment-activations/${codiceContestoPagamento}`,
     headers: tokenHeaderProducer,
     query: () => ({}),
-    response_decoder: extraResponseDecoderWith404(PaymentActivationsGetResponse)
+    response_decoder: getActivationStatusDefaultDecoder()
   };
 
   return {

@@ -2,26 +2,18 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
-import * as t from "io-ts";
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
-  basicErrorResponseDecoder as errD,
   composeHeaderProducers,
-  composeResponseDecoders as compD,
-  constantResponseDecoder as consD,
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
-  ioResponseDecoder as ioD,
   IPostApiRequestType,
   IPutApiRequestType,
   IResponseType,
-  ResponseDecoder,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
-
-import { PaymentResponse } from "../../definitions/pagopa/PaymentResponse";
 
 import { PspListResponse } from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
@@ -31,15 +23,25 @@ import { WalletListResponse } from "../types/pagopa";
 import { WalletResponse } from "../types/pagopa";
 
 import {
+  addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
+  checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
+  deleteWalletUsingDELETEDefaultDecoder,
   DeleteWalletUsingDELETET,
+  getPspListUsingGETDecoder,
   GetPspListUsingGETT,
+  getTransactionsUsingGETDecoder,
   GetTransactionsUsingGETT,
+  getWalletsUsingGETDecoder,
   GetWalletsUsingGETT,
+  payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
+  payUsingPOSTDecoder,
   PayUsingPOSTT,
+  startSessionUsingGETDecoder,
   StartSessionUsingGETT,
+  updateWalletUsingPUTDecoder,
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
 
@@ -67,23 +69,6 @@ type MapResponseType<T, S extends number, B> = T extends IGetApiRequestType<
         ? IDeleteApiRequestType<P4, H4, Q4, MapTypeInApiResponse<R4, S, B>>
         : never;
 
-type BaseResponseType<R> =
-  | IResponseType<200, R>
-  | IResponseType<401, Error>
-  | IResponseType<403, Error>
-  | IResponseType<404, Error>;
-
-type BaseResponseType<R> = IResponseType<200, R> | PaymentManagerErrorType;
-
-function baseResponseDecoder<R, O = R>(
-  type: t.Type<R, O>
-): ResponseDecoder<BaseResponseType<R>> {
-  return compD(
-    compD(compD(ioD<200, R, O>(200, type), errD<401>(401)), errD<403>(403)),
-    errD<404>(404)
-  );
-}
-
 const getSession: MapResponseType<
   StartSessionUsingGETT,
   200,
@@ -93,7 +78,7 @@ const getSession: MapResponseType<
   url: _ => "/v1/users/actions/start-session",
   query: _ => _,
   headers: () => ({}),
-  response_decoder: baseResponseDecoder(SessionResponse)
+  response_decoder: startSessionUsingGETDecoder(SessionResponse)
 };
 
 const getTransactions: (
@@ -107,7 +92,7 @@ const getTransactions: (
   url: () => "/v1/transactions",
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: baseResponseDecoder(TransactionListResponse)
+  response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
 });
 
 const getWallets: (
@@ -121,7 +106,7 @@ const getWallets: (
   url: () => "/v1/wallet",
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: baseResponseDecoder(WalletListResponse)
+  response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
 });
 
 const checkPayment: (
@@ -131,7 +116,7 @@ const checkPayment: (
   url: ({ id }) => `/v1/payments/${id}/actions/check`,
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: baseResponseDecoder(PaymentResponse)
+  response_decoder: checkPaymentUsingGETDefaultDecoder()
 });
 
 const getPspList: (
@@ -148,7 +133,7 @@ const getPspList: (
     idPayment
   }),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: baseResponseDecoder(PspListResponse)
+  response_decoder: getPspListUsingGETDecoder(PspListResponse)
 });
 
 const updateWalletPsp: (
@@ -166,7 +151,7 @@ const updateWalletPsp: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: baseResponseDecoder(WalletResponse)
+  response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
 });
 
 const boardCreditCard: (
@@ -184,7 +169,7 @@ const boardCreditCard: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: baseResponseDecoder(WalletResponse)
+  response_decoder: addWalletCreditCardUsingPOSTDecoder(WalletResponse)
 });
 
 const postPayment: (
@@ -202,7 +187,7 @@ const postPayment: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: baseResponseDecoder(TransactionResponse)
+  response_decoder: payUsingPOSTDecoder(TransactionResponse)
 });
 
 const boardPay: (
@@ -220,7 +205,9 @@ const boardPay: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: baseResponseDecoder(TransactionResponse)
+  response_decoder: payCreditCardVerificationUsingPOSTDecoder(
+    TransactionResponse
+  )
 });
 
 const deleteWallet: (
@@ -230,13 +217,7 @@ const deleteWallet: (
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: compD(
-    compD(
-      compD(consD<undefined, 200>(200, undefined), errD<204>(204)),
-      errD<401>(401)
-    ),
-    errD<403>(403)
-  )
+  response_decoder: deleteWalletUsingDELETEDefaultDecoder()
 });
 
 export function PagoPaClient(

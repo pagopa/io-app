@@ -4277,9 +4277,9 @@ italia-tslint-rules@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/italia-tslint-rules/-/italia-tslint-rules-0.1.1.tgz#b150373925a268ff892a545229708484ac0533ba"
 
-italia-utils@^3.14.10:
-  version "3.14.10"
-  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.14.10.tgz#a7619df50c69a307f2d3e7455ad1b28568bb2f57"
+italia-utils@^3.14.16:
+  version "3.14.16"
+  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-3.14.16.tgz#e0e6fbf87856fb70c6d973faf3ae2c9a4dab15c8"
   dependencies:
     fs-extra "^6.0.0"
     italia-ts-commons "^2.14.0"
