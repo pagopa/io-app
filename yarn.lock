@@ -636,10 +636,6 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-mixpanel@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@types/react-native-mixpanel/-/react-native-mixpanel-0.1.0.tgz#6726c38ca6e11b798e1b5ac146da362baaec7024"
-
 "@types/react-native-push-notification@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#ab732ada08b18e060e3a53c6ecf67dc9258edfea"
@@ -6471,9 +6467,9 @@ react-native-loading-spinner-overlay@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.2.tgz#b7bcd277476d596615fd7feee601789f9bdc7acc"
 
-react-native-mixpanel@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-0.0.16.tgz#1c98e61c07c375efd96b8300ec5813fc5966b9df"
+react-native-mixpanel@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.1.tgz#012580fb1b42b6c0ee35d0af0a24af68cfa79b89"
 
 react-native-offline@3.11.0:
   version "3.11.0"
@@ -6513,7 +6509,7 @@ react-native-safe-area-view@^0.8.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-react-native-sha256@^1.0.1:
+react-native-sha256@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.1.1.tgz#3598dba556b0bbcd12618bd101c10d130c217fc3"
 

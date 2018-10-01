@@ -1,5 +1,7 @@
-import Mixpanel from "react-native-mixpanel";
+import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
+
+import { mixpanel } from "../../mixpanel";
 
 import {
   ANALYTICS_AUTHENTICATION_COMPLETED,
@@ -31,6 +33,7 @@ import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
+// tslint:disable-next-line:cognitive-complexity
 export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
   return (next: Dispatch): ((_: Action) => Action) => {
     return (action: Action): Action => {
@@ -42,9 +45,13 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         //
 
         case APP_STATE_CHANGE_ACTION:
-          Mixpanel.trackWithProperties("APP_STATE_CHANGE", {
-            APPLICATION_STATE_NAME: nextAction.payload
-          });
+          if (mixpanel) {
+            mixpanel
+              .track("APP_STATE_CHANGE", {
+                APPLICATION_STATE_NAME: nextAction.payload
+              })
+              .then(() => 0, () => 0);
+          }
           break;
 
         //
@@ -52,10 +59,14 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         //
 
         case IDP_SELECTED:
-          Mixpanel.trackWithProperties(IDP_SELECTED, {
-            SPID_IDP_ID: nextAction.payload.id,
-            SPID_IDP_NAME: nextAction.payload.name
-          });
+          if (mixpanel) {
+            mixpanel
+              .track(IDP_SELECTED, {
+                SPID_IDP_ID: nextAction.payload.id,
+                SPID_IDP_NAME: nextAction.payload.name
+              })
+              .then(() => 0, () => 0);
+          }
           break;
 
         //
@@ -88,25 +99,23 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // other
         case NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE:
         case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE:
-          Mixpanel.track(nextAction.type);
-          break;
-
-        /*
-        case REHYDRATE: {
-          if (!has(result, 'payload.user.profile.fiscalnumber')) {
-            break
+          if (mixpanel !== undefined) {
+            mixpanel.track(nextAction.type).then(() => 0, () => 0);
+            if (nextAction.type === PROFILE_LOAD_SUCCESS) {
+              // as soon as we have the user fiscal code, attach the mixpanel
+              // session to the sha256 hash to the fiscal code of the user
+              const fiscalnumber = nextAction.payload.fiscal_code;
+              sha256(fiscalnumber).then(
+                hash => {
+                  if (mixpanel !== undefined) {
+                    mixpanel.identify(hash).then(() => 0, () => 0);
+                  }
+                },
+                () => 0
+              );
+            }
           }
-
-          const { fiscalnumber } = result.payload.user.profile
-          sha256(fiscalnumber).then(hash => {
-            Mixpanel.identify(hash)
-            Mixpanel.set({
-              fiscalnumber: hash
-            })
-          })
-          break
-        }
-        */
+          break;
 
         default: {
           break;
@@ -166,10 +175,12 @@ export function screenTracking(
       const result = next(action);
       const nextScreen = getCurrentRouteName(store.getState().nav);
 
-      if (nextScreen !== currentScreen) {
-        Mixpanel.trackWithProperties("SCREEN_CHANGE", {
-          SCREEN_NAME: nextScreen
-        });
+      if (nextScreen !== currentScreen && mixpanel) {
+        mixpanel
+          .track("SCREEN_CHANGE", {
+            SCREEN_NAME: nextScreen
+          })
+          .then(() => 0, () => 0);
       }
       return result;
     };
