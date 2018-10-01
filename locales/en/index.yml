@@ -225,7 +225,7 @@ payment:
   changePsp: Change PSP
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
-wallet:  
+wallet:
   wallet: Wallet
   creditcards: Credit Cards
   paymentMethods: Payment methods
@@ -372,6 +372,16 @@ wallet:
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md
+  errors:
+    PAYMENT_DUPLICATED: PAYMENT_DUPLICATED
+    INVALID_AMOUNT: INVALID_AMOUNT
+    PAYMENT_ONGOING: PAYMENT_ONGOING
+    PAYMENT_EXPIRED: PAYMENT_EXPIRED
+    PAYMENT_UNAVAILABLE: PAYMENT_UNAVAILABLE
+    PAYMENT_UNKNOWN: PAYMENT_UNKNOWN
+    DOMAIN_UNKNOWN: DOMAIN_UNKNOWN
+    GENERIC_ERROR: GENERIC_ERROR
+    MISSING_PAYMENT_ID: MISSING_PAYMENT_ID
 saveCard:
   saveCard: Save the card
   cancel: Cancel

@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
  * @param errorMapping A mapping function that converts the extracted error (if any) into a user-readable string
  */
 export function withErrorModal<
+  E,
   P extends Readonly<{
     error: Option<E>;
     onCancel: () => void;
     onRetry?: () => void;
-  }>,
-  E = string
+  }>
 >(WrappedComponent: React.ComponentType<P>, errorMapping: (t: E) => string) {
   class WithErrorModal extends React.Component<P> {
     public render() {
