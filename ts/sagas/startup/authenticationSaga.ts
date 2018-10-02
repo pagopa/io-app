@@ -19,7 +19,7 @@ import { SessionToken } from "../../types/SessionToken";
  * a SessionToken gets produced.
  */
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
-  yield put(analyticsAuthenticationStarted);
+  yield put(analyticsAuthenticationStarted());
 
   const isSessionExpired: boolean = yield select(isSessionExpiredSelector);
 
@@ -44,7 +44,7 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?
-  yield put(analyticsAuthenticationCompleted);
+  yield put(analyticsAuthenticationCompleted());
 
   return action.payload;
 }

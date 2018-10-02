@@ -1,30 +1,18 @@
-import {
-  ANALYTICS_AUTHENTICATION_COMPLETED,
-  ANALYTICS_AUTHENTICATION_STARTED,
-  ANALYTICS_ONBOARDING_STARTED
-} from "./constants";
+import { ActionType, createAction } from "typesafe-actions";
 
-type AnalyticsOboardingStarted = Readonly<{
-  type: typeof ANALYTICS_ONBOARDING_STARTED;
-}>;
+export const analyticsAuthenticationStarted = createAction(
+  "ANALYTICS_AUTHENTICATION_STARTED"
+);
 
-type AnalyticsAuthenticationStarted = Readonly<{
-  type: typeof ANALYTICS_AUTHENTICATION_STARTED;
-}>;
+export const analyticsAuthenticationCompleted = createAction(
+  "ANALYTICS_AUTHENTICATION_COMPLETED"
+);
 
-type AnalyticsAuthenticationCompleted = Readonly<{
-  type: typeof ANALYTICS_AUTHENTICATION_COMPLETED;
-}>;
+export const analyticsOnboardingStarted = createAction(
+  "ANALYTICS_ONBOARDING_STARTED"
+);
 
 export type AnalyticsActions =
-  | AnalyticsOboardingStarted
-  | AnalyticsAuthenticationStarted
-  | AnalyticsAuthenticationCompleted;
-
-export const analyticsAuthenticationStarted: AnalyticsAuthenticationStarted = {
-  type: "ANALYTICS_AUTHENTICATION_STARTED"
-};
-
-export const analyticsAuthenticationCompleted: AnalyticsAuthenticationCompleted = {
-  type: "ANALYTICS_AUTHENTICATION_COMPLETED"
-};
+  | ActionType<typeof analyticsOnboardingStarted>
+  | ActionType<typeof analyticsAuthenticationStarted>
+  | ActionType<typeof analyticsAuthenticationCompleted>;

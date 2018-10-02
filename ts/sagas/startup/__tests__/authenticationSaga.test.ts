@@ -21,7 +21,7 @@ describe("authenticationSaga", () => {
   it("should navigate to authentication screen and return the session token on login success", () => {
     testSaga(authenticationSaga)
       .next()
-      .put(analyticsAuthenticationStarted)
+      .put(analyticsAuthenticationStarted())
       .next()
       .select(isSessionExpiredSelector)
       .next(false)
@@ -29,7 +29,7 @@ describe("authenticationSaga", () => {
       .next()
       .take(LOGIN_SUCCESS)
       .next(loginSuccess(aSessionToken))
-      .put(analyticsAuthenticationCompleted)
+      .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);
   });
@@ -37,7 +37,7 @@ describe("authenticationSaga", () => {
   it("should navigate to IDP selection screen on session expired and return the session token on login success", () => {
     testSaga(authenticationSaga)
       .next()
-      .put(analyticsAuthenticationStarted)
+      .put(analyticsAuthenticationStarted())
       .next()
       .select(isSessionExpiredSelector)
       .next(true)
@@ -49,7 +49,7 @@ describe("authenticationSaga", () => {
       .next()
       .take(LOGIN_SUCCESS)
       .next(loginSuccess(aSessionToken))
-      .put(analyticsAuthenticationCompleted)
+      .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);
   });

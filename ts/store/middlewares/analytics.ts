@@ -1,12 +1,15 @@
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
+import { getType } from "typesafe-actions";
 
 import { mixpanel } from "../../mixpanel";
 
 import {
-  ANALYTICS_AUTHENTICATION_COMPLETED,
-  ANALYTICS_AUTHENTICATION_STARTED,
-  ANALYTICS_ONBOARDING_STARTED,
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted,
+  analyticsOnboardingStarted
+} from "../actions/analytics";
+import {
   APP_STATE_CHANGE_ACTION,
   IDP_SELECTED,
   LOGIN_FAILURE,
@@ -74,17 +77,17 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         //
 
         // authentication
-        case ANALYTICS_AUTHENTICATION_STARTED:
+        case getType(analyticsAuthenticationStarted):
+        case getType(analyticsAuthenticationCompleted):
         case LOGIN_SUCCESS:
         case LOGIN_FAILURE:
         case SESSION_INFO_LOAD_SUCCESS:
         case SESSION_INFO_LOAD_FAILURE:
         case SESSION_EXPIRED:
-        case ANALYTICS_AUTHENTICATION_COMPLETED:
         case LOGOUT_SUCCESS:
         case LOGOUT_FAILURE:
         // onboarding
-        case ANALYTICS_ONBOARDING_STARTED:
+        case getType(analyticsOnboardingStarted):
         case TOS_ACCEPT_SUCCESS:
         case PIN_CREATE_SUCCESS:
         case PIN_CREATE_FAILURE:
