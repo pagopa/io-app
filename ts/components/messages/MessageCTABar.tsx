@@ -158,7 +158,7 @@ class MessageCTABar extends React.PureComponent<Props> {
           {this.renderReminderCTA(message)}
 
           {needReminderCTA(message) &&
-            needPaymentCTA(message) && (
+            needPaymentCTA(message, service) && (
               <View style={styles.separatorContainer} />
             )}
 
