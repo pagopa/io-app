@@ -15,7 +15,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 
-import { PspListResponse } from "../types/pagopa";
+import { NullableWallet, PspListResponse } from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
 import { TransactionListResponse } from "../types/pagopa";
 import { TransactionResponse } from "../types/pagopa";
@@ -268,14 +268,9 @@ export function PagoPaClient(
         id,
         payRequest
       }),
-    boardCreditCard: (
-      pagoPaToken: string,
-      walletRequest: TypeofApiParams<
-        AddWalletCreditCardUsingPOSTT
-      >["walletRequest"]
-    ) =>
+    boardCreditCard: (pagoPaToken: string, walletRequest: NullableWallet) =>
       createFetchRequestForApi(boardCreditCard(pagoPaToken), options)({
-        walletRequest
+        walletRequest: { data: walletRequest }
       }),
     boardPay: (
       pagoPaToken: string,
