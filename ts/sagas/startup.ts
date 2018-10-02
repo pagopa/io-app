@@ -1,13 +1,13 @@
 import { isNone, Option } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
+import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
-import { START_APPLICATION_INITIALIZATION } from "../store/actions/constants";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
@@ -80,8 +80,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
-    yield put(sessionExpired);
-    yield put(startApplicationInitialization);
+    yield put(sessionExpired());
+    yield put(startApplicationInitialization());
     return;
   }
 
@@ -107,7 +107,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     if (maybeSessionInformation.isNone()) {
       // we can't go further without session info, let's restart
       // the initialization process
-      yield put(startApplicationInitialization);
+      yield put(startApplicationInitialization());
       return;
     }
   }
@@ -123,7 +123,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile
-    yield put(startApplicationInitialization);
+    yield put(startApplicationInitialization());
     return;
   }
   const userProfile = maybeUserProfile.value;
@@ -228,5 +228,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
 export function* startupSaga(): IterableIterator<Effect> {
   // Wait until the IngressScreen gets mounted
-  yield takeLatest(START_APPLICATION_INITIALIZATION, initializeApplicationSaga);
+  yield takeLatest(
+    getType(startApplicationInitialization),
+    initializeApplicationSaga
+  );
 }

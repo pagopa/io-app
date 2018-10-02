@@ -1,17 +1,18 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
+import { isActionOf } from "typesafe-actions";
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import {
-  IDP_SELECTED,
-  LOGIN_SUCCESS,
-  LOGOUT_SUCCESS,
-  SESSION_EXPIRED,
-  SESSION_INFO_LOAD_SUCCESS,
-  SESSION_INVALID
-} from "../actions/constants";
+  idpSelected,
+  loginSuccess,
+  logoutSuccess,
+  sessionExpired,
+  sessionInformationLoadSuccess,
+  sessionInvalid
+} from "../actions/authentication";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -141,7 +142,7 @@ const reducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action
 ): AuthenticationState => {
-  if (action.type === IDP_SELECTED && !isLoggedIn(state)) {
+  if (isActionOf(idpSelected, action) && !isLoggedIn(state)) {
     // Save the selected IDP in the state
     return {
       ...state,
@@ -152,7 +153,7 @@ const reducer = (
     };
   }
 
-  if (action.type === LOGIN_SUCCESS && isLoggedOutWithIdp(state)) {
+  if (isActionOf(loginSuccess, action) && isLoggedOutWithIdp(state)) {
     // Save the SessionToken (got from the WebView redirect url) in the state
     return {
       kind: "LoggedInWithoutSessionInfo",
@@ -161,7 +162,7 @@ const reducer = (
     };
   }
 
-  if (action.type === SESSION_INFO_LOAD_SUCCESS && isLoggedIn(state)) {
+  if (isActionOf(sessionInformationLoadSuccess, action) && isLoggedIn(state)) {
     // Save the session info in the state
     return {
       ...state,
@@ -173,16 +174,17 @@ const reducer = (
   }
 
   if (
-    (action.type === SESSION_EXPIRED ||
-      action.type === SESSION_INVALID ||
-      action.type === LOGOUT_SUCCESS) &&
+    (isActionOf(sessionExpired, action) ||
+      isActionOf(sessionInvalid, action) ||
+      isActionOf(logoutSuccess, action)) &&
     isLoggedIn(state)
   ) {
     return {
       kind: "LoggedOutWithIdp",
       idp: state.idp,
-      reason:
-        action.type === SESSION_EXPIRED ? "SESSION_EXPIRED" : "NOT_LOGGED_IN"
+      reason: isActionOf(sessionExpired, action)
+        ? "SESSION_EXPIRED"
+        : "NOT_LOGGED_IN"
     };
   }
 

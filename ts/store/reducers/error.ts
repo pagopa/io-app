@@ -75,6 +75,7 @@ function reducer(
     // We need to set the error message
     return {
       ...state,
+      // tslint:disable-next-line:no-useless-cast
       [requestName]: some((action as any).payload) || "Generic error"
     };
   } else {

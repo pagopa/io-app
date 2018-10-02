@@ -13,8 +13,8 @@ export function* watchPinResetSaga(): Iterator<Effect> {
     // tslint:disable-next-line:saga-yield-return-type
     yield call(deletePin);
     // invalidate the session
-    yield put(sessionInvalid);
+    yield put(sessionInvalid());
     // initialize the app from scratch (forcing an onboarding flow)
-    yield put(startApplicationInitialization);
+    yield put(startApplicationInitialization());
   });
 }

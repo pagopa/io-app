@@ -1,12 +1,12 @@
 import { Effect } from "redux-saga";
 import { put, select, take } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
-import { LoginSuccess } from "../../store/actions/authentication";
-import { LOGIN_SUCCESS } from "../../store/actions/constants";
+import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 
 import { NavigationActions } from "react-navigation";
@@ -19,7 +19,7 @@ import { SessionToken } from "../../types/SessionToken";
  * a SessionToken gets produced.
  */
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
-  yield put(analyticsAuthenticationStarted);
+  yield put(analyticsAuthenticationStarted());
 
   const isSessionExpired: boolean = yield select(isSessionExpiredSelector);
 
@@ -39,12 +39,14 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
-  const action: LoginSuccess = yield take(LOGIN_SUCCESS);
+  const action: ActionType<typeof loginSuccess> = yield take(
+    getType(loginSuccess)
+  );
 
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?
-  yield put(analyticsAuthenticationCompleted);
+  yield put(analyticsAuthenticationCompleted());
 
   return action.payload;
 }

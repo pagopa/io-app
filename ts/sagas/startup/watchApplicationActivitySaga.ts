@@ -1,19 +1,19 @@
 import { NavigationActions } from "react-navigation";
 import { Effect } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
 import { backgroundActivityTimeout } from "../../config";
-import { startApplicationInitialization } from "../../store/actions/application";
-import { APP_STATE_CHANGE_ACTION } from "../../store/actions/constants";
+import {
+  applicationChangeState,
+  ApplicationState,
+  startApplicationInitialization
+} from "../../store/actions/application";
 import {
   navigateToBackgroundScreen,
   navigateToMessageDetailScreenAction
 } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
-import {
-  ApplicationState,
-  ApplicationStateAction
-} from "../../store/actions/types";
 import {
   PendingMessageState,
   pendingMessageStateSelector
@@ -34,8 +34,8 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let lastUpdateAtMillis: number | undefined;
 
-  yield takeEvery(APP_STATE_CHANGE_ACTION, function*(
-    action: ApplicationStateAction
+  yield takeEvery(getType(applicationChangeState), function*(
+    action: ActionType<typeof applicationChangeState>
   ) {
     // listen for changes in application state
     const newApplicationState: ApplicationState = action.payload;
@@ -62,7 +62,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       if (timeElapsedMillis > backgroundActivityTimeoutMillis) {
         // If the app has been in background state for more than the timeout,
         // re-initialize the app from scratch
-        yield put(startApplicationInitialization);
+        yield put(startApplicationInitialization());
       } else {
         // Check if we have a pending notification message
         const pendingMessageState: PendingMessageState = yield select(

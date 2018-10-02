@@ -1,11 +1,12 @@
 import { testSaga } from "redux-saga-test-plan";
 
+import { getType } from "typesafe-actions";
+
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
-import { LOGIN_SUCCESS } from "../../../store/actions/constants";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { isSessionExpiredSelector } from "../../../store/reducers/authentication";
 
@@ -21,15 +22,15 @@ describe("authenticationSaga", () => {
   it("should navigate to authentication screen and return the session token on login success", () => {
     testSaga(authenticationSaga)
       .next()
-      .put(analyticsAuthenticationStarted)
+      .put(analyticsAuthenticationStarted())
       .next()
       .select(isSessionExpiredSelector)
       .next(false)
       .put(resetToAuthenticationRoute)
       .next()
-      .take(LOGIN_SUCCESS)
+      .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
-      .put(analyticsAuthenticationCompleted)
+      .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);
   });
@@ -37,7 +38,7 @@ describe("authenticationSaga", () => {
   it("should navigate to IDP selection screen on session expired and return the session token on login success", () => {
     testSaga(authenticationSaga)
       .next()
-      .put(analyticsAuthenticationStarted)
+      .put(analyticsAuthenticationStarted())
       .next()
       .select(isSessionExpiredSelector)
       .next(true)
@@ -47,9 +48,9 @@ describe("authenticationSaga", () => {
         })
       )
       .next()
-      .take(LOGIN_SUCCESS)
+      .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
-      .put(analyticsAuthenticationCompleted)
+      .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);
   });

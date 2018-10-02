@@ -43,7 +43,7 @@ export function* checkProfileEnabledSaga(
     if (action.type === PROFILE_UPSERT_FAILURE) {
       // Restart the initialization loop to let the user retry.
       // FIXME: show an error message
-      yield put(startApplicationInitialization);
+      yield put(startApplicationInitialization());
     }
   }
 }

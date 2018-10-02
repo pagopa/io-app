@@ -1,18 +1,28 @@
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
+import { getType } from "typesafe-actions";
 
 import { mixpanel } from "../../mixpanel";
 
 import {
-  ANALYTICS_AUTHENTICATION_COMPLETED,
-  ANALYTICS_AUTHENTICATION_STARTED,
-  ANALYTICS_ONBOARDING_STARTED,
-  APP_STATE_CHANGE_ACTION,
-  IDP_SELECTED,
-  LOGIN_FAILURE,
-  LOGIN_SUCCESS,
-  LOGOUT_FAILURE,
-  LOGOUT_SUCCESS,
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted,
+  analyticsOnboardingStarted
+} from "../actions/analytics";
+
+import { applicationChangeState } from "../actions/application";
+import {
+  idpSelected,
+  loginFailure,
+  loginSuccess,
+  logoutFailure,
+  logoutSuccess,
+  sessionExpired,
+  sessionInformationLoadFailure,
+  sessionInformationLoadSuccess
+} from "../actions/authentication";
+
+import {
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_SUCCESS,
   NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
@@ -23,9 +33,6 @@ import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_SUCCESS,
-  SESSION_EXPIRED,
-  SESSION_INFO_LOAD_FAILURE,
-  SESSION_INFO_LOAD_SUCCESS,
   TOS_ACCEPT_SUCCESS
 } from "../actions/constants";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
@@ -44,7 +51,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // Application state actions
         //
 
-        case APP_STATE_CHANGE_ACTION:
+        case getType(applicationChangeState):
           if (mixpanel) {
             mixpanel
               .track("APP_STATE_CHANGE", {
@@ -58,10 +65,10 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // Authentication actions (with properties)
         //
 
-        case IDP_SELECTED:
+        case getType(idpSelected):
           if (mixpanel) {
             mixpanel
-              .track(IDP_SELECTED, {
+              .track(action.type, {
                 SPID_IDP_ID: nextAction.payload.id,
                 SPID_IDP_NAME: nextAction.payload.name
               })
@@ -74,17 +81,17 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         //
 
         // authentication
-        case ANALYTICS_AUTHENTICATION_STARTED:
-        case LOGIN_SUCCESS:
-        case LOGIN_FAILURE:
-        case SESSION_INFO_LOAD_SUCCESS:
-        case SESSION_INFO_LOAD_FAILURE:
-        case SESSION_EXPIRED:
-        case ANALYTICS_AUTHENTICATION_COMPLETED:
-        case LOGOUT_SUCCESS:
-        case LOGOUT_FAILURE:
+        case getType(analyticsAuthenticationStarted):
+        case getType(analyticsAuthenticationCompleted):
+        case getType(loginSuccess):
+        case getType(loginFailure):
+        case getType(sessionInformationLoadSuccess):
+        case getType(sessionInformationLoadFailure):
+        case getType(sessionExpired):
+        case getType(logoutSuccess):
+        case getType(logoutFailure):
         // onboarding
-        case ANALYTICS_ONBOARDING_STARTED:
+        case getType(analyticsOnboardingStarted):
         case TOS_ACCEPT_SUCCESS:
         case PIN_CREATE_SUCCESS:
         case PIN_CREATE_FAILURE:

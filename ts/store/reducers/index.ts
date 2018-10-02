@@ -6,8 +6,9 @@ import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { FormStateMap, reducer as formReducer } from "redux-form";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
+import { isActionOf } from "typesafe-actions";
 
-import { LOGOUT_SUCCESS } from "../actions/constants";
+import { logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
@@ -87,7 +88,7 @@ export function createRootReducer(
   persistConfigs: ReadonlyArray<PersistConfig>
 ) {
   return (state: GlobalState | undefined, action: Action): GlobalState => {
-    if (action.type === LOGOUT_SUCCESS) {
+    if (isActionOf(logoutSuccess, action)) {
       // Purge the stored redux-persist state
       persistConfigs.forEach(persistConfig => purgeStoredState(persistConfig));
 

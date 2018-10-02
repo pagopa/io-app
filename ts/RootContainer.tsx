@@ -14,9 +14,9 @@ import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
 import { applicationChangeState } from "./store/actions/application";
+import { ApplicationState } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { ApplicationState } from "./store/actions/types";
 import { DeepLinkState } from "./store/reducers/deepLink";
 import {
   isPinLoginValidSelector,

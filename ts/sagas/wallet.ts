@@ -25,6 +25,7 @@ import {
   take,
   takeLatest
 } from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import {
@@ -39,14 +40,13 @@ import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 
-import { LogoutSuccess } from "../store/actions/authentication";
+import { logoutSuccess } from "../store/actions/authentication";
 import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
   DELETE_WALLET_REQUEST,
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
-  LOGOUT_SUCCESS,
   PAYMENT_COMPLETED,
   PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
@@ -1109,18 +1109,17 @@ export function* watchWalletSaga(
       | FetchTransactionsRequest
       | FetchWalletsRequest
       | AddCreditCardRequest
-      | LogoutSuccess
+      | ActionType<typeof logoutSuccess>
       | PaymentRequestQrCode
       | PaymentRequestMessage
       | DeleteWalletRequest = yield take([
       FETCH_TRANSACTIONS_REQUEST,
       FETCH_WALLETS_REQUEST,
-      LOGOUT_SUCCESS,
+      getType(logoutSuccess),
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MESSAGE,
       ADD_CREDIT_CARD_REQUEST,
-      DELETE_WALLET_REQUEST,
-      LOGOUT_SUCCESS
+      DELETE_WALLET_REQUEST
     ]);
 
     if (action.type === FETCH_TRANSACTIONS_REQUEST) {
@@ -1142,7 +1141,7 @@ export function* watchWalletSaga(
     }
     // if the user logs out, go back to waiting
     // for a WALLET_TOKEN_LOAD_SUCCESS action
-    if (action.type === LOGOUT_SUCCESS) {
+    if (isActionOf(logoutSuccess, action)) {
       break;
     }
   }

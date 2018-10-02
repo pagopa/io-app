@@ -99,7 +99,7 @@ function* createOrUpdateProfileSaga(
 
   if (response && response.status === 401) {
     // on 401, expire the current session and restart the authentication flow
-    yield put(sessionExpired);
+    yield put(sessionExpired());
     return;
   }
 
