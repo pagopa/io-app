@@ -1,10 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
 
-import { ProfileState } from "../../store/reducers/profile";
-
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ProfileState } from "../../store/reducers/profile";
 
 /**
  * The enabled/disabled state of each channel.
@@ -31,9 +29,7 @@ export function getEnabledChannelsForService(
   return fromNullable(profileState)
     .mapNullable(
       profile =>
-        InitializedProfile.is(profile)
-          ? profile.blocked_inbox_or_channels
-          : null
+        profile.extended ? profile.extended.blocked_inbox_or_channels : null
     )
     .mapNullable(blockedChannels => blockedChannels[serviceId])
     .map(_ => ({
@@ -60,9 +56,7 @@ export const getBlockedChannels = (
   const profileBlockedChannels = fromNullable(profileState)
     .mapNullable(
       profile =>
-        InitializedProfile.is(profile)
-          ? profile.blocked_inbox_or_channels
-          : null
+        profile.extended ? profile.extended.blocked_inbox_or_channels : null
     )
     .getOrElse({});
 

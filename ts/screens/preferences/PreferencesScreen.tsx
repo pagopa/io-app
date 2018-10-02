@@ -1,32 +1,25 @@
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { untag } from "italia-ts-commons/lib/types";
 import { Content, List, ListItem } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { fromNullable, Option } from "fp-ts/lib/Option";
-
-import { untag } from "italia-ts-commons/lib/types";
-
+import { Profile } from "../../../definitions/backend/Profile";
+import PreferenceItem from "../../components/PreferenceItem";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-
+import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
-
-import PreferenceItem from "../../components/PreferenceItem";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import Markdown from "../../components/ui/Markdown";
-
-import ROUTES from "../../navigation/routes";
-
-import { UserProfileUnion } from "../../api/backend";
-
 import { getLocalePrimary } from "../../utils/locale";
 
 type ReduxMappedProps = {
-  maybeProfile: Option<UserProfileUnion>;
+  maybeProfile: Option<Profile>;
   isProfileLoading: boolean;
   isProfileLoadingError: Option<string>;
   isProfileUpserting: boolean;
@@ -68,8 +61,8 @@ class PreferencesScreen extends React.Component<Props> {
 
     const profileData = maybeProfile
       .map(_ => ({
-        spid_email: untag(_.spid_email),
-        spid_mobile_phone: untag(_.spid_mobile_phone)
+        spid_email: untag(_.spid.spid_email),
+        spid_mobile_phone: untag(_.spid.spid_mobile_phone)
       }))
       .getOrElse({
         spid_email: I18n.t("global.remoteStates.notAvailable"),

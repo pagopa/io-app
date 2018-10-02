@@ -102,8 +102,8 @@ function mapStateToProps(state: GlobalState): ReduxMappedProps {
     hasProfile: maybeProfile !== null,
     isProfileEnabled:
       maybeProfile !== null &&
-      maybeProfile.has_profile &&
-      maybeProfile.is_inbox_enabled
+      maybeProfile.extended !== undefined &&
+      maybeProfile.extended.is_inbox_enabled
   };
 }
 

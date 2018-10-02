@@ -12,11 +12,8 @@ import {
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 
-import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { PaymentProblemJson } from "../../definitions/backend/PaymentProblemJson";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
-
 import {
   activatePaymentDefaultDecoder,
   ActivatePaymentT,
@@ -34,33 +31,13 @@ import {
   getUserMessagesDefaultDecoder,
   GetUserMessagesT,
   GetUserMessageT,
-  getUserProfileDecoder,
+  getUserProfileDefaultDecoder,
   GetUserProfileT,
   upsertProfileDefaultDecoder,
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
-
 import { SessionToken } from "../types/SessionToken";
-
 import { defaultRetryingFetch } from "../utils/fetch";
-
-/**
- * Here we have to redefine the auto-generated UserProfile type since the
- * generated one is not a discriminated union (swagger specs don't support
- * constant values that can discriminate union types).
- */
-export const UserProfileUnion = t.union([
-  t.intersection([
-    InitializedProfile,
-    t.interface({ has_profile: t.literal(true) })
-  ]),
-  t.intersection([
-    AuthenticatedProfile,
-    t.interface({ has_profile: t.literal(false) })
-  ])
-]);
-
-export type UserProfileUnion = t.TypeOf<typeof UserProfileUnion>;
 
 //
 // Other helper types
@@ -167,7 +144,7 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: getUserProfileDecoder(UserProfileUnion)
+    response_decoder: getUserProfileDefaultDecoder()
   };
 
   const createOrUpdateProfileT: UpsertProfileT = {

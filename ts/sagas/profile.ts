@@ -5,13 +5,13 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 
+import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
+import { Profile } from "../../definitions/backend/Profile";
 import {
   GetUserProfileT,
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
-
 import I18n from "../i18n";
-
 import { sessionExpired } from "../store/actions/authentication";
 import { PROFILE_UPSERT_REQUEST } from "../store/actions/constants";
 import {
@@ -22,16 +22,12 @@ import {
   profileUpsertSuccess
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
-
 import { SagaCallReturnType } from "../types/utils";
-
-import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UserProfileUnion } from "../api/backend";
 
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: TypeofApiCall<GetUserProfileT>
-): Iterator<Effect | Option<UserProfileUnion>> {
+): Iterator<Effect | Option<Profile>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -39,11 +35,8 @@ export function* loadProfile(
     );
 
     if (response && response.status === 200) {
-      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
-      // discriminated union!
-      // tslint:disable-next-line:no-useless-cast
-      yield put(profileLoadSuccess(response.value as UserProfileUnion));
+      // Ok we got a valid response, send a PROFILE_LOAD_SUCCESS action
+      yield put(profileLoadSuccess(response.value));
       return some(response.value);
     }
 
@@ -73,14 +66,9 @@ function* createOrUpdateProfileSaga(
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
   // FIXME: perhaps this is responsibility of the caller?
-  const newProfile: ExtendedProfile = profileState.has_profile
+  const newProfile: ExtendedProfile = profileState.extended
     ? {
-        is_inbox_enabled: profileState.is_inbox_enabled,
-        is_webhook_enabled: profileState.is_webhook_enabled,
-        version: profileState.version,
-        email: profileState.email,
-        preferred_languages: profileState.preferred_languages,
-        blocked_inbox_or_channels: profileState.blocked_inbox_or_channels,
+        ...profileState.extended,
         ...action.payload
       }
     : {

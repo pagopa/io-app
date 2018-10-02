@@ -3,7 +3,6 @@ import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 
 import { mixpanel } from "../../mixpanel";
-
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted,
@@ -111,7 +110,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
             if (nextAction.type === PROFILE_LOAD_SUCCESS) {
               // as soon as we have the user fiscal code, attach the mixpanel
               // session to the sha256 hash to the fiscal code of the user
-              const fiscalnumber = nextAction.payload.fiscal_code;
+              const fiscalnumber = nextAction.payload.spid.fiscal_code;
               sha256(fiscalnumber).then(
                 hash => {
                   if (mixpanel !== undefined) {

@@ -1,6 +1,7 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { UserProfileUnion } from "../../api/backend";
+
+import { Profile } from "../../../definitions/backend/Profile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
   PROFILE_UPSERT_FAILURE,
@@ -13,13 +14,13 @@ import {
 } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
-  profile: UserProfileUnion
+  profile: Profile
 ): IterableIterator<Effect> {
   if (
-    !profile.has_profile ||
-    !profile.email ||
-    !profile.is_inbox_enabled ||
-    !profile.is_webhook_enabled
+    !profile.extended ||
+    !profile.extended.email ||
+    !profile.extended.is_inbox_enabled ||
+    !profile.extended.is_webhook_enabled
   ) {
     // NOTE: `has_profile` is a boolean that is true if the profile is
     // active in the API.
@@ -32,7 +33,7 @@ export function* checkProfileEnabledSaga(
       profileUpsertRequest({
         is_inbox_enabled: true,
         is_webhook_enabled: true,
-        email: profile.spid_email
+        email: profile.spid.spid_email
       })
     );
     const action: ProfileUpsertSuccess | ProfileUpsertFailure = yield take([

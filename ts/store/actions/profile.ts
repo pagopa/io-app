@@ -3,10 +3,8 @@
  */
 
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-
-import { UserProfileUnion } from "../../api/backend";
-
+import { Profile } from "../../../definitions/backend/Profile";
+import { Omit } from "../../types/utils";
 import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_SUCCESS,
@@ -16,8 +14,6 @@ import {
   RESET_PROFILE_STATE
 } from "./constants";
 
-import { Omit } from "../../types/utils";
-
 // Actions
 
 type ResetProfileState = Readonly<{
@@ -26,7 +22,7 @@ type ResetProfileState = Readonly<{
 
 type ProfileLoadSuccess = Readonly<{
   type: typeof PROFILE_LOAD_SUCCESS;
-  payload: UserProfileUnion;
+  payload: Profile;
 }>;
 
 type ProfileLoadFailure = Readonly<{
@@ -42,7 +38,7 @@ export type ProfileUpsertRequest = Readonly<{
 
 export type ProfileUpsertSuccess = Readonly<{
   type: typeof PROFILE_UPSERT_SUCCESS;
-  payload: InitializedProfile;
+  payload: Profile;
 }>;
 
 export type ProfileUpsertFailure = Readonly<{
@@ -65,9 +61,7 @@ export const resetProfileState: ResetProfileState = {
   type: RESET_PROFILE_STATE
 };
 
-export const profileLoadSuccess = (
-  profile: UserProfileUnion
-): ProfileLoadSuccess => ({
+export const profileLoadSuccess = (profile: Profile): ProfileLoadSuccess => ({
   type: PROFILE_LOAD_SUCCESS,
   payload: profile
 });
@@ -86,7 +80,7 @@ export const profileUpsertRequest = (
 });
 
 export const profileUpsertSuccess = (
-  profile: InitializedProfile
+  profile: Profile
 ): ProfileUpsertSuccess => ({
   type: PROFILE_UPSERT_SUCCESS,
   payload: profile

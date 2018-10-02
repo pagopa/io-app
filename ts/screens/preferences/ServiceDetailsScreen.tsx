@@ -182,7 +182,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     // whether last attempt to save the preferences failed
     const profileVersion = fromNullable(this.props.profile)
-      .mapNullable(_ => (_.has_profile ? _.version : null))
+      .mapNullable(_ => (_.extended ? _.extended.version : null))
       .getOrElse(0 as NonNegativeInteger);
 
     // URIs for the service logo

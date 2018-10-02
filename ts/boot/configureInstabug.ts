@@ -1,8 +1,8 @@
+import { Option } from "fp-ts/lib/Option";
 import Instabug, { LocaleKey } from "instabug-reactnative";
 import { processColor } from "react-native";
 
-import { Option } from "fp-ts/lib/Option";
-import { UserProfile } from "../../definitions/backend/UserProfile";
+import { Profile } from "../../definitions/backend/Profile";
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
@@ -30,15 +30,15 @@ export const initialiseInstabug = () => {
 };
 
 export const setInstabugProfileAttributes = (
-  profile: UserProfile,
+  profile: Profile,
   maybeIdp: Option<IdentityProvider>
 ) => {
   Instabug.identifyUserWithEmail(
-    profile.spid_email,
-    `${profile.name} ${profile.family_name}`
+    profile.spid.spid_email,
+    `${profile.spid.name} ${profile.spid.family_name}`
   );
 
-  Instabug.setUserAttribute("fiscalcode", profile.fiscal_code);
+  Instabug.setUserAttribute("fiscalcode", profile.spid.fiscal_code);
 
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
     Instabug.setUserAttribute("identityProvider", idp.entityID)
