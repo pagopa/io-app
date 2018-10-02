@@ -9,13 +9,20 @@ import {
   analyticsAuthenticationStarted,
   analyticsOnboardingStarted
 } from "../actions/analytics";
+
+import { applicationChangeState } from "../actions/application";
 import {
-  APP_STATE_CHANGE_ACTION,
-  IDP_SELECTED,
-  LOGIN_FAILURE,
-  LOGIN_SUCCESS,
-  LOGOUT_FAILURE,
-  LOGOUT_SUCCESS,
+  idpSelected,
+  loginFailure,
+  loginSuccess,
+  logoutFailure,
+  logoutSuccess,
+  sessionExpired,
+  sessionInformationLoadFailure,
+  sessionInformationLoadSuccess
+} from "../actions/authentication";
+
+import {
   MESSAGES_LOAD_FAILURE,
   MESSAGES_LOAD_SUCCESS,
   NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
@@ -26,9 +33,6 @@ import {
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
   PROFILE_UPSERT_SUCCESS,
-  SESSION_EXPIRED,
-  SESSION_INFO_LOAD_FAILURE,
-  SESSION_INFO_LOAD_SUCCESS,
   TOS_ACCEPT_SUCCESS
 } from "../actions/constants";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
@@ -47,7 +51,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // Application state actions
         //
 
-        case APP_STATE_CHANGE_ACTION:
+        case getType(applicationChangeState):
           if (mixpanel) {
             mixpanel
               .track("APP_STATE_CHANGE", {
@@ -61,10 +65,10 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // Authentication actions (with properties)
         //
 
-        case IDP_SELECTED:
+        case getType(idpSelected):
           if (mixpanel) {
             mixpanel
-              .track(IDP_SELECTED, {
+              .track(action.type, {
                 SPID_IDP_ID: nextAction.payload.id,
                 SPID_IDP_NAME: nextAction.payload.name
               })
@@ -79,13 +83,13 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // authentication
         case getType(analyticsAuthenticationStarted):
         case getType(analyticsAuthenticationCompleted):
-        case LOGIN_SUCCESS:
-        case LOGIN_FAILURE:
-        case SESSION_INFO_LOAD_SUCCESS:
-        case SESSION_INFO_LOAD_FAILURE:
-        case SESSION_EXPIRED:
-        case LOGOUT_SUCCESS:
-        case LOGOUT_FAILURE:
+        case getType(loginSuccess):
+        case getType(loginFailure):
+        case getType(sessionInformationLoadSuccess):
+        case getType(sessionInformationLoadFailure):
+        case getType(sessionExpired):
+        case getType(logoutSuccess):
+        case getType(logoutFailure):
         // onboarding
         case getType(analyticsOnboardingStarted):
         case TOS_ACCEPT_SUCCESS:

@@ -58,7 +58,7 @@ describe("checkProfileEnabledSaga", () => {
       has_profile: false
     })
       .put(upsertAction)
-      .not.put(startApplicationInitialization)
+      .not.put(startApplicationInitialization())
       .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
@@ -69,7 +69,7 @@ describe("checkProfileEnabledSaga", () => {
       is_inbox_enabled: false
     })
       .put(upsertAction)
-      .not.put(startApplicationInitialization)
+      .not.put(startApplicationInitialization())
       .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
@@ -80,7 +80,7 @@ describe("checkProfileEnabledSaga", () => {
       is_webhook_enabled: false
     })
       .put(upsertAction)
-      .not.put(startApplicationInitialization)
+      .not.put(startApplicationInitialization())
       .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
@@ -91,7 +91,7 @@ describe("checkProfileEnabledSaga", () => {
       email: undefined
     })
       .put(upsertAction)
-      .not.put(startApplicationInitialization)
+      .not.put(startApplicationInitialization())
       .dispatch(profileUpsertSuccess(updatedProfile))
       .run();
   });
@@ -102,7 +102,7 @@ describe("checkProfileEnabledSaga", () => {
       has_profile: false
     })
       .put(upsertAction)
-      .put(startApplicationInitialization)
+      .put(startApplicationInitialization())
       .dispatch(profileUpsertFailure(Error()))
       .run();
   });

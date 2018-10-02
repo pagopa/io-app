@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 class IngressScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     // Dispatch START_APPLICATION_INITIALIZATION to initialize the app
-    this.props.dispatch(startApplicationInitialization);
+    this.props.dispatch(startApplicationInitialization());
 
     // Hide splash screen
     SplashScreen.hide();

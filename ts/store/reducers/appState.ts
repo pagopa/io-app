@@ -4,8 +4,13 @@
  * Handles React Native's AppState changes.
  */
 
-import { APP_STATE_CHANGE_ACTION } from "../actions/constants";
-import { Action, ApplicationState } from "../actions/types";
+import { isActionOf } from "typesafe-actions";
+
+import {
+  applicationChangeState,
+  ApplicationState
+} from "../actions/application";
+import { Action } from "../actions/types";
 
 export type AppState = Readonly<{
   appState: ApplicationState;
@@ -19,7 +24,7 @@ export default function appState(
   state: AppState = initialAppState,
   action: Action
 ): AppState {
-  if (action.type === APP_STATE_CHANGE_ACTION) {
+  if (isActionOf(applicationChangeState, action)) {
     return {
       ...state,
       appState: action.payload

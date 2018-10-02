@@ -1,5 +1,4 @@
-import { APP_STATE_CHANGE_ACTION } from "../../actions/constants";
-import { ApplicationStateAction } from "../../actions/types";
+import { applicationChangeState } from "../../actions/application";
 import appState, { initialAppState } from "../appState";
 
 describe("appState reducer", () => {
@@ -8,10 +7,7 @@ describe("appState reducer", () => {
   });
 
   it("should handle APPLICATION_STATE_CHANGE_ACTION", () => {
-    const action: ApplicationStateAction = {
-      type: APP_STATE_CHANGE_ACTION,
-      payload: "inactive"
-    };
+    const action = applicationChangeState("inactive");
     expect(appState(undefined, action)).toEqual({
       appState: "inactive"
     });

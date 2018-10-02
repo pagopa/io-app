@@ -1,31 +1,23 @@
 import {
-  APP_STATE_CHANGE_ACTION,
-  START_APPLICATION_INITIALIZATION
-} from "./constants";
-import { ApplicationState } from "./types";
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
 /**
  * Action types and action creator related to the Application.
  */
 
-type StartApplicationInitialization = Readonly<{
-  type: typeof START_APPLICATION_INITIALIZATION;
-}>;
+export const startApplicationInitialization = createAction(
+  "START_APPLICATION_INITIALIZATION"
+);
 
-export const startApplicationInitialization: StartApplicationInitialization = {
-  type: START_APPLICATION_INITIALIZATION
-};
+export type ApplicationState = "background" | "inactive" | "active";
 
-type ApplicationChangeState = Readonly<{
-  type: typeof APP_STATE_CHANGE_ACTION;
-  payload: ApplicationState;
-}>;
+export const applicationChangeState = createStandardAction(
+  "APP_STATE_CHANGE_ACTION"
+)<ApplicationState>();
 
-export const applicationChangeState = (
-  activity: ApplicationState
-): ApplicationChangeState => ({
-  type: APP_STATE_CHANGE_ACTION,
-  payload: activity
-});
-
-export type ApplicationActions = StartApplicationInitialization;
+export type ApplicationActions =
+  | ActionType<typeof startApplicationInitialization>
+  | ActionType<typeof applicationChangeState>;

@@ -14,7 +14,6 @@ import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
-import { APP_STATE_CHANGE_ACTION } from "./constants";
 import { ContentActions } from "./content";
 import { DeepLinkActions } from "./deepLink";
 import { ErrorActions } from "./error";
@@ -30,17 +29,9 @@ import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { WalletActions } from "./wallet";
 
-export type ApplicationState = "background" | "inactive" | "active";
-
-export type ApplicationStateAction = Readonly<{
-  type: typeof APP_STATE_CHANGE_ACTION;
-  payload: ApplicationState;
-}>;
-
 export type Action =
   | AnalyticsActions
   | ApplicationActions
-  | ApplicationStateAction
   | AuthenticationActions
   | BackendInfoActions
   | DeepLinkActions

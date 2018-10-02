@@ -1,11 +1,12 @@
 import { testSaga } from "redux-saga-test-plan";
 
+import { getType } from "typesafe-actions";
+
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
-import { LOGIN_SUCCESS } from "../../../store/actions/constants";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { isSessionExpiredSelector } from "../../../store/reducers/authentication";
 
@@ -27,7 +28,7 @@ describe("authenticationSaga", () => {
       .next(false)
       .put(resetToAuthenticationRoute)
       .next()
-      .take(LOGIN_SUCCESS)
+      .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
       .put(analyticsAuthenticationCompleted())
       .next()
@@ -47,7 +48,7 @@ describe("authenticationSaga", () => {
         })
       )
       .next()
-      .take(LOGIN_SUCCESS)
+      .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
       .put(analyticsAuthenticationCompleted())
       .next()
