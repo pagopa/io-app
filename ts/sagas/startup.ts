@@ -37,11 +37,11 @@ import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
+import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
-import { watchResetOnboardingSaga } from "./startup/watchOnboardResetSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchWalletSaga } from "./wallet";
@@ -53,9 +53,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield put(resetProfileState);
-
-  // Watch for bail outs during the onboarding.
-  yield fork(watchResetOnboardingSaga);
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<
@@ -143,10 +140,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
-    // reason, he was logged in but there is no PIN sed, thus we need
+    // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
     yield call(checkAcceptedTosSaga);
-    storedPin = yield call(checkConfiguredPinSaga);
+
+    ({ storedPin } = yield race({
+      storedPin: call(checkConfiguredPinSaga),
+      // Watch for abort action.
+      abortOnboarding: call(watchAbortOnboardingSaga)
+    }));
   } else {
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
