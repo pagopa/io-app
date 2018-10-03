@@ -3,8 +3,9 @@
  */
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { getType } from "typesafe-actions";
 
-import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
+import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 /**
@@ -21,7 +22,7 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
   action: Action
 ): ServiceIdsByOrganizationFiscalCodeState {
   switch (action.type) {
-    case SERVICE_LOAD_SUCCESS:
+    case getType(loadServiceSuccess):
       const service = action.payload;
       // get the current serviceIds for the organization fiscal code
       const servicesForOrganization =
@@ -34,6 +35,7 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
           service.service_id
         ]
       };
+
     default:
       return state;
   }

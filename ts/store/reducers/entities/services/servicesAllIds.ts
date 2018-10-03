@@ -4,7 +4,9 @@
  * are managed by different global reducers.
  */
 
-import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
+import { getType } from "typesafe-actions";
+
+import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 // An array of services id
@@ -20,7 +22,7 @@ const reducer = (
     /**
      * A new service has been loaded from the Backend. Add the ID to the array.
      */
-    case SERVICE_LOAD_SUCCESS:
+    case getType(loadServiceSuccess):
       return [...state, action.payload.service_id];
 
     default:
