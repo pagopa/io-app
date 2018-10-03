@@ -1,13 +1,14 @@
-import {
-  NOTIFICATIONS_PENDING_MESSAGE_CLEAR,
-  NOTIFICATIONS_PENDING_MESSAGE_UPDATE
-} from "../../actions/constants";
-import { Action } from "../../actions/types";
-import { GlobalState } from "../types";
-
 /**
  * Notification message reducer
  */
+import { getType } from "typesafe-actions";
+
+import {
+  clearNotificationPendingMessage,
+  updateNotificationsPendingMessage
+} from "../../actions/notifications";
+import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
 
 export type PendingMessageState = Readonly<{
   id: string;
@@ -21,10 +22,10 @@ const reducer = (
   action: Action
 ): PendingMessageState => {
   switch (action.type) {
-    case NOTIFICATIONS_PENDING_MESSAGE_UPDATE:
+    case getType(updateNotificationsPendingMessage):
       return action.payload;
 
-    case NOTIFICATIONS_PENDING_MESSAGE_CLEAR:
+    case getType(clearNotificationPendingMessage):
       return INITIAL_STATE;
 
     default:

@@ -23,8 +23,6 @@ import {
 } from "../actions/authentication";
 
 import {
-  NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
-  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
   PIN_CREATE_FAILURE,
   PIN_CREATE_SUCCESS,
   PROFILE_LOAD_FAILURE,
@@ -34,6 +32,10 @@ import {
   TOS_ACCEPT_SUCCESS
 } from "../actions/constants";
 import { loadMessagesRequest, loadMessagesSuccess } from "../actions/messages";
+import {
+  updateNotificationInstallationFailure,
+  updateNotificationsInstallationToken
+} from "../actions/notifications";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
@@ -103,8 +105,8 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case getType(loadMessagesRequest):
         case getType(loadMessagesSuccess):
         // other
-        case NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE:
-        case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE:
+        case getType(updateNotificationsInstallationToken):
+        case getType(updateNotificationInstallationFailure):
           if (mixpanel !== undefined) {
             mixpanel.track(nextAction.type).then(() => 0, () => 0);
             if (nextAction.type === PROFILE_LOAD_SUCCESS) {

@@ -2,8 +2,10 @@
  * Notifications installation reducer
  */
 
+import { getType } from "typesafe-actions";
+
 import { generateInstallationId } from "../../../utils/installation";
-import { NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE } from "../../actions/constants";
+import { updateNotificationsInstallationToken } from "../../actions/notifications";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 
@@ -24,8 +26,9 @@ const reducer = (
   action: Action
 ): InstallationState => {
   switch (action.type) {
-    case NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE:
+    case getType(updateNotificationsInstallationToken):
       return { ...state, token: action.payload };
+
     default:
       return state;
   }

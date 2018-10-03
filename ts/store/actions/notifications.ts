@@ -3,69 +3,32 @@
  */
 
 import {
-  NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
-  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
-  NOTIFICATIONS_PENDING_MESSAGE_CLEAR,
-  NOTIFICATIONS_PENDING_MESSAGE_UPDATE
-} from "./constants";
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
-type NotificationsTokenUpdate = Readonly<{
-  type: typeof NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE;
-  /**
-   * The push notification service token
-   */
-  payload: string;
-}>;
+export const updateNotificationsInstallationToken = createAction(
+  "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE",
+  resolve => (token: string) => resolve(token)
+);
 
-type NotificationInstallationUpdateFailure = Readonly<{
-  type: typeof NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE;
-}>;
+export const updateNotificationInstallationFailure = createStandardAction(
+  "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE"
+)();
 
-export type NotificationPendingMessageUpdate = Readonly<{
-  type: typeof NOTIFICATIONS_PENDING_MESSAGE_UPDATE;
-  payload: {
-    // The message id
-    id: string;
-    // If the notification message was received in foreground
-    foreground: boolean;
-  };
-}>;
+export const updateNotificationsPendingMessage = createAction(
+  "NOTIFICATIONS_PENDING_MESSAGE_UPDATE",
+  resolve => (messageId: string, foreground: boolean) =>
+    resolve({ id: messageId, foreground })
+);
 
-export type NotificationPendingMessageClear = Readonly<{
-  type: typeof NOTIFICATIONS_PENDING_MESSAGE_CLEAR;
-}>;
-
-// Creators
-export const updateNotificationsInstallationToken = (
-  token: string
-): NotificationsTokenUpdate => ({
-  type: NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
-  payload: token
-});
-
-export const updateNotificationInstallationFailure = (): NotificationInstallationUpdateFailure => ({
-  type: NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE
-});
-
-/**
- * @param id The message id
- */
-export const updateNotificationsPendingMessage = (
-  id: string,
-  foreground: boolean
-): NotificationPendingMessageUpdate => ({
-  type: NOTIFICATIONS_PENDING_MESSAGE_UPDATE,
-  payload: {
-    id,
-    foreground
-  }
-});
-export const clearNotificationPendingMessage = (): NotificationPendingMessageClear => ({
-  type: NOTIFICATIONS_PENDING_MESSAGE_CLEAR
-});
+export const clearNotificationPendingMessage = createStandardAction(
+  "NOTIFICATIONS_PENDING_MESSAGE_CLEAR"
+)();
 
 export type NotificationsActions =
-  | NotificationsTokenUpdate
-  | NotificationInstallationUpdateFailure
-  | NotificationPendingMessageUpdate
-  | NotificationPendingMessageClear;
+  | ActionType<typeof updateNotificationsInstallationToken>
+  | ActionType<typeof updateNotificationInstallationFailure>
+  | ActionType<typeof updateNotificationsPendingMessage>
+  | ActionType<typeof clearNotificationPendingMessage>;
