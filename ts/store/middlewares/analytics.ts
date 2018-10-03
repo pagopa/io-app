@@ -23,8 +23,6 @@ import {
 } from "../actions/authentication";
 
 import {
-  MESSAGES_LOAD_FAILURE,
-  MESSAGES_LOAD_SUCCESS,
   NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
   NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
   PIN_CREATE_FAILURE,
@@ -35,6 +33,7 @@ import {
   PROFILE_UPSERT_SUCCESS,
   TOS_ACCEPT_SUCCESS
 } from "../actions/constants";
+import { loadMessagesRequest, loadMessagesSuccess } from "../actions/messages";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
@@ -101,8 +100,8 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case PROFILE_UPSERT_SUCCESS:
         case PROFILE_UPSERT_FAILURE:
         // messages
-        case MESSAGES_LOAD_SUCCESS:
-        case MESSAGES_LOAD_FAILURE:
+        case getType(loadMessagesRequest):
+        case getType(loadMessagesSuccess):
         // other
         case NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE:
         case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE:

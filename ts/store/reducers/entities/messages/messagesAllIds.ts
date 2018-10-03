@@ -4,7 +4,9 @@
  * are managed by different global reducers.
  */
 
-import { MESSAGE_LOAD_SUCCESS } from "../../../actions/constants";
+import { getType } from "typesafe-actions";
+
+import { loadMessageSuccess } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -21,7 +23,7 @@ const reducer = (
     /**
      * A new message has been loaded from the Backend. Add the ID to the array.
      */
-    case MESSAGE_LOAD_SUCCESS:
+    case getType(loadMessageSuccess):
       return [...state, action.payload.id];
 
     default:
