@@ -27,7 +27,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
-import { resetOnboarding } from "../../store/actions/onboarding";
+import { abortOnboarding } from "../../store/actions/onboarding";
 import { createPin } from "../../store/actions/pinset";
 import { createErrorSelector } from "../../store/reducers/error";
 import { GlobalState } from "../../store/reducers/types";
@@ -44,7 +44,7 @@ type ReduxMappedProps = {
 
 interface ReduxMappedDispatches {
   createPin: typeof createPin;
-  resetOnboarding: typeof resetOnboarding;
+  abortOnboarding: typeof abortOnboarding;
 }
 
 type OwnProps = {
@@ -135,7 +135,7 @@ class PinScreen extends React.Component<Props, State> {
 
   private handleConfirmPress = () => {
     this.handleModalClose();
-    this.props.resetOnboarding();
+    this.props.abortOnboarding();
   };
 
   private renderModal() {
@@ -342,7 +342,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
 
 const mapDispatchToProps = {
   createPin,
-  resetOnboarding
+  abortOnboarding
 };
 
 export default connect(

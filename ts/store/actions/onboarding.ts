@@ -3,7 +3,7 @@
  */
 
 import {
-  RESET_ONBOARDING,
+  ABORT_ONBOARDING,
   TOS_ACCEPT_REQUEST,
   TOS_ACCEPT_SUCCESS
 } from "./constants";
@@ -18,14 +18,14 @@ type TosAcceptSuccess = Readonly<{
   type: typeof TOS_ACCEPT_SUCCESS;
 }>;
 
-interface ResetOnboarding {
-  type: typeof RESET_ONBOARDING;
+interface AbortOnboarding {
+  type: typeof ABORT_ONBOARDING;
 }
 
 export type OnboardingActions =
   | TosAcceptRequest
   | TosAcceptSuccess
-  | ResetOnboarding;
+  | AbortOnboarding;
 
 // Creators
 
@@ -37,6 +37,6 @@ export const tosAcceptSuccess: TosAcceptSuccess = {
   type: TOS_ACCEPT_SUCCESS
 };
 
-export const resetOnboarding = (): ResetOnboarding => ({
-  type: RESET_ONBOARDING
+export const abortOnboarding = (): AbortOnboarding => ({
+  type: ABORT_ONBOARDING
 });
