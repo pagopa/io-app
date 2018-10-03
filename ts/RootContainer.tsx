@@ -10,13 +10,17 @@ import {
 import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
+import configurePushNotifications from "./boot/configurePushNotification";
 import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import Navigation from "./navigation";
-import { applicationChangeState } from "./store/actions/application";
-import { ApplicationState } from "./store/actions/application";
+import {
+  applicationChangeState,
+  ApplicationState
+} from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { Store } from "./store/actions/types";
 import { DeepLinkState } from "./store/reducers/deepLink";
 import {
   isPinLoginValidSelector,
@@ -38,12 +42,23 @@ type DispatchProps = {
   navigateBack: typeof navigateBack;
 };
 
-type Props = ReduxMappedProps & DispatchProps;
+type OwnProps = {
+  store: Store;
+};
+
+type Props = ReduxMappedProps & DispatchProps & OwnProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
  */
 class RootContainer extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+
+    /* Configure the application to receive push notifications */
+    configurePushNotifications(this.props.store);
+  }
+
   private handleBackButton = () => {
     this.props.navigateBack();
     return true;
