@@ -4,50 +4,34 @@
 
 import { NavigationNavigateActionPayload } from "react-navigation";
 import {
-  CLEAR_DEEPLINK,
-  NAVIGATE_TO_DEEPLINK,
-  SET_DEEPLINK
-} from "./constants";
-
-type SetDeepLink = Readonly<{
-  type: typeof SET_DEEPLINK;
-  payload: NavigationNavigateActionPayload;
-  immediate: boolean;
-}>;
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
 /**
  * Saves the deep link to navigate to.
  *
  * When immediate is true, the app will immediately navigate to the route.
  */
-export const setDeepLink = (
-  navigationPayload: NavigationNavigateActionPayload,
-  immediate: boolean = false
-): SetDeepLink => ({
-  type: SET_DEEPLINK,
-  payload: navigationPayload,
-  immediate
-});
+export const setDeepLink = createAction(
+  "SET_DEEPLINK",
+  resolve => (
+    navigationPayload: NavigationNavigateActionPayload,
+    immediate: boolean = false
+  ) => resolve({ navigationPayload, immediate })
+);
 
-type ClearDeepLink = Readonly<{
-  type: typeof CLEAR_DEEPLINK;
-}>;
+export const clearDeepLink = createStandardAction("CLEAR_DEEPLINK")();
 
-export const clearDeepLink = (): ClearDeepLink => ({
-  type: CLEAR_DEEPLINK
-});
+export const navigateToDeepLink = createAction(
+  "NAVIGATE_TO_DEEPLINK",
+  resolve => (
+    navigationPayload: NavigationNavigateActionPayload,
+    prevRouteKey?: string
+  ) => resolve({ ...navigationPayload, key: prevRouteKey })
+);
 
-export type NavigateToDeepLink = Readonly<{
-  type: typeof NAVIGATE_TO_DEEPLINK;
-  payload: NavigationNavigateActionPayload;
-}>;
-
-export const navigateToDeepLink = (
-  navigationPayload: NavigationNavigateActionPayload,
-  prevRouteKey?: string
-): NavigateToDeepLink => ({
-  type: NAVIGATE_TO_DEEPLINK,
-  payload: { ...navigationPayload, key: prevRouteKey }
-});
-
-export type DeepLinkActions = SetDeepLink | ClearDeepLink;
+export type DeepLinkActions = ActionType<
+  typeof setDeepLink | typeof clearDeepLink | typeof navigateToDeepLink
+>;

@@ -3,7 +3,8 @@
  */
 
 import { NavigationNavigateActionPayload } from "react-navigation";
-import { CLEAR_DEEPLINK, SET_DEEPLINK } from "../actions/constants";
+import { getType } from "typesafe-actions";
+import { clearDeepLink, setDeepLink } from "../actions/deepLink";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -26,13 +27,14 @@ export default (
   action: Action
 ): DeepLinkState => {
   switch (action.type) {
-    case SET_DEEPLINK:
+    case getType(setDeepLink):
       return {
         ...state,
-        deepLink: action.payload
+        deepLink: action.payload.navigationPayload,
+        immediate: action.payload.immediate
       };
 
-    case CLEAR_DEEPLINK:
+    case getType(clearDeepLink):
       return {
         ...state,
         deepLink: null
