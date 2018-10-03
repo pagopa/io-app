@@ -55,7 +55,7 @@ import { watchWalletSaga } from "./wallet";
 function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
-  yield put(resetProfileState);
+  yield put(resetProfileState());
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<

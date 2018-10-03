@@ -1,15 +1,13 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
+
 import { UserProfileUnion } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
-  PROFILE_UPSERT_FAILURE,
-  PROFILE_UPSERT_SUCCESS
-} from "../../store/actions/constants";
-import {
-  ProfileUpsertFailure,
+  profileUpsertFailure,
   profileUpsertRequest,
-  ProfileUpsertSuccess
+  profileUpsertSuccess
 } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
@@ -35,12 +33,14 @@ export function* checkProfileEnabledSaga(
         email: profile.spid_email
       })
     );
-    const action: ProfileUpsertSuccess | ProfileUpsertFailure = yield take([
-      PROFILE_UPSERT_SUCCESS,
-      PROFILE_UPSERT_FAILURE
+    const action: ActionType<
+      typeof profileUpsertSuccess | typeof profileUpsertFailure
+    > = yield take([
+      getType(profileUpsertSuccess),
+      getType(profileUpsertFailure)
     ]);
     // We got an error
-    if (action.type === PROFILE_UPSERT_FAILURE) {
+    if (action.type === getType(profileUpsertFailure)) {
       // Restart the initialization loop to let the user retry.
       // FIXME: show an error message
       yield put(startApplicationInitialization());

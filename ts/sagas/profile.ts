@@ -13,18 +13,18 @@ import {
 import I18n from "../i18n";
 
 import { sessionExpired } from "../store/actions/authentication";
-import { PROFILE_UPSERT_REQUEST } from "../store/actions/constants";
 import {
   profileLoadFailure,
   profileLoadSuccess,
   profileUpsertFailure,
-  ProfileUpsertRequest,
+  profileUpsertRequest,
   profileUpsertSuccess
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 
 import { SagaCallReturnType } from "../types/utils";
 
+import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { UserProfileUnion } from "../api/backend";
 
@@ -57,7 +57,7 @@ export function* loadProfile(
 // A saga to update the Profile.
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
-  action: ProfileUpsertRequest
+  action: ActionType<typeof profileUpsertRequest>
 ): Iterator<Effect> {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield select(
@@ -121,7 +121,7 @@ export function* watchProfileUpsertRequestsSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>
 ): Iterator<Effect> {
   yield takeLatest(
-    PROFILE_UPSERT_REQUEST,
+    getType(profileUpsertRequest),
     createOrUpdateProfileSaga,
     createOrUpdateProfile
   );

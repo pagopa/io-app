@@ -9,7 +9,6 @@ import {
   analyticsAuthenticationStarted,
   analyticsOnboardingStarted
 } from "../actions/analytics";
-
 import { applicationChangeState } from "../actions/application";
 import {
   idpSelected,
@@ -21,13 +20,6 @@ import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../actions/authentication";
-
-import {
-  PROFILE_LOAD_FAILURE,
-  PROFILE_LOAD_SUCCESS,
-  PROFILE_UPSERT_FAILURE,
-  PROFILE_UPSERT_SUCCESS
-} from "../actions/constants";
 import { loadMessagesRequest, loadMessagesSuccess } from "../actions/messages";
 import {
   updateNotificationInstallationFailure,
@@ -35,6 +27,12 @@ import {
 } from "../actions/notifications";
 import { tosAcceptSuccess } from "../actions/onboarding";
 import { createPinFailure, createPinSuccess } from "../actions/pinset";
+import {
+  profileLoadFailure,
+  profileLoadSuccess,
+  profileUpsertFailure,
+  profileUpsertSuccess
+} from "../actions/profile";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
@@ -96,10 +94,10 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case getType(createPinSuccess):
         case getType(createPinFailure):
         // profile
-        case PROFILE_LOAD_SUCCESS:
-        case PROFILE_LOAD_FAILURE:
-        case PROFILE_UPSERT_SUCCESS:
-        case PROFILE_UPSERT_FAILURE:
+        case getType(profileLoadSuccess):
+        case getType(profileLoadFailure):
+        case getType(profileUpsertSuccess):
+        case getType(profileUpsertFailure):
         // messages
         case getType(loadMessagesRequest):
         case getType(loadMessagesSuccess):
@@ -108,7 +106,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case getType(updateNotificationInstallationFailure):
           if (mixpanel !== undefined) {
             mixpanel.track(nextAction.type).then(() => 0, () => 0);
-            if (nextAction.type === PROFILE_LOAD_SUCCESS) {
+            if (nextAction.type === getType(profileLoadSuccess)) {
               // as soon as we have the user fiscal code, attach the mixpanel
               // session to the sha256 hash to the fiscal code of the user
               const fiscalnumber = nextAction.payload.fiscal_code;

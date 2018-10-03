@@ -12,13 +12,13 @@ import { InitializedProfile } from "../../../../definitions/backend/InitializedP
 import { UserProfile } from "../../../../definitions/backend/UserProfile";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
-import { PROFILE_UPSERT_REQUEST } from "../../../store/actions/constants";
 import {
   profileUpsertFailure,
   profileUpsertRequest,
   profileUpsertSuccess
 } from "../../../store/actions/profile";
 
+import { getType } from "typesafe-actions";
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
 describe("checkProfileEnabledSaga", () => {
@@ -48,7 +48,7 @@ describe("checkProfileEnabledSaga", () => {
 
   it("should do nothing if profile is enabled", () => {
     return expectSaga(checkProfileEnabledSaga, profile)
-      .not.put.like({ action: { type: PROFILE_UPSERT_REQUEST } })
+      .not.put.like({ action: { type: getType(profileUpsertRequest) } })
       .run();
   });
 
