@@ -23,8 +23,8 @@ platform :ios do
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do
-    match(type: 'development', readonly: true)
-    match(type: 'appstore', readonly: true)
+    # match(type: 'development')
+    match(type: 'appstore')
   end
 
   desc "Runs all the tests"
