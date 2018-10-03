@@ -237,7 +237,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  resetPin: () => dispatch(startPinReset),
+  resetPin: () => dispatch(startPinReset()),
   logout: () => dispatch(logoutRequest())
 });
 

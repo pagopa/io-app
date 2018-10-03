@@ -23,8 +23,6 @@ import {
 } from "../actions/authentication";
 
 import {
-  PIN_CREATE_FAILURE,
-  PIN_CREATE_SUCCESS,
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
@@ -36,6 +34,7 @@ import {
   updateNotificationsInstallationToken
 } from "../actions/notifications";
 import { tosAcceptSuccess } from "../actions/onboarding";
+import { createPinFailure, createPinSuccess } from "../actions/pinset";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
@@ -94,8 +93,8 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         // onboarding
         case getType(analyticsOnboardingStarted):
         case getType(tosAcceptSuccess):
-        case PIN_CREATE_SUCCESS:
-        case PIN_CREATE_FAILURE:
+        case getType(createPinSuccess):
+        case getType(createPinFailure):
         // profile
         case PROFILE_LOAD_SUCCESS:
         case PROFILE_LOAD_FAILURE:

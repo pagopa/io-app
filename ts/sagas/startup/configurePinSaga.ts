@@ -7,15 +7,14 @@
 
 import { Either, left, right } from "fp-ts/lib/Either";
 import { call, Effect, put, take } from "redux-saga/effects";
-
-import {
-  PIN_CREATE_FAILURE,
-  PIN_CREATE_REQUEST,
-  PIN_CREATE_SUCCESS
-} from "../../store/actions/constants";
+import { ActionType, getType } from "typesafe-actions";
 
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
-import { PinCreateRequest } from "../../store/actions/pinset";
+import {
+  createPin,
+  createPinFailure,
+  createPinSuccess
+} from "../../store/actions/pinset";
 
 import { setPin } from "../../utils/keychain";
 
@@ -29,7 +28,7 @@ export function* configurePinSaga(): Iterator<
   yield put(navigateToOnboardingPinScreenAction);
 
   // Here we wait the user to complete the UI flow
-  const action: PinCreateRequest = yield take(PIN_CREATE_REQUEST);
+  const action: ActionType<typeof createPin> = yield take(getType(createPin));
 
   try {
     const result: SagaCallReturnType<typeof setPin> = yield call(
@@ -40,11 +39,11 @@ export function* configurePinSaga(): Iterator<
       throw Error("Cannot store PIN");
     }
     // We created a PIN, trigger a success
-    yield put({ type: PIN_CREATE_SUCCESS });
+    yield put(createPinSuccess());
     return right(action.payload);
   } catch (error) {
     // We couldn't set a new PIN, trigger a failure
-    yield put({ type: PIN_CREATE_FAILURE });
+    yield put(createPinFailure());
     return left(error);
   }
 }
