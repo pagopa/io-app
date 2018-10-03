@@ -1,4 +1,6 @@
-import { PREFERENCES_LANGUAGES_LOAD_SUCCESS } from "../actions/constants";
+import { getType } from "typesafe-actions";
+
+import { preferencesLanguagesLoadSuccess } from "../actions/preferences";
 import { Action } from "../actions/types";
 
 export type PreferencesState = Readonly<{
@@ -13,11 +15,12 @@ export default function preferencesReducer(
   state: PreferencesState = initialPreferencesState,
   action: Action
 ): PreferencesState {
-  if (action.type === PREFERENCES_LANGUAGES_LOAD_SUCCESS) {
+  if (action.type === getType(preferencesLanguagesLoadSuccess)) {
     return {
       ...state,
       languages: action.payload
     };
   }
+
   return state;
 }

@@ -1,15 +1,10 @@
-import { PREFERENCES_LANGUAGES_LOAD_SUCCESS } from "./constants";
+import { ActionType, createAction } from "typesafe-actions";
 
-type PreferencesLanguagesLoadSuccess = Readonly<{
-  type: typeof PREFERENCES_LANGUAGES_LOAD_SUCCESS;
-  payload: ReadonlyArray<string>;
-}>;
+export const preferencesLanguagesLoadSuccess = createAction(
+  "PREFERENCES_LANGUAGES_LOAD_SUCCESS",
+  resolve => (languages: ReadonlyArray<string>) => resolve(languages)
+);
 
-export type PreferencesActions = PreferencesLanguagesLoadSuccess;
-
-export const preferencesLanguagesLoadSuccess = (
-  languages: ReadonlyArray<string>
-): PreferencesLanguagesLoadSuccess => ({
-  type: PREFERENCES_LANGUAGES_LOAD_SUCCESS,
-  payload: languages
-});
+export type PreferencesActions = ActionType<
+  typeof preferencesLanguagesLoadSuccess
+>;
