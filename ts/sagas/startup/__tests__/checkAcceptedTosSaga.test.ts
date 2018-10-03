@@ -1,9 +1,12 @@
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { getType } from "typesafe-actions";
 
-import { TOS_ACCEPT_REQUEST } from "../../../store/actions/constants";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
-import { tosAcceptSuccess } from "../../../store/actions/onboarding";
+import {
+  tosAcceptRequest,
+  tosAcceptSuccess
+} from "../../../store/actions/onboarding";
 import { isTosAcceptedSelector } from "../../../store/reducers/onboarding";
 
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
@@ -26,9 +29,9 @@ describe("checkAcceptedTosSaga", () => {
         .next(false)
         .put(navigateToTosScreen)
         .next()
-        .take(TOS_ACCEPT_REQUEST)
+        .take(getType(tosAcceptRequest))
         .next()
-        .put(tosAcceptSuccess);
+        .put(tosAcceptSuccess());
     });
   });
 });

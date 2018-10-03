@@ -16,7 +16,7 @@ import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
 } from "../store/actions/navigation";
-import { navigationHistoryPushAction } from "../store/actions/navigationHistory";
+import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
 import {
@@ -235,7 +235,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       navigationStateSelector
     );
     yield put(
-      navigationHistoryPushAction(
+      navigationHistoryPush(
         AppNavigator.router.getStateForAction(
           NavigationActions.back(),
           navigationState

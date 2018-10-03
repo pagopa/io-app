@@ -28,14 +28,14 @@ import {
   PROFILE_LOAD_FAILURE,
   PROFILE_LOAD_SUCCESS,
   PROFILE_UPSERT_FAILURE,
-  PROFILE_UPSERT_SUCCESS,
-  TOS_ACCEPT_SUCCESS
+  PROFILE_UPSERT_SUCCESS
 } from "../actions/constants";
 import { loadMessagesRequest, loadMessagesSuccess } from "../actions/messages";
 import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
+import { tosAcceptSuccess } from "../actions/onboarding";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
@@ -93,7 +93,7 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case getType(logoutFailure):
         // onboarding
         case getType(analyticsOnboardingStarted):
-        case TOS_ACCEPT_SUCCESS:
+        case getType(tosAcceptSuccess):
         case PIN_CREATE_SUCCESS:
         case PIN_CREATE_FAILURE:
         // profile
