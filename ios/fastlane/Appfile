@@ -1,5 +1,4 @@
 app_identifier "it.teamdigitale.app.IO" # The bundle identifier of your app
-apple_id "itunes@teamdigitale.governo.it" # Your Apple email address
 
 # team_id "4RV73SN38W" # Developer Portal Team ID
 team_id "BC8NKY5TF7"
