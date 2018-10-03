@@ -3,9 +3,9 @@ import { Middleware } from "redux";
 
 import { NAVIGATION_RESTORE } from "../actions/constants";
 import {
-  navigationHistoryPopAction,
-  navigationHistoryPushAction,
-  navigationHistoryResetAction
+  navigationHistoryPop,
+  navigationHistoryPush,
+  navigationHistoryReset
 } from "../actions/navigationHistory";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { GlobalState } from "../reducers/types";
@@ -40,7 +40,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
         // If the old state is different from the new state
         if (newNavigationState !== oldNavigationState) {
           // Dispatch an action to push the old state into the navigation history
-          store.dispatch(navigationHistoryPushAction(oldNavigationState));
+          store.dispatch(navigationHistoryPush(oldNavigationState));
         }
         return nextAction;
       }
@@ -54,7 +54,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
         /**
          * Dispatch an action to reset the history.
          */
-        store.dispatch(navigationHistoryResetAction());
+        store.dispatch(navigationHistoryReset());
         return next(action);
       }
 
@@ -73,7 +73,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
         };
 
         // Pop the last element from the history
-        store.dispatch(navigationHistoryPopAction());
+        store.dispatch(navigationHistoryPop());
         // Dispatch an action to restore the previous state
         store.dispatch({
           type: NAVIGATION_RESTORE,

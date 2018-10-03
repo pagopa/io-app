@@ -4,11 +4,12 @@
 
 import { NavigationState } from "react-navigation";
 
+import { getType } from "typesafe-actions";
 import {
-  NAVIGATION_HISTORY_POP,
-  NAVIGATION_HISTORY_PUSH,
-  NAVIGATION_HISTORY_RESET
-} from "../actions/constants";
+  navigationHistoryPop,
+  navigationHistoryPush,
+  navigationHistoryReset
+} from "../actions/navigationHistory";
 import { Action } from "../actions/types";
 
 export type NavigationHistoryState = ReadonlyArray<NavigationState>;
@@ -20,13 +21,13 @@ const reducer = (
   action: Action
 ): NavigationHistoryState => {
   switch (action.type) {
-    case NAVIGATION_HISTORY_PUSH:
+    case getType(navigationHistoryPush):
       return [...state, action.payload];
 
-    case NAVIGATION_HISTORY_RESET:
+    case getType(navigationHistoryReset):
       return INITIAL_STATE;
 
-    case NAVIGATION_HISTORY_POP:
+    case getType(navigationHistoryPop):
       return state.slice(0, -1);
 
     default:
