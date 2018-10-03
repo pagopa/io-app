@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
  */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
 
-class ScanQrCodeScreen extends React.PureComponent<Props, State> {
+class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler: number | undefined;
 
   /**
