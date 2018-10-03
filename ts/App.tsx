@@ -1,14 +1,13 @@
 import { StyleProvider } from "native-base";
 import * as React from "react";
+import { MenuProvider } from "react-native-popup-menu";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
-import theme from "./theme";
-
-import { MenuProvider } from "react-native-popup-menu";
 import configurePushNotifications from "./boot/configurePushNotification";
 import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
 import RootContainer from "./RootContainer";
+import theme from "./theme";
 
 // Configure the global js error handler
 // configureErrorHandler()
@@ -19,9 +18,6 @@ import RootContainer from "./RootContainer";
 
 const { store, persistor } = configureStoreAndPersistor();
 
-// Configure the application to receive push notifications
-configurePushNotifications(store);
-
 /**
  * Main component of the application
  *
@@ -31,6 +27,8 @@ export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>
+        {/* Configure the application to receive push notifications */}
+        {configurePushNotifications(store)}
         <MenuProvider>
           <RootContainer />
         </MenuProvider>
