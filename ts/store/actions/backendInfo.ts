@@ -1,41 +1,20 @@
 /**
  * Action types and action creator related to BackendInfo.
  */
+import { ActionType, createAction } from "typesafe-actions";
 
 import { ServerInfo } from "../../../definitions/backend/ServerInfo";
-import {
-  BACKEND_INFO_LOAD_FAILURE,
-  BACKEND_INFO_LOAD_SUCCESS
-} from "./constants";
 
-type BackendInfoLoadFailure = Readonly<{
-  type: typeof BACKEND_INFO_LOAD_FAILURE;
-  payload: Error;
-  error: true;
-}>;
+export const backendInfoLoadFailure = createAction(
+  "BACKEND_INFO_LOAD_FAILURE",
+  resolve => (error: Error) => resolve(error)
+);
 
-type BackendInfoLoadSuccess = Readonly<{
-  type: typeof BACKEND_INFO_LOAD_SUCCESS;
-  payload: ServerInfo;
-}>;
+export const backendInfoLoadSuccess = createAction(
+  "BACKEND_INFO_LOAD_SUCCESS",
+  resolve => (serverInfo: ServerInfo) => resolve(serverInfo)
+);
 
-export type BackendInfoActions =
-  | BackendInfoLoadFailure
-  | BackendInfoLoadSuccess;
-
-// Creators
-
-export const backendInfoLoadFailure = (
-  error: Error
-): BackendInfoLoadFailure => ({
-  type: BACKEND_INFO_LOAD_FAILURE,
-  payload: error,
-  error: true
-});
-
-export const backendInfoLoadSuccess = (
-  serverInfo: ServerInfo
-): BackendInfoLoadSuccess => ({
-  type: BACKEND_INFO_LOAD_SUCCESS,
-  payload: serverInfo
-});
+export type BackendInfoActions = ActionType<
+  typeof backendInfoLoadFailure | typeof backendInfoLoadSuccess
+>;
