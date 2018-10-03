@@ -1,9 +1,3 @@
-/* 
-  InfoPlist.string.strings
-  ItaliaApp
-
-  Created by Francesco Persico on 03/09/18.
-  Copyright © 2018 Facebook. All rights reserved.
-*/
-
-"NSCameraUsageDescription" = "L'app ha necessità di accedere alla fotocamera per la scansione dei codici QR";
+"NSCameraUsageDescription" = "IO ha necessità di accedere alla fotocamera per la scansione dei codici di pagamento";
+"NSCalendarsUsageDescription" = "IO ha necessità di accedere ai tuoi calendari per permetterti di ricordare le scadenze"
+"NSContactsUsageDescription" = "IO ha necessità di accedere ai tuoi contatti per permetterti di aggiungerli come partecipanti alle scadenze"
