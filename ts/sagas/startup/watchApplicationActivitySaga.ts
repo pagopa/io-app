@@ -1,9 +1,10 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { backgroundActivityTimeout } from "../../config";
+import AppNavigator from "../../navigation/AppNavigator";
 import {
   applicationChangeState,
   ApplicationState,
@@ -13,7 +14,9 @@ import {
   navigateToBackgroundScreen,
   navigateToMessageDetailScreenAction
 } from "../../store/actions/navigation";
+import { navigationHistoryPushAction } from "../../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
+import { navigationStateSelector } from "../../store/reducers/navigation";
 import {
   PendingMessageState,
   pendingMessageStateSelector
@@ -75,6 +78,18 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
           yield put(clearNotificationPendingMessage());
           // Navigate to message details screen
           yield put(navigateToMessageDetailScreenAction(messageId));
+          // Push the MAIN navigator in the history to handle the back button
+          const navigationState: NavigationState = yield select(
+            navigationStateSelector
+          );
+          yield put(
+            navigationHistoryPushAction(
+              AppNavigator.router.getStateForAction(
+                NavigationActions.back(),
+                navigationState
+              )
+            )
+          );
         } else {
           // Or else, just navigate back to the screen we were at before
           // going into background

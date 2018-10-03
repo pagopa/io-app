@@ -1,17 +1,22 @@
 import { isNone, Option } from "fp-ts/lib/Option";
+import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
 import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
+import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
+import { IdentityProvider } from "../models/IdentityProvider";
+import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
 } from "../store/actions/navigation";
+import { navigationHistoryPushAction } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
 import {
@@ -19,6 +24,7 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { navigationStateSelector } from "../store/reducers/navigation";
 import {
   PendingMessageState,
   pendingMessageStateSelector
@@ -28,9 +34,6 @@ import { SagaCallReturnType } from "../types/utils";
 import { getPin } from "../utils/keychain";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
-
-import { setInstabugProfileAttributes } from "../boot/configureInstabug";
-import { IdentityProvider } from "../models/IdentityProvider";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
@@ -221,6 +224,18 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
     // Navigate to message details screen
     yield put(navigateToMessageDetailScreenAction(messageId));
+    // Push the MAIN navigator in the history to handle the back button
+    const navigationState: NavigationState = yield select(
+      navigationStateSelector
+    );
+    yield put(
+      navigationHistoryPushAction(
+        AppNavigator.router.getStateForAction(
+          NavigationActions.back(),
+          navigationState
+        )
+      )
+    );
   } else {
     yield put(navigateToMainNavigatorAction);
   }
