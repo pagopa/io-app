@@ -1,7 +1,8 @@
 app_identifier "it.teamdigitale.app.Italia" # The bundle identifier of your app
 apple_id "itunes@teamdigitale.governo.it" # Your Apple email address
 
-team_id "4RV73SN38W" # Developer Portal Team ID
+# team_id "4RV73SN38W" # Developer Portal Team ID
+team_id "BC8NKY5TF7"
 
 # you can even provide different app identifiers, Apple IDs and team names per lane:
 # More information: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Appfile.md
