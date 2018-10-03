@@ -21,6 +21,12 @@ platform :ios do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   end
 
+  desc 'Fetch certificates and provisioning profiles'
+  lane :certificates do
+    # match(type: 'development')
+    match(type: 'appstore')
+  end
+
   desc "Runs all the tests"
   lane :test do
     scan
