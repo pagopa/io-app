@@ -2,10 +2,11 @@
  * A reducer for the PinLogin.
  */
 
+import { getType } from "typesafe-actions";
 import {
-  PIN_LOGIN_VALIDATE_FAILURE,
-  PIN_LOGIN_VALIDATE_SUCCESS
-} from "../actions/constants";
+  pinLoginValidateFailure,
+  pinLoginValidateSuccess
+} from "../actions/pinlogin";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -25,12 +26,12 @@ const reducer = (
   action: Action
 ): PinLoginState => {
   switch (action.type) {
-    case PIN_LOGIN_VALIDATE_SUCCESS:
+    case getType(pinLoginValidateSuccess):
       return {
         PinConfirmed: "PinConfirmedValid"
       };
 
-    case PIN_LOGIN_VALIDATE_FAILURE:
+    case getType(pinLoginValidateFailure):
       return {
         PinConfirmed: "PinConfirmedInvalid"
       };
