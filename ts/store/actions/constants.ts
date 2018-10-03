@@ -2,9 +2,6 @@
  * All the actions related constants.
  */
 
-// Navigation
-export const NAVIGATION_RESTORE: "NAVIGATION_RESTORE" = "NAVIGATION_RESTORE";
-
 // Wallet
 // (transactions)
 export const FETCH_TRANSACTIONS_REQUEST: "FETCH_TRANSACTIONS_REQUEST" =

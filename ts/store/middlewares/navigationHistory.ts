@@ -1,7 +1,7 @@
 import { NavigationActions, StackActions } from "react-navigation";
 import { Middleware } from "redux";
 
-import { NAVIGATION_RESTORE } from "../actions/constants";
+import { navigationRestore } from "../actions/navigation";
 import {
   navigationHistoryPop,
   navigationHistoryPush,
@@ -75,10 +75,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
         // Pop the last element from the history
         store.dispatch(navigationHistoryPop());
         // Dispatch an action to restore the previous state
-        store.dispatch({
-          type: NAVIGATION_RESTORE,
-          payload: previousNavigationState
-        });
+        store.dispatch(navigationRestore(previousNavigationState));
       }
 
       default:
