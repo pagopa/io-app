@@ -174,9 +174,6 @@ authentication:
 onboarding:
   tos:
     headerTitle: Attivazione
-    contentTitle: Condizioni d'uso e dati personali
-    section1: Termini e condizioni d’uso del servizio
-    section2: Regole sul trattamento dei dati personali
     continue: Continua
   pin:
     headerTitle: Attivazione
