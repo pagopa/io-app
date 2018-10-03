@@ -18,6 +18,7 @@ import h6Theme from "./components/H6";
 import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
+import listTheme from "./components/List";
 import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
@@ -95,6 +96,9 @@ const theme = (): Theme => {
     },
     "UIComponent.FooterWithButtons": {
       ...footerWithButtonsTheme()
+    },
+    "NativeBase.List": {
+      ...listTheme()
     },
     "NativeBase.ListItem": {
       ...listItemTheme()
