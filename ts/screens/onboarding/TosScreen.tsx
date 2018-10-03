@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { Button, Content, H1, H3, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
+import Markdown from "../../components/ui/Markdown";
 
 import I18n from "../../i18n";
 
@@ -67,21 +68,15 @@ const TosScreen: React.SFC<Props> = ({
             <ActivityIndicator />
           </View>
         )}
-        <H1>{I18n.t("onboarding.tos.contentTitle")}</H1>
-        <View spacer={true} extralarge={true} />
         {/* FIXME: handle errors */}
         {profileUpsertError.isSome() && (
           <View padder={true}>
             <Text>{I18n.t("global.actions.retry")}</Text>
           </View>
         )}
-        <H3>{I18n.t("onboarding.tos.section1")}</H3>
-        <View spacer={true} />
-        <Text>{I18n.t("lipsum.medium")}</Text>
-        <View spacer={true} extralarge={true} />
-        <H3>{I18n.t("onboarding.tos.section2")}</H3>
-        <View spacer={true} />
-        <Text>{I18n.t("lipsum.medium")}</Text>
+        <Markdown lazyOptions={{ lazy: true }}>
+          {I18n.t("profile.main.privacy.text")}
+        </Markdown>
       </Content>
       {isProfile === false && (
         <View footer={true}>

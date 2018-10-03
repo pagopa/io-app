@@ -168,9 +168,6 @@ authentication:
 onboarding:
   tos:
     headerTitle: Activation
-    contentTitle: Terms of service and personal data
-    section1: Terms and conditions of use of the service
-    section2: Rules on the processing of personal data
     continue: Continue
   pin:
     headerTitle: Activation
