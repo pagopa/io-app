@@ -2,6 +2,7 @@ import {
   Body,
   CheckBox,
   Container,
+  List,
   ListItem,
   Spinner,
   Text
@@ -75,16 +76,18 @@ class IngressScreen extends React.PureComponent<Props> {
           {I18n.t("startup.title")}
         </Text>
         <Spinner color="white" />
-        {items.map((item, index) => (
-          <ListItem key={`item-${index}`}>
-            <CheckBox checked={item.enabled} />
-            <Body>
-              <Text white={true} bold={item.enabled}>
-                {item.label}
-              </Text>
-            </Body>
-          </ListItem>
-        ))}
+        <List>
+          {items.map((item, index) => (
+            <ListItem key={`item-${index}`}>
+              <CheckBox checked={item.enabled} />
+              <Body>
+                <Text white={true} bold={item.enabled}>
+                  {item.label}
+                </Text>
+              </Body>
+            </ListItem>
+          ))}
+        </List>
       </Container>
     );
   }
