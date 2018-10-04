@@ -62,21 +62,23 @@ const TosScreen: React.SFC<Props> = ({
           : I18n.t("onboarding.tos.headerTitle")
       }
     >
-      <Content>
-        {isAcceptingTos && (
-          <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator />
-          </View>
-        )}
-        {/* FIXME: handle errors */}
-        {profileUpsertError.isSome() && (
-          <View padder={true}>
-            <Text>{I18n.t("global.actions.retry")}</Text>
-          </View>
-        )}
-        <Markdown lazyOptions={{ lazy: true }}>
-          {I18n.t("profile.main.privacy.text")}
-        </Markdown>
+      <Content noPadded={true}>
+        <View content={true}>
+          {isAcceptingTos && (
+            <View style={styles.activityIndicatorContainer}>
+              <ActivityIndicator />
+            </View>
+          )}
+          {/* FIXME: handle errors */}
+          {profileUpsertError.isSome() && (
+            <View padder={true}>
+              <Text>{I18n.t("global.actions.retry")}</Text>
+            </View>
+          )}
+          <Markdown lazyOptions={{ lazy: true }}>
+            {I18n.t("profile.main.privacy.text")}
+          </Markdown>
+        </View>
       </Content>
       {isProfile === false && (
         <View footer={true}>
