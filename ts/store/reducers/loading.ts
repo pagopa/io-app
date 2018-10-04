@@ -5,13 +5,13 @@
  * - ACTION_NAME_(REQUEST|CANCEL|SUCCESS|FAILURE)
  */
 
-import { getType } from "typesafe-actions";
-import {
-  FetchRequestActionsType,
-  PAYMENT_RESET_LOADING,
-  PAYMENT_SET_LOADING
-} from "../actions/constants";
+import { getType, isActionOf } from "typesafe-actions";
+import { FetchRequestActionsType } from "../actions/constants";
 import { Action } from "../actions/types";
+import {
+  paymentResetLoadingState,
+  paymentSetLoadingState
+} from "../actions/wallet/payment";
 import {
   walletManagementResetLoadingState,
   walletManagementSetLoadingState
@@ -65,13 +65,13 @@ const reducer = (
    * Instead of handling each *_REQUEST individually,
    * we're using dedicated set/reset actions
    */
-  if (type === PAYMENT_SET_LOADING) {
+  if (isActionOf(paymentSetLoadingState, action)) {
     return {
       ...state,
       PAYMENT: true
     };
   }
-  if (type === PAYMENT_RESET_LOADING) {
+  if (isActionOf(paymentResetLoadingState, action)) {
     return {
       ...state,
       PAYMENT: false
