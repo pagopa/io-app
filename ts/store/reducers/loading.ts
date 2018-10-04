@@ -5,14 +5,17 @@
  * - ACTION_NAME_(REQUEST|CANCEL|SUCCESS|FAILURE)
  */
 
+import { getType } from "typesafe-actions";
 import {
   FetchRequestActionsType,
   PAYMENT_RESET_LOADING,
-  PAYMENT_SET_LOADING,
-  WALLET_MANAGEMENT_RESET_LOADING_STATE,
-  WALLET_MANAGEMENT_SET_LOADING_STATE
+  PAYMENT_SET_LOADING
 } from "../actions/constants";
 import { Action } from "../actions/types";
+import {
+  walletManagementResetLoadingState,
+  walletManagementSetLoadingState
+} from "../actions/wallet/wallets";
 import { GlobalState } from "./types";
 
 export type LoadingState = Readonly<
@@ -80,13 +83,13 @@ const reducer = (
    * under WALLET_MANAGEMENT (it currently includes
    * deletion and "setting as favourite" of wallets)
    */
-  if (type === WALLET_MANAGEMENT_SET_LOADING_STATE) {
+  if (type === getType(walletManagementSetLoadingState)) {
     return {
       ...state,
       WALLET_MANAGEMENT_LOAD: true
     };
   }
-  if (type === WALLET_MANAGEMENT_RESET_LOADING_STATE) {
+  if (type === getType(walletManagementResetLoadingState)) {
     return {
       ...state,
       WALLET_MANAGEMENT_LOAD: false

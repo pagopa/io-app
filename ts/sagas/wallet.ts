@@ -42,10 +42,6 @@ import ROUTES from "../navigation/routes";
 
 import { logoutSuccess } from "../store/actions/authentication";
 import {
-  ADD_CREDIT_CARD_COMPLETED,
-  ADD_CREDIT_CARD_REQUEST,
-  DELETE_WALLET_REQUEST,
-  FETCH_WALLETS_REQUEST,
   PAYMENT_COMPLETED,
   PAYMENT_REQUEST_CANCEL,
   PAYMENT_REQUEST_COMPLETION,
@@ -98,11 +94,12 @@ import {
   selectTransactionForDetails
 } from "../store/actions/wallet/transactions";
 import {
-  AddCreditCardRequest,
+  addCreditCardCompleted,
+  addCreditCardRequest,
   creditCardDataCleanup,
-  DeleteWalletRequest,
+  deleteWalletRequest,
   fetchWalletsFailure,
-  FetchWalletsRequest,
+  fetchWalletsRequest,
   fetchWalletsSuccess,
   selectWalletForDetails,
   walletManagementResetLoadingState,
@@ -342,7 +339,7 @@ function* addCreditCard(
    * (will trigger an addCreditCardCompleted
    * action upon finishing)
    */
-  yield take(ADD_CREDIT_CARD_COMPLETED);
+  yield take(getType(addCreditCardCompleted));
 
   // There currently is no way of determining
   // whether the card has been added successfully from
@@ -1066,7 +1063,10 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
   }
 }
 
+const fetchWalletsRequestType = getType(fetchWalletsRequest);
 const fetchTransactionsRequestType = getType(fetchTransactionsRequest);
+const addCreditCardRequestType = getType(addCreditCardRequest);
+const deleteWalletRequestType = getType(deleteWalletRequest);
 
 export function* watchWalletSaga(
   sessionToken: SessionToken,
@@ -1108,36 +1108,36 @@ export function* watchWalletSaga(
   while (true) {
     const action:
       | ActionType<typeof fetchTransactionsRequest>
-      | FetchWalletsRequest
-      | AddCreditCardRequest
+      | ActionType<typeof fetchWalletsRequest>
+      | ActionType<typeof addCreditCardRequest>
       | ActionType<typeof logoutSuccess>
       | PaymentRequestQrCode
       | PaymentRequestMessage
-      | DeleteWalletRequest = yield take([
+      | ActionType<typeof deleteWalletRequest> = yield take([
       fetchTransactionsRequestType,
-      FETCH_WALLETS_REQUEST,
+      fetchWalletsRequestType,
       getType(logoutSuccess),
       PAYMENT_REQUEST_QR_CODE,
       PAYMENT_REQUEST_MESSAGE,
-      ADD_CREDIT_CARD_REQUEST,
-      DELETE_WALLET_REQUEST
+      addCreditCardRequestType,
+      deleteWalletRequestType
     ]);
 
     if (action.type === fetchTransactionsRequestType) {
       yield fork(fetchTransactions, pagoPaClient);
     }
-    if (action.type === FETCH_WALLETS_REQUEST) {
+    if (action.type === fetchWalletsRequestType) {
       yield fork(fetchWallets, pagoPaClient);
     }
-    if (action.type === ADD_CREDIT_CARD_REQUEST) {
+    if (action.type === addCreditCardRequestType) {
       yield fork(
         addCreditCard,
-        action.creditCard,
-        action.setAsFavorite, // should the card be set as favorite?
+        action.payload.creditCard,
+        action.payload.setAsFavorite, // should the card be set as favorite?
         pagoPaClient
       );
     }
-    if (action.type === DELETE_WALLET_REQUEST) {
+    if (action.type === deleteWalletRequestType) {
       yield fork(deleteWallet, action.payload, pagoPaClient);
     }
     // if the user logs out, go back to waiting
