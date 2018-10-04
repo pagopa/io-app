@@ -23,7 +23,8 @@ function rule() {
         Text,
         {
           key: i,
-          markdown: true
+          markdown: true,
+          inMessage: state.screen === "MESSAGE_DETAIL" ? true : false
         },
         text
       );

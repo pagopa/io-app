@@ -17,6 +17,7 @@ declare module "native-base" {
       alignCenter?: boolean;
       primary?: boolean;
       markdown?: boolean;
+      inMessage?: boolean;
     }
   }
 }
@@ -65,6 +66,9 @@ export default (): Theme => {
         borderRadius: variables.borderRadiusBase,
         color: variables.colorWhite,
         backgroundColor: variables.textLinkColor
+      },
+      ".inMessage": {
+        lineHeight: variables.lineHeightBase + 0
       }
     },
     lineHeight: variables.lineHeightBase

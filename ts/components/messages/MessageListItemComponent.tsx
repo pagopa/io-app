@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
 
   serviceText: {
-    fontSize: variables.fontSize3
+    fontSize: variables.fontSize3,
+    lineHeight: 20
   },
 
   dateText: {
@@ -91,7 +92,7 @@ export class MessageListItemComponent extends React.PureComponent<
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
-              <Col>
+              <Col size={10}>
                 <Text
                   style={styles.serviceText}
                   leftAlign={true}
@@ -100,7 +101,7 @@ export class MessageListItemComponent extends React.PureComponent<
                   {uiService}
                 </Text>
               </Col>
-              <Col>
+              <Col size={2}>
                 <Text style={styles.dateText} rightAlign={true}>
                   {uiCreatedAt}
                 </Text>

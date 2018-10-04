@@ -34,7 +34,8 @@ function rule() {
       return React.createElement(
         ComponentType,
         {
-          key: state.key
+          key: state.key,
+          inMessage: state.screen === "MESSAGE_DETAIL" ? true : false
         },
         output(node.content, newState)
       );

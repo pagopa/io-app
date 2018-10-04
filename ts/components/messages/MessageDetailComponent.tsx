@@ -79,7 +79,7 @@ class MessageDetailComponent extends React.PureComponent<Props, never> {
 
           {/* Subject */}
           <View style={styles.subjectContainer}>
-            <H1>{message.content.subject}</H1>
+            <H1 style={{lineHeight:40}}>{message.content.subject}</H1>
           </View>
 
           {/* RawInfo */}
@@ -97,7 +97,10 @@ class MessageDetailComponent extends React.PureComponent<Props, never> {
         />
 
         <View style={styles.markdownContainer}>
-          <Markdown lazyOptions={{ lazy: true }}>
+          <Markdown
+            lazyOptions={{ lazy: true }}
+            initialState={{ screen: "MESSAGE_DETAIL" }}
+          >
             {message.content.markdown}
           </Markdown>
         </View>
