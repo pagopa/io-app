@@ -10,118 +10,117 @@
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_shield)
 
-# L'app mobile della Cittadinanza Digitale
+# The mobile app of the Digital Citizenship project
 
 ## FAQ
 
-### Cos'è la Cittadinanza Digitale?
+### What is the Digital Citizenship project?
 
-La Cittadinanza Digitale ha l'obiettivo di portare il cittadino al centro dei servizi erogati dalle pubbliche amministrazioni italiane.
+Digital Citizenship aims at bringing citizens to the center of the Italian public administrations services.
 
-Il progetto si estende su due linee:
+The project comprises two main components:
 
-* la costruzione di una piattaforma di componenti che abilitano lo sviluppo di servizi digitali incentrati sul cittadino
-* un'interfaccia del cittadino per gestire i propri dati e il proprio profilo di cittadino digitale
+* a platform made of elements that enable the development of citizen-centric digital services;
+* an interface for citizens to manage their data and their digital citizen profiles.
 
-### Cos'è l'app mobile della Cittadinanza Digitale?
+### What is the Digital Citizenship mobile app?
 
-L'app mobile della Cittadinanza Digitale è un'applicazione mobile nativa per iOS e Android con duplice scopo:
+The Digital Citizenship mobile app is a native mobile application for iOS and Android with a dual purpose:
 
-* essere un interfaccia per il cittadino verso i propri dati e il proprio profilo di cittadino digitale
-* fungere da _reference implementation_ delle integrazioni con la piattaforma di Cittadinanza Digitale
+* To be an interface for citizens to manage their data and their digital citizen profile;
+* To act as _reference implementation_ of the integrations with the Digital Citizenship platform.
 
-### Chi sviluppa l'app?
+### Who develops the app?
 
-Lo sviluppo dell'app è portato avanti da diversi _contributors_: [L'Agenzia per l'Italia Digitale](http://www.agid.gov.it/), [il Team per la Trasformazione Digitale](https://teamdigitale.governo.it/) e volontari indipendenti che credono nel progetto.
+The development of the app is carried out by several contributors:
 
-### Posso usare l'app?
+* the [Digital Transformation Team](https://teamdigitale.governo.it/)
+* the [Agency for Digital Italy](http://www.agid.gov.it/)
+* volunteers who support the project.
 
-Per ora l'app non è ancora stata pubblicata sugli app store per cui non è possibile installarla tramite i meccanismi abituali.
+### Can I use the app?
 
-Se sei uno sviluppatore puoi invece compilare l'app sul tuo computer e installarla manualmente sul tuo device.
+The app is being tested with a restricted group of users and stakeholders so for now, the app is not available in the app stores.
 
-### Quando sarà pubblicata l'app?
+However, if you are a developer you can build the app on your computer and install it manually on your device. You will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) to login to the app.
 
-Quando l'app avrà raggiunto un livello di qualità e di utilità che ci soddisfa, la renderemo disponibile a tutti i cittadini.
+### When will the app be available?
 
-### Come posso darvi una mano?
+When the app will achieve the appropriate level of quality and usefulness, it will be made available to all citizens on the Apple and Google app stores.
 
-Segnalazione di bug, bugfix ed in genere qualsiasi miglioramento è il benvenuto! Mandaci una Pull Request!
+### How can I help you?
 
-Se invece hai un po' di tempo da dedicarci e vuoi essere coinvolto in modo continuativo, [mandaci una mail](mailto:federico@teamdigitale.governo.it).
+[Reporting bugs](https://github.com/teamdigitale/italia-app/issues), bug fixes, [translations](https://github.com/teamdigitale/italia-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/teamdigitale/italia-app/pulls)!
 
-## Tecnologie usate
+If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico@teamdigitale.governo.it).
 
-* [React Native](https://facebook.github.io/react-native)
+## Main technologies used
+
+* [TypeScript](https://www.typescriptlang.org/)
 * [Redux](http://redux.js.org/)
+* [Redux Saga](https://redux-saga.js.org/)
+* [React Native](https://facebook.github.io/react-native)
 * [Native Base](http://nativebase.io)
-* [Flow](https://flow.org/)
 
-## Architettura
+## Architecture
 
-### Autenticazione SPID
+### SPID Authentication
 
-L'applicazione si appoggia ad un [backend web](https://github.com/teamdigitale/ItaliaApp-backend) per l'autenticazione a SPID. Il backend implementa un Service Provider SAML2 ([tramite Shibboleth](https://github.com/italia/spid-sp-playbook/)) che si occupa dell'autenticazione dell'utente sugli Identity Provider SPID.
+The application relies on a [backend](https://github.com/teamdigitale/ItaliaApp-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/digital-citizenship).
 
-L'autenticazione tra l'applicazione e il backend avviene tramite un token di sessione, generato dal backend al momento dell'autenticazione sull'IdP SPID.
+The backend implements a SAML2 Service Provider that deals with user authentication with the SPID Identity Providers (IdP).
 
-Una volta che il backend comunica il token di sessione all'applicazione, questo viene usato per tutte le successive chiamate che l'applicazione fa alle API esposte dal backend.
+The authentication between the application and the backend takes place via a session token, generated by the backend at the time of the authentication with the SPID IdP.
 
-Il flusso di autenticazione è il seguente:
+Once the backend communicates the session token to the application, it is used for all subsequent calls that the application makes to the API exposed by the backend.
 
-1. L'utente seleziona l'IdP
-2. L'app apre una webview sull'endpoint di autenticazione Shibboleth implementato nel backend, specificando l'entity ID dell'IdP selezionato dall'utente e, come URL di ritorno, l'URL dell'endpoint che genera un nuovo token di sessione (es. `/app/token/new`).
-3. Shibboleth prende in carico il processo di autenticazione verso l'IdP
-4. Ad autenticazione avvenuta, viene fatto un redirect dall'IdP all'endpoint del backend che si occupa della generazione di un nuovo token di sessione.
-5. L'endpoint di generazione di un nuovo token riceve via header HTTP gli attributi SPID, poi genera un nuovo token di sessione (es. `123456789`) e restituisce alla webview un HTTP redirect verso un URL _well known_, contenente il token di sessione (es. `/api/token/123456789`)
-6. L'app, che controlla la webview, intercetta questo URL prima che venga effettuata la richiesta HTTP, ne estrae il token di sessione e termina il flusso di autenticazione chiudendo la webview.
+The authentication flow is as follows:
 
-Successivamente il token di sessione viene usato dall'app per effettuare le chiamate all'API di backend (es. per ottenere gli attributi SPID).
+1. The user selects the IdP;
+1. The app opens a webview on the SAML SP authentication endpoint implemented in the backend, which specifies: the entity ID of the IdP selected by the user and, as returns URL, the URL of the endpoint that generates a new session token.
+1. The SAML SP logic takes over the authentication process by redirecting the user to the chosen IdP.
+1. After the authentication, a redirect is made from the IdP to the backend endpoint that deals with the generation of a new session token.
+1. The endpoint that generates a new token receives the SPID attributes via the HTTP header; then, it generates a new random session token and returns to the webview an HTTP redirect to an URL well-known containing the session token.
+1. The app, which monitors the webview, intercepts this URL before the HTTP request is made, extracts the session token and ends the authentication flow by closing the webview.
+1. Next, the session token is used by the app to make calls to the backend API.
 
-## Come contribuire
+## How to contribute
 
-### Pre-requisiti
+### Pre-requisites
 
 #### nodenv
 
-Su macOS e Linux si consiglia l'uso di [nodenv](https://github.com/nodenv/nodenv)
-per la gestione di versione multiple di NodeJS.
+On macOS and Linux we recommend the use of [nodenv](https://github.com/nodenv/nodenv) for managing multiple versions of NodeJS.
 
-La versione di node usata nel progetto [è questa](.node-version).
+The node version used in this project is stored in [.node-version](.node-version).
 
-Se si ha già `nodenv` installato e configurato sul proprio sistema, la versione
-di `node` corretta verrà impostata quando si accede alla directory dell'app.
+If you already have nodenv installed and configured on your system, the correct version node will be set when you access the app directory.
 
 #### yarn
 
-Per la gestione delle dipendenze javascript usiamo
-[Yarn](https://yarnpkg.com/lang/en/).
+For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/).
 
 #### rbenv
 
-Su macOS e Linux si consiglia l'uso di [rbenv](https://github.com/rbenv/rbenv)
-per la gestione di versione multiple di Ruby.
+On macOS and Linux, for managing multiple versions of Ruby (needed for _Fastlane_ and _CocoaPods_), we recommend the use of [rbenv](https://github.com/rbenv/rbenv).
 
-La versione di Ruby usata nel progetto [è questa](.ruby-version).
+The Ruby version used in this project is stored in [.ruby-version](.ruby-version).
 
-Se si ha già `rbenv` installato e configurato sul proprio sistema, la versione
-di Ruby corretta verrà impostata quando si accede alla directory dell'app.
+If you already have rbenv installed and configured on your system, the correct Ruby version will be set, when you access the app directory.
 
-#### Bundler
-
-Alcune dipendenze (es. CocoaPods) sono installate tramite [bundler](https://bundler.io/).
+Some dependencies (eg CocoaPods) are installed via [bundler](https://bundler.io/).
 
 #### React Native
 
-Seguire [il tutorial (Building Projects with Native Code)](https://facebook.github.io/react-native/docs/getting-started.html) per il proprio sistema operativo.
+Follow the tutorial [Building Projects with Native Code](https://facebook.github.io/react-native/docs/getting-started.html) for your operating system.
 
-Se si dispone di un sistema macOS è possibile seguire sia il tutorial per iOS che per Android. Se invece si dispone di un sistema Linux o Windows sarà possibile installare solo l'ambiente di sviluppo per Android.
+If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
-### Compilazione e lancio sul simulatore
+### Building and launching on the simulator
 
-#### Dipendenze
+#### Dependencies
 
-Per prima cosa installiamo le librerie usate dal progetto:
+First we install the libraries used by the project:
 
 ```
 $ bundle install
@@ -130,179 +129,160 @@ $ cd ios
 $ pod install
 ```
 
-#### Generazione definizioni API
+#### Generating API definitions and translations
 
-Il secondo passo è generare le definizioni dalle specifiche openapi:
-
-```
-$ yarn generate:api-definitions
-$ yarn generate:pagopa-api-definitions
-```
-
-#### Generazione delle traduzioni
-
-Generiamo poi i dati delle traduzioni dai file YAML presenti
-nella directory `locales`:
+The second step is to generate the definitions from the openapi specs and from the YAML translations:
 
 ```
-$ yarn generate:locales
+$ yarn generate:all
 ```
 
-#### Configurazione dell'app
+#### App build configuration
 
-Infine copiamo la configurazione di esempio per l'app.
+Finally, we copy the sample configuration for the app.
 
 ```
 $ cp .env.example .env
 ```
 
-Nota: la configurazione di esempio imposta l'app per interfacciarsi al nostro
-ambiente di test, su cui lavoriamo continuamente - potrebbe quindi accadere
-che alcune funzionalità non siano sempre disponibili o completamente
-funzionanti.
+_Note: The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working._
 
-#### Installazione sul simulatore
+#### Installation on the simulator
 
-Su Android (il simulatore del device va [lanciato a mano](https://medium.com/@deepak.gulati/running-react-native-app-on-the-android-emulator-11bf309443eb)):
+On Android (the device simulator must be [launched manually](https://medium.com/@deepak.gulati/running-react-native-app-on-the-android-emulator-11bf309443eb)):
 
 ```
 $ react-native run-android
 ```
 
-Su iOS (il simulatore verrà lanciato automaticamente):
+On iOS (the simulator will be launched automatically):
 
 ```
 $ react-native run-ios
 ```
 
-Nota: l'app utilizza [CocoaPods](https://cocoapods.org/), il progetto da eseguire è quindi `ItaliaApp.xcworkspace` anzichè `ItaliaApp.xcodeproj` (`run-ios` lo rileva automaticamente)
+_Note: the app uses CocoaPods, the project to run is therefore `ItaliaApp.xcworkspace` instead of `ItaliaApp.xcodeproj` (`run-ios` will automatically detect it)._
 
-### Compilazione (release)
+### Build (release)
 
-Per il rilascio dell'app sugli store usiamo Fastlane.
+For the release of the app on the stores we use [Fastlane](https://fastlane.tools/).
 
 #### iOS
 
-La distribuzione della beta viene fatta con il modello ad-hoc.
+The beta distribution is done with [TestFlight](https://developer.apple.com/testflight/).
 
-Per rilasciare una nuova beta:
-
-```
-$ bundle exec fastlane beta
-```
-
-Per aggiungere un nuovo device alla distribuzione ad-hoc:
+To release a new beta:
 
 ```
-$ bundle exec fastlane register_new_device
+$ cd ios
+$ bundle exec fastlane testflight_beta
 ```
 
 #### Android
 
-Per rilasciare una nuova alpha:
+To release a new alpha:
 
 ```
 $ bundle exec fastlane alpha
 ```
 
-### Installazione su device
+_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/teamdigitale/italia-app) on each by merge to the master branch._
+
+### Installation on physical devices (development)
 
 #### iOS
+
+For this step you’ll need to have a proper iOS development certificate on your dev machine that is also installed on your physical device.
 
 ```
 react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
 ```
 
-### Sviluppo con App Backend e IDP di test in locale
+### Development with Backend App and Local Test IDP
 
-Per sviluppare l'applicazione utilizzando in locale l'App Backend e un IDP di test, è necessario seguire alcuni step aggiuntivi descritti di seguito.
+To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
 
 #### Installazione di App Backend e IDP di test
 
-Seguire la documentazione del repository [italia-backend](https://github.com/teamdigitale/italia-backend).
+Follow the documentation of the repository [italia-backend](https://github.com/teamdigitale/italia-backend).
 
-#### WebView, HTTPS e certificati autofirmati
+#### WebView, HTTPS and self-signed certificates
 
-Allo stato attuale react-native non consente di aprire WebView su url HTTPS con certificato autofirmato. L'IDP di test però fa utilizzo di HTTPS e di un certificato autofirmato. Per ovviare a questo problema è possibile installare in locale un Proxy che faccia da proxy-pass verso l'App Backend e l'IDP.
+At the moment, react-native does not allow to open WebView on HTTPS url with a self-signed certificate. However, the test IDP uses HTTPS and a self-signed certificate. To avoid this problem, it is possible to locally install a Proxy that acts as a proxy-pass to the Backend App and the IDP.
 
-##### Installazione di mitmproxy
+##### Installation of mitmproxy
 
-Un proxy semplice da utilizzare e addatto al nostro scopo è [mitmproxy](https://mitmproxy.org/). Per l'installazione seguire la [pagina di documentazione](https://docs.mitmproxy.org/stable/overview-installation/) del sito ufficiale.
+[Mitmproxy](https://mitmproxy.org/) is a simple proxy to use and is also suitable for our purpose. For installation, follow the documentation page on the [official website](https://docs.mitmproxy.org/stable/overview-installation/).
 
-All'interno del repository è presente il file `scripts/mitmproxy_metro_bundler.py` che permette al proxy di intercettare le richieste verso il Simulatore e, solo in caso di porte specifiche, effettuare il proxy-pass verso localhost.
-Avviare il Proxy con il seguente comando:
+The script `scripts/mitmproxy_metro_bundler.py` allows the proxy to intercept requests to the Simulator and, only in case of specific ports, to proxy the localhost. Start the proxy with the following command:
 
 ```
 SIMULATOR_HOST_IP=XXXXX mitmweb --listen-port 9060 --web-port 9061 --ssl-insecure -s scripts/mitmproxy_metro_bundler.py
 ```
 
-Inserire al posto di `XXXXX`:
+Add in place of `XXXXX`:
+
 * `10.0.2.2` (Standard Android Emulator)
 * `10.0.3.2` (Genymotion Android Emulator)
 
-##### Installazione del certificato di mitmproxy all'interno dell'emulatore Android
+##### Installing the mitmproxy certificate within the emulator Android
 
-Installare il certificato di mitmproxy all'interno dell'emulatore seguendo la [giuda](https://docs.mitmproxy.org/stable/concepts-certificates/) ufficiale.
+Install certificate mitmproxy within the emulator following the official  [guide](https://docs.mitmproxy.org/stable/concepts-certificates/).
 
-#### Impostare il proxy per la connessione nell'emulatore Android
+#### Set the proxy for the connection in the Android emulator
 
-Nella configurazione della connessione inserire:
-* IP Proxy: `10.0.2.2` (o `10.0.3.2` nel caso si utilizzi Genymotion)
-* Porta Proxy: `9060`
+In the connection configuration enter:
 
-### Aggiornare icone dell'applicazione
+* Proxy IP: `10.0.2.2` (or `10.0.3.2` if you use Genymotion)
+* Proxy port: `9060`
 
-Vedere [questo tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
+### Update the app icons
 
+Follow [this tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
 
-### Internazionalizzazione
+### Internationalization
 
-Per il supporto multilingua l'applicazione utilizza:
+For multi-language support the application uses:
 
-* [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) per l'integrazione delle traduzioni con le preferenze dell'utente
-* Dei file YAML nella directory `locales`
-* Uno script di conversione da YAML a codice Typescript (`generate:locales`).
+* [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) for the integration of translations with user preferences
+* YAML files in the directory `locales`
+* A YAML-to-typescript conversion script (`generate:locales`).
 
-Per aggiungere una nuova lingua è necessario:
+To add a new language you must:
 
-1. Creare una nuova directory sotto `locales` usando come nome il codice di lingua (Es: `es`).
-1. Copiare il contenuto dalla lingua di base (`en`).
-1. Procedere con la traduzione.
-1. Eseguire lo script di generazione del codice Typescript (`npm run generate:locales`).
-1. Modificare il file `ts/i18n.ts` aggiungendo la nuova lingua nella variabile `I18n.translations`.
+1. Create a new directory under [locales](locales) using the language code as the name (e.g. `es` for Spanish, `de` for German, etc...).
+1. Copy the content from the base language (`en`).
+1. Proceed with the translation by editing the YAML and Markdown files.
+1. Run the Typescript code generation script (`npm run generate:locales`).
+1. Edit the file [ts/i18n.ts](ts/i18n.ts) by adding the new language in the variable `I18n.translations`.
 
-### Gestione degli errori
+### Error handling
 
-L'applicazione utilizza un custom handler per intercettare e notificare errori javascript causati da eccezioni non gestite. Il codice del custom handler è visibile nel file `ts/utils/configureErrorHandler.ts`
+The application uses a custom handler to intercept and notify javascript errors caused by unhandled exceptions. The custom handler code is visible in the file `ts/utils/configureErrorHandler.ts`
 
+### Connection monitoring
 
-### Monitoring della connessione
+The application uses the library [react-native-offline](https://github.com/rauliyohmc/react-native-offline) to monitor the connection status. In case of no connection, a bar is displayed that notifies the user.
 
-L'applicazione utilizza la libreria [react-native-offline](https://github.com/rauliyohmc/react-native-offline) per monitorare lo stato della connessione. In caso di assenza di connessione viene visualizzata una barra che notifica l'utente. Lo stato della connessione è mantenuto all'interno dello store nella variabile `state.network.isConnected`, è possibile utilizzare questo dato per disabilitare alcune funzioni durante l'assenza della connessione.
-
+The connection status is kept inside the Redux store in the variable `state.network.isConnected`, you can use this data to disable some functions during the absence of the connection.
 
 ### Deep linking
 
-L'applicazione è in grado di gestire i _deep link_. Lo schema URL è: `ioit://`. Il formato del link varia in base alla piattaforma:
-
-- Android: `ioit://ioit/<route-name>`
-- iOS: `ioit://<route-name>`
-
-`<route-name>` dev'essere un valore contenuto nel file `ts/navigation/routes.ts`.
+The application is able to manage _deep links_. The URL scheme is: `ioit://`. The link format is `ioit://<route-name>`.
 
 ### Fonts
 
-L'applicazione utilizza il font `Titillium Web`. I fonts vengono gestiti in modo differente da Android e iOS. Per utilizzare il font `TitilliumWeb-SemiBoldItalic` ad esempio è necessario applicare le seguenti proprietà per Android:
+The application uses the font _Titillium Web_. Fonts are handled differently than Android and iOS. To use the font, `TitilliumWeb-SemiBoldItalic` example, you must apply the following properties for Android:
 
-```
+```css
 {
   fontFamily: 'TitilliumWeb-SemiBoldItalic'
 }
 ```
 
-mentre in iOS il codice da applicare è:
+while in iOS the code to be applied is:
 
-```
+```css
 {
   fontFamily: 'Titillium Web',
   fontWeight: '600',
@@ -310,44 +290,42 @@ mentre in iOS il codice da applicare è:
 }
 ```
 
-Per rendere la gestione dei font e delle varianti più sempice sono state create delle funzioni di utilità all'interno del file `ts/theme/fonts.ts`
+To manage fonts and variants more easily, we have created utility functions within the file [ts/theme/fonts.ts](ts/theme/fonts.ts).
 
 ### Io-Icon-Font
 
-L'applicazione utilizza un font-icon custom dal nome 'io-icon-font'. Grazie alla libreria [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) inclusa nel progetto è possibile creare nuovi IconSet. In particolare tra i vari metodi esposti nell'[apposita sezione](https://github.com/oblador/react-native-vector-icons#custom-fonts) della documentazione si è scelto di utilizzare quello che prevede di esportare il font tramite [IcoMoon](https://icomoon.io/). Durante l'esportazione da IcoMoon utilizzare la configurazione mostrata nella seguente figura.
+The application uses a custom font-icon from the name 'io-icon-font'. Thanks to the library [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) which is included in the project, it is possible to create new IconSets. In particular, among the various methods shown in the [appropriate section](https://github.com/oblador/react-native-vector-icons#custom-fonts) of the documentation, we decided to use the one that allows to export the font through IcoMoon. When exporting from [IcoMoon](https://icomoon.io/), you should use the configuration shown in the following picture.
 
 ![IcoMoon Export Settings][icomoon-export-settings]
 
-Per aggiornare l'icon-font ad una nuova versione è necessario estrarre e posizionare correttamente i seguenti due file dall'archivio '.zip' generatoro da IcoMoon:
+To update the icon-font to a new version, it is necessary to extract and correctly position the following two files from the archive '.zip' generated by IcoMoon:
 
-* `selection.json` contenuto nella root dell'archivio, da posizionare in `ts/theme/font-icons/io-icon-font/`
-* `io-icon-font.ttf` contenuto nella directory `fonts` dell'archivio, da posizionare in `assets/fonts/io-icon-font/`
+* `selection.json` contained in the archive root, to be placed in [ts/theme/font-icons/io-icon-font/](ts/theme/font-icons/io-icon-font).
+* `io-icon-font.ttf` contained in the directory fonts archive, to be placed in [assets/fonts/io-icon-font/](assets/fonts/io-icon-font).
 
-Una volta copiati i due file è necessario aggiornare il link dell'asset eseguendo
+Once the two files have been copied, it is necessary to update the link of the asset by running:
 
 ```
-react-native link
+$ react-native link
 ```
 
-Questo ultimo comando si occupa in particolare di copiare l'asset all'interno di una cartella specifica del sottoprogetto Android.
-
+This last command deals in particular with copying the asset within a specific folder of the Android sub-project.
 
 ### Theming
 
-L'applicazione utilizza [native-base](https://nativebase.io/) e i suo componenti per la realizzazione dell'interfaccia grafica. In particolare è stato scelto di utilizzare come base il tema `material` previsto dalla libreria. Sebbene native-base permetta attraverso l'uso di variabili di personalizzare parte del tema è stato comunque necessario implementare delle funzioni ad-hoc che consentano di andare a modificare il tema dei singoli componenti.
+The application uses [native-base](https://nativebase.io/) and its components for the graphical interface. In particular, we  decided to use as a basis the theme material provided by the library. Although native-base allows to customize part of the theme through the use of variables, it was nevertheless necessary to implement ad-hoc functions that allow to go to modify the theme of the individual components.
 
-#### Estensione di native-base
+#### Extending Native Base default theme
 
-Nella directory `/ts/theme` sono presenti alcuni file che consentono di gestire il tema in modo più flessibile rispetto a quanto permesso nativamente da native-base.
+In the [ts/theme](ts/theme) directory there are some files that allow you to manage the theme in a more flexible way than what native-base permits natively.
 
-##### Variabili
+##### Variables
 
-Per definire nuove variabili da utilizzare nel tema dei componenti è necessario modificare il file `/ts/theme/variables.ts`. Tale file si occupa di importare le variabili di base definite dal tema `material` di native-base e permette di sovrascrivere/definire il valore di nuove variabili.
+To define new variables to use in the components theme, you need to edit the file [ts/theme/variables.ts](ts/theme/variables.ts). This file deals with importing the basic variables defined by the `material` theme of native-base and allows to overwrite / define the value of new variables.
 
-##### Tema dei Componenti
+##### Components Theme
 
-La libreria native-base definisce il tema di ogni singolo componente in un file .ts separato che ha come nome quello dello specifico componente. Ad esempio il file del tema relativo al componente `Button` ha come nome `Button.ts`.
-Per ridefinire il tema dei componenti di native-base è necesario creare/modificare i file presenti nella directory `/ts/theme/components`. Ogni file presente in questa directory deve esportare un oggetto che definisce il tema del componente. Prendiamo come esempio il file `Content.ts`:
+The native-base library defines the theme of each individual component in a separate `.ts` file that is named after the specific component. For example, the theme file related to the component `Button` is named `Button.ts`. To redefine the theme of the native-base components, it is necessary to create / modify the files in the [ts/theme/components](ts/theme/components) directory. Every file in this directory must export an object that defines the components theme. Take the file `Content.ts` as an example:
 
 ```javascript
 import { type Theme } from '../types'
@@ -363,9 +341,9 @@ export default (): Theme => {
 }
 ```
 
-In questo file è possibile notare come vengono ridefiniti due attributi (`padding` e `backgroundColor`) utilizzando come valori quanto presente nelle relative variabili. L'oggetto restituito sarà utilizzato nel file `/ts/theme/index.ts` per associarlo ad uno specifico tipo di componente (in questo caso `NativeBase.Component`).
+In this file, you can see how two attributes are redefined (`padding` and `backgroundColor`) using the values ​​in the relative variables. The returned object will be used in the file [ts/theme/index.ts](ts/theme/index.ts) to associate it with a specific component type (in this case `NativeBase.Component`).
 
-Un esempio più complesso permette di utilizzare le funzioni avanzate del layer di theming di native-base.
+A more complex example allows you to use the advanced features of the native-base theming layer.
 
 ```javascript
 import { type Theme } from '../types'
@@ -396,8 +374,7 @@ export default (): Theme => {
 }
 ```
 
-All'interno del file del tema di un singolo componente è possibile infatti definire degli attributi specifici che verranno utilizzati solo nel caso in cui il componente in questione abbia una specifica proprietà.
-Definendo nell'oggetto di tema qualcosa come:
+Within the theme file of a single component, it is possible to define specific attributes that will be used only if this specific component has a specific property. By defining in the theme object something like:
 
 ```javascript
 '.footer': {
@@ -405,10 +382,9 @@ Definendo nell'oggetto di tema qualcosa come:
 }
 ```
 
-se necessario, sarà possibile utilizzare il componente associandogli la proprietà `footer` nel seguente modo `<Component footer />` ed automaticamente il sistema di theming applicherà al componente gli attributi definiti (`paddingTop: variables.footerPaddingTop`).
+If necessary, you can use the component by associating the `footer` property in the following way `<Component footer />` and automatically the theming system will apply to the component the defined attributes (`paddingTop: variables.footerPaddingTop`).
 
-Altra funzione avanzata è quella che permette di definire il tema dei componenti figli a partire dal componente padre.
-Prediamo come esempio il seguente frammento di codice di un generico componente:
+Another advanced function allows to define the theme of the child components starting from the parent component. Let's take as an example the following code fragment of a generic component:
 
 ```javascript
 ...
@@ -424,7 +400,7 @@ render() {
 ...
 ```
 
-La libreria native-base permette di definire l'aspetto del componente figlio `Text` presente all'interno del componente padre `Button`. Ad esempio per definire la dimensione del testo in tutti i bottoni presenti nell'applicazione, è sufficiente inserire il seguente codice all'interno del file `/ts/theme/components/Button.ts`:
+The native-base library allows you to define the appearance of the child component `Text` present in the parent `Button`. For example, to define the size of the text in all the buttons in the application, simply enter the following code in the file `ts/theme/components/Button.ts`:
 
 ```javascript
 import variables from '../variables'
@@ -440,7 +416,7 @@ export default (): Theme => {
 }
 ```
 
-È possibile spingersi ancora oltre e combinare le due funzionalità viste in precedenza:
+You can go even further and combine the two features seen previously:
 
 ```javascript
 import variables from '../variables'
@@ -458,15 +434,15 @@ export default (): Theme => {
 }
 ```
 
-In questo caso quanto definito all'interno dell'attributo `NativeBase.Text` sarà utilizzato solo nel caso in cui il bottone abbia associata una proprietà dal nome `small`.
+In this case, what is defined within the attribute `NativeBase.Text` will be used only if the button has associated a property with a name `small`.
 
 ### Custom UI components
 
 #### TextWithIcon
 
-Un semplice wrapper in cui è possibile inserire un'icona ed un testo che verranno renderizzati uno di fianco all'altro.
+A simple wrapper in which you can insert an icon and a text that will be rendered side by side.
 
-Esempio di utilizzo:
+Example of use:
 
 ```javascript
 <TextWithIcon danger>
@@ -475,37 +451,32 @@ Esempio di utilizzo:
 </TextWithIcon>
 ```
 
-Per cambiare il tema del wrapper, dell'icona o del testo modificare il file `ts/theme/components/TextWithIcon.ts`.
+To change the wrapper, icon or text theme, edit the `ts/theme/components/TextWithIcon.ts` file.
 
-### Test end to end con Detox (sperimentale)
+### End to end test with Detox (experimental)
 
-Per i test di integrazione sui simulatori usiamo
-[Detox](https://github.com/wix/detox).
+For integration tests on simulators we use [Detox](https://github.com/wix/detox).
 
-I test end to end si trovano in [ts/__e2e__/](ts/__e2e__/).
+End to end tests are found in [ts/__e2e__/](ts/__e2e__/).
 
-Per compilare l'app in preparazione al test:
+To compile the app in preparation for the test:
 
 ```
 $ detox build
 ```
 
-(opzionale) Lanciare il simulatore iOS (con [ios-sim](https://www.npmjs.com/package/ios-sim) per comodità):
+(optional) Launch the iOS simulator (with [ios-sim](https://www.npmjs.com/package/ios-sim) for convenience):
 
 ```
 $ ios-sim start --devicetypeid "iPhone-6, 10.2"
 ```
 
-Nel caso non si lanci il simulatore, Detox ne lancerà uno in background.
+In case you do not launch the simulator, Detox will launch one in the background.
 
-Lancio dei test:
+Launch of the tests:
 
 ```
 $ detox test
 ```
-
-## License
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_large)
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
