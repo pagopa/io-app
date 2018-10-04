@@ -129,16 +129,18 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   return (
     <TopScreenComponent
       goBack={goBack}
+      banner={
+        props.isSessionExpired && (
+          <InfoBanner
+            title={I18n.t("authentication.expiredSessionBanner.title")}
+            message={I18n.t("authentication.expiredSessionBanner.message")}
+          />
+        )
+      }
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
       title={I18n.t("authentication.idp_selection.contentTitle")}
       subtitle={I18n.t("authentication.idp_selection.subtitle")}
     >
-      {props.isSessionExpired && (
-        <InfoBanner
-          title={I18n.t("authentication.expiredSessionBanner.title")}
-          message={I18n.t("authentication.expiredSessionBanner.message")}
-        />
-      )}
       <Content noPadded={true} alternative={true}>
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />

@@ -23,6 +23,7 @@ interface OwnProps {
   subtitle?: string;
   headerTitle?: string;
   onMoreLinkPress?: () => void;
+  banner?: React.ReactNode;
 }
 
 type Props = OwnProps &
@@ -42,7 +43,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       subtitle,
       headerTitle,
       onMoreLinkPress,
-      contextualHelp
+      contextualHelp,
+      banner
     } = this.props;
     return (
       <BaseScreenComponent
@@ -50,6 +52,12 @@ class TopScreenComponent extends React.PureComponent<Props> {
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
       >
+        {banner && (
+          <React.Fragment>
+            {banner}
+            <View spacer={true} />
+          </React.Fragment>
+        )}
         <ScreenHeader heading={<H1>{title}</H1>} icon={icon} />
         <View style={styles.subheaderContainer}>
           {subtitle && <Text>{subtitle}</Text>}
