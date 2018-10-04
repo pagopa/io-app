@@ -246,7 +246,7 @@ export function* watchMessagesLoadOrCancelSaga(
     if (isActionOf(loadMessagesRequest, action)) {
       // Call the generator to load messages
       lastTask = some(
-        yield fork(loadMessagesRequest, getMessages, getMessage, getService)
+        yield fork(loadMessages, getMessages, getMessage, getService)
       );
     }
   }
