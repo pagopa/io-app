@@ -42,6 +42,7 @@
     "react-native-camera": "1.2.0",
     "react-native-config": "^0.11.2",
     "react-native-device-info": "^0.22",
+    "react-native-exception-handler": "^2.9.0",
     "react-native-fs": "2.11.15",
     "react-native-i18n": "^2.0.15",
     "react-native-keychain": "^3.0.0",

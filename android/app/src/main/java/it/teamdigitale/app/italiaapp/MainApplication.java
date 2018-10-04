@@ -15,6 +15,7 @@ import com.vonovak.AddCalendarEventPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;

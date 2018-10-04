@@ -3,11 +3,21 @@
  */
 
 import { AppRegistry } from "react-native";
-import Config from "react-native-config";
-import Mixpanel from "react-native-mixpanel";
+import {
+  setNativeExceptionHandler
+} from "react-native-exception-handler";
+import DeviceInfo from "react-native-device-info";
+import { mixpanel } from "./ts/mixpanel";
 
-// Configure Mixpanel session
-Mixpanel.sharedInstanceWithToken(Config.MIXPANEL_TOKEN);
+setNativeExceptionHandler(exceptionString => {
+  if (mixpanel) {
+    mixpanel.track("APPLICATION_ERROR", {
+      TYPE: "native",
+      ERROR: exceptionString,
+      APP_VERSION: DeviceInfo.getReadableVersion()
+    });
+  }
+});
 
 import { App } from "./ts/App";
 
