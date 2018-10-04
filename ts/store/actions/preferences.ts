@@ -1,9 +1,8 @@
-import { ActionType, createAction } from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const preferencesLanguagesLoadSuccess = createAction(
-  "PREFERENCES_LANGUAGES_LOAD_SUCCESS",
-  resolve => (languages: ReadonlyArray<string>) => resolve(languages)
-);
+export const preferencesLanguagesLoadSuccess = createStandardAction(
+  "PREFERENCES_LANGUAGES_LOAD_SUCCESS"
+)<ReadonlyArray<string>>();
 
 export type PreferencesActions = ActionType<
   typeof preferencesLanguagesLoadSuccess

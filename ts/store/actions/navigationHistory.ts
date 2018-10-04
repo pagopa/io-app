@@ -1,14 +1,9 @@
 import { NavigationState } from "react-navigation";
-import {
-  ActionType,
-  createAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const navigationHistoryPush = createAction(
-  "NAVIGATION_HISTORY_PUSH",
-  resolve => (navigationState: NavigationState) => resolve(navigationState)
-);
+export const navigationHistoryPush = createStandardAction(
+  "NAVIGATION_HISTORY_PUSH"
+)<NavigationState>();
 
 export const navigationHistoryReset = createStandardAction(
   "NAVIGATION_HISTORY_RESET"

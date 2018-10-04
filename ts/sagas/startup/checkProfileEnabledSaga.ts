@@ -33,9 +33,9 @@ export function* checkProfileEnabledSaga(
         email: profile.spid_email
       })
     );
-    const action: ActionType<
-      typeof profileUpsertSuccess | typeof profileUpsertFailure
-    > = yield take([
+    const action:
+      | ActionType<typeof profileUpsertSuccess>
+      | ActionType<typeof profileUpsertFailure> = yield take([
       getType(profileUpsertSuccess),
       getType(profileUpsertFailure)
     ]);

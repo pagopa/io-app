@@ -17,26 +17,24 @@ import { Omit } from "../../types/utils";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 
-export const profileLoadSuccess = createAction(
-  "PROFILE_LOAD_SUCCESS",
-  resolve => (profile: UserProfileUnion) => resolve(profile)
-);
+export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
+  UserProfileUnion
+>();
 
 export const profileLoadFailure = createAction(
   "PROFILE_LOAD_FAILURE",
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
-export const profileUpsertRequest = createAction(
-  "PROFILE_UPSERT_REQUEST",
-  resolve => (newProfile: Partial<Omit<ExtendedProfile, "version">>) =>
-    resolve(newProfile)
-);
+type ProfileUpsertPayload = Partial<Omit<ExtendedProfile, "version">>;
 
-export const profileUpsertSuccess = createAction(
-  "PROFILE_UPSERT_SUCCESS",
-  resolve => (profile: InitializedProfile) => resolve(profile)
-);
+export const profileUpsertRequest = createStandardAction(
+  "PROFILE_UPSERT_REQUEST"
+)<ProfileUpsertPayload>();
+
+export const profileUpsertSuccess = createStandardAction(
+  "PROFILE_UPSERT_SUCCESS"
+)<InitializedProfile>();
 
 export const profileUpsertFailure = createAction(
   "PROFILE_UPSERT_FAILURE",

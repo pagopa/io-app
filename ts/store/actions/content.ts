@@ -1,12 +1,15 @@
-import { ActionType, createAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 
-export const contentServiceLoad = createAction(
-  "CONTENT_SERVICE_LOAD",
-  resolve => (serviceId: ServiceId) => resolve({ serviceId })
-);
+export const contentServiceLoad = createStandardAction("CONTENT_SERVICE_LOAD")<
+  ServiceId
+>();
 
 export const contentServiceLoadSuccess = createAction(
   "CONTENT_SERVICE_LOAD_SUCCESS",
@@ -14,10 +17,9 @@ export const contentServiceLoadSuccess = createAction(
     resolve({ serviceId, data })
 );
 
-export const contentServiceLoadFailure = createAction(
-  "CONTENT_SERVICE_LOAD_FAILURE",
-  resolve => (serviceId: ServiceId) => resolve({ serviceId })
-);
+export const contentServiceLoadFailure = createStandardAction(
+  "CONTENT_SERVICE_LOAD_FAILURE"
+)<ServiceId>();
 
 export type ContentActions = ActionType<
   | typeof contentServiceLoad

@@ -17,7 +17,7 @@ import {
   select,
   take
 } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import {
   GetServiceT,
@@ -212,8 +212,6 @@ export function* loadMessages(
   }
 }
 
-const loadMessagesRequestType = getType(loadMessagesRequest);
-
 /**
  * This generator is an 'always running' task that waits for MESSAGES_LOAD_REQUEST and MESSAGES_LOAD_CANCEL actions.
  * Instead of using takeLatest we are creating an ad-hoc while(true) loop that also manages task cancellation
@@ -231,9 +229,12 @@ export function* watchMessagesLoadOrCancelSaga(
   while (true) {
     // FIXME: why not takeLatest?
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
-    const action: ActionType<
-      typeof loadMessagesRequest | typeof loadMessagesCancel
-    > = yield take([loadMessagesRequestType, getType(loadMessagesCancel)]);
+    const action:
+      | ActionType<typeof loadMessagesRequest>
+      | ActionType<typeof loadMessagesCancel> = yield take([
+      getType(loadMessagesRequest),
+      getType(loadMessagesCancel)
+    ]);
     if (lastTask.isSome()) {
       // If there is an already running task cancel it
       yield cancel(lastTask.value);
@@ -242,7 +243,7 @@ export function* watchMessagesLoadOrCancelSaga(
 
     // If the action received is a MESSAGES_LOAD_REQUEST send the request
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
-    if (action.type === loadMessagesRequestType) {
+    if (isActionOf(loadMessagesRequest, action)) {
       // Call the generator to load messages
       lastTask = some(
         yield fork(loadMessagesRequest, getMessages, getMessage, getService)

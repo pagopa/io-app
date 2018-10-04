@@ -7,24 +7,23 @@ import {
   createAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { PAYMENT_REQUEST_TRANSACTION_SUMMARY } from "./constants";
 
-export const loadMessageSuccess = createAction(
-  "MESSAGE_LOAD_SUCCESS",
-  resolve => (message: MessageWithContentPO) => resolve(message)
-);
+export const loadMessageSuccess = createStandardAction("MESSAGE_LOAD_SUCCESS")<
+  MessageWithContentPO
+>();
 
 export const loadMessageFailure = createAction(
   "MESSAGE_LOAD_FAILURE",
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
-export const loadMessageWithRelationsAction = createAction(
-  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
-  resolve => (messageId: string) => resolve(messageId)
-);
+export const loadMessageWithRelationsAction = createStandardAction(
+  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST"
+)<string>();
 
 export const loadMessageWithRelationsSuccessAction = createStandardAction(
   "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS"
@@ -52,15 +51,13 @@ export const loadMessagesFailure = createAction(
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
-export const navigateToMessageDetails = createAction(
-  "NAVIGATE_TO_MESSAGE_DETAILS",
-  resolve => (messageId: string) => resolve(messageId)
-);
+export const navigateToMessageDetails = createStandardAction(
+  "NAVIGATE_TO_MESSAGE_DETAILS"
+)<string>();
 
-export const startPayment = createAction(
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  resolve => (paymentData: PaymentData) => resolve(paymentData)
-);
+export const startPayment = createStandardAction(
+  PAYMENT_REQUEST_TRANSACTION_SUMMARY
+)<PaymentData>();
 
 export type MessagesActions =
   | ActionType<typeof loadMessageSuccess>

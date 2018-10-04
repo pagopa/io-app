@@ -8,10 +8,9 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-export const updateNotificationsInstallationToken = createAction(
-  "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE",
-  resolve => (token: string) => resolve(token)
-);
+export const updateNotificationsInstallationToken = createStandardAction(
+  "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
+)<string>();
 
 export const updateNotificationInstallationFailure = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE"

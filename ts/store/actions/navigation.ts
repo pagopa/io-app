@@ -5,14 +5,13 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
-import { ActionType, createAction } from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
 import ROUTES from "../../navigation/routes";
 
-export const navigationRestore = createAction(
-  "NAVIGATION_RESTORE",
-  resolve => (navigationState: NavigationState) => resolve(navigationState)
-);
+export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
+  NavigationState
+>();
 
 export const resetToAuthenticationRoute: NavigationResetAction = StackActions.reset(
   {
