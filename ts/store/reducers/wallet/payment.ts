@@ -8,29 +8,30 @@ import {
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
+import { isActionOf } from "typesafe-actions";
 import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
-import {
-  PAYMENT_CANCEL,
-  PAYMENT_COMPLETED,
-  PAYMENT_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_GO_BACK,
-  PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_INITIAL_PICK_PAYMENT_METHOD,
-  PAYMENT_INITIAL_PICK_PSP,
-  PAYMENT_MANUAL_ENTRY,
-  PAYMENT_PICK_PAYMENT_METHOD,
-  PAYMENT_PICK_PSP,
-  PAYMENT_PIN_LOGIN,
-  PAYMENT_QR_CODE,
-  PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER,
-  PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID
-} from "../../actions/constants";
 import { Action } from "../../actions/types";
+import {
+  paymentCancel,
+  paymentCompleted,
+  paymentConfirmPaymentMethod,
+  paymentGoBack,
+  paymentInitialConfirmPaymentMethod,
+  paymentInitialPickPaymentMethod,
+  paymentInitialPickPsp,
+  paymentManualEntry,
+  paymentPickPaymentMethod,
+  paymentPickPsp,
+  paymentPinLogin,
+  paymentQrCode,
+  paymentTransactionSummaryFromBanner,
+  paymentTransactionSummaryFromRptId
+} from "../../actions/wallet/payment";
 import { IndexedById } from "../../helpers/indexer";
 import {
   GlobalState,
@@ -339,7 +340,10 @@ const dataEntryReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
-  if (action.type === PAYMENT_QR_CODE && isInAllowedOrigins(state, ["none"])) {
+  if (
+    isActionOf(paymentQrCode, action) &&
+    isInAllowedOrigins(state, ["none"])
+  ) {
     return {
       stack: popToStateAndPush(
         state.stack,
@@ -351,7 +355,7 @@ const dataEntryReducer: PaymentReducer = (
     };
   }
   if (
-    action.type === PAYMENT_MANUAL_ENTRY &&
+    isActionOf(paymentManualEntry, action) &&
     isInAllowedOrigins(state, ["PaymentStateQrCode"])
   ) {
     return {
@@ -375,7 +379,7 @@ const summaryReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_RPT_ID &&
+    isActionOf(paymentTransactionSummaryFromRptId, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateQrCode",
       "PaymentStateManualEntry",
@@ -396,7 +400,7 @@ const summaryReducer: PaymentReducer = (
     };
   }
   if (
-    action.type === PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER &&
+    isActionOf(paymentTransactionSummaryFromBanner, action) &&
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
       "PaymentStateConfirmPaymentMethod",
@@ -434,7 +438,7 @@ const pickMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    action.type === PAYMENT_INITIAL_PICK_PAYMENT_METHOD &&
+    isActionOf(paymentInitialPickPaymentMethod, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateSummary"
       // "PaymentStateSummaryWithPaymentId",
@@ -460,7 +464,7 @@ const pickMethodReducer: PaymentReducer = (
     };
   }
   if (
-    action.type === PAYMENT_PICK_PAYMENT_METHOD &&
+    isActionOf(paymentPickPaymentMethod, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod"
@@ -493,7 +497,7 @@ const confirmMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    action.type === PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD &&
+    isActionOf(paymentInitialConfirmPaymentMethod, action) &&
     isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
@@ -510,7 +514,7 @@ const confirmMethodReducer: PaymentReducer = (
     };
   }
   if (
-    action.type === PAYMENT_CONFIRM_PAYMENT_METHOD &&
+    isActionOf(paymentConfirmPaymentMethod, action) &&
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
       "PaymentStateSummaryWithPaymentId",
@@ -541,7 +545,7 @@ const pickPspReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    action.type === PAYMENT_INITIAL_PICK_PSP &&
+    isActionOf(paymentInitialPickPsp, action) &&
     isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
@@ -558,7 +562,7 @@ const pickPspReducer: PaymentReducer = (
     };
   }
   if (
-    action.type === PAYMENT_PICK_PSP &&
+    isActionOf(paymentPickPsp, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod",
@@ -588,7 +592,7 @@ const goBackReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
-  if (action.type === PAYMENT_GO_BACK) {
+  if (isActionOf(paymentGoBack, action)) {
     // if going back means going to the "initial" summary screen
     // (i.e. where the "attiva" is done and the payment id is fetched,
     // return to a state that also has the payment Id
@@ -635,7 +639,7 @@ const endPaymentReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    action.type === PAYMENT_PIN_LOGIN &&
+    isActionOf(paymentPinLogin, action) &&
     isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"]) &&
     isPaymentStateWithSelectedPaymentMethod(state)
   ) {
@@ -651,7 +655,7 @@ const endPaymentReducer: PaymentReducer = (
     };
   }
   if (
-    action.type === PAYMENT_COMPLETED &&
+    isActionOf(paymentCompleted, action) &&
     isInAllowedOrigins(state, ["PaymentStatePinLogin"])
   ) {
     return {
@@ -668,7 +672,7 @@ const cancelPaymentReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
-  if (action.type === PAYMENT_CANCEL) {
+  if (isActionOf(paymentCancel, action)) {
     return {
       stack: null // cleaning up
     };

@@ -41,30 +41,9 @@ import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 
 import { logoutSuccess } from "../store/actions/authentication";
-import {
-  ADD_CREDIT_CARD_COMPLETED,
-  ADD_CREDIT_CARD_REQUEST,
-  DELETE_WALLET_REQUEST,
-  FETCH_TRANSACTIONS_REQUEST,
-  FETCH_WALLETS_REQUEST,
-  PAYMENT_COMPLETED,
-  PAYMENT_REQUEST_CANCEL,
-  PAYMENT_REQUEST_COMPLETION,
-  PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
-  PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
-  PAYMENT_REQUEST_GO_BACK,
-  PAYMENT_REQUEST_MANUAL_ENTRY,
-  PAYMENT_REQUEST_MESSAGE,
-  PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
-  PAYMENT_REQUEST_PICK_PSP,
-  PAYMENT_REQUEST_PIN_LOGIN,
-  PAYMENT_REQUEST_QR_CODE,
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  PAYMENT_UPDATE_PSP
-} from "../store/actions/constants";
 import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
-  PaymentCompleted,
+  paymentCompleted,
   paymentConfirmPaymentMethod,
   paymentGoBack,
   paymentInitialConfirmPaymentMethod,
@@ -74,36 +53,37 @@ import {
   paymentPickPaymentMethod,
   paymentPickPsp,
   paymentQrCode,
-  PaymentRequestCancel,
-  PaymentRequestCompletion,
-  PaymentRequestConfirmPaymentMethod,
+  paymentRequestCancel,
   paymentRequestConfirmPaymentMethod,
-  PaymentRequestContinueWithPaymentMethods,
-  PaymentRequestGoBack,
-  PaymentRequestManualEntry,
-  PaymentRequestPickPaymentMethod,
-  PaymentRequestPickPsp,
-  PaymentRequestQrCode,
+  paymentRequestContinueWithPaymentMethods,
+  paymentRequestGoBack,
+  paymentRequestManualEntry,
+  paymentRequestMessage,
+  paymentRequestPickPaymentMethod,
+  paymentRequestPickPsp,
+  paymentRequestPinLogin,
+  paymentRequestQrCode,
   PaymentRequestTransactionSummaryActions,
-  PaymentRequestTransactionSummaryFromBanner,
+  paymentRequestTransactionSummaryFromBanner,
   paymentResetLoadingState,
   paymentSetLoadingState,
   paymentTransactionSummaryFromBanner,
   paymentTransactionSummaryFromRptId,
-  PaymentUpdatePsp
+  paymentUpdatePsp
 } from "../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
-  FetchTransactionsRequest,
+  fetchTransactionsRequest,
   fetchTransactionsSuccess,
   selectTransactionForDetails
 } from "../store/actions/wallet/transactions";
 import {
-  AddCreditCardRequest,
+  addCreditCardCompleted,
+  addCreditCardRequest,
   creditCardDataCleanup,
-  DeleteWalletRequest,
+  deleteWalletRequest,
   fetchWalletsFailure,
-  FetchWalletsRequest,
+  fetchWalletsRequest,
   fetchWalletsSuccess,
   selectWalletForDetails,
   walletManagementResetLoadingState,
@@ -132,9 +112,7 @@ import {
   paymentCancel,
   paymentFailure,
   paymentPinLogin,
-  paymentRequestCompletion,
-  PaymentRequestMessage,
-  PaymentRequestPinLogin
+  paymentRequestCompletion
 } from "./../store/actions/wallet/payment";
 
 import {
@@ -343,7 +321,7 @@ function* addCreditCard(
    * (will trigger an addCreditCardCompleted
    * action upon finishing)
    */
-  yield take(ADD_CREDIT_CARD_COMPLETED);
+  yield take(getType(addCreditCardCompleted));
 
   // There currently is no way of determining
   // whether the card has been added successfully from
@@ -466,34 +444,34 @@ function* watchPaymentSaga(
 ): Iterator<Effect> {
   while (true) {
     const action:
-      | PaymentRequestQrCode
-      | PaymentRequestManualEntry
-      | PaymentRequestTransactionSummaryFromBanner
-      | PaymentRequestContinueWithPaymentMethods
-      | PaymentRequestPickPaymentMethod
-      | PaymentRequestConfirmPaymentMethod
-      | PaymentRequestPickPsp
-      | PaymentUpdatePsp
-      | PaymentRequestCompletion
-      | PaymentRequestGoBack
-      | PaymentRequestCancel
-      | PaymentCompleted
-      | PaymentRequestPinLogin = yield take([
-      PAYMENT_REQUEST_QR_CODE,
-      PAYMENT_REQUEST_MANUAL_ENTRY,
-      PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-      PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS,
-      PAYMENT_REQUEST_PICK_PAYMENT_METHOD,
-      PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD,
-      PAYMENT_REQUEST_PICK_PSP,
-      PAYMENT_UPDATE_PSP,
-      PAYMENT_REQUEST_COMPLETION,
-      PAYMENT_REQUEST_GO_BACK,
-      PAYMENT_REQUEST_CANCEL,
-      PAYMENT_REQUEST_PIN_LOGIN,
-      PAYMENT_COMPLETED
+      | ActionType<typeof paymentRequestQrCode>
+      | ActionType<typeof paymentRequestManualEntry>
+      | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
+      | ActionType<typeof paymentRequestContinueWithPaymentMethods>
+      | ActionType<typeof paymentRequestPickPaymentMethod>
+      | ActionType<typeof paymentRequestConfirmPaymentMethod>
+      | ActionType<typeof paymentRequestPickPsp>
+      | ActionType<typeof paymentUpdatePsp>
+      | ActionType<typeof paymentRequestCompletion>
+      | ActionType<typeof paymentRequestGoBack>
+      | ActionType<typeof paymentRequestCancel>
+      | ActionType<typeof paymentCompleted>
+      | ActionType<typeof paymentRequestPinLogin> = yield take([
+      getType(paymentRequestQrCode),
+      getType(paymentRequestManualEntry),
+      getType(paymentRequestTransactionSummaryFromBanner),
+      getType(paymentRequestContinueWithPaymentMethods),
+      getType(paymentRequestPickPaymentMethod),
+      getType(paymentRequestConfirmPaymentMethod),
+      getType(paymentRequestPickPsp),
+      getType(paymentUpdatePsp),
+      getType(paymentRequestCompletion),
+      getType(paymentRequestGoBack),
+      getType(paymentRequestCancel),
+      getType(paymentRequestPinLogin),
+      getType(paymentCompleted)
     ]);
-    if (action.type === PAYMENT_COMPLETED) {
+    if (isActionOf(paymentCompleted, action)) {
       break;
     }
 
@@ -505,11 +483,11 @@ function* watchPaymentSaga(
       );
 
       switch (action.type) {
-        case PAYMENT_REQUEST_MANUAL_ENTRY: {
+        case getType(paymentRequestManualEntry): {
           yield fork(enterDataManuallyHandler, action, pagoPaClient);
           break;
         }
-        case PAYMENT_REQUEST_TRANSACTION_SUMMARY: {
+        case getType(paymentRequestTransactionSummaryFromBanner): {
           yield fork(
             showTransactionSummaryHandler,
             action,
@@ -518,7 +496,7 @@ function* watchPaymentSaga(
           );
           break;
         }
-        case PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS: {
+        case getType(paymentRequestContinueWithPaymentMethods): {
           yield fork(
             continueWithPaymentMethodsHandler,
             action,
@@ -528,35 +506,35 @@ function* watchPaymentSaga(
           );
           break;
         }
-        case PAYMENT_REQUEST_PICK_PAYMENT_METHOD: {
+        case getType(paymentRequestPickPaymentMethod): {
           yield fork(pickPaymentMethodHandler);
           break;
         }
-        case PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD: {
+        case getType(paymentRequestConfirmPaymentMethod): {
           yield fork(confirmPaymentMethodHandler, action, pagoPaClient);
           break;
         }
-        case PAYMENT_REQUEST_PICK_PSP: {
+        case getType(paymentRequestPickPsp): {
           yield fork(pickPspHandler, action, pagoPaClient);
           break;
         }
-        case PAYMENT_UPDATE_PSP: {
+        case getType(paymentUpdatePsp): {
           yield fork(updatePspHandler, action, pagoPaClient);
           break;
         }
-        case PAYMENT_REQUEST_COMPLETION: {
+        case getType(paymentRequestCompletion): {
           yield fork(completionHandler, pagoPaClient);
           break;
         }
-        case PAYMENT_REQUEST_GO_BACK: {
+        case getType(paymentRequestGoBack): {
           yield fork(goBackHandler, action, pagoPaClient);
           break;
         }
-        case PAYMENT_REQUEST_CANCEL: {
+        case getType(paymentRequestCancel): {
           yield fork(cancelPaymentHandler, action);
           break;
         }
-        case PAYMENT_REQUEST_PIN_LOGIN: {
+        case getType(paymentRequestPinLogin): {
           yield fork(pinLoginHandler, storedPin);
           break;
         }
@@ -565,18 +543,18 @@ function* watchPaymentSaga(
   }
 }
 
-function* cancelPaymentHandler(_: PaymentRequestCancel) {
+function* cancelPaymentHandler(_: ActionType<typeof paymentRequestCancel>) {
   yield put(paymentCancel()); // empty the stack
   yield put(navigateTo(ROUTES.WALLET_HOME));
 }
 
-function* goBackHandler(_: PaymentRequestGoBack) {
+function* goBackHandler(_: ActionType<typeof paymentRequestGoBack>) {
   yield put(paymentGoBack()); // return to previous state
   yield put(NavigationActions.back());
 }
 
 function* enterDataManuallyHandler(
-  _: PaymentRequestManualEntry,
+  _: ActionType<typeof paymentRequestManualEntry>,
   __: PagoPaClient
 ): Iterator<Effect> {
   // from the QR code screen the user selected
@@ -852,7 +830,7 @@ function* checkPayment(
 }
 
 function* continueWithPaymentMethodsHandler(
-  _: PaymentRequestContinueWithPaymentMethods,
+  _: ActionType<typeof paymentRequestContinueWithPaymentMethods>,
   pagoPaClient: PagoPaClient,
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>
@@ -926,7 +904,7 @@ function* continueWithPaymentMethodsHandler(
 }
 
 function* confirmPaymentMethodHandler(
-  action: PaymentRequestConfirmPaymentMethod,
+  action: ActionType<typeof paymentRequestConfirmPaymentMethod>,
   pagoPaClient: PagoPaClient
 ) {
   const walletId = action.payload;
@@ -955,7 +933,7 @@ function* pickPspHandler() {
 }
 
 function* updatePspHandler(
-  action: PaymentUpdatePsp,
+  action: ActionType<typeof paymentUpdatePsp>,
   pagoPaClient: PagoPaClient
 ) {
   // First update the selected wallet (walletId) with the
@@ -1050,7 +1028,7 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
           paymentCompleted: true
         })
       );
-      yield put({ type: PAYMENT_COMPLETED });
+      yield put(paymentCompleted());
     } else {
       yield put(
         paymentFailure(
@@ -1088,7 +1066,7 @@ export function* watchWalletSaga(
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
 
   yield takeLatest(
-    PAYMENT_REQUEST_QR_CODE,
+    getType(paymentRequestQrCode),
     paymentSagaFromQrCode,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
@@ -1096,7 +1074,7 @@ export function* watchWalletSaga(
     storedPin
   );
   yield takeLatest(
-    PAYMENT_REQUEST_MESSAGE,
+    getType(paymentRequestMessage),
     paymentSagaFromMessage,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
@@ -1106,37 +1084,37 @@ export function* watchWalletSaga(
 
   while (true) {
     const action:
-      | FetchTransactionsRequest
-      | FetchWalletsRequest
-      | AddCreditCardRequest
+      | ActionType<typeof fetchTransactionsRequest>
+      | ActionType<typeof fetchWalletsRequest>
+      | ActionType<typeof addCreditCardRequest>
       | ActionType<typeof logoutSuccess>
-      | PaymentRequestQrCode
-      | PaymentRequestMessage
-      | DeleteWalletRequest = yield take([
-      FETCH_TRANSACTIONS_REQUEST,
-      FETCH_WALLETS_REQUEST,
+      | ActionType<typeof paymentRequestQrCode>
+      | ActionType<typeof paymentRequestMessage>
+      | ActionType<typeof deleteWalletRequest> = yield take([
+      getType(fetchTransactionsRequest),
+      getType(fetchWalletsRequest),
       getType(logoutSuccess),
-      PAYMENT_REQUEST_QR_CODE,
-      PAYMENT_REQUEST_MESSAGE,
-      ADD_CREDIT_CARD_REQUEST,
-      DELETE_WALLET_REQUEST
+      getType(paymentRequestQrCode),
+      getType(paymentRequestMessage),
+      getType(addCreditCardRequest),
+      getType(deleteWalletRequest)
     ]);
 
-    if (action.type === FETCH_TRANSACTIONS_REQUEST) {
+    if (isActionOf(fetchTransactionsRequest, action)) {
       yield fork(fetchTransactions, pagoPaClient);
     }
-    if (action.type === FETCH_WALLETS_REQUEST) {
+    if (isActionOf(fetchWalletsRequest, action)) {
       yield fork(fetchWallets, pagoPaClient);
     }
-    if (action.type === ADD_CREDIT_CARD_REQUEST) {
+    if (isActionOf(addCreditCardRequest, action)) {
       yield fork(
         addCreditCard,
-        action.creditCard,
-        action.setAsFavorite, // should the card be set as favorite?
+        action.payload.creditCard,
+        action.payload.setAsFavorite, // should the card be set as favorite?
         pagoPaClient
       );
     }
-    if (action.type === DELETE_WALLET_REQUEST) {
+    if (isActionOf(deleteWalletRequest, action)) {
       yield fork(deleteWallet, action.payload, pagoPaClient);
     }
     // if the user logs out, go back to waiting

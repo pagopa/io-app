@@ -84,7 +84,7 @@ const TosScreen: React.SFC<Props> = ({
             block={true}
             primary={true}
             disabled={isAcceptingTos}
-            onPress={() => dispatch(tosAcceptRequest)}
+            onPress={() => dispatch(tosAcceptRequest())}
           >
             <Text>{I18n.t("onboarding.tos.continue")}</Text>
           </Button>

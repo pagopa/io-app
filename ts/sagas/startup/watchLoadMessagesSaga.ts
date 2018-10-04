@@ -17,6 +17,7 @@ import {
   select,
   take
 } from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import {
   GetServiceT,
@@ -26,17 +27,12 @@ import {
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  MESSAGES_LOAD_CANCEL,
-  MESSAGES_LOAD_REQUEST
-} from "../../store/actions/constants";
-import {
   loadMessageFailure,
   loadMessagesCancel,
   loadMessagesFailure,
+  loadMessagesRequest,
   loadMessagesSuccess,
-  loadMessageSuccess,
-  MessagesLoadCancel,
-  MessagesLoadRequest
+  loadMessageSuccess
 } from "../../store/actions/messages";
 import {
   loadServiceFailure,
@@ -233,9 +229,11 @@ export function* watchMessagesLoadOrCancelSaga(
   while (true) {
     // FIXME: why not takeLatest?
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
-    const action: MessagesLoadRequest | MessagesLoadCancel = yield take([
-      MESSAGES_LOAD_REQUEST,
-      MESSAGES_LOAD_CANCEL
+    const action:
+      | ActionType<typeof loadMessagesRequest>
+      | ActionType<typeof loadMessagesCancel> = yield take([
+      getType(loadMessagesRequest),
+      getType(loadMessagesCancel)
     ]);
     if (lastTask.isSome()) {
       // If there is an already running task cancel it
@@ -245,7 +243,7 @@ export function* watchMessagesLoadOrCancelSaga(
 
     // If the action received is a MESSAGES_LOAD_REQUEST send the request
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
-    if (action.type === MESSAGES_LOAD_REQUEST) {
+    if (isActionOf(loadMessagesRequest, action)) {
       // Call the generator to load messages
       lastTask = some(
         yield fork(loadMessages, getMessages, getMessage, getService)

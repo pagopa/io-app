@@ -9,7 +9,6 @@ import {
   analyticsAuthenticationStarted,
   analyticsOnboardingStarted
 } from "../actions/analytics";
-
 import { applicationChangeState } from "../actions/application";
 import {
   idpSelected,
@@ -21,20 +20,19 @@ import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../actions/authentication";
-
+import { loadMessagesRequest, loadMessagesSuccess } from "../actions/messages";
 import {
-  MESSAGES_LOAD_FAILURE,
-  MESSAGES_LOAD_SUCCESS,
-  NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE,
-  NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE,
-  PIN_CREATE_FAILURE,
-  PIN_CREATE_SUCCESS,
-  PROFILE_LOAD_FAILURE,
-  PROFILE_LOAD_SUCCESS,
-  PROFILE_UPSERT_FAILURE,
-  PROFILE_UPSERT_SUCCESS,
-  TOS_ACCEPT_SUCCESS
-} from "../actions/constants";
+  updateNotificationInstallationFailure,
+  updateNotificationsInstallationToken
+} from "../actions/notifications";
+import { tosAcceptSuccess } from "../actions/onboarding";
+import { createPinFailure, createPinSuccess } from "../actions/pinset";
+import {
+  profileLoadFailure,
+  profileLoadSuccess,
+  profileUpsertFailure,
+  profileUpsertSuccess
+} from "../actions/profile";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 
 /*
@@ -92,23 +90,23 @@ export function actionTracking(): (_: Dispatch) => (_: Action) => Action {
         case getType(logoutFailure):
         // onboarding
         case getType(analyticsOnboardingStarted):
-        case TOS_ACCEPT_SUCCESS:
-        case PIN_CREATE_SUCCESS:
-        case PIN_CREATE_FAILURE:
+        case getType(tosAcceptSuccess):
+        case getType(createPinSuccess):
+        case getType(createPinFailure):
         // profile
-        case PROFILE_LOAD_SUCCESS:
-        case PROFILE_LOAD_FAILURE:
-        case PROFILE_UPSERT_SUCCESS:
-        case PROFILE_UPSERT_FAILURE:
+        case getType(profileLoadSuccess):
+        case getType(profileLoadFailure):
+        case getType(profileUpsertSuccess):
+        case getType(profileUpsertFailure):
         // messages
-        case MESSAGES_LOAD_SUCCESS:
-        case MESSAGES_LOAD_FAILURE:
+        case getType(loadMessagesRequest):
+        case getType(loadMessagesSuccess):
         // other
-        case NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE:
-        case NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE:
+        case getType(updateNotificationsInstallationToken):
+        case getType(updateNotificationInstallationFailure):
           if (mixpanel !== undefined) {
             mixpanel.track(nextAction.type).then(() => 0, () => 0);
-            if (nextAction.type === PROFILE_LOAD_SUCCESS) {
+            if (nextAction.type === getType(profileLoadSuccess)) {
               // as soon as we have the user fiscal code, attach the mixpanel
               // session to the sha256 hash to the fiscal code of the user
               const fiscalnumber = nextAction.payload.fiscal_code;

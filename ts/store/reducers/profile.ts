@@ -5,14 +5,15 @@
  */
 
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
+import { getType } from "typesafe-actions";
 
 import { UserProfileUnion } from "../../api/backend";
 
 import {
-  PROFILE_LOAD_SUCCESS,
-  PROFILE_UPSERT_SUCCESS,
-  RESET_PROFILE_STATE
-} from "../actions/constants";
+  profileLoadSuccess,
+  profileUpsertSuccess,
+  resetProfileState
+} from "../actions/profile";
 import { Action } from "../actions/types";
 
 import { GlobalState } from "./types";
@@ -31,14 +32,14 @@ const reducer = (
   action: Action
 ): ProfileState => {
   switch (action.type) {
-    case RESET_PROFILE_STATE:
+    case getType(resetProfileState):
       return null;
 
-    case PROFILE_LOAD_SUCCESS:
+    case getType(profileLoadSuccess):
       // Store the loaded Profile in the store
       return action.payload;
 
-    case PROFILE_UPSERT_SUCCESS:
+    case getType(profileUpsertSuccess):
       const updated = action.payload;
       const newVersion = updated.version;
       if (

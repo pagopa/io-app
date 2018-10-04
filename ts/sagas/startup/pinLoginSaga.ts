@@ -1,14 +1,14 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
 
-import { PIN_LOGIN_VALIDATE_REQUEST } from "../../store/actions/constants";
 import { navigateToPinLogin } from "../../store/actions/navigation";
 import {
   pinLoginValidateFailure,
-  PinLoginValidateRequest,
+  pinLoginValidateRequest,
   pinLoginValidateSuccess
 } from "../../store/actions/pinlogin";
 
+import { ActionType, getType } from "typesafe-actions";
 import { PinString } from "../../types/PinString";
 
 /**
@@ -21,8 +21,8 @@ export function* loginWithPinSaga(correctPin: PinString): Iterator<Effect> {
   while (true) {
     // Loop until the PIN validation succeeds
 
-    const action: PinLoginValidateRequest = yield take(
-      PIN_LOGIN_VALIDATE_REQUEST
+    const action: ActionType<typeof pinLoginValidateRequest> = yield take(
+      getType(pinLoginValidateRequest)
     );
     const providedPin = action.payload;
 

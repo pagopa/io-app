@@ -1,17 +1,17 @@
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
 import {
   GetServiceT,
   GetUserMessageT
 } from "../../../definitions/backend/requestTypes";
 import I18n from "../../i18n";
-import { MESSAGE_WITH_RELATIONS_LOAD_REQUEST } from "../../store/actions/constants";
 import {
+  loadMessageWithRelationsAction,
   loadMessageWithRelationsFailureAction,
-  loadMessageWithRelationsSuccessAction,
-  MessageWithRelationsLoadRequest
+  loadMessageWithRelationsSuccessAction
 } from "../../store/actions/messages";
 import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage, loadService } from "./watchLoadMessagesSaga";
@@ -22,7 +22,9 @@ import { loadMessage, loadService } from "./watchLoadMessagesSaga";
 export function* loadMessageWithRelationsSaga(
   getMessage: TypeofApiCall<GetUserMessageT>,
   getService: TypeofApiCall<GetServiceT>,
-  messageWithRelationsLoadRequest: MessageWithRelationsLoadRequest
+  messageWithRelationsLoadRequest: ActionType<
+    typeof loadMessageWithRelationsAction
+  >
 ): IterableIterator<Effect> {
   // Extract the massage id from the action payload
   const messageId = messageWithRelationsLoadRequest.payload;
@@ -64,7 +66,7 @@ export function* watchLoadMessageWithRelationsSaga(
   getService: TypeofApiCall<GetServiceT>
 ) {
   yield takeEvery(
-    MESSAGE_WITH_RELATIONS_LOAD_REQUEST,
+    getType(loadMessageWithRelationsAction),
     loadMessageWithRelationsSaga,
     getMessage,
     getService

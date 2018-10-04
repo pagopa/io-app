@@ -13,7 +13,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
-import { loadMessages } from "../../store/actions/messages";
+import { loadMessagesRequest } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 export class MessageListScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
 
-  private refreshMessageList = () => this.props.dispatch(loadMessages());
+  private refreshMessageList = () => this.props.dispatch(loadMessagesRequest());
 
   private handleMessageListItemPress = (messageId: string) => {
     this.props.dispatch(

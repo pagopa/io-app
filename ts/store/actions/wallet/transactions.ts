@@ -1,64 +1,38 @@
-import { Transaction } from "../../../types/pagopa";
 import {
-  FETCH_TRANSACTIONS_FAILURE,
-  FETCH_TRANSACTIONS_REQUEST,
-  FETCH_TRANSACTIONS_SUCCESS,
-  PAYMENT_STORE_NEW_TRANSACTION,
-  SELECT_TRANSACTION_FOR_DETAILS
-} from "../../actions/constants";
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
-type FetchTransactionsSuccess = Readonly<{
-  type: typeof FETCH_TRANSACTIONS_SUCCESS;
-  payload: ReadonlyArray<Transaction>;
-}>;
-
-type FetchTransactionsFailure = Readonly<{
-  type: typeof FETCH_TRANSACTIONS_FAILURE;
-  payload: Error;
-}>;
-
-export type FetchTransactionsRequest = Readonly<{
-  type: typeof FETCH_TRANSACTIONS_REQUEST;
-}>;
-
-type SelectTransactionForDetails = Readonly<{
-  type: typeof SELECT_TRANSACTION_FOR_DETAILS;
-  payload: Transaction;
-}>;
-
-type StoreNewTransaction = Readonly<{
-  type: typeof PAYMENT_STORE_NEW_TRANSACTION;
-  payload: Transaction;
-}>;
+import { Transaction } from "../../../types/pagopa";
 
 export type TransactionsActions =
-  | FetchTransactionsSuccess
-  | FetchTransactionsRequest
-  | SelectTransactionForDetails
-  | StoreNewTransaction
-  | FetchTransactionsFailure;
+  | ActionType<typeof fetchTransactionsSuccess>
+  | ActionType<typeof fetchTransactionsRequest>
+  | ActionType<typeof selectTransactionForDetails>
+  | ActionType<typeof storeNewTransaction>
+  | ActionType<typeof fetchTransactionsFailure>;
 
-export const fetchTransactionsSuccess = (
-  transactions: ReadonlyArray<Transaction>
-): FetchTransactionsSuccess => ({
-  type: FETCH_TRANSACTIONS_SUCCESS,
-  payload: transactions
-});
+export const fetchTransactionsSuccess = createAction(
+  "FETCH_TRANSACTIONS_SUCCESS",
+  resolve => (transactions: ReadonlyArray<Transaction>) => resolve(transactions)
+);
 
-export const fetchTransactionsFailure = (
-  error: Error
-): FetchTransactionsFailure => ({
-  type: FETCH_TRANSACTIONS_FAILURE,
-  payload: error
-});
+export const fetchTransactionsFailure = createAction(
+  "FETCH_TRANSACTIONS_FAILURE",
+  resolve => (error: Error) => resolve(error)
+);
 
-export const fetchTransactionsRequest = (): FetchTransactionsRequest => ({
-  type: FETCH_TRANSACTIONS_REQUEST
-});
+export const fetchTransactionsRequest = createStandardAction(
+  "FETCH_TRANSACTIONS_REQUEST"
+)();
 
-export const selectTransactionForDetails = (
-  transaction: Transaction
-): SelectTransactionForDetails => ({
-  type: SELECT_TRANSACTION_FOR_DETAILS,
-  payload: transaction
-});
+export const storeNewTransaction = createAction(
+  "PAYMENT_STORE_NEW_TRANSACTION",
+  resolve => (transaction: Transaction) => resolve(transaction)
+);
+
+export const selectTransactionForDetails = createAction(
+  "SELECT_TRANSACTION_FOR_DETAILS",
+  resolve => (transaction: Transaction) => resolve(transaction)
+);

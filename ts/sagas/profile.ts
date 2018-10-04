@@ -4,29 +4,28 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
+import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import {
   GetUserProfileT,
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
+import { UserProfileUnion } from "../api/backend";
 
 import I18n from "../i18n";
 
 import { sessionExpired } from "../store/actions/authentication";
-import { PROFILE_UPSERT_REQUEST } from "../store/actions/constants";
 import {
   profileLoadFailure,
   profileLoadSuccess,
   profileUpsertFailure,
-  ProfileUpsertRequest,
+  profileUpsertRequest,
   profileUpsertSuccess
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 
 import { SagaCallReturnType } from "../types/utils";
-
-import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UserProfileUnion } from "../api/backend";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -57,7 +56,7 @@ export function* loadProfile(
 // A saga to update the Profile.
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
-  action: ProfileUpsertRequest
+  action: ActionType<typeof profileUpsertRequest>
 ): Iterator<Effect> {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield select(
@@ -121,7 +120,7 @@ export function* watchProfileUpsertRequestsSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>
 ): Iterator<Effect> {
   yield takeLatest(
-    PROFILE_UPSERT_REQUEST,
+    getType(profileUpsertRequest),
     createOrUpdateProfileSaga,
     createOrUpdateProfile
   );

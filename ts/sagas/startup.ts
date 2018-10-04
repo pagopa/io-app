@@ -16,7 +16,7 @@ import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
 } from "../store/actions/navigation";
-import { navigationHistoryPushAction } from "../store/actions/navigationHistory";
+import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
 import {
@@ -55,7 +55,7 @@ import { watchWalletSaga } from "./wallet";
 function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
-  yield put(resetProfileState);
+  yield put(resetProfileState());
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<
@@ -235,7 +235,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       navigationStateSelector
     );
     yield put(
-      navigationHistoryPushAction(
+      navigationHistoryPush(
         AppNavigator.router.getStateForAction(
           NavigationActions.back(),
           navigationState

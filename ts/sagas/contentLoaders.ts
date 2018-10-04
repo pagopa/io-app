@@ -1,14 +1,13 @@
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { ActionType, getType } from "typesafe-actions";
 
 import { ContentClient } from "../api/content";
 
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 
-import { CONTENT_SERVICE_LOAD } from "../store/actions/constants";
 import {
-  ContentServiceLoad,
   contentServiceLoadFailure,
   contentServiceLoadSuccess
 } from "../store/actions/content";
@@ -38,8 +37,10 @@ function getServiceMetadata(
  * https://www.pivotaltracker.com/story/show/159440224
  */
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
-  yield takeEvery(CONTENT_SERVICE_LOAD, function*(action: ContentServiceLoad) {
-    const serviceId = action.serviceId;
+  yield takeEvery(getType(contentServiceLoadSuccess), function*(
+    action: ActionType<typeof contentServiceLoadSuccess>
+  ) {
+    const { serviceId } = action.payload;
 
     const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
       getServiceMetadata,

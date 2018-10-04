@@ -1,53 +1,28 @@
 import {
-  CONTENT_SERVICE_LOAD,
-  CONTENT_SERVICE_LOAD_FAILURE,
-  CONTENT_SERVICE_LOAD_SUCCESS
-} from "./constants";
-
-import { Service as ServiceMetadata } from "../../../definitions/content/Service";
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 
-export type ContentServiceLoad = Readonly<{
-  type: typeof CONTENT_SERVICE_LOAD;
-  serviceId: ServiceId;
-}>;
+export const contentServiceLoad = createStandardAction("CONTENT_SERVICE_LOAD")<
+  ServiceId
+>();
 
-type ContentServiceLoadSuccess = Readonly<{
-  type: typeof CONTENT_SERVICE_LOAD_SUCCESS;
-  serviceId: ServiceId;
-  data: ServiceMetadata;
-}>;
+export const contentServiceLoadSuccess = createAction(
+  "CONTENT_SERVICE_LOAD_SUCCESS",
+  resolve => (serviceId: ServiceId, data: ServiceMetadata) =>
+    resolve({ serviceId, data })
+);
 
-type ContentServiceLoadFailure = Readonly<{
-  type: typeof CONTENT_SERVICE_LOAD_FAILURE;
-  serviceId: ServiceId;
-}>;
+export const contentServiceLoadFailure = createStandardAction(
+  "CONTENT_SERVICE_LOAD_FAILURE"
+)<ServiceId>();
 
-export type ContentActions =
-  | ContentServiceLoad
-  | ContentServiceLoadSuccess
-  | ContentServiceLoadFailure;
-
-export const contentServiceLoad = (
-  serviceId: ServiceId
-): ContentServiceLoad => ({
-  type: "CONTENT_SERVICE_LOAD",
-  serviceId
-});
-
-export const contentServiceLoadSuccess = (
-  serviceId: ServiceId,
-  data: ServiceMetadata
-): ContentServiceLoadSuccess => ({
-  type: "CONTENT_SERVICE_LOAD_SUCCESS",
-  serviceId,
-  data
-});
-
-export const contentServiceLoadFailure = (
-  serviceId: ServiceId
-): ContentServiceLoadFailure => ({
-  type: "CONTENT_SERVICE_LOAD_FAILURE",
-  serviceId
-});
+export type ContentActions = ActionType<
+  | typeof contentServiceLoad
+  | typeof contentServiceLoadSuccess
+  | typeof contentServiceLoadFailure
+>;

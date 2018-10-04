@@ -4,8 +4,10 @@
  * are managed by different global reducers.
  */
 
+import { getType } from "typesafe-actions";
+
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { SERVICE_LOAD_SUCCESS } from "../../../actions/constants";
+import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -25,9 +27,10 @@ const reducer = (
     /**
      * A new service has been loaded from the Backend. Add the service to the list object.
      */
-    case SERVICE_LOAD_SUCCESS:
+    case getType(loadServiceSuccess):
       // Use the ID as object key
       return { ...state, [action.payload.service_id]: { ...action.payload } };
+
     default:
       return state;
   }

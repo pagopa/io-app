@@ -1,6 +1,8 @@
 import { none, Option } from "fp-ts/lib/Option";
-import { PAGOPA_STORE_TOKEN } from "../../actions/constants";
+import { isActionOf } from "typesafe-actions";
+
 import { Action } from "../../actions/types";
+import { storePagoPaToken } from "../../actions/wallet/pagopa";
 import { GlobalState } from "../types";
 
 export type PagoPaState = Readonly<{
@@ -14,7 +16,7 @@ const PAGOPA_INITIAL_STATE = {
 export const getPagoPaToken = (state: GlobalState) => state.wallet.pagoPa.token;
 
 const reducer = (state: PagoPaState = PAGOPA_INITIAL_STATE, action: Action) => {
-  if (action.type === PAGOPA_STORE_TOKEN) {
+  if (isActionOf(storePagoPaToken, action)) {
     return {
       ...state,
       token: action.payload

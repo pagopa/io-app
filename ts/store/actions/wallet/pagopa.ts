@@ -1,14 +1,9 @@
 import { Option } from "fp-ts/lib/Option";
-import { PAGOPA_STORE_TOKEN } from "../constants";
+import { ActionType, createAction } from "typesafe-actions";
 
-type StorePagoPaToken = Readonly<{
-  type: typeof PAGOPA_STORE_TOKEN;
-  payload: Option<string>;
-}>;
+export const storePagoPaToken = createAction(
+  "PAGOPA_STORE_TOKEN",
+  resolve => (token: Option<string>) => resolve(token)
+);
 
-export type PagoPaActions = StorePagoPaToken;
-
-export const storePagoPaToken = (token: Option<string>): StorePagoPaToken => ({
-  type: PAGOPA_STORE_TOKEN,
-  payload: token
-});
+export type PagoPaActions = ActionType<typeof storePagoPaToken>;

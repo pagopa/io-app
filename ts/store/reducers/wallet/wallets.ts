@@ -5,16 +5,17 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { CreditCard, Wallet } from "../../../types/pagopa";
-import {
-  CREDIT_CARD_DATA_CLEANUP,
-  FETCH_WALLETS_SUCCESS,
-  PAYMENT_UPDATE_PSP_IN_STATE,
-  SELECT_WALLET_FOR_DETAILS,
-  SET_FAVORITE_WALLET,
-  STORE_CREDIT_CARD_DATA
-} from "../../actions/constants";
+import { PAYMENT_UPDATE_PSP_IN_STATE } from "../../actions/constants";
 import { Action } from "../../actions/types";
+import {
+  creditCardDataCleanup,
+  fetchWalletsSuccess,
+  selectWalletForDetails,
+  setFavoriteWallet,
+  storeCreditCardData
+} from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
@@ -92,63 +93,65 @@ const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
 ): WalletsState => {
-  if (action.type === FETCH_WALLETS_SUCCESS) {
-    return {
-      ...state,
-      list: toIndexed(action.payload, "idWallet")
-    };
+  switch (action.type) {
+    case getType(fetchWalletsSuccess):
+      return {
+        ...state,
+        list: toIndexed(action.payload, "idWallet")
+      };
+
+    case getType(selectWalletForDetails):
+      return {
+        ...state,
+        selectedWalletId: some(action.payload)
+      };
+
+    case getType(setFavoriteWallet):
+      return {
+        ...state,
+        favoriteWalletId: action.payload
+      };
+
+    /**
+     * Store the credit card information locally
+     * before sending it to pagoPA
+     */
+    case getType(storeCreditCardData):
+      return {
+        ...state,
+        newCreditCard: some(action.payload)
+      };
+
+    /**
+     * clean up "newCreditCard" after it has been
+     * added to pagoPA
+     */
+    case getType(creditCardDataCleanup):
+      return {
+        ...state,
+        newCreditCard: none
+      };
+
+    // TODO: temporary, until the integration with pagoPA
+    // (then, the psp will be updated on the server side,
+    // and, by fetching the existing cards the psp will be
+    // automatically updated)
+    case PAYMENT_UPDATE_PSP_IN_STATE:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          [action.walletId]: {
+            ...state.list[action.walletId],
+            idPsp: action.payload.id,
+            psp: action.payload
+          }
+        }
+      };
+
+    default:
+      return state;
   }
-  if (action.type === SELECT_WALLET_FOR_DETAILS) {
-    return {
-      ...state,
-      selectedWalletId: some(action.payload)
-    };
-  }
-  if (action.type === SET_FAVORITE_WALLET) {
-    return {
-      ...state,
-      favoriteWalletId: action.payload
-    };
-  }
-  /**
-   * Store the credit card information locally
-   * before sending it to pagoPA
-   */
-  if (action.type === STORE_CREDIT_CARD_DATA) {
-    return {
-      ...state,
-      newCreditCard: some(action.payload)
-    };
-  }
-  /**
-   * clean up "newCreditCard" after it has been
-   * added to pagoPA
-   */
-  if (action.type === CREDIT_CARD_DATA_CLEANUP) {
-    return {
-      ...state,
-      newCreditCard: none
-    };
-  }
-  // TODO: temporary, until the integration with pagoPA
-  // (then, the psp will be updated on the server side,
-  // and, by fetching the existing cards the psp will be
-  // automatically updated)
-  if (action.type === PAYMENT_UPDATE_PSP_IN_STATE) {
-    const newWallet = {
-      ...state.list[action.walletId],
-      idPsp: action.payload.id,
-      psp: action.payload
-    };
-    return {
-      ...state,
-      list: {
-        ...state.list,
-        [action.walletId]: newWallet
-      }
-    };
-  }
-  return state;
 };
 
 export default reducer;

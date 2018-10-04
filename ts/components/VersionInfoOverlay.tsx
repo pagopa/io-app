@@ -5,14 +5,14 @@ import DeviceInfo from "react-native-device-info";
 import { NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { ReduxProps } from "../store/actions/types";
 import { getCurrentRouteName } from "../store/middlewares/analytics";
+import { BackendInfoState } from "../store/reducers/backendInfo";
 import { GlobalState } from "../store/reducers/types";
 
 interface ReduxMappedProps {
   nav: NavigationState;
-  serverInfo: ServerInfo | undefined;
+  serverInfo: BackendInfoState["serverInfo"];
 }
 
 type Props = ReduxMappedProps & ReduxProps;

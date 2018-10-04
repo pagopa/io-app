@@ -1,9 +1,9 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { getType } from "typesafe-actions";
 
 import { saveNavigationStateSaga } from "../saveNavigationStateSaga";
 
-import { SET_DEEPLINK } from "../../../store/actions/constants";
 import { setDeepLink } from "../../../store/actions/deepLink";
 import { navigationStateSelector } from "../../../store/reducers/navigation";
 
@@ -21,7 +21,7 @@ describe("saveNavigationStateSaga", () => {
           }
         ]
       ])
-      .not.put.like({ action: { type: SET_DEEPLINK } })
+      .not.put.like({ action: { type: getType(setDeepLink) } })
       .run();
   });
   it("should set a deep link when in main navigator", () => {

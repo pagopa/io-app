@@ -5,21 +5,13 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
-
-import { NAVIGATION_RESTORE } from "./constants";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
 import ROUTES from "../../navigation/routes";
 
-// Actions
-
-type NavigationRestore = Readonly<{
-  type: typeof NAVIGATION_RESTORE;
-  payload: NavigationState;
-}>;
-
-export type NavigationActions = NavigationAction | NavigationRestore;
-
-// Creators
+export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
+  NavigationState
+>();
 
 export const resetToAuthenticationRoute: NavigationResetAction = StackActions.reset(
   {
@@ -83,3 +75,7 @@ export const navigateToMessageDetailScreenAction = (messageId: string) =>
       })
     ]
   });
+
+export type NavigationActions =
+  | NavigationAction
+  | ActionType<typeof navigationRestore>;

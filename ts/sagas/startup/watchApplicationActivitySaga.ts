@@ -14,7 +14,7 @@ import {
   navigateToBackgroundScreen,
   navigateToMessageDetailScreenAction
 } from "../../store/actions/navigation";
-import { navigationHistoryPushAction } from "../../store/actions/navigationHistory";
+import { navigationHistoryPush } from "../../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
 import { navigationStateSelector } from "../../store/reducers/navigation";
 import {
@@ -83,7 +83,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
             navigationStateSelector
           );
           yield put(
-            navigationHistoryPushAction(
+            navigationHistoryPush(
               AppNavigator.router.getStateForAction(
                 NavigationActions.back(),
                 navigationState

@@ -6,13 +6,12 @@ import {
   FiscalCode,
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
+import { getType } from "typesafe-actions";
 
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-
 import { UserProfile } from "../../../../definitions/backend/UserProfile";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
-import { PROFILE_UPSERT_REQUEST } from "../../../store/actions/constants";
 import {
   profileUpsertFailure,
   profileUpsertRequest,
@@ -48,7 +47,7 @@ describe("checkProfileEnabledSaga", () => {
 
   it("should do nothing if profile is enabled", () => {
     return expectSaga(checkProfileEnabledSaga, profile)
-      .not.put.like({ action: { type: PROFILE_UPSERT_REQUEST } })
+      .not.put.like({ action: { type: getType(profileUpsertRequest) } })
       .run();
   });
 

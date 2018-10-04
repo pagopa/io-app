@@ -1,41 +1,20 @@
 import { NavigationState } from "react-navigation";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
-import {
-  NAVIGATION_HISTORY_POP,
-  NAVIGATION_HISTORY_PUSH,
-  NAVIGATION_HISTORY_RESET
-} from "./constants";
+export const navigationHistoryPush = createStandardAction(
+  "NAVIGATION_HISTORY_PUSH"
+)<NavigationState>();
 
-type NavigationHistoryPush = {
-  type: typeof NAVIGATION_HISTORY_PUSH;
-  payload: NavigationState;
-};
+export const navigationHistoryReset = createStandardAction(
+  "NAVIGATION_HISTORY_RESET"
+)();
 
-type NavigationHistoryReset = {
-  type: typeof NAVIGATION_HISTORY_RESET;
-};
+export const navigationHistoryPop = createStandardAction(
+  "NAVIGATION_HISTORY_POP"
+)();
 
-type NavigationHistoryPop = {
-  type: typeof NAVIGATION_HISTORY_POP;
-};
-
-export type NavigationHistoryActions =
-  | NavigationHistoryPush
-  | NavigationHistoryReset
-  | NavigationHistoryPop;
-
-// Creators
-export const navigationHistoryPushAction = (
-  navigationState: NavigationState
-): NavigationHistoryPush => ({
-  type: NAVIGATION_HISTORY_PUSH,
-  payload: navigationState
-});
-
-export const navigationHistoryResetAction = (): NavigationHistoryReset => ({
-  type: NAVIGATION_HISTORY_RESET
-});
-
-export const navigationHistoryPopAction = (): NavigationHistoryPop => ({
-  type: NAVIGATION_HISTORY_POP
-});
+export type NavigationHistoryActions = ActionType<
+  | typeof navigationHistoryPush
+  | typeof navigationHistoryReset
+  | typeof navigationHistoryPop
+>;

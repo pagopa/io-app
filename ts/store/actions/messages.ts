@@ -1,142 +1,73 @@
 /**
  * Action types and action creator related to the Messages.
  */
+
+import {
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
+
 import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import {
-  MESSAGE_LOAD_FAILURE,
-  MESSAGE_LOAD_SUCCESS,
-  MESSAGE_WITH_RELATIONS_LOAD_FAILURE,
-  MESSAGE_WITH_RELATIONS_LOAD_REQUEST,
-  MESSAGE_WITH_RELATIONS_LOAD_SUCCESS,
-  MESSAGES_LOAD_CANCEL,
-  MESSAGES_LOAD_FAILURE,
-  MESSAGES_LOAD_REQUEST,
-  MESSAGES_LOAD_SUCCESS,
-  NAVIGATE_TO_MESSAGE_DETAILS,
+import { PAYMENT_REQUEST_TRANSACTION_SUMMARY } from "./constants";
+
+export const loadMessageSuccess = createStandardAction("MESSAGE_LOAD_SUCCESS")<
+  MessageWithContentPO
+>();
+
+export const loadMessageFailure = createAction(
+  "MESSAGE_LOAD_FAILURE",
+  resolve => (error: Error) => resolve(error, { error: true })
+);
+
+export const loadMessageWithRelationsAction = createStandardAction(
+  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST"
+)<string>();
+
+export const loadMessageWithRelationsSuccessAction = createStandardAction(
+  "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS"
+)();
+
+export const loadMessageWithRelationsFailureAction = createAction(
+  "MESSAGE_WITH_RELATIONS_LOAD_FAILURE",
+  resolve => (error: Error) => resolve(error, { error: true })
+);
+
+export const loadMessagesRequest = createStandardAction(
+  "MESSAGES_LOAD_REQUEST"
+)();
+
+export const loadMessagesCancel = createStandardAction(
+  "MESSAGES_LOAD_CANCEL"
+)();
+
+export const loadMessagesSuccess = createStandardAction(
+  "MESSAGES_LOAD_SUCCESS"
+)();
+
+export const loadMessagesFailure = createAction(
+  "MESSAGES_LOAD_FAILURE",
+  resolve => (error: Error) => resolve(error, { error: true })
+);
+
+export const navigateToMessageDetails = createStandardAction(
+  "NAVIGATE_TO_MESSAGE_DETAILS"
+)<string>();
+
+export const startPayment = createStandardAction(
   PAYMENT_REQUEST_TRANSACTION_SUMMARY
-} from "./constants";
-
-type MessageLoadSuccess = Readonly<{
-  type: typeof MESSAGE_LOAD_SUCCESS;
-  payload: MessageWithContentPO;
-}>;
-
-type MessageLoadFailure = Readonly<{
-  type: typeof MESSAGE_LOAD_FAILURE;
-  payload: Error;
-  error: true;
-}>;
-
-export type MessageWithRelationsLoadRequest = Readonly<{
-  type: typeof MESSAGE_WITH_RELATIONS_LOAD_REQUEST;
-  // The messageId
-  payload: string;
-}>;
-
-export type MessageWithRelationsLoadSuccess = Readonly<{
-  type: typeof MESSAGE_WITH_RELATIONS_LOAD_SUCCESS;
-}>;
-
-export type MessageWithRelationsLoadFailure = Readonly<{
-  type: typeof MESSAGE_WITH_RELATIONS_LOAD_FAILURE;
-  payload: Error;
-  error: true;
-}>;
-
-export type MessagesLoadRequest = Readonly<{
-  type: typeof MESSAGES_LOAD_REQUEST;
-}>;
-
-export type MessagesLoadCancel = Readonly<{
-  type: typeof MESSAGES_LOAD_CANCEL;
-}>;
-
-type MessagesLoadSuccess = Readonly<{
-  type: typeof MESSAGES_LOAD_SUCCESS;
-}>;
-
-type MessagesLoadFailure = Readonly<{
-  type: typeof MESSAGES_LOAD_FAILURE;
-  payload: Error;
-  error: true;
-}>;
-
-export type NavigateToMessageDetails = Readonly<{
-  type: typeof NAVIGATE_TO_MESSAGE_DETAILS;
-  payload: string;
-}>;
-
-type StartPayment = Readonly<{
-  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
-  payload: PaymentData;
-}>;
+)<PaymentData>();
 
 export type MessagesActions =
-  | MessageLoadSuccess
-  | MessageWithRelationsLoadRequest
-  | MessageWithRelationsLoadSuccess
-  | MessageWithRelationsLoadFailure
-  | MessagesLoadRequest
-  | MessagesLoadCancel
-  | MessagesLoadSuccess
-  | MessagesLoadFailure
-  | StartPayment;
-
-// Creators
-export const loadMessageSuccess = (
-  message: MessageWithContentPO
-): MessageLoadSuccess => ({
-  type: MESSAGE_LOAD_SUCCESS,
-  payload: message
-});
-
-export const loadMessageFailure = (error: Error): MessageLoadFailure => ({
-  type: MESSAGE_LOAD_FAILURE,
-  payload: error,
-  error: true
-});
-
-export const loadMessageWithRelationsAction = (
-  messageId: string
-): MessageWithRelationsLoadRequest => ({
-  type: MESSAGE_WITH_RELATIONS_LOAD_REQUEST,
-  payload: messageId
-});
-
-export const loadMessageWithRelationsSuccessAction = (): MessageWithRelationsLoadSuccess => ({
-  type: MESSAGE_WITH_RELATIONS_LOAD_SUCCESS
-});
-
-export const loadMessageWithRelationsFailureAction = (
-  error: Error
-): MessageWithRelationsLoadFailure => ({
-  type: MESSAGE_WITH_RELATIONS_LOAD_FAILURE,
-  payload: error,
-  error: true
-});
-
-export const loadMessages = (): MessagesLoadRequest => ({
-  type: MESSAGES_LOAD_REQUEST
-});
-
-export const loadMessagesCancel = (): MessagesLoadCancel => ({
-  type: MESSAGES_LOAD_CANCEL
-});
-
-export const loadMessagesSuccess = (): MessagesLoadSuccess => ({
-  type: MESSAGES_LOAD_SUCCESS
-});
-
-export const loadMessagesFailure = (error: Error): MessagesLoadFailure => ({
-  type: MESSAGES_LOAD_FAILURE,
-  payload: error,
-  error: true
-});
-
-export const navigateToMessageDetails = (
-  messageId: string
-): NavigateToMessageDetails => ({
-  type: NAVIGATE_TO_MESSAGE_DETAILS,
-  payload: messageId
-});
+  | ActionType<typeof loadMessageSuccess>
+  | ActionType<typeof loadMessageFailure>
+  | ActionType<typeof loadMessageWithRelationsAction>
+  | ActionType<typeof loadMessageWithRelationsSuccessAction>
+  | ActionType<typeof loadMessageWithRelationsFailureAction>
+  | ActionType<typeof loadMessagesRequest>
+  | ActionType<typeof loadMessagesCancel>
+  | ActionType<typeof loadMessagesSuccess>
+  | ActionType<typeof loadMessagesFailure>
+  | ActionType<typeof navigateToMessageDetails>
+  | ActionType<typeof startPayment>;

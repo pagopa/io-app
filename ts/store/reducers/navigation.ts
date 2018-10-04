@@ -4,9 +4,10 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
+import { getType } from "typesafe-actions";
 
 import AppNavigator from "../../navigation/AppNavigator";
-import { NAVIGATION_RESTORE } from "../actions/constants";
+import { navigationRestore } from "../actions/navigation";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -47,7 +48,7 @@ function nextState(state: NavigationState, action: Action): NavigationState {
       return AppNavigator.router.getStateForAction(action, state);
 
     // Used to restore a saved navigation state
-    case NAVIGATION_RESTORE:
+    case getType(navigationRestore):
       return { ...action.payload };
 
     default:

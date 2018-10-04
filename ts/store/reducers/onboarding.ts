@@ -2,8 +2,9 @@
  * A reducer for the Onboarding.
  * @flow
  */
+import { getType } from "typesafe-actions";
 
-import { TOS_ACCEPT_SUCCESS } from "../actions/constants";
+import { tosAcceptSuccess } from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -24,7 +25,7 @@ const reducer = (
   action: Action
 ): OnboardingState => {
   switch (action.type) {
-    case TOS_ACCEPT_SUCCESS:
+    case getType(tosAcceptSuccess):
       return {
         ...state,
         isTosAccepted: true

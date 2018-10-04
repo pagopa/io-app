@@ -61,7 +61,7 @@ class PinLoginScreen extends React.Component<Props> {
   }
 
   private onPinReset = () => {
-    this.props.dispatch(startPinReset);
+    this.props.dispatch(startPinReset());
   };
 
   private goToPaymentSummary = () => {
