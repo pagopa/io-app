@@ -1,12 +1,12 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { getType } from "typesafe-actions";
 
 import { saveNavigationStateSaga } from "../saveNavigationStateSaga";
 
 import { setDeepLink } from "../../../store/actions/deepLink";
 import { navigationStateSelector } from "../../../store/reducers/navigation";
 
-import { getType } from "typesafe-actions";
 import ROUTES from "../../../navigation/routes";
 
 describe("saveNavigationStateSaga", () => {

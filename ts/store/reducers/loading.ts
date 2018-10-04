@@ -5,7 +5,8 @@
  * - ACTION_NAME_(REQUEST|CANCEL|SUCCESS|FAILURE)
  */
 
-import { getType, isActionOf } from "typesafe-actions";
+import { isActionOf } from "typesafe-actions";
+
 import { FetchRequestActionsType } from "../actions/constants";
 import { Action } from "../actions/types";
 import {
@@ -55,8 +56,6 @@ const reducer = (
   state: LoadingState = INITIAL_STATE,
   action: Action
 ): LoadingState => {
-  const { type } = action;
-
   /**
    * The payment process has multiple occurrences
    * where the loading state needs to be set/reset
@@ -83,20 +82,20 @@ const reducer = (
    * under WALLET_MANAGEMENT (it currently includes
    * deletion and "setting as favourite" of wallets)
    */
-  if (type === getType(walletManagementSetLoadingState)) {
+  if (isActionOf(walletManagementSetLoadingState, action)) {
     return {
       ...state,
       WALLET_MANAGEMENT_LOAD: true
     };
   }
-  if (type === getType(walletManagementResetLoadingState)) {
+  if (isActionOf(walletManagementResetLoadingState, action)) {
     return {
       ...state,
       WALLET_MANAGEMENT_LOAD: false
     };
   }
 
-  const matches = /(.*)_(REQUEST|CANCEL|SUCCESS|FAILURE)/.exec(type);
+  const matches = /(.*)_(REQUEST|CANCEL|SUCCESS|FAILURE)/.exec(action.type);
 
   // Not a *_REQUEST / *_CANCEL / *_SUCCESS /  *_FAILURE action, so we ignore it
   if (!matches) {

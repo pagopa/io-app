@@ -17,8 +17,8 @@ import {
   select,
   take
 } from "redux-saga/effects";
-
 import { ActionType, getType } from "typesafe-actions";
+
 import {
   GetServiceT,
   GetUserMessagesT,

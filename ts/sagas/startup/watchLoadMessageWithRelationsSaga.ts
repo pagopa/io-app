@@ -1,8 +1,8 @@
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
-
 import { ActionType, getType } from "typesafe-actions";
+
 import {
   GetServiceT,
   GetUserMessageT

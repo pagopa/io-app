@@ -1,6 +1,7 @@
 import { NavigationActions, StackActions } from "react-navigation";
 import { all, Effect, put, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+
 import { clearDeepLink, navigateToDeepLink } from "../store/actions/deepLink";
 
 export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {

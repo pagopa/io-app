@@ -6,9 +6,9 @@ import {
   FiscalCode,
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
+import { getType } from "typesafe-actions";
 
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-
 import { UserProfile } from "../../../../definitions/backend/UserProfile";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
@@ -18,7 +18,6 @@ import {
   profileUpsertSuccess
 } from "../../../store/actions/profile";
 
-import { getType } from "typesafe-actions";
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
 describe("checkProfileEnabledSaga", () => {

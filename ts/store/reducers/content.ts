@@ -5,11 +5,11 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 
-import { Action } from "../actions/types";
+import { isActionOf } from "typesafe-actions";
 
-import { getType } from "typesafe-actions";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { contentServiceLoadSuccess } from "../actions/content";
+import { Action } from "../actions/types";
 
 /**
  * Stores useful content such as services and organizations metadata,
@@ -33,7 +33,7 @@ export default function content(
   state: ContentState = initialContentState,
   action: Action
 ): ContentState {
-  if (action.type === getType(contentServiceLoadSuccess)) {
+  if (isActionOf(contentServiceLoadSuccess, action)) {
     return {
       ...state,
       servicesMetadata: {

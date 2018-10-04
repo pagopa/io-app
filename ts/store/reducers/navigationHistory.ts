@@ -3,8 +3,8 @@
  */
 
 import { NavigationState } from "react-navigation";
-
 import { getType } from "typesafe-actions";
+
 import {
   navigationHistoryPop,
   navigationHistoryPush,

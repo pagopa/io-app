@@ -3,8 +3,8 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
-import { tosAcceptSuccess } from "../actions/onboarding";
 
+import { tosAcceptSuccess } from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 

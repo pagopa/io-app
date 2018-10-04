@@ -1,4 +1,4 @@
-import { getType } from "typesafe-actions";
+import { isActionOf } from "typesafe-actions";
 
 import { preferencesLanguagesLoadSuccess } from "../actions/preferences";
 import { Action } from "../actions/types";
@@ -15,7 +15,7 @@ export default function preferencesReducer(
   state: PreferencesState = initialPreferencesState,
   action: Action
 ): PreferencesState {
-  if (action.type === getType(preferencesLanguagesLoadSuccess)) {
+  if (isActionOf(preferencesLanguagesLoadSuccess, action)) {
     return {
       ...state,
       languages: action.payload

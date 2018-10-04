@@ -1,7 +1,7 @@
-import { Service as ServiceMetadata } from "../../../definitions/content/Service";
-
 import { ActionType, createAction } from "typesafe-actions";
+
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 
 export const contentServiceLoad = createAction(
   "CONTENT_SERVICE_LOAD",

@@ -4,6 +4,7 @@
 
 import { NavigationNavigateActionPayload } from "react-navigation";
 import { getType } from "typesafe-actions";
+
 import { clearDeepLink, setDeepLink } from "../actions/deepLink";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";

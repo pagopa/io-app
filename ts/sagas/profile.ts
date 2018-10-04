@@ -4,11 +4,14 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
+import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import {
   GetUserProfileT,
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
+import { UserProfileUnion } from "../api/backend";
 
 import I18n from "../i18n";
 
@@ -23,10 +26,6 @@ import {
 import { profileSelector } from "../store/reducers/profile";
 
 import { SagaCallReturnType } from "../types/utils";
-
-import { ActionType, getType } from "typesafe-actions";
-import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UserProfileUnion } from "../api/backend";
 
 // A saga to load the Profile.
 export function* loadProfile(
