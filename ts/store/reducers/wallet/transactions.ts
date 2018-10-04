@@ -1,16 +1,19 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
+
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+
 import { Transaction } from "../../../types/pagopa";
-import {
-  FETCH_TRANSACTIONS_SUCCESS,
-  PAYMENT_STORE_NEW_TRANSACTION,
-  SELECT_TRANSACTION_FOR_DETAILS
-} from "../../actions/constants";
 import { Action } from "../../actions/types";
+import {
+  fetchTransactionsSuccess,
+  selectTransactionForDetails,
+  storeNewTransaction
+} from "../../actions/wallet/transactions";
 import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { getSelectedWalletId } from "./wallets";
@@ -74,25 +77,28 @@ const reducer = (
   state: TransactionsState = TRANSACTIONS_INITIAL_STATE,
   action: Action
 ): TransactionsState => {
-  if (action.type === FETCH_TRANSACTIONS_SUCCESS) {
-    return {
-      ...state,
-      transactions: toIndexed(action.payload, "id")
-    };
+  switch (action.type) {
+    case getType(fetchTransactionsSuccess):
+      return {
+        ...state,
+        transactions: toIndexed(action.payload, "id")
+      };
+
+    case getType(selectTransactionForDetails):
+      return {
+        ...state,
+        selectedTransactionId: some(action.payload.id)
+      };
+
+    case getType(storeNewTransaction):
+      return {
+        ...state,
+        transactions: addToIndexed(state.transactions, action.payload, "id")
+      };
+
+    default:
+      return state;
   }
-  if (action.type === SELECT_TRANSACTION_FOR_DETAILS) {
-    return {
-      ...state,
-      selectedTransactionId: some(action.payload.id)
-    };
-  }
-  if (action.type === PAYMENT_STORE_NEW_TRANSACTION) {
-    return {
-      ...state,
-      transactions: addToIndexed(state.transactions, action.payload, "id")
-    };
-  }
-  return state;
 };
 
 export default reducer;

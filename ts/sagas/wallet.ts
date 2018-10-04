@@ -45,7 +45,6 @@ import {
   ADD_CREDIT_CARD_COMPLETED,
   ADD_CREDIT_CARD_REQUEST,
   DELETE_WALLET_REQUEST,
-  FETCH_TRANSACTIONS_REQUEST,
   FETCH_WALLETS_REQUEST,
   PAYMENT_COMPLETED,
   PAYMENT_REQUEST_CANCEL,
@@ -94,7 +93,7 @@ import {
 } from "../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
-  FetchTransactionsRequest,
+  fetchTransactionsRequest,
   fetchTransactionsSuccess,
   selectTransactionForDetails
 } from "../store/actions/wallet/transactions";
@@ -1067,6 +1066,8 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
   }
 }
 
+const fetchTransactionsRequestType = getType(fetchTransactionsRequest);
+
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   pagoPaClient: PagoPaClient,
@@ -1106,14 +1107,14 @@ export function* watchWalletSaga(
 
   while (true) {
     const action:
-      | FetchTransactionsRequest
+      | ActionType<typeof fetchTransactionsRequest>
       | FetchWalletsRequest
       | AddCreditCardRequest
       | ActionType<typeof logoutSuccess>
       | PaymentRequestQrCode
       | PaymentRequestMessage
       | DeleteWalletRequest = yield take([
-      FETCH_TRANSACTIONS_REQUEST,
+      fetchTransactionsRequestType,
       FETCH_WALLETS_REQUEST,
       getType(logoutSuccess),
       PAYMENT_REQUEST_QR_CODE,
@@ -1122,7 +1123,7 @@ export function* watchWalletSaga(
       DELETE_WALLET_REQUEST
     ]);
 
-    if (action.type === FETCH_TRANSACTIONS_REQUEST) {
+    if (action.type === fetchTransactionsRequestType) {
       yield fork(fetchTransactions, pagoPaClient);
     }
     if (action.type === FETCH_WALLETS_REQUEST) {
