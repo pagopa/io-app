@@ -229,8 +229,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
     dispatch(
       paymentRequestTransactionSummaryFromRptId({
         rptId,
-        initialAmount,
-        kind: "fromRptId"
+        initialAmount
       })
     ),
   goBack: () => dispatch(paymentRequestGoBack()),

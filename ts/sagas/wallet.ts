@@ -356,21 +356,6 @@ function* paymentSagaFromQrCode(
   );
 }
 
-function* paymentSagaFromMessage(
-  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  storedPin: PinString
-): Iterator<Effect> {
-  yield fork(
-    watchPaymentSaga,
-    getVerificaRpt,
-    postAttivaRpt,
-    getPaymentIdApi,
-    storedPin
-  );
-}
-
 /**
  * This saga is forked at the beginning of a payment flow
  */
@@ -384,6 +369,7 @@ function* watchPaymentSaga(
     const action:
       | ActionType<typeof paymentRequestQrCode>
       | ActionType<typeof paymentRequestManualEntry>
+      | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
       | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
       | ActionType<typeof paymentRequestContinueWithPaymentMethods>
       | ActionType<typeof paymentRequestPickPaymentMethod>
@@ -397,6 +383,7 @@ function* watchPaymentSaga(
       | ActionType<typeof paymentRequestPinLogin> = yield take([
       getType(paymentRequestQrCode),
       getType(paymentRequestManualEntry),
+      getType(paymentRequestTransactionSummaryFromRptId),
       getType(paymentRequestTransactionSummaryFromBanner),
       getType(paymentRequestContinueWithPaymentMethods),
       getType(paymentRequestPickPaymentMethod),
@@ -427,6 +414,7 @@ function* watchPaymentSaga(
           yield fork(enterDataManuallyHandler, action, pagoPaClient);
           break;
         }
+        case getType(paymentRequestTransactionSummaryFromRptId):
         case getType(paymentRequestTransactionSummaryFromBanner): {
           yield fork(
             showTransactionSummaryHandler,
@@ -516,7 +504,7 @@ function* showTransactionSummaryHandler(
   // tapping on the payment banner further in the process.
   // in all cases but the last one, a payload will be
   // provided, and it will contain the RptId information
-  if (action.payload.kind === "fromRptId") {
+  if (isActionOf(paymentRequestTransactionSummaryFromRptId, action)) {
     // either the QR code has been read, or the
     // data has been entered manually. Store the
     // payload and proceed with showing the
@@ -1032,7 +1020,7 @@ export function* watchWalletSaga(
   // Start listening for actions that start the payment flow from a message.
   yield takeLatest(
     getType(paymentRequestMessage),
-    paymentSagaFromMessage,
+    watchPaymentSaga,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
     pollingBackendClient.getPaymentId,
