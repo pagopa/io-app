@@ -102,6 +102,9 @@ export const Wallet = repP(
 );
 export type Wallet = t.TypeOf<typeof Wallet>;
 
+/**
+ * A Wallet that has not being saved yet
+ */
 export type NullableWallet = ReplaceProp1<
   Wallet,
   "idWallet" | "favourite",

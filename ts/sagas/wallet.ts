@@ -39,7 +39,6 @@ import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 
-import { logoutSuccess } from "../store/actions/authentication";
 import {
   paymentCompleted,
   paymentConfirmPaymentMethod,
@@ -119,7 +118,6 @@ import {
   NodoErrors
 } from "../types/errors";
 import {
-  CreditCard,
   NullableWallet,
   PagopaToken,
   PayRequest,
@@ -178,9 +176,8 @@ function* fetchWallets(
 }
 
 function* addCreditCard(
-  creditCard: CreditCard,
-  _: boolean, // should the card be set as favorite?
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof addCreditCardRequest>
 ): Iterator<Effect> {
   try {
     yield put(walletManagementSetLoadingState());
@@ -188,7 +185,7 @@ function* addCreditCard(
       idWallet: null,
       type: "CREDIT_CARD",
       favourite: null,
-      creditCard,
+      creditCard: action.payload.creditCard,
       psp: undefined
     };
     // 1st call: boarding credit card
@@ -302,13 +299,13 @@ function* addCreditCard(
 }
 
 function* deleteWallet(
-  walletId: number,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof deleteWalletRequest>
 ): Iterator<Effect> {
   try {
     yield put(walletManagementSetLoadingState());
     const apiDeleteWallet = (token: PagopaToken) =>
-      pagoPaClient.deleteWallet(token, walletId);
+      pagoPaClient.deleteWallet(token, action.payload);
     const response: SagaCallReturnType<typeof apiDeleteWallet> = yield call(
       fetchWithTokenRefresh,
       apiDeleteWallet,
@@ -983,26 +980,40 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
   }
 }
 
+/**
+ * Main saga entrypoint
+ */
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   pagoPaClient: PagoPaClient,
   storedPin: PinString
 ): Iterator<Effect> {
+  // Builds a backend client specifically for the pagopa-proxy endpoints that
+  // need a fetch instance that doesn't retry requests and have longer timeout
   const backendClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
     pagopaFetch()
   );
 
-  // backend client for polling for paymentId
+  // Backend client for polling for paymentId - uses an instance of fetch that
+  // considers a 404 as a transient error and retries with a constant delay
   const pollingBackendClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
     constantPollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
   );
 
+  // First thing we do is to ask the pagopa REST APIs for a token we can use
+  // to make requests - pagopa REST APIs has their own session.
+  // It's fine if this request fails, as all subsequent API calls are wrapped
+  // with fetchWithTokenRefresh().
+  // Note that fetchAndStorePagoPaToken has a side effect of emitting an action
+  // that stores the token in the Redux store.
+  // TODO: document this flow
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
 
+  // Start listening for actions that start the payment flow from a QR code.
   yield takeLatest(
     getType(paymentRequestQrCode),
     paymentSagaFromQrCode,
@@ -1011,6 +1022,7 @@ export function* watchWalletSaga(
     pollingBackendClient.getPaymentId,
     storedPin
   );
+  // Start listening for actions that start the payment flow from a message.
   yield takeLatest(
     getType(paymentRequestMessage),
     paymentSagaFromMessage,
@@ -1020,45 +1032,19 @@ export function* watchWalletSaga(
     storedPin
   );
 
-  while (true) {
-    const action:
-      | ActionType<typeof fetchTransactionsRequest>
-      | ActionType<typeof fetchWalletsRequest>
-      | ActionType<typeof addCreditCardRequest>
-      | ActionType<typeof logoutSuccess>
-      | ActionType<typeof paymentRequestQrCode>
-      | ActionType<typeof paymentRequestMessage>
-      | ActionType<typeof deleteWalletRequest> = yield take([
-      getType(fetchTransactionsRequest),
-      getType(fetchWalletsRequest),
-      getType(logoutSuccess),
-      getType(paymentRequestQrCode),
-      getType(paymentRequestMessage),
-      getType(addCreditCardRequest),
-      getType(deleteWalletRequest)
-    ]);
+  // Start listening for requests to fetch the transaction history
+  yield takeLatest(
+    getType(fetchTransactionsRequest),
+    fetchTransactions,
+    pagoPaClient
+  );
 
-    if (isActionOf(fetchTransactionsRequest, action)) {
-      yield fork(fetchTransactions, pagoPaClient);
-    }
-    if (isActionOf(fetchWalletsRequest, action)) {
-      yield fork(fetchWallets, pagoPaClient);
-    }
-    if (isActionOf(addCreditCardRequest, action)) {
-      yield fork(
-        addCreditCard,
-        action.payload.creditCard,
-        action.payload.setAsFavorite, // should the card be set as favorite?
-        pagoPaClient
-      );
-    }
-    if (isActionOf(deleteWalletRequest, action)) {
-      yield fork(deleteWallet, action.payload, pagoPaClient);
-    }
-    // if the user logs out, go back to waiting
-    // for a WALLET_TOKEN_LOAD_SUCCESS action
-    if (isActionOf(logoutSuccess, action)) {
-      break;
-    }
-  }
+  // Start listening for requests to fetch the wallets from the pagopa profile
+  yield takeLatest(getType(fetchWalletsRequest), fetchWallets, pagoPaClient);
+
+  // Start listening for requests to add a credit card to the wallets
+  yield takeLatest(getType(addCreditCardRequest), addCreditCard, pagoPaClient);
+
+  // Start listening for requests to delete a wallet
+  yield takeLatest(getType(deleteWalletRequest), deleteWallet, pagoPaClient);
 }
