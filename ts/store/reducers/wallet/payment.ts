@@ -17,20 +17,20 @@ import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { Action } from "../../actions/types";
 import {
+  goBackOnePaymentState,
   paymentCancel,
-  paymentCompleted,
-  paymentConfirmPaymentMethod,
-  paymentGoBack,
-  paymentInitialConfirmPaymentMethod,
-  paymentInitialPickPaymentMethod,
-  paymentInitialPickPsp,
-  paymentManualEntry,
-  paymentPickPaymentMethod,
-  paymentPickPsp,
-  paymentPinLogin,
-  paymentQrCode,
-  paymentTransactionSummaryFromBanner,
-  paymentTransactionSummaryFromRptId
+  resetPaymentState,
+  setPaymentStateFromSummaryToConfirmPaymentMethod,
+  setPaymentStateFromSummaryToPickPaymentMethod,
+  setPaymentStateFromSummaryToPickPsp,
+  setPaymentStateToConfirmPaymentMethod,
+  setPaymentStateToManualEntry,
+  setPaymentStateToPickPaymentMethod,
+  setPaymentStateToPickPsp,
+  setPaymentStateToPinLogin,
+  setPaymentStateToQrCode,
+  setPaymentStateToSummary,
+  setPaymentStateToSummaryWithPaymentId
 } from "../../actions/wallet/payment";
 import { IndexedById } from "../../helpers/indexer";
 import {
@@ -341,7 +341,7 @@ const dataEntryReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentQrCode, action) &&
+    isActionOf(setPaymentStateToQrCode, action) &&
     isInAllowedOrigins(state, ["none"])
   ) {
     return {
@@ -355,7 +355,7 @@ const dataEntryReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentManualEntry, action) &&
+    isActionOf(setPaymentStateToManualEntry, action) &&
     isInAllowedOrigins(state, ["PaymentStateQrCode"])
   ) {
     return {
@@ -379,7 +379,7 @@ const summaryReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentTransactionSummaryFromRptId, action) &&
+    isActionOf(setPaymentStateToSummary, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateQrCode",
       "PaymentStateManualEntry",
@@ -402,7 +402,7 @@ const summaryReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentTransactionSummaryFromBanner, action) &&
+    isActionOf(setPaymentStateToSummaryWithPaymentId, action) &&
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
       "PaymentStateConfirmPaymentMethod",
@@ -440,7 +440,7 @@ const pickMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentInitialPickPaymentMethod, action) &&
+    isActionOf(setPaymentStateFromSummaryToPickPaymentMethod, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateSummary"
       // "PaymentStateSummaryWithPaymentId",
@@ -466,7 +466,7 @@ const pickMethodReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentPickPaymentMethod, action) &&
+    isActionOf(setPaymentStateToPickPaymentMethod, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod"
@@ -499,7 +499,7 @@ const confirmMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentInitialConfirmPaymentMethod, action) &&
+    isActionOf(setPaymentStateFromSummaryToConfirmPaymentMethod, action) &&
     isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
@@ -516,7 +516,7 @@ const confirmMethodReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentConfirmPaymentMethod, action) &&
+    isActionOf(setPaymentStateToConfirmPaymentMethod, action) &&
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
       "PaymentStateSummaryWithPaymentId",
@@ -547,7 +547,7 @@ const pickPspReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentInitialPickPsp, action) &&
+    isActionOf(setPaymentStateFromSummaryToPickPsp, action) &&
     isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
@@ -564,7 +564,7 @@ const pickPspReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentPickPsp, action) &&
+    isActionOf(setPaymentStateToPickPsp, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod",
@@ -594,7 +594,7 @@ const goBackReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
-  if (isActionOf(paymentGoBack, action)) {
+  if (isActionOf(goBackOnePaymentState, action)) {
     // if going back means going to the "initial" summary screen
     // (i.e. where the "attiva" is done and the payment id is fetched,
     // return to a state that also has the payment Id
@@ -641,7 +641,7 @@ const endPaymentReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentPinLogin, action) &&
+    isActionOf(setPaymentStateToPinLogin, action) &&
     isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"]) &&
     isPaymentStateWithSelectedPaymentMethod(state)
   ) {
@@ -657,7 +657,7 @@ const endPaymentReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentCompleted, action) &&
+    isActionOf(resetPaymentState, action) &&
     isInAllowedOrigins(state, ["PaymentStatePinLogin"])
   ) {
     return {

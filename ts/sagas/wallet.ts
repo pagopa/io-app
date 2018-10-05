@@ -35,21 +35,12 @@ import {
 
 import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
-import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
+import { apiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 
 import {
-  paymentCompleted,
-  paymentConfirmPaymentMethod,
-  paymentGoBack,
-  paymentInitialConfirmPaymentMethod,
-  paymentInitialPickPaymentMethod,
-  paymentInitialPickPsp,
-  paymentManualEntry,
-  paymentPickPaymentMethod,
-  paymentPickPsp,
-  paymentQrCode,
+  goBackOnePaymentState,
   paymentRequestCancel,
   paymentRequestConfirmPaymentMethod,
   paymentRequestContinueWithPaymentMethods,
@@ -64,9 +55,18 @@ import {
   paymentRequestTransactionSummaryFromRptId,
   paymentResetLoadingState,
   paymentSetLoadingState,
-  paymentTransactionSummaryFromBanner,
-  paymentTransactionSummaryFromRptId,
-  paymentUpdatePsp
+  paymentUpdatePsp,
+  resetPaymentState,
+  setPaymentStateFromSummaryToConfirmPaymentMethod,
+  setPaymentStateFromSummaryToPickPaymentMethod,
+  setPaymentStateFromSummaryToPickPsp,
+  setPaymentStateToConfirmPaymentMethod,
+  setPaymentStateToManualEntry,
+  setPaymentStateToPickPaymentMethod,
+  setPaymentStateToPickPsp,
+  setPaymentStateToQrCode,
+  setPaymentStateToSummary,
+  setPaymentStateToSummaryWithPaymentId
 } from "../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -86,10 +86,7 @@ import {
   walletManagementResetLoadingState,
   walletManagementSetLoadingState
 } from "../store/actions/wallet/wallets";
-import {
-  sessionTokenSelector,
-  walletTokenSelector
-} from "../store/reducers/authentication";
+import { sessionTokenSelector } from "../store/reducers/authentication";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
@@ -108,8 +105,8 @@ import {
 import {
   paymentCancel,
   paymentFailure,
-  paymentPinLogin,
-  paymentRequestCompletion
+  paymentRequestCompletion,
+  setPaymentStateToPinLogin
 } from "./../store/actions/wallet/payment";
 
 import {
@@ -343,15 +340,17 @@ function* paymentSagaFromQrCode(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
+  pagoPaClient: PagoPaClient,
   storedPin: PinString
 ): Iterator<Effect> {
-  yield put(paymentQrCode());
+  yield put(setPaymentStateToQrCode());
   yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
   yield fork(
     watchPaymentSaga,
     getVerificaRpt,
     postAttivaRpt,
     getPaymentIdApi,
+    pagoPaClient,
     storedPin
   );
 }
@@ -363,11 +362,11 @@ function* watchPaymentSaga(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
+  pagoPaClient: PagoPaClient,
   storedPin: PinString
 ): Iterator<Effect> {
   while (true) {
     const action:
-      | ActionType<typeof paymentRequestQrCode>
       | ActionType<typeof paymentRequestManualEntry>
       | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
       | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
@@ -379,9 +378,8 @@ function* watchPaymentSaga(
       | ActionType<typeof paymentRequestCompletion>
       | ActionType<typeof paymentRequestGoBack>
       | ActionType<typeof paymentRequestCancel>
-      | ActionType<typeof paymentCompleted>
+      | ActionType<typeof resetPaymentState>
       | ActionType<typeof paymentRequestPinLogin> = yield take([
-      getType(paymentRequestQrCode),
       getType(paymentRequestManualEntry),
       getType(paymentRequestTransactionSummaryFromRptId),
       getType(paymentRequestTransactionSummaryFromBanner),
@@ -394,78 +392,70 @@ function* watchPaymentSaga(
       getType(paymentRequestGoBack),
       getType(paymentRequestCancel),
       getType(paymentRequestPinLogin),
-      getType(paymentCompleted)
+      getType(resetPaymentState)
     ]);
 
-    if (isActionOf(paymentCompleted, action)) {
+    if (isActionOf(resetPaymentState, action)) {
       // On payment completed, stop listening for actions
       break;
     }
 
-    const maybeWalletToken: Option<string> = yield select(walletTokenSelector);
-    if (maybeWalletToken.isSome()) {
-      const pagoPaClient = PagoPaClient(
-        pagoPaApiUrlPrefix,
-        maybeWalletToken.value
-      );
-
-      switch (action.type) {
-        case getType(paymentRequestManualEntry): {
-          yield fork(enterDataManuallyHandler, action, pagoPaClient);
-          break;
-        }
-        case getType(paymentRequestTransactionSummaryFromRptId):
-        case getType(paymentRequestTransactionSummaryFromBanner): {
-          yield fork(
-            showTransactionSummaryHandler,
-            action,
-            pagoPaClient,
-            getVerificaRpt
-          );
-          break;
-        }
-        case getType(paymentRequestContinueWithPaymentMethods): {
-          yield fork(
-            continueWithPaymentMethodsHandler,
-            action,
-            pagoPaClient,
-            postAttivaRpt,
-            getPaymentIdApi
-          );
-          break;
-        }
-        case getType(paymentRequestPickPaymentMethod): {
-          yield fork(pickPaymentMethodHandler);
-          break;
-        }
-        case getType(paymentRequestConfirmPaymentMethod): {
-          yield fork(confirmPaymentMethodHandler, action, pagoPaClient);
-          break;
-        }
-        case getType(paymentRequestPickPsp): {
-          yield fork(pickPspHandler, action, pagoPaClient);
-          break;
-        }
-        case getType(paymentUpdatePsp): {
-          yield fork(updatePspHandler, action, pagoPaClient);
-          break;
-        }
-        case getType(paymentRequestCompletion): {
-          yield fork(completionHandler, pagoPaClient);
-          break;
-        }
-        case getType(paymentRequestGoBack): {
-          yield fork(goBackHandler, action, pagoPaClient);
-          break;
-        }
-        case getType(paymentRequestCancel): {
-          yield fork(cancelPaymentHandler, action);
-          break;
-        }
-        case getType(paymentRequestPinLogin): {
-          yield fork(pinLoginHandler, storedPin);
-          break;
-        }
+    switch (action.type) {
+      case getType(paymentRequestManualEntry): {
+        yield fork(enterDataManuallyHandler, action, pagoPaClient);
+        break;
+      }
+      case getType(paymentRequestTransactionSummaryFromRptId):
+      case getType(paymentRequestTransactionSummaryFromBanner): {
+        yield fork(
+          showTransactionSummaryHandler,
+          action,
+          pagoPaClient,
+          getVerificaRpt
+        );
+        break;
+      }
+      case getType(paymentRequestContinueWithPaymentMethods): {
+        yield fork(
+          continueWithPaymentMethodsHandler,
+          action,
+          pagoPaClient,
+          postAttivaRpt,
+          getPaymentIdApi
+        );
+        break;
+      }
+      case getType(paymentRequestPickPaymentMethod): {
+        yield fork(pickPaymentMethodHandler);
+        break;
+      }
+      case getType(paymentRequestConfirmPaymentMethod): {
+        yield fork(confirmPaymentMethodHandler, action, pagoPaClient);
+        break;
+      }
+      case getType(paymentRequestPickPsp): {
+        yield fork(pickPspHandler, action, pagoPaClient);
+        break;
+      }
+      case getType(paymentUpdatePsp): {
+        yield fork(updatePspHandler, action, pagoPaClient);
+        break;
+      }
+      case getType(paymentRequestCompletion): {
+        yield fork(completionHandler, pagoPaClient);
+        break;
+      }
+      case getType(paymentRequestGoBack): {
+        yield fork(goBackHandler, action, pagoPaClient);
+        break;
+      }
+      case getType(paymentRequestCancel): {
+        yield fork(cancelPaymentHandler, action);
+        break;
+      }
+      case getType(paymentRequestPinLogin): {
+        yield fork(pinLoginHandler, storedPin);
+        break;
       }
     }
   }
@@ -477,7 +467,7 @@ function* cancelPaymentHandler(_: ActionType<typeof paymentRequestCancel>) {
 }
 
 function* goBackHandler(_: ActionType<typeof paymentRequestGoBack>) {
-  yield put(paymentGoBack()); // return to previous state
+  yield put(goBackOnePaymentState()); // return to previous state
   yield put(NavigationActions.back());
 }
 
@@ -488,7 +478,7 @@ function* enterDataManuallyHandler(
   // from the QR code screen the user selected
   // the option for entering the data manually
   // -> navigate to manual data insertion screen
-  yield put(paymentManualEntry());
+  yield put(setPaymentStateToManualEntry());
   yield put(navigateTo(ROUTES.PAYMENT_MANUAL_DATA_INSERTION));
 }
 
@@ -531,11 +521,7 @@ function* showTransactionSummaryHandler(
         // response fetched successfully -- store it
         // and proceed
         yield put(
-          paymentTransactionSummaryFromRptId(
-            rptId,
-            initialAmount,
-            response.value
-          )
+          setPaymentStateToSummary(rptId, initialAmount, response.value)
         );
       } else {
         yield put(paymentFailure(extractNodoError(response)));
@@ -547,7 +533,7 @@ function* showTransactionSummaryHandler(
     }
   } else {
     // also, show summary screen
-    yield put(paymentTransactionSummaryFromBanner());
+    yield put(setPaymentStateToSummaryWithPaymentId());
     yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
   }
 }
@@ -559,8 +545,8 @@ function* showConfirmPaymentMethod(
 ) {
   yield put(
     paymentIdOrUndefined === undefined
-      ? paymentConfirmPaymentMethod(wallet.idWallet, pspList)
-      : paymentInitialConfirmPaymentMethod(
+      ? setPaymentStateToConfirmPaymentMethod(wallet.idWallet, pspList)
+      : setPaymentStateFromSummaryToConfirmPaymentMethod(
           wallet.idWallet,
           pspList,
           paymentIdOrUndefined
@@ -576,8 +562,12 @@ function* showPickPsp(
 ) {
   yield put(
     paymentIdOrUndefined === undefined
-      ? paymentPickPsp(wallet.idWallet, pspList)
-      : paymentInitialPickPsp(wallet.idWallet, pspList, paymentIdOrUndefined)
+      ? setPaymentStateToPickPsp(wallet.idWallet, pspList)
+      : setPaymentStateFromSummaryToPickPsp(
+          wallet.idWallet,
+          pspList,
+          paymentIdOrUndefined
+        )
   );
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
@@ -848,8 +838,8 @@ function* pickPaymentMethodHandler(paymentId?: string) {
   // show screen with list of payment methods available
   yield put(
     paymentId
-      ? paymentInitialPickPaymentMethod(paymentId)
-      : paymentPickPaymentMethod()
+      ? setPaymentStateFromSummaryToPickPaymentMethod(paymentId)
+      : setPaymentStateToPickPaymentMethod()
   );
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
 }
@@ -858,7 +848,7 @@ function* pickPspHandler() {
   const walletId: number = yield select(getSelectedPaymentMethod);
   const pspList: ReadonlyArray<Psp> = yield select(getPspList);
 
-  yield put(paymentPickPsp(walletId, pspList));
+  yield put(setPaymentStateToPickPsp(walletId, pspList));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 
@@ -904,7 +894,7 @@ function* updatePspHandler(
 }
 
 function* pinLoginHandler(storedPin: PinString) {
-  yield put(paymentPinLogin());
+  yield put(setPaymentStateToPinLogin());
   // Retrieve the configured PIN from the keychain
   yield race({
     proceed: call(loginWithPinSaga, storedPin),
@@ -958,7 +948,7 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
           paymentCompleted: true
         })
       );
-      yield put(paymentCompleted());
+      yield put(resetPaymentState());
     } else {
       yield put(
         paymentFailure(
@@ -1015,6 +1005,7 @@ export function* watchWalletSaga(
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
     pollingBackendClient.getPaymentId,
+    pagoPaClient,
     storedPin
   );
   // Start listening for actions that start the payment flow from a message.
@@ -1024,6 +1015,7 @@ export function* watchWalletSaga(
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
     pollingBackendClient.getPaymentId,
+    pagoPaClient,
     storedPin
   );
 
