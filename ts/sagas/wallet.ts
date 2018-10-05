@@ -45,11 +45,9 @@ import {
   paymentRequestConfirmPaymentMethod,
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack,
-  paymentRequestMessage,
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp,
   paymentRequestPinLogin,
-  paymentRequestQrCode,
   paymentRequestTransactionSummaryFromBanner,
   paymentRequestTransactionSummaryFromRptId,
   paymentResetLoadingState,
@@ -62,9 +60,9 @@ import {
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToPickPaymentMethod,
   setPaymentStateToPickPsp,
-  setPaymentStateToQrCode,
   setPaymentStateToSummary,
-  setPaymentStateToSummaryWithPaymentId
+  setPaymentStateToSummaryWithPaymentId,
+  startPaymentSaga
 } from "../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -332,25 +330,6 @@ function* deleteWallet(
   } finally {
     yield put(walletManagementResetLoadingState());
   }
-}
-
-function* paymentSagaFromQrCode(
-  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  pagoPaClient: PagoPaClient,
-  storedPin: PinString
-): Iterator<Effect> {
-  yield put(setPaymentStateToQrCode());
-  yield put(navigateTo(ROUTES.PAYMENT_SCAN_QR_CODE)); // start by showing qr code scanner
-  yield fork(
-    watchPaymentSaga,
-    getVerificaRpt,
-    postAttivaRpt,
-    getPaymentIdApi,
-    pagoPaClient,
-    storedPin
-  );
 }
 
 /**
@@ -979,19 +958,9 @@ export function* watchWalletSaga(
   // TODO: document this flow
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
 
-  // Start listening for actions that start the payment flow from a QR code.
+  // Start listening for actions that start the payment flow
   yield takeLatest(
-    getType(paymentRequestQrCode),
-    paymentSagaFromQrCode,
-    backendClient.getVerificaRpt,
-    backendClient.postAttivaRpt,
-    pollingBackendClient.getPaymentId,
-    pagoPaClient,
-    storedPin
-  );
-  // Start listening for actions that start the payment flow from a message.
-  yield takeLatest(
-    getType(paymentRequestMessage),
+    getType(startPaymentSaga),
     watchPaymentSaga,
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,

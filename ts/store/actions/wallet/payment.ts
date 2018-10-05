@@ -21,19 +21,13 @@ export const paymentUpdatePspInState = createStandardAction(
   "PAYMENT_UPDATE_PSP_IN_STATE"
 )<PaymentUpdatePspInStatePayload>();
 
-export const paymentRequestQrCode = createStandardAction(
-  "PAYMENT_REQUEST_QR_CODE"
-)();
+export const startPaymentSaga = createStandardAction("PAYMENT_REQUEST")();
 
 /**
  * Sets the payment state to PaymentStateQrCode, only if previous state is none
  */
 export const setPaymentStateToQrCode = createStandardAction(
   "PAYMENT_QR_CODE"
-)();
-
-export const paymentRequestMessage = createStandardAction(
-  "PAYMENT_REQUEST_MESSAGE"
 )();
 
 /**
@@ -174,9 +168,8 @@ export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
  * All possible payment actions
  */
 export type PaymentActions =
-  | ActionType<typeof paymentRequestQrCode>
+  | ActionType<typeof startPaymentSaga>
   | ActionType<typeof setPaymentStateToQrCode>
-  | ActionType<typeof paymentRequestMessage>
   | ActionType<typeof setPaymentStateToManualEntry>
   | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
   | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
