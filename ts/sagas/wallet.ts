@@ -45,7 +45,6 @@ import {
   paymentRequestConfirmPaymentMethod,
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack,
-  paymentRequestManualEntry,
   paymentRequestMessage,
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp,
@@ -61,7 +60,6 @@ import {
   setPaymentStateFromSummaryToPickPaymentMethod,
   setPaymentStateFromSummaryToPickPsp,
   setPaymentStateToConfirmPaymentMethod,
-  setPaymentStateToManualEntry,
   setPaymentStateToPickPaymentMethod,
   setPaymentStateToPickPsp,
   setPaymentStateToQrCode,
@@ -367,7 +365,6 @@ function* watchPaymentSaga(
 ): Iterator<Effect> {
   while (true) {
     const action:
-      | ActionType<typeof paymentRequestManualEntry>
       | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
       | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
       | ActionType<typeof paymentRequestContinueWithPaymentMethods>
@@ -380,7 +377,6 @@ function* watchPaymentSaga(
       | ActionType<typeof paymentRequestCancel>
       | ActionType<typeof resetPaymentState>
       | ActionType<typeof paymentRequestPinLogin> = yield take([
-      getType(paymentRequestManualEntry),
       getType(paymentRequestTransactionSummaryFromRptId),
       getType(paymentRequestTransactionSummaryFromBanner),
       getType(paymentRequestContinueWithPaymentMethods),
@@ -401,10 +397,6 @@ function* watchPaymentSaga(
     }
 
     switch (action.type) {
-      case getType(paymentRequestManualEntry): {
-        yield fork(enterDataManuallyHandler, action, pagoPaClient);
-        break;
-      }
       case getType(paymentRequestTransactionSummaryFromRptId):
       case getType(paymentRequestTransactionSummaryFromBanner): {
         yield fork(
@@ -469,17 +461,6 @@ function* cancelPaymentHandler(_: ActionType<typeof paymentRequestCancel>) {
 function* goBackHandler(_: ActionType<typeof paymentRequestGoBack>) {
   yield put(goBackOnePaymentState()); // return to previous state
   yield put(NavigationActions.back());
-}
-
-function* enterDataManuallyHandler(
-  _: ActionType<typeof paymentRequestManualEntry>,
-  __: PagoPaClient
-): Iterator<Effect> {
-  // from the QR code screen the user selected
-  // the option for entering the data manually
-  // -> navigate to manual data insertion screen
-  yield put(setPaymentStateToManualEntry());
-  yield put(navigateTo(ROUTES.PAYMENT_MANUAL_DATA_INSERTION));
 }
 
 function* showTransactionSummaryHandler(

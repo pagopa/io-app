@@ -32,10 +32,6 @@ export const setPaymentStateToQrCode = createStandardAction(
   "PAYMENT_QR_CODE"
 )();
 
-export const paymentRequestManualEntry = createStandardAction(
-  "PAYMENT_REQUEST_MANUAL_ENTRY"
-)();
-
 export const paymentRequestMessage = createStandardAction(
   "PAYMENT_REQUEST_MESSAGE"
 )();
@@ -180,7 +176,6 @@ export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
 export type PaymentActions =
   | ActionType<typeof paymentRequestQrCode>
   | ActionType<typeof setPaymentStateToQrCode>
-  | ActionType<typeof paymentRequestManualEntry>
   | ActionType<typeof paymentRequestMessage>
   | ActionType<typeof setPaymentStateToManualEntry>
   | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
