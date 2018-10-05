@@ -7,8 +7,8 @@ import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { CreditCard, Wallet } from "../../../types/pagopa";
-import { PAYMENT_UPDATE_PSP_IN_STATE } from "../../actions/constants";
 import { Action } from "../../actions/types";
+import { paymentUpdatePspInState } from "../../actions/wallet/payment";
 import {
   creditCardDataCleanup,
   fetchWalletsSuccess,
@@ -136,15 +136,15 @@ const reducer = (
     // (then, the psp will be updated on the server side,
     // and, by fetching the existing cards the psp will be
     // automatically updated)
-    case PAYMENT_UPDATE_PSP_IN_STATE:
+    case getType(paymentUpdatePspInState):
       return {
         ...state,
         list: {
           ...state.list,
-          [action.walletId]: {
-            ...state.list[action.walletId],
-            idPsp: action.payload.id,
-            psp: action.payload
+          [action.payload.walletId]: {
+            ...state.list[action.payload.walletId],
+            idPsp: action.payload.psp.id,
+            psp: action.payload.psp
           }
         }
       };

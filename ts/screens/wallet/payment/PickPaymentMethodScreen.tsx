@@ -160,7 +160,12 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   confirmPaymentMethod: (walletId: number) =>
     dispatch(paymentRequestConfirmPaymentMethod(walletId)),
   goBack: () => dispatch(paymentRequestGoBack()),
-  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
+  showSummary: () =>
+    dispatch(
+      paymentRequestTransactionSummaryFromBanner({
+        kind: "fromBanner"
+      })
+    )
 });
 
 export default connect(

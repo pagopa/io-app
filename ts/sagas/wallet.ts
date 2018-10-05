@@ -60,8 +60,8 @@ import {
   paymentRequestPickPsp,
   paymentRequestPinLogin,
   paymentRequestQrCode,
-  PaymentRequestTransactionSummaryActions,
   paymentRequestTransactionSummaryFromBanner,
+  paymentRequestTransactionSummaryFromRptId,
   paymentResetLoadingState,
   paymentSetLoadingState,
   paymentTransactionSummaryFromBanner,
@@ -228,7 +228,7 @@ function* addCreditCard(
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
-    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+    const pagoPaToken: Option<PagopaToken> = yield select(getPagoPaToken);
     if (url === undefined || pagoPaToken.isNone()) {
       // pagoPA is *always* supposed to pass a URL
       // for the app to open. if it is not there,
@@ -371,6 +371,9 @@ function* paymentSagaFromMessage(
   );
 }
 
+/**
+ * This saga is forked at the beginning of a payment flow
+ */
 function* watchPaymentSaga(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
@@ -406,7 +409,9 @@ function* watchPaymentSaga(
       getType(paymentRequestPinLogin),
       getType(paymentCompleted)
     ]);
+
     if (isActionOf(paymentCompleted, action)) {
+      // On payment completed, stop listening for actions
       break;
     }
 
@@ -500,7 +505,9 @@ function* enterDataManuallyHandler(
 }
 
 function* showTransactionSummaryHandler(
-  action: PaymentRequestTransactionSummaryActions,
+  action:
+    | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
+    | ActionType<typeof paymentRequestTransactionSummaryFromRptId>,
   _: PagoPaClient,
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>
 ) {
@@ -509,7 +516,7 @@ function* showTransactionSummaryHandler(
   // tapping on the payment banner further in the process.
   // in all cases but the last one, a payload will be
   // provided, and it will contain the RptId information
-  if (action.kind === "fromRptId") {
+  if (action.payload.kind === "fromRptId") {
     // either the QR code has been read, or the
     // data has been entered manually. Store the
     // payload and proceed with showing the

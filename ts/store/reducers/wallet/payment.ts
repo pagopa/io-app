@@ -393,7 +393,9 @@ const summaryReducer: PaymentReducer = (
         state.stack,
         {
           kind: "PaymentStateSummary",
-          ...action.payload // rptId, verificaResponse, initialAmount
+          rptId: action.payload.rptId,
+          verificaResponse: action.payload.verificaResponse,
+          initialAmount: action.payload.initialAmount
         },
         ["PaymentStateSummary"]
       )

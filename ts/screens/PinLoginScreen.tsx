@@ -65,7 +65,11 @@ class PinLoginScreen extends React.Component<Props> {
   };
 
   private goToPaymentSummary = () => {
-    this.props.dispatch(paymentRequestTransactionSummaryFromBanner());
+    this.props.dispatch(
+      paymentRequestTransactionSummaryFromBanner({
+        kind: "fromBanner"
+      })
+    );
   };
 
   // Method called when the CodeInput is filled
