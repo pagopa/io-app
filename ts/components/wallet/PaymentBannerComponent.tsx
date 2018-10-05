@@ -116,12 +116,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
     : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showSummary: () =>
-    dispatch(
-      paymentRequestTransactionSummaryFromBanner({
-        kind: "fromBanner"
-      })
-    )
+  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });
 
 export default connect(

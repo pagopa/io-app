@@ -42,22 +42,17 @@ export const paymentManualEntry = createStandardAction(
 type PaymentRequestTransactionSummaryFromRptIdPayload = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
-  kind: "fromRptId";
 }>;
 
 // for the first time the screen is being shown (i.e. after the
 // rptId has been passed (from qr code/manual entry/message)
 export const paymentRequestTransactionSummaryFromRptId = createStandardAction(
-  "PAYMENT_REQUEST_TRANSACTION_SUMMARY"
+  "PAYMENT_REQUEST_TRANSACTION_SUMMARY_FROM_RPTID"
 )<PaymentRequestTransactionSummaryFromRptIdPayload>();
 
-type PaymentRequestTransactionSummaryFromBannerPayload = Readonly<{
-  kind: "fromBanner";
-}>;
-
 export const paymentRequestTransactionSummaryFromBanner = createStandardAction(
-  "PAYMENT_REQUEST_TRANSACTION_SUMMARY"
-)<PaymentRequestTransactionSummaryFromBannerPayload>();
+  "PAYMENT_REQUEST_TRANSACTION_SUMMARY_FROM_BANNER"
+)();
 
 // For when the user taps on the payment banner and gets redirected
 // to the summary of the payment.

@@ -239,8 +239,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
     dispatch(
       paymentRequestTransactionSummaryFromRptId({
         rptId,
-        initialAmount,
-        kind: "fromRptId"
+        initialAmount
       })
     ),
   insertDataManually: () => dispatch(paymentRequestManualEntry()),
