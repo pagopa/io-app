@@ -82,7 +82,6 @@ import {
   walletManagementResetLoadingState,
   walletManagementSetLoadingState
 } from "../store/actions/wallet/wallets";
-import { sessionTokenSelector } from "../store/reducers/authentication";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
@@ -376,14 +375,20 @@ function* watchPaymentSaga(
     }
 
     switch (action.type) {
-      case getType(paymentRequestTransactionSummaryFromRptId):
-      case getType(paymentRequestTransactionSummaryFromBanner): {
-        yield fork(
-          showTransactionSummaryHandler,
+      case getType(paymentRequestTransactionSummaryFromRptId): {
+        // handle loading of transaction summary (Verifica) from an RPT ID, this
+        // can be triggered from a message, a QR code or a manual input
+        yield call(
+          showTransactionSummaryFromRptIdHandler,
           action,
-          pagoPaClient,
           getVerificaRpt
         );
+        break;
+      }
+      case getType(paymentRequestTransactionSummaryFromBanner): {
+        // FIXME: not clear what triggers this? it looks like the same summary
+        //        screen is used after the Verifica and the Attiva?
+        yield call(showTransactionSummaryFromBannerHandler);
         break;
       }
       case getType(paymentRequestContinueWithPaymentMethods): {
@@ -442,60 +447,48 @@ function* goBackHandler(_: ActionType<typeof paymentRequestGoBack>) {
   yield put(NavigationActions.back());
 }
 
-function* showTransactionSummaryHandler(
-  action:
-    | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
-    | ActionType<typeof paymentRequestTransactionSummaryFromRptId>,
-  _: PagoPaClient,
+function* showTransactionSummaryFromRptIdHandler(
+  action: ActionType<typeof paymentRequestTransactionSummaryFromRptId>,
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>
 ) {
-  // the user may have gotten here from the QR code,
-  // the manual data entry, from a message OR by
-  // tapping on the payment banner further in the process.
-  // in all cases but the last one, a payload will be
-  // provided, and it will contain the RptId information
-  if (isActionOf(paymentRequestTransactionSummaryFromRptId, action)) {
-    // either the QR code has been read, or the
-    // data has been entered manually. Store the
-    // payload and proceed with showing the
-    // transaction information fetched from the
-    // pagoPA proxy
+  // either the QR code has been read, or the
+  // data has been entered manually. Store the
+  // payload and proceed with showing the
+  // transaction information fetched from the
+  // pagoPA proxy
 
-    // First, navigate to the summary screen
-    yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
+  // First, navigate to the summary screen
+  yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
 
-    const {
-      rptId,
-      initialAmount
-    }: { rptId: RptId; initialAmount: AmountInEuroCents } = action.payload;
+  const { rptId, initialAmount } = action.payload;
 
-    try {
-      yield put(paymentSetLoadingState());
-      const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
-        getVerificaRpt,
-        {
-          rptId: RptIdFromString.encode(rptId)
-        }
-      );
-      if (response !== undefined && response.status === 200) {
-        // response fetched successfully -- store it
-        // and proceed
-        yield put(
-          setPaymentStateToSummary(rptId, initialAmount, response.value)
-        );
-      } else {
-        yield put(paymentFailure(extractNodoError(response)));
+  yield put(paymentSetLoadingState());
+
+  try {
+    const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
+      getVerificaRpt,
+      {
+        rptId: RptIdFromString.encode(rptId)
       }
-    } catch {
-      yield put(paymentFailure("GENERIC_ERROR"));
-    } finally {
-      yield put(paymentResetLoadingState());
+    );
+    if (response !== undefined && response.status === 200) {
+      // Verifica succeeded
+      yield put(setPaymentStateToSummary(rptId, initialAmount, response.value));
+    } else {
+      // Verifica failed
+      yield put(paymentFailure(extractNodoError(response)));
     }
-  } else {
-    // also, show summary screen
-    yield put(setPaymentStateToSummaryWithPaymentId());
-    yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
+  } catch {
+    // Probably a timeout
+    yield put(paymentFailure("GENERIC_ERROR"));
+  } finally {
+    yield put(paymentResetLoadingState());
   }
+}
+
+function* showTransactionSummaryFromBannerHandler() {
+  yield put(setPaymentStateToSummaryWithPaymentId());
+  yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
 }
 
 function* showConfirmPaymentMethod(
@@ -727,9 +720,7 @@ function* continueWithPaymentMethodsHandler(
   /**
    * get data required to fetch a payment id
    */
-  const sessionToken: SessionToken | undefined = yield select(
-    sessionTokenSelector
-  );
+
   const rptId: RptId = yield select(getRptId);
   const paymentContextCode: CodiceContestoPagamento = yield select(
     getPaymentContextCode
@@ -740,7 +731,7 @@ function* continueWithPaymentMethodsHandler(
   // do the "attiva" and then poll until
   // a payment Id shows up
   let paymentId: string | undefined; // tslint:disable-line no-let
-  if (!hasPaymentId && sessionToken !== undefined) {
+  if (!hasPaymentId) {
     try {
       yield put(paymentSetLoadingState());
       const result: Either<NodoErrors, string> = yield call(
