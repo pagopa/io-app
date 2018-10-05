@@ -288,7 +288,12 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   requestPinLogin: () => dispatch(paymentRequestPinLogin()),
   goBack: () => dispatch(paymentRequestGoBack()),
   pickPsp: () => dispatch(paymentRequestPickPsp()),
-  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
+  showSummary: () =>
+    dispatch(
+      paymentRequestTransactionSummaryFromBanner({
+        kind: "fromBanner"
+      })
+    ),
   onCancel: () => dispatch(paymentRequestCancel())
 });
 

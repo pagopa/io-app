@@ -15,7 +15,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 
-import { NullableWallet, PspListResponse } from "../types/pagopa";
+import { NullableWallet, PagopaToken, PspListResponse } from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
 import { TransactionListResponse } from "../types/pagopa";
 import { TransactionResponse } from "../types/pagopa";
@@ -82,7 +82,7 @@ const getSession: MapResponseType<
 };
 
 const getTransactions: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   GetTransactionsUsingGETT,
   200,
@@ -96,7 +96,7 @@ const getTransactions: (
 });
 
 const getWallets: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   GetWalletsUsingGETT,
   200,
@@ -110,7 +110,7 @@ const getWallets: (
 });
 
 const checkPayment: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => CheckPaymentUsingGETT = pagoPaToken => ({
   method: "get",
   url: ({ id }) => `/v1/payments/${id}/actions/check`,
@@ -120,7 +120,7 @@ const checkPayment: (
 });
 
 const getPspList: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   GetPspListUsingGETT,
   200,
@@ -137,7 +137,7 @@ const getPspList: (
 });
 
 const updateWalletPsp: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   UpdateWalletUsingPUTT,
   200,
@@ -155,7 +155,7 @@ const updateWalletPsp: (
 });
 
 const boardCreditCard: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   AddWalletCreditCardUsingPOSTT,
   200,
@@ -173,7 +173,7 @@ const boardCreditCard: (
 });
 
 const postPayment: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   PayUsingPOSTT,
   200,
@@ -191,7 +191,7 @@ const postPayment: (
 });
 
 const boardPay: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => MapResponseType<
   PayCreditCardVerificationUsingPOSTT,
   200,
@@ -211,7 +211,7 @@ const boardPay: (
 });
 
 const deleteWallet: (
-  pagoPaToken: string
+  pagoPaToken: PagopaToken
 ) => DeleteWalletUsingDELETET = pagoPaToken => ({
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
@@ -232,26 +232,26 @@ export function PagoPaClient(
     getSession: (
       wt: string // wallet token
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
-    getWallets: (pagoPaToken: string) =>
+    getWallets: (pagoPaToken: PagopaToken) =>
       createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
-    getTransactions: (pagoPaToken: string) =>
+    getTransactions: (pagoPaToken: PagopaToken) =>
       createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
     checkPayment: (
-      pagoPaToken: string,
+      pagoPaToken: PagopaToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
     ) =>
       createFetchRequestForApi(checkPayment(pagoPaToken), options)({
         id
       }),
     getPspList: (
-      pagoPaToken: string,
+      pagoPaToken: PagopaToken,
       idPayment: TypeofApiParams<GetPspListUsingGETT>["idPayment"]
     ) =>
       createFetchRequestForApi(getPspList(pagoPaToken), options)({
         idPayment
       }),
     updateWalletPsp: (
-      pagoPaToken: string,
+      pagoPaToken: PagopaToken,
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
     ) =>
@@ -260,7 +260,7 @@ export function PagoPaClient(
         walletRequest
       }),
     postPayment: (
-      pagoPaToken: string,
+      pagoPaToken: PagopaToken,
       id: TypeofApiParams<PayUsingPOSTT>["id"],
       payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
     ) =>
@@ -268,12 +268,15 @@ export function PagoPaClient(
         id,
         payRequest
       }),
-    boardCreditCard: (pagoPaToken: string, walletRequest: NullableWallet) =>
+    boardCreditCard: (
+      pagoPaToken: PagopaToken,
+      walletRequest: NullableWallet
+    ) =>
       createFetchRequestForApi(boardCreditCard(pagoPaToken), options)({
         walletRequest: { data: walletRequest }
       }),
     boardPay: (
-      pagoPaToken: string,
+      pagoPaToken: PagopaToken,
       payRequest: TypeofApiParams<
         PayCreditCardVerificationUsingPOSTT
       >["payRequest"]
@@ -282,7 +285,7 @@ export function PagoPaClient(
         payRequest
       }),
     deleteWallet: (
-      pagoPaToken: string,
+      pagoPaToken: PagopaToken,
       id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]
     ) =>
       createFetchRequestForApi(deleteWallet(pagoPaToken), options)({

@@ -225,8 +225,14 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) =>
-    dispatch(paymentRequestTransactionSummaryFromRptId(rptId, amount)),
+  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) =>
+    dispatch(
+      paymentRequestTransactionSummaryFromRptId({
+        rptId,
+        initialAmount,
+        kind: "fromRptId"
+      })
+    ),
   goBack: () => dispatch(paymentRequestGoBack()),
   cancelPayment: () => dispatch(paymentRequestCancel())
 });

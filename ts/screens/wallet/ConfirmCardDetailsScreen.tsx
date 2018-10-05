@@ -155,8 +155,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduMappedDispatchProps => ({
-  addCreditCard: (creditCard: CreditCard, favorite: boolean) =>
-    dispatch(addCreditCardRequest(creditCard, favorite))
+  addCreditCard: (creditCard: CreditCard, setAsFavorite: boolean) =>
+    dispatch(addCreditCardRequest({ creditCard, setAsFavorite }))
 });
 
 export default connect(

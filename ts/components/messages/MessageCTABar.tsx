@@ -128,7 +128,11 @@ class MessageCTABar extends React.PureComponent<Props> {
         const onPaymentCTAPress = () => {
           this.props.dispatch(paymentRequestMessage());
           this.props.dispatch(
-            paymentRequestTransactionSummaryFromRptId(rptId.value, amount.value)
+            paymentRequestTransactionSummaryFromRptId({
+              rptId: rptId.value,
+              initialAmount: amount.value,
+              kind: "fromRptId"
+            })
           );
         };
 

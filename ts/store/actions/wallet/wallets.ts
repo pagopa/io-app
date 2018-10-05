@@ -54,11 +54,14 @@ export const creditCardDataCleanup = createStandardAction(
   "CREDIT_CARD_DATA_CLEANUP"
 )();
 
-export const addCreditCardRequest = createAction(
-  "ADD_CREDIT_CARD_REQUEST",
-  resolve => (creditCard: CreditCard, setAsFavorite: boolean) =>
-    resolve({ creditCard, setAsFavorite })
-);
+type AddCreditCardRequestPayload = Readonly<{
+  creditCard: CreditCard;
+  setAsFavorite: boolean;
+}>;
+
+export const addCreditCardRequest = createStandardAction(
+  "ADD_CREDIT_CARD_REQUEST"
+)<AddCreditCardRequestPayload>();
 
 export const addCreditCardCompleted = createStandardAction(
   "ADD_CREDIT_CARD_COMPLETED"

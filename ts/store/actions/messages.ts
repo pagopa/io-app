@@ -8,9 +8,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { PaymentData } from "../../../definitions/backend/PaymentData";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import { PAYMENT_REQUEST_TRANSACTION_SUMMARY } from "./constants";
 
 export const loadMessageSuccess = createStandardAction("MESSAGE_LOAD_SUCCESS")<
   MessageWithContentPO
@@ -55,10 +53,6 @@ export const navigateToMessageDetails = createStandardAction(
   "NAVIGATE_TO_MESSAGE_DETAILS"
 )<string>();
 
-export const startPayment = createStandardAction(
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY
-)<PaymentData>();
-
 export type MessagesActions =
   | ActionType<typeof loadMessageSuccess>
   | ActionType<typeof loadMessageFailure>
@@ -69,5 +63,4 @@ export type MessagesActions =
   | ActionType<typeof loadMessagesCancel>
   | ActionType<typeof loadMessagesSuccess>
   | ActionType<typeof loadMessagesFailure>
-  | ActionType<typeof navigateToMessageDetails>
-  | ActionType<typeof startPayment>;
+  | ActionType<typeof navigateToMessageDetails>;

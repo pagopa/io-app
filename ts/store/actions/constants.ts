@@ -2,15 +2,6 @@
  * All the actions related constants.
  */
 
-// Wallet
-
-// (payment)
-export const PAYMENT_REQUEST_TRANSACTION_SUMMARY: "PAYMENT_REQUEST_TRANSACTION_SUMMARY" =
-  "PAYMENT_REQUEST_TRANSACTION_SUMMARY";
-// TODO: temporary, until integration with pagoPA occurs @https://www.pivotaltracker.com/story/show/159494746
-export const PAYMENT_UPDATE_PSP_IN_STATE: "PAYMENT_UPDATE_PSP_IN_STATE" =
-  "PAYMENT_UPDATE_PSP_IN_STATE";
-
 // Error
 export const ERROR_CLEAR: "ERROR_CLEAR" = "ERROR_CLEAR";
 

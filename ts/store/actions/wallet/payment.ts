@@ -7,81 +7,19 @@ import {
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PagoPaErrors } from "../../../types/errors";
 import { Psp } from "../../../types/pagopa";
-import {
-  PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  PAYMENT_UPDATE_PSP_IN_STATE
-} from "../constants";
-
-// for the first time the screen is being shown (i.e. after the
-// rptId has been passed (from qr code/manual entry/message)
-type PaymentRequestTransactionSummaryFromRptId = Readonly<{
-  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
-  kind: "fromRptId";
-  payload: {
-    rptId: RptId;
-    initialAmount: AmountInEuroCents;
-  };
-}>;
-
-// for when the user taps on the payment banner and gets redirected
-// to the summary of the payment
-export type PaymentRequestTransactionSummaryFromBanner = Readonly<{
-  type: typeof PAYMENT_REQUEST_TRANSACTION_SUMMARY;
-  kind: "fromBanner";
-}>;
-
-export type PaymentRequestTransactionSummaryActions =
-  | PaymentRequestTransactionSummaryFromRptId
-  | PaymentRequestTransactionSummaryFromBanner;
-
-type PaymentTransactionSummaryActions =
-  | ActionType<typeof paymentTransactionSummaryFromRptId>
-  | ActionType<typeof paymentTransactionSummaryFromBanner>;
 
 export const paymentCompleted = createStandardAction("PAYMENT_COMPLETED")();
 
-// TODO: temporary action until integration with pagoPA occurs
-// @https://www.pivotaltracker.com/story/show/159494746
-type PaymentUpdatePspInState = Readonly<{
-  type: typeof PAYMENT_UPDATE_PSP_IN_STATE;
+type PaymentUpdatePspInStatePayload = Readonly<{
   walletId: number;
-  payload: Psp; // pspId
+  psp: Psp; // pspId
 }>;
 
-/**
- * All possible payment actions
- */
-export type PaymentActions =
-  | ActionType<typeof paymentRequestQrCode>
-  | ActionType<typeof paymentQrCode>
-  | ActionType<typeof paymentRequestManualEntry>
-  | ActionType<typeof paymentRequestMessage>
-  | ActionType<typeof paymentManualEntry>
-  | PaymentRequestTransactionSummaryActions
-  | PaymentTransactionSummaryActions
-  | ActionType<typeof paymentRequestContinueWithPaymentMethods>
-  | ActionType<typeof paymentRequestPickPaymentMethod>
-  | ActionType<typeof paymentPickPaymentMethod>
-  | ActionType<typeof paymentInitialPickPaymentMethod>
-  | ActionType<typeof paymentRequestConfirmPaymentMethod>
-  | ActionType<typeof paymentConfirmPaymentMethod>
-  | ActionType<typeof paymentInitialConfirmPaymentMethod>
-  | ActionType<typeof paymentRequestPickPsp>
-  | ActionType<typeof paymentPickPsp>
-  | ActionType<typeof paymentInitialPickPsp>
-  | ActionType<typeof paymentUpdatePsp>
-  | PaymentUpdatePspInState // TODO: temporary, until integration with pagoPA occurs @https://www.pivotaltracker.com/story/show/159494746
-  | ActionType<typeof paymentRequestCompletion>
-  | ActionType<typeof paymentCompleted>
-  | ActionType<typeof paymentGoBack>
-  | ActionType<typeof paymentRequestGoBack>
-  | ActionType<typeof paymentSetLoadingState>
-  | ActionType<typeof paymentResetLoadingState>
-  | ActionType<typeof paymentCancel>
-  | ActionType<typeof paymentRequestCancel>
-  | ActionType<typeof paymentRequestPinLogin>
-  | ActionType<typeof paymentPinLogin>
-  | ActionType<typeof paymentFailure>;
+// TODO: temporary action until integration with pagoPA occurs
+// @https://www.pivotaltracker.com/story/show/159494746
+export const paymentUpdatePspInState = createStandardAction(
+  "PAYMENT_UPDATE_PSP_IN_STATE"
+)<PaymentUpdatePspInStatePayload>();
 
 export const paymentRequestQrCode = createStandardAction(
   "PAYMENT_REQUEST_QR_CODE"
@@ -101,19 +39,25 @@ export const paymentManualEntry = createStandardAction(
   "PAYMENT_MANUAL_ENTRY"
 )();
 
-export const paymentRequestTransactionSummaryFromRptId = (
-  rptId: RptId,
-  initialAmount: AmountInEuroCents
-): PaymentRequestTransactionSummaryFromRptId => ({
-  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  kind: "fromRptId",
-  payload: { rptId, initialAmount }
-});
+type PaymentRequestTransactionSummaryFromRptIdPayload = Readonly<{
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+  kind: "fromRptId";
+}>;
 
-export const paymentRequestTransactionSummaryFromBanner = (): PaymentRequestTransactionSummaryFromBanner => ({
-  type: PAYMENT_REQUEST_TRANSACTION_SUMMARY,
-  kind: "fromBanner"
-});
+// for the first time the screen is being shown (i.e. after the
+// rptId has been passed (from qr code/manual entry/message)
+export const paymentRequestTransactionSummaryFromRptId = createStandardAction(
+  "PAYMENT_REQUEST_TRANSACTION_SUMMARY"
+)<PaymentRequestTransactionSummaryFromRptIdPayload>();
+
+type PaymentRequestTransactionSummaryFromBannerPayload = Readonly<{
+  kind: "fromBanner";
+}>;
+
+export const paymentRequestTransactionSummaryFromBanner = createStandardAction(
+  "PAYMENT_REQUEST_TRANSACTION_SUMMARY"
+)<PaymentRequestTransactionSummaryFromBannerPayload>();
 
 // For when the user taps on the payment banner and gets redirected
 // to the summary of the payment.
@@ -126,6 +70,8 @@ export const paymentTransactionSummaryFromRptId = createAction(
   ) => resolve({ rptId, verificaResponse, initialAmount })
 );
 
+// for when the user taps on the payment banner and gets redirected
+// to the summary of the payment
 export const paymentTransactionSummaryFromBanner = createStandardAction(
   "PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER"
 )();
@@ -142,15 +88,13 @@ export const paymentPickPaymentMethod = createStandardAction(
   "PAYMENT_PICK_PAYMENT_METHOD"
 )();
 
-export const paymentInitialPickPaymentMethod = createAction(
-  "PAYMENT_INITIAL_PICK_PAYMENT_METHOD",
-  resolve => (paymentId: string) => resolve(paymentId)
-);
+export const paymentInitialPickPaymentMethod = createStandardAction(
+  "PAYMENT_INITIAL_PICK_PAYMENT_METHOD"
+)<string>();
 
-export const paymentRequestConfirmPaymentMethod = createAction(
-  "PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD",
-  resolve => (walletId: number) => resolve(walletId)
-);
+export const paymentRequestConfirmPaymentMethod = createStandardAction(
+  "PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD"
+)<number>();
 
 export const paymentConfirmPaymentMethod = createAction(
   "PAYMENT_CONFIRM_PAYMENT_METHOD",
@@ -186,10 +130,9 @@ export const paymentPickPsp = createAction(
     resolve({ selectedPaymentMethod: walletId, pspList })
 );
 
-export const paymentUpdatePsp = createAction(
-  "PAYMENT_UPDATE_PSP",
-  resolve => (pspId: number) => resolve(pspId)
-);
+export const paymentUpdatePsp = createStandardAction("PAYMENT_UPDATE_PSP")<
+  number
+>();
 
 export const paymentRequestCompletion = createStandardAction(
   "PAYMENT_REQUEST_COMPLETION"
@@ -221,7 +164,41 @@ export const paymentRequestPinLogin = createStandardAction(
 
 export const paymentPinLogin = createStandardAction("PAYMENT_PIN_LOGIN")();
 
-export const paymentFailure = createAction(
-  "PAYMENT_FAILURE",
-  resolve => (error: PagoPaErrors) => resolve(error)
-);
+export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
+  PagoPaErrors
+>();
+
+/**
+ * All possible payment actions
+ */
+export type PaymentActions =
+  | ActionType<typeof paymentRequestQrCode>
+  | ActionType<typeof paymentQrCode>
+  | ActionType<typeof paymentRequestManualEntry>
+  | ActionType<typeof paymentRequestMessage>
+  | ActionType<typeof paymentManualEntry>
+  | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
+  | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
+  | ActionType<typeof paymentRequestContinueWithPaymentMethods>
+  | ActionType<typeof paymentRequestPickPaymentMethod>
+  | ActionType<typeof paymentPickPaymentMethod>
+  | ActionType<typeof paymentInitialPickPaymentMethod>
+  | ActionType<typeof paymentRequestConfirmPaymentMethod>
+  | ActionType<typeof paymentConfirmPaymentMethod>
+  | ActionType<typeof paymentInitialConfirmPaymentMethod>
+  | ActionType<typeof paymentRequestPickPsp>
+  | ActionType<typeof paymentPickPsp>
+  | ActionType<typeof paymentInitialPickPsp>
+  | ActionType<typeof paymentUpdatePsp>
+  | ActionType<typeof paymentUpdatePspInState> // TODO: temporary, until integration with pagoPA occurs @https://www.pivotaltracker.com/story/show/159494746
+  | ActionType<typeof paymentRequestCompletion>
+  | ActionType<typeof paymentCompleted>
+  | ActionType<typeof paymentGoBack>
+  | ActionType<typeof paymentRequestGoBack>
+  | ActionType<typeof paymentSetLoadingState>
+  | ActionType<typeof paymentResetLoadingState>
+  | ActionType<typeof paymentCancel>
+  | ActionType<typeof paymentRequestCancel>
+  | ActionType<typeof paymentRequestPinLogin>
+  | ActionType<typeof paymentPinLogin>
+  | ActionType<typeof paymentFailure>;

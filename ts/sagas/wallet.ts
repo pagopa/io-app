@@ -9,7 +9,6 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
-  IResponseType,
   TypeofApiCall,
   TypeofApiResponse
 } from "italia-ts-commons/lib/requests";
@@ -40,8 +39,6 @@ import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 
-import { logoutSuccess } from "../store/actions/authentication";
-import { storePagoPaToken } from "../store/actions/wallet/pagopa";
 import {
   paymentCompleted,
   paymentConfirmPaymentMethod,
@@ -63,8 +60,8 @@ import {
   paymentRequestPickPsp,
   paymentRequestPinLogin,
   paymentRequestQrCode,
-  PaymentRequestTransactionSummaryActions,
   paymentRequestTransactionSummaryFromBanner,
+  paymentRequestTransactionSummaryFromRptId,
   paymentResetLoadingState,
   paymentSetLoadingState,
   paymentTransactionSummaryFromBanner,
@@ -121,8 +118,8 @@ import {
   NodoErrors
 } from "../types/errors";
 import {
-  CreditCard,
   NullableWallet,
+  PagopaToken,
   PayRequest,
   Psp,
   Wallet
@@ -137,75 +134,14 @@ import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 
-// allow refreshing token this number of times
-const MAX_TOKEN_REFRESHES = 2;
+import {
+  fetchAndStorePagoPaToken,
+  fetchWithTokenRefresh
+} from "./wallet/utils";
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
 };
-
-// this function tries to carry out the provided
-// request, and refreshes the pagoPA token if a 401
-// is returned. Upon refreshing, it tries to
-// re-fetch the contents again for a maximum of
-// MAX_TOKEN_REFRESHES times.
-// If the request is successful (i.e. it does not
-// return a 401), the successful token is returned
-// along with the response (the caller will then
-// decide what to do with it)
-function* fetchWithTokenRefresh<T>(
-  request: (
-    pagoPaToken: string
-  ) => Promise<IResponseType<401, undefined> | undefined | T>,
-  pagoPaClient: PagoPaClient,
-  retries: number = MAX_TOKEN_REFRESHES
-): Iterator<T | undefined | Effect> {
-  if (retries === 0) {
-    return undefined;
-  }
-  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
-  const response: SagaCallReturnType<typeof request> = yield call(
-    request,
-    pagoPaToken.getOrElse("") // empty token -> pagoPA returns a 401 and the app fetches a new one
-  );
-  if (response !== undefined) {
-    // BEWARE: since there is not an easy way to restrict T to an arbitrary union
-    // of IResponseType(s), we kind of take a leap of faith here and assume that T
-    // is always a union of IResponseType(s) together with undefined.
-    if ((response as any).status !== 401) {
-      // return code is not 401, the token
-      // has been "accepted" (the caller will
-      // then handle other error codes)
-      return response;
-    } else {
-      yield call(fetchAndStorePagoPaToken, pagoPaClient);
-
-      // and retry fetching the result
-      return yield call(
-        fetchWithTokenRefresh,
-        request,
-        pagoPaClient,
-        retries - 1
-      );
-    }
-  }
-  return undefined;
-}
-
-function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
-  const refreshTokenResponse: SagaCallReturnType<
-    typeof pagoPaClient.getSession
-  > = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
-  if (
-    refreshTokenResponse !== undefined &&
-    refreshTokenResponse.status === 200
-  ) {
-    // token fetched successfully, store it
-    yield put(
-      storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
-    );
-  }
-}
 
 function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const response:
@@ -240,9 +176,8 @@ function* fetchWallets(
 }
 
 function* addCreditCard(
-  creditCard: CreditCard,
-  _: boolean, // should the card be set as favorite?
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof addCreditCardRequest>
 ): Iterator<Effect> {
   try {
     yield put(walletManagementSetLoadingState());
@@ -250,11 +185,11 @@ function* addCreditCard(
       idWallet: null,
       type: "CREDIT_CARD",
       favourite: null,
-      creditCard,
+      creditCard: action.payload.creditCard,
       psp: undefined
     };
     // 1st call: boarding credit card
-    const boardCreditCard = (token: string) =>
+    const boardCreditCard = (token: PagopaToken) =>
       pagoPaClient.boardCreditCard(token, wallet);
     const responseBoardCC: SagaCallReturnType<
       typeof boardCreditCard
@@ -279,7 +214,7 @@ function* addCreditCard(
           : undefined
       }
     };
-    const boardPay = (token: string) =>
+    const boardPay = (token: PagopaToken) =>
       pagoPaClient.boardPay(token, payRequest);
     const responseBoardPay: SagaCallReturnType<typeof boardPay> = yield call(
       fetchWithTokenRefresh,
@@ -293,7 +228,7 @@ function* addCreditCard(
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
-    const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+    const pagoPaToken: Option<PagopaToken> = yield select(getPagoPaToken);
     if (url === undefined || pagoPaToken.isNone()) {
       // pagoPA is *always* supposed to pass a URL
       // for the app to open. if it is not there,
@@ -364,13 +299,13 @@ function* addCreditCard(
 }
 
 function* deleteWallet(
-  walletId: number,
-  pagoPaClient: PagoPaClient
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof deleteWalletRequest>
 ): Iterator<Effect> {
   try {
     yield put(walletManagementSetLoadingState());
-    const apiDeleteWallet = (token: string) =>
-      pagoPaClient.deleteWallet(token, walletId);
+    const apiDeleteWallet = (token: PagopaToken) =>
+      pagoPaClient.deleteWallet(token, action.payload);
     const response: SagaCallReturnType<typeof apiDeleteWallet> = yield call(
       fetchWithTokenRefresh,
       apiDeleteWallet,
@@ -436,6 +371,9 @@ function* paymentSagaFromMessage(
   );
 }
 
+/**
+ * This saga is forked at the beginning of a payment flow
+ */
 function* watchPaymentSaga(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
@@ -471,7 +409,9 @@ function* watchPaymentSaga(
       getType(paymentRequestPinLogin),
       getType(paymentCompleted)
     ]);
+
     if (isActionOf(paymentCompleted, action)) {
+      // On payment completed, stop listening for actions
       break;
     }
 
@@ -565,7 +505,9 @@ function* enterDataManuallyHandler(
 }
 
 function* showTransactionSummaryHandler(
-  action: PaymentRequestTransactionSummaryActions,
+  action:
+    | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
+    | ActionType<typeof paymentRequestTransactionSummaryFromRptId>,
   _: PagoPaClient,
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>
 ) {
@@ -574,7 +516,7 @@ function* showTransactionSummaryHandler(
   // tapping on the payment banner further in the process.
   // in all cases but the last one, a payload will be
   // provided, and it will contain the RptId information
-  if (action.kind === "fromRptId") {
+  if (action.payload.kind === "fromRptId") {
     // either the QR code has been read, or the
     // data has been entered manually. Store the
     // payload and proceed with showing the
@@ -680,7 +622,7 @@ function* fetchPspList(
 
   try {
     yield put(paymentSetLoadingState());
-    const apiGetPspList = (pagoPaToken: string) =>
+    const apiGetPspList = (pagoPaToken: PagopaToken) =>
       pagoPaClient.getPspList(pagoPaToken, paymentId);
     const response: SagaCallReturnType<typeof apiGetPspList> = yield call(
       fetchWithTokenRefresh,
@@ -805,7 +747,7 @@ function* checkPayment(
 ): Iterator<Effect> {
   try {
     yield put(paymentSetLoadingState());
-    const apiCheckPayment = (token: string) =>
+    const apiCheckPayment = (token: PagopaToken) =>
       pagoPaClient.checkPayment(token, paymentId);
     const response: SagaCallReturnType<typeof apiCheckPayment> = yield call(
       fetchWithTokenRefresh,
@@ -943,7 +885,7 @@ function* updatePspHandler(
 
   try {
     yield put(paymentSetLoadingState());
-    const apiUpdateWalletPsp = (pagoPaToken: string) =>
+    const apiUpdateWalletPsp = (pagoPaToken: PagopaToken) =>
       pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload);
     const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
       fetchWithTokenRefresh,
@@ -993,7 +935,7 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
 
   try {
     yield put(paymentSetLoadingState());
-    const apiPostPayment = (pagoPaToken: string) =>
+    const apiPostPayment = (pagoPaToken: PagopaToken) =>
       pagoPaClient.postPayment(pagoPaToken, paymentId, {
         data: { tipo: "web", idWallet }
       });
@@ -1045,26 +987,40 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
   }
 }
 
+/**
+ * Main saga entrypoint
+ */
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   pagoPaClient: PagoPaClient,
   storedPin: PinString
 ): Iterator<Effect> {
+  // Builds a backend client specifically for the pagopa-proxy endpoints that
+  // need a fetch instance that doesn't retry requests and have longer timeout
   const backendClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
     pagopaFetch()
   );
 
-  // backend client for polling for paymentId
+  // Backend client for polling for paymentId - uses an instance of fetch that
+  // considers a 404 as a transient error and retries with a constant delay
   const pollingBackendClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
     constantPollingFetch(MAX_RETRIES_POLLING, DELAY_BETWEEN_RETRIES_MS)
   );
 
+  // First thing we do is to ask the pagopa REST APIs for a token we can use
+  // to make requests - pagopa REST APIs has their own session.
+  // It's fine if this request fails, as all subsequent API calls are wrapped
+  // with fetchWithTokenRefresh().
+  // Note that fetchAndStorePagoPaToken has a side effect of emitting an action
+  // that stores the token in the Redux store.
+  // TODO: document this flow
   yield call(fetchAndStorePagoPaToken, pagoPaClient);
 
+  // Start listening for actions that start the payment flow from a QR code.
   yield takeLatest(
     getType(paymentRequestQrCode),
     paymentSagaFromQrCode,
@@ -1073,6 +1029,7 @@ export function* watchWalletSaga(
     pollingBackendClient.getPaymentId,
     storedPin
   );
+  // Start listening for actions that start the payment flow from a message.
   yield takeLatest(
     getType(paymentRequestMessage),
     paymentSagaFromMessage,
@@ -1082,45 +1039,19 @@ export function* watchWalletSaga(
     storedPin
   );
 
-  while (true) {
-    const action:
-      | ActionType<typeof fetchTransactionsRequest>
-      | ActionType<typeof fetchWalletsRequest>
-      | ActionType<typeof addCreditCardRequest>
-      | ActionType<typeof logoutSuccess>
-      | ActionType<typeof paymentRequestQrCode>
-      | ActionType<typeof paymentRequestMessage>
-      | ActionType<typeof deleteWalletRequest> = yield take([
-      getType(fetchTransactionsRequest),
-      getType(fetchWalletsRequest),
-      getType(logoutSuccess),
-      getType(paymentRequestQrCode),
-      getType(paymentRequestMessage),
-      getType(addCreditCardRequest),
-      getType(deleteWalletRequest)
-    ]);
+  // Start listening for requests to fetch the transaction history
+  yield takeLatest(
+    getType(fetchTransactionsRequest),
+    fetchTransactions,
+    pagoPaClient
+  );
 
-    if (isActionOf(fetchTransactionsRequest, action)) {
-      yield fork(fetchTransactions, pagoPaClient);
-    }
-    if (isActionOf(fetchWalletsRequest, action)) {
-      yield fork(fetchWallets, pagoPaClient);
-    }
-    if (isActionOf(addCreditCardRequest, action)) {
-      yield fork(
-        addCreditCard,
-        action.payload.creditCard,
-        action.payload.setAsFavorite, // should the card be set as favorite?
-        pagoPaClient
-      );
-    }
-    if (isActionOf(deleteWalletRequest, action)) {
-      yield fork(deleteWallet, action.payload, pagoPaClient);
-    }
-    // if the user logs out, go back to waiting
-    // for a WALLET_TOKEN_LOAD_SUCCESS action
-    if (isActionOf(logoutSuccess, action)) {
-      break;
-    }
-  }
+  // Start listening for requests to fetch the wallets from the pagopa profile
+  yield takeLatest(getType(fetchWalletsRequest), fetchWallets, pagoPaClient);
+
+  // Start listening for requests to add a credit card to the wallets
+  yield takeLatest(getType(addCreditCardRequest), addCreditCard, pagoPaClient);
+
+  // Start listening for requests to delete a wallet
+  yield takeLatest(getType(deleteWalletRequest), deleteWallet, pagoPaClient);
 }
