@@ -3,6 +3,7 @@ import { IResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select } from "redux-saga/effects";
 
 import { PagoPaClient } from "../../api/pagopa";
+import { PagopaToken } from "../../types/pagopa";
 
 import { storePagoPaToken } from "../../store/actions/wallet/pagopa";
 import { getPagoPaToken } from "../../store/reducers/wallet/pagopa";
@@ -38,7 +39,7 @@ export function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
 // decide what to do with it)
 export function* fetchWithTokenRefresh<T>(
   request: (
-    pagoPaToken: string
+    pagoPaToken: PagopaToken
   ) => Promise<IResponseType<401, undefined> | undefined | T>,
   pagoPaClient: PagoPaClient,
   retries: number = MAX_TOKEN_REFRESHES
@@ -46,10 +47,11 @@ export function* fetchWithTokenRefresh<T>(
   if (retries === 0) {
     return undefined;
   }
-  const pagoPaToken: Option<string> = yield select(getPagoPaToken);
+  const pagoPaToken: Option<PagopaToken> = yield select(getPagoPaToken);
   const response: SagaCallReturnType<typeof request> = yield call(
     request,
-    pagoPaToken.getOrElse("") // empty token -> pagoPA returns a 401 and the app fetches a new one
+    pagoPaToken.getOrElse("" as PagopaToken) // empty token -> pagoPA returns a 401 and the app fetches a new one
+    // FIXME: ^^^^^^^^^ why do the request anyway if we already know that it will fail????
   );
   if (response !== undefined) {
     // BEWARE: since there is not an easy way to restrict T to an arbitrary union

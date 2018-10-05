@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import { tag } from "italia-ts-commons/lib/types";
 
 import {
   ReplaceProp1,
@@ -167,9 +168,25 @@ export const WalletListResponse = repP(
 export type WalletListResponse = t.TypeOf<typeof WalletListResponse>;
 
 /**
+ * A tagged string type for the PagoPA SessionToken
+ */
+
+interface IPagopaTokenTag {
+  kind: "IPagopaTokenTag";
+}
+
+export const PagopaToken = tag<IPagopaTokenTag>()(t.string);
+export type PagopaToken = t.TypeOf<typeof PagopaToken>;
+
+/**
  * A Session
  */
-export const Session = reqP(SessionPagoPA, "sessionToken", "Session");
+export const Session = repP(
+  reqP(SessionPagoPA, "sessionToken"),
+  "sessionToken",
+  PagopaToken,
+  "Session"
+);
 
 export type Session = t.TypeOf<typeof Session>;
 

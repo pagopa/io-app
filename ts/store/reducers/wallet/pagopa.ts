@@ -1,12 +1,14 @@
 import { none, Option } from "fp-ts/lib/Option";
 import { isActionOf } from "typesafe-actions";
 
+import { PagopaToken } from "../../../types/pagopa";
+
 import { Action } from "../../actions/types";
 import { storePagoPaToken } from "../../actions/wallet/pagopa";
 import { GlobalState } from "../types";
 
 export type PagoPaState = Readonly<{
-  token: Option<string>;
+  token: Option<PagopaToken>;
 }>;
 
 const PAGOPA_INITIAL_STATE = {

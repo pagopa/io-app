@@ -121,6 +121,7 @@ import {
 import {
   CreditCard,
   NullableWallet,
+  PagopaToken,
   PayRequest,
   Psp,
   Wallet
@@ -191,7 +192,7 @@ function* addCreditCard(
       psp: undefined
     };
     // 1st call: boarding credit card
-    const boardCreditCard = (token: string) =>
+    const boardCreditCard = (token: PagopaToken) =>
       pagoPaClient.boardCreditCard(token, wallet);
     const responseBoardCC: SagaCallReturnType<
       typeof boardCreditCard
@@ -216,7 +217,7 @@ function* addCreditCard(
           : undefined
       }
     };
-    const boardPay = (token: string) =>
+    const boardPay = (token: PagopaToken) =>
       pagoPaClient.boardPay(token, payRequest);
     const responseBoardPay: SagaCallReturnType<typeof boardPay> = yield call(
       fetchWithTokenRefresh,
@@ -306,7 +307,7 @@ function* deleteWallet(
 ): Iterator<Effect> {
   try {
     yield put(walletManagementSetLoadingState());
-    const apiDeleteWallet = (token: string) =>
+    const apiDeleteWallet = (token: PagopaToken) =>
       pagoPaClient.deleteWallet(token, walletId);
     const response: SagaCallReturnType<typeof apiDeleteWallet> = yield call(
       fetchWithTokenRefresh,
@@ -617,7 +618,7 @@ function* fetchPspList(
 
   try {
     yield put(paymentSetLoadingState());
-    const apiGetPspList = (pagoPaToken: string) =>
+    const apiGetPspList = (pagoPaToken: PagopaToken) =>
       pagoPaClient.getPspList(pagoPaToken, paymentId);
     const response: SagaCallReturnType<typeof apiGetPspList> = yield call(
       fetchWithTokenRefresh,
@@ -742,7 +743,7 @@ function* checkPayment(
 ): Iterator<Effect> {
   try {
     yield put(paymentSetLoadingState());
-    const apiCheckPayment = (token: string) =>
+    const apiCheckPayment = (token: PagopaToken) =>
       pagoPaClient.checkPayment(token, paymentId);
     const response: SagaCallReturnType<typeof apiCheckPayment> = yield call(
       fetchWithTokenRefresh,
@@ -880,7 +881,7 @@ function* updatePspHandler(
 
   try {
     yield put(paymentSetLoadingState());
-    const apiUpdateWalletPsp = (pagoPaToken: string) =>
+    const apiUpdateWalletPsp = (pagoPaToken: PagopaToken) =>
       pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload);
     const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
       fetchWithTokenRefresh,
@@ -930,7 +931,7 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
 
   try {
     yield put(paymentSetLoadingState());
-    const apiPostPayment = (pagoPaToken: string) =>
+    const apiPostPayment = (pagoPaToken: PagopaToken) =>
       pagoPaClient.postPayment(pagoPaToken, paymentId, {
         data: { tipo: "web", idWallet }
       });
