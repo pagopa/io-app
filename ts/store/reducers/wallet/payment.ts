@@ -5,7 +5,7 @@ import {
   fromArray as toNonEmptyArray,
   NonEmptyArray
 } from "fp-ts/lib/NonEmptyArray";
-import { fromNullable, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
@@ -234,28 +234,38 @@ export const getPaymentStep = (state: GlobalState) =>
     ? state.wallet.payment.stack.head.kind
     : "PaymentStateNoState";
 
-export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
-  state.wallet.payment.stack.head.rptId;
+export const getRptId = (state: GlobalState): RptId | undefined =>
+  isGlobalStateWithVerificaResponse(state)
+    ? state.wallet.payment.stack.head.rptId
+    : undefined;
 
 export const getPaymentContextCode = (
-  state: GlobalStateWithVerificaResponse
-): CodiceContestoPagamento =>
-  state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento;
+  state: GlobalState
+): CodiceContestoPagamento | undefined =>
+  isGlobalStateWithVerificaResponse(state)
+    ? state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento
+    : undefined;
 
 export const getInitialAmount = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents => state.wallet.payment.stack.head.initialAmount;
 
-export const getSelectedPaymentMethod = (
-  state: GlobalStateWithSelectedPaymentMethod
-): number => state.wallet.payment.stack.head.selectedPaymentMethod;
+export const getSelectedPaymentMethod = (state: GlobalState): Option<number> =>
+  isGlobalStateWithSelectedPaymentMethod(state)
+    ? some(state.wallet.payment.stack.head.selectedPaymentMethod)
+    : none;
 
 export const getCurrentAmount = (
-  state: GlobalStateWithVerificaResponse
-): AmountInEuroCents =>
-  AmountToImporto.encode(
-    state.wallet.payment.stack.head.verificaResponse.importoSingoloVersamento
-  );
+  state: GlobalState
+): Option<AmountInEuroCents> =>
+  isGlobalStateWithVerificaResponse(state)
+    ? some(
+        AmountToImporto.encode(
+          state.wallet.payment.stack.head.verificaResponse
+            .importoSingoloVersamento
+        )
+      )
+    : none;
 
 export const getPaymentRecipient = (
   state: GlobalStateWithVerificaResponse
@@ -271,18 +281,21 @@ export const getPaymentReason = (
     state.wallet.payment.stack.head.verificaResponse.causaleVersamento
   );
 
-export const getPspList = (
-  state: GlobalStateWithSelectedPaymentMethod
-): ReadonlyArray<Psp> => state.wallet.payment.stack.head.pspList;
+export const getPspList = (state: GlobalState): Option<ReadonlyArray<Psp>> =>
+  isGlobalStateWithSelectedPaymentMethod(state)
+    ? some(state.wallet.payment.stack.head.pspList)
+    : none;
 
-export const getPaymentId = (state: GlobalStateWithPaymentId): string =>
-  state.wallet.payment.stack.head.paymentId;
+export const getPaymentId = (state: GlobalState): Option<string> =>
+  isGlobalStateWithPaymentId(state)
+    ? some(state.wallet.payment.stack.head.paymentId)
+    : none;
 
 export const selectedPaymentMethodSelector: (
   state: GlobalStateWithSelectedPaymentMethod
 ) => Wallet = createSelector(
   (state: GlobalStateWithSelectedPaymentMethod) =>
-    some(getSelectedPaymentMethod(state)),
+    getSelectedPaymentMethod(state),
   getWallets,
   (id: Option<number>, wallets: IndexedById<Wallet>): Wallet =>
     getWalletFromId(id, wallets).getOrElse(UNKNOWN_CARD)

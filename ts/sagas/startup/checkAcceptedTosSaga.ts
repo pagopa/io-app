@@ -8,15 +8,16 @@ import {
   tosAcceptSuccess
 } from "../../store/actions/onboarding";
 import { isTosAcceptedSelector } from "../../store/reducers/onboarding";
+import { GlobalState } from "../../store/reducers/types";
 
 export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
   // From the state we check whether the user has already accepted the ToS
   // FIXME: ToS can change over time, this step should eventually check whether
   //        the user has accepted the latest version of the ToS and store the
   //        information in the user profile.
-  const isTosAccepted: ReturnType<typeof isTosAcceptedSelector> = yield select(
-    isTosAcceptedSelector
-  );
+  const isTosAccepted: ReturnType<typeof isTosAcceptedSelector> = yield select<
+    GlobalState
+  >(isTosAcceptedSelector);
 
   if (!isTosAccepted) {
     // Navigate to the TosScreen

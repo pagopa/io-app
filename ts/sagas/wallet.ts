@@ -82,6 +82,7 @@ import {
   walletManagementResetLoadingState,
   walletManagementSetLoadingState
 } from "../store/actions/wallet/wallets";
+import { GlobalState } from "../store/reducers/types";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import {
   getCurrentAmount,
@@ -220,7 +221,9 @@ function* addCreditCard(
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
-    const pagoPaToken: Option<PagopaToken> = yield select(getPagoPaToken);
+    const pagoPaToken: Option<PagopaToken> = yield select<GlobalState>(
+      getPagoPaToken
+    );
     if (url === undefined || pagoPaToken.isNone()) {
       // pagoPA is *always* supposed to pass a URL
       // for the app to open. if it is not there,
@@ -258,7 +261,7 @@ function* addCreditCard(
   // If so, the card has been added.
   // TODO: find a way of finding out the result of the
   // request from the URL
-  const currentCount: number = yield select(walletCountSelector);
+  const currentCount: number = yield select<GlobalState>(walletCountSelector);
   const updatedCount: number | undefined = yield call(
     fetchWallets,
     pagoPaClient
@@ -543,7 +546,7 @@ function* fetchPspList(
   // error about ignoring the return value of a call()
   let paymentId: string; // tslint:disable-line: no-let
   if (paymentIdOrUndefined === undefined) {
-    const tmp: string = yield select(getPaymentId);
+    const tmp: Option<string> = yield select<GlobalState>(getPaymentId);
     paymentId = tmp;
   } else {
     paymentId = paymentIdOrUndefined;
@@ -579,7 +582,9 @@ function* showWalletOrSelectPsp(
   idWallet: number,
   paymentIdOrUndefined?: string
 ): Iterator<Effect> {
-  const wallet: Option<Wallet> = yield select(specificWalletSelector(idWallet));
+  const wallet: Option<Wallet> = yield select<GlobalState>(
+    specificWalletSelector(idWallet)
+  );
   if (wallet.isSome()) {
     const pspList: ReadonlyArray<Psp> = yield call(
       fetchPspList,
@@ -714,18 +719,24 @@ function* continueWithPaymentMethodsHandler(
   // Otherwise, show a list of payment methods available
   // TODO: if no payment method is available (or if the
   // user chooses to do so), allow adding a new one.
-  const favoriteWallet: Option<number> = yield select(getFavoriteWalletId);
-  const hasPaymentId: boolean = yield select(isGlobalStateWithPaymentId);
+  const favoriteWallet: Option<number> = yield select<GlobalState>(
+    getFavoriteWalletId
+  );
+  const hasPaymentId: boolean = yield select<GlobalState>(
+    isGlobalStateWithPaymentId
+  );
 
   /**
    * get data required to fetch a payment id
    */
 
-  const rptId: RptId = yield select(getRptId);
-  const paymentContextCode: CodiceContestoPagamento = yield select(
-    getPaymentContextCode
+  const rptId: RptId | undefined = yield select<GlobalState>(getRptId);
+  const paymentContextCode: CodiceContestoPagamento | undefined = yield select<
+    GlobalState
+  >(getPaymentContextCode);
+  const amount: Option<AmountInEuroCents> = yield select<GlobalState>(
+    getCurrentAmount
   );
-  const amount: AmountInEuroCents = yield select(getCurrentAmount);
 
   // if the payment Id not available yet,
   // do the "attiva" and then poll until
@@ -796,8 +807,12 @@ function* pickPaymentMethodHandler(paymentId?: string) {
 }
 
 function* pickPspHandler() {
-  const walletId: number = yield select(getSelectedPaymentMethod);
-  const pspList: ReadonlyArray<Psp> = yield select(getPspList);
+  const walletId: Option<number> = yield select<GlobalState>(
+    getSelectedPaymentMethod
+  );
+  const pspList: Option<ReadonlyArray<Psp>> = yield select<GlobalState>(
+    getPspList
+  );
 
   yield put(setPaymentStateToPickPsp(walletId, pspList));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
@@ -810,7 +825,9 @@ function* updatePspHandler(
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
-  const walletId: number = yield select(getSelectedPaymentMethod);
+  const walletId: Option<number> = yield select<GlobalState>(
+    getSelectedPaymentMethod
+  );
 
   try {
     yield put(paymentSetLoadingState());
@@ -859,8 +876,10 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
 
-  const idWallet: number = yield select(getSelectedPaymentMethod);
-  const paymentId: string = yield select(getPaymentId);
+  const idWallet: Option<number> = yield select<GlobalState>(
+    getSelectedPaymentMethod
+  );
+  const paymentId: Option<string> = yield select<GlobalState>(getPaymentId);
 
   try {
     yield put(paymentSetLoadingState());
