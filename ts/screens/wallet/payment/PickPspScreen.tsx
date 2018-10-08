@@ -184,21 +184,39 @@ class PickPspScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  error: createErrorSelector(["PAYMENT"])(state),
-  isLoading: createLoadingSelector(["PAYMENT"])(state),
-  ...(getPaymentStep(state) === "PaymentStatePickPsp" &&
-  isGlobalStateWithSelectedPaymentMethod(state)
-    ? {
+function mapStateToProps() {
+  const paymetErrorSelector = createErrorSelector(["PAYMENT"]);
+  const paymentLoadingSelector = createLoadingSelector(["PAYMENT"]);
+  return (state: GlobalState): ReduxMappedStateProps => {
+    const error = paymetErrorSelector(state);
+    const isLoading = paymentLoadingSelector(state);
+
+    if (
+      getPaymentStep(state) === "PaymentStatePickPsp" &&
+      isGlobalStateWithSelectedPaymentMethod(state)
+    ) {
+      // The PaymentManager returns a PSP entry for each supported language, so
+      // we need to skip PSPs that have the language different from the current
+      // locale.
+      const locale = I18n.locale.slice(0, 2);
+      const pspList = getPspListFromGlobalStateWithSelectedPaymentMethod(
+        state
+      ).filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
+      return {
         valid: true,
-        pspList: getPspListFromGlobalStateWithSelectedPaymentMethod(state),
+        error,
+        isLoading,
+        pspList,
         wallet: getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(
           state
         ),
         paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state)
-      }
-    : { valid: false })
-});
+      };
+    } else {
+      return { valid: false, error, isLoading };
+    }
+  };
+}
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPsp: (pspId: number, wallet: Wallet, paymentId: string) =>
@@ -208,6 +226,6 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps(),
   mapDispatchToProps
 )(withErrorModal(withLoadingSpinner(PickPspScreen, {}), mapErrorCodeToMessage));
