@@ -647,6 +647,9 @@ function* checkPayment(
 ): Iterator<Effect> {
   try {
     yield put(paymentSetLoadingState());
+    // FIXME: we should not use default pagopa client for checkpayment, need to
+    //        a client that doesn't retry on failure!!! checkpayment is NOT
+    //        idempotent, the 2nd time it will error!
     const apiCheckPayment = (token: PagopaToken) =>
       pagoPaClient.checkPayment(token, paymentId);
     const response: SagaCallReturnType<typeof apiCheckPayment> = yield call(
@@ -654,7 +657,13 @@ function* checkPayment(
       apiCheckPayment,
       pagoPaClient
     );
-    if (response === undefined || response.status !== 200) {
+    if (
+      response === undefined ||
+      (response.status !== 200 && (response.status as number) !== 422)
+    ) {
+      // TODO: remove the cast of response.status to number as soon as the
+      //       paymentmanager specs include the 422 status.
+      //       https://www.pivotaltracker.com/story/show/161053093
       yield put(
         paymentFailure(
           extractPaymentManagerError(
