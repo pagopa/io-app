@@ -7,13 +7,11 @@ import {
 } from "fp-ts/lib/NonEmptyArray";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
-import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { Action } from "../../actions/types";
 import {
@@ -32,7 +30,6 @@ import {
   setPaymentStateToSummary,
   setPaymentStateToSummaryWithPaymentId
 } from "../../actions/wallet/payment";
-import { IndexedById } from "../../helpers/indexer";
 import {
   GlobalState,
   GlobalStateWithPaymentId,
@@ -40,7 +37,6 @@ import {
   GlobalStateWithVerificaResponse
 } from "../types";
 import { WalletState } from "./index";
-import { getWalletFromId, getWallets } from "./wallets";
 
 // The following are possible states, identified
 // by a string (kind), and with specific
@@ -89,7 +85,7 @@ type PaymentStateConfirmPaymentMethod = Readonly<{
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
+  selectedPaymentMethod: Wallet;
   pspList: ReadonlyArray<Psp>;
   paymentId: string;
 }>;
@@ -99,7 +95,7 @@ type PaymentStatePickPsp = Readonly<{
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
+  selectedPaymentMethod: Wallet;
   pspList: ReadonlyArray<Psp>;
   paymentId: string;
 }>;
@@ -109,7 +105,7 @@ type PaymentStatePinLogin = Readonly<{
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
+  selectedPaymentMethod: Wallet;
   pspList: ReadonlyArray<Psp>;
   paymentId: string;
 }>;
@@ -234,28 +230,47 @@ export const getPaymentStep = (state: GlobalState) =>
     ? state.wallet.payment.stack.head.kind
     : "PaymentStateNoState";
 
-export const getRptId = (state: GlobalState): RptId | undefined =>
+export const getRptIdFromGlobalState = (state: GlobalState): Option<RptId> =>
   isGlobalStateWithVerificaResponse(state)
-    ? state.wallet.payment.stack.head.rptId
-    : undefined;
+    ? some(state.wallet.payment.stack.head.rptId)
+    : none;
 
-export const getPaymentContextCode = (
+export const getRptIdFromGlobalStateWithVerificaResponse = (
+  state: GlobalStateWithVerificaResponse
+): RptId => state.wallet.payment.stack.head.rptId;
+
+export const getPaymentContextCodeFromGlobalState = (
   state: GlobalState
-): CodiceContestoPagamento | undefined =>
+): Option<CodiceContestoPagamento> =>
   isGlobalStateWithVerificaResponse(state)
-    ? state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento
-    : undefined;
+    ? some(
+        state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento
+      )
+    : none;
 
-export const getInitialAmount = (
+export const getPaymentContextCodeFromGlobalStateWithVerificaResponse = (
+  state: GlobalStateWithVerificaResponse
+): CodiceContestoPagamento =>
+  state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento;
+
+export const getInitialAmountFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents => state.wallet.payment.stack.head.initialAmount;
 
-export const getSelectedPaymentMethod = (state: GlobalState): Option<number> =>
+export const getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod = (
+  state: GlobalStateWithSelectedPaymentMethod
+): Wallet => state.wallet.payment.stack.head.selectedPaymentMethod;
+
+export const getSelectedPaymentMethodFromGlobalState = (
+  state: GlobalState
+): Option<Wallet> =>
   isGlobalStateWithSelectedPaymentMethod(state)
-    ? some(state.wallet.payment.stack.head.selectedPaymentMethod)
+    ? some(
+        getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(state)
+      )
     : none;
 
-export const getCurrentAmount = (
+export const getCurrentAmountFromGlobalState = (
   state: GlobalState
 ): Option<AmountInEuroCents> =>
   isGlobalStateWithVerificaResponse(state)
@@ -267,7 +282,21 @@ export const getCurrentAmount = (
       )
     : none;
 
-export const getPaymentRecipient = (
+export const getCurrentAmountFromGlobalStateWithSelectedPaymentMethod = (
+  state: GlobalStateWithSelectedPaymentMethod
+): AmountInEuroCents =>
+  AmountToImporto.encode(
+    state.wallet.payment.stack.head.verificaResponse.importoSingoloVersamento
+  );
+
+export const getCurrentAmountFromGlobalStateWithVerificaResponse = (
+  state: GlobalStateWithVerificaResponse
+): AmountInEuroCents =>
+  AmountToImporto.encode(
+    state.wallet.payment.stack.head.verificaResponse.importoSingoloVersamento
+  );
+
+export const getPaymentRecipientFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
 ): Option<EnteBeneficiario> =>
   fromNullable(
@@ -281,25 +310,31 @@ export const getPaymentReason = (
     state.wallet.payment.stack.head.verificaResponse.causaleVersamento
   );
 
-export const getPspList = (state: GlobalState): Option<ReadonlyArray<Psp>> =>
+export const getPspListFromGlobalState = (
+  state: GlobalState
+): Option<ReadonlyArray<Psp>> =>
   isGlobalStateWithSelectedPaymentMethod(state)
     ? some(state.wallet.payment.stack.head.pspList)
     : none;
 
-export const getPaymentId = (state: GlobalState): Option<string> =>
-  isGlobalStateWithPaymentId(state)
-    ? some(state.wallet.payment.stack.head.paymentId)
-    : none;
-
-export const selectedPaymentMethodSelector: (
+export const getPspListFromGlobalStateWithSelectedPaymentMethod = (
   state: GlobalStateWithSelectedPaymentMethod
-) => Wallet = createSelector(
-  (state: GlobalStateWithSelectedPaymentMethod) =>
-    getSelectedPaymentMethod(state),
-  getWallets,
-  (id: Option<number>, wallets: IndexedById<Wallet>): Wallet =>
-    getWalletFromId(id, wallets).getOrElse(UNKNOWN_CARD)
-);
+): ReadonlyArray<Psp> => state.wallet.payment.stack.head.pspList;
+
+export const getPaymentIdFromGlobalStateWithPaymentId = (
+  state: GlobalStateWithPaymentId
+): string => state.wallet.payment.stack.head.paymentId;
+
+export const getPaymentIdFromGlobalStateWithSelectedPaymentMethod = (
+  state: GlobalStateWithSelectedPaymentMethod
+): string => state.wallet.payment.stack.head.paymentId;
+
+export const getPaymentIdFromGlobalState = (
+  state: GlobalState
+): Option<string> =>
+  isGlobalStateWithPaymentId(state)
+    ? some(getPaymentIdFromGlobalStateWithPaymentId(state))
+    : none;
 
 const isInAllowedOrigins = (
   state: PaymentState,

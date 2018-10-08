@@ -17,9 +17,9 @@ import { Dispatch } from "../../store/actions/types";
 import { paymentRequestTransactionSummaryFromBanner } from "../../store/actions/wallet/payment";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  getCurrentAmount,
+  getCurrentAmountFromGlobalStateWithVerificaResponse,
   getPaymentReason,
-  getPaymentRecipient,
+  getPaymentRecipientFromGlobalStateWithVerificaResponse,
   isGlobalStateWithVerificaResponse
 } from "../../store/reducers/wallet/payment";
 import { UNKNOWN_PAYMENT_REASON, UNKNOWN_RECIPIENT } from "../../types/unknown";
@@ -110,8 +110,12 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
         paymentReason: getPaymentReason(state).getOrElse(
           UNKNOWN_PAYMENT_REASON
         ), // this could be empty as per pagoPA definition
-        currentAmount: getCurrentAmount(state),
-        recipient: getPaymentRecipient(state).getOrElse(UNKNOWN_RECIPIENT) // this could be empty as per pagoPA definition
+        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
+          state
+        ),
+        recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
+          state
+        ).getOrElse(UNKNOWN_RECIPIENT) // this could be empty as per pagoPA definition
       }
     : { valid: false };
 

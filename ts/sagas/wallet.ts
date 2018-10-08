@@ -84,18 +84,9 @@ import {
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
+import { getPaymentIdFromGlobalState } from "../store/reducers/wallet/payment";
 import {
-  getCurrentAmount,
-  getPaymentContextCode,
-  getPaymentId,
-  getPspList,
-  getRptId,
-  getSelectedPaymentMethod,
-  isGlobalStateWithPaymentId
-} from "../store/reducers/wallet/payment";
-import {
-  getFavoriteWalletId,
-  specificWalletSelector,
+  getFavoriteWallet,
   walletCountSelector
 } from "../store/reducers/wallet/wallets";
 import {
@@ -131,6 +122,8 @@ import {
   fetchAndStorePagoPaToken,
   fetchWithTokenRefresh
 } from "./wallet/utils";
+
+import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -395,6 +388,7 @@ function* watchPaymentSaga(
         break;
       }
       case getType(paymentRequestContinueWithPaymentMethods): {
+        // step after the transaction summary
         yield fork(
           continueWithPaymentMethodsHandler,
           action,
@@ -413,7 +407,7 @@ function* watchPaymentSaga(
         break;
       }
       case getType(paymentRequestPickPsp): {
-        yield fork(pickPspHandler, action, pagoPaClient);
+        yield fork(pickPspHandler, action);
         break;
       }
       case getType(paymentUpdatePsp): {
@@ -421,7 +415,7 @@ function* watchPaymentSaga(
         break;
       }
       case getType(paymentRequestCompletion): {
-        yield fork(completionHandler, pagoPaClient);
+        yield fork(completionHandler, action, pagoPaClient);
         break;
       }
       case getType(paymentRequestGoBack): {
@@ -433,7 +427,7 @@ function* watchPaymentSaga(
         break;
       }
       case getType(paymentRequestPinLogin): {
-        yield fork(pinLoginHandler, storedPin);
+        yield fork(pinLoginHandler, action, storedPin);
         break;
       }
     }
@@ -501,9 +495,9 @@ function* showConfirmPaymentMethod(
 ) {
   yield put(
     paymentIdOrUndefined === undefined
-      ? setPaymentStateToConfirmPaymentMethod(wallet.idWallet, pspList)
+      ? setPaymentStateToConfirmPaymentMethod(wallet, pspList)
       : setPaymentStateFromSummaryToConfirmPaymentMethod(
-          wallet.idWallet,
+          wallet,
           pspList,
           paymentIdOrUndefined
         )
@@ -512,19 +506,11 @@ function* showConfirmPaymentMethod(
 }
 
 function* showPickPsp(
-  paymentIdOrUndefined: string | undefined,
+  paymentId: string,
   wallet: Wallet,
   pspList: ReadonlyArray<Psp>
 ) {
-  yield put(
-    paymentIdOrUndefined === undefined
-      ? setPaymentStateToPickPsp(wallet.idWallet, pspList)
-      : setPaymentStateFromSummaryToPickPsp(
-          wallet.idWallet,
-          pspList,
-          paymentIdOrUndefined
-        )
-  );
+  yield put(setPaymentStateFromSummaryToPickPsp(wallet, pspList, paymentId));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 
@@ -540,20 +526,8 @@ const shouldShowPspList = (
 
 function* fetchPspList(
   pagoPaClient: PagoPaClient,
-  paymentIdOrUndefined: string | undefined
-) {
-  // WIP: this could be done via the ternary operator, but lint raises some
-  // error about ignoring the return value of a call()
-  let paymentId: string; // tslint:disable-line: no-let
-  if (paymentIdOrUndefined === undefined) {
-    const tmp: Option<string> = yield select<GlobalState>(getPaymentId);
-    paymentId = tmp;
-  } else {
-    paymentId = paymentIdOrUndefined;
-  }
-
-  let pspList: ReadonlyArray<Psp> = []; // tslint:disable-line: no-let
-
+  paymentId: string
+): Iterator<Effect | Option<ReadonlyArray<Psp>>> {
   try {
     yield put(paymentSetLoadingState());
     const apiGetPspList = (pagoPaToken: PagopaToken) =>
@@ -564,50 +538,48 @@ function* fetchPspList(
       pagoPaClient
     );
     if (response !== undefined && response.status === 200) {
-      pspList = response.value.data;
+      return some(response.value.data);
     }
   } catch {
     /**
      * TODO handle error
      */
+    // FIXME: again the flow continues ignoring any error
+    return none;
   } finally {
     yield put(paymentResetLoadingState());
   }
-
-  return pspList;
 }
 
 function* showWalletOrSelectPsp(
   pagoPaClient: PagoPaClient,
-  idWallet: number,
-  paymentIdOrUndefined?: string
+  wallet: Wallet,
+  paymentId: string
 ): Iterator<Effect> {
-  const wallet: Option<Wallet> = yield select<GlobalState>(
-    specificWalletSelector(idWallet)
+  const maybePspList: Option<ReadonlyArray<Psp>> = yield call(
+    fetchPspList,
+    pagoPaClient,
+    paymentId
   );
-  if (wallet.isSome()) {
-    const pspList: ReadonlyArray<Psp> = yield call(
-      fetchPspList,
-      pagoPaClient,
-      paymentIdOrUndefined
-    );
-    // show card
-    // if multiple psps are available and one
-    // has not yet been selected, show psp list
-    if (shouldShowPspList(wallet.value, pspList)) {
-      // multiple choices here and no favorite psp exists (or one exists
-      // and it is not available for this payment)
-      // show list of psps
-      yield call(showPickPsp, paymentIdOrUndefined, wallet.value, pspList);
-    } else {
-      // only 1 choice of psp, or psp already selected (in previous transaction)
-      yield call(
-        showConfirmPaymentMethod,
-        paymentIdOrUndefined,
-        wallet.value,
-        pspList
-      );
-    }
+  if (maybePspList.isNone()) {
+    yield put(paymentFailure("GENERIC_ERROR"));
+    // FIXME: this is not a fatal error, instead we should allow a retry
+    return;
+  }
+
+  const pspList = maybePspList.value;
+
+  // show card
+  // if multiple psps are available and one
+  // has not yet been selected, show psp list
+  if (shouldShowPspList(wallet, pspList)) {
+    // multiple choices here and no favorite psp exists (or one exists
+    // and it is not available for this payment)
+    // show list of psps
+    yield call(showPickPsp, paymentId, wallet, pspList);
+  } else {
+    // only 1 choice of psp, or psp already selected (in previous transaction)
+    yield call(showConfirmPaymentMethod, paymentId, wallet, pspList);
   }
 }
 
@@ -615,12 +587,12 @@ const MAX_RETRIES_POLLING = 180;
 const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 // handle the "attiva" API call
-const attivaRpt = async (
+async function attivaRpt(
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
-): Promise<Option<NodoErrors>> => {
+): Promise<Either<NodoErrors, PaymentActivationsPostResponse>> {
   const response:
     | TypeofApiResponse<ActivatePaymentT>
     | undefined = await postAttivaRpt({
@@ -631,15 +603,15 @@ const attivaRpt = async (
     }
   });
   return response !== undefined && response.status === 200
-    ? none // none if everything works out fine
-    : some(extractNodoError(response));
-};
+    ? right(response.value) // none if everything works out fine
+    : left(extractNodoError(response));
+}
 
 // handle the polling
-const fetchPaymentId = async (
+async function fetchPaymentId(
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   paymentContextCode: CodiceContestoPagamento
-): Promise<Either<NodoErrors, string>> => {
+): Promise<Either<NodoErrors, string>> {
   // successfully request the payment activation
   // now poll until a paymentId is made available
 
@@ -651,31 +623,34 @@ const fetchPaymentId = async (
     : response !== undefined && response.status === 404
       ? left<NodoErrors, string>("MISSING_PAYMENT_ID")
       : left<NodoErrors, string>("GENERIC_ERROR");
-};
+}
 
 /**
  * First do the "attiva" operation then,
  * if successful, poll until a paymentId
  * is available
  */
-const attivaAndGetPaymentId = async (
+async function attivaAndGetPaymentId(
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
   amount: AmountInEuroCents
-): Promise<Either<NodoErrors, string>> => {
+): Promise<Either<NodoErrors, string>> {
   const attivaRptResult = await attivaRpt(
     postAttivaRpt,
     rptId,
     paymentContextCode,
     amount
   );
-  if (attivaRptResult.isSome()) {
+  if (attivaRptResult.isLeft()) {
     return left(attivaRptResult.value);
   }
+  // FIXME: why we discard the response of Attiva? we should instead update
+  //        the transaction info from the data contained in the response
+
   return await fetchPaymentId(getPaymentIdApi, paymentContextCode);
-};
+}
 
 function* checkPayment(
   pagoPaClient: PagoPaClient,
@@ -698,63 +673,93 @@ function* checkPayment(
           )
         )
       );
+      // FIXME: in payment failure we must stop the payment process!!!
     }
     // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   } catch {
     yield put(paymentFailure("GENERIC_ERROR"));
+    // FIXME: in payment failure we must stop the payment process!!!
   } finally {
     yield put(paymentResetLoadingState());
   }
 }
 
-function* continueWithPaymentMethodsHandler(
-  _: ActionType<typeof paymentRequestContinueWithPaymentMethods>,
+function* callCheckAndSelectPaymentMethod(
   pagoPaClient: PagoPaClient,
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>
+  paymentId: string
 ) {
+  yield call(checkPayment, pagoPaClient, paymentId);
+  // FIXME: checkPayment may emit a paymentFailure action but here there is
+  //        no check and the payment flow continues, ignoring the error.
+
   // find out whether a payment method has already
   // been defined as favorite. If so, use it and
   // ask the user to confirm it
   // Otherwise, show a list of payment methods available
   // TODO: if no payment method is available (or if the
   // user chooses to do so), allow adding a new one.
-  const favoriteWallet: Option<number> = yield select<GlobalState>(
-    getFavoriteWalletId
+  const maybeFavoriteWallet: Option<Wallet> = yield select<GlobalState>(
+    getFavoriteWallet
   );
-  const hasPaymentId: boolean = yield select<GlobalState>(
-    isGlobalStateWithPaymentId
+
+  // redirect as needed
+  if (maybeFavoriteWallet.isSome()) {
+    yield call(
+      showWalletOrSelectPsp,
+      pagoPaClient,
+      maybeFavoriteWallet.value,
+      paymentId
+    );
+  } else {
+    // no favorite wallet selected
+    // show list
+    yield call(pickPaymentMethodHandler, paymentId);
+  }
+}
+
+function* continueWithPaymentMethodsHandler(
+  action: ActionType<typeof paymentRequestContinueWithPaymentMethods>,
+  pagoPaClient: PagoPaClient,
+  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>
+) {
+  // do we have a payment ID already? (e.g. in case the user navigated back)
+  const maybePaymentId: Option<string> = yield select<GlobalState>(
+    getPaymentIdFromGlobalState
   );
 
   /**
    * get data required to fetch a payment id
    */
 
-  const rptId: RptId | undefined = yield select<GlobalState>(getRptId);
-  const paymentContextCode: CodiceContestoPagamento | undefined = yield select<
-    GlobalState
-  >(getPaymentContextCode);
-  const amount: Option<AmountInEuroCents> = yield select<GlobalState>(
-    getCurrentAmount
-  );
+  const rptId = action.payload.rptId;
+  const paymentContextCode = action.payload.codiceContestoPagamento;
+  const currentAmount = action.payload.currentAmount;
 
-  // if the payment Id not available yet,
-  // do the "attiva" and then poll until
-  // a payment Id shows up
-  let paymentId: string | undefined; // tslint:disable-line no-let
-  if (!hasPaymentId) {
+  if (maybePaymentId.isSome()) {
+    // if we have a previous payment ID stored in the state from a previous
+    // "attiva", continue to the next step
+    yield call(
+      callCheckAndSelectPaymentMethod,
+      pagoPaClient,
+      maybePaymentId.value
+    );
+  } else {
+    // or else, do the attiva to get a payment Id
     try {
       yield put(paymentSetLoadingState());
-      const result: Either<NodoErrors, string> = yield call(
+      const result: SagaCallReturnType<
+        typeof attivaAndGetPaymentId
+      > = yield call(
         attivaAndGetPaymentId,
         postAttivaRpt,
         getPaymentIdApi,
         rptId,
         paymentContextCode,
-        amount
+        currentAmount
       );
       if (result.isRight()) {
-        paymentId = result.value;
+        yield call(callCheckAndSelectPaymentMethod, pagoPaClient, result.value);
       } else {
         yield put(paymentFailure(result.value));
         return;
@@ -766,34 +771,22 @@ function* continueWithPaymentMethodsHandler(
       yield put(paymentResetLoadingState());
     }
   }
-  if (paymentId !== undefined) {
-    yield call(checkPayment, pagoPaClient, paymentId);
-  }
-
-  // redirect as needed
-  if (favoriteWallet.isSome()) {
-    yield call(
-      showWalletOrSelectPsp,
-      pagoPaClient,
-      favoriteWallet.value,
-      hasPaymentId && paymentId !== undefined ? undefined : paymentId
-    );
-  } else {
-    // no favorite wallet selected
-    // show list
-    yield call(pickPaymentMethodHandler, paymentId);
-  }
 }
 
 function* confirmPaymentMethodHandler(
   action: ActionType<typeof paymentRequestConfirmPaymentMethod>,
   pagoPaClient: PagoPaClient
 ) {
-  const walletId = action.payload;
+  const wallet = action.payload.wallet;
   // this will either show the recap screen (if the selected
   // wallet already has a PSP), or it will show the
   // "pick psp" screen
-  yield call(showWalletOrSelectPsp, pagoPaClient, walletId, undefined);
+  yield call(
+    showWalletOrSelectPsp,
+    pagoPaClient,
+    wallet,
+    action.payload.paymentId
+  );
 }
 
 function* pickPaymentMethodHandler(paymentId?: string) {
@@ -806,15 +799,10 @@ function* pickPaymentMethodHandler(paymentId?: string) {
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
 }
 
-function* pickPspHandler() {
-  const walletId: Option<number> = yield select<GlobalState>(
-    getSelectedPaymentMethod
-  );
-  const pspList: Option<ReadonlyArray<Psp>> = yield select<GlobalState>(
-    getPspList
-  );
+function* pickPspHandler(action: ActionType<typeof paymentRequestPickPsp>) {
+  const pspList = action.payload.pspList;
 
-  yield put(setPaymentStateToPickPsp(walletId, pspList));
+  yield put(setPaymentStateToPickPsp(action.payload.wallet, pspList));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 
@@ -825,14 +813,16 @@ function* updatePspHandler(
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
   // of wallets (which will contain the updated PSP)
-  const walletId: Option<number> = yield select<GlobalState>(
-    getSelectedPaymentMethod
-  );
+  const { wallet, paymentId } = action.payload;
 
   try {
     yield put(paymentSetLoadingState());
     const apiUpdateWalletPsp = (pagoPaToken: PagopaToken) =>
-      pagoPaClient.updateWalletPsp(pagoPaToken, walletId, action.payload);
+      pagoPaClient.updateWalletPsp(
+        pagoPaToken,
+        wallet.idWallet,
+        action.payload.pspId
+      );
     const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
       fetchWithTokenRefresh,
       apiUpdateWalletPsp,
@@ -844,7 +834,7 @@ function* updatePspHandler(
       // same ones as before, with the selected one's
       // PSP set to the new one)
       yield call(fetchWallets, pagoPaClient);
-      yield put(paymentRequestConfirmPaymentMethod(walletId));
+      yield put(paymentRequestConfirmPaymentMethod({ wallet, paymentId }));
     } else {
       yield put(
         paymentFailure(
@@ -861,7 +851,10 @@ function* updatePspHandler(
   }
 }
 
-function* pinLoginHandler(storedPin: PinString) {
+function* pinLoginHandler(
+  action: ActionType<typeof paymentRequestPinLogin>,
+  storedPin: PinString
+) {
   yield put(setPaymentStateToPinLogin());
   // Retrieve the configured PIN from the keychain
   yield race({
@@ -869,23 +862,28 @@ function* pinLoginHandler(storedPin: PinString) {
     reset: call(watchPinResetSaga)
   });
 
-  yield put(paymentRequestCompletion());
+  yield put(
+    paymentRequestCompletion({
+      wallet: action.payload.wallet,
+      paymentId: action.payload.paymentId
+    })
+  );
 }
 
-function* completionHandler(pagoPaClient: PagoPaClient) {
+function* completionHandler(
+  action: ActionType<typeof paymentRequestCompletion>,
+  pagoPaClient: PagoPaClient
+) {
   // -> it should proceed with the required operations
   // and terminate with the "new payment" screen
 
-  const idWallet: Option<number> = yield select<GlobalState>(
-    getSelectedPaymentMethod
-  );
-  const paymentId: Option<string> = yield select<GlobalState>(getPaymentId);
+  const { wallet, paymentId } = action.payload;
 
   try {
     yield put(paymentSetLoadingState());
     const apiPostPayment = (pagoPaToken: PagopaToken) =>
       pagoPaClient.postPayment(pagoPaToken, paymentId, {
-        data: { tipo: "web", idWallet }
+        data: { tipo: "web", idWallet: wallet.idWallet }
       });
     const response: SagaCallReturnType<typeof apiPostPayment> = yield call(
       fetchWithTokenRefresh,
@@ -902,11 +900,13 @@ function* completionHandler(pagoPaClient: PagoPaClient) {
       // upon successful payment
       const newTransaction = response.value.data;
       yield call(fetchTransactions, pagoPaClient);
+      // FIXME: fetchTransactions could fail
+
       // use "storeNewTransaction(newTransaction) if it's okay
       // to have the payment as "pending" (this information will
       // not be shown to the user as of yet)
       yield put(selectTransactionForDetails(newTransaction));
-      yield put(selectWalletForDetails(idWallet)); // for the banner
+      yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
       yield put(
         // TODO: this should use StackActions.reset
         // to reset the navigation. Right now, the

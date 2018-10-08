@@ -35,10 +35,9 @@ export const fetchWalletsFailure = createAction(
   resolve => (error: Error) => resolve(error)
 );
 
-export const selectWalletForDetails = createAction(
-  "SELECT_WALLET_FOR_DETAILS",
-  resolve => (walletId: number) => resolve(walletId)
-);
+export const selectWalletForDetails = createStandardAction(
+  "SELECT_WALLET_FOR_DETAILS"
+)<number>();
 
 export const setFavoriteWallet = createAction(
   "SET_FAVORITE_WALLET",

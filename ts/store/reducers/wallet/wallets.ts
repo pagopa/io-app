@@ -39,6 +39,11 @@ export const getSelectedWalletId = (state: GlobalState) =>
   state.wallet.wallets.selectedWalletId;
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
+export const getFavoriteWallet = (state: GlobalState) =>
+  state.wallet.wallets.favoriteWalletId.mapNullable(
+    walletId => state.wallet.wallets.list[walletId]
+  );
+
 export const getNewCreditCard = (state: GlobalState) =>
   state.wallet.wallets.newCreditCard;
 

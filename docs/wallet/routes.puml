@@ -1,0 +1,25 @@
+@startuml
+hide empty description
+
+[*] --> P_TRANSACTION_SUMMARY : prTransactionSummaryFromRptId
+[*] --> P_TRANSACTION_SUMMARY : prTransactionSummaryFromBanner
+
+P_TRANSACTION_SUMMARY --> P_PICK_PAYMENT_METHOD : prContinueWithPaymentMethods\n(no-fav-wallet)
+P_TRANSACTION_SUMMARY --> P_PICK_PSP : prContinueWithPaymentMethods\n(fav-wallet,[psps] > 1)
+P_TRANSACTION_SUMMARY --> P_CONFIRM_PAYMENT_METHOD : prContinueWithPaymentMethods\n(fav-wallet,[psps] === 1)
+
+P_PICK_PAYMENT_METHOD --> P_PICK_PSP : prConfirmPaymentMethod\n(select-wallet,[psps] > 1)
+P_PICK_PAYMENT_METHOD --> P_CONFIRM_PAYMENT_METHOD : prConfirmPaymentMethod\n(select-wallet,[psps] === 1)
+P_PICK_PAYMENT_METHOD --> P_TRANSACTION_SUMMARY : prTransactionSummaryFromBanner
+
+P_PICK_PSP --> P_PICK_PSP : pUpdatePsp,\nprConfirmPaymentMethod
+P_PICK_PSP --> P_CONFIRM_PAYMENT_METHOD : pUpdatePsp,\nprConfirmPaymentMethod
+
+P_CONFIRM_PAYMENT_METHOD --> P_PICK_PAYMENT_METHOD : prPickPaymentMethod
+P_CONFIRM_PAYMENT_METHOD --> PIN_LOGIN_SCREEN : prPinLogin
+P_CONFIRM_PAYMENT_METHOD --> P_PICK_PSP : prPickPsp
+P_CONFIRM_PAYMENT_METHOD --> P_TRANSACTION_SUMMARY : prTransactionSummaryFromBanner
+
+PIN_LOGIN_SCREEN --> W_TRANSACTION_DETAILS : prCompletion
+
+@enduml

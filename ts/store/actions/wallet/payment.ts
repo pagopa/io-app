@@ -4,9 +4,12 @@ import {
   createAction,
   createStandardAction
 } from "typesafe-actions";
+
+import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+
 import { PagoPaErrors } from "../../../types/errors";
-import { Psp } from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 
 export const resetPaymentState = createStandardAction("PAYMENT_COMPLETED")();
 
@@ -70,9 +73,15 @@ export const setPaymentStateToSummaryWithPaymentId = createStandardAction(
   "PAYMENT_TRANSACTION_SUMMARY_FROM_BANNER"
 )();
 
+type PaymentRequestContinueWithPaymentMethodsPayload = Readonly<{
+  rptId: RptId;
+  codiceContestoPagamento: CodiceContestoPagamento;
+  currentAmount: AmountInEuroCents;
+}>;
+
 export const paymentRequestContinueWithPaymentMethods = createStandardAction(
   "PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS"
-)();
+)<PaymentRequestContinueWithPaymentMethodsPayload>();
 
 export const paymentRequestPickPaymentMethod = createStandardAction(
   "PAYMENT_REQUEST_PICK_PAYMENT_METHOD"
@@ -86,51 +95,66 @@ export const setPaymentStateFromSummaryToPickPaymentMethod = createStandardActio
   "PAYMENT_INITIAL_PICK_PAYMENT_METHOD"
 )<string>();
 
+type PaymentRequestConfirmPaymentMethodPayload = Readonly<{
+  wallet: Wallet;
+  paymentId: string;
+}>;
+
 export const paymentRequestConfirmPaymentMethod = createStandardAction(
   "PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD"
-)<number>();
+)<PaymentRequestConfirmPaymentMethodPayload>();
 
 export const setPaymentStateToConfirmPaymentMethod = createAction(
   "PAYMENT_CONFIRM_PAYMENT_METHOD",
-  resolve => (walletId: number, pspList: ReadonlyArray<Psp>) =>
-    resolve({ selectedPaymentMethod: walletId, pspList })
+  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>) =>
+    resolve({ selectedPaymentMethod: wallet, pspList })
 );
 
 export const setPaymentStateFromSummaryToConfirmPaymentMethod = createAction(
   "PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD",
-  resolve => (
-    walletId: number,
-    pspList: ReadonlyArray<Psp>,
-    paymentId: string
-  ) => resolve({ selectedPaymentMethod: walletId, pspList, paymentId })
+  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
+    resolve({ selectedPaymentMethod: wallet, pspList, paymentId })
 );
+
+type PaymentRequestPickPspPayload = Readonly<{
+  wallet: Wallet;
+  pspList: ReadonlyArray<Psp>;
+}>;
 
 export const paymentRequestPickPsp = createStandardAction(
   "PAYMENT_REQUEST_PICK_PSP"
-)();
+)<PaymentRequestPickPspPayload>();
 
 export const setPaymentStateFromSummaryToPickPsp = createAction(
   "PAYMENT_INITIAL_PICK_PSP",
-  resolve => (
-    walletId: number,
-    pspList: ReadonlyArray<Psp>,
-    paymentId: string
-  ) => resolve({ selectedPaymentMethod: walletId, pspList, paymentId })
+  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
+    resolve({ selectedPaymentMethod: wallet, pspList, paymentId })
 );
 
 export const setPaymentStateToPickPsp = createAction(
   "PAYMENT_PICK_PSP",
-  resolve => (walletId: number, pspList: ReadonlyArray<Psp>) =>
-    resolve({ selectedPaymentMethod: walletId, pspList })
+  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>) =>
+    resolve({ selectedPaymentMethod: wallet, pspList })
 );
 
+type PaymentUpdatePspPayload = Readonly<{
+  pspId: number;
+  wallet: Wallet;
+  paymentId: string;
+}>;
+
 export const paymentUpdatePsp = createStandardAction("PAYMENT_UPDATE_PSP")<
-  number
+  PaymentUpdatePspPayload
 >();
+
+type PaymentRequestCompletionPayload = Readonly<{
+  wallet: Wallet;
+  paymentId: string;
+}>;
 
 export const paymentRequestCompletion = createStandardAction(
   "PAYMENT_REQUEST_COMPLETION"
-)();
+)<PaymentRequestCompletionPayload>();
 
 export const goBackOnePaymentState = createStandardAction("PAYMENT_GO_BACK")();
 
@@ -152,9 +176,14 @@ export const paymentRequestCancel = createStandardAction(
   "PAYMENT_REQUEST_CANCEL"
 )();
 
+type PaymentRequestPinLoginPayload = Readonly<{
+  wallet: Wallet;
+  paymentId: string;
+}>;
+
 export const paymentRequestPinLogin = createStandardAction(
   "PAYMENT_REQUEST_PIN_LOGIN"
-)();
+)<PaymentRequestPinLoginPayload>();
 
 export const setPaymentStateToPinLogin = createStandardAction(
   "PAYMENT_PIN_LOGIN"
