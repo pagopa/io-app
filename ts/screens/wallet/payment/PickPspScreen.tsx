@@ -3,7 +3,7 @@
  * when it is added to the user wallet
  */
 
-import { Option } from "fp-ts/lib/Option";
+import { none, Option } from "fp-ts/lib/Option";
 import {
   Body,
   Container,
@@ -213,7 +213,7 @@ function mapStateToProps() {
         paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state)
       };
     } else {
-      return { valid: false, error, isLoading };
+      return { valid: false, error: none, isLoading: false };
     }
   };
 }

@@ -6,7 +6,7 @@
  * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  *
  */
-import { Option } from "fp-ts/lib/Option";
+import { none, Option } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
@@ -293,8 +293,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     };
   } else {
     return {
-      isLoading: createLoadingSelector(["PAYMENT"])(state),
-      error: createErrorSelector(["PAYMENT"])(state),
+      isLoading: false,
+      error: none,
       valid: false
     };
   }
