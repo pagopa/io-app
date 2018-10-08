@@ -1,0 +1,165 @@
+@startuml
+
+start
+fork
+  #orange:paymentRequestTransactionSummaryFromRptId;
+  #hotpink:PAYMENT_TRANSACTION_SUMMARY;
+  #cyan:paymentSetLoadingState;
+  if (getVerificaRpt) then (ok)
+    #cyan:setPaymentStateToSummary;
+  else (ko)
+    #cyan:paymentFailure;
+  endif
+  #cyan:paymentResetLoadingState;
+
+fork again
+
+  #orange:paymentRequestTransactionSummaryFromBanner;
+  #cyan:setPaymentStateToSummaryWithPaymentId;
+  #hotpink:PAYMENT_TRANSACTION_SUMMARY;
+
+fork again
+
+  #orange:paymentRequestContinueWithPaymentMethods;
+  #red:getFavoriteWalletId;
+  #red:isGlobalStateWithPaymentId;
+  #red:getRptId;
+  #red:getPaymentContextCode;
+  #red:getCurrentAmount;
+  if (isGlobalStateWithPaymentId) then (no)
+    #cyan:paymentSetLoadingState;
+    :attivaRpt;
+    :fetchPaymentId;
+    #cyan:paymentResetLoadingState;
+  endif
+  if (paymentId) then (some)
+    #cyan:paymentSetLoadingState;
+    :checkPayment;
+    #cyan:paymentResetLoadingState;
+  endif
+  if (favoriteWallet) then (some)
+    #red:specificWalletSelector(walletId);
+    if (wallet) then (some)
+      #red:getPaymentId;
+      #cyan:paymentSetLoadingState;
+      :getPspList;
+      #cyan:paymentResetLoadingState;
+      if (shouldShowPspList) then (yes)
+        if (paymentId) then (defined)
+          #cyan:setPaymentStateFromSummaryToPickPsp;
+        else (no)
+          #cyan:setPaymentStateToPickPsp;
+        endif
+        #hotpink:PAYMENT_PICK_PSP;
+      else (no)
+        if (paymentId) then (defined)
+          #cyan:setPaymentStateFromSummaryToConfirmPaymentMethod;
+        else (undefined)
+          #cyan:setPaymentStateToConfirmPaymentMethod;
+        endif
+        #hotpink:PAYMENT_CONFIRM_PAYMENT_METHOD;
+      endif
+    endif
+  else (none)
+    if (paymentId) then (defined)
+      #cyan:setPaymentStateFromSummaryToPickPaymentMethod;
+    else (undefined)
+      #cyan:setPaymentStateToPickPaymentMethod;
+    endif
+    #hotpink:PAYMENT_PICK_PAYMENT_METHOD;
+  endif
+fork again
+
+  #orange:paymentRequestPickPaymentMethod;
+  if (paymentId) then (defined)
+    #cyan:setPaymentStateFromSummaryToPickPaymentMethod;
+  else (undefined)
+    #cyan:setPaymentStateToPickPaymentMethod;
+  endif
+  #hotpink:PAYMENT_PICK_PAYMENT_METHOD;
+
+fork again
+
+  #orange:paymentRequestConfirmPaymentMethod;
+  #red:specificWalletSelector(idWallet);
+  if (wallet) then (some)
+    #red:getPaymentId;
+    #cyan:paymentSetLoadingState;
+    :getPspList;
+    #cyan:paymentResetLoadingState;
+    if (shouldShowPspList) then (yes)
+      if (paymentId) then (defined)
+        #cyan:setPaymentStateFromSummaryToPickPsp;
+      else (no)
+        #cyan:setPaymentStateToPickPsp;
+      endif
+      #hotpink:PAYMENT_PICK_PSP;
+    else (no)
+      if (paymentId) then (defined)
+        #cyan:setPaymentStateFromSummaryToConfirmPaymentMethod;
+      else (undefined)
+        #cyan:setPaymentStateToConfirmPaymentMethod;
+      endif
+      #hotpink:PAYMENT_CONFIRM_PAYMENT_METHOD;
+    endif
+  endif
+
+fork again
+
+  #orange:paymentRequestPickPsp;
+  #red:getSelectedPaymentMethod;
+  #red:getPspList;
+  #cyan:setPaymentStateToPickPsp;
+  #hotpink:PAYMENT_PICK_PSP;
+
+fork again
+
+  #orange:paymentUpdatePsp;
+  #red:getSelectedPaymentMethod;
+  #cyan:paymentSetLoadingState;
+  :updateWalletPsp;
+  if (updateWalletPsp) then (ok)
+    :getWallets;
+    if (getWallets) then (ok)
+      #cyan:fetchWalletsSuccess;
+    else (ko)
+      #cyan:fetchWalletsFailure;
+    endif
+    #cyan:paymentRequestConfirmPaymentMethod;
+  else (ko)
+    #cyan:paymentFailure;
+  endif
+  #cyan:paymentResetLoadingState;
+
+fork again
+
+  #orange:paymentRequestCompletion;
+  #red:getSelectedPaymentMethod;
+  #red:getPaymentId;
+  #cyan:paymentSetLoadingState;
+  :postPayment;
+  if (postPayment) then (ok)
+    :getTransactions;
+    if (getTransactions) then (ok)
+      #cyan:fetchTransactionsSuccess;
+    else (ko)
+      #cyan:fetchTransactionsFailure;
+    endif
+    #cyan:selectTransactionForDetails;
+    #cyan:selectWalletForDetails;
+    #hotpink:WALLET_TRANSACTION_DETAILS;
+    #cyan:resetPaymentState;
+  else (ko)
+    #cyan:paymentFailure;
+  endif
+  #cyan:paymentResetLoadingState;
+
+fork again
+
+  #orange:paymentRequestPinLogin;
+  #cyan:setPaymentStateToPinLogin;
+  #green:loginWithPinSaga;
+  #cyan:paymentRequestCompletion;
+end fork
+
+@enduml

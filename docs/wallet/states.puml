@@ -1,0 +1,51 @@
+@startuml
+hide empty description
+
+title Wallet State Model
+
+Summary : rptid : verificaResponse : initialAmount
+
+SummaryWithPaymentId : rptId : verificaResponse : initialAmount : paymentId
+
+PickPaymentMethod : rptId : verificaResponse : initialAmount : paymentId
+
+ConfirmPaymentMethod : rptId : verificaResponse : initialAmount : paymentId : selectedPaymentMethod : pspList
+
+PickPsp : rptId : verificaResponse : initialAmount : paymentId : selectedPaymentMethod : pspList
+
+PinLogin : rptId : verificaResponse : initialAmount : paymentId : selectedPaymentMethod : pspList
+
+[*] --> QrCode : ToQrCode
+[*] --> Summary : ToSummary
+
+QrCode --> ManualEntry : ToManualEntry
+
+QrCode --> Summary : ToSummary
+ManualEntry --> Summary : ToSummary
+
+PickPaymentMethod --> SummaryWithPaymentId : ToSummaryWithPaymentId
+ConfirmPaymentMethod --> SummaryWithPaymentId : ToSummaryWithPaymentId
+PickPsp --> SummaryWithPaymentId : ToSummaryWithPaymentId
+
+Summary --> PickPaymentMethod : FromSummaryToPickPaymentMethod
+
+SummaryWithPaymentId --> PickPaymentMethod : ToPickPaymentMethod
+ConfirmPaymentMethod --> PickPaymentMethod : ToPickPaymentMethod
+
+Summary --> ConfirmPaymentMethod : FromSummaryToConfirmPaymentMethod
+
+PickPaymentMethod --> ConfirmPaymentMethod : ToConfirmPaymentMethod
+SummaryWithPaymentId --> ConfirmPaymentMethod : ToConfirmPaymentMethod
+PickPsp --> ConfirmPaymentMethod : ToConfirmPaymentMethod
+
+Summary --> PickPsp : FromSummaryToPickPsp
+
+SummaryWithPaymentId --> PickPsp : ToPickPsp
+ConfirmPaymentMethod --> PickPsp : ToPickPsp
+PickPaymentMethod --> PickPsp : ToPickPsp
+
+ConfirmPaymentMethod --> PinLogin : ToPinLogin
+
+PinLogin --> [*] : resetState
+
+@enduml

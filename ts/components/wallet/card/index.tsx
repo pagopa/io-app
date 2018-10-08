@@ -96,7 +96,7 @@ export type CardProps = Readonly<{
   lastUsage?: boolean;
   whiteLine?: boolean;
   logoPosition?: LogoPosition;
-  mainAction?: (cardId: number) => void;
+  mainAction?: (wallet: Wallet) => void;
   flatBottom?: boolean;
   headerOnly?: boolean;
   rotated?: boolean;

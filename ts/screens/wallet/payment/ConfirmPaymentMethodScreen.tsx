@@ -49,14 +49,16 @@ import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  getCurrentAmount,
+  getCurrentAmountFromGlobalStateWithSelectedPaymentMethod,
+  getPaymentIdFromGlobalStateWithSelectedPaymentMethod,
   getPaymentStep,
-  isGlobalStateWithSelectedPaymentMethod,
-  selectedPaymentMethodSelector
+  getPspListFromGlobalStateWithSelectedPaymentMethod,
+  getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod,
+  isGlobalStateWithSelectedPaymentMethod
 } from "../../../store/reducers/wallet/payment";
 import { feeExtractor } from "../../../store/reducers/wallet/wallets";
 import { mapErrorCodeToMessage } from "../../../types/errors";
-import { Wallet } from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { buildAmount } from "../../../utils/stringBuilder";
 
@@ -73,13 +75,19 @@ type ReduxMappedStateProps = Readonly<{
         wallet: Wallet;
         amount: AmountInEuroCents;
         fee: AmountInEuroCents;
+        paymentId: string;
+        pspList: ReadonlyArray<Psp>;
       }>);
 
 type ReduxMappedDispatchProps = Readonly<{
-  pickPaymentMethod: () => void;
-  pickPsp: () => void;
+  pickPaymentMethod: (paymentId: string) => void;
+  pickPsp: (
+    wallet: Wallet,
+    pspList: ReadonlyArray<Psp>,
+    paymentId: string
+  ) => void;
   // requestCompletion: () => void;
-  requestPinLogin: () => void;
+  requestPinLogin: (wallet: Wallet, paymentId: string) => void;
   goBack: () => void;
   showSummary: () => void;
   onCancel: () => void;
@@ -117,7 +125,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     if (!this.props.valid) {
       return null;
     }
-
+    const { wallet, paymentId, pspList } = this.props;
     const amount = AmountInEuroCentsFromNumber.encode(this.props.amount);
     const fee = AmountInEuroCentsFromNumber.encode(this.props.fee);
     const totalAmount = this.getTotalAmount(amount, fee);
@@ -195,12 +203,17 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <View spacer={true} large={true} />
                   <Text style={WalletStyles.textCenter}>
                     {/* TODO: the proper UI needs to be defined for changing PSP */}
-                    {this.props.wallet.psp !== undefined
+                    {wallet.psp !== undefined
                       ? `${I18n.t("payment.currentPsp")} ${
-                          this.props.wallet.psp.businessName
+                          wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <Text link={true} onPress={() => this.props.pickPsp()}>
+                    <Text
+                      link={true}
+                      onPress={() =>
+                        this.props.pickPsp(wallet, pspList, paymentId)
+                      }
+                    >
                       {I18n.t("payment.changePsp")}
                     </Text>
                   </Text>
@@ -228,7 +241,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestPinLogin()}
+            onPress={() => this.props.requestPinLogin(wallet, paymentId)}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -239,7 +252,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.props.pickPaymentMethod()}
+              onPress={_ => this.props.pickPaymentMethod(paymentId)}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
@@ -264,15 +277,19 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     getPaymentStep(state) === "PaymentStateConfirmPaymentMethod" &&
     isGlobalStateWithSelectedPaymentMethod(state)
   ) {
-    const wallet = selectedPaymentMethodSelector(state);
+    const wallet = getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(
+      state
+    );
     const feeOrUndefined = feeExtractor(wallet);
     return {
       isLoading: createLoadingSelector(["PAYMENT"])(state),
       error: createErrorSelector(["PAYMENT"])(state),
       valid: true,
       wallet,
-      amount: getCurrentAmount(state),
-      fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined
+      amount: getCurrentAmountFromGlobalStateWithSelectedPaymentMethod(state),
+      fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined,
+      paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state),
+      pspList: getPspListFromGlobalStateWithSelectedPaymentMethod(state)
     };
   } else {
     return {
@@ -284,10 +301,13 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
-  requestPinLogin: () => dispatch(paymentRequestPinLogin()),
+  pickPaymentMethod: (paymentId: string) =>
+    dispatch(paymentRequestPickPaymentMethod({ paymentId })),
+  requestPinLogin: (wallet: Wallet, paymentId: string) =>
+    dispatch(paymentRequestPinLogin({ wallet, paymentId })),
   goBack: () => dispatch(paymentRequestGoBack()),
-  pickPsp: () => dispatch(paymentRequestPickPsp()),
+  pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
+    dispatch(paymentRequestPickPsp({ wallet, pspList, paymentId })),
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
   onCancel: () => dispatch(paymentRequestCancel())
 });

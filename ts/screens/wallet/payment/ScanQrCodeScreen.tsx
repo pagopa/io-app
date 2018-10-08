@@ -20,21 +20,31 @@ import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+
 import I18n from "../../../i18n";
+
 import { Dispatch } from "../../../store/actions/types";
+
+import ROUTES from "../../../navigation/routes";
+
 import {
   paymentRequestGoBack,
-  paymentRequestManualEntry,
-  paymentRequestTransactionSummaryFromRptId
+  paymentRequestTransactionSummaryFromRptId,
+  setPaymentStateToManualEntry
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { getPaymentStep } from "../../../store/reducers/wallet/payment";
+
 import variables from "../../../theme/variables";
+
 import { ComponentProps } from "../../../types/react";
+
 import { decodePagoPaQrCode } from "../../../utils/payment";
+
 import { CameraMarker } from "./CameraMarker";
 
 type ReduxMappedStateProps = Readonly<{
@@ -43,7 +53,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
-  insertDataManually: () => void;
+  setPaymentStateToManualEntry: () => void;
   goBack: () => void;
 }>;
 
@@ -165,7 +175,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     const primaryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => this.props.insertDataManually(),
+      onPress: () => {
+        this.props.setPaymentStateToManualEntry();
+        this.props.navigation.navigate(ROUTES.PAYMENT_MANUAL_DATA_INSERTION);
+      },
       title: I18n.t("wallet.QRtoPay.setManually")
     };
 
@@ -242,7 +255,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
         initialAmount
       })
     ),
-  insertDataManually: () => dispatch(paymentRequestManualEntry()),
+  setPaymentStateToManualEntry: () => dispatch(setPaymentStateToManualEntry()),
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
