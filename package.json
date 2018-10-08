@@ -105,7 +105,7 @@
     "chalk": "^2.4.1",
     "danger": "^3.8.0",
     "danger-plugin-digitalcitizenship": "^0.3.1",
-    "detox": "^8.1.4",
+    "detox": "^9.0.4",
     "fs-extra": "^7.0.0",
     "italia-tslint-rules": "^0.1.1",
     "italia-utils": "^3.14.16",
