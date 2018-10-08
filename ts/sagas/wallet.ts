@@ -144,18 +144,18 @@ function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
 
 function* fetchWallets(
   pagoPaClient: PagoPaClient
-): Iterator<Effect | number | undefined> {
+): Iterator<Effect | Option<ReadonlyArray<Wallet>>> {
   const response: SagaCallReturnType<
     typeof pagoPaClient.getWallets
   > = yield call(fetchWithTokenRefresh, pagoPaClient.getWallets, pagoPaClient);
   if (response !== undefined && response.status === 200) {
     yield put(fetchWalletsSuccess(response.value.data));
-    return response.value.data.length;
+    return some(response.value.data);
   } else {
     yield put(fetchWalletsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
-  return undefined;
+  return none;
 }
 
 function* addCreditCard(
@@ -252,10 +252,13 @@ function* addCreditCard(
   // TODO: find a way of finding out the result of the
   // request from the URL
   const currentCount: number = yield select<GlobalState>(walletCountSelector);
-  const updatedCount: number | undefined = yield call(
+  const updatedWallets: SagaCallReturnType<typeof fetchWallets> = yield call(
     fetchWallets,
     pagoPaClient
   );
+  // FIXME: in case the calls to retrieve the wallets fails, we use a zero length
+  //        but we should retry instead or show an error
+  const updatedCount = updatedWallets.map(_ => _.length).getOrElse(0);
   /**
    * TODO: introduce a better way of displaying
    * info messages (e.g. red/green banner at the
@@ -302,8 +305,11 @@ function* deleteWallet(
         text: I18n.t("wallet.delete.successful"),
         type: "success"
       });
-      const count: number | undefined = yield call(fetchWallets, pagoPaClient); // refresh cards list
-      if (count !== undefined && count > 0) {
+      const wallets: SagaCallReturnType<typeof fetchWallets> = yield call(
+        fetchWallets,
+        pagoPaClient
+      ); // refresh cards list
+      if (wallets.isSome() && wallets.value.length > 0) {
         yield put(navigateTo(ROUTES.WALLET_LIST));
       } else {
         yield put(navigateTo(ROUTES.WALLET_HOME));
@@ -503,15 +509,31 @@ function* showPickPsp(
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 
-const shouldShowPspList = (
-  wallet: Wallet,
-  pspList: ReadonlyArray<Psp>
-): boolean =>
-  pspList.length > 1 &&
-  (wallet.psp === undefined ||
-    pspList.filter(
-      p => wallet.psp !== undefined && p.id === wallet.psp.id // check for "undefined" only used to correctly typeguard
-    ).length === undefined);
+/**
+ * Whether we need to show the PSP selection screen to the user.
+ */
+function shouldShowPspList(wallet: Wallet, psps: ReadonlyArray<Psp>): boolean {
+  if (psps.length === 1) {
+    // only one PSP, no need to show the PSP selection screen
+    return false;
+  }
+
+  const walletPsp = wallet.psp;
+
+  if (walletPsp === undefined) {
+    // there is no PSP associated to this payment method (wallet), we should
+    // show the PSP selection screen
+    return true;
+  }
+
+  // look for the PSP associated with the wallet in the list of PSPs returned
+  // by pagopa
+  const walletPspInPsps = psps.find(psp => psp.id === walletPsp.id);
+
+  // if the selected PSP is not available anymore, so show the PSP selection
+  // screen
+  return walletPspInPsps === undefined;
+}
 
 function* fetchPspList(
   pagoPaClient: PagoPaClient,
@@ -825,8 +847,29 @@ function* updatePspHandler(
       // request new wallets (expecting to get the
       // same ones as before, with the selected one's
       // PSP set to the new one)
-      yield call(fetchWallets, pagoPaClient);
-      yield put(paymentRequestConfirmPaymentMethod({ wallet, paymentId }));
+      const maybeUpdatedWallets: SagaCallReturnType<
+        typeof fetchWallets
+      > = yield call(fetchWallets, pagoPaClient);
+      if (maybeUpdatedWallets.isSome()) {
+        // we got an updated list of wallets, look for the wallet we just updated
+        const updatedWallet = maybeUpdatedWallets.value.find(
+          _ => _.idWallet === wallet.idWallet
+        );
+        if (updatedWallet) {
+          yield put(
+            paymentRequestConfirmPaymentMethod({
+              wallet: updatedWallet,
+              paymentId
+            })
+          );
+        }
+        // FIXME: uhmm we just updated a wallet but the wallet is now gone
+        //        right now we do nothing, letting the user retry
+        // TODO: show a toast
+      }
+      // in case fetchwallets fail we stay on the same screen, perhaps we just
+      // neeed to show a toast
+      // TODO: show a toast, asking to retry
     } else {
       yield put(
         paymentFailure(
