@@ -200,6 +200,12 @@ function* addCreditCard(
      * @https://www.pivotaltracker.com/story/show/160521051
      */
     if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
+      yield put(creditCardDataCleanup());
+      yield put(navigateTo(ROUTES.WALLET_HOME));
+      Toast.show({
+        text: I18n.t("wallet.newPaymentMethod.failed"),
+        type: "danger"
+      });
       return;
     }
     // 1st call was successful. Proceed with the 2nd one
@@ -225,6 +231,12 @@ function* addCreditCard(
      * Failed request. show an error (TODO) and return
      */
     if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
+      yield put(creditCardDataCleanup());
+      yield put(navigateTo(ROUTES.WALLET_HOME));
+      Toast.show({
+        text: I18n.t("wallet.newPaymentMethod.failed"),
+        type: "danger"
+      });
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
@@ -244,9 +256,13 @@ function* addCreditCard(
       })
     );
   } catch {
-    /**
-     * TODO handle errors
-     */
+    Toast.show({
+      text: I18n.t("wallet.newPaymentMethod.failed"),
+      type: "danger"
+    });
+    yield put(creditCardDataCleanup());
+    yield put(navigateTo(ROUTES.WALLET_HOME));
+    return;
   } finally {
     yield put(walletManagementResetLoadingState());
   }
