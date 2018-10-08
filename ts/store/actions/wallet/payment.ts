@@ -105,12 +105,6 @@ export const paymentRequestConfirmPaymentMethod = createStandardAction(
 )<PaymentRequestConfirmPaymentMethodPayload>();
 
 export const setPaymentStateToConfirmPaymentMethod = createAction(
-  "PAYMENT_CONFIRM_PAYMENT_METHOD",
-  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>) =>
-    resolve({ selectedPaymentMethod: wallet, pspList })
-);
-
-export const setPaymentStateFromSummaryToConfirmPaymentMethod = createAction(
   "PAYMENT_INITIAL_CONFIRM_PAYMENT_METHOD",
   resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
     resolve({ selectedPaymentMethod: wallet, pspList, paymentId })
@@ -202,7 +196,6 @@ export type PaymentActions =
   | ActionType<typeof setPaymentStateToPickPaymentMethod>
   | ActionType<typeof paymentRequestConfirmPaymentMethod>
   | ActionType<typeof setPaymentStateToConfirmPaymentMethod>
-  | ActionType<typeof setPaymentStateFromSummaryToConfirmPaymentMethod>
   | ActionType<typeof paymentRequestPickPsp>
   | ActionType<typeof setPaymentStateToPickPsp>
   | ActionType<typeof paymentUpdatePsp>

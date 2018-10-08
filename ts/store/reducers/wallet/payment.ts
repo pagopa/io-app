@@ -18,7 +18,6 @@ import {
   goBackOnePaymentState,
   paymentCancel,
   resetPaymentState,
-  setPaymentStateFromSummaryToConfirmPaymentMethod,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToManualEntry,
   setPaymentStateToPickPaymentMethod,
@@ -523,30 +522,14 @@ const confirmMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(setPaymentStateFromSummaryToConfirmPaymentMethod, action) &&
-    isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
-    isPaymentStateWithVerificaResponse(state)
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          ...state.stack.head,
-          ...action.payload,
-          kind: "PaymentStateConfirmPaymentMethod"
-        },
-        ["PaymentStateConfirmPaymentMethod"]
-      )
-    };
-  }
-  if (
     isActionOf(setPaymentStateToConfirmPaymentMethod, action) &&
     isInAllowedOrigins(state, [
+      "PaymentStateSummary",
       "PaymentStatePickPaymentMethod",
       "PaymentStateSummaryWithPaymentId",
       "PaymentStatePickPsp"
     ]) &&
-    isPaymentStateWithPaymentId(state)
+    isPaymentStateWithVerificaResponse(state)
   ) {
     return {
       stack: popToStateAndPush(

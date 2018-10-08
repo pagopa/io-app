@@ -54,7 +54,6 @@ import {
   paymentSetLoadingState,
   paymentUpdatePsp,
   resetPaymentState,
-  setPaymentStateFromSummaryToConfirmPaymentMethod,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToPickPaymentMethod,
   setPaymentStateToPickPsp,
@@ -487,19 +486,11 @@ function* showTransactionSummaryFromBannerHandler() {
 }
 
 function* showConfirmPaymentMethod(
-  paymentIdOrUndefined: string | undefined,
+  paymentId: string,
   wallet: Wallet,
   pspList: ReadonlyArray<Psp>
 ) {
-  yield put(
-    paymentIdOrUndefined === undefined
-      ? setPaymentStateToConfirmPaymentMethod(wallet, pspList)
-      : setPaymentStateFromSummaryToConfirmPaymentMethod(
-          wallet,
-          pspList,
-          paymentIdOrUndefined
-        )
-  );
+  yield put(setPaymentStateToConfirmPaymentMethod(wallet, pspList, paymentId));
   yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
 }
 
