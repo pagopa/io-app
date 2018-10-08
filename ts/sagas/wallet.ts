@@ -812,11 +812,9 @@ function* updatePspHandler(
   try {
     yield put(paymentSetLoadingState());
     const apiUpdateWalletPsp = (pagoPaToken: PagopaToken) =>
-      pagoPaClient.updateWalletPsp(
-        pagoPaToken,
-        wallet.idWallet,
-        action.payload.pspId
-      );
+      pagoPaClient.updateWalletPsp(pagoPaToken, wallet.idWallet, {
+        data: { idPsp: action.payload.pspId }
+      });
     const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
       fetchWithTokenRefresh,
       apiUpdateWalletPsp,
