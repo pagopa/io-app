@@ -55,7 +55,6 @@ import {
   paymentUpdatePsp,
   resetPaymentState,
   setPaymentStateFromSummaryToConfirmPaymentMethod,
-  setPaymentStateFromSummaryToPickPsp,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToPickPaymentMethod,
   setPaymentStateToPickPsp,
@@ -509,7 +508,7 @@ function* showPickPsp(
   wallet: Wallet,
   pspList: ReadonlyArray<Psp>
 ) {
-  yield put(setPaymentStateFromSummaryToPickPsp(wallet, pspList, paymentId));
+  yield put(setPaymentStateToPickPsp(wallet, pspList, paymentId));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 
@@ -795,9 +794,9 @@ function* pickPaymentMethodHandler(paymentId: string) {
 }
 
 function* pickPspHandler(action: ActionType<typeof paymentRequestPickPsp>) {
-  const pspList = action.payload.pspList;
+  const { wallet, pspList, paymentId } = action.payload;
 
-  yield put(setPaymentStateToPickPsp(action.payload.wallet, pspList));
+  yield put(setPaymentStateToPickPsp(wallet, pspList, paymentId));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
 }
 

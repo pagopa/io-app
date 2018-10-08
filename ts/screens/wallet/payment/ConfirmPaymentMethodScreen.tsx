@@ -81,7 +81,11 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: (paymentId: string) => void;
-  pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>) => void;
+  pickPsp: (
+    wallet: Wallet,
+    pspList: ReadonlyArray<Psp>,
+    paymentId: string
+  ) => void;
   // requestCompletion: () => void;
   requestPinLogin: (wallet: Wallet, paymentId: string) => void;
   goBack: () => void;
@@ -206,7 +210,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                       : I18n.t("payment.noPsp")}
                     <Text
                       link={true}
-                      onPress={() => this.props.pickPsp(wallet, pspList)}
+                      onPress={() =>
+                        this.props.pickPsp(wallet, pspList, paymentId)
+                      }
                     >
                       {I18n.t("payment.changePsp")}
                     </Text>
@@ -300,8 +306,8 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   requestPinLogin: (wallet: Wallet, paymentId: string) =>
     dispatch(paymentRequestPinLogin({ wallet, paymentId })),
   goBack: () => dispatch(paymentRequestGoBack()),
-  pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>) =>
-    dispatch(paymentRequestPickPsp({ wallet, pspList })),
+  pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
+    dispatch(paymentRequestPickPsp({ wallet, pspList, paymentId })),
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
   onCancel: () => dispatch(paymentRequestCancel())
 });

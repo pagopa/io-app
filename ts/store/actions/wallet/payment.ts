@@ -119,22 +119,17 @@ export const setPaymentStateFromSummaryToConfirmPaymentMethod = createAction(
 type PaymentRequestPickPspPayload = Readonly<{
   wallet: Wallet;
   pspList: ReadonlyArray<Psp>;
+  paymentId: string;
 }>;
 
 export const paymentRequestPickPsp = createStandardAction(
   "PAYMENT_REQUEST_PICK_PSP"
 )<PaymentRequestPickPspPayload>();
 
-export const setPaymentStateFromSummaryToPickPsp = createAction(
-  "PAYMENT_INITIAL_PICK_PSP",
-  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
-    resolve({ selectedPaymentMethod: wallet, pspList, paymentId })
-);
-
 export const setPaymentStateToPickPsp = createAction(
   "PAYMENT_PICK_PSP",
-  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>) =>
-    resolve({ selectedPaymentMethod: wallet, pspList })
+  resolve => (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
+    resolve({ selectedPaymentMethod: wallet, pspList, paymentId })
 );
 
 type PaymentUpdatePspPayload = Readonly<{
@@ -210,7 +205,6 @@ export type PaymentActions =
   | ActionType<typeof setPaymentStateFromSummaryToConfirmPaymentMethod>
   | ActionType<typeof paymentRequestPickPsp>
   | ActionType<typeof setPaymentStateToPickPsp>
-  | ActionType<typeof setPaymentStateFromSummaryToPickPsp>
   | ActionType<typeof paymentUpdatePsp>
   | ActionType<typeof paymentUpdatePspInState> // TODO: temporary, until integration with pagoPA occurs @https://www.pivotaltracker.com/story/show/159494746
   | ActionType<typeof paymentRequestCompletion>

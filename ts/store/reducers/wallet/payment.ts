@@ -19,7 +19,6 @@ import {
   paymentCancel,
   resetPaymentState,
   setPaymentStateFromSummaryToConfirmPaymentMethod,
-  setPaymentStateFromSummaryToPickPsp,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToManualEntry,
   setPaymentStateToPickPaymentMethod,
@@ -572,25 +571,9 @@ const pickPspReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(setPaymentStateFromSummaryToPickPsp, action) &&
-    isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
-    isPaymentStateWithVerificaResponse(state)
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          ...state.stack.head,
-          ...action.payload,
-          kind: "PaymentStatePickPsp"
-        },
-        ["PaymentStatePickPsp"]
-      )
-    };
-  }
-  if (
     isActionOf(setPaymentStateToPickPsp, action) &&
     isInAllowedOrigins(state, [
+      "PaymentStateSummary",
       "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod",
       "PaymentStatePickPaymentMethod"
