@@ -55,7 +55,6 @@ import {
   paymentUpdatePsp,
   resetPaymentState,
   setPaymentStateFromSummaryToConfirmPaymentMethod,
-  setPaymentStateFromSummaryToPickPaymentMethod,
   setPaymentStateFromSummaryToPickPsp,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToPickPaymentMethod,
@@ -399,7 +398,7 @@ function* watchPaymentSaga(
         break;
       }
       case getType(paymentRequestPickPaymentMethod): {
-        yield fork(pickPaymentMethodHandler);
+        yield fork(pickPaymentMethodHandler, action.payload.paymentId);
         break;
       }
       case getType(paymentRequestConfirmPaymentMethod): {
@@ -789,13 +788,9 @@ function* confirmPaymentMethodHandler(
   );
 }
 
-function* pickPaymentMethodHandler(paymentId?: string) {
+function* pickPaymentMethodHandler(paymentId: string) {
   // show screen with list of payment methods available
-  yield put(
-    paymentId
-      ? setPaymentStateFromSummaryToPickPaymentMethod(paymentId)
-      : setPaymentStateToPickPaymentMethod()
-  );
+  yield put(setPaymentStateToPickPaymentMethod(paymentId));
   yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
 }
 

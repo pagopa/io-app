@@ -80,7 +80,7 @@ type ReduxMappedStateProps = Readonly<{
       }>);
 
 type ReduxMappedDispatchProps = Readonly<{
-  pickPaymentMethod: () => void;
+  pickPaymentMethod: (paymentId: string) => void;
   pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>) => void;
   // requestCompletion: () => void;
   requestPinLogin: (wallet: Wallet, paymentId: string) => void;
@@ -246,7 +246,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.props.pickPaymentMethod()}
+              onPress={_ => this.props.pickPaymentMethod(paymentId)}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
@@ -295,7 +295,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: () => dispatch(paymentRequestPickPaymentMethod()),
+  pickPaymentMethod: (paymentId: string) =>
+    dispatch(paymentRequestPickPaymentMethod({ paymentId })),
   requestPinLogin: (wallet: Wallet, paymentId: string) =>
     dispatch(paymentRequestPinLogin({ wallet, paymentId })),
   goBack: () => dispatch(paymentRequestGoBack()),

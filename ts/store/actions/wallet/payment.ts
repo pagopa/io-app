@@ -83,15 +83,15 @@ export const paymentRequestContinueWithPaymentMethods = createStandardAction(
   "PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS"
 )<PaymentRequestContinueWithPaymentMethodsPayload>();
 
+type PaymentRequestPickPaymentMethodPayload = Readonly<{
+  paymentId: string;
+}>;
+
 export const paymentRequestPickPaymentMethod = createStandardAction(
   "PAYMENT_REQUEST_PICK_PAYMENT_METHOD"
-)();
+)<PaymentRequestPickPaymentMethodPayload>();
 
 export const setPaymentStateToPickPaymentMethod = createStandardAction(
-  "PAYMENT_PICK_PAYMENT_METHOD"
-)();
-
-export const setPaymentStateFromSummaryToPickPaymentMethod = createStandardAction(
   "PAYMENT_INITIAL_PICK_PAYMENT_METHOD"
 )<string>();
 
@@ -205,7 +205,6 @@ export type PaymentActions =
   | ActionType<typeof paymentRequestContinueWithPaymentMethods>
   | ActionType<typeof paymentRequestPickPaymentMethod>
   | ActionType<typeof setPaymentStateToPickPaymentMethod>
-  | ActionType<typeof setPaymentStateFromSummaryToPickPaymentMethod>
   | ActionType<typeof paymentRequestConfirmPaymentMethod>
   | ActionType<typeof setPaymentStateToConfirmPaymentMethod>
   | ActionType<typeof setPaymentStateFromSummaryToConfirmPaymentMethod>

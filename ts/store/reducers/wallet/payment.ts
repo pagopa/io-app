@@ -19,7 +19,6 @@ import {
   paymentCancel,
   resetPaymentState,
   setPaymentStateFromSummaryToConfirmPaymentMethod,
-  setPaymentStateFromSummaryToPickPaymentMethod,
   setPaymentStateFromSummaryToPickPsp,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToManualEntry,
@@ -488,11 +487,11 @@ const pickMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(setPaymentStateFromSummaryToPickPaymentMethod, action) &&
+    isActionOf(setPaymentStateToPickPaymentMethod, action) &&
     isInAllowedOrigins(state, [
-      "PaymentStateSummary"
-      // "PaymentStateSummaryWithPaymentId",
-      // "PaymentStateConfirmPaymentMethod"
+      "PaymentStateSummary",
+      "PaymentStateSummaryWithPaymentId",
+      "PaymentStateConfirmPaymentMethod"
     ]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
@@ -513,29 +512,7 @@ const pickMethodReducer: PaymentReducer = (
       )
     };
   }
-  if (
-    isActionOf(setPaymentStateToPickPaymentMethod, action) &&
-    isInAllowedOrigins(state, [
-      "PaymentStateSummaryWithPaymentId",
-      "PaymentStateConfirmPaymentMethod"
-    ]) &&
-    isPaymentStateWithPaymentId(state)
-  ) {
-    const prevState = state.stack.head;
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          kind: "PaymentStatePickPaymentMethod",
-          rptId: prevState.rptId,
-          verificaResponse: prevState.verificaResponse,
-          initialAmount: prevState.initialAmount,
-          paymentId: prevState.paymentId
-        },
-        ["PaymentStatePickPaymentMethod"]
-      )
-    };
-  }
+
   return state;
 };
 
