@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">IO</string>
+    <string name="app_name" translatable="false">IO</string>
+    <string name="notification_channel_name">Messages</string>
+    <string name="notification_channel_description">Receive notification for new messages</string>
 </resources>
