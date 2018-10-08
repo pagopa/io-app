@@ -260,8 +260,8 @@ function mapStateToProps() {
     } else {
       return {
         valid: false,
-        error: paymentErrorSelector(state),
-        isLoading: paymentLoadingSelector(state)
+        error: none,
+        isLoading: false
       };
     }
   };
