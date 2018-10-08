@@ -47,7 +47,7 @@
     "react-native-mixpanel": "^1.1.1",
     "react-native-offline": "3.11.0",
     "react-native-popup-menu": "^0.14.0",
-    "react-native-push-notification": "3.0.2",
+    "react-native-push-notification": "git://github.com/zo0r/react-native-push-notification#aaf2d19925db4666d6018c0ab1ff0d7d4c90a21d",
     "react-native-qrcode-scanner": "^1.1.0",
     "react-native-sha256": "^1.1.1",
     "react-native-splash-screen": "^3.1.1",
