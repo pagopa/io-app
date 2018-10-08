@@ -37,13 +37,15 @@ import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
+  getPaymentIdFromGlobalStateWithSelectedPaymentMethod,
   getPaymentStep,
-  getPspList,
+  getPspListFromGlobalStateWithSelectedPaymentMethod,
+  getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod,
   isGlobalStateWithSelectedPaymentMethod
 } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import { mapErrorCodeToMessage } from "../../../types/errors";
-import { Psp } from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../../utils/stringBuilder";
 
 type ReduxMappedStateProps = Readonly<{
@@ -54,11 +56,13 @@ type ReduxMappedStateProps = Readonly<{
     | Readonly<{
         valid: true;
         pspList: ReadonlyArray<Psp>;
+        wallet: Wallet;
+        paymentId: string;
       }>
     | Readonly<{ valid: false }>);
 
 type ReduxMappedDispatchProps = Readonly<{
-  pickPsp: (pspId: number) => void;
+  pickPsp: (pspId: number, wallet: Wallet, paymentId: string) => void;
   goBack: () => void;
   onCancel: () => void;
 }>;
@@ -107,6 +111,8 @@ class PickPspScreen extends React.Component<Props, never> {
       return null;
     }
 
+    const { wallet, paymentId } = this.props;
+
     return (
       <Container>
         <AppHeader>
@@ -140,7 +146,9 @@ class PickPspScreen extends React.Component<Props, never> {
             data={this.props.pspList}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => this.props.pickPsp(item.id)}>
+              <TouchableOpacity
+                onPress={() => this.props.pickPsp(item.id, wallet, paymentId)}
+              >
                 <View style={style.listItem}>
                   <Grid>
                     <Col size={6}>
@@ -176,25 +184,48 @@ class PickPspScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  error: createErrorSelector(["PAYMENT"])(state),
-  isLoading: createLoadingSelector(["PAYMENT"])(state),
-  ...(getPaymentStep(state) === "PaymentStatePickPsp" &&
-  isGlobalStateWithSelectedPaymentMethod(state)
-    ? {
+function mapStateToProps() {
+  const paymetErrorSelector = createErrorSelector(["PAYMENT"]);
+  const paymentLoadingSelector = createLoadingSelector(["PAYMENT"]);
+  return (state: GlobalState): ReduxMappedStateProps => {
+    const error = paymetErrorSelector(state);
+    const isLoading = paymentLoadingSelector(state);
+
+    if (
+      getPaymentStep(state) === "PaymentStatePickPsp" &&
+      isGlobalStateWithSelectedPaymentMethod(state)
+    ) {
+      // The PaymentManager returns a PSP entry for each supported language, so
+      // we need to skip PSPs that have the language different from the current
+      // locale.
+      const locale = I18n.locale.slice(0, 2);
+      const pspList = getPspListFromGlobalStateWithSelectedPaymentMethod(
+        state
+      ).filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
+      return {
         valid: true,
-        pspList: getPspList(state)
-      }
-    : { valid: false })
-});
+        error,
+        isLoading,
+        pspList,
+        wallet: getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(
+          state
+        ),
+        paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state)
+      };
+    } else {
+      return { valid: false, error, isLoading };
+    }
+  };
+}
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPsp: (pspId: number) => dispatch(paymentUpdatePsp(pspId)),
+  pickPsp: (pspId: number, wallet: Wallet, paymentId: string) =>
+    dispatch(paymentUpdatePsp({ pspId, wallet, paymentId })),
   goBack: () => dispatch(paymentRequestGoBack()),
   onCancel: () => dispatch(paymentRequestCancel())
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps(),
   mapDispatchToProps
 )(withErrorModal(withLoadingSpinner(PickPspScreen, {}), mapErrorCodeToMessage));

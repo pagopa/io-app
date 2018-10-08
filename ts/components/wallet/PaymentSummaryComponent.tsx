@@ -10,18 +10,13 @@ import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
+
 import { WalletStyles } from "../../components/styles/wallet";
+
 import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import {
-  getCurrentAmount,
-  getInitialAmount,
-  getPaymentReason,
-  isGlobalStateWithVerificaResponse
-} from "../../store/reducers/wallet/payment";
+
 import variables from "../../theme/variables";
-import { UNKNOWN_PAYMENT_REASON } from "../../types/unknown";
+
 import { buildAmount } from "../../utils/stringBuilder";
 
 type ReduxMappedStateProps =
@@ -207,16 +202,4 @@ class PaymentSummaryComponent extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  isGlobalStateWithVerificaResponse(state)
-    ? {
-        hasVerificaResponse: true,
-        amount: getInitialAmount(state),
-        updatedAmount: getCurrentAmount(state),
-        paymentReason: getPaymentReason(state).getOrElse(UNKNOWN_PAYMENT_REASON)
-      }
-    : {
-        hasVerificaResponse: false
-      };
-
-export default connect(mapStateToProps)(PaymentSummaryComponent);
+export default PaymentSummaryComponent;

@@ -6,6 +6,7 @@ import ROUTES from "../../navigation/routes";
 
 import { setDeepLink } from "../../store/actions/deepLink";
 import { navigationStateSelector } from "../../store/reducers/navigation";
+import { GlobalState } from "../../store/reducers/types";
 
 /**
  * Saves the navigation state in the deep link state so that when the app
@@ -16,7 +17,7 @@ import { navigationStateSelector } from "../../store/reducers/navigation";
 export function* saveNavigationStateSaga(): IterableIterator<Effect> {
   const navigationState: ReturnType<
     typeof navigationStateSelector
-  > = yield select(navigationStateSelector);
+  > = yield select<GlobalState>(navigationStateSelector);
   const currentRoute = navigationState.routes[
     navigationState.index
   ] as NavigationStateRoute<NavigationParams>;

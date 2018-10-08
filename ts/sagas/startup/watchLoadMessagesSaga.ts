@@ -46,6 +46,7 @@ import {
   serviceByIdSelector,
   servicesByIdSelector
 } from "../../store/reducers/entities/services/servicesById";
+import { GlobalState } from "../../store/reducers/types";
 import {
   MessageWithContentPO,
   toMessageWithContentPO
@@ -66,7 +67,7 @@ export function* loadMessage(
   // If we already have the message in the store just return it
   const cachedMessage: ReturnType<
     ReturnType<typeof messageByIdSelector>
-  > = yield select(messageByIdSelector(id));
+  > = yield select<GlobalState>(messageByIdSelector(id));
   if (cachedMessage) {
     return right(cachedMessage);
   }
@@ -105,7 +106,7 @@ export function* loadService(
   // If we already have the service in the store just return it
   const cachedService: ReturnType<
     ReturnType<typeof serviceByIdSelector>
-  > = yield select(serviceByIdSelector(id));
+  > = yield select<GlobalState>(serviceByIdSelector(id));
   if (cachedService) {
     return right(cachedService);
   }
@@ -145,12 +146,12 @@ export function* loadMessages(
     // Load already cached messages from the store
     const cachedMessagesById: ReturnType<
       typeof messagesByIdSelector
-    > = yield select(messagesByIdSelector);
+    > = yield select<GlobalState>(messagesByIdSelector);
 
     // Load already cached services from the store
     const cachedServicesById: ReturnType<
       typeof servicesByIdSelector
-    > = yield select(servicesByIdSelector);
+    > = yield select<GlobalState>(servicesByIdSelector);
 
     // Request the list of messages from the Backend
     const response: SagaCallReturnType<typeof getMessages> = yield call(
