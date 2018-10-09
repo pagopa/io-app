@@ -18,7 +18,11 @@ import {
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationEvents,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { InstabugButtons } from "../../../components/InstabugButtons";
@@ -65,6 +69,7 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
+  isFocused: boolean;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -150,7 +155,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
     this.state = {
-      scanningState: "SCANNING"
+      scanningState: "SCANNING",
+      isFocused: false
     };
   }
 
@@ -167,6 +173,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
   }
+
+  private handleDidFocus = () => this.setState({ isFocused: true });
+
+  private handleWillBlur = () => this.setState({ isFocused: false });
 
   public render(): React.ReactNode {
     if (!this.props.valid) {
@@ -191,6 +201,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
     return (
       <Container style={styles.white}>
+        <NavigationEvents
+          onDidFocus={this.handleDidFocus}
+          onWillBlur={this.handleWillBlur}
+        />
         <AppHeader>
           <Left>
             <Button transparent={true} onPress={() => this.props.goBack()}>
@@ -205,33 +219,33 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           </Right>
         </AppHeader>
         <ScrollView bounces={false}>
-          <QRCodeScanner
-            onRead={(reading: { data: string }) =>
-              this.onQrCodeData(reading.data)
-            }
-            ref="scanner" // tslint:disable-line jsx-no-string-ref
-            containerStyle={styles.cameraContainer}
-            showMarker={true}
-            cameraStyle={styles.camera}
-            customMarker={
-              <CameraMarker
-                screenWidth={screenWidth}
-                state={this.state.scanningState}
-              />
-            }
-            bottomContent={
-              <View>
-                <View spacer={true} large={true} />
-                <Text style={[styles.padded, styles.centerText]}>
-                  {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                </Text>
-                <View spacer={true} extralarge={true} />
-              </View>
-            }
-            cameraProps={{
-              ratio: "1:1"
-            }}
-          />
+          {this.state.isFocused && (
+            <QRCodeScanner
+              onRead={(reading: { data: string }) =>
+                this.onQrCodeData(reading.data)
+              }
+              ref="scanner" // tslint:disable-line jsx-no-string-ref
+              containerStyle={styles.cameraContainer}
+              showMarker={true}
+              cameraStyle={styles.camera}
+              customMarker={
+                <CameraMarker
+                  screenWidth={screenWidth}
+                  state={this.state.scanningState}
+                />
+              }
+              bottomContent={
+                <View>
+                  <View spacer={true} large={true} />
+                  <Text style={[styles.padded, styles.centerText]}>
+                    {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                  </Text>
+                  <View spacer={true} extralarge={true} />
+                </View>
+              }
+              cameraProps={{ ratio: "1:1" }}
+            />
+          )}
         </ScrollView>
         <FooterWithButtons
           leftButton={secondaryButtonProps}
