@@ -3,7 +3,6 @@ import * as React from "react";
 import {
   ListRenderItem,
   ListRenderItemInfo,
-  SectionList,
   SectionListData,
   StyleSheet
 } from "react-native";
@@ -34,6 +33,7 @@ import { isDefined } from "../../utils/guards";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
+import { SectionList } from "../../components/ui/SectionList";
 import variables from "../../theme/variables";
 
 const styles = StyleSheet.create({
@@ -108,7 +108,7 @@ class ServicesScreen extends React.PureComponent<Props> {
             </Grid>
           </Left>
           <Right>
-            <IconFont name="io-right" />
+            <IconFont name="io-right" color={variables.brandPrimary} />
           </Right>
         </ListItem>
       )
