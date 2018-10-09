@@ -3,7 +3,6 @@ import * as React from "react";
 import {
   ListRenderItem,
   ListRenderItemInfo,
-  SectionList,
   SectionListData,
   StyleSheet
 } from "react-native";
@@ -34,6 +33,7 @@ import { isDefined } from "../../utils/guards";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
+import { SectionList } from "../../components/ui/SectionList";
 import variables from "../../theme/variables";
 
 const styles = StyleSheet.create({
@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     // Leave a little bit of space in order to avoid cropped characters
     // due to italic style.
     paddingRight: variables.fontSizeBase / 3
+  },
+  serviceName: {
+    color: variables.brandDarkGray
   }
 });
 
@@ -96,7 +99,7 @@ class ServicesScreen extends React.PureComponent<Props> {
           <Left>
             <Grid>
               <Row>
-                <H4>{service.service_name}</H4>
+                <H4 style={styles.serviceName}>{service.service_name}</H4>
               </Row>
               <Row>
                 <Text italic={true} style={styles.fixCroppedItalic}>
@@ -108,7 +111,7 @@ class ServicesScreen extends React.PureComponent<Props> {
             </Grid>
           </Left>
           <Right>
-            <IconFont name="io-right" />
+            <IconFont name="io-right" color={variables.brandPrimary} />
           </Right>
         </ListItem>
       )
