@@ -21,6 +21,7 @@ import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../../store/reducers/notifications/pendingMessage";
+import { GlobalState } from "../../store/reducers/types";
 import { saveNavigationStateSaga } from "../startup/saveNavigationStateSaga";
 
 /**
@@ -68,9 +69,9 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
       } else {
         // Check if we have a pending notification message
-        const pendingMessageState: PendingMessageState = yield select(
-          pendingMessageStateSelector
-        );
+        const pendingMessageState: PendingMessageState = yield select<
+          GlobalState
+        >(pendingMessageStateSelector);
         if (pendingMessageState) {
           // We have a pending notification message to handle
           const messageId = pendingMessageState.id;
@@ -79,7 +80,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
           // Navigate to message details screen
           yield put(navigateToMessageDetailScreenAction(messageId));
           // Push the MAIN navigator in the history to handle the back button
-          const navigationState: NavigationState = yield select(
+          const navigationState: NavigationState = yield select<GlobalState>(
             navigationStateSelector
           );
           yield put(

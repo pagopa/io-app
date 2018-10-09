@@ -6486,9 +6486,9 @@ react-native-popup-menu@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.14.0.tgz#8a11e4a78f76f5883fa5eb9d736f0ec2df8765ce"
 
-react-native-push-notification@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
+"react-native-push-notification@git://github.com/zo0r/react-native-push-notification#aaf2d19925db4666d6018c0ab1ff0d7d4c90a21d":
+  version "3.1.1"
+  resolved "git://github.com/zo0r/react-native-push-notification#aaf2d19925db4666d6018c0ab1ff0d7d4c90a21d"
 
 react-native-qrcode-scanner@^1.1.0:
   version "1.1.0"

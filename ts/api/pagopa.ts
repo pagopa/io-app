@@ -45,7 +45,7 @@ import {
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
 
-import { defaultRetryingFetch } from "../utils/fetch";
+import { defaultRetryingFetch, pagopaFetch } from "../utils/fetch";
 
 type MapTypeInApiResponse<T, S extends number, B> = T extends IResponseType<
   S,
@@ -223,7 +223,8 @@ const deleteWallet: (
 export function PagoPaClient(
   baseUrl: string,
   walletToken: string,
-  fetchApi: typeof fetch = defaultRetryingFetch()
+  fetchApi: typeof fetch = defaultRetryingFetch(),
+  altFetchApi: typeof fetch = pagopaFetch()
 ) {
   const options = { baseUrl, fetchApi };
 
@@ -240,7 +241,10 @@ export function PagoPaClient(
       pagoPaToken: PagopaToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
     ) =>
-      createFetchRequestForApi(checkPayment(pagoPaToken), options)({
+      createFetchRequestForApi(checkPayment(pagoPaToken), {
+        ...options,
+        fetchApi: altFetchApi
+      })({
         id
       }),
     getPspList: (

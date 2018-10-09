@@ -7,8 +7,9 @@
  * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
-import { Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import {
+  AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-ts-commons/lib/pagopa";
@@ -16,7 +17,10 @@ import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
+import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+
 import GoBackButton from "../../../components/GoBackButton";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -25,7 +29,9 @@ import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
+
 import I18n from "../../../i18n";
+
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCancel,
@@ -36,17 +42,30 @@ import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
 import {
+  getCurrentAmountFromGlobalStateWithVerificaResponse,
+  getInitialAmountFromGlobalStateWithVerificaResponse,
+  getPaymentContextCodeFromGlobalStateWithVerificaResponse,
   getPaymentReason,
-  getPaymentRecipient,
+  getPaymentRecipientFromGlobalStateWithVerificaResponse,
   getPaymentStep,
-  getRptId,
+  getRptIdFromGlobalStateWithVerificaResponse,
   isGlobalStateWithVerificaResponse
 } from "../../../store/reducers/wallet/payment";
+
 import { mapErrorCodeToMessage } from "../../../types/errors";
 import {
   UNKNOWN_PAYMENT_REASON,
   UNKNOWN_RECIPIENT
 } from "../../../types/unknown";
+
+type TransactionInfo = Readonly<{
+  paymentReason: string;
+  paymentRecipient: EnteBeneficiario;
+  rptId: RptId;
+  codiceContestoPagamento: CodiceContestoPagamento;
+  amount: AmountInEuroCents;
+  currentAmount: AmountInEuroCents;
+}>;
 
 type ReduxMappedStateProps = Readonly<{
   error: Option<string>;
@@ -58,13 +77,15 @@ type ReduxMappedStateProps = Readonly<{
       }>
     | Readonly<{
         valid: true;
-        paymentReason: string | undefined;
-        paymentRecipient: EnteBeneficiario | undefined;
-        rptId: RptId | undefined;
+        transactionInfo: Option<TransactionInfo>;
       }>);
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmSummary: () => void;
+  confirmSummary: (
+    rptId: RptId,
+    codiceContestoPagamento: CodiceContestoPagamento,
+    currentAmount: AmountInEuroCents
+  ) => void;
   goBack: () => void;
   cancelPayment: () => void;
   onCancel: () => void;
@@ -109,10 +130,21 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       return null;
     }
 
+    // when empty, it means we're still loading the verifica response
+    const txInfo = this.props.transactionInfo;
+
     const primaryButtonProps = {
+      disabled: txInfo.isNone(),
       block: true,
       primary: true,
-      onPress: () => this.props.confirmSummary(),
+      onPress: txInfo.isSome()
+        ? () =>
+            this.props.confirmSummary(
+              txInfo.value.rptId,
+              txInfo.value.codiceContestoPagamento,
+              txInfo.value.currentAmount
+            )
+        : undefined,
       title: I18n.t("wallet.continue")
     };
 
@@ -122,8 +154,6 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       onPress: () => this.props.cancelPayment(),
       title: I18n.t("wallet.cancel")
     };
-
-    const { paymentRecipient, paymentReason, rptId } = this.props;
 
     return (
       <Container>
@@ -140,22 +170,36 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentSummaryComponent navigation={this.props.navigation} />
+          {txInfo.isSome() ? (
+            <PaymentSummaryComponent
+              navigation={this.props.navigation}
+              hasVerificaResponse={true}
+              amount={txInfo.value.amount}
+              updatedAmount={txInfo.value.currentAmount}
+              paymentReason={txInfo.value.paymentReason}
+            />
+          ) : (
+            <PaymentSummaryComponent
+              navigation={this.props.navigation}
+              hasVerificaResponse={false}
+            />
+          )}
+
           <View content={true}>
             <Markdown>
-              {paymentRecipient !== undefined
-                ? formatMdRecipient(paymentRecipient)
-                : "..."}
+              {txInfo
+                .map(_ => formatMdRecipient(_.paymentRecipient))
+                .getOrElse("...")}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {paymentReason !== undefined
-                ? formatMdPaymentReason(paymentReason)
-                : "..."}
+              {txInfo
+                .map(_ => formatMdPaymentReason(_.paymentReason))
+                .getOrElse("...")}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {rptId !== undefined ? formatMdInfoRpt(rptId) : "..."}
+              {txInfo.map(_ => formatMdInfoRpt(_.rptId)).getOrElse("...")}
             </Markdown>
             <View spacer={true} />
           </View>
@@ -170,48 +214,78 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  error: createErrorSelector(["PAYMENT"])(state),
-  isLoading: createLoadingSelector(["PAYMENT"])(state),
-  ...((getPaymentStep(state) === "PaymentStateSummary" ||
-    getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
-  isGlobalStateWithVerificaResponse(state)
-    ? {
-        valid: true,
+function mapStateToProps() {
+  const paymentErrorSelector = createErrorSelector(["PAYMENT"]);
+  const paymentLoadingSelector = createLoadingSelector(["PAYMENT"]);
+
+  return (state: GlobalState): ReduxMappedStateProps => {
+    if (
+      (getPaymentStep(state) === "PaymentStateSummary" ||
+        getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
+      isGlobalStateWithVerificaResponse(state)
+    ) {
+      const transactionInfo = some({
         paymentReason: getPaymentReason(state).getOrElse(
           UNKNOWN_PAYMENT_REASON
         ), // could be undefined as per pagoPA type definition
-        paymentRecipient: getPaymentRecipient(state).getOrElse(
-          UNKNOWN_RECIPIENT
-        ), // could be undefined as per pagoPA type definition
-        rptId: getRptId(state)
-      }
-    : getPaymentStep(state) === "PaymentStateNoState" ||
+        paymentRecipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
+          state
+        ).getOrElse(UNKNOWN_RECIPIENT), // could be undefined as per pagoPA type definition
+        rptId: getRptIdFromGlobalStateWithVerificaResponse(state),
+        codiceContestoPagamento: getPaymentContextCodeFromGlobalStateWithVerificaResponse(
+          state
+        ),
+        amount: getInitialAmountFromGlobalStateWithVerificaResponse(state),
+        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
+          state
+        )
+      });
+      return {
+        valid: true,
+        error: paymentErrorSelector(state),
+        isLoading: paymentLoadingSelector(state),
+        transactionInfo
+      };
+    } else if (
+      getPaymentStep(state) === "PaymentStateNoState" ||
       getPaymentStep(state) === "PaymentStateQrCode" ||
       getPaymentStep(state) === "PaymentStateManualEntry"
-      ? {
-          valid: true,
-          error: createErrorSelector(["PAYMENT"])(state),
-          isLoading: createLoadingSelector(["PAYMENT"])(state),
-          paymentReason: undefined,
-          paymentRecipient: undefined,
-          rptId: undefined
-        }
-      : {
-          valid: false,
-          error: createErrorSelector(["PAYMENT"])(state),
-          isLoading: createLoadingSelector(["PAYMENT"])(state)
-        })
-});
+    ) {
+      return {
+        valid: true,
+        error: paymentErrorSelector(state),
+        isLoading: paymentLoadingSelector(state),
+        transactionInfo: none
+      };
+    } else {
+      return {
+        valid: false,
+        error: none,
+        isLoading: false
+      };
+    }
+  };
+}
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmSummary: () => dispatch(paymentRequestContinueWithPaymentMethods()),
+  confirmSummary: (
+    rptId: RptId,
+    codiceContestoPagamento: CodiceContestoPagamento,
+    currentAmount: AmountInEuroCents
+  ) =>
+    dispatch(
+      paymentRequestContinueWithPaymentMethods({
+        rptId,
+        codiceContestoPagamento,
+        currentAmount
+      })
+    ),
   goBack: () => dispatch(paymentRequestGoBack()),
   cancelPayment: () => dispatch(paymentRequestCancel()),
   onCancel: () => dispatch(paymentRequestCancel())
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps(),
   mapDispatchToProps
 )(
   withErrorModal(

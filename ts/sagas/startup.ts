@@ -29,6 +29,7 @@ import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../store/reducers/notifications/pendingMessage";
+import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { getPin } from "../utils/keychain";
@@ -60,7 +61,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<
     typeof sessionTokenSelector
-  > = yield select(sessionTokenSelector);
+  > = yield select<GlobalState>(sessionTokenSelector);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<
@@ -101,7 +102,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // tslint:disable-next-line: no-let
   let maybeSessionInformation: ReturnType<
     typeof sessionInfoSelector
-  > = yield select(sessionInfoSelector);
+  > = yield select<GlobalState>(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
     maybeSessionInformation = yield call(
@@ -131,7 +132,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     return;
   }
   const userProfile = maybeUserProfile.value;
-  const maybeIdp: Option<IdentityProvider> = yield select(idpSelector);
+  const maybeIdp: Option<IdentityProvider> = yield select<GlobalState>(
+    idpSelector
+  );
 
   setInstabugProfileAttributes(userProfile, maybeIdp);
 
@@ -217,7 +220,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchPinResetSaga);
 
   // Check if we have a pending notification message
-  const pendingMessageState: PendingMessageState = yield select(
+  const pendingMessageState: PendingMessageState = yield select<GlobalState>(
     pendingMessageStateSelector
   );
 
@@ -231,7 +234,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Navigate to message details screen
     yield put(navigateToMessageDetailScreenAction(messageId));
     // Push the MAIN navigator in the history to handle the back button
-    const navigationState: NavigationState = yield select(
+    const navigationState: NavigationState = yield select<GlobalState>(
       navigationStateSelector
     );
     yield put(
