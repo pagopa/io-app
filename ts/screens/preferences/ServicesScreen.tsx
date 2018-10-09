@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     // Leave a little bit of space in order to avoid cropped characters
     // due to italic style.
     paddingRight: variables.fontSizeBase / 3
+  },
+  serviceName: {
+    color: variables.brandDarkGray
   }
 });
 
@@ -96,7 +99,7 @@ class ServicesScreen extends React.PureComponent<Props> {
           <Left>
             <Grid>
               <Row>
-                <H4>{service.service_name}</H4>
+                <H4 style={styles.serviceName}>{service.service_name}</H4>
               </Row>
               <Row>
                 <Text italic={true} style={styles.fixCroppedItalic}>
