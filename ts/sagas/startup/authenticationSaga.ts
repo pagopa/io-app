@@ -12,6 +12,7 @@ import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { NavigationActions } from "react-navigation";
 import ROUTES from "../../navigation/routes";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
+import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 
 /**
@@ -21,7 +22,9 @@ import { SessionToken } from "../../types/SessionToken";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
 
-  const isSessionExpired: boolean = yield select(isSessionExpiredSelector);
+  const isSessionExpired: boolean = yield select<GlobalState>(
+    isSessionExpiredSelector
+  );
 
   // Reset the navigation stack and navigate to the authentication screen
   if (isSessionExpired) {

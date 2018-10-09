@@ -33,7 +33,11 @@ import {
   paymentRequestTransactionSummaryFromBanner
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentStep } from "../../../store/reducers/wallet/payment";
+import {
+  getPaymentIdFromGlobalStateWithPaymentId,
+  getPaymentStep,
+  isGlobalStateWithPaymentId
+} from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 
@@ -44,10 +48,11 @@ type ReduxMappedStateProps =
   | Readonly<{
       valid: true;
       wallets: ReadonlyArray<Wallet>;
+      paymentId: string;
     }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmPaymentMethod: (walletId: number) => void;
+  confirmPaymentMethod: (wallet: Wallet, paymentId: string) => void;
   goBack: () => void;
   showSummary: () => void;
 }>;
@@ -85,7 +90,10 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       title: I18n.t("global.buttons.cancel")
     };
 
-    const { wallets } = this.props;
+    const { wallets, paymentId } = this.props;
+
+    const confirmPaymentMethod = (wallet: Wallet) =>
+      this.props.confirmPaymentMethod(wallet, paymentId);
 
     return (
       <Container>
@@ -131,7 +139,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                   menu={false}
                   favorite={false}
                   lastUsage={false}
-                  mainAction={this.props.confirmPaymentMethod}
+                  mainAction={confirmPaymentMethod}
                   logoPosition={LogoPosition.TOP}
                 />
               )}
@@ -149,16 +157,18 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  getPaymentStep(state) === "PaymentStatePickPaymentMethod"
+  getPaymentStep(state) === "PaymentStatePickPaymentMethod" &&
+  isGlobalStateWithPaymentId(state)
     ? {
         valid: true,
-        wallets: walletsSelector(state)
+        wallets: walletsSelector(state),
+        paymentId: getPaymentIdFromGlobalStateWithPaymentId(state)
       }
     : { valid: false };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmPaymentMethod: (walletId: number) =>
-    dispatch(paymentRequestConfirmPaymentMethod(walletId)),
+  confirmPaymentMethod: (wallet: Wallet, paymentId: string) =>
+    dispatch(paymentRequestConfirmPaymentMethod({ wallet, paymentId })),
   goBack: () => dispatch(paymentRequestGoBack()),
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
 });

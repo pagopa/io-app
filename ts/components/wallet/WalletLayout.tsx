@@ -25,7 +25,10 @@ import { connect } from "react-redux";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
-import { paymentRequestQrCode } from "../../store/actions/wallet/payment";
+import {
+  setPaymentStateToQrCode,
+  startPaymentSaga
+} from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import GoBackButton from "../GoBackButton";
@@ -95,7 +98,8 @@ type NoCards = Readonly<{
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
 type ReduxMappedProps = Readonly<{
-  startPayment: () => void;
+  setPaymentStateToQrCode: () => void;
+  startPaymentSaga: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -235,7 +239,14 @@ class WalletLayout extends React.Component<Props> {
         </ScrollView>
         {this.props.showPayButton && (
           <View footer={true}>
-            <Button block={true} onPress={() => this.props.startPayment()}>
+            <Button
+              block={true}
+              onPress={() => {
+                this.props.setPaymentStateToQrCode();
+                this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE);
+                this.props.startPaymentSaga();
+              }}
+            >
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
@@ -247,7 +258,8 @@ class WalletLayout extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  startPayment: () => dispatch(paymentRequestQrCode())
+  setPaymentStateToQrCode: () => dispatch(setPaymentStateToQrCode()),
+  startPaymentSaga: () => dispatch(startPaymentSaga())
 });
 
 export default connect(

@@ -47,9 +47,7 @@ export default class CardBody extends React.Component<CardProps> {
         <Row
           style={CreditCardStyles.rowStyle}
           onPress={() =>
-            mainAction !== undefined
-              ? mainAction(this.props.item.idWallet)
-              : undefined
+            mainAction !== undefined ? mainAction(this.props.item) : undefined
           }
         >
           <Right>

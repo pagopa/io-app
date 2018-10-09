@@ -5,34 +5,28 @@ import {
   fromArray as toNonEmptyArray,
   NonEmptyArray
 } from "fp-ts/lib/NonEmptyArray";
-import { fromNullable, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
-import { UNKNOWN_CARD } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { Action } from "../../actions/types";
 import {
+  goBackOnePaymentState,
   paymentCancel,
-  paymentCompleted,
-  paymentConfirmPaymentMethod,
-  paymentGoBack,
-  paymentInitialConfirmPaymentMethod,
-  paymentInitialPickPaymentMethod,
-  paymentInitialPickPsp,
-  paymentManualEntry,
-  paymentPickPaymentMethod,
-  paymentPickPsp,
-  paymentPinLogin,
-  paymentQrCode,
-  paymentTransactionSummaryFromBanner,
-  paymentTransactionSummaryFromRptId
+  resetPaymentState,
+  setPaymentStateToConfirmPaymentMethod,
+  setPaymentStateToManualEntry,
+  setPaymentStateToPickPaymentMethod,
+  setPaymentStateToPickPsp,
+  setPaymentStateToPinLogin,
+  setPaymentStateToQrCode,
+  setPaymentStateToSummary,
+  setPaymentStateToSummaryWithPaymentId
 } from "../../actions/wallet/payment";
-import { IndexedById } from "../../helpers/indexer";
 import {
   GlobalState,
   GlobalStateWithPaymentId,
@@ -40,7 +34,6 @@ import {
   GlobalStateWithVerificaResponse
 } from "../types";
 import { WalletState } from "./index";
-import { getWalletFromId, getWallets } from "./wallets";
 
 // The following are possible states, identified
 // by a string (kind), and with specific
@@ -89,7 +82,7 @@ type PaymentStateConfirmPaymentMethod = Readonly<{
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
+  selectedPaymentMethod: Wallet;
   pspList: ReadonlyArray<Psp>;
   paymentId: string;
 }>;
@@ -99,7 +92,7 @@ type PaymentStatePickPsp = Readonly<{
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
+  selectedPaymentMethod: Wallet;
   pspList: ReadonlyArray<Psp>;
   paymentId: string;
 }>;
@@ -109,7 +102,7 @@ type PaymentStatePinLogin = Readonly<{
   rptId: RptId;
   verificaResponse: PaymentRequestsGetResponse;
   initialAmount: AmountInEuroCents;
-  selectedPaymentMethod: number;
+  selectedPaymentMethod: Wallet;
   pspList: ReadonlyArray<Psp>;
   paymentId: string;
 }>;
@@ -234,30 +227,73 @@ export const getPaymentStep = (state: GlobalState) =>
     ? state.wallet.payment.stack.head.kind
     : "PaymentStateNoState";
 
-export const getRptId = (state: GlobalStateWithVerificaResponse): RptId =>
-  state.wallet.payment.stack.head.rptId;
+export const getRptIdFromGlobalState = (state: GlobalState): Option<RptId> =>
+  isGlobalStateWithVerificaResponse(state)
+    ? some(state.wallet.payment.stack.head.rptId)
+    : none;
 
-export const getPaymentContextCode = (
+export const getRptIdFromGlobalStateWithVerificaResponse = (
+  state: GlobalStateWithVerificaResponse
+): RptId => state.wallet.payment.stack.head.rptId;
+
+export const getPaymentContextCodeFromGlobalState = (
+  state: GlobalState
+): Option<CodiceContestoPagamento> =>
+  isGlobalStateWithVerificaResponse(state)
+    ? some(
+        state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento
+      )
+    : none;
+
+export const getPaymentContextCodeFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
 ): CodiceContestoPagamento =>
   state.wallet.payment.stack.head.verificaResponse.codiceContestoPagamento;
 
-export const getInitialAmount = (
+export const getInitialAmountFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents => state.wallet.payment.stack.head.initialAmount;
 
-export const getSelectedPaymentMethod = (
+export const getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod = (
   state: GlobalStateWithSelectedPaymentMethod
-): number => state.wallet.payment.stack.head.selectedPaymentMethod;
+): Wallet => state.wallet.payment.stack.head.selectedPaymentMethod;
 
-export const getCurrentAmount = (
+export const getSelectedPaymentMethodFromGlobalState = (
+  state: GlobalState
+): Option<Wallet> =>
+  isGlobalStateWithSelectedPaymentMethod(state)
+    ? some(
+        getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(state)
+      )
+    : none;
+
+export const getCurrentAmountFromGlobalState = (
+  state: GlobalState
+): Option<AmountInEuroCents> =>
+  isGlobalStateWithVerificaResponse(state)
+    ? some(
+        AmountToImporto.encode(
+          state.wallet.payment.stack.head.verificaResponse
+            .importoSingoloVersamento
+        )
+      )
+    : none;
+
+export const getCurrentAmountFromGlobalStateWithSelectedPaymentMethod = (
+  state: GlobalStateWithSelectedPaymentMethod
+): AmountInEuroCents =>
+  AmountToImporto.encode(
+    state.wallet.payment.stack.head.verificaResponse.importoSingoloVersamento
+  );
+
+export const getCurrentAmountFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
 ): AmountInEuroCents =>
   AmountToImporto.encode(
     state.wallet.payment.stack.head.verificaResponse.importoSingoloVersamento
   );
 
-export const getPaymentRecipient = (
+export const getPaymentRecipientFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
 ): Option<EnteBeneficiario> =>
   fromNullable(
@@ -271,22 +307,31 @@ export const getPaymentReason = (
     state.wallet.payment.stack.head.verificaResponse.causaleVersamento
   );
 
-export const getPspList = (
+export const getPspListFromGlobalState = (
+  state: GlobalState
+): Option<ReadonlyArray<Psp>> =>
+  isGlobalStateWithSelectedPaymentMethod(state)
+    ? some(state.wallet.payment.stack.head.pspList)
+    : none;
+
+export const getPspListFromGlobalStateWithSelectedPaymentMethod = (
   state: GlobalStateWithSelectedPaymentMethod
 ): ReadonlyArray<Psp> => state.wallet.payment.stack.head.pspList;
 
-export const getPaymentId = (state: GlobalStateWithPaymentId): string =>
-  state.wallet.payment.stack.head.paymentId;
+export const getPaymentIdFromGlobalStateWithPaymentId = (
+  state: GlobalStateWithPaymentId
+): string => state.wallet.payment.stack.head.paymentId;
 
-export const selectedPaymentMethodSelector: (
+export const getPaymentIdFromGlobalStateWithSelectedPaymentMethod = (
   state: GlobalStateWithSelectedPaymentMethod
-) => Wallet = createSelector(
-  (state: GlobalStateWithSelectedPaymentMethod) =>
-    some(getSelectedPaymentMethod(state)),
-  getWallets,
-  (id: Option<number>, wallets: IndexedById<Wallet>): Wallet =>
-    getWalletFromId(id, wallets).getOrElse(UNKNOWN_CARD)
-);
+): string => state.wallet.payment.stack.head.paymentId;
+
+export const getPaymentIdFromGlobalState = (
+  state: GlobalState
+): Option<string> =>
+  isGlobalStateWithPaymentId(state)
+    ? some(getPaymentIdFromGlobalStateWithPaymentId(state))
+    : none;
 
 const isInAllowedOrigins = (
   state: PaymentState,
@@ -341,7 +386,7 @@ const dataEntryReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentQrCode, action) &&
+    isActionOf(setPaymentStateToQrCode, action) &&
     isInAllowedOrigins(state, ["none"])
   ) {
     return {
@@ -355,7 +400,7 @@ const dataEntryReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentManualEntry, action) &&
+    isActionOf(setPaymentStateToManualEntry, action) &&
     isInAllowedOrigins(state, ["PaymentStateQrCode"])
   ) {
     return {
@@ -379,7 +424,7 @@ const summaryReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentTransactionSummaryFromRptId, action) &&
+    isActionOf(setPaymentStateToSummary, action) &&
     isInAllowedOrigins(state, [
       "PaymentStateQrCode",
       "PaymentStateManualEntry",
@@ -402,7 +447,7 @@ const summaryReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentTransactionSummaryFromBanner, action) &&
+    isActionOf(setPaymentStateToSummaryWithPaymentId, action) &&
     isInAllowedOrigins(state, [
       "PaymentStatePickPaymentMethod",
       "PaymentStateConfirmPaymentMethod",
@@ -440,11 +485,11 @@ const pickMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentInitialPickPaymentMethod, action) &&
+    isActionOf(setPaymentStateToPickPaymentMethod, action) &&
     isInAllowedOrigins(state, [
-      "PaymentStateSummary"
-      // "PaymentStateSummaryWithPaymentId",
-      // "PaymentStateConfirmPaymentMethod"
+      "PaymentStateSummary",
+      "PaymentStateSummaryWithPaymentId",
+      "PaymentStateConfirmPaymentMethod"
     ]) &&
     isPaymentStateWithVerificaResponse(state)
   ) {
@@ -465,29 +510,7 @@ const pickMethodReducer: PaymentReducer = (
       )
     };
   }
-  if (
-    isActionOf(paymentPickPaymentMethod, action) &&
-    isInAllowedOrigins(state, [
-      "PaymentStateSummaryWithPaymentId",
-      "PaymentStateConfirmPaymentMethod"
-    ]) &&
-    isPaymentStateWithPaymentId(state)
-  ) {
-    const prevState = state.stack.head;
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          kind: "PaymentStatePickPaymentMethod",
-          rptId: prevState.rptId,
-          verificaResponse: prevState.verificaResponse,
-          initialAmount: prevState.initialAmount,
-          paymentId: prevState.paymentId
-        },
-        ["PaymentStatePickPaymentMethod"]
-      )
-    };
-  }
+
   return state;
 };
 
@@ -499,30 +522,14 @@ const confirmMethodReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentInitialConfirmPaymentMethod, action) &&
-    isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
-    isPaymentStateWithVerificaResponse(state)
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          ...state.stack.head,
-          ...action.payload,
-          kind: "PaymentStateConfirmPaymentMethod"
-        },
-        ["PaymentStateConfirmPaymentMethod"]
-      )
-    };
-  }
-  if (
-    isActionOf(paymentConfirmPaymentMethod, action) &&
+    isActionOf(setPaymentStateToConfirmPaymentMethod, action) &&
     isInAllowedOrigins(state, [
+      "PaymentStateSummary",
       "PaymentStatePickPaymentMethod",
       "PaymentStateSummaryWithPaymentId",
       "PaymentStatePickPsp"
     ]) &&
-    isPaymentStateWithPaymentId(state)
+    isPaymentStateWithVerificaResponse(state)
   ) {
     return {
       stack: popToStateAndPush(
@@ -547,25 +554,9 @@ const pickPspReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentInitialPickPsp, action) &&
-    isInAllowedOrigins(state, ["PaymentStateSummary"]) &&
-    isPaymentStateWithVerificaResponse(state)
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          ...state.stack.head,
-          ...action.payload,
-          kind: "PaymentStatePickPsp"
-        },
-        ["PaymentStatePickPsp"]
-      )
-    };
-  }
-  if (
-    isActionOf(paymentPickPsp, action) &&
+    isActionOf(setPaymentStateToPickPsp, action) &&
     isInAllowedOrigins(state, [
+      "PaymentStateSummary",
       "PaymentStateSummaryWithPaymentId",
       "PaymentStateConfirmPaymentMethod",
       "PaymentStatePickPaymentMethod"
@@ -594,7 +585,7 @@ const goBackReducer: PaymentReducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action
 ) => {
-  if (isActionOf(paymentGoBack, action)) {
+  if (isActionOf(goBackOnePaymentState, action)) {
     // if going back means going to the "initial" summary screen
     // (i.e. where the "attiva" is done and the payment id is fetched,
     // return to a state that also has the payment Id
@@ -641,7 +632,7 @@ const endPaymentReducer: PaymentReducer = (
   action: Action
 ) => {
   if (
-    isActionOf(paymentPinLogin, action) &&
+    isActionOf(setPaymentStateToPinLogin, action) &&
     isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"]) &&
     isPaymentStateWithSelectedPaymentMethod(state)
   ) {
@@ -657,7 +648,7 @@ const endPaymentReducer: PaymentReducer = (
     };
   }
   if (
-    isActionOf(paymentCompleted, action) &&
+    isActionOf(resetPaymentState, action) &&
     isInAllowedOrigins(state, ["PaymentStatePinLogin"])
   ) {
     return {

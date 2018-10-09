@@ -9,8 +9,8 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
 import {
-  paymentRequestMessage,
-  paymentRequestTransactionSummaryFromRptId
+  paymentRequestTransactionSummaryFromRptId,
+  startPaymentSaga
 } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
@@ -126,7 +126,7 @@ class MessageCTABar extends React.PureComponent<Props> {
 
       if (isSome(amount) && isSome(rptId)) {
         const onPaymentCTAPress = () => {
-          this.props.dispatch(paymentRequestMessage());
+          this.props.dispatch(startPaymentSaga());
           this.props.dispatch(
             paymentRequestTransactionSummaryFromRptId({
               rptId: rptId.value,

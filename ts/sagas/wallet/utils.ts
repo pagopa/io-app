@@ -6,6 +6,7 @@ import { PagoPaClient } from "../../api/pagopa";
 import { PagopaToken } from "../../types/pagopa";
 
 import { storePagoPaToken } from "../../store/actions/wallet/pagopa";
+import { GlobalState } from "../../store/reducers/types";
 import { getPagoPaToken } from "../../store/reducers/wallet/pagopa";
 
 import { SagaCallReturnType } from "../../types/utils";
@@ -47,7 +48,9 @@ export function* fetchWithTokenRefresh<T>(
   if (retries === 0) {
     return undefined;
   }
-  const pagoPaToken: Option<PagopaToken> = yield select(getPagoPaToken);
+  const pagoPaToken: Option<PagopaToken> = yield select<GlobalState>(
+    getPagoPaToken
+  );
   const response: SagaCallReturnType<typeof request> = yield call(
     request,
     pagoPaToken.getOrElse("" as PagopaToken) // empty token -> pagoPA returns a 401 and the app fetches a new one

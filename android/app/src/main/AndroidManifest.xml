@@ -13,6 +13,9 @@
 
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:allowBackup="false" android:theme="@style/AppTheme">
 
+    <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name" android:value="@string/notification_channel_name"/>
+    <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description" android:value="@string/notification_channel_description"/>
+
     <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
       <intent-filter>
         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -28,7 +31,7 @@
     </receiver>
 
     <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
-    <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService" android:exported="false">
+    <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerServiceGcm" android:exported="false">
       <intent-filter>
         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
       </intent-filter>

@@ -83,7 +83,7 @@ class FooterRow extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  selectWallet: item => dispatch(selectWalletForDetails(item))
+  selectWallet: (item: number) => dispatch(selectWalletForDetails(item))
 });
 
 export default connect(

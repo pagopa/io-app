@@ -24,6 +24,7 @@ import {
   profileUpsertSuccess
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
+import { GlobalState } from "../store/reducers/types";
 
 import { SagaCallReturnType } from "../types/utils";
 
@@ -59,9 +60,9 @@ function* createOrUpdateProfileSaga(
   action: ActionType<typeof profileUpsertRequest>
 ): Iterator<Effect> {
   // Get the current Profile from the state
-  const profileState: ReturnType<typeof profileSelector> = yield select(
-    profileSelector
-  );
+  const profileState: ReturnType<typeof profileSelector> = yield select<
+    GlobalState
+  >(profileSelector);
 
   if (!profileState) {
     // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
