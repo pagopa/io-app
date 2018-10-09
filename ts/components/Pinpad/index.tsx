@@ -1,7 +1,12 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { TextInput, TouchableOpacity } from "react-native";
+import {
+  EmitterSubscription,
+  Keyboard,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
@@ -35,6 +40,8 @@ class Pinpad extends React.PureComponent<Props, State> {
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
 
+  private keyboardDidHideListener: EmitterSubscription | undefined;
+
   constructor(props: Props) {
     super(props);
 
@@ -44,6 +51,25 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     this.inputRef = React.createRef();
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
+    this.keyboardDidHideListener = undefined;
+  }
+
+  public componentDidMount() {
+    // tslint:disable-next-line no-object-mutation
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      this.handleKeyboardDidHide
+    );
+  }
+
+  public componentWillUnmount() {
+    if (this.keyboardDidHideListener) {
+      this.keyboardDidHideListener.remove();
+    }
+
+    if (this.onFulfillTimeoutId) {
+      clearTimeout(this.onFulfillTimeoutId);
+    }
   }
 
   public foldInputRef = (fn: (el: TextInput) => void) =>
@@ -73,13 +99,9 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handlePlaceholderPress = () => this.foldInputRef(focusElement);
 
-  public clear = () => this.setState({ value: "" });
+  private handleKeyboardDidHide = () => this.foldInputRef(blurElement);
 
-  public componentWillUnmount() {
-    if (this.onFulfillTimeoutId) {
-      clearTimeout(this.onFulfillTimeoutId);
-    }
-  }
+  public clear = () => this.setState({ value: "" });
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
