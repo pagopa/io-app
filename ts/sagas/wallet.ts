@@ -118,7 +118,11 @@ import {
 } from "./wallet/utils";
 
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
+<<<<<<< HEAD
 import { showToast } from "../utils/showToast";
+=======
+import { TranslationKeys } from "../../locales/locales";
+>>>>>>> Continue with the payment when adding a card during a payment
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -154,6 +158,46 @@ function* fetchWallets(
   }
   // else show an error modal @https://www.pivotaltracker.com/story/show/159400682
   return none;
+}
+
+function* onAddCreditCardDone(
+  isSuccess: boolean,
+  message?: TranslationKeys
+): IterableIterator<Effect> {
+  // if result is success, show a success message, or else, show the failure
+  // message if provided or fall back to default failure message
+  const toastText = isSuccess
+    ? "wallet.newPaymentMethod.successful"
+    : message || "wallet.newPaymentMethod.failed";
+  const toastType = isSuccess ? "success" : "danger";
+
+  Toast.show({
+    text: I18n.t(toastText),
+    type: toastType
+  });
+
+  // cleanup credit card data from the redux state
+  yield put(creditCardDataCleanup());
+
+  // if we are in a payment, we go back to the pick payment method screen
+  // or else we navigate to the wallet home
+
+  const maybePaymentId: ReturnType<
+    typeof getPaymentIdFromGlobalState
+  > = yield select<GlobalState>(getPaymentIdFromGlobalState);
+
+  // TODO: this should use StackActions.reset
+  // to reset the navigation. Right now, the
+  // "back" option is not allowed -- so the user cannot
+  // get back to previous screens, but the navigation
+  // stack should be cleaned right here
+  // @https://www.pivotaltracker.com/story/show/159300579
+  const nextStepAction = maybePaymentId.isSome()
+    ? paymentRequestPickPaymentMethod({ paymentId: maybePaymentId.value })
+    : navigateTo(ROUTES.WALLET_HOME);
+
+  // navigate to the next action
+  yield put(nextStepAction);
 }
 
 /**
@@ -202,6 +246,7 @@ function* addCreditCard(
       // FIXME: we should not navigate to the wallet home in case we're inside
       //        a payment, instead we should go pack to the payment method
       //        selection screen.
+<<<<<<< HEAD
 >>>>>>> When adding a card, look for the new wallet id instead of counting
       yield put(creditCardDataCleanup());
       yield put(navigateTo(ROUTES.WALLET_HOME));
@@ -214,6 +259,9 @@ function* addCreditCard(
         )
       );
 
+=======
+      yield call(onAddCreditCardDone, false);
+>>>>>>> Continue with the payment when adding a card during a payment
       return;
     }
 
@@ -243,12 +291,7 @@ function* addCreditCard(
       // FIXME: we should not navigate to the wallet home in case we're inside
       //        a payment, instead we should go pack to the payment method
       //        selection screen.
-      yield put(creditCardDataCleanup());
-      yield put(navigateTo(ROUTES.WALLET_HOME));
-      Toast.show({
-        text: I18n.t("wallet.newPaymentMethod.failed"),
-        type: "danger"
-      });
+      yield call(onAddCreditCardDone, false);
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
@@ -298,28 +341,13 @@ function* addCreditCard(
      * top of the screen)
      */
     if (maybeAddedWallet !== undefined) {
-      Toast.show({
-        text: I18n.t("wallet.newPaymentMethod.successful"),
-        type: "success"
-      });
+      yield call(onAddCreditCardDone, true);
     } else {
-      throw new Error();
+      yield call(onAddCreditCardDone, false);
     }
-    yield put(creditCardDataCleanup());
   } catch {
-    Toast.show({
-      text: I18n.t("wallet.newPaymentMethod.failed"),
-      type: "danger"
-    });
-    yield put(creditCardDataCleanup());
+    yield call(onAddCreditCardDone, false);
   } finally {
-    // TODO: this should use StackActions.reset
-    // to reset the navigation. Right now, the
-    // "back" option is not allowed -- so the user cannot
-    // get back to previous screens, but the navigation
-    // stack should be cleaned right here
-    // @https://www.pivotaltracker.com/story/show/159300579
-    yield put(navigateTo(ROUTES.WALLET_HOME));
     yield put(walletManagementResetLoadingState());
   }
 }

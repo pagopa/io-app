@@ -11,6 +11,7 @@
  * Keep in mind that the rest of the "add credit card" process
  * is handled @https://www.pivotaltracker.com/story/show/157838293
  */
+import { Option } from "fp-ts/lib/Option";
 import {
   Body,
   Button,
@@ -24,6 +25,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
@@ -32,12 +34,19 @@ import AppHeader from "../../components/ui/AppHeader";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
+import { GlobalState } from "../../store/reducers/types";
+import { getPaymentIdFromGlobalState } from "../../store/reducers/wallet/payment";
+
+type ReduxMappedProps = Readonly<{
+  paymentId: Option<string>;
+}>;
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-}>;
+}> &
+  ReduxMappedProps;
 
-export class AddPaymentMethodScreen extends React.Component<Props, never> {
+class AddPaymentMethodScreen extends React.PureComponent<Props> {
   /**
    * if it return true, the screen includes:
    * - a different title inside the header
@@ -49,7 +58,8 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
    *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
    */
   private isInTransaction() {
-    return false;
+    // if the current state has a paymentId it means we're in a payment flow
+    return this.props.paymentId.isSome();
   }
 
   public render(): React.ReactNode {
@@ -101,3 +111,11 @@ export class AddPaymentMethodScreen extends React.Component<Props, never> {
     );
   }
 }
+
+function mapStateToProps(state: GlobalState): ReduxMappedProps {
+  return {
+    paymentId: getPaymentIdFromGlobalState(state)
+  };
+}
+
+export default connect(mapStateToProps)(AddPaymentMethodScreen);
