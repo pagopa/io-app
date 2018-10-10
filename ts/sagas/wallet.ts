@@ -118,11 +118,10 @@ import {
 } from "./wallet/utils";
 
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
-<<<<<<< HEAD
+
 import { showToast } from "../utils/showToast";
-=======
+
 import { TranslationKeys } from "../../locales/locales";
->>>>>>> Continue with the payment when adding a card during a payment
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -171,10 +170,7 @@ function* onAddCreditCardDone(
     : message || "wallet.newPaymentMethod.failed";
   const toastType = isSuccess ? "success" : "danger";
 
-  Toast.show({
-    text: I18n.t(toastText),
-    type: toastType
-  });
+  showToast(I18n.t(toastText), toastType);
 
   // cleanup credit card data from the redux state
   yield put(creditCardDataCleanup());
@@ -235,33 +231,12 @@ function* addCreditCard(
      * Failed request. show an error (TODO) and return
      * @https://www.pivotaltracker.com/story/show/160521051
      */
-<<<<<<< HEAD
     if (
       failedCardAlreadyExists ||
       typeof responseBoardCC === "undefined" ||
       responseBoardCC.status !== 200
     ) {
-=======
-    if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
-      // FIXME: we should not navigate to the wallet home in case we're inside
-      //        a payment, instead we should go pack to the payment method
-      //        selection screen.
-<<<<<<< HEAD
->>>>>>> When adding a card, look for the new wallet id instead of counting
-      yield put(creditCardDataCleanup());
-      yield put(navigateTo(ROUTES.WALLET_HOME));
-
-      showToast(
-        I18n.t(
-          failedCardAlreadyExists
-            ? "wallet.newPaymentMethod.failedCardAlreadyExists"
-            : "wallet.newPaymentMethod.failed"
-        )
-      );
-
-=======
       yield call(onAddCreditCardDone, false);
->>>>>>> Continue with the payment when adding a card during a payment
       return;
     }
 
