@@ -7,7 +7,8 @@ import {
   List,
   ListItem,
   Right,
-  Text
+  Text,
+  Toast
 } from "native-base";
 import * as React from "react";
 import { Clipboard, StyleSheet } from "react-native";
@@ -68,6 +69,11 @@ const styles = StyleSheet.create({
  * A component to show the main screen of the Profile section
  */
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private handleClearCachePress = () => {
+    this.props.clearCache();
+    Toast.show({ text: "The cache has been cleared." });
+  };
+
   public render() {
     const {
       navigation,
@@ -220,7 +226,11 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             )}
 
             <ListItem>
-              <Button info={true} small={true} onPress={this.props.clearCache}>
+              <Button
+                info={true}
+                small={true}
+                onPress={this.handleClearCachePress}
+              >
                 <Text>Clear cache</Text>
               </Button>
             </ListItem>
