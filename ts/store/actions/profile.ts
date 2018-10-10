@@ -41,10 +41,13 @@ export const profileUpsertFailure = createAction(
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
+export const clearCache = createStandardAction("CLEAR_CACHE")();
+
 export type ProfileActions =
   | ActionType<typeof resetProfileState>
   | ActionType<typeof profileLoadSuccess>
   | ActionType<typeof profileLoadFailure>
   | ActionType<typeof profileUpsertRequest>
   | ActionType<typeof profileUpsertSuccess>
-  | ActionType<typeof profileUpsertFailure>;
+  | ActionType<typeof profileUpsertFailure>
+  | ActionType<typeof clearCache>;

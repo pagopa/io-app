@@ -7,7 +7,8 @@ import {
   List,
   ListItem,
   Right,
-  Text
+  Text,
+  Toast
 } from "native-base";
 import * as React from "react";
 import { Clipboard, StyleSheet } from "react-native";
@@ -21,6 +22,7 @@ import ROUTES from "../../navigation/routes";
 import { logoutRequest } from "../../store/actions/authentication";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { startPinReset } from "../../store/actions/pinset";
+import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
@@ -44,6 +46,7 @@ type ReduxMappedStateProps = {
 type ReduxMappedDispatchProps = {
   resetPin: () => void;
   logout: () => void;
+  clearCache: typeof clearCache;
 };
 
 type OwnProps = Readonly<{
@@ -66,6 +69,11 @@ const styles = StyleSheet.create({
  * A component to show the main screen of the Profile section
  */
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private handleClearCachePress = () => {
+    this.props.clearCache();
+    Toast.show({ text: "The cache has been cleared." });
+  };
+
   public render() {
     const {
       navigation,
@@ -216,6 +224,16 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 </Button>
               </ListItem>
             )}
+
+            <ListItem>
+              <Button
+                info={true}
+                small={true}
+                onPress={this.handleClearCachePress}
+              >
+                <Text>Clear cache</Text>
+              </Button>
+            </ListItem>
           </List>
         </Content>
       </TopScreenComponent>
@@ -238,7 +256,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: () => dispatch(logoutRequest())
+  logout: () => dispatch(logoutRequest()),
+  clearCache: () => dispatch(clearCache())
 });
 
 export default connect(

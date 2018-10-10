@@ -7,6 +7,7 @@
 import { getType } from "typesafe-actions";
 
 import { loadMessageSuccess } from "../../../actions/messages";
+import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -25,6 +26,9 @@ const reducer = (
      */
     case getType(loadMessageSuccess):
       return [...state, action.payload.id];
+
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;

@@ -5,6 +5,7 @@
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
+import { clearCache } from "../../../actions/profile";
 import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
@@ -35,6 +36,9 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
           service.service_id
         ]
       };
+
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;
