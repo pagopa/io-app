@@ -5,7 +5,9 @@
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
+  basicErrorResponseDecoder,
   composeHeaderProducers,
+  composeResponseDecoders,
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
@@ -45,6 +47,7 @@ import {
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
 
+import { AddResponseType } from "../types/utils";
 import { defaultRetryingFetch, pagopaFetch } from "../utils/fetch";
 
 type MapTypeInApiResponse<T, S extends number, B> = T extends IResponseType<
@@ -154,10 +157,16 @@ const updateWalletPsp: (
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
 });
 
+type AddWalletCreditCardUsingPOSTTWith422 = AddResponseType<
+  AddWalletCreditCardUsingPOSTT,
+  422,
+  Error
+>;
+
 const boardCreditCard: (
   pagoPaToken: PagopaToken
 ) => MapResponseType<
-  AddWalletCreditCardUsingPOSTT,
+  AddWalletCreditCardUsingPOSTTWith422,
   200,
   WalletResponse
 > = pagoPaToken => ({
@@ -169,7 +178,10 @@ const boardCreditCard: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: addWalletCreditCardUsingPOSTDecoder(WalletResponse)
+  response_decoder: composeResponseDecoders(
+    addWalletCreditCardUsingPOSTDecoder(WalletResponse),
+    basicErrorResponseDecoder<422>(422)
+  )
 });
 
 const postPayment: (

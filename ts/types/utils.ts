@@ -1,6 +1,13 @@
 // tslint:disable:readonly-array
 
 import * as t from "io-ts";
+import {
+  IDeleteApiRequestType,
+  IGetApiRequestType,
+  IPostApiRequestType,
+  IPutApiRequestType,
+  IResponseType
+} from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 
 export type SagaCallReturnType<
@@ -65,3 +72,17 @@ export const replaceProp1 = <
   name?: string
 ): t.Type<ReplaceProp1<A, P, A1>, O, I> =>
   t.refinement(type, o => typeB.is(o[p]), name) as any;
+
+export type AddResponseType<
+  T,
+  S extends number,
+  A
+> = T extends IGetApiRequestType<infer P1, infer H1, infer Q1, infer R1>
+  ? IGetApiRequestType<P1, H1, Q1, R1 | IResponseType<S, A>>
+  : T extends IPostApiRequestType<infer P2, infer H2, infer Q2, infer R2>
+    ? IPostApiRequestType<P2, H2, Q2, R2 | IResponseType<S, A>>
+    : T extends IPutApiRequestType<infer P3, infer H3, infer Q3, infer R3>
+      ? IPutApiRequestType<P3, H3, Q3, R3 | IResponseType<S, A>>
+      : T extends IDeleteApiRequestType<infer P4, infer H4, infer Q4, infer R4>
+        ? IDeleteApiRequestType<P4, H4, Q4, R4 | IResponseType<S, A>>
+        : never;

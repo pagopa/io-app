@@ -245,6 +245,7 @@ wallet:
       so that you don't have to re-add them from scratch for every transaction
     successful: The card was added successfully!
     failed: The card could not be added
+    failedCardAlreadyExists: The card you are adding already exists
   textMsg:
     title: Text confirmation code
     header: Confirmation code
