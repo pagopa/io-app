@@ -1,5 +1,9 @@
 declare module "simple-markdown" {
-  export const defaultRules = {};
+  export const defaultRules: DefaultRules;
+
+  export type DefaultRules = Readonly<{
+    [key: string]: any
+  }>;
 
   export type SingleASTNode = Readonly<{
     type: string,
@@ -10,6 +14,12 @@ declare module "simple-markdown" {
 
   export type State = {
     [key: string]: any
+  };
+
+  type Capture = {
+    '0': string,
+    index?: number,
+    [key: number]: string,
   };
 
   export type Parser = (

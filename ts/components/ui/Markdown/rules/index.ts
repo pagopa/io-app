@@ -1,5 +1,6 @@
 import blockQuoteRule from "./blockQuote";
 import brRule from "./br";
+import demoRule from "./demo";
 import emRule from "./em";
 import defaultRule from "./empty";
 import headingRule from "./heading";
@@ -25,6 +26,7 @@ const rules = {
   codeBlock: defaultRule,
   def: defaultRule,
   del: defaultRule,
+  demo: demoRule,
   em: emRule,
   escape: defaultRule,
   fence: defaultRule,
