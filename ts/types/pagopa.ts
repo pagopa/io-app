@@ -259,3 +259,10 @@ export type Pay = t.TypeOf<typeof Pay>;
 export const PayRequest = repP(PayRequestPagoPA, "data", Pay, "PayRequest");
 
 export type PayRequest = t.TypeOf<typeof PayRequest>;
+
+export const PagoPAErrorResponse = t.type({
+  code: t.string,
+  message: t.string
+});
+
+export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;

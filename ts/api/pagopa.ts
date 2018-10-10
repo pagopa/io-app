@@ -5,19 +5,24 @@
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
-  basicErrorResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders,
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
+  ioResponseDecoder,
   IPostApiRequestType,
   IPutApiRequestType,
   IResponseType,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 
-import { NullableWallet, PagopaToken, PspListResponse } from "../types/pagopa";
+import {
+  NullableWallet,
+  PagoPAErrorResponse,
+  PagopaToken,
+  PspListResponse
+} from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
 import { TransactionListResponse } from "../types/pagopa";
 import { TransactionResponse } from "../types/pagopa";
@@ -162,7 +167,7 @@ const updateWalletPsp: (
 type AddWalletCreditCardUsingPOSTTWith422 = AddResponseType<
   AddWalletCreditCardUsingPOSTT,
   422,
-  Error
+  PagoPAErrorResponse
 >;
 
 const boardCreditCard: (
@@ -182,7 +187,7 @@ const boardCreditCard: (
   ),
   response_decoder: composeResponseDecoders(
     addWalletCreditCardUsingPOSTDecoder(WalletResponse),
-    basicErrorResponseDecoder<422>(422)
+    ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
   )
 });
 

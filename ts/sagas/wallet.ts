@@ -180,7 +180,9 @@ function* addCreditCard(
     > = yield call(fetchWithTokenRefresh, boardCreditCard, pagoPaClient);
 
     const failedCardAlreadyExists =
-      typeof responseBoardCC !== "undefined" && responseBoardCC.status === 422;
+      typeof responseBoardCC !== "undefined" &&
+      responseBoardCC.status === 422 &&
+      responseBoardCC.value.message === "creditcard.already_exists";
 
     /**
      * Failed request. show an error (TODO) and return
