@@ -2,9 +2,9 @@
  * This file exports a function to create the whole theme of the application.
  * It takes our custom variables and mixes them with each defined component theme.
  */
-
 import merge from "lodash/merge";
 import getTheme from "native-base/src/theme/components";
+
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
@@ -29,10 +29,15 @@ import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
 import viewTheme from "./components/View";
-
 import { Theme } from "./types";
-
 import variables from "./variables";
+
+import markdownBlockQuoteTheme from "./components/markdown/MarkdownBlockQuote";
+import markdownBrTheme from "./components/markdown/MarkdownBr";
+import markdownHeadingTheme from "./components/markdown/MarkdownHeading";
+import markdownListTheme from "./components/markdown/MarkdownList";
+import markdownParagraphTheme from "./components/markdown/MarkdownParagraph";
+import markdownTextTheme from "./components/markdown/MarkdownText";
 
 const theme = (): Theme => {
   const nbTheme = getTheme(variables);
@@ -111,6 +116,25 @@ const theme = (): Theme => {
     },
     "UIComponent.MaskedInput": {
       ...maskedInputTheme()
+    },
+    // Markdown
+    "UIComponent.MarkdownBlockQuote": {
+      ...markdownBlockQuoteTheme()
+    },
+    "UIComponent.MarkdownBr": {
+      ...markdownBrTheme()
+    },
+    "UIComponent.MarkdownHeading": {
+      ...markdownHeadingTheme()
+    },
+    "UIComponent.MarkdownList": {
+      ...markdownListTheme()
+    },
+    "UIComponent.MarkdownParagraph": {
+      ...markdownParagraphTheme()
+    },
+    "UIComponent.MarkdownText": {
+      ...markdownTextTheme()
     }
   };
 

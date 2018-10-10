@@ -2,6 +2,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
+import MarkdownList from "../MarkdownList";
 import { makeReactNativeRule } from "./utils";
 
 function rule() {
@@ -34,7 +35,7 @@ function rule() {
     });
 
     return React.createElement(
-      View,
+      MarkdownList,
       {
         key: state.key
       },

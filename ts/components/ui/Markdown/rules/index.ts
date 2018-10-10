@@ -1,5 +1,7 @@
+import blockQuoteRule from "./blockQuote";
 import brRule from "./br";
 import emRule from "./em";
+import defaultRule from "./empty";
 import headingRule from "./heading";
 import linkRule from "./link";
 import listRule from "./list";
@@ -9,8 +11,6 @@ import strongRule from "./strong";
 import textRule from "./text";
 
 // By default, don't display unsupported elements
-import defaultRule from "./empty";
-
 /**
  * SimpleMarkdown rules
  *
@@ -19,33 +19,33 @@ import defaultRule from "./empty";
  */
 
 const rules = {
-  heading: headingRule,
-  nptable: defaultRule,
-  lheading: defaultRule,
-  hr: defaultRule,
-  codeBlock: defaultRule,
-  fence: defaultRule,
-  blockQuote: defaultRule,
-  list: listRule,
-  def: defaultRule,
-  table: defaultRule,
-  newline: newlineRule,
-  paragraph: paragraphRule,
-  escape: defaultRule,
   autolink: defaultRule,
-  mailto: defaultRule,
-  url: defaultRule,
-  link: linkRule,
-  image: defaultRule,
-  reflink: defaultRule,
-  refimage: defaultRule,
-  em: emRule,
-  strong: strongRule,
-  u: defaultRule,
-  del: defaultRule,
-  inlineCode: defaultRule,
+  blockQuote: blockQuoteRule,
   br: brRule,
-  text: textRule
+  codeBlock: defaultRule,
+  def: defaultRule,
+  del: defaultRule,
+  em: emRule,
+  escape: defaultRule,
+  fence: defaultRule,
+  heading: headingRule,
+  hr: defaultRule,
+  image: defaultRule,
+  inlineCode: defaultRule,
+  lheading: defaultRule,
+  link: linkRule,
+  list: listRule,
+  mailto: defaultRule,
+  newline: newlineRule,
+  nptable: defaultRule,
+  paragraph: paragraphRule,
+  refimage: defaultRule,
+  reflink: defaultRule,
+  strong: strongRule,
+  table: defaultRule,
+  text: textRule,
+  u: defaultRule,
+  url: defaultRule
 };
 
 export default rules;
