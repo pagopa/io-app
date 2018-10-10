@@ -206,21 +206,22 @@ function* addCreditCard(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof addCreditCardRequest>
 ): Iterator<Effect> {
+  const wallet: NullableWallet = {
+    idWallet: null,
+    type: "CREDIT_CARD",
+    favourite: null,
+    creditCard: action.payload.creditCard,
+    psp: undefined
+  };
+  // 1st call: boarding credit card
   try {
-    yield put(walletManagementSetLoadingState());
-    const wallet: NullableWallet = {
-      idWallet: null,
-      type: "CREDIT_CARD",
-      favourite: null,
-      creditCard: action.payload.creditCard,
-      psp: undefined
-    };
-    // 1st call: boarding credit card
     const boardCreditCard = (token: PagopaToken) =>
       pagoPaClient.boardCreditCard(token, wallet);
+    yield put(walletManagementSetLoadingState());
     const responseBoardCC: SagaCallReturnType<
       typeof boardCreditCard
     > = yield call(fetchWithTokenRefresh, boardCreditCard, pagoPaClient);
+    yield put(walletManagementResetLoadingState());
 
     const failedCardAlreadyExists =
       typeof responseBoardCC !== "undefined" &&
@@ -254,11 +255,14 @@ function* addCreditCard(
     };
     const boardPay = (token: PagopaToken) =>
       pagoPaClient.boardPay(token, payRequest);
+    yield put(walletManagementSetLoadingState());
     const responseBoardPay: SagaCallReturnType<typeof boardPay> = yield call(
       fetchWithTokenRefresh,
       boardPay,
       pagoPaClient
     );
+    yield put(walletManagementResetLoadingState());
+
     /**
      * Failed request. show an error (TODO) and return
      */
@@ -300,10 +304,13 @@ function* addCreditCard(
     // is to fetch the wallets and look for a wallet with the same ID of the
     // wallet we just added.
     // TODO: find a way of finding out the result of the request from the URL
+    yield put(walletManagementSetLoadingState());
     const updatedWallets: SagaCallReturnType<typeof fetchWallets> = yield call(
       fetchWallets,
       pagoPaClient
     );
+    yield put(walletManagementResetLoadingState());
+
     // FIXME: in case the calls to retrieve the wallets fails, we always fail,
     //        but we should retry instead or show an error
     const maybeAddedWallet = updatedWallets
@@ -321,9 +328,8 @@ function* addCreditCard(
       yield call(onAddCreditCardDone, false);
     }
   } catch {
-    yield call(onAddCreditCardDone, false);
-  } finally {
     yield put(walletManagementResetLoadingState());
+    yield call(onAddCreditCardDone, false);
   }
 }
 
