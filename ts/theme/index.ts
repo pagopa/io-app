@@ -34,6 +34,7 @@ import variables from "./variables";
 
 import markdownBlockQuoteTheme from "./components/markdown/MarkdownBlockQuote";
 import markdownBrTheme from "./components/markdown/MarkdownBr";
+import markdownDemoTheme from "./components/markdown/MarkdownDemo";
 import markdownHeadingTheme from "./components/markdown/MarkdownHeading";
 import markdownListTheme from "./components/markdown/MarkdownList";
 import markdownParagraphTheme from "./components/markdown/MarkdownParagraph";
@@ -123,6 +124,9 @@ const theme = (): Theme => {
     },
     "UIComponent.MarkdownBr": {
       ...markdownBrTheme()
+    },
+    "UIComponent.MarkdownDemo": {
+      ...markdownDemoTheme()
     },
     "UIComponent.MarkdownHeading": {
       ...markdownHeadingTheme()
