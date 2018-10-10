@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
-import MarkdownHeading from "../MarkdownHeading";
+import MarkdownBlockQuote from "../MarkdownBlockQuote";
 import { makeReactNativeRule } from "./utils";
 
 function rule() {
@@ -10,15 +10,12 @@ function rule() {
     output: ReactOutput,
     state: State
   ): React.ReactNode => {
-    const newState = { ...state, withinHeading: true };
     return React.createElement(
-      MarkdownHeading,
+      MarkdownBlockQuote,
       {
-        key: state.key,
-        level: node.level,
-        inMessage: state.screen === "MESSAGE_DETAIL"
+        key: state.key
       },
-      output(node.content, newState)
+      output(node.content, state)
     );
   };
 }

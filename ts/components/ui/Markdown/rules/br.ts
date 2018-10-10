@@ -1,7 +1,7 @@
-import { Text } from "native-base";
 import * as React from "react";
 import { ReactOutput, SingleASTNode, State } from "simple-markdown";
 
+import MarkdownBr from "../MarkdownBr";
 import { makeReactNativeRule } from "./utils";
 
 /**
@@ -10,11 +10,11 @@ import { makeReactNativeRule } from "./utils";
 function rule() {
   return (_: SingleASTNode, __: ReactOutput, state: State): React.ReactNode => {
     return React.createElement(
-      Text,
+      MarkdownBr,
       {
         key: state.key
       },
-      "\n\n"
+      "\n"
     );
   };
 }

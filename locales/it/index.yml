@@ -5,6 +5,7 @@ global:
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
       ricominciare!
   markdown:
+    reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   app:
     version: Versione
