@@ -6,16 +6,23 @@ import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
   composeHeaderProducers,
+  composeResponseDecoders,
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
+  ioResponseDecoder,
   IPostApiRequestType,
   IPutApiRequestType,
   IResponseType,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 
-import { NullableWallet, PagopaToken, PspListResponse } from "../types/pagopa";
+import {
+  NullableWallet,
+  PagoPAErrorResponse,
+  PagopaToken,
+  PspListResponse
+} from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
 import { TransactionListResponse } from "../types/pagopa";
 import { TransactionResponse } from "../types/pagopa";
@@ -45,6 +52,7 @@ import {
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
 
+import { AddResponseType } from "../types/utils";
 import { defaultRetryingFetch, pagopaFetch } from "../utils/fetch";
 
 type MapTypeInApiResponse<T, S extends number, B> = T extends IResponseType<
@@ -154,10 +162,18 @@ const updateWalletPsp: (
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
 });
 
+// Remove this patch once SIA has fixed the spec.
+// @see https://www.pivotaltracker.com/story/show/161113136
+type AddWalletCreditCardUsingPOSTTWith422 = AddResponseType<
+  AddWalletCreditCardUsingPOSTT,
+  422,
+  PagoPAErrorResponse
+>;
+
 const boardCreditCard: (
   pagoPaToken: PagopaToken
 ) => MapResponseType<
-  AddWalletCreditCardUsingPOSTT,
+  AddWalletCreditCardUsingPOSTTWith422,
   200,
   WalletResponse
 > = pagoPaToken => ({
@@ -169,7 +185,10 @@ const boardCreditCard: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: addWalletCreditCardUsingPOSTDecoder(WalletResponse)
+  response_decoder: composeResponseDecoders(
+    addWalletCreditCardUsingPOSTDecoder(WalletResponse),
+    ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
+  )
 });
 
 const postPayment: (

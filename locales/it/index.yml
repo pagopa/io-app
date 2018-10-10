@@ -252,6 +252,7 @@ wallet:
       ecc.) per non doverli inserire ad ogni transazione
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
+    failedCardAlreadyExists: La carta che stai inserendo è già presente
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS

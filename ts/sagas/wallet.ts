@@ -121,6 +121,7 @@ import {
 } from "./wallet/utils";
 
 import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
+import { showToast } from "../utils/showToast";
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -178,19 +179,34 @@ function* addCreditCard(
       typeof boardCreditCard
     > = yield call(fetchWithTokenRefresh, boardCreditCard, pagoPaClient);
 
+    const failedCardAlreadyExists =
+      typeof responseBoardCC !== "undefined" &&
+      responseBoardCC.status === 422 &&
+      responseBoardCC.value.message === "creditcard.already_exists";
+
     /**
      * Failed request. show an error (TODO) and return
      * @https://www.pivotaltracker.com/story/show/160521051
      */
-    if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
+    if (
+      failedCardAlreadyExists ||
+      typeof responseBoardCC === "undefined" ||
+      responseBoardCC.status !== 200
+    ) {
       yield put(creditCardDataCleanup());
       yield put(navigateTo(ROUTES.WALLET_HOME));
-      Toast.show({
-        text: I18n.t("wallet.newPaymentMethod.failed"),
-        type: "danger"
-      });
+
+      showToast(
+        I18n.t(
+          failedCardAlreadyExists
+            ? "wallet.newPaymentMethod.failedCardAlreadyExists"
+            : "wallet.newPaymentMethod.failed"
+        )
+      );
+
       return;
     }
+
     // 1st call was successful. Proceed with the 2nd one
     // (boarding pay)
     const { idWallet } = responseBoardCC.value.data;
