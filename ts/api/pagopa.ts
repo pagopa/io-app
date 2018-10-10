@@ -157,6 +157,8 @@ const updateWalletPsp: (
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
 });
 
+// Remove this patch once SIA has fixed the spec.
+// @see https://www.pivotaltracker.com/story/show/161113136
 type AddWalletCreditCardUsingPOSTTWith422 = AddResponseType<
   AddWalletCreditCardUsingPOSTT,
   422,
