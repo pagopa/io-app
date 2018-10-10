@@ -5,7 +5,7 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 
-import { getType, isActionOf } from "typesafe-actions";
+import { getType } from "typesafe-actions";
 
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { contentServiceLoadSuccess } from "../actions/content";
