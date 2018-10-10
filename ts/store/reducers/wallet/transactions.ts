@@ -8,6 +8,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import { Transaction } from "../../../types/pagopa";
+import { cleanPaymentDescription } from "../../../utils/cleanPaymentDescription";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsSuccess,
@@ -72,6 +73,12 @@ export const transactionsByWalletSelector = createSelector(
     )
 );
 
+const cleanDescription = ({ description, ...transaction }: Transaction) => {
+  const cleanedDescription = cleanPaymentDescription(description);
+
+  return { ...transaction, description: cleanedDescription };
+};
+
 // reducer
 const reducer = (
   state: TransactionsState = TRANSACTIONS_INITIAL_STATE,
@@ -81,7 +88,7 @@ const reducer = (
     case getType(fetchTransactionsSuccess):
       return {
         ...state,
-        transactions: toIndexed(action.payload, "id")
+        transactions: toIndexed(action.payload.map(cleanDescription), "id")
       };
 
     case getType(selectTransactionForDetails):
