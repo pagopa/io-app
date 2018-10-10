@@ -8,6 +8,7 @@ import { getType } from "typesafe-actions";
 
 import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
 import { loadMessageSuccess } from "../../../actions/messages";
+import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -29,6 +30,9 @@ const reducer = (
     case getType(loadMessageSuccess):
       // Use the ID as object key
       return { ...state, [action.payload.id]: { ...action.payload } };
+
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;

@@ -21,6 +21,7 @@ import ROUTES from "../../navigation/routes";
 import { logoutRequest } from "../../store/actions/authentication";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { startPinReset } from "../../store/actions/pinset";
+import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
@@ -44,6 +45,7 @@ type ReduxMappedStateProps = {
 type ReduxMappedDispatchProps = {
   resetPin: () => void;
   logout: () => void;
+  clearCache: typeof clearCache;
 };
 
 type OwnProps = Readonly<{
@@ -216,6 +218,12 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 </Button>
               </ListItem>
             )}
+
+            <ListItem>
+              <Button info={true} small={true} onPress={this.props.clearCache}>
+                <Text>Clear cache</Text>
+              </Button>
+            </ListItem>
           </List>
         </Content>
       </TopScreenComponent>
@@ -238,7 +246,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: () => dispatch(logoutRequest())
+  logout: () => dispatch(logoutRequest()),
+  clearCache: () => dispatch(clearCache())
 });
 
 export default connect(

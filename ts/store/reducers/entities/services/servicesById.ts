@@ -7,6 +7,7 @@
 import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { clearCache } from "../../../actions/profile";
 import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -30,6 +31,9 @@ const reducer = (
     case getType(loadServiceSuccess):
       // Use the ID as object key
       return { ...state, [action.payload.service_id]: { ...action.payload } };
+
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;

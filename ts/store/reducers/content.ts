@@ -5,10 +5,11 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 
-import { isActionOf } from "typesafe-actions";
+import { getType, isActionOf } from "typesafe-actions";
 
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { contentServiceLoadSuccess } from "../actions/content";
+import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 
 /**
@@ -33,17 +34,25 @@ export default function content(
   state: ContentState = initialContentState,
   action: Action
 ): ContentState {
-  if (isActionOf(contentServiceLoadSuccess, action)) {
-    return {
-      ...state,
-      servicesMetadata: {
-        byId: {
-          ...state.servicesMetadata.byId,
-          [action.payload.serviceId]: action.payload.data
+  switch (action.type) {
+    case getType(contentServiceLoadSuccess):
+      return {
+        ...state,
+        servicesMetadata: {
+          byId: {
+            ...state.servicesMetadata.byId,
+            [action.payload.serviceId]: action.payload.data
+          }
         }
-      }
-    };
-  }
+      };
 
-  return state;
+    case getType(clearCache):
+      return {
+        ...state,
+        servicesMetadata: { ...initialContentState.servicesMetadata }
+      };
+
+    default:
+      return state;
+  }
 }
