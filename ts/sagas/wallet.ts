@@ -82,10 +82,7 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 import { getPaymentIdFromGlobalState } from "../store/reducers/wallet/payment";
-import {
-  getFavoriteWallet,
-  walletCountSelector
-} from "../store/reducers/wallet/wallets";
+import { getFavoriteWallet } from "../store/reducers/wallet/wallets";
 import {
   paymentCancel,
   paymentFailure,
@@ -159,6 +156,12 @@ function* fetchWallets(
   return none;
 }
 
+/**
+ * This saga manages the flow for adding a new card.
+ *
+ * Adding a new card can happen either from the wallet home screen or during the
+ * payment process from the payment method selection screen.
+ */
 function* addCreditCard(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof addCreditCardRequest>
@@ -188,11 +191,18 @@ function* addCreditCard(
      * Failed request. show an error (TODO) and return
      * @https://www.pivotaltracker.com/story/show/160521051
      */
+<<<<<<< HEAD
     if (
       failedCardAlreadyExists ||
       typeof responseBoardCC === "undefined" ||
       responseBoardCC.status !== 200
     ) {
+=======
+    if (responseBoardCC === undefined || responseBoardCC.status !== 200) {
+      // FIXME: we should not navigate to the wallet home in case we're inside
+      //        a payment, instead we should go pack to the payment method
+      //        selection screen.
+>>>>>>> When adding a card, look for the new wallet id instead of counting
       yield put(creditCardDataCleanup());
       yield put(navigateTo(ROUTES.WALLET_HOME));
 
@@ -230,6 +240,9 @@ function* addCreditCard(
      * Failed request. show an error (TODO) and return
      */
     if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
+      // FIXME: we should not navigate to the wallet home in case we're inside
+      //        a payment, instead we should go pack to the payment method
+      //        selection screen.
       yield put(creditCardDataCleanup());
       yield put(navigateTo(ROUTES.WALLET_HOME));
       Toast.show({
@@ -256,66 +269,59 @@ function* addCreditCard(
         url: urlWithToken
       })
     );
+
+    /**
+     * Wait for the webview to do its thing
+     * (will trigger an addCreditCardCompleted
+     * action upon finishing)
+     */
+    yield take(getType(addCreditCardCompleted));
+
+    // There currently is no way of determining whether the card has been added
+    // successfully from the URL returned in the webview, so the approach here
+    // is to fetch the wallets and look for a wallet with the same ID of the
+    // wallet we just added.
+    // TODO: find a way of finding out the result of the request from the URL
+    const updatedWallets: SagaCallReturnType<typeof fetchWallets> = yield call(
+      fetchWallets,
+      pagoPaClient
+    );
+    // FIXME: in case the calls to retrieve the wallets fails, we always fail,
+    //        but we should retry instead or show an error
+    const maybeAddedWallet = updatedWallets
+      .map(wx => wx.find(w => w.idWallet === idWallet))
+      .toUndefined();
+
+    /**
+     * TODO: introduce a better way of displaying
+     * info messages (e.g. red/green banner at the
+     * top of the screen)
+     */
+    if (maybeAddedWallet !== undefined) {
+      Toast.show({
+        text: I18n.t("wallet.newPaymentMethod.successful"),
+        type: "success"
+      });
+    } else {
+      throw new Error();
+    }
+    yield put(creditCardDataCleanup());
   } catch {
     Toast.show({
       text: I18n.t("wallet.newPaymentMethod.failed"),
       type: "danger"
     });
     yield put(creditCardDataCleanup());
-    yield put(navigateTo(ROUTES.WALLET_HOME));
-    return;
   } finally {
+    // TODO: this should use StackActions.reset
+    // to reset the navigation. Right now, the
+    // "back" option is not allowed -- so the user cannot
+    // get back to previous screens, but the navigation
+    // stack should be cleaned right here
+    // @https://www.pivotaltracker.com/story/show/159300579
+    yield put(navigateTo(ROUTES.WALLET_HOME));
     yield put(walletManagementResetLoadingState());
   }
-
-  /**
-   * Wait for the webview to do its thing
-   * (will trigger an addCreditCardCompleted
-   * action upon finishing)
-   */
-  yield take(getType(addCreditCardCompleted));
-
-  // There currently is no way of determining
-  // whether the card has been added successfully from
-  // the URL returned in the webview, so the approach here
-  // is: count current number of cards, refresh cards,
-  // check if new number of cards is previous number + 1.
-  // If so, the card has been added.
-  // TODO: find a way of finding out the result of the
-  // request from the URL
-  const currentCount: number = yield select<GlobalState>(walletCountSelector);
-  const updatedWallets: SagaCallReturnType<typeof fetchWallets> = yield call(
-    fetchWallets,
-    pagoPaClient
-  );
-  // FIXME: in case the calls to retrieve the wallets fails, we use a zero length
-  //        but we should retry instead or show an error
-  const updatedCount = updatedWallets.map(_ => _.length).getOrElse(0);
-  /**
-   * TODO: introduce a better way of displaying
-   * info messages (e.g. red/green banner at the
-   * top of the screen)
-   */
-  if (updatedCount !== undefined && updatedCount === currentCount + 1) {
-    Toast.show({
-      text: I18n.t("wallet.newPaymentMethod.successful"),
-      type: "success"
-    });
-  } else {
-    Toast.show({
-      text: I18n.t("wallet.newPaymentMethod.failed"),
-      type: "danger"
-    });
-  }
-  yield put(creditCardDataCleanup());
-
-  // TODO: this should use StackActions.reset
-  // to reset the navigation. Right now, the
-  // "back" option is not allowed -- so the user cannot
-  // get back to previous screens, but the navigation
-  // stack should be cleaned right here
-  // @https://www.pivotaltracker.com/story/show/159300579
-  yield put(navigateTo(ROUTES.WALLET_HOME));
 }
 
 function* deleteWallet(
