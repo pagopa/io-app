@@ -1033,7 +1033,7 @@ export function* watchWalletSaga(
   // Note that fetchAndStorePagoPaToken has a side effect of emitting an action
   // that stores the token in the Redux store.
   // TODO: document this flow
-  yield call(fetchAndStorePagoPaToken, pagoPaClient);
+  yield fork(fetchAndStorePagoPaToken, pagoPaClient);
 
   // Start listening for actions that start the payment flow
   yield takeLatest(

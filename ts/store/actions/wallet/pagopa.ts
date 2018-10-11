@@ -1,10 +1,21 @@
-import { Option } from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { PagopaToken } from "../../../types/pagopa";
 
-export const storePagoPaToken = createStandardAction("PAGOPA_STORE_TOKEN")<
-  Option<PagopaToken>
+export const pagoPaTokenRequest = createStandardAction(
+  "PAGOPA_TOKEN_REQUEST"
+)();
+
+export const pagoPaTokenFailure = createStandardAction(
+  "PAGOPA_TOKEN_FAILURE"
+)();
+
+export const pagoPaTokenSuccess = createStandardAction("PAGOPA_TOKEN_SUCCESS")<
+  PagopaToken
 >();
 
-export type PagoPaActions = ActionType<typeof storePagoPaToken>;
+export type PagoPaActions = ActionType<
+  | typeof pagoPaTokenRequest
+  | typeof pagoPaTokenFailure
+  | typeof pagoPaTokenSuccess
+>;
