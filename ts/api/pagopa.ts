@@ -5,8 +5,10 @@
 import {
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
+  basicErrorResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders,
+  constantResponseDecoder,
   createFetchRequestForApi,
   IDeleteApiRequestType,
   IGetApiRequestType,
@@ -34,7 +36,6 @@ import {
   AddWalletCreditCardUsingPOSTT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
-  deleteWalletUsingDELETEDefaultDecoder,
   DeleteWalletUsingDELETET,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
@@ -236,7 +237,16 @@ const deleteWallet: (
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: deleteWalletUsingDELETEDefaultDecoder()
+  response_decoder: composeResponseDecoders(
+    composeResponseDecoders(
+      composeResponseDecoders(
+        constantResponseDecoder(200, undefined),
+        basicErrorResponseDecoder<204>(204)
+      ),
+      basicErrorResponseDecoder<401>(401)
+    ),
+    basicErrorResponseDecoder<403>(403)
+  )
 });
 
 export function PagoPaClient(
