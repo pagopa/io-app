@@ -1,9 +1,19 @@
 import { Theme } from "../types";
 import variables from "../variables";
 
+declare module "native-base" {
+  namespace NativeBase {
+    interface List {
+      padded?: boolean;
+    }
+  }
+}
+
 export default (): Theme => {
   return {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+    ".padded": {
+      paddingLeft: variables.contentPadding,
+      paddingRight: variables.contentPadding
+    }
   };
 };

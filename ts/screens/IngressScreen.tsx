@@ -76,7 +76,7 @@ class IngressScreen extends React.PureComponent<Props> {
           {I18n.t("startup.title")}
         </Text>
         <Spinner color="white" />
-        <List>
+        <List padded={true}>
           {items.map((item, index) => (
             <ListItem key={`item-${index}`}>
               <CheckBox checked={item.enabled} />

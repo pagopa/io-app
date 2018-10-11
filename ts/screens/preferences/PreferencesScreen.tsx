@@ -89,7 +89,7 @@ class PreferencesScreen extends React.Component<Props> {
         contextualHelp={contextualHelp}
       >
         <Content noPadded={true}>
-          <List>
+          <List padded={true}>
             <ListItem
               onPress={() =>
                 this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
