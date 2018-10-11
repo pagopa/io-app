@@ -7,7 +7,7 @@
  * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -97,11 +97,29 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
-const formatMdRecipient = (e: EnteBeneficiario): string =>
-  `**${I18n.t("wallet.firstTransactionSummary.entity")}**\n
-${e.denominazioneBeneficiario} - ${e.denomUnitOperBeneficiario}\n
-${e.indirizzoBeneficiario} n. ${e.civicoBeneficiario}\n
-${e.capBeneficiario} ${e.localitaBeneficiario} (${e.provinciaBeneficiario})`;
+const formatMdRecipient = (e: EnteBeneficiario): string => {
+  const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
+    .map(d => ` - ${d}`)
+    .getOrElse("");
+  const address = fromNullable(e.indirizzoBeneficiario).getOrElse("");
+  const civicNumber = fromNullable(e.civicoBeneficiario)
+    .map(c => ` n. ${c}`)
+    .getOrElse("");
+  const cap = fromNullable(e.capBeneficiario)
+    .map(c => `${c} `)
+    .getOrElse("");
+  const city = fromNullable(e.localitaBeneficiario)
+    .map(l => `${l} `)
+    .getOrElse("");
+  const province = fromNullable(e.provinciaBeneficiario)
+    .map(p => `(${p})`)
+    .getOrElse("");
+
+  return `**${I18n.t("wallet.firstTransactionSummary.entity")}**\n
+${e.denominazioneBeneficiario}${denomUnitOper}\n
+${address}${civicNumber}\n
+${cap}${city}${province}`;
+};
 
 const formatMdPaymentReason = (p: string): string =>
   `**${I18n.t("wallet.firstTransactionSummary.object")}**\n
