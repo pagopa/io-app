@@ -25,7 +25,6 @@ target 'ItaliaApp' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
 
   pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
 
