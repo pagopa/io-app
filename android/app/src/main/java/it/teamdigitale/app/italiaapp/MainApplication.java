@@ -56,7 +56,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         new RNI18nPackage(),
         new Sha256Package(),
         new RNMixpanel(),
-        new RNFSPackage(),
         new RNDeviceInfo(),
         new ReactNativeConfigPackage()
       );
