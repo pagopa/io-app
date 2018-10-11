@@ -13,7 +13,7 @@ import {
   TypeofApiResponse
 } from "italia-ts-commons/lib/requests";
 import { Toast } from "native-base";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
 import {
   call,
   Effect,
@@ -172,12 +172,8 @@ function* onAddCreditCardDone(
 
   showToast(I18n.t(toastText), toastType);
 
-  // cleanup credit card data from the redux state
-  yield put(creditCardDataCleanup());
-
   // if we are in a payment, we go back to the pick payment method screen
   // or else we navigate to the wallet home
-
   const maybePaymentId: ReturnType<
     typeof getPaymentIdFromGlobalState
   > = yield select<GlobalState>(getPaymentIdFromGlobalState);
@@ -194,6 +190,12 @@ function* onAddCreditCardDone(
 
   // navigate to the next action
   yield put(nextStepAction);
+  // Wait for the navigation transition to complete, in order to avoid
+  // to see the card's placeholder data.
+  yield take(StackActions.COMPLETE_TRANSITION);
+
+  // cleanup credit card data from the redux state
+  yield put(creditCardDataCleanup());
 }
 
 /**
