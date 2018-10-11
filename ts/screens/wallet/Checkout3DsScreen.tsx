@@ -54,6 +54,8 @@ class Checkout3DsScreen extends React.Component<Props, State> {
   };
 
   public render() {
+    // FIXME: using google as default doesn't make sense, we need to do
+    //        something else (e.g. show an error screen)
     const url = this.props.navigation.getParam("url", "https://www.google.com");
     return (
       <Container>
