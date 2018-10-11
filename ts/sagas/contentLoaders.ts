@@ -8,6 +8,7 @@ import { ContentClient } from "../api/content";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 
 import {
+  contentServiceLoad,
   contentServiceLoadFailure,
   contentServiceLoadSuccess
 } from "../store/actions/content";
@@ -37,10 +38,10 @@ function getServiceMetadata(
  * https://www.pivotaltracker.com/story/show/159440224
  */
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
-  yield takeEvery(getType(contentServiceLoadSuccess), function*(
-    action: ActionType<typeof contentServiceLoadSuccess>
+  yield takeEvery(getType(contentServiceLoad), function*(
+    action: ActionType<typeof contentServiceLoad>
   ) {
-    const { serviceId } = action.payload;
+    const serviceId = action.payload;
 
     const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
       getServiceMetadata,
