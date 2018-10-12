@@ -4,14 +4,9 @@
  * A saga that manages the Wallet.
  */
 
-import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import {
-  TypeofApiCall,
-  TypeofApiResponse
-} from "italia-ts-commons/lib/requests";
+import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Toast } from "native-base";
 import { NavigationActions, StackActions } from "react-navigation";
 import {
@@ -26,7 +21,6 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
-import { CodiceContestoPagamento } from "../../definitions/backend/CodiceContestoPagamento";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
@@ -90,11 +84,7 @@ import {
   setPaymentStateToPinLogin
 } from "./../store/actions/wallet/payment";
 
-import {
-  extractNodoError,
-  extractPaymentManagerError,
-  NodoErrors
-} from "../types/errors";
+import { extractNodoError, extractPaymentManagerError } from "../types/errors";
 import {
   NullableWallet,
   PagopaToken,
@@ -106,7 +96,6 @@ import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
 import { SagaCallReturnType } from "../types/utils";
 
-import { amountToImportoWithFallback } from "../utils/amounts";
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 
 import { loginWithPinSaga } from "./startup/pinLoginSaga";
@@ -117,11 +106,10 @@ import {
   fetchWithTokenRefresh
 } from "./wallet/utils";
 
-import { PaymentActivationsPostResponse } from "../../definitions/backend/PaymentActivationsPostResponse";
-
 import { showToast } from "../utils/showToast";
 
 import { TranslationKeys } from "../../locales/locales";
+import { attivaAndGetPaymentId } from "./wallet/nodo";
 
 const navigateTo = (routeName: string, params?: object) => {
   return NavigationActions.navigate({ routeName, params });
@@ -645,72 +633,6 @@ function* showWalletOrSelectPsp(
 
 const MAX_RETRIES_POLLING = 180;
 const DELAY_BETWEEN_RETRIES_MS = 1000;
-
-// handle the "attiva" API call
-async function attivaRpt(
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  rptId: RptId,
-  paymentContextCode: CodiceContestoPagamento,
-  amount: AmountInEuroCents
-): Promise<Either<NodoErrors, PaymentActivationsPostResponse>> {
-  const response:
-    | TypeofApiResponse<ActivatePaymentT>
-    | undefined = await postAttivaRpt({
-    paymentActivationsPostRequest: {
-      rptId: RptIdFromString.encode(rptId),
-      codiceContestoPagamento: paymentContextCode,
-      importoSingoloVersamento: amountToImportoWithFallback(amount)
-    }
-  });
-  return response !== undefined && response.status === 200
-    ? right(response.value) // none if everything works out fine
-    : left(extractNodoError(response));
-}
-
-// handle the polling
-async function fetchPaymentId(
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  paymentContextCode: CodiceContestoPagamento
-): Promise<Either<NodoErrors, string>> {
-  // successfully request the payment activation
-  // now poll until a paymentId is made available
-
-  const response = await getPaymentIdApi({
-    codiceContestoPagamento: paymentContextCode
-  });
-  return response !== undefined && response.status === 200
-    ? right(response.value.idPagamento)
-    : response !== undefined && response.status === 404
-      ? left<NodoErrors, string>("MISSING_PAYMENT_ID")
-      : left<NodoErrors, string>("GENERIC_ERROR");
-}
-
-/**
- * First do the "attiva" operation then,
- * if successful, poll until a paymentId
- * is available
- */
-async function attivaAndGetPaymentId(
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  rptId: RptId,
-  paymentContextCode: CodiceContestoPagamento,
-  amount: AmountInEuroCents
-): Promise<Either<NodoErrors, string>> {
-  const attivaRptResult = await attivaRpt(
-    postAttivaRpt,
-    rptId,
-    paymentContextCode,
-    amount
-  );
-  if (attivaRptResult.isLeft()) {
-    return left(attivaRptResult.value);
-  }
-  // FIXME: why we discard the response of Attiva? we should instead update
-  //        the transaction info from the data contained in the response
-
-  return await fetchPaymentId(getPaymentIdApi, paymentContextCode);
-}
 
 function* checkPayment(
   pagoPaClient: PagoPaClient,
