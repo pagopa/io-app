@@ -6,11 +6,7 @@ import * as React from "react";
 import I18n from "../../i18n";
 
 import { Text, View } from "native-base";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -20,30 +16,24 @@ import TransactionsList, {
 } from "../../components/wallet/TransactionsList";
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import ROUTES from "../../navigation/routes";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
-interface ParamType {
-  readonly card: Wallet;
-}
-
-interface StateParams extends NavigationState {
-  readonly params: ParamType;
-}
-
-interface OwnProps {
-  readonly navigation: NavigationScreenProp<StateParams>;
-}
+type NavigationParams = Readonly<{
+  paymentCompleted: boolean;
+  card: Wallet;
+}>;
 
 type ReduxMappedProps = Readonly<{
   selectedWallet: Wallet;
   isLoading: boolean;
 }>;
 
-type Props = ReduxMappedProps & OwnProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
 
 class TransactionsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
@@ -61,16 +51,26 @@ class TransactionsScreen extends React.Component<Props, never> {
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
-        navigation={this.props.navigation}
         showPayButton={false}
         headerContents={headerContents}
         cardType={{ type: CardEnum.FULL, card: this.props.selectedWallet }}
+        navigateToWalletList={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_LIST)
+        }
+        navigateToScanQrCode={() =>
+          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+        }
+        navigateToCardTransactions={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+        }
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
-          navigation={this.props.navigation}
           display={TransactionsDisplayed.BY_WALLET}
+          navigateToTransactionDetails={() =>
+            this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS)
+          }
         />
       </WalletLayout>
     );

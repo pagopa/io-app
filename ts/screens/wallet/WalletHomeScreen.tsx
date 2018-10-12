@@ -186,16 +186,26 @@ class WalletHomeScreen extends React.Component<Props, never> {
     return (
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
-        navigation={this.props.navigation}
         headerContents={headerContents}
         cardType={cardType}
         allowGoBack={false}
+        navigateToWalletList={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_LIST)
+        }
+        navigateToScanQrCode={() =>
+          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+        }
+        navigateToCardTransactions={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+        }
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
-          navigation={this.props.navigation}
           display={TransactionsDisplayed.LATEST}
+          navigateToTransactionDetails={() =>
+            this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS)
+          }
         />
       </WalletLayout>
     );

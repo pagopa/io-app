@@ -34,6 +34,10 @@ import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 
 import {
+  navigateToTransactionDetailsScreen,
+  navigateToWalletCheckout3dsScreen
+} from "../store/actions/navigation";
+import {
   goBackOnePaymentState,
   paymentRequestCancel,
   paymentRequestConfirmPaymentMethod,
@@ -111,8 +115,15 @@ import { showToast } from "../utils/showToast";
 import { TranslationKeys } from "../../locales/locales";
 import { attivaAndGetPaymentId } from "./wallet/nodo";
 
-const navigateTo = (routeName: string, params?: object) => {
-  return NavigationActions.navigate({ routeName, params });
+/**
+ * Helper function for navigating to screens that don't accept navigation
+ * parameters.
+ *
+ * For screens that need navigation parameters, use type safe nav action
+ * creators.
+ */
+const navigateTo = (routeName: string) => {
+  return NavigationActions.navigate({ routeName });
 };
 
 function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
@@ -277,7 +288,7 @@ function* addCreditCard(
     // from pagoPA and needs to be opened in a webview
     const urlWithToken = `${url}&sessionToken=${pagoPaToken.value}`;
     yield put(
-      navigateTo(ROUTES.WALLET_CHECKOUT_3DS_SCREEN, {
+      navigateToWalletCheckout3dsScreen({
         url: urlWithToken
       })
     );
@@ -913,17 +924,8 @@ function* completionHandler(
       // not be shown to the user as of yet)
       yield put(selectTransactionForDetails(newTransaction));
       yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
-      yield put(
-        // TODO: this should use StackActions.reset
-        // to reset the navigation. Right now, the
-        // "back" option is not allowed -- so the user cannot
-        // get back to previous screens, but the navigation
-        // stack should be cleaned right here
-        // @https://www.pivotaltracker.com/story/show/159300579
-        navigateTo(ROUTES.WALLET_TRANSACTION_DETAILS, {
-          paymentCompleted: true
-        })
-      );
+
+      yield put(navigateToTransactionDetailsScreen({ paymentCompleted: true }));
       yield put(resetPaymentState());
     } else {
       yield put(

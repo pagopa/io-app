@@ -19,11 +19,9 @@ import {
 } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
   setPaymentStateToQrCode,
@@ -36,7 +34,7 @@ import { InstabugButtons } from "../InstabugButtons";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
-import CardComponent from "./card";
+import CardComponent from "./card/CardComponent";
 import { LogoPosition } from "./card/Logo";
 
 const styles = StyleSheet.create({
@@ -104,11 +102,13 @@ type ReduxMappedProps = Readonly<{
 
 type OwnProps = Readonly<{
   title: string;
-  navigation: NavigationScreenProp<NavigationState>;
   headerContents?: React.ReactNode;
   cardType?: CardType;
   showPayButton?: boolean;
   allowGoBack?: boolean;
+  navigateToWalletList: () => void;
+  navigateToScanQrCode: () => void;
+  navigateToCardTransactions: () => void;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -134,40 +134,36 @@ class WalletLayout extends React.Component<Props> {
       case CardEnum.FAN: {
         const { cards } = this.props.cardType;
         return (
-          <TouchableOpacity
-            onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_LIST)
-            }
-          >
+          <TouchableOpacity onPress={this.props.navigateToWalletList}>
             {cards.length === 1 ? (
               <View style={WalletStyles.container}>
                 <CardComponent
-                  navigation={this.props.navigation}
                   item={cards[0]}
                   logoPosition={LogoPosition.TOP}
                   flatBottom={true}
                   headerOnly={true}
                   rotated={true}
+                  navigateToDetails={this.props.navigateToCardTransactions}
                 />
               </View>
             ) : (
               <View style={styles.shiftDown}>
                 <View style={styles.firstCard}>
                   <CardComponent
-                    navigation={this.props.navigation}
                     item={cards[0]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
+                    navigateToDetails={this.props.navigateToCardTransactions}
                   />
                 </View>
                 <View style={styles.secondCard}>
                   <CardComponent
-                    navigation={this.props.navigation}
                     item={cards[1]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
+                    navigateToDetails={this.props.navigateToCardTransactions}
                   />
                 </View>
               </View>
@@ -179,12 +175,12 @@ class WalletLayout extends React.Component<Props> {
         return (
           <View style={WalletStyles.container}>
             <CardComponent
-              navigation={this.props.navigation}
               item={this.props.cardType.card}
               favorite={false}
               menu={true}
               lastUsage={false}
               flatBottom={true}
+              navigateToDetails={this.props.navigateToCardTransactions}
             />
           </View>
         );
@@ -193,12 +189,12 @@ class WalletLayout extends React.Component<Props> {
         return (
           <View style={WalletStyles.container}>
             <CardComponent
-              navigation={this.props.navigation}
               item={this.props.cardType.card}
               logoPosition={LogoPosition.TOP}
               flatBottom={true}
               headerOnly={true}
               rotated={true}
+              navigateToDetails={this.props.navigateToCardTransactions}
             />
           </View>
         );
@@ -243,7 +239,7 @@ class WalletLayout extends React.Component<Props> {
               block={true}
               onPress={() => {
                 this.props.setPaymentStateToQrCode();
-                this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE);
+                this.props.navigateToScanQrCode();
                 this.props.startPaymentSaga();
               }}
             >

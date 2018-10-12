@@ -33,12 +33,16 @@ import { Transaction } from "../../types/pagopa";
 import { UNKNOWN_CARD, UNKNOWN_TRANSACTION } from "../../types/unknown";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 
+type NavigationParams = Readonly<{
+  paymentCompleted: boolean;
+}>;
+
 type ReduxMappedProps = Readonly<{
   transaction: Transaction;
   selectedWallet: Wallet;
 }>;
 
-type Props = ReduxMappedProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -64,11 +68,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
    * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
-  private getSubHeader() {
-    const paymentCompleted = this.props.navigation.getParam(
-      "paymentCompleted",
-      false
-    );
+  private getSubHeader(paymentCompleted: boolean) {
     return paymentCompleted ? (
       <View>
         <Grid>
@@ -135,11 +135,19 @@ class TransactionDetailsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
-        navigation={this.props.navigation}
-        headerContents={this.getSubHeader()}
+        headerContents={this.getSubHeader(paymentCompleted)}
         cardType={{ type: CardEnum.HEADER, card: this.props.selectedWallet }}
         showPayButton={false}
         allowGoBack={!paymentCompleted}
+        navigateToWalletList={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_LIST)
+        }
+        navigateToScanQrCode={() =>
+          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+        }
+        navigateToCardTransactions={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+        }
       >
         <Content
           scrollEnabled={false}

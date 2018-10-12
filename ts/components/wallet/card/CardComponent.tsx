@@ -15,7 +15,6 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import I18n from "../../../i18n";
@@ -88,9 +87,8 @@ type ReduxMappedDispatchProps = Readonly<{
   deleteWallet: (walletId: number) => void;
 }>;
 
-export type CardProps = Readonly<{
+type OwnProps = Readonly<{
   item: Wallet;
-  navigation: NavigationScreenProp<NavigationState>;
   menu?: boolean;
   favorite?: boolean;
   lastUsage?: boolean;
@@ -101,9 +99,10 @@ export type CardProps = Readonly<{
   headerOnly?: boolean;
   rotated?: boolean;
   customStyle?: any;
+  navigateToDetails: () => void;
 }>;
 
-type Props = CardProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 /**
  * Credit card component
@@ -259,7 +258,7 @@ class CardComponent extends React.Component<Props> {
 
 const mapStateToProps = (
   state: GlobalState,
-  props: CardProps
+  props: OwnProps
 ): ReduxMappedStateProps => {
   const favoriteCard = getFavoriteWalletId(state);
   return {

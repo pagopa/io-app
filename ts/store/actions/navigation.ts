@@ -7,11 +7,21 @@ import {
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
+import { InferNavigationParams } from "../../types/react";
+
 import ROUTES from "../../navigation/routes";
+
+import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
+import Checkout3DsScreen from "../../screens/wallet/Checkout3DsScreen";
+import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
 >();
+
+export type NavigationActions =
+  | NavigationAction
+  | ActionType<typeof navigationRestore>;
 
 export const resetToAuthenticationRoute: NavigationResetAction = StackActions.reset(
   {
@@ -56,7 +66,9 @@ export const navigateToBackgroundScreen = NavigationActions.navigate({
 
 export const navigateBack = NavigationActions.back;
 
-export const navigateToMessageDetailScreenAction = (messageId: string) =>
+export const navigateToMessageDetailScreenAction = (
+  params: InferNavigationParams<typeof MessageDetailScreen>
+) =>
   StackActions.reset({
     key: "StackRouterRoot",
     index: 0,
@@ -67,15 +79,31 @@ export const navigateToMessageDetailScreenAction = (messageId: string) =>
           routeName: ROUTES.MESSAGES_NAVIGATOR,
           action: NavigationActions.navigate({
             routeName: ROUTES.MESSAGE_DETAIL,
-            params: {
-              messageId
-            }
+            params
           })
         })
       })
     ]
   });
 
-export type NavigationActions =
-  | NavigationAction
-  | ActionType<typeof navigationRestore>;
+// TODO: this should use StackActions.reset
+// to reset the navigation. Right now, the
+// "back" option is not allowed -- so the user cannot
+// get back to previous screens, but the navigation
+// stack should be cleaned right here
+// @https://www.pivotaltracker.com/story/show/159300579
+export const navigateToTransactionDetailsScreen = (
+  params: InferNavigationParams<typeof TransactionDetailsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_TRANSACTION_DETAILS,
+    params
+  });
+
+export const navigateToWalletCheckout3dsScreen = (
+  params: InferNavigationParams<typeof Checkout3DsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
+    params
+  });

@@ -16,12 +16,10 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
 import { selectWalletForDetails } from "../../store/actions/wallet/wallets";
@@ -61,8 +59,8 @@ export enum TransactionsDisplayed {
 type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
-  navigation: NavigationScreenProp<NavigationState>;
   display: TransactionsDisplayed;
+  navigateToTransactionDetails: () => void;
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
@@ -98,7 +96,7 @@ class TransactionsList extends React.Component<Props> {
         onPress={() => {
           this.props.selectTransaction(item);
           this.props.selectWallet(item.idWallet);
-          this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS);
+          this.props.navigateToTransactionDetails();
         }}
       >
         <Body>

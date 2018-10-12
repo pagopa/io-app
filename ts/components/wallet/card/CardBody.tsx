@@ -7,13 +7,21 @@ import { Right, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
-import { CardProps } from ".";
+
 import I18n from "../../../i18n";
+
 import variables from "../../../theme/variables";
+
+import { Wallet } from "../../../types/pagopa";
+
 import { buildExpirationDate } from "../../../utils/stringBuilder";
+
 import IconFont from "../../ui/IconFont";
+
 import FooterRow from "./FooterRow";
+
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
+
 import { CreditCardStyles } from "./style";
 
 const styles = StyleSheet.create({
@@ -25,7 +33,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CardBody extends React.Component<CardProps> {
+type Props = Readonly<{
+  item: Wallet;
+  logoPosition?: LogoPosition;
+  mainAction?: (wallet: Wallet) => void;
+  lastUsage?: boolean;
+  whiteLine?: boolean;
+  navigateToDetails: () => void;
+}>;
+
+export default class CardBody extends React.Component<Props> {
   /**
    * Display the right-end part of the
    * card body. This will be the card
@@ -78,7 +95,7 @@ export default class CardBody extends React.Component<CardProps> {
   }
 
   public render() {
-    const { item, navigation } = this.props;
+    const { item } = this.props;
     const expirationDate = buildExpirationDate(item);
     // returns a list of rows, namely:
     // - the "validity" row displaying when the card expires
@@ -109,10 +126,10 @@ export default class CardBody extends React.Component<CardProps> {
       this.whiteLine(),
       <FooterRow
         {...{
-          navigation,
           item,
           showMsg: this.props.lastUsage,
-          key: "footerRow"
+          key: "footerRow",
+          navigateToDetails: this.props.navigateToDetails
         }}
       />
     ];

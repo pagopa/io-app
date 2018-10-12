@@ -9,9 +9,7 @@ import { Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import ROUTES from "../../../navigation/routes";
 import { Dispatch } from "../../../store/actions/types";
 import { selectWalletForDetails } from "../../../store/actions/wallet/wallets";
 import variables from "../../../theme/variables";
@@ -25,9 +23,9 @@ type ReduxMappedProps = Readonly<{
 }>;
 
 type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
   item: Wallet;
   showMsg?: boolean;
+  navigateToDetails: () => void;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -45,7 +43,7 @@ class FooterRow extends React.Component<Props> {
   };
 
   public render() {
-    const { navigate } = this.props.navigation;
+    const { navigateToDetails } = this.props;
     const { item } = this.props;
     if (this.props.showMsg) {
       // show "last usage" row
@@ -55,7 +53,7 @@ class FooterRow extends React.Component<Props> {
           size={6}
           onPress={() => {
             this.props.selectWallet(item.idWallet);
-            navigate(ROUTES.WALLET_CARD_TRANSACTIONS);
+            navigateToDetails();
           }}
         >
           <Col size={8}>

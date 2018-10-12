@@ -15,20 +15,25 @@ import {
 import * as React from "react";
 import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import CardComponent from "../../components/wallet/card";
+import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { addCreditCardRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { getNewCreditCard } from "../../store/reducers/wallet/wallets";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
+
+type NavigationParams = Readonly<{
+  paymentCompleted: boolean;
+}>;
 
 type ReduxMappedStateProps = Readonly<{
   wallet: Wallet;
@@ -38,11 +43,9 @@ type ReduMappedDispatchProps = Readonly<{
   addCreditCard: (creditCard: CreditCard, favorite: boolean) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduMappedDispatchProps;
+type Props = ReduxMappedStateProps &
+  ReduMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams>;
 
 type State = Readonly<{
   favorite: boolean;
@@ -103,11 +106,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         <Content>
           <H1> {I18n.t("wallet.saveCard.title")} </H1>
           <CardComponent
-            navigation={this.props.navigation}
             item={this.props.wallet}
             menu={false}
             favorite={false}
             lastUsage={false}
+            navigateToDetails={() =>
+              this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+            }
           />
           <View spacer={true} />
           <Grid>

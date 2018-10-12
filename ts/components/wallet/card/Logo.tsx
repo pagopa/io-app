@@ -40,7 +40,7 @@ export const cardIcons: { [key in CreditCardType]: any } = {
 // shown for all cards -- a future story will take
 // care of switching the images to the actual logos
 // @https://www.pivotaltracker.com/story/show/159651239
-const getCardIcon = (_: Wallet) => {
+const getCardIconFromBrandLogo = (_: Wallet) => {
   return require("../../../../img/wallet/cards-icons/unknown.png");
 };
 
@@ -56,10 +56,11 @@ type Props = Readonly<{
   item: Wallet;
 }>;
 
-export default class Logo extends React.Component<Props> {
-  public render() {
-    return (
-      <Image style={styles.issuerLogo} source={getCardIcon(this.props.item)} />
-    );
-  }
-}
+const Logo: React.SFC<Props> = props => (
+  <Image
+    style={styles.issuerLogo}
+    source={getCardIconFromBrandLogo(props.item)}
+  />
+);
+
+export default Logo;
