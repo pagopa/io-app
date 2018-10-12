@@ -24,6 +24,7 @@ import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
@@ -146,7 +147,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
         }
         navigateToCardTransactions={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+          this.props.navigation.dispatch(
+            navigateToTransactionDetailsScreen({ paymentCompleted: false })
+          )
         }
       >
         <Content

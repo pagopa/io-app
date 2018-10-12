@@ -62,7 +62,7 @@ class WalletsScreen extends React.Component<Props, never> {
             renderRow={(item): React.ReactElement<any> => (
               <CardComponent
                 item={item}
-                navigateToDetails={() =>
+                navigateToCardTransactions={() =>
                   this.props.navigation.navigate(
                     ROUTES.WALLET_CARD_TRANSACTIONS
                   )

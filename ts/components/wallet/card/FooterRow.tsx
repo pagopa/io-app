@@ -25,7 +25,7 @@ type ReduxMappedProps = Readonly<{
 type OwnProps = Readonly<{
   item: Wallet;
   showMsg?: boolean;
-  navigateToDetails: () => void;
+  navigateToCardTransactions: () => void;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -43,7 +43,7 @@ class FooterRow extends React.Component<Props> {
   };
 
   public render() {
-    const { navigateToDetails } = this.props;
+    const { navigateToCardTransactions } = this.props;
     const { item } = this.props;
     if (this.props.showMsg) {
       // show "last usage" row
@@ -53,7 +53,7 @@ class FooterRow extends React.Component<Props> {
           size={6}
           onPress={() => {
             this.props.selectWallet(item.idWallet);
-            navigateToDetails();
+            navigateToCardTransactions();
           }}
         >
           <Col size={8}>

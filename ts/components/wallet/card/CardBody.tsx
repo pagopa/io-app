@@ -39,7 +39,7 @@ type Props = Readonly<{
   mainAction?: (wallet: Wallet) => void;
   lastUsage?: boolean;
   whiteLine?: boolean;
-  navigateToDetails: () => void;
+  navigateToCardTransactions: () => void;
 }>;
 
 export default class CardBody extends React.Component<Props> {
@@ -129,7 +129,7 @@ export default class CardBody extends React.Component<Props> {
           item,
           showMsg: this.props.lastUsage,
           key: "footerRow",
-          navigateToDetails: this.props.navigateToDetails
+          navigateToCardTransactions: this.props.navigateToCardTransactions
         }}
       />
     ];

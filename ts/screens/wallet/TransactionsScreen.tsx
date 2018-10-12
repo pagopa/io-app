@@ -17,6 +17,7 @@ import TransactionsList, {
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import ROUTES from "../../navigation/routes";
+import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
@@ -69,7 +70,11 @@ class TransactionsScreen extends React.Component<Props, never> {
           totalAmount={I18n.t("wallet.total")}
           display={TransactionsDisplayed.BY_WALLET}
           navigateToTransactionDetails={() =>
-            this.props.navigation.navigate(ROUTES.WALLET_TRANSACTION_DETAILS)
+            this.props.navigation.dispatch(
+              navigateToTransactionDetailsScreen({
+                paymentCompleted: false
+              })
+            )
           }
         />
       </WalletLayout>

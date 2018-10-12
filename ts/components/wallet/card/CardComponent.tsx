@@ -99,7 +99,7 @@ type OwnProps = Readonly<{
   headerOnly?: boolean;
   rotated?: boolean;
   customStyle?: any;
-  navigateToDetails: () => void;
+  navigateToCardTransactions: () => void;
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;

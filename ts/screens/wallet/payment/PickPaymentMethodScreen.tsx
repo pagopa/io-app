@@ -142,7 +142,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                   lastUsage={false}
                   mainAction={confirmPaymentMethod}
                   logoPosition={LogoPosition.TOP}
-                  navigateToDetails={() =>
+                  navigateToCardTransactions={() =>
                     this.props.navigation.navigate(
                       ROUTES.WALLET_CARD_TRANSACTIONS
                     )

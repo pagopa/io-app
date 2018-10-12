@@ -157,7 +157,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               menu={false}
               favorite={false}
               lastUsage={false}
-              navigateToDetails={() =>
+              navigateToCardTransactions={() =>
                 this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
               }
             />

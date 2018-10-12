@@ -143,7 +143,9 @@ class WalletLayout extends React.Component<Props> {
                   flatBottom={true}
                   headerOnly={true}
                   rotated={true}
-                  navigateToDetails={this.props.navigateToCardTransactions}
+                  navigateToCardTransactions={
+                    this.props.navigateToCardTransactions
+                  }
                 />
               </View>
             ) : (
@@ -154,7 +156,9 @@ class WalletLayout extends React.Component<Props> {
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
-                    navigateToDetails={this.props.navigateToCardTransactions}
+                    navigateToCardTransactions={
+                      this.props.navigateToCardTransactions
+                    }
                   />
                 </View>
                 <View style={styles.secondCard}>
@@ -163,7 +167,9 @@ class WalletLayout extends React.Component<Props> {
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
-                    navigateToDetails={this.props.navigateToCardTransactions}
+                    navigateToCardTransactions={
+                      this.props.navigateToCardTransactions
+                    }
                   />
                 </View>
               </View>
@@ -180,7 +186,7 @@ class WalletLayout extends React.Component<Props> {
               menu={true}
               lastUsage={false}
               flatBottom={true}
-              navigateToDetails={this.props.navigateToCardTransactions}
+              navigateToCardTransactions={this.props.navigateToCardTransactions}
             />
           </View>
         );
@@ -194,7 +200,7 @@ class WalletLayout extends React.Component<Props> {
               flatBottom={true}
               headerOnly={true}
               rotated={true}
-              navigateToDetails={this.props.navigateToCardTransactions}
+              navigateToCardTransactions={this.props.navigateToCardTransactions}
             />
           </View>
         );
