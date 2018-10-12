@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  item: Wallet;
+  wallet: Wallet;
   logoPosition?: LogoPosition;
   mainAction?: (wallet: Wallet) => void;
   lastUsage?: boolean;
   whiteLine?: boolean;
-  navigateToCardTransactions: () => void;
+  navigateToWalletTransactions: (item: Wallet) => void;
 }>;
 
 export default class CardBody extends React.Component<Props> {
@@ -64,7 +64,7 @@ export default class CardBody extends React.Component<Props> {
         <Row
           style={CreditCardStyles.rowStyle}
           onPress={() =>
-            mainAction !== undefined ? mainAction(this.props.item) : undefined
+            mainAction !== undefined ? mainAction(this.props.wallet) : undefined
           }
         >
           <Right>
@@ -78,7 +78,7 @@ export default class CardBody extends React.Component<Props> {
       );
     } else {
       return shouldRenderLogo(LogoPosition.CENTER, this.props.logoPosition) ? (
-        <Logo item={this.props.item} />
+        <Logo item={this.props.wallet} />
       ) : null;
     }
   }
@@ -95,8 +95,8 @@ export default class CardBody extends React.Component<Props> {
   }
 
   public render() {
-    const { item } = this.props;
-    const expirationDate = buildExpirationDate(item);
+    const { wallet } = this.props;
+    const expirationDate = buildExpirationDate(wallet);
     // returns a list of rows, namely:
     // - the "validity" row displaying when the card expires
     // - the "owner" row, displaying the owner name on the left-end
@@ -118,19 +118,17 @@ export default class CardBody extends React.Component<Props> {
       <Row key="owner" size={6} style={CreditCardStyles.rowStyle}>
         <Col size={7}>
           <Text style={CreditCardStyles.textStyle}>
-            {item.creditCard.holder.toUpperCase()}
+            {wallet.creditCard.holder.toUpperCase()}
           </Text>
         </Col>
         <Col size={2}>{this.rightPart()}</Col>
       </Row>,
       this.whiteLine(),
       <FooterRow
-        {...{
-          item,
-          showMsg: this.props.lastUsage,
-          key: "footerRow",
-          navigateToCardTransactions: this.props.navigateToCardTransactions
-        }}
+        wallet={wallet}
+        showMsg={this.props.lastUsage}
+        key={"footerRow"}
+        navigateToWalletTransactions={this.props.navigateToWalletTransactions}
       />
     ];
   }

@@ -62,8 +62,7 @@ import {
 import {
   fetchTransactionsFailure,
   fetchTransactionsRequest,
-  fetchTransactionsSuccess,
-  selectTransactionForDetails
+  fetchTransactionsSuccess
 } from "../store/actions/wallet/transactions";
 import {
   addCreditCardCompleted,
@@ -73,7 +72,6 @@ import {
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
-  selectWalletForDetails,
   walletManagementResetLoadingState,
   walletManagementSetLoadingState
 } from "../store/actions/wallet/wallets";
@@ -919,13 +917,12 @@ function* completionHandler(
       yield call(fetchTransactions, pagoPaClient);
       // FIXME: fetchTransactions could fail
 
-      // use "storeNewTransaction(newTransaction) if it's okay
-      // to have the payment as "pending" (this information will
-      // not be shown to the user as of yet)
-      yield put(selectTransactionForDetails(newTransaction));
-      yield put(selectWalletForDetails(wallet.idWallet)); // for the banner
-
-      yield put(navigateToTransactionDetailsScreen({ paymentCompleted: true }));
+      yield put(
+        navigateToTransactionDetailsScreen({
+          transaction: newTransaction,
+          isPaymentCompletedTransaction: true
+        })
+      );
       yield put(resetPaymentState());
     } else {
       yield put(

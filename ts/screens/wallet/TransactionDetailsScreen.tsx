@@ -11,39 +11,37 @@
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
-import * as React from "react";
-
 import { Content, H1, H3, Text, View } from "native-base";
+import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
-import { transactionForDetailsSelector } from "../../store/reducers/wallet/transactions";
-import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
+import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import { Transaction } from "../../types/pagopa";
-import { UNKNOWN_CARD, UNKNOWN_TRANSACTION } from "../../types/unknown";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
-  paymentCompleted: boolean;
-}>;
-
-type ReduxMappedProps = Readonly<{
+  isPaymentCompletedTransaction: boolean;
   transaction: Transaction;
-  selectedWallet: Wallet;
 }>;
 
-type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
+type ReduxInjectedProps = Readonly<{
+  wallets: ReturnType<typeof getWalletsById>;
+}>;
+
+type Props = ReduxInjectedProps & NavigationInjectedProps<NavigationParams>;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -116,9 +114,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const { transaction } = this.props;
-    const paymentCompleted = this.props.navigation.getParam(
-      "paymentCompleted",
+    const transaction = this.props.navigation.getParam("transaction");
+
+    // whether this transaction is the result of a just completed payment
+    const isPaymentCompletedTransaction = this.props.navigation.getParam(
+      "isPaymentCompletedTransaction",
       false
     );
     const amount = buildAmount(centsToAmount(transaction.amount.amount));
@@ -133,22 +133,32 @@ class TransactionDetailsScreen extends React.Component<Props> {
       centsToAmount(transaction.grandTotal.amount)
     );
 
+    // FIXME: in case the wallet for this transaction has been deleted, display
+    //        a message in the wallet layout instead of an empty space
+    const transactionWallet = this.props.wallets[transaction.idWallet];
+
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
-        headerContents={this.getSubHeader(paymentCompleted)}
-        cardType={{ type: CardEnum.HEADER, card: this.props.selectedWallet }}
+        headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
+        cardType={
+          transactionWallet
+            ? { type: CardEnum.HEADER, card: transactionWallet }
+            : { type: CardEnum.NONE }
+        }
         showPayButton={false}
-        allowGoBack={!paymentCompleted}
+        allowGoBack={!isPaymentCompletedTransaction}
         navigateToWalletList={() =>
           this.props.navigation.navigate(ROUTES.WALLET_LIST)
         }
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
         }
-        navigateToCardTransactions={() =>
+        navigateToWalletTransactions={(selectedWallet: Wallet) =>
           this.props.navigation.dispatch(
-            navigateToTransactionDetailsScreen({ paymentCompleted: false })
+            navigateToWalletTransactionsScreen({
+              selectedWallet
+            })
           )
         }
       >
@@ -163,7 +173,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
                 name="io-close"
                 size={variables.iconSizeBase}
                 onPress={() =>
-                  paymentCompleted
+                  isPaymentCompletedTransaction
                     ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
                     : this.props.navigation.goBack()
                 }
@@ -206,11 +216,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
     );
   }
 }
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  transaction: transactionForDetailsSelector(state).getOrElse(
-    UNKNOWN_TRANSACTION
-  ),
-  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD)
+
+export const mapStateToProps = (state: GlobalState): ReduxInjectedProps => ({
+  wallets: getWalletsById(state)
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);

@@ -20,14 +20,17 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateToTransactionDetailsScreen,
+  navigateToWalletTransactionsScreen
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-import { Wallet } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -196,9 +199,11 @@ class WalletHomeScreen extends React.Component<Props, never> {
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
         }
-        navigateToCardTransactions={() =>
+        navigateToWalletTransactions={(selectedWallet: Wallet) =>
           this.props.navigation.dispatch(
-            navigateToTransactionDetailsScreen({ paymentCompleted: false })
+            navigateToWalletTransactionsScreen({
+              selectedWallet
+            })
           )
         }
       >
@@ -206,9 +211,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
           display={TransactionsDisplayed.LATEST}
-          navigateToTransactionDetails={() =>
+          navigateToTransactionDetails={(transaction: Transaction) =>
             this.props.navigation.dispatch(
-              navigateToTransactionDetailsScreen({ paymentCompleted: false })
+              navigateToTransactionDetailsScreen({
+                transaction,
+                isPaymentCompletedTransaction: false
+              })
             )
           }
         />

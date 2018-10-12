@@ -88,7 +88,7 @@ type ReduxMappedDispatchProps = Readonly<{
 }>;
 
 type OwnProps = Readonly<{
-  item: Wallet;
+  wallet: Wallet;
   menu?: boolean;
   favorite?: boolean;
   lastUsage?: boolean;
@@ -99,7 +99,7 @@ type OwnProps = Readonly<{
   headerOnly?: boolean;
   rotated?: boolean;
   customStyle?: any;
-  navigateToCardTransactions: () => void;
+  navigateToWalletTransactions: (item: Wallet) => void;
 }>;
 
 type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
@@ -125,17 +125,17 @@ class CardComponent extends React.Component<Props> {
     if (this.props.isFavoriteCard) {
       this.props.setFavoriteCard(none);
     } else {
-      this.props.setFavoriteCard(some(this.props.item.idWallet));
+      this.props.setFavoriteCard(some(this.props.wallet.idWallet));
     }
   };
 
   private topRightCorner() {
-    const { item } = this.props;
+    const { wallet } = this.props;
     if (this.props.logoPosition === LogoPosition.TOP) {
       return (
         <Col size={2}>
           {shouldRenderLogo(LogoPosition.TOP, this.props.logoPosition) && (
-            <Logo item={item} />
+            <Logo item={wallet} />
           )}
         </Col>
       );
@@ -186,7 +186,8 @@ class CardComponent extends React.Component<Props> {
                         {
                           text: I18n.t("global.buttons.ok"),
                           style: "destructive",
-                          onPress: () => this.props.deleteWallet(item.idWallet)
+                          onPress: () =>
+                            this.props.deleteWallet(wallet.idWallet)
                         }
                       ],
                       { cancelable: false }
@@ -206,7 +207,7 @@ class CardComponent extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const { item } = this.props;
+    const { wallet } = this.props;
 
     const cardStyles: ReadonlyArray<ViewStyle> = [
       styles.cardStyle,
@@ -236,7 +237,7 @@ class CardComponent extends React.Component<Props> {
                         CreditCardStyles.largeTextStyle
                       ]}
                     >
-                      {`${HIDDEN_CREDITCARD_NUMBERS}${item.creditCard.pan.slice(
+                      {`${HIDDEN_CREDITCARD_NUMBERS}${wallet.creditCard.pan.slice(
                         -4
                       )}`}
                     </Text>
@@ -264,7 +265,7 @@ const mapStateToProps = (
   return {
     isFavoriteCard: favoriteCard.fold(
       false,
-      walletId => walletId === props.item.idWallet
+      walletId => walletId === props.wallet.idWallet
     )
   };
 };

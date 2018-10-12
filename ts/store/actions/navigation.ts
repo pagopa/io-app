@@ -14,6 +14,7 @@ import ROUTES from "../../navigation/routes";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import Checkout3DsScreen from "../../screens/wallet/Checkout3DsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
+import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -105,5 +106,13 @@ export const navigateToWalletCheckout3dsScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
+    params
+  });
+
+export const navigateToWalletTransactionsScreen = (
+  params: InferNavigationParams<typeof TransactionsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_CARD_TRANSACTIONS,
     params
   });

@@ -20,14 +20,11 @@ import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
-import { selectTransactionForDetails } from "../../store/actions/wallet/transactions";
-import { selectWalletForDetails } from "../../store/actions/wallet/wallets";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  latestTransactionsSelector,
-  transactionsByWalletSelector
+  getTransactions,
+  latestTransactionsSelector
 } from "../../store/reducers/wallet/transactions";
 import { Transaction } from "../../types/pagopa";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
@@ -43,11 +40,6 @@ type ReduxMappedStateProps =
       isLoading: true;
     }>;
 
-type ReduxMappedDispatchProps = Readonly<{
-  selectTransaction: (i: Transaction) => void;
-  selectWallet: (item: number) => void;
-}>;
-
 /**
  * The type of transactions that are to be shown
  */
@@ -60,10 +52,10 @@ type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
   display: TransactionsDisplayed;
-  navigateToTransactionDetails: () => void;
+  navigateToTransactionDetails: (transaction: Transaction) => void;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps & ReduxMappedStateProps;
 /**
  * Transactions List component
  */
@@ -93,11 +85,7 @@ class TransactionsList extends React.Component<Props> {
     return (
       <ListItem
         style={WalletStyles.listItem}
-        onPress={() => {
-          this.props.selectTransaction(item);
-          this.props.selectWallet(item.idWallet);
-          this.props.navigateToTransactionDetails();
-        }}
+        onPress={() => this.props.navigateToTransactionDetails(item)}
       >
         <Body>
           <Grid>
@@ -188,7 +176,7 @@ const mapStateToProps = (
     }
     case TransactionsDisplayed.BY_WALLET: {
       return {
-        transactions: transactionsByWalletSelector(state),
+        transactions: getTransactions(state),
         isLoading
       };
     }
@@ -196,12 +184,4 @@ const mapStateToProps = (
   return { transactions: [], isLoading };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  selectTransaction: item => dispatch(selectTransactionForDetails(item)),
-  selectWallet: (item: number) => dispatch(selectWalletForDetails(item))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TransactionsList);
+export default connect(mapStateToProps)(TransactionsList);

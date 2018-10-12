@@ -108,7 +108,7 @@ type OwnProps = Readonly<{
   allowGoBack?: boolean;
   navigateToWalletList: () => void;
   navigateToScanQrCode: () => void;
-  navigateToCardTransactions: () => void;
+  navigateToWalletTransactions: (wallet: Wallet) => void;
 }>;
 
 type Props = OwnProps & ReduxMappedProps;
@@ -138,13 +138,13 @@ class WalletLayout extends React.Component<Props> {
             {cards.length === 1 ? (
               <View style={WalletStyles.container}>
                 <CardComponent
-                  item={cards[0]}
+                  wallet={cards[0]}
                   logoPosition={LogoPosition.TOP}
                   flatBottom={true}
                   headerOnly={true}
                   rotated={true}
-                  navigateToCardTransactions={
-                    this.props.navigateToCardTransactions
+                  navigateToWalletTransactions={
+                    this.props.navigateToWalletTransactions
                   }
                 />
               </View>
@@ -152,23 +152,23 @@ class WalletLayout extends React.Component<Props> {
               <View style={styles.shiftDown}>
                 <View style={styles.firstCard}>
                   <CardComponent
-                    item={cards[0]}
+                    wallet={cards[0]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
-                    navigateToCardTransactions={
-                      this.props.navigateToCardTransactions
+                    navigateToWalletTransactions={
+                      this.props.navigateToWalletTransactions
                     }
                   />
                 </View>
                 <View style={styles.secondCard}>
                   <CardComponent
-                    item={cards[1]}
+                    wallet={cards[1]}
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
-                    navigateToCardTransactions={
-                      this.props.navigateToCardTransactions
+                    navigateToWalletTransactions={
+                      this.props.navigateToWalletTransactions
                     }
                   />
                 </View>
@@ -181,12 +181,14 @@ class WalletLayout extends React.Component<Props> {
         return (
           <View style={WalletStyles.container}>
             <CardComponent
-              item={this.props.cardType.card}
+              wallet={this.props.cardType.card}
               favorite={false}
               menu={true}
               lastUsage={false}
               flatBottom={true}
-              navigateToCardTransactions={this.props.navigateToCardTransactions}
+              navigateToWalletTransactions={
+                this.props.navigateToWalletTransactions
+              }
             />
           </View>
         );
@@ -195,12 +197,14 @@ class WalletLayout extends React.Component<Props> {
         return (
           <View style={WalletStyles.container}>
             <CardComponent
-              item={this.props.cardType.card}
+              wallet={this.props.cardType.card}
               logoPosition={LogoPosition.TOP}
               flatBottom={true}
               headerOnly={true}
               rotated={true}
-              navigateToCardTransactions={this.props.navigateToCardTransactions}
+              navigateToWalletTransactions={
+                this.props.navigateToWalletTransactions
+              }
             />
           </View>
         );

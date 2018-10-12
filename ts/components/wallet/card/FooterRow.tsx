@@ -9,26 +9,19 @@ import { Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
-import { connect } from "react-redux";
-import { Dispatch } from "../../../store/actions/types";
-import { selectWalletForDetails } from "../../../store/actions/wallet/wallets";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { buildFormattedLastUsage } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
 import { CreditCardStyles } from "./style";
 
-type ReduxMappedProps = Readonly<{
-  selectWallet: (item: number) => void;
-}>;
-
 type OwnProps = Readonly<{
-  item: Wallet;
+  wallet: Wallet;
   showMsg?: boolean;
-  navigateToCardTransactions: () => void;
+  navigateToWalletTransactions: (item: Wallet) => void;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type Props = OwnProps;
 
 const styles = StyleSheet.create({
   rightAligned: {
@@ -43,18 +36,15 @@ class FooterRow extends React.Component<Props> {
   };
 
   public render() {
-    const { navigateToCardTransactions } = this.props;
-    const { item } = this.props;
+    const { navigateToWalletTransactions } = this.props;
+    const { wallet } = this.props;
     if (this.props.showMsg) {
       // show "last usage" row
       return (
         <Row
           style={CreditCardStyles.rowStyle}
           size={6}
-          onPress={() => {
-            this.props.selectWallet(item.idWallet);
-            navigateToCardTransactions();
-          }}
+          onPress={() => navigateToWalletTransactions(wallet)}
         >
           <Col size={8}>
             <Text
@@ -63,7 +53,7 @@ class FooterRow extends React.Component<Props> {
                 CreditCardStyles.smallTextStyle
               ]}
             >
-              {buildFormattedLastUsage(item)}
+              {buildFormattedLastUsage(wallet)}
             </Text>
           </Col>
           <Col size={1} style={styles.rightAligned}>
@@ -80,11 +70,4 @@ class FooterRow extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  selectWallet: (item: number) => dispatch(selectWalletForDetails(item))
-});
-
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(FooterRow);
+export default FooterRow;

@@ -23,7 +23,7 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
+import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { addCreditCardRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -106,12 +106,14 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         <Content>
           <H1> {I18n.t("wallet.saveCard.title")} </H1>
           <CardComponent
-            item={this.props.wallet}
+            wallet={this.props.wallet}
             menu={false}
             favorite={false}
             lastUsage={false}
-            navigateToCardTransactions={() =>
-              this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+            navigateToWalletTransactions={(wallet: Wallet) =>
+              this.props.navigation.dispatch(
+                navigateToWalletTransactionsScreen({ selectedWallet: wallet })
+              )
             }
           />
           <View spacer={true} />

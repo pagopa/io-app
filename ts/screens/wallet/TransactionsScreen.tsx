@@ -17,27 +17,27 @@ import TransactionsList, {
 import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import ROUTES from "../../navigation/routes";
-import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateToTransactionDetailsScreen,
+  navigateToWalletTransactionsScreen
+} from "../../store/actions/navigation";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
-import { selectedWalletSelector } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
-import { UNKNOWN_CARD } from "../../types/unknown";
 
 type NavigationParams = Readonly<{
-  paymentCompleted: boolean;
-  card: Wallet;
+  selectedWallet: Wallet;
 }>;
 
 type ReduxMappedProps = Readonly<{
-  selectedWallet: Wallet;
   isLoading: boolean;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
 
-class TransactionsScreen extends React.Component<Props, never> {
+class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
+    const selectedWallet = this.props.navigation.getParam("selectedWallet");
     const headerContents = (
       <View>
         <View style={WalletStyles.walletBannerText}>
@@ -54,25 +54,28 @@ class TransactionsScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.paymentMethod")}
         showPayButton={false}
         headerContents={headerContents}
-        cardType={{ type: CardEnum.FULL, card: this.props.selectedWallet }}
+        cardType={{ type: CardEnum.FULL, card: selectedWallet }}
         navigateToWalletList={() =>
           this.props.navigation.navigate(ROUTES.WALLET_LIST)
         }
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
         }
-        navigateToCardTransactions={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+        navigateToWalletTransactions={(wallet: Wallet) =>
+          this.props.navigation.dispatch(
+            navigateToWalletTransactionsScreen({ selectedWallet: wallet })
+          )
         }
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
           display={TransactionsDisplayed.BY_WALLET}
-          navigateToTransactionDetails={() =>
+          navigateToTransactionDetails={transaction =>
             this.props.navigation.dispatch(
               navigateToTransactionDetailsScreen({
-                paymentCompleted: false
+                transaction,
+                isPaymentCompletedTransaction: false
               })
             )
           }
@@ -83,7 +86,6 @@ class TransactionsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  selectedWallet: selectedWalletSelector(state).getOrElse(UNKNOWN_CARD),
   isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
 });
 

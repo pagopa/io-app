@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import ROUTES from "../../navigation/routes";
+import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
@@ -51,8 +52,10 @@ class WalletsScreen extends React.Component<Props, never> {
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
         }
-        navigateToCardTransactions={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+        navigateToWalletTransactions={(selectedWallet: Wallet) =>
+          this.props.navigation.dispatch(
+            navigateToWalletTransactionsScreen({ selectedWallet })
+          )
         }
       >
         <Content style={[WalletStyles.padded, WalletStyles.header]}>
@@ -61,10 +64,10 @@ class WalletsScreen extends React.Component<Props, never> {
             dataArray={this.props.wallets as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
               <CardComponent
-                item={item}
-                navigateToCardTransactions={() =>
-                  this.props.navigation.navigate(
-                    ROUTES.WALLET_CARD_TRANSACTIONS
+                wallet={item}
+                navigateToWalletTransactions={(selectedWallet: Wallet) =>
+                  this.props.navigation.dispatch(
+                    navigateToWalletTransactionsScreen({ selectedWallet })
                   )
                 }
               />

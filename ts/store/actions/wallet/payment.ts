@@ -13,17 +13,6 @@ import { Psp, Wallet } from "../../../types/pagopa";
 
 export const resetPaymentState = createStandardAction("PAYMENT_COMPLETED")();
 
-type PaymentUpdatePspInStatePayload = Readonly<{
-  walletId: number;
-  psp: Psp; // pspId
-}>;
-
-// TODO: temporary action until integration with pagoPA occurs
-// @https://www.pivotaltracker.com/story/show/159494746
-export const paymentUpdatePspInState = createStandardAction(
-  "PAYMENT_UPDATE_PSP_IN_STATE"
-)<PaymentUpdatePspInStatePayload>();
-
 export const startPaymentSaga = createStandardAction("PAYMENT_REQUEST")();
 
 /**
@@ -199,7 +188,6 @@ export type PaymentActions =
   | ActionType<typeof paymentRequestPickPsp>
   | ActionType<typeof setPaymentStateToPickPsp>
   | ActionType<typeof paymentUpdatePsp>
-  | ActionType<typeof paymentUpdatePspInState> // TODO: temporary, until integration with pagoPA occurs @https://www.pivotaltracker.com/story/show/159494746
   | ActionType<typeof paymentRequestCompletion>
   | ActionType<typeof resetPaymentState>
   | ActionType<typeof goBackOnePaymentState>

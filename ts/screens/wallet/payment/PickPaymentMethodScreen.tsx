@@ -26,6 +26,7 @@ import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestConfirmPaymentMethod,
@@ -136,15 +137,15 @@ class PickPaymentMethodScreen extends React.Component<Props> {
               dataArray={wallets as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
                 <CardComponent
-                  item={item}
+                  wallet={item}
                   menu={false}
                   favorite={false}
                   lastUsage={false}
                   mainAction={confirmPaymentMethod}
                   logoPosition={LogoPosition.TOP}
-                  navigateToCardTransactions={() =>
-                    this.props.navigation.navigate(
-                      ROUTES.WALLET_CARD_TRANSACTIONS
+                  navigateToWalletTransactions={(selectedWallet: Wallet) =>
+                    this.props.navigation.dispatch(
+                      navigateToWalletTransactionsScreen({ selectedWallet })
                     )
                   }
                 />

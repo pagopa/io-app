@@ -36,7 +36,7 @@ import AppHeader from "../../../components/ui/AppHeader";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
+import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import {
@@ -153,12 +153,14 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
             <CardComponent
-              item={this.props.wallet}
+              wallet={this.props.wallet}
               menu={false}
               favorite={false}
               lastUsage={false}
-              navigateToCardTransactions={() =>
-                this.props.navigation.navigate(ROUTES.WALLET_CARD_TRANSACTIONS)
+              navigateToWalletTransactions={(selectedWallet: Wallet) =>
+                this.props.navigation.dispatch(
+                  navigateToWalletTransactionsScreen({ selectedWallet })
+                )
               }
             />
             <View spacer={true} large={true} />
