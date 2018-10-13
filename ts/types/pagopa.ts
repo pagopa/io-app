@@ -244,14 +244,9 @@ export type TransactionResponse = t.TypeOf<typeof TransactionResponse>;
 /**
  * A refined Pay
  */
-export const Pay = repP(
-  reqP(PayPagoPA, "idWallet"),
-  "tipo",
-  t.literal("web"),
-  "Pay"
-);
+const Pay = repP(reqP(PayPagoPA, "idWallet"), "tipo", t.literal("web"), "Pay");
 
-export type Pay = t.TypeOf<typeof Pay>;
+type Pay = t.TypeOf<typeof Pay>;
 
 /**
  * A refined PayRequest

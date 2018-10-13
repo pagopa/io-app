@@ -5,7 +5,7 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { MessageListItemComponent } from "./MessageListItemComponent";
 
-export type OwnProps = {
+type OwnProps = {
   messages: ReadonlyArray<MessageWithContentPO>;
   servicesById: ServicesByIdState;
   refreshing: boolean;
@@ -13,7 +13,7 @@ export type OwnProps = {
   onListItemPress?: (messageId: string) => void;
 };
 
-export type Props = OwnProps;
+type Props = OwnProps;
 
 const makeRenderItem = (
   servicesById: ServicesByIdState,
@@ -33,7 +33,7 @@ const makeRenderItem = (
 
 const keyExtractor = (message: MessageWithContentPO) => message.id;
 
-export class MessageListComponent extends React.PureComponent<Props, never> {
+class MessageListComponent extends React.PureComponent<Props, never> {
   public render() {
     const {
       messages,

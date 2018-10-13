@@ -1,7 +1,6 @@
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Amount } from "../types/pagopa";
-import { Transaction } from "../types/pagopa";
 import { Wallet } from "../types/pagopa";
 import {
   CreditCardCVC,
@@ -64,29 +63,6 @@ export const UNKNOWN_CARD: Wallet = {
     id: UNKNOWN_NUMBER,
     logoPSP: UNKNOWN_STRING
   }
-};
-
-export const UNKNOWN_TRANSACTION: Transaction = {
-  amount: UNKNOWN_AMOUNT_PAGOPA,
-  created: UNKNOWN_DATE,
-  description: UNKNOWN_STRING,
-  error: false,
-  fee: UNKNOWN_AMOUNT_PAGOPA,
-  grandTotal: UNKNOWN_AMOUNT_PAGOPA,
-  id: UNKNOWN_NUMBER,
-  idPayment: UNKNOWN_NUMBER,
-  idPsp: UNKNOWN_NUMBER,
-  idStatus: UNKNOWN_NUMBER,
-  idWallet: UNKNOWN_NUMBER,
-  merchant: UNKNOWN_STRING,
-  nodoIdPayment: UNKNOWN_STRING,
-  paymentModel: UNKNOWN_NUMBER,
-  statusMessage: UNKNOWN_STRING,
-  success: false,
-  token: UNKNOWN_STRING,
-  updated: UNKNOWN_DATE,
-  urlCheckout3ds: UNKNOWN_STRING,
-  urlRedirectPSP: UNKNOWN_STRING
 };
 
 export const UNKNOWN_AMOUNT = "9999999999" as AmountInEuroCents;

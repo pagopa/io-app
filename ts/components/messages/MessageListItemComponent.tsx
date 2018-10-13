@@ -131,5 +131,3 @@ export class MessageListItemComponent extends React.PureComponent<
     );
   }
 }
-
-export default MessageListItemComponent;

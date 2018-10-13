@@ -33,7 +33,7 @@ const WALLETS_INITIAL_STATE: WalletsState = {
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
-export const getWallets = createSelector(
+const getWallets = createSelector(
   getWalletsById,
   wx => values(wx).filter(_ => _ !== undefined) as ReadonlyArray<Wallet>
 );
@@ -69,23 +69,10 @@ export const walletsSelector = createSelector(
     )
 );
 
-export const getWalletFromId = (
-  walletId: Option<number>,
-  wallets: IndexedById<Wallet>
-): Option<Wallet> =>
-  walletId.mapNullable(wId =>
-    values(wallets).find(c => c !== undefined && c.idWallet === wId)
-  );
-
 export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
   w.psp === undefined
     ? undefined
     : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
-
-export const walletCountSelector = createSelector(
-  getWalletsById,
-  (wallets: ReturnType<typeof getWalletsById>) => Object.keys(wallets).length
-);
 
 // reducer
 const reducer = (

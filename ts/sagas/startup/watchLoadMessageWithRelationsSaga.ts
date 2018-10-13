@@ -19,7 +19,7 @@ import { loadMessage, loadService } from "./watchLoadMessagesSaga";
 /**
  * Load message with related entities (ex. the sender service).
  */
-export function* loadMessageWithRelationsSaga(
+function* loadMessageWithRelationsSaga(
   getMessage: TypeofApiCall<GetUserMessageT>,
   getService: TypeofApiCall<GetServiceT>,
   messageWithRelationsLoadRequest: ActionType<

@@ -217,7 +217,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 }
 
-export const mapStateToProps = (state: GlobalState): ReduxInjectedProps => ({
+const mapStateToProps = (state: GlobalState): ReduxInjectedProps => ({
   wallets: getWalletsById(state)
 });
 

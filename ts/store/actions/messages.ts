@@ -49,10 +49,6 @@ export const loadMessagesFailure = createAction(
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
-export const navigateToMessageDetails = createStandardAction(
-  "NAVIGATE_TO_MESSAGE_DETAILS"
-)<string>();
-
 export type MessagesActions =
   | ActionType<typeof loadMessageSuccess>
   | ActionType<typeof loadMessageFailure>
@@ -62,5 +58,4 @@ export type MessagesActions =
   | ActionType<typeof loadMessagesRequest>
   | ActionType<typeof loadMessagesCancel>
   | ActionType<typeof loadMessagesSuccess>
-  | ActionType<typeof loadMessagesFailure>
-  | ActionType<typeof navigateToMessageDetails>;
+  | ActionType<typeof loadMessagesFailure>;

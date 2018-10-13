@@ -14,7 +14,6 @@ import {
 
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { PaymentProblemJson } from "../../definitions/backend/PaymentProblemJson";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 
 import {
@@ -99,13 +98,6 @@ function baseResponseDecoder<R, O = R>(
 /**
  * Specific for the nodo-related requests
  */
-
-export type NodoErrorResponseType =
-  | IResponseType<400, PaymentProblemJson>
-  | IResponseType<401, undefined>
-  | IResponseType<500, PaymentProblemJson>;
-
-export type NodoResponseType<R> = IResponseType<200, R> | NodoErrorResponseType;
 
 export type LogoutT = IPostApiRequestType<
   {},

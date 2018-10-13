@@ -7,7 +7,6 @@ import { getType } from "typesafe-actions";
 
 import { clearDeepLink, setDeepLink } from "../actions/deepLink";
 import { Action } from "../actions/types";
-import { GlobalState } from "./types";
 
 export type DeepLinkState = Readonly<{
   deepLink: NavigationNavigateActionPayload | null;
@@ -18,10 +17,6 @@ const INITIAL_STATE: DeepLinkState = {
   deepLink: null,
   immediate: false
 };
-
-export const deepLinkSelector = (
-  state: GlobalState
-): NavigationNavigateActionPayload | null => state.deepLink.deepLink;
 
 export default (
   state: DeepLinkState = INITIAL_STATE,
