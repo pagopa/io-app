@@ -15,7 +15,7 @@ export type PendingMessageState = Readonly<{
   foreground: boolean;
 }> | null;
 
-export const INITIAL_STATE: PendingMessageState = null;
+const INITIAL_STATE: PendingMessageState = null;
 
 const reducer = (
   state: PendingMessageState = INITIAL_STATE,

@@ -118,9 +118,6 @@ export const sessionInfoSelector = (
     : none;
 };
 
-export const walletTokenSelector = (state: GlobalState): Option<string> =>
-  sessionInfoSelector(state).map(s => s.walletToken);
-
 function matchWithIdp<O>(
   state: AuthenticationState,
   whenWithoutIdp: O,

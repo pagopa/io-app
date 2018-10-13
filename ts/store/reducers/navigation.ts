@@ -1,6 +1,5 @@
 import {
   NavigationActions,
-  NavigationRoute,
   NavigationState,
   StackActions
 } from "react-navigation";
@@ -28,9 +27,6 @@ const getCurrentRouteFromState = (route: NavigationState): NavigationState => {
 
   return route;
 };
-
-export const currentRouteSelector = ({ nav }: GlobalState) =>
-  getCurrentRouteFromState(nav) as NavigationRoute;
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {

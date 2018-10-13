@@ -25,13 +25,13 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-export type ReduxMappedProps = Readonly<{
+type ReduxMappedProps = Readonly<{
   isLoading: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
   servicesById: ServicesByIdState;
 }>;
 
-export type Props = NavigationScreenProps & ReduxMappedProps & ReduxProps;
+type Props = NavigationScreenProps & ReduxMappedProps & ReduxProps;
 
 const styles = StyleSheet.create({
   emptyContentContainer: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class MessageListScreen extends React.Component<Props, never> {
+class MessageListScreen extends React.Component<Props, never> {
   private didFocusSubscription?: NavigationEventSubscription;
 
   private refreshMessageList = () => this.props.dispatch(loadMessagesRequest());

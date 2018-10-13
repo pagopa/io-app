@@ -10,7 +10,7 @@ export type NodoErrors =
   | keyof typeof detailEnum
   | "GENERIC_ERROR"
   | "MISSING_PAYMENT_ID";
-export type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
+type PaymentManagerErrors = "GENERIC_ERROR"; // no specific errors are available
 export type PagoPaErrors = NodoErrors | PaymentManagerErrors;
 
 export const extractNodoError = (
