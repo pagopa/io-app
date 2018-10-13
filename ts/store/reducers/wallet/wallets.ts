@@ -18,7 +18,7 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type WalletsState = Readonly<{
-  walletById: IndexedById<Wallet | undefined>;
+  walletById: IndexedById<Wallet>;
   favoriteWalletId: Option<number>;
   newCreditCard: Option<CreditCard>;
 }>;
@@ -73,7 +73,9 @@ export const getWalletFromId = (
   walletId: Option<number>,
   wallets: IndexedById<Wallet>
 ): Option<Wallet> =>
-  walletId.mapNullable(wId => values(wallets).find(c => c.idWallet === wId));
+  walletId.mapNullable(wId =>
+    values(wallets).find(c => c !== undefined && c.idWallet === wId)
+  );
 
 export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
   w.psp === undefined
@@ -94,7 +96,7 @@ const reducer = (
     case getType(fetchWalletsSuccess):
       return {
         ...state,
-        walletById: toIndexed(action.payload, "idWallet")
+        walletById: toIndexed(action.payload, _ => _.idWallet)
       };
 
     case getType(setFavoriteWallet):

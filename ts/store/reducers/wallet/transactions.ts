@@ -25,9 +25,10 @@ const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
 };
 
 // selectors
-export const getTransactions = (
-  state: GlobalState
-): ReadonlyArray<Transaction> => values(state.wallet.transactions.transactions);
+export const getTransactions = (state: GlobalState) =>
+  values(state.wallet.transactions.transactions).filter(
+    _ => _ !== undefined
+  ) as ReadonlyArray<Transaction>;
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
@@ -58,13 +59,17 @@ const reducer = (
     case getType(fetchTransactionsSuccess):
       return {
         ...state,
-        transactions: toIndexed(action.payload.map(cleanDescription), "id")
+        transactions: toIndexed(action.payload.map(cleanDescription), _ => _.id)
       };
 
     case getType(storeNewTransaction):
       return {
         ...state,
-        transactions: addToIndexed(state.transactions, action.payload, "id")
+        transactions: addToIndexed(
+          state.transactions,
+          action.payload,
+          _ => _.id
+        )
       };
 
     default:
