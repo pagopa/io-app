@@ -14,8 +14,9 @@ import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import CardComponent from "../../components/wallet/card";
+import CardComponent from "../../components/wallet/card/CardComponent";
 import ROUTES from "../../navigation/routes";
+import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
@@ -44,15 +45,32 @@ class WalletsScreen extends React.Component<Props, never> {
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
-        navigation={this.props.navigation}
         headerContents={headerContents}
+        navigateToWalletList={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_LIST)
+        }
+        navigateToScanQrCode={() =>
+          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+        }
+        navigateToWalletTransactions={(selectedWallet: Wallet) =>
+          this.props.navigation.dispatch(
+            navigateToWalletTransactionsScreen({ selectedWallet })
+          )
+        }
       >
         <Content style={[WalletStyles.padded, WalletStyles.header]}>
           <List
             removeClippedSubviews={false}
             dataArray={this.props.wallets as any[]} // tslint:disable-line
             renderRow={(item): React.ReactElement<any> => (
-              <CardComponent navigation={this.props.navigation} item={item} />
+              <CardComponent
+                wallet={item}
+                navigateToWalletTransactions={(selectedWallet: Wallet) =>
+                  this.props.navigation.dispatch(
+                    navigateToWalletTransactionsScreen({ selectedWallet })
+                  )
+                }
+              />
             )}
           />
           <View spacer={true} />

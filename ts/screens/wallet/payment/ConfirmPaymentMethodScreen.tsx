@@ -25,7 +25,7 @@ import {
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
@@ -33,9 +33,10 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import CardComponent from "../../../components/wallet/card";
+import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
+import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import {
@@ -61,6 +62,10 @@ import { mapErrorCodeToMessage } from "../../../types/errors";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { buildAmount } from "../../../utils/stringBuilder";
+
+type NavigationParams = Readonly<{
+  paymentCompleted: boolean;
+}>;
 
 type ReduxMappedStateProps = Readonly<{
   isLoading: boolean;
@@ -93,11 +98,9 @@ type ReduxMappedDispatchProps = Readonly<{
   onCancel: () => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams>;
 
 const styles = StyleSheet.create({
   child: {
@@ -144,17 +147,21 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentBannerComponent navigation={this.props.navigation} />
+          <PaymentBannerComponent />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
             <CardComponent
-              navigation={this.props.navigation}
-              item={this.props.wallet}
+              wallet={this.props.wallet}
               menu={false}
               favorite={false}
               lastUsage={false}
+              navigateToWalletTransactions={(selectedWallet: Wallet) =>
+                this.props.navigation.dispatch(
+                  navigateToWalletTransactionsScreen({ selectedWallet })
+                )
+              }
             />
             <View spacer={true} large={true} />
             <Grid>

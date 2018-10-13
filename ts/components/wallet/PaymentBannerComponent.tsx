@@ -9,7 +9,6 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
@@ -41,11 +40,7 @@ type ReduxMappedDispatchProps = Readonly<{
   showSummary: () => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class PaymentBannerComponent extends React.Component<Props> {
   public shouldComponentUpdate(nextProps: Props) {

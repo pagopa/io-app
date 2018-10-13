@@ -7,11 +7,15 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { Dispatch } from "../../store/actions/types";
 import { addCreditCardCompleted } from "../../store/actions/wallet/wallets";
 
+type NavigationParams = Readonly<{
+  url: string;
+}>;
+
 type ReduxMappedProps = Readonly<{
   addCreditCardCompleted: () => void;
 }>;
 
-type Props = ReduxMappedProps & NavigationInjectedProps;
+type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
 
 type State = {
   isWebViewLoading: boolean;

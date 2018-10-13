@@ -232,7 +232,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield put(clearNotificationPendingMessage());
 
     // Navigate to message details screen
-    yield put(navigateToMessageDetailScreenAction(messageId));
+    yield put(navigateToMessageDetailScreenAction({ messageId }));
     // Push the MAIN navigator in the history to handle the back button
     const navigationState: NavigationState = yield select<GlobalState>(
       navigationStateSelector

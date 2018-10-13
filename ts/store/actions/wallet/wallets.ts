@@ -10,7 +10,6 @@ import { CreditCard, Wallet } from "../../../types/pagopa";
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
-  | ActionType<typeof selectWalletForDetails>
   | ActionType<typeof setFavoriteWallet>
   | ActionType<typeof storeCreditCardData>
   | ActionType<typeof creditCardDataCleanup>
@@ -34,10 +33,6 @@ export const fetchWalletsFailure = createAction(
   "FETCH_WALLETS_FAILURE",
   resolve => (error: Error) => resolve(error)
 );
-
-export const selectWalletForDetails = createStandardAction(
-  "SELECT_WALLET_FOR_DETAILS"
-)<number>();
 
 export const setFavoriteWallet = createAction(
   "SET_FAVORITE_WALLET",

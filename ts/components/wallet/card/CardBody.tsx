@@ -7,13 +7,21 @@ import { Right, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Row } from "react-native-easy-grid";
-import { CardProps } from ".";
+
 import I18n from "../../../i18n";
+
 import variables from "../../../theme/variables";
+
+import { Wallet } from "../../../types/pagopa";
+
 import { buildExpirationDate } from "../../../utils/stringBuilder";
+
 import IconFont from "../../ui/IconFont";
+
 import FooterRow from "./FooterRow";
+
 import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
+
 import { CreditCardStyles } from "./style";
 
 const styles = StyleSheet.create({
@@ -25,7 +33,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CardBody extends React.Component<CardProps> {
+type Props = Readonly<{
+  wallet: Wallet;
+  logoPosition?: LogoPosition;
+  mainAction?: (wallet: Wallet) => void;
+  lastUsage?: boolean;
+  whiteLine?: boolean;
+  navigateToWalletTransactions: (item: Wallet) => void;
+}>;
+
+export default class CardBody extends React.Component<Props> {
   /**
    * Display the right-end part of the
    * card body. This will be the card
@@ -47,7 +64,7 @@ export default class CardBody extends React.Component<CardProps> {
         <Row
           style={CreditCardStyles.rowStyle}
           onPress={() =>
-            mainAction !== undefined ? mainAction(this.props.item) : undefined
+            mainAction !== undefined ? mainAction(this.props.wallet) : undefined
           }
         >
           <Right>
@@ -61,7 +78,7 @@ export default class CardBody extends React.Component<CardProps> {
       );
     } else {
       return shouldRenderLogo(LogoPosition.CENTER, this.props.logoPosition) ? (
-        <Logo item={this.props.item} />
+        <Logo item={this.props.wallet} />
       ) : null;
     }
   }
@@ -78,8 +95,8 @@ export default class CardBody extends React.Component<CardProps> {
   }
 
   public render() {
-    const { item, navigation } = this.props;
-    const expirationDate = buildExpirationDate(item);
+    const { wallet } = this.props;
+    const expirationDate = buildExpirationDate(wallet);
     // returns a list of rows, namely:
     // - the "validity" row displaying when the card expires
     // - the "owner" row, displaying the owner name on the left-end
@@ -101,19 +118,17 @@ export default class CardBody extends React.Component<CardProps> {
       <Row key="owner" size={6} style={CreditCardStyles.rowStyle}>
         <Col size={7}>
           <Text style={CreditCardStyles.textStyle}>
-            {item.creditCard.holder.toUpperCase()}
+            {wallet.creditCard.holder.toUpperCase()}
           </Text>
         </Col>
         <Col size={2}>{this.rightPart()}</Col>
       </Row>,
       this.whiteLine(),
       <FooterRow
-        {...{
-          navigation,
-          item,
-          showMsg: this.props.lastUsage,
-          key: "footerRow"
-        }}
+        wallet={wallet}
+        showMsg={this.props.lastUsage}
+        key={"footerRow"}
+        navigateToWalletTransactions={this.props.navigateToWalletTransactions}
       />
     ];
   }

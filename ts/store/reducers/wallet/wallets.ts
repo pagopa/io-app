@@ -8,11 +8,9 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { Action } from "../../actions/types";
-import { paymentUpdatePspInState } from "../../actions/wallet/payment";
 import {
   creditCardDataCleanup,
   fetchWalletsSuccess,
-  selectWalletForDetails,
   setFavoriteWallet,
   storeCreditCardData
 } from "../../actions/wallet/wallets";
@@ -20,28 +18,31 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type WalletsState = Readonly<{
-  list: IndexedById<Wallet>;
-  selectedWalletId: Option<number>;
+  walletById: IndexedById<Wallet>;
   favoriteWalletId: Option<number>;
   newCreditCard: Option<CreditCard>;
 }>;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
-  list: {},
-  selectedWalletId: none,
+  walletById: {},
   favoriteWalletId: none,
   newCreditCard: none
 };
 
 // selectors
-export const getWallets = (state: GlobalState) => state.wallet.wallets.list;
-export const getSelectedWalletId = (state: GlobalState) =>
-  state.wallet.wallets.selectedWalletId;
+export const getWalletsById = (state: GlobalState) =>
+  state.wallet.wallets.walletById;
+
+export const getWallets = createSelector(
+  getWalletsById,
+  wx => values(wx).filter(_ => _ !== undefined) as ReadonlyArray<Wallet>
+);
+
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
 export const getFavoriteWallet = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId.mapNullable(
-    walletId => state.wallet.wallets.list[walletId]
+    walletId => state.wallet.wallets.walletById[walletId]
   );
 
 export const getNewCreditCard = (state: GlobalState) =>
@@ -51,8 +52,8 @@ export const walletsSelector = createSelector(
   getWallets,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (wallets: IndexedById<Wallet>): ReadonlyArray<Wallet> =>
-    values(wallets).sort(
+  (wallets: ReturnType<typeof getWallets>): ReadonlyArray<Wallet> =>
+    [...wallets].sort(
       // sort by date, descending
       // if both dates are undefined -> 0
       // if either is undefined, it is considered as used "infinitely" long ago
@@ -72,16 +73,9 @@ export const getWalletFromId = (
   walletId: Option<number>,
   wallets: IndexedById<Wallet>
 ): Option<Wallet> =>
-  walletId.mapNullable(wId => values(wallets).find(c => c.idWallet === wId));
-
-export const selectedWalletSelector = createSelector(
-  getSelectedWalletId,
-  getWallets,
-  getWalletFromId
-);
-
-export const specificWalletSelector = (walletId: number) =>
-  createSelector(() => some(walletId), getWallets, getWalletFromId);
+  walletId.mapNullable(wId =>
+    values(wallets).find(c => c !== undefined && c.idWallet === wId)
+  );
 
 export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
   w.psp === undefined
@@ -89,8 +83,8 @@ export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
     : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
 
 export const walletCountSelector = createSelector(
-  getWallets,
-  (wallets: IndexedById<Wallet>) => Object.keys(wallets).length
+  getWalletsById,
+  (wallets: ReturnType<typeof getWalletsById>) => Object.keys(wallets).length
 );
 
 // reducer
@@ -102,13 +96,7 @@ const reducer = (
     case getType(fetchWalletsSuccess):
       return {
         ...state,
-        list: toIndexed(action.payload, "idWallet")
-      };
-
-    case getType(selectWalletForDetails):
-      return {
-        ...state,
-        selectedWalletId: some(action.payload)
+        walletById: toIndexed(action.payload, _ => _.idWallet)
       };
 
     case getType(setFavoriteWallet):
@@ -135,23 +123,6 @@ const reducer = (
       return {
         ...state,
         newCreditCard: none
-      };
-
-    // TODO: temporary, until the integration with pagoPA
-    // (then, the psp will be updated on the server side,
-    // and, by fetching the existing cards the psp will be
-    // automatically updated)
-    case getType(paymentUpdatePspInState):
-      return {
-        ...state,
-        list: {
-          ...state.list,
-          [action.payload.walletId]: {
-            ...state.list[action.payload.walletId],
-            idPsp: action.payload.psp.id,
-            psp: action.payload.psp
-          }
-        }
       };
 
     default:

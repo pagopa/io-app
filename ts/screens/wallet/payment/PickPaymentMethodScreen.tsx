@@ -14,18 +14,19 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import CardComponent from "../../../components/wallet/card";
+import CardComponent from "../../../components/wallet/card/CardComponent";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestConfirmPaymentMethod,
@@ -40,6 +41,10 @@ import {
 } from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
+
+type NavigationParams = Readonly<{
+  paymentCompleted: boolean;
+}>;
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -57,11 +62,9 @@ type ReduxMappedDispatchProps = Readonly<{
   showSummary: () => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams>;
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public shouldComponentUpdate(nextProps: Props) {
@@ -109,7 +112,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           </Right>
         </AppHeader>
         <Content noPadded={true}>
-          <PaymentBannerComponent navigation={this.props.navigation} />
+          <PaymentBannerComponent />
 
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} />
@@ -134,13 +137,17 @@ class PickPaymentMethodScreen extends React.Component<Props> {
               dataArray={wallets as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
                 <CardComponent
-                  navigation={this.props.navigation}
-                  item={item}
+                  wallet={item}
                   menu={false}
                   favorite={false}
                   lastUsage={false}
                   mainAction={confirmPaymentMethod}
                   logoPosition={LogoPosition.TOP}
+                  navigateToWalletTransactions={(selectedWallet: Wallet) =>
+                    this.props.navigation.dispatch(
+                      navigateToWalletTransactionsScreen({ selectedWallet })
+                    )
+                  }
                 />
               )}
             />

@@ -20,13 +20,17 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import {
+  navigateToTransactionDetailsScreen,
+  navigateToWalletTransactionsScreen
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-import { Wallet } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -186,16 +190,35 @@ class WalletHomeScreen extends React.Component<Props, never> {
     return (
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
-        navigation={this.props.navigation}
         headerContents={headerContents}
         cardType={cardType}
         allowGoBack={false}
+        navigateToWalletList={() =>
+          this.props.navigation.navigate(ROUTES.WALLET_LIST)
+        }
+        navigateToScanQrCode={() =>
+          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+        }
+        navigateToWalletTransactions={(selectedWallet: Wallet) =>
+          this.props.navigation.dispatch(
+            navigateToWalletTransactionsScreen({
+              selectedWallet
+            })
+          )
+        }
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
-          navigation={this.props.navigation}
           display={TransactionsDisplayed.LATEST}
+          navigateToTransactionDetails={(transaction: Transaction) =>
+            this.props.navigation.dispatch(
+              navigateToTransactionDetailsScreen({
+                transaction,
+                isPaymentCompletedTransaction: false
+              })
+            )
+          }
         />
       </WalletLayout>
     );

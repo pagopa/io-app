@@ -82,7 +82,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
         </AppHeader>
         {this.isInTransaction() ? (
           <Content noPadded={true}>
-            <PaymentBannerComponent navigation={this.props.navigation} />
+            <PaymentBannerComponent />
             <View style={WalletStyles.paddedLR}>
               <View spacer={true} large={true} />
               {this.isInTransaction() && (
