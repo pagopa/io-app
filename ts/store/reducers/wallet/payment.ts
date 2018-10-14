@@ -19,11 +19,9 @@ import {
   paymentCancel,
   resetPaymentState,
   setPaymentStateToConfirmPaymentMethod,
-  setPaymentStateToManualEntry,
   setPaymentStateToPickPaymentMethod,
   setPaymentStateToPickPsp,
   setPaymentStateToPinLogin,
-  setPaymentStateToQrCode,
   setPaymentStateToSummary,
   setPaymentStateToSummaryWithPaymentId
 } from "../../actions/wallet/payment";
@@ -38,18 +36,6 @@ import { WalletState } from "./index";
 // The following are possible states, identified
 // by a string (kind), and with specific
 // properties depending on the state
-
-type PaymentStateNoState = Readonly<{
-  kind: "PaymentStateNoState";
-}>;
-
-type PaymentStateQrCode = Readonly<{
-  kind: "PaymentStateQrCode";
-}>;
-
-type PaymentStateManualEntry = Readonly<{
-  kind: "PaymentStateManualEntry";
-}>;
 
 type PaymentStateSummary = Readonly<{
   kind: "PaymentStateSummary";
@@ -109,9 +95,6 @@ type PaymentStatePinLogin = Readonly<{
 
 // Allowed states
 type PaymentStates =
-  | PaymentStateNoState
-  | PaymentStateQrCode
-  | PaymentStateManualEntry
   | PaymentStateSummary
   | PaymentStateSummaryWithPaymentId
   | PaymentStatePickPaymentMethod
@@ -336,43 +319,6 @@ const popToStateAndPush = (
 };
 
 type PaymentReducer = (state: PaymentState, action: Action) => PaymentState;
-/**
- * Reducer for actions for entering data (qr code, manual entry)
- */
-const dataEntryReducer: PaymentReducer = (
-  state: PaymentState = PAYMENT_INITIAL_STATE,
-  action: Action
-) => {
-  if (
-    isActionOf(setPaymentStateToQrCode, action) &&
-    isInAllowedOrigins(state, ["none"])
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          kind: "PaymentStateQrCode"
-        },
-        ["PaymentStateQrCode"]
-      )
-    };
-  }
-  if (
-    isActionOf(setPaymentStateToManualEntry, action) &&
-    isInAllowedOrigins(state, ["PaymentStateQrCode"])
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          kind: "PaymentStateManualEntry"
-        },
-        ["PaymentStateManualEntry"]
-      )
-    };
-  }
-  return state;
-};
 
 /**
  * Reducer for actions that show the payment summary
@@ -383,11 +329,7 @@ const summaryReducer: PaymentReducer = (
 ) => {
   if (
     isActionOf(setPaymentStateToSummary, action) &&
-    isInAllowedOrigins(state, [
-      "PaymentStateQrCode",
-      "PaymentStateManualEntry",
-      "none"
-    ])
+    isInAllowedOrigins(state, ["none"])
   ) {
     // the summary screen is being requested following
     // a QR code scan/manual entry/message with payment notice
@@ -636,7 +578,6 @@ const reducer = (
   action: Action
 ): PaymentState => {
   const reducers: ReadonlyArray<PaymentReducer> = [
-    dataEntryReducer,
     summaryReducer,
     pickMethodReducer,
     confirmMethodReducer,

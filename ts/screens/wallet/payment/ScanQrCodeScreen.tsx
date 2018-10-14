@@ -37,11 +37,8 @@ import ROUTES from "../../../navigation/routes";
 
 import {
   paymentRequestGoBack,
-  paymentRequestTransactionSummaryFromRptId,
-  setPaymentStateToManualEntry
+  paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
-import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentStep } from "../../../store/reducers/wallet/payment";
 
 import variables from "../../../theme/variables";
 
@@ -51,13 +48,8 @@ import { decodePagoPaQrCode } from "../../../utils/payment";
 
 import { CameraMarker } from "./CameraMarker";
 
-type ReduxMappedStateProps = Readonly<{
-  valid: boolean;
-}>;
-
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
-  setPaymentStateToManualEntry: () => void;
   goBack: () => void;
 }>;
 
@@ -65,7 +57,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps & ReduxMappedDispatchProps;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
@@ -160,13 +152,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     };
   }
 
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
-  }
-
   public componentWillUnmount() {
     if (this.scannerReactivateTimeoutHandler) {
       // cancel the QR scanner reactivation before unmounting the component
@@ -179,14 +164,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   private handleWillBlur = () => this.setState({ isFocused: false });
 
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
     const primaryButtonProps = {
       block: true,
       primary: true,
       onPress: () => {
-        this.props.setPaymentStateToManualEntry();
         this.props.navigation.navigate(ROUTES.PAYMENT_MANUAL_DATA_INSERTION);
       },
       title: I18n.t("wallet.QRtoPay.setManually")
@@ -257,10 +238,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  valid: getPaymentStep(state) === "PaymentStateQrCode"
-});
-
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) =>
     dispatch(
@@ -269,11 +246,10 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
         initialAmount
       })
     ),
-  setPaymentStateToManualEntry: () => dispatch(setPaymentStateToManualEntry()),
   goBack: () => dispatch(paymentRequestGoBack())
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(ScanQrCodeScreen);

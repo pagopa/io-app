@@ -23,10 +23,7 @@ import { connect } from "react-redux";
 
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
-import {
-  setPaymentStateToQrCode,
-  startPaymentSaga
-} from "../../store/actions/wallet/payment";
+import { startPaymentSaga } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import GoBackButton from "../GoBackButton";
@@ -96,7 +93,6 @@ type NoCards = Readonly<{
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
 type ReduxMappedProps = Readonly<{
-  setPaymentStateToQrCode: () => void;
   startPaymentSaga: () => void;
 }>;
 
@@ -248,7 +244,6 @@ class WalletLayout extends React.Component<Props> {
             <Button
               block={true}
               onPress={() => {
-                this.props.setPaymentStateToQrCode();
                 this.props.navigateToScanQrCode();
                 this.props.startPaymentSaga();
               }}
@@ -264,7 +259,6 @@ class WalletLayout extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  setPaymentStateToQrCode: () => dispatch(setPaymentStateToQrCode()),
   startPaymentSaga: () => dispatch(startPaymentSaga())
 });
 
