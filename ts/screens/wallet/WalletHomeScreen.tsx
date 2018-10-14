@@ -12,9 +12,7 @@ import { connect } from "react-redux";
 
 import { WalletStyles } from "../../components/styles/wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
-import TransactionsList, {
-  TransactionsDisplayed
-} from "../../components/wallet/TransactionsList";
+import TransactionsList from "../../components/wallet/TransactionsList";
 import { CardEnum, CardType } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
@@ -27,10 +25,11 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
+import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Transaction, Wallet } from "../../types/pagopa";
+import * as pot from "../../types/pot";
 
 type ReduxMappedStateProps =
   | Readonly<{
@@ -210,7 +209,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
-          display={TransactionsDisplayed.LATEST}
+          selector={latestTransactionsSelector}
           navigateToTransactionDetails={(transaction: Transaction) =>
             this.props.navigation.dispatch(
               navigateToTransactionDetailsScreen({
@@ -226,14 +225,15 @@ class WalletHomeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  const isLoadingWallets = createLoadingSelector(["FETCH_WALLETS"])(state);
-  if (isLoadingWallets) {
-    return { isLoadingWallets };
-  }
-  return {
-    wallets: walletsSelector(state),
-    isLoadingWallets
-  };
+  const potWallets = walletsSelector(state);
+  return pot.isLoading(potWallets)
+    ? {
+        isLoadingWallets: true
+      }
+    : {
+        isLoadingWallets: false,
+        wallets: pot.getOrElse(potWallets, [])
+      };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({

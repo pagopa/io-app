@@ -9,7 +9,6 @@ import { Transaction } from "../../../types/pagopa";
 export type TransactionsActions =
   | ActionType<typeof fetchTransactionsSuccess>
   | ActionType<typeof fetchTransactionsRequest>
-  | ActionType<typeof storeNewTransaction>
   | ActionType<typeof fetchTransactionsFailure>;
 
 export const fetchTransactionsSuccess = createAction(
@@ -25,8 +24,3 @@ export const fetchTransactionsFailure = createAction(
 export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
 )();
-
-export const storeNewTransaction = createAction(
-  "PAYMENT_STORE_NEW_TRANSACTION",
-  resolve => (transaction: Transaction) => resolve(transaction)
-);

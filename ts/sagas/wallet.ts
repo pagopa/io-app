@@ -698,9 +698,9 @@ function* callCheckAndSelectPaymentMethod(
   // Otherwise, show a list of payment methods available
   // TODO: if no payment method is available (or if the
   // user chooses to do so), allow adding a new one.
-  const maybeFavoriteWallet: Option<Wallet> = yield select<GlobalState>(
-    getFavoriteWallet
-  );
+  const maybeFavoriteWallet: ReturnType<
+    typeof getFavoriteWallet
+  > = yield select<GlobalState>(getFavoriteWallet);
 
   // redirect as needed
   if (maybeFavoriteWallet.isSome()) {

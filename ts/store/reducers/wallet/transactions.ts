@@ -7,41 +7,56 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import { Transaction } from "../../../types/pagopa";
+import * as pot from "../../../types/pot";
 import { cleanPaymentDescription } from "../../../utils/cleanPaymentDescription";
 import { Action } from "../../actions/types";
 import {
-  fetchTransactionsSuccess,
-  storeNewTransaction
+  fetchTransactionsFailure,
+  fetchTransactionsRequest,
+  fetchTransactionsSuccess
 } from "../../actions/wallet/transactions";
-import { addToIndexed, IndexedById, toIndexed } from "../../helpers/indexer";
+import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type TransactionsState = Readonly<{
-  transactions: IndexedById<Transaction>;
+  transactions: pot.Pot<IndexedById<Transaction>>;
 }>;
 
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
-  transactions: {}
+  transactions: pot.none
 };
 
 // selectors
 export const getTransactions = (state: GlobalState) =>
-  values(state.wallet.transactions.transactions).filter(
-    _ => _ !== undefined
-  ) as ReadonlyArray<Transaction>;
+  pot.map(
+    state.wallet.transactions.transactions,
+    txs =>
+      values(txs).filter(_ => _ !== undefined) as ReadonlyArray<Transaction>
+  );
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
-  (transactions: ReadonlyArray<Transaction>) =>
-    [...transactions]
-      .sort(
-        (a, b) =>
-          isNaN(a.created as any) || isNaN(b.created as any)
-            ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-            : b.created.toISOString().localeCompare(a.created.toISOString())
-      )
-      .filter(t => t.statusMessage !== "rifiutato")
-      .slice(0, 50) // WIP no magic numbers
+  potTransactions =>
+    pot.map(
+      potTransactions,
+      transactions =>
+        [...transactions]
+          .sort(
+            (a, b) =>
+              // FIXME: code here is checking for NaN assuming creation dates may
+              //        be undefined, but since we override the pagopa Wallet
+              //        type to force creation dates to always be defined and we
+              //        use that new type for parsing responses, we ignore
+              //        wallets with undefined creation dates... so the check
+              //        is unnecessary.
+              // tslint:disable-next-line:no-useless-cast
+              isNaN(a.created as any) || isNaN(b.created as any)
+                ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
+                : b.created.toISOString().localeCompare(a.created.toISOString())
+          )
+          .filter(t => t.statusMessage !== "rifiutato")
+          .slice(0, 50) // WIP no magic numbers
+    )
 );
 
 const cleanDescription = ({ description, ...transaction }: Transaction) => {
@@ -56,20 +71,24 @@ const reducer = (
   action: Action
 ): TransactionsState => {
   switch (action.type) {
+    case getType(fetchTransactionsRequest):
+      return {
+        ...state,
+        transactions: pot.toLoading(state.transactions)
+      };
+
     case getType(fetchTransactionsSuccess):
       return {
         ...state,
-        transactions: toIndexed(action.payload.map(cleanDescription), _ => _.id)
+        transactions: pot.some(
+          toIndexed(action.payload.map(cleanDescription), _ => _.id)
+        )
       };
 
-    case getType(storeNewTransaction):
+    case getType(fetchTransactionsFailure):
       return {
         ...state,
-        transactions: addToIndexed(
-          state.transactions,
-          action.payload,
-          _ => _.id
-        )
+        transactions: pot.toError(state.transactions, action.payload)
       };
 
     default:
