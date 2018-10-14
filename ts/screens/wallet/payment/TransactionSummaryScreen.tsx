@@ -264,11 +264,7 @@ function mapStateToProps() {
         isLoading: paymentLoadingSelector(state),
         transactionInfo
       };
-    } else if (
-      getPaymentStep(state) === "PaymentStateNoState" ||
-      getPaymentStep(state) === "PaymentStateQrCode" ||
-      getPaymentStep(state) === "PaymentStateManualEntry"
-    ) {
+    } else if (getPaymentStep(state) === "PaymentStateNoState") {
       return {
         valid: true,
         error: paymentErrorSelector(state),

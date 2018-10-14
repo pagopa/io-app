@@ -15,21 +15,6 @@ export const resetPaymentState = createStandardAction("PAYMENT_COMPLETED")();
 
 export const startPaymentSaga = createStandardAction("PAYMENT_REQUEST")();
 
-/**
- * Sets the payment state to PaymentStateQrCode, only if previous state is none
- */
-export const setPaymentStateToQrCode = createStandardAction(
-  "PAYMENT_QR_CODE"
-)();
-
-/**
- * Sets the payment state to PaymentStateManualEntry, only if previous state is
- * PaymentStateQrCode.
- */
-export const setPaymentStateToManualEntry = createStandardAction(
-  "PAYMENT_MANUAL_ENTRY"
-)();
-
 type PaymentRequestTransactionSummaryFromRptIdPayload = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
@@ -176,8 +161,6 @@ export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
  */
 export type PaymentActions =
   | ActionType<typeof startPaymentSaga>
-  | ActionType<typeof setPaymentStateToQrCode>
-  | ActionType<typeof setPaymentStateToManualEntry>
   | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
   | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
   | ActionType<typeof paymentRequestContinueWithPaymentMethods>

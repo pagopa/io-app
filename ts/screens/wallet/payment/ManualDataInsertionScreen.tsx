@@ -47,12 +47,6 @@ import {
   paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId
 } from "../../../store/actions/wallet/payment";
-import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentStep } from "../../../store/reducers/wallet/payment";
-
-type ReduxMappedStateProps = Readonly<{
-  valid: boolean;
-}>;
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
@@ -64,7 +58,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
+type Props = OwnProps & ReduxMappedDispatchProps;
 
 type State = Readonly<{
   transactionCode: Option<string>;
@@ -118,18 +112,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     }
   };
 
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
-  }
-
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
-
     const primaryButtonProps = {
       block: true,
       primary: true,
@@ -220,10 +203,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  valid: getPaymentStep(state) === "PaymentStateManualEntry"
-});
-
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) =>
     dispatch(
@@ -237,6 +216,6 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(ManualDataInsertionScreen);
