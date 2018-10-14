@@ -20,13 +20,10 @@ import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  getTransactions,
-  latestTransactionsSelector
-} from "../../store/reducers/wallet/transactions";
+import { getTransactions } from "../../store/reducers/wallet/transactions";
 import { Transaction } from "../../types/pagopa";
+import * as pot from "../../types/pot";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
@@ -40,18 +37,10 @@ type ReduxMappedStateProps =
       isLoading: true;
     }>;
 
-/**
- * The type of transactions that are to be shown
- */
-export enum TransactionsDisplayed {
-  LATEST, // show the latest transactions
-  BY_WALLET // show all the transactions paid with an already-selected wallet (available in the store)
-}
-
 type OwnProps = Readonly<{
   title: string;
   totalAmount: string;
-  display: TransactionsDisplayed;
+  selector: typeof getTransactions;
   navigateToTransactionDetails: (transaction: Transaction) => void;
 }>;
 
@@ -163,25 +152,13 @@ const mapStateToProps = (
   state: GlobalState,
   props: OwnProps
 ): ReduxMappedStateProps => {
-  const isLoading = createLoadingSelector(["FETCH_TRANSACTIONS"])(state);
-  if (isLoading) {
-    return { isLoading };
-  }
-  switch (props.display) {
-    case TransactionsDisplayed.LATEST: {
-      return {
-        transactions: latestTransactionsSelector(state),
-        isLoading
+  const potTransactions = props.selector(state);
+  return pot.isLoading(potTransactions)
+    ? { isLoading: true }
+    : {
+        isLoading: false,
+        transactions: pot.getOrElse(potTransactions, [])
       };
-    }
-    case TransactionsDisplayed.BY_WALLET: {
-      return {
-        transactions: getTransactions(state),
-        isLoading
-      };
-    }
-  }
-  return { transactions: [], isLoading };
 };
 
 export default connect(mapStateToProps)(TransactionsList);

@@ -30,6 +30,7 @@ import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import { Transaction } from "../../types/pagopa";
+import * as pot from "../../types/pot";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -38,7 +39,7 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxInjectedProps = Readonly<{
-  wallets: ReturnType<typeof getWalletsById>;
+  wallets: pot.PotType<ReturnType<typeof getWalletsById>> | undefined;
 }>;
 
 type Props = ReduxInjectedProps & NavigationInjectedProps<NavigationParams>;
@@ -135,7 +136,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
     // FIXME: in case the wallet for this transaction has been deleted, display
     //        a message in the wallet layout instead of an empty space
-    const transactionWallet = this.props.wallets[transaction.idWallet];
+    const transactionWallet = this.props.wallets
+      ? this.props.wallets[transaction.idWallet]
+      : undefined;
 
     return (
       <WalletLayout
@@ -218,7 +221,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxInjectedProps => ({
-  wallets: getWalletsById(state)
+  wallets: pot.toUndefined(getWalletsById(state))
 });
 
 export default connect(mapStateToProps)(TransactionDetailsScreen);

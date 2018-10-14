@@ -17,10 +17,10 @@ import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner"
 import CardComponent from "../../components/wallet/card/CardComponent";
 import ROUTES from "../../navigation/routes";
 import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
+import * as pot from "../../types/pot";
 
 type ReduxMappedStateProps = Readonly<{
   wallets: ReadonlyArray<Wallet>;
@@ -92,9 +92,12 @@ class WalletsScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  wallets: walletsSelector(state),
-  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
-});
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  const potWallets = walletsSelector(state);
+  return {
+    wallets: pot.getOrElse(potWallets, []),
+    isLoading: pot.isLoading(potWallets)
+  };
+};
 
 export default connect(mapStateToProps)(withLoadingSpinner(WalletsScreen, {}));

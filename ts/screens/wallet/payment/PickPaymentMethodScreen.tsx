@@ -16,6 +16,7 @@ import {
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
@@ -41,6 +42,7 @@ import {
 } from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
+import * as pot from "../../../types/pot";
 
 type NavigationParams = Readonly<{
   paymentCompleted: boolean;
@@ -168,7 +170,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
   isGlobalStateWithPaymentId(state)
     ? {
         valid: true,
-        wallets: walletsSelector(state),
+        wallets: pot.getOrElse(walletsSelector(state), []),
         paymentId: getPaymentIdFromGlobalStateWithPaymentId(state)
       }
     : { valid: false };
