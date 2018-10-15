@@ -18,7 +18,7 @@ import { CreditCardStyles } from "./style";
 type OwnProps = Readonly<{
   wallet: Wallet;
   showMsg?: boolean;
-  navigateToWalletTransactions: (item: Wallet) => void;
+  navigateToWalletTransactions?: (item: Wallet) => void;
 }>;
 
 type Props = OwnProps;
@@ -44,7 +44,11 @@ class FooterRow extends React.Component<Props> {
         <Row
           style={CreditCardStyles.rowStyle}
           size={6}
-          onPress={() => navigateToWalletTransactions(wallet)}
+          onPress={
+            navigateToWalletTransactions
+              ? () => navigateToWalletTransactions(wallet)
+              : undefined
+          }
         >
           <Col size={8}>
             <Text

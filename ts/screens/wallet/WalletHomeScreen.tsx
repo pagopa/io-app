@@ -12,23 +12,20 @@ import { connect } from "react-redux";
 
 import { WalletStyles } from "../../components/styles/wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
+import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
-import { CardEnum, CardType } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  navigateToTransactionDetailsScreen,
-  navigateToWalletTransactionsScreen
-} from "../../store/actions/navigation";
+import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-import { Transaction, Wallet } from "../../types/pagopa";
+import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 
 type ReduxMappedStateProps = Readonly<{
@@ -157,18 +154,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
     this.props.loadTransactions();
   }
 
-  // check the cards to display (none, one or two cards)
-  private getCardType(wallets: ReadonlyArray<Wallet>): CardType {
-    switch (wallets.length) {
-      case 0:
-        return { type: CardEnum.NONE };
-      case 1:
-        return { type: CardEnum.FAN, cards: [wallets[0]] };
-      default:
-        return { type: CardEnum.FAN, cards: [wallets[0], wallets[1]] };
-    }
-  }
-
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
     const wallets = pot.getOrElse(potWallets, []);
@@ -177,27 +162,27 @@ class WalletHomeScreen extends React.Component<Props, never> {
       : wallets.length > 0
         ? this.withCardsHeader()
         : this.withoutCardsHeader();
-    const cardType = this.getCardType(wallets);
 
     return (
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
-        cardType={cardType}
+        displayedWallets={
+          wallets.length === 0 ? null : (
+            <CardsFan
+              wallets={
+                wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
+              }
+              navigateToWalletList={() =>
+                this.props.navigation.navigate(ROUTES.WALLET_LIST)
+              }
+            />
+          )
+        }
         showPayButton={true}
         allowGoBack={false}
-        navigateToWalletList={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_LIST)
-        }
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
-        }
-        navigateToWalletTransactions={(selectedWallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({
-              selectedWallet
-            })
-          )
         }
       >
         <TransactionsList

@@ -8,7 +8,7 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 
 import { WalletStyles } from "../../components/styles/wallet";
-import WalletLayout, { CardEnum } from "../../components/wallet/WalletLayout";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";
@@ -83,23 +83,11 @@ class WalletsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
-        cardType={{ type: CardEnum.NONE }}
         headerContents={headerContents}
         showPayButton={true}
         allowGoBack={true}
-        favoriteWallet={favoriteWallet}
-        onSetFavoriteWallet={this.props.setFavoriteWallet}
-        onDeleteWallet={this.props.deleteWallet}
-        navigateToWalletList={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_LIST)
-        }
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
-        }
-        navigateToWalletTransactions={(selectedWallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({ selectedWallet })
-          )
         }
       >
         <Content style={[WalletStyles.padded, WalletStyles.header]}>

@@ -10,8 +10,8 @@ import { NavigationInjectedProps } from "react-navigation";
 
 import { connect } from "react-redux";
 import { WalletStyles } from "../../components/styles/wallet";
+import CardFull from "../../components/wallet/card/CardFull";
 import TransactionsList from "../../components/wallet/TransactionsList";
-import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import ROUTES from "../../navigation/routes";
 import {
@@ -20,6 +20,7 @@ import {
 } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { getTransactions } from "../../store/reducers/wallet/transactions";
+import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
@@ -27,6 +28,7 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedProps = Readonly<{
+  favoriteWalletId?: number;
   transactions: ReturnType<typeof getTransactions>;
 }>;
 
@@ -52,17 +54,19 @@ class TransactionsScreen extends React.Component<Props> {
         showPayButton={false}
         allowGoBack={true}
         headerContents={headerContents}
-        cardType={{ type: CardEnum.FULL, card: selectedWallet }}
-        navigateToWalletList={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_LIST)
+        displayedWallets={
+          <CardFull
+            wallet={selectedWallet}
+            favoriteWalletId={this.props.favoriteWalletId}
+            navigateToWalletTransactions={(wallet: Wallet) =>
+              this.props.navigation.dispatch(
+                navigateToWalletTransactionsScreen({ selectedWallet: wallet })
+              )
+            }
+          />
         }
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
-        }
-        navigateToWalletTransactions={(wallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({ selectedWallet: wallet })
-          )
         }
       >
         <TransactionsList
@@ -84,6 +88,7 @@ class TransactionsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  favoriteWalletId: getFavoriteWalletId(state).toUndefined(),
   transactions: getTransactions(state)
 });
 

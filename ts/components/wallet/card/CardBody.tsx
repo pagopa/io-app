@@ -39,7 +39,7 @@ type Props = Readonly<{
   mainAction?: (wallet: Wallet) => void;
   lastUsage?: boolean;
   whiteLine?: boolean;
-  navigateToWalletTransactions: (item: Wallet) => void;
+  navigateToWalletTransactions?: (item: Wallet) => void;
 }>;
 
 export default class CardBody extends React.Component<Props> {
