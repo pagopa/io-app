@@ -6435,9 +6435,9 @@ react-native-exception-handler@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.9.0.tgz#d29da023154059416ebf5798b8d2664bfe22941f"
 
-react-native-fs@2.11.15:
-  version "2.11.15"
-  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.15.tgz#b80ac78edf124137624697b4864f834c1caf4f43"
+react-native-fs@2.11.18:
+  version "2.11.18"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.18.tgz#5ad9fd6d565b1bb2d77242c7a6103229e2e43170"
   dependencies:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
