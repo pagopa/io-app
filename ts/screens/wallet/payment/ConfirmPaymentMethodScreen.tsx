@@ -38,15 +38,16 @@ import AppHeader from "../../../components/ui/AppHeader";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
+import { identificationRequest } from "../../../store/actions/identification";
 import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentRequestTransactionSummaryFromBanner } from "../../../store/actions/wallet/payment";
 import {
   paymentRequestCancel,
+  paymentRequestCompletion,
   paymentRequestGoBack,
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp,
-  paymentRequestPinLogin
+  paymentRequestTransactionSummaryFromBanner
 } from "../../../store/actions/wallet/payment";
 import { createErrorSelector } from "../../../store/reducers/error";
 import { createLoadingSelector } from "../../../store/reducers/loading";
@@ -97,11 +98,10 @@ type ReduxMappedDispatchProps = Readonly<{
     pspList: ReadonlyArray<Psp>,
     paymentId: string
   ) => void;
-  // requestCompletion: () => void;
-  requestPinLogin: (wallet: Wallet, paymentId: string) => void;
   goBack: () => void;
   showSummary: () => void;
   onCancel: () => void;
+  requestIdentification: (wallet: Wallet, paymentId: string) => void;
 }>;
 
 type Props = ReduxMappedStateProps &
@@ -258,7 +258,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestPinLogin(wallet, paymentId)}
+            onPress={() => this.props.requestIdentification(wallet, paymentId)}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -324,13 +324,23 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   pickPaymentMethod: (paymentId: string) =>
     dispatch(paymentRequestPickPaymentMethod({ paymentId })),
-  requestPinLogin: (wallet: Wallet, paymentId: string) =>
-    dispatch(paymentRequestPinLogin({ wallet, paymentId })),
   goBack: () => dispatch(paymentRequestGoBack()),
   pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
     dispatch(paymentRequestPickPsp({ wallet, pspList, paymentId })),
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
-  onCancel: () => dispatch(paymentRequestCancel())
+  onCancel: () => dispatch(paymentRequestCancel()),
+  requestIdentification: (wallet: Wallet, paymentId: string) =>
+    dispatch(
+      identificationRequest(
+        {
+          action: paymentRequestCancel(),
+          label: I18n.t("wallet.ConfirmPayment.cancelPayment")
+        },
+        {
+          action: paymentRequestCompletion({ wallet, paymentId })
+        }
+      )
+    )
 });
 
 export default connect(

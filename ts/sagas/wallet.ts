@@ -14,7 +14,6 @@ import {
   Effect,
   fork,
   put,
-  race,
   select,
   take,
   takeLatest
@@ -45,7 +44,6 @@ import {
   paymentRequestGoBack,
   paymentRequestPickPaymentMethod,
   paymentRequestPickPsp,
-  paymentRequestPinLogin,
   paymentRequestTransactionSummaryFromBanner,
   paymentRequestTransactionSummaryFromRptId,
   paymentResetLoadingState,
@@ -82,8 +80,7 @@ import { getFavoriteWallet } from "../store/reducers/wallet/wallets";
 import {
   paymentCancel,
   paymentFailure,
-  paymentRequestCompletion,
-  setPaymentStateToPinLogin
+  paymentRequestCompletion
 } from "./../store/actions/wallet/payment";
 
 import { extractNodoError, extractPaymentManagerError } from "../types/errors";
@@ -94,14 +91,10 @@ import {
   Psp,
   Wallet
 } from "../types/pagopa";
-import { PinString } from "../types/PinString";
 import { SessionToken } from "../types/SessionToken";
 import { SagaCallReturnType } from "../types/utils";
 
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
-
-import { loginWithPinSaga } from "./startup/pinLoginSaga";
-import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 
 import {
   fetchAndStorePagoPaToken,
@@ -383,8 +376,7 @@ function* watchPaymentSaga(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  pagoPaClient: PagoPaClient,
-  storedPin: PinString
+  pagoPaClient: PagoPaClient
 ): Iterator<Effect> {
   while (true) {
     const action:
@@ -398,8 +390,7 @@ function* watchPaymentSaga(
       | ActionType<typeof paymentRequestCompletion>
       | ActionType<typeof paymentRequestGoBack>
       | ActionType<typeof paymentRequestCancel>
-      | ActionType<typeof resetPaymentState>
-      | ActionType<typeof paymentRequestPinLogin> = yield take([
+      | ActionType<typeof resetPaymentState> = yield take([
       getType(paymentRequestTransactionSummaryFromRptId),
       getType(paymentRequestTransactionSummaryFromBanner),
       getType(paymentRequestContinueWithPaymentMethods),
@@ -410,7 +401,6 @@ function* watchPaymentSaga(
       getType(paymentRequestCompletion),
       getType(paymentRequestGoBack),
       getType(paymentRequestCancel),
-      getType(paymentRequestPinLogin),
       getType(resetPaymentState)
     ]);
 
@@ -473,10 +463,6 @@ function* watchPaymentSaga(
       }
       case getType(paymentRequestCancel): {
         yield fork(cancelPaymentHandler, action);
-        break;
-      }
-      case getType(paymentRequestPinLogin): {
-        yield fork(pinLoginHandler, action, storedPin);
         break;
       }
     }
@@ -866,25 +852,6 @@ function* updatePspHandler(
   }
 }
 
-function* pinLoginHandler(
-  action: ActionType<typeof paymentRequestPinLogin>,
-  storedPin: PinString
-) {
-  yield put(setPaymentStateToPinLogin());
-  // Retrieve the configured PIN from the keychain
-  yield race({
-    proceed: call(loginWithPinSaga, storedPin),
-    reset: call(watchPinResetSaga)
-  });
-
-  yield put(
-    paymentRequestCompletion({
-      wallet: action.payload.wallet,
-      paymentId: action.payload.paymentId
-    })
-  );
-}
-
 function* completionHandler(
   action: ActionType<typeof paymentRequestCompletion>,
   pagoPaClient: PagoPaClient
@@ -945,8 +912,7 @@ function* completionHandler(
  */
 export function* watchWalletSaga(
   sessionToken: SessionToken,
-  pagoPaClient: PagoPaClient,
-  storedPin: PinString
+  pagoPaClient: PagoPaClient
 ): Iterator<Effect> {
   // Builds a backend client specifically for the pagopa-proxy endpoints that
   // need a fetch instance that doesn't retry requests and have longer timeout
@@ -980,8 +946,7 @@ export function* watchWalletSaga(
     backendClient.getVerificaRpt,
     backendClient.postAttivaRpt,
     pollingBackendClient.getPaymentId,
-    pagoPaClient,
-    storedPin
+    pagoPaClient
   );
 
   // Start listening for requests to fetch the transaction history

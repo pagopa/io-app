@@ -139,19 +139,6 @@ export const paymentRequestCancel = createStandardAction(
   "PAYMENT_REQUEST_CANCEL"
 )();
 
-type PaymentRequestPinLoginPayload = Readonly<{
-  wallet: Wallet;
-  paymentId: string;
-}>;
-
-export const paymentRequestPinLogin = createStandardAction(
-  "PAYMENT_REQUEST_PIN_LOGIN"
-)<PaymentRequestPinLoginPayload>();
-
-export const setPaymentStateToPinLogin = createStandardAction(
-  "PAYMENT_PIN_LOGIN"
-)();
-
 export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
   PagoPaErrors
 >();
@@ -179,6 +166,4 @@ export type PaymentActions =
   | ActionType<typeof paymentResetLoadingState>
   | ActionType<typeof paymentCancel>
   | ActionType<typeof paymentRequestCancel>
-  | ActionType<typeof paymentRequestPinLogin>
-  | ActionType<typeof setPaymentStateToPinLogin>
   | ActionType<typeof paymentFailure>;
