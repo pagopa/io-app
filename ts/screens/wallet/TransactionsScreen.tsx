@@ -9,7 +9,6 @@ import { Text, View } from "native-base";
 import { NavigationInjectedProps } from "react-navigation";
 
 import { connect } from "react-redux";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { WalletStyles } from "../../components/styles/wallet";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import { CardEnum } from "../../components/wallet/WalletLayout";
@@ -19,7 +18,6 @@ import {
   navigateToTransactionDetailsScreen,
   navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { getTransactions } from "../../store/reducers/wallet/transactions";
 import { Wallet } from "../../types/pagopa";
@@ -29,7 +27,7 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedProps = Readonly<{
-  isLoading: boolean;
+  transactions: ReturnType<typeof getTransactions>;
 }>;
 
 type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
@@ -70,7 +68,7 @@ class TransactionsScreen extends React.Component<Props> {
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
-          selector={getTransactions}
+          transactions={this.props.transactions}
           navigateToTransactionDetails={transaction =>
             this.props.navigation.dispatch(
               navigateToTransactionDetailsScreen({
@@ -86,9 +84,7 @@ class TransactionsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
+  transactions: getTransactions(state)
 });
 
-export default connect(mapStateToProps)(
-  withLoadingSpinner(TransactionsScreen, {})
-);
+export default connect(mapStateToProps)(TransactionsScreen);
