@@ -19,9 +19,10 @@ const blurElement = (el: TextInput) => el.blur();
 const current = (ref: React.RefObject<TextInput>) => ref.current;
 
 interface Props {
+  activeColor: string;
+  clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
-  activeColor: string;
   onFulfill: (code: PinString, isValid: boolean) => void;
 }
 
@@ -86,6 +87,10 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       if (isValid) {
         this.foldInputRef(blurElement);
+      } else {
+        if (this.props.clearOnInvalid) {
+          this.clear();
+        }
       }
 
       // Fire the callback asynchronously, otherwise this component

@@ -1,7 +1,6 @@
 /**
  * Defines types for the available actions and store related stuff.
  */
-
 import {
   Dispatch as DispatchAPI,
   MiddlewareAPI as ReduxMiddlewareAPI,
@@ -17,6 +16,7 @@ import { BackendInfoActions } from "./backendInfo";
 import { ContentActions } from "./content";
 import { DeepLinkActions } from "./deepLink";
 import { ErrorActions } from "./error";
+import { IdentificationActions } from "./identification";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
@@ -47,7 +47,8 @@ export type Action =
   | ServicesActions
   | WalletActions
   | ContentActions
-  | NavigationHistoryActions;
+  | NavigationHistoryActions
+  | IdentificationActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

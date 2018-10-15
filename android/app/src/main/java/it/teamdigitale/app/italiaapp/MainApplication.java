@@ -9,6 +9,7 @@ import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.ocetnik.timer.BackgroundTimerPackage;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.vonovak.AddCalendarEventPackage;
 import com.horcrux.svg.SvgPackage;
@@ -39,6 +40,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new BackgroundTimerPackage(),
         new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
           .setInvocationEvent("none")
           .setPrimaryColor("#0073E6")
