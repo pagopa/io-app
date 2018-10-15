@@ -11,7 +11,6 @@
  * Keep in mind that the rest of the "add credit card" process
  * is handled @https://www.pivotaltracker.com/story/show/157838293
  */
-import { Option } from "fp-ts/lib/Option";
 import {
   Body,
   Button,
@@ -27,6 +26,8 @@ import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
+import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -35,11 +36,31 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
-import { getPaymentIdFromGlobalState } from "../../store/reducers/wallet/payment";
+import {
+  getCurrentAmountFromGlobalStateWithVerificaResponse,
+  getPaymentReason,
+  getPaymentRecipientFromGlobalStateWithVerificaResponse,
+  isGlobalStateWithVerificaResponse
+} from "../../store/reducers/wallet/payment";
 
-type ReduxMappedProps = Readonly<{
-  paymentId: Option<string>;
-}>;
+type ReduxMappedProps =
+  | Readonly<{
+      isInTransaction: false;
+    }>
+  | Readonly<{
+      // if isInTransaction is true, the screen includes:
+      // - a different title inside the header
+      // - the banner with the summary of the transaction
+      // - the visualization of the title "Pay with"
+      // TODO:
+      // - implement the code so that when the screen is accessed during the identification of a
+      //    transaction, the banner and the title are displayed
+      //    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
+      isInTransaction: true;
+      paymentReason?: string;
+      currentAmount: AmountInEuroCents;
+      recipient?: EnteBeneficiario;
+    }>;
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -47,21 +68,6 @@ type Props = Readonly<{
   ReduxMappedProps;
 
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
-  /**
-   * if it return true, the screen includes:
-   * - a different title inside the header
-   * - the banner with the summary of the transaction
-   * - the visualization of the title "Pay with"
-   * TODO:
-   * - implement the code so that when the screen is accessed during the identification of a
-   *    transaction, the banner and the title are displayed
-   *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
-   */
-  private isInTransaction() {
-    // if the current state has a paymentId it means we're in a payment flow
-    return this.props.paymentId.isSome();
-  }
-
   public render(): React.ReactNode {
     return (
       <Container>
@@ -70,7 +76,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             <GoBackButton />
           </Left>
           <Body>
-            {this.isInTransaction() ? (
+            {this.props.isInTransaction ? (
               <Text>{I18n.t("wallet.payWith.header")}</Text>
             ) : (
               <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
@@ -80,14 +86,16 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             <InstabugButtons />
           </Right>
         </AppHeader>
-        {this.isInTransaction() ? (
+        {this.props.isInTransaction ? (
           <Content noPadded={true}>
-            <PaymentBannerComponent />
+            <PaymentBannerComponent
+              paymentReason={this.props.paymentReason}
+              currentAmount={this.props.currentAmount}
+              recipient={this.props.recipient}
+            />
             <View style={WalletStyles.paddedLR}>
               <View spacer={true} large={true} />
-              {this.isInTransaction() && (
-                <H1>{I18n.t("wallet.payWith.title")}</H1>
-              )}
+              <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />
               <PaymentMethodsList navigation={this.props.navigation} />
             </View>
@@ -113,9 +121,20 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
 }
 
 function mapStateToProps(state: GlobalState): ReduxMappedProps {
-  return {
-    paymentId: getPaymentIdFromGlobalState(state)
-  };
+  return isGlobalStateWithVerificaResponse(state)
+    ? {
+        isInTransaction: true,
+        paymentReason: getPaymentReason(state).toUndefined(), // this could be empty as per pagoPA definition
+        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
+          state
+        ),
+        recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
+          state
+        ).toUndefined() // this could be empty as per pagoPA definition
+      }
+    : {
+        isInTransaction: false
+      };
 }
 
 export default connect(mapStateToProps)(AddPaymentMethodScreen);

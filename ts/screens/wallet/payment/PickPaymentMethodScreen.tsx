@@ -2,6 +2,7 @@
  * This screen allows the user to select the payment method for a selected transaction
  * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
+import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Container,
@@ -17,6 +18,7 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
@@ -36,7 +38,10 @@ import {
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import {
+  getCurrentAmountFromGlobalStateWithVerificaResponse,
   getPaymentIdFromGlobalStateWithPaymentId,
+  getPaymentReason,
+  getPaymentRecipientFromGlobalStateWithVerificaResponse,
   getPaymentStep,
   isGlobalStateWithPaymentId
 } from "../../../store/reducers/wallet/payment";
@@ -56,6 +61,9 @@ type ReduxMappedStateProps =
       valid: true;
       wallets: ReadonlyArray<Wallet>;
       paymentId: string;
+      paymentReason?: string;
+      currentAmount: AmountInEuroCents;
+      recipient?: EnteBeneficiario;
     }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -114,7 +122,11 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           </Right>
         </AppHeader>
         <Content noPadded={true}>
-          <PaymentBannerComponent />
+          <PaymentBannerComponent
+            paymentReason={this.props.paymentReason}
+            currentAmount={this.props.currentAmount}
+            recipient={this.props.recipient}
+          />
 
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} />
@@ -171,7 +183,14 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
     ? {
         valid: true,
         wallets: pot.getOrElse(walletsSelector(state), []),
-        paymentId: getPaymentIdFromGlobalStateWithPaymentId(state)
+        paymentId: getPaymentIdFromGlobalStateWithPaymentId(state),
+        paymentReason: getPaymentReason(state).toUndefined(), // this could be empty as per pagoPA definition
+        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
+          state
+        ),
+        recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
+          state
+        ).toUndefined() // this could be empty as per pagoPA definition
       }
     : { valid: false };
 
