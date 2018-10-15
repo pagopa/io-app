@@ -168,7 +168,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       const identificationResult: SagaCallReturnType<
         typeof startAndReturnIdentificationResult
       > = yield call(startAndReturnIdentificationResult, storedPin);
-      if (identificationResult !== IdentificationResult.success) {
+      if (identificationResult === IdentificationResult.pinreset) {
         // If we are here the user had chosen to reset the PIN
         yield put(startApplicationInitialization());
         return;
