@@ -19,11 +19,9 @@ import {
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
-import {
-  PendingMessageState,
-  pendingMessageStateSelector
-} from "../store/reducers/notifications/pendingMessage";
+import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { GlobalState } from "../store/reducers/types";
+import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
@@ -41,28 +39,32 @@ export function* waitIdentificationResult(): Iterator<
     getType(identificationSuccess)
   ]);
 
-  // If the identification was cancelled just return false
-  if (resultAction.type === getType(identificationCancel)) {
-    return IdentificationResult.cancel;
+  switch (resultAction.type) {
+    case getType(identificationCancel):
+      return IdentificationResult.cancel;
+
+    case getType(identificationPinReset): {
+      // Invalidate the session
+      yield put(sessionInvalid());
+
+      // Delete the PIN
+      // tslint:disable-next-line:saga-yield-return-type
+      yield call(deletePin);
+
+      // Hide the identification screen
+      yield put(identificationReset());
+
+      return IdentificationResult.pinreset;
+    }
+
+    case getType(identificationSuccess): {
+      return IdentificationResult.success;
+    }
+
+    default: {
+      ((): never => resultAction)();
+    }
   }
-
-  // If the user decided to reset the pin perform needed actions than return false
-  if (resultAction.type === getType(identificationPinReset)) {
-    // Delete the PIN
-    // tslint:disable-next-line:saga-yield-return-type
-    yield call(deletePin);
-
-    // Invalidate the session
-    yield put(sessionInvalid());
-
-    // Hide the identification screen
-    yield put(identificationReset());
-
-    return IdentificationResult.pinreset;
-  }
-
-  // Identification was success return true
-  return IdentificationResult.success;
 }
 
 /**
@@ -103,11 +105,16 @@ export function* startAndHandleIdentificationResult(
     yield put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    const pendingMessageState: PendingMessageState = yield select<GlobalState>(
-      pendingMessageStateSelector
-    );
+    const pendingMessageState: ReturnType<
+      typeof pendingMessageStateSelector
+    > = yield select<GlobalState>(pendingMessageStateSelector);
 
-    if (pendingMessageState) {
+    // Check if there is a payment ongoing
+    const isPaymentOngoing: ReturnType<
+      typeof isPaymentOngoingSelector
+    > = yield select<GlobalState>(isPaymentOngoingSelector);
+
+    if (!isPaymentOngoing && pendingMessageState) {
       // We have a pending notification message to handle
       const messageId = pendingMessageState.id;
 

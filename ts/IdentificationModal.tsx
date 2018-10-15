@@ -18,12 +18,18 @@ import { ReduxProps } from "./store/actions/types";
 import { IdentificationState } from "./store/reducers/identification";
 import { GlobalState } from "./store/reducers/types";
 
-type MapStateToProps = {
-  identification: IdentificationState;
+type ReduxMappedStateProps = {
+  identificationState: IdentificationState;
 };
 
-type Props = MapStateToProps & ReduxProps;
+type Props = ReduxMappedStateProps & ReduxProps;
 
+/**
+ * Type used in the local state to save the result of Pinpad PIN matching.
+ * State is "unstarted" if the user still need to insert the PIN.
+ * State is "failure" when the PIN inserted by the user do not match the
+ * stored one.
+ */
 type IdentificationByPinState = "unstarted" | "failure";
 
 type State = {
@@ -55,6 +61,11 @@ const renderIdentificationByPinState = (
   return null;
 };
 
+/**
+ * A component used to identify the the user.
+ * The identification process can be activated calling a saga or dispatching the
+ * requestIdentification redux action.
+ */
 class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -65,102 +76,98 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { identification, dispatch } = this.props;
+    const { identificationState, dispatch } = this.props;
 
-    // If the identification state is started we need to show the modal
-    if (identification.kind === "started") {
-      const {
-        pin,
-        identificationCancelData,
-        identificationSuccessData
-      } = identification;
-
-      const { identificationByPinState } = this.state;
-
-      /**
-       * Create handlers merging default internal actions (to manage the identification state)
-       * with, if available, custom actions passed as props.
-       */
-      const onIdentificationCancelHandler = () => {
-        if (identificationCancelData) {
-          dispatch(identificationCancelData.action);
-        }
-        dispatch(identificationCancel());
-      };
-
-      const onIdentificationSuccessHandler = () => {
-        if (identificationSuccessData) {
-          dispatch(identificationSuccessData.action);
-        }
-        dispatch(identificationSuccess());
-      };
-
-      const onIdentificationFailureHandler = () => {
-        dispatch(identificationFailure());
-      };
-
-      const onPinResetHandler = () => {
-        dispatch(identificationPinReset());
-      };
-
-      return (
-        <Modal
-          visible={true}
-          transparent={true}
-          onRequestClose={onRequestCloseHandler}
-        >
-          <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
-            <StatusBar barStyle="light-content" />
-            <Content primary={true}>
-              <View spacer={true} extralarge={true} />
-              <Text white={true} alignCenter={true}>
-                {I18n.t("pin_login.pin.pinInfo")}
-              </Text>
-              <Pinpad
-                compareWithCode={pin as string}
-                activeColor={"white"}
-                inactiveColor={"white"}
-                onFulfill={(_: string, __: boolean) =>
-                  this.onPinFullfill(
-                    _,
-                    __,
-                    onIdentificationSuccessHandler,
-                    onIdentificationFailureHandler
-                  )
-                }
-                clearOnInvalid={true}
-              />
-              {renderIdentificationByPinState(identificationByPinState)}
-              <View spacer={true} extralarge={true} />
-              <View>
-                {identificationCancelData !== undefined && (
-                  <Button
-                    block={true}
-                    primary={true}
-                    onPress={onIdentificationCancelHandler}
-                  >
-                    <Text>{identificationCancelData.label}</Text>
-                  </Button>
-                )}
-                {identificationCancelData === undefined && (
-                  <Button
-                    block={true}
-                    primary={true}
-                    onPress={onPinResetHandler}
-                  >
-                    <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-                  </Button>
-                )}
-                <View spacer={true} />
-                <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
-              </View>
-            </Content>
-          </BaseScreenComponent>
-        </Modal>
-      );
+    if (identificationState.kind !== "started") {
+      return null;
     }
 
-    return null;
+    // The identification state is started we need to show the modal
+    const {
+      pin,
+      identificationCancelData,
+      identificationSuccessData
+    } = identificationState;
+
+    const { identificationByPinState } = this.state;
+
+    /**
+     * Create handlers merging default internal actions (to manage the identification state)
+     * with, if available, custom actions passed as props.
+     */
+    const onIdentificationCancelHandler = () => {
+      if (identificationCancelData) {
+        dispatch(identificationCancelData.action);
+      }
+      dispatch(identificationCancel());
+    };
+
+    const onIdentificationSuccessHandler = () => {
+      if (identificationSuccessData) {
+        dispatch(identificationSuccessData.action);
+      }
+      dispatch(identificationSuccess());
+    };
+
+    const onIdentificationFailureHandler = () => {
+      dispatch(identificationFailure());
+    };
+
+    const onPinResetHandler = () => {
+      dispatch(identificationPinReset());
+    };
+
+    return (
+      <Modal
+        visible={true}
+        transparent={true}
+        onRequestClose={onRequestCloseHandler}
+      >
+        <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
+          <StatusBar barStyle="light-content" />
+          <Content primary={true}>
+            <View spacer={true} extralarge={true} />
+            <Text white={true} alignCenter={true}>
+              {I18n.t("pin_login.pin.pinInfo")}
+            </Text>
+            <Pinpad
+              compareWithCode={pin as string}
+              activeColor={"white"}
+              inactiveColor={"white"}
+              onFulfill={(_: string, __: boolean) =>
+                this.onPinFullfill(
+                  _,
+                  __,
+                  onIdentificationSuccessHandler,
+                  onIdentificationFailureHandler
+                )
+              }
+              clearOnInvalid={true}
+            />
+            {renderIdentificationByPinState(identificationByPinState)}
+            <View spacer={true} extralarge={true} />
+            <View>
+              {identificationCancelData !== undefined && (
+                <Button
+                  block={true}
+                  primary={true}
+                  onPress={onIdentificationCancelHandler}
+                >
+                  <Text>{identificationCancelData.label}</Text>
+                </Button>
+              )}
+              {identificationCancelData === undefined && (
+                <Button block={true} primary={true} onPress={onPinResetHandler}>
+                  <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+                </Button>
+              )}
+              <View spacer={true} />
+              <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
+            </View>
+          </Content>
+        </BaseScreenComponent>
+      </Modal>
+    );
   }
 
   private onPinFullfill = (
@@ -184,8 +191,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 }
 
-const mapStateToProps = (state: GlobalState): MapStateToProps => ({
-  identification: state.identification
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  identificationState: state.identification
 });
 
 export default connect(mapStateToProps)(IdentificationModal);

@@ -122,6 +122,9 @@ export type PaymentStateWithVerificaResponse = Readonly<{
   stack: NonEmptyArray<PaymentStatesWithVerificaResponse>;
 }>;
 
+export const isPaymentOngoingSelector = (state: GlobalState): boolean =>
+  state.wallet.payment.stack !== null;
+
 export const isPaymentRequestingPinLogin = (wallet: WalletState) =>
   wallet.payment.stack !== null &&
   wallet.payment.stack.head.kind === "PaymentStatePinLogin";

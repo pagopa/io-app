@@ -30,10 +30,12 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
 
     if (lastState !== "background" && newApplicationState === "background") {
       // Start the background timer
-      identificationBackgroundTimer = yield fork(
-        startIdentificationBackgroundTimer,
-        backgroundActivityTimeoutMillis
-      );
+      identificationBackgroundTimer = yield fork(function*() {
+        // Start and wait the timer to fire
+        yield call(startTimer, backgroundActivityTimeoutMillis);
+        // Timer fired we need to identify the user
+        yield put(identificationRequest());
+      });
     } else if (lastState === "background" && newApplicationState === "active") {
       // Cancel the background timer if running
       if (identificationBackgroundTimer) {
@@ -45,13 +47,4 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
     // Update the last state
     lastState = newApplicationState;
   });
-}
-
-function* startIdentificationBackgroundTimer(
-  delay: number
-): IterableIterator<Effect> {
-  // Start and wait the timer to fire
-  yield call(startTimer, delay);
-  // Timer fired we need to identify the user
-  yield put(identificationRequest());
 }
