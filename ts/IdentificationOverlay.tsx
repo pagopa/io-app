@@ -1,6 +1,6 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StatusBar } from "react-native";
+import { Dimensions, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -41,8 +41,6 @@ const contextualHelp = {
   body: () => I18n.t("pin_login.unlock_screen.help.content")
 };
 
-const onRequestCloseHandler = () => undefined;
-
 const renderIdentificationByPinState = (
   identificationByPinState: IdentificationByPinState
 ) => {
@@ -61,12 +59,21 @@ const renderIdentificationByPinState = (
   return null;
 };
 
+const screenDimensions = Dimensions.get("screen");
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: screenDimensions.width,
+    height: screenDimensions.height
+  }
+});
+
 /**
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
  * requestIdentification redux action.
  */
-class IdentificationModal extends React.PureComponent<Props, State> {
+class IdentificationOverlay extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -118,11 +125,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
 
     return (
-      <Modal
-        visible={true}
-        transparent={true}
-        onRequestClose={onRequestCloseHandler}
-      >
+      <View style={styles.wrapper}>
         <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
           <StatusBar barStyle="light-content" />
           <Content primary={true}>
@@ -166,7 +169,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             </View>
           </Content>
         </BaseScreenComponent>
-      </Modal>
+      </View>
     );
   }
 
@@ -195,4 +198,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   identificationState: state.identification
 });
 
-export default connect(mapStateToProps)(IdentificationModal);
+export default connect(mapStateToProps)(IdentificationOverlay);
