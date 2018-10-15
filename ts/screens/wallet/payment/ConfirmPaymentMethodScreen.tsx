@@ -27,6 +27,8 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
+import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import GoBackButton from "../../../components/GoBackButton";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -52,6 +54,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import {
   getCurrentAmountFromGlobalStateWithSelectedPaymentMethod,
   getPaymentIdFromGlobalStateWithSelectedPaymentMethod,
+  getPaymentReason,
+  getPaymentRecipientFromGlobalStateWithVerificaResponse,
   getPaymentStep,
   getPspListFromGlobalStateWithSelectedPaymentMethod,
   getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod,
@@ -82,6 +86,8 @@ type ReduxMappedStateProps = Readonly<{
         fee: AmountInEuroCents;
         paymentId: string;
         pspList: ReadonlyArray<Psp>;
+        paymentReason?: string;
+        recipient?: EnteBeneficiario;
       }>);
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -147,7 +153,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          <PaymentBannerComponent />
+          <PaymentBannerComponent
+            currentAmount={this.props.amount}
+            paymentReason={this.props.paymentReason}
+            recipient={this.props.recipient}
+          />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
@@ -155,7 +165,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <CardComponent
               wallet={this.props.wallet}
               menu={false}
-              favorite={false}
+              showFavoriteIcon={false}
               lastUsage={false}
               navigateToWalletTransactions={(selectedWallet: Wallet) =>
                 this.props.navigation.dispatch(
@@ -296,7 +306,11 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
       amount: getCurrentAmountFromGlobalStateWithSelectedPaymentMethod(state),
       fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined,
       paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state),
-      pspList: getPspListFromGlobalStateWithSelectedPaymentMethod(state)
+      pspList: getPspListFromGlobalStateWithSelectedPaymentMethod(state),
+      paymentReason: getPaymentReason(state).toUndefined(),
+      recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
+        state
+      ).toUndefined()
     };
   } else {
     return {

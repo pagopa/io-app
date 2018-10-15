@@ -19,11 +19,8 @@ import {
 } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { connect } from "react-redux";
 
 import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
-import { startPaymentSaga } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import GoBackButton from "../GoBackButton";
@@ -92,41 +89,38 @@ type NoCards = Readonly<{
 
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
-type ReduxMappedProps = Readonly<{
-  startPaymentSaga: () => void;
-}>;
-
-type OwnProps = Readonly<{
+type Props = Readonly<{
   title: string;
   headerContents?: React.ReactNode;
-  cardType?: CardType;
-  showPayButton?: boolean;
-  allowGoBack?: boolean;
+  cardType: CardType;
+  showPayButton: boolean;
+  allowGoBack: boolean;
+  favoriteWallet?: number;
+  onSetFavoriteWallet?: (walletId?: number) => void;
+  onDeleteWallet?: (walletId: number) => void;
   navigateToWalletList: () => void;
   navigateToScanQrCode: () => void;
   navigateToWalletTransactions: (wallet: Wallet) => void;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
-
-class WalletLayout extends React.Component<Props> {
-  public static defaultProps = {
-    headerContents: null,
-    cardType: { type: CardEnum.NONE } as NoCards,
-    showPayButton: true,
-    allowGoBack: true
-  };
-
+export default class WalletLayout extends React.Component<Props> {
+  // tslint:disable-next-line:cognitive-complexity
   private displayedWallets(): React.ReactNode {
-    if (!this.props.cardType) {
-      return null;
-    }
+    const { favoriteWallet, onSetFavoriteWallet, onDeleteWallet } = this.props;
+
+    const onSetFavoriteForWallet = (idWallet: number) =>
+      onSetFavoriteWallet !== undefined
+        ? (willBeFavorite: boolean) =>
+            onSetFavoriteWallet(willBeFavorite ? idWallet : undefined)
+        : undefined;
+
+    const onDeleteForWallet = (idWallet: number) =>
+      onDeleteWallet !== undefined ? () => onDeleteWallet(idWallet) : undefined;
+
     switch (this.props.cardType.type) {
       case CardEnum.NONE:
-      case undefined: {
-        // "undefined" is here because cardType is optional, but defaultProps sets it to NONE
         return null;
-      }
+
       case CardEnum.FAN: {
         const { cards } = this.props.cardType;
         return (
@@ -139,6 +133,12 @@ class WalletLayout extends React.Component<Props> {
                   flatBottom={true}
                   headerOnly={true}
                   rotated={true}
+                  isFavorite={
+                    favoriteWallet !== undefined &&
+                    favoriteWallet === cards[0].idWallet
+                  }
+                  onSetFavorite={onSetFavoriteForWallet(cards[0].idWallet)}
+                  onDelete={onDeleteForWallet(cards[0].idWallet)}
                   navigateToWalletTransactions={
                     this.props.navigateToWalletTransactions
                   }
@@ -152,6 +152,12 @@ class WalletLayout extends React.Component<Props> {
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
+                    isFavorite={
+                      favoriteWallet !== undefined &&
+                      favoriteWallet === cards[0].idWallet
+                    }
+                    onSetFavorite={onSetFavoriteForWallet(cards[0].idWallet)}
+                    onDelete={onDeleteForWallet(cards[0].idWallet)}
                     navigateToWalletTransactions={
                       this.props.navigateToWalletTransactions
                     }
@@ -163,6 +169,12 @@ class WalletLayout extends React.Component<Props> {
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
+                    isFavorite={
+                      favoriteWallet !== undefined &&
+                      favoriteWallet === cards[1].idWallet
+                    }
+                    onSetFavorite={onSetFavoriteForWallet(cards[1].idWallet)}
+                    onDelete={onDeleteForWallet(cards[1].idWallet)}
                     navigateToWalletTransactions={
                       this.props.navigateToWalletTransactions
                     }
@@ -178,10 +190,18 @@ class WalletLayout extends React.Component<Props> {
           <View style={WalletStyles.container}>
             <CardComponent
               wallet={this.props.cardType.card}
-              favorite={false}
+              showFavoriteIcon={false}
               menu={true}
               lastUsage={false}
               flatBottom={true}
+              isFavorite={
+                favoriteWallet !== undefined &&
+                favoriteWallet === this.props.cardType.card.idWallet
+              }
+              onSetFavorite={onSetFavoriteForWallet(
+                this.props.cardType.card.idWallet
+              )}
+              onDelete={onDeleteForWallet(this.props.cardType.card.idWallet)}
               navigateToWalletTransactions={
                 this.props.navigateToWalletTransactions
               }
@@ -198,6 +218,14 @@ class WalletLayout extends React.Component<Props> {
               flatBottom={true}
               headerOnly={true}
               rotated={true}
+              isFavorite={
+                favoriteWallet !== undefined &&
+                favoriteWallet === this.props.cardType.card.idWallet
+              }
+              onSetFavorite={onSetFavoriteForWallet(
+                this.props.cardType.card.idWallet
+              )}
+              onDelete={onDeleteForWallet(this.props.cardType.card.idWallet)}
               navigateToWalletTransactions={
                 this.props.navigateToWalletTransactions
               }
@@ -245,7 +273,6 @@ class WalletLayout extends React.Component<Props> {
               block={true}
               onPress={() => {
                 this.props.navigateToScanQrCode();
-                this.props.startPaymentSaga();
               }}
             >
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
@@ -257,12 +284,3 @@ class WalletLayout extends React.Component<Props> {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  startPaymentSaga: () => dispatch(startPaymentSaga())
-});
-
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(WalletLayout);

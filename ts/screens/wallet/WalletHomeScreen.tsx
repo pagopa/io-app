@@ -31,14 +31,10 @@ import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Transaction, Wallet } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 
-type ReduxMappedStateProps =
-  | Readonly<{
-      wallets: ReadonlyArray<Wallet>;
-      isLoadingWallets: false;
-    }>
-  | Readonly<{
-      isLoadingWallets: true;
-    }>;
+type ReduxMappedStateProps = Readonly<{
+  potWallets: ReturnType<typeof walletsSelector>;
+  potTransactions: ReturnType<typeof latestTransactionsSelector>;
+}>;
 
 type ReduxMappedDispatchProps = Readonly<{
   // temporary
@@ -174,23 +170,21 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    // if (this.props.isLoadingWallets) {
-    //   return <BoxedRefreshIndicator />;
-    // }
-    const headerContents = this.props.isLoadingWallets
+    const { potWallets, potTransactions } = this.props;
+    const wallets = pot.getOrElse(potWallets, []);
+    const headerContents = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
-      : this.props.wallets.length > 0
+      : wallets.length > 0
         ? this.withCardsHeader()
         : this.withoutCardsHeader();
-    const cardType = this.getCardType(
-      this.props.isLoadingWallets ? [] : this.props.wallets
-    );
+    const cardType = this.getCardType(wallets);
 
     return (
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
         cardType={cardType}
+        showPayButton={true}
         allowGoBack={false}
         navigateToWalletList={() =>
           this.props.navigation.navigate(ROUTES.WALLET_LIST)
@@ -209,7 +203,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
-          selector={latestTransactionsSelector}
+          transactions={potTransactions}
           navigateToTransactionDetails={(transaction: Transaction) =>
             this.props.navigation.dispatch(
               navigateToTransactionDetailsScreen({
@@ -224,17 +218,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  const potWallets = walletsSelector(state);
-  return pot.isLoading(potWallets)
-    ? {
-        isLoadingWallets: true
-      }
-    : {
-        isLoadingWallets: false,
-        wallets: pot.getOrElse(potWallets, [])
-      };
-};
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  potWallets: walletsSelector(state),
+  potTransactions: latestTransactionsSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   loadTransactions: () => dispatch(fetchTransactionsRequest()),

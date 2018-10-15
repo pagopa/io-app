@@ -45,7 +45,8 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCancel,
   paymentRequestGoBack,
-  paymentRequestTransactionSummaryFromRptId
+  paymentRequestTransactionSummaryFromRptId,
+  startPaymentSaga
 } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -204,13 +205,15 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) =>
+  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
+    dispatch(startPaymentSaga());
     dispatch(
       paymentRequestTransactionSummaryFromRptId({
         rptId,
         initialAmount
       })
-    ),
+    );
+  },
   goBack: () => dispatch(paymentRequestGoBack()),
   cancelPayment: () => dispatch(paymentRequestCancel())
 });
