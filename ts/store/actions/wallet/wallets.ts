@@ -1,4 +1,3 @@
-import { Option } from "fp-ts/lib/Option";
 import {
   ActionType,
   createAction,
@@ -34,10 +33,9 @@ export const fetchWalletsFailure = createAction(
   resolve => (error: Error) => resolve(error)
 );
 
-export const setFavoriteWallet = createAction(
-  "SET_FAVORITE_WALLET",
-  resolve => (walletId: Option<number>) => resolve(walletId)
-);
+export const setFavoriteWallet = createStandardAction("SET_FAVORITE_WALLET")<
+  number | undefined
+>();
 
 export const storeCreditCardData = createAction(
   "STORE_CREDIT_CARD_DATA",

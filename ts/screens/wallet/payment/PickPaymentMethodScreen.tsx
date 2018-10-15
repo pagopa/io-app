@@ -153,7 +153,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                 <CardComponent
                   wallet={item}
                   menu={false}
-                  favorite={false}
+                  showFavoriteIcon={false}
                   lastUsage={false}
                   mainAction={confirmPaymentMethod}
                   logoPosition={LogoPosition.TOP}

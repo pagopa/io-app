@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
@@ -110,7 +110,7 @@ const reducer = (
     case getType(setFavoriteWallet):
       return {
         ...state,
-        favoriteWalletId: action.payload
+        favoriteWalletId: fromNullable(action.payload)
       };
 
     /**

@@ -95,13 +95,28 @@ type Props = Readonly<{
   cardType: CardType;
   showPayButton: boolean;
   allowGoBack: boolean;
+  favoriteWallet?: number;
+  onSetFavoriteWallet?: (walletId?: number) => void;
+  onDeleteWallet?: (walletId: number) => void;
   navigateToWalletList: () => void;
   navigateToScanQrCode: () => void;
   navigateToWalletTransactions: (wallet: Wallet) => void;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
+  // tslint:disable-next-line:cognitive-complexity
   private displayedWallets(): React.ReactNode {
+    const { favoriteWallet, onSetFavoriteWallet, onDeleteWallet } = this.props;
+
+    const onSetFavoriteForWallet = (idWallet: number) =>
+      onSetFavoriteWallet !== undefined
+        ? (willBeFavorite: boolean) =>
+            onSetFavoriteWallet(willBeFavorite ? idWallet : undefined)
+        : undefined;
+
+    const onDeleteForWallet = (idWallet: number) =>
+      onDeleteWallet !== undefined ? () => onDeleteWallet(idWallet) : undefined;
+
     switch (this.props.cardType.type) {
       case CardEnum.NONE:
         return null;
@@ -118,6 +133,12 @@ export default class WalletLayout extends React.Component<Props> {
                   flatBottom={true}
                   headerOnly={true}
                   rotated={true}
+                  isFavorite={
+                    favoriteWallet !== undefined &&
+                    favoriteWallet === cards[0].idWallet
+                  }
+                  onSetFavorite={onSetFavoriteForWallet(cards[0].idWallet)}
+                  onDelete={onDeleteForWallet(cards[0].idWallet)}
                   navigateToWalletTransactions={
                     this.props.navigateToWalletTransactions
                   }
@@ -131,6 +152,12 @@ export default class WalletLayout extends React.Component<Props> {
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
+                    isFavorite={
+                      favoriteWallet !== undefined &&
+                      favoriteWallet === cards[0].idWallet
+                    }
+                    onSetFavorite={onSetFavoriteForWallet(cards[0].idWallet)}
+                    onDelete={onDeleteForWallet(cards[0].idWallet)}
                     navigateToWalletTransactions={
                       this.props.navigateToWalletTransactions
                     }
@@ -142,6 +169,12 @@ export default class WalletLayout extends React.Component<Props> {
                     logoPosition={LogoPosition.TOP}
                     flatBottom={true}
                     headerOnly={true}
+                    isFavorite={
+                      favoriteWallet !== undefined &&
+                      favoriteWallet === cards[1].idWallet
+                    }
+                    onSetFavorite={onSetFavoriteForWallet(cards[1].idWallet)}
+                    onDelete={onDeleteForWallet(cards[1].idWallet)}
                     navigateToWalletTransactions={
                       this.props.navigateToWalletTransactions
                     }
@@ -157,10 +190,18 @@ export default class WalletLayout extends React.Component<Props> {
           <View style={WalletStyles.container}>
             <CardComponent
               wallet={this.props.cardType.card}
-              favorite={false}
+              showFavoriteIcon={false}
               menu={true}
               lastUsage={false}
               flatBottom={true}
+              isFavorite={
+                favoriteWallet !== undefined &&
+                favoriteWallet === this.props.cardType.card.idWallet
+              }
+              onSetFavorite={onSetFavoriteForWallet(
+                this.props.cardType.card.idWallet
+              )}
+              onDelete={onDeleteForWallet(this.props.cardType.card.idWallet)}
               navigateToWalletTransactions={
                 this.props.navigateToWalletTransactions
               }
@@ -177,6 +218,14 @@ export default class WalletLayout extends React.Component<Props> {
               flatBottom={true}
               headerOnly={true}
               rotated={true}
+              isFavorite={
+                favoriteWallet !== undefined &&
+                favoriteWallet === this.props.cardType.card.idWallet
+              }
+              onSetFavorite={onSetFavoriteForWallet(
+                this.props.cardType.card.idWallet
+              )}
+              onDelete={onDeleteForWallet(this.props.cardType.card.idWallet)}
               navigateToWalletTransactions={
                 this.props.navigateToWalletTransactions
               }

@@ -108,7 +108,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           <CardComponent
             wallet={this.props.wallet}
             menu={false}
-            favorite={false}
+            showFavoriteIcon={false}
             lastUsage={false}
             navigateToWalletTransactions={(wallet: Wallet) =>
               this.props.navigation.dispatch(

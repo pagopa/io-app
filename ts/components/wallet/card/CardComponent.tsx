@@ -4,7 +4,6 @@
  * the props passed
  */
 import color from "color";
-import { none, Option, some } from "fp-ts/lib/Option";
 import { Body, Card, Text } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet, ViewStyle } from "react-native";
@@ -15,16 +14,9 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { connect } from "react-redux";
 
 import I18n from "../../../i18n";
-import { Dispatch } from "../../../store/actions/types";
-import {
-  deleteWalletRequest,
-  setFavoriteWallet
-} from "../../../store/actions/wallet/wallets";
-import { GlobalState } from "../../../store/reducers/types";
-import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
+
 import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
@@ -78,19 +70,11 @@ const styles = StyleSheet.create({
   }
 });
 
-type ReduxMappedStateProps = Readonly<{
-  isFavoriteCard: boolean;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  setFavoriteCard: (item: Option<number>) => void;
-  deleteWallet: (walletId: number) => void;
-}>;
-
-type OwnProps = Readonly<{
+type Props = Readonly<{
+  isFavorite?: boolean;
   wallet: Wallet;
   menu?: boolean;
-  favorite?: boolean;
+  showFavoriteIcon?: boolean;
   lastUsage?: boolean;
   whiteLine?: boolean;
   logoPosition?: LogoPosition;
@@ -99,18 +83,18 @@ type OwnProps = Readonly<{
   headerOnly?: boolean;
   rotated?: boolean;
   customStyle?: any;
+  onSetFavorite?: (willBeFavorite: boolean) => void;
+  onDelete?: () => void;
   navigateToWalletTransactions: (item: Wallet) => void;
 }>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 /**
  * Credit card component
  */
-class CardComponent extends React.Component<Props> {
+export default class CardComponent extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {
     menu: true,
-    favorite: true,
+    showFavoriteIcon: true,
     lastUsage: true,
     whiteLine: false,
     logoPosition: LogoPosition.CENTER,
@@ -121,88 +105,100 @@ class CardComponent extends React.Component<Props> {
     customStyle: undefined
   };
 
-  private toggleFavorite = () => {
-    if (this.props.isFavoriteCard) {
-      this.props.setFavoriteCard(none);
-    } else {
-      this.props.setFavoriteCard(some(this.props.wallet.idWallet));
-    }
-  };
-
   private topRightCorner() {
-    const { wallet } = this.props;
-    if (this.props.logoPosition === LogoPosition.TOP) {
+    const {
+      wallet,
+      logoPosition,
+      isFavorite,
+      onSetFavorite,
+      onDelete,
+      showFavoriteIcon
+    } = this.props;
+
+    const onToggleFavorite =
+      onSetFavorite && isFavorite !== undefined
+        ? () => onSetFavorite(!isFavorite)
+        : undefined;
+
+    if (logoPosition === LogoPosition.TOP) {
       return (
         <Col size={2}>
-          {shouldRenderLogo(LogoPosition.TOP, this.props.logoPosition) && (
+          {shouldRenderLogo(LogoPosition.TOP, logoPosition) && (
             <Logo item={wallet} />
           )}
         </Col>
       );
     } else {
-      return [
-        <Col key="favorite" size={1}>
-          {this.props.favorite && (
-            <IconFont
-              name={
-                this.props.isFavoriteCard ? "io-filled-star" : "io-empty-star"
-              }
-              color={variables.brandPrimary}
-              style={styles.paddedIcon}
-              onPress={this.toggleFavorite}
-            />
-          )}
-        </Col>,
-        <Col key="menu" size={1}>
-          {this.props.menu && (
-            <Menu>
-              <MenuTrigger>
+      return (
+        <React.Fragment>
+          {showFavoriteIcon &&
+            isFavorite !== undefined && (
+              <Col key="favorite" size={1}>
                 <IconFont
-                  name="io-more"
+                  name={isFavorite ? "io-filled-star" : "io-empty-star"}
                   color={variables.brandPrimary}
                   style={styles.paddedIcon}
+                  onPress={onToggleFavorite}
                 />
-              </MenuTrigger>
-              <MenuOptions>
-                <MenuOption onSelect={this.toggleFavorite}>
-                  <Text bold={true} style={styles.blueText}>
-                    {I18n.t(
-                      this.props.isFavoriteCard
-                        ? "cardComponent.unsetFavourite"
-                        : "cardComponent.setFavourite"
+              </Col>
+            )}
+
+          <Col size={1}>
+            {this.props.menu && (
+              <Menu>
+                <MenuTrigger>
+                  <IconFont
+                    name="io-more"
+                    color={variables.brandPrimary}
+                    style={styles.paddedIcon}
+                  />
+                </MenuTrigger>
+
+                <MenuOptions>
+                  {onSetFavorite &&
+                    isFavorite !== undefined && (
+                      <MenuOption onSelect={onToggleFavorite}>
+                        <Text bold={true} style={styles.blueText}>
+                          {I18n.t(
+                            isFavorite
+                              ? "cardComponent.unsetFavourite"
+                              : "cardComponent.setFavourite"
+                          )}
+                        </Text>
+                      </MenuOption>
                     )}
-                  </Text>
-                </MenuOption>
-                <MenuOption
-                  onSelect={() =>
-                    Alert.alert(
-                      I18n.t("cardComponent.deleteTitle"),
-                      I18n.t("cardComponent.deleteMsg"),
-                      [
-                        {
-                          text: I18n.t("global.buttons.cancel"),
-                          style: "cancel"
-                        },
-                        {
-                          text: I18n.t("global.buttons.ok"),
-                          style: "destructive",
-                          onPress: () =>
-                            this.props.deleteWallet(wallet.idWallet)
-                        }
-                      ],
-                      { cancelable: false }
-                    )
-                  }
-                >
-                  <Text bold={true} style={styles.blueText}>
-                    {I18n.t("global.buttons.delete")}
-                  </Text>
-                </MenuOption>
-              </MenuOptions>
-            </Menu>
-          )}
-        </Col>
-      ];
+                  {onDelete && (
+                    <MenuOption
+                      onSelect={() =>
+                        Alert.alert(
+                          I18n.t("cardComponent.deleteTitle"),
+                          I18n.t("cardComponent.deleteMsg"),
+                          [
+                            {
+                              text: I18n.t("global.buttons.cancel"),
+                              style: "cancel"
+                            },
+                            {
+                              text: I18n.t("global.buttons.ok"),
+                              style: "destructive",
+                              onPress: onDelete
+                            }
+                          ],
+                          { cancelable: false }
+                        )
+                      }
+                    >
+                      <Text bold={true} style={styles.blueText}>
+                        {I18n.t("global.buttons.delete")}
+                      </Text>
+                    </MenuOption>
+                  )}
+                </MenuOptions>
+              </Menu>
+            )}
+          </Col>
+        </React.Fragment>
+      );
     }
   }
 
@@ -256,26 +252,3 @@ class CardComponent extends React.Component<Props> {
     );
   }
 }
-
-const mapStateToProps = (
-  state: GlobalState,
-  props: OwnProps
-): ReduxMappedStateProps => {
-  const favoriteCard = getFavoriteWalletId(state);
-  return {
-    isFavoriteCard: favoriteCard.fold(
-      false,
-      walletId => walletId === props.wallet.idWallet
-    )
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteWallet(item)),
-  deleteWallet: (walletId: number) => dispatch(deleteWalletRequest(walletId))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardComponent);
