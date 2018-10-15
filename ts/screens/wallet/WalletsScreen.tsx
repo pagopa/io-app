@@ -7,7 +7,7 @@ import * as React from "react";
 
 import { Content, List, Text, View } from "native-base";
 import { WalletStyles } from "../../components/styles/wallet";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import WalletLayout, { CardEnum } from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { Button } from "native-base";
@@ -45,7 +45,10 @@ class WalletsScreen extends React.Component<Props, never> {
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
+        cardType={{ type: CardEnum.NONE }}
         headerContents={headerContents}
+        showPayButton={true}
+        allowGoBack={true}
         navigateToWalletList={() =>
           this.props.navigation.navigate(ROUTES.WALLET_LIST)
         }

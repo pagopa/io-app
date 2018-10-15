@@ -19,11 +19,8 @@ import {
 } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { connect } from "react-redux";
 
 import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
-import { startPaymentSaga } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import GoBackButton from "../GoBackButton";
@@ -92,41 +89,23 @@ type NoCards = Readonly<{
 
 export type CardType = FullCard | HeaderCard | FannedCards | NoCards;
 
-type ReduxMappedProps = Readonly<{
-  startPaymentSaga: () => void;
-}>;
-
-type OwnProps = Readonly<{
+type Props = Readonly<{
   title: string;
   headerContents?: React.ReactNode;
-  cardType?: CardType;
-  showPayButton?: boolean;
-  allowGoBack?: boolean;
+  cardType: CardType;
+  showPayButton: boolean;
+  allowGoBack: boolean;
   navigateToWalletList: () => void;
   navigateToScanQrCode: () => void;
   navigateToWalletTransactions: (wallet: Wallet) => void;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
-
-class WalletLayout extends React.Component<Props> {
-  public static defaultProps = {
-    headerContents: null,
-    cardType: { type: CardEnum.NONE } as NoCards,
-    showPayButton: true,
-    allowGoBack: true
-  };
-
+export default class WalletLayout extends React.Component<Props> {
   private displayedWallets(): React.ReactNode {
-    if (!this.props.cardType) {
-      return null;
-    }
     switch (this.props.cardType.type) {
       case CardEnum.NONE:
-      case undefined: {
-        // "undefined" is here because cardType is optional, but defaultProps sets it to NONE
         return null;
-      }
+
       case CardEnum.FAN: {
         const { cards } = this.props.cardType;
         return (
@@ -245,7 +224,6 @@ class WalletLayout extends React.Component<Props> {
               block={true}
               onPress={() => {
                 this.props.navigateToScanQrCode();
-                this.props.startPaymentSaga();
               }}
             >
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
@@ -257,12 +235,3 @@ class WalletLayout extends React.Component<Props> {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  startPaymentSaga: () => dispatch(startPaymentSaga())
-});
-
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(WalletLayout);

@@ -191,6 +191,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
         cardType={cardType}
+        showPayButton={true}
         allowGoBack={false}
         navigateToWalletList={() =>
           this.props.navigation.navigate(ROUTES.WALLET_LIST)

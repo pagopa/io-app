@@ -52,6 +52,7 @@ class TransactionsScreen extends React.Component<Props> {
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
         showPayButton={false}
+        allowGoBack={true}
         headerContents={headerContents}
         cardType={{ type: CardEnum.FULL, card: selectedWallet }}
         navigateToWalletList={() =>
