@@ -20,15 +20,13 @@ import { connect } from "react-redux";
 
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import { CardEnum } from "../../components/wallet/WalletLayout";
+import CardHeader from "../../components/wallet/card/CardHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Wallet } from "../../types/pagopa";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
@@ -144,25 +142,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
       <WalletLayout
         title={I18n.t("wallet.transaction")}
         headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
-        cardType={
-          transactionWallet
-            ? { type: CardEnum.HEADER, card: transactionWallet }
-            : { type: CardEnum.NONE }
+        displayedWallets={
+          transactionWallet ? <CardHeader wallet={transactionWallet} /> : null
         }
         showPayButton={false}
         allowGoBack={!isPaymentCompletedTransaction}
-        navigateToWalletList={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_LIST)
-        }
         navigateToScanQrCode={() =>
           this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
-        }
-        navigateToWalletTransactions={(selectedWallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({
-              selectedWallet
-            })
-          )
         }
       >
         <Content

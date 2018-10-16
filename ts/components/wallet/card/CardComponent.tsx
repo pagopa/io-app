@@ -85,7 +85,7 @@ type Props = Readonly<{
   customStyle?: any;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   onDelete?: () => void;
-  navigateToWalletTransactions: (item: Wallet) => void;
+  navigateToWalletTransactions?: (item: Wallet) => void;
 }>;
 
 /**
