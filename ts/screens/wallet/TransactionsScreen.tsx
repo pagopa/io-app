@@ -2,24 +2,23 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
-import * as React from "react";
-import I18n from "../../i18n";
-
 import { Text, View } from "native-base";
+import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
-
 import { connect } from "react-redux";
+
 import { WalletStyles } from "../../components/styles/wallet";
 import CardFull from "../../components/wallet/card/CardFull";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
   navigateToTransactionDetailsScreen,
   navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
-import { getTransactions } from "../../store/reducers/wallet/transactions";
+import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 
@@ -27,12 +26,14 @@ type NavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
 
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
 type ReduxMappedProps = Readonly<{
   favoriteWalletId?: number;
-  transactions: ReturnType<typeof getTransactions>;
+  transactions: ReturnType<ReturnType<typeof getWalletTransactionsCreator>>;
 }>;
 
-type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
+type Props = OwnProps & ReduxMappedProps;
 
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -87,9 +88,14 @@ class TransactionsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (
+  state: GlobalState,
+  ownProps: OwnProps
+): ReduxMappedProps => ({
   favoriteWalletId: getFavoriteWalletId(state).toUndefined(),
-  transactions: getTransactions(state)
+  transactions: getWalletTransactionsCreator(
+    ownProps.navigation.getParam("selectedWallet").idWallet
+  )(state)
 });
 
 export default connect(mapStateToProps)(TransactionsScreen);
