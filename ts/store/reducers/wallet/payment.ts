@@ -17,11 +17,9 @@ import { Action } from "../../actions/types";
 import {
   goBackOnePaymentState,
   paymentCancel,
-  resetPaymentState,
   setPaymentStateToConfirmPaymentMethod,
   setPaymentStateToPickPaymentMethod,
   setPaymentStateToPickPsp,
-  setPaymentStateToPinLogin,
   setPaymentStateToSummary,
   setPaymentStateToSummaryWithPaymentId
 } from "../../actions/wallet/payment";
@@ -123,6 +121,9 @@ type PaymentStatesWithVerificaResponse =
 export type PaymentStateWithVerificaResponse = Readonly<{
   stack: NonEmptyArray<PaymentStatesWithVerificaResponse>;
 }>;
+
+export const isPaymentOngoingSelector = (state: GlobalState): boolean =>
+  state.wallet.payment.stack !== null;
 
 export const isPaymentRequestingPinLogin = (wallet: WalletState) =>
   wallet.payment.stack !== null &&
@@ -525,40 +526,6 @@ const goBackReducer: PaymentReducer = (
 };
 
 /**
- * Reducer for actions that terminate a payment
- */
-const endPaymentReducer: PaymentReducer = (
-  state: PaymentState = PAYMENT_INITIAL_STATE,
-  action: Action
-) => {
-  if (
-    isActionOf(setPaymentStateToPinLogin, action) &&
-    isInAllowedOrigins(state, ["PaymentStateConfirmPaymentMethod"]) &&
-    isPaymentStateWithSelectedPaymentMethod(state)
-  ) {
-    return {
-      stack: popToStateAndPush(
-        state.stack,
-        {
-          ...state.stack.head,
-          kind: "PaymentStatePinLogin"
-        },
-        ["PaymentStatePinLogin"]
-      )
-    };
-  }
-  if (
-    isActionOf(resetPaymentState, action) &&
-    isInAllowedOrigins(state, ["PaymentStatePinLogin"])
-  ) {
-    return {
-      stack: null // cleaning up
-    };
-  }
-  return state;
-};
-
-/**
  * Reducer for actions that cancel a payment
  */
 const cancelPaymentReducer: PaymentReducer = (
@@ -583,8 +550,7 @@ const reducer = (
     confirmMethodReducer,
     pickPspReducer,
     goBackReducer,
-    cancelPaymentReducer,
-    endPaymentReducer
+    cancelPaymentReducer
   ];
   return reducers.reduce(
     (s: PaymentState, r: PaymentReducer) => r(s, action),
