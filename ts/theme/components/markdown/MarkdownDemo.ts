@@ -9,7 +9,7 @@ export default (): Theme => {
 
       backgroundColor: "#c1f4f2",
       marginBottom: 50,
-      padding: 20
+      padding: 10
     }
   };
 };
