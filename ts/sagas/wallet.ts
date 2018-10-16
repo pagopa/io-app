@@ -201,7 +201,7 @@ function* addCreditCard(
   const wallet: NullableWallet = {
     idWallet: null,
     type: "CREDIT_CARD",
-    favourite: null,
+    favourite: action.payload.setAsFavorite,
     creditCard: action.payload.creditCard,
     psp: undefined
   };
