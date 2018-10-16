@@ -34,6 +34,13 @@ export const getTransactions = (state: GlobalState) =>
       values(txs).filter(_ => _ !== undefined) as ReadonlyArray<Transaction>
   );
 
+export const getWalletTransactionsCreator = (idWallet: number) => (
+  state: GlobalState
+) =>
+  pot.map(getTransactions(state), tsx =>
+    tsx.filter(_ => _.idWallet === idWallet)
+  );
+
 export const latestTransactionsSelector = createSelector(
   getTransactions,
   potTransactions =>
