@@ -36,7 +36,6 @@ import { Dispatch } from "../../../store/actions/types";
 import ROUTES from "../../../navigation/routes";
 
 import {
-  paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId,
   startPaymentSaga
 } from "../../../store/actions/wallet/payment";
@@ -51,7 +50,6 @@ import { CameraMarker } from "./CameraMarker";
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
-  goBack: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -177,7 +175,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     const secondaryButtonProps = {
       block: true,
       bordered: true,
-      onPress: () => this.props.goBack(),
+      onPress: () => this.props.navigation.goBack(),
       title: I18n.t("wallet.cancel")
     };
 
@@ -189,7 +187,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         />
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
+            <Button
+              transparent={true}
+              onPress={() => this.props.navigation.goBack()}
+            >
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -248,8 +249,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
         initialAmount
       })
     );
-  },
-  goBack: () => dispatch(paymentRequestGoBack())
+  }
 });
 
 export default connect(
