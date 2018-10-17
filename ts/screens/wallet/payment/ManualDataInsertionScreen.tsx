@@ -81,6 +81,15 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.setState({ amount: !isNaN(parsedValue) ? some(parsedValue) : none });
   };
 
+  private isFormValid = () =>
+    this.state.transactionCode.isSome() &&
+    this.state.fiscalCode.isSome() &&
+    this.state.amount.isSome() &&
+    AmountInEuroCentsFromNumber.decode(this.state.amount.value).isRight() &&
+    RptIdFromString.decode(
+      `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
+    ).isRight();
+
   /**
    * This method collects the data from the form and,
    * if it is syntactically correct, it dispatches a
@@ -111,8 +120,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const primaryButtonProps = {
+      disabled: !this.isFormValid(),
       block: true,
-      primary: true,
+      primary: this.isFormValid(),
       onPress: this.proceedToSummary,
       title: I18n.t("global.buttons.continue")
     };
@@ -181,11 +191,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
                   keyboardType={"numeric"}
-                  value={
-                    this.state.amount.isSome()
-                      ? `${this.state.amount.value}`
-                      : EMPTY_AMOUNT
-                  }
+                  value={this.state.amount.map(String).getOrElse(EMPTY_AMOUNT)}
                   onChangeText={this.validateAmount}
                 />
               </Item>
