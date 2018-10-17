@@ -5,6 +5,8 @@
 # shared
 defaults: &defaults
   working_directory: ~/italia-app
+  environment:
+    - INSTABUG_TOKEN: 5c2d0f12fa12f9afc535585e5b7a9e79
 
 # nodejs builds
 defaults_js: &defaults_js
