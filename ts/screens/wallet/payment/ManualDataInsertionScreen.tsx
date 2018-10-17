@@ -10,6 +10,7 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
+import { NumberFromString } from "io-ts-types";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -60,32 +61,39 @@ type Props = OwnProps & ReduxMappedDispatchProps;
 type State = Readonly<{
   transactionCode: Option<string>;
   fiscalCode: Option<string>;
-  amount: Option<number>;
+  delocalizedAmount: Option<string>;
 }>;
 
 const EMPTY_NOTICE_NUMBER = "";
 const EMPTY_FISCAL_CODE = "";
 const EMPTY_AMOUNT = "";
+
+const AmountInEuroCentsFromString = NumberFromString.pipe(
+  AmountInEuroCentsFromNumber
+);
+
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       transactionCode: none,
       fiscalCode: none,
-      amount: none
+      delocalizedAmount: none
     };
   }
 
-  private validateAmount = (value: string) => {
-    const parsedValue = parseFloat(value);
-    this.setState({ amount: !isNaN(parsedValue) ? some(parsedValue) : none });
-  };
+  private decimalSeparatorRe = RegExp(
+    I18n.t("global.localization.decimalSeparator"),
+    "g"
+  );
 
   private isFormValid = () =>
+    this.state.delocalizedAmount.isSome() &&
     this.state.transactionCode.isSome() &&
     this.state.fiscalCode.isSome() &&
-    this.state.amount.isSome() &&
-    AmountInEuroCentsFromNumber.decode(this.state.amount.value).isRight() &&
+    AmountInEuroCentsFromString.decode(
+      this.state.delocalizedAmount.value
+    ).isRight() &&
     RptIdFromString.decode(
       `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
     ).isRight();
@@ -100,7 +108,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     if (
       this.state.transactionCode.isSome() &&
       this.state.fiscalCode.isSome() &&
-      this.state.amount.isSome()
+      this.state.delocalizedAmount.isSome()
     ) {
       // extract the rptId object from the "rptId" string
       // (i.e. the concatenation of fiscal code and notice number)
@@ -108,8 +116,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
       );
       // get the amount (directly from the input)
-      const amount = AmountInEuroCentsFromNumber.decode(
-        this.state.amount.value
+      const amount = AmountInEuroCentsFromString.decode(
+        this.state.delocalizedAmount.value
       );
       if (rptId.isRight() && amount.isRight()) {
         // valid Rpt Id and valid amount were entered
@@ -163,7 +171,15 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
             <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
             <Form>
-              <Item floatingLabel={true}>
+              <Item
+                floatingLabel={true}
+                error={
+                  this.state.transactionCode.isSome() &&
+                  NumberFromString.decode(
+                    this.state.transactionCode.value
+                  ).isLeft()
+                }
+              >
                 <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
@@ -175,7 +191,13 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   }}
                 />
               </Item>
-              <Item floatingLabel={true}>
+              <Item
+                floatingLabel={true}
+                error={
+                  this.state.fiscalCode.isSome() &&
+                  NumberFromString.decode(this.state.fiscalCode.value).isLeft()
+                }
+              >
                 <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
@@ -187,12 +209,26 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   }}
                 />
               </Item>
-              <Item floatingLabel={true}>
+              <Item
+                floatingLabel={true}
+                error={
+                  this.state.delocalizedAmount.isSome() &&
+                  AmountInEuroCentsFromString.decode(
+                    this.state.delocalizedAmount.value
+                  ).isLeft()
+                }
+              >
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
                   keyboardType={"numeric"}
-                  value={this.state.amount.map(String).getOrElse(EMPTY_AMOUNT)}
-                  onChangeText={this.validateAmount}
+                  onChangeText={value =>
+                    this.setState({
+                      delocalizedAmount:
+                        value === EMPTY_AMOUNT
+                          ? none
+                          : some(value.replace(this.decimalSeparatorRe, "."))
+                    })
+                  }
                 />
               </Item>
             </Form>
