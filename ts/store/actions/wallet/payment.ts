@@ -143,6 +143,18 @@ export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
   PagoPaErrors
 >();
 
+export const paymentVerificaRequest = createStandardAction(
+  "PAYMENT_VERIFICA_REQUEST"
+)();
+
+export const paymentVerificaSuccess = createStandardAction(
+  "PAYMENT_VERIFICA_SUCCESS"
+)<PaymentRequestsGetResponse>();
+
+export const paymentVerificaFailure = createStandardAction(
+  "PAYMENT_VERIFICA_FAILURE"
+)<PagoPaErrors>();
+
 /**
  * All possible payment actions
  */
@@ -166,4 +178,7 @@ export type PaymentActions =
   | ActionType<typeof paymentResetLoadingState>
   | ActionType<typeof paymentCancel>
   | ActionType<typeof paymentRequestCancel>
-  | ActionType<typeof paymentFailure>;
+  | ActionType<typeof paymentFailure>
+  | ActionType<typeof paymentVerificaRequest>
+  | ActionType<typeof paymentVerificaSuccess>
+  | ActionType<typeof paymentVerificaFailure>;

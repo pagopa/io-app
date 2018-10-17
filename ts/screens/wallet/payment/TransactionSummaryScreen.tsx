@@ -15,7 +15,7 @@ import {
 } from "italia-ts-commons/lib/pagopa";
 import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
@@ -32,39 +32,25 @@ import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryCo
 
 import I18n from "../../../i18n";
 
+import * as pot from "../../../types/pot";
+
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCancel,
   paymentRequestContinueWithPaymentMethods,
   paymentRequestGoBack
 } from "../../../store/actions/wallet/payment";
-import { createErrorSelector } from "../../../store/reducers/error";
-import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  getCurrentAmountFromGlobalStateWithVerificaResponse,
-  getInitialAmountFromGlobalStateWithVerificaResponse,
-  getPaymentContextCodeFromGlobalStateWithVerificaResponse,
-  getPaymentReason,
-  getPaymentRecipientFromGlobalStateWithVerificaResponse,
-  getPaymentStep,
-  getRptIdFromGlobalStateWithVerificaResponse,
-  isGlobalStateWithVerificaResponse
-} from "../../../store/reducers/wallet/payment";
+import { getPaymentState } from "../../../store/reducers/wallet/payment";
 
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { mapErrorCodeToMessage } from "../../../types/errors";
-import {
-  UNKNOWN_PAYMENT_REASON,
-  UNKNOWN_RECIPIENT
-} from "../../../types/unknown";
+import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
+import { AmountToImporto } from "../../../utils/amounts";
 
-type TransactionInfo = Readonly<{
-  paymentReason: string;
-  paymentRecipient: EnteBeneficiario;
+type NavigationParams = Readonly<{
   rptId: RptId;
-  codiceContestoPagamento: CodiceContestoPagamento;
-  amount: AmountInEuroCents;
-  currentAmount: AmountInEuroCents;
+  initialAmount: AmountInEuroCents;
 }>;
 
 type ReduxMappedStateProps = Readonly<{
@@ -73,11 +59,11 @@ type ReduxMappedStateProps = Readonly<{
 }> &
   (
     | Readonly<{
-        valid: false;
+        valid: false; // TODO: replace valid: false with an error
       }>
     | Readonly<{
         valid: true;
-        transactionInfo: Option<TransactionInfo>;
+        potVerifica: pot.Pot<PaymentRequestsGetResponse>;
       }>);
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -91,11 +77,9 @@ type ReduxMappedDispatchProps = Readonly<{
   onCancel: () => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams>;
 
 const formatMdRecipient = (e: EnteBeneficiario): string => {
   const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
@@ -131,7 +115,7 @@ const formatMdInfoRpt = (r: RptId): string =>
   )}\n
 **${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
-class TransactionSummaryScreen extends React.Component<Props, never> {
+class TransactionSummaryScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -148,23 +132,36 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
       return null;
     }
 
-    // when empty, it means we're still loading the verifica response
-    const txInfo = this.props.transactionInfo;
+    const rptId = this.props.navigation.getParam("rptId");
+    const initialAmount = this.props.navigation.getParam("initialAmount");
 
-    const primaryButtonProps = {
-      disabled: txInfo.isNone(),
+    // when empty, it means we're still loading the verifica response
+    const { potVerifica } = this.props;
+
+    const basePrimaryButtonProps = {
       block: true,
       primary: true,
-      onPress: txInfo.isSome()
-        ? () =>
-            this.props.confirmSummary(
-              txInfo.value.rptId,
-              txInfo.value.codiceContestoPagamento,
-              txInfo.value.currentAmount
-            )
-        : undefined,
       title: I18n.t("wallet.continue")
     };
+    const primaryButtonProps =
+      pot.isSome(potVerifica) &&
+      !(pot.isLoading(potVerifica) || pot.isError(potVerifica))
+        ? {
+            ...basePrimaryButtonProps,
+            disabled: false,
+            onPress: () =>
+              this.props.confirmSummary(
+                rptId,
+                potVerifica.value.codiceContestoPagamento,
+                AmountToImporto.encode(
+                  potVerifica.value.importoSingoloVersamento
+                )
+              )
+          }
+        : {
+            ...basePrimaryButtonProps,
+            disabled: true
+          };
 
     const secondaryButtonProps = {
       block: true,
@@ -188,37 +185,46 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          {txInfo.isSome() ? (
+          {pot.isSome(potVerifica) ? (
             <PaymentSummaryComponent
-              navigation={this.props.navigation}
               hasVerificaResponse={true}
-              amount={txInfo.value.amount}
-              updatedAmount={txInfo.value.currentAmount}
-              paymentReason={txInfo.value.paymentReason}
+              amount={initialAmount}
+              updatedAmount={
+                potVerifica.value.importoSingoloVersamento
+                  ? AmountToImporto.encode(
+                      potVerifica.value.importoSingoloVersamento
+                    )
+                  : UNKNOWN_AMOUNT
+              }
+              paymentReason={
+                potVerifica.value.causaleVersamento || UNKNOWN_PAYMENT_REASON
+              }
             />
           ) : (
             <PaymentSummaryComponent
-              navigation={this.props.navigation}
               hasVerificaResponse={false}
+              amount={initialAmount}
             />
           )}
 
           <View content={true}>
             <Markdown>
-              {txInfo
-                .map(_ => formatMdRecipient(_.paymentRecipient))
+              {pot
+                .toOption(potVerifica)
+                .mapNullable(_ => _.enteBeneficiario)
+                .map(formatMdRecipient)
                 .getOrElse("...")}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {txInfo
-                .map(_ => formatMdPaymentReason(_.paymentReason))
+              {pot
+                .toOption(potVerifica)
+                .mapNullable(_ => _.causaleVersamento)
+                .map(formatMdPaymentReason)
                 .getOrElse("...")}
             </Markdown>
             <View spacer={true} />
-            <Markdown>
-              {txInfo.map(_ => formatMdInfoRpt(_.rptId)).getOrElse("...")}
-            </Markdown>
+            <Markdown>{formatMdInfoRpt(rptId)}</Markdown>
             <View spacer={true} />
           </View>
         </Content>
@@ -233,43 +239,33 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
 }
 
 function mapStateToProps() {
-  const paymentErrorSelector = createErrorSelector(["PAYMENT"]);
-  const paymentLoadingSelector = createLoadingSelector(["PAYMENT"]);
-
   return (state: GlobalState): ReduxMappedStateProps => {
-    if (
-      (getPaymentStep(state) === "PaymentStateSummary" ||
-        getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
-      isGlobalStateWithVerificaResponse(state)
-    ) {
-      const transactionInfo = some({
-        paymentReason: getPaymentReason(state).getOrElse(
-          UNKNOWN_PAYMENT_REASON
-        ), // could be undefined as per pagoPA type definition
-        paymentRecipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
-          state
-        ).getOrElse(UNKNOWN_RECIPIENT), // could be undefined as per pagoPA type definition
-        rptId: getRptIdFromGlobalStateWithVerificaResponse(state),
-        codiceContestoPagamento: getPaymentContextCodeFromGlobalStateWithVerificaResponse(
-          state
-        ),
-        amount: getInitialAmountFromGlobalStateWithVerificaResponse(state),
-        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
-          state
-        )
-      });
+    const maybePaymentState = getPaymentState(state);
+    if (maybePaymentState.isNone()) {
+      // we're not in a payment
       return {
-        valid: true,
-        error: paymentErrorSelector(state),
-        isLoading: paymentLoadingSelector(state),
-        transactionInfo
+        valid: false,
+        error: none,
+        isLoading: false
       };
-    } else if (getPaymentStep(state) === "PaymentStateNoState") {
+    }
+    const paymentState = maybePaymentState.value;
+    if (paymentState.kind === "PaymentStateSummary") {
+      const potVerificaResponse = paymentState.verificaResponse;
       return {
         valid: true,
-        error: paymentErrorSelector(state),
-        isLoading: paymentLoadingSelector(state),
-        transactionInfo: none
+        error: pot.isError(potVerificaResponse)
+          ? some(potVerificaResponse.error.message)
+          : none,
+        isLoading: pot.isLoading(potVerificaResponse),
+        potVerifica: paymentState.verificaResponse
+      };
+    } else if (paymentState.kind === "PaymentStateSummaryWithPaymentId") {
+      return {
+        valid: true,
+        error: none,
+        isLoading: false,
+        potVerifica: pot.some(paymentState.verificaResponse)
       };
     } else {
       return {

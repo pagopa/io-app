@@ -34,7 +34,8 @@ import ROUTES from "../navigation/routes";
 
 import {
   navigateToTransactionDetailsScreen,
-  navigateToWalletCheckout3dsScreen
+  navigateToWalletCheckout3dsScreen,
+  navigateToWalletTransactionSummaryScreen
 } from "../store/actions/navigation";
 import {
   goBackOnePaymentState,
@@ -55,7 +56,10 @@ import {
   setPaymentStateToPickPsp,
   setPaymentStateToSummary,
   setPaymentStateToSummaryWithPaymentId,
-  startPaymentSaga
+  startPaymentSaga,
+  paymentVerificaRequest,
+  paymentVerificaSuccess,
+  paymentVerificaFailure
 } from "../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -490,11 +494,11 @@ function* showTransactionSummaryFromRptIdHandler(
   // pagoPA proxy
 
   // First, navigate to the summary screen
-  yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
+  yield put(navigateToWalletTransactionSummaryScreen(action.payload));
 
   const { rptId, initialAmount } = action.payload;
 
-  yield put(paymentSetLoadingState());
+  yield put(paymentVerificaRequest());
 
   try {
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
@@ -505,10 +509,10 @@ function* showTransactionSummaryFromRptIdHandler(
     );
     if (response !== undefined && response.status === 200) {
       // Verifica succeeded
-      yield put(setPaymentStateToSummary(rptId, initialAmount, response.value));
+      yield put(paymentVerificaSuccess(response.value));
     } else {
       // Verifica failed
-      yield put(paymentFailure(extractNodoError(response)));
+      yield put(paymentVerificaFailure(extractNodoError(response)));
     }
   } catch {
     // Probably a timeout
@@ -520,7 +524,7 @@ function* showTransactionSummaryFromRptIdHandler(
 
 function* showTransactionSummaryFromBannerHandler() {
   yield put(setPaymentStateToSummaryWithPaymentId());
-  yield put(navigateTo(ROUTES.PAYMENT_TRANSACTION_SUMMARY));
+  yield put(navigateToWalletTransactionSummaryScreen());
 }
 
 function* showConfirmPaymentMethod(

@@ -13,6 +13,7 @@ import ROUTES from "../../navigation/routes";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import Checkout3DsScreen from "../../screens/wallet/Checkout3DsScreen";
+import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 
@@ -85,6 +86,14 @@ export const navigateToMessageDetailScreenAction = (
         })
       })
     ]
+  });
+
+export const navigateToWalletTransactionSummaryScreen = (
+  params: InferNavigationParams<typeof TransactionSummaryScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+    params
   });
 
 // TODO: this should use StackActions.reset

@@ -12,6 +12,7 @@ import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceC
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../types/pagopa";
+import * as pot from "../../../types/pot";
 import { AmountToImporto } from "../../../utils/amounts";
 import { Action } from "../../actions/types";
 import {
@@ -38,7 +39,7 @@ import { WalletState } from "./index";
 type PaymentStateSummary = Readonly<{
   kind: "PaymentStateSummary";
   rptId: RptId;
-  verificaResponse: PaymentRequestsGetResponse;
+  verificaResponse: pot.Pot<PaymentRequestsGetResponse>;
   initialAmount: AmountInEuroCents;
 }>;
 
@@ -134,7 +135,8 @@ const isPaymentStateWithVerificaResponse = (
   state: PaymentState
 ): state is PaymentStateWithVerificaResponse =>
   state.stack !== null &&
-  (state.stack.head.kind === "PaymentStateSummary" ||
+  ((state.stack.head.kind === "PaymentStateSummary" &&
+    pot.isSome(state.stack.head.verificaResponse)) ||
     state.stack.head.kind === "PaymentStateSummaryWithPaymentId" ||
     state.stack.head.kind === "PaymentStatePickPaymentMethod" ||
     state.stack.head.kind === "PaymentStateConfirmPaymentMethod" ||
@@ -206,10 +208,8 @@ export const isGlobalStateWithSelectedPaymentMethod = (
  * If no step is available (clean stack), return a "NoState"
  * value -- that can be typeguarded as needed (kind !==/=== "PaymentStateNoState")
  */
-export const getPaymentStep = (state: GlobalState) =>
-  state.wallet.payment.stack !== null
-    ? state.wallet.payment.stack.head.kind
-    : "PaymentStateNoState";
+export const getPaymentState = (state: GlobalState): Option<PaymentStates> =>
+  fromNullable(state.wallet.payment.stack).map(_ => _.head);
 
 export const getRptIdFromGlobalStateWithVerificaResponse = (
   state: GlobalStateWithVerificaResponse
@@ -340,7 +340,7 @@ const summaryReducer: PaymentReducer = (
         {
           kind: "PaymentStateSummary",
           rptId: action.payload.rptId,
-          verificaResponse: action.payload.verificaResponse,
+          verificaResponse: pot.some(action.payload.verificaResponse),
           initialAmount: action.payload.initialAmount
         },
         ["PaymentStateSummary"]

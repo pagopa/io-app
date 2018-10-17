@@ -100,6 +100,11 @@ export const isSome = <A>(
   p.kind === "PotSomeLoading" ||
   p.kind === "PotSomeError";
 
+export const isNone = <A>(p: Pot<A>): p is None | NoneLoading | NoneError =>
+  p.kind === "PotNone" ||
+  p.kind === "PotNoneLoading" ||
+  p.kind === "PotNoneError";
+
 export const isLoading = <A>(p: Pot<A>): p is NoneLoading | SomeLoading<A> =>
   p.kind === "PotNoneLoading" || p.kind === "PotSomeLoading";
 
