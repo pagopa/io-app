@@ -43,16 +43,12 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentRequestCancel,
-  paymentRequestGoBack,
   paymentRequestTransactionSummaryFromRptId,
   startPaymentSaga
 } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
-  goBack: () => void;
-  cancelPayment: () => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -125,7 +121,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       bordered: true,
-      onPress: () => this.props.cancelPayment(),
+      onPress: () => this.props.navigation.goBack(),
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -133,7 +129,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button transparent={true} onPress={() => this.props.goBack()}>
+            <Button
+              transparent={true}
+              onPress={() => this.props.navigation.goBack()}
+            >
               <Icon name="chevron-left" />
             </Button>
           </Left>
@@ -213,9 +212,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
         initialAmount
       })
     );
-  },
-  goBack: () => dispatch(paymentRequestGoBack()),
-  cancelPayment: () => dispatch(paymentRequestCancel())
+  }
 });
 
 export default connect(
