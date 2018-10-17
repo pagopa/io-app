@@ -106,9 +106,6 @@ const theme = (): Theme => {
     "NativeBase.List": {
       ...listTheme()
     },
-    "UIComponent.SectionList": {
-      ...listTheme()
-    },
     "NativeBase.ListItem": {
       ...listItemTheme()
     },

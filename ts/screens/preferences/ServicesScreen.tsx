@@ -151,6 +151,7 @@ class ServicesScreen extends React.PureComponent<Props> {
           keyExtractor={this.getServiceKey}
           stickySectionHeadersEnabled={false}
           alwaysBounceVertical={false}
+          withContentLateralPadding={true}
         />
       </TopScreenComponent>
     );

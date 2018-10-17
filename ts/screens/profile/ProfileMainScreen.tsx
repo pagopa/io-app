@@ -91,7 +91,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         subtitle={I18n.t("profile.main.screenSubtitle")}
       >
         <Content noPadded={true}>
-          <List>
+          <List withContentLateralPadding={true}>
             {/* Privacy */}
             <ListItem
               first={true}
