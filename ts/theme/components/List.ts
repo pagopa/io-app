@@ -4,14 +4,14 @@ import variables from "../variables";
 declare module "native-base" {
   namespace NativeBase {
     interface List {
-      padded?: boolean;
+      withContentLateralPadding?: boolean;
     }
   }
 }
 
 export default (): Theme => {
   return {
-    ".padded": {
+    ".withContentLateralPadding": {
       paddingLeft: variables.contentPadding,
       paddingRight: variables.contentPadding
     }
