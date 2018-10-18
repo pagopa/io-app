@@ -34,7 +34,7 @@ locales:
   en: Inglese
 connection:
   status:
-    offline: Connessione assente!
+    offline: Sei offline! Alcune funzioni di IO non sono disponibili.
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
