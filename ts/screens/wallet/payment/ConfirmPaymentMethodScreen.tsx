@@ -144,10 +144,10 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <CardComponent
               wallet={wallet}
-              menu={false}
-              showFavoriteIcon={false}
-              lastUsage={false}
-              navigateToWalletTransactions={(selectedWallet: Wallet) =>
+              type="Full"
+              hideMenu={true}
+              hideFavoriteIcon={true}
+              mainAction={(selectedWallet: Wallet) =>
                 this.props.navigation.dispatch(
                   navigateToWalletTransactionsScreen({ selectedWallet })
                 )

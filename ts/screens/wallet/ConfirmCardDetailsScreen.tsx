@@ -157,9 +157,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           <H1>{I18n.t("wallet.saveCard.title")}</H1>
           <CardComponent
             wallet={wallet}
-            menu={false}
-            showFavoriteIcon={false}
-            lastUsage={false}
+            type="Full"
+            hideMenu={true}
+            hideFavoriteIcon={true}
           />
           <View spacer={true} />
           <Grid>

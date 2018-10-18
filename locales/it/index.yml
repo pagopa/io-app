@@ -408,6 +408,8 @@ cardComponent:
   deleteMsg: Questo cancellerà il metodo di pagamento
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
+  detailsAndTransactions: Dettagli e transazioni
+  pick: Paga con questo metodo
 messages:
   counting:
     zero: Nessun messaggio

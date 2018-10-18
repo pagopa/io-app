@@ -26,7 +26,6 @@ import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
-import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import {
@@ -132,12 +131,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
               dataArray={wallets as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
                 <CardComponent
+                  type="Picking"
                   wallet={item}
-                  menu={false}
-                  showFavoriteIcon={false}
-                  lastUsage={false}
                   mainAction={this.props.navigateToConfirmOrPickPsp}
-                  logoPosition={LogoPosition.TOP}
                 />
               )}
             />

@@ -7,18 +7,6 @@ import { Image, StyleSheet } from "react-native";
 import { Wallet } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 
-export enum LogoPosition {
-  TOP,
-  CENTER
-}
-
-export const shouldRenderLogo = (
-  current: LogoPosition,
-  requested?: LogoPosition
-) => {
-  return current === requested; // current position is the requested one
-};
-
 export const cardIcons: { [key in CreditCardType]: any } = {
   MASTERCARD: require("../../../../img/wallet/cards-icons/mastercard.png"),
   VISA: require("../../../../img/wallet/cards-icons/visa.png"),

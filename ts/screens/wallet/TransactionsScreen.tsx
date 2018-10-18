@@ -8,14 +8,13 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { WalletStyles } from "../../components/styles/wallet";
-import CardFull from "../../components/wallet/card/CardFull";
+import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
   navigateToPaymentScanQrCode,
-  navigateToTransactionDetailsScreen,
-  navigateToWalletTransactionsScreen
+  navigateToTransactionDetailsScreen
 } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
@@ -56,14 +55,10 @@ class TransactionsScreen extends React.Component<Props> {
         allowGoBack={true}
         headerContents={headerContents}
         displayedWallets={
-          <CardFull
+          <CardComponent
+            type="Header"
             wallet={selectedWallet}
-            favoriteWalletId={this.props.favoriteWalletId}
-            navigateToWalletTransactions={(wallet: Wallet) =>
-              this.props.navigation.dispatch(
-                navigateToWalletTransactionsScreen({ selectedWallet: wallet })
-              )
-            }
+            hideFavoriteIcon={true}
           />
         }
         navigateToScanQrCode={() =>
