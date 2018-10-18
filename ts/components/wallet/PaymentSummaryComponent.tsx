@@ -16,7 +16,7 @@ import I18n from "../../i18n";
 
 import variables from "../../theme/variables";
 
-import { buildAmount } from "../../utils/stringBuilder";
+import { formatNumberAmount } from "../../utils/stringBuilder";
 
 type Props =
   | Readonly<{
@@ -133,11 +133,11 @@ class PaymentSummaryComponent extends React.Component<Props> {
           </H3>,
           amountIsUpdated ? (
             <H3 style={[WalletStyles.white, styles.strikeThrough]}>
-              {amount !== undefined ? buildAmount(amount) : "..."}
+              {amount !== undefined ? formatNumberAmount(amount) : "..."}
             </H3>
           ) : (
             <H1 style={WalletStyles.white}>
-              {amount !== undefined ? buildAmount(amount) : "..."}
+              {amount !== undefined ? formatNumberAmount(amount) : "..."}
             </H1>
           )
         )}
@@ -156,7 +156,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
               </View>,
               <H1 style={WalletStyles.white}>
                 {updatedAmount !== undefined
-                  ? buildAmount(updatedAmount)
+                  ? formatNumberAmount(updatedAmount)
                   : "..."}
               </H1>
             )}

@@ -21,7 +21,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
-import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
+import { formatNumberAmount, centsToAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 
@@ -56,7 +56,7 @@ export default class TransactionsList extends React.Component<Props> {
 
   private renderRow = (item: Transaction): React.ReactElement<any> => {
     const paymentReason = item.description;
-    const amount = buildAmount(centsToAmount(item.amount.amount));
+    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
       <ListItem

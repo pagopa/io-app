@@ -11,13 +11,17 @@ import { WalletStyles } from "../../components/styles/wallet";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
+import { none } from "fp-ts/lib/Option";
 import { Button } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import CardComponent from "../../components/wallet/card/CardComponent";
-import ROUTES from "../../navigation/routes";
-import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
+import {
+  navigateToPaymentScanQrCode,
+  navigateToWalletAddPaymentMethod,
+  navigateToWalletTransactionsScreen
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   deleteWalletRequest,
@@ -87,7 +91,7 @@ class WalletsScreen extends React.Component<Props> {
         showPayButton={true}
         allowGoBack={true}
         navigateToScanQrCode={() =>
-          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
         }
       >
         <Content style={[WalletStyles.padded, WalletStyles.header]}>
@@ -104,7 +108,9 @@ class WalletsScreen extends React.Component<Props> {
             block={true}
             style={WalletStyles.addPaymentMethodButton}
             onPress={(): boolean =>
-              this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+              this.props.navigation.dispatch(
+                navigateToWalletAddPaymentMethod({ inPayment: none })
+              )
             }
           >
             <Text style={WalletStyles.addPaymentMethodText}>

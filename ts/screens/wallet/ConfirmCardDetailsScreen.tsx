@@ -2,6 +2,8 @@
  * This screen presents a summary on the credit card after the user
  * inserted the data required to save a new card
  */
+import { Option } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Container,
@@ -17,6 +19,7 @@ import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
@@ -32,7 +35,12 @@ import { CreditCard, Wallet } from "../../types/pagopa";
 import { UNKNOWN_CARD } from "../../types/unknown";
 
 type NavigationParams = Readonly<{
-  paymentCompleted: boolean;
+  inPayment: Option<{
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+    verifica: PaymentRequestsGetResponse;
+    paymentId: string;
+  }>;
 }>;
 
 type ReduxMappedStateProps = Readonly<{
@@ -161,9 +169,18 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduMappedDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: Props
+): ReduMappedDispatchProps => ({
   addCreditCard: (creditCard: CreditCard, setAsFavorite: boolean) =>
-    dispatch(addCreditCardRequest({ creditCard, setAsFavorite }))
+    dispatch(
+      addCreditCardRequest({
+        creditCard,
+        setAsFavorite,
+        inPayment: props.navigation.getParam("inPayment")
+      })
+    )
 });
 
 export default connect(

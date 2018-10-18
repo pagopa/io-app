@@ -78,10 +78,13 @@ export const walletsSelector = createSelector(
     )
 );
 
-export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
-  w.psp === undefined
-    ? undefined
-    : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
+/**
+ * Returns the fee for a wallet that has a preferred psp
+ */
+export const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
+  fromNullable(w.psp).map(
+    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
+  );
 
 // reducer
 const reducer = (

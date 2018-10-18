@@ -1,15 +1,7 @@
-/**
- * This screen asks the authorization to proceed with the transaction.
- * TODO:
- * - integrate contextual help:
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
- *
- */
-import { none, Option } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
-  AmountInEuroCentsFromNumber
+  AmountInEuroCentsFromNumber,
+  RptId
 } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
@@ -28,10 +20,8 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
-import { withErrorModal } from "../../../components/helpers/withErrorModal";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
@@ -49,50 +39,23 @@ import {
   paymentRequestPickPsp,
   paymentRequestTransactionSummaryFromBanner
 } from "../../../store/actions/wallet/payment";
-import { createErrorSelector } from "../../../store/reducers/error";
-import { createLoadingSelector } from "../../../store/reducers/loading";
-import { GlobalState } from "../../../store/reducers/types";
-import {
-  getCurrentAmountFromGlobalStateWithSelectedPaymentMethod,
-  getPaymentIdFromGlobalStateWithSelectedPaymentMethod,
-  getPaymentReason,
-  getPaymentRecipientFromGlobalStateWithVerificaResponse,
-  getPaymentStep,
-  getPspListFromGlobalStateWithSelectedPaymentMethod,
-  getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod,
-  isGlobalStateWithSelectedPaymentMethod
-} from "../../../store/reducers/wallet/payment";
-import { feeExtractor } from "../../../store/reducers/wallet/wallets";
-import { mapErrorCodeToMessage } from "../../../types/errors";
+import { feeForWallet } from "../../../store/reducers/wallet/wallets";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
-import { buildAmount } from "../../../utils/stringBuilder";
+import { AmountToImporto } from "../../../utils/amounts";
+import { formatNumberAmount } from "../../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
-  paymentCompleted: boolean;
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+  verifica: PaymentRequestsGetResponse;
+  paymentId: string;
+  wallet: Wallet;
+  pspList: ReadonlyArray<Psp>;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  isLoading: boolean;
-  error: Option<string>;
-}> &
-  (
-    | Readonly<{
-        valid: false;
-      }>
-    | Readonly<{
-        valid: true;
-        wallet: Wallet;
-        amount: AmountInEuroCents;
-        fee: AmountInEuroCents;
-        paymentId: string;
-        pspList: ReadonlyArray<Psp>;
-        paymentReason?: string;
-        recipient?: EnteBeneficiario;
-      }>);
-
 type ReduxMappedDispatchProps = Readonly<{
-  pickPaymentMethod: (paymentId: string) => void;
+  pickPaymentMethod: () => void;
   pickPsp: (
     wallet: Wallet,
     pspList: ReadonlyArray<Psp>,
@@ -104,8 +67,7 @@ type ReduxMappedDispatchProps = Readonly<{
   requestIdentification: (wallet: Wallet, paymentId: string) => void;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+type Props = ReduxMappedDispatchProps &
   NavigationInjectedProps<NavigationParams>;
 
 const styles = StyleSheet.create({
@@ -119,25 +81,27 @@ const styles = StyleSheet.create({
 });
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
-  private getTotalAmount(amount: number, fee: number) {
-    return amount + fee;
-  }
-
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
-  }
-
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
-    const { wallet, paymentId, pspList } = this.props;
-    const amount = AmountInEuroCentsFromNumber.encode(this.props.amount);
-    const fee = AmountInEuroCentsFromNumber.encode(this.props.fee);
-    const totalAmount = this.getTotalAmount(amount, fee);
+    const verifica = this.props.navigation.getParam("verifica");
+    const paymentId = this.props.navigation.getParam("paymentId");
+    const wallet = this.props.navigation.getParam("wallet");
+    const pspList = this.props.navigation.getParam("pspList");
+
+    const currentAmount = AmountToImporto.encode(
+      verifica.importoSingoloVersamento
+    );
+
+    const walletFee = AmountInEuroCentsFromNumber.encode(
+      feeForWallet(wallet).getOrElse(UNKNOWN_AMOUNT)
+    );
+
+    const totalAmount =
+      AmountInEuroCentsFromNumber.encode(currentAmount) + walletFee;
+
+    const paymentReason = verifica.causaleVersamento;
+
+    const recipient = verifica.enteBeneficiario;
+
     return (
       <Container>
         <AppHeader>
@@ -154,16 +118,16 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
         <Content noPadded={true}>
           <PaymentBannerComponent
-            currentAmount={this.props.amount}
-            paymentReason={this.props.paymentReason}
-            recipient={this.props.recipient}
+            currentAmount={currentAmount}
+            paymentReason={paymentReason}
+            recipient={recipient}
           />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
             <CardComponent
-              wallet={this.props.wallet}
+              wallet={wallet}
               menu={false}
               showFavoriteIcon={false}
               lastUsage={false}
@@ -181,7 +145,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {buildAmount(amount)}
+                    {formatNumberAmount(
+                      AmountInEuroCentsFromNumber.encode(currentAmount)
+                    )}
                   </Text>
                 </Col>
               </Row>
@@ -197,7 +163,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
                 <Col size={1}>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {buildAmount(fee)}
+                    {formatNumberAmount(walletFee)}
                   </Text>
                 </Col>
               </Row>
@@ -210,7 +176,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={WalletStyles.textRight}>
-                    {buildAmount(totalAmount)}
+                    {formatNumberAmount(totalAmount)}
                   </H1>
                 </Col>
               </Row>
@@ -269,7 +235,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.props.pickPaymentMethod(paymentId)}
+              onPress={_ => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
@@ -289,44 +255,31 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  if (
-    getPaymentStep(state) === "PaymentStateConfirmPaymentMethod" &&
-    isGlobalStateWithSelectedPaymentMethod(state)
-  ) {
-    const wallet = getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(
-      state
-    );
-    const feeOrUndefined = feeExtractor(wallet);
-    return {
-      isLoading: createLoadingSelector(["PAYMENT"])(state),
-      error: createErrorSelector(["PAYMENT"])(state),
-      valid: true,
-      wallet,
-      amount: getCurrentAmountFromGlobalStateWithSelectedPaymentMethod(state),
-      fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined,
-      paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state),
-      pspList: getPspListFromGlobalStateWithSelectedPaymentMethod(state),
-      paymentReason: getPaymentReason(state).toUndefined(),
-      recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
-        state
-      ).toUndefined()
-    };
-  } else {
-    return {
-      isLoading: false,
-      error: none,
-      valid: false
-    };
-  }
-};
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: (paymentId: string) =>
-    dispatch(paymentRequestPickPaymentMethod({ paymentId })),
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: Props
+): ReduxMappedDispatchProps => ({
+  pickPaymentMethod: () =>
+    dispatch(
+      paymentRequestPickPaymentMethod({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        paymentId: props.navigation.getParam("paymentId")
+      })
+    ),
   goBack: () => dispatch(paymentRequestGoBack()),
   pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
-    dispatch(paymentRequestPickPsp({ wallet, pspList, paymentId })),
+    dispatch(
+      paymentRequestPickPsp({
+        wallet,
+        pspList,
+        paymentId,
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica")
+      })
+    ),
   showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
   onCancel: () => dispatch(paymentRequestCancel()),
   requestIdentification: (wallet: Wallet, paymentId: string) =>
@@ -344,11 +297,6 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
-)(
-  withErrorModal(
-    withLoadingSpinner(ConfirmPaymentMethodScreen, {}),
-    mapErrorCodeToMessage
-  )
-);
+)(ConfirmPaymentMethodScreen);

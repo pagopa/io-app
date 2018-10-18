@@ -10,6 +10,7 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { none } from "fp-ts/lib/Option";
 import { WalletStyles } from "../../components/styles/wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import CardsFan from "../../components/wallet/card/CardsFan";
@@ -17,8 +18,12 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
-import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateToPaymentScanQrCode,
+  navigateToTransactionDetailsScreen,
+  navigateToWalletAddPaymentMethod,
+  navigateToWalletList
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
@@ -88,7 +93,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
           <Right>
             <Text
               onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+                this.props.navigation.dispatch(
+                  navigateToWalletAddPaymentMethod({ inPayment: none })
+                )
               }
               style={WalletStyles.white}
             >
@@ -120,7 +127,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
               block={true}
               style={WalletStyles.addPaymentMethodButton}
               onPress={(): boolean =>
-                this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD)
+                this.props.navigation.dispatch(
+                  navigateToWalletAddPaymentMethod({ inPayment: none })
+                )
               }
             >
               <Text style={WalletStyles.addPaymentMethodText}>
@@ -174,7 +183,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
                 wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
               }
               navigateToWalletList={() =>
-                this.props.navigation.navigate(ROUTES.WALLET_LIST)
+                this.props.navigation.dispatch(navigateToWalletList())
               }
             />
           )
@@ -182,7 +191,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         showPayButton={true}
         allowGoBack={false}
         navigateToScanQrCode={() =>
-          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
         }
       >
         <TransactionsList

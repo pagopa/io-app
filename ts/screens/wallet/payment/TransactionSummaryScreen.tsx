@@ -18,7 +18,6 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 
 import GoBackButton from "../../../components/GoBackButton";
@@ -41,7 +40,6 @@ import {
   paymentRequestGoBack
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPaymentState } from "../../../store/reducers/wallet/payment";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { mapErrorCodeToMessage } from "../../../types/errors";
@@ -51,27 +49,17 @@ import { AmountToImporto } from "../../../utils/amounts";
 type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
+  maybePaymentId: Option<string>; // FIXME: find a way to pass this when navigating back
 }>;
 
 type ReduxMappedStateProps = Readonly<{
   error: Option<string>;
   isLoading: boolean;
-}> &
-  (
-    | Readonly<{
-        valid: false; // TODO: replace valid: false with an error
-      }>
-    | Readonly<{
-        valid: true;
-        potVerifica: pot.Pot<PaymentRequestsGetResponse>;
-      }>);
+  potVerifica: pot.Pot<PaymentRequestsGetResponse>;
+}>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmSummary: (
-    rptId: RptId,
-    codiceContestoPagamento: CodiceContestoPagamento,
-    currentAmount: AmountInEuroCents
-  ) => void;
+  confirmSummary: (verifica: PaymentRequestsGetResponse) => void;
   goBack: () => void;
   cancelPayment: () => void;
   onCancel: () => void;
@@ -116,22 +104,7 @@ const formatMdInfoRpt = (r: RptId): string =>
 **${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
-  }
-
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
-
     const rptId = this.props.navigation.getParam("rptId");
     const initialAmount = this.props.navigation.getParam("initialAmount");
 
@@ -149,14 +122,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         ? {
             ...basePrimaryButtonProps,
             disabled: false,
-            onPress: () =>
-              this.props.confirmSummary(
-                rptId,
-                potVerifica.value.codiceContestoPagamento,
-                AmountToImporto.encode(
-                  potVerifica.value.importoSingoloVersamento
-                )
-              )
+            onPress: () => this.props.confirmSummary(potVerifica.value)
           }
         : {
             ...basePrimaryButtonProps,
@@ -238,55 +204,25 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
-function mapStateToProps() {
-  return (state: GlobalState): ReduxMappedStateProps => {
-    const maybePaymentState = getPaymentState(state);
-    if (maybePaymentState.isNone()) {
-      // we're not in a payment
-      return {
-        valid: false,
-        error: none,
-        isLoading: false
-      };
-    }
-    const paymentState = maybePaymentState.value;
-    if (paymentState.kind === "PaymentStateSummary") {
-      const potVerificaResponse = paymentState.verificaResponse;
-      return {
-        valid: true,
-        error: pot.isError(potVerificaResponse)
-          ? some(potVerificaResponse.error.message)
-          : none,
-        isLoading: pot.isLoading(potVerificaResponse),
-        potVerifica: paymentState.verificaResponse
-      };
-    } else if (paymentState.kind === "PaymentStateSummaryWithPaymentId") {
-      return {
-        valid: true,
-        error: none,
-        isLoading: false,
-        potVerifica: pot.some(paymentState.verificaResponse)
-      };
-    } else {
-      return {
-        valid: false,
-        error: none,
-        isLoading: false
-      };
-    }
-  };
-}
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmSummary: (
-    rptId: RptId,
-    codiceContestoPagamento: CodiceContestoPagamento,
-    currentAmount: AmountInEuroCents
-  ) =>
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  error: pot.isError(state.wallet.payment.verifica)
+    ? some(state.wallet.payment.verifica.error.message)
+    : none,
+  isLoading: pot.isLoading(state.wallet.payment.verifica),
+  potVerifica: state.wallet.payment.verifica
+});
+
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: Props
+): ReduxMappedDispatchProps => ({
+  confirmSummary: (verifica: PaymentRequestsGetResponse) =>
     dispatch(
       paymentRequestContinueWithPaymentMethods({
-        rptId,
-        codiceContestoPagamento,
-        currentAmount
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        maybePaymentId: props.navigation.getParam("maybePaymentId"),
+        verifica
       })
     ),
   goBack: () => dispatch(paymentRequestGoBack()),
@@ -295,7 +231,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 });
 
 export default connect(
-  mapStateToProps(),
+  mapStateToProps,
   mapDispatchToProps
 )(
   withErrorModal(

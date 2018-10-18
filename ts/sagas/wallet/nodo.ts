@@ -77,13 +77,13 @@ export async function attivaAndGetPaymentId(
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
   rptId: RptId,
   paymentContextCode: CodiceContestoPagamento,
-  amount: AmountInEuroCents
+  currentAmount: AmountInEuroCents
 ): Promise<Either<NodoErrors, string>> {
   const attivaRptResult = await attivaRpt(
     postAttivaRpt,
     rptId,
     paymentContextCode,
-    amount
+    currentAmount
   );
   if (attivaRptResult.isLeft()) {
     return left(attivaRptResult.value);

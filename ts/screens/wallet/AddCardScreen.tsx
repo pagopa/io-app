@@ -3,6 +3,7 @@
  * (holder, pan, cvc, expiration date)
  */
 import { none, Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import {
   Body,
@@ -17,10 +18,10 @@ import {
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -28,11 +29,9 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
+import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { storeCreditCardData } from "../../store/actions/wallet/wallets";
-import { createLoadingSelector } from "../../store/reducers/loading";
-import { GlobalState } from "../../store/reducers/types";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -42,6 +41,15 @@ import {
   CreditCardPan
 } from "../../utils/input";
 
+type NavigationParams = Readonly<{
+  inPayment: Option<{
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+    verifica: PaymentRequestsGetResponse;
+    paymentId: string;
+  }>;
+}>;
+
 type ReduxMappedStateProps = Readonly<{
   isLoading: boolean;
 }>;
@@ -50,11 +58,9 @@ type ReduxMappedDispatchProps = Readonly<{
   storeCreditCardData: (card: CreditCard) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams>;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -141,7 +147,11 @@ class AddCardScreen extends React.Component<Props, State> {
     // store data locally and proceed
     // to the recap screen
     this.props.storeCreditCardData(card);
-    this.props.navigation.navigate(ROUTES.WALLET_CONFIRM_CARD_DETAILS);
+    this.props.navigation.dispatch(
+      navigateToWalletConfirmCardDetails({
+        inPayment: this.props.navigation.getParam("inPayment")
+      })
+    );
   };
 
   public render(): React.ReactNode {
@@ -321,15 +331,11 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
-});
-
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
-)(withLoadingSpinner(AddCardScreen, {}));
+)(AddCardScreen);

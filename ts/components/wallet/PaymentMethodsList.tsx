@@ -10,9 +10,7 @@ import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 import {
   ContextualHelpInjectedProps,
@@ -23,16 +21,13 @@ import IconFont from "../ui/IconFont";
 import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
+  navigateToAddCreditCard: () => void;
 }>;
 
 type Props = OwnProps & ContextualHelpInjectedProps;
 
-type Route = keyof typeof ROUTES;
-
 type IPaymentMethod = Readonly<{
-  navigateTo?: Route;
-  onPress?: () => void;
+  onPress: () => void;
   name: string;
   maxFee: string;
   icon: any;
@@ -43,29 +38,6 @@ const unavailableAlert = () =>
     I18n.t("wallet.pickPaymentMethod.unavailable.title"),
     I18n.t("wallet.pickPaymentMethod.unavailable.message")
   );
-
-const paymentMethods: ReadonlyArray<IPaymentMethod> = [
-  {
-    navigateTo: ROUTES.WALLET_ADD_CARD as Route,
-    name: I18n.t("wallet.methods.card.name"),
-    maxFee: I18n.t("wallet.methods.card.maxFee"),
-    icon: "io-48-card"
-  },
-  {
-    navigateTo: undefined, // TODO: add route when destination is available @https://www.pivotaltracker.com/story/show/157588719
-    name: I18n.t("wallet.methods.bank.name"),
-    maxFee: I18n.t("wallet.methods.bank.maxFee"),
-    icon: "io-48-bank",
-    onPress: unavailableAlert
-  },
-  {
-    navigateTo: undefined,
-    name: I18n.t("wallet.methods.mobile.name"),
-    maxFee: I18n.t("wallet.methods.mobile.maxFee"),
-    icon: "io-48-phone",
-    onPress: unavailableAlert
-  }
-];
 
 const AddMethodStyle = StyleSheet.create({
   paymentMethodEntry: {
@@ -88,8 +60,26 @@ const AddMethodStyle = StyleSheet.create({
 
 class PaymentMethodsList extends React.Component<Props, never> {
   public render(): React.ReactNode {
-    const { navigate } = this.props.navigation;
-
+    const paymentMethods: ReadonlyArray<IPaymentMethod> = [
+      {
+        onPress: this.props.navigateToAddCreditCard,
+        name: I18n.t("wallet.methods.card.name"),
+        maxFee: I18n.t("wallet.methods.card.maxFee"),
+        icon: "io-48-card"
+      },
+      {
+        name: I18n.t("wallet.methods.bank.name"),
+        maxFee: I18n.t("wallet.methods.bank.maxFee"),
+        icon: "io-48-bank",
+        onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+      },
+      {
+        name: I18n.t("wallet.methods.mobile.name"),
+        maxFee: I18n.t("wallet.methods.mobile.maxFee"),
+        icon: "io-48-phone",
+        onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+      }
+    ];
     return (
       <View>
         <Text>{I18n.t("wallet.chooseMethod")}</Text>
@@ -101,13 +91,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
           renderItem={itemInfo => (
             <ListItem
               style={[AddMethodStyle.paymentMethodEntry, WalletStyles.listItem]}
-              onPress={() =>
-                itemInfo.item.navigateTo
-                  ? navigate(itemInfo.item.navigateTo)
-                  : itemInfo.item.onPress
-                    ? itemInfo.item.onPress()
-                    : undefined
-              }
+              onPress={itemInfo.item.onPress}
             >
               <Left>
                 <Grid>

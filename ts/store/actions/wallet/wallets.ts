@@ -4,6 +4,9 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
+import { Option } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 
 export type WalletsActions =
@@ -15,8 +18,6 @@ export type WalletsActions =
   | ActionType<typeof addCreditCardRequest>
   | ActionType<typeof addCreditCardCompleted>
   | ActionType<typeof deleteWalletRequest>
-  | ActionType<typeof walletManagementSetLoadingState>
-  | ActionType<typeof walletManagementResetLoadingState>
   | ActionType<typeof fetchWalletsFailure>;
 
 export const fetchWalletsRequest = createStandardAction(
@@ -49,6 +50,12 @@ export const creditCardDataCleanup = createStandardAction(
 type AddCreditCardRequestPayload = Readonly<{
   creditCard: CreditCard;
   setAsFavorite: boolean;
+  inPayment: Option<{
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+    verifica: PaymentRequestsGetResponse;
+    paymentId: string;
+  }>;
 }>;
 
 export const addCreditCardRequest = createStandardAction(
@@ -63,11 +70,3 @@ export const deleteWalletRequest = createAction(
   "DELETE_WALLET_REQUEST",
   resolve => (walletId: number) => resolve(walletId)
 );
-
-export const walletManagementSetLoadingState = createStandardAction(
-  "WALLET_MANAGEMENT_SET_LOADING_STATE"
-)();
-
-export const walletManagementResetLoadingState = createStandardAction(
-  "WALLET_MANAGEMENT_RESET_LOADING_STATE"
-)();

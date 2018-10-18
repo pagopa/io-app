@@ -33,8 +33,6 @@ import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
 
-import ROUTES from "../../../navigation/routes";
-
 import {
   paymentRequestTransactionSummaryFromRptId,
   startPaymentSaga
@@ -47,6 +45,7 @@ import { ComponentProps } from "../../../types/react";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 
 import { CameraMarker } from "./CameraMarker";
+import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
@@ -167,7 +166,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       block: true,
       primary: true,
       onPress: () => {
-        this.props.navigation.navigate(ROUTES.PAYMENT_MANUAL_DATA_INSERTION);
+        this.props.navigation.dispatch(navigateToPaymentManualDataInsertion());
       },
       title: I18n.t("wallet.QRtoPay.setManually")
     };

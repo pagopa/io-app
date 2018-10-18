@@ -5,7 +5,11 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  RptId,
+  RptIdFromString
+} from "italia-ts-commons/lib/pagopa";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Toast } from "native-base";
 import { NavigationActions, StackActions } from "react-navigation";
@@ -20,6 +24,7 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
+import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
@@ -30,15 +35,22 @@ import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix } from "../config";
 import I18n from "../i18n";
-import ROUTES from "../navigation/routes";
 
 import {
+  navigateToPaymentConfirmPaymentMethodScreen,
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
+  navigateToPaymentTransactionSummaryScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletCheckout3dsScreen,
-  navigateToWalletTransactionSummaryScreen
+  navigateToWalletHome,
+  navigateToWalletList
 } from "../store/actions/navigation";
 import {
   goBackOnePaymentState,
+  paymentPspListFailure,
+  paymentPspListRequest,
+  paymentPspListSuccess,
   paymentRequestCancel,
   paymentRequestConfirmPaymentMethod,
   paymentRequestContinueWithPaymentMethods,
@@ -47,19 +59,12 @@ import {
   paymentRequestPickPsp,
   paymentRequestTransactionSummaryFromBanner,
   paymentRequestTransactionSummaryFromRptId,
-  paymentResetLoadingState,
-  paymentSetLoadingState,
   paymentUpdatePsp,
-  resetPaymentState,
-  setPaymentStateToConfirmPaymentMethod,
-  setPaymentStateToPickPaymentMethod,
-  setPaymentStateToPickPsp,
-  setPaymentStateToSummary,
-  setPaymentStateToSummaryWithPaymentId,
-  startPaymentSaga,
+  paymentVerificaFailure,
   paymentVerificaRequest,
   paymentVerificaSuccess,
-  paymentVerificaFailure
+  resetPaymentState,
+  startPaymentSaga
 } from "../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -73,13 +78,10 @@ import {
   deleteWalletRequest,
   fetchWalletsFailure,
   fetchWalletsRequest,
-  fetchWalletsSuccess,
-  walletManagementResetLoadingState,
-  walletManagementSetLoadingState
+  fetchWalletsSuccess
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
 import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
-import { getPaymentIdFromGlobalState } from "../store/reducers/wallet/payment";
 import { getFavoriteWallet } from "../store/reducers/wallet/wallets";
 import {
   paymentCancel,
@@ -105,21 +107,11 @@ import {
   fetchWithTokenRefresh
 } from "./wallet/utils";
 
+import { AmountToImporto } from "../utils/amounts";
 import { showToast } from "../utils/showToast";
 
 import { TranslationKeys } from "../../locales/locales";
 import { attivaAndGetPaymentId } from "./wallet/nodo";
-
-/**
- * Helper function for navigating to screens that don't accept navigation
- * parameters.
- *
- * For screens that need navigation parameters, use type safe nav action
- * creators.
- */
-const navigateTo = (routeName: string) => {
-  return NavigationActions.navigate({ routeName });
-};
 
 function* fetchTransactions(pagoPaClient: PagoPaClient): Iterator<Effect> {
   const response:
@@ -155,22 +147,22 @@ function* fetchWallets(
 
 function* onAddCreditCardDone(
   isSuccess: boolean,
-  message?: TranslationKeys
+  message: Option<TranslationKeys>,
+  inPayment: Option<{
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+    verifica: PaymentRequestsGetResponse;
+    paymentId: string;
+  }>
 ): IterableIterator<Effect> {
   // if result is success, show a success message, or else, show the failure
   // message if provided or fall back to default failure message
   const toastText = isSuccess
     ? "wallet.newPaymentMethod.successful"
-    : message || "wallet.newPaymentMethod.failed";
+    : message.getOrElse("wallet.newPaymentMethod.failed");
   const toastType = isSuccess ? "success" : "danger";
 
   showToast(I18n.t(toastText), toastType);
-
-  // if we are in a payment, we go back to the pick payment method screen
-  // or else we navigate to the wallet home
-  const maybePaymentId: ReturnType<
-    typeof getPaymentIdFromGlobalState
-  > = yield select<GlobalState>(getPaymentIdFromGlobalState);
 
   // TODO: this should use StackActions.reset
   // to reset the navigation. Right now, the
@@ -178,9 +170,14 @@ function* onAddCreditCardDone(
   // get back to previous screens, but the navigation
   // stack should be cleaned right here
   // @https://www.pivotaltracker.com/story/show/159300579
-  const nextStepAction = maybePaymentId.isSome()
-    ? paymentRequestPickPaymentMethod({ paymentId: maybePaymentId.value })
-    : navigateTo(ROUTES.WALLET_HOME);
+  const nextStepAction = inPayment.isSome()
+    ? paymentRequestPickPaymentMethod({
+        rptId: inPayment.value.rptId,
+        initialAmount: inPayment.value.initialAmount,
+        verifica: inPayment.value.verifica,
+        paymentId: inPayment.value.paymentId
+      })
+    : navigateToWalletHome();
 
   // navigate to the next action
   yield put(nextStepAction);
@@ -233,7 +230,7 @@ function* addCreditCard(
       typeof responseBoardCC === "undefined" ||
       responseBoardCC.status !== 200
     ) {
-      yield call(onAddCreditCardDone, false);
+      yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
       return;
     }
 
@@ -266,7 +263,7 @@ function* addCreditCard(
       // FIXME: we should not navigate to the wallet home in case we're inside
       //        a payment, instead we should go pack to the payment method
       //        selection screen.
-      yield call(onAddCreditCardDone, false);
+      yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
       return;
     }
     const url = responseBoardPay.value.data.urlCheckout3ds;
@@ -319,13 +316,13 @@ function* addCreditCard(
      * top of the screen)
      */
     if (maybeAddedWallet !== undefined) {
-      yield call(onAddCreditCardDone, true);
+      yield call(onAddCreditCardDone, true, none, action.payload.inPayment);
     } else {
-      yield call(onAddCreditCardDone, false);
+      yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
     }
   } catch {
     yield put(walletManagementResetLoadingState());
-    yield call(onAddCreditCardDone, false);
+    yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
   }
 }
 
@@ -353,9 +350,9 @@ function* deleteWallet(
         pagoPaClient
       ); // refresh cards list
       if (wallets.isSome() && wallets.value.length > 0) {
-        yield put(navigateTo(ROUTES.WALLET_LIST));
+        yield put(navigateToWalletList());
       } else {
-        yield put(navigateTo(ROUTES.WALLET_HOME));
+        yield put(navigateToWalletHome());
       }
     } else {
       // a problem occurred
@@ -442,7 +439,13 @@ function* watchPaymentSaga(
         break;
       }
       case getType(paymentRequestPickPaymentMethod): {
-        yield fork(pickPaymentMethodHandler, action.payload.paymentId);
+        yield fork(
+          pickPaymentMethodHandler,
+          action.payload.rptId,
+          action.payload.initialAmount,
+          action.payload.verifica,
+          action.payload.paymentId
+        );
         break;
       }
       case getType(paymentRequestConfirmPaymentMethod): {
@@ -475,7 +478,8 @@ function* watchPaymentSaga(
 
 function* cancelPaymentHandler(_: ActionType<typeof paymentRequestCancel>) {
   yield put(paymentCancel()); // empty the stack
-  yield put(navigateTo(ROUTES.WALLET_HOME));
+  // FIXME: if coming from a message, should navigate back to the message
+  yield put(navigateToWalletHome());
 }
 
 function* goBackHandler(_: ActionType<typeof paymentRequestGoBack>) {
@@ -494,9 +498,15 @@ function* showTransactionSummaryFromRptIdHandler(
   // pagoPA proxy
 
   // First, navigate to the summary screen
-  yield put(navigateToWalletTransactionSummaryScreen(action.payload));
+  yield put(
+    navigateToPaymentTransactionSummaryScreen({
+      rptId: action.payload.rptId,
+      initialAmount: action.payload.initialAmount,
+      maybePaymentId: none
+    })
+  );
 
-  const { rptId, initialAmount } = action.payload;
+  const { rptId } = action.payload;
 
   yield put(paymentVerificaRequest());
 
@@ -512,37 +522,16 @@ function* showTransactionSummaryFromRptIdHandler(
       yield put(paymentVerificaSuccess(response.value));
     } else {
       // Verifica failed
-      yield put(paymentVerificaFailure(extractNodoError(response)));
+      yield put(paymentVerificaFailure(Error(extractNodoError(response))));
     }
   } catch {
     // Probably a timeout
-    yield put(paymentFailure("GENERIC_ERROR"));
-  } finally {
-    yield put(paymentResetLoadingState());
+    yield put(paymentVerificaFailure(Error("GENERIC_ERROR")));
   }
 }
 
 function* showTransactionSummaryFromBannerHandler() {
-  yield put(setPaymentStateToSummaryWithPaymentId());
-  yield put(navigateToWalletTransactionSummaryScreen());
-}
-
-function* showConfirmPaymentMethod(
-  paymentId: string,
-  wallet: Wallet,
-  pspList: ReadonlyArray<Psp>
-) {
-  yield put(setPaymentStateToConfirmPaymentMethod(wallet, pspList, paymentId));
-  yield put(navigateTo(ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD));
-}
-
-function* showPickPsp(
-  paymentId: string,
-  wallet: Wallet,
-  pspList: ReadonlyArray<Psp>
-) {
-  yield put(setPaymentStateToPickPsp(wallet, pspList, paymentId));
-  yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
+  yield put(navigateToPaymentTransactionSummaryScreen());
 }
 
 /**
@@ -576,7 +565,7 @@ function* fetchPspList(
   paymentId: string
 ): Iterator<Effect | Option<ReadonlyArray<Psp>>> {
   try {
-    yield put(paymentSetLoadingState());
+    yield put(paymentPspListRequest());
     const apiGetPspList = (pagoPaToken: PagopaToken) =>
       pagoPaClient.getPspList(pagoPaToken, paymentId);
     const response: SagaCallReturnType<typeof apiGetPspList> = yield call(
@@ -585,6 +574,7 @@ function* fetchPspList(
       pagoPaClient
     );
     if (response !== undefined && response.status === 200) {
+      yield put(paymentPspListSuccess(response.value));
       return some(response.value.data);
     }
   } catch {
@@ -592,21 +582,19 @@ function* fetchPspList(
      * TODO handle error
      */
     // FIXME: again the flow continues ignoring any error
+    yield put(paymentPspListFailure(Error("GENERIC_ERROR")));
     return none;
-  } finally {
-    yield put(paymentResetLoadingState());
   }
 }
 
-function* showWalletOrSelectPsp(
-  pagoPaClient: PagoPaClient,
-  wallet: Wallet,
-  paymentId: string
+function* confirmPaymentMethodHandler(
+  action: ActionType<typeof paymentRequestConfirmPaymentMethod>,
+  pagoPaClient: PagoPaClient
 ): Iterator<Effect> {
   const maybePspList: Option<ReadonlyArray<Psp>> = yield call(
     fetchPspList,
     pagoPaClient,
-    paymentId
+    action.payload.paymentId
   );
   if (maybePspList.isNone()) {
     yield put(paymentFailure("GENERIC_ERROR"));
@@ -619,14 +607,32 @@ function* showWalletOrSelectPsp(
   // show card
   // if multiple psps are available and one
   // has not yet been selected, show psp list
-  if (shouldShowPspList(wallet, pspList)) {
+  if (shouldShowPspList(action.payload.wallet, pspList)) {
     // multiple choices here and no favorite psp exists (or one exists
     // and it is not available for this payment)
     // show list of psps
-    yield call(showPickPsp, paymentId, wallet, pspList);
+    yield put(
+      navigateToPaymentPickPspScreen({
+        rptId: action.payload.rptId,
+        initialAmount: action.payload.initialAmount,
+        verifica: action.payload.verifica,
+        wallet: action.payload.wallet,
+        pspList,
+        paymentId: action.payload.paymentId
+      })
+    );
   } else {
     // only 1 choice of psp, or psp already selected (in previous transaction)
-    yield call(showConfirmPaymentMethod, paymentId, wallet, pspList);
+    yield put(
+      navigateToPaymentConfirmPaymentMethodScreen({
+        rptId: action.payload.rptId,
+        initialAmount: action.payload.initialAmount,
+        verifica: action.payload.verifica,
+        paymentId: action.payload.paymentId,
+        wallet: action.payload.wallet,
+        pspList
+      })
+    );
   }
 }
 
@@ -676,6 +682,9 @@ function* checkPayment(
 
 function* callCheckAndSelectPaymentMethod(
   pagoPaClient: PagoPaClient,
+  rptId: RptId,
+  initialAmount: AmountInEuroCents,
+  verifica: PaymentRequestsGetResponse,
   paymentId: string
 ) {
   yield call(checkPayment, pagoPaClient, paymentId);
@@ -695,15 +704,26 @@ function* callCheckAndSelectPaymentMethod(
   // redirect as needed
   if (maybeFavoriteWallet.isSome()) {
     yield call(
-      showWalletOrSelectPsp,
-      pagoPaClient,
-      maybeFavoriteWallet.value,
-      paymentId
+      confirmPaymentMethodHandler,
+      paymentRequestConfirmPaymentMethod({
+        rptId,
+        initialAmount,
+        verifica,
+        wallet: maybeFavoriteWallet.value,
+        paymentId
+      }),
+      pagoPaClient
     );
   } else {
     // no favorite wallet selected
     // show list
-    yield call(pickPaymentMethodHandler, paymentId);
+    yield call(
+      pickPaymentMethodHandler,
+      rptId,
+      initialAmount,
+      verifica,
+      paymentId
+    );
   }
 }
 
@@ -713,25 +733,25 @@ function* continueWithPaymentMethodsHandler(
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>
 ) {
-  // do we have a payment ID already? (e.g. in case the user navigated back)
-  const maybePaymentId: Option<string> = yield select<GlobalState>(
-    getPaymentIdFromGlobalState
-  );
-
   /**
    * get data required to fetch a payment id
    */
 
-  const rptId = action.payload.rptId;
-  const paymentContextCode = action.payload.codiceContestoPagamento;
-  const currentAmount = action.payload.currentAmount;
+  const { rptId, initialAmount, verifica, maybePaymentId } = action.payload;
+  const paymentContextCode = verifica.codiceContestoPagamento;
+  const currentAmount = AmountToImporto.encode(
+    verifica.importoSingoloVersamento
+  );
 
   if (maybePaymentId.isSome()) {
     // if we have a previous payment ID stored in the state from a previous
-    // "attiva", continue to the next step
+    // "attiva", continue to select a payment method
     yield call(
-      callCheckAndSelectPaymentMethod,
+      callCheckAndSelectPaymentMethod, // FIXME: we must not do check here, it's not idempotent
       pagoPaClient,
+      rptId,
+      initialAmount,
+      verifica,
       maybePaymentId.value
     );
   } else {
@@ -749,7 +769,14 @@ function* continueWithPaymentMethodsHandler(
         currentAmount
       );
       if (result.isRight()) {
-        yield call(callCheckAndSelectPaymentMethod, pagoPaClient, result.value);
+        yield call(
+          callCheckAndSelectPaymentMethod,
+          pagoPaClient,
+          rptId,
+          initialAmount,
+          verifica,
+          result.value
+        );
       } else {
         yield put(paymentFailure(result.value));
         return;
@@ -763,33 +790,36 @@ function* continueWithPaymentMethodsHandler(
   }
 }
 
-function* confirmPaymentMethodHandler(
-  action: ActionType<typeof paymentRequestConfirmPaymentMethod>,
-  pagoPaClient: PagoPaClient
+function* pickPaymentMethodHandler(
+  rptId: RptId,
+  initialAmount: AmountInEuroCents,
+  verifica: PaymentRequestsGetResponse,
+  paymentId: string
 ) {
-  const wallet = action.payload.wallet;
-  // this will either show the recap screen (if the selected
-  // wallet already has a PSP), or it will show the
-  // "pick psp" screen
-  yield call(
-    showWalletOrSelectPsp,
-    pagoPaClient,
-    wallet,
-    action.payload.paymentId
-  );
-}
-
-function* pickPaymentMethodHandler(paymentId: string) {
   // show screen with list of payment methods available
-  yield put(setPaymentStateToPickPaymentMethod(paymentId));
-  yield put(navigateTo(ROUTES.PAYMENT_PICK_PAYMENT_METHOD));
+  yield put(
+    navigateToPaymentPickPaymentMethodScreen({
+      rptId,
+      initialAmount,
+      verifica,
+      paymentId
+    })
+  );
 }
 
 function* pickPspHandler(action: ActionType<typeof paymentRequestPickPsp>) {
   const { wallet, pspList, paymentId } = action.payload;
 
-  yield put(setPaymentStateToPickPsp(wallet, pspList, paymentId));
-  yield put(navigateTo(ROUTES.PAYMENT_PICK_PSP));
+  yield put(
+    navigateToPaymentPickPspScreen({
+      wallet,
+      pspList,
+      paymentId,
+      rptId: action.payload.rptId,
+      initialAmount: action.payload.initialAmount,
+      verifica: action.payload.verifica
+    })
+  );
 }
 
 function* updatePspHandler(
@@ -828,6 +858,9 @@ function* updatePspHandler(
         if (updatedWallet) {
           yield put(
             paymentRequestConfirmPaymentMethod({
+              rptId: action.payload.rptId,
+              initialAmount: action.payload.initialAmount,
+              verifica: action.payload.verifica,
               wallet: updatedWallet,
               paymentId
             })

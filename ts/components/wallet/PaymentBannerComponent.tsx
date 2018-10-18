@@ -12,7 +12,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
 import { UNKNOWN_PAYMENT_REASON, UNKNOWN_RECIPIENT } from "../../types/unknown";
-import { buildAmount } from "../../utils/stringBuilder";
+import { formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
@@ -22,7 +22,7 @@ type Props = Readonly<{
 }>;
 
 const PaymentBannerComponent: React.SFC<Props> = props => {
-  const currentAmount = buildAmount(
+  const currentAmount = formatNumberAmount(
     AmountInEuroCentsFromNumber.encode(props.currentAmount)
   );
   const paymentReason = props.paymentReason || UNKNOWN_PAYMENT_REASON;
