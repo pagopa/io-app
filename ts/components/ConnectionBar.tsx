@@ -1,6 +1,6 @@
 import color from "color";
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { connect } from "react-redux";
 
 import I18n from "../i18n";
@@ -16,6 +16,9 @@ type Props = ReduxMappedProps & ReduxProps;
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 1
+  },
+  inner: {
     backgroundColor: color(customVariables.brandDarkGray)
       .darken(0.1)
       .fade(0.2)
@@ -23,9 +26,8 @@ const styles = StyleSheet.create({
     height: 30,
     position: "absolute",
     justifyContent: "center",
-    top: 0,
-    width: "100%",
-    zIndex: 1
+    top: Platform.OS === "ios" ? 12 : 0,
+    width: "100%"
   },
   text: {
     textAlign: "center",
@@ -43,8 +45,8 @@ const ConnectionBar: React.SFC<Props> = props => {
   }
 
   return (
-    <View>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.inner}>
         <Text style={styles.text}>{I18n.t("connection.status.offline")}</Text>
       </View>
     </View>
