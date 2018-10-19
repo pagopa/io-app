@@ -40,12 +40,12 @@ import customVariables from "../../theme/variables";
 
 import { logosForService } from "../../utils/services";
 
-export interface IMessageDetailsScreenParam {
+export interface IServiceDetailsScreenParam {
   readonly service: ServicePublic;
 }
 
 interface INavigationStateWithParams extends NavigationState {
-  readonly params: IMessageDetailsScreenParam;
+  readonly params: IServiceDetailsScreenParam;
 }
 
 type ReduxMappedProps = Readonly<{

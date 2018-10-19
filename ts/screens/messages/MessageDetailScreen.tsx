@@ -10,6 +10,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
+import { contentServiceLoad } from "../../store/actions/content";
 import { loadMessageWithRelationsAction } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 import { messageByIdSelector } from "../../store/reducers/entities/messages/messagesById";
@@ -115,6 +116,10 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private goBack = () => this.props.navigation.goBack();
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
+    // When a service gets selected, before navigating to the service detail
+    // screen, we issue a contentServiceLoad to refresh the service metadata
+    this.props.dispatch(contentServiceLoad(service.service_id));
+
     this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, {
       service
     });

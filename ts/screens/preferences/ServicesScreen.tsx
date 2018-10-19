@@ -24,7 +24,7 @@ import { ServicesState } from "../../store/reducers/entities/services";
 import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
-import { IMessageDetailsScreenParam } from "./ServiceDetailsScreen";
+import { IServiceDetailsScreenParam } from "./ServiceDetailsScreen";
 
 import { getEnabledChannelsForService } from "./common";
 
@@ -88,7 +88,7 @@ class ServicesScreen extends React.PureComponent<Props> {
       // screen, we issue a contentServiceLoad to refresh the service metadata
       this.props.dispatch(contentServiceLoad(service.service_id));
 
-      const params: IMessageDetailsScreenParam = {
+      const params: IServiceDetailsScreenParam = {
         service
       };
       this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, params);
