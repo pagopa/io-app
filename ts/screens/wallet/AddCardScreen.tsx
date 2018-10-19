@@ -19,7 +19,6 @@ import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
@@ -30,8 +29,6 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
-import { Dispatch } from "../../store/actions/types";
-import { storeCreditCardData } from "../../store/actions/wallet/wallets";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -55,7 +52,7 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  storeCreditCardData: (card: CreditCard) => void;
+  prepareCreditCardForBoarding: (card: CreditCard) => void;
 }>;
 
 type Props = ReduxMappedStateProps &
@@ -132,7 +129,7 @@ function getCardFromState(state: State): Option<CreditCard> {
   return some(card);
 }
 
-class AddCardScreen extends React.Component<Props, State> {
+export default class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -143,12 +140,10 @@ class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
-  private submit = (card: CreditCard) => {
-    // store data locally and proceed
-    // to the recap screen
-    this.props.storeCreditCardData(card);
+  private submit = (creditCard: CreditCard) => {
     this.props.navigation.dispatch(
       navigateToWalletConfirmCardDetails({
+        creditCard,
         inPayment: this.props.navigation.getParam("inPayment")
       })
     );
@@ -330,12 +325,3 @@ class AddCardScreen extends React.Component<Props, State> {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
-});
-
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(AddCardScreen);

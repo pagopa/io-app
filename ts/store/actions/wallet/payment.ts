@@ -1,26 +1,12 @@
+import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
+import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 
-import { Option } from "fp-ts/lib/Option";
 import { PagoPaErrors } from "../../../types/errors";
 import { Psp, PspListResponse, Wallet } from "../../../types/pagopa";
-
-export const resetPaymentState = createStandardAction("PAYMENT_COMPLETED")();
-
-export const startPaymentSaga = createStandardAction("PAYMENT_REQUEST")();
-
-type PaymentRequestTransactionSummaryFromRptIdPayload = Readonly<{
-  rptId: RptId;
-  initialAmount: AmountInEuroCents;
-}>;
-
-// for the first time the screen is being shown (i.e. after the
-// rptId has been passed (from qr code/manual entry/message)
-export const paymentRequestTransactionSummaryFromRptId = createStandardAction(
-  "PAYMENT_REQUEST_TRANSACTION_SUMMARY_FROM_RPTID"
-)<PaymentRequestTransactionSummaryFromRptIdPayload>();
 
 export const paymentRequestTransactionSummaryFromBanner = createStandardAction(
   "PAYMENT_REQUEST_TRANSACTION_SUMMARY_FROM_BANNER"
@@ -82,9 +68,9 @@ type PaymentUpdatePspPayload = Readonly<{
   paymentId: string;
 }>;
 
-export const paymentUpdatePsp = createStandardAction("PAYMENT_UPDATE_PSP")<
-  PaymentUpdatePspPayload
->();
+export const paymentUpdateWalletPsp = createStandardAction(
+  "PAYMENT_UPDATE_WALLET_PSP"
+)<PaymentUpdatePspPayload>();
 
 type PaymentRequestCompletionPayload = Readonly<{
   wallet: Wallet;
@@ -111,9 +97,13 @@ export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
   PagoPaErrors
 >();
 
+//
+// verifica
+//
+
 export const paymentVerificaRequest = createStandardAction(
   "PAYMENT_VERIFICA_REQUEST"
-)();
+)<RptId>();
 
 export const paymentVerificaSuccess = createStandardAction(
   "PAYMENT_VERIFICA_SUCCESS"
@@ -123,32 +113,100 @@ export const paymentVerificaFailure = createStandardAction(
   "PAYMENT_VERIFICA_FAILURE"
 )<Error>();
 
-export const paymentPspListRequest = createStandardAction(
-  "PAYMENT_PSPLIST_REQUEST"
-)();
+//
+// attiva
+//
 
-export const paymentPspListSuccess = createStandardAction(
-  "PAYMENT_PSPLIST_SUCCESS"
+type paymentAttivaRequestPayload = Readonly<{
+  rptId: RptId;
+  verifica: PaymentRequestsGetResponse;
+}>;
+
+export const paymentAttivaRequest = createStandardAction(
+  "PAYMENT_ATTIVA_REQUEST"
+)<paymentAttivaRequestPayload>();
+
+export const paymentAttivaSuccess = createStandardAction(
+  "PAYMENT_ATTIVA_SUCCESS"
+)<PaymentActivationsPostResponse>();
+
+export const paymentAttivaFailure = createStandardAction(
+  "PAYMENT_ATTIVA_FAILURE"
+)<Error>();
+
+//
+// paymentId polling
+//
+
+export const paymentIdPollingRequest = createStandardAction(
+  "PAYMENT_ID_POLLING_REQUEST"
+)<PaymentRequestsGetResponse>();
+
+export const paymentIdPollingSuccess = createStandardAction(
+  "PAYMENT_ID_POLLING_SUCCESS"
+)<string>();
+
+export const paymentIdPollingFailure = createStandardAction(
+  "PAYMENT_ID_POLLING_FAILURE"
+)<Error>();
+
+//
+// check payment
+//
+
+export const paymentCheckRequest = createStandardAction(
+  "PAYMENT_CHECK_REQUEST"
+)<string>();
+
+export const paymentCheckSuccess = createStandardAction(
+  "PAYMENT_CHECK_SUCCESS"
+)<true>();
+
+export const paymentCheckFailure = createStandardAction(
+  "PAYMENT_CHECK_FAILURE"
+)<Error>();
+
+//
+// fetch psp list
+//
+
+export const paymentFetchPspsForPaymentIdRequest = createStandardAction(
+  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_REQUEST"
+)<string>();
+
+export const paymentFetchPspsForPaymentIdSuccess = createStandardAction(
+  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_SUCCESS"
 )<PspListResponse>();
 
-export const paymentPspListFailure = createStandardAction(
-  "PAYMENT_PSPLIST_FAILURE"
+export const paymentFetchPspsForPaymentIdFailure = createStandardAction(
+  "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_FAILURE"
 )<Error>();
+
+//
+// run startOrResumePaymentSaga
+//
+
+type RunStartOrResumePaymentSagaPayload = Readonly<{
+  rptId: RptId;
+  verifica: PaymentRequestsGetResponse;
+  onSuccess: (paymentId: string) => void;
+}>;
+
+export const runStartOrResumePaymentSaga = createStandardAction(
+  "PAYMENT_RUN_START_OR_RESUME_PAYMENT_SAGA"
+)<RunStartOrResumePaymentSagaPayload>();
 
 /**
  * All possible payment actions
  */
 export type PaymentActions =
-  | ActionType<typeof startPaymentSaga>
   | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
-  | ActionType<typeof paymentRequestTransactionSummaryFromRptId>
   | ActionType<typeof paymentRequestContinueWithPaymentMethods>
   | ActionType<typeof paymentRequestPickPaymentMethod>
   | ActionType<typeof paymentRequestConfirmPaymentMethod>
   | ActionType<typeof paymentRequestPickPsp>
-  | ActionType<typeof paymentUpdatePsp>
+  | ActionType<typeof paymentUpdateWalletPsp>
   | ActionType<typeof paymentRequestCompletion>
-  | ActionType<typeof resetPaymentState>
   | ActionType<typeof goBackOnePaymentState>
   | ActionType<typeof paymentRequestGoBack>
   | ActionType<typeof paymentCancel>
@@ -157,6 +215,16 @@ export type PaymentActions =
   | ActionType<typeof paymentVerificaRequest>
   | ActionType<typeof paymentVerificaSuccess>
   | ActionType<typeof paymentVerificaFailure>
-  | ActionType<typeof paymentPspListRequest>
-  | ActionType<typeof paymentPspListSuccess>
-  | ActionType<typeof paymentPspListFailure>;
+  | ActionType<typeof paymentAttivaRequest>
+  | ActionType<typeof paymentAttivaSuccess>
+  | ActionType<typeof paymentAttivaFailure>
+  | ActionType<typeof paymentIdPollingRequest>
+  | ActionType<typeof paymentIdPollingSuccess>
+  | ActionType<typeof paymentIdPollingFailure>
+  | ActionType<typeof paymentCheckRequest>
+  | ActionType<typeof paymentCheckSuccess>
+  | ActionType<typeof paymentCheckFailure>
+  | ActionType<typeof paymentFetchPspsForPaymentIdRequest>
+  | ActionType<typeof paymentFetchPspsForPaymentIdSuccess>
+  | ActionType<typeof paymentFetchPspsForPaymentIdFailure>
+  | ActionType<typeof runStartOrResumePaymentSaga>;

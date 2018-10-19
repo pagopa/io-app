@@ -25,7 +25,7 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCancel,
   paymentRequestGoBack,
-  paymentUpdatePsp
+  paymentUpdateWalletPsp
 } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -44,7 +44,7 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  pickPsp: (pspId: number, wallet: Wallet, paymentId: string) => void;
+  pickPsp: (pspId: number) => void;
   goBack: () => void;
   onCancel: () => void;
 }>;
@@ -77,10 +77,11 @@ const style = StyleSheet.create({
   }
 });
 
+/**
+ * Select a PSP to be used for a the current selected wallet
+ */
 class PickPspScreen extends React.Component<Props> {
   public render(): React.ReactNode {
-    const wallet = this.props.navigation.getParam("wallet");
-    const paymentId = this.props.navigation.getParam("paymentId");
     const allPspList = this.props.navigation.getParam("pspList");
 
     // The PaymentManager returns a PSP entry for each supported language, so
@@ -124,9 +125,7 @@ class PickPspScreen extends React.Component<Props> {
             data={pspList}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.pickPsp(item.id, wallet, paymentId)}
-              >
+              <TouchableOpacity onPress={() => this.props.pickPsp(item.id)}>
                 <View style={style.listItem}>
                   <Grid>
                     <Col size={6}>
@@ -168,15 +167,15 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: Props
 ): ReduxMappedDispatchProps => ({
-  pickPsp: (pspId: number, wallet: Wallet, paymentId: string) =>
+  pickPsp: (pspId: number) =>
     dispatch(
-      paymentUpdatePsp({
+      paymentUpdateWalletPsp({
         pspId,
-        wallet,
-        paymentId,
         rptId: props.navigation.getParam("rptId"),
         initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica")
+        verifica: props.navigation.getParam("verifica"),
+        wallet: props.navigation.getParam("wallet"),
+        paymentId: props.navigation.getParam("paymentId")
       })
     ),
   goBack: () => dispatch(paymentRequestGoBack()),

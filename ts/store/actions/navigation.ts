@@ -13,6 +13,7 @@ import ROUTES from "../../navigation/routes";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import Checkout3DsScreen from "../../screens/wallet/Checkout3DsScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
@@ -21,7 +22,6 @@ import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
-import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState

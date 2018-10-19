@@ -1,47 +1,37 @@
-import {
-  ActionType,
-  createAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 
-export type WalletsActions =
-  | ActionType<typeof fetchWalletsRequest>
-  | ActionType<typeof fetchWalletsSuccess>
-  | ActionType<typeof setFavoriteWallet>
-  | ActionType<typeof storeCreditCardData>
-  | ActionType<typeof creditCardDataCleanup>
-  | ActionType<typeof addCreditCardRequest>
-  | ActionType<typeof addCreditCardCompleted>
-  | ActionType<typeof deleteWalletRequest>
-  | ActionType<typeof fetchWalletsFailure>;
-
 export const fetchWalletsRequest = createStandardAction(
   "FETCH_WALLETS_REQUEST"
 )();
 
-export const fetchWalletsSuccess = createAction(
-  "FETCH_WALLETS_SUCCESS",
-  resolve => (wallets: ReadonlyArray<Wallet>) => resolve(wallets)
-);
+export const fetchWalletsSuccess = createStandardAction(
+  "FETCH_WALLETS_SUCCESS"
+)<ReadonlyArray<Wallet>>();
 
-export const fetchWalletsFailure = createAction(
-  "FETCH_WALLETS_FAILURE",
-  resolve => (error: Error) => resolve(error)
-);
+export const fetchWalletsFailure = createStandardAction(
+  "FETCH_WALLETS_FAILURE"
+)<Error>();
+
+export const deleteWalletRequest = createStandardAction(
+  "DELETE_WALLET_REQUEST"
+)<number>();
+
+export const deleteWalletSuccess = createStandardAction(
+  "DELETE_WALLET_SUCCESS"
+)<ReadonlyArray<Wallet>>();
+
+export const deleteWalletFailure = createStandardAction(
+  "DELETE_WALLET_FAILURE"
+)<Error>();
 
 export const setFavoriteWallet = createStandardAction("SET_FAVORITE_WALLET")<
   number | undefined
 >();
-
-export const storeCreditCardData = createAction(
-  "STORE_CREDIT_CARD_DATA",
-  resolve => (card: CreditCard) => resolve(card)
-);
 
 export const creditCardDataCleanup = createStandardAction(
   "CREDIT_CARD_DATA_CLEANUP"
@@ -58,15 +48,27 @@ type AddCreditCardRequestPayload = Readonly<{
   }>;
 }>;
 
-export const addCreditCardRequest = createStandardAction(
-  "ADD_CREDIT_CARD_REQUEST"
+export const runAddCreditCardSaga = createStandardAction(
+  "RUN_ADD_CREDIT_CARD_SAGA"
 )<AddCreditCardRequestPayload>();
 
 export const addCreditCardCompleted = createStandardAction(
   "ADD_CREDIT_CARD_COMPLETED"
 )();
 
-export const deleteWalletRequest = createAction(
-  "DELETE_WALLET_REQUEST",
-  resolve => (walletId: number) => resolve(walletId)
-);
+export const runDeleteWalletSaga = createStandardAction(
+  "RUN_DELETE_WALLET_SAGA"
+)<number>();
+
+export type WalletsActions =
+  | ActionType<typeof fetchWalletsRequest>
+  | ActionType<typeof fetchWalletsSuccess>
+  | ActionType<typeof fetchWalletsFailure>
+  | ActionType<typeof deleteWalletRequest>
+  | ActionType<typeof deleteWalletSuccess>
+  | ActionType<typeof deleteWalletFailure>
+  | ActionType<typeof runDeleteWalletSaga>
+  | ActionType<typeof setFavoriteWallet>
+  | ActionType<typeof creditCardDataCleanup>
+  | ActionType<typeof runAddCreditCardSaga>
+  | ActionType<typeof addCreditCardCompleted>;

@@ -1,4 +1,4 @@
-import { isSome } from "fp-ts/lib/Option";
+import { isSome, none } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
@@ -8,10 +8,8 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
-import {
-  paymentRequestTransactionSummaryFromRptId,
-  startPaymentSaga
-} from "../../store/actions/wallet/payment";
+
+import { navigateToPaymentTransactionSummaryScreen } from "../../store/actions/navigation";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import {
@@ -126,11 +124,11 @@ class MessageCTABar extends React.PureComponent<Props> {
 
       if (isSome(amount) && isSome(rptId)) {
         const onPaymentCTAPress = () => {
-          this.props.dispatch(startPaymentSaga());
           this.props.dispatch(
-            paymentRequestTransactionSummaryFromRptId({
+            navigateToPaymentTransactionSummaryScreen({
               rptId: rptId.value,
-              initialAmount: amount.value
+              initialAmount: amount.value,
+              maybePaymentId: none
             })
           );
         };

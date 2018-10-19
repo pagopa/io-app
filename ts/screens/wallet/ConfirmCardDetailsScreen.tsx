@@ -28,13 +28,11 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
 import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { addCreditCardRequest } from "../../store/actions/wallet/wallets";
-import { GlobalState } from "../../store/reducers/types";
-import { getNewCreditCard } from "../../store/reducers/wallet/wallets";
+import { runAddCreditCardSaga } from "../../store/actions/wallet/wallets";
 import { CreditCard, Wallet } from "../../types/pagopa";
-import { UNKNOWN_CARD } from "../../types/unknown";
 
 type NavigationParams = Readonly<{
+  creditCard: CreditCard;
   inPayment: Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
@@ -43,16 +41,14 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  wallet: Wallet;
-}>;
-
 type ReduMappedDispatchProps = Readonly<{
-  addCreditCard: (creditCard: CreditCard, favorite: boolean) => void;
+  runAddCreditCardSaga: (
+    creditCard: CreditCard,
+    setAsFavorite: boolean
+  ) => void;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduMappedDispatchProps &
+type Props = ReduMappedDispatchProps &
   NavigationInjectedProps<NavigationParams>;
 
 type State = Readonly<{
@@ -79,14 +75,19 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
+    const creditCard = this.props.navigation.getParam("creditCard");
+    const wallet = {
+      creditCard,
+      type: "CREDIT_CARD",
+      idWallet: -1, // FIXME: no magic numbers
+      psp: undefined
+    };
+
     const primaryButtonProps = {
       block: true,
       primary: true,
       onPress: () =>
-        this.props.addCreditCard(
-          this.props.wallet.creditCard,
-          this.state.favorite
-        ),
+        this.props.runAddCreditCardSaga(creditCard, this.state.favorite),
       title: I18n.t("wallet.saveCard.save")
     };
 
@@ -114,13 +115,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         <Content>
           <H1>{I18n.t("wallet.saveCard.title")}</H1>
           <CardComponent
-            wallet={this.props.wallet}
+            wallet={wallet}
             menu={false}
             showFavoriteIcon={false}
             lastUsage={false}
-            navigateToWalletTransactions={(wallet: Wallet) =>
+            navigateToWalletTransactions={(selectedWallet: Wallet) =>
               this.props.navigation.dispatch(
-                navigateToWalletTransactionsScreen({ selectedWallet: wallet })
+                navigateToWalletTransactionsScreen({ selectedWallet })
               )
             }
           />
@@ -148,34 +149,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  const card = getNewCreditCard(state);
-  if (card.isNone()) {
-    return {
-      wallet: UNKNOWN_CARD
-    };
-  }
-  return {
-    /**
-     * Build a `Wallet` for the `CardComponent`
-     * component to render
-     */
-    wallet: {
-      creditCard: card.value,
-      type: "CREDIT_CARD",
-      idWallet: -1,
-      psp: undefined
-    }
-  };
-};
-
 const mapDispatchToProps = (
   dispatch: Dispatch,
   props: Props
 ): ReduMappedDispatchProps => ({
-  addCreditCard: (creditCard: CreditCard, setAsFavorite: boolean) =>
+  runAddCreditCardSaga: (creditCard: CreditCard, setAsFavorite: boolean) =>
     dispatch(
-      addCreditCardRequest({
+      runAddCreditCardSaga({
         creditCard,
         setAsFavorite,
         inPayment: props.navigation.getParam("inPayment")
@@ -184,6 +164,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(ConfirmCardDetailsScreen);

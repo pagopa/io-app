@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
@@ -11,11 +11,13 @@ import * as pot from "../../../types/pot";
 import { Action } from "../../actions/types";
 import {
   creditCardDataCleanup,
+  deleteWalletFailure,
+  deleteWalletRequest,
+  deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
-  setFavoriteWallet,
-  storeCreditCardData
+  setFavoriteWallet
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
@@ -23,25 +25,30 @@ import { GlobalState } from "../types";
 export type WalletsState = Readonly<{
   walletById: pot.Pot<IndexedById<Wallet>>;
   favoriteWalletId: Option<number>;
-  newCreditCard: Option<CreditCard>;
+  newCreditCard: pot.Pot<CreditCard>;
 }>;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
   favoriteWalletId: none,
-  newCreditCard: none
+  newCreditCard: pot.none
 };
 
 // selectors
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
-const getWallets = createSelector(getWalletsById, potWx =>
+export const getWalletsByIdOption = (state: GlobalState) =>
+  pot.toOption(state.wallet.wallets.walletById);
+
+export const getWallets = createSelector(getWalletsById, potWx =>
   pot.map(
     potWx,
     wx => values(wx).filter(_ => _ !== undefined) as ReadonlyArray<Wallet>
   )
 );
+
+export const getWalletsOption = createSelector(getWallets, pot.toOption);
 
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
@@ -92,7 +99,12 @@ const reducer = (
   action: Action
 ): WalletsState => {
   switch (action.type) {
+    //
+    // fetch wallets
+    //
+
     case getType(fetchWalletsRequest):
+    case getType(deleteWalletRequest):
       return {
         ...state,
         walletById: pot.toLoading(state.walletById)
@@ -105,9 +117,18 @@ const reducer = (
       };
 
     case getType(fetchWalletsFailure):
+    case getType(deleteWalletFailure):
       return {
         ...state,
         walletById: pot.toError(state.walletById, action.payload)
+      };
+
+    case getType(deleteWalletSuccess):
+      return {
+        ...state,
+        walletById: pot.isSome(state.walletById)
+          ? pot.some(state.walletById.value)
+          : pot.none
       };
 
     case getType(setFavoriteWallet):
@@ -117,23 +138,13 @@ const reducer = (
       };
 
     /**
-     * Store the credit card information locally
-     * before sending it to pagoPA
-     */
-    case getType(storeCreditCardData):
-      return {
-        ...state,
-        newCreditCard: some(action.payload)
-      };
-
-    /**
      * clean up "newCreditCard" after it has been
      * added to pagoPA
      */
     case getType(creditCardDataCleanup):
       return {
         ...state,
-        newCreditCard: none
+        newCreditCard: pot.none
       };
 
     default:

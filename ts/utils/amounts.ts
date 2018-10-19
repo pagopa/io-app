@@ -17,6 +17,7 @@ export const AmountToImporto = new t.Type<
   i => `${i}` as AmountInEuroCents
 );
 
+// FIXME: OMG this is used in the attiva!!!!!
 export const amountToImportoWithFallback = (
   a: AmountInEuroCents
 ): ImportoEuroCents =>

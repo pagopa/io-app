@@ -24,7 +24,7 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
-  deleteWalletRequest,
+  runDeleteWalletSaga,
   setFavoriteWallet
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -135,7 +135,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavoriteWallet(walletId)),
-  deleteWallet: (walletId: number) => dispatch(deleteWalletRequest(walletId))
+  deleteWallet: (walletId: number) => dispatch(runDeleteWalletSaga(walletId))
 });
 
 export default connect(

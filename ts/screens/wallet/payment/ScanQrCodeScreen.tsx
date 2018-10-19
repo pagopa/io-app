@@ -33,22 +33,24 @@ import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
 
-import {
-  paymentRequestTransactionSummaryFromRptId,
-  startPaymentSaga
-} from "../../../store/actions/wallet/payment";
-
 import variables from "../../../theme/variables";
 
 import { ComponentProps } from "../../../types/react";
 
 import { decodePagoPaQrCode } from "../../../utils/payment";
 
+import { none } from "fp-ts/lib/Option";
+import {
+  navigateToPaymentManualDataInsertion,
+  navigateToPaymentTransactionSummaryScreen
+} from "../../../store/actions/navigation";
 import { CameraMarker } from "./CameraMarker";
-import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 
 type ReduxMappedDispatchProps = Readonly<{
-  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  runPaymentTransactionSummarySaga: (
+    rptId: RptId,
+    amount: AmountInEuroCents
+  ) => void;
 }>;
 
 type OwnProps = Readonly<{
@@ -108,7 +110,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.setState({
       scanningState: "VALID"
     });
-    this.props.showTransactionSummary(data.e1, data.e2);
+    this.props.runPaymentTransactionSummarySaga(data.e1, data.e2);
   };
 
   /**
@@ -240,12 +242,15 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
-    dispatch(startPaymentSaga());
+  runPaymentTransactionSummarySaga: (
+    rptId: RptId,
+    initialAmount: AmountInEuroCents
+  ) => {
     dispatch(
-      paymentRequestTransactionSummaryFromRptId({
+      navigateToPaymentTransactionSummaryScreen({
         rptId,
-        initialAmount
+        initialAmount,
+        maybePaymentId: none
       })
     );
   }

@@ -37,7 +37,9 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCancel,
   paymentRequestContinueWithPaymentMethods,
-  paymentRequestGoBack
+  paymentRequestGoBack,
+  paymentVerificaRequest,
+  runStartOrResumePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 
@@ -45,6 +47,10 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { mapErrorCodeToMessage } from "../../../types/errors";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
+import { Wallet } from "../../../types/pagopa";
+import { Alert } from "react-native";
+import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
+import { navigateToPaymentPickPaymentMethodScreen } from "../../../store/actions/navigation";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -56,9 +62,11 @@ type ReduxMappedStateProps = Readonly<{
   error: Option<string>;
   isLoading: boolean;
   potVerifica: pot.Pot<PaymentRequestsGetResponse>;
+  maybeFavoriteWallet: Option<Wallet>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
+  dispatchPaymentVerificaRequest: () => void;
   confirmSummary: (verifica: PaymentRequestsGetResponse) => void;
   goBack: () => void;
   cancelPayment: () => void;
@@ -104,6 +112,14 @@ const formatMdInfoRpt = (r: RptId): string =>
 **${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props> {
+  public onComponentDidMount() {
+    if (this.props.navigation.getParam("maybePaymentId").isNone()) {
+      // on component mount, if we are not in a payment, trigger a request to
+      // fetch the payment summary
+      this.props.dispatchPaymentVerificaRequest();
+    }
+  }
+
   public render(): React.ReactNode {
     const rptId = this.props.navigation.getParam("rptId");
     const initialAmount = this.props.navigation.getParam("initialAmount");
@@ -204,31 +220,54 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
+// TODO: Also add loading states for attiva, paymentid, check
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   error: pot.isError(state.wallet.payment.verifica)
     ? some(state.wallet.payment.verifica.error.message)
     : none,
   isLoading: pot.isLoading(state.wallet.payment.verifica),
-  potVerifica: state.wallet.payment.verifica
+  potVerifica: state.wallet.payment.verifica,
+  maybeFavoriteWallet: getFavoriteWallet(state)
 });
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
   props: Props
-): ReduxMappedDispatchProps => ({
-  confirmSummary: (verifica: PaymentRequestsGetResponse) =>
-    dispatch(
-      paymentRequestContinueWithPaymentMethods({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        maybePaymentId: props.navigation.getParam("maybePaymentId"),
-        verifica
-      })
-    ),
-  goBack: () => dispatch(paymentRequestGoBack()),
-  cancelPayment: () => dispatch(paymentRequestCancel()),
-  onCancel: () => dispatch(paymentRequestCancel())
-});
+): ReduxMappedDispatchProps => {
+  const rptId = props.navigation.getParam("rptId");
+  const initialAmount = props.navigation.getParam("initialAmount");
+
+  return {
+    dispatchPaymentVerificaRequest: () =>
+      dispatch(paymentVerificaRequest(rptId)),
+    confirmSummary: (verifica: PaymentRequestsGetResponse) =>
+      dispatch(
+        runStartOrResumePaymentSaga({
+          rptId,
+          verifica,
+          onSuccess: paymentId => {
+            if (props.maybeFavoriteWallet.isSome()) {
+              // confirm using the favorite wallet
+              // ...confirmPaymentMethodHandler
+            } else {
+              // select a wallet
+              dispatch(
+                navigateToPaymentPickPaymentMethodScreen({
+                  rptId,
+                  initialAmount,
+                  verifica,
+                  paymentId
+                })
+              );
+            }
+          }
+        })
+      ),
+    goBack: () => dispatch(paymentRequestGoBack()),
+    cancelPayment: () => dispatch(paymentRequestCancel()),
+    onCancel: () => dispatch(paymentRequestCancel())
+  };
+};
 
 export default connect(
   mapStateToProps,
