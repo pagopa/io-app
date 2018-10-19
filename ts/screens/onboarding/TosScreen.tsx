@@ -5,20 +5,22 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
 import Markdown from "../../components/ui/Markdown";
-
 import I18n from "../../i18n";
-
 import { FetchRequestActions } from "../../store/actions/constants";
-import { tosAcceptRequest } from "../../store/actions/onboarding";
+import {
+  abortOnboarding,
+  tosAcceptRequest
+} from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 
-type ReduxMappedProps = {
+type ReduxMappedStateProps = {
   isAcceptingTos: boolean;
   profileUpsertError: Option<string>;
 };
@@ -27,7 +29,11 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReduxMappedStateProps & ReduxProps & OwnProps;
+
+type State = {
+  showAbortOnboardingModal: boolean;
+};
 
 const styles = StyleSheet.create({
   activityIndicatorContainer: {
@@ -45,58 +51,87 @@ const styles = StyleSheet.create({
 /**
  * A screen to show the ToS to the user.
  */
-const TosScreen: React.SFC<Props> = ({
-  profileUpsertError,
-  isAcceptingTos,
-  navigation,
-  dispatch
-}) => {
-  const isProfile = navigation.getParam("isProfile", false);
+class TosScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showAbortOnboardingModal: false
+    };
+  }
 
-  return (
-    <BaseScreenComponent
-      goBack={() => navigation.goBack()}
-      headerTitle={
-        isProfile
-          ? I18n.t("profile.main.screenTitle")
-          : I18n.t("onboarding.tos.headerTitle")
-      }
-    >
-      <Content noPadded={true}>
-        <View content={true}>
-          {isAcceptingTos && (
-            <View style={styles.activityIndicatorContainer}>
-              <ActivityIndicator />
-            </View>
-          )}
-          {/* FIXME: handle errors */}
-          {profileUpsertError.isSome() && (
-            <View padder={true}>
-              <Text>{I18n.t("global.actions.retry")}</Text>
-            </View>
-          )}
-          <Markdown lazyOptions={{ lazy: true }}>
-            {I18n.t("profile.main.privacy.text")}
-          </Markdown>
-        </View>
-      </Content>
-      {isProfile === false && (
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            disabled={isAcceptingTos}
-            onPress={() => dispatch(tosAcceptRequest())}
-          >
-            <Text>{I18n.t("onboarding.tos.continue")}</Text>
-          </Button>
-        </View>
-      )}
-    </BaseScreenComponent>
-  );
-};
+  public render() {
+    const {
+      profileUpsertError,
+      isAcceptingTos,
+      navigation,
+      dispatch
+    } = this.props;
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+    const isProfile = navigation.getParam("isProfile", false);
+
+    return (
+      <BaseScreenComponent
+        goBack={this.handleGoBack}
+        headerTitle={
+          isProfile
+            ? I18n.t("profile.main.screenTitle")
+            : I18n.t("onboarding.tos.headerTitle")
+        }
+      >
+        <Content noPadded={true}>
+          <View content={true}>
+            {isAcceptingTos && (
+              <View style={styles.activityIndicatorContainer}>
+                <ActivityIndicator />
+              </View>
+            )}
+            {/* FIXME: handle errors */}
+            {profileUpsertError.isSome() && (
+              <View padder={true}>
+                <Text>{I18n.t("global.actions.retry")}</Text>
+              </View>
+            )}
+            <Markdown lazyOptions={{ lazy: true }}>
+              {I18n.t("profile.main.privacy.text")}
+            </Markdown>
+          </View>
+        </Content>
+        {isProfile === false && (
+          <View footer={true}>
+            <Button
+              block={true}
+              primary={true}
+              disabled={isAcceptingTos}
+              onPress={() => dispatch(tosAcceptRequest())}
+            >
+              <Text>{I18n.t("onboarding.tos.continue")}</Text>
+            </Button>
+          </View>
+        )}
+
+        {this.state.showAbortOnboardingModal && (
+          <AbortOnboardingModal
+            onClose={this.handleModalClose}
+            onConfirm={this.handleModalConfirm}
+          />
+        )}
+      </BaseScreenComponent>
+    );
+  }
+
+  private handleGoBack = () =>
+    this.setState({ showAbortOnboardingModal: true });
+
+  private handleModalClose = () =>
+    this.setState({ showAbortOnboardingModal: false });
+
+  private handleModalConfirm = () => {
+    this.handleModalClose();
+    this.props.dispatch(abortOnboarding());
+  };
+}
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   isAcceptingTos: createLoadingSelector([FetchRequestActions.TOS_ACCEPT])(
     state
   ),
