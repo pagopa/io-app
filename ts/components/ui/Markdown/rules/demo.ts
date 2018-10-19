@@ -15,7 +15,7 @@ const rule = {
 
   // First we check whether a string matches
   match: (source: string) => {
-    return /^\[demo\]([\s\S]+?)\[\/demo\]+\n{2,}/.exec(source);
+    return /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/.exec(source);
   },
 
   // Then parse this string into a syntax node
