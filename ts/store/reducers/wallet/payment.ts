@@ -17,18 +17,22 @@ import {
   paymentIdPollingFailure,
   paymentIdPollingRequest,
   paymentIdPollingSuccess,
+  paymentInitializeState,
   paymentVerificaFailure,
   paymentVerificaRequest,
   paymentVerificaSuccess
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 
+// TODO: instead of keeping one single state, it would me more correct to keep
+//       a state for each rptid - this will make unnecessary to reset the state
+//       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
   verifica: pot.Pot<PaymentRequestsGetResponse>;
   attiva: pot.Pot<PaymentActivationsPostResponse>;
   paymentId: pot.Pot<string>;
   check: pot.Pot<true>;
-  pspList: pot.Pot<ReadonlyArray<Psp>>;
+  psps: pot.Pot<ReadonlyArray<Psp>>;
 }>;
 
 /**
@@ -45,7 +49,7 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   attiva: pot.none,
   paymentId: pot.none,
   check: pot.none,
-  pspList: pot.none
+  psps: pot.none
 };
 
 /**
@@ -56,6 +60,9 @@ const reducer = (
   action: Action
 ): PaymentState => {
   switch (action.type) {
+    case getType(paymentInitializeState):
+      return PAYMENT_INITIAL_STATE;
+
     //
     // verifica
     //
@@ -142,17 +149,17 @@ const reducer = (
     case getType(paymentFetchPspsForPaymentIdRequest):
       return {
         ...state,
-        pspList: pot.noneLoading
+        psps: pot.noneLoading
       };
     case getType(paymentFetchPspsForPaymentIdSuccess):
       return {
         ...state,
-        pspList: pot.some(action.payload.data)
+        psps: pot.some(action.payload.data)
       };
     case getType(paymentFetchPspsForPaymentIdFailure):
       return {
         ...state,
-        pspList: pot.noneError(action.payload)
+        psps: pot.noneError(action.payload)
       };
   }
   return state;

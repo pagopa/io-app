@@ -3,7 +3,6 @@ import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
-import { CodiceContestoPagamento } from "../../../definitions/backend/CodiceContestoPagamento";
 import {
   ActivatePaymentT,
   GetActivationStatusT,
@@ -16,14 +15,18 @@ import {
   paymentAttivaSuccess,
   paymentCheckFailure,
   paymentCheckRequest,
-  paymentIdPollingFailure,
-  paymentIdPollingSuccess,
-  paymentVerificaFailure,
-  paymentVerificaRequest,
-  paymentVerificaSuccess,
+  paymentFetchPspsForPaymentIdFailure,
   paymentFetchPspsForPaymentIdRequest,
   paymentFetchPspsForPaymentIdSuccess,
-  paymentFetchPspsForPaymentIdFailure
+  paymentIdPollingFailure,
+  paymentIdPollingRequest,
+  paymentIdPollingSuccess,
+  paymentUpdateWalletPspFailure,
+  paymentUpdateWalletPspRequest,
+  paymentUpdateWalletPspSuccess,
+  paymentVerificaFailure,
+  paymentVerificaRequest,
+  paymentVerificaSuccess
 } from "../../store/actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -98,7 +101,63 @@ export function* fetchTransactionsRequestHandler(
 }
 
 /**
+ * Updates a Wallet with a new favorite PSP
+ *
+ * TODO: consider avoiding the fetch, let the appliction logic decide
+ */
+export function* updateWalletPspRequestHandler(
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof paymentUpdateWalletPspRequest>
+) {
+  // First update the selected wallet (walletId) with the
+  // new PSP (action.payload); then request a new list
+  // of wallets (which will contain the updated PSP)
+  const { wallet, idPsp } = action.payload;
+
+  try {
+    const apiUpdateWalletPsp = (pagoPaToken: PagopaToken) =>
+      pagoPaClient.updateWalletPsp(pagoPaToken, wallet.idWallet, {
+        data: { idPsp }
+      });
+    const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
+      fetchWithTokenRefresh,
+      apiUpdateWalletPsp,
+      pagoPaClient
+    );
+
+    if (response !== undefined && response.status === 200) {
+      const getResponse: SagaCallReturnType<
+        typeof pagoPaClient.getWallets
+      > = yield call(
+        fetchWithTokenRefresh,
+        pagoPaClient.getWallets,
+        pagoPaClient
+      );
+      if (getResponse !== undefined && getResponse.status === 200) {
+        const successAction = paymentUpdateWalletPspSuccess(
+          getResponse.value.data
+        );
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          // signal the callee if requested
+          action.payload.onSuccess(successAction);
+        }
+      } else {
+        // FIXME: show relevant error
+        yield put(paymentUpdateWalletPspFailure(Error("Generic error")));
+      }
+    } else {
+      yield put(paymentUpdateWalletPspFailure(Error("Generic error")));
+    }
+  } catch {
+    yield put(paymentUpdateWalletPspFailure(Error("Generic error")));
+  }
+}
+
+/**
  * Handles deleteWalletRequest
+ *
+ * TODO: consider avoiding the fetch, let the appliction logic decide
  */
 export function* deleteWalletRequestHandler(
   pagoPaClient: PagoPaClient,
@@ -106,7 +165,7 @@ export function* deleteWalletRequestHandler(
 ): Iterator<Effect> {
   try {
     const deleteWalletApi = (token: PagopaToken) =>
-      pagoPaClient.deleteWallet(token, action.payload);
+      pagoPaClient.deleteWallet(token, action.payload.walletId);
     const deleteResponse: SagaCallReturnType<
       typeof deleteWalletApi
     > = yield call(fetchWithTokenRefresh, deleteWalletApi, pagoPaClient);
@@ -119,16 +178,23 @@ export function* deleteWalletRequestHandler(
         pagoPaClient
       );
       if (getResponse !== undefined && getResponse.status === 200) {
-        yield put(deleteWalletSuccess(getResponse.value.data));
+        const successAction = deleteWalletSuccess(getResponse.value.data);
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
+        }
       } else {
-        // FIXME: show relevant error
-        yield put(deleteWalletFailure(Error("Generic error")));
+        throw Error();
       }
     } else {
-      yield put(deleteWalletFailure(Error("Generic error")));
+      throw Error();
     }
   } catch {
-    yield put(deleteWalletFailure(Error("Generic error")));
+    const failureAction = deleteWalletFailure(Error("Generic error"));
+    yield put(failureAction);
+    if (action.payload.onFailure) {
+      action.payload.onFailure(failureAction);
+    }
   }
 }
 
@@ -259,7 +325,7 @@ export function* paymentAttivaRequestHandler(
  */
 export function* paymentIdPollingRequestHandler(
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  paymentContextCode: CodiceContestoPagamento
+  action: ActionType<typeof paymentIdPollingRequest>
 ) {
   // successfully request the payment activation
   // now poll until a paymentId is made available
@@ -268,7 +334,7 @@ export function* paymentIdPollingRequestHandler(
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
-        codiceContestoPagamento: paymentContextCode
+        codiceContestoPagamento: action.payload.codiceContestoPagamento
       }
     );
     if (response !== undefined && response.status === 200) {

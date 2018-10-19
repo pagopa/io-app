@@ -21,11 +21,12 @@ import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
+import { navigateToPaymentConfirmPaymentMethodScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentRequestCancel,
   paymentRequestGoBack,
-  paymentUpdateWalletPsp
+  paymentUpdateWalletPspRequest
 } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -38,7 +39,7 @@ type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
-  pspList: ReadonlyArray<Psp>;
+  psps: ReadonlyArray<Psp>;
   wallet: Wallet;
   paymentId: string;
 }>;
@@ -82,7 +83,7 @@ const style = StyleSheet.create({
  */
 class PickPspScreen extends React.Component<Props> {
   public render(): React.ReactNode {
-    const allPspList = this.props.navigation.getParam("pspList");
+    const allPspList = this.props.navigation.getParam("psps");
 
     // The PaymentManager returns a PSP entry for each supported language, so
     // we need to skip PSPs that have the language different from the current
@@ -166,22 +167,34 @@ class PickPspScreen extends React.Component<Props> {
 const mapDispatchToProps = (
   dispatch: Dispatch,
   props: Props
-): ReduxMappedDispatchProps => ({
-  pickPsp: (pspId: number) =>
-    dispatch(
-      paymentUpdateWalletPsp({
-        pspId,
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        wallet: props.navigation.getParam("wallet"),
-        paymentId: props.navigation.getParam("paymentId")
-      })
-    ),
-  goBack: () => dispatch(paymentRequestGoBack()),
-  onCancel: () => dispatch(paymentRequestCancel())
-});
+): ReduxMappedDispatchProps => {
+  const wallet = props.navigation.getParam("wallet");
+  return {
+    pickPsp: (idPsp: number) =>
+      dispatch(
+        paymentUpdateWalletPspRequest({
+          idPsp,
+          wallet,
+          onSuccess: () => {
+            dispatch(
+              navigateToPaymentConfirmPaymentMethodScreen({
+                rptId: props.navigation.getParam("rptId"),
+                initialAmount: props.navigation.getParam("initialAmount"),
+                verifica: props.navigation.getParam("verifica"),
+                paymentId: props.navigation.getParam("paymentId"),
+                wallet,
+                psps: props.navigation.getParam("psps")
+              })
+            );
+          }
+        })
+      ),
+    goBack: () => dispatch(paymentRequestGoBack()),
+    onCancel: () => dispatch(paymentRequestCancel())
+  };
+};
 
+// TODO: add loading and error states
 export default connect(
   undefined,
   mapDispatchToProps

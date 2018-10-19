@@ -15,6 +15,7 @@ import I18n from "../i18n";
 
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
+import { Psp, Wallet } from "../types/pagopa";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -62,4 +63,37 @@ export function decodePagoPaQrCode(
       )
     )
   );
+}
+
+/**
+ * Whether we need to show the PSP selection screen to the user.
+ */
+export function shouldSelectPspForWallet(
+  wallet: Wallet,
+  psps: ReadonlyArray<Psp>
+): boolean {
+  if (psps.length === 1) {
+    // FIXME: there can be multiple (equal) PSPs for different languages that
+    //        in the UI will be presented as one, so it could happen that
+    //        we ask the user to select a PSP when in fact there is only
+    //        one option
+    // only one PSP, no need to show the PSP selection screen
+    return false;
+  }
+
+  const walletPsp = wallet.psp;
+
+  if (walletPsp === undefined) {
+    // there is no PSP associated to this payment method (wallet), we should
+    // show the PSP selection screen
+    return true;
+  }
+
+  // look for the PSP associated with the wallet in the list of PSPs returned
+  // by pagopa
+  const walletPspInPsps = psps.find(psp => psp.id === walletPsp.id);
+
+  // if the selected PSP is not available anymore, so show the PSP selection
+  // screen
+  return walletPspInPsps === undefined;
 }

@@ -44,6 +44,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
@@ -244,11 +245,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
+    dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
         rptId,
-        initialAmount,
-        maybePaymentId: none
+        initialAmount
       })
     );
   }

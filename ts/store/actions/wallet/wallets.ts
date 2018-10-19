@@ -17,9 +17,15 @@ export const fetchWalletsFailure = createStandardAction(
   "FETCH_WALLETS_FAILURE"
 )<Error>();
 
+type DeleteWalletRequestPayload = Readonly<{
+  walletId: number;
+  onSuccess?: (action: ActionType<typeof deleteWalletSuccess>) => void;
+  onFailure?: (action: ActionType<typeof deleteWalletFailure>) => void;
+}>;
+
 export const deleteWalletRequest = createStandardAction(
   "DELETE_WALLET_REQUEST"
-)<number>();
+)<DeleteWalletRequestPayload>();
 
 export const deleteWalletSuccess = createStandardAction(
   "DELETE_WALLET_SUCCESS"
@@ -56,10 +62,6 @@ export const addCreditCardCompleted = createStandardAction(
   "ADD_CREDIT_CARD_COMPLETED"
 )();
 
-export const runDeleteWalletSaga = createStandardAction(
-  "RUN_DELETE_WALLET_SAGA"
-)<number>();
-
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
@@ -67,7 +69,6 @@ export type WalletsActions =
   | ActionType<typeof deleteWalletRequest>
   | ActionType<typeof deleteWalletSuccess>
   | ActionType<typeof deleteWalletFailure>
-  | ActionType<typeof runDeleteWalletSaga>
   | ActionType<typeof setFavoriteWallet>
   | ActionType<typeof creditCardDataCleanup>
   | ActionType<typeof runAddCreditCardSaga>

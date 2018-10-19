@@ -4,15 +4,12 @@
  * A saga that manages the Wallet.
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { Toast } from "native-base";
-import { NavigationActions, StackActions } from "react-navigation";
+// import { none, Option } from "fp-ts/lib/Option";
+// import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+// import { StackActions } from "react-navigation";
 import {
   call,
   Effect,
-  fork,
   put,
   select,
   take,
@@ -20,114 +17,76 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
-import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  ActivatePaymentT,
-  GetActivationStatusT
-} from "../../definitions/backend/requestTypes";
+// import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 
 import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix } from "../config";
-import I18n from "../i18n";
+// import I18n from "../i18n";
 
+// import {
+//   navigateToWalletCheckout3dsScreen,
+//   navigateToWalletHome
+// } from "../store/actions/navigation";
 import {
-  navigateToPaymentConfirmPaymentMethodScreen,
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToTransactionDetailsScreen,
-  navigateToWalletCheckout3dsScreen,
-  navigateToWalletHome,
-  navigateToWalletList
-} from "../store/actions/navigation";
-import {
-  goBackOnePaymentState,
-  paymentAttivaRequest,
-  paymentIdPollingRequest,
-  paymentPspListFailure,
-  paymentPspListRequest,
-  paymentPspListSuccess,
-  paymentRequestCancel,
-  paymentRequestConfirmPaymentMethod,
-  paymentRequestContinueWithPaymentMethods,
-  paymentRequestGoBack,
-  paymentRequestPickPaymentMethod,
-  paymentRequestPickPsp,
-  paymentRequestTransactionSummaryFromBanner,
-  paymentUpdateWalletPsp,
-  paymentVerificaRequest,
-  paymentCheckRequest,
-  paymentAttivaSuccess,
   paymentAttivaFailure,
-  paymentIdPollingSuccess,
-  paymentIdPollingFailure,
-  paymentCheckSuccess,
+  paymentAttivaRequest,
+  paymentAttivaSuccess,
   paymentCheckFailure,
-  runStartOrResumePaymentSaga,
-  paymentFetchPspsForPaymentIdRequest
+  paymentCheckRequest,
+  paymentCheckSuccess,
+  paymentFetchPspsForPaymentIdFailure,
+  paymentFetchPspsForPaymentIdRequest,
+  paymentFetchPspsForPaymentIdSuccess,
+  paymentIdPollingFailure,
+  paymentIdPollingRequest,
+  paymentIdPollingSuccess,
+  // paymentRequestPickPaymentMethod,
+  paymentUpdateWalletPspRequest,
+  paymentVerificaRequest,
+  runStartOrResumePaymentSaga
 } from "../store/actions/wallet/payment";
 import { fetchTransactionsRequest } from "../store/actions/wallet/transactions";
 import {
-  addCreditCardCompleted,
-  creditCardDataCleanup,
-  deleteWalletFailure,
+  // addCreditCardCompleted,
+  // creditCardDataCleanup,
   deleteWalletRequest,
-  deleteWalletSuccess,
-  fetchWalletsFailure,
-  fetchWalletsRequest,
-  fetchWalletsSuccess,
-  runAddCreditCardSaga,
-  runDeleteWalletSaga
+  // fetchWalletsFailure,
+  fetchWalletsRequest
+  // fetchWalletsSuccess,
+  // runAddCreditCardSaga
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
-import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
-import {
-  getFavoriteWallet,
-  getWalletsByIdOption,
-  getWalletsOption
-} from "../store/reducers/wallet/wallets";
-import {
-  paymentCancel,
-  paymentFailure,
-  paymentRequestCompletion
-} from "./../store/actions/wallet/payment";
+// import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
+// import { getWalletsByIdOption } from "../store/reducers/wallet/wallets";
 
-import { extractPaymentManagerError } from "../types/errors";
-import {
-  NullableWallet,
-  PagopaToken,
-  PayRequest,
-  Psp,
-  Wallet
-} from "../types/pagopa";
+// import { NullableWallet, PagopaToken, PayRequest } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
-import { SagaCallReturnType } from "../types/utils";
+// import { SagaCallReturnType } from "../types/utils";
 
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 
 import {
-  fetchAndStorePagoPaToken,
-  fetchWithTokenRefresh
+  fetchAndStorePagoPaToken
+  // fetchWithTokenRefresh
 } from "./wallet/utils";
 
-import { AmountToImporto } from "../utils/amounts";
-import { showToast } from "../utils/showToast";
-
-import { TranslationKeys } from "../../locales/locales";
+// import { TranslationKeys } from "../../locales/locales";
 import {
   deleteWalletRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
+  paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
   paymentVerificaRequestHandler,
-  paymentFetchPspsForWalletRequestHandler
+  updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
 import * as pot from "../types/pot";
 
+/*
 function* onAddCreditCardDone(
   isSuccess: boolean,
   message: Option<TranslationKeys>,
@@ -171,6 +130,7 @@ function* onAddCreditCardDone(
   // cleanup credit card data from the redux state
   yield put(creditCardDataCleanup());
 }
+*/
 
 /**
  * This saga manages the flow for adding a new card.
@@ -180,6 +140,7 @@ function* onAddCreditCardDone(
  *
  * Run from ConfirmCardDetailsScreen
  */
+/*
 function* addCreditCardSaga(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof runAddCreditCardSaga>
@@ -206,10 +167,10 @@ function* addCreditCardSaga(
       responseBoardCC.status === 422 &&
       responseBoardCC.value.message === "creditcard.already_exists";
 
-    /**
-     * Failed request. show an error (TODO) and return
-     * @https://www.pivotaltracker.com/story/show/160521051
-     */
+
+    // Failed request. show an error (TODO) and return
+    // @https://www.pivotaltracker.com/story/show/160521051
+
     if (
       failedCardAlreadyExists ||
       typeof responseBoardCC === "undefined" ||
@@ -241,9 +202,9 @@ function* addCreditCardSaga(
     );
     yield put(walletManagementResetLoadingState());
 
-    /**
-     * Failed request. show an error (TODO) and return
-     */
+
+    // Failed request. show an error (TODO) and return
+
     if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
       // FIXME: we should not navigate to the wallet home in case we're inside
       //        a payment, instead we should go pack to the payment method
@@ -270,11 +231,11 @@ function* addCreditCardSaga(
       })
     );
 
-    /**
-     * Wait for the webview to do its thing
-     * (will trigger an addCreditCardCompleted
-     * action upon finishing)
-     */
+
+    // Wait for the webview to do its thing
+    // (will trigger an addCreditCardCompleted
+    // action upon finishing)
+
     yield take(getType(addCreditCardCompleted));
 
     // There currently is no way of determining whether the card has been added
@@ -294,11 +255,11 @@ function* addCreditCardSaga(
       .mapNullable(wx => wx[idWallet])
       .toUndefined();
 
-    /**
-     * TODO: introduce a better way of displaying
-     * info messages (e.g. red/green banner at the
-     * top of the screen)
-     */
+
+    // TODO: introduce a better way of displaying
+    // info messages (e.g. red/green banner at the
+    // top of the screen)
+
     if (maybeAddedWallet !== undefined) {
       yield call(onAddCreditCardDone, true, none, action.payload.inPayment);
     } else {
@@ -309,382 +270,10 @@ function* addCreditCardSaga(
     yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
   }
 }
-
-/**
- * A saga that implements the logic for deleting a wallet.
- */
-function* deleteWalletSaga(
-  action: ActionType<typeof runDeleteWalletSaga>
-): Iterator<Effect> {
-  yield put(deleteWalletRequest(action.payload));
-  const deleteWalletResultAction = yield take([
-    getType(deleteWalletSuccess),
-    getType(deleteWalletFailure)
-  ]);
-
-  if (isActionOf(deleteWalletSuccess, deleteWalletResultAction)) {
-    // wallet was successfully deleted
-    Toast.show({
-      text: I18n.t("wallet.delete.successful"),
-      type: "success"
-    });
-
-    const updatedWallets: ReturnType<typeof getWalletsOption> = yield select<
-      GlobalState
-    >(getWalletsOption);
-
-    if (updatedWallets.isSome() && updatedWallets.value.length > 0) {
-      yield put(navigateToWalletList());
-    } else {
-      yield put(navigateToWalletHome());
-    }
-  } else {
-    Toast.show({
-      text: I18n.t("wallet.delete.failed"),
-      type: "danger"
-    });
-  }
-}
-
-/**
- * This saga is forked at the beginning of a payment flow
- */
-function* watchPaymentSaga(
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  pagoPaClient: PagoPaClient
-): Iterator<Effect> {
-  while (true) {
-    const action:
-      | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
-      | ActionType<typeof paymentRequestContinueWithPaymentMethods>
-      | ActionType<typeof paymentRequestPickPaymentMethod>
-      | ActionType<typeof paymentRequestConfirmPaymentMethod>
-      | ActionType<typeof paymentRequestPickPsp>
-      | ActionType<typeof paymentUpdateWalletPsp>
-      | ActionType<typeof paymentRequestCompletion>
-      | ActionType<typeof paymentRequestGoBack>
-      | ActionType<typeof paymentRequestCancel> = yield take([
-      getType(paymentRequestTransactionSummaryFromBanner),
-      getType(paymentRequestContinueWithPaymentMethods),
-      getType(paymentRequestPickPaymentMethod),
-      getType(paymentRequestConfirmPaymentMethod),
-      getType(paymentRequestPickPsp),
-      getType(paymentUpdateWalletPsp),
-      getType(paymentRequestCompletion),
-      getType(paymentRequestGoBack),
-      getType(paymentRequestCancel)
-    ]);
-
-    switch (action.type) {
-      case getType(paymentRequestTransactionSummaryFromBanner): {
-        // FIXME: not clear what triggers this? it looks like the same summary
-        //        screen is used after the Verifica and the Attiva?
-        yield call(showTransactionSummaryFromBannerHandler);
-        break;
-      }
-      case getType(paymentRequestContinueWithPaymentMethods): {
-        // step after the transaction summary
-        yield fork(
-          continueWithPaymentMethodsSaga,
-          action,
-          pagoPaClient,
-          postAttivaRpt,
-          getPaymentIdApi
-        );
-        break;
-      }
-      case getType(paymentRequestPickPaymentMethod): {
-        yield fork(
-          pickPaymentMethodHandler,
-          action.payload.rptId,
-          action.payload.initialAmount,
-          action.payload.verifica,
-          action.payload.paymentId
-        );
-        break;
-      }
-      case getType(paymentRequestConfirmPaymentMethod): {
-        yield fork(confirmPaymentMethodHandler, action, pagoPaClient);
-        break;
-      }
-      case getType(paymentRequestPickPsp): {
-        yield fork(pickPspHandler, action);
-        break;
-      }
-      case getType(paymentUpdateWalletPsp): {
-        yield fork(updateWalletPspHandler, action, pagoPaClient);
-        break;
-      }
-      case getType(paymentRequestCompletion): {
-        yield fork(completionHandler, action, pagoPaClient);
-        break;
-      }
-      case getType(paymentRequestGoBack): {
-        yield fork(goBackHandler, action, pagoPaClient);
-        break;
-      }
-      case getType(paymentRequestCancel): {
-        yield fork(cancelPaymentHandler, action);
-        break;
-      }
-    }
-  }
-}
-
-function* cancelPaymentHandler(_: ActionType<typeof paymentRequestCancel>) {
-  yield put(paymentCancel()); // empty the stack
-  // FIXME: if coming from a message, should navigate back to the message
-  yield put(navigateToWalletHome());
-}
-
-function* goBackHandler(_: ActionType<typeof paymentRequestGoBack>) {
-  yield put(goBackOnePaymentState()); // return to previous state
-  yield put(NavigationActions.back());
-}
-
-function* showTransactionSummaryFromBannerHandler() {
-  yield put(navigateToPaymentTransactionSummaryScreen());
-}
-
-/**
- * Whether we need to show the PSP selection screen to the user.
- */
-function shouldShowPspList(wallet: Wallet, psps: ReadonlyArray<Psp>): boolean {
-  if (psps.length === 1) {
-    // only one PSP, no need to show the PSP selection screen
-    return false;
-  }
-
-  const walletPsp = wallet.psp;
-
-  if (walletPsp === undefined) {
-    // there is no PSP associated to this payment method (wallet), we should
-    // show the PSP selection screen
-    return true;
-  }
-
-  // look for the PSP associated with the wallet in the list of PSPs returned
-  // by pagopa
-  const walletPspInPsps = psps.find(psp => psp.id === walletPsp.id);
-
-  // if the selected PSP is not available anymore, so show the PSP selection
-  // screen
-  return walletPspInPsps === undefined;
-}
-
-function* confirmPaymentMethodHandler(
-  action: ActionType<typeof paymentRequestConfirmPaymentMethod>,
-  pagoPaClient: PagoPaClient
-): Iterator<Effect> {
-  const maybePspList: Option<ReadonlyArray<Psp>> = yield call(
-    fetchPspList,
-    pagoPaClient,
-    action.payload.paymentId
-  );
-  if (maybePspList.isNone()) {
-    yield put(paymentFailure("GENERIC_ERROR"));
-    // FIXME: this is not a fatal error, instead we should allow a retry
-    return;
-  }
-
-  const pspList = maybePspList.value;
-
-  // show card
-  // if multiple psps are available and one
-  // has not yet been selected, show psp list
-  if (shouldShowPspList(action.payload.wallet, pspList)) {
-    // multiple choices here and no favorite psp exists (or one exists
-    // and it is not available for this payment)
-    // show list of psps
-    yield put(
-      navigateToPaymentPickPspScreen({
-        rptId: action.payload.rptId,
-        initialAmount: action.payload.initialAmount,
-        verifica: action.payload.verifica,
-        wallet: action.payload.wallet,
-        pspList,
-        paymentId: action.payload.paymentId
-      })
-    );
-  } else {
-    // only 1 choice of psp, or psp already selected (in previous transaction)
-    yield put(
-      navigateToPaymentConfirmPaymentMethodScreen({
-        rptId: action.payload.rptId,
-        initialAmount: action.payload.initialAmount,
-        verifica: action.payload.verifica,
-        paymentId: action.payload.paymentId,
-        wallet: action.payload.wallet,
-        pspList
-      })
-    );
-  }
-}
+*/
 
 const MAX_RETRIES_POLLING = 180;
 const DELAY_BETWEEN_RETRIES_MS = 1000;
-
-function* selectPaymentMethodSaga(
-  pagoPaClient: PagoPaClient,
-  rptId: RptId,
-  initialAmount: AmountInEuroCents,
-  verifica: PaymentRequestsGetResponse,
-  paymentId: string
-) {
-  // no favorite wallet selected
-  // show list
-  yield call(
-    pickPaymentMethodHandler,
-    rptId,
-    initialAmount,
-    verifica,
-    paymentId
-  );
-}
-
-function* pickPspHandler(action: ActionType<typeof paymentRequestPickPsp>) {
-  const { wallet, pspList, paymentId } = action.payload;
-
-  yield put(
-    navigateToPaymentPickPspScreen({
-      wallet,
-      pspList,
-      paymentId,
-      rptId: action.payload.rptId,
-      initialAmount: action.payload.initialAmount,
-      verifica: action.payload.verifica
-    })
-  );
-}
-
-/**
- * Updates a Wallet with a new favorite PSP
- */
-function* updateWalletPspHandler(
-  action: ActionType<typeof paymentUpdateWalletPsp>,
-  pagoPaClient: PagoPaClient
-) {
-  // First update the selected wallet (walletId) with the
-  // new PSP (action.payload); then request a new list
-  // of wallets (which will contain the updated PSP)
-  const { wallet } = action.payload;
-
-  try {
-    yield put(fetchWalletsRequest());
-    const apiUpdateWalletPsp = (pagoPaToken: PagopaToken) =>
-      pagoPaClient.updateWalletPsp(pagoPaToken, wallet.idWallet, {
-        data: { idPsp: action.payload.pspId }
-      });
-    const response: SagaCallReturnType<typeof apiUpdateWalletPsp> = yield call(
-      fetchWithTokenRefresh,
-      apiUpdateWalletPsp,
-      pagoPaClient
-    );
-
-    if (response !== undefined && response.status === 200) {
-      // request new wallets (expecting to get the
-      // same ones as before, with the selected one's
-      // PSP set to the new one)
-      const maybeUpdatedWallets: SagaCallReturnType<
-        typeof fetchWalletsRequestHandler
-      > = yield call(fetchWalletsRequestHandler, pagoPaClient);
-
-      if (maybeUpdatedWallets.isSome()) {
-        // we got an updated list of wallets, look for the wallet we just updated
-        const updatedWallet = maybeUpdatedWallets.value.find(
-          _ => _.idWallet === wallet.idWallet
-        );
-        if (updatedWallet) {
-          yield put(
-            paymentRequestConfirmPaymentMethod({
-              rptId: action.payload.rptId,
-              initialAmount: action.payload.initialAmount,
-              verifica: action.payload.verifica,
-              paymentId: action.payload.paymentId,
-              wallet: updatedWallet
-            })
-          );
-        }
-        // FIXME: uhmm we just updated a wallet but the wallet is now gone
-        //        right now we do nothing, letting the user retry
-        // TODO: show a toast
-      }
-      // in case fetchwallets fail we stay on the same screen, perhaps we just
-      // neeed to show a toast
-      // TODO: show a toast, asking to retry
-    } else {
-      yield put(
-        paymentFailure(
-          extractPaymentManagerError(
-            response ? response.value.message : undefined
-          )
-        )
-      );
-    }
-  } catch {
-    yield put(paymentFailure("GENERIC_ERROR"));
-  } finally {
-    yield put(paymentResetLoadingState());
-  }
-}
-
-function* completionHandler(
-  action: ActionType<typeof paymentRequestCompletion>,
-  pagoPaClient: PagoPaClient
-) {
-  // -> it should proceed with the required operations
-  // and terminate with the "new payment" screen
-
-  const { wallet, paymentId } = action.payload;
-
-  try {
-    yield put(paymentSetLoadingState());
-    const apiPostPayment = (pagoPaToken: PagopaToken) =>
-      pagoPaClient.postPayment(pagoPaToken, paymentId, {
-        data: { tipo: "web", idWallet: wallet.idWallet }
-      });
-    const response: SagaCallReturnType<typeof apiPostPayment> = yield call(
-      fetchWithTokenRefresh,
-      apiPostPayment,
-      pagoPaClient
-    );
-
-    if (response !== undefined && response.status === 200) {
-      // request all transactions (expecting to get the
-      // same ones as before, plus the newly created one
-      // (the reason for this is because newTransaction contains
-      // a payment with status "processing", while the
-      // value returned here contains the "completed" status
-      // upon successful payment
-      const newTransaction = response.value.data;
-      yield call(fetchTransactions, pagoPaClient);
-      // FIXME: fetchTransactions could fail
-
-      yield put(
-        navigateToTransactionDetailsScreen({
-          transaction: newTransaction,
-          isPaymentCompletedTransaction: true
-        })
-      );
-      //
-      // PAYMENT IS COMPLETED
-      //
-    } else {
-      yield put(
-        paymentFailure(
-          extractPaymentManagerError(
-            response ? response.value.message : undefined
-          )
-        )
-      );
-    }
-  } catch {
-    yield put(paymentFailure("GENERIC_ERROR"));
-  } finally {
-    yield put(paymentResetLoadingState());
-  }
-}
 
 /**
  * This saga will run in sequence the requests needed to activate a payment:
@@ -692,6 +281,7 @@ function* completionHandler(
  * 1) attiva -> nodo
  * 2) polling for a payment id <- nodo
  * 3) check -> payment manager
+ * 4) available PSPs <- payment manager
  *
  * Each step has a corresponding state in the wallet.payment state that gets
  * updated with the "pot" state (none -> loading -> some|error).
@@ -770,8 +360,29 @@ function* startOrResumePaymentSaga(
       continue;
     }
 
+    // fourth step: fetch the PSPs available for this payment
+    if (pot.isNone(paymentState.psps)) {
+      // this step needs to be executed
+      yield put(
+        paymentFetchPspsForPaymentIdRequest(paymentState.paymentId.value)
+      );
+      const responseAction = yield take([
+        getType(paymentFetchPspsForPaymentIdSuccess),
+        getType(paymentFetchPspsForPaymentIdFailure)
+      ]);
+      if (isActionOf(paymentFetchPspsForPaymentIdFailure, responseAction)) {
+        // this step failed, exit the flow
+        return;
+      }
+      // all is ok, continue to the next step
+      continue;
+    }
+
     // finally, we signal the success of the activation flow
-    action.payload.onSuccess(paymentState.paymentId.value);
+    action.payload.onSuccess(
+      paymentState.paymentId.value,
+      paymentState.psps.value
+    );
 
     // since this is the last step, we exit the flow
     break;
@@ -814,13 +425,11 @@ export function* watchWalletSaga(
   // Sagas
   //
 
-  yield takeLatest(
-    getType(runAddCreditCardSaga),
-    addCreditCardSaga,
-    pagoPaClient
-  );
-
-  yield takeLatest(getType(runDeleteWalletSaga), deleteWalletSaga);
+  // yield takeLatest(
+  //   getType(runAddCreditCardSaga),
+  //   addCreditCardSaga,
+  //   pagoPaClient
+  // );
 
   yield takeLatest(
     getType(runStartOrResumePaymentSaga),
@@ -840,6 +449,12 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(fetchWalletsRequest),
     fetchWalletsRequestHandler,
+    pagoPaClient
+  );
+
+  yield takeLatest(
+    getType(paymentUpdateWalletPspRequest),
+    updateWalletPspRequestHandler,
     pagoPaClient
   );
 

@@ -41,7 +41,7 @@ import {
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
-import { Wallet } from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { AmountToImporto } from "../../../utils/amounts";
 
@@ -50,6 +50,7 @@ type NavigationParams = Readonly<{
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
   paymentId: string;
+  psps: ReadonlyArray<Psp>;
 }>;
 
 type ReduxMappedStateProps = Readonly<{

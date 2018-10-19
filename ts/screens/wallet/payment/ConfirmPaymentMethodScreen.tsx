@@ -51,7 +51,7 @@ type NavigationParams = Readonly<{
   verifica: PaymentRequestsGetResponse;
   paymentId: string;
   wallet: Wallet;
-  pspList: ReadonlyArray<Psp>;
+  psps: ReadonlyArray<Psp>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -85,7 +85,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     const verifica = this.props.navigation.getParam("verifica");
     const paymentId = this.props.navigation.getParam("paymentId");
     const wallet = this.props.navigation.getParam("wallet");
-    const pspList = this.props.navigation.getParam("pspList");
+    const psps = this.props.navigation.getParam("psps");
 
     const currentAmount = AmountToImporto.encode(
       verifica.importoSingoloVersamento
@@ -194,7 +194,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                     <Text
                       link={true}
                       onPress={() =>
-                        this.props.pickPsp(wallet, pspList, paymentId)
+                        this.props.pickPsp(wallet, psps, paymentId)
                       }
                     >
                       {I18n.t("payment.changePsp")}

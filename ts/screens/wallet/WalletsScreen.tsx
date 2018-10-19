@@ -20,11 +20,13 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import {
   navigateToPaymentScanQrCode,
   navigateToWalletAddPaymentMethod,
+  navigateToWalletHome,
+  navigateToWalletList,
   navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
-  runDeleteWalletSaga,
+  deleteWalletRequest,
   setFavoriteWallet
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -34,6 +36,7 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 import * as pot from "../../types/pot";
+import { showToast } from "../../utils/showToast";
 
 type ReduxMappedStateProps = Readonly<{
   wallets: ReadonlyArray<Wallet>;
@@ -135,7 +138,23 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavoriteWallet(walletId)),
-  deleteWallet: (walletId: number) => dispatch(runDeleteWalletSaga(walletId))
+  deleteWallet: (walletId: number) =>
+    dispatch(
+      deleteWalletRequest({
+        walletId,
+        onSuccess: action => {
+          showToast(I18n.t("wallet.delete.successful"), "success");
+          if (action.payload.length > 0) {
+            dispatch(navigateToWalletList());
+          } else {
+            dispatch(navigateToWalletHome());
+          }
+        },
+        onFailure: _ => {
+          showToast(I18n.t("wallet.delete.failed"), "danger");
+        }
+      })
+    )
 });
 
 export default connect(

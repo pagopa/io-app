@@ -35,27 +35,27 @@ import * as pot from "../../../types/pot";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentRequestCancel,
-  paymentRequestContinueWithPaymentMethods,
-  paymentRequestGoBack,
   paymentVerificaRequest,
   runStartOrResumePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import {
+  navigateToPaymentConfirmPaymentMethodScreen,
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentPickPspScreen
+} from "../../../store/actions/navigation";
+import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { mapErrorCodeToMessage } from "../../../types/errors";
+import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
-import { Wallet } from "../../../types/pagopa";
-import { Alert } from "react-native";
-import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
-import { navigateToPaymentPickPaymentMethodScreen } from "../../../store/actions/navigation";
+import { shouldSelectPspForWallet } from "../../../utils/payment";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
-  maybePaymentId: Option<string>; // FIXME: find a way to pass this when navigating back
 }>;
 
 type ReduxMappedStateProps = Readonly<{
@@ -67,10 +67,11 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   dispatchPaymentVerificaRequest: () => void;
-  confirmSummary: (verifica: PaymentRequestsGetResponse) => void;
+  startOrResumePayment: (verifica: PaymentRequestsGetResponse) => void;
   goBack: () => void;
   cancelPayment: () => void;
   onCancel: () => void;
+  onRetry: () => void;
 }>;
 
 type Props = ReduxMappedStateProps &
@@ -112,10 +113,10 @@ const formatMdInfoRpt = (r: RptId): string =>
 **${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props> {
-  public onComponentDidMount() {
-    if (this.props.navigation.getParam("maybePaymentId").isNone()) {
-      // on component mount, if we are not in a payment, trigger a request to
-      // fetch the payment summary
+  public componentDidMount() {
+    if (pot.isNone(this.props.potVerifica)) {
+      // on component mount, if we haven't fetch the payment summary if we
+      // haven't already
       this.props.dispatchPaymentVerificaRequest();
     }
   }
@@ -138,7 +139,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         ? {
             ...basePrimaryButtonProps,
             disabled: false,
-            onPress: () => this.props.confirmSummary(potVerifica.value)
+            onPress: () => this.props.startOrResumePayment(potVerifica.value)
           }
         : {
             ...basePrimaryButtonProps,
@@ -148,7 +149,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     const secondaryButtonProps = {
       block: true,
       light: true,
-      onPress: () => this.props.cancelPayment(),
+      onPress: () => this.props.navigation.goBack(),
       title: I18n.t("wallet.cancel")
     };
 
@@ -220,15 +221,33 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
-// TODO: Also add loading states for attiva, paymentid, check
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  error: pot.isError(state.wallet.payment.verifica)
-    ? some(state.wallet.payment.verifica.error.message)
-    : none,
-  isLoading: pot.isLoading(state.wallet.payment.verifica),
-  potVerifica: state.wallet.payment.verifica,
-  maybeFavoriteWallet: getFavoriteWallet(state)
-});
+// TODO: Also add loading states for attiva, paymentid, check, psplist
+// TODO: Add retry on error
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+  return {
+    error: pot.isError(verifica)
+      ? some(verifica.error.message)
+      : pot.isError(attiva)
+        ? some(attiva.error.message)
+        : pot.isError(paymentId)
+          ? some(paymentId.error.message)
+          : pot.isError(check)
+            ? some(check.error.message)
+            : pot.isError(psps)
+              ? some(psps.error.message)
+              : none,
+    // TODO: show different loading messages for each loading state
+    isLoading:
+      pot.isLoading(verifica) ||
+      pot.isLoading(attiva) ||
+      pot.isLoading(paymentId) ||
+      pot.isLoading(check) ||
+      pot.isLoading(psps),
+    potVerifica: verifica,
+    maybeFavoriteWallet: getFavoriteWallet(state)
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
@@ -237,35 +256,78 @@ const mapDispatchToProps = (
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
 
-  return {
-    dispatchPaymentVerificaRequest: () =>
-      dispatch(paymentVerificaRequest(rptId)),
-    confirmSummary: (verifica: PaymentRequestsGetResponse) =>
-      dispatch(
-        runStartOrResumePaymentSaga({
-          rptId,
-          verifica,
-          onSuccess: paymentId => {
-            if (props.maybeFavoriteWallet.isSome()) {
-              // confirm using the favorite wallet
-              // ...confirmPaymentMethodHandler
-            } else {
-              // select a wallet
+  const dispatchPaymentVerificaRequest = () =>
+    dispatch(paymentVerificaRequest(rptId));
+
+  const startOrResumePayment = (verifica: PaymentRequestsGetResponse) =>
+    dispatch(
+      runStartOrResumePaymentSaga({
+        rptId,
+        verifica,
+        onSuccess: (paymentId, psps) => {
+          // payment has been activated successfully
+          if (props.maybeFavoriteWallet.isSome()) {
+            // the user has selected a favorite wallet, so no need to ask to
+            // select one
+            const wallet = props.maybeFavoriteWallet.value;
+            if (shouldSelectPspForWallet(wallet, psps)) {
+              // there are multiple psps available for the favorite wallet,
+              // as the user to select one
               dispatch(
-                navigateToPaymentPickPaymentMethodScreen({
+                navigateToPaymentPickPspScreen({
                   rptId,
                   initialAmount,
                   verifica,
+                  wallet,
+                  psps,
                   paymentId
                 })
               );
+            } else {
+              // there is only one psp available or the user already selected
+              // a psp in the past for this wallet that can be used for this
+              // payment, in this case we can proceed to the confirmation
+              // screen
+              dispatch(
+                navigateToPaymentConfirmPaymentMethodScreen({
+                  rptId,
+                  initialAmount,
+                  verifica,
+                  paymentId,
+                  psps,
+                  wallet: props.maybeFavoriteWallet.value
+                })
+              );
             }
+          } else {
+            // select a wallet
+            dispatch(
+              navigateToPaymentPickPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                paymentId,
+                psps
+              })
+            );
           }
-        })
-      ),
-    goBack: () => dispatch(paymentRequestGoBack()),
-    cancelPayment: () => dispatch(paymentRequestCancel()),
-    onCancel: () => dispatch(paymentRequestCancel())
+        }
+      })
+    );
+
+  return {
+    dispatchPaymentVerificaRequest,
+    startOrResumePayment,
+    goBack: () => props.navigation.goBack(),
+    cancelPayment: () => props.navigation.goBack(),
+    onCancel: () => props.navigation.goBack(),
+    onRetry: () => {
+      if (pot.isSome(props.potVerifica)) {
+        startOrResumePayment(props.potVerifica.value);
+      } else {
+        dispatchPaymentVerificaRequest();
+      }
+    }
   };
 };
 

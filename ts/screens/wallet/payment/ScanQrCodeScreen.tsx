@@ -39,12 +39,12 @@ import { ComponentProps } from "../../../types/react";
 
 import { decodePagoPaQrCode } from "../../../utils/payment";
 
-import { none } from "fp-ts/lib/Option";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen
 } from "../../../store/actions/navigation";
 import { CameraMarker } from "./CameraMarker";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
   runPaymentTransactionSummarySaga: (
@@ -246,11 +246,11 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
+    dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
         rptId,
-        initialAmount,
-        maybePaymentId: none
+        initialAmount
       })
     );
   }

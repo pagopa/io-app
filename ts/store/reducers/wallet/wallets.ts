@@ -10,6 +10,11 @@ import { CreditCard, Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { Action } from "../../actions/types";
 import {
+  paymentUpdateWalletPspFailure,
+  paymentUpdateWalletPspRequest,
+  paymentUpdateWalletPspSuccess
+} from "../../actions/wallet/payment";
+import {
   creditCardDataCleanup,
   deleteWalletFailure,
   deleteWalletRequest,
@@ -104,6 +109,7 @@ const reducer = (
     //
 
     case getType(fetchWalletsRequest):
+    case getType(paymentUpdateWalletPspRequest):
     case getType(deleteWalletRequest):
       return {
         ...state,
@@ -111,6 +117,8 @@ const reducer = (
       };
 
     case getType(fetchWalletsSuccess):
+    case getType(paymentUpdateWalletPspSuccess):
+    case getType(deleteWalletSuccess):
       return {
         ...state,
         walletById: pot.some(toIndexed(action.payload, _ => _.idWallet))
@@ -118,17 +126,10 @@ const reducer = (
 
     case getType(fetchWalletsFailure):
     case getType(deleteWalletFailure):
+    case getType(paymentUpdateWalletPspFailure):
       return {
         ...state,
         walletById: pot.toError(state.walletById, action.payload)
-      };
-
-    case getType(deleteWalletSuccess):
-      return {
-        ...state,
-        walletById: pot.isSome(state.walletById)
-          ? pot.some(state.walletById.value)
-          : pot.none
       };
 
     case getType(setFavoriteWallet):
