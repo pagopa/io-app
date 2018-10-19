@@ -17,6 +17,7 @@ import {
 import { ReduxProps } from "./store/actions/types";
 import { IdentificationState } from "./store/reducers/identification";
 import { GlobalState } from "./store/reducers/types";
+import variables from "./theme/variables";
 
 type ReduxMappedStateProps = {
   identificationState: IdentificationState;
@@ -127,7 +128,10 @@ class IdentificationOverlay extends React.PureComponent<Props, State> {
     return (
       <View style={styles.wrapper}>
         <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
-          <StatusBar barStyle="light-content" />
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor={variables.contentPrimaryBackground}
+          />
           <Content primary={true}>
             <View spacer={true} extralarge={true} />
             <Text white={true} alignCenter={true}>
