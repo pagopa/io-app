@@ -1,7 +1,14 @@
 import { isNone, Option } from "fp-ts/lib/Option";
 import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
-import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  cancel,
+  fork,
+  put,
+  select,
+  takeLatest
+} from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
@@ -152,13 +159,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
-    yield call(checkAcceptedTosSaga);
 
-    ({ storedPin } = yield race({
-      storedPin: call(checkConfiguredPinSaga),
-      // Watch for abort action.
-      abortOnboarding: call(watchAbortOnboardingSaga)
-    }));
+    // Start the watchAbortOnboardingSaga
+    const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+    yield call(checkAcceptedTosSaga);
+    storedPin = yield call(checkConfiguredPinSaga);
+    // Stop the watchAbortOnboardingSaga
+    yield cancel(watchAbortOnboardingSagaTask);
   } else {
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
