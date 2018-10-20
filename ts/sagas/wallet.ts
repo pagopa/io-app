@@ -42,6 +42,7 @@ import {
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   creditCardCheckout3dsRequest,
+  creditCardCheckout3dsSuccess,
   deleteWalletRequest,
   fetchWalletsFailure,
   fetchWalletsRequest,
@@ -107,6 +108,10 @@ function* startOrResumeAddCreditCardSaga(
       _ => _.wallet.wallets
     );
 
+    //
+    // first step: add the credit card to the wallets
+    //
+
     if (pot.isNone(state.creditCardAddWallet)) {
       yield put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
       const responseAction = yield take([
@@ -120,6 +125,10 @@ function* startOrResumeAddCreditCardSaga(
       // all is ok, continue to the next step
       continue;
     }
+
+    //
+    // second step: verify the card with a payment
+    //
 
     const { idWallet } = state.creditCardAddWallet.value.data;
 
@@ -151,34 +160,38 @@ function* startOrResumeAddCreditCardSaga(
       continue;
     }
 
+    //
+    // third step: process the optional 3ds checkout
+    //
+
     const urlCheckout3ds =
       state.creditCardVerification.value.data.urlCheckout3ds;
     const pagoPaToken: Option<PagopaToken> = yield select<GlobalState>(
       getPagoPaToken
     );
 
-    if (
-      pot.isNone(state.creditCardCheckout3ds) &&
-      urlCheckout3ds !== undefined &&
-      pagoPaToken.isSome()
-    ) {
-      yield put(
-        creditCardCheckout3dsRequest({
-          urlCheckout3ds,
-          pagopaToken: pagoPaToken.value
-        })
-      );
-      const responseAction = yield take([
-        getType(addWalletCreditCardSuccess),
-        getType(addWalletCreditCardFailure)
-      ]);
-      if (isActionOf(addWalletCreditCardFailure, responseAction)) {
-        // this step failed, exit the flow
-        return;
+    if (pot.isNone(state.creditCardCheckout3ds)) {
+      if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
+        yield put(
+          creditCardCheckout3dsRequest({
+            urlCheckout3ds,
+            pagopaToken: pagoPaToken.value
+          })
+        );
+        yield take(getType(creditCardCheckout3dsSuccess));
+        // all is ok, continue to the next step
+        continue;
+      } else {
+        // if there is no need for a 3ds checkout, simulate a success checkout
+        // to proceed to the next step
+        yield put(creditCardCheckout3dsSuccess());
+        continue;
       }
-      // all is ok, continue to the next step
-      continue;
     }
+
+    //
+    // fourth step: verify that the new card exists in the user wallets
+    //
 
     // There currently is no way of determining whether the card has been added
     // successfully from the URL returned in the webview, so the approach here
@@ -199,6 +212,10 @@ function* startOrResumeAddCreditCardSaga(
         // signal the completion
         if (action.payload.onSuccess) {
           action.payload.onSuccess();
+        }
+      } else {
+        if (action.payload.onFailure) {
+          action.payload.onFailure();
         }
       }
     }

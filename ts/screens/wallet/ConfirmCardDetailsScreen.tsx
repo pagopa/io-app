@@ -2,7 +2,7 @@
  * This screen presents a summary on the credit card after the user
  * inserted the data required to save a new card
  */
-import { Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
@@ -15,13 +15,15 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Switch } from "react-native";
+import { Modal, Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
+import { withErrorModal } from "../../components/helpers/withErrorModal";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -32,12 +34,14 @@ import { Dispatch } from "../../store/actions/types";
 import { paymentRequestPickPaymentMethod } from "../../store/actions/wallet/payment";
 import {
   addWalletCreditCardInit,
+  creditCardCheckout3dsSuccess,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { WalletsState } from "../../store/reducers/wallet/wallets";
 import { CreditCard } from "../../types/pagopa";
+import * as pot from "../../types/pot";
 import { showToast } from "../../utils/showToast";
+import Checkout3DsScreen from "./Checkout3DsScreen";
 
 type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -50,18 +54,28 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedStateProps = Readonly<{
-  creditCardAddWallet: string;
+  isLoading: boolean;
+  checkout3dsUrl: Option<string>;
+  error: Option<string>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   addWalletCreditCardInit: () => void;
+  creditCardCheckout3dsSuccess: () => void;
   runStartOrResumeAddCreditCardSaga: (
     creditCard: CreditCard,
     setAsFavorite: boolean
   ) => void;
+  onCancel: () => void;
 }>;
 
-type Props = ReduxMappedDispatchProps &
+type ReduxMergedProps = Readonly<{
+  onRetry: () => void;
+}>;
+
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  ReduxMergedProps &
   NavigationInjectedProps<NavigationParams>;
 
 type State = Readonly<{
@@ -94,6 +108,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const creditCard = this.props.navigation.getParam("creditCard");
+
     const wallet = {
       creditCard,
       type: "CREDIT_CARD",
@@ -160,19 +175,53 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           rightButton={secondaryButtonProps}
           inlineHalf={true}
         />
+        <Modal
+          animationType="fade"
+          transparent={false}
+          visible={this.props.checkout3dsUrl.isSome()}
+        >
+          {this.props.checkout3dsUrl.isSome() && (
+            <Checkout3DsScreen
+              url={this.props.checkout3dsUrl.value}
+              onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
+            />
+          )}
+        </Modal>
       </Container>
     );
   }
 }
 
-// TODO: add loading/error states
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  // creditCardAddWallet: state.wallet.wallets.creditCardAddWallet,
-  // creditCardVerification: state.wallet.wallets.creditCardVerification,
-  // creditCardCheckout3ds: state.wallet.wallets.creditCardCheckout3ds,
-  // walletById: state.wallet.wallets.walletById
-  creditCardAddWallet: ""
-});
+// TODO: add error states
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  const {
+    creditCardAddWallet,
+    creditCardVerification,
+    creditCardCheckout3ds,
+    walletById
+  } = state.wallet.wallets;
+
+  const isLoading =
+    pot.isLoading(creditCardAddWallet) ||
+    pot.isLoading(creditCardVerification) ||
+    pot.isLoading(walletById);
+
+  const error = pot.isError(creditCardAddWallet)
+    ? some(creditCardAddWallet.error.message)
+    : pot.isError(creditCardVerification)
+      ? some("GENERIC_ERROR")
+      : pot.isError(walletById)
+        ? some("GENERIC_ERROR")
+        : none;
+
+  return {
+    isLoading,
+    error,
+    checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
+      ? pot.toOption(creditCardCheckout3ds)
+      : none
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
@@ -195,6 +244,8 @@ const mapDispatchToProps = (
   };
   return {
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
+    creditCardCheckout3dsSuccess: () =>
+      dispatch(creditCardCheckout3dsSuccess()),
     runStartOrResumeAddCreditCardSaga: (
       creditCard: CreditCard,
       setAsFavorite: boolean
@@ -212,8 +263,44 @@ const mapDispatchToProps = (
             navigateToNextScreen();
           }
         })
-      )
+      ),
+    onCancel: () => props.navigation.goBack()
   };
 };
 
-export default connect(mapStateToProps)(ConfirmCardDetailsScreen);
+const mergeProps = (
+  stateProps: ReduxMappedStateProps,
+  dispatchProps: ReduxMappedDispatchProps,
+  ownProps: NavigationInjectedProps<NavigationParams>
+) => {
+  const maybeError = stateProps.error;
+  const isRetriableError =
+    maybeError.isNone() || maybeError.value !== "ALREADY_EXISTS";
+  const onRetry = isRetriableError
+    ? () => {
+        dispatchProps.runStartOrResumeAddCreditCardSaga(
+          ownProps.navigation.getParam("creditCard"),
+          false // FIXME: unfortunately we can't access the internal component state from here?
+        );
+      }
+    : undefined;
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    ...{
+      onRetry
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(
+  withErrorModal(
+    withLoadingSpinner(ConfirmCardDetailsScreen, {}),
+    (_: string) => _
+  )
+);

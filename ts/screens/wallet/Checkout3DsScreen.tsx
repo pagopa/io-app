@@ -1,21 +1,12 @@
 import { Container } from "native-base";
 import * as React from "react";
 import { NavState, StyleSheet, View, WebView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
-import { Dispatch } from "../../store/actions/types";
-import { addCreditCardCompleted } from "../../store/actions/wallet/wallets";
 
-type NavigationParams = Readonly<{
+type Props = Readonly<{
   url: string;
+  onCheckout3dsSuccess: () => void;
 }>;
-
-type ReduxMappedProps = Readonly<{
-  addCreditCardCompleted: () => void;
-}>;
-
-type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
 
 type State = {
   isWebViewLoading: boolean;
@@ -34,7 +25,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Checkout3DsScreen extends React.Component<Props, State> {
+export default class Checkout3DsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -53,14 +44,12 @@ class Checkout3DsScreen extends React.Component<Props, State> {
     if (navState.url !== undefined && navState.url.includes(exitUrl)) {
       // time to leave, trigger the appropriate action
       // to let the saga know that it can wrap things up
-      this.props.addCreditCardCompleted();
+      this.props.onCheckout3dsSuccess();
     }
   };
 
   public render() {
-    // FIXME: using google as default doesn't make sense, we need to do
-    //        something else (e.g. show an error screen)
-    const url = this.props.navigation.getParam("url", "https://www.google.com");
+    const { url } = this.props;
     return (
       <Container>
         <WebView
@@ -79,12 +68,3 @@ class Checkout3DsScreen extends React.Component<Props, State> {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedProps => ({
-  addCreditCardCompleted: () => dispatch(addCreditCardCompleted())
-});
-
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(Checkout3DsScreen);

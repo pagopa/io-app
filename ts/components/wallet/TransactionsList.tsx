@@ -21,7 +21,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
-import { formatNumberAmount, centsToAmount } from "../../utils/stringBuilder";
+import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 

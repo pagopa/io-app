@@ -95,8 +95,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       feeForWallet(wallet).getOrElse(UNKNOWN_AMOUNT)
     );
 
-    const totalAmount =
-      AmountInEuroCentsFromNumber.encode(currentAmount) + walletFee;
+    const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
+      currentAmount
+    );
+    // tslint:disable-next-line:restrict-plus-operands
+    const totalAmount = currentAmountDecoded + walletFee;
 
     const paymentReason = verifica.causaleVersamento;
 
