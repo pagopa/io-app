@@ -7,6 +7,7 @@ import I18n from "../i18n";
 import { ReduxProps } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import IconFont from "./ui/IconFont";
 
 type ReduxMappedProps = {
   isConnected: boolean;
@@ -16,18 +17,24 @@ type Props = ReduxMappedProps & ReduxProps;
 
 const styles = StyleSheet.create({
   container: {
-    zIndex: 1
+    zIndex: Platform.OS === "ios" ? 1 : undefined
   },
   inner: {
-    backgroundColor: color(customVariables.brandDarkGray)
-      .darken(0.1)
-      .fade(0.2)
+    backgroundColor: color(customVariables.brandDarkestGray)
+      .fade(0.5)
       .string(),
     height: 30,
     position: "absolute",
+    flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
     top: Platform.OS === "ios" ? 12 : 0,
-    width: "100%"
+    width: "100%",
+    zIndex: Platform.OS === "android" ? 1 : undefined
+  },
+  icon: {
+    color: customVariables.colorWhite,
+    marginRight: customVariables.fontSizeBase / 2
   },
   text: {
     textAlign: "center",
@@ -47,6 +54,7 @@ const ConnectionBar: React.SFC<Props> = props => {
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
+        <IconFont name="io-offline" style={styles.icon} />
         <Text style={styles.text}>{I18n.t("connection.status.offline")}</Text>
       </View>
     </View>
