@@ -43,8 +43,8 @@ import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen
 } from "../../../store/actions/navigation";
-import { CameraMarker } from "./CameraMarker";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import { CameraMarker } from "./CameraMarker";
 
 type ReduxMappedDispatchProps = Readonly<{
   runPaymentTransactionSummarySaga: (

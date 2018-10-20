@@ -19,6 +19,7 @@ import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
@@ -26,10 +27,17 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
-import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { runAddCreditCardSaga } from "../../store/actions/wallet/wallets";
-import { CreditCard, Wallet } from "../../types/pagopa";
+import { paymentRequestPickPaymentMethod } from "../../store/actions/wallet/payment";
+import {
+  addWalletCreditCardInit,
+  runStartOrResumeAddCreditCardSaga
+} from "../../store/actions/wallet/wallets";
+import { GlobalState } from "../../store/reducers/types";
+import { WalletsState } from "../../store/reducers/wallet/wallets";
+import { CreditCard } from "../../types/pagopa";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -41,14 +49,19 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type ReduMappedDispatchProps = Readonly<{
-  runAddCreditCardSaga: (
+type ReduxMappedStateProps = Readonly<{
+  creditCardAddWallet: string;
+}>;
+
+type ReduxMappedDispatchProps = Readonly<{
+  addWalletCreditCardInit: () => void;
+  runStartOrResumeAddCreditCardSaga: (
     creditCard: CreditCard,
     setAsFavorite: boolean
   ) => void;
 }>;
 
-type Props = ReduMappedDispatchProps &
+type Props = ReduxMappedDispatchProps &
   NavigationInjectedProps<NavigationParams>;
 
 type State = Readonly<{
@@ -56,6 +69,11 @@ type State = Readonly<{
 }>;
 
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
+  public componentDidMount() {
+    // reset the credit card boarding state on mount
+    this.props.addWalletCreditCardInit();
+  }
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -87,7 +105,10 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       block: true,
       primary: true,
       onPress: () =>
-        this.props.runAddCreditCardSaga(creditCard, this.state.favorite),
+        this.props.runStartOrResumeAddCreditCardSaga(
+          creditCard,
+          this.state.favorite
+        ),
       title: I18n.t("wallet.saveCard.save")
     };
 
@@ -119,11 +140,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             menu={false}
             showFavoriteIcon={false}
             lastUsage={false}
-            navigateToWalletTransactions={(selectedWallet: Wallet) =>
-              this.props.navigation.dispatch(
-                navigateToWalletTransactionsScreen({ selectedWallet })
-              )
-            }
           />
           <View spacer={true} />
           <Grid>
@@ -149,21 +165,55 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: Props
-): ReduMappedDispatchProps => ({
-  runAddCreditCardSaga: (creditCard: CreditCard, setAsFavorite: boolean) =>
-    dispatch(
-      runAddCreditCardSaga({
-        creditCard,
-        setAsFavorite,
-        inPayment: props.navigation.getParam("inPayment")
-      })
-    )
+// TODO: add loading/error states
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  // creditCardAddWallet: state.wallet.wallets.creditCardAddWallet,
+  // creditCardVerification: state.wallet.wallets.creditCardVerification,
+  // creditCardCheckout3ds: state.wallet.wallets.creditCardCheckout3ds,
+  // walletById: state.wallet.wallets.walletById
+  creditCardAddWallet: ""
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(ConfirmCardDetailsScreen);
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: NavigationInjectedProps<NavigationParams>
+): ReduxMappedDispatchProps => {
+  const navigateToNextScreen = () => {
+    const inPayment = props.navigation.getParam("inPayment");
+    if (inPayment.isSome()) {
+      dispatch(
+        paymentRequestPickPaymentMethod({
+          rptId: inPayment.value.rptId,
+          initialAmount: inPayment.value.initialAmount,
+          verifica: inPayment.value.verifica,
+          paymentId: inPayment.value.paymentId
+        })
+      );
+    } else {
+      dispatch(navigateToWalletHome());
+    }
+  };
+  return {
+    addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
+    runStartOrResumeAddCreditCardSaga: (
+      creditCard: CreditCard,
+      setAsFavorite: boolean
+    ) =>
+      dispatch(
+        runStartOrResumeAddCreditCardSaga({
+          creditCard,
+          setAsFavorite,
+          onSuccess: () => {
+            showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
+            navigateToNextScreen();
+          },
+          onFailure: () => {
+            showToast(I18n.t("wallet.newPaymentMethod.failed"), "danger");
+            navigateToNextScreen();
+          }
+        })
+      )
+  };
+};
+
+export default connect(mapStateToProps)(ConfirmCardDetailsScreen);

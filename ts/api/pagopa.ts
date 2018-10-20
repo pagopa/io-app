@@ -171,7 +171,7 @@ type AddWalletCreditCardUsingPOSTTWith422 = AddResponseType<
   PagoPAErrorResponse
 >;
 
-const boardCreditCard: (
+const addWalletCreditCard: (
   pagoPaToken: PagopaToken
 ) => MapResponseType<
   AddWalletCreditCardUsingPOSTTWith422,
@@ -301,21 +301,22 @@ export function PagoPaClient(
         id,
         payRequest
       }),
-    boardCreditCard: (
-      pagoPaToken: PagopaToken,
-      walletRequest: NullableWallet
-    ) =>
-      createFetchRequestForApi(boardCreditCard(pagoPaToken), options)({
-        walletRequest: { data: walletRequest }
+    addWalletCreditCard: (pagoPaToken: PagopaToken, wallet: NullableWallet) =>
+      createFetchRequestForApi(addWalletCreditCard(pagoPaToken), options)({
+        walletRequest: { data: wallet }
       }),
-    boardPay: (
+    payCreditCardVerification: (
       pagoPaToken: PagopaToken,
       payRequest: TypeofApiParams<
         PayCreditCardVerificationUsingPOSTT
-      >["payRequest"]
+      >["payRequest"],
+      language?: TypeofApiParams<
+        PayCreditCardVerificationUsingPOSTT
+      >["language"]
     ) =>
       createFetchRequestForApi(boardPay(pagoPaToken), options)({
-        payRequest
+        payRequest,
+        language
       }),
     deleteWallet: (
       pagoPaToken: PagopaToken,

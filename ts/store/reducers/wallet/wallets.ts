@@ -6,7 +6,11 @@ import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { CreditCard, Wallet } from "../../../types/pagopa";
+import {
+  TransactionResponse,
+  Wallet,
+  WalletResponse
+} from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { Action } from "../../actions/types";
 import {
@@ -15,13 +19,21 @@ import {
   paymentUpdateWalletPspSuccess
 } from "../../actions/wallet/payment";
 import {
-  creditCardDataCleanup,
+  addWalletCreditCardFailure,
+  addWalletCreditCardInit,
+  addWalletCreditCardRequest,
+  addWalletCreditCardSuccess,
+  creditCardCheckout3dsRequest,
+  creditCardCheckout3dsSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationRequest,
+  payCreditCardVerificationSuccess,
   setFavoriteWallet
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -30,13 +42,17 @@ import { GlobalState } from "../types";
 export type WalletsState = Readonly<{
   walletById: pot.Pot<IndexedById<Wallet>>;
   favoriteWalletId: Option<number>;
-  newCreditCard: pot.Pot<CreditCard>;
+  creditCardAddWallet: pot.Pot<WalletResponse>;
+  creditCardVerification: pot.Pot<TransactionResponse>;
+  creditCardCheckout3ds: pot.Pot<string>;
 }>;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
   favoriteWalletId: none,
-  newCreditCard: pot.none
+  creditCardAddWallet: pot.none,
+  creditCardVerification: pot.none,
+  creditCardCheckout3ds: pot.none
 };
 
 // selectors
@@ -65,7 +81,7 @@ export const getFavoriteWallet = (state: GlobalState) =>
   );
 
 export const getNewCreditCard = (state: GlobalState) =>
-  state.wallet.wallets.newCreditCard;
+  state.wallet.wallets.creditCardAddWallet;
 
 export const walletsSelector = createSelector(
   getWallets,
@@ -138,14 +154,78 @@ const reducer = (
         favoriteWalletId: fromNullable(action.payload)
       };
 
-    /**
-     * clean up "newCreditCard" after it has been
-     * added to pagoPA
-     */
-    case getType(creditCardDataCleanup):
+    //
+    // add credit card
+    //
+
+    case getType(addWalletCreditCardInit):
       return {
         ...state,
-        newCreditCard: pot.none
+        creditCardAddWallet: pot.none,
+        creditCardVerification: pot.none,
+        creditCardCheckout3ds: pot.none
+      };
+
+    case getType(addWalletCreditCardRequest):
+      return {
+        ...state,
+        creditCardAddWallet: pot.noneLoading
+      };
+
+    case getType(addWalletCreditCardSuccess):
+      return {
+        ...state,
+        creditCardAddWallet: pot.some(action.payload)
+      };
+
+    case getType(addWalletCreditCardFailure):
+      return {
+        ...state,
+        creditCardAddWallet: pot.noneError(Error(action.payload))
+      };
+
+    //
+    // pay credit card verification
+    //
+
+    case getType(payCreditCardVerificationRequest):
+      return {
+        ...state,
+        creditCardVerification: pot.noneLoading
+      };
+
+    case getType(payCreditCardVerificationSuccess):
+      return {
+        ...state,
+        creditCardVerification: pot.some(action.payload)
+      };
+
+    case getType(payCreditCardVerificationFailure):
+      return {
+        ...state,
+        creditCardVerification: pot.noneError(action.payload)
+      };
+
+    //
+    // credit card 3ds checkout
+    //
+
+    case getType(creditCardCheckout3dsRequest):
+      // a valid URL has been made available
+      // from pagoPA and needs to be opened in a webview
+      const urlWithToken = `${action.payload.urlCheckout3ds}&sessionToken=${
+        action.payload.pagopaToken
+      }`;
+
+      return {
+        ...state,
+        creditCardCheckout3ds: pot.someLoading(urlWithToken)
+      };
+
+    case getType(creditCardCheckout3dsSuccess):
+      return {
+        ...state,
+        creditCardCheckout3ds: pot.some("done")
       };
 
     default:

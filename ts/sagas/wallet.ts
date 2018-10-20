@@ -4,9 +4,7 @@
  * A saga that manages the Wallet.
  */
 
-// import { none, Option } from "fp-ts/lib/Option";
-// import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-// import { StackActions } from "react-navigation";
+import { Option } from "fp-ts/lib/Option";
 import {
   call,
   Effect,
@@ -17,17 +15,10 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
-// import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
-
 import { BackendClient } from "../api/backend";
 import { PagoPaClient } from "../api/pagopa";
 import { apiUrlPrefix } from "../config";
-// import I18n from "../i18n";
 
-// import {
-//   navigateToWalletCheckout3dsScreen,
-//   navigateToWalletHome
-// } from "../store/actions/navigation";
 import {
   paymentAttivaFailure,
   paymentAttivaRequest,
@@ -41,41 +32,41 @@ import {
   paymentIdPollingFailure,
   paymentIdPollingRequest,
   paymentIdPollingSuccess,
-  // paymentRequestPickPaymentMethod,
   paymentUpdateWalletPspRequest,
   paymentVerificaRequest,
   runStartOrResumePaymentSaga
 } from "../store/actions/wallet/payment";
 import { fetchTransactionsRequest } from "../store/actions/wallet/transactions";
 import {
-  // addCreditCardCompleted,
-  // creditCardDataCleanup,
+  addWalletCreditCardFailure,
+  addWalletCreditCardRequest,
+  addWalletCreditCardSuccess,
+  creditCardCheckout3dsRequest,
   deleteWalletRequest,
-  // fetchWalletsFailure,
-  fetchWalletsRequest
-  // fetchWalletsSuccess,
-  // runAddCreditCardSaga
+  fetchWalletsFailure,
+  fetchWalletsRequest,
+  fetchWalletsSuccess,
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationRequest,
+  payCreditCardVerificationSuccess,
+  runStartOrResumeAddCreditCardSaga
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
-// import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
-// import { getWalletsByIdOption } from "../store/reducers/wallet/wallets";
+import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 
-// import { NullableWallet, PagopaToken, PayRequest } from "../types/pagopa";
+import { NullableWallet, PagopaToken, PayRequest } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
-// import { SagaCallReturnType } from "../types/utils";
 
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 
-import {
-  fetchAndStorePagoPaToken
-  // fetchWithTokenRefresh
-} from "./wallet/utils";
+import { fetchAndStorePagoPaToken } from "./wallet/utils";
 
-// import { TranslationKeys } from "../../locales/locales";
 import {
+  addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
+  payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
   paymentFetchPspsForWalletRequestHandler,
@@ -86,51 +77,8 @@ import {
 
 import * as pot from "../types/pot";
 
-/*
-function* onAddCreditCardDone(
-  isSuccess: boolean,
-  message: Option<TranslationKeys>,
-  inPayment: Option<{
-    rptId: RptId;
-    initialAmount: AmountInEuroCents;
-    verifica: PaymentRequestsGetResponse;
-    paymentId: string;
-  }>
-): IterableIterator<Effect> {
-  // if result is success, show a success message, or else, show the failure
-  // message if provided or fall back to default failure message
-  const toastText = isSuccess
-    ? "wallet.newPaymentMethod.successful"
-    : message.getOrElse("wallet.newPaymentMethod.failed");
-  const toastType = isSuccess ? "success" : "danger";
-
-  showToast(I18n.t(toastText), toastType);
-
-  // TODO: this should use StackActions.reset
-  // to reset the navigation. Right now, the
-  // "back" option is not allowed -- so the user cannot
-  // get back to previous screens, but the navigation
-  // stack should be cleaned right here
-  // @https://www.pivotaltracker.com/story/show/159300579
-  const nextStepAction = inPayment.isSome()
-    ? paymentRequestPickPaymentMethod({
-        rptId: inPayment.value.rptId,
-        initialAmount: inPayment.value.initialAmount,
-        verifica: inPayment.value.verifica,
-        paymentId: inPayment.value.paymentId
-      })
-    : navigateToWalletHome();
-
-  // navigate to the next action
-  yield put(nextStepAction);
-  // Wait for the navigation transition to complete, in order to avoid
-  // to see the card's placeholder data.
-  yield take(StackActions.COMPLETE_TRANSITION);
-
-  // cleanup credit card data from the redux state
-  yield put(creditCardDataCleanup());
-}
-*/
+const MAX_RETRIES_POLLING = 180;
+const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 /**
  * This saga manages the flow for adding a new card.
@@ -140,103 +88,97 @@ function* onAddCreditCardDone(
  *
  * Run from ConfirmCardDetailsScreen
  */
-/*
-function* addCreditCardSaga(
-  pagoPaClient: PagoPaClient,
-  action: ActionType<typeof runAddCreditCardSaga>
-): Iterator<Effect> {
-  const wallet: NullableWallet = {
+// tslint:disable-next-line:cognitive-complexity
+function* startOrResumeAddCreditCardSaga(
+  action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
+) {
+  const creditCardWallet: NullableWallet = {
     idWallet: null,
     type: "CREDIT_CARD",
     favourite: action.payload.setAsFavorite,
     creditCard: action.payload.creditCard,
     psp: undefined
   };
-  // 1st call: boarding credit card
-  try {
-    const boardCreditCard = (token: PagopaToken) =>
-      pagoPaClient.boardCreditCard(token, wallet);
-    yield put(walletManagementSetLoadingState());
-    const responseBoardCC: SagaCallReturnType<
-      typeof boardCreditCard
-    > = yield call(fetchWithTokenRefresh, boardCreditCard, pagoPaClient);
-    yield put(walletManagementResetLoadingState());
 
-    const failedCardAlreadyExists =
-      typeof responseBoardCC !== "undefined" &&
-      responseBoardCC.status === 422 &&
-      responseBoardCC.value.message === "creditcard.already_exists";
-
-
-    // Failed request. show an error (TODO) and return
-    // @https://www.pivotaltracker.com/story/show/160521051
-
-    if (
-      failedCardAlreadyExists ||
-      typeof responseBoardCC === "undefined" ||
-      responseBoardCC.status !== 200
-    ) {
-      yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
-      return;
-    }
-
-    // 1st call was successful. Proceed with the 2nd one
-    // (boarding pay)
-    const { idWallet } = responseBoardCC.value.data;
-    const payRequest: PayRequest = {
-      data: {
-        idWallet,
-        tipo: "web",
-        cvv: wallet.creditCard.securityCode
-          ? wallet.creditCard.securityCode
-          : undefined
-      }
-    };
-    const boardPay = (token: PagopaToken) =>
-      pagoPaClient.boardPay(token, payRequest);
-    yield put(walletManagementSetLoadingState());
-    const responseBoardPay: SagaCallReturnType<typeof boardPay> = yield call(
-      fetchWithTokenRefresh,
-      boardPay,
-      pagoPaClient
+  while (true) {
+    // before each step we select the updated payment state to know what has
+    // been already done.
+    const state: GlobalState["wallet"]["wallets"] = yield select<GlobalState>(
+      _ => _.wallet.wallets
     );
-    yield put(walletManagementResetLoadingState());
 
-
-    // Failed request. show an error (TODO) and return
-
-    if (responseBoardPay === undefined || responseBoardPay.status !== 200) {
-      // FIXME: we should not navigate to the wallet home in case we're inside
-      //        a payment, instead we should go pack to the payment method
-      //        selection screen.
-      yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
-      return;
+    if (pot.isNone(state.creditCardAddWallet)) {
+      yield put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
+      const responseAction = yield take([
+        getType(addWalletCreditCardSuccess),
+        getType(addWalletCreditCardFailure)
+      ]);
+      if (isActionOf(addWalletCreditCardFailure, responseAction)) {
+        // this step failed, exit the flow
+        return;
+      }
+      // all is ok, continue to the next step
+      continue;
     }
-    const url = responseBoardPay.value.data.urlCheckout3ds;
+
+    const { idWallet } = state.creditCardAddWallet.value.data;
+
+    if (pot.isNone(state.creditCardVerification)) {
+      const payRequest: PayRequest = {
+        data: {
+          idWallet,
+          tipo: "web",
+          cvv: action.payload.creditCard.securityCode
+            ? action.payload.creditCard.securityCode
+            : undefined
+        }
+      };
+      yield put(
+        payCreditCardVerificationRequest({
+          payRequest,
+          language: action.payload.language
+        })
+      );
+      const responseAction = yield take([
+        getType(payCreditCardVerificationSuccess),
+        getType(payCreditCardVerificationFailure)
+      ]);
+      if (isActionOf(payCreditCardVerificationFailure, responseAction)) {
+        // this step failed, exit the flow
+        return;
+      }
+      // all is ok, continue to the next step
+      continue;
+    }
+
+    const urlCheckout3ds =
+      state.creditCardVerification.value.data.urlCheckout3ds;
     const pagoPaToken: Option<PagopaToken> = yield select<GlobalState>(
       getPagoPaToken
     );
-    if (url === undefined || pagoPaToken.isNone()) {
-      // pagoPA is *always* supposed to pass a URL
-      // for the app to open. if it is not there,
-      // exit with an error (TODO)
-      return;
+
+    if (
+      pot.isNone(state.creditCardCheckout3ds) &&
+      urlCheckout3ds !== undefined &&
+      pagoPaToken.isSome()
+    ) {
+      yield put(
+        creditCardCheckout3dsRequest({
+          urlCheckout3ds,
+          pagopaToken: pagoPaToken.value
+        })
+      );
+      const responseAction = yield take([
+        getType(addWalletCreditCardSuccess),
+        getType(addWalletCreditCardFailure)
+      ]);
+      if (isActionOf(addWalletCreditCardFailure, responseAction)) {
+        // this step failed, exit the flow
+        return;
+      }
+      // all is ok, continue to the next step
+      continue;
     }
-    // a valid URL has been made available
-    // from pagoPA and needs to be opened in a webview
-    const urlWithToken = `${url}&sessionToken=${pagoPaToken.value}`;
-    yield put(
-      navigateToWalletCheckout3dsScreen({
-        url: urlWithToken
-      })
-    );
-
-
-    // Wait for the webview to do its thing
-    // (will trigger an addCreditCardCompleted
-    // action upon finishing)
-
-    yield take(getType(addCreditCardCompleted));
 
     // There currently is no way of determining whether the card has been added
     // successfully from the URL returned in the webview, so the approach here
@@ -244,36 +186,28 @@ function* addCreditCardSaga(
     // wallet we just added.
     // TODO: find a way of finding out the result of the request from the URL
     yield put(fetchWalletsRequest());
-    yield take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)]);
-    const updatedWallets: ReturnType<
-      typeof getWalletsByIdOption
-    > = yield select<GlobalState>(getWalletsByIdOption);
-
-    // FIXME: in case the calls to retrieve the wallets fails, we always fail,
-    //        but we should retry instead or show an error
-    const maybeAddedWallet = updatedWallets
-      .mapNullable(wx => wx[idWallet])
-      .toUndefined();
-
-
-    // TODO: introduce a better way of displaying
-    // info messages (e.g. red/green banner at the
-    // top of the screen)
-
-    if (maybeAddedWallet !== undefined) {
-      yield call(onAddCreditCardDone, true, none, action.payload.inPayment);
-    } else {
-      yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
+    const fetchWalletsResultAction = yield take([
+      getType(fetchWalletsSuccess),
+      getType(fetchWalletsFailure)
+    ]);
+    if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
+      const updatedWallets = fetchWalletsResultAction.payload;
+      const maybeAddedWallet = updatedWallets.find(
+        _ => _.idWallet === idWallet
+      );
+      if (maybeAddedWallet) {
+        // signal the completion
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess();
+        }
+      }
     }
-  } catch {
-    yield put(walletManagementResetLoadingState());
-    yield call(onAddCreditCardDone, false, none, action.payload.inPayment);
+
+    // TODO: set as favorite
+
+    break;
   }
 }
-*/
-
-const MAX_RETRIES_POLLING = 180;
-const DELAY_BETWEEN_RETRIES_MS = 1000;
 
 /**
  * This saga will run in sequence the requests needed to activate a payment:
@@ -425,11 +359,10 @@ export function* watchWalletSaga(
   // Sagas
   //
 
-  // yield takeLatest(
-  //   getType(runAddCreditCardSaga),
-  //   addCreditCardSaga,
-  //   pagoPaClient
-  // );
+  yield takeLatest(
+    getType(runStartOrResumeAddCreditCardSaga),
+    startOrResumeAddCreditCardSaga
+  );
 
   yield takeLatest(
     getType(runStartOrResumePaymentSaga),
@@ -449,6 +382,18 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(fetchWalletsRequest),
     fetchWalletsRequestHandler,
+    pagoPaClient
+  );
+
+  yield takeLatest(
+    getType(addWalletCreditCardRequest),
+    addWalletCreditCardRequestHandler,
+    pagoPaClient
+  );
+
+  yield takeLatest(
+    getType(payCreditCardVerificationRequest),
+    payCreditCardVerificationRequestHandler,
     pagoPaClient
   );
 

@@ -33,11 +33,17 @@ import {
   fetchTransactionsSuccess
 } from "../../store/actions/wallet/transactions";
 import {
+  addWalletCreditCardFailure,
+  addWalletCreditCardRequest,
+  addWalletCreditCardSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
   fetchWalletsFailure,
-  fetchWalletsSuccess
+  fetchWalletsSuccess,
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationRequest,
+  payCreditCardVerificationSuccess
 } from "../../store/actions/wallet/wallets";
 import {
   extractNodoError,
@@ -195,6 +201,63 @@ export function* deleteWalletRequestHandler(
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
     }
+  }
+}
+
+export function* addWalletCreditCardRequestHandler(
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof addWalletCreditCardRequest>
+) {
+  try {
+    const boardCreditCard = (token: PagopaToken) =>
+      pagoPaClient.addWalletCreditCard(token, action.payload.creditcard);
+
+    const response: SagaCallReturnType<typeof boardCreditCard> = yield call(
+      fetchWithTokenRefresh,
+      boardCreditCard,
+      pagoPaClient
+    );
+
+    if (response !== undefined && response.status === 200) {
+      yield put(addWalletCreditCardSuccess(response.value));
+    } else if (
+      response !== undefined &&
+      response.status === 422 &&
+      response.value.message === "creditcard.already_exists"
+    ) {
+      yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(addWalletCreditCardFailure("GENERIC_ERROR"));
+  }
+}
+
+export function* payCreditCardVerificationRequestHandler(
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof payCreditCardVerificationRequest>
+) {
+  try {
+    const boardPay = (token: PagopaToken) =>
+      pagoPaClient.payCreditCardVerification(
+        token,
+        action.payload.payRequest,
+        action.payload.language
+      );
+    const response: SagaCallReturnType<typeof boardPay> = yield call(
+      fetchWithTokenRefresh,
+      boardPay,
+      pagoPaClient
+    );
+
+    if (response !== undefined && response.status === 200) {
+      yield put(payCreditCardVerificationSuccess(response.value));
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(payCreditCardVerificationFailure(Error("GENERIC_ERROR")));
   }
 }
 

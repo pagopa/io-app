@@ -19,6 +19,8 @@ import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
+
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
@@ -29,6 +31,8 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
+import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -52,7 +56,8 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  prepareCreditCardForBoarding: (card: CreditCard) => void;
+  addWalletCreditCardInit: () => void;
+  navigateToConfirmCardDetailsScreen: (card: CreditCard) => void;
 }>;
 
 type Props = ReduxMappedStateProps &
@@ -129,7 +134,7 @@ function getCardFromState(state: State): Option<CreditCard> {
   return some(card);
 }
 
-export default class AddCardScreen extends React.Component<Props, State> {
+class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -139,15 +144,6 @@ export default class AddCardScreen extends React.Component<Props, State> {
       holder: none
     };
   }
-
-  private submit = (creditCard: CreditCard) => {
-    this.props.navigation.dispatch(
-      navigateToWalletConfirmCardDetails({
-        creditCard,
-        inPayment: this.props.navigation.getParam("inPayment")
-      })
-    );
-  };
 
   public render(): React.ReactNode {
     // list of cards to be displayed
@@ -164,14 +160,23 @@ export default class AddCardScreen extends React.Component<Props, State> {
     const primaryButtonPropsFromState = (
       state: State
     ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-      const maybeCard = getCardFromState(state);
-      return {
+      const baseButtonProps = {
         block: true,
         primary: true,
-        onPress: maybeCard.map(card => () => this.submit(card)).toUndefined(),
-        disabled: maybeCard.isNone(),
         title: I18n.t("global.buttons.continue")
       };
+      const maybeCard = getCardFromState(state);
+      return maybeCard
+        .map(card => ({
+          ...baseButtonProps,
+          disabled: false,
+          onPress: () => this.props.navigateToConfirmCardDetailsScreen(card)
+        }))
+        .getOrElse({
+          ...baseButtonProps,
+          disabled: true,
+          onPress: () => undefined
+        });
     };
 
     const secondaryButtonProps = {
@@ -325,3 +330,22 @@ export default class AddCardScreen extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: NavigationInjectedProps<NavigationParams>
+): ReduxMappedDispatchProps => ({
+  addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
+  navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
+    dispatch(
+      navigateToWalletConfirmCardDetails({
+        creditCard,
+        inPayment: props.navigation.getParam("inPayment")
+      })
+    )
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddCardScreen);

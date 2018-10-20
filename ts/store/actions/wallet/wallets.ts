@@ -1,9 +1,14 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { Option } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { CreditCard, Wallet } from "../../../types/pagopa";
+import {
+  CreditCard,
+  NullableWallet,
+  PagopaToken,
+  PayRequest,
+  TransactionResponse,
+  Wallet,
+  WalletResponse
+} from "../../../types/pagopa";
 
 export const fetchWalletsRequest = createStandardAction(
   "FETCH_WALLETS_REQUEST"
@@ -16,6 +21,56 @@ export const fetchWalletsSuccess = createStandardAction(
 export const fetchWalletsFailure = createStandardAction(
   "FETCH_WALLETS_FAILURE"
 )<Error>();
+
+export const addWalletCreditCardInit = createStandardAction(
+  "ADD_WALLET_CREDITCARD_INIT"
+)();
+
+type AddWalletCreditCardRequestPayload = Readonly<{
+  creditcard: NullableWallet;
+}>;
+
+export const addWalletCreditCardRequest = createStandardAction(
+  "ADD_WALLET_CREDITCARD_REQUEST"
+)<AddWalletCreditCardRequestPayload>();
+
+export const addWalletCreditCardSuccess = createStandardAction(
+  "ADD_WALLET_CREDITCARD_SUCCESS"
+)<WalletResponse>();
+
+export const addWalletCreditCardFailure = createStandardAction(
+  "ADD_WALLET_CREDITCARD_FAILURE"
+)<"GENERIC_ERROR" | "ALREADY_EXISTS">();
+
+type PayCreditCardVerificationRequestPayload = Readonly<{
+  payRequest: PayRequest;
+  language?: string;
+}>;
+
+export const payCreditCardVerificationRequest = createStandardAction(
+  "PAY_CREDITCARD_VERIFICATION_REQUEST"
+)<PayCreditCardVerificationRequestPayload>();
+
+export const payCreditCardVerificationSuccess = createStandardAction(
+  "PAY_CREDITCARD_VERIFICATION_SUCCESS"
+)<TransactionResponse>();
+
+export const payCreditCardVerificationFailure = createStandardAction(
+  "PAY_CREDITCARD_VERIFICATION_FAILURE"
+)<Error>();
+
+type CreditCardCheckout3dsRequestPayload = Readonly<{
+  urlCheckout3ds: string;
+  pagopaToken: PagopaToken;
+}>;
+
+export const creditCardCheckout3dsRequest = createStandardAction(
+  "CREDITCARD_CHKECKOUT_3DS_REQUEST"
+)<CreditCardCheckout3dsRequestPayload>();
+
+export const creditCardCheckout3dsSuccess = createStandardAction(
+  "CREDITCARD_CHKECKOUT_3DS_SUCCESS"
+)();
 
 type DeleteWalletRequestPayload = Readonly<{
   walletId: number;
@@ -39,28 +94,17 @@ export const setFavoriteWallet = createStandardAction("SET_FAVORITE_WALLET")<
   number | undefined
 >();
 
-export const creditCardDataCleanup = createStandardAction(
-  "CREDIT_CARD_DATA_CLEANUP"
-)();
-
-type AddCreditCardRequestPayload = Readonly<{
+type StartOrResumeAddCreditCardSagaPayload = Readonly<{
   creditCard: CreditCard;
+  language?: string;
   setAsFavorite: boolean;
-  inPayment: Option<{
-    rptId: RptId;
-    initialAmount: AmountInEuroCents;
-    verifica: PaymentRequestsGetResponse;
-    paymentId: string;
-  }>;
+  onSuccess?: () => void;
+  onFailure?: () => void;
 }>;
 
-export const runAddCreditCardSaga = createStandardAction(
+export const runStartOrResumeAddCreditCardSaga = createStandardAction(
   "RUN_ADD_CREDIT_CARD_SAGA"
-)<AddCreditCardRequestPayload>();
-
-export const addCreditCardCompleted = createStandardAction(
-  "ADD_CREDIT_CARD_COMPLETED"
-)();
+)<StartOrResumeAddCreditCardSagaPayload>();
 
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
@@ -70,6 +114,13 @@ export type WalletsActions =
   | ActionType<typeof deleteWalletSuccess>
   | ActionType<typeof deleteWalletFailure>
   | ActionType<typeof setFavoriteWallet>
-  | ActionType<typeof creditCardDataCleanup>
-  | ActionType<typeof runAddCreditCardSaga>
-  | ActionType<typeof addCreditCardCompleted>;
+  | ActionType<typeof runStartOrResumeAddCreditCardSaga>
+  | ActionType<typeof addWalletCreditCardInit>
+  | ActionType<typeof addWalletCreditCardRequest>
+  | ActionType<typeof addWalletCreditCardSuccess>
+  | ActionType<typeof addWalletCreditCardFailure>
+  | ActionType<typeof payCreditCardVerificationRequest>
+  | ActionType<typeof payCreditCardVerificationSuccess>
+  | ActionType<typeof payCreditCardVerificationFailure>
+  | ActionType<typeof creditCardCheckout3dsRequest>
+  | ActionType<typeof creditCardCheckout3dsSuccess>;
