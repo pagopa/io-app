@@ -166,7 +166,7 @@ class PickPspScreen extends React.Component<Props> {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: Props
+  props: NavigationInjectedProps<NavigationParams>
 ): ReduxMappedDispatchProps => {
   const wallet = props.navigation.getParam("wallet");
   return {

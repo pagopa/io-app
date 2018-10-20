@@ -184,7 +184,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: Props
+  props: NavigationInjectedProps<NavigationParams>
 ): ReduxMappedDispatchProps => ({
   confirmPaymentMethod: (wallet: Wallet, paymentId: string) =>
     dispatch(

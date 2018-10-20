@@ -67,15 +67,26 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   dispatchPaymentVerificaRequest: () => void;
-  startOrResumePayment: (verifica: PaymentRequestsGetResponse) => void;
+  startOrResumePayment: (
+    verifica: PaymentRequestsGetResponse,
+    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+  ) => void;
   goBack: () => void;
   cancelPayment: () => void;
   onCancel: () => void;
+  onRetryWithPotVerifica: (
+    potVerifica: pot.Pot<PaymentRequestsGetResponse>,
+    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+  ) => void;
+}>;
+
+type ReduxMergedProps = Readonly<{
   onRetry: () => void;
 }>;
 
 type Props = ReduxMappedStateProps &
   ReduxMappedDispatchProps &
+  ReduxMergedProps &
   NavigationInjectedProps<NavigationParams>;
 
 const formatMdRecipient = (e: EnteBeneficiario): string => {
@@ -126,7 +137,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     const initialAmount = this.props.navigation.getParam("initialAmount");
 
     // when empty, it means we're still loading the verifica response
-    const { potVerifica } = this.props;
+    const { potVerifica, maybeFavoriteWallet } = this.props;
 
     const basePrimaryButtonProps = {
       block: true,
@@ -139,7 +150,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
         ? {
             ...basePrimaryButtonProps,
             disabled: false,
-            onPress: () => this.props.startOrResumePayment(potVerifica.value)
+            onPress: () =>
+              this.props.startOrResumePayment(
+                potVerifica.value,
+                maybeFavoriteWallet
+              )
           }
         : {
             ...basePrimaryButtonProps,
@@ -251,7 +266,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: Props
+  props: NavigationInjectedProps<NavigationParams>
 ): ReduxMappedDispatchProps => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
@@ -259,17 +274,20 @@ const mapDispatchToProps = (
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerificaRequest(rptId));
 
-  const startOrResumePayment = (verifica: PaymentRequestsGetResponse) =>
+  const startOrResumePayment = (
+    verifica: PaymentRequestsGetResponse,
+    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+  ) =>
     dispatch(
       runStartOrResumePaymentSaga({
         rptId,
         verifica,
         onSuccess: (paymentId, psps) => {
           // payment has been activated successfully
-          if (props.maybeFavoriteWallet.isSome()) {
+          if (maybeFavoriteWallet.isSome()) {
             // the user has selected a favorite wallet, so no need to ask to
             // select one
-            const wallet = props.maybeFavoriteWallet.value;
+            const wallet = maybeFavoriteWallet.value;
             if (shouldSelectPspForWallet(wallet, psps)) {
               // there are multiple psps available for the favorite wallet,
               // as the user to select one
@@ -295,7 +313,7 @@ const mapDispatchToProps = (
                   verifica,
                   paymentId,
                   psps,
-                  wallet: props.maybeFavoriteWallet.value
+                  wallet: maybeFavoriteWallet.value
                 })
               );
             }
@@ -321,9 +339,12 @@ const mapDispatchToProps = (
     goBack: () => props.navigation.goBack(),
     cancelPayment: () => props.navigation.goBack(),
     onCancel: () => props.navigation.goBack(),
-    onRetry: () => {
-      if (pot.isSome(props.potVerifica)) {
-        startOrResumePayment(props.potVerifica.value);
+    onRetryWithPotVerifica: (
+      potVerifica: pot.Pot<PaymentRequestsGetResponse>,
+      maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+    ) => {
+      if (pot.isSome(potVerifica)) {
+        startOrResumePayment(potVerifica.value, maybeFavoriteWallet);
       } else {
         dispatchPaymentVerificaRequest();
       }
@@ -331,9 +352,27 @@ const mapDispatchToProps = (
   };
 };
 
+const mergeProps = (
+  stateProps: ReduxMappedStateProps,
+  dispatchProps: ReduxMappedDispatchProps,
+  ownProps: {}
+) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps,
+  ...{
+    onRetry: () =>
+      dispatchProps.onRetryWithPotVerifica(
+        stateProps.potVerifica,
+        stateProps.maybeFavoriteWallet
+      )
+  }
+});
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(
   withErrorModal(
     withLoadingSpinner(TransactionSummaryScreen, {}),

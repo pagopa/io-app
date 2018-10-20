@@ -257,7 +257,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: Props
+  props: NavigationInjectedProps<NavigationParams>
 ): ReduxMappedDispatchProps => ({
   pickPaymentMethod: () =>
     dispatch(
