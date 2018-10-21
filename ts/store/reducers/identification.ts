@@ -15,14 +15,9 @@ export enum IdentificationResult {
   "success" = "success"
 }
 
-export type IdentificationCancelData = {
-  action: Action;
-  label: string;
-};
+export type IdentificationCancelData = { label: string; onCancel: () => void };
 
-export type IdentificationSuccessData = {
-  action: Action;
-};
+export type IdentificationSuccessData = { onSuccess: () => void };
 
 type IdentificationUnidentifiedState = {
   kind: "unidentified";

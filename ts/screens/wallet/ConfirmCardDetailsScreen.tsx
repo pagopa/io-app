@@ -21,6 +21,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import Checkout3DsComponent from "../../components/Checkout3DsComponent";
 import GoBackButton from "../../components/GoBackButton";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -29,19 +30,20 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
-import { navigateToWalletHome } from "../../store/actions/navigation";
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToWalletHome
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { paymentRequestPickPaymentMethod } from "../../store/actions/wallet/payment";
 import {
   addWalletCreditCardInit,
   creditCardCheckout3dsSuccess,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { CreditCard } from "../../types/pagopa";
+import { CreditCard, Psp } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 import { showToast } from "../../utils/showToast";
-import Checkout3DsScreen from "./Checkout3DsScreen";
 
 type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -50,6 +52,7 @@ type NavigationParams = Readonly<{
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
     paymentId: string;
+    psps: ReadonlyArray<Psp>;
   }>;
 }>;
 
@@ -181,7 +184,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           visible={this.props.checkout3dsUrl.isSome()}
         >
           {this.props.checkout3dsUrl.isSome() && (
-            <Checkout3DsScreen
+            <Checkout3DsComponent
               url={this.props.checkout3dsUrl.value}
               onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
             />
@@ -230,14 +233,7 @@ const mapDispatchToProps = (
   const navigateToNextScreen = () => {
     const inPayment = props.navigation.getParam("inPayment");
     if (inPayment.isSome()) {
-      dispatch(
-        paymentRequestPickPaymentMethod({
-          rptId: inPayment.value.rptId,
-          initialAmount: inPayment.value.initialAmount,
-          verifica: inPayment.value.verifica,
-          paymentId: inPayment.value.paymentId
-        })
-      );
+      dispatch(navigateToPaymentPickPaymentMethodScreen(inPayment.value));
     } else {
       dispatch(navigateToWalletHome());
     }

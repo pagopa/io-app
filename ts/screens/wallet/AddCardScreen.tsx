@@ -33,7 +33,7 @@ import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
-import { CreditCard } from "../../types/pagopa";
+import { CreditCard, Psp } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
   CreditCardCVC,
@@ -48,6 +48,7 @@ type NavigationParams = Readonly<{
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
     paymentId: string;
+    psps: ReadonlyArray<Psp>;
   }>;
 }>;
 

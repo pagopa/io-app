@@ -1,7 +1,7 @@
 import { Container } from "native-base";
 import * as React from "react";
 import { NavState, StyleSheet, View, WebView } from "react-native";
-import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
+import { RefreshIndicator } from "./ui/RefreshIndicator";
 
 type Props = Readonly<{
   url: string;
@@ -25,7 +25,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Checkout3DsScreen extends React.Component<Props, State> {
+export default class Checkout3DsComponent extends React.Component<
+  Props,
+  State
+> {
   constructor(props: Props) {
     super(props);
     this.state = {

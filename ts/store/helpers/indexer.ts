@@ -1,5 +1,3 @@
-import { entries } from "lodash";
-
 /**
  * represents a "list" of objects that have
  * been indexed by a specific property
@@ -21,24 +19,3 @@ export const toIndexed = <T>(
   key: (_: T) => string | number
 ): IndexedById<T> =>
   lst.reduce((o, obj) => ({ ...o, [key(obj)]: obj }), {} as IndexedById<T>);
-
-/**
- * Adds a new object to an indexed "list" of objects
- * The added object should be indexable by the same
- * key as the previously added items
- * @param indexed existing indexed object
- * @param newObj  object to be added
- * @param key     key used to extract the index from `newObj`
- * @returns       new indexed object, with the elements from indexed and newObj
- */
-export const addToIndexed = <T>(
-  indexed: IndexedById<T>,
-  newObj: T,
-  key: (_: T) => string | number
-): IndexedById<T> =>
-  entries(indexed).reduce(
-    (o, [k, v]: [string, T | undefined]) => ({ ...o, [k]: v }),
-    {
-      [key(newObj)]: newObj
-    } as IndexedById<T>
-  );

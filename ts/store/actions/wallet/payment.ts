@@ -1,112 +1,22 @@
-import { Option } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { RptId } from "italia-ts-commons/lib/pagopa";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 
-import { PagoPaErrors } from "../../../types/errors";
-import { Psp, PspListResponse, Wallet } from "../../../types/pagopa";
+import {
+  Psp,
+  PspListResponse,
+  Transaction,
+  Wallet
+} from "../../../types/pagopa";
 
+/**
+ * Resets the payment state before starting a new payment
+ */
 export const paymentInitializeState = createStandardAction(
   "PAYMENT_INITIALIZE_STATE"
 )();
-
-export const paymentRequestTransactionSummaryFromBanner = createStandardAction(
-  "PAYMENT_REQUEST_TRANSACTION_SUMMARY_FROM_BANNER"
-)();
-
-type PaymentRequestContinueWithPaymentMethodsPayload = Readonly<{
-  rptId: RptId;
-  initialAmount: AmountInEuroCents;
-  verifica: PaymentRequestsGetResponse;
-  maybePaymentId: Option<string>;
-}>;
-
-export const paymentRequestContinueWithPaymentMethods = createStandardAction(
-  "PAYMENT_REQUEST_CONTINUE_WITH_PAYMENT_METHODS"
-)<PaymentRequestContinueWithPaymentMethodsPayload>();
-
-type PaymentRequestPickPaymentMethodPayload = Readonly<{
-  rptId: RptId;
-  initialAmount: AmountInEuroCents;
-  verifica: PaymentRequestsGetResponse;
-  paymentId: string;
-}>;
-
-export const paymentRequestPickPaymentMethod = createStandardAction(
-  "PAYMENT_REQUEST_PICK_PAYMENT_METHOD"
-)<PaymentRequestPickPaymentMethodPayload>();
-
-type PaymentRequestConfirmPaymentMethodPayload = Readonly<{
-  rptId: RptId;
-  initialAmount: AmountInEuroCents;
-  verifica: PaymentRequestsGetResponse;
-  wallet: Wallet;
-  paymentId: string;
-}>;
-
-export const paymentRequestConfirmPaymentMethod = createStandardAction(
-  "PAYMENT_REQUEST_CONFIRM_PAYMENT_METHOD"
-)<PaymentRequestConfirmPaymentMethodPayload>();
-
-type PaymentRequestPickPspPayload = Readonly<{
-  rptId: RptId;
-  initialAmount: AmountInEuroCents;
-  verifica: PaymentRequestsGetResponse;
-  wallet: Wallet;
-  pspList: ReadonlyArray<Psp>;
-  paymentId: string;
-}>;
-
-export const paymentRequestPickPsp = createStandardAction(
-  "PAYMENT_REQUEST_PICK_PSP"
-)<PaymentRequestPickPspPayload>();
-
-type WalletUpdatePspRequestPayload = Readonly<{
-  idPsp: number;
-  wallet: Wallet;
-  onSuccess?: (
-    action: ActionType<typeof paymentUpdateWalletPspSuccess>
-  ) => void;
-}>;
-
-export const paymentUpdateWalletPspRequest = createStandardAction(
-  "PAYMENT_UPDATE_WALLET_PSP_REQUEST"
-)<WalletUpdatePspRequestPayload>();
-
-export const paymentUpdateWalletPspSuccess = createStandardAction(
-  "PAYMENT_UPDATE_WALLET_PSP_SUCCESS"
-)<ReadonlyArray<Wallet>>();
-
-export const paymentUpdateWalletPspFailure = createStandardAction(
-  "PAYMENT_UPDATE_WALLET_PSP_FAILURE"
-)<Error>();
-
-type PaymentRequestCompletionPayload = Readonly<{
-  wallet: Wallet;
-  paymentId: string;
-}>;
-
-export const paymentRequestCompletion = createStandardAction(
-  "PAYMENT_REQUEST_COMPLETION"
-)<PaymentRequestCompletionPayload>();
-
-export const goBackOnePaymentState = createStandardAction("PAYMENT_GO_BACK")();
-
-export const paymentRequestGoBack = createStandardAction(
-  "PAYMENT_REQUEST_GO_BACK"
-)();
-
-export const paymentCancel = createStandardAction("PAYMENT_CANCEL")();
-
-export const paymentRequestCancel = createStandardAction(
-  "PAYMENT_REQUEST_CANCEL"
-)();
-
-export const paymentFailure = createStandardAction("PAYMENT_FAILURE")<
-  PagoPaErrors
->();
 
 //
 // verifica
@@ -194,6 +104,52 @@ export const paymentFetchPspsForPaymentIdFailure = createStandardAction(
 )<Error>();
 
 //
+// Update Wallet PSP request and responses
+//
+
+type WalletUpdatePspRequestPayload = Readonly<{
+  idPsp: number;
+  wallet: Wallet;
+  onSuccess?: (
+    action: ActionType<typeof paymentUpdateWalletPspSuccess>
+  ) => void;
+}>;
+
+export const paymentUpdateWalletPspRequest = createStandardAction(
+  "PAYMENT_UPDATE_WALLET_PSP_REQUEST"
+)<WalletUpdatePspRequestPayload>();
+
+export const paymentUpdateWalletPspSuccess = createStandardAction(
+  "PAYMENT_UPDATE_WALLET_PSP_SUCCESS"
+)<ReadonlyArray<Wallet>>();
+
+export const paymentUpdateWalletPspFailure = createStandardAction(
+  "PAYMENT_UPDATE_WALLET_PSP_FAILURE"
+)<Error>();
+
+//
+// execute payment
+//
+
+type PaymentExecutePaymentRequestPayload = Readonly<{
+  paymentId: string;
+  wallet: Wallet;
+  onSuccess?: (action: ActionType<typeof paymentExecutePaymentSuccess>) => void;
+}>;
+
+export const paymentExecutePaymentRequest = createStandardAction(
+  "PAYMENT_EXECUTE_PAYMENT_REQUEST"
+)<PaymentExecutePaymentRequestPayload>();
+
+export const paymentExecutePaymentSuccess = createStandardAction(
+  "PAYMENT_EXECUTE_PAYMENT_SUCCESS"
+)<Transaction>();
+
+export const paymentExecutePaymentFailure = createStandardAction(
+  "PAYMENT_EXECUTE_PAYMENT_FAILURE"
+)<Error>();
+
+//
 // run startOrResumePaymentSaga
 //
 
@@ -212,20 +168,9 @@ export const runStartOrResumePaymentSaga = createStandardAction(
  */
 export type PaymentActions =
   | ActionType<typeof paymentInitializeState>
-  | ActionType<typeof paymentRequestTransactionSummaryFromBanner>
-  | ActionType<typeof paymentRequestContinueWithPaymentMethods>
-  | ActionType<typeof paymentRequestPickPaymentMethod>
-  | ActionType<typeof paymentRequestConfirmPaymentMethod>
-  | ActionType<typeof paymentRequestPickPsp>
   | ActionType<typeof paymentUpdateWalletPspRequest>
   | ActionType<typeof paymentUpdateWalletPspSuccess>
   | ActionType<typeof paymentUpdateWalletPspFailure>
-  | ActionType<typeof paymentRequestCompletion>
-  | ActionType<typeof goBackOnePaymentState>
-  | ActionType<typeof paymentRequestGoBack>
-  | ActionType<typeof paymentCancel>
-  | ActionType<typeof paymentRequestCancel>
-  | ActionType<typeof paymentFailure>
   | ActionType<typeof paymentVerificaRequest>
   | ActionType<typeof paymentVerificaSuccess>
   | ActionType<typeof paymentVerificaFailure>
@@ -241,4 +186,7 @@ export type PaymentActions =
   | ActionType<typeof paymentFetchPspsForPaymentIdRequest>
   | ActionType<typeof paymentFetchPspsForPaymentIdSuccess>
   | ActionType<typeof paymentFetchPspsForPaymentIdFailure>
+  | ActionType<typeof paymentExecutePaymentRequest>
+  | ActionType<typeof paymentExecutePaymentSuccess>
+  | ActionType<typeof paymentExecutePaymentFailure>
   | ActionType<typeof runStartOrResumePaymentSaga>;

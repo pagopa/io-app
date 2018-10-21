@@ -15,6 +15,10 @@ import {
   paymentAttivaSuccess,
   paymentCheckFailure,
   paymentCheckRequest,
+  paymentCheckSuccess,
+  paymentExecutePaymentFailure,
+  paymentExecutePaymentRequest,
+  paymentExecutePaymentSuccess,
   paymentFetchPspsForPaymentIdFailure,
   paymentFetchPspsForPaymentIdRequest,
   paymentFetchPspsForPaymentIdSuccess,
@@ -299,9 +303,11 @@ export function* paymentCheckRequestHandler(
       pagoPaClient
     );
     if (
-      response === undefined ||
-      (response.status !== 200 && (response.status as number) !== 422)
+      response !== undefined &&
+      (response.status === 200 || (response.status as number) === 422)
     ) {
+      yield put(paymentCheckSuccess(true));
+    } else {
       // TODO: remove the cast of response.status to number as soon as the
       //       paymentmanager specs include the 422 status.
       //       https://www.pivotaltracker.com/story/show/161053093
@@ -314,11 +320,39 @@ export function* paymentCheckRequestHandler(
           )
         )
       );
-    } else {
-      yield put(paymentCheckFailure(Error("GENERIC_ERROR")));
     }
   } catch {
     yield put(paymentCheckFailure(Error("GENERIC_ERROR")));
+  }
+}
+
+export function* paymentExecutePaymentRequestHandler(
+  pagoPaClient: PagoPaClient,
+  action: ActionType<typeof paymentExecutePaymentRequest>
+): Iterator<Effect> {
+  try {
+    const apiPostPayment = (pagoPaToken: PagopaToken) =>
+      pagoPaClient.postPayment(pagoPaToken, action.payload.paymentId, {
+        data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
+      });
+    const response: SagaCallReturnType<typeof apiPostPayment> = yield call(
+      fetchWithTokenRefresh,
+      apiPostPayment,
+      pagoPaClient
+    );
+
+    if (response !== undefined && response.status === 200) {
+      const newTransaction = response.value.data;
+      const successAction = paymentExecutePaymentSuccess(newTransaction);
+      yield put(successAction);
+      if (action.payload.onSuccess) {
+        action.payload.onSuccess(successAction);
+      }
+    } else {
+      yield put(paymentExecutePaymentFailure(Error("GENERIC_ERROR")));
+    }
+  } catch {
+    yield put(paymentExecutePaymentFailure(Error("GENERIC_ERROR")));
   }
 }
 

@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Psp } from "../../../types/pagopa";
+import { Psp, Transaction } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { Action } from "../../actions/types";
 import {
@@ -11,6 +11,9 @@ import {
   paymentCheckFailure,
   paymentCheckRequest,
   paymentCheckSuccess,
+  paymentExecutePaymentFailure,
+  paymentExecutePaymentRequest,
+  paymentExecutePaymentSuccess,
   paymentFetchPspsForPaymentIdFailure,
   paymentFetchPspsForPaymentIdRequest,
   paymentFetchPspsForPaymentIdSuccess,
@@ -33,12 +36,13 @@ export type PaymentState = Readonly<{
   paymentId: pot.Pot<string>;
   check: pot.Pot<true>;
   psps: pot.Pot<ReadonlyArray<Psp>>;
+  transaction: pot.Pot<Transaction>;
 }>;
 
 /**
  * Returns the payment ID if one has been fetched so far
  */
-export const getPaymentIdFromGlobalState = (state: GlobalState) =>
+const getPaymentIdFromGlobalState = (state: GlobalState) =>
   pot.toOption(state.wallet.payment.paymentId);
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
@@ -49,7 +53,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   attiva: pot.none,
   paymentId: pot.none,
   check: pot.none,
-  psps: pot.none
+  psps: pot.none,
+  transaction: pot.none
 };
 
 /**
@@ -143,9 +148,8 @@ const reducer = (
       };
 
     //
-    // getPspList
+    // fetch available psps
     //
-
     case getType(paymentFetchPspsForPaymentIdRequest):
       return {
         ...state,
@@ -160,6 +164,25 @@ const reducer = (
       return {
         ...state,
         psps: pot.noneError(action.payload)
+      };
+
+    //
+    // execute payment
+    //
+    case getType(paymentExecutePaymentRequest):
+      return {
+        ...state,
+        transaction: pot.noneLoading
+      };
+    case getType(paymentExecutePaymentSuccess):
+      return {
+        ...state,
+        transaction: pot.some(action.payload)
+      };
+    case getType(paymentExecutePaymentFailure):
+      return {
+        ...state,
+        transaction: pot.noneError(action.payload)
       };
   }
   return state;

@@ -16,9 +16,3 @@ export const AmountToImporto = new t.Type<
     ImportoEuroCents.validate(AmountInEuroCentsFromNumber.encode(a) * 100, c),
   i => `${i}` as AmountInEuroCents
 );
-
-// FIXME: OMG this is used in the attiva!!!!!
-export const amountToImportoWithFallback = (
-  a: AmountInEuroCents
-): ImportoEuroCents =>
-  AmountToImporto.decode(a).getOrElse(99999999 as ImportoEuroCents);

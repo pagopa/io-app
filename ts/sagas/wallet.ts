@@ -26,6 +26,7 @@ import {
   paymentCheckFailure,
   paymentCheckRequest,
   paymentCheckSuccess,
+  paymentExecutePaymentRequest,
   paymentFetchPspsForPaymentIdFailure,
   paymentFetchPspsForPaymentIdRequest,
   paymentFetchPspsForPaymentIdSuccess,
@@ -70,6 +71,7 @@ import {
   payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
+  paymentExecutePaymentRequestHandler,
   paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
   paymentVerificaRequestHandler,
@@ -453,6 +455,12 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentFetchPspsForPaymentIdRequest),
     paymentFetchPspsForWalletRequestHandler,
+    pagoPaClient
+  );
+
+  yield takeLatest(
+    getType(paymentExecutePaymentRequest),
+    paymentExecutePaymentRequestHandler,
     pagoPaClient
   );
 }

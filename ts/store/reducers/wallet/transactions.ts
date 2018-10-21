@@ -27,7 +27,7 @@ const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
 };
 
 // selectors
-export const getTransactions = (state: GlobalState) =>
+const getTransactions = (state: GlobalState) =>
   pot.map(
     state.wallet.transactions.transactions,
     txs =>

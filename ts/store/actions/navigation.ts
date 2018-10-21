@@ -14,7 +14,6 @@ import ROUTES from "../../navigation/routes";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
-import Checkout3DsScreen from "../../screens/wallet/Checkout3DsScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
@@ -68,10 +67,6 @@ export const navigateToPinLogin = NavigationActions.navigate({
   key: undefined
 });
 
-export const navigateToBackgroundScreen = NavigationActions.navigate({
-  routeName: ROUTES.BACKGROUND
-});
-
 export const navigateBack = NavigationActions.back;
 
 export const navigateToMessageDetailScreenAction = (
@@ -121,14 +116,6 @@ export const navigateToTransactionDetailsScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_TRANSACTION_DETAILS,
-    params
-  });
-
-export const navigateToWalletCheckout3dsScreen = (
-  params: InferNavigationParams<typeof Checkout3DsScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
     params
   });
 

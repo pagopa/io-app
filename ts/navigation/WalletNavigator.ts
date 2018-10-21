@@ -1,7 +1,6 @@
 import { createStackNavigator } from "react-navigation";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
-import Checkout3DsScreen from "../screens/wallet/Checkout3DsScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
@@ -41,9 +40,6 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.WALLET_CONFIRM_CARD_DETAILS]: {
       screen: ConfirmCardDetailsScreen
-    },
-    [ROUTES.WALLET_CHECKOUT_3DS_SCREEN]: {
-      screen: Checkout3DsScreen
     },
     [ROUTES.PAYMENT_SCAN_QR_CODE]: {
       screen: ScanQrCodeScreen

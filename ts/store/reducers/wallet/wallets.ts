@@ -59,17 +59,12 @@ const WALLETS_INITIAL_STATE: WalletsState = {
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
-export const getWalletsByIdOption = (state: GlobalState) =>
-  pot.toOption(state.wallet.wallets.walletById);
-
-export const getWallets = createSelector(getWalletsById, potWx =>
+const getWallets = createSelector(getWalletsById, potWx =>
   pot.map(
     potWx,
     wx => values(wx).filter(_ => _ !== undefined) as ReadonlyArray<Wallet>
   )
 );
-
-export const getWalletsOption = createSelector(getWallets, pot.toOption);
 
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
@@ -79,9 +74,6 @@ export const getFavoriteWallet = (state: GlobalState) =>
       pot.map(state.wallet.wallets.walletById, wx => wx[walletId])
     )
   );
-
-export const getNewCreditCard = (state: GlobalState) =>
-  state.wallet.wallets.creditCardAddWallet;
 
 export const walletsSelector = createSelector(
   getWallets,

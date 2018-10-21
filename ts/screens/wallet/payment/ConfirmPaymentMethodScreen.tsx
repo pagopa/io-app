@@ -1,3 +1,4 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -22,6 +23,8 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
+import { withErrorModal } from "../../../components/helpers/withErrorModal";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
@@ -29,18 +32,19 @@ import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
-import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
-import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentRequestCancel,
-  paymentRequestCompletion,
-  paymentRequestGoBack,
-  paymentRequestPickPaymentMethod,
-  paymentRequestPickPsp,
-  paymentRequestTransactionSummaryFromBanner
-} from "../../../store/actions/wallet/payment";
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
+  navigateToTransactionDetailsScreen,
+  navigateToWalletTransactionsScreen
+} from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
+import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
+import { fetchTransactionsRequest } from "../../../store/actions/wallet/transactions";
+import { GlobalState } from "../../../store/reducers/types";
 import { feeForWallet } from "../../../store/reducers/wallet/wallets";
 import { Psp, Wallet } from "../../../types/pagopa";
+import * as pot from "../../../types/pot";
 import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
@@ -54,20 +58,22 @@ type NavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type ReduxMappedDispatchProps = Readonly<{
-  pickPaymentMethod: () => void;
-  pickPsp: (
-    wallet: Wallet,
-    pspList: ReadonlyArray<Psp>,
-    paymentId: string
-  ) => void;
-  goBack: () => void;
-  showSummary: () => void;
-  onCancel: () => void;
-  requestIdentification: (wallet: Wallet, paymentId: string) => void;
+type ReduxMappedStateProps = Readonly<{
+  isLoading: boolean;
+  error: Option<string>;
 }>;
 
-type Props = ReduxMappedDispatchProps &
+type ReduxMappedDispatchProps = Readonly<{
+  pickPaymentMethod: () => void;
+  pickPsp: () => void;
+  goBack: () => void;
+  onCancel: () => void;
+  onRetry: () => void;
+  runAuthorizationAndPayment: () => void;
+}>;
+
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
   NavigationInjectedProps<NavigationParams>;
 
 const styles = StyleSheet.create({
@@ -83,9 +89,7 @@ const styles = StyleSheet.create({
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const verifica = this.props.navigation.getParam("verifica");
-    const paymentId = this.props.navigation.getParam("paymentId");
     const wallet = this.props.navigation.getParam("wallet");
-    const psps = this.props.navigation.getParam("psps");
 
     const currentAmount = AmountToImporto.encode(
       verifica.importoSingoloVersamento
@@ -194,12 +198,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <Text
-                      link={true}
-                      onPress={() =>
-                        this.props.pickPsp(wallet, psps, paymentId)
-                      }
-                    >
+                    <Text link={true} onPress={() => this.props.pickPsp()}>
                       {I18n.t("payment.changePsp")}
                     </Text>
                   </Text>
@@ -227,7 +226,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestIdentification(wallet, paymentId)}
+            onPress={() => this.props.runAuthorizationAndPayment()}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -247,7 +246,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               style={styles.child}
               block={true}
               cancel={true}
-              onPress={this.props.showSummary}
+              onPress={this.props.goBack}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
@@ -258,48 +257,82 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
+const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
+  isLoading: pot.isLoading(wallet.payment.transaction),
+  error: pot.isError(wallet.payment.transaction)
+    ? some(wallet.payment.transaction.error.message)
+    : none
+});
+
 const mapDispatchToProps = (
   dispatch: Dispatch,
   props: NavigationInjectedProps<NavigationParams>
-): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: () =>
-    dispatch(
-      paymentRequestPickPaymentMethod({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        paymentId: props.navigation.getParam("paymentId")
-      })
-    ),
-  goBack: () => dispatch(paymentRequestGoBack()),
-  pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
-    dispatch(
-      paymentRequestPickPsp({
-        wallet,
-        pspList,
-        paymentId,
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica")
-      })
-    ),
-  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
-  onCancel: () => dispatch(paymentRequestCancel()),
-  requestIdentification: (wallet: Wallet, paymentId: string) =>
+): ReduxMappedDispatchProps => {
+  const runAuthorizationAndPayment = () =>
     dispatch(
       identificationRequest(
         {
-          action: paymentRequestCancel(),
-          label: I18n.t("wallet.ConfirmPayment.cancelPayment")
+          label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
+          onCancel: () => undefined
         },
         {
-          action: paymentRequestCompletion({ wallet, paymentId })
+          onSuccess: () => {
+            dispatch(
+              paymentExecutePaymentRequest({
+                wallet: props.navigation.getParam("wallet"),
+                paymentId: props.navigation.getParam("paymentId"),
+                onSuccess: action => {
+                  // on success, update the transactions and navigate to
+                  // the resulting transaciton details
+                  dispatch(fetchTransactionsRequest());
+                  dispatch(
+                    navigateToTransactionDetailsScreen({
+                      isPaymentCompletedTransaction: true,
+                      transaction: action.payload
+                    })
+                  );
+                }
+              })
+            );
+          }
         }
       )
-    )
-});
+    );
+  return {
+    pickPaymentMethod: () =>
+      dispatch(
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps")
+        })
+      ),
+    goBack: () => props.navigation.goBack(),
+    pickPsp: () =>
+      dispatch(
+        navigateToPaymentPickPspScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps"),
+          wallet: props.navigation.getParam("wallet")
+        })
+      ),
+    onCancel: () => props.navigation.goBack(),
+    runAuthorizationAndPayment,
+    onRetry: runAuthorizationAndPayment
+  };
+};
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
-)(ConfirmPaymentMethodScreen);
+)(
+  withErrorModal(
+    withLoadingSpinner(ConfirmPaymentMethodScreen, {}),
+    (_: string) => _
+  )
+);

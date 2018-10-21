@@ -36,6 +36,7 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import { navigateToWalletAddCreditCard } from "../../store/actions/navigation";
+import { Psp } from "../../types/pagopa";
 import { AmountToImporto } from "../../utils/amounts";
 
 type NavigationParams = Readonly<{
@@ -44,6 +45,7 @@ type NavigationParams = Readonly<{
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
     paymentId: string;
+    psps: ReadonlyArray<Psp>;
   }>;
 }>;
 

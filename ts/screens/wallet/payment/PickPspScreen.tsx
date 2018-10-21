@@ -23,11 +23,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { navigateToPaymentConfirmPaymentMethodScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import {
-  paymentRequestCancel,
-  paymentRequestGoBack,
-  paymentUpdateWalletPspRequest
-} from "../../../store/actions/wallet/payment";
+import { paymentUpdateWalletPspRequest } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
 import {
@@ -39,9 +35,9 @@ type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
+  paymentId: string;
   psps: ReadonlyArray<Psp>;
   wallet: Wallet;
-  paymentId: string;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -189,8 +185,8 @@ const mapDispatchToProps = (
           }
         })
       ),
-    goBack: () => dispatch(paymentRequestGoBack()),
-    onCancel: () => dispatch(paymentRequestCancel())
+    goBack: () => props.navigation.goBack(),
+    onCancel: () => props.navigation.goBack()
   };
 };
 
