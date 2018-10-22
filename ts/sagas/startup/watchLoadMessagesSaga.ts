@@ -72,24 +72,29 @@ export function* loadMessage(
     return right(cachedMessage);
   }
 
-  const response: SagaCallReturnType<typeof getMessage> = yield call(
-    getMessage,
-    { id }
-  );
+  try {
+    const response: SagaCallReturnType<typeof getMessage> = yield call(
+      getMessage,
+      { id }
+    );
 
-  if (!response || response.status !== 200) {
-    const error: Error =
-      response && response.status === 500
-        ? Error(response.value.title)
-        : Error();
+    if (!response || response.status !== 200) {
+      const error: Error =
+        response && response.status === 500
+          ? Error(response.value.title)
+          : Error();
+      yield put(loadMessageFailure(error));
+      return left(error);
+    }
+
+    // Trigger an action to store the new message (converted to plain object) and return it
+    const messageWithContentPO = toMessageWithContentPO(response.value);
+    yield put(loadMessageSuccess(messageWithContentPO));
+    return right(messageWithContentPO);
+  } catch (error) {
     yield put(loadMessageFailure(error));
     return left(error);
   }
-
-  // Trigger an action to store the new message (converted to plain object) and return it
-  const messageWithContentPO = toMessageWithContentPO(response.value);
-  yield put(loadMessageSuccess(messageWithContentPO));
-  return right(messageWithContentPO);
 }
 
 /**
@@ -111,23 +116,28 @@ export function* loadService(
     return right(cachedService);
   }
 
-  const response: SagaCallReturnType<typeof getService> = yield call(
-    getService,
-    { service_id: id }
-  );
+  try {
+    const response: SagaCallReturnType<typeof getService> = yield call(
+      getService,
+      { service_id: id }
+    );
 
-  if (!response || response.status !== 200) {
-    const error: Error =
-      response && response.status === 500
-        ? Error(response.value.title)
-        : Error();
+    if (!response || response.status !== 200) {
+      const error: Error =
+        response && response.status === 500
+          ? Error(response.value.title)
+          : Error();
+      yield put(loadServiceFailure(error));
+      return left(error);
+    }
+
+    // Trigger an action to store the new service and return it
+    yield put(loadServiceSuccess(response.value));
+    return right(response.value);
+  } catch (error) {
     yield put(loadServiceFailure(error));
     return left(error);
   }
-
-  // Trigger an action to store the new service and return it
-  yield put(loadServiceSuccess(response.value));
-  return right(response.value);
 }
 
 /**
@@ -205,6 +215,9 @@ export function* loadMessages(
 
       yield put(loadMessagesSuccess());
     }
+  } catch (error) {
+    // Dispatch failure action
+    yield put(loadMessagesFailure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a cancel message
