@@ -113,7 +113,7 @@ export function* fetchTransactionsRequestHandler(
 /**
  * Updates a Wallet with a new favorite PSP
  *
- * TODO: consider avoiding the fetch, let the appliction logic decide
+ * TODO: consider avoiding the fetch, let the application logic decide
  */
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PagoPaClient,
@@ -208,6 +208,9 @@ export function* deleteWalletRequestHandler(
   }
 }
 
+/**
+ * Handles addWalletCreditCardRequest
+ */
 export function* addWalletCreditCardRequestHandler(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof addWalletCreditCardRequest>
@@ -238,6 +241,9 @@ export function* addWalletCreditCardRequestHandler(
   }
 }
 
+/**
+ * Handles payCreditCardVerificationRequest
+ */
 export function* payCreditCardVerificationRequestHandler(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof payCreditCardVerificationRequest>
@@ -265,6 +271,9 @@ export function* payCreditCardVerificationRequestHandler(
   }
 }
 
+/**
+ * Handles paymentFetchPspsForWalletRequest
+ */
 export function* paymentFetchPspsForWalletRequestHandler(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof paymentFetchPspsForPaymentIdRequest>
@@ -287,6 +296,9 @@ export function* paymentFetchPspsForWalletRequestHandler(
   }
 }
 
+/**
+ * Handles paymentCheckRequest
+ */
 export function* paymentCheckRequestHandler(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof paymentCheckRequest>
@@ -326,6 +338,9 @@ export function* paymentCheckRequestHandler(
   }
 }
 
+/**
+ * Handles paymentExecutePaymentRequest
+ */
 export function* paymentExecutePaymentRequestHandler(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof paymentExecutePaymentRequest>
@@ -360,6 +375,9 @@ export function* paymentExecutePaymentRequestHandler(
 // Nodo APIs
 //
 
+/**
+ * Handles paymentVerificaRequest
+ */
 export function* paymentVerificaRequestHandler(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
   action: ActionType<typeof paymentVerificaRequest>
@@ -385,7 +403,7 @@ export function* paymentVerificaRequestHandler(
 }
 
 /**
- * Executes the "Attiva" operation on the PagoPa node.
+ * Handles paymentAttivaRequest
  */
 export function* paymentAttivaRequestHandler(
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
@@ -418,6 +436,8 @@ export function* paymentAttivaRequestHandler(
 }
 
 /**
+ * Handles paymentIdPollingRequest
+ *
  * Polls the backend for the paymentId linked to the payment context code
  */
 export function* paymentIdPollingRequestHandler(
