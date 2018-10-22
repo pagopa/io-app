@@ -375,7 +375,7 @@ export default connect(
   mergeProps
 )(
   withErrorModal(
-    withLoadingSpinner(TransactionSummaryScreen, {}),
+    withLoadingSpinner(TransactionSummaryScreen),
     mapErrorCodeToMessage
   )
 );

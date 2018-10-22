@@ -295,8 +295,5 @@ export default connect(
   mapDispatchToProps,
   mergeProps
 )(
-  withErrorModal(
-    withLoadingSpinner(ConfirmCardDetailsScreen, {}),
-    (_: string) => _
-  )
+  withErrorModal(withLoadingSpinner(ConfirmCardDetailsScreen), (_: string) => _)
 );

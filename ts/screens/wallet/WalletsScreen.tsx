@@ -160,4 +160,4 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(WalletsScreen, {}));
+)(withLoadingSpinner(WalletsScreen));

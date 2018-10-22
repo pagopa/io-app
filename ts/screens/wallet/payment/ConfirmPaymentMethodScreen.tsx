@@ -332,7 +332,7 @@ export default connect(
   mapDispatchToProps
 )(
   withErrorModal(
-    withLoadingSpinner(ConfirmPaymentMethodScreen, {}),
+    withLoadingSpinner(ConfirmPaymentMethodScreen),
     (_: string) => _
   )
 );

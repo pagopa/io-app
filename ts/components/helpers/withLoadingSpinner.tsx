@@ -11,7 +11,7 @@ import { Omit } from "../../types/utils";
  */
 export function withLoadingSpinner<P extends Readonly<{ isLoading: boolean }>>(
   WrappedComponent: React.ComponentType<P>,
-  spinnerProps: Omit<SpinnerProps, "visible"> // TODO: Add default value
+  spinnerProps: Omit<SpinnerProps, "visible"> = {}
 ) {
   class WithLoadingSpinner extends React.Component<P> {
     public render() {
