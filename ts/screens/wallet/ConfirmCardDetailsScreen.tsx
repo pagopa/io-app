@@ -211,13 +211,13 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     pot.isLoading(creditCardVerification) ||
     pot.isLoading(walletById);
 
-  const error = pot.isError(creditCardAddWallet)
-    ? some(creditCardAddWallet.error.message)
-    : pot.isError(creditCardVerification)
+  const error =
+    (pot.isError(creditCardAddWallet) &&
+      creditCardAddWallet.error !== "ALREADY_EXISTS") ||
+    pot.isError(creditCardVerification) ||
+    pot.isError(walletById)
       ? some("GENERIC_ERROR")
-      : pot.isError(walletById)
-        ? some("GENERIC_ERROR")
-        : none;
+      : none;
 
   return {
     isLoading,
@@ -243,7 +243,7 @@ const mapDispatchToProps = (
   return {
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
     creditCardCheckout3dsSuccess: () =>
-      dispatch(creditCardCheckout3dsSuccess()),
+      dispatch(creditCardCheckout3dsSuccess("done")),
     runStartOrResumeAddCreditCardSaga: (
       creditCard: CreditCard,
       setAsFavorite: boolean
@@ -256,8 +256,15 @@ const mapDispatchToProps = (
             showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
             navigateToNextScreen();
           },
-          onFailure: () => {
-            showToast(I18n.t("wallet.newPaymentMethod.failed"), "danger");
+          onFailure: error => {
+            showToast(
+              I18n.t(
+                error === "ALREADY_EXISTS"
+                  ? "wallet.newPaymentMethod.failedCardAlreadyExists"
+                  : "wallet.newPaymentMethod.failed"
+              ),
+              "danger"
+            );
             navigateToNextScreen();
           }
         })

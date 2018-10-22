@@ -28,7 +28,7 @@ import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 type Props = Readonly<{
   title: string;
   totalAmount: string;
-  transactions: pot.Pot<ReadonlyArray<Transaction>>;
+  transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
 }>;
 

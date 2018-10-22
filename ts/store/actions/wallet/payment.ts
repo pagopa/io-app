@@ -1,15 +1,15 @@
 import { RptId } from "italia-ts-commons/lib/pagopa";
+import { TypeofApiResponse } from "italia-ts-commons/lib/requests";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
+import { detailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
 
-import {
-  Psp,
-  PspListResponse,
-  Transaction,
-  Wallet
-} from "../../../types/pagopa";
+import { Psp, Transaction, Wallet } from "../../../types/pagopa";
+import { OmitStatusFromResponse, PayloadForAction } from "../../../types/utils";
+import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
  * Resets the payment state before starting a new payment
@@ -30,9 +30,11 @@ export const paymentVerificaSuccess = createStandardAction(
   "PAYMENT_VERIFICA_SUCCESS"
 )<PaymentRequestsGetResponse>();
 
+// the error is undefined in case we weren't able to decode it, it should be
+// interpreted as a generic error
 export const paymentVerificaFailure = createStandardAction(
   "PAYMENT_VERIFICA_FAILURE"
-)<Error>();
+)<keyof typeof PaymentProblemErrorEnum | undefined>();
 
 //
 // attiva
@@ -51,9 +53,11 @@ export const paymentAttivaSuccess = createStandardAction(
   "PAYMENT_ATTIVA_SUCCESS"
 )<PaymentActivationsPostResponse>();
 
+// the error is undefined in case we weren't able to decode it, it should be
+// interpreted as a generic error
 export const paymentAttivaFailure = createStandardAction(
   "PAYMENT_ATTIVA_FAILURE"
-)<Error>();
+)<PaymentProblemErrorEnum | undefined>();
 
 //
 // paymentId polling
@@ -67,9 +71,11 @@ export const paymentIdPollingSuccess = createStandardAction(
   "PAYMENT_ID_POLLING_SUCCESS"
 )<string>();
 
+// the error is undefined in case we weren't able to decode it, it should be
+// interpreted as a generic error
 export const paymentIdPollingFailure = createStandardAction(
   "PAYMENT_ID_POLLING_FAILURE"
-)<Error>();
+)<"PAYMENT_ID_TIMEOUT" | undefined>();
 
 //
 // check payment
@@ -85,7 +91,10 @@ export const paymentCheckSuccess = createStandardAction(
 
 export const paymentCheckFailure = createStandardAction(
   "PAYMENT_CHECK_FAILURE"
-)<Error>();
+)<
+  | OmitStatusFromResponse<TypeofApiResponse<CheckPaymentUsingGETT>, 200>
+  | undefined
+>();
 
 //
 // fetch psp list
@@ -97,7 +106,7 @@ export const paymentFetchPspsForPaymentIdRequest = createStandardAction(
 
 export const paymentFetchPspsForPaymentIdSuccess = createStandardAction(
   "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_SUCCESS"
-)<PspListResponse>();
+)<ReadonlyArray<Psp>>();
 
 export const paymentFetchPspsForPaymentIdFailure = createStandardAction(
   "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_FAILURE"
@@ -121,11 +130,11 @@ export const paymentUpdateWalletPspRequest = createStandardAction(
 
 export const paymentUpdateWalletPspSuccess = createStandardAction(
   "PAYMENT_UPDATE_WALLET_PSP_SUCCESS"
-)<ReadonlyArray<Wallet>>();
+)<PayloadForAction<typeof fetchWalletsSuccess>>();
 
 export const paymentUpdateWalletPspFailure = createStandardAction(
   "PAYMENT_UPDATE_WALLET_PSP_FAILURE"
-)<Error>();
+)<PayloadForAction<typeof fetchWalletsFailure>>();
 
 //
 // execute payment

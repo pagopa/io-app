@@ -1,8 +1,7 @@
 import { getType } from "typesafe-actions";
-import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Psp, Transaction } from "../../../types/pagopa";
+
 import * as pot from "../../../types/pot";
+import { PotFromActions } from "../../../types/utils";
 import { Action } from "../../actions/types";
 import {
   paymentAttivaFailure,
@@ -31,12 +30,27 @@ import { GlobalState } from "../types";
 //       a state for each rptid - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
-  verifica: pot.Pot<PaymentRequestsGetResponse>;
-  attiva: pot.Pot<PaymentActivationsPostResponse>;
-  paymentId: pot.Pot<string>;
-  check: pot.Pot<true>;
-  psps: pot.Pot<ReadonlyArray<Psp>>;
-  transaction: pot.Pot<Transaction>;
+  verifica: PotFromActions<
+    typeof paymentVerificaSuccess,
+    typeof paymentVerificaFailure
+  >;
+  attiva: PotFromActions<
+    typeof paymentAttivaSuccess,
+    typeof paymentAttivaFailure
+  >;
+  paymentId: PotFromActions<
+    typeof paymentIdPollingSuccess,
+    typeof paymentIdPollingFailure
+  >;
+  check: PotFromActions<typeof paymentCheckSuccess, typeof paymentCheckFailure>;
+  psps: PotFromActions<
+    typeof paymentFetchPspsForPaymentIdSuccess,
+    typeof paymentFetchPspsForPaymentIdFailure
+  >;
+  transaction: PotFromActions<
+    typeof paymentExecutePaymentSuccess,
+    typeof paymentExecutePaymentFailure
+  >;
 }>;
 
 /**
@@ -158,7 +172,7 @@ const reducer = (
     case getType(paymentFetchPspsForPaymentIdSuccess):
       return {
         ...state,
-        psps: pot.some(action.payload.data)
+        psps: pot.some(action.payload)
       };
     case getType(paymentFetchPspsForPaymentIdFailure):
       return {

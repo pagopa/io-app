@@ -9,6 +9,11 @@ import {
   IResponseType
 } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
+import {
+  PayloadCreator,
+  PayloadMetaCreator
+} from "typesafe-actions/dist/types";
+import { Pot } from "./pot";
 
 export type SagaCallReturnType<
   T extends (...args: any[]) => any,
@@ -86,3 +91,26 @@ export type AddResponseType<
       : T extends IDeleteApiRequestType<infer P4, infer H4, infer Q4, infer R4>
         ? IDeleteApiRequestType<P4, H4, Q4, R4 | IResponseType<S, A>>
         : never;
+
+/**
+ * Removes a status from the union of IResponseType(s)
+ */
+export type OmitStatusFromResponse<
+  T,
+  S extends number
+> = T extends IResponseType<S, any> ? never : T;
+
+/**
+ * Extracts the type of the payload of a typesafe action
+ */
+export type PayloadForAction<A> = A extends PayloadCreator<any, infer P>
+  ? P
+  : A extends PayloadMetaCreator<any, infer P1, any> ? P1 : A;
+
+/**
+ * Converts the types of a success and failure actions to a Pot type
+ */
+export type PotFromActions<S, F> = Pot<
+  PayloadForAction<S>,
+  PayloadForAction<F>
+>;

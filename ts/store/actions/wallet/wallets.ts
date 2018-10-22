@@ -9,6 +9,7 @@ import {
   Wallet,
   WalletResponse
 } from "../../../types/pagopa";
+import { PayloadForAction } from "../../../types/utils";
 
 export const fetchWalletsRequest = createStandardAction(
   "FETCH_WALLETS_REQUEST"
@@ -70,7 +71,7 @@ export const creditCardCheckout3dsRequest = createStandardAction(
 
 export const creditCardCheckout3dsSuccess = createStandardAction(
   "CREDITCARD_CHKECKOUT_3DS_SUCCESS"
-)();
+)<string>();
 
 type DeleteWalletRequestPayload = Readonly<{
   walletId: number;
@@ -84,11 +85,11 @@ export const deleteWalletRequest = createStandardAction(
 
 export const deleteWalletSuccess = createStandardAction(
   "DELETE_WALLET_SUCCESS"
-)<ReadonlyArray<Wallet>>();
+)<PayloadForAction<typeof fetchWalletsSuccess>>();
 
 export const deleteWalletFailure = createStandardAction(
   "DELETE_WALLET_FAILURE"
-)<Error>();
+)<PayloadForAction<typeof fetchWalletsFailure>>();
 
 export const setFavoriteWallet = createStandardAction("SET_FAVORITE_WALLET")<
   number | undefined
@@ -99,7 +100,7 @@ type StartOrResumeAddCreditCardSagaPayload = Readonly<{
   language?: string;
   setAsFavorite: boolean;
   onSuccess?: () => void;
-  onFailure?: () => void;
+  onFailure?: (error?: "ALREADY_EXISTS") => void;
 }>;
 
 export const runStartOrResumeAddCreditCardSaga = createStandardAction(

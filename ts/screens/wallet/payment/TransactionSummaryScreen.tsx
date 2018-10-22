@@ -47,7 +47,6 @@ import {
   navigateToPaymentPickPspScreen
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
-import { mapErrorCodeToMessage } from "../../../types/errors";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
@@ -59,9 +58,12 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedStateProps = Readonly<{
-  error: Option<string>;
+  error: Option<
+    | pot.PotErrorType<GlobalState["wallet"]["payment"]["verifica"]>
+    | "PAYMENT_ID_TIMEOUT"
+  >;
   isLoading: boolean;
-  potVerifica: pot.Pot<PaymentRequestsGetResponse>;
+  potVerifica: GlobalState["wallet"]["payment"]["verifica"];
   maybeFavoriteWallet: Option<Wallet>;
 }>;
 
@@ -75,7 +77,7 @@ type ReduxMappedDispatchProps = Readonly<{
   cancelPayment: () => void;
   onCancel: () => void;
   onRetryWithPotVerifica: (
-    potVerifica: pot.Pot<PaymentRequestsGetResponse>,
+    potVerifica: ReduxMappedStateProps["potVerifica"],
     maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) => void;
 }>;
@@ -244,15 +246,15 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   return {
     error: pot.isError(verifica)
-      ? some(verifica.error.message)
+      ? some(verifica.error)
       : pot.isError(attiva)
-        ? some(attiva.error.message)
+        ? some(attiva.error)
         : pot.isError(paymentId)
-          ? some(paymentId.error.message)
+          ? some(paymentId.error)
           : pot.isError(check)
-            ? some(check.error.message)
+            ? some(undefined)
             : pot.isError(psps)
-              ? some(psps.error.message)
+              ? some(undefined)
               : none,
     // TODO: show different loading messages for each loading state
     isLoading:
@@ -342,7 +344,7 @@ const mapDispatchToProps = (
     cancelPayment: () => props.navigation.goBack(),
     onCancel: () => props.navigation.goBack(),
     onRetryWithPotVerifica: (
-      potVerifica: pot.Pot<PaymentRequestsGetResponse>,
+      potVerifica: ReduxMappedStateProps["potVerifica"],
       maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
     ) => {
       if (pot.isSome(potVerifica)) {
@@ -370,6 +372,31 @@ const mergeProps = (
       )
   }
 });
+
+const mapErrorCodeToMessage = (
+  error: ReduxMappedStateProps["error"]["_A"]
+): string => {
+  switch (error) {
+    case "PAYMENT_DUPLICATED":
+      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+    case "INVALID_AMOUNT":
+      return I18n.t("wallet.errors.INVALID_AMOUNT");
+    case "PAYMENT_ONGOING":
+      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+    case "PAYMENT_EXPIRED":
+      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
+    case "PAYMENT_UNAVAILABLE":
+      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
+    case "PAYMENT_UNKNOWN":
+      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
+    case "DOMAIN_UNKNOWN":
+      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
+    case "PAYMENT_ID_TIMEOUT":
+      return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
+    case undefined:
+      return I18n.t("wallet.errors.GENERIC_ERROR");
+  }
+};
 
 export default connect(
   mapStateToProps,

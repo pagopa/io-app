@@ -49,10 +49,6 @@ import {
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess
 } from "../../store/actions/wallet/wallets";
-import {
-  extractNodoError,
-  extractPaymentManagerError
-} from "../../types/errors";
 import { PagopaToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { fetchWithTokenRefresh } from "./utils";
@@ -287,7 +283,7 @@ export function* paymentFetchPspsForWalletRequestHandler(
       pagoPaClient
     );
     if (response !== undefined && response.status === 200) {
-      yield put(paymentFetchPspsForPaymentIdSuccess(response.value));
+      yield put(paymentFetchPspsForPaymentIdSuccess(response.value.data));
     } else {
       yield put(paymentFetchPspsForPaymentIdFailure(Error("GENERIC_ERROR")));
     }
@@ -318,23 +314,15 @@ export function* paymentCheckRequestHandler(
       response !== undefined &&
       (response.status === 200 || (response.status as number) === 422)
     ) {
-      yield put(paymentCheckSuccess(true));
-    } else {
       // TODO: remove the cast of response.status to number as soon as the
       //       paymentmanager specs include the 422 status.
       //       https://www.pivotaltracker.com/story/show/161053093
-      yield put(
-        paymentCheckFailure(
-          Error(
-            extractPaymentManagerError(
-              response ? response.value.message : undefined
-            )
-          )
-        )
-      );
+      yield put(paymentCheckSuccess(true));
+    } else {
+      yield put(paymentCheckFailure(response));
     }
   } catch {
-    yield put(paymentCheckFailure(Error("GENERIC_ERROR")));
+    yield put(paymentCheckFailure(undefined));
   }
 }
 
@@ -392,13 +380,17 @@ export function* paymentVerificaRequestHandler(
     if (response !== undefined && response.status === 200) {
       // Verifica succeeded
       yield put(paymentVerificaSuccess(response.value));
+    } else if (response !== undefined && response.status === 500) {
+      // Verifica failed with a 500, that usually means there was an error
+      // interacting with Pagopa that we can interpret
+      yield put(paymentVerificaFailure(response.value.detail));
     } else {
-      // Verifica failed
-      yield put(paymentVerificaFailure(Error(extractNodoError(response))));
+      // unknown error
+      throw Error();
     }
   } catch {
     // Probably a timeout
-    yield put(paymentVerificaFailure(Error("GENERIC_ERROR")));
+    yield put(paymentVerificaFailure(undefined));
   }
 }
 
@@ -425,13 +417,15 @@ export function* paymentAttivaRequestHandler(
     if (response !== undefined && response.status === 200) {
       // Attiva succeeded
       yield put(paymentAttivaSuccess(response.value));
-    } else {
+    } else if (response !== undefined && response.status === 500) {
       // Attiva failed
-      yield put(paymentAttivaFailure(Error(extractNodoError(response))));
+      yield put(paymentAttivaFailure(response.value.detail));
+    } else {
+      throw Error();
     }
   } catch {
     // Probably a timeout
-    yield put(paymentAttivaFailure(Error("GENERIC_ERROR")));
+    yield put(paymentAttivaFailure(undefined));
   }
 }
 
@@ -457,20 +451,13 @@ export function* paymentIdPollingRequestHandler(
     if (response !== undefined && response.status === 200) {
       // Attiva succeeded
       yield put(paymentIdPollingSuccess(response.value.idPagamento));
-    } else {
+    } else if (response !== undefined && response.status === 400) {
       // Attiva failed
-      yield put(
-        paymentIdPollingFailure(
-          Error(
-            response !== undefined && response.status === 404
-              ? "MISSING_PAYMENT_ID"
-              : "GENERIC_ERROR"
-          )
-        )
-      );
+      yield put(paymentIdPollingFailure("PAYMENT_ID_TIMEOUT"));
+    } else {
+      throw Error();
     }
   } catch {
-    // Probably a timeout
-    yield put(paymentIdPollingFailure(Error("GENERIC_ERROR")));
+    yield put(paymentIdPollingFailure(undefined));
   }
 }

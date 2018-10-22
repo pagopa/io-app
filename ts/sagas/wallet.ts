@@ -149,6 +149,13 @@ function* startOrResumeAddCreditCardSaga(
       ]);
       if (isActionOf(addWalletCreditCardFailure, responseAction)) {
         // this step failed, exit the flow
+        if (
+          responseAction.payload === "ALREADY_EXISTS" &&
+          action.payload.onFailure
+        ) {
+          // if the card already exists, run onFailure before exiting the flow
+          action.payload.onFailure(responseAction.payload);
+        }
         return;
       }
       // all is ok, continue to the next step
@@ -223,7 +230,7 @@ function* startOrResumeAddCreditCardSaga(
       } else {
         // if there is no need for a 3ds checkout, simulate a success checkout
         // to proceed to the next step
-        yield put(creditCardCheckout3dsSuccess());
+        yield put(creditCardCheckout3dsSuccess("done"));
         continue;
       }
     }

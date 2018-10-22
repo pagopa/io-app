@@ -19,7 +19,7 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type TransactionsState = Readonly<{
-  transactions: pot.Pot<IndexedById<Transaction>>;
+  transactions: pot.Pot<IndexedById<Transaction>, Error>;
 }>;
 
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {

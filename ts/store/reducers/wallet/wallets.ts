@@ -6,12 +6,10 @@ import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import {
-  TransactionResponse,
-  Wallet,
-  WalletResponse
-} from "../../../types/pagopa";
+
+import { Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
+import { PotFromActions } from "../../../types/utils";
 import { Action } from "../../actions/types";
 import {
   paymentUpdateWalletPspFailure,
@@ -40,11 +38,20 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type WalletsState = Readonly<{
-  walletById: pot.Pot<IndexedById<Wallet>>;
+  walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
   favoriteWalletId: Option<number>;
-  creditCardAddWallet: pot.Pot<WalletResponse>;
-  creditCardVerification: pot.Pot<TransactionResponse>;
-  creditCardCheckout3ds: pot.Pot<string>;
+  creditCardAddWallet: PotFromActions<
+    typeof addWalletCreditCardSuccess,
+    typeof addWalletCreditCardFailure
+  >;
+  creditCardVerification: PotFromActions<
+    typeof payCreditCardVerificationSuccess,
+    typeof payCreditCardVerificationFailure
+  >;
+  creditCardCheckout3ds: PotFromActions<
+    typeof creditCardCheckout3dsSuccess,
+    never
+  >;
 }>;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
@@ -79,7 +86,9 @@ export const walletsSelector = createSelector(
   getWallets,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (potWallets: ReturnType<typeof getWallets>): pot.Pot<ReadonlyArray<Wallet>> =>
+  (
+    potWallets: ReturnType<typeof getWallets>
+  ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potWallets, wallets =>
       [...wallets].sort(
         // sort by date, descending
@@ -173,7 +182,7 @@ const reducer = (
     case getType(addWalletCreditCardFailure):
       return {
         ...state,
-        creditCardAddWallet: pot.noneError(Error(action.payload))
+        creditCardAddWallet: pot.noneError(action.payload)
       };
 
     //
