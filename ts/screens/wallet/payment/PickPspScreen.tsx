@@ -46,8 +46,9 @@ type ReduxMappedDispatchProps = Readonly<{
   onCancel: () => void;
 }>;
 
-type Props = ReduxMappedDispatchProps &
-  NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedDispatchProps & OwnProps;
 
 const style = StyleSheet.create({
   listItem: {
@@ -162,7 +163,7 @@ class PickPspScreen extends React.Component<Props> {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: NavigationInjectedProps<NavigationParams>
+  props: OwnProps
 ): ReduxMappedDispatchProps => {
   const wallet = props.navigation.getParam("wallet");
   return {

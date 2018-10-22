@@ -59,9 +59,9 @@ type ReduxMappedDispatchProps = Readonly<{
   goBack: () => void;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
-  NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -164,7 +164,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: NavigationInjectedProps<NavigationParams>
+  props: OwnProps
 ): ReduxMappedDispatchProps => ({
   navigateToConfirmPaymentMethod: (wallet: Wallet) =>
     dispatch(

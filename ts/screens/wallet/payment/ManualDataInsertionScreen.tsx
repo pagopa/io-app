@@ -34,7 +34,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { InstabugButtons } from "../../../components/InstabugButtons";
@@ -50,9 +50,7 @@ type ReduxMappedDispatchProps = Readonly<{
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationInjectedProps;
 
 type Props = OwnProps & ReduxMappedDispatchProps;
 

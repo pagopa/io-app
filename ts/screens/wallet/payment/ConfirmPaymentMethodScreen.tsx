@@ -72,9 +72,9 @@ type ReduxMappedDispatchProps = Readonly<{
   runAuthorizationAndPayment: () => void;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
-  NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 const styles = StyleSheet.create({
   child: {
@@ -266,7 +266,7 @@ const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: NavigationInjectedProps<NavigationParams>
+  props: OwnProps
 ): ReduxMappedDispatchProps => {
   const runAuthorizationAndPayment = () =>
     dispatch(

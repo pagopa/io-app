@@ -76,10 +76,12 @@ type ReduxMergedProps = Readonly<{
   onRetry: () => void;
 }>;
 
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
 type Props = ReduxMappedStateProps &
   ReduxMappedDispatchProps &
   ReduxMergedProps &
-  NavigationInjectedProps<NavigationParams>;
+  OwnProps;
 
 type State = Readonly<{
   favorite: boolean;
@@ -267,7 +269,7 @@ const mapDispatchToProps = (
 const mergeProps = (
   stateProps: ReduxMappedStateProps,
   dispatchProps: ReduxMappedDispatchProps,
-  ownProps: NavigationInjectedProps<NavigationParams>
+  ownProps: OwnProps
 ) => {
   const maybeError = stateProps.error;
   const isRetriableError =

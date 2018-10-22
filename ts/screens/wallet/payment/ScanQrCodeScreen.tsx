@@ -18,11 +18,7 @@ import {
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { InstabugButtons } from "../../../components/InstabugButtons";
@@ -53,9 +49,7 @@ type ReduxMappedDispatchProps = Readonly<{
   ) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationInjectedProps;
 
 type Props = OwnProps & ReduxMappedDispatchProps;
 

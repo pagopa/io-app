@@ -84,10 +84,12 @@ type ReduxMergedProps = Readonly<{
   onRetry: () => void;
 }>;
 
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
 type Props = ReduxMappedStateProps &
   ReduxMappedDispatchProps &
   ReduxMergedProps &
-  NavigationInjectedProps<NavigationParams>;
+  OwnProps;
 
 const formatMdRecipient = (e: EnteBeneficiario): string => {
   const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
@@ -266,7 +268,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  props: NavigationInjectedProps<NavigationParams>
+  props: OwnProps
 ): ReduxMappedDispatchProps => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
