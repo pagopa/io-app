@@ -14,8 +14,10 @@ import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
@@ -24,8 +26,10 @@ import I18n from "../../../i18n";
 import { navigateToPaymentConfirmPaymentMethodScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentUpdateWalletPspRequest } from "../../../store/actions/wallet/payment";
+import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
+import * as pot from "../../../types/pot";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
@@ -41,6 +45,10 @@ type NavigationParams = Readonly<{
   wallet: Wallet;
 }>;
 
+type ReduxMappedStateProps = Readonly<{
+  isLoading: boolean;
+}>;
+
 type ReduxMappedDispatchProps = Readonly<{
   pickPsp: (pspId: number) => void;
   goBack: () => void;
@@ -49,7 +57,7 @@ type ReduxMappedDispatchProps = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedDispatchProps & OwnProps;
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 const style = StyleSheet.create({
   listItem: {
@@ -162,6 +170,10 @@ class PickPspScreen extends React.Component<Props> {
   }
 }
 
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  isLoading: pot.isLoading(state.wallet.wallets.walletById)
+});
+
 const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
@@ -196,8 +208,7 @@ const mapDispatchToProps = (
   };
 };
 
-// TODO: add loading and error states
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
-)(PickPspScreen);
+)(withLoadingSpinner(PickPspScreen));
