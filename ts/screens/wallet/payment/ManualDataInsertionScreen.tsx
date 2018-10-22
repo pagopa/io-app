@@ -79,7 +79,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 
   private decimalSeparatorRe = RegExp(
-    I18n.t("global.localization.decimalSeparator"),
+    `\\I18n.t("global.localization.decimalSeparator")`,
     "g"
   );
 
