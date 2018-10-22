@@ -32,8 +32,7 @@ import I18n from "../../../i18n";
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToWalletAddPaymentMethod,
-  navigateToWalletTransactionsScreen
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
@@ -55,8 +54,7 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  navigateToConfirmPaymentMethod: (wallet: Wallet) => void;
-  navigateToPickPsp: (wallet: Wallet) => void;
+  navigateToConfirmOrPickPsp: (wallet: Wallet) => void;
   navigateToAddPaymentMethod: () => void;
   goBack: () => void;
 }>;
@@ -137,17 +135,8 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                   menu={false}
                   showFavoriteIcon={false}
                   lastUsage={false}
-                  mainAction={
-                    item.psp
-                      ? this.props.navigateToConfirmPaymentMethod
-                      : this.props.navigateToPickPsp
-                  }
+                  mainAction={this.props.navigateToConfirmOrPickPsp}
                   logoPosition={LogoPosition.TOP}
-                  navigateToWalletTransactions={(selectedWallet: Wallet) =>
-                    this.props.navigation.dispatch(
-                      navigateToWalletTransactionsScreen({ selectedWallet })
-                    )
-                  }
                 />
               )}
             />
@@ -172,28 +161,43 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => ({
-  navigateToConfirmPaymentMethod: (wallet: Wallet) =>
-    dispatch(
-      navigateToPaymentConfirmPaymentMethodScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        paymentId: props.navigation.getParam("paymentId"),
-        psps: props.navigation.getParam("psps"),
-        wallet
-      })
-    ),
-  navigateToPickPsp: (wallet: Wallet) =>
-    dispatch(
-      navigateToPaymentPickPspScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        paymentId: props.navigation.getParam("paymentId"),
-        psps: props.navigation.getParam("psps"),
-        wallet
-      })
-    ),
+  navigateToConfirmOrPickPsp: (wallet: Wallet) => {
+    const psps = props.navigation.getParam("psps");
+    const walletPsp = wallet.psp;
+    // whether the wallet has already an associated psp that is compatible
+    // with the current payment
+    const hasCompatiblePsp =
+      walletPsp !== undefined &&
+      psps.find(_ => _.idPsp === walletPsp.idPsp) !== undefined;
+
+    if (hasCompatiblePsp) {
+      // if the wallet has a compatible PSP, go directly to the confirmation
+      // screen
+      dispatch(
+        navigateToPaymentConfirmPaymentMethodScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps"),
+          wallet
+        })
+      );
+    } else {
+      // if the wallet doesn't have a compatible PSP, navigate to the PSP
+      // selection screen
+      dispatch(
+        navigateToPaymentPickPspScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps"),
+          wallet
+        })
+      );
+    }
+  },
   navigateToAddPaymentMethod: () =>
     dispatch(
       navigateToWalletAddPaymentMethod({

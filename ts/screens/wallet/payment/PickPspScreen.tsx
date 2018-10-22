@@ -26,6 +26,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentUpdateWalletPspRequest } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
+import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
@@ -166,24 +167,28 @@ const mapDispatchToProps = (
   props: OwnProps
 ): ReduxMappedDispatchProps => {
   const wallet = props.navigation.getParam("wallet");
+  const onSuccess = () =>
+    dispatch(
+      navigateToPaymentConfirmPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        paymentId: props.navigation.getParam("paymentId"),
+        wallet,
+        psps: props.navigation.getParam("psps")
+      })
+    );
+  const onFailure = () => {
+    showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger");
+  };
   return {
     pickPsp: (idPsp: number) =>
       dispatch(
         paymentUpdateWalletPspRequest({
           idPsp,
           wallet,
-          onSuccess: () => {
-            dispatch(
-              navigateToPaymentConfirmPaymentMethodScreen({
-                rptId: props.navigation.getParam("rptId"),
-                initialAmount: props.navigation.getParam("initialAmount"),
-                verifica: props.navigation.getParam("verifica"),
-                paymentId: props.navigation.getParam("paymentId"),
-                wallet,
-                psps: props.navigation.getParam("psps")
-              })
-            );
-          }
+          onSuccess,
+          onFailure
         })
       ),
     goBack: () => props.navigation.goBack(),

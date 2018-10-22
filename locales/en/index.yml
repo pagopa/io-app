@@ -268,6 +268,7 @@ wallet:
     info2: which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
+    onUpdateWalletPspFailure: Operation failed, please retry
   ConfirmPayment:
     header: Confirm transaction
     cancel: CANCEL

@@ -122,6 +122,9 @@ type WalletUpdatePspRequestPayload = Readonly<{
   onSuccess?: (
     action: ActionType<typeof paymentUpdateWalletPspSuccess>
   ) => void;
+  onFailure?: (
+    action: ActionType<typeof paymentUpdateWalletPspFailure>
+  ) => void;
 }>;
 
 export const paymentUpdateWalletPspRequest = createStandardAction(

@@ -278,6 +278,7 @@ wallet:
     info2: che dovrà gestire la tua transazione.
     link: Per saperne di più
     maxFee: Commissione massima
+    onUpdateWalletPspFailure: Operazione fallita, riprova
   ConfirmPayment:
     header: Conferma pagamento
     cancel: ANNULLA

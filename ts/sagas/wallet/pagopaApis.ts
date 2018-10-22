@@ -140,23 +140,37 @@ export function* updateWalletPspRequestHandler(
         pagoPaClient
       );
       if (getResponse !== undefined && getResponse.status === 200) {
-        const successAction = paymentUpdateWalletPspSuccess(
-          getResponse.value.data
+        // look for the updated wallet
+        const updatedWallet = getResponse.value.data.find(
+          _ => _.idWallet === wallet.idWallet
         );
-        yield put(successAction);
-        if (action.payload.onSuccess) {
-          // signal the callee if requested
-          action.payload.onSuccess(successAction);
+        if (updatedWallet !== undefined) {
+          // the wallet is still there, we can proceed
+          const successAction = paymentUpdateWalletPspSuccess(
+            getResponse.value.data
+          );
+          yield put(successAction);
+          if (action.payload.onSuccess) {
+            // signal the callee if requested
+            action.payload.onSuccess(successAction);
+          }
+        } else {
+          // oops, the wallet is not there anymore!
+          throw Error();
         }
       } else {
-        // FIXME: show relevant error
-        yield put(paymentUpdateWalletPspFailure(Error("Generic error")));
+        throw Error();
       }
     } else {
-      yield put(paymentUpdateWalletPspFailure(Error("Generic error")));
+      throw Error();
     }
   } catch {
-    yield put(paymentUpdateWalletPspFailure(Error("Generic error")));
+    const failureAction = paymentUpdateWalletPspFailure(Error("Generic error"));
+    yield put(failureAction);
+    if (action.payload.onFailure) {
+      // signal the callee if requested
+      action.payload.onFailure(failureAction);
+    }
   }
 }
 
