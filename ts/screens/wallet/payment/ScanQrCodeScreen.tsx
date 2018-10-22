@@ -28,6 +28,7 @@ import { connect } from "react-redux";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { CameraMarker } from "../../../components/wallet/CameraMarker";
 
 import I18n from "../../../i18n";
 
@@ -44,7 +45,6 @@ import {
   navigateToPaymentTransactionSummaryScreen
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { CameraMarker } from "./CameraMarker";
 
 type ReduxMappedDispatchProps = Readonly<{
   runPaymentTransactionSummarySaga: (
