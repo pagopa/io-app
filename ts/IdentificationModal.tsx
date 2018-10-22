@@ -67,7 +67,7 @@ const onRequestCloseHandler = () => undefined;
  * The identification process can be activated calling a saga or dispatching the
  * requestIdentification redux action.
  */
-class IdentificationOverlay extends React.PureComponent<Props, State> {
+class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -195,4 +195,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   identificationState: state.identification
 });
 
-export default connect(mapStateToProps)(IdentificationOverlay);
+export default connect(mapStateToProps)(IdentificationModal);

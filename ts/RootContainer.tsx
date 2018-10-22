@@ -13,7 +13,7 @@ import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-import IdentificationOverlay from "./IdentificationOverlay";
+import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
 import {
   applicationChangeState,
@@ -142,7 +142,7 @@ class RootContainer extends React.PureComponent<Props> {
         <ConnectionBar />
         <VersionInfoOverlay />
         <Navigation />
-        <IdentificationOverlay />
+        <IdentificationModal />
       </Root>
     );
   }
