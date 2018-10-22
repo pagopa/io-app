@@ -119,7 +119,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
 
     return (
-      <Modal onRequestClose={onRequestCloseHandler} animationType="none">
+      <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
           <StatusBar
             barStyle="light-content"
