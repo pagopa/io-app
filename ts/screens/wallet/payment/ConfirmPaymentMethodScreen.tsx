@@ -1,4 +1,4 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -42,10 +42,8 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
 import { fetchTransactionsRequest } from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
-import { feeForWallet } from "../../../store/reducers/wallet/wallets";
 import { Psp, Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
-import { UNKNOWN_AMOUNT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 
@@ -86,6 +84,14 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Returns the fee for a wallet that has a preferred psp
+ */
+const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
+  fromNullable(w.psp).map(
+    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
+  );
+
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const verifica = this.props.navigation.getParam("verifica");
@@ -95,15 +101,18 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       verifica.importoSingoloVersamento
     );
 
-    const walletFee = AmountInEuroCentsFromNumber.encode(
-      feeForWallet(wallet).getOrElse(UNKNOWN_AMOUNT)
+    // FIXME: it seems like we're converting a number to a string and vice versa
+    const maybeWalletFee = feeForWallet(wallet).map(
+      AmountInEuroCentsFromNumber.encode
     );
 
     const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
       currentAmount
     );
     // tslint:disable-next-line:restrict-plus-operands
-    const totalAmount = currentAmountDecoded + walletFee;
+    const totalAmount = maybeWalletFee
+      .map(walletFee => currentAmountDecoded + walletFee)
+      .getOrElse(currentAmountDecoded);
 
     const paymentReason = verifica.causaleVersamento;
 
@@ -158,22 +167,24 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   </Text>
                 </Col>
               </Row>
-              <Row>
-                <Col size={4}>
-                  <Text>
-                    {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                    <Text link={true}>
-                      {I18n.t("wallet.ConfirmPayment.why")}
+              {maybeWalletFee.isSome() && (
+                <Row>
+                  <Col size={4}>
+                    <Text>
+                      {`${I18n.t("wallet.ConfirmPayment.fee")} `}
+                      <Text link={true}>
+                        {I18n.t("wallet.ConfirmPayment.why")}
+                      </Text>
                     </Text>
-                  </Text>
-                </Col>
+                  </Col>
 
-                <Col size={1}>
-                  <Text bold={true} style={WalletStyles.textRight}>
-                    {formatNumberAmount(walletFee)}
-                  </Text>
-                </Col>
-              </Row>
+                  <Col size={1}>
+                    <Text bold={true} style={WalletStyles.textRight}>
+                      {formatNumberAmount(maybeWalletFee.value)}
+                    </Text>
+                  </Col>
+                </Row>
+              )}
               <View spacer={true} large={true} />
               <Row style={WalletStyles.divider}>
                 <Col>

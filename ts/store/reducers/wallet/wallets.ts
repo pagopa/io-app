@@ -2,7 +2,6 @@
  * Reducers, states, selectors and guards for the cards
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -106,14 +105,6 @@ export const walletsSelector = createSelector(
       )
     )
 );
-
-/**
- * Returns the fee for a wallet that has a preferred psp
- */
-export const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
-  fromNullable(w.psp).map(
-    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
-  );
 
 // reducer
 const reducer = (

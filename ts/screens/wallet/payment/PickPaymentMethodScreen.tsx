@@ -31,6 +31,7 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
   navigateToWalletAddPaymentMethod,
   navigateToWalletTransactionsScreen
 } from "../../../store/actions/navigation";
@@ -55,6 +56,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   navigateToConfirmPaymentMethod: (wallet: Wallet) => void;
+  navigateToPickPsp: (wallet: Wallet) => void;
   navigateToAddPaymentMethod: () => void;
   goBack: () => void;
 }>;
@@ -135,7 +137,11 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                   menu={false}
                   showFavoriteIcon={false}
                   lastUsage={false}
-                  mainAction={this.props.navigateToConfirmPaymentMethod}
+                  mainAction={
+                    item.psp
+                      ? this.props.navigateToConfirmPaymentMethod
+                      : this.props.navigateToPickPsp
+                  }
                   logoPosition={LogoPosition.TOP}
                   navigateToWalletTransactions={(selectedWallet: Wallet) =>
                     this.props.navigation.dispatch(
@@ -169,6 +175,17 @@ const mapDispatchToProps = (
   navigateToConfirmPaymentMethod: (wallet: Wallet) =>
     dispatch(
       navigateToPaymentConfirmPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        paymentId: props.navigation.getParam("paymentId"),
+        psps: props.navigation.getParam("psps"),
+        wallet
+      })
+    ),
+  navigateToPickPsp: (wallet: Wallet) =>
+    dispatch(
+      navigateToPaymentPickPspScreen({
         rptId: props.navigation.getParam("rptId"),
         initialAmount: props.navigation.getParam("initialAmount"),
         verifica: props.navigation.getParam("verifica"),
