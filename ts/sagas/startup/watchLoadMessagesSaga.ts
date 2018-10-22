@@ -153,73 +153,71 @@ export function* loadMessages(
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
+    // Load already cached messages from the store
+    const cachedMessagesById: ReturnType<
+      typeof messagesByIdSelector
+    > = yield select<GlobalState>(messagesByIdSelector);
+
+    // Load already cached services from the store
+    const cachedServicesById: ReturnType<
+      typeof servicesByIdSelector
+    > = yield select<GlobalState>(servicesByIdSelector);
+
     // Request the list of messages from the Backend
-    try {
-      // Load already cached messages from the store
-      const cachedMessagesById: ReturnType<
-        typeof messagesByIdSelector
-      > = yield select<GlobalState>(messagesByIdSelector);
+    const response: SagaCallReturnType<typeof getMessages> = yield call(
+      getMessages,
+      {}
+    );
 
-      // Load already cached services from the store
-      const cachedServicesById: ReturnType<
-        typeof servicesByIdSelector
-      > = yield select<GlobalState>(servicesByIdSelector);
+    if (response && response.status === 401) {
+      // on 401, expire the current session and restart the authentication flow
+      yield put(sessionExpired());
+      return;
+    }
 
-      const response: SagaCallReturnType<typeof getMessages> = yield call(
-        getMessages,
-        {}
-      );
+    /**
+     * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
+     */
+    if (!response || response.status !== 200) {
+      const error: Error =
+        response && response.status === 500
+          ? Error(response.value.title)
+          : Error();
 
-      if (response && response.status === 401) {
-        // on 401, expire the current session and restart the authentication flow
-        yield put(sessionExpired());
-        return;
-      }
-
-      /**
-       * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
-       */
-      if (!response || response.status !== 200) {
-        const error: Error =
-          response && response.status === 500
-            ? Error(response.value.title)
-            : Error();
-
-        // Dispatch failure action
-        yield put(loadMessagesFailure(error));
-      } else {
-        // Filter messages already in the store
-        const newMessagesWithoutContent = response.value.items.filter(
-          message => !cachedMessagesById.hasOwnProperty(message.id)
-        );
-
-        // Get the messages ids list
-        const newMessagesIds = newMessagesWithoutContent.map(
-          message => message.id
-        );
-
-        // Filter services already in the store
-        const newServicesIds = newMessagesWithoutContent
-          .map(message => message.sender_service_id)
-          .filter(id => !cachedServicesById.hasOwnProperty(id))
-          .filter((id, index, ids) => index === ids.indexOf(id)); // Get unique ids
-
-        // Fetch the services detail in parallel
-        // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
-        // We fetch services first because to show messages you need the related service info
-        yield all(newServicesIds.map(id => call(loadService, getService, id)));
-
-        // Fetch the messages detail in parallel
-        // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
-        // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
-        yield all(newMessagesIds.map(id => call(loadMessage, getMessage, id)));
-
-        yield put(loadMessagesSuccess());
-      }
-    } catch (error) {
       // Dispatch failure action
       yield put(loadMessagesFailure(error));
+    } else {
+      // Filter messages already in the store
+      const newMessagesWithoutContent = response.value.items.filter(
+        message => !cachedMessagesById.hasOwnProperty(message.id)
+      );
+
+      // Get the messages ids list
+      const newMessagesIds = newMessagesWithoutContent.map(
+        message => message.id
+      );
+
+      // Filter services already in the store
+      const newServicesIds = newMessagesWithoutContent
+        .map(message => message.sender_service_id)
+        .filter(id => !cachedServicesById.hasOwnProperty(id))
+        .filter((id, index, ids) => index === ids.indexOf(id)); // Get unique ids
+
+      // Fetch the services detail in parallel
+      // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
+      // We fetch services first because to show messages you need the related service info
+      yield all(newServicesIds.map(id => call(loadService, getService, id)));
+
+      // Fetch the messages detail in parallel
+      // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
+      // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
+      yield all(newMessagesIds.map(id => call(loadMessage, getMessage, id)));
+
+      yield put(loadMessagesSuccess());
     }
+  } catch (error) {
+    // Dispatch failure action
+    yield put(loadMessagesFailure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a cancel message
