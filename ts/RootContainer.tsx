@@ -141,8 +141,8 @@ class RootContainer extends React.PureComponent<Props> {
         <StatusBar barStyle="dark-content" />
         <ConnectionBar />
         <VersionInfoOverlay />
-        <IdentificationOverlay />
         <Navigation />
+        <IdentificationOverlay />
       </Root>
     );
   }
