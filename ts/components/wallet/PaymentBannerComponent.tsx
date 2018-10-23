@@ -55,7 +55,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
         </Col>
         <Col>
           <Text style={[WalletStyles.white, WalletStyles.textRight]}>
-            {I18n.t("wallet.cancel").toUpperCase()}
+            {I18n.t("global.buttons.cancel").toUpperCase()}
           </Text>
           <View spacer={true} />
         </Col>

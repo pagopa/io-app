@@ -35,6 +35,7 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
+  navigateToPaymentTransactionSummaryScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletTransactionsScreen
 } from "../../../store/actions/navigation";
@@ -64,7 +65,6 @@ type ReduxMappedStateProps = Readonly<{
 type ReduxMappedDispatchProps = Readonly<{
   pickPaymentMethod: () => void;
   pickPsp: () => void;
-  goBack: () => void;
   onCancel: () => void;
   onRetry: () => void;
   runAuthorizationAndPayment: () => void;
@@ -122,7 +122,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.ConfirmPayment.header")}</Text>
@@ -257,7 +257,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               style={styles.child}
               block={true}
               cancel={true}
-              onPress={this.props.goBack}
+              onPress={this.props.onCancel}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
@@ -320,7 +320,6 @@ const mapDispatchToProps = (
           psps: props.navigation.getParam("psps")
         })
       ),
-    goBack: () => props.navigation.goBack(),
     pickPsp: () =>
       dispatch(
         navigateToPaymentPickPspScreen({
@@ -332,7 +331,13 @@ const mapDispatchToProps = (
           wallet: props.navigation.getParam("wallet")
         })
       ),
-    onCancel: () => props.navigation.goBack(),
+    onCancel: () =>
+      dispatch(
+        navigateToPaymentTransactionSummaryScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount")
+        })
+      ),
     runAuthorizationAndPayment,
     onRetry: runAuthorizationAndPayment
   };

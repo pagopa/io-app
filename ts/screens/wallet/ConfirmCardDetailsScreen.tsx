@@ -137,7 +137,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       light: true,
       bordered: true,
       onPress: this.goBack,
-      title: I18n.t("global.buttons.cancel")
+      title: I18n.t("global.buttons.back")
     };
 
     return (
@@ -176,9 +176,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           </Grid>
         </Content>
         <FooterWithButtons
-          leftButton={primaryButtonProps}
-          rightButton={secondaryButtonProps}
-          inlineHalf={true}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineOneThird={true}
         />
         <Modal
           animationType="fade"

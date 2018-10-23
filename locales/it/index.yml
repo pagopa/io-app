@@ -17,6 +17,7 @@ global:
     ok: OK
     continue: Continua
     retry: Riprova
+    back: Indietro
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -165,7 +166,6 @@ authentication:
     subtitle: "I diversi Identity Provider permettono diverse modalità di
       riconoscimento e offrono insieme a SPID servizi diversi: scopri i
       dettagli di ciascuno"
-    cancel: Annulla
   idp_login:
     headerTitle: Accedi
   errors:
@@ -281,7 +281,6 @@ wallet:
     onUpdateWalletPspFailure: Operazione fallita, riprova
   ConfirmPayment:
     header: Conferma pagamento
-    cancel: ANNULLA
     cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
@@ -350,7 +349,6 @@ wallet:
   latestTransactions: Ultime operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
-  cancel: Annulla
   continue: Continua
   methods:
     card:
@@ -397,7 +395,6 @@ wallet:
     MISSING_PAYMENT_ID: Sembra che l'ente che ha emesso questo avviso abbia qualche problema a gestirne il pagamento in questo momento, riprova più tardi!
 saveCard:
   saveCard: Salva la carta
-  cancel: Annulla
   header: Vuoi salvare questa carta?
   favoriteTitle: Imposta la carta come metodo di pagamento preferito
   favoriteText: Al prossimo pagamento ti verrà automaticamente proposto questo metodo

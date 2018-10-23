@@ -4,23 +4,14 @@
  */
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import {
-  Body,
-  Button,
-  Container,
-  Icon,
-  Left,
-  Right,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { Body, Container, Left, Right, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -38,11 +29,13 @@ import { decodePagoPaQrCode } from "../../../utils/payment";
 
 import {
   navigateToPaymentManualDataInsertion,
-  navigateToPaymentTransactionSummaryScreen
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletHome: () => void;
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     amount: AmountInEuroCents
@@ -170,8 +163,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     const secondaryButtonProps = {
       block: true,
       bordered: true,
-      onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("wallet.cancel")
+      onPress: this.props.navigateToWalletHome,
+      title: I18n.t("global.buttons.cancel")
     };
 
     return (
@@ -182,12 +175,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         />
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <Icon name="chevron-left" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
@@ -236,6 +224,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => navigateToWalletHome(),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     initialAmount: AmountInEuroCents

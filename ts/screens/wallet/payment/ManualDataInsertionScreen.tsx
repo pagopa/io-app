@@ -19,12 +19,10 @@ import {
 } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
-  Button,
   Container,
   Content,
   Form,
   H1,
-  Icon,
   Input,
   Item,
   Label,
@@ -37,16 +35,23 @@ import { ScrollView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+
 import I18n from "../../../i18n";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
+
+import {
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHome
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletHome: () => void;
   showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
 }>;
 
@@ -135,7 +140,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       bordered: true,
-      onPress: () => this.props.navigation.goBack(),
+      onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -143,12 +148,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <Icon name="chevron-left" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.insertManually.header")}</Text>
@@ -242,6 +242,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => navigateToWalletHome(),
   showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
     dispatch(paymentInitializeState());
     dispatch(

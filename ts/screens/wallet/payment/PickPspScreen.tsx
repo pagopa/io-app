@@ -51,7 +51,6 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   pickPsp: (pspId: number) => void;
-  goBack: () => void;
   onCancel: () => void;
 }>;
 
@@ -103,7 +102,7 @@ class PickPspScreen extends React.Component<Props> {
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("saveCard.saveCard")}</Text>
@@ -203,7 +202,6 @@ const mapDispatchToProps = (
           onFailure
         })
       ),
-    goBack: () => props.navigation.goBack(),
     onCancel: () => props.navigation.goBack()
   };
 };

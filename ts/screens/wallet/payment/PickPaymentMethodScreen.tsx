@@ -32,6 +32,7 @@ import I18n from "../../../i18n";
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
+  navigateToPaymentTransactionSummaryScreen,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
@@ -54,9 +55,9 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
+  navigateToTransactionSummary: () => void;
   navigateToConfirmOrPickPsp: (wallet: Wallet) => void;
   navigateToAddPaymentMethod: () => void;
-  goBack: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -84,7 +85,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
     const secondaryButtonProps = {
       block: true,
       cancel: true,
-      onPress: this.props.goBack,
+      onPress: this.props.navigateToTransactionSummary,
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -92,7 +93,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.payWith.header")}</Text>
@@ -144,8 +145,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         </Content>
 
         <FooterWithButtons
-          leftButton={primaryButtonProps}
-          rightButton={secondaryButtonProps}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineOneThird={true}
         />
       </Container>
     );
@@ -161,6 +163,13 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => ({
+  navigateToTransactionSummary: () =>
+    dispatch(
+      navigateToPaymentTransactionSummaryScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount")
+      })
+    ),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     const psps = props.navigation.getParam("psps");
     const walletPsp = wallet.psp;
@@ -209,8 +218,7 @@ const mapDispatchToProps = (
           psps: props.navigation.getParam("psps")
         })
       })
-    ),
-  goBack: () => props.navigation.goBack()
+    )
 });
 
 export default connect(

@@ -44,7 +44,8 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen
+  navigateToPaymentPickPspScreen,
+  navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
@@ -169,14 +170,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
       block: true,
       light: true,
       onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("wallet.cancel")
+      title: I18n.t("global.buttons.cancel")
     };
 
     return (
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>
@@ -341,8 +342,8 @@ const mapDispatchToProps = (
     dispatchPaymentVerificaRequest,
     startOrResumePayment,
     goBack: () => props.navigation.goBack(),
-    cancelPayment: () => props.navigation.goBack(),
-    onCancel: () => props.navigation.goBack(),
+    cancelPayment: () => navigateToWalletHome(),
+    onCancel: () => navigateToWalletHome(),
     onRetryWithPotVerifica: (
       potVerifica: ReduxMappedStateProps["potVerifica"],
       maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]

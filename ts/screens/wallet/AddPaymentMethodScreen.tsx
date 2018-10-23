@@ -111,7 +111,11 @@ export default class AddPaymentMethodScreen extends React.PureComponent<Props> {
             bordered={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text>{I18n.t("wallet.cancel")}</Text>
+            <Text>
+              {inPayment.isSome()
+                ? I18n.t("global.buttons.back")
+                : I18n.t("global.buttons.cancel")}
+            </Text>
           </Button>
         </View>
       </Container>

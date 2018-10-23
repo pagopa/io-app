@@ -323,9 +323,9 @@ class AddCardScreen extends React.Component<Props, State> {
         </ScrollView>
 
         <FooterWithButtons
-          leftButton={primaryButtonPropsFromState(this.state)}
-          rightButton={secondaryButtonProps}
-          inlineHalf={true}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonPropsFromState(this.state)}
+          inlineOneThird={true}
         />
       </Container>
     );
