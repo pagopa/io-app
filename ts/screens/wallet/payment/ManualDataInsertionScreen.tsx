@@ -19,12 +19,10 @@ import {
 } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
-  Button,
   Container,
   Content,
   Form,
   H1,
-  Icon,
   Input,
   Item,
   Label,
@@ -34,27 +32,33 @@ import {
 } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+
 import I18n from "../../../i18n";
-import { Dispatch } from "../../../store/actions/types";
+
 import {
-  paymentRequestTransactionSummaryFromRptId,
-  startPaymentSaga
-} from "../../../store/actions/wallet/payment";
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHome
+} from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
-  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  navigateToWalletHome: () => void;
+  navigateToTransactionSummary: (
+    rptId: RptId,
+    amount: AmountInEuroCents
+  ) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationInjectedProps;
 
 type Props = OwnProps & ReduxMappedDispatchProps;
 
@@ -83,7 +87,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 
   private decimalSeparatorRe = RegExp(
-    I18n.t("global.localization.decimalSeparator"),
+    `\\I18n.t("global.localization.decimalSeparator")`,
     "g"
   );
 
@@ -121,7 +125,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       );
       if (rptId.isRight() && amount.isRight()) {
         // valid Rpt Id and valid amount were entered
-        this.props.showTransactionSummary(rptId.value, amount.value);
+        this.props.navigateToTransactionSummary(rptId.value, amount.value);
       } // TODO: else toast saying that the data entered is invalid
     }
   };
@@ -139,7 +143,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       bordered: true,
-      onPress: () => this.props.navigation.goBack(),
+      onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -147,12 +151,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       <Container>
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <Icon name="chevron-left" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.insertManually.header")}</Text>
@@ -169,7 +168,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
             <Form>
               <Item
                 floatingLabel={true}
@@ -246,10 +244,14 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
-    dispatch(startPaymentSaga());
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateToTransactionSummary: (
+    rptId: RptId,
+    initialAmount: AmountInEuroCents
+  ) => {
+    dispatch(paymentInitializeState());
     dispatch(
-      paymentRequestTransactionSummaryFromRptId({
+      navigateToPaymentTransactionSummaryScreen({
         rptId,
         initialAmount
       })

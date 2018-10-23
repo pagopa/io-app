@@ -98,14 +98,14 @@ class IdentificationModal extends React.PureComponent<Props, State> {
      */
     const onIdentificationCancelHandler = () => {
       if (identificationCancelData) {
-        dispatch(identificationCancelData.action);
+        identificationCancelData.onCancel();
       }
       dispatch(identificationCancel());
     };
 
     const onIdentificationSuccessHandler = () => {
       if (identificationSuccessData) {
-        dispatch(identificationSuccessData.action);
+        identificationSuccessData.onSuccess();
       }
       dispatch(identificationSuccess());
     };

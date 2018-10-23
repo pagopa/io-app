@@ -23,13 +23,17 @@ import IconFont from "../../components/ui/IconFont";
 import CardHeader from "../../components/wallet/card/CardHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
+import {
+  navigateToPaymentScanQrCode,
+  navigateToWalletHome
+} from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
-import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
+import { cleanTransactionDescription } from "../../utils/payment";
+import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -120,15 +124,15 @@ class TransactionDetailsScreen extends React.Component<Props> {
       "isPaymentCompletedTransaction",
       false
     );
-    const amount = buildAmount(centsToAmount(transaction.amount.amount));
-    const fee = buildAmount(
+    const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
+    const fee = formatNumberAmount(
       centsToAmount(
         transaction.fee === undefined
           ? transaction.grandTotal.amount - transaction.amount.amount
           : transaction.fee.amount
       )
     );
-    const totalAmount = buildAmount(
+    const totalAmount = formatNumberAmount(
       centsToAmount(transaction.grandTotal.amount)
     );
 
@@ -148,7 +152,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         showPayButton={false}
         allowGoBack={!isPaymentCompletedTransaction}
         navigateToScanQrCode={() =>
-          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
         }
       >
         <Content
@@ -163,7 +167,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
                 size={variables.iconSizeBase}
                 onPress={() =>
                   isPaymentCompletedTransaction
-                    ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
+                    ? this.props.navigation.dispatch(navigateToWalletHome())
                     : this.props.navigation.goBack()
                 }
               />
@@ -185,7 +189,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
-              transaction.description
+              cleanTransactionDescription(transaction.description)
             )}
             {this.labelValueRow(
               I18n.t("wallet.recipient"),

@@ -21,14 +21,15 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
-import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
+import { cleanTransactionDescription } from "../../utils/payment";
+import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 
 type Props = Readonly<{
   title: string;
   totalAmount: string;
-  transactions: pot.Pot<ReadonlyArray<Transaction>>;
+  transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
 }>;
 
@@ -55,8 +56,8 @@ export default class TransactionsList extends React.Component<Props> {
   }
 
   private renderRow = (item: Transaction): React.ReactElement<any> => {
-    const paymentReason = item.description;
-    const amount = buildAmount(centsToAmount(item.amount.amount));
+    const paymentReason = cleanTransactionDescription(item.description);
+    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
       <ListItem

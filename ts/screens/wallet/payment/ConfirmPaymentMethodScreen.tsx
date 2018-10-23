@@ -1,15 +1,8 @@
-/**
- * This screen asks the authorization to proceed with the transaction.
- * TODO:
- * - integrate contextual help:
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
- *
- */
-import { none, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
-  AmountInEuroCentsFromNumber
+  AmountInEuroCentsFromNumber,
+  RptId
 } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
@@ -28,7 +21,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -39,74 +32,47 @@ import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
-import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToTransactionDetailsScreen,
+  navigateToWalletTransactionsScreen
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import {
-  paymentRequestCancel,
-  paymentRequestCompletion,
-  paymentRequestGoBack,
-  paymentRequestPickPaymentMethod,
-  paymentRequestPickPsp,
-  paymentRequestTransactionSummaryFromBanner
-} from "../../../store/actions/wallet/payment";
-import { createErrorSelector } from "../../../store/reducers/error";
-import { createLoadingSelector } from "../../../store/reducers/loading";
+import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
+import { fetchTransactionsRequest } from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  getCurrentAmountFromGlobalStateWithSelectedPaymentMethod,
-  getPaymentIdFromGlobalStateWithSelectedPaymentMethod,
-  getPaymentReason,
-  getPaymentRecipientFromGlobalStateWithVerificaResponse,
-  getPaymentStep,
-  getPspListFromGlobalStateWithSelectedPaymentMethod,
-  getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod,
-  isGlobalStateWithSelectedPaymentMethod
-} from "../../../store/reducers/wallet/payment";
-import { feeExtractor } from "../../../store/reducers/wallet/wallets";
-import { mapErrorCodeToMessage } from "../../../types/errors";
 import { Psp, Wallet } from "../../../types/pagopa";
-import { UNKNOWN_AMOUNT } from "../../../types/unknown";
-import { buildAmount } from "../../../utils/stringBuilder";
+import * as pot from "../../../types/pot";
+import { AmountToImporto } from "../../../utils/amounts";
+import { formatNumberAmount } from "../../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
-  paymentCompleted: boolean;
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+  verifica: PaymentRequestsGetResponse;
+  paymentId: string;
+  wallet: Wallet;
+  psps: ReadonlyArray<Psp>;
 }>;
 
 type ReduxMappedStateProps = Readonly<{
   isLoading: boolean;
   error: Option<string>;
-}> &
-  (
-    | Readonly<{
-        valid: false;
-      }>
-    | Readonly<{
-        valid: true;
-        wallet: Wallet;
-        amount: AmountInEuroCents;
-        fee: AmountInEuroCents;
-        paymentId: string;
-        pspList: ReadonlyArray<Psp>;
-        paymentReason?: string;
-        recipient?: EnteBeneficiario;
-      }>);
-
-type ReduxMappedDispatchProps = Readonly<{
-  pickPaymentMethod: (paymentId: string) => void;
-  pickPsp: (
-    wallet: Wallet,
-    pspList: ReadonlyArray<Psp>,
-    paymentId: string
-  ) => void;
-  goBack: () => void;
-  showSummary: () => void;
-  onCancel: () => void;
-  requestIdentification: (wallet: Wallet, paymentId: string) => void;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
-  NavigationInjectedProps<NavigationParams>;
+type ReduxMappedDispatchProps = Readonly<{
+  pickPaymentMethod: () => void;
+  pickPsp: () => void;
+  onCancel: () => void;
+  onRetry: () => void;
+  runAuthorizationAndPayment: () => void;
+}>;
+
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 const styles = StyleSheet.create({
   child: {
@@ -118,31 +84,45 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Returns the fee for a wallet that has a preferred psp
+ */
+const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
+  fromNullable(w.psp).map(
+    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
+  );
+
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
-  private getTotalAmount(amount: number, fee: number) {
-    return amount + fee;
-  }
-
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
-  }
-
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
-    const { wallet, paymentId, pspList } = this.props;
-    const amount = AmountInEuroCentsFromNumber.encode(this.props.amount);
-    const fee = AmountInEuroCentsFromNumber.encode(this.props.fee);
-    const totalAmount = this.getTotalAmount(amount, fee);
+    const verifica = this.props.navigation.getParam("verifica");
+    const wallet = this.props.navigation.getParam("wallet");
+
+    const currentAmount = AmountToImporto.encode(
+      verifica.importoSingoloVersamento
+    );
+
+    // FIXME: it seems like we're converting a number to a string and vice versa
+    const maybeWalletFee = feeForWallet(wallet).map(
+      AmountInEuroCentsFromNumber.encode
+    );
+
+    const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
+      currentAmount
+    );
+    const totalAmount = maybeWalletFee
+      // tslint:disable-next-line:restrict-plus-operands
+      .map(walletFee => currentAmountDecoded + walletFee)
+      .getOrElse(currentAmountDecoded);
+
+    const paymentReason = verifica.causaleVersamento;
+
+    const recipient = verifica.enteBeneficiario;
+
     return (
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.ConfirmPayment.header")}</Text>
@@ -154,16 +134,16 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
         <Content noPadded={true}>
           <PaymentBannerComponent
-            currentAmount={this.props.amount}
-            paymentReason={this.props.paymentReason}
-            recipient={this.props.recipient}
+            currentAmount={currentAmount}
+            paymentReason={paymentReason}
+            recipient={recipient}
           />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
             <CardComponent
-              wallet={this.props.wallet}
+              wallet={wallet}
               menu={false}
               showFavoriteIcon={false}
               lastUsage={false}
@@ -181,26 +161,30 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={WalletStyles.textRight}>
-                    {buildAmount(amount)}
+                    {formatNumberAmount(
+                      AmountInEuroCentsFromNumber.encode(currentAmount)
+                    )}
                   </Text>
                 </Col>
               </Row>
-              <Row>
-                <Col size={4}>
-                  <Text>
-                    {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                    <Text link={true}>
-                      {I18n.t("wallet.ConfirmPayment.why")}
+              {maybeWalletFee.isSome() && (
+                <Row>
+                  <Col size={4}>
+                    <Text>
+                      {`${I18n.t("wallet.ConfirmPayment.fee")} `}
+                      <Text link={true}>
+                        {I18n.t("wallet.ConfirmPayment.why")}
+                      </Text>
                     </Text>
-                  </Text>
-                </Col>
+                  </Col>
 
-                <Col size={1}>
-                  <Text bold={true} style={WalletStyles.textRight}>
-                    {buildAmount(fee)}
-                  </Text>
-                </Col>
-              </Row>
+                  <Col size={1}>
+                    <Text bold={true} style={WalletStyles.textRight}>
+                      {formatNumberAmount(maybeWalletFee.value)}
+                    </Text>
+                  </Col>
+                </Row>
+              )}
               <View spacer={true} large={true} />
               <Row style={WalletStyles.divider}>
                 <Col>
@@ -210,7 +194,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={WalletStyles.textRight}>
-                    {buildAmount(totalAmount)}
+                    {formatNumberAmount(totalAmount)}
                   </H1>
                 </Col>
               </Row>
@@ -225,12 +209,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <Text
-                      link={true}
-                      onPress={() =>
-                        this.props.pickPsp(wallet, pspList, paymentId)
-                      }
-                    >
+                    <Text link={true} onPress={() => this.props.pickPsp()}>
                       {I18n.t("payment.changePsp")}
                     </Text>
                   </Text>
@@ -258,7 +237,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.requestIdentification(wallet, paymentId)}
+            onPress={() => this.props.runAuthorizationAndPayment()}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </Button>
@@ -269,7 +248,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.props.pickPaymentMethod(paymentId)}
+              onPress={_ => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
@@ -278,7 +257,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               style={styles.child}
               block={true}
               cancel={true}
-              onPress={this.props.showSummary}
+              onPress={this.props.onCancel}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
@@ -289,66 +268,87 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  if (
-    getPaymentStep(state) === "PaymentStateConfirmPaymentMethod" &&
-    isGlobalStateWithSelectedPaymentMethod(state)
-  ) {
-    const wallet = getSelectedPaymentMethodFromGlobalStateWithSelectedPaymentMethod(
-      state
-    );
-    const feeOrUndefined = feeExtractor(wallet);
-    return {
-      isLoading: createLoadingSelector(["PAYMENT"])(state),
-      error: createErrorSelector(["PAYMENT"])(state),
-      valid: true,
-      wallet,
-      amount: getCurrentAmountFromGlobalStateWithSelectedPaymentMethod(state),
-      fee: feeOrUndefined === undefined ? UNKNOWN_AMOUNT : feeOrUndefined,
-      paymentId: getPaymentIdFromGlobalStateWithSelectedPaymentMethod(state),
-      pspList: getPspListFromGlobalStateWithSelectedPaymentMethod(state),
-      paymentReason: getPaymentReason(state).toUndefined(),
-      recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
-        state
-      ).toUndefined()
-    };
-  } else {
-    return {
-      isLoading: false,
-      error: none,
-      valid: false
-    };
-  }
-};
+const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
+  isLoading: pot.isLoading(wallet.payment.transaction),
+  error: pot.isError(wallet.payment.transaction)
+    ? some(wallet.payment.transaction.error.message)
+    : none
+});
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  pickPaymentMethod: (paymentId: string) =>
-    dispatch(paymentRequestPickPaymentMethod({ paymentId })),
-  goBack: () => dispatch(paymentRequestGoBack()),
-  pickPsp: (wallet: Wallet, pspList: ReadonlyArray<Psp>, paymentId: string) =>
-    dispatch(paymentRequestPickPsp({ wallet, pspList, paymentId })),
-  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner()),
-  onCancel: () => dispatch(paymentRequestCancel()),
-  requestIdentification: (wallet: Wallet, paymentId: string) =>
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: OwnProps
+): ReduxMappedDispatchProps => {
+  const runAuthorizationAndPayment = () =>
     dispatch(
       identificationRequest(
         {
-          action: paymentRequestCancel(),
-          label: I18n.t("wallet.ConfirmPayment.cancelPayment")
+          label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
+          onCancel: () => undefined
         },
         {
-          action: paymentRequestCompletion({ wallet, paymentId })
+          onSuccess: () => {
+            dispatch(
+              paymentExecutePaymentRequest({
+                wallet: props.navigation.getParam("wallet"),
+                paymentId: props.navigation.getParam("paymentId"),
+                onSuccess: action => {
+                  // on success, update the transactions and navigate to
+                  // the resulting transaciton details
+                  dispatch(fetchTransactionsRequest());
+                  dispatch(
+                    navigateToTransactionDetailsScreen({
+                      isPaymentCompletedTransaction: true,
+                      transaction: action.payload
+                    })
+                  );
+                }
+              })
+            );
+          }
         }
       )
-    )
-});
+    );
+  return {
+    pickPaymentMethod: () =>
+      dispatch(
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps")
+        })
+      ),
+    pickPsp: () =>
+      dispatch(
+        navigateToPaymentPickPspScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps"),
+          wallet: props.navigation.getParam("wallet")
+        })
+      ),
+    onCancel: () =>
+      dispatch(
+        navigateToPaymentTransactionSummaryScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount")
+        })
+      ),
+    runAuthorizationAndPayment,
+    onRetry: runAuthorizationAndPayment
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
   withErrorModal(
-    withLoadingSpinner(ConfirmPaymentMethodScreen, {}),
-    mapErrorCodeToMessage
+    withLoadingSpinner(ConfirmPaymentMethodScreen),
+    (_: string) => _
   )
 );

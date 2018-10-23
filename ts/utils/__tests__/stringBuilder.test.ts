@@ -1,5 +1,5 @@
 import { entries } from "lodash";
-import { buildAmount } from "../stringBuilder";
+import { formatNumberAmount } from "../stringBuilder";
 
 describe("amountBuilder", () => {
   it("should render amounts correctly", async () => {
@@ -12,7 +12,7 @@ describe("amountBuilder", () => {
       "10.50 €": 10.5001
     };
     entries(values).forEach(([k, v]: [string, number]) =>
-      expect(buildAmount(v)).toEqual(k)
+      expect(formatNumberAmount(v)).toEqual(k)
     );
   });
 });

@@ -1,35 +1,64 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { CreditCard, Wallet } from "../../../types/pagopa";
+
+import { Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
+import { PotFromActions } from "../../../types/utils";
 import { Action } from "../../actions/types";
 import {
-  creditCardDataCleanup,
+  paymentUpdateWalletPspFailure,
+  paymentUpdateWalletPspRequest,
+  paymentUpdateWalletPspSuccess
+} from "../../actions/wallet/payment";
+import {
+  addWalletCreditCardFailure,
+  addWalletCreditCardInit,
+  addWalletCreditCardRequest,
+  addWalletCreditCardSuccess,
+  creditCardCheckout3dsRequest,
+  creditCardCheckout3dsSuccess,
+  deleteWalletFailure,
+  deleteWalletRequest,
+  deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
-  setFavoriteWallet,
-  storeCreditCardData
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationRequest,
+  payCreditCardVerificationSuccess,
+  setFavoriteWallet
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type WalletsState = Readonly<{
-  walletById: pot.Pot<IndexedById<Wallet>>;
+  walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
   favoriteWalletId: Option<number>;
-  newCreditCard: Option<CreditCard>;
+  creditCardAddWallet: PotFromActions<
+    typeof addWalletCreditCardSuccess,
+    typeof addWalletCreditCardFailure
+  >;
+  creditCardVerification: PotFromActions<
+    typeof payCreditCardVerificationSuccess,
+    typeof payCreditCardVerificationFailure
+  >;
+  creditCardCheckout3ds: PotFromActions<
+    typeof creditCardCheckout3dsSuccess,
+    never
+  >;
 }>;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
   favoriteWalletId: none,
-  newCreditCard: none
+  creditCardAddWallet: pot.none,
+  creditCardVerification: pot.none,
+  creditCardCheckout3ds: pot.none
 };
 
 // selectors
@@ -52,14 +81,13 @@ export const getFavoriteWallet = (state: GlobalState) =>
     )
   );
 
-export const getNewCreditCard = (state: GlobalState) =>
-  state.wallet.wallets.newCreditCard;
-
 export const walletsSelector = createSelector(
   getWallets,
   // define whether an order among cards needs to be established
   // (e.g. by insertion date, expiration date, ...)
-  (potWallets: ReturnType<typeof getWallets>): pot.Pot<ReadonlyArray<Wallet>> =>
+  (
+    potWallets: ReturnType<typeof getWallets>
+  ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potWallets, wallets =>
       [...wallets].sort(
         // sort by date, descending
@@ -78,30 +106,35 @@ export const walletsSelector = createSelector(
     )
 );
 
-export const feeExtractor = (w: Wallet): AmountInEuroCents | undefined =>
-  w.psp === undefined
-    ? undefined
-    : (("0".repeat(10) + `${w.psp.fixedCost.amount}`) as AmountInEuroCents);
-
 // reducer
 const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
 ): WalletsState => {
   switch (action.type) {
+    //
+    // fetch wallets
+    //
+
     case getType(fetchWalletsRequest):
+    case getType(paymentUpdateWalletPspRequest):
+    case getType(deleteWalletRequest):
       return {
         ...state,
         walletById: pot.toLoading(state.walletById)
       };
 
     case getType(fetchWalletsSuccess):
+    case getType(paymentUpdateWalletPspSuccess):
+    case getType(deleteWalletSuccess):
       return {
         ...state,
         walletById: pot.some(toIndexed(action.payload, _ => _.idWallet))
       };
 
     case getType(fetchWalletsFailure):
+    case getType(deleteWalletFailure):
+    case getType(paymentUpdateWalletPspFailure):
       return {
         ...state,
         walletById: pot.toError(state.walletById, action.payload)
@@ -113,24 +146,78 @@ const reducer = (
         favoriteWalletId: fromNullable(action.payload)
       };
 
-    /**
-     * Store the credit card information locally
-     * before sending it to pagoPA
-     */
-    case getType(storeCreditCardData):
+    //
+    // add credit card
+    //
+
+    case getType(addWalletCreditCardInit):
       return {
         ...state,
-        newCreditCard: some(action.payload)
+        creditCardAddWallet: pot.none,
+        creditCardVerification: pot.none,
+        creditCardCheckout3ds: pot.none
       };
 
-    /**
-     * clean up "newCreditCard" after it has been
-     * added to pagoPA
-     */
-    case getType(creditCardDataCleanup):
+    case getType(addWalletCreditCardRequest):
       return {
         ...state,
-        newCreditCard: none
+        creditCardAddWallet: pot.noneLoading
+      };
+
+    case getType(addWalletCreditCardSuccess):
+      return {
+        ...state,
+        creditCardAddWallet: pot.some(action.payload)
+      };
+
+    case getType(addWalletCreditCardFailure):
+      return {
+        ...state,
+        creditCardAddWallet: pot.noneError(action.payload)
+      };
+
+    //
+    // pay credit card verification
+    //
+
+    case getType(payCreditCardVerificationRequest):
+      return {
+        ...state,
+        creditCardVerification: pot.noneLoading
+      };
+
+    case getType(payCreditCardVerificationSuccess):
+      return {
+        ...state,
+        creditCardVerification: pot.some(action.payload)
+      };
+
+    case getType(payCreditCardVerificationFailure):
+      return {
+        ...state,
+        creditCardVerification: pot.noneError(action.payload)
+      };
+
+    //
+    // credit card 3ds checkout
+    //
+
+    case getType(creditCardCheckout3dsRequest):
+      // a valid URL has been made available
+      // from pagoPA and needs to be opened in a webview
+      const urlWithToken = `${action.payload.urlCheckout3ds}&sessionToken=${
+        action.payload.pagopaToken
+      }`;
+
+      return {
+        ...state,
+        creditCardCheckout3ds: pot.someLoading(urlWithToken)
+      };
+
+    case getType(creditCardCheckout3dsSuccess):
+      return {
+        ...state,
+        creditCardCheckout3ds: pot.some("done")
       };
 
     default:

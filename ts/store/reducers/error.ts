@@ -24,11 +24,7 @@ const INITIAL_STATE: ErrorState = {
   PROFILE_UPSERT: none,
   MESSAGE_WITH_RELATIONS_LOAD: none,
   MESSAGES_LOAD: none,
-  LOGOUT: none,
-  PAYMENT: none,
-  WALLET_MANAGEMENT_LOAD: none,
-  FETCH_WALLETS: none,
-  FETCH_TRANSACTIONS: none
+  LOGOUT: none
 };
 
 /**

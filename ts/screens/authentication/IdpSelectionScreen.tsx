@@ -146,7 +146,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
           <Button block={true} light={true} bordered={true} onPress={goBack}>
-            <Text>{I18n.t("authentication.idp_selection.cancel")}</Text>
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
       </Content>

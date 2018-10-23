@@ -2,7 +2,8 @@
  * This screen allows the user to select the payment method for a selected transaction
  * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
-import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
+import { some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Container,
@@ -18,7 +19,7 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
@@ -28,91 +29,71 @@ import CardComponent from "../../../components/wallet/card/CardComponent";
 import { LogoPosition } from "../../../components/wallet/card/Logo";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import { navigateToWalletTransactionsScreen } from "../../../store/actions/navigation";
+import {
+  navigateToPaymentConfirmPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletAddPaymentMethod
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import {
-  paymentRequestConfirmPaymentMethod,
-  paymentRequestGoBack,
-  paymentRequestTransactionSummaryFromBanner
-} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  getCurrentAmountFromGlobalStateWithVerificaResponse,
-  getPaymentIdFromGlobalStateWithPaymentId,
-  getPaymentReason,
-  getPaymentRecipientFromGlobalStateWithVerificaResponse,
-  getPaymentStep,
-  isGlobalStateWithPaymentId
-} from "../../../store/reducers/wallet/payment";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
-import { Wallet } from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
+import { AmountToImporto } from "../../../utils/amounts";
 
 type NavigationParams = Readonly<{
-  paymentCompleted: boolean;
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+  verifica: PaymentRequestsGetResponse;
+  paymentId: string;
+  psps: ReadonlyArray<Psp>;
 }>;
 
-type ReduxMappedStateProps =
-  | Readonly<{
-      valid: false;
-    }>
-  | Readonly<{
-      valid: true;
-      wallets: ReadonlyArray<Wallet>;
-      paymentId: string;
-      paymentReason?: string;
-      currentAmount: AmountInEuroCents;
-      recipient?: EnteBeneficiario;
-    }>;
+type ReduxMappedStateProps = Readonly<{
+  wallets: ReadonlyArray<Wallet>;
+}>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmPaymentMethod: (wallet: Wallet, paymentId: string) => void;
-  goBack: () => void;
-  showSummary: () => void;
+  navigateToTransactionSummary: () => void;
+  navigateToConfirmOrPickPsp: (wallet: Wallet) => void;
+  navigateToAddPaymentMethod: () => void;
 }>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
-  NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 class PickPaymentMethodScreen extends React.Component<Props> {
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
-  }
-
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
+    const verifica = this.props.navigation.getParam("verifica");
+
+    const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
+    const currentAmount = AmountToImporto.encode(
+      verifica.importoSingoloVersamento
+    );
+    const recipient = verifica.enteBeneficiario;
+
+    const { wallets } = this.props;
 
     const primaryButtonProps = {
       block: true,
-      onPress: () =>
-        this.props.navigation.navigate(ROUTES.WALLET_ADD_PAYMENT_METHOD),
+      onPress: this.props.navigateToAddPaymentMethod,
       title: I18n.t("wallet.newPaymentMethod.addButton")
     };
 
     const secondaryButtonProps = {
       block: true,
       cancel: true,
-      onPress: this.props.showSummary,
+      onPress: this.props.navigateToTransactionSummary,
       title: I18n.t("global.buttons.cancel")
     };
-
-    const { wallets, paymentId } = this.props;
-
-    const confirmPaymentMethod = (wallet: Wallet) =>
-      this.props.confirmPaymentMethod(wallet, paymentId);
 
     return (
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.payWith.header")}</Text>
@@ -123,9 +104,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         </AppHeader>
         <Content noPadded={true}>
           <PaymentBannerComponent
-            paymentReason={this.props.paymentReason}
-            currentAmount={this.props.currentAmount}
-            recipient={this.props.recipient}
+            paymentReason={paymentReason}
+            currentAmount={currentAmount}
+            recipient={recipient}
           />
 
           <View style={WalletStyles.paddedLR}>
@@ -155,13 +136,8 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                   menu={false}
                   showFavoriteIcon={false}
                   lastUsage={false}
-                  mainAction={confirmPaymentMethod}
+                  mainAction={this.props.navigateToConfirmOrPickPsp}
                   logoPosition={LogoPosition.TOP}
-                  navigateToWalletTransactions={(selectedWallet: Wallet) =>
-                    this.props.navigation.dispatch(
-                      navigateToWalletTransactionsScreen({ selectedWallet })
-                    )
-                  }
                 />
               )}
             />
@@ -169,36 +145,80 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         </Content>
 
         <FooterWithButtons
-          leftButton={primaryButtonProps}
-          rightButton={secondaryButtonProps}
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonProps}
+          inlineOneThird={true}
         />
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps =>
-  getPaymentStep(state) === "PaymentStatePickPaymentMethod" &&
-  isGlobalStateWithPaymentId(state)
-    ? {
-        valid: true,
-        wallets: pot.getOrElse(walletsSelector(state), []),
-        paymentId: getPaymentIdFromGlobalStateWithPaymentId(state),
-        paymentReason: getPaymentReason(state).toUndefined(), // this could be empty as per pagoPA definition
-        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
-          state
-        ),
-        recipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
-          state
-        ).toUndefined() // this could be empty as per pagoPA definition
-      }
-    : { valid: false };
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+  // FIXME: handle loading/error states
+  wallets: pot.getOrElse(walletsSelector(state), [])
+});
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmPaymentMethod: (wallet: Wallet, paymentId: string) =>
-    dispatch(paymentRequestConfirmPaymentMethod({ wallet, paymentId })),
-  goBack: () => dispatch(paymentRequestGoBack()),
-  showSummary: () => dispatch(paymentRequestTransactionSummaryFromBanner())
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: OwnProps
+): ReduxMappedDispatchProps => ({
+  navigateToTransactionSummary: () =>
+    dispatch(
+      navigateToPaymentTransactionSummaryScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount")
+      })
+    ),
+  navigateToConfirmOrPickPsp: (wallet: Wallet) => {
+    const psps = props.navigation.getParam("psps");
+    const walletPsp = wallet.psp;
+    // whether the wallet has already an associated psp that is compatible
+    // with the current payment
+    const hasCompatiblePsp =
+      walletPsp !== undefined &&
+      psps.find(_ => _.idPsp === walletPsp.idPsp) !== undefined;
+
+    if (hasCompatiblePsp) {
+      // if the wallet has a compatible PSP, go directly to the confirmation
+      // screen
+      dispatch(
+        navigateToPaymentConfirmPaymentMethodScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps"),
+          wallet
+        })
+      );
+    } else {
+      // if the wallet doesn't have a compatible PSP, navigate to the PSP
+      // selection screen
+      dispatch(
+        navigateToPaymentPickPspScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps"),
+          wallet
+        })
+      );
+    }
+  },
+  navigateToAddPaymentMethod: () =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({
+        inPayment: some({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          paymentId: props.navigation.getParam("paymentId"),
+          psps: props.navigation.getParam("psps")
+        })
+      })
+    )
 });
 
 export default connect(

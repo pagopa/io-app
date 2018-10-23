@@ -1,73 +1,127 @@
+import { ActionType, createStandardAction } from "typesafe-actions";
+
 import {
-  ActionType,
-  createAction,
-  createStandardAction
-} from "typesafe-actions";
-
-import { CreditCard, Wallet } from "../../../types/pagopa";
-
-export type WalletsActions =
-  | ActionType<typeof fetchWalletsRequest>
-  | ActionType<typeof fetchWalletsSuccess>
-  | ActionType<typeof setFavoriteWallet>
-  | ActionType<typeof storeCreditCardData>
-  | ActionType<typeof creditCardDataCleanup>
-  | ActionType<typeof addCreditCardRequest>
-  | ActionType<typeof addCreditCardCompleted>
-  | ActionType<typeof deleteWalletRequest>
-  | ActionType<typeof walletManagementSetLoadingState>
-  | ActionType<typeof walletManagementResetLoadingState>
-  | ActionType<typeof fetchWalletsFailure>;
+  CreditCard,
+  NullableWallet,
+  PagopaToken,
+  PayRequest,
+  TransactionResponse,
+  Wallet,
+  WalletResponse
+} from "../../../types/pagopa";
+import { PayloadForAction } from "../../../types/utils";
 
 export const fetchWalletsRequest = createStandardAction(
   "FETCH_WALLETS_REQUEST"
 )();
 
-export const fetchWalletsSuccess = createAction(
-  "FETCH_WALLETS_SUCCESS",
-  resolve => (wallets: ReadonlyArray<Wallet>) => resolve(wallets)
-);
+export const fetchWalletsSuccess = createStandardAction(
+  "FETCH_WALLETS_SUCCESS"
+)<ReadonlyArray<Wallet>>();
 
-export const fetchWalletsFailure = createAction(
-  "FETCH_WALLETS_FAILURE",
-  resolve => (error: Error) => resolve(error)
-);
+export const fetchWalletsFailure = createStandardAction(
+  "FETCH_WALLETS_FAILURE"
+)<Error>();
+
+export const addWalletCreditCardInit = createStandardAction(
+  "ADD_WALLET_CREDITCARD_INIT"
+)();
+
+type AddWalletCreditCardRequestPayload = Readonly<{
+  creditcard: NullableWallet;
+}>;
+
+export const addWalletCreditCardRequest = createStandardAction(
+  "ADD_WALLET_CREDITCARD_REQUEST"
+)<AddWalletCreditCardRequestPayload>();
+
+export const addWalletCreditCardSuccess = createStandardAction(
+  "ADD_WALLET_CREDITCARD_SUCCESS"
+)<WalletResponse>();
+
+export const addWalletCreditCardFailure = createStandardAction(
+  "ADD_WALLET_CREDITCARD_FAILURE"
+)<"GENERIC_ERROR" | "ALREADY_EXISTS">();
+
+type PayCreditCardVerificationRequestPayload = Readonly<{
+  payRequest: PayRequest;
+  language?: string;
+}>;
+
+export const payCreditCardVerificationRequest = createStandardAction(
+  "PAY_CREDITCARD_VERIFICATION_REQUEST"
+)<PayCreditCardVerificationRequestPayload>();
+
+export const payCreditCardVerificationSuccess = createStandardAction(
+  "PAY_CREDITCARD_VERIFICATION_SUCCESS"
+)<TransactionResponse>();
+
+export const payCreditCardVerificationFailure = createStandardAction(
+  "PAY_CREDITCARD_VERIFICATION_FAILURE"
+)<Error>();
+
+type CreditCardCheckout3dsRequestPayload = Readonly<{
+  urlCheckout3ds: string;
+  pagopaToken: PagopaToken;
+}>;
+
+export const creditCardCheckout3dsRequest = createStandardAction(
+  "CREDITCARD_CHKECKOUT_3DS_REQUEST"
+)<CreditCardCheckout3dsRequestPayload>();
+
+export const creditCardCheckout3dsSuccess = createStandardAction(
+  "CREDITCARD_CHKECKOUT_3DS_SUCCESS"
+)<string>();
+
+type DeleteWalletRequestPayload = Readonly<{
+  walletId: number;
+  onSuccess?: (action: ActionType<typeof deleteWalletSuccess>) => void;
+  onFailure?: (action: ActionType<typeof deleteWalletFailure>) => void;
+}>;
+
+export const deleteWalletRequest = createStandardAction(
+  "DELETE_WALLET_REQUEST"
+)<DeleteWalletRequestPayload>();
+
+export const deleteWalletSuccess = createStandardAction(
+  "DELETE_WALLET_SUCCESS"
+)<PayloadForAction<typeof fetchWalletsSuccess>>();
+
+export const deleteWalletFailure = createStandardAction(
+  "DELETE_WALLET_FAILURE"
+)<PayloadForAction<typeof fetchWalletsFailure>>();
 
 export const setFavoriteWallet = createStandardAction("SET_FAVORITE_WALLET")<
   number | undefined
 >();
 
-export const storeCreditCardData = createAction(
-  "STORE_CREDIT_CARD_DATA",
-  resolve => (card: CreditCard) => resolve(card)
-);
-
-export const creditCardDataCleanup = createStandardAction(
-  "CREDIT_CARD_DATA_CLEANUP"
-)();
-
-type AddCreditCardRequestPayload = Readonly<{
+type StartOrResumeAddCreditCardSagaPayload = Readonly<{
   creditCard: CreditCard;
+  language?: string;
   setAsFavorite: boolean;
+  onSuccess?: () => void;
+  onFailure?: (error?: "ALREADY_EXISTS") => void;
 }>;
 
-export const addCreditCardRequest = createStandardAction(
-  "ADD_CREDIT_CARD_REQUEST"
-)<AddCreditCardRequestPayload>();
+export const runStartOrResumeAddCreditCardSaga = createStandardAction(
+  "RUN_ADD_CREDIT_CARD_SAGA"
+)<StartOrResumeAddCreditCardSagaPayload>();
 
-export const addCreditCardCompleted = createStandardAction(
-  "ADD_CREDIT_CARD_COMPLETED"
-)();
-
-export const deleteWalletRequest = createAction(
-  "DELETE_WALLET_REQUEST",
-  resolve => (walletId: number) => resolve(walletId)
-);
-
-export const walletManagementSetLoadingState = createStandardAction(
-  "WALLET_MANAGEMENT_SET_LOADING_STATE"
-)();
-
-export const walletManagementResetLoadingState = createStandardAction(
-  "WALLET_MANAGEMENT_RESET_LOADING_STATE"
-)();
+export type WalletsActions =
+  | ActionType<typeof fetchWalletsRequest>
+  | ActionType<typeof fetchWalletsSuccess>
+  | ActionType<typeof fetchWalletsFailure>
+  | ActionType<typeof deleteWalletRequest>
+  | ActionType<typeof deleteWalletSuccess>
+  | ActionType<typeof deleteWalletFailure>
+  | ActionType<typeof setFavoriteWallet>
+  | ActionType<typeof runStartOrResumeAddCreditCardSaga>
+  | ActionType<typeof addWalletCreditCardInit>
+  | ActionType<typeof addWalletCreditCardRequest>
+  | ActionType<typeof addWalletCreditCardSuccess>
+  | ActionType<typeof addWalletCreditCardFailure>
+  | ActionType<typeof payCreditCardVerificationRequest>
+  | ActionType<typeof payCreditCardVerificationSuccess>
+  | ActionType<typeof payCreditCardVerificationFailure>
+  | ActionType<typeof creditCardCheckout3dsRequest>
+  | ActionType<typeof creditCardCheckout3dsSuccess>;

@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { StyleSheet } from "react-native";
 
-import variables from "../../../theme/variables";
+import variables from "../../theme/variables";
 
 type MarkerState = "SCANNING" | "VALID" | "INVALID";
 
@@ -12,6 +12,11 @@ type Props = {
   state: MarkerState;
 };
 
+/**
+ * Renders a square camera marker.
+ *
+ * This is overlayed on the camera preview of the QR code scanner.
+ */
 export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
   const iconName =
     state === "INVALID" ? "times" : state === "VALID" ? "check" : undefined;

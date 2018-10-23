@@ -9,7 +9,6 @@ import { H1, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { WalletStyles } from "../../components/styles/wallet";
 
@@ -17,9 +16,9 @@ import I18n from "../../i18n";
 
 import variables from "../../theme/variables";
 
-import { buildAmount } from "../../utils/stringBuilder";
+import { formatNumberAmount } from "../../utils/stringBuilder";
 
-type ReduxMappedStateProps =
+type Props =
   | Readonly<{
       amount: AmountInEuroCents;
       updatedAmount: AmountInEuroCents;
@@ -29,12 +28,6 @@ type ReduxMappedStateProps =
   | Readonly<{
       hasVerificaResponse: false;
     }>;
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps;
 
 const styles = StyleSheet.create({
   padded: {
@@ -140,11 +133,11 @@ class PaymentSummaryComponent extends React.Component<Props> {
           </H3>,
           amountIsUpdated ? (
             <H3 style={[WalletStyles.white, styles.strikeThrough]}>
-              {amount !== undefined ? buildAmount(amount) : "..."}
+              {amount !== undefined ? formatNumberAmount(amount) : "..."}
             </H3>
           ) : (
             <H1 style={WalletStyles.white}>
-              {amount !== undefined ? buildAmount(amount) : "..."}
+              {amount !== undefined ? formatNumberAmount(amount) : "..."}
             </H1>
           )
         )}
@@ -163,7 +156,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
               </View>,
               <H1 style={WalletStyles.white}>
                 {updatedAmount !== undefined
-                  ? buildAmount(updatedAmount)
+                  ? formatNumberAmount(updatedAmount)
                   : "..."}
               </H1>
             )}

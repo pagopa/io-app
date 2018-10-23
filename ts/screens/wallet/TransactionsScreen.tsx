@@ -12,8 +12,8 @@ import CardFull from "../../components/wallet/card/CardFull";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import {
+  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
@@ -67,7 +67,7 @@ class TransactionsScreen extends React.Component<Props> {
           />
         }
         navigateToScanQrCode={() =>
-          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
+          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
         }
       >
         <TransactionsList

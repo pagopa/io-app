@@ -16,6 +16,7 @@ global:
     ok: OK
     continue: Continue
     retry: Retry
+    back: Back
   navigator:
     messages: messages
     wallet: wallet
@@ -159,7 +160,6 @@ authentication:
     subtitle: "The Identity Providers provide several authentication methods
       and, toghether with SPID, they provide several services: find out more
       at each one's website."
-    cancel: Cancel
   idp_login:
     headerTitle: Login
   errors:
@@ -268,9 +268,9 @@ wallet:
     info2: which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
+    onUpdateWalletPspFailure: Operation failed, please retry
   ConfirmPayment:
     header: Confirm transaction
-    cancel: CANCEL
     cancelPayment: Cancel the transaction
     goToPay: Confirm and pay
     askConfirm: Want to proceed with the transaction?
@@ -340,7 +340,6 @@ wallet:
   latestTransactions: Latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  cancel: Cancel
   continue: Continue
   methods:
     card:
@@ -387,7 +386,6 @@ wallet:
     MISSING_PAYMENT_ID: MISSING_PAYMENT_ID
 saveCard:
   saveCard: Save the card
-  cancel: Cancel
   header: Do you whant to save this card?
   favoriteTitle: Set the cart as favourite payment method
   favoriteText: This payment method will be automatically proposed for the next payment

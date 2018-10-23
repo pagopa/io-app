@@ -4,41 +4,22 @@
  */
 import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import {
-  Body,
-  Button,
-  Container,
-  Icon,
-  Left,
-  Right,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { Body, Container, Left, Right, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import GoBackButton from "../../../components/GoBackButton";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { CameraMarker } from "../../../components/wallet/CameraMarker";
 
 import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
-
-import ROUTES from "../../../navigation/routes";
-
-import {
-  paymentRequestTransactionSummaryFromRptId,
-  startPaymentSaga
-} from "../../../store/actions/wallet/payment";
 
 import variables from "../../../theme/variables";
 
@@ -46,15 +27,22 @@ import { ComponentProps } from "../../../types/react";
 
 import { decodePagoPaQrCode } from "../../../utils/payment";
 
-import { CameraMarker } from "./CameraMarker";
+import {
+  navigateToPaymentManualDataInsertion,
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHome
+} from "../../../store/actions/navigation";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
-  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  navigateToWalletHome: () => void;
+  runPaymentTransactionSummarySaga: (
+    rptId: RptId,
+    amount: AmountInEuroCents
+  ) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationInjectedProps;
 
 type Props = OwnProps & ReduxMappedDispatchProps;
 
@@ -109,7 +97,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.setState({
       scanningState: "VALID"
     });
-    this.props.showTransactionSummary(data.e1, data.e2);
+    this.props.runPaymentTransactionSummarySaga(data.e1, data.e2);
   };
 
   /**
@@ -167,7 +155,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       block: true,
       primary: true,
       onPress: () => {
-        this.props.navigation.navigate(ROUTES.PAYMENT_MANUAL_DATA_INSERTION);
+        this.props.navigation.dispatch(navigateToPaymentManualDataInsertion());
       },
       title: I18n.t("wallet.QRtoPay.setManually")
     };
@@ -175,8 +163,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     const secondaryButtonProps = {
       block: true,
       bordered: true,
-      onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("wallet.cancel")
+      onPress: this.props.navigateToWalletHome,
+      title: I18n.t("global.buttons.cancel")
     };
 
     return (
@@ -187,12 +175,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         />
         <AppHeader>
           <Left>
-            <Button
-              transparent={true}
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <Icon name="chevron-left" />
-            </Button>
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
@@ -241,10 +224,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
-    dispatch(startPaymentSaga());
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  runPaymentTransactionSummarySaga: (
+    rptId: RptId,
+    initialAmount: AmountInEuroCents
+  ) => {
+    dispatch(paymentInitializeState());
     dispatch(
-      paymentRequestTransactionSummaryFromRptId({
+      navigateToPaymentTransactionSummaryScreen({
         rptId,
         initialAmount
       })
