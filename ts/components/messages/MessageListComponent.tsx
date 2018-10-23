@@ -1,12 +1,17 @@
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 
+import {
+  MessagesUIStatesByIdState,
+  withDefaultMessageUIStates
+} from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { MessageListItemComponent } from "./MessageListItemComponent";
 
 type OwnProps = {
   messages: ReadonlyArray<MessageWithContentPO>;
+  messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
   refreshing: boolean;
   onRefresh: () => void;
@@ -16,15 +21,20 @@ type OwnProps = {
 type Props = OwnProps;
 
 const makeRenderItem = (
+  messagesUIStatesById: MessagesUIStatesByIdState,
   servicesById: ServicesByIdState,
   onListItemPress?: (messageId: string) => void
 ) => (info: ListRenderItemInfo<MessageWithContentPO>) => {
   const message = info.item;
+  const messageUIStates = withDefaultMessageUIStates(
+    messagesUIStatesById[message.id]
+  );
   const service = servicesById[message.sender_service_id];
 
   return (
     <MessageListItemComponent
       message={message}
+      messageUIStates={messageUIStates}
       service={service}
       onItemPress={onListItemPress}
     />
@@ -37,6 +47,7 @@ class MessageListComponent extends React.PureComponent<Props, never> {
   public render() {
     const {
       messages,
+      messagesUIStatesById,
       servicesById,
       refreshing,
       onRefresh,
@@ -52,7 +63,11 @@ class MessageListComponent extends React.PureComponent<Props, never> {
         scrollEnabled={true}
         data={messages}
         keyExtractor={keyExtractor}
-        renderItem={makeRenderItem(servicesById, onListItemPress)}
+        renderItem={makeRenderItem(
+          messagesUIStatesById,
+          servicesById,
+          onListItemPress
+        )}
         refreshControl={refreshControl}
       />
     );

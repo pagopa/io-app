@@ -6,6 +6,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
@@ -14,6 +15,7 @@ import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
   message: MessageWithContentPO;
+  messageUIStates: MessageUIStates;
   service?: ServicePublic;
   onItemPress?: (messageId: string) => void;
 };
@@ -22,7 +24,6 @@ type Props = OwnProps;
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding,
     paddingTop: 16
   },
@@ -39,24 +40,39 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
+  readCol: {
+    width: variables.contentPadding
+  },
+
   serviceText: {
     fontSize: variables.fontSize3,
-    lineHeight: 20
+    lineHeight: 20,
+    paddingRight: 5
+  },
+
+  serviceTextNew: {
+    color: variables.h2Color
   },
 
   dateText: {
     color: variables.brandDarkGray,
-    fontSize: variables.fontSize2
+    fontSize: variables.fontSize2,
+    lineHeight: 16
   },
 
   subjectRow: {
-    marginBottom: 16
+    marginBottom: 16,
+    paddingLeft: variables.contentPadding
   },
 
   iconContainer: {
     justifyContent: "flex-end",
     alignItems: "center",
     flexDirection: "row"
+  },
+
+  ctaBarRow: {
+    paddingLeft: variables.contentPadding
   },
 
   ctaBarContainer: {
@@ -69,7 +85,7 @@ export class MessageListItemComponent extends React.PureComponent<
   never
 > {
   public render() {
-    const { message, service, onItemPress } = this.props;
+    const { message, messageUIStates, service, onItemPress } = this.props;
 
     // TODO: Extract this to external file
     const uiService = service
@@ -92,11 +108,24 @@ export class MessageListItemComponent extends React.PureComponent<
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
+              <Col style={{ width: variables.contentPadding }}>
+                {!messageUIStates.read && (
+                  <IconFont
+                    name="io-new"
+                    color={variables.contentPrimaryBackground}
+                    size={24}
+                    style={{ lineHeight: 20 }}
+                  />
+                )}
+              </Col>
               <Col size={10}>
                 <Text
-                  style={styles.serviceText}
+                  style={[
+                    styles.serviceText,
+                    !messageUIStates.read ? styles.serviceTextNew : undefined
+                  ]}
                   leftAlign={true}
-                  alternativeBold={true}
+                  bold={true}
                 >
                   {uiService}
                 </Text>
@@ -119,7 +148,7 @@ export class MessageListItemComponent extends React.PureComponent<
                 />
               </Col>
             </Row>
-            <Row>
+            <Row style={styles.ctaBarRow}>
               <MessageCTABar
                 message={message}
                 service={service}

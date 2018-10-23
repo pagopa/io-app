@@ -1,11 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import {
-  NavigationActions,
-  NavigationEventSubscription,
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationActions, NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import MessageListComponent from "../../components/messages/MessageListComponent";
@@ -16,6 +12,10 @@ import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessagesRequest } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
+import {
+  messagesUIStatesByIdSelector,
+  MessagesUIStatesByIdState
+} from "../../store/reducers/entities/messages/messagesUIStatesById";
 import {
   servicesByIdSelector,
   ServicesByIdState
@@ -28,6 +28,7 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 type ReduxMappedProps = Readonly<{
   isLoading: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
+  messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
 }>;
 
@@ -46,8 +47,6 @@ const styles = StyleSheet.create({
 });
 
 class MessageListScreen extends React.Component<Props, never> {
-  private didFocusSubscription?: NavigationEventSubscription;
-
   private refreshMessageList = () => this.props.dispatch(loadMessagesRequest());
 
   private handleMessageListItemPress = (messageId: string) => {
@@ -62,23 +61,16 @@ class MessageListScreen extends React.Component<Props, never> {
   };
 
   public componentDidMount() {
-    // tslint:disable-next-line:no-object-mutation
-    this.didFocusSubscription = this.props.navigation.addListener(
-      "didFocus",
-      _ => {
-        this.refreshMessageList();
-      }
-    );
-  }
-
-  public componentWillUnmount() {
-    if (this.didFocusSubscription) {
-      this.didFocusSubscription.remove();
-    }
+    this.refreshMessageList();
   }
 
   public render() {
-    const { isLoading, messages, servicesById } = this.props;
+    const {
+      isLoading,
+      messages,
+      messagesUIStatesById,
+      servicesById
+    } = this.props;
 
     return (
       <TopScreenComponent
@@ -101,6 +93,7 @@ class MessageListScreen extends React.Component<Props, never> {
         {messages.length > 0 && (
           <MessageListComponent
             messages={messages}
+            messagesUIStatesById={messagesUIStatesById}
             servicesById={servicesById}
             refreshing={isLoading}
             onRefresh={this.refreshMessageList}
@@ -119,6 +112,7 @@ const messagesLoadSelector = createLoadingSelector([
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoading: messagesLoadSelector(state),
   messages: orderedMessagesSelector(state),
+  messagesUIStatesById: messagesUIStatesByIdSelector(state),
   servicesById: servicesByIdSelector(state)
 });
 
