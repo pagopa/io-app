@@ -63,7 +63,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             </Left>
           )}
           <Body>
-            <Text white={this.props.primary}>
+            <Text white={this.props.primary} numberOfLines={1}>
               {headerTitle || DEFAULT_APPLICATION_NAME}
             </Text>
           </Body>
