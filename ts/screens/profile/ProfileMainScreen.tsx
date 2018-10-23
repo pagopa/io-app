@@ -111,28 +111,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </Right>
             </ListItem>
 
-            {/* Terms & conditions */}
-            <ListItem
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_TOS, {
-                  isProfile: true
-                })
-              }
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.termsAndConditions.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.main.termsAndConditions.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
-
             <ListItem itemDivider={true}>
               <Text>{I18n.t("profile.main.accountSectionHeader")}</Text>
             </ListItem>
