@@ -224,7 +224,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  navigateToWalletHome: () => navigateToWalletHome(),
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     initialAmount: AmountInEuroCents

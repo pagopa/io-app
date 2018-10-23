@@ -75,7 +75,6 @@ type ReduxMappedDispatchProps = Readonly<{
     maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) => void;
   goBack: () => void;
-  cancelPayment: () => void;
   onCancel: () => void;
   onRetryWithPotVerifica: (
     potVerifica: ReduxMappedStateProps["potVerifica"],
@@ -340,8 +339,7 @@ const mapDispatchToProps = (
     dispatchPaymentVerificaRequest,
     startOrResumePayment,
     goBack: () => props.navigation.goBack(),
-    cancelPayment: () => navigateToWalletHome(),
-    onCancel: () => navigateToWalletHome(),
+    onCancel: () => dispatch(navigateToWalletHome()),
     onRetryWithPotVerifica: (
       potVerifica: ReduxMappedStateProps["potVerifica"],
       maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]

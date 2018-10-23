@@ -245,7 +245,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  navigateToWalletHome: () => navigateToWalletHome(),
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
