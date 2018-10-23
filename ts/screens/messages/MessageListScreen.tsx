@@ -1,11 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import {
-  NavigationActions,
-  NavigationEventSubscription,
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationActions, NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import MessageListComponent from "../../components/messages/MessageListComponent";
@@ -51,8 +47,6 @@ const styles = StyleSheet.create({
 });
 
 class MessageListScreen extends React.Component<Props, never> {
-  private didFocusSubscription?: NavigationEventSubscription;
-
   private refreshMessageList = () => this.props.dispatch(loadMessagesRequest());
 
   private handleMessageListItemPress = (messageId: string) => {
@@ -67,19 +61,7 @@ class MessageListScreen extends React.Component<Props, never> {
   };
 
   public componentDidMount() {
-    // tslint:disable-next-line:no-object-mutation
-    this.didFocusSubscription = this.props.navigation.addListener(
-      "didFocus",
-      _ => {
-        this.refreshMessageList();
-      }
-    );
-  }
-
-  public componentWillUnmount() {
-    if (this.didFocusSubscription) {
-      this.didFocusSubscription.remove();
-    }
+    this.refreshMessageList();
   }
 
   public render() {
