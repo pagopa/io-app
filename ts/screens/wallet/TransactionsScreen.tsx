@@ -59,6 +59,7 @@ class TransactionsScreen extends React.Component<Props> {
             type="Header"
             wallet={selectedWallet}
             hideFavoriteIcon={true}
+            hideMenu={true}
           />
         }
         navigateToScanQrCode={() =>
