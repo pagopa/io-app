@@ -119,7 +119,14 @@ export class MessageListItemComponent extends React.PureComponent<
                 )}
               </Col>
               <Col size={10}>
-                <Text style={styles.serviceText} leftAlign={true} bold={true}>
+                <Text
+                  style={[
+                    styles.serviceText,
+                    !messageUIStates.read ? styles.serviceTextNew : undefined
+                  ]}
+                  leftAlign={true}
+                  bold={true}
+                >
                   {uiService}
                 </Text>
               </Col>
