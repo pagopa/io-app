@@ -1,6 +1,6 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, StatusBar, StyleSheet } from "react-native";
+import { Modal, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -60,21 +60,14 @@ const renderIdentificationByPinState = (
   return null;
 };
 
-const screenDimensions = Dimensions.get("screen");
-
-const styles = StyleSheet.create({
-  wrapper: {
-    width: screenDimensions.width,
-    height: screenDimensions.height
-  }
-});
+const onRequestCloseHandler = () => undefined;
 
 /**
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
  * requestIdentification redux action.
  */
-class IdentificationOverlay extends React.PureComponent<Props, State> {
+class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -126,7 +119,7 @@ class IdentificationOverlay extends React.PureComponent<Props, State> {
     };
 
     return (
-      <View style={styles.wrapper}>
+      <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
           <StatusBar
             barStyle="light-content"
@@ -173,7 +166,7 @@ class IdentificationOverlay extends React.PureComponent<Props, State> {
             </View>
           </Content>
         </BaseScreenComponent>
-      </View>
+      </Modal>
     );
   }
 
@@ -202,4 +195,4 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   identificationState: state.identification
 });
 
-export default connect(mapStateToProps)(IdentificationOverlay);
+export default connect(mapStateToProps)(IdentificationModal);
