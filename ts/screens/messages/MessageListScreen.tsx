@@ -17,6 +17,10 @@ import { loadMessagesRequest } from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import {
+  messagesUIStatesByIdSelector,
+  MessagesUIStatesByIdState
+} from "../../store/reducers/entities/messages/messagesUIStatesById";
+import {
   servicesByIdSelector,
   ServicesByIdState
 } from "../../store/reducers/entities/services/servicesById";
@@ -28,6 +32,7 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 type ReduxMappedProps = Readonly<{
   isLoading: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
+  messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
 }>;
 
@@ -78,7 +83,12 @@ class MessageListScreen extends React.Component<Props, never> {
   }
 
   public render() {
-    const { isLoading, messages, servicesById } = this.props;
+    const {
+      isLoading,
+      messages,
+      messagesUIStatesById,
+      servicesById
+    } = this.props;
 
     return (
       <TopScreenComponent
@@ -101,6 +111,7 @@ class MessageListScreen extends React.Component<Props, never> {
         {messages.length > 0 && (
           <MessageListComponent
             messages={messages}
+            messagesUIStatesById={messagesUIStatesById}
             servicesById={servicesById}
             refreshing={isLoading}
             onRefresh={this.refreshMessageList}
@@ -119,6 +130,7 @@ const messagesLoadSelector = createLoadingSelector([
 const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoading: messagesLoadSelector(state),
   messages: orderedMessagesSelector(state),
+  messagesUIStatesById: messagesUIStatesByIdSelector(state),
   servicesById: servicesByIdSelector(state)
 });
 

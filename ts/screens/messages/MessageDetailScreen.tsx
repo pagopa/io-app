@@ -11,9 +11,16 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { contentServiceLoad } from "../../store/actions/content";
-import { loadMessageWithRelationsAction } from "../../store/actions/messages";
+import {
+  loadMessageWithRelationsAction,
+  setMessageReadState
+} from "../../store/actions/messages";
 import { ReduxProps } from "../../store/actions/types";
 import { messageByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import {
+  makeMessageUIStatesByIdSelector,
+  MessageUIStates
+} from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
@@ -78,6 +85,7 @@ type FullScreenState = {
   kind: "FullState";
   messageId: string;
   message: MessageWithContentPO;
+  messageUIStates: MessageUIStates;
   service?: ServicePublic;
 };
 
@@ -224,6 +232,18 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       this.props.dispatch(
         loadMessageWithRelationsAction(screenState.messageId)
       );
+    } else if (isFullState(screenState) && !screenState.messageUIStates.read) {
+      // Set the message read state to TRUE
+      this.props.dispatch(setMessageReadState(screenState.messageId, true));
+    }
+  }
+
+  public componentDidUpdate() {
+    const { screenState } = this.props;
+
+    if (isFullState(screenState) && !screenState.messageUIStates.read) {
+      // Set the message read state to TRUE
+      this.props.dispatch(setMessageReadState(screenState.messageId, true));
     }
   }
 
@@ -289,6 +309,7 @@ const mapStateToProps = (
   }
 
   const message = messageByIdSelector(messageId)(state);
+  const messageUIStates = makeMessageUIStatesByIdSelector(messageId)(state);
 
   if (message !== undefined) {
     const service = message
@@ -300,6 +321,7 @@ const mapStateToProps = (
         kind: "FullState",
         messageId,
         message,
+        messageUIStates,
         service
       }
     };

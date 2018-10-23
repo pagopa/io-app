@@ -6,6 +6,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
@@ -14,6 +15,7 @@ import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
   message: MessageWithContentPO;
+  messageUIStates: MessageUIStates;
   service?: ServicePublic;
   onItemPress?: (messageId: string) => void;
 };
@@ -69,7 +71,7 @@ export class MessageListItemComponent extends React.PureComponent<
   never
 > {
   public render() {
-    const { message, service, onItemPress } = this.props;
+    const { message, messageUIStates, service, onItemPress } = this.props;
 
     // TODO: Extract this to external file
     const uiService = service
@@ -98,6 +100,13 @@ export class MessageListItemComponent extends React.PureComponent<
                   leftAlign={true}
                   alternativeBold={true}
                 >
+                  {!messageUIStates.read && (
+                    <IconFont
+                      name="io-new"
+                      color={variables.contentPrimaryBackground}
+                      style={{ lineHeight: 20, fontSize: 16 }}
+                    />
+                  )}
                   {uiService}
                 </Text>
               </Col>

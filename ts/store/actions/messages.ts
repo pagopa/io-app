@@ -49,6 +49,11 @@ export const loadMessagesFailure = createAction(
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
+export const setMessageReadState = createAction(
+  "MESSAGES_SET_READ",
+  resolve => (id: string, read: boolean) => resolve({ id, read }, { id, read })
+);
+
 export type MessagesActions =
   | ActionType<typeof loadMessageSuccess>
   | ActionType<typeof loadMessageFailure>
@@ -58,4 +63,5 @@ export type MessagesActions =
   | ActionType<typeof loadMessagesRequest>
   | ActionType<typeof loadMessagesCancel>
   | ActionType<typeof loadMessagesSuccess>
-  | ActionType<typeof loadMessagesFailure>;
+  | ActionType<typeof loadMessagesFailure>
+  | ActionType<typeof setMessageReadState>;
