@@ -466,3 +466,5 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
+serviceDetail:
+  headerTitle: "Service details"

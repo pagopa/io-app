@@ -478,3 +478,5 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+serviceDetail:
+  headerTitle: "Dettagli del Servizio"
