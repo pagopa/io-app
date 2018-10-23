@@ -32,6 +32,7 @@ import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
+import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -188,7 +189,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
-              transaction.description
+              cleanTransactionDescription(transaction.description)
             )}
             {this.labelValueRow(
               I18n.t("wallet.recipient"),

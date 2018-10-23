@@ -168,7 +168,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
             <Form>
               <Item
                 floatingLabel={true}

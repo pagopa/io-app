@@ -233,7 +233,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         <FooterWithButtons
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
-          inlineHalf={true}
+          inlineOneThird={true}
         />
       </Container>
     );
