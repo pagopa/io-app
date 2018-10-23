@@ -24,7 +24,6 @@ type Props = OwnProps;
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding,
     paddingTop: 16
   },
@@ -41,24 +40,39 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
+  readCol: {
+    width: variables.contentPadding
+  },
+
   serviceText: {
     fontSize: variables.fontSize3,
-    lineHeight: 20
+    lineHeight: 20,
+    paddingRight: 5
+  },
+
+  serviceTextNew: {
+    color: variables.h2Color
   },
 
   dateText: {
     color: variables.brandDarkGray,
-    fontSize: variables.fontSize2
+    fontSize: variables.fontSize2,
+    lineHeight: 16
   },
 
   subjectRow: {
-    marginBottom: 16
+    marginBottom: 16,
+    paddingLeft: variables.contentPadding
   },
 
   iconContainer: {
     justifyContent: "flex-end",
     alignItems: "center",
     flexDirection: "row"
+  },
+
+  ctaBarRow: {
+    paddingLeft: variables.contentPadding
   },
 
   ctaBarContainer: {
@@ -94,19 +108,18 @@ export class MessageListItemComponent extends React.PureComponent<
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
+              <Col style={{ width: variables.contentPadding }}>
+                {!messageUIStates.read && (
+                  <IconFont
+                    name="io-new"
+                    color={variables.contentPrimaryBackground}
+                    size={24}
+                    style={{ lineHeight: 20 }}
+                  />
+                )}
+              </Col>
               <Col size={10}>
-                <Text
-                  style={styles.serviceText}
-                  leftAlign={true}
-                  alternativeBold={true}
-                >
-                  {!messageUIStates.read && (
-                    <IconFont
-                      name="io-new"
-                      color={variables.contentPrimaryBackground}
-                      style={{ lineHeight: 20, fontSize: 16 }}
-                    />
-                  )}
+                <Text style={styles.serviceText} leftAlign={true} bold={true}>
                   {uiService}
                 </Text>
               </Col>
@@ -128,7 +141,7 @@ export class MessageListItemComponent extends React.PureComponent<
                 />
               </Col>
             </Row>
-            <Row>
+            <Row style={styles.ctaBarRow}>
               <MessageCTABar
                 message={message}
                 service={service}
