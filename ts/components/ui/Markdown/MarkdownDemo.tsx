@@ -13,6 +13,8 @@ type Props = ComponentProps<View>;
 
 const styles = StyleSheet.create({
   textColumn: {
+    alignItems: "center",
+    flexDirection: "row",
     justifyContent: "flex-start",
     paddingRight: 5
   },
