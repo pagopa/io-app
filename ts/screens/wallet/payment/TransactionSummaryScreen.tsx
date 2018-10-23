@@ -241,8 +241,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
-// TODO: Also add loading states for attiva, paymentid, check, psplist
-// TODO: Add retry on error
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   return {

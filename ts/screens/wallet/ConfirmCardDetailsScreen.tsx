@@ -197,7 +197,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   }
 }
 
-// TODO: add error states
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const {
     creditCardAddWallet,

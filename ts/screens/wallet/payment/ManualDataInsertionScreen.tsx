@@ -52,7 +52,10 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
   navigateToWalletHome: () => void;
-  showTransactionSummary: (rptId: RptId, amount: AmountInEuroCents) => void;
+  navigateToTransactionSummary: (
+    rptId: RptId,
+    amount: AmountInEuroCents
+  ) => void;
 }>;
 
 type OwnProps = NavigationInjectedProps;
@@ -122,7 +125,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       );
       if (rptId.isRight() && amount.isRight()) {
         // valid Rpt Id and valid amount were entered
-        this.props.showTransactionSummary(rptId.value, amount.value);
+        this.props.navigateToTransactionSummary(rptId.value, amount.value);
       } // TODO: else toast saying that the data entered is invalid
     }
   };
@@ -243,7 +246,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   navigateToWalletHome: () => navigateToWalletHome(),
-  showTransactionSummary: (rptId: RptId, initialAmount: AmountInEuroCents) => {
+  navigateToTransactionSummary: (
+    rptId: RptId,
+    initialAmount: AmountInEuroCents
+  ) => {
     dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
