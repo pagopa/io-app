@@ -111,6 +111,7 @@ export function* fetchTransactionsRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the application logic decide
  */
+// tslint:disable-next-line:cognitive-complexity
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PagoPaClient,
   action: ActionType<typeof paymentUpdateWalletPspRequest>

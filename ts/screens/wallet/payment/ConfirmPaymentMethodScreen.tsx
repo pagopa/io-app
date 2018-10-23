@@ -109,8 +109,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
       currentAmount
     );
-    // tslint:disable-next-line:restrict-plus-operands
     const totalAmount = maybeWalletFee
+      // tslint:disable-next-line:restrict-plus-operands
       .map(walletFee => currentAmountDecoded + walletFee)
       .getOrElse(currentAmountDecoded);
 
