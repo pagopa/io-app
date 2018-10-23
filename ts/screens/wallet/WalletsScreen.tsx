@@ -61,6 +61,7 @@ class WalletsScreen extends React.Component<Props> {
     const isFavorite = this.props.favoriteWallet === item.idWallet;
     return (
       <CardComponent
+        type="Full"
         wallet={item}
         isFavorite={isFavorite}
         onSetFavorite={(willBeFavorite: boolean) =>
@@ -69,7 +70,7 @@ class WalletsScreen extends React.Component<Props> {
           )
         }
         onDelete={() => this.props.deleteWallet(item.idWallet)}
-        navigateToWalletTransactions={(selectedWallet: Wallet) =>
+        mainAction={(selectedWallet: Wallet) =>
           this.props.navigation.dispatch(
             navigateToWalletTransactionsScreen({ selectedWallet })
           )

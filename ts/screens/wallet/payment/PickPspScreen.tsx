@@ -14,6 +14,7 @@ import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { ActionType } from "typesafe-actions";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
@@ -25,7 +26,10 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { navigateToPaymentConfirmPaymentMethodScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentUpdateWalletPspRequest } from "../../../store/actions/wallet/payment";
+import {
+  paymentUpdateWalletPspRequest,
+  paymentUpdateWalletPspSuccess
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -178,14 +182,16 @@ const mapDispatchToProps = (
   props: OwnProps
 ): ReduxMappedDispatchProps => {
   const wallet = props.navigation.getParam("wallet");
-  const onSuccess = () =>
+  const onSuccess = (
+    action: ActionType<typeof paymentUpdateWalletPspSuccess>
+  ) =>
     dispatch(
       navigateToPaymentConfirmPaymentMethodScreen({
         rptId: props.navigation.getParam("rptId"),
         initialAmount: props.navigation.getParam("initialAmount"),
         verifica: props.navigation.getParam("verifica"),
         paymentId: props.navigation.getParam("paymentId"),
-        wallet,
+        wallet: action.meta,
         psps: props.navigation.getParam("psps")
       })
     );

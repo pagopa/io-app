@@ -148,7 +148,8 @@ export function* updateWalletPspRequestHandler(
         if (updatedWallet !== undefined) {
           // the wallet is still there, we can proceed
           const successAction = paymentUpdateWalletPspSuccess(
-            getResponse.value.data
+            getResponse.value.data,
+            response.value.data
           );
           yield put(successAction);
           if (action.payload.onSuccess) {

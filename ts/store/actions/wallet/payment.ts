@@ -133,7 +133,7 @@ export const paymentUpdateWalletPspRequest = createStandardAction(
 
 export const paymentUpdateWalletPspSuccess = createStandardAction(
   "PAYMENT_UPDATE_WALLET_PSP_SUCCESS"
-)<PayloadForAction<typeof fetchWalletsSuccess>>();
+)<PayloadForAction<typeof fetchWalletsSuccess>, Wallet>();
 
 export const paymentUpdateWalletPspFailure = createStandardAction(
   "PAYMENT_UPDATE_WALLET_PSP_FAILURE"

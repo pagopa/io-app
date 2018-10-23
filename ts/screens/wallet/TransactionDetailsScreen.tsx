@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import CardHeader from "../../components/wallet/card/CardHeader";
+import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
@@ -147,7 +147,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
         title={I18n.t("wallet.transaction")}
         headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
         displayedWallets={
-          transactionWallet ? <CardHeader wallet={transactionWallet} /> : null
+          transactionWallet ? (
+            <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
+          ) : (
+            undefined
+          )
         }
         showPayButton={false}
         allowGoBack={!isPaymentCompletedTransaction}

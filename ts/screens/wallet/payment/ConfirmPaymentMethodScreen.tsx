@@ -36,8 +36,7 @@ import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToTransactionDetailsScreen,
-  navigateToWalletTransactionsScreen
+  navigateToTransactionDetailsScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
@@ -144,14 +143,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <CardComponent
               wallet={wallet}
-              menu={false}
-              showFavoriteIcon={false}
-              lastUsage={false}
-              navigateToWalletTransactions={(selectedWallet: Wallet) =>
-                this.props.navigation.dispatch(
-                  navigateToWalletTransactionsScreen({ selectedWallet })
-                )
-              }
+              type="Full"
+              hideMenu={true}
+              hideFavoriteIcon={true}
             />
             <View spacer={true} large={true} />
             <Grid>
@@ -203,7 +197,6 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col size={9}>
                   <View spacer={true} large={true} />
                   <Text style={WalletStyles.textCenter}>
-                    {/* TODO: the proper UI needs to be defined for changing PSP */}
                     {wallet.psp !== undefined
                       ? `${I18n.t("payment.currentPsp")} ${
                           wallet.psp.businessName
