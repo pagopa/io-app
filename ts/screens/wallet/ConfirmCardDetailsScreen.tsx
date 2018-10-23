@@ -104,7 +104,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           </Right>
         </AppHeader>
         <Content>
-          <H1> {I18n.t("wallet.saveCard.title")} </H1>
+          <H1>{I18n.t("wallet.saveCard.title")}</H1>
           <CardComponent
             wallet={this.props.wallet}
             menu={false}
