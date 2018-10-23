@@ -27,6 +27,7 @@ import {
   navigateToPaymentScanQrCode,
   navigateToWalletHome
 } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -40,11 +41,17 @@ type NavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
-type ReduxInjectedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
   wallets: pot.PotType<ReturnType<typeof getWalletsById>> | undefined;
 }>;
 
-type Props = ReduxInjectedProps & NavigationInjectedProps<NavigationParams>;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletHome: () => void;
+}>;
+
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams>;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -169,11 +176,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
-                onPress={() =>
-                  isPaymentCompletedTransaction
-                    ? this.props.navigation.dispatch(navigateToWalletHome())
-                    : this.props.navigation.goBack()
-                }
+                onPress={this.props.navigateToWalletHome}
               />
             </Row>
             <View spacer={true} large={true} />
@@ -214,8 +217,15 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxInjectedProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+});
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   wallets: pot.toUndefined(getWalletsById(state))
 });
 
-export default connect(mapStateToProps)(TransactionDetailsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionDetailsScreen);
