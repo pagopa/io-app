@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation";
 
-import TosScreen from "../screens/onboarding/TosScreen";
 import { PrivacyMainScreen } from "../screens/profile/PrivacyMainScreen";
 import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
+import { ProfileTosScreen } from "../screens/profile/ProfileTosScreen";
 import ROUTES from "./routes";
 
 /**
@@ -21,7 +21,7 @@ const ProfileNavigator = createStackNavigator(
       screen: PrivacyScreen
     },
     [ROUTES.PROFILE_TOS]: {
-      screen: TosScreen
+      screen: ProfileTosScreen
     }
   },
   {
