@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
 });
 
 const NoTabBarRoutes: ReadonlyArray<string> = [
+  ROUTES.WALLET_ADD_PAYMENT_METHOD,
   ROUTES.WALLET_ADD_CARD,
   ROUTES.WALLET_CONFIRM_CARD_DETAILS,
   ROUTES.PAYMENT_TRANSACTION_SUMMARY,
