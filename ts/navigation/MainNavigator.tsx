@@ -7,7 +7,13 @@
 
 import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
-import { createBottomTabNavigator, StackActions } from "react-navigation";
+import {
+  createBottomTabNavigator,
+  NavigationRoute,
+  NavigationScreenProp,
+  NavigationState,
+  StackActions
+} from "react-navigation";
 
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
@@ -83,6 +89,29 @@ const styles = StyleSheet.create({
   }
 });
 
+const NoTabBarRoutes: ReadonlyArray<string> = [
+  ROUTES.WALLET_ADD_CARD,
+  ROUTES.WALLET_CONFIRM_CARD_DETAILS,
+  ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+  ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+  ROUTES.PAYMENT_PICK_PSP,
+  ROUTES.PAYMENT_PICK_PAYMENT_METHOD
+];
+
+const getTabBarVisibility = (
+  nav: NavigationScreenProp<NavigationRoute>
+): boolean => {
+  const state = nav.state as NavigationState;
+
+  const { routeName } = state.routes[state.index];
+
+  if (NoTabBarRoutes.indexOf(routeName) !== -1) {
+    return false;
+  }
+
+  return true;
+};
+
 /**
  * A navigator for all the screens used when the user is authenticated.
  */
@@ -108,6 +137,7 @@ const navigation = createBottomTabNavigator(
   },
   {
     navigationOptions: ({ navigation: nav }) => ({
+      tabBarVisible: getTabBarVisibility(nav),
       tabBarLabel: ({ tintColor }) => {
         const { routeName } = nav.state;
         // adding `color` as a separate style property since it depends on tintColor
