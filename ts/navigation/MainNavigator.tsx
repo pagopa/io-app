@@ -7,7 +7,7 @@
 
 import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
-import { createBottomTabNavigator } from "react-navigation";
+import { createBottomTabNavigator, StackActions } from "react-navigation";
 
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
@@ -132,6 +132,19 @@ const navigation = createBottomTabNavigator(
             color={tintColor === null ? undefined : tintColor}
           />
         );
+      },
+      tabBarOnPress: options => {
+        if (options.navigation.state.index > 0) {
+          // Always show the first screen on tab press
+          options.navigation.dispatch(
+            StackActions.popToTop({
+              immediate: true,
+              key: options.navigation.state.key
+            })
+          );
+        } else {
+          options.defaultHandler();
+        }
       }
     }),
     tabBarOptions: {
