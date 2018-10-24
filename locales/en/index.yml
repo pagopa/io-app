@@ -259,7 +259,7 @@ wallet:
     infoTitle: Set the card as favourite payment method
     info: This payment method will be automatically proposed for the next payment
     save: Save the card
-    notice: To verify the card will be a transaction of 1 euro, which will be reversed and will not be charged.
+    notice: To verify the card, 1 euro will be charged and immediately reversed.
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
