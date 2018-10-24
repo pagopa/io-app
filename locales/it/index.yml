@@ -269,6 +269,10 @@ wallet:
       pagamento
     save: Salva la carta
     notice: Per verificare la carta verrà effettuata una transazione di 1 euro, che verrà stornata e non ti verrà addebitata.
+  saveCardInPayment:
+    header: Paga con questa carta
+    title: Vuoi pagare con questa carta?
+    save: Paga con questa carta
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:
