@@ -10,12 +10,7 @@ import {
   composeResponseDecoders,
   constantResponseDecoder,
   createFetchRequestForApi,
-  IDeleteApiRequestType,
-  IGetApiRequestType,
   ioResponseDecoder,
-  IPostApiRequestType,
-  IPutApiRequestType,
-  IResponseType,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 
@@ -53,30 +48,12 @@ import {
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
 
-import { AddResponseType } from "../types/utils";
+import {
+  AddResponseType,
+  MapResponseType,
+  ReplaceRequestParams
+} from "../types/utils";
 import { defaultRetryingFetch, pagopaFetch } from "../utils/fetch";
-
-type MapTypeInApiResponse<T, S extends number, B> = T extends IResponseType<
-  S,
-  infer R
->
-  ? IResponseType<S, B>
-  : T;
-
-type MapResponseType<T, S extends number, B> = T extends IGetApiRequestType<
-  infer P1,
-  infer H1,
-  infer Q1,
-  infer R1
->
-  ? IGetApiRequestType<P1, H1, Q1, MapTypeInApiResponse<R1, S, B>>
-  : T extends IPostApiRequestType<infer P2, infer H2, infer Q2, infer R2>
-    ? IPostApiRequestType<P2, H2, Q2, MapTypeInApiResponse<R2, S, B>>
-    : T extends IPutApiRequestType<infer P3, infer H3, infer Q3, infer R3>
-      ? IPutApiRequestType<P3, H3, Q3, MapTypeInApiResponse<R3, S, B>>
-      : T extends IDeleteApiRequestType<infer P4, infer H4, infer Q4, infer R4>
-        ? IDeleteApiRequestType<P4, H4, Q4, MapTypeInApiResponse<R4, S, B>>
-        : never;
 
 const getSession: MapResponseType<
   StartSessionUsingGETT,
@@ -90,13 +67,15 @@ const getSession: MapResponseType<
   response_decoder: startSessionUsingGETDecoder(SessionResponse)
 };
 
-const getTransactions: (
-  pagoPaToken: PagopaToken
-) => MapResponseType<
+type GetTransactionsUsingGETTExtra = MapResponseType<
   GetTransactionsUsingGETT,
   200,
   TransactionListResponse
-> = pagoPaToken => ({
+>;
+
+const getTransactions: (
+  pagoPaToken: PagopaToken
+) => GetTransactionsUsingGETTExtra = pagoPaToken => ({
   method: "get",
   url: () => "/v1/transactions",
   query: () => ({}),
@@ -104,13 +83,15 @@ const getTransactions: (
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
 });
 
-const getWallets: (
-  pagoPaToken: PagopaToken
-) => MapResponseType<
+type GetWalletsUsingGETExtraT = MapResponseType<
   GetWalletsUsingGETT,
   200,
   WalletListResponse
-> = pagoPaToken => ({
+>;
+
+const getWallets: (
+  pagoPaToken: PagopaToken
+) => GetWalletsUsingGETExtraT = pagoPaToken => ({
   method: "get",
   url: () => "/v1/wallet",
   query: () => ({}),
@@ -128,30 +109,39 @@ const checkPayment: (
   response_decoder: checkPaymentUsingGETDefaultDecoder()
 });
 
-const getPspList: (
-  pagoPaToken: PagopaToken
-) => MapResponseType<
-  GetPspListUsingGETT,
+type GetPspListUsingGETTExtra = MapResponseType<
+  ReplaceRequestParams<
+    GetPspListUsingGETT,
+    // TODO: temporary patch, see https://www.pivotaltracker.com/story/show/161475199
+    TypeofApiParams<GetPspListUsingGETT> & { idWallet: number }
+  >,
   200,
   PspListResponse
-> = pagoPaToken => ({
+>;
+
+const getPspList: (
+  pagoPaToken: PagopaToken
+) => GetPspListUsingGETTExtra = pagoPaToken => ({
   method: "get",
   url: () => "/v1/psps",
-  query: ({ idPayment }) => ({
+  query: ({ idPayment, idWallet }) => ({
     paymentType: "CREDIT_CARD",
-    idPayment
+    idPayment,
+    idWallet
   }),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 });
 
-const updateWalletPsp: (
-  pagoPaToken: PagopaToken
-) => MapResponseType<
+type UpdateWalletUsingPUTTExtra = MapResponseType<
   UpdateWalletUsingPUTT,
   200,
   WalletResponse
-> = pagoPaToken => ({
+>;
+
+const updateWalletPsp: (
+  pagoPaToken: PagopaToken
+) => UpdateWalletUsingPUTTExtra = pagoPaToken => ({
   method: "put",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
@@ -165,19 +155,15 @@ const updateWalletPsp: (
 
 // Remove this patch once SIA has fixed the spec.
 // @see https://www.pivotaltracker.com/story/show/161113136
-type AddWalletCreditCardUsingPOSTTWith422 = AddResponseType<
-  AddWalletCreditCardUsingPOSTT,
-  422,
-  PagoPAErrorResponse
+type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
+  AddResponseType<AddWalletCreditCardUsingPOSTT, 422, PagoPAErrorResponse>,
+  200,
+  WalletResponse
 >;
 
 const addWalletCreditCard: (
   pagoPaToken: PagopaToken
-) => MapResponseType<
-  AddWalletCreditCardUsingPOSTTWith422,
-  200,
-  WalletResponse
-> = pagoPaToken => ({
+) => AddWalletCreditCardUsingPOSTTExtra = pagoPaToken => ({
   method: "post",
   url: () => "/v1/wallet/cc",
   query: () => ({}),
@@ -192,13 +178,15 @@ const addWalletCreditCard: (
   )
 });
 
-const postPayment: (
-  pagoPaToken: PagopaToken
-) => MapResponseType<
+type PayUsingPOSTTExtra = MapResponseType<
   PayUsingPOSTT,
   200,
   TransactionResponse
-> = pagoPaToken => ({
+>;
+
+const postPayment: (
+  pagoPaToken: PagopaToken
+) => PayUsingPOSTTExtra = pagoPaToken => ({
   method: "post",
   url: ({ id }) => `/v1/payments/${id}/actions/pay`,
   query: () => ({}),
@@ -210,13 +198,15 @@ const postPayment: (
   response_decoder: payUsingPOSTDecoder(TransactionResponse)
 });
 
-const boardPay: (
-  pagoPaToken: PagopaToken
-) => MapResponseType<
+type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   PayCreditCardVerificationUsingPOSTT,
   200,
   TransactionResponse
-> = pagoPaToken => ({
+>;
+
+const boardPay: (
+  pagoPaToken: PagopaToken
+) => PayCreditCardVerificationUsingPOSTTExtra = pagoPaToken => ({
   method: "post",
   url: () => "/v1/payments/cc/actions/pay",
   query: () => ({}),
@@ -278,10 +268,12 @@ export function PagoPaClient(
       }),
     getPspList: (
       pagoPaToken: PagopaToken,
-      idPayment: TypeofApiParams<GetPspListUsingGETT>["idPayment"]
+      idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
+      idWallet: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
       createFetchRequestForApi(getPspList(pagoPaToken), options)({
-        idPayment
+        idPayment,
+        idWallet
       }),
     updateWalletPsp: (
       pagoPaToken: PagopaToken,

@@ -33,7 +33,6 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
 import {
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
   navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -43,9 +42,10 @@ import {
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { CreditCard, Psp, Wallet } from "../../types/pagopa";
+import { CreditCard, Wallet } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 import { showToast } from "../../utils/showToast";
+import { dispatchPickPspOrConfirm } from "./payment/common";
 
 type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -53,8 +53,7 @@ type NavigationParams = Readonly<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
-    paymentId: string;
-    psps: ReadonlyArray<Psp>;
+    idPayment: string;
   }>;
 }>;
 
@@ -228,16 +227,20 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     walletById
   } = state.wallet.wallets;
 
+  const { psps } = state.wallet.payment;
+
   const isLoading =
     pot.isLoading(creditCardAddWallet) ||
     pot.isLoading(creditCardVerification) ||
-    pot.isLoading(walletById);
+    pot.isLoading(walletById) ||
+    pot.isLoading(psps);
 
   const error =
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error !== "ALREADY_EXISTS") ||
     pot.isError(creditCardVerification) ||
-    pot.isError(walletById)
+    pot.isError(walletById) ||
+    pot.isError(psps)
       ? some("GENERIC_ERROR")
       : none;
 
@@ -254,24 +257,39 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: NavigationInjectedProps<NavigationParams>
 ): ReduxMappedDispatchProps => {
-  const navigateToNextScreen = (wallet?: Wallet) => {
+  const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");
     if (inPayment.isSome()) {
-      // if we are in a payment
-      if (wallet) {
-        // if the card was added successfully, ask the user to pick a psp
-        // FIXME: we may want to skip this step in case there is only one psp
-        //        available for this payment
-        dispatch(
-          navigateToPaymentPickPspScreen({
-            ...inPayment.value,
-            wallet
-          })
-        );
-      } else {
-        // if the card wasn't added, go back to pick a payment method
-        dispatch(navigateToPaymentPickPaymentMethodScreen(inPayment.value));
-      }
+      const { rptId, initialAmount, verifica, idPayment } = inPayment.value;
+      dispatchPickPspOrConfirm(dispatch)(
+        rptId,
+        initialAmount,
+        verifica,
+        idPayment,
+        maybeWallet,
+        failureReason => {
+          // trying to use this card for the current payment has failed, show
+          // a toast and navigate to the wallet selection screen
+          if (failureReason === "FETCH_PSPS_FAILURE") {
+            // fetching the PSPs for the payment has failed
+            showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+          } else if (failureReason === "NO_PSPS_AVAILABLE") {
+            // this card cannot be used for this payment
+            // TODO: perhaps we can temporarily hide the selected wallet from
+            //       the list of available wallets
+            showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+          }
+          // navigate to the wallet selection screen
+          dispatch(
+            navigateToPaymentPickPaymentMethodScreen({
+              rptId,
+              initialAmount,
+              verifica,
+              idPayment
+            })
+          );
+        }
+      );
     } else {
       dispatch(navigateToWalletHome());
     }
@@ -290,7 +308,7 @@ const mapDispatchToProps = (
           setAsFavorite,
           onSuccess: addedWallet => {
             showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
-            navigateToNextScreen(addedWallet);
+            navigateToNextScreen(some(addedWallet));
           },
           onFailure: error => {
             showToast(
@@ -301,7 +319,7 @@ const mapDispatchToProps = (
               ),
               "danger"
             );
-            navigateToNextScreen();
+            navigateToNextScreen(none);
           }
         })
       ),

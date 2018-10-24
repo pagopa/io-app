@@ -29,24 +29,23 @@ import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import {
-  navigateToPaymentConfirmPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
-import { Psp, Wallet } from "../../../types/pagopa";
+import { Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { AmountToImporto } from "../../../utils/amounts";
+import { showToast } from "../../../utils/showToast";
+import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
-  paymentId: string;
-  psps: ReadonlyArray<Psp>;
+  idPayment: string;
 }>;
 
 type ReduxMappedStateProps = Readonly<{
@@ -167,41 +166,27 @@ const mapDispatchToProps = (
       })
     ),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
-    const psps = props.navigation.getParam("psps");
-    const walletPsp = wallet.psp;
-    // whether the wallet has already an associated psp that is compatible
-    // with the current payment
-    const hasCompatiblePsp =
-      walletPsp !== undefined &&
-      psps.find(_ => _.idPsp === walletPsp.idPsp) !== undefined;
+    dispatchPickPspOrConfirm(dispatch)(
+      props.navigation.getParam("rptId"),
+      props.navigation.getParam("initialAmount"),
+      props.navigation.getParam("verifica"),
+      props.navigation.getParam("idPayment"),
+      some(wallet),
+      failureReason => {
+        // selecting the payment method has failed, show a toast and stay in
+        // this screen
 
-    if (hasCompatiblePsp) {
-      // if the wallet has a compatible PSP, go directly to the confirmation
-      // screen
-      dispatch(
-        navigateToPaymentConfirmPaymentMethodScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          paymentId: props.navigation.getParam("paymentId"),
-          psps: props.navigation.getParam("psps"),
-          wallet
-        })
-      );
-    } else {
-      // if the wallet doesn't have a compatible PSP, navigate to the PSP
-      // selection screen
-      dispatch(
-        navigateToPaymentPickPspScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          paymentId: props.navigation.getParam("paymentId"),
-          psps: props.navigation.getParam("psps"),
-          wallet
-        })
-      );
-    }
+        if (failureReason === "FETCH_PSPS_FAILURE") {
+          // fetching the PSPs for the payment has failed
+          showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+        } else if (failureReason === "NO_PSPS_AVAILABLE") {
+          // this wallet cannot be used for this payment
+          // TODO: perhaps we can temporarily hide the selected wallet from
+          //       the list of available wallets
+          showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+        }
+      }
+    );
   },
   navigateToAddPaymentMethod: () =>
     dispatch(
@@ -210,8 +195,7 @@ const mapDispatchToProps = (
           rptId: props.navigation.getParam("rptId"),
           initialAmount: props.navigation.getParam("initialAmount"),
           verifica: props.navigation.getParam("verifica"),
-          paymentId: props.navigation.getParam("paymentId"),
-          psps: props.navigation.getParam("psps")
+          idPayment: props.navigation.getParam("idPayment")
         })
       })
     )

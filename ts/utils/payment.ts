@@ -66,36 +66,38 @@ export function decodePagoPaQrCode(
 }
 
 /**
+ * The PaymentManager returns a PSP entry for each supported language, so
+ * we need to skip PSPs that have the language different from the current
+ * locale.
+ */
+export const pspsForLocale = (
+  psps: ReadonlyArray<Psp>,
+  locale: string = I18n.locale.slice(0, 2)
+) => psps.filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
+
+/**
  * Whether we need to show the PSP selection screen to the user.
  */
-export function shouldSelectPspForWallet(
+export function walletHasFavoriteAvailablePsp(
   wallet: Wallet,
   psps: ReadonlyArray<Psp>
 ): boolean {
-  if (psps.length === 1) {
-    // FIXME: there can be multiple (equal) PSPs for different languages that
-    //        in the UI will be presented as one, so it could happen that
-    //        we ask the user to select a PSP when in fact there is only
-    //        one option
-    // only one PSP, no need to show the PSP selection screen
+  // see whether there's a PSP that has already been used with this wallet
+  const maybeWalletPsp = wallet.psp;
+
+  if (maybeWalletPsp === undefined) {
+    // there is no PSP associated to this payment method (wallet), we cannot
+    // automatically select a PSP
     return false;
   }
 
-  const walletPsp = wallet.psp;
+  // see whether the PSP associated with this wallet can be used for this
+  // payment
+  const walletPspInPsps = psps.find(psp => psp.id === maybeWalletPsp.id);
 
-  if (walletPsp === undefined) {
-    // there is no PSP associated to this payment method (wallet), we should
-    // show the PSP selection screen
-    return true;
-  }
-
-  // look for the PSP associated with the wallet in the list of PSPs returned
-  // by pagopa
-  const walletPspInPsps = psps.find(psp => psp.id === walletPsp.id);
-
-  // if the selected PSP is not available anymore, so show the PSP selection
-  // screen
-  return walletPspInPsps === undefined;
+  // if the wallet PSP is one of the available PSPs, we can automatically
+  // select it
+  return walletPspInPsps !== undefined;
 }
 
 /**

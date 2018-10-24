@@ -78,6 +78,51 @@ export const replaceProp1 = <
 ): t.Type<ReplaceProp1<A, P, A1>, O, I> =>
   t.refinement(type, o => typeB.is(o[p]), name) as any;
 
+type MapTypeInApiResponse<T, S extends number, B> = T extends IResponseType<
+  S,
+  infer R
+>
+  ? IResponseType<S, B>
+  : T;
+
+/**
+ * Changes the response with status S to have type B
+ */
+export type MapResponseType<
+  T,
+  S extends number,
+  B
+> = T extends IGetApiRequestType<infer P1, infer H1, infer Q1, infer R1>
+  ? IGetApiRequestType<P1, H1, Q1, MapTypeInApiResponse<R1, S, B>>
+  : T extends IPostApiRequestType<infer P2, infer H2, infer Q2, infer R2>
+    ? IPostApiRequestType<P2, H2, Q2, MapTypeInApiResponse<R2, S, B>>
+    : T extends IPutApiRequestType<infer P3, infer H3, infer Q3, infer R3>
+      ? IPutApiRequestType<P3, H3, Q3, MapTypeInApiResponse<R3, S, B>>
+      : T extends IDeleteApiRequestType<infer P4, infer H4, infer Q4, infer R4>
+        ? IDeleteApiRequestType<P4, H4, Q4, MapTypeInApiResponse<R4, S, B>>
+        : never;
+
+/**
+ * Replaces the parameters of the request T with the type P
+ */
+export type ReplaceRequestParams<T, P> = T extends IGetApiRequestType<
+  infer P1,
+  infer H1,
+  infer Q1,
+  infer R1
+>
+  ? IGetApiRequestType<P, H1, Q1, R1>
+  : T extends IPostApiRequestType<infer P2, infer H2, infer Q2, infer R2>
+    ? IPostApiRequestType<P, H2, Q2, R2>
+    : T extends IPutApiRequestType<infer P3, infer H3, infer Q3, infer R3>
+      ? IPutApiRequestType<P, H3, Q3, R3>
+      : T extends IDeleteApiRequestType<infer P4, infer H4, infer Q4, infer R4>
+        ? IDeleteApiRequestType<P, H4, Q4, R4>
+        : never;
+
+/**
+ * Adds the status S with response type A to the responses of the request
+ */
 export type AddResponseType<
   T,
   S extends number,
