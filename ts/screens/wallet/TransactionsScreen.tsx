@@ -13,10 +13,11 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
-import { Wallet } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -24,12 +25,16 @@ type NavigationParams = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type ReduxMappedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
   favoriteWalletId?: number;
   transactions: ReturnType<ReturnType<typeof getWalletTransactionsCreator>>;
 }>;
 
-type Props = OwnProps & ReduxMappedProps;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => void;
+}>;
+
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -63,13 +68,8 @@ class TransactionsScreen extends React.Component<Props> {
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
           transactions={this.props.transactions}
-          navigateToTransactionDetails={transaction =>
-            this.props.navigation.dispatch(
-              navigateToTransactionDetailsScreen({
-                transaction,
-                isPaymentCompletedTransaction: false
-              })
-            )
+          navigateToTransactionDetails={
+            this.props.navigateToTransactionDetailsScreen
           }
         />
       </WalletLayout>
@@ -80,11 +80,24 @@ class TransactionsScreen extends React.Component<Props> {
 const mapStateToProps = (
   state: GlobalState,
   ownProps: OwnProps
-): ReduxMappedProps => ({
+): ReduxMappedStateProps => ({
   favoriteWalletId: getFavoriteWalletId(state).toUndefined(),
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state)
 });
 
-export default connect(mapStateToProps)(TransactionsScreen);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+    dispatch(
+      navigateToTransactionDetailsScreen({
+        transaction,
+        isPaymentCompletedTransaction: false
+      })
+    )
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionsScreen);

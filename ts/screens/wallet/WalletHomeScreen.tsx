@@ -39,7 +39,10 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  // temporary
+  navigateToWalletAddPaymentMethod: () => void;
+  navigateToWalletList: () => void;
+  navigateToPaymentScanQrCode: () => void;
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => void;
   loadTransactions: () => void;
   loadWallets: () => void;
 }>;
@@ -92,11 +95,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           </Left>
           <Right>
             <Text
-              onPress={(): boolean =>
-                this.props.navigation.dispatch(
-                  navigateToWalletAddPaymentMethod({ inPayment: none })
-                )
-              }
+              onPress={this.props.navigateToWalletAddPaymentMethod}
               style={WalletStyles.white}
             >
               {`+ ${I18n.t("wallet.newPaymentMethod.add")}`}
@@ -126,11 +125,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
               bordered={true}
               block={true}
               style={WalletStyles.addPaymentMethodButton}
-              onPress={(): boolean =>
-                this.props.navigation.dispatch(
-                  navigateToWalletAddPaymentMethod({ inPayment: none })
-                )
-              }
+              onPress={this.props.navigateToWalletAddPaymentMethod}
             >
               <Text style={WalletStyles.addPaymentMethodText}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
@@ -182,28 +177,19 @@ class WalletHomeScreen extends React.Component<Props, never> {
               wallets={
                 wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
               }
-              navigateToWalletList={() =>
-                this.props.navigation.dispatch(navigateToWalletList())
-              }
+              navigateToWalletList={this.props.navigateToWalletList}
             />
           )
         }
-        onNewPaymentPress={() =>
-          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
-        }
+        onNewPaymentPress={this.props.navigateToPaymentScanQrCode}
         allowGoBack={false}
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}
           totalAmount={I18n.t("wallet.total")}
           transactions={potTransactions}
-          navigateToTransactionDetails={(transaction: Transaction) =>
-            this.props.navigation.dispatch(
-              navigateToTransactionDetailsScreen({
-                transaction,
-                isPaymentCompletedTransaction: false
-              })
-            )
+          navigateToTransactionDetails={
+            this.props.navigateToTransactionDetailsScreen
           }
         />
       </WalletLayout>
@@ -217,6 +203,17 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletAddPaymentMethod: () =>
+    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+  navigateToWalletList: () => dispatch(navigateToWalletList()),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+    dispatch(
+      navigateToTransactionDetailsScreen({
+        transaction,
+        isPaymentCompletedTransaction: false
+      })
+    ),
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });

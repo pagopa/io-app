@@ -44,6 +44,8 @@ type ReduxMappedStateProps = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletTransactionsScreen: (wallet: Wallet) => void;
+  navigateToWalletAddPaymentMethod: () => void;
   setFavoriteWallet: (walletId?: number) => void;
   deleteWallet: (walletId: number) => void;
 }>;
@@ -69,11 +71,7 @@ class WalletsScreen extends React.Component<Props> {
           )
         }
         onDelete={() => this.props.deleteWallet(item.idWallet)}
-        mainAction={(selectedWallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({ selectedWallet })
-          )
-        }
+        mainAction={this.props.navigateToWalletTransactionsScreen}
       />
     );
   };
@@ -106,11 +104,7 @@ class WalletsScreen extends React.Component<Props> {
             bordered={true}
             block={true}
             style={WalletStyles.addPaymentMethodButton}
-            onPress={(): boolean =>
-              this.props.navigation.dispatch(
-                navigateToWalletAddPaymentMethod({ inPayment: none })
-              )
-            }
+            onPress={this.props.navigateToWalletAddPaymentMethod}
           >
             <Text style={WalletStyles.addPaymentMethodText}>
               {I18n.t("wallet.newPaymentMethod.addButton")}
@@ -132,8 +126,12 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
+    dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavoriteWallet(walletId)),
+  navigateToWalletAddPaymentMethod: () =>
+    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({

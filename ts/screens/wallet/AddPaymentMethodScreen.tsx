@@ -26,6 +26,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
@@ -36,6 +37,7 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import { navigateToWalletAddCreditCard } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { Psp } from "../../types/pagopa";
 import { AmountToImporto } from "../../utils/amounts";
 
@@ -49,17 +51,15 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type Props = NavigationInjectedProps<NavigationParams>;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToAddCreditCard: () => void;
+}>;
 
-export default class AddPaymentMethodScreen extends React.PureComponent<Props> {
-  private navigateToAddCreditCard = () => {
-    this.props.navigation.dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: this.props.navigation.getParam("inPayment")
-      })
-    );
-  };
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
+type Props = ReduxMappedDispatchProps & OwnProps;
+
+class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const inPayment = this.props.navigation.getParam("inPayment");
     return (
@@ -93,14 +93,14 @@ export default class AddPaymentMethodScreen extends React.PureComponent<Props> {
               <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />
               <PaymentMethodsList
-                navigateToAddCreditCard={this.navigateToAddCreditCard}
+                navigateToAddCreditCard={this.props.navigateToAddCreditCard}
               />
             </View>
           </Content>
         ) : (
           <Content>
             <PaymentMethodsList
-              navigateToAddCreditCard={this.navigateToAddCreditCard}
+              navigateToAddCreditCard={this.props.navigateToAddCreditCard}
             />
           </Content>
         )}
@@ -122,3 +122,20 @@ export default class AddPaymentMethodScreen extends React.PureComponent<Props> {
     );
   }
 }
+
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: OwnProps
+): ReduxMappedDispatchProps => ({
+  navigateToAddCreditCard: () =>
+    dispatch(
+      navigateToWalletAddCreditCard({
+        inPayment: props.navigation.getParam("inPayment")
+      })
+    )
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddPaymentMethodScreen);
