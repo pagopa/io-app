@@ -12,10 +12,7 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import {
-  navigateToPaymentScanQrCode,
-  navigateToTransactionDetailsScreen
-} from "../../store/actions/navigation";
+import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
@@ -51,7 +48,6 @@ class TransactionsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
-        showPayButton={false}
         allowGoBack={true}
         headerContents={headerContents}
         displayedWallets={
@@ -61,9 +57,6 @@ class TransactionsScreen extends React.Component<Props> {
             hideFavoriteIcon={true}
             hideMenu={true}
           />
-        }
-        navigateToScanQrCode={() =>
-          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
         }
       >
         <TransactionsList

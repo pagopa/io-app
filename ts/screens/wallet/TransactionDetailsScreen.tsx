@@ -23,10 +23,7 @@ import IconFont from "../../components/ui/IconFont";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import {
-  navigateToPaymentScanQrCode,
-  navigateToWalletHome
-} from "../../store/actions/navigation";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
@@ -160,11 +157,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             undefined
           )
         }
-        showPayButton={false}
         allowGoBack={!isPaymentCompletedTransaction}
-        navigateToScanQrCode={() =>
-          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
-        }
       >
         <Content
           scrollEnabled={false}
