@@ -18,7 +18,6 @@ import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import {
-  navigateToPaymentScanQrCode,
   navigateToWalletAddPaymentMethod,
   navigateToWalletHome,
   navigateToWalletList,
@@ -92,11 +91,7 @@ class WalletsScreen extends React.Component<Props> {
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
         headerContents={headerContents}
-        showPayButton={true}
         allowGoBack={true}
-        navigateToScanQrCode={() =>
-          this.props.navigation.dispatch(navigateToPaymentScanQrCode())
-        }
       >
         <Content style={[WalletStyles.padded, WalletStyles.header]}>
           <FlatList

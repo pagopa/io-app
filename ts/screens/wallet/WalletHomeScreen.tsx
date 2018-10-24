@@ -188,11 +188,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
             />
           )
         }
-        showPayButton={true}
-        allowGoBack={false}
-        navigateToScanQrCode={() =>
+        onNewPaymentPress={() =>
           this.props.navigation.dispatch(navigateToPaymentScanQrCode())
         }
+        allowGoBack={false}
       >
         <TransactionsList
           title={I18n.t("wallet.latestTransactions")}

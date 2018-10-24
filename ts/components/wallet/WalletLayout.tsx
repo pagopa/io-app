@@ -37,10 +37,9 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   title: string;
   headerContents?: React.ReactNode;
-  showPayButton: boolean;
+  onNewPaymentPress?: () => void;
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
-  navigateToScanQrCode: () => void;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
@@ -71,14 +70,9 @@ export default class WalletLayout extends React.Component<Props> {
           </Content>
           {this.props.children}
         </ScrollView>
-        {this.props.showPayButton && (
+        {this.props.onNewPaymentPress && (
           <View footer={true}>
-            <Button
-              block={true}
-              onPress={() => {
-                this.props.navigateToScanQrCode();
-              }}
-            >
+            <Button block={true} onPress={this.props.onNewPaymentPress}>
               <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
               <Text>{I18n.t("wallet.payNotice")}</Text>
             </Button>
