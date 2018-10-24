@@ -36,6 +36,7 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
 type ReduxMappedDispatchProps = Readonly<{
   navigateToWalletHome: () => void;
+  navigateToPaymentManualDataInsertion: () => void;
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     amount: AmountInEuroCents
@@ -154,9 +155,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     const primaryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => {
-        this.props.navigation.dispatch(navigateToPaymentManualDataInsertion());
-      },
+      onPress: this.props.navigateToPaymentManualDataInsertion,
       title: I18n.t("wallet.QRtoPay.setManually")
     };
 
@@ -225,6 +224,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateToPaymentManualDataInsertion: () =>
+    dispatch(navigateToPaymentManualDataInsertion()),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
