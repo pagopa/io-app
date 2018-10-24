@@ -268,6 +268,7 @@ wallet:
     info: Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
       pagamento
     save: Salva la carta
+    notice: Per verificare la carta verrà effettuata una transazione di 1 euro, che verrà stornata e non ti verrà addebitata.
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:

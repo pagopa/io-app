@@ -26,6 +26,7 @@ import GoBackButton from "../../components/GoBackButton";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../components/InstabugButtons";
+import NoticeBox from "../../components/NoticeBox";
 import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
@@ -161,6 +162,16 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             hideMenu={true}
             hideFavoriteIcon={true}
           />
+          <View spacer={true} />
+          <NoticeBox
+            backgroundColor={"#c1f4f2"}
+            iconProps={{
+              name: "io-notice",
+              size: 32
+            }}
+          >
+            <Text bold={true}>{I18n.t("wallet.saveCard.notice")}</Text>
+          </NoticeBox>
           <View spacer={true} />
           <Grid>
             <Col size={5}>
