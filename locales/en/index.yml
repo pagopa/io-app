@@ -33,7 +33,7 @@ locales:
   en: English
 connection:
   status:
-    offline: You are offline!
+    offline: Offline! Some features will not work.
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.

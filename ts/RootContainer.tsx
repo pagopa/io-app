@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
-import ConnectionBar from "./components/ConnectionBar";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
@@ -139,7 +138,6 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
-        <ConnectionBar />
         <VersionInfoOverlay />
         <Navigation />
         <IdentificationModal />
