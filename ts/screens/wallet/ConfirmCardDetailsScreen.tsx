@@ -33,6 +33,7 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
 import {
   navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
   navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -42,7 +43,7 @@ import {
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { CreditCard, Psp } from "../../types/pagopa";
+import { CreditCard, Psp, Wallet } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 import { showToast } from "../../utils/showToast";
 
@@ -114,6 +115,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const creditCard = this.props.navigation.getParam("creditCard");
+    const isInPayment = this.props.navigation.getParam("inPayment").isSome();
 
     const wallet = {
       creditCard,
@@ -130,7 +132,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           creditCard,
           this.state.favorite
         ),
-      title: I18n.t("wallet.saveCard.save")
+      title: isInPayment
+        ? I18n.t("wallet.saveCardInPayment.save")
+        : I18n.t("wallet.saveCard.save")
     };
 
     const secondaryButtonProps = {
@@ -148,14 +152,22 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             <GoBackButton />
           </Left>
           <Body>
-            <Text>{I18n.t("wallet.saveCard.header")}</Text>
+            <Text>
+              {isInPayment
+                ? I18n.t("wallet.saveCardInPayment.header")
+                : I18n.t("wallet.saveCard.header")}
+            </Text>
           </Body>
           <Right>
             <InstabugButtons />
           </Right>
         </AppHeader>
         <Content>
-          <H1>{I18n.t("wallet.saveCard.title")}</H1>
+          <H1>
+            {isInPayment
+              ? I18n.t("wallet.saveCardInPayment.title")
+              : I18n.t("wallet.saveCard.title")}
+          </H1>
           <CardComponent
             wallet={wallet}
             type="Full"
@@ -242,10 +254,24 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: NavigationInjectedProps<NavigationParams>
 ): ReduxMappedDispatchProps => {
-  const navigateToNextScreen = () => {
+  const navigateToNextScreen = (wallet?: Wallet) => {
     const inPayment = props.navigation.getParam("inPayment");
     if (inPayment.isSome()) {
-      dispatch(navigateToPaymentPickPaymentMethodScreen(inPayment.value));
+      // if we are in a payment
+      if (wallet) {
+        // if the card was added successfully, ask the user to pick a psp
+        // FIXME: we may want to skip this step in case there is only one psp
+        //        available for this payment
+        dispatch(
+          navigateToPaymentPickPspScreen({
+            ...inPayment.value,
+            wallet
+          })
+        );
+      } else {
+        // if the card wasn't added, go back to pick a payment method
+        dispatch(navigateToPaymentPickPaymentMethodScreen(inPayment.value));
+      }
     } else {
       dispatch(navigateToWalletHome());
     }
@@ -262,9 +288,9 @@ const mapDispatchToProps = (
         runStartOrResumeAddCreditCardSaga({
           creditCard,
           setAsFavorite,
-          onSuccess: () => {
+          onSuccess: addedWallet => {
             showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
-            navigateToNextScreen();
+            navigateToNextScreen(addedWallet);
           },
           onFailure: error => {
             showToast(

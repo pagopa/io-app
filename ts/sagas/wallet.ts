@@ -244,6 +244,8 @@ function* startOrResumeAddCreditCardSaga(
     // wallet we just added.
     // TODO: find a way of finding out the result of the request from the URL
     //
+    // FIXME: we may want to trigger a success here and leave the fetching of
+    //        the wallets to the caller
     yield put(fetchWalletsRequest());
     const fetchWalletsResultAction = yield take([
       getType(fetchWalletsSuccess),
@@ -257,7 +259,7 @@ function* startOrResumeAddCreditCardSaga(
       if (maybeAddedWallet) {
         // signal the completion
         if (action.payload.onSuccess) {
-          action.payload.onSuccess();
+          action.payload.onSuccess(maybeAddedWallet);
         }
       } else {
         if (action.payload.onFailure) {

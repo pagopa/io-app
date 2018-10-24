@@ -260,6 +260,10 @@ wallet:
     info: This payment method will be automatically proposed for the next payment
     save: Save the card
     notice: To verify the card, 1 euro will be charged and immediately reversed.
+  saveCardInPayment:
+    header: Pay with this card
+    title: Do you want to pay with this card?
+    save: Pay with this card
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:

@@ -99,7 +99,7 @@ type StartOrResumeAddCreditCardSagaPayload = Readonly<{
   creditCard: CreditCard;
   language?: string;
   setAsFavorite: boolean;
-  onSuccess?: () => void;
+  onSuccess?: (wallet: Wallet) => void;
   onFailure?: (error?: "ALREADY_EXISTS") => void;
 }>;
 
