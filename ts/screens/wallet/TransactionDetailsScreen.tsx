@@ -18,8 +18,13 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import {
+  ContextualHelpInjectedProps,
+  withContextualHelp
+} from "../../components/helpers/withContextualHelp";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
+import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
@@ -48,7 +53,8 @@ type ReduxMappedDispatchProps = Readonly<{
 
 type Props = ReduxMappedStateProps &
   ReduxMappedDispatchProps &
-  NavigationInjectedProps<NavigationParams>;
+  NavigationInjectedProps<NavigationParams> &
+  ContextualHelpInjectedProps;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -181,7 +187,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
             {this.labelValueRow(
               <Text>
                 <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
-                <Text note={true} style={WalletStyles.whyLink}>
+                <Text
+                  note={true}
+                  style={WalletStyles.whyLink}
+                  onPress={this.props.showHelp}
+                >
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
@@ -221,4 +231,10 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TransactionDetailsScreen);
+)(
+  withContextualHelp(
+    TransactionDetailsScreen,
+    I18n.t("wallet.whyAFee.title"),
+    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
+  )
+);
