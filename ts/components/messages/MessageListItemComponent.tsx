@@ -24,6 +24,7 @@ type Props = OwnProps;
 
 const styles = StyleSheet.create({
   itemContainer: {
+    paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding,
     paddingTop: 16
   },
@@ -40,14 +41,19 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
-  readCol: {
-    width: variables.contentPadding
-  },
-
   serviceText: {
     fontSize: variables.fontSize3,
     lineHeight: 20,
     paddingRight: 5
+  },
+
+  readCol: {
+    marginLeft: -4,
+    width: variables.contentPadding
+  },
+
+  readIcon: {
+    lineHeight: 20
   },
 
   serviceTextNew: {
@@ -61,18 +67,13 @@ const styles = StyleSheet.create({
   },
 
   subjectRow: {
-    marginBottom: 16,
-    paddingLeft: variables.contentPadding
+    marginBottom: 16
   },
 
   iconContainer: {
     justifyContent: "flex-end",
     alignItems: "center",
     flexDirection: "row"
-  },
-
-  ctaBarRow: {
-    paddingLeft: variables.contentPadding
   },
 
   ctaBarContainer: {
@@ -108,16 +109,16 @@ export class MessageListItemComponent extends React.PureComponent<
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
-              <Col style={{ width: variables.contentPadding }}>
-                {!messageUIStates.read && (
+              {!messageUIStates.read && (
+                <Col style={styles.readCol}>
                   <IconFont
                     name="io-new"
                     color={variables.contentPrimaryBackground}
                     size={24}
-                    style={{ lineHeight: 20 }}
+                    style={styles.readIcon}
                   />
-                )}
-              </Col>
+                </Col>
+              )}
               <Col size={10}>
                 <Text
                   style={[
@@ -148,7 +149,7 @@ export class MessageListItemComponent extends React.PureComponent<
                 />
               </Col>
             </Row>
-            <Row style={styles.ctaBarRow}>
+            <Row>
               <MessageCTABar
                 message={message}
                 service={service}
