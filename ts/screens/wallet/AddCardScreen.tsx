@@ -182,7 +182,7 @@ class AddCardScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("global.buttons.cancel")
+      title: I18n.t("global.buttons.back")
     };
 
     return (
