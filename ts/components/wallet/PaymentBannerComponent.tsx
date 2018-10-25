@@ -30,13 +30,13 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
   return (
     <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
       <Row>
-        <Col>
+        <Col size={2}>
           <View spacer={true} />
           <Text bold={true} style={WalletStyles.white}>
             {paymentReason}
           </Text>
         </Col>
-        <Col>
+        <Col size={1}>
           <View spacer={true} />
           <Text
             bold={true}
@@ -47,13 +47,13 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col size={2}>
           <Text style={WalletStyles.white}>
             {recipient.denominazioneBeneficiario}
           </Text>
           <View spacer={true} />
         </Col>
-        <Col>
+        <Col size={1}>
           <Text style={[WalletStyles.white, WalletStyles.textRight]}>
             {I18n.t("global.buttons.cancel").toUpperCase()}
           </Text>

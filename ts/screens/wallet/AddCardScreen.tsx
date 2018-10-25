@@ -153,9 +153,7 @@ class AddCardScreen extends React.Component<Props, State> {
       MAESTRO: cardIcons.MAESTRO,
       VISA: cardIcons.VISA,
       VISAELECTRON: cardIcons.VISAELECTRON,
-      AMEX: cardIcons.AMEX,
-      POSTEPAY: cardIcons.POSTEPAY,
-      DINER: cardIcons.DINERS
+      POSTEPAY: cardIcons.POSTEPAY
     };
 
     const primaryButtonPropsFromState = (
@@ -184,7 +182,7 @@ class AddCardScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("global.buttons.cancel")
+      title: I18n.t("global.buttons.back")
     };
 
     return (

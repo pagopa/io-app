@@ -169,7 +169,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
       block: true,
       light: true,
       onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("global.buttons.cancel")
+      title: I18n.t("global.buttons.back")
     };
 
     return (
