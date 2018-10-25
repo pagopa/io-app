@@ -358,13 +358,13 @@ wallet:
   methods:
     card:
       name: Carta di credito/debito
-      maxFee: Commissione massima 0.50€
+      maxFee: Commissione massima 1.50€
     bank:
-      name: Conto corrente
+      name: Bancomat Pay
       maxFee: Commissione massima 0.50€
     mobile:
       name: Altri metodi di pagamento
-      maxFee: Commissione massima 0.50€
+      maxFee: Paypal, Satispay, etc.
   addCardTitle: Dati carta
   dummyCard:
     labels:

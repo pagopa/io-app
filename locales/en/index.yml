@@ -349,13 +349,13 @@ wallet:
   methods:
     card:
       name: Credit/debit card
-      maxFee: Maximum fee of 0.50€
+      maxFee: Maximum fee of 1.50€
     bank:
-      name: Bank account
+      name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     mobile:
       name: Other payment methods
-      maxFee: Maximum fee of 0.50€
+      maxFee: Paypal, Satispay, etc.
   addCardTitle: Card details
   dummyCard:
     labels:
