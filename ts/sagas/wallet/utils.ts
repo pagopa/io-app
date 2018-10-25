@@ -15,17 +15,21 @@ import { SagaCallReturnType } from "../../types/utils";
 const MAX_TOKEN_REFRESHES = 2;
 
 export function* fetchAndStorePagoPaToken(pagoPaClient: PagoPaClient) {
-  const refreshTokenResponse: SagaCallReturnType<
-    typeof pagoPaClient.getSession
-  > = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
-  if (
-    refreshTokenResponse !== undefined &&
-    refreshTokenResponse.status === 200
-  ) {
-    // token fetched successfully, store it
-    yield put(
-      storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
-    );
+  try {
+    const refreshTokenResponse: SagaCallReturnType<
+      typeof pagoPaClient.getSession
+    > = yield call(pagoPaClient.getSession, pagoPaClient.walletToken);
+    if (
+      refreshTokenResponse !== undefined &&
+      refreshTokenResponse.status === 200
+    ) {
+      // token fetched successfully, store it
+      yield put(
+        storePagoPaToken(some(refreshTokenResponse.value.data.sessionToken))
+      );
+    }
+  } catch {
+    return;
   }
 }
 
