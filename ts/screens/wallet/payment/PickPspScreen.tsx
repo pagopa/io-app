@@ -14,7 +14,6 @@ import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { ActionType } from "typesafe-actions";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
@@ -24,12 +23,7 @@ import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import { navigateToPaymentConfirmPaymentMethodScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import {
-  paymentUpdateWalletPspRequest,
-  paymentUpdateWalletPspSuccess
-} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -39,12 +33,13 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
+import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
-  paymentId: string;
+  idPayment: string;
   psps: ReadonlyArray<Psp>;
   wallet: Wallet;
 }>;
@@ -92,15 +87,7 @@ const style = StyleSheet.create({
  */
 class PickPspScreen extends React.Component<Props> {
   public render(): React.ReactNode {
-    const allPspList = this.props.navigation.getParam("psps");
-
-    // The PaymentManager returns a PSP entry for each supported language, so
-    // we need to skip PSPs that have the language different from the current
-    // locale.
-    const locale = I18n.locale.slice(0, 2);
-    const pspList = allPspList.filter(
-      _ => (_.lingua ? _.lingua.toLowerCase() === locale : true)
-    );
+    const availablePsps = this.props.navigation.getParam("psps");
 
     return (
       <Container>
@@ -132,7 +119,7 @@ class PickPspScreen extends React.Component<Props> {
             )}
             removeClippedSubviews={false}
             numColumns={1}
-            data={pspList}
+            data={availablePsps}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => this.props.pickPsp(item.id)}>
@@ -181,32 +168,18 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => {
-  const wallet = props.navigation.getParam("wallet");
-  const onSuccess = (
-    action: ActionType<typeof paymentUpdateWalletPspSuccess>
-  ) =>
-    dispatch(
-      navigateToPaymentConfirmPaymentMethodScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        paymentId: props.navigation.getParam("paymentId"),
-        wallet: action.meta,
-        psps: props.navigation.getParam("psps")
-      })
-    );
-  const onFailure = () => {
-    showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger");
-  };
   return {
     pickPsp: (idPsp: number) =>
-      dispatch(
-        paymentUpdateWalletPspRequest({
-          idPsp,
-          wallet,
-          onSuccess,
-          onFailure
-        })
+      dispatchUpdatePspForWalletAndConfirm(dispatch)(
+        idPsp,
+        props.navigation.getParam("wallet"),
+        props.navigation.getParam("rptId"),
+        props.navigation.getParam("initialAmount"),
+        props.navigation.getParam("verifica"),
+        props.navigation.getParam("idPayment"),
+        props.navigation.getParam("psps"),
+        () =>
+          showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
       ),
     onCancel: () => props.navigation.goBack()
   };

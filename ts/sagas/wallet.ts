@@ -27,15 +27,13 @@ import {
   paymentCheckRequest,
   paymentCheckSuccess,
   paymentExecutePaymentRequest,
-  paymentFetchPspsForPaymentIdFailure,
   paymentFetchPspsForPaymentIdRequest,
-  paymentFetchPspsForPaymentIdSuccess,
   paymentIdPollingFailure,
   paymentIdPollingRequest,
   paymentIdPollingSuccess,
   paymentUpdateWalletPspRequest,
   paymentVerificaRequest,
-  runStartOrResumePaymentSaga
+  runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import { fetchTransactionsRequest } from "../store/actions/wallet/transactions";
 import {
@@ -280,7 +278,6 @@ function* startOrResumeAddCreditCardSaga(
  * 1) attiva -> nodo
  * 2) polling for a payment id <- nodo
  * 3) check -> payment manager
- * 4) available PSPs <- payment manager
  *
  * Each step has a corresponding state in the wallet.payment state that gets
  * updated with the "pot" state (none -> loading -> some|error).
@@ -299,8 +296,8 @@ function* startOrResumeAddCreditCardSaga(
  *       to the next step).
  */
 // tslint:disable-next-line:cognitive-complexity
-function* startOrResumePaymentSaga(
-  action: ActionType<typeof runStartOrResumePaymentSaga>
+function* startOrResumePaymentActivationSaga(
+  action: ActionType<typeof runStartOrResumePaymentActivationSaga>
 ) {
   while (true) {
     // before each step we select the updated payment state to know what has
@@ -362,29 +359,8 @@ function* startOrResumePaymentSaga(
       continue;
     }
 
-    // fourth step: fetch the PSPs available for this payment
-    if (pot.isNone(paymentState.psps)) {
-      // this step needs to be executed
-      yield put(
-        paymentFetchPspsForPaymentIdRequest(paymentState.paymentId.value)
-      );
-      const responseAction = yield take([
-        getType(paymentFetchPspsForPaymentIdSuccess),
-        getType(paymentFetchPspsForPaymentIdFailure)
-      ]);
-      if (isActionOf(paymentFetchPspsForPaymentIdFailure, responseAction)) {
-        // this step failed, exit the flow
-        return;
-      }
-      // all is ok, continue to the next step
-      continue;
-    }
-
     // finally, we signal the success of the activation flow
-    action.payload.onSuccess(
-      paymentState.paymentId.value,
-      paymentState.psps.value
-    );
+    action.payload.onSuccess(paymentState.paymentId.value);
 
     // since this is the last step, we exit the flow
     break;
@@ -443,8 +419,8 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
-    getType(runStartOrResumePaymentSaga),
-    startOrResumePaymentSaga
+    getType(runStartOrResumePaymentActivationSaga),
+    startOrResumePaymentActivationSaga
   );
 
   //

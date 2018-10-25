@@ -304,6 +304,8 @@ wallet:
     header: Scelta metodo di pagamamento
     title: Paga con
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
+    fetchPspFailure: Errore temporaneo, riprova
+    noPspsAvailable: Questo metodo di pagamento non può essere usato
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento

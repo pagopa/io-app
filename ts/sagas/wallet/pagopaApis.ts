@@ -292,19 +292,35 @@ export function* paymentFetchPspsForWalletRequestHandler(
 ) {
   try {
     const apiGetPspList = (pagoPaToken: PagopaToken) =>
-      pagoPaClient.getPspList(pagoPaToken, action.payload);
+      pagoPaClient.getPspList(
+        pagoPaToken,
+        action.payload.idPayment,
+        action.payload.idWallet
+      );
     const response: SagaCallReturnType<typeof apiGetPspList> = yield call(
       fetchWithTokenRefresh,
       apiGetPspList,
       pagoPaClient
     );
     if (response !== undefined && response.status === 200) {
-      yield put(paymentFetchPspsForPaymentIdSuccess(response.value.data));
+      const successAction = paymentFetchPspsForPaymentIdSuccess(
+        response.value.data
+      );
+      yield put(successAction);
+      if (action.payload.onSuccess) {
+        action.payload.onSuccess(successAction);
+      }
     } else {
-      yield put(paymentFetchPspsForPaymentIdFailure(Error("GENERIC_ERROR")));
+      throw Error();
     }
   } catch {
-    yield put(paymentFetchPspsForPaymentIdFailure(Error("GENERIC_ERROR")));
+    const failureAction = paymentFetchPspsForPaymentIdFailure(
+      Error("GENERIC_ERROR")
+    );
+    yield put(failureAction);
+    if (action.payload.onFailure) {
+      action.payload.onFailure(failureAction);
+    }
   }
 }
 
@@ -351,7 +367,7 @@ export function* paymentExecutePaymentRequestHandler(
 ): Iterator<Effect> {
   try {
     const apiPostPayment = (pagoPaToken: PagopaToken) =>
-      pagoPaClient.postPayment(pagoPaToken, action.payload.paymentId, {
+      pagoPaClient.postPayment(pagoPaToken, action.payload.idPayment, {
         data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
       });
     const response: SagaCallReturnType<typeof apiPostPayment> = yield call(

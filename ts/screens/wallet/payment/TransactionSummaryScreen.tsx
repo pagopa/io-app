@@ -36,22 +36,20 @@ import * as pot from "../../../types/pot";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentVerificaRequest,
-  runStartOrResumePaymentSaga
+  runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
-  navigateToPaymentConfirmPaymentMethodScreen,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
-import { shouldSelectPspForWallet } from "../../../utils/payment";
+import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -241,7 +239,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+  const { verifica, attiva, paymentId, check } = state.wallet.payment;
   return {
     error: pot.isError(verifica)
       ? some(verifica.error)
@@ -251,16 +249,13 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
           ? some(paymentId.error)
           : pot.isError(check)
             ? some(undefined)
-            : pot.isError(psps)
-              ? some(undefined)
-              : none,
+            : none,
     // TODO: show different loading messages for each loading state
     isLoading:
       pot.isLoading(verifica) ||
       pot.isLoading(attiva) ||
       pot.isLoading(paymentId) ||
-      pot.isLoading(check) ||
-      pot.isLoading(psps),
+      pot.isLoading(check),
     potVerifica: verifica,
     maybeFavoriteWallet: getFavoriteWallet(state)
   };
@@ -281,57 +276,30 @@ const mapDispatchToProps = (
     maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) =>
     dispatch(
-      runStartOrResumePaymentSaga({
+      runStartOrResumePaymentActivationSaga({
         rptId,
         verifica,
-        onSuccess: (paymentId, psps) => {
-          // payment has been activated successfully
-          if (maybeFavoriteWallet.isSome()) {
-            // the user has selected a favorite wallet, so no need to ask to
-            // select one
-            const wallet = maybeFavoriteWallet.value;
-            if (shouldSelectPspForWallet(wallet, psps)) {
-              // there are multiple psps available for the favorite wallet,
-              // as the user to select one
+        onSuccess: idPayment =>
+          dispatchPickPspOrConfirm(dispatch)(
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment,
+            maybeFavoriteWallet,
+            () => {
+              // either we cannot use the default payment method for this
+              // payment, or fetching the PSPs for this payment and the
+              // default wallet has failed, ask the user to pick a wallet
               dispatch(
-                navigateToPaymentPickPspScreen({
+                navigateToPaymentPickPaymentMethodScreen({
                   rptId,
                   initialAmount,
                   verifica,
-                  wallet,
-                  psps,
-                  paymentId
-                })
-              );
-            } else {
-              // there is only one psp available or the user already selected
-              // a psp in the past for this wallet that can be used for this
-              // payment, in this case we can proceed to the confirmation
-              // screen
-              dispatch(
-                navigateToPaymentConfirmPaymentMethodScreen({
-                  rptId,
-                  initialAmount,
-                  verifica,
-                  paymentId,
-                  psps,
-                  wallet: maybeFavoriteWallet.value
+                  idPayment
                 })
               );
             }
-          } else {
-            // select a wallet
-            dispatch(
-              navigateToPaymentPickPaymentMethodScreen({
-                rptId,
-                initialAmount,
-                verifica,
-                paymentId,
-                psps
-              })
-            );
-          }
-        }
+          )
       })
     );
 

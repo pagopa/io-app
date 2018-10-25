@@ -100,9 +100,20 @@ export const paymentCheckFailure = createStandardAction(
 // fetch psp list
 //
 
+type PaymentFetchPspsForPaymentIdRequestPayload = Readonly<{
+  idPayment: string;
+  idWallet?: number;
+  onSuccess?: (
+    action: ActionType<typeof paymentFetchPspsForPaymentIdSuccess>
+  ) => void;
+  onFailure?: (
+    action: ActionType<typeof paymentFetchPspsForPaymentIdFailure>
+  ) => void;
+}>;
+
 export const paymentFetchPspsForPaymentIdRequest = createStandardAction(
   "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_REQUEST"
-)<string>();
+)<PaymentFetchPspsForPaymentIdRequestPayload>();
 
 export const paymentFetchPspsForPaymentIdSuccess = createStandardAction(
   "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_SUCCESS"
@@ -144,7 +155,7 @@ export const paymentUpdateWalletPspFailure = createStandardAction(
 //
 
 type PaymentExecutePaymentRequestPayload = Readonly<{
-  paymentId: string;
+  idPayment: string;
   wallet: Wallet;
   onSuccess?: (action: ActionType<typeof paymentExecutePaymentSuccess>) => void;
 }>;
@@ -165,15 +176,15 @@ export const paymentExecutePaymentFailure = createStandardAction(
 // run startOrResumePaymentSaga
 //
 
-type RunStartOrResumePaymentSagaPayload = Readonly<{
+type RunStartOrResumePaymentActivationSagaPayload = Readonly<{
   rptId: RptId;
   verifica: PaymentRequestsGetResponse;
-  onSuccess: (paymentId: string, psps: ReadonlyArray<Psp>) => void;
+  onSuccess: (idPayment: string) => void;
 }>;
 
-export const runStartOrResumePaymentSaga = createStandardAction(
-  "PAYMENT_RUN_START_OR_RESUME_PAYMENT_SAGA"
-)<RunStartOrResumePaymentSagaPayload>();
+export const runStartOrResumePaymentActivationSaga = createStandardAction(
+  "PAYMENT_RUN_START_OR_RESUME_PAYMENT_ACTIVATION_SAGA"
+)<RunStartOrResumePaymentActivationSagaPayload>();
 
 /**
  * All possible payment actions
@@ -201,4 +212,4 @@ export type PaymentActions =
   | ActionType<typeof paymentExecutePaymentRequest>
   | ActionType<typeof paymentExecutePaymentSuccess>
   | ActionType<typeof paymentExecutePaymentFailure>
-  | ActionType<typeof runStartOrResumePaymentSaga>;
+  | ActionType<typeof runStartOrResumePaymentActivationSaga>;

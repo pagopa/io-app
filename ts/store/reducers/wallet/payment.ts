@@ -2,6 +2,7 @@ import { getType } from "typesafe-actions";
 
 import * as pot from "../../../types/pot";
 import { PotFromActions } from "../../../types/utils";
+import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
 import {
   paymentAttivaFailure,
@@ -170,9 +171,10 @@ const reducer = (
         psps: pot.noneLoading
       };
     case getType(paymentFetchPspsForPaymentIdSuccess):
+      // before storing the PSPs, filter only the PSPs for the current locale
       return {
         ...state,
-        psps: pot.some(action.payload)
+        psps: pot.some(pspsForLocale(action.payload))
       };
     case getType(paymentFetchPspsForPaymentIdFailure):
       return {

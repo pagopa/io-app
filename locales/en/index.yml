@@ -294,6 +294,8 @@ wallet:
     header: Choose payment method
     title: Pay with
     text: Choose one saved payment method or add a new one
+    fetchPspFailure: Temporary error, please retry
+    noPspsAvailable: This payment method cannot be used
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice

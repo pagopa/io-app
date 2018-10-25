@@ -51,7 +51,7 @@ type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
-  paymentId: string;
+  idPayment: string;
   wallet: Wallet;
   psps: ReadonlyArray<Psp>;
 }>;
@@ -284,7 +284,7 @@ const mapDispatchToProps = (
             dispatch(
               paymentExecutePaymentRequest({
                 wallet: props.navigation.getParam("wallet"),
-                paymentId: props.navigation.getParam("paymentId"),
+                idPayment: props.navigation.getParam("idPayment"),
                 onSuccess: action => {
                   // on success, update the transactions and navigate to
                   // the resulting transaciton details
@@ -309,8 +309,7 @@ const mapDispatchToProps = (
           rptId: props.navigation.getParam("rptId"),
           initialAmount: props.navigation.getParam("initialAmount"),
           verifica: props.navigation.getParam("verifica"),
-          paymentId: props.navigation.getParam("paymentId"),
-          psps: props.navigation.getParam("psps")
+          idPayment: props.navigation.getParam("idPayment")
         })
       ),
     pickPsp: () =>
@@ -319,7 +318,7 @@ const mapDispatchToProps = (
           rptId: props.navigation.getParam("rptId"),
           initialAmount: props.navigation.getParam("initialAmount"),
           verifica: props.navigation.getParam("verifica"),
-          paymentId: props.navigation.getParam("paymentId"),
+          idPayment: props.navigation.getParam("idPayment"),
           psps: props.navigation.getParam("psps"),
           wallet: props.navigation.getParam("wallet")
         })
