@@ -153,9 +153,7 @@ class AddCardScreen extends React.Component<Props, State> {
       MAESTRO: cardIcons.MAESTRO,
       VISA: cardIcons.VISA,
       VISAELECTRON: cardIcons.VISAELECTRON,
-      AMEX: cardIcons.AMEX,
-      POSTEPAY: cardIcons.POSTEPAY,
-      DINER: cardIcons.DINERS
+      POSTEPAY: cardIcons.POSTEPAY
     };
 
     const primaryButtonPropsFromState = (
