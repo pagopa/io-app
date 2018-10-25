@@ -113,7 +113,7 @@ type GetPspListUsingGETTExtra = MapResponseType<
   ReplaceRequestParams<
     GetPspListUsingGETT,
     // TODO: temporary patch, see https://www.pivotaltracker.com/story/show/161475199
-    TypeofApiParams<GetPspListUsingGETT> & { idWallet: number }
+    TypeofApiParams<GetPspListUsingGETT> & { idWallet?: number }
   >,
   200,
   PspListResponse
@@ -124,11 +124,17 @@ const getPspList: (
 ) => GetPspListUsingGETTExtra = pagoPaToken => ({
   method: "get",
   url: () => "/v1/psps",
-  query: ({ idPayment, idWallet }) => ({
-    paymentType: "CREDIT_CARD",
-    idPayment,
+  query: ({ idPayment, idWallet }) =>
     idWallet
-  }),
+      ? {
+          paymentType: "CREDIT_CARD",
+          idPayment,
+          idWallet
+        }
+      : {
+          paymentType: "CREDIT_CARD",
+          idPayment
+        },
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 });
@@ -269,12 +275,16 @@ export function PagoPaClient(
     getPspList: (
       pagoPaToken: PagopaToken,
       idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
-      idWallet: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
+      idWallet?: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
-      createFetchRequestForApi(getPspList(pagoPaToken), options)({
-        idPayment,
+      createFetchRequestForApi(getPspList(pagoPaToken), options)(
         idWallet
-      }),
+          ? {
+              idPayment,
+              idWallet
+            }
+          : { idPayment }
+      ),
     updateWalletPsp: (
       pagoPaToken: PagopaToken,
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],

@@ -102,7 +102,7 @@ export const paymentCheckFailure = createStandardAction(
 
 type PaymentFetchPspsForPaymentIdRequestPayload = Readonly<{
   idPayment: string;
-  idWallet: number;
+  idWallet?: number;
   onSuccess?: (
     action: ActionType<typeof paymentFetchPspsForPaymentIdSuccess>
   ) => void;

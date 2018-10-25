@@ -17,7 +17,10 @@ import {
   paymentUpdateWalletPspSuccess
 } from "../../../store/actions/wallet/payment";
 import { Psp, Wallet } from "../../../types/pagopa";
-import { walletHasFavoriteAvailablePsp } from "../../../utils/payment";
+import {
+  pspsForLocale,
+  walletHasFavoriteAvailablePsp
+} from "../../../utils/payment";
 
 /**
  * Common action dispatchers for payment screens
@@ -78,10 +81,14 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
     dispatch(
       paymentFetchPspsForPaymentIdRequest({
         idPayment,
-        idWallet: wallet.idWallet,
+        // provide the idWallet to the getPsps request only if the wallet has
+        // a preferred PSP
+        idWallet: wallet.psp ? wallet.idWallet : undefined,
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
-          const psps = successAction.payload;
+          // filter PSPs for the current locale only (the list will contain
+          // duspliacates for all the supported languages)
+          const psps = pspsForLocale(successAction.payload);
           if (psps.length === 0) {
             // this payment method cannot be used!
             onFailure("NO_PSPS_AVAILABLE");
