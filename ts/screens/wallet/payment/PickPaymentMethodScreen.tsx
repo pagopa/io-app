@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
@@ -49,7 +50,8 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedStateProps = Readonly<{
-  wallets: ReadonlyArray<Wallet>;
+  wallets: pot.PotType<ReturnType<typeof walletsSelector>>;
+  isLoading: boolean;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -149,10 +151,15 @@ class PickPaymentMethodScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  // FIXME: handle loading/error states
-  wallets: pot.getOrElse(walletsSelector(state), [])
-});
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  const potWallets = walletsSelector(state);
+  const potPsps = state.wallet.payment.psps;
+  const isLoading = pot.isLoading(potWallets) || pot.isLoading(potPsps);
+  return {
+    wallets: pot.getOrElse(potWallets, []),
+    isLoading
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
@@ -204,4 +211,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PickPaymentMethodScreen);
+)(withLoadingSpinner(PickPaymentMethodScreen));
