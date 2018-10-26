@@ -5,6 +5,7 @@
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
+import * as pot from "../../../../types/pot";
 import { clearCache } from "../../../actions/profile";
 import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
@@ -12,11 +13,14 @@ import { Action } from "../../../actions/types";
 /**
  * Maps organization fiscal code to serviceId
  */
-export type ServiceIdsByOrganizationFiscalCodeState = Readonly<{
-  [key: string]: ReadonlyArray<NonEmptyString> | undefined;
-}>;
+export type ServiceIdsByOrganizationFiscalCodeState = pot.Pot<
+  Readonly<{
+    [key: string]: ReadonlyArray<NonEmptyString> | undefined;
+  }>,
+  Error
+>;
 
-const INITIAL_STATE: ServiceIdsByOrganizationFiscalCodeState = {};
+const INITIAL_STATE: ServiceIdsByOrganizationFiscalCodeState = pot.none;
 
 export function serviceIdsByOrganizationFiscalCodeReducer(
   state: ServiceIdsByOrganizationFiscalCodeState = INITIAL_STATE,

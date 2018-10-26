@@ -7,6 +7,7 @@
 import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import * as pot from "../../../../types/pot";
 import { clearCache } from "../../../actions/profile";
 import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
@@ -16,7 +17,7 @@ export type ServicesByIdState = Readonly<{
   [key: string]: ServicePublic | undefined;
 }>;
 
-type ServiceByIdState = Readonly<ServicePublic>;
+type ServiceByIdState = pot.Pot<Readonly<ServicePublic>, Error>;
 
 const INITIAL_STATE: ServicesByIdState = {};
 
