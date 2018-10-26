@@ -1,6 +1,6 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StatusBar } from "react-native";
+import { Modal, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -62,6 +62,23 @@ const renderIdentificationByPinState = (
 
 const onRequestCloseHandler = () => undefined;
 
+const styles = StyleSheet.create({
+  identificationMessage: {
+    alignSelf: "center",
+    color: variables.colorWhite,
+    fontSize: 16,
+    lineHeight: 21,
+    width: "70%"
+  },
+  resetPinMessage: {
+    alignSelf: "center",
+    color: variables.colorWhite,
+    fontSize: 14,
+    lineHeight: 18,
+    width: "80%"
+  }
+});
+
 /**
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
@@ -86,11 +103,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     // The identification state is started we need to show the modal
     const {
       pin,
+      identificationGenericData,
       identificationCancelData,
       identificationSuccessData
     } = identificationState;
 
     const { identificationByPinState } = this.state;
+
+    const identificationMessage = identificationGenericData
+      ? identificationGenericData.message
+      : I18n.t("identification.message");
 
     /**
      * Create handlers merging default internal actions (to manage the identification state)
@@ -127,8 +149,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           />
           <Content primary={true}>
             <View spacer={true} extralarge={true} />
-            <Text white={true} alignCenter={true}>
-              {I18n.t("pin_login.pin.pinInfo")}
+            <Text
+              bold={true}
+              alignCenter={true}
+              style={styles.identificationMessage}
+            >
+              {identificationMessage}
             </Text>
             <Pinpad
               compareWithCode={pin as string}
@@ -146,6 +172,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             />
             {renderIdentificationByPinState(identificationByPinState)}
             <View spacer={true} extralarge={true} />
+            <Text alignCenter={true} style={styles.resetPinMessage}>
+              {identificationCancelData !== undefined
+                ? I18n.t("identification.resetPinFromProfileMessage")
+                : I18n.t("identification.resetPinMessage")}
+            </Text>
+            <View spacer={true} extralarge={true} />
             <View>
               {identificationCancelData !== undefined && (
                 <Button
@@ -161,8 +193,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
                 </Button>
               )}
-              <View spacer={true} />
-              <Text white={true}>{I18n.t("pin_login.pin.reset.tip")}</Text>
             </View>
           </Content>
         </BaseScreenComponent>

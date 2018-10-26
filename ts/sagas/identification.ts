@@ -16,6 +16,7 @@ import { navigateToMessageDetailScreenAction } from "../store/actions/navigation
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   IdentificationCancelData,
+  IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
@@ -73,12 +74,14 @@ export function* waitIdentificationResult(): Iterator<
  */
 export function* startAndReturnIdentificationResult(
   pin: PinString,
+  identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData
 ): Iterator<Effect | SagaCallReturnType<typeof waitIdentificationResult>> {
   yield put(
     identificationStart(
       pin,
+      identificationGenericData,
       identificationCancelData,
       identificationSuccessData
     )
@@ -95,6 +98,7 @@ export function* startAndHandleIdentificationResult(
   yield put(
     identificationStart(
       pin,
+      identificationRequestAction.payload.identificationGenericData,
       identificationRequestAction.payload.identificationCancelData,
       identificationRequestAction.payload.identificationSuccessData
     )

@@ -3,6 +3,7 @@ import { ActionType, createAction } from "typesafe-actions";
 import { PinString } from "../../types/PinString";
 import {
   IdentificationCancelData,
+  IdentificationGenericData,
   IdentificationSuccessData
 } from "../reducers/identification";
 
@@ -13,10 +14,12 @@ import {
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
   resolve => (
+    identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
     identificationSuccessData?: IdentificationSuccessData
   ) =>
     resolve({
+      identificationGenericData,
       identificationCancelData,
       identificationSuccessData
     })
@@ -29,11 +32,13 @@ export const identificationStart = createAction(
   "IDENTIFICATION_START",
   resolve => (
     pin: PinString,
+    identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
     identificationSuccessData?: IdentificationSuccessData
   ) =>
     resolve({
       pin,
+      identificationGenericData,
       identificationCancelData,
       identificationSuccessData
     })
