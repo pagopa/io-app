@@ -12,7 +12,6 @@ import {
 import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
-import { PagoPaClient } from "../api/pagopa";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import { IdentityProvider } from "../models/IdentityProvider";
@@ -189,11 +188,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
-  const pagoPaClient: PagoPaClient = PagoPaClient(
-    pagoPaApiUrlPrefix,
-    maybeSessionInformation.value.walletToken
-  );
-  yield fork(watchWalletSaga, sessionToken, pagoPaClient, storedPin);
+  const walletToken = maybeSessionInformation.value.walletToken;
+  yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.

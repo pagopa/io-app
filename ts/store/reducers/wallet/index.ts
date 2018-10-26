@@ -4,8 +4,6 @@
  */
 
 import { combineReducers } from "redux";
-import { PagoPaState } from "./pagopa";
-import pagoPaReducer from "./pagopa";
 import { PaymentState } from "./payment";
 import paymentReducer from "./payment";
 import { TransactionsState } from "./transactions";
@@ -17,14 +15,12 @@ export type WalletState = Readonly<{
   transactions: TransactionsState;
   wallets: WalletsState;
   payment: PaymentState;
-  pagoPa: PagoPaState;
 }>;
 
 const reducer = combineReducers({
   transactions: transactionsReducer,
   wallets: walletsReducer,
-  payment: paymentReducer,
-  pagoPa: pagoPaReducer
+  payment: paymentReducer
 });
 
 export default reducer;

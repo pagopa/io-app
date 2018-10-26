@@ -17,7 +17,7 @@ import {
 import {
   NullableWallet,
   PagoPAErrorResponse,
-  PagopaToken,
+  PaymentManagerToken,
   PspListResponse
 } from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
@@ -74,7 +74,7 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
 >;
 
 const getTransactions: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => GetTransactionsUsingGETTExtra = pagoPaToken => ({
   method: "get",
   url: () => "/v1/transactions",
@@ -90,7 +90,7 @@ type GetWalletsUsingGETExtraT = MapResponseType<
 >;
 
 const getWallets: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => GetWalletsUsingGETExtraT = pagoPaToken => ({
   method: "get",
   url: () => "/v1/wallet",
@@ -100,7 +100,7 @@ const getWallets: (
 });
 
 const checkPayment: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => CheckPaymentUsingGETT = pagoPaToken => ({
   method: "get",
   url: ({ id }) => `/v1/payments/${id}/actions/check`,
@@ -120,7 +120,7 @@ type GetPspListUsingGETTExtra = MapResponseType<
 >;
 
 const getPspList: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => GetPspListUsingGETTExtra = pagoPaToken => ({
   method: "get",
   url: () => "/v1/psps",
@@ -146,7 +146,7 @@ type UpdateWalletUsingPUTTExtra = MapResponseType<
 >;
 
 const updateWalletPsp: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => UpdateWalletUsingPUTTExtra = pagoPaToken => ({
   method: "put",
   url: ({ id }) => `/v1/wallet/${id}`,
@@ -168,7 +168,7 @@ type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
 >;
 
 const addWalletCreditCard: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => AddWalletCreditCardUsingPOSTTExtra = pagoPaToken => ({
   method: "post",
   url: () => "/v1/wallet/cc",
@@ -191,7 +191,7 @@ type PayUsingPOSTTExtra = MapResponseType<
 >;
 
 const postPayment: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => PayUsingPOSTTExtra = pagoPaToken => ({
   method: "post",
   url: ({ id }) => `/v1/payments/${id}/actions/pay`,
@@ -211,7 +211,7 @@ type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
 >;
 
 const boardPay: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => PayCreditCardVerificationUsingPOSTTExtra = pagoPaToken => ({
   method: "post",
   url: () => "/v1/payments/cc/actions/pay",
@@ -227,7 +227,7 @@ const boardPay: (
 });
 
 const deleteWallet: (
-  pagoPaToken: PagopaToken
+  pagoPaToken: PaymentManagerToken
 ) => DeleteWalletUsingDELETET = pagoPaToken => ({
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
@@ -245,7 +245,7 @@ const deleteWallet: (
   )
 });
 
-export function PagoPaClient(
+export function PaymentManagerClient(
   baseUrl: string,
   walletToken: string,
   fetchApi: typeof fetch = defaultRetryingFetch(),
@@ -258,12 +258,12 @@ export function PagoPaClient(
     getSession: (
       wt: string // wallet token
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
-    getWallets: (pagoPaToken: PagopaToken) =>
+    getWallets: (pagoPaToken: PaymentManagerToken) =>
       createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
-    getTransactions: (pagoPaToken: PagopaToken) =>
+    getTransactions: (pagoPaToken: PaymentManagerToken) =>
       createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
     checkPayment: (
-      pagoPaToken: PagopaToken,
+      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
     ) =>
       createFetchRequestForApi(checkPayment(pagoPaToken), {
@@ -273,7 +273,7 @@ export function PagoPaClient(
         id
       }),
     getPspList: (
-      pagoPaToken: PagopaToken,
+      pagoPaToken: PaymentManagerToken,
       idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
       idWallet?: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
@@ -286,7 +286,7 @@ export function PagoPaClient(
           : { idPayment }
       ),
     updateWalletPsp: (
-      pagoPaToken: PagopaToken,
+      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
     ) =>
@@ -295,7 +295,7 @@ export function PagoPaClient(
         walletRequest
       }),
     postPayment: (
-      pagoPaToken: PagopaToken,
+      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<PayUsingPOSTT>["id"],
       payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
     ) =>
@@ -303,12 +303,15 @@ export function PagoPaClient(
         id,
         payRequest
       }),
-    addWalletCreditCard: (pagoPaToken: PagopaToken, wallet: NullableWallet) =>
+    addWalletCreditCard: (
+      pagoPaToken: PaymentManagerToken,
+      wallet: NullableWallet
+    ) =>
       createFetchRequestForApi(addWalletCreditCard(pagoPaToken), options)({
         walletRequest: { data: wallet }
       }),
     payCreditCardVerification: (
-      pagoPaToken: PagopaToken,
+      pagoPaToken: PaymentManagerToken,
       payRequest: TypeofApiParams<
         PayCreditCardVerificationUsingPOSTT
       >["payRequest"],
@@ -321,7 +324,7 @@ export function PagoPaClient(
         language
       }),
     deleteWallet: (
-      pagoPaToken: PagopaToken,
+      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]
     ) =>
       createFetchRequestForApi(deleteWallet(pagoPaToken), options)({
@@ -330,4 +333,4 @@ export function PagoPaClient(
   };
 }
 
-export type PagoPaClient = ReturnType<typeof PagoPaClient>;
+export type PaymentManagerClient = ReturnType<typeof PaymentManagerClient>;

@@ -206,7 +206,7 @@ const reducer = (
       // a valid URL has been made available
       // from pagoPA and needs to be opened in a webview
       const urlWithToken = `${action.payload.urlCheckout3ds}&sessionToken=${
-        action.payload.pagopaToken
+        action.payload.paymentManagerToken
       }`;
 
       return {
