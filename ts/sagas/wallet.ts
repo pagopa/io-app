@@ -4,19 +4,12 @@
  * A saga that manages the Wallet.
  */
 
-import { Option } from "fp-ts/lib/Option";
-import {
-  call,
-  Effect,
-  put,
-  select,
-  take,
-  takeLatest
-} from "redux-saga/effects";
+import { none, some } from "fp-ts/lib/Option";
+import { Effect, put, select, take, takeLatest } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
-import { PagoPaClient } from "../api/pagopa";
+import { PaymentManagerClient } from "../api/pagopa";
 import { apiUrlPrefix } from "../config";
 
 import {
@@ -52,14 +45,15 @@ import {
   runStartOrResumeAddCreditCardSaga
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
-import { getPagoPaToken } from "../store/reducers/wallet/pagopa";
 
-import { NullableWallet, PagopaToken, PayRequest } from "../types/pagopa";
+import {
+  NullableWallet,
+  PaymentManagerToken,
+  PayRequest
+} from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 
 import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
-
-import { fetchAndStorePagoPaToken } from "./wallet/utils";
 
 import {
   addWalletCreditCardRequestHandler,
@@ -77,6 +71,7 @@ import {
 } from "./wallet/pagopaApis";
 
 import * as pot from "../types/pot";
+import { SessionManager } from "../utils/SessionManager";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -113,6 +108,7 @@ const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000;
  */
 // tslint:disable-next-line:cognitive-complexity
 function* startOrResumeAddCreditCardSaga(
+  pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
 ) {
   // prepare a new wallet (payment method) that describes the credit card we
@@ -210,16 +206,14 @@ function* startOrResumeAddCreditCardSaga(
 
     const urlCheckout3ds =
       state.creditCardVerification.value.data.urlCheckout3ds;
-    const pagoPaToken: Option<PagopaToken> = yield select<GlobalState>(
-      getPagoPaToken
-    );
+    const pagoPaToken = pmSessionManager.get();
 
     if (pot.isNone(state.creditCardCheckout3ds)) {
       if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
         yield put(
           creditCardCheckout3dsRequest({
             urlCheckout3ds,
-            pagopaToken: pagoPaToken.value
+            paymentManagerToken: pagoPaToken.value
           })
         );
         yield take(getType(creditCardCheckout3dsSuccess));
@@ -379,7 +373,8 @@ function* startOrResumePaymentActivationSaga(
  */
 export function* watchWalletSaga(
   sessionToken: SessionToken,
-  pagoPaClient: PagoPaClient
+  walletToken: string,
+  paymentManagerUrlPrefix: string
 ): Iterator<Effect> {
   // Builds a backend client specifically for the pagopa-proxy endpoints that
   // need a fetch instance that doesn't retry requests and have longer timeout
@@ -400,14 +395,31 @@ export function* watchWalletSaga(
     )
   );
 
-  // First thing we do is to ask the pagopa REST APIs for a token we can use
-  // to make requests - pagopa REST APIs has their own session.
-  // It's fine if this request fails, as all subsequent API calls are wrapped
-  // with fetchWithTokenRefresh().
-  // Note that fetchAndStorePagoPaToken has a side effect of emitting an action
-  // that stores the token in the Redux store.
-  // TODO: document this flow
-  yield call(fetchAndStorePagoPaToken, pagoPaClient);
+  // Client for the PagoPA PaymentManager
+  const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
+    paymentManagerUrlPrefix,
+    walletToken
+  );
+
+  // Helper function that requests a new session token from the PaymentManager.
+  // When calling the PM APIs, we must use separate session, generated from the
+  // walletToken.
+  const getPaymentManagerSession = async () => {
+    try {
+      const response = await paymentManagerClient.getSession(walletToken);
+      if (response !== undefined && response.status === 200) {
+        return some(response.value.data.sessionToken);
+      }
+      return none;
+    } catch {
+      return none;
+    }
+  };
+
+  // The session manager for the PagoPA PaymentManager (PM) will manage the
+  // refreshing of the PM session when calling its APIs, keeping a shared token
+  // and serializing the refresh requests.
+  const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
   //
   // Sagas
@@ -415,7 +427,8 @@ export function* watchWalletSaga(
 
   yield takeLatest(
     getType(runStartOrResumeAddCreditCardSaga),
-    startOrResumeAddCreditCardSaga
+    startOrResumeAddCreditCardSaga,
+    pmSessionManager
   );
 
   yield takeLatest(
@@ -430,37 +443,43 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(fetchTransactionsRequest),
     fetchTransactionsRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(fetchWalletsRequest),
     fetchWalletsRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(addWalletCreditCardRequest),
     addWalletCreditCardRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(payCreditCardVerificationRequest),
     payCreditCardVerificationRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(paymentUpdateWalletPspRequest),
     updateWalletPspRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(deleteWalletRequest),
     deleteWalletRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
@@ -484,18 +503,21 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentCheckRequest),
     paymentCheckRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(paymentFetchPspsForPaymentIdRequest),
     paymentFetchPspsForWalletRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 
   yield takeLatest(
     getType(paymentExecutePaymentRequest),
     paymentExecutePaymentRequestHandler,
-    pagoPaClient
+    paymentManagerClient,
+    pmSessionManager
   );
 }

@@ -3,7 +3,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import {
   CreditCard,
   NullableWallet,
-  PagopaToken,
+  PaymentManagerToken,
   PayRequest,
   TransactionResponse,
   Wallet,
@@ -62,7 +62,7 @@ export const payCreditCardVerificationFailure = createStandardAction(
 
 type CreditCardCheckout3dsRequestPayload = Readonly<{
   urlCheckout3ds: string;
-  pagopaToken: PagopaToken;
+  paymentManagerToken: PaymentManagerToken;
 }>;
 
 export const creditCardCheckout3dsRequest = createStandardAction(

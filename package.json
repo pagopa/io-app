@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "abort-controller": "^1.0.2",
+    "async-mutex": "^0.1.3",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
     "email-validator": "^2.0.4",
