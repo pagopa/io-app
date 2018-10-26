@@ -65,7 +65,7 @@ profile:
     logout: Logout/Exit
     privacy:
       title: Privacy
-      description: Export data, Remove account
+      description: Export data, delete account
       text: !include privacy.md
     termsAndConditions:
       title: Terms and Conditions
@@ -77,11 +77,11 @@ profile:
         title: Privacy policy
         description: review accepted privacy terms
       removeAccount:
-        title: Cancella il tuo account
+        title: Delete your account
         description: remove all data associated to your account from your phone and
           our systems (SPID required)
       exportData:
-        title: Esporta i tuoi dati
+        title: Export your data
         description: send to your email all your account’s data in an open format
     developersSectionHeader: Developers
     accountSectionHeader: Account
