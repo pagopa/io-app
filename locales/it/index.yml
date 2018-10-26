@@ -471,6 +471,9 @@ preferences:
   empty:
     default: Nessuna preferenza impostata
   preferencesHelp: !include preferences_home_help.md
+  unavailable:
+    title: Questa impostazione non è ancora disponibile
+    message: Questa impostazione sarà disponibile in una versione futura
 services:
   headerTitle: Servizi
   title: Elenco dei servizi

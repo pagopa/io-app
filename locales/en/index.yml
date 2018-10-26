@@ -459,6 +459,9 @@ preferences:
   empty:
     default: No preference set
   preferencesHelp: !include preferences_home_help.md
+  unavailable:
+    title: This setting is not available at this time
+    message: This setting will be available in a future release
 services:
   headerTitle: Services
   title: Available services

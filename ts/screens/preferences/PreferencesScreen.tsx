@@ -1,5 +1,6 @@
 import { Content, List, ListItem } from "native-base";
 import * as React from "react";
+import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -24,6 +25,12 @@ import ROUTES from "../../navigation/routes";
 import { UserProfileUnion } from "../../api/backend";
 
 import { getLocalePrimary } from "../../utils/locale";
+
+const unavailableAlert = () =>
+  Alert.alert(
+    I18n.t("preferences.unavailable.title"),
+    I18n.t("preferences.unavailable.message")
+  );
 
 type ReduxMappedProps = {
   maybeProfile: Option<UserProfileUnion>;
@@ -101,7 +108,7 @@ class PreferencesScreen extends React.Component<Props> {
                 valuePreview={I18n.t("preferences.list.services_description")}
               />
             </ListItem>
-            <ListItem>
+            <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
                 title={I18n.t("preferences.list.email")}
@@ -109,7 +116,7 @@ class PreferencesScreen extends React.Component<Props> {
                 valuePreview={profileData.spid_email}
               />
             </ListItem>
-            <ListItem>
+            <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
                 title={I18n.t("preferences.list.mobile_phone")}
@@ -117,7 +124,7 @@ class PreferencesScreen extends React.Component<Props> {
                 valuePreview={profileData.spid_mobile_phone}
               />
             </ListItem>
-            <ListItem>
+            <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
                 title={I18n.t("preferences.list.language")}
