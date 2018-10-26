@@ -15,6 +15,10 @@ export enum IdentificationResult {
   "success" = "success"
 }
 
+export type IdentificationGenericData = {
+  message: string;
+};
+
 export type IdentificationCancelData = { label: string; onCancel: () => void };
 
 export type IdentificationSuccessData = { onSuccess: () => void };
@@ -26,6 +30,7 @@ type IdentificationUnidentifiedState = {
 type IdentificationStartedState = {
   kind: "started";
   pin: PinString;
+  identificationGenericData?: IdentificationGenericData;
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;
 };

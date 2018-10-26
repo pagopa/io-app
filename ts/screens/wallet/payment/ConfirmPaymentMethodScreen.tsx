@@ -276,6 +276,9 @@ const mapDispatchToProps = (
     dispatch(
       identificationRequest(
         {
+          message: I18n.t("wallet.ConfirmPayment.identificationMessage")
+        },
+        {
           label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
           onCancel: () => undefined
         },

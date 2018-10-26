@@ -297,6 +297,7 @@ wallet:
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
+    identificationMessage: "Conferma l'operazione inserendo il tuo codice PIN"
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
@@ -489,3 +490,7 @@ services:
   contactPhone: Telefono
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
+identification:
+  message: "Inserisci il codice PIN"
+  resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
+  resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".

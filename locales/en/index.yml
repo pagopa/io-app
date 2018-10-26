@@ -287,6 +287,7 @@ wallet:
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
+    identificationMessage: Confirm the transaction with your PIN code
   payWith:
     noWallets:
       title: No payment methods found
@@ -477,3 +478,7 @@ services:
   contactPhone: Phone
 serviceDetail:
   headerTitle: "Service details"
+identification:
+  message: "Enter the PIN"
+  resetPinMessage: To reset your PIN you will have to login again with your SPID account.
+  resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
