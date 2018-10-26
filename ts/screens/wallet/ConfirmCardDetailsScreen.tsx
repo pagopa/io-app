@@ -241,7 +241,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     pot.isError(creditCardVerification) ||
     pot.isError(walletById) ||
     pot.isError(psps)
-      ? some("GENERIC_ERROR")
+      ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
 
   return {

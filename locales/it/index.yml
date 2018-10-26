@@ -269,6 +269,7 @@ wallet:
       pagamento
     save: Salva la carta
     notice: Per verificare la carta verrà effettuata una transazione di 2 centesimi di euro, che verrà stornata e non ti verrà addebitata.
+    temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
@@ -392,15 +393,15 @@ wallet:
     title: Perchè devo pagare le commissioni?
     text: !include why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Il pagamento per questo avviso è già stato effettuato.
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato.
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
-    PAYMENT_ONGOING: Il pagamento per questo avviso è già in corso, riprova più tardi.
+    PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
-    PAYMENT_UNKNOWN: Sembra che questo avviso di pagamento non venga riconosciuto dall'ente che lo ha emesso.
-    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente che non riesco a riconoscere.
-    GENERIC_ERROR: Ooops, qualcosa è andato storto! Non ti preoccupare, è sicuramente colpa nostra, riprova più tardi per piacere!
-    MISSING_PAYMENT_ID: Sembra che l'ente che ha emesso questo avviso abbia qualche problema a gestirne il pagamento in questo momento, riprova più tardi!
+    PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA.
+    GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
+    MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
