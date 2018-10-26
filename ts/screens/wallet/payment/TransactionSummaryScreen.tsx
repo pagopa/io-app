@@ -81,7 +81,7 @@ type ReduxMappedDispatchProps = Readonly<{
 }>;
 
 type ReduxMergedProps = Readonly<{
-  onRetry: () => void;
+  onRetry?: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -325,18 +325,34 @@ const mergeProps = (
   stateProps: ReduxMappedStateProps,
   dispatchProps: ReduxMappedDispatchProps,
   ownProps: {}
-) => ({
-  ...stateProps,
-  ...dispatchProps,
-  ...ownProps,
-  ...{
-    onRetry: () =>
-      dispatchProps.onRetryWithPotVerifica(
-        stateProps.potVerifica,
-        stateProps.maybeFavoriteWallet
-      )
-  }
-});
+) => {
+  // we allow to retry the operation on a temporary unavailability of the remote
+  // system, a timeout while waiting for the payment ID and for generic errors
+  // (e.g. timeouts)
+  const canRetry = stateProps.error
+    .filter(
+      _ =>
+        _ === "PAYMENT_UNAVAILABLE" ||
+        _ === "PAYMENT_ID_TIMEOUT" ||
+        _ === undefined
+    )
+    .isSome();
+  const baseProps = {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps
+  };
+  return canRetry
+    ? {
+        ...baseProps,
+        onRetry: () =>
+          dispatchProps.onRetryWithPotVerifica(
+            stateProps.potVerifica,
+            stateProps.maybeFavoriteWallet
+          )
+      }
+    : baseProps;
+};
 
 const mapErrorCodeToMessage = (
   error: ReduxMappedStateProps["error"]["_A"]
