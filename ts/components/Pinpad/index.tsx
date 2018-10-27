@@ -5,7 +5,10 @@ import {
   EmitterSubscription,
   Keyboard,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  AppState,
+  AppStateStatus,
+  InteractionManager
 } from "react-native";
 
 import { PinString } from "../../types/PinString";
@@ -16,7 +19,6 @@ import { Baseline, Bullet } from "./Placeholders";
 
 const focusElement = (el: TextInput) => el.focus();
 const blurElement = (el: TextInput) => el.blur();
-const current = (ref: React.RefObject<TextInput>) => ref.current;
 
 interface Props {
   activeColor: string;
@@ -34,7 +36,7 @@ interface State {
  * A customized CodeInput component.
  */
 class Pinpad extends React.PureComponent<Props, State> {
-  private inputRef: React.RefObject<TextInput>;
+  private textInputRef: React.RefObject<TextInput>;
   private onFulfillTimeoutId?: number;
 
   // Utility array of as many elements as how many digits the pin has.
@@ -50,33 +52,32 @@ class Pinpad extends React.PureComponent<Props, State> {
       value: ""
     };
 
-    this.inputRef = React.createRef();
+    this.textInputRef = React.createRef();
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
     this.keyboardDidHideListener = undefined;
   }
 
   public componentDidMount() {
-    // tslint:disable-next-line no-object-mutation
-    this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      this.handleKeyboardDidHide
-    );
+    AppState.addEventListener("change", this.handleAppStateChange);
   }
 
   public componentWillUnmount() {
     if (this.keyboardDidHideListener) {
+      console.log("Remove keyboard listener");
       this.keyboardDidHideListener.remove();
+      // tslint:disable-next-line:no-object-mutation
+      this.keyboardDidHideListener = undefined;
     }
+
+    AppState.removeEventListener("change", this.handleAppStateChange);
 
     if (this.onFulfillTimeoutId) {
       clearTimeout(this.onFulfillTimeoutId);
     }
   }
 
-  public foldInputRef = (fn: (el: TextInput) => void) =>
-    fromNullable(this.inputRef)
-      .mapNullable(current)
-      .fold(undefined, fn);
+  public foldTextInputRef = (fn: (el: TextInput) => void) =>
+    fromNullable(this.textInputRef.current).fold(undefined, fn);
 
   private handleChangeText = (inputValue: string) => {
     this.setState({ value: inputValue });
@@ -86,7 +87,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       const isValid = inputValue === this.props.compareWithCode;
 
       if (isValid) {
-        this.foldInputRef(blurElement);
+        this.foldTextInputRef(blurElement);
       } else {
         if (this.props.clearOnInvalid) {
           this.clear();
@@ -102,11 +103,41 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
-  private handlePlaceholderPress = () => this.foldInputRef(focusElement);
+  private handlePlaceholderPress = () => this.foldTextInputRef(focusElement);
 
-  private handleKeyboardDidHide = () => this.foldInputRef(blurElement);
+  private handleKeyboardDidHide = () => {
+    console.log("handleKeyboardDidHide");
+    this.foldTextInputRef(blurElement);
+  };
 
-  public clear = () => this.setState({ value: "" });
+  private handleAppStateChange = (newAppStateStatus: AppStateStatus) => {
+    if (newAppStateStatus === "active") {
+      console.log("Handling active");
+      this.foldTextInputRef(focusElement);
+    } else {
+      console.log("Handling background");
+      this.foldTextInputRef(blurElement);
+      this.clear();
+      if (this.keyboardDidHideListener) {
+        console.log("Remove keyboard listener");
+        this.keyboardDidHideListener.remove();
+        // tslint:disable-next-line:no-object-mutation
+        this.keyboardDidHideListener = undefined;
+      }
+    }
+  };
+
+  private handleFocus = () => {
+    console.log("Handling focus");
+    if (!this.keyboardDidHideListener) {
+      console.log("Add keyboard listener");
+      // tslint:disable-next-line:no-object-mutation
+      this.keyboardDidHideListener = Keyboard.addListener(
+        "keyboardDidHide",
+        this.handleKeyboardDidHide
+      );
+    }
+  };
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
@@ -123,6 +154,8 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
   };
 
+  public clear = () => this.setState({ value: "" });
+
   public render() {
     return (
       <React.Fragment>
@@ -130,13 +163,18 @@ class Pinpad extends React.PureComponent<Props, State> {
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <TextInput
-          ref={this.inputRef}
+          ref={this.textInputRef}
           style={styles.input}
           keyboardType="numeric"
           autoFocus={true}
           value={this.state.value}
           onChangeText={this.handleChangeText}
           maxLength={PIN_LENGTH}
+          onFocus={() => {
+            console.log("onFocus");
+            this.handleFocus();
+          }}
+          onBlur={() => console.log("onBlur")}
         />
       </React.Fragment>
     );
