@@ -116,14 +116,8 @@ class Pinpad extends React.PureComponent<Props, State> {
       this.foldTextInputRef(focusElement);
     } else {
       console.log("Handling background");
-      this.foldTextInputRef(blurElement);
       this.clear();
-      if (this.keyboardDidHideListener) {
-        console.log("Remove keyboard listener");
-        this.keyboardDidHideListener.remove();
-        // tslint:disable-next-line:no-object-mutation
-        this.keyboardDidHideListener = undefined;
-      }
+      this.foldTextInputRef(blurElement);
     }
   };
 
@@ -136,6 +130,16 @@ class Pinpad extends React.PureComponent<Props, State> {
         "keyboardDidHide",
         this.handleKeyboardDidHide
       );
+    }
+  };
+
+  private handleBlur = () => {
+    console.log("Handling blur");
+    if (this.keyboardDidHideListener) {
+      console.log("Remove keyboard listener");
+      this.keyboardDidHideListener.remove();
+      // tslint:disable-next-line:no-object-mutation
+      this.keyboardDidHideListener = undefined;
     }
   };
 
@@ -174,7 +178,10 @@ class Pinpad extends React.PureComponent<Props, State> {
             console.log("onFocus");
             this.handleFocus();
           }}
-          onBlur={() => console.log("onBlur")}
+          onBlur={() => {
+            console.log("onBlur");
+            this.handleBlur();
+          }}
         />
       </React.Fragment>
     );
