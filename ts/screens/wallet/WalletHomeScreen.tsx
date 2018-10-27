@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { none } from "fp-ts/lib/Option";
 import { WalletStyles } from "../../components/styles/wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
+import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -94,12 +95,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
             </Text>
           </Left>
           <Right>
-            <Text
+            <AddPaymentMethodButton
               onPress={this.props.navigateToWalletAddPaymentMethod}
-              style={WalletStyles.white}
-            >
-              {`+ ${I18n.t("wallet.newPaymentMethod.add")}`}
-            </Text>
+            />
           </Right>
         </Row>
       </Grid>
