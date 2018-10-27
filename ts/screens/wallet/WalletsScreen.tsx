@@ -3,19 +3,19 @@
  * (credit cards for now)
  */
 
-import { Content, Text, View } from "native-base";
+import { none } from "fp-ts/lib/Option";
+import { Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 
 import { WalletStyles } from "../../components/styles/wallet";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
-import { none } from "fp-ts/lib/Option";
-import { Button } from "native-base";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import {
   navigateToWalletAddPaymentMethod,
@@ -36,6 +36,10 @@ import {
 import { Wallet } from "../../types/pagopa";
 import * as pot from "../../types/pot";
 import { showToast } from "../../utils/showToast";
+
+const styles = StyleSheet.create({
+  headerContainer: { flexDirection: "row" }
+});
 
 type ReduxMappedStateProps = Readonly<{
   wallets: ReadonlyArray<Wallet>;
@@ -78,13 +82,22 @@ class WalletsScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const { favoriteWallet } = this.props;
+
     const headerContents = (
-      <View style={WalletStyles.walletBannerText}>
-        <Text style={WalletStyles.white}>
-          {I18n.t("wallet.creditDebitCards")}
-        </Text>
+      <View style={styles.headerContainer}>
+        <Left>
+          <Text style={WalletStyles.white}>
+            {I18n.t("wallet.creditDebitCards")}
+          </Text>
+        </Left>
+        <Right>
+          <AddPaymentMethodButton
+            onPress={this.props.navigateToWalletAddPaymentMethod}
+          />
+        </Right>
       </View>
     );
+
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
@@ -99,17 +112,6 @@ class WalletsScreen extends React.Component<Props> {
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
           />
-          <View spacer={true} />
-          <Button
-            bordered={true}
-            block={true}
-            style={WalletStyles.addPaymentMethodButton}
-            onPress={this.props.navigateToWalletAddPaymentMethod}
-          >
-            <Text style={WalletStyles.addPaymentMethodText}>
-              {I18n.t("wallet.newPaymentMethod.addButton")}
-            </Text>
-          </Button>
         </Content>
       </WalletLayout>
     );
