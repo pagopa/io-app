@@ -1,27 +1,24 @@
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { call, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
 
-import {
-  GetServiceT,
-  GetUserMessageT
-} from "../../../definitions/backend/requestTypes";
+import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
 import I18n from "../../i18n";
 import {
   loadMessageWithRelationsAction,
   loadMessageWithRelationsFailureAction,
   loadMessageWithRelationsSuccessAction
 } from "../../store/actions/messages";
+import { loadServiceRequest } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
-import { loadMessage, loadService } from "./watchLoadMessagesSaga";
+import { loadMessage } from "./watchLoadMessagesSaga";
 
 /**
  * Load message with related entities (ex. the sender service).
  */
-function* loadMessageWithRelationsSaga(
+export function* loadMessageWithRelationsSaga(
   getMessage: TypeofApiCall<GetUserMessageT>,
-  getService: TypeofApiCall<GetServiceT>,
   messageWithRelationsLoadRequest: ActionType<
     typeof loadMessageWithRelationsAction
   >
@@ -37,38 +34,17 @@ function* loadMessageWithRelationsSaga(
 
   if (messageOrError.isRight()) {
     const message = messageOrError.value;
+    yield put(loadMessageWithRelationsSuccessAction());
+
     // We have the message try to load also the sender service
-    const serviceOrError = yield call(
-      loadService,
-      getService,
-      message.sender_service_id
-    );
+    yield put(loadServiceRequest(message.sender_service_id));
 
-    if (serviceOrError.isRight()) {
-      yield put(loadMessageWithRelationsSuccessAction());
-
-      return;
-    }
+    return;
   }
 
   yield put(
     loadMessageWithRelationsFailureAction(
       new Error(I18n.t("global.actions.retry"))
     )
-  );
-}
-
-/**
- * A saga that waits for MESSAGE_WITH_RELATIONS_LOAD_REQUEST action and call loadMessageWithRelationsSaga.
- */
-export function* watchLoadMessageWithRelationsSaga(
-  getMessage: TypeofApiCall<GetUserMessageT>,
-  getService: TypeofApiCall<GetServiceT>
-) {
-  yield takeEvery(
-    getType(loadMessageWithRelationsAction),
-    loadMessageWithRelationsSaga,
-    getMessage,
-    getService
   );
 }

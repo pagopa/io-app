@@ -12,6 +12,7 @@ import { InferNavigationParams } from "../../types/react";
 import ROUTES from "../../navigation/routes";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
+import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
@@ -87,6 +88,14 @@ export const navigateToMessageDetailScreenAction = (
         })
       })
     ]
+  });
+
+export const navigateToServiceDetailsScreen = (
+  params: InferNavigationParams<typeof ServiceDetailsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PREFERENCES_SERVICE_DETAIL,
+    params
   });
 
 export const navigateToPaymentTransactionSummaryScreen = (

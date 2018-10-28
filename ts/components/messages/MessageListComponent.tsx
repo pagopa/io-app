@@ -7,6 +7,7 @@ import {
 } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
 import { MessageListItemComponent } from "./MessageListItemComponent";
 
 type OwnProps = {
@@ -35,7 +36,7 @@ const makeRenderItem = (
     <MessageListItemComponent
       message={message}
       messageUIStates={messageUIStates}
-      service={service}
+      service={service !== undefined ? service : pot.none}
       onItemPress={onListItemPress}
     />
   );
@@ -43,7 +44,7 @@ const makeRenderItem = (
 
 const keyExtractor = (message: MessageWithContentPO) => message.id;
 
-class MessageListComponent extends React.PureComponent<Props, never> {
+class MessageListComponent extends React.PureComponent<Props> {
   public render() {
     const {
       messages,
@@ -62,6 +63,7 @@ class MessageListComponent extends React.PureComponent<Props, never> {
       <FlatList
         scrollEnabled={true}
         data={messages}
+        extraData={{ servicesById }}
         keyExtractor={keyExtractor}
         renderItem={makeRenderItem(
           messagesUIStatesById,

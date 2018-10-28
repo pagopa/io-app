@@ -30,11 +30,13 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 0;
+const CURRENT_REDUX_STORE_VERSION = 1;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
 const migrations: MigrationManifest = {
+  // version 0
+  // we changed the way we comput the installation ID
   "0": (state: PersistedState): PersistedState =>
     ({
       ...state,
@@ -42,6 +44,15 @@ const migrations: MigrationManifest = {
         ...((state as any).notifications ? (state as any).notifications : {}),
         installation: getInstallationInitialState()
       }
+    } as PersistedState),
+
+  // version 1
+  // we changes the type of the services state to use Pot types so we clear all
+  // the entitie to force a reload of messages and services
+  "1": (state: PersistedState): PersistedState =>
+    ({
+      ...state,
+      entities: {}
     } as PersistedState)
 };
 

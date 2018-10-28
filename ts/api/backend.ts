@@ -35,6 +35,8 @@ import {
   GetUserMessageT,
   getUserProfileDecoder,
   GetUserProfileT,
+  getVisibleServicesDefaultDecoder,
+  GetVisibleServicesT,
   upsertProfileDefaultDecoder,
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
@@ -138,6 +140,14 @@ export function BackendClient(
     response_decoder: getServiceDefaultDecoder()
   };
 
+  const getVisibleServicesT: GetVisibleServicesT = {
+    method: "get",
+    url: () => "/api/v1/services",
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: getVisibleServicesDefaultDecoder()
+  };
+
   const getMessagesT: GetUserMessagesT = {
     method: "get",
     url: () => `/api/v1/messages`,
@@ -219,6 +229,7 @@ export function BackendClient(
   return {
     getSession: createFetchRequestForApi(getSessionT, options),
     getService: createFetchRequestForApi(getServiceT, options),
+    getVisibleServices: createFetchRequestForApi(getVisibleServicesT, options),
     getMessages: createFetchRequestForApi(getMessagesT, options),
     getMessage: createFetchRequestForApi(getMessageT, options),
     getProfile: createFetchRequestForApi(getProfileT, options),

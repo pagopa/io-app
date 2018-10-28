@@ -1,6 +1,6 @@
 import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { call } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
@@ -10,18 +10,11 @@ import {
   loadMessagesSuccess,
   loadMessageSuccess
 } from "../../../store/actions/messages";
-import {
-  loadServiceFailure,
-  loadServiceSuccess
-} from "../../../store/actions/services";
+import { loadServiceRequest } from "../../../store/actions/services";
 import { messagesByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
-import {
-  loadMessage,
-  loadMessages,
-  loadService
-} from "../../startup/watchLoadMessagesSaga";
+import { loadMessage, loadMessages } from "../../startup/watchLoadMessagesSaga";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
@@ -120,53 +113,6 @@ describe("messages", () => {
     });
   });
 
-  describe("loadService test plan", () => {
-    it("should call getService with the right parameters", () => {
-      const getService = jest.fn();
-      testSaga(loadService, getService, testServiceId1)
-        .next()
-        .next()
-        .call(getService, { service_id: testServiceId1 });
-    });
-
-    it("should only return an empty error if the getService response is undefined (can't be decoded)", () => {
-      const getService = jest.fn();
-      testSaga(loadService, getService, testServiceId1)
-        .next()
-        .next()
-        // Return undefined as getService response
-        .next(undefined)
-        .put(loadServiceFailure(Error()))
-        .next()
-        .returns(left(Error()));
-    });
-
-    it("should only return the error if the getService response status is not 200", () => {
-      const getService = jest.fn();
-      const error = Error("Backend error");
-      testSaga(loadService, getService, testServiceId1)
-        .next()
-        .next()
-        // Return 500 with an error message as getService response
-        .next({ status: 500, value: { title: error.message } })
-        .put(loadServiceFailure(error))
-        .next()
-        .returns(left(Error("Backend error")));
-    });
-
-    it("should put SERVICE_LOAD_SUCCESS and return the service if the getService response status is 200", () => {
-      const getService = jest.fn();
-      testSaga(loadService, getService, testServiceId1)
-        .next()
-        .next()
-        // Return 200 with a valid service as getService response
-        .next({ status: 200, value: testServicePublic })
-        .put(loadServiceSuccess(testServicePublic))
-        .next()
-        .returns(right(testServicePublic));
-    });
-  });
-
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
       const getMessages = jest.fn();
@@ -204,7 +150,7 @@ describe("messages", () => {
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
-        .all([call(loadService, getService, "5a563817fcc896087002ea46c49a")])
+        .all([put(loadServiceRequest("5a563817fcc896087002ea46c49a"))])
         .next({ status: 200, value: testServicePublic })
         .all([
           call(loadMessage, getMessage, testMessageId1),
