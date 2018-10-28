@@ -2,18 +2,17 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import {
-  EmitterSubscription,
-  Keyboard,
-  TextInput,
-  TouchableOpacity,
   AppState,
   AppStateStatus,
-  InteractionManager
+  EmitterSubscription,
+  InteractionManager,
+  Keyboard,
+  TextInput,
+  TouchableOpacity
 } from "react-native";
 
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
-
 import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
 
@@ -63,7 +62,6 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   public componentWillUnmount() {
     if (this.keyboardDidHideListener) {
-      console.log("Remove keyboard listener");
       this.keyboardDidHideListener.remove();
       // tslint:disable-next-line:no-object-mutation
       this.keyboardDidHideListener = undefined;
@@ -106,20 +104,16 @@ class Pinpad extends React.PureComponent<Props, State> {
   private handlePlaceholderPress = () => this.foldTextInputRef(focusElement);
 
   private handleKeyboardDidHide = () => {
-    console.log("handleKeyboardDidHide");
     this.foldTextInputRef(blurElement);
   };
 
   private handleAppStateChange = (newAppStateStatus: AppStateStatus) => {
     if (newAppStateStatus === "active") {
-      console.log("Handling active");
       InteractionManager.runAfterInteractions(() => {
         this.foldTextInputRef(focusElement);
       });
     } else {
-      console.log("Handling background");
       if (this.keyboardDidHideListener) {
-        console.log("Remove keyboard listener");
         this.keyboardDidHideListener.remove();
         // tslint:disable-next-line:no-object-mutation
         this.keyboardDidHideListener = undefined;
@@ -130,9 +124,7 @@ class Pinpad extends React.PureComponent<Props, State> {
   };
 
   private handleFocus = () => {
-    console.log("Handling focus");
     if (!this.keyboardDidHideListener) {
-      console.log("Add keyboard listener");
       // tslint:disable-next-line:no-object-mutation
       this.keyboardDidHideListener = Keyboard.addListener(
         "keyboardDidHide",
@@ -172,13 +164,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           value={this.state.value}
           onChangeText={this.handleChangeText}
           maxLength={PIN_LENGTH}
-          onFocus={() => {
-            console.log("onFocus");
-            this.handleFocus();
-          }}
-          onBlur={() => {
-            console.log("onBlur");
-          }}
+          onFocus={this.handleFocus}
         />
       </React.Fragment>
     );
