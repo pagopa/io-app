@@ -107,5 +107,7 @@ export function walletHasFavoriteAvailablePsp(
 export const cleanTransactionDescription = (description: string): string => {
   const descriptionParts = description.split("/TXT/");
 
-  return descriptionParts[descriptionParts.length - 1].trim();
+  return descriptionParts.length > 1
+    ? descriptionParts[descriptionParts.length - 1].trim()
+    : "";
 };
