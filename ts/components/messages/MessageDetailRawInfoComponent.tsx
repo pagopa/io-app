@@ -98,6 +98,11 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
                   )}: `}</Text>
                   {service.value.service_name}
                 </Text>
+
+                <Text>
+                  <Text bold={true}>ID: </Text>
+                  {message.id}
+                </Text>
               </React.Fragment>
             )}
           </View>
