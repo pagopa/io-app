@@ -116,20 +116,22 @@ class Pinpad extends React.PureComponent<Props, State> {
       this.foldTextInputRef(focusElement);
     } else {
       console.log("Handling background");
-      this.clear();
       this.foldTextInputRef(blurElement);
+      this.clear();
     }
   };
 
   private handleFocus = () => {
     console.log("Handling focus");
     if (!this.keyboardDidHideListener) {
-      console.log("Add keyboard listener");
-      // tslint:disable-next-line:no-object-mutation
-      this.keyboardDidHideListener = Keyboard.addListener(
-        "keyboardDidHide",
-        this.handleKeyboardDidHide
-      );
+      setTimeout(() => {
+        console.log("Add keyboard listener");
+        // tslint:disable-next-line:no-object-mutation
+        this.keyboardDidHideListener = Keyboard.addListener(
+          "keyboardDidHide",
+          this.handleKeyboardDidHide
+        );
+      }, 750);
     }
   };
 
