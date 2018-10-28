@@ -229,7 +229,7 @@ export function BackendClient(
   return {
     getSession: createFetchRequestForApi(getSessionT, options),
     getService: createFetchRequestForApi(getServiceT, options),
-    getServices: createFetchRequestForApi(getVisibleServicesT, options),
+    getVisibleServices: createFetchRequestForApi(getVisibleServicesT, options),
     getMessages: createFetchRequestForApi(getMessagesT, options),
     getMessage: createFetchRequestForApi(getMessageT, options),
     getProfile: createFetchRequestForApi(getProfileT, options),

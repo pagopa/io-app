@@ -26,6 +26,7 @@ global:
   actions:
     retry: An error occurred, please retry
   remoteStates:
+    loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
 locales:

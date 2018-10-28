@@ -27,6 +27,7 @@ global:
   actions:
     retry: Si è verificato un errore, si prega di riprovare
   remoteStates:
+    loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
 locales:

@@ -9,6 +9,7 @@ import I18n from "../../i18n";
 import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
@@ -16,7 +17,7 @@ import MessageCTABar from "./MessageCTABar";
 type OwnProps = {
   message: MessageWithContentPO;
   messageUIStates: MessageUIStates;
-  service?: ServicePublic;
+  service: pot.Pot<ServicePublic, Error>;
   onItemPress?: (messageId: string) => void;
 };
 
@@ -89,9 +90,10 @@ export class MessageListItemComponent extends React.PureComponent<
     const { message, messageUIStates, service, onItemPress } = this.props;
 
     // TODO: Extract this to external file
-    const uiService = service
-      ? `${service.organization_name} - ${service.department_name}`
-      : I18n.t("messages.unknownSender");
+    const uiService = pot.getOrElse(
+      pot.map(service, s => `${s.organization_name} - ${s.department_name}`),
+      I18n.t("messages.unknownSender")
+    );
 
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date

@@ -6,6 +6,7 @@ import { Col, Grid } from "react-native-easy-grid";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -16,7 +17,7 @@ import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service?: ServicePublic;
+  service: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
 
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
 /**
  * A component to render the message detail.
  */
-class MessageDetailComponent extends React.PureComponent<Props, never> {
+class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
     const { message, service, onServiceLinkPress } = this.props;
 
@@ -62,19 +63,19 @@ class MessageDetailComponent extends React.PureComponent<Props, never> {
       <View>
         <View style={styles.headerContainer}>
           {/* Service */}
-          {service && (
+          {pot.isSome(service) && (
             <Grid style={styles.serviceContainer}>
               <Col>
-                <H4>{service.organization_name}</H4>
+                <H4>{service.value.organization_name}</H4>
                 <H6 link={true} onPress={onServiceLinkPress}>
-                  {service.service_name}
+                  {service.value.service_name}
                 </H6>
               </Col>
               <Col style={{ width: 60 }}>
                 <TouchableOpacity onPress={onServiceLinkPress}>
                   <MultiImage
                     style={{ width: 60, height: 60 }}
-                    source={logosForService(service)}
+                    source={logosForService(service.value)}
                   />
                 </TouchableOpacity>
               </Col>

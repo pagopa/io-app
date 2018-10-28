@@ -10,15 +10,21 @@ import {
   serviceIdsByOrganizationFiscalCodeReducer,
   ServiceIdsByOrganizationFiscalCodeState
 } from "./servicesByOrganizationFiscalCode";
+import {
+  visibleServicesReducer,
+  VisibleServicesState
+} from "./visibleServices";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
+  visible: VisibleServicesState;
 }>;
 
 const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
-  byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer
+  byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
+  visible: visibleServicesReducer
 });
 
 export default reducer;

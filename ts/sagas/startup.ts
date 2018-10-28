@@ -7,6 +7,7 @@ import {
   fork,
   put,
   select,
+  takeEvery,
   takeLatest
 } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
@@ -18,6 +19,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
+import { loadMessageWithRelationsAction } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
@@ -25,6 +27,10 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
+import {
+  loadServiceRequest,
+  loadVisibleServicesRequest
+} from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -50,11 +56,13 @@ import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
+import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
+import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
-import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchWalletSaga } from "./wallet";
@@ -62,7 +70,7 @@ import { watchWalletSaga } from "./wallet";
 /**
  * Handles the application startup and the main application logic loop
  */
-// tslint:disable-next-line:cognitive-complexity
+// tslint:disable-next-line:cognitive-complexity no-big-function
 function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -206,19 +214,30 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Note that the following sagas will be automatically cancelled each time
   // this parent saga gets restarted.
 
+  yield takeEvery(
+    getType(loadServiceRequest),
+    loadServiceRequestHandler,
+    backendClient.getService
+  );
+
+  yield takeEvery(
+    getType(loadVisibleServicesRequest),
+    loadVisibleServicesRequestHandler,
+    backendClient.getVisibleServices
+  );
+
   // Load messages when requested
   yield fork(
     watchMessagesLoadOrCancelSaga,
     backendClient.getMessages,
-    backendClient.getMessage,
-    backendClient.getService
+    backendClient.getMessage
   );
 
   // Load message and related entities (ex. the sender service)
-  yield fork(
-    watchLoadMessageWithRelationsSaga,
-    backendClient.getMessage,
-    backendClient.getService
+  yield takeEvery(
+    getType(loadMessageWithRelationsAction),
+    loadMessageWithRelationsSaga,
+    backendClient.getMessage
   );
 
   // Watch for the app going to background/foreground

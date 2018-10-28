@@ -2,37 +2,49 @@
  * Action types and action creator related to Services.
  */
 
-import { TypeofApiResponse } from "italia-ts-commons/lib/requests";
-import {
-  ActionType,
-  createAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { GetVisibleServicesT } from "../../../definitions/backend/requestTypes";
+import { ServiceList } from "../../../definitions/backend/ServiceList";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
-export const loadServicesRequest = createStandardAction(
-  "SERVICES_LOAD_REQUEST"
+//
+// load visible services
+//
+
+export const loadVisibleServicesRequest = createStandardAction(
+  "VISIBLE_SERVICES_LOAD_REQUEST"
 )();
 
-export const loadServicesSuccess = createStandardAction(
-  "SERVICES_LOAD_SUCCESS"
-)<TypeofApiResponse<GetVisibleServicesT>>();
+export const loadVisibleServicesSuccess = createStandardAction(
+  "VISIBLE_SERVICES_LOAD_SUCCESS"
+)<ServiceList["items"]>();
 
-export const loadServicesFailure = createStandardAction(
-  "SERVICES_LOAD_FAILURE"
+export const loadVisibleServicesFailure = createStandardAction(
+  "VISIBLE_SERVICES_LOAD_FAILURE"
 )();
+
+//
+// load single service
+//
+
+export const loadServiceRequest = createStandardAction("SERVICE_LOAD_REQUEST")<
+  string
+>();
 
 export const loadServiceSuccess = createStandardAction("SERVICE_LOAD_SUCCESS")<
   ServicePublic
 >();
 
-export const loadServiceFailure = createAction(
-  "SERVICE_LOAD_FAILURE",
-  resolve => (error: Error) => resolve(error, { error: true })
-);
+export const loadServiceFailure = createStandardAction("SERVICE_LOAD_FAILURE")<
+  string
+>();
 
 export type ServicesActions = ActionType<
-  typeof loadServiceSuccess | typeof loadServiceFailure
+  // tslint:disable-next-line:max-union-size
+  | typeof loadVisibleServicesRequest
+  | typeof loadVisibleServicesSuccess
+  | typeof loadVisibleServicesFailure
+  | typeof loadServiceRequest
+  | typeof loadServiceSuccess
+  | typeof loadServiceFailure
 >;
