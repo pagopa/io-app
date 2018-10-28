@@ -113,9 +113,17 @@ class Pinpad extends React.PureComponent<Props, State> {
   private handleAppStateChange = (newAppStateStatus: AppStateStatus) => {
     if (newAppStateStatus === "active") {
       console.log("Handling active");
-      this.foldTextInputRef(focusElement);
+      InteractionManager.runAfterInteractions(() => {
+        this.foldTextInputRef(focusElement);
+      });
     } else {
       console.log("Handling background");
+      if (this.keyboardDidHideListener) {
+        console.log("Remove keyboard listener");
+        this.keyboardDidHideListener.remove();
+        // tslint:disable-next-line:no-object-mutation
+        this.keyboardDidHideListener = undefined;
+      }
       this.foldTextInputRef(blurElement);
       this.clear();
     }
@@ -124,24 +132,12 @@ class Pinpad extends React.PureComponent<Props, State> {
   private handleFocus = () => {
     console.log("Handling focus");
     if (!this.keyboardDidHideListener) {
-      setTimeout(() => {
-        console.log("Add keyboard listener");
-        // tslint:disable-next-line:no-object-mutation
-        this.keyboardDidHideListener = Keyboard.addListener(
-          "keyboardDidHide",
-          this.handleKeyboardDidHide
-        );
-      }, 750);
-    }
-  };
-
-  private handleBlur = () => {
-    console.log("Handling blur");
-    if (this.keyboardDidHideListener) {
-      console.log("Remove keyboard listener");
-      this.keyboardDidHideListener.remove();
+      console.log("Add keyboard listener");
       // tslint:disable-next-line:no-object-mutation
-      this.keyboardDidHideListener = undefined;
+      this.keyboardDidHideListener = Keyboard.addListener(
+        "keyboardDidHide",
+        this.handleKeyboardDidHide
+      );
     }
   };
 
@@ -182,7 +178,6 @@ class Pinpad extends React.PureComponent<Props, State> {
           }}
           onBlur={() => {
             console.log("onBlur");
-            this.handleBlur();
           }}
         />
       </React.Fragment>
