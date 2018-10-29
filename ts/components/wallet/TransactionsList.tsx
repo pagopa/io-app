@@ -88,7 +88,11 @@ export default class TransactionsList extends React.Component<Props> {
 
   public render(): React.ReactNode {
     if (pot.isLoading(this.props.transactions)) {
-      return <BoxedRefreshIndicator />;
+      return (
+        <BoxedRefreshIndicator
+          caption={<Text>{I18n.t("wallet.transactionsLoadMessage")}</Text>}
+        />
+      );
     }
 
     const transactions = pot.getOrElse(this.props.transactions, []);

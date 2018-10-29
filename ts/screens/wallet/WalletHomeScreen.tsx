@@ -143,7 +143,32 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <View>
         {this.header()}
         <View spacer={true} />
-        <BoxedRefreshIndicator />
+        <BoxedRefreshIndicator
+          caption={
+            <Text style={[WalletStyles.white, styles.inLineSpace]}>
+              {I18n.t("wallet.walletLoadMessage")}
+            </Text>
+          }
+        />
+      </View>
+    );
+  }
+
+  private errorWalletsHeader() {
+    return (
+      <View>
+        {this.header()}
+        <View spacer={true} />
+        <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+          {I18n.t("wallet.walletLoadFailure")}
+        </Text>
+        <View spacer={true} />
+        <Button block={true} danger={true} onPress={this.props.loadWallets}>
+          <Text style={WalletStyles.addPaymentMethodText}>
+            {I18n.t("global.buttons.retry")}
+          </Text>
+        </Button>
+        <View spacer={true} />
       </View>
     );
   }
@@ -161,9 +186,11 @@ class WalletHomeScreen extends React.Component<Props, never> {
     const wallets = pot.getOrElse(potWallets, []);
     const headerContents = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
-      : wallets.length > 0
-        ? this.withCardsHeader()
-        : this.withoutCardsHeader();
+      : pot.isError(potWallets)
+        ? this.errorWalletsHeader()
+        : wallets.length > 0
+          ? this.withCardsHeader()
+          : this.withoutCardsHeader();
 
     return (
       <WalletLayout
@@ -179,17 +206,37 @@ class WalletHomeScreen extends React.Component<Props, never> {
             />
           )
         }
-        onNewPaymentPress={this.props.navigateToPaymentScanQrCode}
+        onNewPaymentPress={
+          pot.isSome(potWallets)
+            ? this.props.navigateToPaymentScanQrCode
+            : undefined
+        }
         allowGoBack={false}
       >
-        <TransactionsList
-          title={I18n.t("wallet.latestTransactions")}
-          totalAmount={I18n.t("wallet.total")}
-          transactions={potTransactions}
-          navigateToTransactionDetails={
-            this.props.navigateToTransactionDetailsScreen
-          }
-        />
+        {pot.isError(potTransactions) ? (
+          <React.Fragment>
+            <View spacer={true} />
+            <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+              {I18n.t("wallet.transactionsLoadFailure")}
+            </Text>
+            <Button
+              block={true}
+              danger={true}
+              onPress={this.props.loadTransactions}
+            >
+              <Text>{I18n.t("global.buttons.retry")}</Text>
+            </Button>
+          </React.Fragment>
+        ) : (
+          <TransactionsList
+            title={I18n.t("wallet.latestTransactions")}
+            totalAmount={I18n.t("wallet.total")}
+            transactions={potTransactions}
+            navigateToTransactionDetails={
+              this.props.navigateToTransactionDetailsScreen
+            }
+          />
+        )}
       </WalletLayout>
     );
   }

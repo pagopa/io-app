@@ -233,6 +233,10 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
+  walletLoadMessage: Loading payment methods...
+  walletLoadFailure: Loading payment methods has failed!
+  transactionsLoadMessage: Loading transactions...
+  transactionsLoadFailure: Loading transactions has failed!
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
