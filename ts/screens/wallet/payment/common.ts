@@ -68,22 +68,23 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
   initialAmount: AmountInEuroCents,
   verifica: PaymentRequestsGetResponse,
   idPayment: string,
-  maybeWallet: Option<Wallet>,
+  maybeSelectedWallet: Option<Wallet>,
   // NO_PSPS_AVAILABLE: the wallet cannot be used for this payment
   // FETCH_PSPS_FAILURE: fetching the PSPs for this wallet has failed
   onFailure: (reason: "NO_PSPS_AVAILABLE" | "FETCH_PSPS_FAILURE") => void
 ) => {
-  if (maybeWallet.isSome()) {
-    const wallet = maybeWallet.value;
-    // the user has selected a favorite wallet, so no need to ask to
-    // select one - we can ask pagopa for the PSPs that we can use with this
-    // wallet.
+  if (maybeSelectedWallet.isSome()) {
+    const selectedWallet = maybeSelectedWallet.value;
+    // the user has selected a wallet (either because it was the favourite one
+    // or because he just added a new card he wants to use for the payment), so
+    // there's no need to ask to select a wallet - we can ask pagopa for the
+    // PSPs that we can use with this wallet.
     dispatch(
       paymentFetchPspsForPaymentIdRequest({
         idPayment,
         // provide the idWallet to the getPsps request only if the wallet has
         // a preferred PSP
-        idWallet: wallet.psp ? wallet.idWallet : undefined,
+        idWallet: selectedWallet.psp ? selectedWallet.idWallet : undefined,
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
           // filter PSPs for the current locale only (the list will contain
@@ -92,7 +93,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
           if (psps.length === 0) {
             // this payment method cannot be used!
             onFailure("NO_PSPS_AVAILABLE");
-          } else if (walletHasFavoriteAvailablePsp(wallet, psps)) {
+          } else if (walletHasFavoriteAvailablePsp(selectedWallet, psps)) {
             // The user already selected a psp in the past for this wallet, and
             // that PSP can be used for this payment, in this case we can
             // proceed to the confirmation screen
@@ -103,7 +104,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
                 verifica,
                 idPayment,
                 psps,
-                wallet: maybeWallet.value
+                wallet: maybeSelectedWallet.value
               })
             );
           } else if (psps.length === 1) {
@@ -112,7 +113,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
             // select it
             dispatchUpdatePspForWalletAndConfirm(dispatch)(
               psps[0].id,
-              wallet,
+              selectedWallet,
               rptId,
               initialAmount,
               verifica,
@@ -126,7 +127,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
                     rptId,
                     initialAmount,
                     verifica,
-                    wallet,
+                    wallet: selectedWallet,
                     psps,
                     idPayment
                   })
@@ -140,7 +141,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
                 rptId,
                 initialAmount,
                 verifica,
-                wallet,
+                wallet: selectedWallet,
                 psps,
                 idPayment
               })

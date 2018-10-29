@@ -26,7 +26,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   deleteWalletRequest,
-  setFavoriteWallet
+  setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 type ReduxMappedStateProps = Readonly<{
   wallets: ReadonlyArray<Wallet>;
   isLoading: boolean;
-  favoriteWallet?: number;
+  favoriteWallet: ReturnType<typeof getFavoriteWalletId>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -63,7 +63,10 @@ type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 class WalletsScreen extends React.Component<Props> {
   private renderWallet = (info: ListRenderItemInfo<Wallet>) => {
     const item = info.item;
-    const isFavorite = this.props.favoriteWallet === item.idWallet;
+    const isFavorite = pot.map(
+      this.props.favoriteWallet,
+      _ => _ === item.idWallet
+    );
     return (
       <CardComponent
         type="Full"
@@ -123,7 +126,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   return {
     wallets: pot.getOrElse(potWallets, []),
     isLoading: pot.isLoading(potWallets),
-    favoriteWallet: getFavoriteWalletId(state).toUndefined()
+    favoriteWallet: getFavoriteWalletId(state)
   };
 };
 
@@ -131,7 +134,7 @@ const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
-    dispatch(setFavoriteWallet(walletId)),
+    dispatch(setFavouriteWalletRequest(walletId)),
   navigateToWalletAddPaymentMethod: () =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   deleteWallet: (walletId: number) =>

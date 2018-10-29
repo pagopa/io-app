@@ -47,7 +47,10 @@ import {
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess
+  payCreditCardVerificationSuccess,
+  setFavouriteWalletFailure,
+  setFavouriteWalletRequest,
+  setFavouriteWalletSuccess
 } from "../../store/actions/wallet/wallets";
 import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
@@ -97,6 +100,35 @@ export function* fetchTransactionsRequestHandler(
     }
   } catch {
     yield put(fetchTransactionsFailure(new Error("Generic error")));
+  }
+}
+
+/**
+ * Handles setFavouriteWalletRequest
+ */
+export function* setFavouriteWalletRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof setFavouriteWalletRequest>
+): Iterator<Effect> {
+  const favouriteWalletId = action.payload;
+  if (favouriteWalletId === undefined) {
+    // FIXME: currently there is no way to unset a favourite wallet
+    return;
+  }
+  const setFavouriteWallet = (pagoPaToken: PaymentManagerToken) =>
+    pagoPaClient.favouriteWallet(pagoPaToken, favouriteWalletId);
+
+  const request = pmSessionManager.withRefresh(setFavouriteWallet);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response !== undefined && response.status === 200) {
+      yield put(setFavouriteWalletSuccess(response.value.data));
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(setFavouriteWalletFailure(Error()));
   }
 }
 

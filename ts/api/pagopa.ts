@@ -32,6 +32,8 @@ import {
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteWalletUsingDELETET,
+  favouriteWalletUsingPOSTDecoder,
+  FavouriteWalletUsingPOSTT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getTransactionsUsingGETDecoder,
@@ -157,6 +159,26 @@ const updateWalletPsp: (
     ApiHeaderJson
   ),
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
+});
+
+type FavouriteWalletUsingPOSTTExtra = MapResponseType<
+  FavouriteWalletUsingPOSTT,
+  200,
+  WalletResponse
+>;
+
+const favouriteWallet: (
+  pagoPaToken: PaymentManagerToken
+) => FavouriteWalletUsingPOSTTExtra = pagoPaToken => ({
+  method: "post",
+  url: ({ id }) => `/v1/wallet/${id}/actions/favourite`,
+  query: () => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(
+    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ApiHeaderJson
+  ),
+  response_decoder: favouriteWalletUsingPOSTDecoder(WalletResponse)
 });
 
 // Remove this patch once SIA has fixed the spec.
@@ -293,6 +315,13 @@ export function PaymentManagerClient(
       createFetchRequestForApi(updateWalletPsp(pagoPaToken), options)({
         id,
         walletRequest
+      }),
+    favouriteWallet: (
+      pagoPaToken: PaymentManagerToken,
+      id: TypeofApiParams<FavouriteWalletUsingPOSTTExtra>["id"]
+    ) =>
+      createFetchRequestForApi(favouriteWallet(pagoPaToken), options)({
+        id
       }),
     postPayment: (
       pagoPaToken: PaymentManagerToken,

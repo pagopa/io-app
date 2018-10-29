@@ -85,7 +85,7 @@ type Props = ReduxMappedStateProps &
   OwnProps;
 
 type State = Readonly<{
-  favorite: boolean;
+  setAsFavourite: boolean;
 }>;
 
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
@@ -97,14 +97,14 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      favorite: true
+      setAsFavourite: true
     };
   }
 
   // It supports switch state changes
-  private onValueChange = () => {
+  private onSetFavouriteValueChange = () => {
     this.setState(prevState => ({
-      favorite: !prevState.favorite
+      setAsFavourite: !prevState.setAsFavourite
     }));
   };
 
@@ -129,7 +129,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       onPress: () =>
         this.props.runStartOrResumeAddCreditCardSaga(
           creditCard,
-          this.state.favorite
+          this.state.setAsFavourite
         ),
       title: isInPayment
         ? I18n.t("wallet.saveCardInPayment.save")
@@ -191,8 +191,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             </Col>
             <Col size={1}>
               <Switch
-                value={this.state.favorite}
-                onValueChange={this.onValueChange}
+                value={this.state.setAsFavourite}
+                onValueChange={this.onSetFavouriteValueChange}
               />
             </Col>
           </Grid>
@@ -339,7 +339,11 @@ const mergeProps = (
     ? () => {
         dispatchProps.runStartOrResumeAddCreditCardSaga(
           ownProps.navigation.getParam("creditCard"),
-          false // FIXME: unfortunately we can't access the internal component state from here?
+          // FIXME: Unfortunately we can't access the internal component state
+          //        from here so we cannot know if the user wants to set this
+          //        card as favourite, we pass true anyway since it's the
+          //        default.
+          true
         );
       }
     : undefined;

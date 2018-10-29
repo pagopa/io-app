@@ -91,9 +91,17 @@ export const deleteWalletFailure = createStandardAction(
   "DELETE_WALLET_FAILURE"
 )<PayloadForAction<typeof fetchWalletsFailure>>();
 
-export const setFavoriteWallet = createStandardAction("SET_FAVORITE_WALLET")<
-  number | undefined
->();
+export const setFavouriteWalletRequest = createStandardAction(
+  "SET_FAVOURITE_WALLET_REQUEST"
+)<number | undefined>();
+
+export const setFavouriteWalletSuccess = createStandardAction(
+  "SET_FAVOURITE_WALLET_SUCCESS"
+)<Wallet>();
+
+export const setFavouriteWalletFailure = createStandardAction(
+  "SET_FAVOURITE_WALLET_FAILURE"
+)<Error>();
 
 type StartOrResumeAddCreditCardSagaPayload = Readonly<{
   creditCard: CreditCard;
@@ -114,7 +122,9 @@ export type WalletsActions =
   | ActionType<typeof deleteWalletRequest>
   | ActionType<typeof deleteWalletSuccess>
   | ActionType<typeof deleteWalletFailure>
-  | ActionType<typeof setFavoriteWallet>
+  | ActionType<typeof setFavouriteWalletRequest>
+  | ActionType<typeof setFavouriteWalletSuccess>
+  | ActionType<typeof setFavouriteWalletFailure>
   | ActionType<typeof runStartOrResumeAddCreditCardSaga>
   | ActionType<typeof addWalletCreditCardInit>
   | ActionType<typeof addWalletCreditCardRequest>

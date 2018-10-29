@@ -16,7 +16,6 @@ import { navigateToTransactionDetailsScreen } from "../../store/actions/navigati
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
-import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
@@ -26,7 +25,6 @@ type NavigationParams = Readonly<{
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type ReduxMappedStateProps = Readonly<{
-  favoriteWalletId?: number;
   transactions: ReturnType<ReturnType<typeof getWalletTransactionsCreator>>;
 }>;
 
@@ -81,7 +79,6 @@ const mapStateToProps = (
   state: GlobalState,
   ownProps: OwnProps
 ): ReduxMappedStateProps => ({
-  favoriteWalletId: getFavoriteWalletId(state).toUndefined(),
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state)

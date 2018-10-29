@@ -257,7 +257,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
       pot.isLoading(paymentId) ||
       pot.isLoading(check),
     potVerifica: verifica,
-    maybeFavoriteWallet: getFavoriteWallet(state)
+    maybeFavoriteWallet: pot.toOption(getFavoriteWallet(state))
   };
 };
 

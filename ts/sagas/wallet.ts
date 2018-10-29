@@ -42,7 +42,8 @@ import {
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
-  runStartOrResumeAddCreditCardSaga
+  runStartOrResumeAddCreditCardSaga,
+  setFavouriteWalletRequest
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
 
@@ -67,6 +68,7 @@ import {
   paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
   paymentVerificaRequestHandler,
+  setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
@@ -248,7 +250,10 @@ function* startOrResumeAddCreditCardSaga(
       const maybeAddedWallet = updatedWallets.find(
         _ => _.idWallet === idWallet
       );
-      if (maybeAddedWallet) {
+      if (maybeAddedWallet !== undefined) {
+        if (action.payload.setAsFavorite === true) {
+          yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
+        }
         // signal the completion
         if (action.payload.onSuccess) {
           action.payload.onSuccess(maybeAddedWallet);
@@ -464,6 +469,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(payCreditCardVerificationRequest),
     payCreditCardVerificationRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(setFavouriteWalletRequest),
+    setFavouriteWalletRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
