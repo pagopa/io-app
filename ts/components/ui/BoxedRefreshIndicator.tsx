@@ -11,12 +11,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class BoxedRefreshIndicator extends React.Component {
-  public render() {
-    return (
-      <View style={styles.refreshBox}>
-        <RefreshIndicator />
-      </View>
-    );
-  }
+interface Props {
+  caption?: React.ReactNode;
 }
+
+const BoxedRefreshIndicator: React.SFC<Props> = props => (
+  <View style={styles.refreshBox}>
+    <RefreshIndicator />
+    {props.caption ? props.caption : null}
+  </View>
+);
+
+export default BoxedRefreshIndicator;

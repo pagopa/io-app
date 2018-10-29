@@ -240,6 +240,10 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  walletLoadMessage: Carico i metodi di pagamento...
+  walletLoadFailure: Non è stato possibile caricare i metodi di pagamento.
+  transactionsLoadMessage: Carico lo storico delle transazioni...
+  transactionsLoadFailure: Non è stato possibile caricare lo storico delle transazioni.
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
