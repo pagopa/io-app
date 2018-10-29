@@ -1,7 +1,6 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -31,14 +30,16 @@ import {
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
-  setFavoriteWallet
+  setFavouriteWalletFailure,
+  setFavouriteWalletRequest,
+  setFavouriteWalletSuccess
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
-  favoriteWalletId: Option<number>;
+  favoriteWalletId: pot.Pot<Wallet["idWallet"], Error>;
   creditCardAddWallet: PotFromActions<
     typeof addWalletCreditCardSuccess,
     typeof addWalletCreditCardFailure
@@ -55,7 +56,7 @@ export type WalletsState = Readonly<{
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
-  favoriteWalletId: none,
+  favoriteWalletId: pot.none,
   creditCardAddWallet: pot.none,
   creditCardVerification: pot.none,
   creditCardCheckout3ds: pot.none
@@ -74,8 +75,9 @@ const getWallets = createSelector(getWalletsById, potWx =>
 
 export const getFavoriteWalletId = (state: GlobalState) =>
   state.wallet.wallets.favoriteWalletId;
+
 export const getFavoriteWallet = (state: GlobalState) =>
-  state.wallet.wallets.favoriteWalletId.mapNullable(walletId =>
+  pot.mapNullable(state.wallet.wallets.favoriteWalletId, walletId =>
     pot.toUndefined(
       pot.map(state.wallet.wallets.walletById, wx => wx[walletId])
     )
@@ -121,29 +123,65 @@ const reducer = (
     case getType(deleteWalletRequest):
       return {
         ...state,
+        favoriteWalletId: pot.toLoading(state.favoriteWalletId),
         walletById: pot.toLoading(state.walletById)
       };
 
     case getType(fetchWalletsSuccess):
     case getType(paymentUpdateWalletPspSuccess):
     case getType(deleteWalletSuccess):
-      return {
+      const favouriteWallet = action.payload.find(_ => _.favourite === true);
+      const newState = {
         ...state,
         walletById: pot.some(toIndexed(action.payload, _ => _.idWallet))
       };
+      return favouriteWallet !== undefined
+        ? {
+            ...newState,
+            favoriteWalletId: pot.some(favouriteWallet.idWallet)
+          }
+        : newState;
 
     case getType(fetchWalletsFailure):
     case getType(deleteWalletFailure):
     case getType(paymentUpdateWalletPspFailure):
       return {
         ...state,
+        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload),
         walletById: pot.toError(state.walletById, action.payload)
       };
 
-    case getType(setFavoriteWallet):
+    //
+    // set favourite wallet
+    //
+
+    case getType(setFavouriteWalletRequest):
       return {
         ...state,
-        favoriteWalletId: fromNullable(action.payload)
+        favoriteWalletId:
+          action.payload === undefined
+            ? pot.none
+            : pot.toUpdating(state.favoriteWalletId, action.payload)
+      };
+
+    case getType(setFavouriteWalletSuccess):
+      // On success, we update both the favourite wallet ID and the
+      // corresponding Wallet in walletById.
+      // Note that we don't update the Wallet that was previously the
+      // favourite one.
+      return {
+        ...state,
+        favoriteWalletId: pot.some(action.payload.idWallet),
+        walletById: {
+          ...state.walletById,
+          [action.payload.idWallet]: action.payload
+        }
+      };
+
+    case getType(setFavouriteWalletFailure):
+      return {
+        ...state,
+        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload)
       };
 
     //

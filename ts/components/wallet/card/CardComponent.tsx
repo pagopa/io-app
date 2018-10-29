@@ -14,6 +14,7 @@ import {
 } from "react-native-popup-menu";
 
 import I18n from "../../../i18n";
+import * as pot from "../../../types/pot";
 
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
@@ -33,9 +34,9 @@ interface BaseProps {
 }
 
 interface FullCommonProps extends BaseProps {
-  isFavorite?: boolean;
-  hideMenu?: boolean;
+  isFavorite?: pot.Pot<boolean, Error>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
+  hideMenu?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
 }
@@ -83,8 +84,14 @@ export default class CardComponent extends React.Component<Props> {
     );
 
   private handleFavoritePress = () => {
-    if (this.props.type === "Full" && this.props.onSetFavorite !== undefined) {
-      this.props.onSetFavorite(!this.props.isFavorite);
+    if (
+      this.props.type === "Full" &&
+      this.props.onSetFavorite !== undefined &&
+      this.props.isFavorite !== undefined &&
+      !pot.isLoading(this.props.isFavorite) &&
+      !pot.isUpdating(this.props.isFavorite)
+    ) {
+      this.props.onSetFavorite(!pot.getOrElse(this.props.isFavorite, false));
     }
   };
 
@@ -114,8 +121,16 @@ export default class CardComponent extends React.Component<Props> {
           {!hideFavoriteIcon &&
             isFavorite !== undefined && (
               <IconFont
-                name={isFavorite ? "io-filled-star" : "io-empty-star"}
-                color={variables.brandPrimary}
+                name={
+                  pot.getOrElseWithUpdating(isFavorite, false) === true
+                    ? "io-filled-star"
+                    : "io-empty-star"
+                }
+                color={
+                  pot.isUpdating(isFavorite)
+                    ? variables.brandDarkGray
+                    : variables.brandPrimary
+                }
                 style={styles.paddedIcon}
                 onPress={this.handleFavoritePress}
               />
@@ -137,7 +152,7 @@ export default class CardComponent extends React.Component<Props> {
                     <MenuOption onSelect={this.handleFavoritePress}>
                       <Text bold={true} style={styles.blueText}>
                         {I18n.t(
-                          isFavorite
+                          pot.getOrElseWithUpdating(isFavorite, false) === true
                             ? "cardComponent.unsetFavourite"
                             : "cardComponent.setFavourite"
                         )}
