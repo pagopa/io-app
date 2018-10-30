@@ -19,11 +19,17 @@ import {
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  creditCardCheckout3dsComplete,
   creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
+  fetchCreditCardCheckout3dsTransactionFailure,
+  fetchCreditCardCheckout3dsTransactionRequest,
+  fetchCreditCardCheckout3dsTransactionSuccess,
+  fetchCreditCardUpdatedWalletFailure,
+  fetchCreditCardUpdatedWalletRequest,
+  fetchCreditCardUpdatedWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
@@ -48,9 +54,15 @@ export type WalletsState = Readonly<{
     typeof payCreditCardVerificationSuccess,
     typeof payCreditCardVerificationFailure
   >;
-  creditCardCheckout3ds: PotFromActions<
-    typeof creditCardCheckout3dsSuccess,
-    never
+  creditCardCheckout3dsUrl: pot.Pot<string, never>;
+  creditCardCheckout3dsTransactionId: number | undefined;
+  creditCardCheckout3dsTransaction: PotFromActions<
+    typeof fetchCreditCardCheckout3dsTransactionSuccess,
+    typeof fetchCreditCardCheckout3dsTransactionFailure
+  >;
+  creditCardUpdatedWallet: PotFromActions<
+    typeof fetchCreditCardUpdatedWalletSuccess,
+    typeof fetchCreditCardUpdatedWalletFailure
   >;
 }>;
 
@@ -59,7 +71,10 @@ const WALLETS_INITIAL_STATE: WalletsState = {
   favoriteWalletId: pot.none,
   creditCardAddWallet: pot.none,
   creditCardVerification: pot.none,
-  creditCardCheckout3ds: pot.none
+  creditCardCheckout3dsUrl: pot.none,
+  creditCardCheckout3dsTransactionId: undefined,
+  creditCardCheckout3dsTransaction: pot.none,
+  creditCardUpdatedWallet: pot.none
 };
 
 // selectors
@@ -112,6 +127,7 @@ export const walletsSelector = createSelector(
 const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
+  // tslint:disable-next-line:no-big-function
 ): WalletsState => {
   switch (action.type) {
     //
@@ -193,7 +209,10 @@ const reducer = (
         ...state,
         creditCardAddWallet: pot.none,
         creditCardVerification: pot.none,
-        creditCardCheckout3ds: pot.none
+        creditCardCheckout3dsUrl: pot.none,
+        creditCardCheckout3dsTransactionId: undefined,
+        creditCardCheckout3dsTransaction: pot.none,
+        creditCardUpdatedWallet: pot.none
       };
 
     case getType(addWalletCreditCardRequest):
@@ -249,14 +268,67 @@ const reducer = (
 
       return {
         ...state,
-        creditCardCheckout3ds: pot.someLoading(urlWithToken)
+        creditCardCheckout3dsUrl: pot.someLoading(urlWithToken)
       };
 
-    case getType(creditCardCheckout3dsSuccess):
+    case getType(creditCardCheckout3dsComplete):
       return {
         ...state,
-        creditCardCheckout3ds: pot.some("done")
+        creditCardCheckout3dsUrl: pot.some("done"),
+        creditCardCheckout3dsTransactionId: action.payload
       };
+
+    //
+    // fetchCreditCardCheckout3dsTransaction
+    //
+
+    case getType(fetchCreditCardCheckout3dsTransactionRequest):
+      return {
+        ...state,
+        creditCardCheckout3dsTransaction: pot.noneLoading
+      };
+
+    case getType(fetchCreditCardCheckout3dsTransactionSuccess):
+      return {
+        ...state,
+        creditCardCheckout3dsTransaction: pot.some(action.payload)
+      };
+
+    case getType(fetchCreditCardCheckout3dsTransactionFailure):
+      return {
+        ...state,
+        creditCardCheckout3dsTransaction: pot.noneError(action.payload)
+      };
+
+    //
+    // fetchCreditCardUpdatedWallet
+    //
+
+    case getType(fetchCreditCardUpdatedWalletRequest):
+      return {
+        ...state,
+        creditCardUpdatedWallet: pot.noneLoading
+      };
+
+    case getType(fetchCreditCardUpdatedWalletSuccess):
+      return {
+        ...state,
+        creditCardUpdatedWallet: pot.some(action.payload),
+        walletById: {
+          ...state.walletById,
+          [action.payload.idWallet]: action.payload
+        }
+      };
+
+    case getType(fetchCreditCardUpdatedWalletFailure):
+      return {
+        ...state,
+        creditCardUpdatedWallet: pot.noneError(action.payload)
+      };
+
+    //
+    // default
+    //
 
     default:
       return state;

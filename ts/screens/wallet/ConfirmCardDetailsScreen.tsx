@@ -38,7 +38,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   addWalletCreditCardInit,
-  creditCardCheckout3dsSuccess,
+  creditCardCheckout3dsComplete,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -65,7 +65,7 @@ type ReduxMappedStateProps = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   addWalletCreditCardInit: () => void;
-  creditCardCheckout3dsSuccess: () => void;
+  onCheckout3dsComplete: (transactionId: number) => void;
   runStartOrResumeAddCreditCardSaga: (
     creditCard: CreditCard,
     setAsFavorite: boolean
@@ -210,7 +210,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           {this.props.checkout3dsUrl.isSome() && (
             <Checkout3DsComponent
               url={this.props.checkout3dsUrl.value}
-              onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
+              onComplete={this.props.onCheckout3dsComplete}
             />
           )}
         </Modal>
@@ -223,7 +223,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const {
     creditCardAddWallet,
     creditCardVerification,
-    creditCardCheckout3ds,
+    creditCardCheckout3dsUrl,
+    creditCardCheckout3dsTransaction,
     walletById
   } = state.wallet.wallets;
 
@@ -232,6 +233,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const isLoading =
     pot.isLoading(creditCardAddWallet) ||
     pot.isLoading(creditCardVerification) ||
+    pot.isLoading(creditCardCheckout3dsTransaction) ||
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
@@ -247,8 +249,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   return {
     isLoading,
     error,
-    checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
-      ? pot.toOption(creditCardCheckout3ds)
+    checkout3dsUrl: pot.isLoading(creditCardCheckout3dsUrl)
+      ? pot.toOption(creditCardCheckout3dsUrl)
       : none
   };
 };
@@ -296,8 +298,8 @@ const mapDispatchToProps = (
   };
   return {
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
-    creditCardCheckout3dsSuccess: () =>
-      dispatch(creditCardCheckout3dsSuccess("done")),
+    onCheckout3dsComplete: (transactionId: number) =>
+      dispatch(creditCardCheckout3dsComplete(transactionId)),
     runStartOrResumeAddCreditCardSaga: (
       creditCard: CreditCard,
       setAsFavorite: boolean

@@ -1,11 +1,12 @@
 import { Container } from "native-base";
 import * as React from "react";
 import { NavState, StyleSheet, View, WebView } from "react-native";
+import { getTransactionIdFrom3dsCheckoutUrl } from "../utils/payment";
 import { RefreshIndicator } from "./ui/RefreshIndicator";
 
 type Props = Readonly<{
   url: string;
-  onCheckout3dsSuccess: () => void;
+  onComplete: (transactionId: number) => void;
 }>;
 
 type State = {
@@ -40,14 +41,16 @@ export default class Checkout3DsComponent extends React.Component<
     this.setState({ isWebViewLoading: isLoading });
 
   private navigationStateChanged = (navState: NavState) => {
-    // pagoPA-designated URL for exiting the webview
-    // (visisted when the user taps the "close" button)
-    const exitUrl = "/wallet/loginMethod";
+    // when the transaction is completed, "loading" is false and the url
+    // will end with "/wallet/result?id=XXXX" where XXXX is the transaction ID
+    // for the 3ds checkout transaction - once we have the transaction ID
+    // we can query the PM for the status of the transaction
 
-    if (navState.url !== undefined && navState.url.includes(exitUrl)) {
-      // time to leave, trigger the appropriate action
-      // to let the saga know that it can wrap things up
-      this.props.onCheckout3dsSuccess();
+    if (navState.url !== undefined) {
+      const maybeTransactionId = getTransactionIdFrom3dsCheckoutUrl(
+        navState.url
+      );
+      maybeTransactionId.map(this.props.onComplete);
     }
   };
 

@@ -38,8 +38,12 @@ import {
   GetPspListUsingGETT,
   getTransactionsUsingGETDecoder,
   GetTransactionsUsingGETT,
+  getTransactionUsingGETDecoder,
+  GetTransactionUsingGETT,
   getWalletsUsingGETDecoder,
   GetWalletsUsingGETT,
+  getWalletUsingGETDecoder,
+  GetWalletUsingGETT,
   payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
   payUsingPOSTDecoder,
@@ -85,6 +89,22 @@ const getTransactions: (
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
 });
 
+type GetTransactionUsingGETTExtra = MapResponseType<
+  GetTransactionUsingGETT,
+  200,
+  TransactionResponse
+>;
+
+const getTransaction: (
+  pagoPaToken: PaymentManagerToken
+) => GetTransactionUsingGETTExtra = pagoPaToken => ({
+  method: "get",
+  url: ({ id }) => `/v1/transactions/${id}`,
+  query: () => ({}),
+  headers: AuthorizationBearerHeaderProducer(pagoPaToken), // FIXME: add cache-control: no-cache
+  response_decoder: getTransactionUsingGETDecoder(TransactionResponse)
+});
+
 type GetWalletsUsingGETExtraT = MapResponseType<
   GetWalletsUsingGETT,
   200,
@@ -99,6 +119,22 @@ const getWallets: (
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
   response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
+});
+
+type GetWalletUsingGETExtraT = MapResponseType<
+  GetWalletUsingGETT,
+  200,
+  WalletResponse
+>;
+
+const getWallet: (
+  pagoPaToken: PaymentManagerToken
+) => GetWalletUsingGETExtraT = pagoPaToken => ({
+  method: "get",
+  url: ({ id }) => `/v1/wallet/${id}`,
+  query: () => ({}),
+  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  response_decoder: getWalletUsingGETDecoder(WalletResponse)
 });
 
 const checkPayment: (
@@ -282,8 +318,16 @@ export function PaymentManagerClient(
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
     getWallets: (pagoPaToken: PaymentManagerToken) =>
       createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
+    getWallet: (
+      pagoPaToken: PaymentManagerToken,
+      id: TypeofApiParams<GetWalletUsingGETT>["id"]
+    ) => createFetchRequestForApi(getWallet(pagoPaToken), options)({ id }),
     getTransactions: (pagoPaToken: PaymentManagerToken) =>
       createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
+    getTransaction: (
+      pagoPaToken: PaymentManagerToken,
+      id: TypeofApiParams<GetTransactionUsingGETT>["id"]
+    ) => createFetchRequestForApi(getTransaction(pagoPaToken), options)({ id }),
     checkPayment: (
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]

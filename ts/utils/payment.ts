@@ -1,5 +1,5 @@
-import { fromEither, Option } from "fp-ts/lib/Option";
-
+import { fromEither, none, Option } from "fp-ts/lib/Option";
+import { NumberFromString } from "io-ts-types";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -111,3 +111,19 @@ export const cleanTransactionDescription = (description: string): string => {
     ? descriptionParts[descriptionParts.length - 1].trim()
     : "";
 };
+
+/**
+ * Extracts the resulting transaction ID from the URL of a 3DS checkout flow.
+ *
+ * @see https://www.pivotaltracker.com/story/show/160648765
+ */
+export function getTransactionIdFrom3dsCheckoutUrl(
+  url: string
+): Option<number> {
+  const parts = url.split("/wallet/result?id=");
+  if (parts.length !== 2) {
+    return none;
+  }
+  const transactionId = parts[1];
+  return fromEither(NumberFromString.decode(transactionId));
+}

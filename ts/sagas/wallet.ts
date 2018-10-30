@@ -33,12 +33,16 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  creditCardCheckout3dsComplete,
   creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletRequest,
-  fetchWalletsFailure,
+  fetchCreditCardCheckout3dsTransactionFailure,
+  fetchCreditCardCheckout3dsTransactionRequest,
+  fetchCreditCardCheckout3dsTransactionSuccess,
+  fetchCreditCardUpdatedWalletFailure,
+  fetchCreditCardUpdatedWalletRequest,
+  fetchCreditCardUpdatedWalletSuccess,
   fetchWalletsRequest,
-  fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
@@ -59,6 +63,8 @@ import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
+  fetchCreditCardCheckout3dsTransactionRequestHandler,
+  fetchCreditCardUpdatedWalletRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
   payCreditCardVerificationRequestHandler,
@@ -210,7 +216,7 @@ function* startOrResumeAddCreditCardSaga(
       state.creditCardVerification.value.data.urlCheckout3ds;
     const pagoPaToken = pmSessionManager.get();
 
-    if (pot.isNone(state.creditCardCheckout3ds)) {
+    if (pot.isNone(state.creditCardCheckout3dsUrl)) {
       if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
         yield put(
           creditCardCheckout3dsRequest({
@@ -218,54 +224,85 @@ function* startOrResumeAddCreditCardSaga(
             paymentManagerToken: pagoPaToken.value
           })
         );
-        yield take(getType(creditCardCheckout3dsSuccess));
+
+        yield take(getType(creditCardCheckout3dsComplete));
+        // the 3ds checkout has completed
         // all is ok, continue to the next step
         continue;
       } else {
         // if there is no need for a 3ds checkout, simulate a success checkout
         // to proceed to the next step
-        yield put(creditCardCheckout3dsSuccess("done"));
+        yield put(creditCardCheckout3dsComplete(undefined));
         continue;
       }
     }
 
-    //
-    // Fourth step: verify that the new card exists in the user wallets
-    //
-    // There currently is no way of determining whether the card has been added
-    // successfully from the URL returned in the webview, so the approach here
-    // is to fetch the wallets and look for a wallet with the same ID of the
-    // wallet we just added.
-    // TODO: find a way of finding out the result of the request from the URL
-    //
-    // FIXME: we may want to trigger a success here and leave the fetching of
-    //        the wallets to the caller
-    yield put(fetchWalletsRequest());
-    const fetchWalletsResultAction = yield take([
-      getType(fetchWalletsSuccess),
-      getType(fetchWalletsFailure)
-    ]);
-    if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
-      const updatedWallets = fetchWalletsResultAction.payload;
-      const maybeAddedWallet = updatedWallets.find(
-        _ => _.idWallet === idWallet
-      );
-      if (maybeAddedWallet !== undefined) {
-        if (action.payload.setAsFavorite === true) {
-          yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
-        }
-        // signal the completion
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(maybeAddedWallet);
+    if (
+      state.creditCardCheckout3dsTransactionId !== undefined &&
+      pot.isNone(state.creditCardCheckout3dsTransaction)
+    ) {
+      // fetch the status of the transaction
+      const transactionId = state.creditCardCheckout3dsTransactionId;
+      yield put(fetchCreditCardCheckout3dsTransactionRequest(transactionId));
+
+      // wait for the result
+      const fetchCreditCardCheckout3dsResult = yield take([
+        getType(fetchCreditCardCheckout3dsTransactionSuccess),
+        getType(fetchCreditCardCheckout3dsTransactionFailure)
+      ]);
+
+      if (
+        isActionOf(
+          fetchCreditCardCheckout3dsTransactionSuccess,
+          fetchCreditCardCheckout3dsResult
+        )
+      ) {
+        const {
+          idStatus,
+          accountingStatus
+        } = fetchCreditCardCheckout3dsResult.payload;
+
+        if (idStatus !== 3 || accountingStatus !== 1) {
+          if (action.payload.onFailure) {
+            action.payload.onFailure();
+          }
+          return;
         }
       } else {
-        if (action.payload.onFailure) {
-          action.payload.onFailure();
-        }
+        return;
       }
+
+      continue;
     }
 
-    // TODO: set as favorite
+    if (pot.isNone(state.creditCardUpdatedWallet)) {
+      yield put(fetchCreditCardUpdatedWalletRequest(idWallet));
+
+      const resultAction = yield take([
+        fetchCreditCardUpdatedWalletSuccess,
+        fetchCreditCardUpdatedWalletFailure
+      ]);
+
+      if (isActionOf(fetchCreditCardUpdatedWalletFailure, resultAction)) {
+        if (resultAction.payload === "NOT_FOUND") {
+          if (action.payload.onFailure) {
+            action.payload.onFailure();
+          }
+        }
+        return;
+      }
+      continue;
+    }
+
+    // set as favourite
+    if (action.payload.setAsFavorite === true) {
+      yield put(setFavouriteWalletRequest(idWallet));
+    }
+
+    // signal the completion
+    if (action.payload.onSuccess) {
+      action.payload.onSuccess(state.creditCardUpdatedWallet.value);
+    }
 
     break;
   }
@@ -453,8 +490,22 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
+    getType(fetchCreditCardCheckout3dsTransactionRequest),
+    fetchCreditCardCheckout3dsTransactionRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
     getType(fetchWalletsRequest),
     fetchWalletsRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(fetchCreditCardUpdatedWalletRequest),
+    fetchCreditCardUpdatedWalletRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );

@@ -43,6 +43,12 @@ import {
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
+  fetchCreditCardCheckout3dsTransactionFailure,
+  fetchCreditCardCheckout3dsTransactionRequest,
+  fetchCreditCardCheckout3dsTransactionSuccess,
+  fetchCreditCardUpdatedWalletFailure,
+  fetchCreditCardUpdatedWalletRequest,
+  fetchCreditCardUpdatedWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
@@ -314,6 +320,66 @@ export function* payCreditCardVerificationRequestHandler(
     }
   } catch {
     yield put(payCreditCardVerificationFailure(Error("GENERIC_ERROR")));
+  }
+}
+
+/**
+ * Handles fetchCreditCardCheckout3dsTransactionRequest
+ */
+export function* fetchCreditCardCheckout3dsTransactionRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchCreditCardCheckout3dsTransactionRequest>
+) {
+  const getTransaction = (token: PaymentManagerToken) =>
+    pagoPaClient.getTransaction(token, action.payload);
+  const getTransactionWithRefresh = pmSessionManager.withRefresh(
+    getTransaction
+  );
+  try {
+    const response: SagaCallReturnType<
+      typeof getTransactionWithRefresh
+    > = yield call(getTransactionWithRefresh);
+
+    if (response !== undefined && response.status === 200) {
+      const successAction = fetchCreditCardCheckout3dsTransactionSuccess(
+        response.value.data
+      );
+      yield put(successAction);
+    } else {
+      throw Error();
+    }
+  } catch {
+    const failureAction = fetchCreditCardCheckout3dsTransactionFailure(Error());
+    yield put(failureAction);
+  }
+}
+
+/**
+ * Handles fetchCreditCardUpdatedWalletRequest
+ */
+export function* fetchCreditCardUpdatedWalletRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchCreditCardUpdatedWalletRequest>
+) {
+  const getWallet = (token: PaymentManagerToken) =>
+    pagoPaClient.getWallet(token, action.payload);
+  const getWalletWithRefresh = pmSessionManager.withRefresh(getWallet);
+  try {
+    const response: SagaCallReturnType<
+      typeof getWalletWithRefresh
+    > = yield call(getWalletWithRefresh);
+
+    if (response !== undefined && response.status === 200) {
+      yield put(fetchCreditCardUpdatedWalletSuccess(response.value.data));
+    } else if (response !== undefined && response.status === 404) {
+      yield put(fetchCreditCardUpdatedWalletFailure("NOT_FOUND"));
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(fetchCreditCardUpdatedWalletFailure("GENERIC_ERROR"));
   }
 }
 
