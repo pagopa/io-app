@@ -10,7 +10,11 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
 import { PaymentManagerClient } from "../api/pagopa";
-import { apiUrlPrefix } from "../config";
+import {
+  apiUrlPrefix,
+  fetchPagoPaTimeout,
+  fetchPaymentManagerLongTimeout
+} from "../config";
 
 import {
   paymentAttivaFailure,
@@ -54,7 +58,7 @@ import {
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 
-import { constantPollingFetch, pagopaFetch } from "../utils/fetch";
+import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
 import {
   addWalletCreditCardRequestHandler,
@@ -383,15 +387,15 @@ export function* watchWalletSaga(
 ): Iterator<Effect> {
   // Builds a backend client specifically for the pagopa-proxy endpoints that
   // need a fetch instance that doesn't retry requests and have longer timeout
-  const backendClient = BackendClient(
+  const pagopaNodoClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
-    pagopaFetch()
+    defaultRetryingFetch(fetchPagoPaTimeout, 0)
   );
 
   // Backend client for polling for paymentId - uses an instance of fetch that
   // considers a 404 as a transient error and retries with a constant delay
-  const pollingBackendClient = BackendClient(
+  const pollingPagopaNodoClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
     constantPollingFetch(
@@ -403,7 +407,9 @@ export function* watchWalletSaga(
   // Client for the PagoPA PaymentManager
   const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
     paymentManagerUrlPrefix,
-    walletToken
+    walletToken,
+    defaultRetryingFetch(),
+    defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
   );
 
   // Helper function that requests a new session token from the PaymentManager.
@@ -497,19 +503,19 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentVerificaRequest),
     paymentVerificaRequestHandler,
-    backendClient.getVerificaRpt
+    pagopaNodoClient.getVerificaRpt
   );
 
   yield takeLatest(
     getType(paymentAttivaRequest),
     paymentAttivaRequestHandler,
-    backendClient.postAttivaRpt
+    pagopaNodoClient.postAttivaRpt
   );
 
   yield takeLatest(
     getType(paymentIdPollingRequest),
     paymentIdPollingRequestHandler,
-    pollingBackendClient.getPaymentId
+    pollingPagopaNodoClient.getPaymentId
   );
 
   yield takeLatest(

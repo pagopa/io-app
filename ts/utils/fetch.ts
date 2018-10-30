@@ -14,15 +14,15 @@ import {
 } from "italia-ts-commons/lib/fetch";
 import { TransientError, withRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { fetchMaxRetries, fetchPagoPaTimeout, fetchTimeout } from "../config";
+import { fetchMaxRetries, fetchTimeout } from "../config";
 
 /**
  * Returns a fetch wrapped with timeout and retry logic
  */
 function retryingFetch(
   fetchApi: typeof fetch,
-  timeout: Millisecond = fetchTimeout,
-  maxRetries: number = fetchMaxRetries
+  timeout: Millisecond,
+  maxRetries: number
 ): typeof fetch {
   // a fetch that can be aborted and that gets cancelled after fetchTimeoutMs
   const abortableFetch = AbortableFetch(fetchApi);
@@ -43,28 +43,16 @@ function retryingFetch(
  * retrying strategy - suitable for calling the backend APIs that are supposed
  * to respond quickly.
  */
-export function defaultRetryingFetch() {
+export function defaultRetryingFetch(
+  timeout: Millisecond = fetchTimeout,
+  maxRetries: number = fetchMaxRetries
+) {
   // Override default react-native fetch with whatwg's that supports aborting
   // tslint:disable-next-line:no-object-mutation
   (global as any).AbortController = require("abort-controller");
   require("./whatwg-fetch");
 
-  return retryingFetch((global as any).fetch);
-}
-
-/**
- * A fetch configured with a much longer timeout than usual, suitable for
- * calling the PagoPA "verifica" and "attiva" operations that could take much
- * longer than normal APIs to respond (this depends on the public administration
- * system that PagoPA talks to).
- */
-export function pagopaFetch() {
-  // Override default react-native fetch with whatwg's that supports aborting
-  // tslint:disable-next-line:no-object-mutation
-  (global as any).AbortController = require("abort-controller");
-  require("./whatwg-fetch");
-
-  return retryingFetch((global as any).fetch, fetchPagoPaTimeout);
+  return retryingFetch((global as any).fetch, timeout, maxRetries);
 }
 
 /**
