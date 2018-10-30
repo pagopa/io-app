@@ -55,7 +55,6 @@ import {
   MapResponseType,
   ReplaceRequestParams
 } from "../types/utils";
-import { defaultRetryingFetch, pagopaFetch } from "../utils/fetch";
 
 const getSession: MapResponseType<
   StartSessionUsingGETT,
@@ -270,10 +269,14 @@ const deleteWallet: (
 export function PaymentManagerClient(
   baseUrl: string,
   walletToken: string,
-  fetchApi: typeof fetch = defaultRetryingFetch(),
-  altFetchApi: typeof fetch = pagopaFetch()
+  fetchApi: typeof fetch,
+  altFetchApi: typeof fetch
 ) {
   const options = { baseUrl, fetchApi };
+  const altOptions = {
+    ...options,
+    fetchApi: altFetchApi
+  };
 
   return {
     walletToken,
@@ -288,10 +291,7 @@ export function PaymentManagerClient(
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
     ) =>
-      createFetchRequestForApi(checkPayment(pagoPaToken), {
-        ...options,
-        fetchApi: altFetchApi
-      })({
+      createFetchRequestForApi(checkPayment(pagoPaToken), altOptions)({
         id
       }),
     getPspList: (
@@ -328,7 +328,7 @@ export function PaymentManagerClient(
       id: TypeofApiParams<PayUsingPOSTT>["id"],
       payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
     ) =>
-      createFetchRequestForApi(postPayment(pagoPaToken), options)({
+      createFetchRequestForApi(postPayment(pagoPaToken), altOptions)({
         id,
         payRequest
       }),
@@ -348,7 +348,7 @@ export function PaymentManagerClient(
         PayCreditCardVerificationUsingPOSTT
       >["language"]
     ) =>
-      createFetchRequestForApi(boardPay(pagoPaToken), options)({
+      createFetchRequestForApi(boardPay(pagoPaToken), altOptions)({
         payRequest,
         language
       }),
