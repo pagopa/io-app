@@ -104,7 +104,13 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handlePlaceholderPress = () => this.foldInputRef(focusElement);
 
-  private handleKeyboardDidHide = () => this.foldInputRef(blurElement);
+  private handleKeyboardDidHide = () => {
+    if (this.state.value.length === PIN_LENGTH) {
+      this.foldInputRef(blurElement);
+    } else {
+      this.foldInputRef(focusElement);
+    }
+  };
 
   public clear = () => this.setState({ value: "" });
 
@@ -137,6 +143,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           value={this.state.value}
           onChangeText={this.handleChangeText}
           maxLength={PIN_LENGTH}
+          onLayout={() => this.foldInputRef(focusElement)}
         />
       </React.Fragment>
     );
