@@ -234,9 +234,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         </ScrollView>
 
         <FooterWithButtons
+          type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
-          inlineHalf={true}
         />
       </Container>
     );
