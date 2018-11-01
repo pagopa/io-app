@@ -268,15 +268,15 @@ class TransactionSummaryScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const { verifica, attiva, paymentId, check } = state.wallet.payment;
   return {
-    // error: pot.isError(verifica)
-    //   ? some(verifica.error)
-    //   : pot.isError(attiva)
-    //     ? some(attiva.error)
-    //     : pot.isError(paymentId)
-    //       ? some(paymentId.error)
-    //       : pot.isError(check)
-    //         ? some(undefined)
-    //         : none,
+    error: pot.isError(verifica)
+      ? some(verifica.error)
+      : pot.isError(attiva)
+        ? some(attiva.error)
+        : pot.isError(paymentId)
+          ? some(paymentId.error)
+          : pot.isError(check)
+            ? some(undefined)
+            : none,
     // TODO: show different loading messages for each loading state
     isLoading:
       pot.isLoading(verifica) ||
@@ -284,8 +284,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
       pot.isLoading(paymentId) ||
       pot.isLoading(check),
     potVerifica: verifica,
-    maybeFavoriteWallet: pot.toOption(getFavoriteWallet(state)),
-    error: some("PAYMENT_DUPLICATED")
+    maybeFavoriteWallet: pot.toOption(getFavoriteWallet(state))
   };
 };
 
