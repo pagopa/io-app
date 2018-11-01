@@ -23,6 +23,7 @@ interface Props {
 
 interface State {
   value: string;
+  isFocused: boolean;
 }
 
 /**
@@ -44,18 +45,26 @@ class Pinpad extends React.PureComponent<Props, State> {
         this.foldInputRef(el => {
           if (!el.isFocused()) {
             el.focus();
+            this.setState({
+              isFocused: false
+            });
+          } else {
+            this.setState({
+              isFocused: true
+            });
           }
         });
       }
       this.setFocusWatcher();
-    }, 100);
+    }, 500);
   };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: ""
+      value: "",
+      isFocused: false
     };
 
     this.inputRef = React.createRef();
@@ -132,7 +141,11 @@ class Pinpad extends React.PureComponent<Props, State> {
         </View>
         <TextInput
           ref={this.inputRef}
-          style={styles.input}
+          // style={styles.input}
+          style={{
+            backgroundColor: this.state.isFocused ? "#fff" : "#faa",
+            height: 50
+          }}
           keyboardType="numeric"
           autoFocus={true}
           value={this.state.value}
