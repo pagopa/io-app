@@ -1,6 +1,4 @@
 import { Button, Text, View } from "native-base";
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
