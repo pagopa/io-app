@@ -7,9 +7,9 @@ export default (): Theme => ({
       flexDirection: "row",
       "NativeBase.Button": {
         flex: 1,
+        alignContent: "center",
         ".primary": {
-          flex: 3,
-          alignContent: "center"
+          flex: 2
         }
       }
     }
