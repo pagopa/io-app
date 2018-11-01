@@ -48,7 +48,7 @@ type Props = SingleButton | TwoButtonsInlineHalf | TwoButtonsInlineThird;
 /**
  * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
  */
-class FooterWithButtons extends React.Component<Props, never> {
+export default class FooterWithButtons extends React.Component<Props, never> {
   private renderRightButton() {
     if (this.props.type === "SingleButton") {
       return null;
@@ -92,9 +92,3 @@ class FooterWithButtons extends React.Component<Props, never> {
     );
   }
 }
-
-export default connectStyle(
-  "UIComponent.FooterWithButtons",
-  {},
-  mapPropsToStyleNames
-)(FooterWithButtons);
