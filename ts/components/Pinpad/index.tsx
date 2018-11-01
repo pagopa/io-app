@@ -1,12 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import {
-  EmitterSubscription,
-  Keyboard,
-  TextInput,
-  TouchableOpacity
-} from "react-native";
+import { TextInput, TouchableOpacity } from "react-native";
 
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
@@ -35,13 +30,26 @@ interface State {
  */
 class Pinpad extends React.PureComponent<Props, State> {
   private inputRef: React.RefObject<TextInput>;
+  private focusWatcher?: number;
   private onFulfillTimeoutId?: number;
 
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
 
-  private keyboardDidHideListener: EmitterSubscription | undefined;
+  private setFocusWatcher = () => {
+    // tslint:disable-next-line:no-object-mutation
+    this.focusWatcher = setTimeout(() => {
+      if (this.state.value.length < PIN_LENGTH) {
+        this.foldInputRef(el => {
+          if (!el.isFocused()) {
+            el.focus();
+          }
+        });
+      }
+      this.setFocusWatcher();
+    }, 100);
+  };
 
   constructor(props: Props) {
     super(props);
@@ -52,20 +60,15 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     this.inputRef = React.createRef();
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
-    this.keyboardDidHideListener = undefined;
   }
 
   public componentDidMount() {
-    // tslint:disable-next-line no-object-mutation
-    this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      this.handleKeyboardDidHide
-    );
+    this.setFocusWatcher();
   }
 
   public componentWillUnmount() {
-    if (this.keyboardDidHideListener) {
-      this.keyboardDidHideListener.remove();
+    if (this.focusWatcher) {
+      clearTimeout(this.focusWatcher);
     }
 
     if (this.onFulfillTimeoutId) {
@@ -103,14 +106,6 @@ class Pinpad extends React.PureComponent<Props, State> {
   };
 
   private handlePlaceholderPress = () => this.foldInputRef(focusElement);
-
-  private handleKeyboardDidHide = () => {
-    if (this.state.value.length === PIN_LENGTH) {
-      this.foldInputRef(blurElement);
-    } else {
-      this.foldInputRef(focusElement);
-    }
-  };
 
   public clear = () => this.setState({ value: "" });
 
