@@ -200,7 +200,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         <FooterWithButtons
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
-          inlineOneThird={true}
+          inlineHalf={true}
         />
         <Modal
           animationType="fade"
