@@ -64,6 +64,7 @@ import { watchApplicationActivitySaga } from "./startup/watchApplicationActivity
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
+import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchWalletSaga } from "./wallet";
 
@@ -246,6 +247,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchSessionExpiredSaga);
   // Logout the user by expiring the session
   yield fork(watchLogoutSaga, backendClient.logout);
+  // Watch for requests to reset the PIN.
+  yield fork(watchPinResetSaga);
   // Watch for identification request
   yield fork(watchIdentificationRequest, storedPin);
 
