@@ -49,6 +49,7 @@ import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
+import { cleanTransactionDescription } from "../../../utils/payment";
 import { dispatchPickPspOrConfirm } from "./common";
 
 const basePrimaryButtonProps = {
@@ -123,7 +124,7 @@ ${cap}${city}${province}`;
 
 const formatMdPaymentReason = (p: string): string =>
   `**${I18n.t("wallet.firstTransactionSummary.object")}**\n
-${p}`;
+${cleanTransactionDescription(p)}`;
 
 const formatMdInfoRpt = (r: RptId): string =>
   `**${I18n.t("payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(
@@ -221,7 +222,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
                   : UNKNOWN_AMOUNT
               }
               paymentReason={
-                potVerifica.value.causaleVersamento || UNKNOWN_PAYMENT_REASON
+                potVerifica.value.causaleVersamento
+                  ? cleanTransactionDescription(
+                      potVerifica.value.causaleVersamento
+                    )
+                  : UNKNOWN_PAYMENT_REASON
               }
             />
           ) : (
