@@ -179,7 +179,7 @@ class AddCardScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
+      bordered: true,
       onPress: () => this.props.navigation.goBack(),
       title: I18n.t("global.buttons.back")
     };
@@ -320,7 +320,7 @@ class AddCardScreen extends React.Component<Props, State> {
         </ScrollView>
 
         <FooterWithButtons
-          type="TwoButtonsInlineThird"
+          type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonPropsFromState(this.state)}
         />
