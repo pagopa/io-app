@@ -36,8 +36,12 @@ import AppHeader from "../../components/ui/AppHeader";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
-import { navigateToWalletAddCreditCard } from "../../store/actions/navigation";
+import {
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletAddCreditCard
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { AmountToImporto } from "../../utils/amounts";
 
 type NavigationParams = Readonly<{
@@ -50,6 +54,7 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
+  navigateToTransactionSummary: () => void;
   navigateToAddCreditCard: () => void;
 }>;
 
@@ -84,7 +89,10 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
               currentAmount={AmountToImporto.encode(
                 inPayment.value.verifica.importoSingoloVersamento
               )}
-              recipient={inPayment.value.verifica.enteBeneficiario}
+              recipient={
+                inPayment.value.verifica.enteBeneficiario || UNKNOWN_RECIPIENT
+              }
+              onCancel={this.props.navigateToTransactionSummary}
             />
             <View style={WalletStyles.paddedLR}>
               <View spacer={true} large={true} />
@@ -125,6 +133,17 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => ({
+  navigateToTransactionSummary: () => {
+    const maybeInPayment = props.navigation.getParam("inPayment");
+    maybeInPayment.map(inPayment =>
+      dispatch(
+        navigateToPaymentTransactionSummaryScreen({
+          rptId: inPayment.rptId,
+          initialAmount: inPayment.initialAmount
+        })
+      )
+    );
+  },
   navigateToAddCreditCard: () =>
     dispatch(
       navigateToWalletAddCreditCard({

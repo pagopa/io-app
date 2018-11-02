@@ -44,6 +44,7 @@ import { fetchTransactionsRequest } from "../../../store/actions/wallet/transact
 import { GlobalState } from "../../../store/reducers/types";
 import { Psp, Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
+import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 
@@ -135,7 +136,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <PaymentBannerComponent
             currentAmount={currentAmount}
             paymentReason={paymentReason}
-            recipient={recipient}
+            recipient={recipient || UNKNOWN_RECIPIENT}
+            onCancel={this.props.onCancel}
           />
           <View style={WalletStyles.paddedLR}>
             <View spacer={true} extralarge={true} />
