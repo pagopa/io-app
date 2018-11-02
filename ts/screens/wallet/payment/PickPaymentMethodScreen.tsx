@@ -38,6 +38,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 import { Wallet } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
+import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -106,7 +107,8 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           <PaymentBannerComponent
             paymentReason={paymentReason}
             currentAmount={currentAmount}
-            recipient={recipient}
+            recipient={recipient || UNKNOWN_RECIPIENT}
+            onCancel={this.props.navigateToTransactionSummary}
           />
 
           <View style={WalletStyles.paddedLR}>

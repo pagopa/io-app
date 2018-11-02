@@ -5,35 +5,34 @@
 
 import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
-import { UNKNOWN_PAYMENT_REASON, UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 
 type Props = Readonly<{
-  paymentReason?: string;
+  paymentReason: string;
   currentAmount: AmountInEuroCents;
-  recipient?: EnteBeneficiario;
+  recipient: EnteBeneficiario;
+  onCancel: () => void;
 }>;
 
 const PaymentBannerComponent: React.SFC<Props> = props => {
   const currentAmount = formatNumberAmount(
     AmountInEuroCentsFromNumber.encode(props.currentAmount)
   );
-  const paymentReason = props.paymentReason || UNKNOWN_PAYMENT_REASON;
-  const recipient = props.recipient || UNKNOWN_RECIPIENT;
+
   return (
     <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
       <Row>
         <Col size={2}>
           <View spacer={true} />
           <Text bold={true} style={WalletStyles.white}>
-            {paymentReason}
+            {props.paymentReason}
           </Text>
         </Col>
         <Col size={1}>
@@ -49,14 +48,16 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
       <Row>
         <Col size={2}>
           <Text style={WalletStyles.white}>
-            {recipient.denominazioneBeneficiario}
+            {props.recipient.denominazioneBeneficiario}
           </Text>
           <View spacer={true} />
         </Col>
         <Col size={1}>
-          <Text style={[WalletStyles.white, WalletStyles.textRight]}>
-            {I18n.t("global.buttons.cancel").toUpperCase()}
-          </Text>
+          <Button bordered={true} transparent={true} onPress={props.onCancel}>
+            <Text style={[WalletStyles.white, WalletStyles.textRight]}>
+              {I18n.t("global.buttons.cancel").toUpperCase()}
+            </Text>
+          </Button>
           <View spacer={true} />
         </Col>
       </Row>
