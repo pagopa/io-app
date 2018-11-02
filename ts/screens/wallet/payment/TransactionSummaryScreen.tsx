@@ -51,6 +51,12 @@ import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { dispatchPickPspOrConfirm } from "./common";
 
+const basePrimaryButtonProps = {
+  block: true,
+  primary: true,
+  title: I18n.t("wallet.continue")
+};
+
 type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
@@ -134,18 +140,27 @@ class TransactionSummaryScreen extends React.Component<Props> {
     }
   }
 
-  public render(): React.ReactNode {
-    const rptId = this.props.navigation.getParam("rptId");
-    const initialAmount = this.props.navigation.getParam("initialAmount");
+  private handleBackPress = () => this.props.navigation.goBack();
 
-    // when empty, it means we're still loading the verifica response
+  private getSecondaryButtonProps = () => ({
+    block: true,
+    light: true,
+    onPress: this.handleBackPress,
+    title: I18n.t("global.buttons.back")
+  });
+
+  private renderFooterSingleButton() {
+    return (
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={this.getSecondaryButtonProps()}
+      />
+    );
+  }
+
+  private renderFooterButtons() {
     const { potVerifica, maybeFavoriteWallet } = this.props;
 
-    const basePrimaryButtonProps = {
-      block: true,
-      primary: true,
-      title: I18n.t("wallet.continue")
-    };
     const primaryButtonProps =
       pot.isSome(potVerifica) &&
       !(pot.isLoading(potVerifica) || pot.isError(potVerifica))
@@ -163,12 +178,21 @@ class TransactionSummaryScreen extends React.Component<Props> {
             disabled: true
           };
 
-    const secondaryButtonProps = {
-      block: true,
-      light: true,
-      onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("global.buttons.back")
-    };
+    return (
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        leftButton={this.getSecondaryButtonProps()}
+        rightButton={primaryButtonProps}
+      />
+    );
+  }
+
+  public render(): React.ReactNode {
+    const rptId = this.props.navigation.getParam("rptId");
+    const initialAmount = this.props.navigation.getParam("initialAmount");
+
+    // when empty, it means we're still loading the verifica response
+    const { potVerifica } = this.props;
 
     return (
       <Container>
@@ -228,11 +252,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
             <View spacer={true} />
           </View>
         </Content>
-        <FooterWithButtons
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-          inlineOneThird={true}
-        />
+
+        {this.props.error.fold(
+          this.renderFooterButtons(),
+          error =>
+            error === "PAYMENT_DUPLICATED"
+              ? this.renderFooterSingleButton()
+              : this.renderFooterButtons()
+        )}
       </Container>
     );
   }

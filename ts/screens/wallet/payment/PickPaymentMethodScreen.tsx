@@ -142,9 +142,9 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         </Content>
 
         <FooterWithButtons
+          type="TwoButtonsInlineThird"
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
-          inlineOneThird={true}
         />
       </Container>
     );

@@ -34,6 +34,7 @@ class AbortOnboardingModal extends React.PureComponent<Props> {
           </Content>
 
           <FooterWithButtons
+            type="TwoButtonsInlineHalf"
             leftButton={{
               block: true,
               bordered: true,
@@ -46,7 +47,6 @@ class AbortOnboardingModal extends React.PureComponent<Props> {
               onPress: this.props.onConfirm,
               title: I18n.t("global.buttons.continue")
             }}
-            inlineHalf={true}
           />
         </Container>
       </Modal>

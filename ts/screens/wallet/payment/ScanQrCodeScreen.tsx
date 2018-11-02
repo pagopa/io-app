@@ -213,9 +213,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           )}
         </ScrollView>
         <FooterWithButtons
+          type="TwoButtonsInlineThird"
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
-          inlineOneThird={true}
         />
       </Container>
     );
