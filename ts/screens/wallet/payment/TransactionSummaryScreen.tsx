@@ -266,23 +266,35 @@ class TransactionSummaryScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
-  const { verifica, attiva, paymentId, check } = state.wallet.payment;
+  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+
+  const error = pot.isError(verifica)
+    ? some(verifica.error)
+    : pot.isError(attiva)
+      ? some(attiva.error)
+      : pot.isError(paymentId)
+        ? some(paymentId.error)
+        : pot.isError(check) || pot.isError(psps)
+          ? some(undefined)
+          : none;
+
+  // we need to show the spinner when the data is in the loading state
+  // and also while the logic is processing one step's response and
+  // starting the next step's loading request
+  const isLoading =
+    pot.isLoading(verifica) ||
+    pot.isLoading(attiva) ||
+    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    pot.isLoading(paymentId) ||
+    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    pot.isLoading(check) ||
+    (error.isNone() && pot.isSome(check) && pot.isNone(psps)) ||
+    pot.isLoading(psps);
+
   return {
-    error: pot.isError(verifica)
-      ? some(verifica.error)
-      : pot.isError(attiva)
-        ? some(attiva.error)
-        : pot.isError(paymentId)
-          ? some(paymentId.error)
-          : pot.isError(check)
-            ? some(undefined)
-            : none,
+    error,
     // TODO: show different loading messages for each loading state
-    isLoading:
-      pot.isLoading(verifica) ||
-      pot.isLoading(attiva) ||
-      pot.isLoading(paymentId) ||
-      pot.isLoading(check),
+    isLoading,
     potVerifica: verifica,
     maybeFavoriteWallet: pot.toOption(getFavoriteWallet(state))
   };
