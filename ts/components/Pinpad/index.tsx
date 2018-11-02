@@ -23,7 +23,6 @@ interface Props {
 
 interface State {
   value: string;
-  isFocused: boolean;
 }
 
 /**
@@ -45,26 +44,18 @@ class Pinpad extends React.PureComponent<Props, State> {
         this.foldInputRef(el => {
           if (!el.isFocused()) {
             el.focus();
-            this.setState({
-              isFocused: false
-            });
-          } else {
-            this.setState({
-              isFocused: true
-            });
           }
         });
       }
       this.setFocusWatcher();
-    }, 500);
+    }, 200);
   };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: "",
-      isFocused: false
+      value: ""
     };
 
     this.inputRef = React.createRef();
@@ -98,7 +89,9 @@ class Pinpad extends React.PureComponent<Props, State> {
       const isValid = inputValue === this.props.compareWithCode;
 
       if (isValid) {
-        this.foldInputRef(blurElement);
+        if (this.focusWatcher) {
+          clearTimeout(this.focusWatcher);
+        }
       } else {
         if (this.props.clearOnInvalid) {
           this.clear();
@@ -135,25 +128,22 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   public render() {
     return (
-      <React.Fragment>
+      <View onLayout={() => this.foldInputRef(blurElement)}>
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <TextInput
           ref={this.inputRef}
-          // style={styles.input}
-          style={{
-            backgroundColor: this.state.isFocused ? "#fff" : "#faa",
-            height: 50
-          }}
+          style={styles.input}
           keyboardType="numeric"
-          autoFocus={true}
+          autoFocus={false}
           value={this.state.value}
           onChangeText={this.handleChangeText}
           maxLength={PIN_LENGTH}
           onLayout={() => this.foldInputRef(focusElement)}
         />
-      </React.Fragment>
+        <TextInput autoFocus={true} style={styles.input} />
+      </View>
     );
   }
 }
