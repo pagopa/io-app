@@ -105,6 +105,10 @@ export function walletHasFavoriteAvailablePsp(
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 export const cleanTransactionDescription = (description: string): string => {
+  if (!description.startsWith("/RF")) {
+    // not a description in the pagopa format, return the description unmodified
+    return description;
+  }
   const descriptionParts = description.split("/TXT/");
 
   return descriptionParts.length > 1
