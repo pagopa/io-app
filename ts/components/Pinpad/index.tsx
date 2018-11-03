@@ -1,5 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { ITuple3, Tuple3 } from "italia-ts-commons/lib/tuples";
+import { Button, Col, Grid, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
   EmitterSubscription,
@@ -102,6 +103,9 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
+  private handlePinDigit = (digit: number) =>
+    this.handleChangeText(`${this.state.value}${digit}`);
+
   private handlePlaceholderPress = () => this.foldInputRef(focusElement);
 
   private handleKeyboardDidHide = () => this.foldInputRef(blurElement);
@@ -123,21 +127,72 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
   };
 
+  private renderPinCol = (
+    digit: number,
+    label: string,
+    handler: (digit: number) => void
+  ) => (
+    <Col>
+      <Button
+        onPress={() => handler(digit)}
+        style={{ height: 65 }}
+        transparent={true}
+        block={true}
+      >
+        <Text
+          style={{
+            color: this.props.activeColor,
+            fontSize: 50,
+            lineHeight: 60
+          }}
+        >
+          {label}
+        </Text>
+      </Button>
+    </Col>
+  );
+
+  private renderPinRow = (
+    digits: ReadonlyArray<
+      ITuple3<number, string, (digit: number) => void> | undefined
+    >
+  ) => (
+    <Row>
+      {digits.map(
+        el => (el ? this.renderPinCol(el.e1, el.e2, el.e3) : <Col />)
+      )}
+    </Row>
+  );
+
   public render() {
     return (
       <React.Fragment>
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
-        <TextInput
-          ref={this.inputRef}
-          style={styles.input}
-          keyboardType="numeric"
-          autoFocus={true}
-          value={this.state.value}
-          onChangeText={this.handleChangeText}
-          maxLength={PIN_LENGTH}
-        />
+        <View spacer={true} large={true} />
+        <Grid>
+          {this.renderPinRow([
+            Tuple3(1, "①", this.handlePinDigit),
+            Tuple3(2, "②", this.handlePinDigit),
+            Tuple3(3, "③", this.handlePinDigit)
+          ])}
+          {this.renderPinRow([
+            Tuple3(4, "④", this.handlePinDigit),
+            Tuple3(5, "⑤", this.handlePinDigit),
+            Tuple3(6, "⑥", this.handlePinDigit)
+          ])}
+          {this.renderPinRow([
+            Tuple3(7, "⑦", this.handlePinDigit),
+            Tuple3(8, "⑧", this.handlePinDigit),
+            Tuple3(9, "⑨", this.handlePinDigit)
+          ])}
+          {this.renderPinRow([
+            undefined,
+            Tuple3(0, "⓪", this.handlePinDigit),
+            Tuple3(0, "✕", this.clear)
+          ])}
+        </Grid>
       </React.Fragment>
     );
   }
