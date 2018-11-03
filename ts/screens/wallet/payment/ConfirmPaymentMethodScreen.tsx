@@ -146,13 +146,6 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
-            <CardComponent
-              wallet={wallet}
-              type="Full"
-              hideMenu={true}
-              hideFavoriteIcon={true}
-            />
-            <View spacer={true} large={true} />
             <Grid>
               <Row>
                 <Col>
@@ -195,6 +188,17 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <H1 style={WalletStyles.textRight}>
                     {formatNumberAmount(totalAmount)}
                   </H1>
+                </Col>
+              </Row>
+              <View spacer={true} />
+              <Row>
+                <Col>
+                  <CardComponent
+                    type="Full"
+                    wallet={wallet}
+                    hideMenu={true}
+                    hideFavoriteIcon={true}
+                  />
                 </Col>
               </Row>
               <Row>
