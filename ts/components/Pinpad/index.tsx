@@ -9,6 +9,8 @@ import {
   TouchableOpacity
 } from "react-native";
 
+import I18n from "../../i18n";
+
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
 
@@ -25,6 +27,7 @@ interface Props {
   compareWithCode?: string;
   inactiveColor: string;
   onFulfill: (code: PinString, isValid: boolean) => void;
+  onCancel?: () => void;
 }
 
 interface State {
@@ -130,7 +133,8 @@ class Pinpad extends React.PureComponent<Props, State> {
   private renderPinCol = (
     digit: number,
     label: string,
-    handler: (digit: number) => void
+    handler: (digit: number) => void,
+    style: "normal" | "small"
   ) => (
     <Col>
       <Button
@@ -142,7 +146,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         <Text
           style={{
             color: this.props.activeColor,
-            fontSize: 50,
+            fontSize: style === "normal" ? 50 : 20,
             lineHeight: 60
           }}
         >
@@ -159,7 +163,17 @@ class Pinpad extends React.PureComponent<Props, State> {
   ) => (
     <Row>
       {digits.map(
-        el => (el ? this.renderPinCol(el.e1, el.e2, el.e3) : <Col />)
+        el =>
+          el ? (
+            this.renderPinCol(
+              el.e1,
+              el.e2,
+              el.e3,
+              el.e2.length > 1 ? "small" : "normal"
+            )
+          ) : (
+            <Col />
+          )
       )}
     </Row>
   );
@@ -188,7 +202,9 @@ class Pinpad extends React.PureComponent<Props, State> {
             Tuple3(9, "⑨", this.handlePinDigit)
           ])}
           {this.renderPinRow([
-            undefined,
+            this.props.onCancel
+              ? Tuple3(0, I18n.t("global.buttons.cancel"), this.props.onCancel)
+              : undefined,
             Tuple3(0, "⓪", this.handlePinDigit),
             Tuple3(0, "✕", this.clear)
           ])}

@@ -169,6 +169,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                 )
               }
               clearOnInvalid={true}
+              onCancel={
+                identificationCancelData
+                  ? onIdentificationCancelHandler
+                  : undefined
+              }
             />
             {renderIdentificationByPinState(identificationByPinState)}
             <View spacer={true} extralarge={true} />
@@ -179,15 +184,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             </Text>
             <View spacer={true} extralarge={true} />
             <View>
-              {identificationCancelData !== undefined && (
-                <Button
-                  block={true}
-                  primary={true}
-                  onPress={onIdentificationCancelHandler}
-                >
-                  <Text>{identificationCancelData.label}</Text>
-                </Button>
-              )}
               {identificationCancelData === undefined && (
                 <Button block={true} primary={true} onPress={onPinResetHandler}>
                   <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
