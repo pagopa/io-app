@@ -273,6 +273,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
 
+  const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
+
   const error = pot.isError(verifica)
     ? some(verifica.error)
     : pot.isError(attiva)
@@ -293,15 +295,18 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
     pot.isLoading(paymentId) ||
     (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (error.isNone() && pot.isSome(check) && pot.isNone(psps)) ||
-    pot.isLoading(psps);
+    (maybeFavoriteWallet.isSome() &&
+      error.isNone() &&
+      pot.isSome(check) &&
+      pot.isNone(psps)) ||
+    (maybeFavoriteWallet.isSome() && pot.isLoading(psps));
 
   return {
     error,
     // TODO: show different loading messages for each loading state
     isLoading,
     potVerifica: verifica,
-    maybeFavoriteWallet: pot.toOption(getFavoriteWallet(state))
+    maybeFavoriteWallet
   };
 };
 
