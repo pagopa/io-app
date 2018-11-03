@@ -79,6 +79,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center"
   },
+  childTwice: {
+    flex: 2
+  },
   parent: {
     flexDirection: "row"
   }
@@ -241,20 +244,20 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             <Button
               style={styles.child}
               block={true}
+              cancel={true}
+              onPress={this.props.onCancel}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </Button>
+            <View hspacer={true} />
+            <Button
+              style={[styles.child, styles.childTwice]}
+              block={true}
               light={true}
               bordered={true}
               onPress={_ => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-            </Button>
-            <View hspacer={true} />
-            <Button
-              style={styles.child}
-              block={true}
-              cancel={true}
-              onPress={this.props.onCancel}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
         </View>
