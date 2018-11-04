@@ -148,7 +148,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
-            <View spacer={true} extralarge={true} />
+            <View spacer={true} />
             <Text
               bold={true}
               alignCenter={true}
@@ -160,6 +160,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
+              buttonType="primary"
               onFulfill={(_: string, __: boolean) =>
                 this.onPinFullfill(
                   _,
@@ -176,20 +177,24 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
             />
             {renderIdentificationByPinState(identificationByPinState)}
-            <View spacer={true} extralarge={true} />
+            <View spacer={true} large={true} />
+
+            {identificationCancelData === undefined && (
+              <React.Fragment>
+                <Button block={true} primary={true} onPress={onPinResetHandler}>
+                  <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+                </Button>
+                <View spacer={true} large={true} />
+              </React.Fragment>
+            )}
+
             <Text alignCenter={true} style={styles.resetPinMessage}>
               {identificationCancelData !== undefined
                 ? I18n.t("identification.resetPinFromProfileMessage")
                 : I18n.t("identification.resetPinMessage")}
             </Text>
+
             <View spacer={true} extralarge={true} />
-            <View>
-              {identificationCancelData === undefined && (
-                <Button block={true} primary={true} onPress={onPinResetHandler}>
-                  <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-                </Button>
-              )}
-            </View>
           </Content>
         </BaseScreenComponent>
       </Modal>

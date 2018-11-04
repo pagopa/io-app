@@ -15,6 +15,7 @@ interface Props {
   clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
+  buttonType: "primary" | "light";
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
 }
@@ -72,16 +73,22 @@ class Pinpad extends React.PureComponent<Props, State> {
   private handlePinDigit = (digit: number) =>
     this.handleChangeText(`${this.state.value}${digit}`);
 
-  public clear = () => this.setState({ value: "" });
+  private deleteLastDigit = () =>
+    this.setState(prev => ({
+      value:
+        prev.value.length > 0
+          ? prev.value.slice(0, prev.value.length - 1)
+          : prev.value
+    }));
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
     const { activeColor, inactiveColor } = this.props;
 
     return isPlaceholderPopulated ? (
-      <Bullet color={activeColor} />
+      <Bullet color={activeColor} key={`baseline-${i}`} />
     ) : (
-      <Baseline color={inactiveColor} />
+      <Baseline color={inactiveColor} key={`baseline-${i}`} />
     );
   };
 
@@ -89,27 +96,37 @@ class Pinpad extends React.PureComponent<Props, State> {
     digit: number,
     label: string,
     handler: (digit: number) => void,
-    style: "normal" | "small"
-  ) => (
-    <Col>
-      <Button
-        onPress={() => handler(digit)}
-        style={{ height: 65 }}
-        transparent={true}
-        block={true}
-      >
-        <Text
-          style={{
-            color: this.props.activeColor,
-            fontSize: style === "normal" ? 50 : 20,
-            lineHeight: 60
-          }}
+    style: "digit" | "label"
+  ) => {
+    return (
+      <Col key={`pinpad-digit-${digit}-${label}`}>
+        <Button
+          onPress={() => handler(digit)}
+          style={style === "digit" ? styles.roundButton : {}}
+          transparent={style === "label"}
+          block={style === "label"}
+          primary={this.props.buttonType === "primary"}
+          light={this.props.buttonType === "light"}
         >
-          {label}
-        </Text>
-      </Button>
-    </Col>
-  );
+          <Text
+            style={[
+              styles.buttonTextBase,
+              style === "digit"
+                ? styles.buttonTextDigit
+                : styles.buttonTextLabel,
+              style === "label" && this.props.buttonType === "primary"
+                ? {
+                    color: "white"
+                  }
+                : {}
+            ]}
+          >
+            {label}
+          </Text>
+        </Button>
+      </Col>
+    );
+  };
 
   private renderPinRow = (
     digits: ReadonlyArray<
@@ -118,20 +135,22 @@ class Pinpad extends React.PureComponent<Props, State> {
   ) => (
     <Row>
       {digits.map(
-        el =>
+        (el, i) =>
           el ? (
             this.renderPinCol(
               el.e1,
               el.e2,
               el.e3,
-              el.e2.length > 1 ? "small" : "normal"
+              el.e2.length === 1 ? "digit" : "label"
             )
           ) : (
-            <Col />
+            <Col key={`pinpad-empty-${i}`} />
           )
       )}
     </Row>
   );
+
+  public clear = () => this.setState({ value: "" });
 
   public render() {
     return (
@@ -139,29 +158,33 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
-        <View spacer={true} large={true} />
+        <View spacer={true} extralarge={true} />
         <Grid>
           {this.renderPinRow([
-            Tuple3(1, "①", this.handlePinDigit),
-            Tuple3(2, "②", this.handlePinDigit),
-            Tuple3(3, "③", this.handlePinDigit)
+            Tuple3(1, "1", this.handlePinDigit),
+            Tuple3(2, "2", this.handlePinDigit),
+            Tuple3(3, "3", this.handlePinDigit)
           ])}
           {this.renderPinRow([
-            Tuple3(4, "④", this.handlePinDigit),
-            Tuple3(5, "⑤", this.handlePinDigit),
-            Tuple3(6, "⑥", this.handlePinDigit)
+            Tuple3(4, "4", this.handlePinDigit),
+            Tuple3(5, "5", this.handlePinDigit),
+            Tuple3(6, "6", this.handlePinDigit)
           ])}
           {this.renderPinRow([
-            Tuple3(7, "⑦", this.handlePinDigit),
-            Tuple3(8, "⑧", this.handlePinDigit),
-            Tuple3(9, "⑨", this.handlePinDigit)
+            Tuple3(7, "7", this.handlePinDigit),
+            Tuple3(8, "8", this.handlePinDigit),
+            Tuple3(9, "9", this.handlePinDigit)
           ])}
           {this.renderPinRow([
             this.props.onCancel
-              ? Tuple3(0, I18n.t("global.buttons.cancel"), this.props.onCancel)
+              ? Tuple3(
+                  0,
+                  I18n.t("global.buttons.cancel").toUpperCase(),
+                  this.props.onCancel
+                )
               : undefined,
-            Tuple3(0, "⓪", this.handlePinDigit),
-            Tuple3(0, "✕", this.clear)
+            Tuple3(10, "0", this.handlePinDigit),
+            Tuple3(11, "<", this.deleteLastDigit)
           ])}
         </Grid>
       </React.Fragment>
