@@ -161,42 +161,46 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             <InstabugButtons />
           </Right>
         </AppHeader>
-        <Content>
-          <H1>
-            {isInPayment
-              ? I18n.t("wallet.saveCardInPayment.title")
-              : I18n.t("wallet.saveCard.title")}
-          </H1>
-          <CardComponent
-            wallet={wallet}
-            type="Full"
-            hideMenu={true}
-            hideFavoriteIcon={true}
-          />
-          <View spacer={true} />
-          <NoticeBox
-            backgroundColor={"#c1f4f2"}
-            iconProps={{
-              name: "io-notice",
-              size: 32
-            }}
-          >
-            <Text bold={true}>{I18n.t("wallet.saveCard.notice")}</Text>
-          </NoticeBox>
-          <View spacer={true} />
-          <Grid>
-            <Col size={5}>
-              <Text bold={true}>{I18n.t("wallet.saveCard.infoTitle")}</Text>
-              <Text>{I18n.t("wallet.saveCard.info")}</Text>
-            </Col>
-            <Col size={1}>
-              <Switch
-                value={this.state.setAsFavourite}
-                onValueChange={this.onSetFavouriteValueChange}
-              />
-            </Col>
-          </Grid>
+
+        <Content noPadded={true}>
+          <View content={true}>
+            <H1>
+              {isInPayment
+                ? I18n.t("wallet.saveCardInPayment.title")
+                : I18n.t("wallet.saveCard.title")}
+            </H1>
+            <CardComponent
+              wallet={wallet}
+              type="Full"
+              hideMenu={true}
+              hideFavoriteIcon={true}
+            />
+            <View spacer={true} />
+            <NoticeBox
+              backgroundColor={"#c1f4f2"}
+              iconProps={{
+                name: "io-notice",
+                size: 32
+              }}
+            >
+              <Text bold={true}>{I18n.t("wallet.saveCard.notice")}</Text>
+            </NoticeBox>
+            <View spacer={true} />
+            <Grid>
+              <Col size={5}>
+                <Text bold={true}>{I18n.t("wallet.saveCard.infoTitle")}</Text>
+                <Text>{I18n.t("wallet.saveCard.info")}</Text>
+              </Col>
+              <Col size={1}>
+                <Switch
+                  value={this.state.setAsFavourite}
+                  onValueChange={this.onSetFavouriteValueChange}
+                />
+              </Col>
+            </Grid>
+          </View>
         </Content>
+
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}

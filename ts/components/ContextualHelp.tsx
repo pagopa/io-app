@@ -76,9 +76,11 @@ export class ContextualHelp extends React.Component<Props, State> {
             </View>
           )}
           {this.state.content && (
-            <Content>
-              <H1>{this.props.title}</H1>
-              {this.state.content}
+            <Content noPadded={true}>
+              <View content={true}>
+                <H1>{this.props.title}</H1>
+                {this.state.content}
+              </View>
             </Content>
           )}
         </Container>
