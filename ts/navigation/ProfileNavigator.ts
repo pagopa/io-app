@@ -1,6 +1,5 @@
 import { createStackNavigator } from "react-navigation";
 
-import TosScreen from "../screens/onboarding/TosScreen";
 import { PrivacyMainScreen } from "../screens/profile/PrivacyMainScreen";
 import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
@@ -19,9 +18,6 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_PRIVACY]: {
       screen: PrivacyScreen
-    },
-    [ROUTES.PROFILE_TOS]: {
-      screen: TosScreen
     }
   },
   {

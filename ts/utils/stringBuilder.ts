@@ -14,7 +14,7 @@ const DISPLAYED_DIGITS = 2;
 export const centsToAmount = (cents: number): number =>
   cents / Math.pow(10, DISPLAYED_DIGITS);
 
-export const buildAmount = (amount: number): string =>
+export const formatNumberAmount = (amount: number): string =>
   `${amount.toFixed(DISPLAYED_DIGITS)} €`;
 
 export const buildFormattedLastUsage = (w: Wallet): string => {

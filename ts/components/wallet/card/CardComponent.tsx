@@ -3,34 +3,25 @@
  * with different appearences based on
  * the props passed
  */
-import color from "color";
-import { none, Option, some } from "fp-ts/lib/Option";
-import { Body, Card, Text } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Platform, StyleSheet, ViewStyle } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { Alert } from "react-native";
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { connect } from "react-redux";
 
 import I18n from "../../../i18n";
-import { Dispatch } from "../../../store/actions/types";
-import {
-  deleteWalletRequest,
-  setFavoriteWallet
-} from "../../../store/actions/wallet/wallets";
-import { GlobalState } from "../../../store/reducers/types";
-import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
-import { makeFontStyleObject } from "../../../theme/fonts";
+import * as pot from "../../../types/pot";
+
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
+import { buildExpirationDate } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
-import CardBody from "./CardBody";
-import Logo, { LogoPosition, shouldRenderLogo } from "./Logo";
+import styles from "./CardComponent.style";
+import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
@@ -38,123 +29,114 @@ import { CreditCardStyles } from "./style";
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
-const styles = StyleSheet.create({
-  cardStyle: {
-    backgroundColor: color(variables.colorWhite)
-      .darken(0.05)
-      .string(),
-    borderRadius: 10,
-    marginTop: 20,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: -1
-  },
-  fullCard: {
-    height: 184
-  },
-  croppedCard: {
-    height: 125
-  },
-  headerCard: {
-    height: 58
-  },
-  flatBottom: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
-  },
-  rotatedCard: {
-    shadowRadius: 10,
-    shadowOpacity: 0.15,
-    transform: [{ perspective: 700 }, { rotateX: "-20deg" }, { scaleX: 0.98 }],
-    marginBottom: -3
-  },
-  blueText: {
-    color: variables.brandPrimary,
-    textAlign: "center",
-    ...makeFontStyleObject(Platform.select)
-  },
-  paddedIcon: {
-    paddingLeft: 10
-  }
-});
-
-type ReduxMappedStateProps = Readonly<{
-  isFavoriteCard: boolean;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  setFavoriteCard: (item: Option<number>) => void;
-  deleteWallet: (walletId: number) => void;
-}>;
-
-type OwnProps = Readonly<{
+interface BaseProps {
   wallet: Wallet;
-  menu?: boolean;
-  favorite?: boolean;
-  lastUsage?: boolean;
-  whiteLine?: boolean;
-  logoPosition?: LogoPosition;
-  mainAction?: (wallet: Wallet) => void;
-  flatBottom?: boolean;
-  headerOnly?: boolean;
-  rotated?: boolean;
-  customStyle?: any;
-  navigateToWalletTransactions: (item: Wallet) => void;
-}>;
+}
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+interface FullCommonProps extends BaseProps {
+  isFavorite?: pot.Pot<boolean, Error>;
+  onSetFavorite?: (willBeFavorite: boolean) => void;
+  hideMenu?: boolean;
+  hideFavoriteIcon?: boolean;
+  onDelete?: () => void;
+}
+
+interface FullProps extends FullCommonProps {
+  type: "Full";
+  mainAction?: (item: Wallet) => void;
+}
+
+interface HeaderProps extends FullCommonProps {
+  type: "Header";
+}
+
+interface PreviewProps extends BaseProps {
+  type: "Preview";
+}
+
+interface PickingProps extends BaseProps {
+  type: "Picking";
+  mainAction: (wallet: Wallet) => void;
+}
+
+type Props = FullProps | HeaderProps | PreviewProps | PickingProps;
 
 /**
  * Credit card component
  */
-class CardComponent extends React.Component<Props> {
-  public static defaultProps: Partial<Props> = {
-    menu: true,
-    favorite: true,
-    lastUsage: true,
-    whiteLine: false,
-    logoPosition: LogoPosition.CENTER,
-    mainAction: undefined,
-    flatBottom: false,
-    headerOnly: false,
-    rotated: false,
-    customStyle: undefined
-  };
+export default class CardComponent extends React.Component<Props> {
+  private handleDeleteSelect = () =>
+    Alert.alert(
+      I18n.t("cardComponent.deleteTitle"),
+      I18n.t("cardComponent.deleteMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.ok"),
+          style: "destructive",
+          onPress: this.props.type === "Full" ? this.props.onDelete : undefined
+        }
+      ],
+      { cancelable: false }
+    );
 
-  private toggleFavorite = () => {
-    if (this.props.isFavoriteCard) {
-      this.props.setFavoriteCard(none);
-    } else {
-      this.props.setFavoriteCard(some(this.props.wallet.idWallet));
+  private handleFavoritePress = () => {
+    if (
+      this.props.type === "Full" &&
+      this.props.onSetFavorite !== undefined &&
+      this.props.isFavorite !== undefined &&
+      !pot.isLoading(this.props.isFavorite) &&
+      !pot.isUpdating(this.props.isFavorite)
+    ) {
+      this.props.onSetFavorite(!pot.getOrElse(this.props.isFavorite, false));
     }
   };
 
-  private topRightCorner() {
+  private handleOnFooterPress = () => {
+    if (
+      (this.props.type === "Full" || this.props.type === "Picking") &&
+      this.props.mainAction
+    ) {
+      this.props.mainAction(this.props.wallet);
+    }
+  };
+
+  private renderTopRightCorner() {
     const { wallet } = this.props;
-    if (this.props.logoPosition === LogoPosition.TOP) {
+
+    if (this.props.type === "Full" || this.props.type === "Header") {
+      const {
+        hideFavoriteIcon,
+        isFavorite,
+        onSetFavorite,
+        onDelete,
+        hideMenu
+      } = this.props;
+
       return (
-        <Col size={2}>
-          {shouldRenderLogo(LogoPosition.TOP, this.props.logoPosition) && (
-            <Logo item={wallet} />
-          )}
-        </Col>
-      );
-    } else {
-      return [
-        <Col key="favorite" size={1}>
-          {this.props.favorite && (
-            <IconFont
-              name={
-                this.props.isFavoriteCard ? "io-filled-star" : "io-empty-star"
-              }
-              color={variables.brandPrimary}
-              style={styles.paddedIcon}
-              onPress={this.toggleFavorite}
-            />
-          )}
-        </Col>,
-        <Col key="menu" size={1}>
-          {this.props.menu && (
+        <React.Fragment>
+          {!hideFavoriteIcon &&
+            isFavorite !== undefined && (
+              <IconFont
+                name={
+                  pot.getOrElseWithUpdating(isFavorite, false) === true
+                    ? "io-filled-star"
+                    : "io-empty-star"
+                }
+                color={
+                  pot.isUpdating(isFavorite)
+                    ? variables.brandDarkGray
+                    : variables.brandPrimary
+                }
+                style={styles.paddedIcon}
+                onPress={this.handleFavoritePress}
+              />
+            )}
+
+          {!hideMenu && (
             <Menu>
               <MenuTrigger>
                 <IconFont
@@ -163,119 +145,146 @@ class CardComponent extends React.Component<Props> {
                   style={styles.paddedIcon}
                 />
               </MenuTrigger>
+
               <MenuOptions>
-                <MenuOption onSelect={this.toggleFavorite}>
-                  <Text bold={true} style={styles.blueText}>
-                    {I18n.t(
-                      this.props.isFavoriteCard
-                        ? "cardComponent.unsetFavourite"
-                        : "cardComponent.setFavourite"
-                    )}
-                  </Text>
-                </MenuOption>
-                <MenuOption
-                  onSelect={() =>
-                    Alert.alert(
-                      I18n.t("cardComponent.deleteTitle"),
-                      I18n.t("cardComponent.deleteMsg"),
-                      [
-                        {
-                          text: I18n.t("global.buttons.cancel"),
-                          style: "cancel"
-                        },
-                        {
-                          text: I18n.t("global.buttons.ok"),
-                          style: "destructive",
-                          onPress: () =>
-                            this.props.deleteWallet(wallet.idWallet)
-                        }
-                      ],
-                      { cancelable: false }
-                    )
-                  }
-                >
-                  <Text bold={true} style={styles.blueText}>
-                    {I18n.t("global.buttons.delete")}
-                  </Text>
-                </MenuOption>
+                {onSetFavorite &&
+                  isFavorite !== undefined && (
+                    <MenuOption onSelect={this.handleFavoritePress}>
+                      <Text bold={true} style={styles.blueText}>
+                        {I18n.t(
+                          pot.getOrElseWithUpdating(isFavorite, false) === true
+                            ? "cardComponent.unsetFavourite"
+                            : "cardComponent.setFavourite"
+                        )}
+                      </Text>
+                    </MenuOption>
+                  )}
+
+                {onDelete && (
+                  <MenuOption onSelect={this.handleDeleteSelect}>
+                    <Text bold={true} style={styles.blueText}>
+                      {I18n.t("global.buttons.delete")}
+                    </Text>
+                  </MenuOption>
+                )}
               </MenuOptions>
             </Menu>
           )}
-        </Col>
-      ];
+        </React.Fragment>
+      );
     }
+
+    if (this.props.type === "Preview") {
+      return (
+        <View style={styles.cardLogo}>
+          <Logo item={wallet} />
+        </View>
+      );
+    }
+
+    return null;
+  }
+
+  private renderBody() {
+    const { type, wallet } = this.props;
+
+    if (type === "Preview") {
+      return null;
+    }
+
+    const expirationDate = buildExpirationDate(wallet);
+
+    return (
+      <View style={[styles.columns, styles.marginTop]}>
+        <View>
+          <Text
+            style={[
+              CreditCardStyles.textStyle,
+              CreditCardStyles.smallTextStyle
+            ]}
+          >
+            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+          </Text>
+
+          <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
+            {wallet.creditCard.holder.toUpperCase()}
+          </Text>
+        </View>
+
+        <View style={styles.cardLogo}>
+          <Logo item={wallet} />
+        </View>
+      </View>
+    );
+  }
+
+  private renderFooterRow() {
+    if (
+      this.props.type === "Preview" ||
+      this.props.type === "Header" ||
+      this.props.mainAction === undefined
+    ) {
+      return null;
+    }
+
+    const isFullCard = this.props.type === "Full";
+
+    const buttonStyle = isFullCard ? styles.transactions : styles.pickPayment;
+    const footerTextStyle = isFullCard
+      ? styles.transactionsText
+      : styles.pickPaymentText;
+    const text = I18n.t(
+      isFullCard ? "cardComponent.detailsAndTransactions" : "cardComponent.pick"
+    );
+
+    return (
+      <Button
+        style={[styles.footerButton, buttonStyle]}
+        block={true}
+        iconRight={true}
+        onPress={this.handleOnFooterPress}
+      >
+        <Text style={footerTextStyle}>{text}</Text>
+        <IconFont
+          name="io-right"
+          size={variables.iconSize2}
+          style={footerTextStyle}
+        />
+      </Button>
+    );
   }
 
   public render(): React.ReactNode {
     const { wallet } = this.props;
 
-    const cardStyles: ReadonlyArray<ViewStyle> = [
-      styles.cardStyle,
-      this.props.headerOnly
-        ? styles.headerCard
-        : this.props.lastUsage
-          ? styles.fullCard
-          : styles.croppedCard,
-      this.props.flatBottom ? styles.flatBottom : {},
-      this.props.rotated ? styles.rotatedCard : {},
-      this.props.customStyle !== undefined ? this.props.customStyle : {}
-    ];
+    const hasFlatBottom =
+      this.props.type === "Preview" || this.props.type === "Header";
+
     return (
-      // tslint:disable-next-line: readonly-array
-      <Card style={cardStyles as ViewStyle[]}>
-        <Body>
-          <Grid>
-            <Col size={1} />
-            <Col size={19}>
-              <Grid>
-                <Row size={1} />
-                <Row size={6} style={CreditCardStyles.rowStyle}>
-                  <Col size={7}>
-                    <Text
-                      style={[
-                        CreditCardStyles.textStyle,
-                        CreditCardStyles.largeTextStyle
-                      ]}
-                    >
-                      {`${HIDDEN_CREDITCARD_NUMBERS}${wallet.creditCard.pan.slice(
-                        -4
-                      )}`}
-                    </Text>
-                  </Col>
+      <View
+        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+      >
+        <View style={styles.cardInner}>
+          <View style={styles.columns}>
+            <Text
+              style={[
+                CreditCardStyles.textStyle,
+                CreditCardStyles.largeTextStyle
+              ]}
+            >
+              {`${HIDDEN_CREDITCARD_NUMBERS}${wallet.creditCard.pan.slice(-4)}`}
+            </Text>
 
-                  {this.topRightCorner()}
-                </Row>
-                {!this.props.headerOnly && <CardBody {...this.props} />}
-              </Grid>
-            </Col>
+            <View style={styles.topRightCornerContainer}>
+              {this.renderTopRightCorner()}
+            </View>
+          </View>
 
-            <Col size={1} />
-          </Grid>
-        </Body>
-      </Card>
+          {this.renderBody()}
+        </View>
+
+        {this.renderFooterRow()}
+      </View>
     );
   }
 }
-
-const mapStateToProps = (
-  state: GlobalState,
-  props: OwnProps
-): ReduxMappedStateProps => {
-  const favoriteCard = getFavoriteWalletId(state);
-  return {
-    isFavoriteCard: favoriteCard.fold(
-      false,
-      walletId => walletId === props.wallet.idWallet
-    )
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  setFavoriteCard: (item: Option<number>) => dispatch(setFavoriteWallet(item)),
-  deleteWallet: (walletId: number) => dispatch(deleteWalletRequest(walletId))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardComponent);

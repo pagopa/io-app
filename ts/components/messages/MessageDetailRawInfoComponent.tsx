@@ -11,11 +11,12 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service?: ServicePublic;
+  service: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
 
@@ -75,27 +76,32 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
               </Text>
               {format(message.created_at, "dddd D MMMM YYYY")}
             </Text>
-            {service && (
+            {pot.isSome(service) && (
               <React.Fragment>
                 <Text>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.organizationName"
                   )}: `}</Text>
-                  {service.organization_name}
+                  {service.value.organization_name}
                 </Text>
 
                 <Text>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.departmentName"
                   )}: `}</Text>
-                  {service.department_name}
+                  {service.value.department_name}
                 </Text>
 
                 <Text link={true} onPress={onServiceLinkPress}>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.serviceName"
                   )}: `}</Text>
-                  {service.service_name}
+                  {service.value.service_name}
+                </Text>
+
+                <Text>
+                  <Text bold={true}>ID: </Text>
+                  {message.id}
                 </Text>
               </React.Fragment>
             )}

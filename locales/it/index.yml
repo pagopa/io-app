@@ -1,5 +1,7 @@
 ---
 global:
+  localization:
+    decimalSeparator: ","
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -15,6 +17,7 @@ global:
     ok: OK
     continue: Continua
     retry: Riprova
+    back: Indietro
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -24,6 +27,7 @@ global:
   actions:
     retry: Si è verificato un errore, si prega di riprovare
   remoteStates:
+    loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
 locales:
@@ -31,7 +35,7 @@ locales:
   en: Inglese
 connection:
   status:
-    offline: Connessione assente!
+    offline: Offline! Qualcosa non funzionerà.
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -163,7 +167,6 @@ authentication:
     subtitle: "I diversi Identity Provider permettono diverse modalità di
       riconoscimento e offrono insieme a SPID servizi diversi: scopri i
       dettagli di ciascuno"
-    cancel: Annulla
   idp_login:
     headerTitle: Accedi
   errors:
@@ -178,7 +181,7 @@ onboarding:
     continue: Continua
   pin:
     headerTitle: Attivazione
-    contentTitle: Scegli un codice PIN
+    contentTitle: Scegli un PIN
     contentTitleConfirm: Digita ancora il PIN
     pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
@@ -195,7 +198,7 @@ onboarding:
     Potrai riprenderla in ogni momento facendo di nuovo login con SPID.
 pin_login:
   pin:
-    pinInfo: Inserisci il codice PIN
+    pinInfo: Inserisci il PIN
     reset:
       button: Ho dimenticato il PIN
       button_short: Reimposta PIN
@@ -237,6 +240,10 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  walletLoadMessage: Carico i metodi di pagamento...
+  walletLoadFailure: Non è stato possibile caricare i metodi di pagamento.
+  transactionsLoadMessage: Carico lo storico delle transazioni...
+  transactionsLoadFailure: Non è stato possibile caricare lo storico delle transazioni.
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -266,6 +273,12 @@ wallet:
     info: Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
       pagamento
     save: Salva la carta
+    notice: Per verificare la carta verrà effettuata una transazione di 2 centesimi di euro, che verrà stornata e non ti verrà addebitata.
+    temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+  saveCardInPayment:
+    header: Paga con questa carta
+    title: Vuoi pagare con questa carta?
+    save: Paga con questa carta
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:
@@ -276,9 +289,9 @@ wallet:
     info2: che dovrà gestire la tua transazione.
     link: Per saperne di più
     maxFee: Commissione massima
+    onUpdateWalletPspFailure: Operazione fallita, riprova
   ConfirmPayment:
     header: Conferma pagamento
-    cancel: ANNULLA
     cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
@@ -290,6 +303,7 @@ wallet:
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
+    identificationMessage: "Conferma l'operazione inserendo il tuo PIN"
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
@@ -297,6 +311,8 @@ wallet:
     header: Scelta metodo di pagamamento
     title: Paga con
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
+    fetchPspFailure: Errore temporaneo, riprova
+    noPspsAvailable: Questo metodo di pagamento non può essere usato
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
@@ -347,18 +363,17 @@ wallet:
   latestTransactions: Ultime operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
-  cancel: Annulla
   continue: Continua
   methods:
     card:
       name: Carta di credito/debito
-      maxFee: Commissione massima 0.50€
+      maxFee: Commissione massima 1.50€
     bank:
-      name: Conto corrente
+      name: Bancomat Pay
       maxFee: Commissione massima 0.50€
     mobile:
       name: Altri metodi di pagamento
-      maxFee: Commissione massima 0.50€
+      maxFee: Paypal, Satispay, etc.
   addCardTitle: Dati carta
   dummyCard:
     labels:
@@ -383,18 +398,17 @@ wallet:
     title: Perchè devo pagare le commissioni?
     text: !include why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Il pagamento per questo avviso è già stato effettuato.
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato.
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
-    PAYMENT_ONGOING: Il pagamento per questo avviso è già in corso, riprova più tardi.
+    PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
-    PAYMENT_UNKNOWN: Sembra che questo avviso di pagamento non venga riconosciuto dall'ente che lo ha emesso.
-    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente che non riesco a riconoscere.
-    GENERIC_ERROR: Ooops, qualcosa è andato storto! Non ti preoccupare, è sicuramente colpa nostra, riprova più tardi per piacere!
-    MISSING_PAYMENT_ID: Sembra che l'ente che ha emesso questo avviso abbia qualche problema a gestirne il pagamento in questo momento, riprova più tardi!
+    PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA.
+    GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
+    MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
 saveCard:
   saveCard: Salva la carta
-  cancel: Annulla
   header: Vuoi salvare questa carta?
   favoriteTitle: Imposta la carta come metodo di pagamento preferito
   favoriteText: Al prossimo pagamento ti verrà automaticamente proposto questo metodo
@@ -408,6 +422,8 @@ cardComponent:
   deleteMsg: Questo cancellerà il metodo di pagamento
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
+  detailsAndTransactions: Dettagli e transazioni
+  pick: Paga con questo metodo
 messages:
   counting:
     zero: Nessun messaggio
@@ -460,6 +476,9 @@ preferences:
   empty:
     default: Nessuna preferenza impostata
   preferencesHelp: !include preferences_home_help.md
+  unavailable:
+    title: Questa impostazione non è ancora disponibile
+    message: Questa impostazione sarà disponibile in una versione futura
 services:
   headerTitle: Servizi
   title: Elenco dei servizi
@@ -478,3 +497,9 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+serviceDetail:
+  headerTitle: "Dettagli del Servizio"
+identification:
+  message: "Inserisci il PIN"
+  resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
+  resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".

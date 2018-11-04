@@ -2,9 +2,9 @@
  * A reducer to store the serviceIds by organization fiscal codes
  */
 
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { clearCache } from "../../../actions/profile";
 import { loadServiceSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
@@ -13,7 +13,7 @@ import { Action } from "../../../actions/types";
  * Maps organization fiscal code to serviceId
  */
 export type ServiceIdsByOrganizationFiscalCodeState = Readonly<{
-  [key: string]: ReadonlyArray<NonEmptyString> | undefined;
+  [key: string]: ReadonlyArray<ServiceId> | undefined;
 }>;
 
 const INITIAL_STATE: ServiceIdsByOrganizationFiscalCodeState = {};
@@ -24,17 +24,27 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
 ): ServiceIdsByOrganizationFiscalCodeState {
   switch (action.type) {
     case getType(loadServiceSuccess):
-      const service = action.payload;
+      const { organization_fiscal_code, service_id } = action.payload;
       // get the current serviceIds for the organization fiscal code
-      const servicesForOrganization =
-        state[service.organization_fiscal_code] || [];
-      // append the serviceId to the list
+      const servicesForOrganization = state[organization_fiscal_code];
+
+      if (
+        servicesForOrganization !== undefined &&
+        servicesForOrganization.indexOf(service_id) >= 0
+      ) {
+        // the service is already in the organization
+        return state;
+      }
+
+      // add the service to the organization
+      const updatedServicesForOrganization =
+        servicesForOrganization === undefined
+          ? [service_id]
+          : [...servicesForOrganization, service_id];
+
       return {
         ...state,
-        [service.organization_fiscal_code]: [
-          ...servicesForOrganization,
-          service.service_id
-        ]
+        [organization_fiscal_code]: updatedServicesForOrganization
       };
 
     case getType(clearCache):

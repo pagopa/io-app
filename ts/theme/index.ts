@@ -8,7 +8,6 @@ import getTheme from "native-base/src/theme/components";
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
-import footerWithButtonsTheme from "./components/FooterWithButtons";
 import h1Theme from "./components/H1";
 import h2Theme from "./components/H2";
 import h3Theme from "./components/H3";
@@ -100,13 +99,7 @@ const theme = (): Theme => {
     "UIComponent.ScreenHeader": {
       ...screenHeaderTheme()
     },
-    "UIComponent.FooterWithButtons": {
-      ...footerWithButtonsTheme()
-    },
     "NativeBase.List": {
-      ...listTheme()
-    },
-    "UIComponent.SectionList": {
       ...listTheme()
     },
     "NativeBase.ListItem": {

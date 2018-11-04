@@ -1,17 +1,25 @@
 import { isNone, Option } from "fp-ts/lib/Option";
 import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
-import { call, fork, put, race, select, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  cancel,
+  fork,
+  put,
+  select,
+  takeEvery,
+  takeLatest
+} from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
-import { PagoPaClient } from "../api/pagopa";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
+import { loadMessageWithRelationsAction } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
@@ -20,10 +28,15 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
 import {
+  loadServiceRequest,
+  loadVisibleServicesRequest
+} from "../store/actions/services";
+import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import {
   PendingMessageState,
@@ -33,18 +46,23 @@ import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { getPin } from "../utils/keychain";
+import {
+  startAndReturnIdentificationResult,
+  watchIdentificationRequest
+} from "./identification";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
+import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
-import { loginWithPinSaga } from "./startup/pinLoginSaga";
+import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
-import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -53,6 +71,7 @@ import { watchWalletSaga } from "./wallet";
 /**
  * Handles the application startup and the main application logic loop
  */
+// tslint:disable-next-line:cognitive-complexity no-big-function
 function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -148,23 +167,27 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
-    yield call(checkAcceptedTosSaga);
 
-    ({ storedPin } = yield race({
-      storedPin: call(checkConfiguredPinSaga),
-      // Watch for abort action.
-      abortOnboarding: call(watchAbortOnboardingSaga)
-    }));
+    // Start the watchAbortOnboardingSaga
+    const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+    yield call(checkAcceptedTosSaga);
+    storedPin = yield call(checkConfiguredPinSaga);
+    // Stop the watchAbortOnboardingSaga
+    yield cancel(watchAbortOnboardingSagaTask);
   } else {
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
       // The user was previously logged in, so no onboarding is needed
       // The session was valid so the user didn't event had to do a full login,
-      // in this case we ask the user to provide the PIN as a "lighter" login
-      yield race({
-        login: call(loginWithPinSaga, storedPin),
-        reset: call(watchPinResetSaga)
-      });
+      // in this case we ask the user to identify using the PIN.
+      const identificationResult: SagaCallReturnType<
+        typeof startAndReturnIdentificationResult
+      > = yield call(startAndReturnIdentificationResult, storedPin);
+      if (identificationResult === IdentificationResult.pinreset) {
+        // If we are here the user had chosen to reset the PIN
+        yield put(startApplicationInitialization());
+        return;
+      }
     }
   }
 
@@ -174,11 +197,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
-  const pagoPaClient: PagoPaClient = PagoPaClient(
-    pagoPaApiUrlPrefix,
-    maybeSessionInformation.value.walletToken
-  );
-  yield fork(watchWalletSaga, sessionToken, pagoPaClient, storedPin);
+  const walletToken = maybeSessionInformation.value.walletToken;
+  yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
@@ -195,19 +215,30 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Note that the following sagas will be automatically cancelled each time
   // this parent saga gets restarted.
 
+  yield takeEvery(
+    getType(loadServiceRequest),
+    loadServiceRequestHandler,
+    backendClient.getService
+  );
+
+  yield takeEvery(
+    getType(loadVisibleServicesRequest),
+    loadVisibleServicesRequestHandler,
+    backendClient.getVisibleServices
+  );
+
   // Load messages when requested
   yield fork(
     watchMessagesLoadOrCancelSaga,
     backendClient.getMessages,
-    backendClient.getMessage,
-    backendClient.getService
+    backendClient.getMessage
   );
 
   // Load message and related entities (ex. the sender service)
-  yield fork(
-    watchLoadMessageWithRelationsSaga,
-    backendClient.getMessage,
-    backendClient.getService
+  yield takeEvery(
+    getType(loadMessageWithRelationsAction),
+    loadMessageWithRelationsSaga,
+    backendClient.getMessage
   );
 
   // Watch for the app going to background/foreground
@@ -216,8 +247,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchSessionExpiredSaga);
   // Logout the user by expiring the session
   yield fork(watchLogoutSaga, backendClient.logout);
-  // Watch for requests to reset the PIN
+  // Watch for requests to reset the PIN.
   yield fork(watchPinResetSaga);
+  // Watch for identification request
+  yield fork(watchIdentificationRequest, storedPin);
 
   // Check if we have a pending notification message
   const pendingMessageState: PendingMessageState = yield select<GlobalState>(

@@ -18,31 +18,43 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import {
+  ContextualHelpInjectedProps,
+  withContextualHelp
+} from "../../components/helpers/withContextualHelp";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import { CardEnum } from "../../components/wallet/WalletLayout";
+import Markdown from "../../components/ui/Markdown";
+import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
-import { navigateToWalletTransactionsScreen } from "../../store/actions/navigation";
+import { navigateToWalletHome } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Wallet } from "../../types/pagopa";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
-import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
+import { cleanTransactionDescription } from "../../utils/payment";
+import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
   transaction: Transaction;
 }>;
 
-type ReduxInjectedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
   wallets: pot.PotType<ReturnType<typeof getWalletsById>> | undefined;
 }>;
 
-type Props = ReduxInjectedProps & NavigationInjectedProps<NavigationParams>;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletHome: () => void;
+}>;
+
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  NavigationInjectedProps<NavigationParams> &
+  ContextualHelpInjectedProps;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -122,15 +134,15 @@ class TransactionDetailsScreen extends React.Component<Props> {
       "isPaymentCompletedTransaction",
       false
     );
-    const amount = buildAmount(centsToAmount(transaction.amount.amount));
-    const fee = buildAmount(
+    const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
+    const fee = formatNumberAmount(
       centsToAmount(
         transaction.fee === undefined
           ? transaction.grandTotal.amount - transaction.amount.amount
           : transaction.fee.amount
       )
     );
-    const totalAmount = buildAmount(
+    const totalAmount = formatNumberAmount(
       centsToAmount(transaction.grandTotal.amount)
     );
 
@@ -144,26 +156,14 @@ class TransactionDetailsScreen extends React.Component<Props> {
       <WalletLayout
         title={I18n.t("wallet.transaction")}
         headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
-        cardType={
-          transactionWallet
-            ? { type: CardEnum.HEADER, card: transactionWallet }
-            : { type: CardEnum.NONE }
-        }
-        showPayButton={false}
-        allowGoBack={!isPaymentCompletedTransaction}
-        navigateToWalletList={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_LIST)
-        }
-        navigateToScanQrCode={() =>
-          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
-        }
-        navigateToWalletTransactions={(selectedWallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({
-              selectedWallet
-            })
+        displayedWallets={
+          transactionWallet ? (
+            <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
+          ) : (
+            undefined
           )
         }
+        allowGoBack={!isPaymentCompletedTransaction}
       >
         <Content
           scrollEnabled={false}
@@ -175,11 +175,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
-                onPress={() =>
-                  isPaymentCompletedTransaction
-                    ? this.props.navigation.navigate(ROUTES.WALLET_HOME)
-                    : this.props.navigation.goBack()
-                }
+                onPress={this.props.navigateToWalletHome}
               />
             </Row>
             <View spacer={true} large={true} />
@@ -191,7 +187,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
             {this.labelValueRow(
               <Text>
                 <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
-                <Text note={true} style={WalletStyles.whyLink}>
+                <Text
+                  note={true}
+                  style={WalletStyles.whyLink}
+                  onPress={this.props.showHelp}
+                >
                   {I18n.t("wallet.why")}
                 </Text>
               </Text>,
@@ -199,7 +199,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             )}
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
-              transaction.description
+              cleanTransactionDescription(transaction.description)
             )}
             {this.labelValueRow(
               I18n.t("wallet.recipient"),
@@ -220,8 +220,21 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxInjectedProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+});
+
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   wallets: pot.toUndefined(getWalletsById(state))
 });
 
-export default connect(mapStateToProps)(TransactionDetailsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  withContextualHelp(
+    TransactionDetailsScreen,
+    I18n.t("wallet.whyAFee.title"),
+    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
+  )
+);

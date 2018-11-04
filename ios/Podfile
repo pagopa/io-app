@@ -45,6 +45,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-add-calendar-event', :path => '../node_modules/react-native-add-calendar-event'
 
+  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+
 end
 
 # Fix a open bug in react-native-config

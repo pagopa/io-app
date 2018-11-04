@@ -1,7 +1,16 @@
-import { Col, Content, Grid, H1, H3, Text, View } from "native-base";
+import {
+  Body,
+  Content,
+  H1,
+  H3,
+  List,
+  ListItem,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -13,18 +22,20 @@ import ROUTES from "../../navigation/routes";
 
 import variables from "../../theme/variables";
 
+const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
+
+const styles = StyleSheet.create({
+  notGrow: {
+    flex: 0,
+    marginLeft: variables.fontSizeBase
+  }
+});
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
 type Props = OwnProps;
-
-const styles = StyleSheet.create({
-  gridRow: {
-    paddingTop: variables.contentPadding,
-    alignItems: "center"
-  }
-});
 
 /**
  * A component to show the main screen of the Privacy section
@@ -34,66 +45,73 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
     goBack={() => props.navigation.goBack()}
     headerTitle={I18n.t("profile.main.screenTitle")}
   >
-    <Content>
-      <View>
+    <Content noPadded={true}>
+      <View content={true}>
         <H1>{I18n.t("profile.main.mainPrivacy.screenTitle")}</H1>
         <Text>{I18n.t("profile.main.mainPrivacy.screenSubtitle")}</Text>
-        <Grid>
-          {/* Privacy Policy*/}
-          <Row
-            style={styles.gridRow}
+        <View spacer={true} />
+
+        <List>
+          <ListItem
             onPress={() => props.navigation.navigate(ROUTES.PROFILE_PRIVACY)}
           >
-            <Col size={10}>
-              <H3>{I18n.t("profile.main.mainPrivacy.privacyPolicy.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.privacyPolicy.description")}
-              </Text>
-            </Col>
-            <Col size={2}>
+            {/* Privacy Policy*/}
+            <Body>
+              <View>
+                <H3>
+                  {I18n.t("profile.main.mainPrivacy.privacyPolicy.title")}
+                </H3>
+                <Text>
+                  {I18n.t("profile.main.mainPrivacy.privacyPolicy.description")}
+                </Text>
+              </View>
+            </Body>
+            <Right style={styles.notGrow}>
               <IconFont
                 name="io-right"
                 color={variables.contentPrimaryBackground}
               />
-            </Col>
-          </Row>
-          {/* Remove account */}
-          <Row
-            style={styles.gridRow}
-            onPress={() => Alert.alert(I18n.t("global.notImplemented"))}
-          >
-            <Col size={10}>
-              <H3>{I18n.t("profile.main.mainPrivacy.removeAccount.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.removeAccount.description")}
-              </Text>
-            </Col>
-            <Col size={2}>
+            </Right>
+          </ListItem>
+
+          <ListItem onPress={unavailableAlert}>
+            {/* Remove account */}
+            <Body>
+              <View>
+                <H3>
+                  {I18n.t("profile.main.mainPrivacy.removeAccount.title")}
+                </H3>
+                <Text>
+                  {I18n.t("profile.main.mainPrivacy.removeAccount.description")}
+                </Text>
+              </View>
+            </Body>
+            <Right style={styles.notGrow}>
               <IconFont
                 name="io-right"
                 color={variables.contentPrimaryBackground}
               />
-            </Col>
-          </Row>
-          {/* Export your data */}
-          <Row
-            style={styles.gridRow}
-            onPress={() => Alert.alert(I18n.t("global.notImplemented"))}
-          >
-            <Col size={10}>
-              <H3>{I18n.t("profile.main.mainPrivacy.exportData.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.exportData.description")}
-              </Text>
-            </Col>
-            <Col size={2}>
+            </Right>
+          </ListItem>
+
+          <ListItem onPress={unavailableAlert}>
+            {/* Export your data */}
+            <Body>
+              <View>
+                <H3>{I18n.t("profile.main.mainPrivacy.exportData.title")}</H3>
+                <Text>
+                  {I18n.t("profile.main.mainPrivacy.exportData.description")}
+                </Text>
+              </View>
+            </Body>
+            <Right style={styles.notGrow}>
               <IconFont
                 name="io-right"
                 color={variables.contentPrimaryBackground}
               />
-            </Col>
-          </Row>
-        </Grid>
+            </Right>
+          </ListItem>
+        </List>
       </View>
     </Content>
   </BaseScreenComponent>

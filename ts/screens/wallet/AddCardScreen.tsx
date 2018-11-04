@@ -3,6 +3,7 @@
  * (holder, pan, cvc, expiration date)
  */
 import { none, Option, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import {
   Body,
@@ -17,10 +18,11 @@ import {
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -28,11 +30,9 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
+import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { storeCreditCardData } from "../../store/actions/wallet/wallets";
-import { createLoadingSelector } from "../../store/reducers/loading";
-import { GlobalState } from "../../store/reducers/types";
+import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -42,19 +42,27 @@ import {
   CreditCardPan
 } from "../../utils/input";
 
+type NavigationParams = Readonly<{
+  inPayment: Option<{
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+    verifica: PaymentRequestsGetResponse;
+    idPayment: string;
+  }>;
+}>;
+
 type ReduxMappedStateProps = Readonly<{
   isLoading: boolean;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  storeCreditCardData: (card: CreditCard) => void;
+  addWalletCreditCardInit: () => void;
+  navigateToConfirmCardDetailsScreen: (card: CreditCard) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -137,13 +145,6 @@ class AddCardScreen extends React.Component<Props, State> {
     };
   }
 
-  private submit = (card: CreditCard) => {
-    // store data locally and proceed
-    // to the recap screen
-    this.props.storeCreditCardData(card);
-    this.props.navigation.navigate(ROUTES.WALLET_CONFIRM_CARD_DETAILS);
-  };
-
   public render(): React.ReactNode {
     // list of cards to be displayed
     const displayedCards: { [key: string]: any } = {
@@ -151,29 +152,36 @@ class AddCardScreen extends React.Component<Props, State> {
       MAESTRO: cardIcons.MAESTRO,
       VISA: cardIcons.VISA,
       VISAELECTRON: cardIcons.VISAELECTRON,
-      AMEX: cardIcons.AMEX,
-      POSTEPAY: cardIcons.POSTEPAY,
-      DINER: cardIcons.DINERS
+      POSTEPAY: cardIcons.POSTEPAY
     };
 
     const primaryButtonPropsFromState = (
       state: State
     ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-      const maybeCard = getCardFromState(state);
-      return {
+      const baseButtonProps = {
         block: true,
         primary: true,
-        onPress: maybeCard.map(card => () => this.submit(card)).toUndefined(),
-        disabled: maybeCard.isNone(),
         title: I18n.t("global.buttons.continue")
       };
+      const maybeCard = getCardFromState(state);
+      return maybeCard
+        .map(card => ({
+          ...baseButtonProps,
+          disabled: false,
+          onPress: () => this.props.navigateToConfirmCardDetailsScreen(card)
+        }))
+        .getOrElse({
+          ...baseButtonProps,
+          disabled: true,
+          onPress: () => undefined
+        });
     };
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
+      bordered: true,
       onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("global.buttons.cancel")
+      title: I18n.t("global.buttons.back")
     };
 
     return (
@@ -312,24 +320,30 @@ class AddCardScreen extends React.Component<Props, State> {
         </ScrollView>
 
         <FooterWithButtons
-          leftButton={primaryButtonPropsFromState(this.state)}
-          rightButton={secondaryButtonProps}
-          inlineHalf={true}
+          type="TwoButtonsInlineHalf"
+          leftButton={secondaryButtonProps}
+          rightButton={primaryButtonPropsFromState(this.state)}
         />
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  storeCreditCardData: (card: CreditCard) => dispatch(storeCreditCardData(card))
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: OwnProps
+): ReduxMappedDispatchProps => ({
+  addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
+  navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
+    dispatch(
+      navigateToWalletConfirmCardDetails({
+        creditCard,
+        inPayment: props.navigation.getParam("inPayment")
+      })
+    )
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
-)(withLoadingSpinner(AddCardScreen, {}));
+)(AddCardScreen);

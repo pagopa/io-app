@@ -9,7 +9,7 @@ describe("toLoading", () => {
       pot.isLoading(pot.toLoading(pot.someError(1, Error())))
     ).toBeTruthy();
 
-    const p: pot.Pot<number> = pot.some(1);
+    const p: pot.Pot<number, Error> = pot.some(1);
     if (!pot.isLoading(p)) {
       expect(pot.toLoading(p)).toBeTruthy();
     }

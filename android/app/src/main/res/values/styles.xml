@@ -8,7 +8,6 @@
 
     <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">
         <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>

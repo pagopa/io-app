@@ -7,16 +7,19 @@
 import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import * as pot from "../../../../types/pot";
 import { clearCache } from "../../../actions/profile";
-import { loadServiceSuccess } from "../../../actions/services";
+import {
+  loadServiceFailure,
+  loadServiceRequest,
+  loadServiceSuccess
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type ServicesByIdState = Readonly<{
-  [key: string]: ServicePublic | undefined;
+  [key: string]: pot.Pot<ServicePublic, Error> | undefined;
 }>;
-
-type ServiceByIdState = Readonly<ServicePublic>;
 
 const INITIAL_STATE: ServicesByIdState = {};
 
@@ -25,12 +28,26 @@ const reducer = (
   action: Action
 ): ServicesByIdState => {
   switch (action.type) {
-    /**
-     * A new service has been loaded from the Backend. Add the service to the list object.
-     */
+    case getType(loadServiceRequest):
+      // Use the ID as object key
+      return {
+        ...state,
+        [action.payload]: pot.noneLoading
+      };
+
     case getType(loadServiceSuccess):
       // Use the ID as object key
-      return { ...state, [action.payload.service_id]: { ...action.payload } };
+      return {
+        ...state,
+        [action.payload.service_id]: pot.some(action.payload)
+      };
+
+    case getType(loadServiceFailure):
+      // Use the ID as object key
+      return {
+        ...state,
+        [action.payload]: pot.noneError(Error())
+      };
 
     case getType(clearCache):
       return INITIAL_STATE;
@@ -47,6 +64,7 @@ export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => {
 
 export const serviceByIdSelector = (id: string) => (
   state: GlobalState
-): ServiceByIdState | undefined => state.entities.services.byId[id];
+): pot.Pot<ServicePublic, Error> | undefined =>
+  state.entities.services.byId[id];
 
 export default reducer;

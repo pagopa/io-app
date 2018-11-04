@@ -1,3 +1,4 @@
+import { Text } from "native-base";
 import * as React from "react";
 import {
   Capture,
@@ -15,13 +16,13 @@ const rule = {
 
   // First we check whether a string matches
   match: (source: string) => {
-    return /^\[demo\]([\s\S]+?)\[\/demo\]+\n{2,}/.exec(source);
+    return /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/.exec(source);
   },
 
   // Then parse this string into a syntax node
-  parse: (capture: Capture, parse: Parser, state: State) => {
+  parse: (capture: Capture, _: Parser, __: State) => {
     return {
-      content: parse(`${capture[1]}\n\n`, state)
+      content: `${capture[1]}`
     };
   },
 
@@ -29,15 +30,27 @@ const rule = {
   // React element
   react_native: (
     node: SingleASTNode,
-    output: ReactOutput,
+    _: ReactOutput,
     state: State
   ): React.ReactNode => {
+    const demoText = React.createElement(
+      Text,
+      {
+        bold: true,
+        markdown: true,
+        style: {
+          lineHeight: 21
+        }
+      },
+      node.content
+    );
+
     return React.createElement(
       MarkdownDemo,
       {
         key: state.key
       },
-      output(node.content, state)
+      demoText
     );
   }
 };

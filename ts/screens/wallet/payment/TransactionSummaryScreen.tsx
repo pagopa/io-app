@@ -15,10 +15,9 @@ import {
 } from "italia-ts-commons/lib/pagopa";
 import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { CodiceContestoPagamento } from "../../../../definitions/backend/CodiceContestoPagamento";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 
 import GoBackButton from "../../../components/GoBackButton";
@@ -32,70 +31,72 @@ import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryCo
 
 import I18n from "../../../i18n";
 
+import * as pot from "../../../types/pot";
+
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentRequestCancel,
-  paymentRequestContinueWithPaymentMethods,
-  paymentRequestGoBack
+  paymentVerificaRequest,
+  runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { createErrorSelector } from "../../../store/reducers/error";
-import { createLoadingSelector } from "../../../store/reducers/loading";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  getCurrentAmountFromGlobalStateWithVerificaResponse,
-  getInitialAmountFromGlobalStateWithVerificaResponse,
-  getPaymentContextCodeFromGlobalStateWithVerificaResponse,
-  getPaymentReason,
-  getPaymentRecipientFromGlobalStateWithVerificaResponse,
-  getPaymentStep,
-  getRptIdFromGlobalStateWithVerificaResponse,
-  isGlobalStateWithVerificaResponse
-} from "../../../store/reducers/wallet/payment";
 
-import { mapErrorCodeToMessage } from "../../../types/errors";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
-  UNKNOWN_PAYMENT_REASON,
-  UNKNOWN_RECIPIENT
-} from "../../../types/unknown";
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToWalletHome
+} from "../../../store/actions/navigation";
+import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
+import { Wallet } from "../../../types/pagopa";
+import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
+import { AmountToImporto } from "../../../utils/amounts";
+import { cleanTransactionDescription } from "../../../utils/payment";
+import { dispatchPickPspOrConfirm } from "./common";
 
-type TransactionInfo = Readonly<{
-  paymentReason: string;
-  paymentRecipient: EnteBeneficiario;
+const basePrimaryButtonProps = {
+  block: true,
+  primary: true,
+  title: I18n.t("wallet.continue")
+};
+
+type NavigationParams = Readonly<{
   rptId: RptId;
-  codiceContestoPagamento: CodiceContestoPagamento;
-  amount: AmountInEuroCents;
-  currentAmount: AmountInEuroCents;
+  initialAmount: AmountInEuroCents;
 }>;
 
 type ReduxMappedStateProps = Readonly<{
-  error: Option<string>;
+  error: Option<
+    | pot.PotErrorType<GlobalState["wallet"]["payment"]["verifica"]>
+    | "PAYMENT_ID_TIMEOUT"
+  >;
   isLoading: boolean;
-}> &
-  (
-    | Readonly<{
-        valid: false;
-      }>
-    | Readonly<{
-        valid: true;
-        transactionInfo: Option<TransactionInfo>;
-      }>);
+  potVerifica: GlobalState["wallet"]["payment"]["verifica"];
+  maybeFavoriteWallet: Option<Wallet>;
+}>;
 
 type ReduxMappedDispatchProps = Readonly<{
-  confirmSummary: (
-    rptId: RptId,
-    codiceContestoPagamento: CodiceContestoPagamento,
-    currentAmount: AmountInEuroCents
+  dispatchPaymentVerificaRequest: () => void;
+  startOrResumePayment: (
+    verifica: PaymentRequestsGetResponse,
+    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) => void;
   goBack: () => void;
-  cancelPayment: () => void;
   onCancel: () => void;
+  onRetryWithPotVerifica: (
+    potVerifica: ReduxMappedStateProps["potVerifica"],
+    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+  ) => void;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
+type ReduxMergedProps = Readonly<{
+  onRetry?: () => void;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  ReduxMergedProps &
+  OwnProps;
 
 const formatMdRecipient = (e: EnteBeneficiario): string => {
   const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
@@ -123,7 +124,7 @@ ${cap}${city}${province}`;
 
 const formatMdPaymentReason = (p: string): string =>
   `**${I18n.t("wallet.firstTransactionSummary.object")}**\n
-${p}`;
+${cleanTransactionDescription(p)}`;
 
 const formatMdInfoRpt = (r: RptId): string =>
   `**${I18n.t("payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(
@@ -131,53 +132,74 @@ const formatMdInfoRpt = (r: RptId): string =>
   )}\n
 **${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
-class TransactionSummaryScreen extends React.Component<Props, never> {
-  constructor(props: Props) {
-    super(props);
+class TransactionSummaryScreen extends React.Component<Props> {
+  public componentDidMount() {
+    if (pot.isNone(this.props.potVerifica)) {
+      // on component mount, if we haven't fetch the payment summary if we
+      // haven't already
+      this.props.dispatchPaymentVerificaRequest();
+    }
   }
 
-  public shouldComponentUpdate(nextProps: Props) {
-    // avoids updating the component on invalid props to avoid having the screen
-    // become blank during transitions from one payment state to another
-    // FIXME: this is quite fragile, we should instead avoid having a shared state
-    return nextProps.valid;
+  private handleBackPress = () => this.props.navigation.goBack();
+
+  private getSecondaryButtonProps = () => ({
+    block: true,
+    light: true,
+    onPress: this.handleBackPress,
+    title: I18n.t("global.buttons.back")
+  });
+
+  private renderFooterSingleButton() {
+    return (
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={this.getSecondaryButtonProps()}
+      />
+    );
+  }
+
+  private renderFooterButtons() {
+    const { potVerifica, maybeFavoriteWallet } = this.props;
+
+    const primaryButtonProps =
+      pot.isSome(potVerifica) &&
+      !(pot.isLoading(potVerifica) || pot.isError(potVerifica))
+        ? {
+            ...basePrimaryButtonProps,
+            disabled: false,
+            onPress: () =>
+              this.props.startOrResumePayment(
+                potVerifica.value,
+                maybeFavoriteWallet
+              )
+          }
+        : {
+            ...basePrimaryButtonProps,
+            disabled: true
+          };
+
+    return (
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        leftButton={this.getSecondaryButtonProps()}
+        rightButton={primaryButtonProps}
+      />
+    );
   }
 
   public render(): React.ReactNode {
-    if (!this.props.valid) {
-      return null;
-    }
+    const rptId = this.props.navigation.getParam("rptId");
+    const initialAmount = this.props.navigation.getParam("initialAmount");
 
     // when empty, it means we're still loading the verifica response
-    const txInfo = this.props.transactionInfo;
-
-    const primaryButtonProps = {
-      disabled: txInfo.isNone(),
-      block: true,
-      primary: true,
-      onPress: txInfo.isSome()
-        ? () =>
-            this.props.confirmSummary(
-              txInfo.value.rptId,
-              txInfo.value.codiceContestoPagamento,
-              txInfo.value.currentAmount
-            )
-        : undefined,
-      title: I18n.t("wallet.continue")
-    };
-
-    const secondaryButtonProps = {
-      block: true,
-      light: true,
-      onPress: () => this.props.cancelPayment(),
-      title: I18n.t("wallet.cancel")
-    };
+    const { potVerifica } = this.props;
 
     return (
       <Container>
         <AppHeader>
           <Left>
-            <GoBackButton onPress={this.props.goBack} />
+            <GoBackButton />
           </Left>
           <Body>
             <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>
@@ -188,122 +210,231 @@ class TransactionSummaryScreen extends React.Component<Props, never> {
         </AppHeader>
 
         <Content noPadded={true}>
-          {txInfo.isSome() ? (
+          {pot.isSome(potVerifica) ? (
             <PaymentSummaryComponent
-              navigation={this.props.navigation}
               hasVerificaResponse={true}
-              amount={txInfo.value.amount}
-              updatedAmount={txInfo.value.currentAmount}
-              paymentReason={txInfo.value.paymentReason}
+              amount={initialAmount}
+              updatedAmount={
+                potVerifica.value.importoSingoloVersamento
+                  ? AmountToImporto.encode(
+                      potVerifica.value.importoSingoloVersamento
+                    )
+                  : UNKNOWN_AMOUNT
+              }
+              paymentReason={
+                potVerifica.value.causaleVersamento
+                  ? cleanTransactionDescription(
+                      potVerifica.value.causaleVersamento
+                    )
+                  : UNKNOWN_PAYMENT_REASON
+              }
             />
           ) : (
             <PaymentSummaryComponent
-              navigation={this.props.navigation}
               hasVerificaResponse={false}
+              amount={initialAmount}
             />
           )}
 
           <View content={true}>
             <Markdown>
-              {txInfo
-                .map(_ => formatMdRecipient(_.paymentRecipient))
+              {pot
+                .toOption(potVerifica)
+                .mapNullable(_ => _.enteBeneficiario)
+                .map(formatMdRecipient)
                 .getOrElse("...")}
             </Markdown>
             <View spacer={true} />
             <Markdown>
-              {txInfo
-                .map(_ => formatMdPaymentReason(_.paymentReason))
+              {pot
+                .toOption(potVerifica)
+                .mapNullable(_ => _.causaleVersamento)
+                .map(formatMdPaymentReason)
                 .getOrElse("...")}
             </Markdown>
             <View spacer={true} />
-            <Markdown>
-              {txInfo.map(_ => formatMdInfoRpt(_.rptId)).getOrElse("...")}
-            </Markdown>
+            <Markdown>{formatMdInfoRpt(rptId)}</Markdown>
             <View spacer={true} />
           </View>
         </Content>
-        <FooterWithButtons
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-          inlineHalf={true}
-        />
+
+        {this.props.error.fold(
+          this.renderFooterButtons(),
+          error =>
+            error === "PAYMENT_DUPLICATED"
+              ? this.renderFooterSingleButton()
+              : this.renderFooterButtons()
+        )}
       </Container>
     );
   }
 }
 
-function mapStateToProps() {
-  const paymentErrorSelector = createErrorSelector(["PAYMENT"]);
-  const paymentLoadingSelector = createLoadingSelector(["PAYMENT"]);
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+  const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
 
-  return (state: GlobalState): ReduxMappedStateProps => {
-    if (
-      (getPaymentStep(state) === "PaymentStateSummary" ||
-        getPaymentStep(state) === "PaymentStateSummaryWithPaymentId") &&
-      isGlobalStateWithVerificaResponse(state)
-    ) {
-      const transactionInfo = some({
-        paymentReason: getPaymentReason(state).getOrElse(
-          UNKNOWN_PAYMENT_REASON
-        ), // could be undefined as per pagoPA type definition
-        paymentRecipient: getPaymentRecipientFromGlobalStateWithVerificaResponse(
-          state
-        ).getOrElse(UNKNOWN_RECIPIENT), // could be undefined as per pagoPA type definition
-        rptId: getRptIdFromGlobalStateWithVerificaResponse(state),
-        codiceContestoPagamento: getPaymentContextCodeFromGlobalStateWithVerificaResponse(
-          state
-        ),
-        amount: getInitialAmountFromGlobalStateWithVerificaResponse(state),
-        currentAmount: getCurrentAmountFromGlobalStateWithVerificaResponse(
-          state
-        )
-      });
-      return {
-        valid: true,
-        error: paymentErrorSelector(state),
-        isLoading: paymentLoadingSelector(state),
-        transactionInfo
-      };
-    } else if (getPaymentStep(state) === "PaymentStateNoState") {
-      return {
-        valid: true,
-        error: paymentErrorSelector(state),
-        isLoading: paymentLoadingSelector(state),
-        transactionInfo: none
-      };
-    } else {
-      return {
-        valid: false,
-        error: none,
-        isLoading: false
-      };
-    }
+  const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
+
+  const error = pot.isError(verifica)
+    ? some(verifica.error)
+    : pot.isError(attiva)
+      ? some(attiva.error)
+      : pot.isError(paymentId)
+        ? some(paymentId.error)
+        : pot.isError(check) || pot.isError(psps)
+          ? some(undefined)
+          : none;
+
+  // we need to show the spinner when the data is in the loading state
+  // and also while the logic is processing one step's response and
+  // starting the next step's loading request
+  const isLoading =
+    pot.isLoading(verifica) ||
+    pot.isLoading(attiva) ||
+    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    pot.isLoading(paymentId) ||
+    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    pot.isLoading(check) ||
+    (maybeFavoriteWallet.isSome() &&
+      error.isNone() &&
+      pot.isSome(check) &&
+      pot.isNone(psps)) ||
+    (maybeFavoriteWallet.isSome() && pot.isLoading(psps));
+
+  return {
+    error,
+    // TODO: show different loading messages for each loading state
+    isLoading,
+    potVerifica: verifica,
+    maybeFavoriteWallet
   };
-}
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  confirmSummary: (
-    rptId: RptId,
-    codiceContestoPagamento: CodiceContestoPagamento,
-    currentAmount: AmountInEuroCents
+};
+
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: OwnProps
+): ReduxMappedDispatchProps => {
+  const rptId = props.navigation.getParam("rptId");
+  const initialAmount = props.navigation.getParam("initialAmount");
+
+  const dispatchPaymentVerificaRequest = () =>
+    dispatch(paymentVerificaRequest(rptId));
+
+  const startOrResumePayment = (
+    verifica: PaymentRequestsGetResponse,
+    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) =>
     dispatch(
-      paymentRequestContinueWithPaymentMethods({
+      runStartOrResumePaymentActivationSaga({
         rptId,
-        codiceContestoPagamento,
-        currentAmount
+        verifica,
+        onSuccess: idPayment =>
+          dispatchPickPspOrConfirm(dispatch)(
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment,
+            maybeFavoriteWallet,
+            () => {
+              // either we cannot use the default payment method for this
+              // payment, or fetching the PSPs for this payment and the
+              // default wallet has failed, ask the user to pick a wallet
+              dispatch(
+                navigateToPaymentPickPaymentMethodScreen({
+                  rptId,
+                  initialAmount,
+                  verifica,
+                  idPayment
+                })
+              );
+            }
+          )
       })
-    ),
-  goBack: () => dispatch(paymentRequestGoBack()),
-  cancelPayment: () => dispatch(paymentRequestCancel()),
-  onCancel: () => dispatch(paymentRequestCancel())
-});
+    );
+
+  return {
+    dispatchPaymentVerificaRequest,
+    startOrResumePayment,
+    goBack: () => props.navigation.goBack(),
+    onCancel: () => dispatch(navigateToWalletHome()),
+    onRetryWithPotVerifica: (
+      potVerifica: ReduxMappedStateProps["potVerifica"],
+      maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+    ) => {
+      if (pot.isSome(potVerifica)) {
+        startOrResumePayment(potVerifica.value, maybeFavoriteWallet);
+      } else {
+        dispatchPaymentVerificaRequest();
+      }
+    }
+  };
+};
+
+const mergeProps = (
+  stateProps: ReduxMappedStateProps,
+  dispatchProps: ReduxMappedDispatchProps,
+  ownProps: {}
+) => {
+  // we allow to retry the operation on a temporary unavailability of the remote
+  // system, a timeout while waiting for the payment ID and for generic errors
+  // (e.g. timeouts)
+  const canRetry = stateProps.error
+    .filter(
+      _ =>
+        _ === "PAYMENT_UNAVAILABLE" ||
+        _ === "PAYMENT_ID_TIMEOUT" ||
+        _ === undefined
+    )
+    .isSome();
+  const baseProps = {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps
+  };
+  return canRetry
+    ? {
+        ...baseProps,
+        onRetry: () =>
+          dispatchProps.onRetryWithPotVerifica(
+            stateProps.potVerifica,
+            stateProps.maybeFavoriteWallet
+          )
+      }
+    : baseProps;
+};
+
+const mapErrorCodeToMessage = (
+  error: ReduxMappedStateProps["error"]["_A"]
+): string => {
+  switch (error) {
+    case "PAYMENT_DUPLICATED":
+      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+    case "INVALID_AMOUNT":
+      return I18n.t("wallet.errors.INVALID_AMOUNT");
+    case "PAYMENT_ONGOING":
+      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+    case "PAYMENT_EXPIRED":
+      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
+    case "PAYMENT_UNAVAILABLE":
+      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
+    case "PAYMENT_UNKNOWN":
+      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
+    case "DOMAIN_UNKNOWN":
+      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
+    case "PAYMENT_ID_TIMEOUT":
+      return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
+    case undefined:
+      return I18n.t("wallet.errors.GENERIC_ERROR");
+  }
+};
 
 export default connect(
-  mapStateToProps(),
-  mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
 )(
   withErrorModal(
-    withLoadingSpinner(TransactionSummaryScreen, {}),
+    withLoadingSpinner(TransactionSummaryScreen),
     mapErrorCodeToMessage
   )
 );

@@ -14,7 +14,11 @@ function rule() {
     const items = node.items.map((item: any, i: number) => {
       const bullet = node.ordered
         ? React.createElement(Text, { key: state.key }, `${i + 1}. `)
-        : React.createElement(Text, { key: state.key }, "\u2022 ");
+        : React.createElement(
+            Text,
+            { key: state.key, style: { marginTop: 2 } },
+            "\u2022 "
+          );
 
       const listItemText = React.createElement(
         Text,
@@ -27,7 +31,8 @@ function rule() {
         {
           key: i,
           style: {
-            flexDirection: "row"
+            flexDirection: "row",
+            alignItems: "flex-start"
           }
         },
         [bullet, listItemText]

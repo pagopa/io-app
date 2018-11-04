@@ -4,20 +4,32 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
-import { loadMessageWithRelationsAction } from "../../store/actions/messages";
-import { ReduxProps } from "../../store/actions/types";
+import { contentServiceLoad } from "../../store/actions/content";
+import {
+  loadMessageWithRelationsAction,
+  setMessageReadState
+} from "../../store/actions/messages";
+import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import {
+  makeMessageUIStatesByIdSelector,
+  MessageUIStates
+} from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
+import { InferNavigationParams } from "../../types/react";
+import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
 /**
  * The react-navigation getParam function requires a fallback value to use when the parameter
@@ -77,7 +89,8 @@ type FullScreenState = {
   kind: "FullState";
   messageId: string;
   message: MessageWithContentPO;
-  service?: ServicePublic;
+  messageUIStates: MessageUIStates;
+  service: pot.Pot<ServicePublic, Error>;
 };
 
 const isFullState = (
@@ -93,11 +106,23 @@ type ScreenState =
   | ErrorScreenState
   | FullScreenState;
 
-type ReduxMapStateToProps = {
+type ReduxMappedStateProps = Readonly<{
   screenState: ScreenState;
-};
+}>;
 
-type Props = OwnProps & ReduxMapStateToProps & ReduxProps;
+type ReduxMappedDispatchProps = Readonly<{
+  contentServiceLoad: (serviceId: ServiceId) => void;
+  loadMessageWithRelations: (messageId: string) => void;
+  setMessageReadState: (messageId: string, isRead: boolean) => void;
+  navigateToServiceDetailsScreen: (
+    params: InferNavigationParams<typeof ServiceDetailsScreen>
+  ) => void;
+}>;
+
+type Props = OwnProps &
+  ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  ReduxProps;
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -115,7 +140,10 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private goBack = () => this.props.navigation.goBack();
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
-    this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICE_DETAIL, {
+    // When a service gets selected, before navigating to the service detail
+    // screen, we issue a contentServiceLoad to refresh the service metadata
+    this.props.contentServiceLoad(service.service_id);
+    this.props.navigateToServiceDetailsScreen({
       service
     });
   };
@@ -160,9 +188,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         </Text>
         <Button
           primary={true}
-          onPress={() =>
-            this.props.dispatch(loadMessageWithRelationsAction(messageId))
-          }
+          onPress={() => this.props.loadMessageWithRelations(messageId)}
         >
           <Text>{I18n.t("messageDetails.retryText")}</Text>
         </Button>
@@ -175,7 +201,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    */
   private renderFullState = (
     message: MessageWithContentPO,
-    service?: ServicePublic
+    service: pot.Pot<ServicePublic, Error>
   ) => {
     return (
       <Content noPadded={true}>
@@ -183,7 +209,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           message={message}
           service={service}
           onServiceLinkPress={
-            service ? () => this.onServiceLinkPressHandler(service) : undefined
+            pot.isSome(service)
+              ? () => this.onServiceLinkPressHandler(service.value)
+              : undefined
           }
         />
       </Content>
@@ -216,9 +244,19 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
      * try to load it.
      */
     if (isNeedLoadingState(screenState)) {
-      this.props.dispatch(
-        loadMessageWithRelationsAction(screenState.messageId)
-      );
+      this.props.loadMessageWithRelations(screenState.messageId);
+    } else if (isFullState(screenState) && !screenState.messageUIStates.read) {
+      // Set the message read state to TRUE
+      this.props.setMessageReadState(screenState.messageId, true);
+    }
+  }
+
+  public componentDidUpdate() {
+    const { screenState } = this.props;
+
+    if (isFullState(screenState) && !screenState.messageUIStates.read) {
+      // Set the message read state to TRUE
+      this.props.setMessageReadState(screenState.messageId, true);
     }
   }
 
@@ -245,7 +283,7 @@ const messageWithRelationsLoadErrorSelector = createErrorSelector([
 const mapStateToProps = (
   state: GlobalState,
   ownProps: OwnProps
-): ReduxMapStateToProps => {
+): ReduxMappedStateProps => {
   /**
    * Try to get the messageId from the navigation parameters.
    */
@@ -284,6 +322,7 @@ const mapStateToProps = (
   }
 
   const message = messageByIdSelector(messageId)(state);
+  const messageUIStates = makeMessageUIStatesByIdSelector(messageId)(state);
 
   if (message !== undefined) {
     const service = message
@@ -295,7 +334,8 @@ const mapStateToProps = (
         kind: "FullState",
         messageId,
         message,
-        service
+        messageUIStates,
+        service: service !== undefined ? service : pot.none
       }
     };
   }
@@ -308,4 +348,19 @@ const mapStateToProps = (
   };
 };
 
-export default connect(mapStateToProps)(MessageDetailScreen);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  contentServiceLoad: (serviceId: ServiceId) =>
+    dispatch(contentServiceLoad(serviceId)),
+  loadMessageWithRelations: (messageId: string) =>
+    dispatch(loadMessageWithRelationsAction(messageId)),
+  setMessageReadState: (messageId: string, isRead: boolean) =>
+    dispatch(setMessageReadState(messageId, isRead)),
+  navigateToServiceDetailsScreen: (
+    params: InferNavigationParams<typeof ServiceDetailsScreen>
+  ) => dispatch(navigateToServiceDetailsScreen(params))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessageDetailScreen);

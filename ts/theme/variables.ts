@@ -7,7 +7,6 @@
 
 // tslint:disable:no-invalid-this
 
-import color from "color";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
@@ -37,9 +36,8 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandDarkGray: "#5C6F82",
-  brandPrimaryLight: color("#0066CC")
-    .lighten(0.15)
-    .hex(),
+  brandDarkestGray: "#17324D",
+  brandPrimaryLight: "#99CCFF",
 
   cardFontColor: "#17324D",
   colorWhite: "white",

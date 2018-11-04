@@ -105,11 +105,7 @@ export type Wallet = t.TypeOf<typeof Wallet>;
 /**
  * A Wallet that has not being saved yet
  */
-export type NullableWallet = ReplaceProp1<
-  Wallet,
-  "idWallet" | "favourite",
-  null
->;
+export type NullableWallet = ReplaceProp1<Wallet, "idWallet", null>;
 
 /**
  * A refined Transaction
@@ -174,12 +170,12 @@ export type WalletListResponse = t.TypeOf<typeof WalletListResponse>;
  * A tagged string type for the PagoPA SessionToken
  */
 
-interface IPagopaTokenTag {
-  kind: "IPagopaTokenTag";
+interface IPaymentManagerTokenTag {
+  kind: "IPaymentManagerTokenTag";
 }
 
-export const PagopaToken = tag<IPagopaTokenTag>()(t.string);
-export type PagopaToken = t.TypeOf<typeof PagopaToken>;
+export const PaymentManagerToken = tag<IPaymentManagerTokenTag>()(t.string);
+export type PaymentManagerToken = t.TypeOf<typeof PaymentManagerToken>;
 
 /**
  * A Session
@@ -187,7 +183,7 @@ export type PagopaToken = t.TypeOf<typeof PagopaToken>;
 export const Session = repP(
   reqP(SessionPagoPA, "sessionToken"),
   "sessionToken",
-  PagopaToken,
+  PaymentManagerToken,
   "Session"
 );
 

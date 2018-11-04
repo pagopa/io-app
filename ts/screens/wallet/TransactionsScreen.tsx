@@ -2,37 +2,37 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
-import * as React from "react";
-import I18n from "../../i18n";
-
 import { Text, View } from "native-base";
+import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
-
 import { connect } from "react-redux";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+
 import { WalletStyles } from "../../components/styles/wallet";
+import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
-import { CardEnum } from "../../components/wallet/WalletLayout";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import ROUTES from "../../navigation/routes";
-import {
-  navigateToTransactionDetailsScreen,
-  navigateToWalletTransactionsScreen
-} from "../../store/actions/navigation";
-import { createLoadingSelector } from "../../store/reducers/loading";
+import I18n from "../../i18n";
+import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import { getTransactions } from "../../store/reducers/wallet/transactions";
-import { Wallet } from "../../types/pagopa";
+import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
 
-type ReduxMappedProps = Readonly<{
-  isLoading: boolean;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type ReduxMappedStateProps = Readonly<{
+  transactions: ReturnType<ReturnType<typeof getWalletTransactionsCreator>>;
 }>;
 
-type Props = ReduxMappedProps & NavigationInjectedProps<NavigationParams>;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => void;
+}>;
+
+type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
 
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -51,32 +51,23 @@ class TransactionsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
-        showPayButton={false}
+        allowGoBack={true}
         headerContents={headerContents}
-        cardType={{ type: CardEnum.FULL, card: selectedWallet }}
-        navigateToWalletList={() =>
-          this.props.navigation.navigate(ROUTES.WALLET_LIST)
-        }
-        navigateToScanQrCode={() =>
-          this.props.navigation.navigate(ROUTES.PAYMENT_SCAN_QR_CODE)
-        }
-        navigateToWalletTransactions={(wallet: Wallet) =>
-          this.props.navigation.dispatch(
-            navigateToWalletTransactionsScreen({ selectedWallet: wallet })
-          )
+        displayedWallets={
+          <CardComponent
+            type="Header"
+            wallet={selectedWallet}
+            hideFavoriteIcon={true}
+            hideMenu={true}
+          />
         }
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           totalAmount={I18n.t("wallet.total")}
-          selector={getTransactions}
-          navigateToTransactionDetails={transaction =>
-            this.props.navigation.dispatch(
-              navigateToTransactionDetailsScreen({
-                transaction,
-                isPaymentCompletedTransaction: false
-              })
-            )
+          transactions={this.props.transactions}
+          navigateToTransactionDetails={
+            this.props.navigateToTransactionDetailsScreen
           }
         />
       </WalletLayout>
@@ -84,10 +75,26 @@ class TransactionsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
-  isLoading: createLoadingSelector(["WALLET_MANAGEMENT_LOAD"])(state)
+const mapStateToProps = (
+  state: GlobalState,
+  ownProps: OwnProps
+): ReduxMappedStateProps => ({
+  transactions: getWalletTransactionsCreator(
+    ownProps.navigation.getParam("selectedWallet").idWallet
+  )(state)
 });
 
-export default connect(mapStateToProps)(
-  withLoadingSpinner(TransactionsScreen, {})
-);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+    dispatch(
+      navigateToTransactionDetailsScreen({
+        transaction,
+        isPaymentCompletedTransaction: false
+      })
+    )
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionsScreen);

@@ -6,15 +6,18 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service?: ServicePublic;
+  messageUIStates: MessageUIStates;
+  service: pot.Pot<ServicePublic, Error>;
   onItemPress?: (messageId: string) => void;
 };
 
@@ -40,12 +43,28 @@ const styles = StyleSheet.create({
   },
 
   serviceText: {
-    fontSize: variables.fontSize3
+    fontSize: variables.fontSize3,
+    lineHeight: 20,
+    paddingRight: 5
+  },
+
+  readCol: {
+    marginLeft: -4,
+    width: variables.contentPadding
+  },
+
+  readIcon: {
+    lineHeight: 20
+  },
+
+  serviceTextNew: {
+    color: variables.h2Color
   },
 
   dateText: {
     color: variables.brandDarkGray,
-    fontSize: variables.fontSize2
+    fontSize: variables.fontSize2,
+    lineHeight: 16
   },
 
   subjectRow: {
@@ -68,12 +87,13 @@ export class MessageListItemComponent extends React.PureComponent<
   never
 > {
   public render() {
-    const { message, service, onItemPress } = this.props;
+    const { message, messageUIStates, service, onItemPress } = this.props;
 
     // TODO: Extract this to external file
-    const uiService = service
-      ? `${service.organization_name} - ${service.department_name}`
-      : I18n.t("messages.unknownSender");
+    const uiService = pot.getOrElse(
+      pot.map(service, s => `${s.organization_name} - ${s.department_name}`),
+      I18n.t("messages.unknownSender")
+    );
 
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
@@ -91,16 +111,29 @@ export class MessageListItemComponent extends React.PureComponent<
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
-              <Col>
+              {!messageUIStates.read && (
+                <Col style={styles.readCol}>
+                  <IconFont
+                    name="io-new"
+                    color={variables.contentPrimaryBackground}
+                    size={24}
+                    style={styles.readIcon}
+                  />
+                </Col>
+              )}
+              <Col size={10}>
                 <Text
-                  style={styles.serviceText}
+                  style={[
+                    styles.serviceText,
+                    !messageUIStates.read ? styles.serviceTextNew : undefined
+                  ]}
                   leftAlign={true}
-                  alternativeBold={true}
+                  bold={true}
                 >
                   {uiService}
                 </Text>
               </Col>
-              <Col>
+              <Col size={2}>
                 <Text style={styles.dateText} rightAlign={true}>
                   {uiCreatedAt}
                 </Text>

@@ -16,40 +16,28 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import { getTransactions } from "../../store/reducers/wallet/transactions";
 import { Transaction } from "../../types/pagopa";
 import * as pot from "../../types/pot";
-import { buildAmount, centsToAmount } from "../../utils/stringBuilder";
+import { cleanTransactionDescription } from "../../utils/payment";
+import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 
-type ReduxMappedStateProps =
-  | Readonly<{
-      transactions: ReadonlyArray<Transaction>;
-      isLoading: false;
-    }>
-  | Readonly<{
-      isLoading: true;
-    }>;
-
-type OwnProps = Readonly<{
+type Props = Readonly<{
   title: string;
   totalAmount: string;
-  selector: typeof getTransactions;
+  transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps;
 /**
  * Transactions List component
  */
 
-class TransactionsList extends React.Component<Props> {
+export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
     const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
     const datetime: string = `${item.created.toLocaleDateString()} - ${item.created.toLocaleTimeString()}`;
@@ -68,8 +56,8 @@ class TransactionsList extends React.Component<Props> {
   }
 
   private renderRow = (item: Transaction): React.ReactElement<any> => {
-    const paymentReason = item.description;
-    const amount = buildAmount(centsToAmount(item.amount.amount));
+    const paymentReason = cleanTransactionDescription(item.description);
+    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
       <ListItem
@@ -99,11 +87,15 @@ class TransactionsList extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
-    if (this.props.isLoading) {
-      return <BoxedRefreshIndicator />;
+    if (pot.isLoading(this.props.transactions)) {
+      return (
+        <BoxedRefreshIndicator
+          caption={<Text>{I18n.t("wallet.transactionsLoadMessage")}</Text>}
+        />
+      );
     }
 
-    const { transactions } = this.props;
+    const transactions = pot.getOrElse(this.props.transactions, []);
 
     if (transactions.length === 0) {
       return (
@@ -147,18 +139,3 @@ class TransactionsList extends React.Component<Props> {
     );
   }
 }
-
-const mapStateToProps = (
-  state: GlobalState,
-  props: OwnProps
-): ReduxMappedStateProps => {
-  const potTransactions = props.selector(state);
-  return pot.isLoading(potTransactions)
-    ? { isLoading: true }
-    : {
-        isLoading: false,
-        transactions: pot.getOrElse(potTransactions, [])
-      };
-};
-
-export default connect(mapStateToProps)(TransactionsList);

@@ -12,6 +12,7 @@
  * is handled @https://www.pivotaltracker.com/story/show/157838293
  */
 import { Option } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
 import {
   Body,
   Button,
@@ -24,9 +25,10 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../components/GoBackButton";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import { WalletStyles } from "../../components/styles/wallet";
@@ -34,35 +36,35 @@ import AppHeader from "../../components/ui/AppHeader";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import { getPaymentIdFromGlobalState } from "../../store/reducers/wallet/payment";
+import {
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletAddCreditCard
+} from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
+import { UNKNOWN_RECIPIENT } from "../../types/unknown";
+import { AmountToImporto } from "../../utils/amounts";
 
-type ReduxMappedProps = Readonly<{
-  paymentId: Option<string>;
+type NavigationParams = Readonly<{
+  inPayment: Option<{
+    rptId: RptId;
+    initialAmount: AmountInEuroCents;
+    verifica: PaymentRequestsGetResponse;
+    idPayment: string;
+  }>;
 }>;
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}> &
-  ReduxMappedProps;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToTransactionSummary: () => void;
+  navigateToAddCreditCard: () => void;
+}>;
+
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = ReduxMappedDispatchProps & OwnProps;
 
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
-  /**
-   * if it return true, the screen includes:
-   * - a different title inside the header
-   * - the banner with the summary of the transaction
-   * - the visualization of the title "Pay with"
-   * TODO:
-   * - implement the code so that when the screen is accessed during the identification of a
-   *    transaction, the banner and the title are displayed
-   *    https://www.pivotaltracker.com/n/projects/2048617/stories/158395136
-   */
-  private isInTransaction() {
-    // if the current state has a paymentId it means we're in a payment flow
-    return this.props.paymentId.isSome();
-  }
-
   public render(): React.ReactNode {
+    const inPayment = this.props.navigation.getParam("inPayment");
     return (
       <Container>
         <AppHeader>
@@ -70,7 +72,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             <GoBackButton />
           </Left>
           <Body>
-            {this.isInTransaction() ? (
+            {inPayment.isSome() ? (
               <Text>{I18n.t("wallet.payWith.header")}</Text>
             ) : (
               <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
@@ -80,21 +82,32 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             <InstabugButtons />
           </Right>
         </AppHeader>
-        {this.isInTransaction() ? (
+        {inPayment.isSome() ? (
           <Content noPadded={true}>
-            <PaymentBannerComponent />
+            <PaymentBannerComponent
+              paymentReason={inPayment.value.verifica.causaleVersamento}
+              currentAmount={AmountToImporto.encode(
+                inPayment.value.verifica.importoSingoloVersamento
+              )}
+              recipient={
+                inPayment.value.verifica.enteBeneficiario || UNKNOWN_RECIPIENT
+              }
+              onCancel={this.props.navigateToTransactionSummary}
+            />
             <View style={WalletStyles.paddedLR}>
               <View spacer={true} large={true} />
-              {this.isInTransaction() && (
-                <H1>{I18n.t("wallet.payWith.title")}</H1>
-              )}
+              <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />
-              <PaymentMethodsList navigation={this.props.navigation} />
+              <PaymentMethodsList
+                navigateToAddCreditCard={this.props.navigateToAddCreditCard}
+              />
             </View>
           </Content>
         ) : (
           <Content>
-            <PaymentMethodsList navigation={this.props.navigation} />
+            <PaymentMethodsList
+              navigateToAddCreditCard={this.props.navigateToAddCreditCard}
+            />
           </Content>
         )}
         <View footer={true}>
@@ -104,7 +117,11 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             bordered={true}
             onPress={(): boolean => this.props.navigation.goBack()}
           >
-            <Text>{I18n.t("wallet.cancel")}</Text>
+            <Text>
+              {inPayment.isSome()
+                ? I18n.t("global.buttons.back")
+                : I18n.t("global.buttons.cancel")}
+            </Text>
           </Button>
         </View>
       </Container>
@@ -112,10 +129,30 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
   }
 }
 
-function mapStateToProps(state: GlobalState): ReduxMappedProps {
-  return {
-    paymentId: getPaymentIdFromGlobalState(state)
-  };
-}
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  props: OwnProps
+): ReduxMappedDispatchProps => ({
+  navigateToTransactionSummary: () => {
+    const maybeInPayment = props.navigation.getParam("inPayment");
+    maybeInPayment.map(inPayment =>
+      dispatch(
+        navigateToPaymentTransactionSummaryScreen({
+          rptId: inPayment.rptId,
+          initialAmount: inPayment.initialAmount
+        })
+      )
+    );
+  },
+  navigateToAddCreditCard: () =>
+    dispatch(
+      navigateToWalletAddCreditCard({
+        inPayment: props.navigation.getParam("inPayment")
+      })
+    )
+});
 
-export default connect(mapStateToProps)(AddPaymentMethodScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(AddPaymentMethodScreen);

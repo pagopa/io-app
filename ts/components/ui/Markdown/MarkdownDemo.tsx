@@ -5,6 +5,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
+import variables from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import IconFont from "../../ui/IconFont";
 
@@ -12,11 +13,15 @@ type Props = ComponentProps<View>;
 
 const styles = StyleSheet.create({
   textColumn: {
-    paddingRight: 10
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    paddingRight: 5
   },
   iconColumn: {
+    alignItems: "center",
     flexDirection: "row",
-    alignItems: "center"
+    justifyContent: "flex-end"
   }
 });
 
@@ -25,11 +30,11 @@ class MarkdownDemo extends React.PureComponent<Props, never> {
     return (
       <View {...this.props}>
         <Grid>
-          <Col size={11} style={styles.textColumn}>
+          <Col size={10} style={styles.textColumn}>
             {this.props.children}
           </Col>
-          <Col size={1} style={styles.iconColumn}>
-            <IconFont name="io-notice" />
+          <Col size={2} style={styles.iconColumn}>
+            <IconFont name="io-test" size={variables.iconSize6} />
           </Col>
         </Grid>
       </View>

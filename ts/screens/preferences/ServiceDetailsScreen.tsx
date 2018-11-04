@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { fromNullable, Option } from "fp-ts/lib/Option";
@@ -40,13 +40,9 @@ import customVariables from "../../theme/variables";
 
 import { logosForService } from "../../utils/services";
 
-export interface IMessageDetailsScreenParam {
-  readonly service: ServicePublic;
-}
-
-interface INavigationStateWithParams extends NavigationState {
-  readonly params: IMessageDetailsScreenParam;
-}
+type NavigationParams = Readonly<{
+  service: ServicePublic;
+}>;
 
 type ReduxMappedProps = Readonly<{
   services: ServicesState;
@@ -55,9 +51,7 @@ type ReduxMappedProps = Readonly<{
   profileUpsertError: Option<string>;
 }>;
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<INavigationStateWithParams>;
-}>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReduxMappedProps & ReduxProps & OwnProps;
 
@@ -104,7 +98,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // We initialize the UI by making the states of the channels the same
     // as what is set in the profile. The user will be able to change the state
     // via the UI and the profile will be updated in the background accordingly.
-    const serviceId = this.props.navigation.state.params.service.service_id;
+    const serviceId = this.props.navigation.getParam("service").service_id;
     this.state = {
       uiEnabledChannels: getEnabledChannelsForService(
         this.props.profile,
@@ -120,7 +114,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       this.setState({
         uiEnabledChannels: getEnabledChannelsForService(
           nextProps.profile,
-          nextProps.navigation.state.params.service.service_id
+          nextProps.navigation.getParam("service").service_id
         )
       });
     }
@@ -135,7 +129,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private dispatchNewEnabledChannels(newUiEnabledChannels: EnabledChannels) {
     const updatedBlockedChannels = getBlockedChannels(
       this.props.profile,
-      this.props.navigation.state.params.service.service_id
+      this.props.navigation.getParam("service").service_id
     );
 
     // compute the new blocked channels preference for the user profile
@@ -153,7 +147,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   // tslint:disable-next-line:cognitive-complexity no-big-function
   public render() {
     // collect the service
-    const service = this.props.navigation.state.params.service;
+    const service = this.props.navigation.getParam("service");
     const serviceId = service.service_id;
 
     // finds out which channels are enabled in the user profile
@@ -191,7 +185,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={this.goBack}
-        headerTitle={service.service_name}
+        headerTitle={I18n.t("serviceDetail.headerTitle")}
       >
         <Content>
           <Grid>

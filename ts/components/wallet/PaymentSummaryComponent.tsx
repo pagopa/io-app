@@ -1,6 +1,7 @@
 /**
  * This component will display the transaction details if updates on the amount are identified
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
@@ -9,7 +10,6 @@ import { H1, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { WalletStyles } from "../../components/styles/wallet";
 
@@ -17,9 +17,9 @@ import I18n from "../../i18n";
 
 import variables from "../../theme/variables";
 
-import { buildAmount } from "../../utils/stringBuilder";
+import { formatNumberAmount } from "../../utils/stringBuilder";
 
-type ReduxMappedStateProps =
+type Props =
   | Readonly<{
       amount: AmountInEuroCents;
       updatedAmount: AmountInEuroCents;
@@ -29,12 +29,6 @@ type ReduxMappedStateProps =
   | Readonly<{
       hasVerificaResponse: false;
     }>;
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps;
 
 const styles = StyleSheet.create({
   padded: {
@@ -81,7 +75,18 @@ const styles = StyleSheet.create({
       // does not work as expected
       // TODO: figure why this is not working on android @https://www.pivotaltracker.com/story/show/159229134
     }
-  })
+  }),
+
+  amountLabel: {
+    color: variables.colorWhite,
+    fontSize: variables.fontSizeBase * 1.25,
+    fontWeight: "700",
+    lineHeight: variables.fontSizeBase * 1.5
+  },
+
+  updateInfoRow: {
+    marginTop: variables.fontSizeBase / 2
+  }
 });
 
 class PaymentSummaryComponent extends React.Component<Props> {
@@ -135,48 +140,35 @@ class PaymentSummaryComponent extends React.Component<Props> {
         <View spacer={true} large={true} />
 
         {this.labelValueRow(
-          <H3 style={[WalletStyles.white, styles.noBottomLine]}>
-            {I18n.t("wallet.firstTransactionSummary.amount")}
-          </H3>,
-          amountIsUpdated ? (
-            <H3 style={[WalletStyles.white, styles.strikeThrough]}>
-              {amount !== undefined ? buildAmount(amount) : "..."}
-            </H3>
-          ) : (
-            <H1 style={WalletStyles.white}>
-              {amount !== undefined ? buildAmount(amount) : "..."}
-            </H1>
-          )
-        )}
-        {amountIsUpdated && (
-          <View>
-            {this.labelValueRow(
-              <View style={[WalletStyles.flexRow, WalletStyles.alignCenter]}>
-                <H3 style={[WalletStyles.white, styles.noBottomLine]}>
-                  {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
-                </H3>
-                <Icon
-                  style={[WalletStyles.white, styles.iconStyle]}
-                  name={"alert-circle"}
-                  type={"Feather"}
-                />
-              </View>,
-              <H1 style={WalletStyles.white}>
-                {updatedAmount !== undefined
-                  ? buildAmount(updatedAmount)
-                  : "..."}
-              </H1>
+          <View style={[WalletStyles.flexRow, WalletStyles.alignCenter]}>
+            <Text style={styles.amountLabel}>
+              {I18n.t(
+                amountIsUpdated
+                  ? "wallet.firstTransactionSummary.updatedAmount"
+                  : "wallet.firstTransactionSummary.amount"
+              )}
+            </Text>
+            {amountIsUpdated && (
+              <Icon
+                style={[WalletStyles.white, styles.iconStyle]}
+                name="alert-circle"
+                type="Feather"
+              />
             )}
-            <Row style={styles.toAlignColumnstart}>
-              <Text style={WalletStyles.white}>
-                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
-              </Text>
-              <Text style={styles.underlined}>
-                {I18n.t("wallet.firstTransactionSummary.moreInfo")}
-              </Text>
-            </Row>
-          </View>
+          </View>,
+          <H3 style={WalletStyles.white}>
+            {amountIsUpdated && updatedAmount
+              ? formatNumberAmount(updatedAmount)
+              : fromNullable(amount).fold("...", formatNumberAmount)}
+          </H3>
         )}
+
+        <Row style={[styles.toAlignColumnstart, styles.updateInfoRow]}>
+          <Text style={WalletStyles.white}>
+            {I18n.t("wallet.firstTransactionSummary.updateInfo")}
+          </Text>
+        </Row>
+
         {false && // tslint:disable-line no-redundant-boolean
           // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(

@@ -5,7 +5,6 @@ import IngressScreen from "../screens/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
-import PinNavigator from "./PinNavigator";
 import ROUTES from "./routes";
 
 import { Animated, Easing } from "react-native";
@@ -61,9 +60,6 @@ const navigator = createStackNavigator(
     },
     [ROUTES.ONBOARDING]: {
       screen: OnboardingNavigator
-    },
-    [ROUTES.PIN_LOGIN_NAVIGATOR]: {
-      screen: PinNavigator
     },
     [ROUTES.MAIN]: {
       // The navigator used for authenticated users

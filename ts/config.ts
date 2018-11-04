@@ -13,7 +13,7 @@ export const DEFAULT_APPLICATION_NAME = "io.italia.it";
 const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/teamdigitale/italia-services-metadata/master" as NonEmptyString;
 
 // default timeout of fetch (in ms)
-const DEFAULT_FETCH_TIMEOUT_MS = 3000;
+const DEFAULT_FETCH_TIMEOUT_MS = 5000;
 
 // default max retries for fetch
 const DEFAULT_FETCH_MAX_RETRIES = 3;
@@ -21,18 +21,23 @@ const DEFAULT_FETCH_MAX_RETRIES = 3;
 // default timeout of fetch for calling the PagoPA SOAP APIs
 const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 60000;
 
+// default timeout of fetch for calling certain PagoPA Payment Manager APIs
+// that usually take longer than the other APIs (e.g. the payment related
+// operations)
+const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
+
 // default seconds of background activity before asking the PIN login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
-export const environment = Config.ENVIRONMENT;
-export const apiUrlPrefix = Config.API_URL_PREFIX;
-export const pagoPaApiUrlPrefix = Config.PAGOPA_API_URL_PREFIX;
-export const mixpanelToken = Config.MIXPANEL_TOKEN;
+export const environment: string = Config.ENVIRONMENT;
+export const apiUrlPrefix: string = Config.API_URL_PREFIX;
+export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
+export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
-export const gcmSenderId = Config.GCM_SENDER_ID;
+export const gcmSenderId: string = Config.GCM_SENDER_ID;
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
-export const instabugToken = Config.INSTABUG_TOKEN;
+export const instabugToken: string = Config.INSTABUG_TOKEN;
 
 export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
   DEFAULT_FETCH_TIMEOUT_MS
@@ -45,6 +50,10 @@ export const fetchMaxRetries = t.Integer.decode(
 export const fetchPagoPaTimeout = t.Integer.decode(
   Config.FETCH_PAGOPA_TIMEOUT_MS
 ).getOrElse(DEFAULT_FETCH_PAGOPA_TIMEOUT_MS) as Millisecond;
+
+export const fetchPaymentManagerLongTimeout = t.Integer.decode(
+  Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS
+).getOrElse(DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS) as Millisecond;
 
 export const backgroundActivityTimeout = t.Integer.decode(
   Config.BACKGROUND_ACTIVITY_TIMEOUT_S

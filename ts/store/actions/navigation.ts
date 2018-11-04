@@ -12,7 +12,14 @@ import { InferNavigationParams } from "../../types/react";
 import ROUTES from "../../navigation/routes";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-import Checkout3DsScreen from "../../screens/wallet/Checkout3DsScreen";
+import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
+import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
+import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
+import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
+import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
+import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
+import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 
@@ -61,10 +68,6 @@ export const navigateToPinLogin = NavigationActions.navigate({
   key: undefined
 });
 
-export const navigateToBackgroundScreen = NavigationActions.navigate({
-  routeName: ROUTES.BACKGROUND
-});
-
 export const navigateBack = NavigationActions.back;
 
 export const navigateToMessageDetailScreenAction = (
@@ -87,6 +90,30 @@ export const navigateToMessageDetailScreenAction = (
     ]
   });
 
+export const navigateToServiceDetailsScreen = (
+  params: InferNavigationParams<typeof ServiceDetailsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PREFERENCES_SERVICE_DETAIL,
+    params
+  });
+
+export const navigateToPaymentTransactionSummaryScreen = (
+  params: InferNavigationParams<typeof TransactionSummaryScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+    params
+  });
+
+export const navigateToPaymentPickPaymentMethodScreen = (
+  params: InferNavigationParams<typeof PickPaymentMethodScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
+    params
+  });
+
 // TODO: this should use StackActions.reset
 // to reset the navigation. Right now, the
 // "back" option is not allowed -- so the user cannot
@@ -101,18 +128,70 @@ export const navigateToTransactionDetailsScreen = (
     params
   });
 
-export const navigateToWalletCheckout3dsScreen = (
-  params: InferNavigationParams<typeof Checkout3DsScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
-    params
-  });
-
 export const navigateToWalletTransactionsScreen = (
   params: InferNavigationParams<typeof TransactionsScreen>
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_CARD_TRANSACTIONS,
     params
+  });
+
+export const navigateToPaymentPickPspScreen = (
+  params: InferNavigationParams<typeof PickPspScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_PICK_PSP,
+    params
+  });
+
+export const navigateToPaymentConfirmPaymentMethodScreen = (
+  params: InferNavigationParams<typeof ConfirmPaymentMethodScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
+    params
+  });
+
+export const navigateToWalletHome = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_HOME
+  });
+
+export const navigateToWalletList = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_LIST
+  });
+
+export const navigateToWalletAddPaymentMethod = (
+  params: InferNavigationParams<typeof AddPaymentMethodScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+    params
+  });
+
+export const navigateToWalletAddCreditCard = (
+  params: InferNavigationParams<typeof AddCardScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_CARD,
+    params
+  });
+
+export const navigateToWalletConfirmCardDetails = (
+  params: InferNavigationParams<typeof ConfirmCardDetailsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_CONFIRM_CARD_DETAILS,
+    params
+  });
+
+export const navigateToPaymentScanQrCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_SCAN_QR_CODE
+  });
+
+export const navigateToPaymentManualDataInsertion = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION
   });

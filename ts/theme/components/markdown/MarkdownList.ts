@@ -1,4 +1,5 @@
 import { Theme } from "../../types";
+import variables from "../../variables";
 
 export default (): Theme => {
   return {
@@ -8,7 +9,9 @@ export default (): Theme => {
         alignItems: "center",
         flexDirection: "row",
         paddingLeft: 10
-      }
+      },
+
+      marginBottom: variables.lineHeightBase
     }
   };
 };

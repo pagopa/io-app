@@ -1,5 +1,7 @@
 ---
 global:
+  localization:
+    decimalSeparator: "."
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -14,6 +16,7 @@ global:
     ok: OK
     continue: Continue
     retry: Retry
+    back: Back
   navigator:
     messages: messages
     wallet: wallet
@@ -23,6 +26,7 @@ global:
   actions:
     retry: An error occurred, please retry
   remoteStates:
+    loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
 locales:
@@ -30,7 +34,7 @@ locales:
   en: English
 connection:
   status:
-    offline: You are offline!
+    offline: Offline! Some features will not work.
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
@@ -62,7 +66,7 @@ profile:
     logout: Logout/Exit
     privacy:
       title: Privacy
-      description: Export data, Remove account
+      description: Export data, delete account
       text: !include privacy.md
     termsAndConditions:
       title: Terms and Conditions
@@ -74,11 +78,11 @@ profile:
         title: Privacy policy
         description: review accepted privacy terms
       removeAccount:
-        title: Cancella il tuo account
+        title: Delete your account
         description: remove all data associated to your account from your phone and
           our systems (SPID required)
       exportData:
-        title: Esporta i tuoi dati
+        title: Export your data
         description: send to your email all your account’s data in an open format
     developersSectionHeader: Developers
     accountSectionHeader: Account
@@ -157,7 +161,6 @@ authentication:
     subtitle: "The Identity Providers provide several authentication methods
       and, toghether with SPID, they provide several services: find out more
       at each one's website."
-    cancel: Cancel
   idp_login:
     headerTitle: Login
   errors:
@@ -230,6 +233,10 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
+  walletLoadMessage: Loading payment methods...
+  walletLoadFailure: Loading payment methods has failed!
+  transactionsLoadMessage: Loading transactions...
+  transactionsLoadFailure: Loading transactions has failed!
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -257,6 +264,12 @@ wallet:
     infoTitle: Set the card as favourite payment method
     info: This payment method will be automatically proposed for the next payment
     save: Save the card
+    notice: To verify the card, 2 euro cents will be charged and immediately reversed.
+    temporaryError: There was a temporary problem while saving this card, please retry.
+  saveCardInPayment:
+    header: Pay with this card
+    title: Do you want to pay with this card?
+    save: Pay with this card
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
@@ -266,9 +279,9 @@ wallet:
     info2: which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
+    onUpdateWalletPspFailure: Operation failed, please retry
   ConfirmPayment:
     header: Confirm transaction
-    cancel: CANCEL
     cancelPayment: Cancel the transaction
     goToPay: Confirm and pay
     askConfirm: Want to proceed with the transaction?
@@ -280,6 +293,7 @@ wallet:
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
+    identificationMessage: Confirm the transaction with your PIN code
   payWith:
     noWallets:
       title: No payment methods found
@@ -287,6 +301,8 @@ wallet:
     header: Choose payment method
     title: Pay with
     text: Choose one saved payment method or add a new one
+    fetchPspFailure: Temporary error, please retry
+    noPspsAvailable: This payment method cannot be used
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
@@ -338,18 +354,17 @@ wallet:
   latestTransactions: Latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  cancel: Cancel
   continue: Continue
   methods:
     card:
       name: Credit/debit card
-      maxFee: Maximum fee of 0.50€
+      maxFee: Maximum fee of 1.50€
     bank:
-      name: Bank account
+      name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     mobile:
       name: Other payment methods
-      maxFee: Maximum fee of 0.50€
+      maxFee: Paypal, Satispay, etc.
   addCardTitle: Card details
   dummyCard:
     labels:
@@ -374,18 +389,17 @@ wallet:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: PAYMENT_DUPLICATED
-    INVALID_AMOUNT: INVALID_AMOUNT
-    PAYMENT_ONGOING: PAYMENT_ONGOING
-    PAYMENT_EXPIRED: PAYMENT_EXPIRED
-    PAYMENT_UNAVAILABLE: PAYMENT_UNAVAILABLE
-    PAYMENT_UNKNOWN: PAYMENT_UNKNOWN
-    DOMAIN_UNKNOWN: DOMAIN_UNKNOWN
-    GENERIC_ERROR: GENERIC_ERROR
-    MISSING_PAYMENT_ID: MISSING_PAYMENT_ID
+    PAYMENT_DUPLICATED: This notice has been already paid.
+    INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
+    PAYMENT_ONGOING: Another payment for this notice is going on, a mew payment can't be started at this time.
+    PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
+    PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
+    PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
+    DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the PagoPA network
+    GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
+    MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
 saveCard:
   saveCard: Save the card
-  cancel: Cancel
   header: Do you whant to save this card?
   favoriteTitle: Set the cart as favourite payment method
   favoriteText: This payment method will be automatically proposed for the next payment
@@ -398,6 +412,8 @@ cardComponent:
   deleteMsg: This will delete the payment method
   neverUsed: Never used
   lastUsage: Last usage
+  detailsAndTransactions: Details and transactions
+  pick: Pay with this method
 messages:
   counting:
     zero: No message
@@ -448,6 +464,9 @@ preferences:
   empty:
     default: No preference set
   preferencesHelp: !include preferences_home_help.md
+  unavailable:
+    title: This setting is not available at this time
+    message: This setting will be available in a future release
 services:
   headerTitle: Services
   title: Available services
@@ -466,3 +485,9 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
+serviceDetail:
+  headerTitle: "Service details"
+identification:
+  message: "Enter the PIN"
+  resetPinMessage: To reset your PIN you will have to login again with your SPID account.
+  resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.

@@ -1,4 +1,4 @@
-import { isSome } from "fp-ts/lib/Option";
+import { isSome, none } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
@@ -8,12 +8,12 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
-import {
-  paymentRequestTransactionSummaryFromRptId,
-  startPaymentSaga
-} from "../../store/actions/wallet/payment";
+
+import { navigateToPaymentTransactionSummaryScreen } from "../../store/actions/navigation";
+import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import * as pot from "../../types/pot";
 import {
   formatDateAsDay,
   formatDateAsMonth,
@@ -28,7 +28,7 @@ import CalendarIconComponent from "../CalendarIconComponent";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service?: ServicePublic;
+  service: pot.Pot<ServicePublic, Error>;
   containerStyle?: ViewStyle;
 };
 
@@ -61,32 +61,19 @@ const styles = StyleSheet.create({
   }
 });
 
-function needReminderCTA(message: MessageWithContentPO) {
-  return message.content.due_date !== undefined;
-}
-
-function needPaymentCTA(
-  message: MessageWithContentPO,
-  service?: ServicePublic
-) {
-  return message.content.payment_data !== undefined && service !== undefined;
-}
-
 class MessageCTABar extends React.PureComponent<Props> {
-  private renderReminderCTA(message: MessageWithContentPO) {
-    if (message.content.due_date === undefined) {
-      return null;
-    }
-
-    const { subject, due_date } = message.content;
+  private renderReminderCTA(
+    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
+    subject: string
+  ) {
     // Create an action that open the Calendar to let the user add an event
     const onPressHandler = () =>
       AddCalendarEvent.presentEventCreatingDialog({
         title: I18n.t("messages.cta.reminderTitle", {
           subject
         }),
-        startDate: formatDateAsReminder(due_date),
-        endDate: formatDateAsReminder(due_date),
+        startDate: formatDateAsReminder(dueDate),
+        endDate: formatDateAsReminder(dueDate),
         allDay: true
       }).catch(_ => undefined);
 
@@ -95,8 +82,8 @@ class MessageCTABar extends React.PureComponent<Props> {
         <CalendarIconComponent
           height="48"
           width="48"
-          month={formatDateAsMonth(due_date)}
-          day={formatDateAsDay(due_date)}
+          month={formatDateAsMonth(dueDate)}
+          day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
           textColor={variables.colorWhite}
         />
@@ -111,61 +98,69 @@ class MessageCTABar extends React.PureComponent<Props> {
   }
 
   private renderPaymentCTA(
-    message: MessageWithContentPO,
-    service?: ServicePublic
+    paymentData: NonNullable<MessageWithContentPO["content"]["payment_data"]>,
+    potService: pot.Pot<ServicePublic, Error>
   ) {
-    if (message.content.payment_data && service) {
-      const { payment_data } = message.content;
+    const amount = getAmountFromPaymentAmount(paymentData.amount);
 
-      const amount = getAmountFromPaymentAmount(payment_data.amount);
+    const rptId = pot.getOrElse(
+      pot.map(potService, service =>
+        getRptIdFromNoticeNumber(
+          service.organization_fiscal_code,
+          paymentData.notice_number
+        )
+      ),
+      none
+    );
 
-      const rptId = getRptIdFromNoticeNumber(
-        service.organization_fiscal_code,
-        payment_data.notice_number
-      );
+    const onPaymentCTAPress =
+      isSome(amount) && isSome(rptId)
+        ? () => {
+            this.props.dispatch(paymentInitializeState());
+            this.props.dispatch(
+              navigateToPaymentTransactionSummaryScreen({
+                rptId: rptId.value,
+                initialAmount: amount.value
+              })
+            );
+          }
+        : undefined;
 
-      if (isSome(amount) && isSome(rptId)) {
-        const onPaymentCTAPress = () => {
-          this.props.dispatch(startPaymentSaga());
-          this.props.dispatch(
-            paymentRequestTransactionSummaryFromRptId({
-              rptId: rptId.value,
-              initialAmount: amount.value
-            })
-          );
-        };
-
-        return (
-          <View style={styles.paymentContainer}>
-            <Button block={true} onPress={onPaymentCTAPress}>
-              <Text>
-                {I18n.t("messages.cta.pay", {
-                  amount: formatPaymentAmount(payment_data.amount)
-                })}
-              </Text>
-            </Button>
-          </View>
-        );
-      }
-    }
-
-    return null;
+    return (
+      <View style={styles.paymentContainer}>
+        <Button
+          block={true}
+          onPress={onPaymentCTAPress}
+          disabled={onPaymentCTAPress === undefined}
+        >
+          <Text>
+            {I18n.t("messages.cta.pay", {
+              amount: formatPaymentAmount(paymentData.amount)
+            })}
+          </Text>
+        </Button>
+      </View>
+    );
   }
 
   public render() {
     const { message, service, containerStyle } = this.props;
 
-    if (needReminderCTA(message) || needPaymentCTA(message, service)) {
+    const { due_date, payment_data } = message.content;
+
+    if (due_date !== undefined || payment_data !== undefined) {
       return (
         <View style={[styles.mainContainer, containerStyle]}>
-          {this.renderReminderCTA(message)}
+          {due_date !== undefined &&
+            this.renderReminderCTA(due_date, message.content.subject)}
 
-          {needReminderCTA(message) &&
-            needPaymentCTA(message, service) && (
+          {due_date !== undefined &&
+            payment_data !== undefined && (
               <View style={styles.separatorContainer} />
             )}
 
-          {this.renderPaymentCTA(message, service)}
+          {payment_data !== undefined &&
+            this.renderPaymentCTA(payment_data, service)}
         </View>
       );
     }

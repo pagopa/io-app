@@ -8,7 +8,6 @@ import { getType } from "typesafe-actions";
 
 import { Transaction } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
-import { cleanPaymentDescription } from "../../../utils/cleanPaymentDescription";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,
@@ -18,8 +17,13 @@ import {
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 
+/**
+ * The transactions selector will truncate the list at this length
+ */
+const MAX_TRANSACTIONS_IN_LIST = 50;
+
 export type TransactionsState = Readonly<{
-  transactions: pot.Pot<IndexedById<Transaction>>;
+  transactions: pot.Pot<IndexedById<Transaction>, Error>;
 }>;
 
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
@@ -27,11 +31,18 @@ const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
 };
 
 // selectors
-export const getTransactions = (state: GlobalState) =>
+const getTransactions = (state: GlobalState) =>
   pot.map(
     state.wallet.transactions.transactions,
     txs =>
       values(txs).filter(_ => _ !== undefined) as ReadonlyArray<Transaction>
+  );
+
+export const getWalletTransactionsCreator = (idWallet: number) => (
+  state: GlobalState
+) =>
+  pot.map(getTransactions(state), tsx =>
+    tsx.filter(_ => _.idWallet === idWallet)
   );
 
 export const latestTransactionsSelector = createSelector(
@@ -55,15 +66,9 @@ export const latestTransactionsSelector = createSelector(
                 : b.created.toISOString().localeCompare(a.created.toISOString())
           )
           .filter(t => t.statusMessage !== "rifiutato")
-          .slice(0, 50) // WIP no magic numbers
+          .slice(0, MAX_TRANSACTIONS_IN_LIST) // WIP no magic numbers
     )
 );
-
-const cleanDescription = ({ description, ...transaction }: Transaction) => {
-  const cleanedDescription = cleanPaymentDescription(description);
-
-  return { ...transaction, description: cleanedDescription };
-};
 
 // reducer
 const reducer = (
@@ -80,9 +85,7 @@ const reducer = (
     case getType(fetchTransactionsSuccess):
       return {
         ...state,
-        transactions: pot.some(
-          toIndexed(action.payload.map(cleanDescription), _ => _.id)
-        )
+        transactions: pot.some(toIndexed(action.payload, _ => _.id))
       };
 
     case getType(fetchTransactionsFailure):

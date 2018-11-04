@@ -95,6 +95,7 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       allowFontScaling={true}
       ellipsizeMode="tail"
       inMessage={false}
+      markdown={true}
       style={
         Array [
           Object {
@@ -107,10 +108,267 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      A simple ordered list:
-1. Vue
-2. React
-3. Angular
+      A 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      simple 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      ordered 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      list
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      : 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      1
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      Vue 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      2
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      React 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      3
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      . 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      Angular
     </Text>
   </View>
 </View>
@@ -133,6 +391,7 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       allowFontScaling={true}
       ellipsizeMode="tail"
       inMessage={false}
+      markdown={true}
       style={
         Array [
           Object {
@@ -145,10 +404,267 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       }
       uppercase={false}
     >
-      A simple unordered list:
-* Vue
-* React
-* Angular
+      A 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      simple 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      unordered 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      list
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      : 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      Vue 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      React 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      * 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      Angular
     </Text>
   </View>
 </View>
@@ -171,6 +687,7 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       allowFontScaling={true}
       ellipsizeMode="tail"
       inMessage={false}
+      markdown={true}
       style={
         Array [
           Object {
@@ -183,7 +700,67 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       }
       uppercase={false}
     >
-      A simple paragraph.
+      A 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      simple 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      paragraph
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      inMessage={false}
+      markdown={true}
+      style={
+        Array [
+          Object {
+            "color": "#000",
+            "fontFamily": "System",
+            "fontSize": 16,
+          },
+          Object {},
+        ]
+      }
+      uppercase={false}
+    >
+      .
     </Text>
   </View>
 </View>

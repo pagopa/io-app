@@ -10,6 +10,7 @@ import { ContentState } from "./content";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
+import { IdentificationState } from "./identification";
 import { LoadingState } from "./loading";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
@@ -17,12 +18,7 @@ import { OnboardingState } from "./onboarding";
 import { PinLoginState } from "./pinlogin";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
-import {
-  WalletState,
-  WalletStateWithPaymentId,
-  WalletStateWithSelectedPaymentMethod,
-  WalletStateWithVerificaResponse
-} from "./wallet";
+import { WalletState } from "./wallet";
 
 type NetworkState = Readonly<{
   isConnected: boolean;
@@ -48,42 +44,7 @@ export type GlobalState = Readonly<{
   preferences: PreferencesState;
   content: ContentState;
   navigationHistory: NavigationHistoryState;
+  identification: IdentificationState;
 }>;
-
-/**
- * This represents a GlobalState where the Wallet state
- * is guaranteed to store a payment for which the "verifica"
- * information is available
- */
-export type GlobalStateWithVerificaResponse = {
-  [T in Exclude<keyof GlobalState, "wallet">]: GlobalState[T]
-} &
-  Readonly<{
-    wallet: WalletStateWithVerificaResponse;
-  }>;
-
-/**
- * This represents a GlobalState where the Wallet state
- * is guaranteed to store a payment for which the payment
- * method has been selected (+ verifica response)
- */
-export type GlobalStateWithSelectedPaymentMethod = {
-  [T in Exclude<keyof GlobalState, "wallet">]: GlobalState[T]
-} &
-  Readonly<{
-    wallet: WalletStateWithSelectedPaymentMethod;
-  }>;
-
-/**
- * This represents a GlobalState where the Wallet state
- * is guaranteed to store a payment for which the payment
- * id has been fetched (+ verifica response)
- */
-export type GlobalStateWithPaymentId = {
-  [T in Exclude<keyof GlobalState, "wallet">]: GlobalState[T]
-} &
-  Readonly<{
-    wallet: WalletStateWithPaymentId;
-  }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

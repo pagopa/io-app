@@ -1,6 +1,7 @@
 package it.teamdigitale.app.italiaapp;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
 

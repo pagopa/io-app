@@ -25,7 +25,9 @@ const reducer = (
      * A new message has been loaded from the Backend. Add the ID to the array.
      */
     case getType(loadMessageSuccess):
-      return [...state, action.payload.id];
+      return state.indexOf(action.payload.id) >= 0
+        ? state
+        : [...state, action.payload.id];
 
     case getType(clearCache):
       return INITIAL_STATE;

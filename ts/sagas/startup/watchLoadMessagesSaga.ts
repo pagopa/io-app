@@ -20,11 +20,9 @@ import {
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import {
-  GetServiceT,
   GetUserMessagesT,
   GetUserMessageT
 } from "../../../definitions/backend/requestTypes";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessageFailure,
@@ -34,18 +32,12 @@ import {
   loadMessagesSuccess,
   loadMessageSuccess
 } from "../../store/actions/messages";
-import {
-  loadServiceFailure,
-  loadServiceSuccess
-} from "../../store/actions/services";
+import { loadServiceRequest } from "../../store/actions/services";
 import {
   messageByIdSelector,
   messagesByIdSelector
 } from "../../store/reducers/entities/messages/messagesById";
-import {
-  serviceByIdSelector,
-  servicesByIdSelector
-} from "../../store/reducers/entities/services/servicesById";
+import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import {
   MessageWithContentPO,
@@ -72,62 +64,29 @@ export function* loadMessage(
     return right(cachedMessage);
   }
 
-  const response: SagaCallReturnType<typeof getMessage> = yield call(
-    getMessage,
-    { id }
-  );
+  try {
+    const response: SagaCallReturnType<typeof getMessage> = yield call(
+      getMessage,
+      { id }
+    );
 
-  if (!response || response.status !== 200) {
-    const error: Error =
-      response && response.status === 500
-        ? Error(response.value.title)
-        : Error();
+    if (!response || response.status !== 200) {
+      const error: Error =
+        response && response.status === 500
+          ? Error(response.value.title)
+          : Error();
+      yield put(loadMessageFailure(error));
+      return left(error);
+    }
+
+    // Trigger an action to store the new message (converted to plain object) and return it
+    const messageWithContentPO = toMessageWithContentPO(response.value);
+    yield put(loadMessageSuccess(messageWithContentPO));
+    return right(messageWithContentPO);
+  } catch (error) {
     yield put(loadMessageFailure(error));
     return left(error);
   }
-
-  // Trigger an action to store the new message (converted to plain object) and return it
-  const messageWithContentPO = toMessageWithContentPO(response.value);
-  yield put(loadMessageSuccess(messageWithContentPO));
-  return right(messageWithContentPO);
-}
-
-/**
- * A generator to load the service details from the Backend
- *
- * @param {function} getService - The function that makes the Backend request
- * @param {string} id - The id of the service to load
- * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
- */
-export function* loadService(
-  getService: TypeofApiCall<GetServiceT>,
-  id: string
-): IterableIterator<Effect | Either<Error, ServicePublic>> {
-  // If we already have the service in the store just return it
-  const cachedService: ReturnType<
-    ReturnType<typeof serviceByIdSelector>
-  > = yield select<GlobalState>(serviceByIdSelector(id));
-  if (cachedService) {
-    return right(cachedService);
-  }
-
-  const response: SagaCallReturnType<typeof getService> = yield call(
-    getService,
-    { service_id: id }
-  );
-
-  if (!response || response.status !== 200) {
-    const error: Error =
-      response && response.status === 500
-        ? Error(response.value.title)
-        : Error();
-    yield put(loadServiceFailure(error));
-    return left(error);
-  }
-
-  // Trigger an action to store the new service and return it
-  yield put(loadServiceSuccess(response.value));
-  return right(response.value);
 }
 
 /**
@@ -137,8 +96,7 @@ export function* loadService(
  */
 export function* loadMessages(
   getMessages: TypeofApiCall<GetUserMessagesT>,
-  getMessage: TypeofApiCall<GetUserMessageT>,
-  getService: TypeofApiCall<GetServiceT>
+  getMessage: TypeofApiCall<GetUserMessageT>
 ): IterableIterator<Effect> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
@@ -196,7 +154,7 @@ export function* loadMessages(
       // Fetch the services detail in parallel
       // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
       // We fetch services first because to show messages you need the related service info
-      yield all(newServicesIds.map(id => call(loadService, getService, id)));
+      yield all(newServicesIds.map(id => put(loadServiceRequest(id))));
 
       // Fetch the messages detail in parallel
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
@@ -205,6 +163,9 @@ export function* loadMessages(
 
       yield put(loadMessagesSuccess());
     }
+  } catch (error) {
+    // Dispatch failure action
+    yield put(loadMessagesFailure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a cancel message
@@ -221,8 +182,7 @@ export function* loadMessages(
  */
 export function* watchMessagesLoadOrCancelSaga(
   getMessages: TypeofApiCall<GetUserMessagesT>,
-  getMessage: TypeofApiCall<GetUserMessageT>,
-  getService: TypeofApiCall<GetServiceT>
+  getMessage: TypeofApiCall<GetUserMessageT>
 ): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line:no-let
@@ -246,9 +206,7 @@ export function* watchMessagesLoadOrCancelSaga(
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
     if (isActionOf(loadMessagesRequest, action)) {
       // Call the generator to load messages
-      lastTask = some(
-        yield fork(loadMessages, getMessages, getMessage, getService)
-      );
+      lastTask = some(yield fork(loadMessages, getMessages, getMessage));
     }
   }
 }

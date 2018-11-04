@@ -91,7 +91,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         subtitle={I18n.t("profile.main.screenSubtitle")}
       >
         <Content noPadded={true}>
-          <List>
+          <List withContentLateralPadding={true}>
             {/* Privacy */}
             <ListItem
               first={true}
@@ -101,28 +101,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 <H3>{I18n.t("profile.main.privacy.title")}</H3>
                 <Text style={styles.itemLeftText}>
                   {I18n.t("profile.main.privacy.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
-
-            {/* Terms & conditions */}
-            <ListItem
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_TOS, {
-                  isProfile: true
-                })
-              }
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.termsAndConditions.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.main.termsAndConditions.description")}
                 </Text>
               </Left>
               <Right>

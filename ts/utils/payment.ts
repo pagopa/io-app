@@ -15,6 +15,7 @@ import I18n from "../i18n";
 
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
+import { Psp, Wallet } from "../types/pagopa";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -63,3 +64,54 @@ export function decodePagoPaQrCode(
     )
   );
 }
+
+/**
+ * The PaymentManager returns a PSP entry for each supported language, so
+ * we need to skip PSPs that have the language different from the current
+ * locale.
+ */
+export const pspsForLocale = (
+  psps: ReadonlyArray<Psp>,
+  locale: string = I18n.locale.slice(0, 2)
+) => psps.filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
+
+/**
+ * Whether we need to show the PSP selection screen to the user.
+ */
+export function walletHasFavoriteAvailablePsp(
+  wallet: Wallet,
+  psps: ReadonlyArray<Psp>
+): boolean {
+  // see whether there's a PSP that has already been used with this wallet
+  const maybeWalletPsp = wallet.psp;
+
+  if (maybeWalletPsp === undefined) {
+    // there is no PSP associated to this payment method (wallet), we cannot
+    // automatically select a PSP
+    return false;
+  }
+
+  // see whether the PSP associated with this wallet can be used for this
+  // payment
+  const walletPspInPsps = psps.find(psp => psp.id === maybeWalletPsp.id);
+
+  // if the wallet PSP is one of the available PSPs, we can automatically
+  // select it
+  return walletPspInPsps !== undefined;
+}
+
+/**
+ * This function removes the tag from payment description of a PagoPA transaction.
+ * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
+ */
+export const cleanTransactionDescription = (description: string): string => {
+  if (!description.startsWith("/RF")) {
+    // not a description in the pagopa format, return the description unmodified
+    return description;
+  }
+  const descriptionParts = description.split("/TXT/");
+
+  return descriptionParts.length > 1
+    ? descriptionParts[descriptionParts.length - 1].trim()
+    : "";
+};

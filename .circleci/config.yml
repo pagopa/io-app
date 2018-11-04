@@ -153,6 +153,11 @@ jobs:
       - run:
           command: cd android && ./gradlew assembleDebug
 
+      # Save APKs
+      - store_artifacts:
+          path: android/app/build/outputs/apk
+          destination: apks/release
+
       # Save jars cache
       - save_cache:
           paths:
