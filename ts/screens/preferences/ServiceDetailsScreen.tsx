@@ -187,249 +187,254 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         goBack={this.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
       >
-        <Content>
-          <Grid>
-            <Row>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <H2>{service.service_name}</H2>
-              </Col>
-              <Col style={{ width: 60 }}>
-                <MultiImage
-                  style={{ width: 60, height: 60 }}
-                  source={logoUris}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} large={true} />
-            <Row>
-              <Col size={10}>
-                <Text
-                  primary={
-                    profileEnabledChannels.inbox !==
-                    this.state.uiEnabledChannels.inbox
+        <Content noPadded={true}>
+          <View content={true}>
+            <Grid>
+              <Row>
+                <Col>
+                  <H4>{service.organization_name}</H4>
+                  <H2>{service.service_name}</H2>
+                </Col>
+                <Col style={{ width: 60 }}>
+                  <MultiImage
+                    style={{ width: 60, height: 60 }}
+                    source={logoUris}
+                  />
+                </Col>
+              </Row>
+              <View spacer={true} large={true} />
+              <Row>
+                <Col size={10}>
+                  <Text
+                    primary={
+                      profileEnabledChannels.inbox !==
+                      this.state.uiEnabledChannels.inbox
+                    }
+                  >
+                    {profileEnabledChannels.inbox
+                      ? I18n.t("services.serviceIsEnabled")
+                      : I18n.t("services.serviceNotEnabled")}
+                  </Text>
+                </Col>
+                <Col size={2}>
+                  <Switch
+                    key={`switch-inbox-${profileVersion}`}
+                    value={this.state.uiEnabledChannels.inbox}
+                    disabled={
+                      profileEnabledChannels.inbox !==
+                      this.state.uiEnabledChannels.inbox
+                    }
+                    onValueChange={(value: boolean) => {
+                      // compute the updated map of enabled channels
+                      const newUiEnabledChannels = {
+                        ...this.state.uiEnabledChannels,
+                        inbox: value
+                      };
+
+                      // dispatch the update of the profile from the new prefs
+                      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+                      // optimistically update the UI while we wait for the
+                      // profile to update
+                      this.setState({
+                        uiEnabledChannels: newUiEnabledChannels
+                      });
+                    }}
+                  />
+                </Col>
+              </Row>
+              <View spacer={true} />
+              <Row>
+                <Col size={1} />
+                <Col size={9}>
+                  <Text
+                    primary={
+                      profileEnabledChannels.push !==
+                      this.state.uiEnabledChannels.push
+                    }
+                  >
+                    {I18n.t("services.pushNotifications")}
+                  </Text>
+                </Col>
+                <Col size={2}>
+                  <Switch
+                    key={`switch-push-${profileVersion}`}
+                    value={
+                      this.state.uiEnabledChannels.inbox &&
+                      this.state.uiEnabledChannels.push
+                    }
+                    disabled={!this.state.uiEnabledChannels.inbox}
+                    onValueChange={(value: boolean) => {
+                      // compute the updated map of enabled channels
+                      const newUiEnabledChannels = {
+                        ...this.state.uiEnabledChannels,
+                        push: value
+                      };
+
+                      // dispatch the update of the profile from the new prefs
+                      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+                      // optimistically update the UI while we wait for the
+                      // profile to update
+                      this.setState({
+                        uiEnabledChannels: newUiEnabledChannels
+                      });
+                    }}
+                  />
+                </Col>
+              </Row>
+              <View spacer={true} />
+              <Row>
+                <Col size={1} />
+                <Col size={9}>
+                  <Text
+                    primary={
+                      profileEnabledChannels.email !==
+                      this.state.uiEnabledChannels.email
+                    }
+                  >
+                    {I18n.t("services.emailNotifications")}
+                  </Text>
+                </Col>
+                <Col size={2}>
+                  <Switch
+                    key={`switch-email-${profileVersion}`}
+                    disabled={!this.state.uiEnabledChannels.inbox}
+                    value={
+                      this.state.uiEnabledChannels.inbox &&
+                      this.state.uiEnabledChannels.email
+                    }
+                    onValueChange={(value: boolean) => {
+                      // compute the updated map of enabled channels
+                      const newUiEnabledChannels = {
+                        ...this.state.uiEnabledChannels,
+                        email: value
+                      };
+
+                      // dispatch the update of the profile from the new prefs
+                      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+                      // optimistically update the UI while we wait for the
+                      // profile to update
+                      this.setState({
+                        uiEnabledChannels: newUiEnabledChannels
+                      });
+                    }}
+                  />
+                </Col>
+              </Row>
+              <View spacer={true} large={true} />
+              {description && (
+                <Markdown lazyOptions={{ lazy: true, animated: true }}>
+                  {description}
+                </Markdown>
+              )}
+              {description && <View spacer={true} large={true} />}
+              {tos_url && (
+                <TouchableOpacity
+                  style={styles.infoItem}
+                  onPress={() =>
+                    Linking.openURL(tos_url).then(() => 0, () => 0)
                   }
                 >
-                  {profileEnabledChannels.inbox
-                    ? I18n.t("services.serviceIsEnabled")
-                    : I18n.t("services.serviceNotEnabled")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-inbox-${profileVersion}`}
-                  value={this.state.uiEnabledChannels.inbox}
-                  disabled={
-                    profileEnabledChannels.inbox !==
-                    this.state.uiEnabledChannels.inbox
-                  }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      inbox: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
-                  }}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} />
-            <Row>
-              <Col size={1} />
-              <Col size={9}>
-                <Text
-                  primary={
-                    profileEnabledChannels.push !==
-                    this.state.uiEnabledChannels.push
+                  <Text link={true}>{I18n.t("services.tosLink")}</Text>
+                </TouchableOpacity>
+              )}
+              {privacy_url && (
+                <TouchableOpacity
+                  style={styles.infoItem}
+                  onPress={() =>
+                    Linking.openURL(privacy_url).then(() => 0, () => 0)
                   }
                 >
-                  {I18n.t("services.pushNotifications")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-push-${profileVersion}`}
-                  value={
-                    this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.push
-                  }
-                  disabled={!this.state.uiEnabledChannels.inbox}
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      push: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
-                  }}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} />
-            <Row>
-              <Col size={1} />
-              <Col size={9}>
-                <Text
-                  primary={
-                    profileEnabledChannels.email !==
-                    this.state.uiEnabledChannels.email
-                  }
-                >
-                  {I18n.t("services.emailNotifications")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-email-${profileVersion}`}
-                  disabled={!this.state.uiEnabledChannels.inbox}
-                  value={
-                    this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.email
-                  }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      email: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
-                  }}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} large={true} />
-            {description && (
-              <Markdown lazyOptions={{ lazy: true, animated: true }}>
-                {description}
-              </Markdown>
-            )}
-            {description && <View spacer={true} large={true} />}
-            {tos_url && (
-              <TouchableOpacity
-                style={styles.infoItem}
-                onPress={() => Linking.openURL(tos_url).then(() => 0, () => 0)}
-              >
-                <Text link={true}>{I18n.t("services.tosLink")}</Text>
-              </TouchableOpacity>
-            )}
-            {privacy_url && (
-              <TouchableOpacity
-                style={styles.infoItem}
-                onPress={() =>
-                  Linking.openURL(privacy_url).then(() => 0, () => 0)
-                }
-              >
-                <Text link={true}>{I18n.t("services.privacyLink")}</Text>
-              </TouchableOpacity>
-            )}
-            {(app_android || app_ios || web_url) && (
+                  <Text link={true}>{I18n.t("services.privacyLink")}</Text>
+                </TouchableOpacity>
+              )}
+              {(app_android || app_ios || web_url) && (
+                <H4 style={styles.infoHeader}>
+                  {I18n.t("services.otherAppsInfo")}
+                </H4>
+              )}
+              {web_url && (
+                <View style={styles.infoItem}>
+                  <Text>{I18n.t("services.otherAppWeb")}</Text>
+                  <Button
+                    small={true}
+                    onPress={() =>
+                      Linking.openURL(web_url).then(() => 0, () => 0)
+                    }
+                  >
+                    <Text>{web_url}</Text>
+                  </Button>
+                </View>
+              )}
+              {app_ios && (
+                <View style={styles.infoItem}>
+                  <Text>{I18n.t("services.otherAppIos")}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(app_ios).then(() => 0, () => 0)
+                    }
+                  >
+                    <Image
+                      style={styles.badgeLogo}
+                      alignSelf="flex-start"
+                      resizeMode="contain"
+                      source={require("../../../img/badges/app-store-badge.png")}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+              {app_android && (
+                <View style={styles.infoItem}>
+                  <Text>{I18n.t("services.otherAppAndroid")}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(app_android).then(() => 0, () => 0)
+                    }
+                  >
+                    <Image
+                      style={styles.badgeLogo}
+                      resizeMode="contain"
+                      source={require("../../../img/badges/google-play-badge.png")}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
               <H4 style={styles.infoHeader}>
-                {I18n.t("services.otherAppsInfo")}
+                {I18n.t("services.contactsAndInfo")}
               </H4>
-            )}
-            {web_url && (
-              <View style={styles.infoItem}>
-                <Text>{I18n.t("services.otherAppWeb")}</Text>
-                <Button
-                  small={true}
-                  onPress={() =>
-                    Linking.openURL(web_url).then(() => 0, () => 0)
-                  }
-                >
-                  <Text>{web_url}</Text>
-                </Button>
-              </View>
-            )}
-            {app_ios && (
-              <View style={styles.infoItem}>
-                <Text>{I18n.t("services.otherAppIos")}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(app_ios).then(() => 0, () => 0)
-                  }
-                >
-                  <Image
-                    style={styles.badgeLogo}
-                    alignSelf="flex-start"
-                    resizeMode="contain"
-                    source={require("../../../img/badges/app-store-badge.png")}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-            {app_android && (
-              <View style={styles.infoItem}>
-                <Text>{I18n.t("services.otherAppAndroid")}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(app_android).then(() => 0, () => 0)
-                  }
-                >
-                  <Image
-                    style={styles.badgeLogo}
-                    resizeMode="contain"
-                    source={require("../../../img/badges/google-play-badge.png")}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-            <H4 style={styles.infoHeader}>
-              {I18n.t("services.contactsAndInfo")}
-            </H4>
-            {renderInformationRow(
-              "C.F.",
-              service.organization_fiscal_code,
-              () => Clipboard.setString(service.organization_fiscal_code)
-            )}
-            {address &&
-              renderInformationRow(
-                I18n.t("services.contactAddress"),
-                address,
-                () => Clipboard.setString(address)
+              {renderInformationRow(
+                "C.F.",
+                service.organization_fiscal_code,
+                () => Clipboard.setString(service.organization_fiscal_code)
               )}
-            {phone &&
-              renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
-                Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
+              {address &&
+                renderInformationRow(
+                  I18n.t("services.contactAddress"),
+                  address,
+                  () => Clipboard.setString(address)
+                )}
+              {phone &&
+                renderInformationRow(
+                  I18n.t("services.contactPhone"),
+                  phone,
+                  () => Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
+                )}
+              {email &&
+                renderInformationRow("EMail", email, () =>
+                  Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
+                )}
+              {pec && renderInformationRow("PEC", pec)}
+              {web_url &&
+                renderInformationRow("Web", web_url, () =>
+                  Linking.openURL(web_url).then(() => 0, () => 0)
+                )}
+              {renderInformationRow("ID", service.service_id, () =>
+                Clipboard.setString(service.service_id)
               )}
-            {email &&
-              renderInformationRow("EMail", email, () =>
-                Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
-              )}
-            {pec && renderInformationRow("PEC", pec)}
-            {web_url &&
-              renderInformationRow("Web", web_url, () =>
-                Linking.openURL(web_url).then(() => 0, () => 0)
-              )}
-            {renderInformationRow("ID", service.service_id, () =>
-              Clipboard.setString(service.service_id)
-            )}
-            <View spacer={true} large={true} />
-          </Grid>
+            </Grid>
+          </View>
         </Content>
       </BaseScreenComponent>
     );
