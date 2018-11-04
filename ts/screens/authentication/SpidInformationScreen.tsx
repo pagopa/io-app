@@ -86,52 +86,57 @@ class SpidInformationScreen extends React.Component<Props, never> {
           </Right>
         </AppHeader>
 
-        <Content>
-          <DefaultSubscreenHeader
-            screenTitle={I18n.t("authentication.spid_information.contentTitle")}
-            icon={require("../../../img/icons/digital-id.png")}
-          />
+        <Content noPadded={true}>
+          <View content={true}>
+            <DefaultSubscreenHeader
+              screenTitle={I18n.t(
+                "authentication.spid_information.contentTitle"
+              )}
+              icon={require("../../../img/icons/digital-id.png")}
+            />
 
-          <View spacer={true} large={true} />
-          <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
-          <Text link={true} onPress={this.props.showHelp}>
-            {I18n.t("authentication.spid_information.moreLinkText")}
-          </Text>
-          <View spacer={true} extralarge={true} />
-
-          <H1>{I18n.t("authentication.spid_information.subtitle")}</H1>
-          <View spacer={true} />
-          <Text>
-            {I18n.t("authentication.spid_information.paragraph2-part1")}
-            <Text bold={true}>
-              {I18n.t("authentication.spid_information.paragraph2-bold")}
+            <View spacer={true} large={true} />
+            <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
+            <Text link={true} onPress={this.props.showHelp}>
+              {I18n.t("authentication.spid_information.moreLinkText")}
             </Text>
+            <View spacer={true} extralarge={true} />
+
+            <H1>{I18n.t("authentication.spid_information.subtitle")}</H1>
+            <View spacer={true} />
             <Text>
-              {` ${I18n.t("authentication.spid_information.paragraph2-part2")}`}
+              {I18n.t("authentication.spid_information.paragraph2-part1")}
+              <Text bold={true}>
+                {I18n.t("authentication.spid_information.paragraph2-bold")}
+              </Text>
+              <Text>
+                {` ${I18n.t(
+                  "authentication.spid_information.paragraph2-part2"
+                )}`}
+              </Text>
             </Text>
-          </Text>
-          <Grid>
-            {this.getValueContent(
-              I18n.t("authentication.spid_information.point1-value"),
-              I18n.t("authentication.spid_information.point1-content")
-            )}
+            <Grid>
+              {this.getValueContent(
+                I18n.t("authentication.spid_information.point1-value"),
+                I18n.t("authentication.spid_information.point1-content")
+              )}
 
-            {this.getValueContent(
-              I18n.t("authentication.spid_information.point2-value"),
-              I18n.t("authentication.spid_information.point2-content")
-            )}
+              {this.getValueContent(
+                I18n.t("authentication.spid_information.point2-value"),
+                I18n.t("authentication.spid_information.point2-content")
+              )}
 
-            {this.getValueContent(
-              I18n.t("authentication.spid_information.point3-value"),
-              I18n.t("authentication.spid_information.point3-content")
-            )}
+              {this.getValueContent(
+                I18n.t("authentication.spid_information.point3-value"),
+                I18n.t("authentication.spid_information.point3-content")
+              )}
 
-            {this.getValueContent(
-              I18n.t("authentication.spid_information.point4-value"),
-              I18n.t("authentication.spid_information.point4-content")
-            )}
-          </Grid>
-          <View spacer={true} extralarge={true} />
+              {this.getValueContent(
+                I18n.t("authentication.spid_information.point4-value"),
+                I18n.t("authentication.spid_information.point4-content")
+              )}
+            </Grid>
+          </View>
         </Content>
 
         <View footer={true}>
