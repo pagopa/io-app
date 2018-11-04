@@ -166,54 +166,59 @@ class TransactionDetailsScreen extends React.Component<Props> {
         allowGoBack={!isPaymentCompletedTransaction}
       >
         <Content
+          noPadded={true}
           scrollEnabled={false}
           style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
         >
-          <Grid>
-            <Row style={styles.titleRow}>
-              <H3>{I18n.t("wallet.transactionDetails")}</H3>
-              <IconFont
-                name="io-close"
-                size={variables.iconSizeBase}
-                onPress={this.props.navigateToWalletHome}
-              />
-            </Row>
-            <View spacer={true} large={true} />
-            {this.labelValueRow(
-              I18n.t("wallet.total"),
-              <H3 style={styles.value}>{totalAmount}</H3>
-            )}
-            {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
-            {this.labelValueRow(
-              <Text>
-                <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
-                <Text
-                  note={true}
-                  style={WalletStyles.whyLink}
-                  onPress={this.props.showHelp}
-                >
-                  {I18n.t("wallet.why")}
-                </Text>
-              </Text>,
-              fee
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.paymentReason"),
-              cleanTransactionDescription(transaction.description)
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.recipient"),
-              transaction.merchant
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.date"),
-              transaction.created.toLocaleDateString()
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.time"),
-              transaction.created.toLocaleTimeString()
-            )}
-          </Grid>
+          <View content={true}>
+            <Grid>
+              <Row style={styles.titleRow}>
+                <H3>{I18n.t("wallet.transactionDetails")}</H3>
+                <IconFont
+                  name="io-close"
+                  size={variables.iconSizeBase}
+                  onPress={this.props.navigateToWalletHome}
+                />
+              </Row>
+              <View spacer={true} large={true} />
+              {this.labelValueRow(
+                I18n.t("wallet.total"),
+                <H3 style={styles.value}>{totalAmount}</H3>
+              )}
+              {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
+              {this.labelValueRow(
+                <Text>
+                  <Text note={true}>{`${I18n.t(
+                    "wallet.transactionFee"
+                  )} `}</Text>
+                  <Text
+                    note={true}
+                    style={WalletStyles.whyLink}
+                    onPress={this.props.showHelp}
+                  >
+                    {I18n.t("wallet.why")}
+                  </Text>
+                </Text>,
+                fee
+              )}
+              {this.labelValueRow(
+                I18n.t("wallet.paymentReason"),
+                cleanTransactionDescription(transaction.description)
+              )}
+              {this.labelValueRow(
+                I18n.t("wallet.recipient"),
+                transaction.merchant
+              )}
+              {this.labelValueRow(
+                I18n.t("wallet.date"),
+                transaction.created.toLocaleDateString()
+              )}
+              {this.labelValueRow(
+                I18n.t("wallet.time"),
+                transaction.created.toLocaleTimeString()
+              )}
+            </Grid>
+          </View>
         </Content>
       </WalletLayout>
     );
