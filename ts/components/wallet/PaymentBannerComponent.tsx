@@ -5,14 +5,21 @@
 
 import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
 import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
-import { Button, Text, View } from "native-base";
+import { Button, Right, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
 import { formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
+
+const styles = StyleSheet.create({
+  rightButtonText: {
+    paddingRight: 0
+  }
+});
 
 type Props = Readonly<{
   paymentReason: string;
@@ -52,14 +59,14 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           </Text>
           <View spacer={true} />
         </Col>
-        <Col size={1}>
-          <Button bordered={true} transparent={true} onPress={props.onCancel}>
-            <Text style={[WalletStyles.white, WalletStyles.textRight]}>
+        <Right>
+          <Button small={true} transparent={true} onPress={props.onCancel}>
+            <Text style={[WalletStyles.white, styles.rightButtonText]}>
               {I18n.t("global.buttons.cancel").toUpperCase()}
             </Text>
           </Button>
           <View spacer={true} />
-        </Col>
+        </Right>
       </Row>
     </Grid>
   );
