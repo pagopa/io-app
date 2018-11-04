@@ -85,7 +85,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 
     const secondaryButtonProps = {
       block: true,
-      cancel: true,
+      bordered: true,
       onPress: this.props.navigateToTransactionSummary,
       title: I18n.t("global.buttons.cancel")
     };
@@ -142,6 +142,8 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             />
           </View>
         </Content>
+
+        <View spacer={true} />
 
         <FooterWithButtons
           type="TwoButtonsInlineThird"
