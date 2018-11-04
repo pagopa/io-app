@@ -181,7 +181,7 @@ onboarding:
     continue: Continua
   pin:
     headerTitle: Attivazione
-    contentTitle: Scegli un codice PIN
+    contentTitle: Scegli un PIN
     contentTitleConfirm: Digita ancora il PIN
     pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
@@ -198,7 +198,7 @@ onboarding:
     Potrai riprenderla in ogni momento facendo di nuovo login con SPID.
 pin_login:
   pin:
-    pinInfo: Inserisci il codice PIN
+    pinInfo: Inserisci il PIN
     reset:
       button: Ho dimenticato il PIN
       button_short: Reimposta PIN
@@ -303,7 +303,7 @@ wallet:
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
-    identificationMessage: "Conferma l'operazione inserendo il tuo codice PIN"
+    identificationMessage: "Conferma l'operazione inserendo il tuo PIN"
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
@@ -500,6 +500,6 @@ services:
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
 identification:
-  message: "Inserisci il codice PIN"
+  message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
   resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".

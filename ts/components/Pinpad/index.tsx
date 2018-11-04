@@ -1,12 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { ITuple3, Tuple3 } from "italia-ts-commons/lib/tuples";
+import { Button, Col, Grid, Row, Text, View } from "native-base";
 import * as React from "react";
-import {
-  EmitterSubscription,
-  Keyboard,
-  TextInput,
-  TouchableOpacity
-} from "react-native";
+
+import I18n from "../../i18n";
 
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
@@ -14,16 +10,14 @@ import { PIN_LENGTH } from "../../utils/constants";
 import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
 
-const focusElement = (el: TextInput) => el.focus();
-const blurElement = (el: TextInput) => el.blur();
-const current = (ref: React.RefObject<TextInput>) => ref.current;
-
 interface Props {
   activeColor: string;
   clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
+  buttonType: "primary" | "light";
   onFulfill: (code: PinString, isValid: boolean) => void;
+  onCancel?: () => void;
 }
 
 interface State {
@@ -34,14 +28,11 @@ interface State {
  * A customized CodeInput component.
  */
 class Pinpad extends React.PureComponent<Props, State> {
-  private inputRef: React.RefObject<TextInput>;
   private onFulfillTimeoutId?: number;
 
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
-
-  private keyboardDidHideListener: EmitterSubscription | undefined;
 
   constructor(props: Props) {
     super(props);
@@ -50,33 +41,14 @@ class Pinpad extends React.PureComponent<Props, State> {
       value: ""
     };
 
-    this.inputRef = React.createRef();
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
-    this.keyboardDidHideListener = undefined;
-  }
-
-  public componentDidMount() {
-    // tslint:disable-next-line no-object-mutation
-    this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      this.handleKeyboardDidHide
-    );
   }
 
   public componentWillUnmount() {
-    if (this.keyboardDidHideListener) {
-      this.keyboardDidHideListener.remove();
-    }
-
     if (this.onFulfillTimeoutId) {
       clearTimeout(this.onFulfillTimeoutId);
     }
   }
-
-  public foldInputRef = (fn: (el: TextInput) => void) =>
-    fromNullable(this.inputRef)
-      .mapNullable(current)
-      .fold(undefined, fn);
 
   private handleChangeText = (inputValue: string) => {
     this.setState({ value: inputValue });
@@ -85,12 +57,8 @@ class Pinpad extends React.PureComponent<Props, State> {
     if (inputValue.length === PIN_LENGTH) {
       const isValid = inputValue === this.props.compareWithCode;
 
-      if (isValid) {
-        this.foldInputRef(blurElement);
-      } else {
-        if (this.props.clearOnInvalid) {
-          this.clear();
-        }
+      if (!isValid && this.props.clearOnInvalid) {
+        this.clear();
       }
 
       // Fire the callback asynchronously, otherwise this component
@@ -102,26 +70,87 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
-  private handlePlaceholderPress = () => this.foldInputRef(focusElement);
+  private handlePinDigit = (digit: number) =>
+    this.handleChangeText(`${this.state.value}${digit}`);
 
-  private handleKeyboardDidHide = () => this.foldInputRef(blurElement);
-
-  public clear = () => this.setState({ value: "" });
+  private deleteLastDigit = () =>
+    this.setState(prev => ({
+      value:
+        prev.value.length > 0
+          ? prev.value.slice(0, prev.value.length - 1)
+          : prev.value
+    }));
 
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
     const { activeColor, inactiveColor } = this.props;
 
-    return (
-      <TouchableOpacity key={i} onPress={this.handlePlaceholderPress}>
-        {isPlaceholderPopulated ? (
-          <Bullet color={activeColor} />
-        ) : (
-          <Baseline color={inactiveColor} />
-        )}
-      </TouchableOpacity>
+    return isPlaceholderPopulated ? (
+      <Bullet color={activeColor} key={`baseline-${i}`} />
+    ) : (
+      <Baseline color={inactiveColor} key={`baseline-${i}`} />
     );
   };
+
+  private renderPinCol = (
+    digit: number,
+    label: string,
+    handler: (digit: number) => void,
+    style: "digit" | "label"
+  ) => {
+    return (
+      <Col key={`pinpad-digit-${digit}-${label}`}>
+        <Button
+          onPress={() => handler(digit)}
+          style={style === "digit" ? styles.roundButton : {}}
+          transparent={style === "label"}
+          block={style === "label"}
+          primary={this.props.buttonType === "primary"}
+          light={this.props.buttonType === "light"}
+        >
+          <Text
+            style={[
+              styles.buttonTextBase,
+              style === "digit"
+                ? styles.buttonTextDigit
+                : styles.buttonTextLabel,
+              style === "label" && this.props.buttonType === "primary"
+                ? {
+                    color: "white"
+                  }
+                : {}
+            ]}
+          >
+            {label}
+          </Text>
+        </Button>
+      </Col>
+    );
+  };
+
+  private renderPinRow = (
+    digits: ReadonlyArray<
+      ITuple3<number, string, (digit: number) => void> | undefined
+    >
+  ) => (
+    <Row>
+      {digits.map(
+        (el, i) =>
+          el ? (
+            this.renderPinCol(
+              el.e1,
+              el.e2,
+              el.e3,
+              el.e2.length === 1 ? "digit" : "label"
+            )
+          ) : (
+            <Col key={`pinpad-empty-${i}`} />
+          )
+      )}
+    </Row>
+  );
+
+  public clear = () => this.setState({ value: "" });
 
   public render() {
     return (
@@ -129,15 +158,35 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
-        <TextInput
-          ref={this.inputRef}
-          style={styles.input}
-          keyboardType="numeric"
-          autoFocus={true}
-          value={this.state.value}
-          onChangeText={this.handleChangeText}
-          maxLength={PIN_LENGTH}
-        />
+        <View spacer={true} extralarge={true} />
+        <Grid>
+          {this.renderPinRow([
+            Tuple3(1, "1", this.handlePinDigit),
+            Tuple3(2, "2", this.handlePinDigit),
+            Tuple3(3, "3", this.handlePinDigit)
+          ])}
+          {this.renderPinRow([
+            Tuple3(4, "4", this.handlePinDigit),
+            Tuple3(5, "5", this.handlePinDigit),
+            Tuple3(6, "6", this.handlePinDigit)
+          ])}
+          {this.renderPinRow([
+            Tuple3(7, "7", this.handlePinDigit),
+            Tuple3(8, "8", this.handlePinDigit),
+            Tuple3(9, "9", this.handlePinDigit)
+          ])}
+          {this.renderPinRow([
+            this.props.onCancel
+              ? Tuple3(
+                  0,
+                  I18n.t("global.buttons.cancel").toUpperCase(),
+                  this.props.onCancel
+                )
+              : undefined,
+            Tuple3(10, "0", this.handlePinDigit),
+            Tuple3(11, "<", this.deleteLastDigit)
+          ])}
+        </Grid>
       </React.Fragment>
     );
   }

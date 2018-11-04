@@ -161,6 +161,7 @@ class PinScreen extends React.Component<Props, State> {
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
           onFulfill={this.onPinFulfill}
+          buttonType="light"
         />
       );
     } else {
@@ -175,6 +176,7 @@ class PinScreen extends React.Component<Props, State> {
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
+            buttonType="light"
           />
 
           {pinState.state === "PinConfirmed" &&
