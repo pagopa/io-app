@@ -104,10 +104,12 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             </View>
           </Content>
         ) : (
-          <Content>
-            <PaymentMethodsList
-              navigateToAddCreditCard={this.props.navigateToAddCreditCard}
-            />
+          <Content noPadded={true}>
+            <View content={true}>
+              <PaymentMethodsList
+                navigateToAddCreditCard={this.props.navigateToAddCreditCard}
+              />
+            </View>
           </Content>
         )}
         <View footer={true}>

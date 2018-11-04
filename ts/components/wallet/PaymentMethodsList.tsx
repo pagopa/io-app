@@ -80,8 +80,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
         onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
       }
     ];
+
     return (
-      <View>
+      <React.Fragment>
         <Text>{I18n.t("wallet.chooseMethod")}</Text>
         <View spacer={true} />
         <FlatList
@@ -119,7 +120,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <Text link={true} onPress={this.props.showHelp}>
           {I18n.t("wallet.whyAFee.title")}
         </Text>
-      </View>
+      </React.Fragment>
     );
   }
 }
