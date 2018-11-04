@@ -187,11 +187,13 @@ class PinScreen extends React.Component<Props, State> {
   // The Content of the Screen
   public renderContent(pinState: PinState) {
     return (
-      <Content>
-        {this.renderContentHeader(pinState)}
-        {this.renderCodeInput(pinState)}
-        <View spacer={true} extralarge={true} />
-        {this.renderDescription(pinState)}
+      <Content noPadded={true}>
+        <View content={true}>
+          {this.renderContentHeader(pinState)}
+          {this.renderCodeInput(pinState)}
+          <View spacer={true} extralarge={true} />
+          {this.renderDescription(pinState)}
+        </View>
       </Content>
     );
   }
