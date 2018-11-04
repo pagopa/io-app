@@ -47,7 +47,11 @@ export class MarkdownScreenComponent extends React.PureComponent<Props, State> {
             <ActivityIndicator color={themeVariables.brandPrimaryLight} />
           </View>
         )}
-        {this.state.content && <Content>{this.state.content}</Content>}
+        {this.state.content && (
+          <Content noPadded={true}>
+            <View content={true}>{this.state.content}</View>
+          </Content>
+        )}
       </BaseScreenComponent>
     );
   }
