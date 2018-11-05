@@ -2,7 +2,7 @@
  * Set the basic PushNotification configuration
  */
 
-import { Alert, PushNotificationIOS } from "react-native";
+import { Alert, Platform, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { debugRemotePushNotification, gcmSenderId } from "../config";
@@ -27,7 +27,13 @@ function configurePushNotifications(store: Store) {
         Alert.alert("Notification", JSON.stringify(notification));
       }
 
-      if (notification.message_id) {
+      const messageId = Platform.select({
+        ios: String((notification.data as any).message_id),
+        android: notification.message_id,
+        default: ""
+      });
+
+      if (messageId.length > 0) {
         // We just received a push notification about a new message
         if (notification.foreground) {
           // The App is in foreground so just refresh the messages list
@@ -40,7 +46,7 @@ function configurePushNotifications(store: Store) {
            */
           store.dispatch(
             updateNotificationsPendingMessage(
-              notification.message_id,
+              messageId,
               notification.foreground
             )
           );
