@@ -23,11 +23,16 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
+import {
+  ContextualHelpInjectedProps,
+  withContextualHelp
+} from "../../../components/helpers/withContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
+import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -72,7 +77,10 @@ type ReduxMappedDispatchProps = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
+type Props = ReduxMappedStateProps &
+  ReduxMappedDispatchProps &
+  ContextualHelpInjectedProps &
+  OwnProps;
 
 const styles = StyleSheet.create({
   child: {
@@ -164,7 +172,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Col size={4}>
                     <Text>
                       {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                      <Text link={true}>
+                      <Text link={true} onPress={this.props.showHelp}>
                         {I18n.t("wallet.ConfirmPayment.why")}
                       </Text>
                     </Text>
@@ -351,8 +359,12 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withErrorModal(
-    withLoadingSpinner(ConfirmPaymentMethodScreen),
-    (_: string) => _
+  withContextualHelp(
+    withErrorModal(
+      withLoadingSpinner(ConfirmPaymentMethodScreen),
+      (_: string) => _
+    ),
+    I18n.t("wallet.whyAFee.title"),
+    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
   )
 );
