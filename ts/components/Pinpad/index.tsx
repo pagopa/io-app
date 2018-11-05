@@ -64,8 +64,9 @@ class Pinpad extends React.PureComponent<Props, State> {
       // Fire the callback asynchronously, otherwise this component
       // will be unmounted before the render of the last bullet placeholder.
       // tslint:disable-next-line no-object-mutation
-      this.onFulfillTimeoutId = setTimeout(() =>
-        this.props.onFulfill(inputValue as PinString, isValid)
+      this.onFulfillTimeoutId = setTimeout(
+        () => this.props.onFulfill(inputValue as PinString, isValid),
+        50
       );
     }
   };
