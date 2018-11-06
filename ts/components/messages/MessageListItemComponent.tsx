@@ -82,10 +82,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class MessageListItemComponent extends React.PureComponent<
-  Props,
-  never
-> {
+export class MessageListItemComponent extends React.PureComponent<Props> {
   public render() {
     const { message, messageUIStates, service, onItemPress } = this.props;
 
