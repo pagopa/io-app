@@ -2,7 +2,7 @@
  * Set the basic PushNotification configuration
  */
 
-import { Alert, Platform, PushNotificationIOS } from "react-native";
+import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { debugRemotePushNotification, gcmSenderId } from "../config";
@@ -27,11 +27,11 @@ function configurePushNotifications(store: Store) {
         Alert.alert("Notification", JSON.stringify(notification));
       }
 
-      const messageId = Platform.select({
-        ios: String((notification.data as any).message_id),
-        android: notification.message_id,
-        default: ""
-      });
+      const messageId = notification.message_id
+        ? notification.message_id
+        : notification.data
+          ? String((notification.data as any).message_id)
+          : "";
 
       if (messageId.length > 0) {
         // We just received a push notification about a new message
