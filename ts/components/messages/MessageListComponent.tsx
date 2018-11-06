@@ -45,15 +45,14 @@ const makeRenderItem = (
 const keyExtractor = (message: MessageWithContentPO) => message.id;
 
 class MessageListComponent extends React.PureComponent<Props> {
+  private renderItem = makeRenderItem(
+    this.props.messagesUIStatesById,
+    this.props.servicesById,
+    this.props.onListItemPress
+  );
+
   public render() {
-    const {
-      messages,
-      messagesUIStatesById,
-      servicesById,
-      refreshing,
-      onRefresh,
-      onListItemPress
-    } = this.props;
+    const { messages, servicesById, refreshing, onRefresh } = this.props;
 
     const refreshControl = (
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -65,11 +64,7 @@ class MessageListComponent extends React.PureComponent<Props> {
         data={messages}
         extraData={{ servicesById }}
         keyExtractor={keyExtractor}
-        renderItem={makeRenderItem(
-          messagesUIStatesById,
-          servicesById,
-          onListItemPress
-        )}
+        renderItem={this.renderItem}
         refreshControl={refreshControl}
       />
     );
