@@ -21,38 +21,34 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const makeRenderItem = (
-  messagesUIStatesById: MessagesUIStatesByIdState,
-  servicesById: ServicesByIdState,
-  onListItemPress?: (messageId: string) => void
-) => (info: ListRenderItemInfo<MessageWithContentPO>) => {
-  const message = info.item;
-  const messageUIStates = withDefaultMessageUIStates(
-    messagesUIStatesById[message.id]
-  );
-  const service = servicesById[message.sender_service_id];
-
-  return (
-    <MessageListItemComponent
-      message={message}
-      messageUIStates={messageUIStates}
-      service={service !== undefined ? service : pot.none}
-      onItemPress={onListItemPress}
-    />
-  );
-};
-
 const keyExtractor = (message: MessageWithContentPO) => message.id;
 
 class MessageListComponent extends React.PureComponent<Props> {
-  private renderItem = makeRenderItem(
-    this.props.messagesUIStatesById,
-    this.props.servicesById,
-    this.props.onListItemPress
-  );
+  private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
+    const message = info.item;
+    const messageUIStates = withDefaultMessageUIStates(
+      this.props.messagesUIStatesById[message.id]
+    );
+    const service = this.props.servicesById[message.sender_service_id];
+
+    return (
+      <MessageListItemComponent
+        message={message}
+        messageUIStates={messageUIStates}
+        service={service !== undefined ? service : pot.none}
+        onItemPress={this.props.onListItemPress}
+      />
+    );
+  };
 
   public render() {
-    const { messages, servicesById, refreshing, onRefresh } = this.props;
+    const {
+      messages,
+      messagesUIStatesById,
+      servicesById,
+      refreshing,
+      onRefresh
+    } = this.props;
 
     const refreshControl = (
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -62,7 +58,7 @@ class MessageListComponent extends React.PureComponent<Props> {
       <FlatList
         scrollEnabled={true}
         data={messages}
-        extraData={{ servicesById }}
+        extraData={{ servicesById, messagesUIStatesById }}
         keyExtractor={keyExtractor}
         renderItem={this.renderItem}
         refreshControl={refreshControl}
