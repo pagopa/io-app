@@ -1,6 +1,6 @@
-import { Grid, H3, Left, ListItem, Right, Row, Text } from "native-base";
+import { H3, ListItem } from "native-base";
 import * as React from "react";
-import { ListRenderItemInfo, SectionListData, StyleSheet } from "react-native";
+import { ListRenderItemInfo, SectionListData } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -8,39 +8,23 @@ import I18n from "../../i18n";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
-import IconFont from "../../components/ui/IconFont";
-
 import { contentServiceLoad } from "../../store/actions/content";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
-import { getEnabledChannelsForService } from "./common";
-
 import { isDefined } from "../../utils/guards";
 
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import H4 from "../../components/ui/H4";
+import { ServiceListItem } from "../../components/services/ServiceListItem";
 import Markdown from "../../components/ui/Markdown";
 import { SectionList } from "../../components/ui/SectionList";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServicesRequest } from "../../store/actions/services";
-import variables from "../../theme/variables";
 import * as pot from "../../types/pot";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
-
-const styles = StyleSheet.create({
-  fixCroppedItalic: {
-    // Leave a little bit of space in order to avoid cropped characters
-    // due to italic style.
-    paddingRight: variables.fontSizeBase / 3
-  },
-  serviceName: {
-    color: variables.brandDarkGray
-  }
-});
 
 type ReduxMappedStateProps = Readonly<{
   profile: ProfileState;
@@ -87,59 +71,24 @@ class ServicesScreen extends React.Component<Props> {
     </ListItem>
   );
 
+  private onServiceSelect = (service: ServicePublic) => {
+    // when a service gets selected, before navigating to the service detail
+    // screen, we issue a contentServiceLoad to refresh the service metadata
+    this.props.contentServiceLoad(service.service_id);
+    this.props.navigateToServiceDetailsScreen({
+      service
+    });
+  };
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
-  ) => {
-    const potService = itemInfo.item;
-    const enabledChannels = pot.map(potService, service =>
-      getEnabledChannelsForService(this.props.profile, service.service_id)
-    );
-
-    const onPress = pot.toUndefined(
-      pot.map(potService, service => () => {
-        // when a service gets selected, before navigating to the service detail
-        // screen, we issue a contentServiceLoad to refresh the service metadata
-        this.props.contentServiceLoad(service.service_id);
-        this.props.navigateToServiceDetailsScreen({
-          service
-        });
-      })
-    );
-
-    const serviceName = pot.isLoading(potService)
-      ? I18n.t("global.remoteStates.loading")
-      : pot.isError(potService) || pot.isNone(potService)
-        ? I18n.t("global.remoteStates.notAvailable")
-        : potService.value.service_name;
-
-    const inboxEnabledLabel = pot.map(
-      enabledChannels,
-      _ =>
-        _.inbox
-          ? I18n.t("services.serviceIsEnabled")
-          : I18n.t("services.serviceNotEnabled")
-    );
-
-    return (
-      <ListItem onPress={onPress}>
-        <Left>
-          <Grid>
-            <Row>
-              <H4 style={styles.serviceName}>{serviceName}</H4>
-            </Row>
-            <Row>
-              <Text italic={true} style={styles.fixCroppedItalic}>
-                {pot.getOrElse(inboxEnabledLabel, "")}
-              </Text>
-            </Row>
-          </Grid>
-        </Left>
-        <Right>
-          <IconFont name="io-right" color={variables.brandPrimary} />
-        </Right>
-      </ListItem>
-    );
-  };
+  ) => (
+    <ServiceListItem
+      item={itemInfo.item}
+      profile={this.props.profile}
+      onSelect={this.onServiceSelect}
+    />
+  );
 
   public componentDidMount() {
     // on mount, update visible services
