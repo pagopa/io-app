@@ -1,22 +1,10 @@
-import { Body, Container, Left, Right, Text } from "native-base";
+import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { StyleSheet, TouchableHighlight } from "react-native";
 
-import IconFont from "../../components/ui/IconFont";
-import AppHeader from "../ui/AppHeader";
-
-import { DEFAULT_APPLICATION_NAME } from "../../config";
 import { ContextualHelp } from "../ContextualHelp";
-import GoBackButton from "../GoBackButton";
-import { InstabugButtons } from "../InstabugButtons";
-
-const styles = StyleSheet.create({
-  helpButton: {
-    paddingLeft: 10
-  }
-});
+import { BaseHeader } from "./BaseHeader";
 
 interface ContextualHelpProps {
   title: string;
@@ -53,32 +41,15 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { goBack, headerTitle, contextualHelp } = this.props;
+    const { primary, goBack, headerTitle, contextualHelp } = this.props;
     return (
       <Container>
-        <AppHeader primary={this.props.primary}>
-          {goBack && (
-            <Left>
-              <GoBackButton onPress={goBack} />
-            </Left>
-          )}
-          <Body>
-            <Text white={this.props.primary} numberOfLines={1}>
-              {headerTitle || DEFAULT_APPLICATION_NAME}
-            </Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-            {contextualHelp && (
-              <TouchableHighlight
-                onPress={this.showHelp}
-                style={styles.helpButton}
-              >
-                <IconFont name="io-question" />
-              </TouchableHighlight>
-            )}
-          </Right>
-        </AppHeader>
+        <BaseHeader
+          primary={primary}
+          goBack={goBack}
+          headerTitle={headerTitle}
+          onShowHelp={contextualHelp ? this.showHelp : undefined}
+        />
         {this.props.children}
         {contextualHelp && (
           <ContextualHelp
