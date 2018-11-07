@@ -16,7 +16,13 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  FlatList,
+  Image,
+  Keyboard,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -51,10 +57,6 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  isLoading: boolean;
-}>;
-
 type ReduxMappedDispatchProps = Readonly<{
   addWalletCreditCardInit: () => void;
   navigateToConfirmCardDetailsScreen: (card: CreditCard) => void;
@@ -62,7 +64,7 @@ type ReduxMappedDispatchProps = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
+type Props = ReduxMappedDispatchProps & OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -164,17 +166,21 @@ class AddCardScreen extends React.Component<Props, State> {
         title: I18n.t("global.buttons.continue")
       };
       const maybeCard = getCardFromState(state);
-      return maybeCard
-        .map(card => ({
+      if (maybeCard.isSome()) {
+        Keyboard.dismiss();
+        return {
           ...baseButtonProps,
           disabled: false,
-          onPress: () => this.props.navigateToConfirmCardDetailsScreen(card)
-        }))
-        .getOrElse({
+          onPress: () =>
+            this.props.navigateToConfirmCardDetailsScreen(maybeCard.value)
+        };
+      } else {
+        return {
           ...baseButtonProps,
           disabled: true,
           onPress: () => undefined
-        });
+        };
+      }
     };
 
     const secondaryButtonProps = {
