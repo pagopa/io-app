@@ -38,10 +38,7 @@ import {
 } from "../store/reducers/authentication";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
-import {
-  PendingMessageState,
-  pendingMessageStateSelector
-} from "../store/reducers/notifications/pendingMessage";
+import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
@@ -253,9 +250,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchIdentificationRequest, storedPin);
 
   // Check if we have a pending notification message
-  const pendingMessageState: PendingMessageState = yield select<GlobalState>(
-    pendingMessageStateSelector
-  );
+  const pendingMessageState: ReturnType<
+    typeof pendingMessageStateSelector
+  > = yield select<GlobalState>(pendingMessageStateSelector);
 
   if (pendingMessageState) {
     // We have a pending notification message to handle

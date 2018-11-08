@@ -2,6 +2,9 @@
  * Set the basic PushNotification configuration
  */
 
+import { fromEither, fromNullable } from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
@@ -12,6 +15,17 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { Store } from "../store/actions/types";
+
+/**
+ * Helper type used to validate the notification payload.
+ * The message_id can be in different places depending on the platform.
+ */
+const NotificationPayload = t.partial({
+  message_id: NonEmptyString,
+  data: t.partial({
+    message_id: NonEmptyString
+  })
+});
 
 function configurePushNotifications(store: Store) {
   PushNotification.configure({
@@ -27,13 +41,15 @@ function configurePushNotifications(store: Store) {
         Alert.alert("Notification", JSON.stringify(notification));
       }
 
-      const messageId = notification.message_id
-        ? notification.message_id
-        : notification.data
-          ? String((notification.data as any).message_id)
-          : "";
+      const maybeMessageId = fromEither(
+        NotificationPayload.decode(notification)
+      ).chain(payload =>
+        fromNullable(payload.message_id).alt(
+          fromNullable(payload.data).mapNullable(_ => _.message_id)
+        )
+      );
 
-      if (messageId.length > 0) {
+      maybeMessageId.map(messageId => {
         // We just received a push notification about a new message
         if (notification.foreground) {
           // The App is in foreground so just refresh the messages list
@@ -51,7 +67,7 @@ function configurePushNotifications(store: Store) {
             )
           );
         }
-      }
+      });
 
       // On iOS we need to call this when the remote notification handling is complete
       notification.finish(PushNotificationIOS.FetchResult.NoData);

@@ -73,21 +73,9 @@ export const navigateBack = NavigationActions.back;
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
 ) =>
-  StackActions.reset({
-    key: "StackRouterRoot",
-    index: 0,
-    actions: [
-      NavigationActions.navigate({
-        routeName: ROUTES.MAIN,
-        action: NavigationActions.navigate({
-          routeName: ROUTES.MESSAGES_NAVIGATOR,
-          action: NavigationActions.navigate({
-            routeName: ROUTES.MESSAGE_DETAIL,
-            params
-          })
-        })
-      })
-    ]
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_DETAIL,
+    params
   });
 
 export const navigateToServiceDetailsScreen = (
