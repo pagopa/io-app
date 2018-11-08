@@ -12,15 +12,15 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 //
 
 export const loadVisibleServicesRequest = createStandardAction(
-  "VISIBLE_SERVICES_LOAD_REQUEST"
+  "SERVICES_VISIBLE_LOAD_REQUEST"
 )();
 
 export const loadVisibleServicesSuccess = createStandardAction(
-  "VISIBLE_SERVICES_LOAD_SUCCESS"
+  "SERVICES_VISIBLE_LOAD_SUCCESS"
 )<ServiceList["items"]>();
 
 export const loadVisibleServicesFailure = createStandardAction(
-  "VISIBLE_SERVICES_LOAD_FAILURE"
+  "SERVICES_VISIBLE_LOAD_FAILURE"
 )();
 
 //
