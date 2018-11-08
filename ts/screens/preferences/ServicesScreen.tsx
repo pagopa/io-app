@@ -95,13 +95,6 @@ class ServicesScreen extends React.Component<Props> {
     />
   );
 
-  private refreshControl = (
-    <RefreshControl
-      refreshing={this.props.isLoading}
-      onRefresh={this.props.loadVisibleServices}
-    />
-  );
-
   public componentDidMount() {
     // on mount, update visible services
     this.props.loadVisibleServices();
@@ -127,7 +120,12 @@ class ServicesScreen extends React.Component<Props> {
           alwaysBounceVertical={false}
           withContentLateralPadding={true}
           refreshing={this.props.isLoading}
-          refreshControl={this.refreshControl}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isLoading}
+              onRefresh={this.props.loadVisibleServices}
+            />
+          }
         />
       </TopScreenComponent>
     );
