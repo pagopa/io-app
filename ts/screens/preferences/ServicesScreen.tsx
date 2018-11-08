@@ -1,6 +1,10 @@
 import { H3, ListItem } from "native-base";
 import * as React from "react";
-import { ListRenderItemInfo, SectionListData } from "react-native";
+import {
+  ListRenderItemInfo,
+  RefreshControl,
+  SectionListData
+} from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -28,6 +32,7 @@ import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type ReduxMappedStateProps = Readonly<{
   profile: ProfileState;
+  isLoading: boolean;
   // tslint:disable-next-line:readonly-array
   sections: Array<SectionListData<pot.Pot<ServicePublic, Error>>>;
 }>;
@@ -114,6 +119,13 @@ class ServicesScreen extends React.Component<Props> {
           stickySectionHeadersEnabled={false}
           alwaysBounceVertical={false}
           withContentLateralPadding={true}
+          refreshing={this.props.isLoading}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isLoading}
+              onRefresh={this.props.loadVisibleServices}
+            />
+          }
         />
       </TopScreenComponent>
     );
@@ -137,9 +149,20 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
       data
     };
   });
+
+  const isAnyServiceLoading =
+    Object.keys(services.byId).find(k => {
+      const oneService = services.byId[k];
+      return oneService !== undefined && pot.isLoading(oneService);
+    }) !== undefined;
+
+  const isLoading =
+    pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
+
   return {
     profile: state.profile,
-    sections
+    sections,
+    isLoading
   };
 };
 
