@@ -19,6 +19,7 @@ platform :ios do
   before_all do
     HOCKEYAPP_ALPHA_TOKEN = ENV["HOCKEYAPP_ALPHA_TOKEN"]
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    ITUNES_USER = ENV["ITUNES_USER"]
   end
 
   desc 'Fetch certificates and provisioning profiles'
@@ -91,7 +92,7 @@ platform :ios do
 
   # Builds the app for TestFlight releases
   lane :do_testflight_build do
-    sync_code_signing(type: "appstore")
+    sync_code_signing(type: "appstore", username: ITUNES_USER)
 
     # Install pods
     cocoapods
