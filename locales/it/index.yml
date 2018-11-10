@@ -209,8 +209,8 @@ pin_login:
     confirmInvalid: PIN non valido
   unlock_screen:
     help:
-      title: hello
-      content: hello
+      title: Accesso con PIN
+      content: !include pin_unlock_help.md
 forms:
   validators:
     required: Valore richiesto

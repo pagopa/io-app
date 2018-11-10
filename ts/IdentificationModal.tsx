@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
+import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import I18n from "./i18n";
 import {
@@ -39,7 +40,11 @@ type State = {
 
 const contextualHelp = {
   title: I18n.t("pin_login.unlock_screen.help.title"),
-  body: () => <Text>{I18n.t("pin_login.unlock_screen.help.content")}</Text>
+  body: () => (
+    <Markdown lazyOptions={{ lazy: true }}>
+      {I18n.t("pin_login.unlock_screen.help.content")}
+    </Markdown>
+  )
 };
 
 const renderIdentificationByPinState = (
