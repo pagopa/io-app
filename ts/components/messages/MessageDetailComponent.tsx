@@ -10,7 +10,7 @@ import * as pot from "../../types/pot";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
-import Markdown from "../ui/Markdown";
+import { Markdown } from "../ui/Markdown";
 import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";

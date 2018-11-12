@@ -18,7 +18,7 @@ import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import Markdown from "../../components/ui/Markdown";
+import { Markdown } from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
