@@ -11,7 +11,7 @@ interface ContextualHelpProps {
   body: () => React.ReactNode;
 }
 
-export interface OwnProps {
+interface OwnProps {
   headerTitle?: string;
   goBack?: () => void;
   contextualHelp?: ContextualHelpProps;

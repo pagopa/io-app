@@ -28,9 +28,7 @@ import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 
 // Wait the identification and return the result
-export function* waitIdentificationResult(): Iterator<
-  Effect | IdentificationResult
-> {
+function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
   const resultAction:
     | ActionType<typeof identificationCancel>
     | ActionType<typeof identificationPinReset>
@@ -91,7 +89,7 @@ export function* startAndReturnIdentificationResult(
 }
 
 // Started by redux action
-export function* startAndHandleIdentificationResult(
+function* startAndHandleIdentificationResult(
   pin: PinString,
   identificationRequestAction: ActionType<typeof identificationRequest>
 ): IterableIterator<Effect> {

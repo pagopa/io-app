@@ -44,7 +44,7 @@ export type IdentificationState =
   | IdentificationStartedState
   | IdentificationIdentifiedState;
 
-export const INITIAL_STATE: IdentificationUnidentifiedState = {
+const INITIAL_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
 };
 

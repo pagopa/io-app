@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface OwnProps {
+interface OwnProps {
   headerTitle?: string;
   goBack?: () => void;
   primary?: boolean;

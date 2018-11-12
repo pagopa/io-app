@@ -16,7 +16,7 @@ export type MessageUIStates = {
 };
 
 // Default states used mainly for old messages already in the store
-export const DEFAULT_MESSAGE_UI_STATES = {
+const DEFAULT_MESSAGE_UI_STATES = {
   read: true
 };
 
@@ -24,7 +24,7 @@ export type MessagesUIStatesByIdState = Readonly<{
   [key: string]: MessageUIStates | undefined;
 }>;
 
-export const INITIAL_STATE: MessagesUIStatesByIdState = {};
+const INITIAL_STATE: MessagesUIStatesByIdState = {};
 
 const reducer = (
   state: MessagesUIStatesByIdState = INITIAL_STATE,
