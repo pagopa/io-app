@@ -104,7 +104,7 @@
     "@types/uuid": "^3.4.4",
     "@types/validator": "^9.4.2",
     "babel-jest": "23.6.0",
-    "babel-preset-react-native": "4.0.1",
+    "babel-preset-react-native": "5.0.0",
     "chalk": "^2.4.1",
     "danger": "^3.8.0",
     "danger-plugin-digitalcitizenship": "^0.3.1",
