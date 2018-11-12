@@ -17,18 +17,14 @@ allprojects {
     repositories {
         mavenLocal()
         maven {
-            url 'https://maven.google.com'
-        }
-        maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
         jcenter()
         maven {
-            url "https://jitpack.io" 
+            url "https://jitpack.io"
         }
-		google()
-
+		    google()
     }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:26.1.0"
