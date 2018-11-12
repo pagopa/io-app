@@ -3,15 +3,11 @@ import * as renderer from "react-test-renderer";
 
 import { Markdown } from "..";
 
-const mokedDispatch = jest.fn();
-
 describe("Markdown", () => {
   describe("heading", () => {
     it("should render heading1 correctly", () => {
       const tree = renderer
-        .create(
-          <Markdown dispatch={mokedDispatch}># A simple heading1</Markdown>
-        )
+        .create(<Markdown># A simple heading1</Markdown>)
         .toJSON();
 
       expect(tree).toMatchSnapshot();
@@ -19,9 +15,7 @@ describe("Markdown", () => {
 
     it("should render heading2 correctly", () => {
       const tree = renderer
-        .create(
-          <Markdown dispatch={mokedDispatch}>## A simple heading2</Markdown>
-        )
+        .create(<Markdown>## A simple heading2</Markdown>)
         .toJSON();
 
       expect(tree).toMatchSnapshot();
@@ -29,9 +23,7 @@ describe("Markdown", () => {
 
     it("should render heading3 correctly", () => {
       const tree = renderer
-        .create(
-          <Markdown dispatch={mokedDispatch}>### A simple heading3</Markdown>
-        )
+        .create(<Markdown>### A simple heading3</Markdown>)
         .toJSON();
 
       expect(tree).toMatchSnapshot();
@@ -41,9 +33,7 @@ describe("Markdown", () => {
   describe("paragraph", () => {
     it("should render paragraph correctly", () => {
       const tree = renderer
-        .create(
-          <Markdown dispatch={mokedDispatch}>A simple paragraph.</Markdown>
-        )
+        .create(<Markdown>A simple paragraph.</Markdown>)
         .toJSON();
 
       expect(tree).toMatchSnapshot();
@@ -55,7 +45,6 @@ describe("Markdown", () => {
       const tree = renderer
         .create(
           <Markdown
-            dispatch={mokedDispatch}
           >{`A simple unordered list:\n* Vue\n* React\n* Angular`}</Markdown>
         )
         .toJSON();
@@ -67,7 +56,6 @@ describe("Markdown", () => {
       const tree = renderer
         .create(
           <Markdown
-            dispatch={mokedDispatch}
           >{`A simple ordered list:\n1. Vue\n2. React\n3. Angular`}</Markdown>
         )
         .toJSON();

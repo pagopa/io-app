@@ -22,7 +22,7 @@ import { isDefined } from "../../utils/guards";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ServiceListItem } from "../../components/services/ServiceListItem";
-import Markdown from "../../components/ui/Markdown";
+import { Markdown } from "../../components/ui/Markdown";
 import { SectionList } from "../../components/ui/SectionList";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServicesRequest } from "../../store/actions/services";

@@ -2,12 +2,10 @@ import merge from "lodash/merge";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, LayoutAnimation, UIManager } from "react-native";
-import { connect } from "react-redux";
 import * as SimpleMarkdown from "simple-markdown";
 
 import { isDevEnvironment } from "../../../config";
 import I18n from "../../../i18n";
-import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import ActivityIndicator from "../ActivityIndicator";
 import reactNativeRules from "./rules";
@@ -27,7 +25,6 @@ const reactOutput = SimpleMarkdown.reactFor(ruleOutput);
 
 function renderMarkdown(
   body: string,
-  dispatch: Dispatch,
   initialState: SimpleMarkdown.State = {}
 ): React.ReactNode {
   try {
@@ -41,8 +38,7 @@ function renderMarkdown(
     // We merge the initialState with always needed attributes
     const state: SimpleMarkdown.State = {
       ...initialState,
-      inline: false,
-      dispatch
+      inline: false
     };
 
     // Generate the syntax tree
@@ -79,7 +75,7 @@ type OwnProps = {
   initialState?: SimpleMarkdown.State;
 };
 
-type Props = OwnProps & ReduxProps;
+type Props = OwnProps;
 
 interface State {
   renderedMarkdown: ReturnType<typeof renderMarkdown> | undefined;
@@ -106,7 +102,7 @@ export class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { lazyOptions, children, initialState, dispatch } = this.props;
+    const { lazyOptions, children, initialState } = this.props;
     if (lazyOptions && lazyOptions.lazy) {
       // Render the markdown string asynchronously.
       const cancelRender = InteractionManager.runAfterInteractions(() => {
@@ -119,7 +115,7 @@ export class Markdown extends React.PureComponent<Props, State> {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         }
         this.setState({
-          renderedMarkdown: renderMarkdown(children, dispatch, initialState)
+          renderedMarkdown: renderMarkdown(children, initialState)
         });
       }).cancel;
       this.setState({
@@ -136,7 +132,7 @@ export class Markdown extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { lazyOptions, children, initialState, dispatch } = this.props;
+    const { lazyOptions, children, initialState } = this.props;
     if (lazyOptions && lazyOptions.lazy) {
       if (!this.state.renderedMarkdown) {
         return (
@@ -149,8 +145,6 @@ export class Markdown extends React.PureComponent<Props, State> {
       return <View>{this.state.renderedMarkdown}</View>;
     }
 
-    return <View>{renderMarkdown(children, dispatch, initialState)}</View>;
+    return <View>{renderMarkdown(children, initialState)}</View>;
   }
 }
-
-export default connect()(Markdown);

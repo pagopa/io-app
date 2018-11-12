@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
-import Markdown from "../../components/ui/Markdown";
+import { Markdown } from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
 

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
-import Markdown from "./components/ui/Markdown";
+import { Markdown } from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import I18n from "./i18n";
 import {
