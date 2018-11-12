@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
-import { Markdown } from "../../components/ui/Markdown";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
 import {

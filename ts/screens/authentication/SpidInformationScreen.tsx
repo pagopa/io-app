@@ -29,7 +29,7 @@ import {
 } from "../../components/helpers/withContextualHelp";
 import { InstabugButtons } from "../../components/InstabugButtons";
 import AppHeader from "../../components/ui/AppHeader";
-import { Markdown } from "../../components/ui/Markdown";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 

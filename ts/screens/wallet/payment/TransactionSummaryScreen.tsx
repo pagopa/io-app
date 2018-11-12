@@ -26,7 +26,7 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import { InstabugButtons } from "../../../components/InstabugButtons";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { Markdown } from "../../../components/ui/Markdown";
+import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 
 import I18n from "../../../i18n";

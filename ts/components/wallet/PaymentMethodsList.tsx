@@ -18,7 +18,7 @@ import {
 } from "../helpers/withContextualHelp";
 import { WalletStyles } from "../styles/wallet";
 import IconFont from "../ui/IconFont";
-import { Markdown } from "../ui/Markdown";
+import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;

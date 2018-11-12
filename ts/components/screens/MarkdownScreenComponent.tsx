@@ -5,7 +5,7 @@ import { InteractionManager } from "react-native";
 import themeVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import ActivityIndicator from "../ui/ActivityIndicator";
-import { Markdown } from "../ui/Markdown";
+import Markdown from "../ui/Markdown";
 import BaseScreenComponent from "./BaseScreenComponent";
 
 interface OwnProps {
