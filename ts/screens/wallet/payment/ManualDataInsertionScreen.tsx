@@ -9,14 +9,19 @@
  *  - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
+import { isLeft, isRight } from "fp-ts/lib/Either";
+import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import { NumberFromString } from "io-ts-types";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
-  RptId,
-  RptIdFromString
+  PaymentNoticeNumberFromString,
+  RptId
 } from "italia-ts-commons/lib/pagopa";
+import {
+  NonEmptyString,
+  OrganizationFiscalCode
+} from "italia-ts-commons/lib/strings";
 import {
   Body,
   Container,
@@ -63,14 +68,16 @@ type OwnProps = NavigationInjectedProps;
 type Props = OwnProps & ReduxMappedDispatchProps;
 
 type State = Readonly<{
-  transactionCode: Option<string>;
-  fiscalCode: Option<string>;
-  delocalizedAmount: Option<string>;
+  paymentNoticeNumber: Option<
+    ReturnType<typeof PaymentNoticeNumberFromString.decode>
+  >;
+  organizationFiscalCode: Option<
+    ReturnType<typeof OrganizationFiscalCode.decode>
+  >;
+  delocalizedAmount: Option<
+    ReturnType<typeof AmountInEuroCentsFromString.decode>
+  >;
 }>;
-
-const EMPTY_NOTICE_NUMBER = "";
-const EMPTY_FISCAL_CODE = "";
-const EMPTY_AMOUNT = "";
 
 const AmountInEuroCentsFromString = NumberFromString.pipe(
   AmountInEuroCentsFromNumber
@@ -80,8 +87,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      transactionCode: none,
-      fiscalCode: none,
+      paymentNoticeNumber: none,
+      organizationFiscalCode: none,
       delocalizedAmount: none
     };
   }
@@ -92,15 +99,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   );
 
   private isFormValid = () =>
-    this.state.delocalizedAmount.isSome() &&
-    this.state.transactionCode.isSome() &&
-    this.state.fiscalCode.isSome() &&
-    AmountInEuroCentsFromString.decode(
-      this.state.delocalizedAmount.value
-    ).isRight() &&
-    RptIdFromString.decode(
-      `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
-    ).isRight();
+    this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
+    this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
+    this.state.organizationFiscalCode.map(isRight).getOrElse(false);
 
   /**
    * This method collects the data from the form and,
@@ -109,25 +110,31 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
    */
   private proceedToSummary = () => {
     // first make sure all the elements have been entered correctly
-    if (
-      this.state.transactionCode.isSome() &&
-      this.state.fiscalCode.isSome() &&
-      this.state.delocalizedAmount.isSome()
-    ) {
-      // extract the rptId object from the "rptId" string
-      // (i.e. the concatenation of fiscal code and notice number)
-      const rptId = RptIdFromString.decode(
-        `${this.state.fiscalCode.value}${this.state.transactionCode.value}`
+
+    this.state.paymentNoticeNumber
+      .chain(fromEither)
+      .chain(paymentNoticeNumber =>
+        this.state.organizationFiscalCode
+          .chain(fromEither)
+          .chain(organizationFiscalCode =>
+            fromEither(
+              RptId.decode({
+                paymentNoticeNumber,
+                organizationFiscalCode
+              })
+            )
+          )
+          .chain(rptId =>
+            this.state.delocalizedAmount
+              .chain(fromEither)
+              .map(delocalizedAmount =>
+                this.props.navigateToTransactionSummary(
+                  rptId,
+                  delocalizedAmount
+                )
+              )
+          )
       );
-      // get the amount (directly from the input)
-      const amount = AmountInEuroCentsFromString.decode(
-        this.state.delocalizedAmount.value
-      );
-      if (rptId.isRight() && amount.isRight()) {
-        // valid Rpt Id and valid amount were entered
-        this.props.navigateToTransactionSummary(rptId.value, amount.value);
-      } // TODO: else toast saying that the data entered is invalid
-    }
   };
 
   public render(): React.ReactNode {
@@ -171,60 +178,68 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <Form>
               <Item
                 floatingLabel={true}
-                error={
-                  this.state.transactionCode.isSome() &&
-                  NumberFromString.decode(
-                    this.state.transactionCode.value
-                  ).isLeft()
-                }
+                error={this.state.paymentNoticeNumber
+                  .map(isLeft)
+                  .getOrElse(false)}
+                success={this.state.paymentNoticeNumber
+                  .map(isRight)
+                  .getOrElse(false)}
               >
                 <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  maxLength={18}
                   onChangeText={value => {
                     this.setState({
-                      transactionCode:
-                        value === EMPTY_NOTICE_NUMBER ? none : some(value)
+                      paymentNoticeNumber: some(value)
+                        .filter(NonEmptyString.is)
+                        .map(_ => PaymentNoticeNumberFromString.decode(_))
                     });
                   }}
                 />
               </Item>
               <Item
                 floatingLabel={true}
-                error={
-                  this.state.fiscalCode.isSome() &&
-                  NumberFromString.decode(this.state.fiscalCode.value).isLeft()
-                }
+                error={this.state.organizationFiscalCode
+                  .map(isLeft)
+                  .getOrElse(false)}
+                success={this.state.organizationFiscalCode
+                  .map(isRight)
+                  .getOrElse(false)}
               >
                 <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  maxLength={11}
                   onChangeText={value => {
                     this.setState({
-                      fiscalCode:
-                        value === EMPTY_FISCAL_CODE ? none : some(value)
+                      organizationFiscalCode: some(value)
+                        .filter(NonEmptyString.is)
+                        .map(_ => OrganizationFiscalCode.decode(_))
                     });
                   }}
                 />
               </Item>
               <Item
                 floatingLabel={true}
-                error={
-                  this.state.delocalizedAmount.isSome() &&
-                  AmountInEuroCentsFromString.decode(
-                    this.state.delocalizedAmount.value
-                  ).isLeft()
-                }
+                error={this.state.delocalizedAmount
+                  .map(isLeft)
+                  .getOrElse(false)}
+                success={this.state.delocalizedAmount
+                  .map(isRight)
+                  .getOrElse(false)}
               >
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  maxLength={10}
                   onChangeText={value =>
                     this.setState({
-                      delocalizedAmount:
-                        value === EMPTY_AMOUNT
-                          ? none
-                          : some(value.replace(this.decimalSeparatorRe, "."))
+                      delocalizedAmount: some(
+                        value.replace(this.decimalSeparatorRe, ".")
+                      )
+                        .filter(NonEmptyString.is)
+                        .map(_ => AmountInEuroCentsFromString.decode(_))
                     })
                   }
                 />
