@@ -423,7 +423,7 @@ cardComponent:
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
-  pick: Paga con questo metodo
+  pick: Paga con questa carta
 messages:
   counting:
     zero: Nessun messaggio
