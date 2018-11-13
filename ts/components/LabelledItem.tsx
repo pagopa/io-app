@@ -32,7 +32,11 @@ type Props =
       label: string;
       icon: string;
       placeholder: string;
-      inputProps: TextInputProps;
+      inputProps: Pick<
+        TextInputProps,
+        // tslint:disable-next-line:max-union-size
+        "value" | "keyboardType" | "maxLength" | "secureTextEntry"
+      >;
       mask: string;
       onChangeText: (formatted: string, expected: string) => void;
     }>

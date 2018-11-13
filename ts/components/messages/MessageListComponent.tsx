@@ -1,5 +1,10 @@
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  RefreshControlProps
+} from "react-native";
 
 import {
   MessagesUIStatesByIdState,
@@ -50,7 +55,7 @@ class MessageListComponent extends React.PureComponent<Props> {
       onRefresh
     } = this.props;
 
-    const refreshControl = (
+    const refreshControl: React.ReactElement<RefreshControlProps> = (
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     );
 

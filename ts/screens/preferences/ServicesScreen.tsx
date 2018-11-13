@@ -3,6 +3,7 @@ import * as React from "react";
 import {
   ListRenderItemInfo,
   RefreshControl,
+  RefreshControlProps,
   SectionListData
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -101,6 +102,13 @@ class ServicesScreen extends React.Component<Props> {
   }
 
   public render() {
+    const refreshControl: React.ReactElement<RefreshControlProps> = (
+      <RefreshControl
+        refreshing={this.props.isLoading}
+        onRefresh={this.props.loadVisibleServices}
+      />
+    );
+
     return (
       <TopScreenComponent
         title={I18n.t("services.title")}
@@ -120,12 +128,7 @@ class ServicesScreen extends React.Component<Props> {
           alwaysBounceVertical={false}
           withContentLateralPadding={true}
           refreshing={this.props.isLoading}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.isLoading}
-              onRefresh={this.props.loadVisibleServices}
-            />
-          }
+          refreshControl={refreshControl}
         />
       </TopScreenComponent>
     );

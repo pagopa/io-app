@@ -24,7 +24,10 @@ export function withLoadingSpinner<P extends Readonly<{ isLoading: boolean }>>(
       );
     }
   }
-  hoistNonReactStatics(WithLoadingSpinner, WrappedComponent);
+  hoistNonReactStatics(
+    WithLoadingSpinner,
+    WrappedComponent as React.ComponentType<any>
+  );
 
   return WithLoadingSpinner;
 }
