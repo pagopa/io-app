@@ -395,7 +395,7 @@ wallet:
       inserisci manualmente i dati identificativi (IUV e codive ente/azienda).
     setManually: Inserisci i dati manualmente
   whyAFee:
-    title: Perchè devo pagare le commissioni?
+    title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: Questo avviso è già stato pagato.
