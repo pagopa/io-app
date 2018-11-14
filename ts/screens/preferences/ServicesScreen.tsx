@@ -3,7 +3,9 @@ import * as React from "react";
 import {
   ListRenderItemInfo,
   RefreshControl,
-  SectionListData
+  SectionList,
+  SectionListData,
+  StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -23,9 +25,9 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ServiceListItem } from "../../components/services/ServiceListItem";
 import Markdown from "../../components/ui/Markdown";
-import { SectionList } from "../../components/ui/SectionList";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServicesRequest } from "../../store/actions/services";
+import variables from "../../theme/variables";
 import * as pot from "../../types/pot";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
@@ -52,6 +54,13 @@ type Props = ReduxMappedStateProps &
   ReduxProps &
   OwnProps;
 
+const styles = StyleSheet.create({
+  listItem: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  }
+});
+
 class ServicesScreen extends React.Component<Props> {
   private goBack = () => this.props.navigation.goBack();
 
@@ -71,7 +80,7 @@ class ServicesScreen extends React.Component<Props> {
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
   }): React.ReactElement<any> | null => (
-    <ListItem itemHeader={true}>
+    <ListItem itemHeader={true} style={styles.listItem}>
       <H3>{info.section.title}</H3>
     </ListItem>
   );
@@ -118,7 +127,6 @@ class ServicesScreen extends React.Component<Props> {
           keyExtractor={this.getServiceKey}
           stickySectionHeadersEnabled={false}
           alwaysBounceVertical={false}
-          withContentLateralPadding={true}
           refreshing={this.props.isLoading}
           refreshControl={
             <RefreshControl

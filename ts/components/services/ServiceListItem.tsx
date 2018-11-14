@@ -23,6 +23,10 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
+  listItem: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  },
   fixCroppedItalic: {
     // Leave a little bit of space in order to avoid cropped characters
     // due to italic style.
@@ -59,7 +63,7 @@ export class ServiceListItem extends React.PureComponent<Props> {
     );
 
     return (
-      <ListItem onPress={onPress}>
+      <ListItem onPress={onPress} style={styles.listItem}>
         <Left>
           <Grid>
             <Row>
