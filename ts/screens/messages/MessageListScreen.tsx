@@ -1,16 +1,17 @@
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import { NavigationActions, NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import MessageListComponent from "../../components/messages/MessageListComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessagesRequest } from "../../store/actions/messages";
-import { ReduxProps } from "../../store/actions/types";
+import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import {
   messagesUIStatesByIdSelector,
@@ -25,14 +26,21 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-type ReduxMappedProps = Readonly<{
+type ReduxMappedStateProps = Readonly<{
   isLoading: boolean;
   messages: ReadonlyArray<MessageWithContentPO>;
   messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
 }>;
 
-type Props = NavigationScreenProps & ReduxMappedProps & ReduxProps;
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToMessageDetails: (messageId: NonEmptyString) => void;
+  loadMessagesRequest: () => void;
+}>;
+
+type Props = NavigationScreenProps &
+  ReduxMappedStateProps &
+  ReduxMappedDispatchProps;
 
 const styles = StyleSheet.create({
   emptyContentContainer: {
@@ -46,19 +54,11 @@ const styles = StyleSheet.create({
   }
 });
 
-class MessageListScreen extends React.Component<Props, never> {
-  private refreshMessageList = () => this.props.dispatch(loadMessagesRequest());
+class MessageListScreen extends React.Component<Props> {
+  private refreshMessageList = () => this.props.loadMessagesRequest();
 
-  private handleMessageListItemPress = (messageId: string) => {
-    this.props.dispatch(
-      NavigationActions.navigate({
-        routeName: ROUTES.MESSAGE_DETAIL,
-        params: {
-          messageId
-        }
-      })
-    );
-  };
+  private handleMessageListItemPress = (messageId: NonEmptyString) =>
+    this.props.navigateToMessageDetails(messageId);
 
   public componentDidMount() {
     this.refreshMessageList();
@@ -109,11 +109,20 @@ const messagesLoadSelector = createLoadingSelector([
   FetchRequestActions.MESSAGES_LOAD
 ]);
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
   isLoading: messagesLoadSelector(state),
   messages: orderedMessagesSelector(state),
   messagesUIStatesById: messagesUIStatesByIdSelector(state),
   servicesById: servicesByIdSelector(state)
 });
 
-export default connect(mapStateToProps)(MessageListScreen);
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToMessageDetails: (messageId: NonEmptyString) =>
+    dispatch(navigateToMessageDetailScreenAction({ messageId })),
+  loadMessagesRequest: () => dispatch(loadMessagesRequest())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessageListScreen);

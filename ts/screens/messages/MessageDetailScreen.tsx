@@ -4,6 +4,7 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
@@ -31,14 +32,8 @@ import * as pot from "../../types/pot";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
-/**
- * The react-navigation getParam function requires a fallback value to use when the parameter
- * is not available.
- */
-const NO_MESSAGE_ID_PARAM = "NO_MESSAGE_ID_PARAM";
-
 type MessageDetailScreenNavigationParams = {
-  messageId: string;
+  messageId: NonEmptyString;
 };
 
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
@@ -287,10 +282,7 @@ const mapStateToProps = (
   /**
    * Try to get the messageId from the navigation parameters.
    */
-  const messageId = ownProps.navigation.getParam(
-    "messageId",
-    NO_MESSAGE_ID_PARAM
-  );
+  const messageId = ownProps.navigation.getParam("messageId");
 
   if (messageId === NO_MESSAGE_ID_PARAM) {
     return {

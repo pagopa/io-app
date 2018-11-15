@@ -2,6 +2,7 @@
  * Action types and action creator related to the Notifications.
  */
 
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import {
   ActionType,
   createAction,
@@ -18,7 +19,7 @@ export const updateNotificationInstallationFailure = createStandardAction(
 
 export const updateNotificationsPendingMessage = createAction(
   "NOTIFICATIONS_PENDING_MESSAGE_UPDATE",
-  resolve => (messageId: string, foreground: boolean) =>
+  resolve => (messageId: NonEmptyString, foreground: boolean) =>
     resolve({ id: messageId, foreground })
 );
 

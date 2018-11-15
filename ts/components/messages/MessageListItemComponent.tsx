@@ -1,4 +1,5 @@
 import { DateFromISOString } from "io-ts-types";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -18,7 +19,7 @@ type OwnProps = {
   message: MessageWithContentPO;
   messageUIStates: MessageUIStates;
   service: pot.Pot<ServicePublic, Error>;
-  onItemPress?: (messageId: string) => void;
+  onItemPress?: (messageId: NonEmptyString) => void;
 };
 
 type Props = OwnProps;
@@ -106,9 +107,12 @@ export class MessageListItemComponent extends React.Component<Props> {
       .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
       .getOrElse(message.created_at);
 
-    const onItemPressHandler = onItemPress
-      ? () => onItemPress(message.id)
-      : undefined;
+    const messageId = message.id;
+
+    const onItemPressHandler =
+      onItemPress && NonEmptyString.is(messageId)
+        ? () => onItemPress(messageId)
+        : undefined;
 
     return (
       <TouchableOpacity key={message.id} onPress={onItemPressHandler}>
