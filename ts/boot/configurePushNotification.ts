@@ -5,7 +5,7 @@
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Alert, PushNotificationIOS } from "react-native";
+import { Alert, Platform, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { debugRemotePushNotification, gcmSenderId } from "../config";
@@ -73,8 +73,14 @@ function configurePushNotifications(store: Store) {
         }
       });
 
-      // On iOS we need to call this when the remote notification handling is complete
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
+      if (Platform.OS === "ios") {
+        // On iOS we need to call this when the remote notification handling is complete
+        notification.finish(
+          maybeMessageId.isSome()
+            ? PushNotificationIOS.FetchResult.NewData
+            : PushNotificationIOS.FetchResult.NoData
+        );
+      }
     },
 
     // GCM Sender ID
