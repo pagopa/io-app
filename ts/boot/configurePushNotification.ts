@@ -41,6 +41,10 @@ function configurePushNotifications(store: Store) {
         Alert.alert("Notification", JSON.stringify(notification));
       }
 
+      // we try first to get the messageId from payload.message_id, if that's
+      // empty, we fall back to payload.data.message_id - note that both are
+      // defined as NonEmptyString(s) so if the decoding succees and either one
+      // exists, we're sure it's not an empty string
       const maybeMessageId = fromEither(
         NotificationPayload.decode(notification)
       ).chain(payload =>

@@ -1,3 +1,4 @@
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 
@@ -16,7 +17,7 @@ type OwnProps = {
   servicesById: ServicesByIdState;
   refreshing: boolean;
   onRefresh: () => void;
-  onListItemPress?: (messageId: string) => void;
+  onListItemPress?: (messageId: NonEmptyString) => void;
 };
 
 type Props = OwnProps;

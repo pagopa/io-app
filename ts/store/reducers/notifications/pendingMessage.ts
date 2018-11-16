@@ -3,6 +3,7 @@
  */
 import { getType } from "typesafe-actions";
 
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import {
   clearNotificationPendingMessage,
   updateNotificationsPendingMessage
@@ -11,7 +12,7 @@ import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 
 export type PendingMessageState = Readonly<{
-  id: string;
+  id: NonEmptyString;
   foreground: boolean;
 }> | null;
 

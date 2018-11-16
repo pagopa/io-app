@@ -85,7 +85,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
 
       // We only navigate to the new message from a push if we're not in a
       // payment flow
-      if (!isPaymentOngoing && pendingMessageState) {
+      if (!isPaymentOngoing && pendingMessageState !== null) {
         // We have a pending notification message to handle
         const messageId = pendingMessageState.id;
 
