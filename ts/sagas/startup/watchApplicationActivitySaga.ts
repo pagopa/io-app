@@ -42,7 +42,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         // Timer fired we need to identify the user
         yield put(identificationRequest());
       });
-    } else if (lastState === "background" && newApplicationState === "active") {
+    } else if (lastState !== "active" && newApplicationState === "active") {
       // Cancel the background timer if running
       if (identificationBackgroundTimer) {
         yield cancel(identificationBackgroundTimer);
