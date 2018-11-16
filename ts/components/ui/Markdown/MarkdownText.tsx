@@ -13,7 +13,7 @@ type Props = OwnProps & ComponentProps<Text>;
 
 class MarkdownText extends React.PureComponent<Props, never> {
   public render() {
-    return <Text {...this.props} />;
+    return <Text selectable {...this.props} />;
   }
 }
 export default connectStyle(
