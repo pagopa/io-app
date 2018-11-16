@@ -7,6 +7,7 @@ import variables from "../../theme/variables";
 const styles = StyleSheet.create({
   androidIndicatorInner: {
     justifyContent: "center",
+    alignSelf: "center",
     backgroundColor: variables.colorWhite,
     width: 42,
     height: 42,
