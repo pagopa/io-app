@@ -91,6 +91,23 @@ function renderInformationRow(
   );
 }
 
+function renderTruncatedInformationRow(
+  label: string,
+  info: string,
+  onPress?: () => void
+) {
+  return (
+    <View style={styles.infoItem}>
+      <Text>{label}</Text>
+      <Button primary={true} small={true} onPress={onPress}>
+        <Text ellipsizeMode="tail" numberOfLines={1}>
+          {info}
+        </Text>
+      </Button>
+    </View>
+  );
+}
+
 class ServiceDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -361,7 +378,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     Linking.openURL(web_url).then(() => 0, () => 0)
                   }
                 >
-                  <Text>{web_url}</Text>
+                  <Text ellipsizeMode="tail" numberOfLines={1}>
+                    {web_url}
+                  </Text>
                 </Button>
               </View>
             )}
@@ -422,7 +441,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {pec && renderInformationRow("PEC", pec)}
             {web_url &&
-              renderInformationRow("Web", web_url, () =>
+              renderTruncatedInformationRow("Web", web_url, () =>
                 Linking.openURL(web_url).then(() => 0, () => 0)
               )}
             {renderInformationRow("ID", service.service_id, () =>
