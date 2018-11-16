@@ -13,67 +13,91 @@ import { clearNotificationPendingMessage } from "../../store/actions/notificatio
 import { pendingMessageStateSelector } from "../../store/reducers/notifications/pendingMessage";
 import { GlobalState } from "../../store/reducers/types";
 import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
-import { startTimer } from "../../utils/timer";
+import { resolveAfterMillis } from "../../utils/timer";
 
 /**
- * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to identify
+ * Listen to changes in app state
  */
 export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
 
+  // this code gets executed first when the app is active
   // tslint:disable-next-line:no-let
-  let lastState: ApplicationState = "active";
+  let currentAppState: ApplicationState = "active";
 
   // tslint:disable-next-line:no-let
-  let identificationBackgroundTimer: Task | undefined;
+  let identificationTimerTaskId: Task | undefined;
 
+  // Listen for changes in application state
+  // applicationChangeState actions get triggered by the AppState listeners
+  // initialized in the RootContainer
   yield takeEvery(getType(applicationChangeState), function*(
     action: ActionType<typeof applicationChangeState>
   ) {
-    // Listen for changes in application state
-    const newApplicationState: ApplicationState = action.payload;
+    // the state the app is transitioning to
+    const nextAppState: ApplicationState = action.payload;
 
-    if (lastState !== "background" && newApplicationState === "background") {
-      // Start the background timer
-      identificationBackgroundTimer = yield fork(function*() {
+    if (nextAppState === currentAppState) {
+      // Ignore bogus app state events
+      return;
+    }
+
+    if (
+      nextAppState === "background" &&
+      identificationTimerTaskId === undefined
+    ) {
+      // The app is running in the background. The user is either:
+      // - in another app
+      // - on the home screen
+      // - [Android] on another Activity (even if it was launched by your app)
+      //
+      // When transitioning to the background state we start a timer that will
+      // trigger the identificationScreen after backgroundActivityTimeoutMillis
+      identificationTimerTaskId = yield fork(function*() {
         // Start and wait the timer to fire
-        yield call(startTimer, backgroundActivityTimeoutMillis);
-        identificationBackgroundTimer = undefined;
-        // Timer fired we need to identify the user
+        yield call(resolveAfterMillis, backgroundActivityTimeoutMillis);
+        // when the timer completes, we unset the timer handle and activate
+        // the identification screen
+        identificationTimerTaskId = undefined;
         yield put(identificationRequest());
       });
-    } else if (lastState !== "active" && newApplicationState === "active") {
-      // Cancel the background timer if running
-      if (identificationBackgroundTimer) {
-        yield cancel(identificationBackgroundTimer);
-        identificationBackgroundTimer = undefined;
+    } else if (
+      nextAppState !== "background" &&
+      identificationTimerTaskId !== undefined
+    ) {
+      // The app is running in the foreground and the timer hasn't completed
+      // yet (or else identificationBackgroundTimer will be undefined)
 
-        // Check if there is a payment ongoing
-        const isPaymentOngoing: ReturnType<
-          typeof isPaymentOngoingSelector
-        > = yield select<GlobalState>(isPaymentOngoingSelector);
+      // FIXME: the following cancels the forked saga, it DOES NOT cancel the
+      //        background timer (possible memory leak)
+      yield cancel(identificationTimerTaskId);
+      identificationTimerTaskId = undefined;
 
-        // Check if we have a pending notification message
-        const pendingMessageState: ReturnType<
-          typeof pendingMessageStateSelector
-        > = yield select<GlobalState>(pendingMessageStateSelector);
+      // Check if there is a payment ongoing
+      const isPaymentOngoing: ReturnType<
+        typeof isPaymentOngoingSelector
+      > = yield select<GlobalState>(isPaymentOngoingSelector);
 
-        // We only navigate to the new message from a push if we're not in a
-        // payment flow
-        if (!isPaymentOngoing && pendingMessageState) {
-          // We have a pending notification message to handle
-          const messageId = pendingMessageState.id;
+      // Check if we have a pending notification message
+      const pendingMessageState: ReturnType<
+        typeof pendingMessageStateSelector
+      > = yield select<GlobalState>(pendingMessageStateSelector);
 
-          // Remove the pending message from the notification state
-          yield put(clearNotificationPendingMessage());
+      // We only navigate to the new message from a push if we're not in a
+      // payment flow
+      if (!isPaymentOngoing && pendingMessageState) {
+        // We have a pending notification message to handle
+        const messageId = pendingMessageState.id;
 
-          // Navigate to message details screen
-          yield put(navigateToMessageDetailScreenAction({ messageId }));
-        }
+        // Remove the pending message from the notification state
+        yield put(clearNotificationPendingMessage());
+
+        // Navigate to message details screen
+        yield put(navigateToMessageDetailScreenAction({ messageId }));
       }
     }
 
     // Update the last state
-    lastState = newApplicationState;
+    currentAppState = nextAppState;
   });
 }
