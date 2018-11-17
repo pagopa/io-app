@@ -27,8 +27,13 @@ export const clearNotificationPendingMessage = createStandardAction(
   "NOTIFICATIONS_PENDING_MESSAGE_CLEAR"
 )();
 
+export const localNotificationRequest = createStandardAction(
+  "NOTIFICATIONS_LOCAL_REQUEST"
+)<string>();
+
 export type NotificationsActions =
   | ActionType<typeof updateNotificationsInstallationToken>
   | ActionType<typeof updateNotificationInstallationFailure>
   | ActionType<typeof updateNotificationsPendingMessage>
-  | ActionType<typeof clearNotificationPendingMessage>;
+  | ActionType<typeof clearNotificationPendingMessage>
+  | ActionType<typeof localNotificationRequest>;

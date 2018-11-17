@@ -60,6 +60,7 @@ import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { watchLocalNotificationRequests } from "./startup/watchLocalNotificationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -248,6 +249,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchPinResetSaga);
   // Watch for identification request
   yield fork(watchIdentificationRequest, storedPin);
+  // Watch for requests to trigger local notifications
+  yield fork(watchLocalNotificationRequests);
 
   // Check if we have a pending notification message
   const pendingMessageState: ReturnType<

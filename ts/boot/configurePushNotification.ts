@@ -9,7 +9,7 @@ import { Alert, Platform, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { debugRemotePushNotification, gcmSenderId } from "../config";
-import { loadMessagesRequest } from "../store/actions/messages";
+import { loadMessageWithRelationsAction } from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
@@ -24,7 +24,8 @@ const NotificationPayload = t.partial({
   message_id: NonEmptyString,
   data: t.partial({
     message_id: NonEmptyString
-  })
+  }),
+  message: NonEmptyString
 });
 
 function configurePushNotifications(store: Store) {
@@ -48,22 +49,23 @@ function configurePushNotifications(store: Store) {
       const maybeMessageId = fromEither(
         NotificationPayload.decode(notification)
       ).chain(payload =>
-        fromNullable(payload.message_id).alt(
-          fromNullable(payload.data).mapNullable(_ => _.message_id)
-        )
+        fromNullable(payload.message_id)
+          .alt(fromNullable(payload.data).mapNullable(_ => _.message_id))
+          .alt(fromNullable(payload.message))
       );
 
       maybeMessageId.map(messageId => {
-        // We just received a push notification about a new message
-        if (notification.foreground) {
-          // The App is in foreground so just refresh the messages list
-          store.dispatch(loadMessagesRequest());
-        } else {
-          /**
-           * The App was closed/in background and has been now opened clicking on the push notification.
-           * Save the message id of the notification in the store so the App can navigate to the message detail screen
-           * as soon as possible (if needed after the user login/insert the unlock PIN)
-           */
+        // We just received a push notification about a new message, the first
+        // thing we do is to load the message.
+        store.dispatch(loadMessageWithRelationsAction(messageId));
+
+        if (!notification.foreground) {
+          // The App was closed/in background and has been now opened clicking
+          // on the push notification.
+          // Save the message id of the notification in the store so the App can
+          // navigate to the message detail screen as soon as possible (if
+          // needed after the user login/insert the unlock PIN)
+
           store.dispatch(
             updateNotificationsPendingMessage(
               messageId,

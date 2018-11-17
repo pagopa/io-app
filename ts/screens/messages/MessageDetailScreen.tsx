@@ -153,28 +153,20 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     return this.renderLoadingState();
   };
 
-  private loadMessageOrSetRead = () => {
+  private setReadState = () => {
     const { message, messageId, messageUIStates } = this.props;
-    // If the message is empty (e.g. coming from a push notification or deep
-    // link), trigger a load.
-    if (
-      pot.isNone(message) &&
-      !pot.isLoading(message) &&
-      !pot.isError(message)
-    ) {
-      this.props.loadMessageWithRelations(messageId);
-    } else if (!messageUIStates.read) {
+    if (pot.isSome(message) && !messageUIStates.read) {
       // if this message has never been read, set its read state to true
       this.props.setMessageReadState(messageId, true);
     }
   };
 
   public componentDidMount() {
-    this.loadMessageOrSetRead();
+    this.setReadState();
   }
 
   public componentDidUpdate() {
-    this.loadMessageOrSetRead();
+    this.setReadState();
   }
 
   public render() {
