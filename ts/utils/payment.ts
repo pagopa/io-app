@@ -105,7 +105,15 @@ export function walletHasFavoriteAvailablePsp(
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 export const cleanTransactionDescription = (description: string): string => {
-  if (!description.startsWith("/RF")) {
+  // detect description in pagopa format - note that we also check for cases
+  // without the leading slash since some services don't add it (mistake on
+  // their side)
+  if (
+    !description.startsWith("/RFA/") &&
+    !description.startsWith("/RFB/") &&
+    !description.startsWith("RFA/") &&
+    !description.startsWith("RFB/")
+  ) {
     // not a description in the pagopa format, return the description unmodified
     return description;
   }

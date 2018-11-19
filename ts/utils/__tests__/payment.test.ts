@@ -54,10 +54,26 @@ import { cleanTransactionDescription } from "../payment";
 
 describe("cleanTransactionDescription", () => {
   it("should remove the tag returning just the description", () => {
-    const cleanedPaymentDescription = cleanTransactionDescription(
-      "/RFB/0123456789012/666.98/TXT/ actual description"
-    );
-
-    expect(cleanedPaymentDescription).toBe("actual description");
+    [
+      [
+        "/RFB/0123456789012/666.98/TXT/ actual description",
+        "actual description"
+      ],
+      [
+        "RFB/0123456789012/666.98/TXT/ actual description",
+        "actual description"
+      ],
+      [
+        "/RFA/0123456789012/666.98/TXT/ actual description",
+        "actual description"
+      ],
+      [
+        "RFA/0123456789012/666.98/TXT/ actual description",
+        "actual description"
+      ],
+      ["actual description", "actual description"]
+    ].forEach(([dirty, cleaned]) => {
+      expect(cleanTransactionDescription(dirty)).toEqual(cleaned);
+    });
   });
 });
