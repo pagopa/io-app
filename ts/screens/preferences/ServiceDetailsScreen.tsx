@@ -73,25 +73,7 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Renders a row in the service information panel
- */
 function renderInformationRow(
-  label: string,
-  info: string,
-  onPress?: () => void
-) {
-  return (
-    <View style={styles.infoItem}>
-      <Text>{label}</Text>
-      <Button primary={true} small={true} onPress={onPress}>
-        <Text>{info}</Text>
-      </Button>
-    </View>
-  );
-}
-
-function renderTruncatedInformationRow(
   label: string,
   info: string,
   onPress?: () => void
@@ -441,7 +423,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {pec && renderInformationRow("PEC", pec)}
             {web_url &&
-              renderTruncatedInformationRow("Web", web_url, () =>
+              renderInformationRow("Web", web_url, () =>
                 Linking.openURL(web_url).then(() => 0, () => 0)
               )}
             {renderInformationRow("ID", service.service_id, () =>
