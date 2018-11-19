@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Renders a row in the service information panel
+ */
 function renderInformationRow(
   label: string,
   info: string,
