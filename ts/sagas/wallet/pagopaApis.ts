@@ -33,8 +33,11 @@ import {
   paymentVerificaSuccess
 } from "../../store/actions/wallet/payment";
 import {
+  fetchTransactionFailure,
+  fetchTransactionRequest,
   fetchTransactionsFailure,
-  fetchTransactionsSuccess
+  fetchTransactionsSuccess,
+  fetchTransactionSuccess
 } from "../../store/actions/wallet/transactions";
 import {
   addWalletCreditCardFailure,
@@ -100,6 +103,31 @@ export function* fetchTransactionsRequestHandler(
     }
   } catch {
     yield put(fetchTransactionsFailure(new Error("Generic error")));
+  }
+}
+
+/**
+ * Handles fetchTransactionRequest
+ */
+export function* fetchTransactionRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchTransactionRequest>
+): Iterator<Effect> {
+  const getTransaction = (pagoPaToken: PaymentManagerToken) =>
+    pagoPaClient.getTransaction(pagoPaToken, action.payload);
+  const request = pmSessionManager.withRefresh(getTransaction);
+  try {
+    const response: SagaCallReturnType<typeof request> | undefined = yield call(
+      request
+    );
+    if (response !== undefined && response.status === 200) {
+      yield put(fetchTransactionSuccess(response.value.data));
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(fetchTransactionFailure(new Error("Generic error")));
   }
 }
 

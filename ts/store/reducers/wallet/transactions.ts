@@ -6,7 +6,7 @@ import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { Transaction } from "../../../types/pagopa";
+import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { Action } from "../../actions/types";
 import {
@@ -35,7 +35,9 @@ const getTransactions = (state: GlobalState) =>
   pot.map(
     state.wallet.transactions.transactions,
     txs =>
-      values(txs).filter(_ => _ !== undefined) as ReadonlyArray<Transaction>
+      values(txs).filter(
+        _ => _ !== undefined && isSuccessTransaction(_)
+      ) as ReadonlyArray<Transaction>
   );
 
 export const getWalletTransactionsCreator = (idWallet: number) => (

@@ -41,16 +41,27 @@ import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToTransactionDetailsScreen
+  navigateToTransactionDetailsScreen,
+  navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
-import { fetchTransactionsRequest } from "../../../store/actions/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  runPollTransactionSaga
+} from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
-import { Psp, Wallet } from "../../../types/pagopa";
+import {
+  isCompletedTransaction,
+  isSuccessTransaction,
+  Psp,
+  Transaction,
+  Wallet
+} from "../../../types/pagopa";
 import * as pot from "../../../types/pot";
 import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
+import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -279,7 +290,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
-  isLoading: pot.isLoading(wallet.payment.transaction),
+  isLoading:
+    pot.isLoading(wallet.payment.transaction) ||
+    pot.isLoading(wallet.payment.confirmedTransaction),
   error: pot.isError(wallet.payment.transaction)
     ? some(wallet.payment.transaction.error.message)
     : none
@@ -289,6 +302,48 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => {
+  const onTransactionTimeout = () => {
+    dispatch(navigateToWalletHome());
+    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
+  };
+
+  const onTransactionValid = (tx: Transaction) => {
+    if (isSuccessTransaction(tx)) {
+      // on success, update the transactions and navigate to
+      // the resulting transaciton details
+      dispatch(fetchTransactionsRequest());
+      dispatch(
+        navigateToTransactionDetailsScreen({
+          isPaymentCompletedTransaction: true,
+          transaction: tx
+        })
+      );
+      showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
+    } else {
+      dispatch(navigateToWalletHome());
+      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
+    }
+  };
+
+  const onIdentificationSuccess = () => {
+    dispatch(
+      paymentExecutePaymentRequest({
+        wallet: props.navigation.getParam("wallet"),
+        idPayment: props.navigation.getParam("idPayment"),
+        onSuccess: action => {
+          dispatch(
+            runPollTransactionSaga({
+              id: action.payload.id,
+              isValid: isCompletedTransaction,
+              onTimeout: onTransactionTimeout,
+              onValid: onTransactionValid
+            })
+          );
+        }
+      })
+    );
+  };
+
   const runAuthorizationAndPayment = () =>
     dispatch(
       identificationRequest(
@@ -300,25 +355,7 @@ const mapDispatchToProps = (
           onCancel: () => undefined
         },
         {
-          onSuccess: () => {
-            dispatch(
-              paymentExecutePaymentRequest({
-                wallet: props.navigation.getParam("wallet"),
-                idPayment: props.navigation.getParam("idPayment"),
-                onSuccess: action => {
-                  // on success, update the transactions and navigate to
-                  // the resulting transaciton details
-                  dispatch(fetchTransactionsRequest());
-                  dispatch(
-                    navigateToTransactionDetailsScreen({
-                      isPaymentCompletedTransaction: true,
-                      transaction: action.payload
-                    })
-                  );
-                }
-              })
-            );
-          }
+          onSuccess: onIdentificationSuccess
         }
       )
     );
