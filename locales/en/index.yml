@@ -434,7 +434,7 @@ messages:
   noContent: Content not available
 messageDetails:
   headerTitle: Message
-  invalidText: Invalid parameters!
+  emptyMessage: No content
   loadingText: Loading message details in progress...
   errorText: An error occurred while loading the message details.
   retryText: Retry

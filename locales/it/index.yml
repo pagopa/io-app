@@ -444,7 +444,7 @@ messages:
   noContent: Contenuto non disponibile
 messageDetails:
   headerTitle: Messaggio
-  invalidText: Parametri non validi!
+  emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messagio in corso...
   errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
   retryText: Riprova

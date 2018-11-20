@@ -1,15 +1,15 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import { NavigationActions, NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import MessageListComponent from "../../components/messages/MessageListComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessagesRequest } from "../../store/actions/messages";
+import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
 import { orderedMessagesSelector } from "../../store/reducers/entities/messages";
 import {
@@ -50,14 +50,7 @@ class MessageListScreen extends React.Component<Props, never> {
   private refreshMessageList = () => this.props.dispatch(loadMessagesRequest());
 
   private handleMessageListItemPress = (messageId: string) => {
-    this.props.dispatch(
-      NavigationActions.navigate({
-        routeName: ROUTES.MESSAGE_DETAIL,
-        params: {
-          messageId
-        }
-      })
-    );
+    this.props.dispatch(navigateToMessageDetailScreenAction({ messageId }));
   };
 
   public componentDidMount() {
