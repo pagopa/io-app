@@ -45,7 +45,10 @@ import {
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
+import {
+  paymentExecutePaymentRequest,
+  runDeleteActivePaymentSaga
+} from "../../../store/actions/wallet/payment";
 import {
   fetchTransactionsRequest,
   runPollTransactionSaga
@@ -380,13 +383,15 @@ const mapDispatchToProps = (
           wallet: props.navigation.getParam("wallet")
         })
       ),
-    onCancel: () =>
+    onCancel: () => {
+      dispatch(runDeleteActivePaymentSaga());
       dispatch(
         navigateToPaymentTransactionSummaryScreen({
           rptId: props.navigation.getParam("rptId"),
           initialAmount: props.navigation.getParam("initialAmount")
         })
-      ),
+      );
+    },
     runAuthorizationAndPayment,
     onRetry: runAuthorizationAndPayment
   };

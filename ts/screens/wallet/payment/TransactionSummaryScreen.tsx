@@ -36,6 +36,7 @@ import * as pot from "../../../types/pot";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentVerificaRequest,
+  runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -356,7 +357,10 @@ const mapDispatchToProps = (
     dispatchPaymentVerificaRequest,
     startOrResumePayment,
     goBack: () => props.navigation.goBack(),
-    onCancel: () => dispatch(navigateToWalletHome()),
+    onCancel: () => {
+      dispatch(runDeleteActivePaymentSaga());
+      dispatch(navigateToWalletHome());
+    },
     onRetryWithPotVerifica: (
       potVerifica: ReduxMappedStateProps["potVerifica"],
       maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]

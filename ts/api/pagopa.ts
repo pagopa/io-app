@@ -31,6 +31,8 @@ import {
   AddWalletCreditCardUsingPOSTT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
+  deleteBySessionCookieExpiredUsingDELETEDefaultDecoder,
+  DeleteBySessionCookieExpiredUsingDELETET,
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
@@ -243,6 +245,20 @@ const postPayment: (
   response_decoder: payUsingPOSTDecoder(TransactionResponse)
 });
 
+const deletePayment: (
+  pagoPaToken: PaymentManagerToken
+) => DeleteBySessionCookieExpiredUsingDELETET = pagoPaToken => ({
+  method: "delete",
+  url: ({ id }) => `/v1/payments/${id}/actions/delete`,
+  query: () => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(
+    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ApiHeaderJson
+  ),
+  response_decoder: deleteBySessionCookieExpiredUsingDELETEDefaultDecoder()
+});
+
 type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   PayCreditCardVerificationUsingPOSTT,
   200,
@@ -353,6 +369,13 @@ export function PaymentManagerClient(
       createFetchRequestForApi(postPayment(pagoPaToken), altOptions)({
         id,
         payRequest
+      }),
+    deletePayment: (
+      pagoPaToken: PaymentManagerToken,
+      id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
+    ) =>
+      createFetchRequestForApi(deletePayment(pagoPaToken), options)({
+        id
       }),
     addWalletCreditCard: (
       pagoPaToken: PaymentManagerToken,
