@@ -47,6 +47,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentExecutePaymentRequest,
+  paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import {
@@ -385,6 +386,7 @@ const mapDispatchToProps = (
       ),
     onCancel: () => {
       dispatch(runDeleteActivePaymentSaga());
+      dispatch(paymentInitializeState());
       dispatch(
         navigateToPaymentTransactionSummaryScreen({
           rptId: props.navigation.getParam("rptId"),

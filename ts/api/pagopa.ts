@@ -31,7 +31,6 @@ import {
   AddWalletCreditCardUsingPOSTT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
-  deleteBySessionCookieExpiredUsingDELETEDefaultDecoder,
   DeleteBySessionCookieExpiredUsingDELETET,
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
@@ -59,6 +58,20 @@ import {
   MapResponseType,
   ReplaceRequestParams
 } from "../types/utils";
+
+/**
+ * A decoder that ignores the content of the payload and only decodes the status
+ */
+const constantEmptyDecoder = composeResponseDecoders(
+  composeResponseDecoders(
+    composeResponseDecoders(
+      constantResponseDecoder(200, undefined),
+      basicErrorResponseDecoder<204>(204)
+    ),
+    basicErrorResponseDecoder<401>(401)
+  ),
+  basicErrorResponseDecoder<403>(403)
+);
 
 const getSession: MapResponseType<
   StartSessionUsingGETT,
@@ -256,7 +269,7 @@ const deletePayment: (
     AuthorizationBearerHeaderProducer(pagoPaToken),
     ApiHeaderJson
   ),
-  response_decoder: deleteBySessionCookieExpiredUsingDELETEDefaultDecoder()
+  response_decoder: constantEmptyDecoder
 });
 
 type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
@@ -288,16 +301,7 @@ const deleteWallet: (
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: composeResponseDecoders(
-    composeResponseDecoders(
-      composeResponseDecoders(
-        constantResponseDecoder(200, undefined),
-        basicErrorResponseDecoder<204>(204)
-      ),
-      basicErrorResponseDecoder<401>(401)
-    ),
-    basicErrorResponseDecoder<403>(403)
-  )
+  response_decoder: constantEmptyDecoder
 });
 
 export function PaymentManagerClient(

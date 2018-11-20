@@ -136,8 +136,18 @@ const formatMdInfoRpt = (r: RptId): string =>
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
-      // on component mount, if we haven't fetch the payment summary if we
-      // haven't already
+      // on component mount, fetch the payment summary if we haven't already
+      this.props.dispatchPaymentVerificaRequest();
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    if (
+      pot.isSome(prevProps.potVerifica) &&
+      pot.isNone(this.props.potVerifica)
+    ) {
+      // when resetting the payment state, fetch the payment summary again
+      // - this is needed to generate a new codiceContestoPagamento
       this.props.dispatchPaymentVerificaRequest();
     }
   }

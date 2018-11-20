@@ -23,7 +23,8 @@ import {
   paymentInitializeState,
   paymentVerificaFailure,
   paymentVerificaRequest,
-  paymentVerificaSuccess
+  paymentVerificaSuccess,
+  paymentRestartState
 } from "../../actions/wallet/payment";
 import {
   pollTransactionSagaCompleted,
@@ -90,6 +91,7 @@ const reducer = (
   action: Action
 ): PaymentState => {
   switch (action.type) {
+    // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
 
