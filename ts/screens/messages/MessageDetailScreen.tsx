@@ -31,89 +31,22 @@ import * as pot from "../../types/pot";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
-/**
- * The react-navigation getParam function requires a fallback value to use when the parameter
- * is not available.
- */
-const NO_MESSAGE_ID_PARAM = "NO_MESSAGE_ID_PARAM";
-
 type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
 
-type InvalidScreenState = {
-  kind: "InvalidState";
-};
-
-const isInvalidState = (
-  screenState: ScreenState
-): screenState is InvalidScreenState => {
-  return screenState.kind === "InvalidState";
-};
-
-type NeedLoadingScreenState = {
-  kind: "NeedLoadingState";
-  messageId: string;
-};
-
-const isNeedLoadingState = (
-  screenState: ScreenState
-): screenState is NeedLoadingScreenState => {
-  return screenState.kind === "NeedLoadingState";
-};
-
-type LoadingScreenState = {
-  kind: "LoadingState";
-};
-
-const isLoadingState = (
-  screenState: ScreenState
-): screenState is LoadingScreenState => {
-  return screenState.kind === "LoadingState";
-};
-
-type ErrorScreenState = {
-  kind: "ErrorState";
-  messageId: string;
-};
-
-const isErrorState = (
-  screenState: ScreenState
-): screenState is ErrorScreenState => {
-  return screenState.kind === "ErrorState";
-};
-
-type FullScreenState = {
-  kind: "FullState";
-  messageId: string;
-  message: MessageWithContentPO;
-  messageUIStates: MessageUIStates;
-  service: pot.Pot<ServicePublic, Error>;
-};
-
-const isFullState = (
-  screenState: ScreenState
-): screenState is FullScreenState => {
-  return screenState.kind === "FullState";
-};
-
-type ScreenState =
-  | InvalidScreenState
-  | NeedLoadingScreenState
-  | LoadingScreenState
-  | ErrorScreenState
-  | FullScreenState;
-
 type ReduxMappedStateProps = Readonly<{
-  screenState: ScreenState;
+  potMessage: pot.Pot<MessageWithContentPO, Error>;
+  messageUIStates: MessageUIStates;
+  potService: pot.Pot<ServicePublic, Error>;
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
   contentServiceLoad: (serviceId: ServiceId) => void;
-  loadMessageWithRelations: (messageId: string) => void;
-  setMessageReadState: (messageId: string, isRead: boolean) => void;
+  loadMessageWithRelations: () => void;
+  setMessageReadState: (isRead: boolean) => void;
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => void;
@@ -149,14 +82,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   /**
-   * Used when something went wrong and there is no way to recover.
-   * (ex. no messageId navigation parameter passed to the screen)
+   * Renders the empty message state, when no message content is avaialable
    */
-  private renderInvalidState = () => {
+  private renderEmptyState = () => {
     return (
       <View style={styles.notFullStateContainer}>
         <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.invalidText")}
+          {I18n.t("messageDetails.emptyMessage")}
         </Text>
       </View>
     );
@@ -180,16 +112,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Used when something went wrong but there is a way to recover.
    * (ex. the loading of the message/service failed but we can retry)
    */
-  private renderErrorState = (messageId: string) => {
+  private renderErrorState = () => {
     return (
       <View style={styles.notFullStateContainer}>
         <Text style={styles.notFullStateMessageText}>
           {I18n.t("messageDetails.errorText")}
         </Text>
-        <Button
-          primary={true}
-          onPress={() => this.props.loadMessageWithRelations(messageId)}
-        >
+        <Button primary={true} onPress={this.props.loadMessageWithRelations}>
           <Text>{I18n.t("messageDetails.retryText")}</Text>
         </Button>
       </View>
@@ -220,44 +149,37 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const screenState = this.props.screenState;
+    const { potMessage, potService } = this.props;
 
-    if (isInvalidState(screenState)) {
-      return this.renderInvalidState();
-    } else if (isLoadingState(screenState)) {
+    if (pot.isSome(potMessage)) {
+      return this.renderFullState(potMessage.value, potService);
+    }
+    if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
-    } else if (isErrorState(screenState)) {
-      return this.renderErrorState(screenState.messageId);
-    } else if (isFullState(screenState)) {
-      return this.renderFullState(screenState.message, screenState.service);
+    }
+    if (pot.isError(potMessage)) {
+      return this.renderErrorState();
     }
 
     // Fallback to invalid state
-    return this.renderInvalidState();
+    return this.renderEmptyState();
+  };
+
+  private setMessageReadState = () => {
+    const { potMessage, messageUIStates } = this.props;
+
+    if (pot.isSome(potMessage) && !messageUIStates.read) {
+      // Set the message read state to TRUE
+      this.props.setMessageReadState(true);
+    }
   };
 
   public componentDidMount() {
-    const { screenState } = this.props;
-
-    /**
-     * If the message in not in the store (ex. coming from a push notification or deep link)
-     * try to load it.
-     */
-    if (isNeedLoadingState(screenState)) {
-      this.props.loadMessageWithRelations(screenState.messageId);
-    } else if (isFullState(screenState) && !screenState.messageUIStates.read) {
-      // Set the message read state to TRUE
-      this.props.setMessageReadState(screenState.messageId, true);
-    }
+    this.setMessageReadState();
   }
 
   public componentDidUpdate() {
-    const { screenState } = this.props;
-
-    if (isFullState(screenState) && !screenState.messageUIStates.read) {
-      // Set the message read state to TRUE
-      this.props.setMessageReadState(screenState.messageId, true);
-    }
+    this.setMessageReadState();
   }
 
   public render() {
@@ -284,81 +206,54 @@ const mapStateToProps = (
   state: GlobalState,
   ownProps: OwnProps
 ): ReduxMappedStateProps => {
-  /**
-   * Try to get the messageId from the navigation parameters.
-   */
-  const messageId = ownProps.navigation.getParam(
-    "messageId",
-    NO_MESSAGE_ID_PARAM
-  );
-
-  if (messageId === NO_MESSAGE_ID_PARAM) {
-    return {
-      screenState: {
-        kind: "InvalidState"
-      }
-    };
-  }
+  const messageId = ownProps.navigation.getParam("messageId");
 
   const isLoading = messageWithRelationsLoadLoadingSelector(state);
-
-  if (isLoading) {
-    return {
-      screenState: {
-        kind: "LoadingState"
-      }
-    };
-  }
-
   const hasError = messageWithRelationsLoadErrorSelector(state).isSome();
+  const maybeMessage = messageByIdSelector(messageId)(state);
 
-  if (hasError) {
-    return {
-      screenState: {
-        kind: "ErrorState",
-        messageId
-      }
-    };
-  }
+  const potMessage =
+    maybeMessage !== undefined
+      ? pot.some(maybeMessage)
+      : isLoading
+        ? pot.noneLoading
+        : hasError
+          ? pot.noneError(Error())
+          : pot.none;
 
-  const message = messageByIdSelector(messageId)(state);
+  const potService = pot
+    .toOption(potMessage)
+    .mapNullable(message =>
+      serviceByIdSelector(message.sender_service_id)(state)
+    )
+    .getOrElse(pot.none);
+
   const messageUIStates = makeMessageUIStatesByIdSelector(messageId)(state);
 
-  if (message !== undefined) {
-    const service = message
-      ? serviceByIdSelector(message.sender_service_id)(state)
-      : undefined;
-
-    return {
-      screenState: {
-        kind: "FullState",
-        messageId,
-        message,
-        messageUIStates,
-        service: service !== undefined ? service : pot.none
-      }
-    };
-  }
-
   return {
-    screenState: {
-      kind: "NeedLoadingState",
-      messageId
-    }
+    potMessage,
+    messageUIStates,
+    potService
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  contentServiceLoad: (serviceId: ServiceId) =>
-    dispatch(contentServiceLoad(serviceId)),
-  loadMessageWithRelations: (messageId: string) =>
-    dispatch(loadMessageWithRelationsAction(messageId)),
-  setMessageReadState: (messageId: string, isRead: boolean) =>
-    dispatch(setMessageReadState(messageId, isRead)),
-  navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params))
-});
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: OwnProps
+): ReduxMappedDispatchProps => {
+  const messageId = ownProps.navigation.getParam("messageId");
+  return {
+    contentServiceLoad: (serviceId: ServiceId) =>
+      dispatch(contentServiceLoad(serviceId)),
+    loadMessageWithRelations: () =>
+      dispatch(loadMessageWithRelationsAction(messageId)),
+    setMessageReadState: (isRead: boolean) =>
+      dispatch(setMessageReadState(messageId, isRead)),
+    navigateToServiceDetailsScreen: (
+      params: InferNavigationParams<typeof ServiceDetailsScreen>
+    ) => dispatch(navigateToServiceDetailsScreen(params))
+  };
+};
 
 export default connect(
   mapStateToProps,
