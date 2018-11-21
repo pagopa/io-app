@@ -323,6 +323,7 @@ const mapDispatchToProps = (
       );
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
+      dispatch(runDeleteActivePaymentSaga());
       dispatch(navigateToWalletHome());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
