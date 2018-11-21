@@ -324,6 +324,9 @@ const mapDispatchToProps = (
       );
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
+      // on failure, attempt to reset the current payment to make it possible
+      // to retry
+      dispatch(runDeleteActivePaymentSaga());
       dispatch(navigateToWalletHome());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
