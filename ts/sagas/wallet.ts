@@ -5,7 +5,15 @@
  */
 
 import { none, some } from "fp-ts/lib/Option";
-import { Effect, put, select, take, takeLatest } from "redux-saga/effects";
+import { delay } from "redux-saga";
+import {
+  call,
+  Effect,
+  put,
+  select,
+  take,
+  takeLatest
+} from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
@@ -32,7 +40,15 @@ import {
   paymentVerificaRequest,
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
-import { fetchTransactionsRequest } from "../store/actions/wallet/transactions";
+import {
+  fetchTransactionFailure,
+  fetchTransactionRequest,
+  fetchTransactionsRequest,
+  fetchTransactionSuccess,
+  pollTransactionSagaCompleted,
+  pollTransactionSagaTimeout,
+  runPollTransactionSaga
+} from "../store/actions/wallet/transactions";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
@@ -63,6 +79,7 @@ import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
+  fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
   payCreditCardVerificationRequestHandler,
@@ -91,6 +108,15 @@ const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
  * How much time to wait between retries when polling for a payment ID
  */
 const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000;
+
+/**
+ * Configure the max number of retries and delay between retries when polling
+ * for the completion of a transaction during payment.
+ *
+ * Max wait time will be POLL_TRANSACTION_MAX_RETRIES * POLL_TRANSACTION_DELAY_MILLIS
+ */
+const POLL_TRANSACTION_MAX_RETRIES = 30;
+const POLL_TRANSACTION_DELAY_MILLIS = 500;
 
 /**
  * This saga manages the flow for adding a new card.
@@ -371,6 +397,57 @@ function* startOrResumePaymentActivationSaga(
 }
 
 /**
+ * This saga will poll for a transaction until it reaches a certain "valid"
+ * status, as defined by the isValid predicate.
+ * The saga will retry for POLL_TRANSACTION_MAX_RETRIES times, with a delay
+ * of POLL_TRANSACTION_DELAY_MILLIS between retries.
+ */
+function* pollTransactionSaga(
+  action: ActionType<typeof runPollTransactionSaga>
+) {
+  // tslint:disable-next-line:no-var-keyword
+  var count = POLL_TRANSACTION_MAX_RETRIES;
+
+  const { id, isValid, onValid, onTimeout } = action.payload;
+
+  while (count > 0) {
+    // cycle until POLL_TRANSACTION_MAX_RETRIES
+
+    // issue a request for fetch the transaction
+    yield put(fetchTransactionRequest(id));
+    const result = yield take([
+      getType(fetchTransactionSuccess),
+      getType(fetchTransactionFailure)
+    ]);
+
+    if (isActionOf(fetchTransactionSuccess, result)) {
+      // on success, emit the completed action and call the (optional) callback
+      const transaction = result.payload;
+      if (isValid(transaction)) {
+        yield put(pollTransactionSagaCompleted(transaction));
+        if (onValid) {
+          onValid(transaction);
+        }
+        return;
+      }
+    }
+
+    // on failure, try again after a delay
+
+    // tslint:disable-next-line:saga-yield-return-type
+    yield call(delay, POLL_TRANSACTION_DELAY_MILLIS);
+
+    count -= 1;
+  }
+  // no more retries, emit a timeout action and call the (optional) failure
+  // callback
+  yield put(pollTransactionSagaTimeout());
+  if (onTimeout) {
+    onTimeout();
+  }
+}
+
+/**
  * Main wallet saga.
  *
  * This saga is responsible for handling actions the mostly correspond to API
@@ -447,6 +524,8 @@ export function* watchWalletSaga(
     startOrResumePaymentActivationSaga
   );
 
+  yield takeLatest(getType(runPollTransactionSaga), pollTransactionSaga);
+
   //
   // API requests
   //
@@ -454,6 +533,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(fetchTransactionsRequest),
     fetchTransactionsRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(fetchTransactionRequest),
+    fetchTransactionRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );

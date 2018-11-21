@@ -304,6 +304,9 @@ wallet:
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
     identificationMessage: "Conferma l'operazione inserendo il tuo PIN"
+    transactionSuccess: Il pagamento è stato completato!
+    transactionFailure: Si è verificato un errore durante il pagamento, riprova!
+    transactionTimeout: Non è stato possibile recuperare l'esito del pagamento!
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
