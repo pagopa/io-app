@@ -5,6 +5,7 @@ import {
   RptId
 } from "italia-ts-commons/lib/pagopa";
 import {
+  ActionSheet,
   Body,
   Button,
   Container,
@@ -40,14 +41,12 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToPaymentTransactionSummaryScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentExecutePaymentRequest,
-  paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import {
@@ -324,9 +323,6 @@ const mapDispatchToProps = (
       );
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
-      // on failure, attempt to reset the current payment to make it possible
-      // to retry
-      dispatch(runDeleteActivePaymentSaga());
       dispatch(navigateToWalletHome());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
@@ -388,13 +384,26 @@ const mapDispatchToProps = (
         })
       ),
     onCancel: () => {
-      dispatch(runDeleteActivePaymentSaga());
-      dispatch(paymentInitializeState());
-      dispatch(
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount")
-        })
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            dispatch(runDeleteActivePaymentSaga());
+            dispatch(navigateToWalletHome());
+            showToast(
+              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              "success"
+            );
+          }
+        }
       );
     },
     runAuthorizationAndPayment,

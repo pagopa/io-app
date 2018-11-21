@@ -23,8 +23,7 @@ import {
   paymentInitializeState,
   paymentVerificaFailure,
   paymentVerificaRequest,
-  paymentVerificaSuccess,
-  paymentRestartState
+  paymentVerificaSuccess
 } from "../../actions/wallet/payment";
 import {
   pollTransactionSagaCompleted,

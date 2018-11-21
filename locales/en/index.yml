@@ -297,6 +297,10 @@ wallet:
     transactionSuccess: The payment has completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
+    confirmCancelTitle: Do you want to cancel this payment?
+    confirmCancelPayment: Cancel this payment
+    confirmContinuePayment: Continue with the payment
+    cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
   payWith:
     noWallets:
       title: No payment methods found
