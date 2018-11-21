@@ -31,6 +31,7 @@ import {
   paymentCheckFailure,
   paymentCheckRequest,
   paymentCheckSuccess,
+  paymentDeletePaymentRequest,
   paymentExecutePaymentRequest,
   paymentFetchPspsForPaymentIdRequest,
   paymentIdPollingFailure,
@@ -38,6 +39,7 @@ import {
   paymentIdPollingSuccess,
   paymentUpdateWalletPspRequest,
   paymentVerificaRequest,
+  runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
@@ -85,6 +87,7 @@ import {
   payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
+  paymentDeletePaymentRequestHandler,
   paymentExecutePaymentRequestHandler,
   paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
@@ -448,6 +451,21 @@ function* pollTransactionSaga(
 }
 
 /**
+ * This saga attempts to delete the active payment, if there's one.
+ *
+ * This is a best effort operation as the result is actually ignored.
+ */
+function* deleteActivePaymentSaga() {
+  const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
+    GlobalState
+  >(_ => _.wallet.payment.paymentId);
+  const maybePaymentId = pot.toOption(potPaymentId);
+  if (maybePaymentId.isSome()) {
+    yield put(paymentDeletePaymentRequest({ paymentId: maybePaymentId.value }));
+  }
+}
+
+/**
  * Main wallet saga.
  *
  * This saga is responsible for handling actions the mostly correspond to API
@@ -525,6 +543,11 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(runPollTransactionSaga), pollTransactionSaga);
+
+  yield takeLatest(
+    getType(runDeleteActivePaymentSaga),
+    deleteActivePaymentSaga
+  );
 
   //
   // API requests
@@ -621,6 +644,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentExecutePaymentRequest),
     paymentExecutePaymentRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(paymentDeletePaymentRequest),
+    paymentDeletePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );

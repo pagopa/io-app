@@ -31,6 +31,7 @@ import {
   AddWalletCreditCardUsingPOSTT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
+  DeleteBySessionCookieExpiredUsingDELETET,
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
@@ -57,6 +58,20 @@ import {
   MapResponseType,
   ReplaceRequestParams
 } from "../types/utils";
+
+/**
+ * A decoder that ignores the content of the payload and only decodes the status
+ */
+const constantEmptyDecoder = composeResponseDecoders(
+  composeResponseDecoders(
+    composeResponseDecoders(
+      constantResponseDecoder(200, undefined),
+      basicErrorResponseDecoder<204>(204)
+    ),
+    basicErrorResponseDecoder<401>(401)
+  ),
+  basicErrorResponseDecoder<403>(403)
+);
 
 const getSession: MapResponseType<
   StartSessionUsingGETT,
@@ -243,6 +258,20 @@ const postPayment: (
   response_decoder: payUsingPOSTDecoder(TransactionResponse)
 });
 
+const deletePayment: (
+  pagoPaToken: PaymentManagerToken
+) => DeleteBySessionCookieExpiredUsingDELETET = pagoPaToken => ({
+  method: "delete",
+  url: ({ id }) => `/v1/payments/${id}/actions/delete`,
+  query: () => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(
+    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ApiHeaderJson
+  ),
+  response_decoder: constantEmptyDecoder
+});
+
 type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   PayCreditCardVerificationUsingPOSTT,
   200,
@@ -272,16 +301,7 @@ const deleteWallet: (
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   headers: AuthorizationBearerHeaderProducer(pagoPaToken),
-  response_decoder: composeResponseDecoders(
-    composeResponseDecoders(
-      composeResponseDecoders(
-        constantResponseDecoder(200, undefined),
-        basicErrorResponseDecoder<204>(204)
-      ),
-      basicErrorResponseDecoder<401>(401)
-    ),
-    basicErrorResponseDecoder<403>(403)
-  )
+  response_decoder: constantEmptyDecoder
 });
 
 export function PaymentManagerClient(
@@ -353,6 +373,13 @@ export function PaymentManagerClient(
       createFetchRequestForApi(postPayment(pagoPaToken), altOptions)({
         id,
         payRequest
+      }),
+    deletePayment: (
+      pagoPaToken: PaymentManagerToken,
+      id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
+    ) =>
+      createFetchRequestForApi(deletePayment(pagoPaToken), options)({
+        id
       }),
     addWalletCreditCard: (
       pagoPaToken: PaymentManagerToken,

@@ -5,6 +5,7 @@ import {
   RptId
 } from "italia-ts-commons/lib/pagopa";
 import {
+  ActionSheet,
   Body,
   Button,
   Container,
@@ -40,12 +41,14 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToPaymentTransactionSummaryScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
+import {
+  paymentExecutePaymentRequest,
+  runDeleteActivePaymentSaga
+} from "../../../store/actions/wallet/payment";
 import {
   fetchTransactionsRequest,
   runPollTransactionSaga
@@ -320,6 +323,7 @@ const mapDispatchToProps = (
       );
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
+      dispatch(runDeleteActivePaymentSaga());
       dispatch(navigateToWalletHome());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
@@ -380,13 +384,29 @@ const mapDispatchToProps = (
           wallet: props.navigation.getParam("wallet")
         })
       ),
-    onCancel: () =>
-      dispatch(
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount")
-        })
-      ),
+    onCancel: () => {
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            dispatch(runDeleteActivePaymentSaga());
+            dispatch(navigateToWalletHome());
+            showToast(
+              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              "success"
+            );
+          }
+        }
+      );
+    },
     runAuthorizationAndPayment,
     onRetry: runAuthorizationAndPayment
   };

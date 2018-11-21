@@ -36,6 +36,7 @@ import * as pot from "../../../types/pot";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentVerificaRequest,
+  runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -135,8 +136,18 @@ const formatMdInfoRpt = (r: RptId): string =>
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
-      // on component mount, if we haven't fetch the payment summary if we
-      // haven't already
+      // on component mount, fetch the payment summary if we haven't already
+      this.props.dispatchPaymentVerificaRequest();
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    if (
+      pot.isSome(prevProps.potVerifica) &&
+      pot.isNone(this.props.potVerifica)
+    ) {
+      // when resetting the payment state, fetch the payment summary again
+      // - this is needed to generate a new codiceContestoPagamento
       this.props.dispatchPaymentVerificaRequest();
     }
   }
@@ -356,7 +367,10 @@ const mapDispatchToProps = (
     dispatchPaymentVerificaRequest,
     startOrResumePayment,
     goBack: () => props.navigation.goBack(),
-    onCancel: () => dispatch(navigateToWalletHome()),
+    onCancel: () => {
+      dispatch(runDeleteActivePaymentSaga());
+      dispatch(navigateToWalletHome());
+    },
     onRetryWithPotVerifica: (
       potVerifica: ReduxMappedStateProps["potVerifica"],
       maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]

@@ -307,6 +307,10 @@ wallet:
     transactionSuccess: Il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!
     transactionTimeout: Non è stato possibile recuperare l'esito del pagamento!
+    confirmCancelTitle: Vuoi annullare il pagamento?
+    confirmCancelPayment: Annulla il pagamento
+    confirmContinuePayment: Continua con il pagamento
+    cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato

@@ -16,6 +16,9 @@ import {
   paymentCheckFailure,
   paymentCheckRequest,
   paymentCheckSuccess,
+  paymentDeletePaymentFailure,
+  paymentDeletePaymentRequest,
+  paymentDeletePaymentSuccess,
   paymentExecutePaymentFailure,
   paymentExecutePaymentRequest,
   paymentExecutePaymentSuccess,
@@ -450,6 +453,30 @@ export function* paymentExecutePaymentRequestHandler(
     }
   } catch {
     yield put(paymentExecutePaymentFailure(Error("GENERIC_ERROR")));
+  }
+}
+
+/**
+ * Handles paymentDeletePaymentRequest
+ */
+export function* paymentDeletePaymentRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof paymentDeletePaymentRequest>
+): Iterator<Effect> {
+  const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
+    pagoPaClient.deletePayment(pagoPaToken, action.payload.paymentId);
+  const request = pmSessionManager.withRefresh(apiPostPayment);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+
+    if (response !== undefined && response.status === 200) {
+      yield put(paymentDeletePaymentSuccess());
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(paymentDeletePaymentFailure());
   }
 }
 

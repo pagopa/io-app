@@ -173,6 +173,30 @@ export const paymentExecutePaymentFailure = createStandardAction(
 )<Error>();
 
 //
+// delete an ongoing payment
+//
+
+type PaymentDeletePaymentRequestPayload = Readonly<{
+  paymentId: string;
+}>;
+
+export const paymentDeletePaymentRequest = createStandardAction(
+  "PAYMENT_DELETE_PAYMENT_REQUEST"
+)<PaymentDeletePaymentRequestPayload>();
+
+export const paymentDeletePaymentSuccess = createStandardAction(
+  "PAYMENT_DELETE_PAYMENT_SUCCESS"
+)();
+
+export const paymentDeletePaymentFailure = createStandardAction(
+  "PAYMENT_DELETE_PAYMENT_FAILURE"
+)();
+
+export const runDeleteActivePaymentSaga = createStandardAction(
+  "PAYMENT_RUN_DELETE_ACTIVE_PAYMENT_SAGA"
+)();
+
+//
 // run startOrResumePaymentSaga
 //
 
@@ -212,4 +236,8 @@ export type PaymentActions =
   | ActionType<typeof paymentExecutePaymentRequest>
   | ActionType<typeof paymentExecutePaymentSuccess>
   | ActionType<typeof paymentExecutePaymentFailure>
+  | ActionType<typeof paymentDeletePaymentRequest>
+  | ActionType<typeof paymentDeletePaymentSuccess>
+  | ActionType<typeof paymentDeletePaymentFailure>
+  | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>;
