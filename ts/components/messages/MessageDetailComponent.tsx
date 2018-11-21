@@ -55,10 +55,9 @@ const styles = StyleSheet.create({
 /**
  * A component to render the message detail.
  */
-class MessageDetailComponent extends React.PureComponent<Props> {
+export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
     const { message, service, onServiceLinkPress } = this.props;
-
     return (
       <View>
         <View style={styles.headerContainer}>
@@ -113,5 +112,3 @@ class MessageDetailComponent extends React.PureComponent<Props> {
     );
   }
 }
-
-export default MessageDetailComponent;
