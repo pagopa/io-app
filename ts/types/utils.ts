@@ -80,7 +80,7 @@ export const replaceProp1 = <
 
 type MapTypeInApiResponse<T, S extends number, B> = T extends IResponseType<
   S,
-  infer R
+  any
 >
   ? IResponseType<S, B>
   : T;
@@ -106,17 +106,17 @@ export type MapResponseType<
  * Replaces the parameters of the request T with the type P
  */
 export type ReplaceRequestParams<T, P> = T extends IGetApiRequestType<
-  infer P1,
+  any,
   infer H1,
   infer Q1,
   infer R1
 >
   ? IGetApiRequestType<P, H1, Q1, R1>
-  : T extends IPostApiRequestType<infer P2, infer H2, infer Q2, infer R2>
+  : T extends IPostApiRequestType<any, infer H2, infer Q2, infer R2>
     ? IPostApiRequestType<P, H2, Q2, R2>
-    : T extends IPutApiRequestType<infer P3, infer H3, infer Q3, infer R3>
+    : T extends IPutApiRequestType<any, infer H3, infer Q3, infer R3>
       ? IPutApiRequestType<P, H3, Q3, R3>
-      : T extends IDeleteApiRequestType<infer P4, infer H4, infer Q4, infer R4>
+      : T extends IDeleteApiRequestType<any, infer H4, infer Q4, infer R4>
         ? IDeleteApiRequestType<P, H4, Q4, R4>
         : never;
 
