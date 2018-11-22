@@ -367,7 +367,11 @@ const mapDispatchToProps = (
   return {
     dispatchPaymentVerificaRequest,
     startOrResumePayment,
-    goBack: () => props.navigation.goBack(),
+    goBack: () => {
+      props.navigation.goBack();
+      // reset the payment state
+      dispatch(paymentInitializeState());
+    },
     onCancel: () => {
       // on cancel:
       // navigate to the wallet home
