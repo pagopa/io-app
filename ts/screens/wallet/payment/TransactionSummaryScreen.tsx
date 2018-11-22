@@ -35,6 +35,7 @@ import * as pot from "../../../types/pot";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentInitializeState,
   paymentVerificaRequest,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
@@ -368,8 +369,13 @@ const mapDispatchToProps = (
     startOrResumePayment,
     goBack: () => props.navigation.goBack(),
     onCancel: () => {
-      dispatch(runDeleteActivePaymentSaga());
+      // on cancel:
+      // navigate to the wallet home
       dispatch(navigateToWalletHome());
+      // delete the active payment from PagoPA
+      dispatch(runDeleteActivePaymentSaga());
+      // reset the payment state
+      dispatch(paymentInitializeState());
     },
     onRetryWithPotVerifica: (
       potVerifica: ReduxMappedStateProps["potVerifica"],

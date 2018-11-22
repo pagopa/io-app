@@ -47,6 +47,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentExecutePaymentRequest,
+  paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import {
@@ -312,19 +313,27 @@ const mapDispatchToProps = (
 
   const onTransactionValid = (tx: Transaction) => {
     if (isSuccessTransaction(tx)) {
-      // on success, update the transactions and navigate to
-      // the resulting transaciton details
-      dispatch(fetchTransactionsRequest());
+      // on success:
       dispatch(
         navigateToTransactionDetailsScreen({
           isPaymentCompletedTransaction: true,
           transaction: tx
         })
       );
+      // reset the payment state
+      dispatch(paymentInitializeState());
+      // update the transactions state
+      dispatch(fetchTransactionsRequest());
+      // navigate to the resulting transaction details
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
-      dispatch(runDeleteActivePaymentSaga());
+      // on failure:
+      // navigate to the wallet home
       dispatch(navigateToWalletHome());
+      // delete the active payment from PagoPA
+      dispatch(runDeleteActivePaymentSaga());
+      // reset the payment state
+      dispatch(paymentInitializeState());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
   };
@@ -397,8 +406,13 @@ const mapDispatchToProps = (
         },
         buttonIndex => {
           if (buttonIndex === 0) {
-            dispatch(runDeleteActivePaymentSaga());
+            // on cancel:
+            // navigate to the wallet home
             dispatch(navigateToWalletHome());
+            // delete the active payment from PagoPA
+            dispatch(runDeleteActivePaymentSaga());
+            // reset the payment state
+            dispatch(paymentInitializeState());
             showToast(
               I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
               "success"
