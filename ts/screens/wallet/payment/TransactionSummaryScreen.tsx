@@ -142,17 +142,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
     }
   }
 
-  public componentDidUpdate(prevProps: Props) {
-    if (
-      pot.isSome(prevProps.potVerifica) &&
-      pot.isNone(this.props.potVerifica)
-    ) {
-      // when resetting the payment state, fetch the payment summary again
-      // - this is needed to generate a new codiceContestoPagamento
-      this.props.dispatchPaymentVerificaRequest();
-    }
-  }
-
   private handleBackPress = () => this.props.navigation.goBack();
 
   private getSecondaryButtonProps = () => ({

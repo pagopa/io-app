@@ -1,27 +1,7 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Overlay } from "../ui/Overlay";
 import { RefreshIndicator } from "../ui/RefreshIndicator";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
-    opacity: 0.7,
-    zIndex: 1,
-    justifyContent: "center"
-  },
-  back: {
-    zIndex: 0
-  }
-});
 
 /**
  * A HOC to display and overlay spinner conditionally
@@ -36,16 +16,9 @@ export function withLoadingSpinner<P extends Readonly<{ isLoading: boolean }>>(
     public render() {
       const { isLoading } = this.props;
       return (
-        <View style={styles.container}>
-          {isLoading && (
-            <View style={styles.overlay}>
-              <RefreshIndicator />
-            </View>
-          )}
-          <View style={[styles.container, styles.back]}>
-            <WrappedComponent {...this.props} />
-          </View>
-        </View>
+        <Overlay foreground={isLoading ? <RefreshIndicator /> : undefined}>
+          <WrappedComponent {...this.props} />
+        </Overlay>
       );
     }
   }
