@@ -179,7 +179,7 @@ platform :ios do
       "ItaliaAppTests/Info.plist"
     ]
     git_add(path: versioning_paths)
-    git_commit(path: versioning_paths, message: "[fastlane] New iOS/TestFlight build v#{version_number} (build #{build_number})")
+    git_commit(path: versioning_paths, message: "[fastlane] New iOS/TestFlight build v#{version_number} (build #{build_number}) [skip ci]")
 
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
@@ -188,8 +188,9 @@ platform :ios do
     # Push the new commit and tag back to your git remote
     push_to_git_remote
 
-    # upload to HockeyApp
+    # upload to itunes store
     pilot(
+      username: ITUNES_USER,
       changelog: changelog,
       skip_waiting_for_build_processing: true
     )
