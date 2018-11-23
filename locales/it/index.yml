@@ -452,7 +452,7 @@ messages:
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
-  loadingText: Caricamento dei dettagli del messagio in corso...
+  loadingText: Caricamento dei dettagli del messaggio in corso...
   errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
   retryText: Riprova
   rawInfoLink:
