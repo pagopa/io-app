@@ -36,7 +36,10 @@ import AppHeader from "../../components/ui/AppHeader";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
-import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
+import {
+  navigateToWalletConfirmCardDetails,
+  navigateToWalletHome
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import { CreditCard } from "../../types/pagopa";
@@ -59,6 +62,7 @@ type NavigationParams = Readonly<{
 
 type ReduxMappedDispatchProps = Readonly<{
   addWalletCreditCardInit: () => void;
+  navigateToWalletHome: () => void;
   navigateToConfirmCardDetailsScreen: (card: CreditCard) => void;
 }>;
 
@@ -197,7 +201,9 @@ class AddCardScreen extends React.Component<Props, State> {
             <GoBackButton />
           </Left>
           <Body>
-            <Text>{I18n.t("wallet.addCardTitle")}</Text>
+            <Text numberOfLines={1} onPress={this.props.navigateToWalletHome}>
+              {I18n.t("wallet.addPaymentMethodTitle")}
+            </Text>
           </Body>
           <Right>
             <InstabugButtons />
@@ -339,6 +345,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(

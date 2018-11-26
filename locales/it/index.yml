@@ -505,8 +505,6 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
-serviceDetail:
-  headerTitle: "Dettagli del Servizio"
 identification:
   message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.

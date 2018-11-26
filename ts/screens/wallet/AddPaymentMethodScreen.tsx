@@ -38,7 +38,8 @@ import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletAddCreditCard
+  navigateToWalletAddCreditCard,
+  navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
@@ -54,6 +55,7 @@ type NavigationParams = Readonly<{
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletHome: () => void;
   navigateToTransactionSummary: () => void;
   navigateToAddCreditCard: () => void;
 }>;
@@ -72,11 +74,11 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             <GoBackButton />
           </Left>
           <Body>
-            {inPayment.isSome() ? (
-              <Text>{I18n.t("wallet.payWith.header")}</Text>
-            ) : (
-              <Text>{I18n.t("wallet.addPaymentMethodTitle")}</Text>
-            )}
+            <Text numberOfLines={1} onPress={this.props.navigateToWalletHome}>
+              {inPayment.isSome()
+                ? I18n.t("wallet.payWith.header")
+                : I18n.t("wallet.wallet")}
+            </Text>
           </Body>
           <Right>
             <InstabugButtons />
@@ -133,6 +135,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToTransactionSummary: () => {
     const maybeInPayment = props.navigation.getParam("inPayment");
     maybeInPayment.map(inPayment =>

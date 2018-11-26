@@ -188,7 +188,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   public render() {
     return (
       <BaseScreenComponent
-        headerTitle={I18n.t("messageDetails.headerTitle")}
+        headerTitle={I18n.t("navigation.messages")}
         goBack={this.goBack}
       >
         {this.renderCurrentState()}

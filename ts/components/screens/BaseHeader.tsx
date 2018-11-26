@@ -36,7 +36,7 @@ export class BaseHeader extends React.PureComponent<Props> {
           </Left>
         )}
         <Body>
-          <Text white={this.props.primary} numberOfLines={1}>
+          <Text white={this.props.primary} numberOfLines={1} onPress={goBack}>
             {headerTitle || DEFAULT_APPLICATION_NAME}
           </Text>
         </Body>

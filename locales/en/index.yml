@@ -493,8 +493,6 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
-serviceDetail:
-  headerTitle: "Service details"
 identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.

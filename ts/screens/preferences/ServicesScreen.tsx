@@ -112,6 +112,7 @@ class ServicesScreen extends React.Component<Props> {
   public render() {
     return (
       <TopScreenComponent
+        headerTitle={I18n.t("preferences.title")}
         title={I18n.t("services.title")}
         goBack={this.goBack}
         subtitle={I18n.t("services.subTitle")}

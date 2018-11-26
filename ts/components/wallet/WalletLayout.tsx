@@ -20,11 +20,15 @@ import {
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
+import { connect } from "react-redux";
+import { navigateToWalletHome } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
+import { InstabugButtons } from "../InstabugButtons";
+import { WalletStyles } from "../styles/wallet";
+
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
-import { InstabugButtons } from "../InstabugButtons";
-import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
 
@@ -34,7 +38,11 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = Readonly<{
+type ReduxMappedDispatchProps = Readonly<{
+  navigateToWalletHome: () => void;
+}>;
+
+type OwnProps = Readonly<{
   title: string;
   headerContents?: React.ReactNode;
   onNewPaymentPress?: () => void;
@@ -42,7 +50,9 @@ type Props = Readonly<{
   displayedWallets?: React.ReactNode;
 }>;
 
-export default class WalletLayout extends React.Component<Props> {
+type Props = ReduxMappedDispatchProps & OwnProps;
+
+class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
       <Container>
@@ -53,7 +63,17 @@ export default class WalletLayout extends React.Component<Props> {
             </Left>
           )}
           <Body>
-            <Text style={WalletStyles.white}>{this.props.title}</Text>
+            <Text
+              style={WalletStyles.white}
+              numberOfLines={1}
+              onPress={
+                this.props.allowGoBack
+                  ? this.props.navigateToWalletHome
+                  : undefined
+              }
+            >
+              {this.props.title}
+            </Text>
           </Body>
           <Right>
             <InstabugButtons color={variables.colorWhite} />
@@ -82,3 +102,12 @@ export default class WalletLayout extends React.Component<Props> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(WalletLayout);

@@ -177,7 +177,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             <GoBackButton />
           </Left>
           <Body>
-            <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
+            <Text numberOfLines={1} onPress={this.props.navigateToWalletHome}>
+              {I18n.t("wallet.wallet")}
+            </Text>
           </Body>
           <Right>
             <InstabugButtons />

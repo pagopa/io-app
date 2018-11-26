@@ -187,7 +187,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={this.goBack}
-        headerTitle={I18n.t("serviceDetail.headerTitle")}
+        headerTitle={I18n.t("services.title")}
       >
         <Content>
           <Grid>
