@@ -70,6 +70,9 @@ import {
   paymentCheckFailure,
   paymentCheckRequest,
   paymentCheckSuccess,
+  paymentDeletePaymentFailure,
+  paymentDeletePaymentRequest,
+  paymentDeletePaymentSuccess,
   paymentExecutePaymentFailure,
   paymentExecutePaymentRequest,
   paymentExecutePaymentSuccess,
@@ -286,6 +289,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentUpdateWalletPspFailure):
     case getType(paymentExecutePaymentRequest):
     case getType(paymentExecutePaymentFailure):
+    case getType(paymentDeletePaymentRequest):
+    case getType(paymentDeletePaymentSuccess):
+    case getType(paymentDeletePaymentFailure):
     // other
     case getType(updateNotificationsInstallationToken):
     case getType(updateNotificationInstallationFailure):
