@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import * as pot from "../../types/pot";
@@ -17,6 +18,7 @@ import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 
 type OwnProps = {
   message: MessageWithContentPO;
+  paymentByRptId: PaymentByRptIdState;
   service: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
  */
 export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
-    const { message, service, onServiceLinkPress } = this.props;
+    const { message, paymentByRptId, service, onServiceLinkPress } = this.props;
     return (
       <View>
         <View style={styles.headerContainer}>
@@ -96,6 +98,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
 
         <MessageCTABar
           message={message}
+          paymentByRptId={paymentByRptId}
           service={service}
           containerStyle={styles.ctaBarContainer}
         />

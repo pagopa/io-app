@@ -445,6 +445,7 @@ messages:
   yesterday: ieri
   cta:
     pay: Paga € {{amount}}
+    paid: Pagato € {{amount}}
     reminder: Promemoria
     reminderTitle: "Promemoria per: {{subject}}"
   unknownSender: Mittente sconosciuto

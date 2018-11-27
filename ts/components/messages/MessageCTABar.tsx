@@ -1,4 +1,5 @@
 import { isSome, none } from "fp-ts/lib/Option";
+import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
@@ -11,6 +12,7 @@ import { ReduxProps } from "../../store/actions/types";
 
 import { navigateToPaymentTransactionSummaryScreen } from "../../store/actions/navigation";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
+import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import * as pot from "../../types/pot";
@@ -30,6 +32,7 @@ type OwnProps = {
   message: MessageWithContentPO;
   service: pot.Pot<ServicePublic, Error>;
   containerStyle?: ViewStyle;
+  paymentByRptId: PaymentByRptIdState;
 };
 
 type Props = OwnProps & ReduxProps;
@@ -99,7 +102,8 @@ class MessageCTABar extends React.PureComponent<Props> {
 
   private renderPaymentCTA(
     paymentData: NonNullable<MessageWithContentPO["content"]["payment_data"]>,
-    potService: pot.Pot<ServicePublic, Error>
+    potService: pot.Pot<ServicePublic, Error>,
+    paymentByRptId: PaymentByRptIdState
   ) {
     const amount = getAmountFromPaymentAmount(paymentData.amount);
 
@@ -113,8 +117,13 @@ class MessageCTABar extends React.PureComponent<Props> {
       none
     );
 
+    const isPaid = rptId
+      .map(RptIdFromString.encode)
+      .map(_ => paymentByRptId[_] !== undefined)
+      .getOrElse(false);
+
     const onPaymentCTAPress =
-      isSome(amount) && isSome(rptId)
+      !isPaid && isSome(amount) && isSome(rptId)
         ? () => {
             this.props.dispatch(paymentInitializeState());
             this.props.dispatch(
@@ -131,10 +140,10 @@ class MessageCTABar extends React.PureComponent<Props> {
         <Button
           block={true}
           onPress={onPaymentCTAPress}
-          disabled={onPaymentCTAPress === undefined}
+          disabled={onPaymentCTAPress === undefined || isPaid}
         >
           <Text>
-            {I18n.t("messages.cta.pay", {
+            {I18n.t(isPaid ? "messages.cta.paid" : "messages.cta.pay", {
               amount: formatPaymentAmount(paymentData.amount)
             })}
           </Text>
@@ -144,7 +153,7 @@ class MessageCTABar extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { message, service, containerStyle } = this.props;
+    const { message, service, containerStyle, paymentByRptId } = this.props;
 
     const { due_date, payment_data } = message.content;
 
@@ -160,7 +169,7 @@ class MessageCTABar extends React.PureComponent<Props> {
             )}
 
           {payment_data !== undefined &&
-            this.renderPaymentCTA(payment_data, service)}
+            this.renderPaymentCTA(payment_data, service, paymentByRptId)}
         </View>
       );
     }

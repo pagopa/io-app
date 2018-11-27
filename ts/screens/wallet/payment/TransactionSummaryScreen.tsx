@@ -35,6 +35,7 @@ import * as pot from "../../../types/pot";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentCompletedSuccess,
   paymentInitializeState,
   paymentVerificaRequest,
   runDeleteActivePaymentSaga,
@@ -87,6 +88,7 @@ type ReduxMappedDispatchProps = Readonly<{
     potVerifica: ReduxMappedStateProps["potVerifica"],
     maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) => void;
+  onDuplicatedPayment: () => void;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -139,6 +141,18 @@ class TransactionSummaryScreen extends React.Component<Props> {
     if (pot.isNone(this.props.potVerifica)) {
       // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    const { error } = this.props;
+    // in case the verifica returns an error indicating the payment has been
+    // already completed for this notice, we update the payment state so that
+    // the notice result paid
+    if (error.toUndefined() !== prevProps.error.toUndefined()) {
+      error
+        .filter(_ => _ === "PAYMENT_DUPLICATED")
+        .map(_ => this.props.onDuplicatedPayment());
     }
   }
 
@@ -379,7 +393,14 @@ const mapDispatchToProps = (
       } else {
         dispatchPaymentVerificaRequest();
       }
-    }
+    },
+    onDuplicatedPayment: () =>
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: props.navigation.getParam("rptId"),
+          kind: "DUPLICATED"
+        })
+      )
   };
 };
 

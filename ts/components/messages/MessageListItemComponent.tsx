@@ -7,6 +7,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import * as pot from "../../types/pot";
@@ -17,6 +18,7 @@ import MessageCTABar from "./MessageCTABar";
 type OwnProps = {
   message: MessageWithContentPO;
   messageUIStates: MessageUIStates;
+  paymentByRptId: GlobalState["entities"]["paymentByRptId"];
   service: pot.Pot<ServicePublic, Error>;
   onItemPress?: (messageId: string) => void;
 };
@@ -84,14 +86,36 @@ const styles = StyleSheet.create({
 
 export class MessageListItemComponent extends React.Component<Props> {
   public shouldComponentUpdate(nextProps: Props) {
+    const { payment_data } = this.props.message.content;
+    const rptId =
+      payment_data !== undefined
+        ? pot.getOrElse(
+            pot.map(
+              this.props.service,
+              service =>
+                `${service.organization_fiscal_code}${
+                  payment_data.notice_number
+                }`
+            ),
+            undefined
+          )
+        : undefined;
     return (
       this.props.service.kind !== nextProps.service.kind ||
-      this.props.messageUIStates.read !== nextProps.messageUIStates.read
+      this.props.messageUIStates.read !== nextProps.messageUIStates.read ||
+      (rptId !== undefined &&
+        this.props.paymentByRptId[rptId] !== nextProps.paymentByRptId[rptId])
     );
   }
 
   public render() {
-    const { message, messageUIStates, service, onItemPress } = this.props;
+    const {
+      message,
+      paymentByRptId,
+      messageUIStates,
+      service,
+      onItemPress
+    } = this.props;
 
     // TODO: Extract this to external file
     const uiService = pot.getOrElse(
@@ -158,6 +182,7 @@ export class MessageListItemComponent extends React.Component<Props> {
             <Row>
               <MessageCTABar
                 message={message}
+                paymentByRptId={paymentByRptId}
                 service={service}
                 containerStyle={styles.ctaBarContainer}
               />

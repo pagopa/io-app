@@ -41,6 +41,7 @@ type ReduxMappedStateProps = Readonly<{
   potMessage: pot.Pot<MessageWithContentPO, Error>;
   messageUIStates: MessageUIStates;
   potService: pot.Pot<ServicePublic, Error>;
+  paymentByRptId: GlobalState["entities"]["paymentByRptId"];
 }>;
 
 type ReduxMappedDispatchProps = Readonly<{
@@ -130,12 +131,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    */
   private renderFullState = (
     message: MessageWithContentPO,
-    service: pot.Pot<ServicePublic, Error>
+    service: pot.Pot<ServicePublic, Error>,
+    paymentByRptId: Props["paymentByRptId"]
   ) => {
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
           message={message}
+          paymentByRptId={paymentByRptId}
           service={service}
           onServiceLinkPress={
             pot.isSome(service)
@@ -149,10 +152,10 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const { potMessage, potService } = this.props;
+    const { potMessage, potService, paymentByRptId } = this.props;
 
     if (pot.isSome(potMessage)) {
-      return this.renderFullState(potMessage.value, potService);
+      return this.renderFullState(potMessage.value, potService, paymentByRptId);
     }
     if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
@@ -233,7 +236,8 @@ const mapStateToProps = (
   return {
     potMessage,
     messageUIStates,
-    potService
+    potService,
+    paymentByRptId: state.entities.paymentByRptId
   };
 };
 

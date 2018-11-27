@@ -46,6 +46,8 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentCompletedFailure,
+  paymentCompletedSuccess,
   paymentExecutePaymentRequest,
   paymentInitializeState,
   runDeleteActivePaymentSaga
@@ -320,6 +322,14 @@ const mapDispatchToProps = (
           transaction: tx
         })
       );
+      // signal success
+      dispatch(
+        paymentCompletedSuccess({
+          transaction: tx,
+          rptId: props.navigation.getParam("rptId"),
+          kind: "COMPLETED"
+        })
+      );
       // reset the payment state
       dispatch(paymentInitializeState());
       // update the transactions state
@@ -330,6 +340,8 @@ const mapDispatchToProps = (
       // on failure:
       // navigate to the wallet home
       dispatch(navigateToWalletHome());
+      // signal faliure
+      dispatch(paymentCompletedFailure());
       // delete the active payment from PagoPA
       dispatch(runDeleteActivePaymentSaga());
       // reset the payment state

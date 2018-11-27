@@ -30,6 +30,7 @@ type ReduxMappedProps = Readonly<{
   messages: ReadonlyArray<MessageWithContentPO>;
   messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
+  paymentByRptId: GlobalState["entities"]["paymentByRptId"];
 }>;
 
 type Props = NavigationScreenProps & ReduxMappedProps & ReduxProps;
@@ -62,7 +63,8 @@ class MessageListScreen extends React.Component<Props, never> {
       isLoading,
       messages,
       messagesUIStatesById,
-      servicesById
+      servicesById,
+      paymentByRptId
     } = this.props;
 
     return (
@@ -88,6 +90,7 @@ class MessageListScreen extends React.Component<Props, never> {
             messages={messages}
             messagesUIStatesById={messagesUIStatesById}
             servicesById={servicesById}
+            paymentByRptId={paymentByRptId}
             refreshing={isLoading}
             onRefresh={this.refreshMessageList}
             onListItemPress={this.handleMessageListItemPress}
@@ -106,7 +109,8 @@ const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
   isLoading: messagesLoadSelector(state),
   messages: orderedMessagesSelector(state),
   messagesUIStatesById: messagesUIStatesByIdSelector(state),
-  servicesById: servicesByIdSelector(state)
+  servicesById: servicesByIdSelector(state),
+  paymentByRptId: state.entities.paymentByRptId
 });
 
 export default connect(mapStateToProps)(MessageListScreen);

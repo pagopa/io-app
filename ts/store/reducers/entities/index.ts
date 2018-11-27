@@ -9,18 +9,21 @@ import {
   OrganizationNamesByFiscalCodeState,
   servicesByOrganizationFiscalCodeReducer
 } from "./organizations/organizationsByFiscalCodeReducer";
+import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
 import servicesReducer, { ServicesState } from "./services";
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;
   services: ServicesState;
   organizations: OrganizationNamesByFiscalCodeState;
+  paymentByRptId: PaymentByRptIdState;
 }>;
 
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,
   services: servicesReducer,
-  organizations: servicesByOrganizationFiscalCodeReducer
+  organizations: servicesByOrganizationFiscalCodeReducer,
+  paymentByRptId: paymentByRptIdReducer
 });
 
 export default reducer;
