@@ -173,6 +173,30 @@ export const paymentExecutePaymentFailure = createStandardAction(
 )<Error>();
 
 //
+// Signal the completion of a payment
+//
+
+type PaymentCompletedSuccessPayload = Readonly<
+  | {
+      kind: "COMPLETED";
+      transaction: Transaction;
+      rptId: RptId;
+    }
+  | {
+      kind: "DUPLICATED";
+      rptId: RptId;
+    }
+>;
+
+export const paymentCompletedSuccess = createStandardAction(
+  "PAYMENT_COMPLETED_SUCCESS"
+)<PaymentCompletedSuccessPayload>();
+
+export const paymentCompletedFailure = createStandardAction(
+  "PAYMENT_COMPLETED_FAILURE"
+)();
+
+//
 // delete an ongoing payment
 //
 
@@ -236,6 +260,8 @@ export type PaymentActions =
   | ActionType<typeof paymentExecutePaymentRequest>
   | ActionType<typeof paymentExecutePaymentSuccess>
   | ActionType<typeof paymentExecutePaymentFailure>
+  | ActionType<typeof paymentCompletedSuccess>
+  | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePaymentRequest>
   | ActionType<typeof paymentDeletePaymentSuccess>
   | ActionType<typeof paymentDeletePaymentFailure>

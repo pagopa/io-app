@@ -435,6 +435,7 @@ messages:
   yesterday: yesterday
   cta:
     pay: Pay € {{amount}}
+    paid: Paid € {{amount}}
     reminder: Reminder
     reminderTitle: "Reminder for: {{subject}}"
   unknownSender: Unknown sender
