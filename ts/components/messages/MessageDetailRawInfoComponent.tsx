@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -11,7 +12,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import * as pot from "../../types/pot";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {

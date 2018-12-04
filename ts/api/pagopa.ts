@@ -3,6 +3,7 @@
  * to call the different API available
  */
 import {
+  AddResponseType,
   ApiHeaderJson,
   AuthorizationBearerHeaderProducer,
   basicErrorResponseDecoder,
@@ -11,6 +12,8 @@ import {
   constantResponseDecoder,
   createFetchRequestForApi,
   ioResponseDecoder,
+  MapResponseType,
+  ReplaceRequestParams,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 
@@ -52,12 +55,6 @@ import {
   updateWalletUsingPUTDecoder,
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
-
-import {
-  AddResponseType,
-  MapResponseType,
-  ReplaceRequestParams
-} from "../types/utils";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status

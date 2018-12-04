@@ -1,4 +1,5 @@
 import { DateFromISOString } from "io-ts-types";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -10,7 +11,6 @@ import { MessageUIStates } from "../../store/reducers/entities/messages/messages
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import * as pot from "../../types/pot";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";

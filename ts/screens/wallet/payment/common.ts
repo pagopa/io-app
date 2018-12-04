@@ -1,7 +1,7 @@
 // tslint:disable:parameters-max-number
 
 import { Option } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ActionType } from "typesafe-actions";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";

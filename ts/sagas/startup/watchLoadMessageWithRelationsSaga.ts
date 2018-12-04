@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -13,7 +14,6 @@ import {
 import { loadServiceRequest } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
-import * as pot from "../../types/pot";
 import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "./watchLoadMessagesSaga";
 

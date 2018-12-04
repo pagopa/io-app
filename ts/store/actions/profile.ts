@@ -2,6 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
+import { Omit } from "italia-ts-commons/lib/types";
 import {
   ActionType,
   createAction,
@@ -12,8 +13,6 @@ import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 
 import { UserProfileUnion } from "../../api/backend";
-
-import { Omit } from "../../types/utils";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 

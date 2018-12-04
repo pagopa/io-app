@@ -3,7 +3,8 @@
  * inserted the data required to save a new card
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   Container,
@@ -43,7 +44,6 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { CreditCard, Wallet } from "../../types/pagopa";
-import * as pot from "../../types/pot";
 import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 

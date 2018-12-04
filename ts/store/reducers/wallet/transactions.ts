@@ -1,13 +1,12 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
-
+import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
-import * as pot from "../../../types/pot";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,

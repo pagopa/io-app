@@ -17,7 +17,7 @@ import {
   AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
 import {
   NonEmptyString,
   OrganizationFiscalCode

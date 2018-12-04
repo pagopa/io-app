@@ -1,5 +1,6 @@
 import { isSome, none } from "fp-ts/lib/Option";
-import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
+import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
@@ -15,7 +16,6 @@ import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import * as pot from "../../types/pot";
 import {
   formatDateAsDay,
   formatDateAsMonth,

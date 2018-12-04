@@ -1,3 +1,4 @@
+import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
 import {
   Image,
@@ -5,8 +6,6 @@ import {
   ImageRequireSource,
   ImageURISource
 } from "react-native";
-
-import { Omit } from "../../types/utils";
 
 interface Props extends Omit<ImageProps, "source"> {
   source: ReadonlyArray<ImageURISource | ImageRequireSource>;

@@ -1,4 +1,5 @@
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   Container,
@@ -27,7 +28,6 @@ import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
-import * as pot from "../../../types/pot";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,

@@ -1,12 +1,12 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import { Wallet } from "../../../types/pagopa";
-import * as pot from "../../../types/pot";
 import { PotFromActions } from "../../../types/utils";
 import { Action } from "../../actions/types";
 import {

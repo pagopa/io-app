@@ -12,7 +12,8 @@ import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
@@ -30,8 +31,6 @@ import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 
 import I18n from "../../../i18n";
-
-import * as pot from "../../../types/pot";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
