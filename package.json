@@ -31,7 +31,7 @@
     "io-ts": "^1.4.2",
     "io-ts-types": "^0.4.0",
     "italia-pagopa-commons": "^0.0.2",
-    "italia-ts-commons": "^3.1.1",
+    "italia-ts-commons": "^3.1.2",
     "lodash": "^4.17.11",
     "native-base": "~2.8.1",
     "native-base-shoutem-theme": "^0.2.2",
