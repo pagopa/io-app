@@ -35,7 +35,7 @@ function retryingFetch(
     maxRetries,
     exponentialBackoff
   );
-  return retriableFetch(retryLogic)(timeoutFetch);
+  return retriableFetch(retryLogic)(timeoutFetch as typeof fetch);
 }
 
 /**
@@ -93,5 +93,5 @@ export const constantPollingFetch = (
       shouldAbort
     );
 
-  return retriableFetch(retryWithTransient404s)(timeoutFetch);
+  return retriableFetch(retryWithTransient404s)(timeoutFetch as typeof fetch);
 };

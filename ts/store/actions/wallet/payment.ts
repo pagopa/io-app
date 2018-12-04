@@ -1,5 +1,8 @@
-import { RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiResponse } from "italia-ts-commons/lib/requests";
+import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import {
+  OmitStatusFromResponse,
+  TypeofApiResponse
+} from "italia-ts-commons/lib/requests";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
@@ -8,7 +11,7 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
 
 import { Psp, Transaction, Wallet } from "../../../types/pagopa";
-import { OmitStatusFromResponse, PayloadForAction } from "../../../types/utils";
+import { PayloadForAction } from "../../../types/utils";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**

@@ -3,8 +3,10 @@
  * Used for the screens from the identification of the transaction to the end of the procedure.
  */
 
-import { AmountInEuroCentsFromNumber } from "italia-ts-commons/lib/pagopa";
-import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  AmountInEuroCentsFromNumber
+} from "italia-pagopa-commons/lib/pagopa";
 import { Button, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";

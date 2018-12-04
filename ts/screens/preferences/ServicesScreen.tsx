@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { H3, ListItem } from "native-base";
 import * as React from "react";
 import {
@@ -28,7 +29,6 @@ import Markdown from "../../components/ui/Markdown";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServicesRequest } from "../../store/actions/services";
 import variables from "../../theme/variables";
-import * as pot from "../../types/pot";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 

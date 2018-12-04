@@ -11,6 +11,7 @@
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -34,7 +35,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
-import * as pot from "../../types/pot";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 

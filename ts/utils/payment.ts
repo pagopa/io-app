@@ -1,5 +1,4 @@
 import { fromEither, Option } from "fp-ts/lib/Option";
-
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -7,7 +6,7 @@ import {
   RptId,
   rptIdFromPaymentNoticeQrCode,
   RptIdFromString
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 

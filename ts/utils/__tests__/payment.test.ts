@@ -1,8 +1,7 @@
 // tslint:disable:no-useless-cast
 
 import { isSome } from "fp-ts/lib/Option";
-
-import { AmountInEuroCents, RptId } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";

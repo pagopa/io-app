@@ -3,6 +3,7 @@
  * with different appearences based on
  * the props passed
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
@@ -14,7 +15,6 @@ import {
 } from "react-native-popup-menu";
 
 import I18n from "../../../i18n";
-import * as pot from "../../../types/pot";
 
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";

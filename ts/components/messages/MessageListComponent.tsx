@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 
@@ -8,7 +9,6 @@ import {
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import * as pot from "../../types/pot";
 import { MessageListItemComponent } from "./MessageListItemComponent";
 
 type OwnProps = {

@@ -5,6 +5,7 @@
  */
 
 import { none, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { delay } from "redux-saga";
 import {
   call,
@@ -96,7 +97,6 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
-import * as pot from "../types/pot";
 import { SessionManager } from "../utils/SessionManager";
 
 /**

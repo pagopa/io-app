@@ -3216,6 +3216,10 @@ fp-ts@^1.0.0, fp-ts@^1.6.0, fp-ts@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.6.2.tgz#21f3675262d35b507b6e854f68965979e125ff77"
 
+fp-ts@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
+
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
@@ -3844,9 +3848,16 @@ io-ts-types@^0.3.11:
     monocle-ts "^1.0.0"
     newtype-ts "^0.2.1"
 
-io-ts@^1.1.4, io-ts@^1.3.0:
+io-ts@^1.1.4:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.3.0.tgz#72a5e7dbbb650b9c26030bac0c22d9b18c321f54"
+  dependencies:
+    fp-ts "^1.0.0"
+
+io-ts@^1.3.0, io-ts@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.4.2.tgz#d3cb1ef7d7ba68d59af85d839a728aad7f4b1c28"
+  integrity sha512-U4uw8jjj8jYZip7zHgBj40GW0DpYdVi1i0J3anezp2ytYHDg7+cKc7iIFlIyCh+NLwMxzwu6OQ/b9S61KUjPGg==
   dependencies:
     fp-ts "^1.0.0"
 
@@ -4170,6 +4181,13 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
+italia-pagopa-commons@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-0.0.1.tgz#dfc184e9f5b0ba99fcce77fc3f21584abd2253a0"
+  dependencies:
+    io-ts "^1.4.2"
+    italia-ts-commons "^2.14.1"
+
 italia-ts-commons@^2.14.0:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.14.0.tgz#2d5b258e4e39809c807c00880132374a40382986"
@@ -4186,6 +4204,17 @@ italia-ts-commons@^2.14.1:
   dependencies:
     fp-ts "^1.6.0"
     io-ts "^1.1.4"
+    json-set-map "^1.0.2"
+    validator "^10.1.0"
+    winston "^3.0.0"
+
+italia-ts-commons@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-3.1.0.tgz#c29db1b2002e70e331d3f09058dec2cc5fa19c11"
+  integrity sha512-Sm1dDWFKiLNXOPRYPaQaarxOGsO/i/4BpeIfn3nYxoB3JNtARxvJgKIeiXmnSpUAv7AajJad2k0a/Le5xL8y0A==
+  dependencies:
+    fp-ts "^1.12.0"
+    io-ts "^1.4.2"
     json-set-map "^1.0.2"
     validator "^10.1.0"
     winston "^3.0.0"
@@ -7880,8 +7909,9 @@ typesafe-actions@^2.0.4:
   resolved "https://registry.yarnpkg.com/typesafe-actions/-/typesafe-actions-2.0.4.tgz#31c8f8df3566d549eb52edb64a75997e970c17d0"
 
 typescript@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.1.tgz#0b7a04b8cf3868188de914d9568bd030f0c56192"
+  integrity sha512-jw7P2z/h6aPT4AENXDGjcfHTu5CSqzsbZc6YlUIebTyBAq8XaKp78x7VcSh30xwSCcsu5irZkYZUSFP1MrAMbg==
 
 typestrict@^1.0.0:
   version "1.0.0"

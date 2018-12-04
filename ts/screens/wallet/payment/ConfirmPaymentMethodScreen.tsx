@@ -3,7 +3,8 @@ import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
   RptId
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   ActionSheet,
   Body,
@@ -64,7 +65,6 @@ import {
   Transaction,
   Wallet
 } from "../../../types/pagopa";
-import * as pot from "../../../types/pot";
 import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";

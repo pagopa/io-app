@@ -1,6 +1,6 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import * as pot from "../../../types/pot";
 import { PotFromActions } from "../../../types/utils";
 import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
