@@ -3216,10 +3216,6 @@ fp-ts@^1.0.0, fp-ts@^1.6.0, fp-ts@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.6.2.tgz#21f3675262d35b507b6e854f68965979e125ff77"
 
-fp-ts@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
-
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
@@ -3839,22 +3835,17 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
-io-ts-types@^0.3.11:
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.3.11.tgz#64b82c18ed888ac1879cd6d99d15b429dc0555ac"
+io-ts-types@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.4.0.tgz#c1f349b7f83543cc1c7b68f6176a8f2bd9f555d6"
+  integrity sha512-hXgxda7l9bOhuLPZ6ylP7GpA2R06c7ohmPFc954hKa1GFXFaZqD13YCDEmPPMWV+TVWLmxM4EaahsSqQiUMQ5g==
   dependencies:
     fp-ts "^1.0.0"
     io-ts "^1.1.4"
     monocle-ts "^1.0.0"
     newtype-ts "^0.2.1"
 
-io-ts@^1.1.4:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.3.0.tgz#72a5e7dbbb650b9c26030bac0c22d9b18c321f54"
-  dependencies:
-    fp-ts "^1.0.0"
-
-io-ts@^1.3.0, io-ts@^1.4.2:
+io-ts@1.4.2, io-ts@^1.1.4, io-ts@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.4.2.tgz#d3cb1ef7d7ba68d59af85d839a728aad7f4b1c28"
   integrity sha512-U4uw8jjj8jYZip7zHgBj40GW0DpYdVi1i0J3anezp2ytYHDg7+cKc7iIFlIyCh+NLwMxzwu6OQ/b9S61KUjPGg==
@@ -4181,12 +4172,13 @@ istanbul-reports@^1.3.0:
   dependencies:
     handlebars "^4.0.3"
 
-italia-pagopa-commons@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-0.0.1.tgz#dfc184e9f5b0ba99fcce77fc3f21584abd2253a0"
+italia-pagopa-commons@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-0.0.2.tgz#2416c54c785889e00fd212fc1b5d2252892b38df"
+  integrity sha512-w0eQkkq7B9Clr6ZxUYtT7muIyZLeEnLGNUE2dG3mb2Duo/2tZYCmUoaLBzh9GVfc+AiE19EfqncXRD2LEQwDiw==
   dependencies:
     io-ts "^1.4.2"
-    italia-ts-commons "^2.14.1"
+    italia-ts-commons "^3.1.1"
 
 italia-ts-commons@^2.14.0:
   version "2.14.0"
@@ -4198,22 +4190,12 @@ italia-ts-commons@^2.14.0:
     validator "^10.1.0"
     winston "^3.0.0"
 
-italia-ts-commons@^2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.14.1.tgz#4196a9c369181260c8f4eb65a3db10cd90c7f63b"
+italia-ts-commons@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-3.1.1.tgz#1199bbafc3ec7da573e45175b9f424e3351ac26c"
+  integrity sha512-+W51+uRq+YtbE39uz9wNSeFV3NqpMI089gfM7KKeifqLmnWzo53J0eBoWJmHr98XFv0Jl5VrOq6wJNcK5cjvUQ==
   dependencies:
-    fp-ts "^1.6.0"
-    io-ts "^1.1.4"
-    json-set-map "^1.0.2"
-    validator "^10.1.0"
-    winston "^3.0.0"
-
-italia-ts-commons@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-3.1.0.tgz#c29db1b2002e70e331d3f09058dec2cc5fa19c11"
-  integrity sha512-Sm1dDWFKiLNXOPRYPaQaarxOGsO/i/4BpeIfn3nYxoB3JNtARxvJgKIeiXmnSpUAv7AajJad2k0a/Le5xL8y0A==
-  dependencies:
-    fp-ts "^1.12.0"
+    fp-ts "^1.6.2"
     io-ts "^1.4.2"
     json-set-map "^1.0.2"
     validator "^10.1.0"
@@ -7908,10 +7890,10 @@ typesafe-actions@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/typesafe-actions/-/typesafe-actions-2.0.4.tgz#31c8f8df3566d549eb52edb64a75997e970c17d0"
 
-typescript@^3.0.3:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.1.tgz#0b7a04b8cf3868188de914d9568bd030f0c56192"
-  integrity sha512-jw7P2z/h6aPT4AENXDGjcfHTu5CSqzsbZc6YlUIebTyBAq8XaKp78x7VcSh30xwSCcsu5irZkYZUSFP1MrAMbg==
+typescript@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
+  integrity sha512-kk80vLW9iGtjMnIv11qyxLqZm20UklzuR2tL0QAnDIygIUIemcZMxlMWudl9OOt76H3ntVzcTiddQ1/pAAJMYg==
 
 typestrict@^1.0.0:
   version "1.0.0"

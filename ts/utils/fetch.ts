@@ -35,6 +35,7 @@ function retryingFetch(
     maxRetries,
     exponentialBackoff
   );
+  // TODO: remove the cast once we upgrade to tsc >= 3.1
   return retriableFetch(retryLogic)(timeoutFetch as typeof fetch);
 }
 
@@ -93,5 +94,6 @@ export const constantPollingFetch = (
       shouldAbort
     );
 
+  // TODO: remove the cast once we upgrade to tsc >= 3.1
   return retriableFetch(retryWithTransient404s)(timeoutFetch as typeof fetch);
 };
