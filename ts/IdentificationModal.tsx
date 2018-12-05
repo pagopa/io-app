@@ -1,6 +1,6 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StatusBar, StyleSheet } from "react-native";
+import { Modal, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -147,61 +147,72 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     return (
       <Modal onRequestClose={onRequestCloseHandler}>
-        <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor={variables.contentPrimaryBackground}
-          />
-          <Content primary={true}>
-            <View spacer={true} />
-            <Text
-              bold={true}
-              alignCenter={true}
-              style={styles.identificationMessage}
-            >
-              {identificationMessage}
-            </Text>
-            <Pinpad
-              compareWithCode={pin as string}
-              activeColor={"white"}
-              inactiveColor={"white"}
-              buttonType="primary"
-              onFulfill={(_: string, __: boolean) =>
-                this.onPinFullfill(
-                  _,
-                  __,
-                  onIdentificationSuccessHandler,
-                  onIdentificationFailureHandler
-                )
-              }
-              clearOnInvalid={true}
-              onCancel={
-                identificationCancelData
-                  ? onIdentificationCancelHandler
-                  : undefined
-              }
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: variables.contentPrimaryBackground
+          }}
+        >
+          <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor={variables.contentPrimaryBackground}
             />
-            {renderIdentificationByPinState(identificationByPinState)}
-            <View spacer={true} large={true} />
+            <Content primary={true}>
+              <View spacer={true} />
+              <Text
+                bold={true}
+                alignCenter={true}
+                style={styles.identificationMessage}
+              >
+                {identificationMessage}
+              </Text>
+              <Pinpad
+                compareWithCode={pin as string}
+                activeColor={"white"}
+                inactiveColor={"white"}
+                buttonType="primary"
+                onFulfill={(_: string, __: boolean) =>
+                  this.onPinFullfill(
+                    _,
+                    __,
+                    onIdentificationSuccessHandler,
+                    onIdentificationFailureHandler
+                  )
+                }
+                clearOnInvalid={true}
+                onCancel={
+                  identificationCancelData
+                    ? onIdentificationCancelHandler
+                    : undefined
+                }
+              />
+              {renderIdentificationByPinState(identificationByPinState)}
+              <View spacer={true} large={true} />
 
-            {identificationCancelData === undefined && (
-              <React.Fragment>
-                <Button block={true} primary={true} onPress={onPinResetHandler}>
-                  <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-                </Button>
-                <View spacer={true} large={true} />
-              </React.Fragment>
-            )}
+              {identificationCancelData === undefined && (
+                <React.Fragment>
+                  <Button
+                    block={true}
+                    primary={true}
+                    onPress={onPinResetHandler}
+                  >
+                    <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
+                  </Button>
+                  <View spacer={true} large={true} />
+                </React.Fragment>
+              )}
 
-            <Text alignCenter={true} style={styles.resetPinMessage}>
-              {identificationCancelData !== undefined
-                ? I18n.t("identification.resetPinFromProfileMessage")
-                : I18n.t("identification.resetPinMessage")}
-            </Text>
+              <Text alignCenter={true} style={styles.resetPinMessage}>
+                {identificationCancelData !== undefined
+                  ? I18n.t("identification.resetPinFromProfileMessage")
+                  : I18n.t("identification.resetPinMessage")}
+              </Text>
 
-            <View spacer={true} extralarge={true} />
-          </Content>
-        </BaseScreenComponent>
+              <View spacer={true} extralarge={true} />
+            </Content>
+          </BaseScreenComponent>
+        </SafeAreaView>
       </Modal>
     );
   }

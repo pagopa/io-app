@@ -7,7 +7,12 @@
 
 import { Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, TouchableHighlight } from "react-native";
+import {
+  InteractionManager,
+  Modal,
+  SafeAreaView,
+  TouchableHighlight
+} from "react-native";
 
 import IconFont from "../components/ui/IconFont";
 import ActivityIndicator from "./ui/ActivityIndicator";
@@ -61,27 +66,29 @@ export class ContextualHelp extends React.Component<Props, State> {
         animationType="slide"
         onRequestClose={onClose}
       >
-        <Container>
-          <AppHeader>
-            <Right>
-              <TouchableHighlight onPress={onClose}>
-                <IconFont name="io-close" />
-              </TouchableHighlight>
-            </Right>
-          </AppHeader>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
+          <Container>
+            <AppHeader>
+              <Right>
+                <TouchableHighlight onPress={onClose}>
+                  <IconFont name="io-close" />
+                </TouchableHighlight>
+              </Right>
+            </AppHeader>
 
-          {!this.state.content && (
-            <View centerJustified={true}>
-              <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-            </View>
-          )}
-          {this.state.content && (
-            <Content>
-              <H1>{this.props.title}</H1>
-              {this.state.content}
-            </Content>
-          )}
-        </Container>
+            {!this.state.content && (
+              <View centerJustified={true}>
+                <ActivityIndicator color={themeVariables.brandPrimaryLight} />
+              </View>
+            )}
+            {this.state.content && (
+              <Content>
+                <H1>{this.props.title}</H1>
+                {this.state.content}
+              </Content>
+            )}
+          </Container>
+        </SafeAreaView>
       </Modal>
     );
   }

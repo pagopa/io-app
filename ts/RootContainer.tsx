@@ -5,6 +5,7 @@ import {
   BackHandler,
   Linking,
   Platform,
+  SafeAreaView,
   StatusBar
 } from "react-native";
 import { connect } from "react-redux";
@@ -136,12 +137,14 @@ class RootContainer extends React.PureComponent<Props> {
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
     return (
-      <Root>
-        <StatusBar barStyle="dark-content" />
-        <VersionInfoOverlay />
-        <Navigation />
-        <IdentificationModal />
-      </Root>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
+        <Root>
+          <StatusBar barStyle="dark-content" />
+          <VersionInfoOverlay />
+          <Navigation />
+          <IdentificationModal />
+        </Root>
+      </SafeAreaView>
     );
   }
 }
