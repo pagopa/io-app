@@ -14,6 +14,7 @@ import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
 import { ContentActions } from "./content";
+import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
 import { ErrorActions } from "./error";
 import { IdentificationActions } from "./identification";
@@ -48,7 +49,8 @@ export type Action =
   | WalletActions
   | ContentActions
   | NavigationHistoryActions
-  | IdentificationActions;
+  | IdentificationActions
+  | DebugActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

@@ -33,6 +33,7 @@ type ReduxMappedProps = {
   pinLoginState: PinLoginState;
   deepLinkState: DeepLinkState;
   isPinValid: boolean;
+  isDebugModeEnabled: boolean;
 };
 
 type DispatchProps = {
@@ -138,7 +139,7 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
-        <VersionInfoOverlay />
+        {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
         <Navigation />
         <IdentificationModal />
       </Root>
@@ -149,7 +150,8 @@ class RootContainer extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => ({
   pinLoginState: state.pinlogin,
   deepLinkState: state.deepLink,
-  isPinValid: isPinLoginValidSelector(state)
+  isPinValid: isPinLoginValidSelector(state),
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 
 const mapDispatchToProps = {
