@@ -1,7 +1,9 @@
 import Instabug, { invocationMode } from "instabug-reactnative";
 import * as React from "react";
 import { StyleSheet, TouchableHighlight } from "react-native";
+import { connect } from "react-redux";
 
+import { GlobalState } from "../store/reducers/types";
 import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
@@ -11,11 +13,17 @@ const styles = StyleSheet.create({
   }
 });
 
-interface Props {
+interface OwnProps {
   color?: string;
 }
 
-export class InstabugButtons extends React.PureComponent<Props, {}> {
+type ReduxMappedProps = Readonly<{
+  isDebugModeEnabled: boolean;
+}>;
+
+type Props = ReduxMappedProps & OwnProps;
+
+class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
   private handleIBChatPress() {
     Instabug.invokeWithInvocationMode(invocationMode.chatsList);
   }
@@ -26,20 +34,30 @@ export class InstabugButtons extends React.PureComponent<Props, {}> {
 
   public render() {
     return (
-      <React.Fragment>
-        <TouchableHighlight
-          onPress={this.handleIBChatPress}
-          style={styles.button}
-        >
-          <IconFont name="io-chat" color={this.props.color} />
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.handleIBBugPress}
-          style={styles.button}
-        >
-          <IconFont name="io-bug" color={this.props.color} />
-        </TouchableHighlight>
-      </React.Fragment>
+      this.props.isDebugModeEnabled && (
+        <React.Fragment>
+          <TouchableHighlight
+            onPress={this.handleIBChatPress}
+            style={styles.button}
+          >
+            <IconFont name="io-chat" color={this.props.color} />
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.handleIBBugPress}
+            style={styles.button}
+          >
+            <IconFont name="io-bug" color={this.props.color} />
+          </TouchableHighlight>
+        </React.Fragment>
+      )
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
+});
+
+export const InstabugButtons = connect(mapStateToProps)(
+  InstabugButtonsComponent
+);

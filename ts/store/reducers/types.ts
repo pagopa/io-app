@@ -7,6 +7,7 @@ import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
 import { ContentState } from "./content";
+import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
@@ -45,6 +46,7 @@ export type GlobalState = Readonly<{
   content: ContentState;
   navigationHistory: NavigationHistoryState;
   identification: IdentificationState;
+  debug: DebugState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

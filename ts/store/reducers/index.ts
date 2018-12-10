@@ -14,6 +14,7 @@ import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import contentReducer from "./content";
+import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -66,6 +67,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   preferences: preferencesReducer,
   pinlogin: pinloginReducer,
   identification: identificationReducer,
+  navigationHistory: navigationHistoryReducer,
 
   //
   // persisted state
@@ -82,7 +84,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  navigationHistory: navigationHistoryReducer
+  debug: debugReducer
 });
 
 export function createRootReducer(
