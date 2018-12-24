@@ -6302,12 +6302,12 @@ react-native-background-timer@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.0.1.tgz#ef714a4bfd28fc47cbbd335631b581cf915604a2"
 
-react-native-camera@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.2.0.tgz#fa93b39726d15bdbb02fac06f4a23957b0be403a"
+react-native-camera@1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.6.4.tgz#a7d0f3da8ff07be36c07e14dcae57d822a09013e"
+  integrity sha512-aS77+UVOKwxE+gTfpkPwIVoyFPD7uFuLV6qzV2M9kwK/KklR7wjd594xvatX40GHfLRFRpuUn5HiJU5WnOovbQ==
   dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
+    prop-types "^15.6.2"
 
 react-native-config@^0.11.2:
   version "0.11.5"
