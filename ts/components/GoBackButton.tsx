@@ -1,17 +1,10 @@
 import { Button } from "native-base";
 import * as React from "react";
 import { BackHandler } from "react-native";
-import {
-  NavigationScreenProp,
-  NavigationState,
-  withNavigation
-} from "react-navigation";
+import { NavigationInjectedProps, withNavigation } from "react-navigation";
+
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
-
-interface NavigationProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
 
 interface OwnProps {
   [k: string]: any;
@@ -19,7 +12,7 @@ interface OwnProps {
   white?: boolean;
 }
 
-type Props = NavigationProps & OwnProps;
+type Props = NavigationInjectedProps & OwnProps;
 
 class GoBackButton extends React.PureComponent<Props> {
   public static defaultProps: Partial<Props> = {
