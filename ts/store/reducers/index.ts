@@ -3,7 +3,6 @@
  */
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
-import { FormStateMap, reducer as formReducer } from "redux-form";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
@@ -60,7 +59,6 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   deepLink: deepLinkReducer,
   loading: loadingReducer,
   error: errorReducer,
-  form: formReducer as Reducer<FormStateMap, Action>,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
   content: contentReducer,

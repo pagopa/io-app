@@ -1,5 +1,4 @@
 import { NavigationState } from "react-navigation";
-import { FormStateMap } from "redux-form";
 import { PersistPartial } from "redux-persist";
 
 import { Action } from "../actions/types";
@@ -33,7 +32,6 @@ export type GlobalState = Readonly<{
   deepLink: DeepLinkState;
   entities: EntitiesState;
   error: ErrorState;
-  form: FormStateMap;
   loading: LoadingState;
   nav: NavigationState;
   network: NetworkState;
