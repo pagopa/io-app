@@ -214,16 +214,15 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
-              placeholder={I18n.t("wallet.dummyCard.values.holder")}
               inputProps={{
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
-                autoCapitalize: "words"
+                placeholder: I18n.t("wallet.dummyCard.values.holder"),
+                autoCapitalize: "words",
+                onChangeText: (value: string) =>
+                  this.setState({
+                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+                  })
               }}
-              onChangeText={(value: string) =>
-                this.setState({
-                  holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-                })
-              }
             />
 
             <View spacer={true} />
@@ -232,18 +231,17 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
-              placeholder={I18n.t("wallet.dummyCard.values.pan")}
-              inputProps={{
+              inputMaskProps={{
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
+                placeholder: I18n.t("wallet.dummyCard.values.pan"),
                 keyboardType: "numeric",
-                maxLength: 23
+                maxLength: 23,
+                mask: "[0000] [0000] [0000] [0000] [999]",
+                onChangeText: (_, value) =>
+                  this.setState({
+                    pan: value !== EMPTY_CARD_PAN ? some(value) : none
+                  })
               }}
-              mask={"[0000] [0000] [0000] [0000] [999]"}
-              onChangeText={(_, value) =>
-                this.setState({
-                  pan: value !== EMPTY_CARD_PAN ? some(value) : none
-                })
-              }
             />
 
             <View spacer={true} />
@@ -253,22 +251,23 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
-                  placeholder={I18n.t("wallet.dummyCard.values.expirationDate")}
-                  inputProps={{
+                  inputMaskProps={{
                     value: this.state.expirationDate.getOrElse(
                       EMPTY_CARD_EXPIRATION_DATE
                     ),
-                    keyboardType: "numeric"
+                    placeholder: I18n.t(
+                      "wallet.dummyCard.values.expirationDate"
+                    ),
+                    keyboardType: "numeric",
+                    mask: "[00]{/}[00]",
+                    onChangeText: (_, value) =>
+                      this.setState({
+                        expirationDate:
+                          value !== EMPTY_CARD_EXPIRATION_DATE
+                            ? some(value)
+                            : none
+                      })
                   }}
-                  mask={"[00]{/}[00]"}
-                  onChangeText={(_, value) =>
-                    this.setState({
-                      expirationDate:
-                        value !== EMPTY_CARD_EXPIRATION_DATE
-                          ? some(value)
-                          : none
-                    })
-                  }
                 />
               </Col>
               <Col style={styles.verticalSpacing} />
@@ -277,22 +276,23 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
-                  placeholder={I18n.t("wallet.dummyCard.values.securityCode")}
-                  inputProps={{
+                  inputMaskProps={{
                     value: this.state.securityCode.getOrElse(
                       EMPTY_CARD_SECURITY_CODE
                     ),
+                    placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
                     keyboardType: "numeric",
                     maxLength: 4,
-                    secureTextEntry: true
+                    secureTextEntry: true,
+                    mask: "[0009]",
+                    onChangeText: (_, value) =>
+                      this.setState({
+                        securityCode:
+                          value !== EMPTY_CARD_SECURITY_CODE
+                            ? some(value)
+                            : none
+                      })
                   }}
-                  mask={"[0009]"}
-                  onChangeText={(_, value) =>
-                    this.setState({
-                      securityCode:
-                        value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
-                    })
-                  }
                 />
               </Col>
             </Grid>

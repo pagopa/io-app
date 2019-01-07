@@ -13,6 +13,7 @@ import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
+import { TextInputMaskProps } from "react-native-text-input-mask";
 import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -31,18 +32,13 @@ type Props =
       type: "masked";
       label: string;
       icon: string;
-      placeholder: string;
-      inputProps: TextInputProps;
-      mask: string;
-      onChangeText: (formatted: string, expected: string) => void;
+      inputMaskProps: TextInputMaskProps;
     }>
   | Readonly<{
       type: "text";
       label: string;
       icon: string;
-      placeholder: string;
       inputProps: TextInputProps;
-      onChangeText: (value: string) => void;
     }>;
 
 export class LabelledItem extends React.Component<Props> {
@@ -63,19 +59,14 @@ export class LabelledItem extends React.Component<Props> {
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
-              placeholder={this.props.placeholder}
-              mask={this.props.mask}
-              onChangeText={this.props.onChangeText}
               underlineColorAndroid="transparent"
-              {...this.props.inputProps}
+              {...this.props.inputMaskProps}
             />
           ) : (
             <Input
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
-              placeholder={this.props.placeholder}
-              onChangeText={this.props.onChangeText}
               underlineColorAndroid="transparent"
               {...this.props.inputProps}
             />

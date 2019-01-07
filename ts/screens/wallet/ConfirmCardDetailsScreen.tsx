@@ -74,7 +74,7 @@ type ReduxMappedDispatchProps = Readonly<{
 }>;
 
 type ReduxMergedProps = Readonly<{
-  onRetry: () => void;
+  onRetry?: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;

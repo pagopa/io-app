@@ -28,6 +28,7 @@ type Props =
     }>
   | Readonly<{
       hasVerificaResponse: false;
+      amount: AmountInEuroCents;
     }>;
 
 const styles = StyleSheet.create({

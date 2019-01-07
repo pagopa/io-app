@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
   },
   badgeLogo: {
     width: 150,
-    height: 50
+    height: 50,
+    alignSelf: "flex-start"
   }
 });
 
@@ -379,7 +380,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 >
                   <Image
                     style={styles.badgeLogo}
-                    alignSelf="flex-start"
                     resizeMode="contain"
                     source={require("../../../img/badges/app-store-badge.png")}
                   />
