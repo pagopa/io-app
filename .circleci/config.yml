@@ -80,7 +80,7 @@ jobs:
       - run: yarn tsc:noemit
 
       # Run tests
-      - run: yarn test
+      - run: yarn test --runInBand
       - run: 'bash <(curl -s https://codecov.io/bash)'
 
       # Run DangerJS
