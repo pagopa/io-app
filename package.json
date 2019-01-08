@@ -140,27 +140,6 @@
     "@types/prop-types": "15.5.5",
     "io-ts-types/io-ts": "1.4.2"
   },
-  "jest": {
-    "preset": "react-native",
-    "modulePaths": [
-      "<rootDir>"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "testMatch": [
-      "**/__tests__/*.(test|spec).ts?(x)"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|react-navigation|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
-    ],
-    "collectCoverage": true
-  },
   "rnpm": {
     "assets": [
       "./assets/fonts/TitilliumWeb",
