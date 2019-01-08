@@ -1,7 +1,7 @@
 PODS:
   - Mixpanel (3.3.3)
-  - React (0.55.4):
-    - React/Core (= 0.55.4)
+  - React (0.57.8):
+    - React/Core (= 0.57.8)
   - react-native-add-calendar-event (2.1.0):
     - React
   - react-native-background-timer (2.0.1):
@@ -21,37 +21,37 @@ PODS:
     - React
   - react-native-splash-screen (3.1.1):
     - React
-  - React/ART (0.55.4):
+  - React/ART (0.57.8):
     - React/Core
-  - React/Core (0.55.4):
-    - yoga (= 0.55.4.React)
-  - React/DevSupport (0.55.4):
+  - React/Core (0.57.8):
+    - yoga (= 0.57.8.React)
+  - React/DevSupport (0.57.8):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.55.4)
-  - React/RCTActionSheet (0.55.4):
+  - React/fishhook (0.57.8)
+  - React/RCTActionSheet (0.57.8):
     - React/Core
-  - React/RCTAnimation (0.55.4):
+  - React/RCTAnimation (0.57.8):
     - React/Core
-  - React/RCTBlob (0.55.4):
+  - React/RCTBlob (0.57.8):
     - React/Core
-  - React/RCTCameraRoll (0.55.4):
+  - React/RCTCameraRoll (0.57.8):
     - React/Core
     - React/RCTImage
-  - React/RCTGeolocation (0.55.4):
+  - React/RCTGeolocation (0.57.8):
     - React/Core
-  - React/RCTImage (0.55.4):
+  - React/RCTImage (0.57.8):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.55.4):
+  - React/RCTNetwork (0.57.8):
     - React/Core
-  - React/RCTPushNotification (0.55.4):
+  - React/RCTPushNotification (0.57.8):
     - React/Core
-  - React/RCTText (0.55.4):
+  - React/RCTText (0.57.8):
     - React/Core
-  - React/RCTVibration (0.55.4):
+  - React/RCTVibration (0.57.8):
     - React/Core
-  - React/RCTWebSocket (0.55.4):
+  - React/RCTWebSocket (0.57.8):
     - React/Core
     - React/fishhook
     - React/RCTBlob
@@ -69,7 +69,7 @@ PODS:
     - React
   - RNVectorIcons (4.6.0):
     - React
-  - yoga (0.55.4.React)
+  - yoga (0.57.8.React)
 
 DEPENDENCIES:
   - react-native-add-calendar-event (from `../node_modules/react-native-add-calendar-event`)
@@ -138,7 +138,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
-  React: aa2040dbb6f317b95314968021bd2888816e03d5
+  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-add-calendar-event: e3415a2d8a782e06899be6fb59427199eba1ab82
   react-native-background-timer: bb7a98c8e97fc7c290de2d423dd09ddb73dcbcbb
   react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
@@ -152,7 +152,7 @@ SPEC CHECKSUMS:
   RNKeychain: 627c6095cef215dd3d9804a9a9cf45ab96aa3997
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
-  yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
+  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
 PODFILE CHECKSUM: 7baf54ac28b13a0b19cb8d2964f16af6425333e3
 
