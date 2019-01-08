@@ -1,13 +1,13 @@
 /**
  * Set the basic PushNotification configuration
  */
-
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 
+import { store } from "../App";
 import { debugRemotePushNotification, gcmSenderId } from "../config";
 import {
   loadMessagesRequest,
@@ -17,7 +17,6 @@ import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
-import { Store } from "../store/actions/types";
 
 /**
  * Helper type used to validate the notification payload.
@@ -30,7 +29,7 @@ const NotificationPayload = t.partial({
   })
 });
 
-function configurePushNotifications(store: Store) {
+function configurePushNotifications() {
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {

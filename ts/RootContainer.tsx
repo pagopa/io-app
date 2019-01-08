@@ -20,7 +20,6 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { Store } from "./store/actions/types";
 import { DeepLinkState } from "./store/reducers/deepLink";
 import {
   isPinLoginValidSelector,
@@ -43,11 +42,7 @@ type DispatchProps = {
   navigateBack: typeof navigateBack;
 };
 
-type OwnProps = {
-  store: Store;
-};
-
-type Props = ReduxMappedProps & DispatchProps & OwnProps;
+type Props = ReduxMappedProps & DispatchProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
@@ -57,7 +52,7 @@ class RootContainer extends React.PureComponent<Props> {
     super(props);
 
     /* Configure the application to receive push notifications */
-    configurePushNotifications(this.props.store);
+    configurePushNotifications();
   }
 
   private handleBackButton = () => {
