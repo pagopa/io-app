@@ -75,6 +75,7 @@
     "whatwg-fetch": "git://github.com/github/fetch#141665b1477bb25ac1427b2cb3e05203453e30cb"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
     "@types/chalk": "^2.2.0",
     "@types/color": "^3.0.0",
     "@types/fs-extra": "^5.0.4",
@@ -102,7 +103,8 @@
     "@types/stacktrace-js": "^0.0.32",
     "@types/uuid": "^3.4.4",
     "@types/validator": "^9.4.2",
-    "babel-jest": "23.6.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "babel-preset-react-native": "^4.0.1",
     "chalk": "^2.4.1",
     "danger": "^3.8.0",
