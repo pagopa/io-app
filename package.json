@@ -150,7 +150,7 @@
   "detox": {
     "test-runner": "jest",
     "specs": "e2e",
-    "runner-config": "jest-e2e.json",
+    "runner-config": "jest-e2e.config.js",
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
