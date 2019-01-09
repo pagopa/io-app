@@ -6579,6 +6579,10 @@ react-native-text-input-mask@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/react-native-text-input-mask/-/react-native-text-input-mask-0.8.0.tgz#30f0de0215644db10719c4b1d29610605fb57262"
 
+"react-native-touch-id@git://github.com/naoufal/react-native-touch-id#d2ff356f5dbed4ad647b26110f5053ed41f522a4":
+  version "4.3.0"
+  resolved "git://github.com/naoufal/react-native-touch-id#d2ff356f5dbed4ad647b26110f5053ed41f522a4"
+
 react-native-typescript-transformer@^1.2.10:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/react-native-typescript-transformer/-/react-native-typescript-transformer-1.2.10.tgz#6f76c1449028cdeafa184b533301ecd547367ed1"

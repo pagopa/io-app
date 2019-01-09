@@ -56,6 +56,7 @@
     "react-native-splash-screen": "^3.1.1",
     "react-native-svg": "^6.5.2",
     "react-native-text-input-mask": "^0.8.0",
+    "react-native-touch-id": "git://github.com/naoufal/react-native-touch-id#d2ff356f5dbed4ad647b26110f5053ed41f522a4",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "2.18.3",
     "react-navigation-redux-helpers": "2.0.9",

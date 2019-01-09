@@ -1,6 +1,7 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Modal, StatusBar, StyleSheet } from "react-native";
+import TouchID from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -34,8 +35,12 @@ type Props = ReduxMappedStateProps & ReduxProps;
  */
 type IdentificationByPinState = "unstarted" | "failure";
 
+type IdentificationByBiometryState = "unstarted" | "failure";
+
 type State = {
   identificationByPinState: IdentificationByPinState;
+  identificationByBiometryState: IdentificationByBiometryState;
+  biometryType?: string;
 };
 
 const contextualHelp = {
@@ -57,6 +62,24 @@ const renderIdentificationByPinState = (
         <TextWithIcon danger={true}>
           <IconFont name="io-close" color={"white"} />
           <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
+        </TextWithIcon>
+      </React.Fragment>
+    );
+  }
+
+  return null;
+};
+
+const renderIdentificationByBiometryState = (
+  identificationByBiometryState: IdentificationByPinState
+) => {
+  if (identificationByBiometryState === "failure") {
+    return (
+      <React.Fragment>
+        <View spacer={true} extralarge={true} />
+        <TextWithIcon danger={true}>
+          <IconFont name="io-close" color={"white"} />
+          <Text white={true}>Identification failed</Text>
         </TextWithIcon>
       </React.Fragment>
     );
@@ -94,8 +117,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      identificationByPinState: "unstarted"
+      identificationByPinState: "unstarted",
+      identificationByBiometryState: "unstarted"
     };
+  }
+
+  public componentWillMount() {
+    TouchID.isSupported()
+      .then(biometryType => {
+        if (biometryType === true) {
+          this.setState({ biometryType: "Fingerprint" });
+        } else {
+          this.setState({ biometryType });
+        }
+      })
+      .catch(_ => {
+        this.setState({ biometryType: undefined });
+      });
   }
 
   public render() {
@@ -113,7 +151,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationSuccessData
     } = identificationState;
 
-    const { identificationByPinState } = this.state;
+    const {
+      identificationByPinState,
+      identificationByBiometryState,
+      biometryType
+    } = this.state;
 
     const identificationMessage = identificationGenericData
       ? identificationGenericData.message
@@ -153,6 +195,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
+            {biometryType && (
+              <React.Fragment>
+                <Button
+                  block={true}
+                  primary={true}
+                  onPress={() =>
+                    this.onFingerprintRequest(
+                      onIdentificationSuccessHandler,
+                      onIdentificationFailureHandler
+                    )
+                  }
+                >
+                  <Text>{biometryType}</Text>
+                </Button>
+                <View spacer={true} />
+              </React.Fragment>
+            )}
             <View spacer={true} />
             <Text
               bold={true}
@@ -182,6 +241,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
             />
             {renderIdentificationByPinState(identificationByPinState)}
+            {renderIdentificationByBiometryState(identificationByBiometryState)}
             <View spacer={true} large={true} />
 
             {identificationCancelData === undefined && (
@@ -224,6 +284,25 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
       onIdentificationFailureHandler();
     }
+  };
+
+  private onFingerprintRequest = (
+    onIdentificationSuccessHandler: () => void,
+    onIdentificationFailureHandler: () => void
+  ) => {
+    TouchID.authenticate("Identification")
+      .then(_ => {
+        this.setState({
+          identificationByBiometryState: "unstarted"
+        });
+        onIdentificationSuccessHandler();
+      })
+      .catch(_ => {
+        this.setState({
+          identificationByBiometryState: "failure"
+        });
+        onIdentificationFailureHandler();
+      });
   };
 }
 

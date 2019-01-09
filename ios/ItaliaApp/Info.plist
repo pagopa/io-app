@@ -70,6 +70,8 @@
 	<string>The app needs NSMotionUsageDescription permission</string>
 	<key>NSContactsUsageDescription</key>
 	<string>IO needs access to your contacts to let you add them in calendar events</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Enabling Face ID allows you to identify faster.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>
