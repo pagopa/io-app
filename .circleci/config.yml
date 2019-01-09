@@ -287,6 +287,18 @@ jobs:
       - run: '[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils'
       - run: '[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils'
 
+      # Remove watchman from node global packages
+      - run:
+          name: Remove watchman from node global packages
+          command: npm r -g watchman
+
+      # Install watchman with brew
+      - run:
+          name: Install watchman
+          command: |
+            brew update
+            brew install watchman || exit 0
+
       # Install bundle dependencies
       - run:
           name: Bundle Install
