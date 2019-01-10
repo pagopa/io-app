@@ -4,7 +4,7 @@ PODS:
     - React/Core (= 0.57.8)
   - react-native-add-calendar-event (2.1.0):
     - React
-  - react-native-background-timer (2.0.1):
+  - react-native-background-timer (2.1.1):
     - React
   - react-native-camera (1.2.0):
     - React
