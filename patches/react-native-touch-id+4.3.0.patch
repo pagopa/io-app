@@ -19,3 +19,20 @@ patch-package
          return;
      }
  }
+--- a/node_modules/react-native-touch-id/index.d.ts
++++ b/node_modules/react-native-touch-id/index.d.ts
+@@ -2,12 +2,12 @@ declare module 'react-native-touch-id' {
+     /**
+      * The supported biometry type
+      */
+-    type BiometryType = 'FaceID' | 'TouchID';
++    export type BiometryType = 'FaceID' | 'TouchID' | true;
+   
+     /**
+      * Base config to pass to `TouchID.isSupported` and `TouchID.authenticate`
+      */
+-    interface IsSupportedConfig {
++    export interface IsSupportedConfig {
+       /**
+        * Return unified error messages
+        */
