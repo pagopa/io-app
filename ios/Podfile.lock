@@ -14,7 +14,7 @@ PODS:
     - React
   - react-native-camera/RN (1.2.0):
     - React
-  - react-native-config (0.11.5):
+  - react-native-config (0.11.7):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
@@ -142,7 +142,7 @@ SPEC CHECKSUMS:
   react-native-add-calendar-event: e3415a2d8a782e06899be6fb59427199eba1ab82
   react-native-background-timer: bb7a98c8e97fc7c290de2d423dd09ddb73dcbcbb
   react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
-  react-native-config: 408003951fd9d8b1dfd7ebf535f67c315f44d823
+  react-native-config: 8c2a92aa66a6cec1a23d9eda7ba6fcf31a63ace5
   react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
   react-native-splash-screen: 8e3f866dc79bfe533baeffd0a38c33f7a7eae7f8
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
