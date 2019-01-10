@@ -1,7 +1,7 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
-import TouchID from "react-native-touch-id";
+import TouchID, { AuthenticateConfig, IsSupportedConfig, AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -91,6 +91,14 @@ const renderIdentificationByBiometryState = (
 
 const onRequestCloseHandler = () => undefined;
 
+const isSupportedConfig: IsSupportedConfig = {
+  unifiedErrors: true
+}
+
+const authenticateConfig: AuthenticateConfig = {
+  unifiedErrors: true
+}
+
 const styles = StyleSheet.create({
   identificationMessage: {
     alignSelf: "center",
@@ -124,25 +132,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   public componentWillMount() {
-    TouchID.isSupported()
+    TouchID.isSupported(isSupportedConfig)
       .then(biometryType => {
         // On Android it just return `true`
         if (biometryType === true) {
-          if (debugBiometricIdentification) {
-            Alert.alert("Biometric support", "OK: Fingerprint");
-          }
           this.setState({ biometryType: "Fingerprint" });
         } else {
-          if (debugBiometricIdentification) {
-            Alert.alert("Biometric support", `OK: ${biometryType}`);
-          }
           this.setState({ biometryType });
         }
       })
-      .catch(error => {
-        if (debugBiometricIdentification) {
-          Alert.alert("Biometric support", `KO: ${error.code}`);
-        }
+      .catch(() => {
         this.setState({ biometryType: undefined });
       });
   }
@@ -301,8 +300,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     onIdentificationSuccessHandler: () => void,
     onIdentificationFailureHandler: () => void
   ) => {
-    TouchID.authenticate("Identification")
-      .then(_ => {
+    TouchID.authenticate("Identification", authenticateConfig)
+      .then(() => {
         if (debugBiometricIdentification) {
           Alert.alert("Biometric identification", "OK");
         }
@@ -311,7 +310,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         });
         onIdentificationSuccessHandler();
       })
-      .catch(error => {
+      .catch((error: AuthenticationError) => {
         if (debugBiometricIdentification) {
           Alert.alert("Biometric identification", `KO: ${error.code}`);
         }
