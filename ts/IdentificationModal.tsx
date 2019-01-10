@@ -1,6 +1,6 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StatusBar, StyleSheet } from "react-native";
+import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID from "react-native-touch-id";
 import { connect } from "react-redux";
 
@@ -9,6 +9,7 @@ import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
 import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
+import { debugBiometricIdentification } from "./config";
 import I18n from "./i18n";
 import {
   identificationCancel,
@@ -125,13 +126,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   public componentWillMount() {
     TouchID.isSupported()
       .then(biometryType => {
+        // On Android it just return `true`
         if (biometryType === true) {
+          if (debugBiometricIdentification) {
+            Alert.alert("Biometric support", "OK: Fingerprint");
+          }
           this.setState({ biometryType: "Fingerprint" });
         } else {
+          if (debugBiometricIdentification) {
+            Alert.alert("Biometric support", `OK: ${biometryType}`);
+          }
           this.setState({ biometryType });
         }
       })
-      .catch(_ => {
+      .catch(error => {
+        if (debugBiometricIdentification) {
+          Alert.alert("Biometric support", `KO: ${error.code}`);
+        }
         this.setState({ biometryType: undefined });
       });
   }
@@ -292,12 +303,18 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   ) => {
     TouchID.authenticate("Identification")
       .then(_ => {
+        if (debugBiometricIdentification) {
+          Alert.alert("Biometric identification", "OK");
+        }
         this.setState({
           identificationByBiometryState: "unstarted"
         });
         onIdentificationSuccessHandler();
       })
-      .catch(_ => {
+      .catch(error => {
+        if (debugBiometricIdentification) {
+          Alert.alert("Biometric identification", `KO: ${error.code}`);
+        }
         this.setState({
           identificationByBiometryState: "failure"
         });

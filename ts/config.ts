@@ -37,6 +37,8 @@ export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId: string = Config.GCM_SENDER_ID;
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
+export const debugBiometricIdentification =
+  Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;
 
 export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
