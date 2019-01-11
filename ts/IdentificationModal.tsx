@@ -1,7 +1,11 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
-import TouchID, { AuthenticateConfig, IsSupportedConfig, AuthenticationError } from "react-native-touch-id";
+import TouchID, {
+  AuthenticateConfig,
+  AuthenticationError,
+  IsSupportedConfig
+} from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -93,11 +97,11 @@ const onRequestCloseHandler = () => undefined;
 
 const isSupportedConfig: IsSupportedConfig = {
   unifiedErrors: true
-}
+};
 
 const authenticateConfig: AuthenticateConfig = {
   unifiedErrors: true
-}
+};
 
 const styles = StyleSheet.create({
   identificationMessage: {
@@ -302,9 +306,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   ) => {
     TouchID.authenticate("Identification", authenticateConfig)
       .then(() => {
-        if (debugBiometricIdentification) {
-          Alert.alert("Biometric identification", "OK");
-        }
         this.setState({
           identificationByBiometryState: "unstarted"
         });
@@ -314,9 +315,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         if (debugBiometricIdentification) {
           Alert.alert("Biometric identification", `KO: ${error.code}`);
         }
-        this.setState({
-          identificationByBiometryState: "failure"
-        });
+        if (error.code !== "USER_CANCELED") {
+          this.setState({
+            identificationByBiometryState: "failure"
+          });
+        }
         onIdentificationFailureHandler();
       });
   };
