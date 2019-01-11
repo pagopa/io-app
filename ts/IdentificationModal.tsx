@@ -84,7 +84,7 @@ const renderIdentificationByBiometryState = (
         <View spacer={true} extralarge={true} />
         <TextWithIcon danger={true}>
           <IconFont name="io-close" color={"white"} />
-          <Text white={true}>Identification failed</Text>
+          <Text white={true}>{I18n.t("identification.biometric.failure")}</Text>
         </TextWithIcon>
       </React.Fragment>
     );

@@ -499,3 +499,5 @@ identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.
   resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
+  biometric:
+    failure: Identification failed
