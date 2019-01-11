@@ -137,17 +137,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   public componentWillMount() {
     TouchID.isSupported(isSupportedConfig)
-      .then(biometryType => {
-        // On Android it just return `true`
-        if (biometryType === true) {
-          this.setState({ biometryType: "Fingerprint" });
-        } else {
-          this.setState({ biometryType });
-        }
-      })
-      .catch(() => {
-        this.setState({ biometryType: undefined });
-      });
+      .then(
+        biometryType => (biometryType === true ? "Fingerprint" : biometryType),
+        _ => undefined
+      )
+      .then(biometryType => this.setState({ biometryType }), _ => 0);
   }
 
   public render() {

@@ -149,7 +149,7 @@ Here is a still NOT complete table of the environment variables you can set:
 
 | NAME                           | DEFAULT |                                                                                                 |
 |--------------------------------|---------|-------------------------------------------------------------------------------------------------|
-| DEBUG_BIOMETRIC_IDENTIFICATION | NO      | If set to "YES" an Alert is rendered with the exact result code of the biometric identification. |
+| `DEBUG_BIOMETRIC_IDENTIFICATION` | NO      | If set to "YES" an Alert is rendered with the exact result code of the biometric identification. |
 
 _Note: The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working._
 

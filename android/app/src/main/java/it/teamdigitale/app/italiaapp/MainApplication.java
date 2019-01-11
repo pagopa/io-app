@@ -41,8 +41,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new FingerprintAuthPackage(),
-            new BackgroundTimerPackage(),
+        new FingerprintAuthPackage(),
+        new BackgroundTimerPackage(),
         new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
           .setInvocationEvent("none")
           .setPrimaryColor("#0073E6")
