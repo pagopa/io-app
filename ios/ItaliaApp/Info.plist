@@ -71,7 +71,7 @@
 	<key>NSContactsUsageDescription</key>
 	<string>IO needs access to your contacts to let you add them in calendar events</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>>Enable Face ID for a faster identification.</string>
+	<string>Enable Face ID for a faster identification.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>
