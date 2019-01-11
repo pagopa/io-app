@@ -13,7 +13,7 @@ import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
 import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
-import { debugBiometricIdentification } from "./config";
+import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
 import {
   identificationCancel,
@@ -312,7 +312,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         onIdentificationSuccessHandler();
       })
       .catch((error: AuthenticationError) => {
-        if (debugBiometricIdentification) {
+        if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("Biometric identification", `KO: ${error.code}`);
         }
         if (error.code !== "USER_CANCELED") {
