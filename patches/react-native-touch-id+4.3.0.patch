@@ -1,0 +1,38 @@
+patch-package
+--- a/node_modules/react-native-touch-id/TouchID.m
++++ b/node_modules/react-native-touch-id/TouchID.m
+@@ -14,12 +14,13 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
+     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+         callback(@[[NSNull null], [self getBiometryType:context]]);
+         
+-    } else if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+-        callback(@[[NSNull null], [self getBiometryType:context]]);
+     }
+-    // Device does not support FaceID / TouchID / Pin
+     else {
+-        callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
++        if(error.code == LAErrorTouchIDNotEnrolled) {
++            callback(@[RCTMakeError(@"LAErrorTouchIDNotEnrolled", nil, nil)]);
++        } else {
++            callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
++        }
+         return;
+     }
+ }
+--- a/node_modules/react-native-touch-id/index.d.ts
++++ b/node_modules/react-native-touch-id/index.d.ts
+@@ -2,12 +2,12 @@ declare module 'react-native-touch-id' {
+     /**
+      * The supported biometry type
+      */
+-    type BiometryType = 'FaceID' | 'TouchID';
++    export type BiometryType = 'FaceID' | 'TouchID' | true;
+   
+     /**
+      * Base config to pass to `TouchID.isSupported` and `TouchID.authenticate`
+      */
+-    interface IsSupportedConfig {
++    export interface IsSupportedConfig {
+       /**
+        * Return unified error messages
+        */

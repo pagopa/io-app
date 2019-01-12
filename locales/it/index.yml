@@ -511,3 +511,5 @@ identification:
   message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
   resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
+  biometric:
+    failure: Identificazione fallita

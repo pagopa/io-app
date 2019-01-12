@@ -1,6 +1,11 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StatusBar, StyleSheet } from "react-native";
+import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
+import TouchID, {
+  AuthenticateConfig,
+  AuthenticationError,
+  IsSupportedConfig
+} from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -8,6 +13,7 @@ import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
 import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
+import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
 import {
   identificationCancel,
@@ -34,8 +40,12 @@ type Props = ReduxMappedStateProps & ReduxProps;
  */
 type IdentificationByPinState = "unstarted" | "failure";
 
+type IdentificationByBiometryState = "unstarted" | "failure";
+
 type State = {
   identificationByPinState: IdentificationByPinState;
+  identificationByBiometryState: IdentificationByBiometryState;
+  biometryType?: string;
 };
 
 const contextualHelp = {
@@ -65,7 +75,33 @@ const renderIdentificationByPinState = (
   return null;
 };
 
+const renderIdentificationByBiometryState = (
+  identificationByBiometryState: IdentificationByPinState
+) => {
+  if (identificationByBiometryState === "failure") {
+    return (
+      <React.Fragment>
+        <View spacer={true} extralarge={true} />
+        <TextWithIcon danger={true}>
+          <IconFont name="io-close" color={"white"} />
+          <Text white={true}>{I18n.t("identification.biometric.failure")}</Text>
+        </TextWithIcon>
+      </React.Fragment>
+    );
+  }
+
+  return null;
+};
+
 const onRequestCloseHandler = () => undefined;
+
+const isSupportedConfig: IsSupportedConfig = {
+  unifiedErrors: true
+};
+
+const authenticateConfig: AuthenticateConfig = {
+  unifiedErrors: true
+};
 
 const styles = StyleSheet.create({
   identificationMessage: {
@@ -94,8 +130,18 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      identificationByPinState: "unstarted"
+      identificationByPinState: "unstarted",
+      identificationByBiometryState: "unstarted"
     };
+  }
+
+  public componentWillMount() {
+    TouchID.isSupported(isSupportedConfig)
+      .then(
+        biometryType => (biometryType === true ? "Fingerprint" : biometryType),
+        _ => undefined
+      )
+      .then(biometryType => this.setState({ biometryType }), _ => 0);
   }
 
   public render() {
@@ -113,7 +159,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationSuccessData
     } = identificationState;
 
-    const { identificationByPinState } = this.state;
+    const {
+      identificationByPinState,
+      identificationByBiometryState,
+      biometryType
+    } = this.state;
 
     const identificationMessage = identificationGenericData
       ? identificationGenericData.message
@@ -153,6 +203,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
+            {biometryType && (
+              <React.Fragment>
+                <Button
+                  block={true}
+                  primary={true}
+                  onPress={() =>
+                    this.onFingerprintRequest(
+                      onIdentificationSuccessHandler,
+                      onIdentificationFailureHandler
+                    )
+                  }
+                >
+                  <Text>{biometryType}</Text>
+                </Button>
+                <View spacer={true} />
+              </React.Fragment>
+            )}
             <View spacer={true} />
             <Text
               bold={true}
@@ -182,6 +249,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
             />
             {renderIdentificationByPinState(identificationByPinState)}
+            {renderIdentificationByBiometryState(identificationByBiometryState)}
             <View spacer={true} large={true} />
 
             {identificationCancelData === undefined && (
@@ -224,6 +292,30 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
       onIdentificationFailureHandler();
     }
+  };
+
+  private onFingerprintRequest = (
+    onIdentificationSuccessHandler: () => void,
+    onIdentificationFailureHandler: () => void
+  ) => {
+    TouchID.authenticate("Identification", authenticateConfig)
+      .then(() => {
+        this.setState({
+          identificationByBiometryState: "unstarted"
+        });
+        onIdentificationSuccessHandler();
+      })
+      .catch((error: AuthenticationError) => {
+        if (isDebugBiometricIdentificationEnabled) {
+          Alert.alert("Biometric identification", `KO: ${error.code}`);
+        }
+        if (error.code !== "USER_CANCELED") {
+          this.setState({
+            identificationByBiometryState: "failure"
+          });
+        }
+        onIdentificationFailureHandler();
+      });
   };
 }
 
