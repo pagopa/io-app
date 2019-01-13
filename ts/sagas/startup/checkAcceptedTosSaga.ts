@@ -3,10 +3,7 @@ import { put, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { navigateToTosScreen } from "../../store/actions/navigation";
-import {
-  tosAcceptRequest,
-  tosAcceptSuccess
-} from "../../store/actions/onboarding";
+import { tosAccept } from "../../store/actions/onboarding";
 import { isTosAcceptedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
 
@@ -24,10 +21,10 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
     yield put(navigateToTosScreen);
 
     // Here we wait the user accept the ToS
-    yield take(getType(tosAcceptRequest));
+    yield take(getType(tosAccept.request));
 
     // We're done with accepting the ToS, dispatch the action that updates
     // the redux state.
-    yield put(tosAcceptSuccess());
+    yield put(tosAccept.success());
   }
 }

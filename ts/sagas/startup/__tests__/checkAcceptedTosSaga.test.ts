@@ -3,10 +3,7 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import { getType } from "typesafe-actions";
 
 import { navigateToTosScreen } from "../../../store/actions/navigation";
-import {
-  tosAcceptRequest,
-  tosAcceptSuccess
-} from "../../../store/actions/onboarding";
+import { tosAccept } from "../../../store/actions/onboarding";
 import { isTosAcceptedSelector } from "../../../store/reducers/onboarding";
 
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
@@ -29,9 +26,9 @@ describe("checkAcceptedTosSaga", () => {
         .next(false)
         .put(navigateToTosScreen)
         .next()
-        .take(getType(tosAcceptRequest))
+        .take(getType(tosAccept.request))
         .next()
-        .put(tosAcceptSuccess());
+        .put(tosAccept.success());
     });
   });
 });
