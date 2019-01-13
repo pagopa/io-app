@@ -54,33 +54,17 @@ import {
 import { loadService, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
-  paymentAttivaFailure,
-  paymentAttivaRequest,
-  paymentAttivaSuccess,
-  paymentCheckFailure,
-  paymentCheckRequest,
-  paymentCheckSuccess,
+  paymentAttiva,
+  paymentCheck,
   paymentCompletedFailure,
   paymentCompletedSuccess,
-  paymentDeletePaymentFailure,
-  paymentDeletePaymentRequest,
-  paymentDeletePaymentSuccess,
-  paymentExecutePaymentFailure,
-  paymentExecutePaymentRequest,
-  paymentExecutePaymentSuccess,
-  paymentFetchPspsForPaymentIdFailure,
-  paymentFetchPspsForPaymentIdRequest,
-  paymentFetchPspsForPaymentIdSuccess,
-  paymentIdPollingFailure,
-  paymentIdPollingRequest,
-  paymentIdPollingSuccess,
+  paymentDeletePayment,
+  paymentExecutePayment,
+  paymentFetchPspsForPaymentId,
+  paymentIdPolling,
   paymentInitializeState,
-  paymentUpdateWalletPspFailure,
-  paymentUpdateWalletPspRequest,
-  paymentUpdateWalletPspSuccess,
-  paymentVerificaFailure,
-  paymentVerificaRequest,
-  paymentVerificaSuccess
+  paymentUpdateWalletPsp,
+  paymentVerifica
 } from "../actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -164,18 +148,18 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Payment actions (with properties)
     //
 
-    case getType(paymentVerificaRequest):
+    case getType(paymentVerifica.request):
       return mp.track(action.type, {
         organizationFiscalCode: action.payload.organizationFiscalCode,
         paymentNoticeNumber: action.payload.paymentNoticeNumber
       });
 
-    case getType(paymentVerificaSuccess):
+    case getType(paymentVerifica.success):
       return mp.track(action.type, {
         amount: action.payload.importoSingoloVersamento
       });
 
-    case getType(paymentAttivaRequest):
+    case getType(paymentAttiva.request):
       return mp.track(action.type, {
         organizationFiscalCode: action.payload.rptId.organizationFiscalCode,
         paymentNoticeNumber: action.payload.rptId.paymentNoticeNumber
@@ -204,10 +188,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //
 
     case getType(addWalletCreditCardFailure):
-    case getType(paymentAttivaFailure):
-    case getType(paymentVerificaFailure):
-    case getType(paymentIdPollingFailure):
-    case getType(paymentCheckFailure):
+    case getType(paymentAttiva.failure):
+    case getType(paymentVerifica.failure):
+    case getType(paymentIdPolling.failure):
+    case getType(paymentCheck.failure):
       return mp.track(action.type, {
         reason: action.payload
       });
@@ -279,24 +263,24 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(fetchTransactionsFailure):
     // payment
     case getType(paymentInitializeState):
-    case getType(paymentAttivaSuccess):
-    case getType(paymentIdPollingRequest):
-    case getType(paymentIdPollingSuccess):
-    case getType(paymentCheckRequest):
-    case getType(paymentCheckSuccess):
-    case getType(paymentFetchPspsForPaymentIdRequest):
-    case getType(paymentFetchPspsForPaymentIdSuccess):
-    case getType(paymentFetchPspsForPaymentIdFailure):
-    case getType(paymentUpdateWalletPspRequest):
-    case getType(paymentUpdateWalletPspSuccess):
-    case getType(paymentUpdateWalletPspFailure):
-    case getType(paymentExecutePaymentRequest):
-    case getType(paymentExecutePaymentSuccess):
-    case getType(paymentExecutePaymentFailure):
+    case getType(paymentAttiva.success):
+    case getType(paymentIdPolling.request):
+    case getType(paymentIdPolling.success):
+    case getType(paymentCheck.request):
+    case getType(paymentCheck.success):
+    case getType(paymentFetchPspsForPaymentId.request):
+    case getType(paymentFetchPspsForPaymentId.success):
+    case getType(paymentFetchPspsForPaymentId.failure):
+    case getType(paymentUpdateWalletPsp.request):
+    case getType(paymentUpdateWalletPsp.success):
+    case getType(paymentUpdateWalletPsp.failure):
+    case getType(paymentExecutePayment.request):
+    case getType(paymentExecutePayment.success):
+    case getType(paymentExecutePayment.failure):
     case getType(paymentCompletedFailure):
-    case getType(paymentDeletePaymentRequest):
-    case getType(paymentDeletePaymentSuccess):
-    case getType(paymentDeletePaymentFailure):
+    case getType(paymentDeletePayment.request):
+    case getType(paymentDeletePayment.success):
+    case getType(paymentDeletePayment.failure):
     // other
     case getType(updateNotificationsInstallationToken):
     case getType(updateNotificationInstallationFailure):

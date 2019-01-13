@@ -26,20 +26,14 @@ import {
 } from "../config";
 
 import {
-  paymentAttivaFailure,
-  paymentAttivaRequest,
-  paymentAttivaSuccess,
-  paymentCheckFailure,
-  paymentCheckRequest,
-  paymentCheckSuccess,
-  paymentDeletePaymentRequest,
-  paymentExecutePaymentRequest,
-  paymentFetchPspsForPaymentIdRequest,
-  paymentIdPollingFailure,
-  paymentIdPollingRequest,
-  paymentIdPollingSuccess,
-  paymentUpdateWalletPspRequest,
-  paymentVerificaRequest,
+  paymentAttiva,
+  paymentCheck,
+  paymentDeletePayment,
+  paymentExecutePayment,
+  paymentFetchPspsForPaymentId,
+  paymentIdPolling,
+  paymentUpdateWalletPsp,
+  paymentVerifica,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
@@ -342,16 +336,16 @@ function* startOrResumePaymentActivationSaga(
     if (pot.isNone(paymentState.attiva)) {
       // this step needs to be executed
       yield put(
-        paymentAttivaRequest({
+        paymentAttiva.request({
           rptId: action.payload.rptId,
           verifica: action.payload.verifica
         })
       );
       const responseAction = yield take([
-        getType(paymentAttivaSuccess),
-        getType(paymentAttivaFailure)
+        getType(paymentAttiva.success),
+        getType(paymentAttiva.failure)
       ]);
-      if (isActionOf(paymentAttivaFailure, responseAction)) {
+      if (isActionOf(paymentAttiva.failure, responseAction)) {
         // this step failed, exit the flow
         return;
       }
@@ -362,12 +356,12 @@ function* startOrResumePaymentActivationSaga(
     // second step: poll for payment ID
     if (pot.isNone(paymentState.paymentId)) {
       // this step needs to be executed
-      yield put(paymentIdPollingRequest(action.payload.verifica));
+      yield put(paymentIdPolling.request(action.payload.verifica));
       const responseAction = yield take([
-        getType(paymentIdPollingSuccess),
-        getType(paymentIdPollingFailure)
+        getType(paymentIdPolling.success),
+        getType(paymentIdPolling.failure)
       ]);
-      if (isActionOf(paymentIdPollingFailure, responseAction)) {
+      if (isActionOf(paymentIdPolling.failure, responseAction)) {
         // this step failed, exit the flow
         return;
       }
@@ -378,12 +372,12 @@ function* startOrResumePaymentActivationSaga(
     // third step: "check" the payment
     if (pot.isNone(paymentState.check)) {
       // this step needs to be executed
-      yield put(paymentCheckRequest(paymentState.paymentId.value));
+      yield put(paymentCheck.request(paymentState.paymentId.value));
       const responseAction = yield take([
-        getType(paymentCheckSuccess),
-        getType(paymentCheckFailure)
+        getType(paymentCheck.success),
+        getType(paymentCheck.failure)
       ]);
-      if (isActionOf(paymentCheckFailure, responseAction)) {
+      if (isActionOf(paymentCheck.failure, responseAction)) {
         // this step failed, exit the flow
         return;
       }
@@ -461,7 +455,9 @@ function* deleteActivePaymentSaga() {
   >(_ => _.wallet.payment.paymentId);
   const maybePaymentId = pot.toOption(potPaymentId);
   if (maybePaymentId.isSome()) {
-    yield put(paymentDeletePaymentRequest({ paymentId: maybePaymentId.value }));
+    yield put(
+      paymentDeletePayment.request({ paymentId: maybePaymentId.value })
+    );
   }
 }
 
@@ -596,7 +592,7 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
-    getType(paymentUpdateWalletPspRequest),
+    getType(paymentUpdateWalletPsp.request),
     updateWalletPspRequestHandler,
     paymentManagerClient,
     pmSessionManager
@@ -610,46 +606,46 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
-    getType(paymentVerificaRequest),
+    getType(paymentVerifica.request),
     paymentVerificaRequestHandler,
     pagopaNodoClient.getVerificaRpt
   );
 
   yield takeLatest(
-    getType(paymentAttivaRequest),
+    getType(paymentAttiva.request),
     paymentAttivaRequestHandler,
     pagopaNodoClient.postAttivaRpt
   );
 
   yield takeLatest(
-    getType(paymentIdPollingRequest),
+    getType(paymentIdPolling.request),
     paymentIdPollingRequestHandler,
     pollingPagopaNodoClient.getPaymentId
   );
 
   yield takeLatest(
-    getType(paymentCheckRequest),
+    getType(paymentCheck.request),
     paymentCheckRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
 
   yield takeLatest(
-    getType(paymentFetchPspsForPaymentIdRequest),
+    getType(paymentFetchPspsForPaymentId.request),
     paymentFetchPspsForWalletRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
 
   yield takeLatest(
-    getType(paymentExecutePaymentRequest),
+    getType(paymentExecutePayment.request),
     paymentExecutePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
 
   yield takeLatest(
-    getType(paymentDeletePaymentRequest),
+    getType(paymentDeletePayment.request),
     paymentDeletePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager

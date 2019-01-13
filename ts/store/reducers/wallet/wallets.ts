@@ -4,16 +4,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
-import { getType } from "typesafe-actions";
+import { getType, isOfType } from "typesafe-actions";
 
 import { Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
 import { Action } from "../../actions/types";
-import {
-  paymentUpdateWalletPspFailure,
-  paymentUpdateWalletPspRequest,
-  paymentUpdateWalletPspSuccess
-} from "../../actions/wallet/payment";
+import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
@@ -119,7 +115,7 @@ const reducer = (
     //
 
     case getType(fetchWalletsRequest):
-    case getType(paymentUpdateWalletPspRequest):
+    case getType(paymentUpdateWalletPsp.request):
     case getType(deleteWalletRequest):
       return {
         ...state,
@@ -128,12 +124,15 @@ const reducer = (
       };
 
     case getType(fetchWalletsSuccess):
-    case getType(paymentUpdateWalletPspSuccess):
+    case getType(paymentUpdateWalletPsp.success):
     case getType(deleteWalletSuccess):
-      const favouriteWallet = action.payload.find(_ => _.favourite === true);
+      const wallets = isOfType(getType(paymentUpdateWalletPsp.success), action)
+        ? action.payload.wallets
+        : action.payload;
+      const favouriteWallet = wallets.find(_ => _.favourite === true);
       const newState = {
         ...state,
-        walletById: pot.some(toIndexed(action.payload, _ => _.idWallet))
+        walletById: pot.some(toIndexed(wallets, _ => _.idWallet))
       };
       return favouriteWallet !== undefined
         ? {
@@ -144,7 +143,7 @@ const reducer = (
 
     case getType(fetchWalletsFailure):
     case getType(deleteWalletFailure):
-    case getType(paymentUpdateWalletPspFailure):
+    case getType(paymentUpdateWalletPsp.failure):
       return {
         ...state,
         favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload),

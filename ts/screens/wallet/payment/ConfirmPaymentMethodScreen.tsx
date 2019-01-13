@@ -49,7 +49,7 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
-  paymentExecutePaymentRequest,
+  paymentExecutePayment,
   paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
@@ -352,7 +352,7 @@ const mapDispatchToProps = (
 
   const onIdentificationSuccess = () => {
     dispatch(
-      paymentExecutePaymentRequest({
+      paymentExecutePayment.request({
         wallet: props.navigation.getParam("wallet"),
         idPayment: props.navigation.getParam("idPayment"),
         onSuccess: action => {

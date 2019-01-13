@@ -35,7 +35,7 @@ function getServiceMetadata(
  */
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
-    action: ActionType<typeof contentServiceLoad.request>
+    action: ActionType<typeof contentServiceLoad["request"]>
   ) {
     const serviceId = action.payload;
 
