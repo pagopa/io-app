@@ -177,7 +177,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   loadVisibleServices: () => dispatch(loadVisibleServicesRequest()),
   contentServiceLoad: (serviceId: ServiceId) =>
-    dispatch(contentServiceLoad(serviceId)),
+    dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params))

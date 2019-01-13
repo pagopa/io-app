@@ -248,7 +248,7 @@ const mapDispatchToProps = (
   const messageId = ownProps.navigation.getParam("messageId");
   return {
     contentServiceLoad: (serviceId: ServiceId) =>
-      dispatch(contentServiceLoad(serviceId)),
+      dispatch(contentServiceLoad.request(serviceId)),
     loadMessageWithRelations: () =>
       dispatch(loadMessageWithRelationsAction(messageId)),
     setMessageReadState: (isRead: boolean) =>

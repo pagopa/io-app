@@ -22,10 +22,7 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import {
-  contentServiceLoadFailure,
-  contentServiceLoadSuccess
-} from "../actions/content";
+import { contentServiceLoad } from "../actions/content";
 import {
   identificationCancel,
   identificationFailure,
@@ -155,7 +152,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Content actions (with properties)
     //
 
-    case getType(contentServiceLoadFailure):
+    case getType(contentServiceLoad.failure):
       return mp.track(action.type, {
         serviceId: action.payload
       });
@@ -268,7 +265,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServiceSuccess):
     case getType(loadServiceFailure):
     // content
-    case getType(contentServiceLoadSuccess):
+    case getType(contentServiceLoad.success):
     // wallet
     case getType(fetchWalletsRequest):
     case getType(fetchWalletsFailure):
