@@ -5,7 +5,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
 import { H1, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
@@ -28,6 +28,7 @@ type Props =
     }>
   | Readonly<{
       hasVerificaResponse: false;
+      amount: AmountInEuroCents;
     }>;
 
 const styles = StyleSheet.create({

@@ -5,9 +5,6 @@ exports[`Markdown heading should render heading1 correctly 1`] = `
   style={Object {}}
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     inMessage={false}
     level={1}
     style={
@@ -31,9 +28,6 @@ exports[`Markdown heading should render heading2 correctly 1`] = `
   style={Object {}}
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     inMessage={false}
     level={2}
     style={
@@ -57,9 +51,6 @@ exports[`Markdown heading should render heading3 correctly 1`] = `
   style={Object {}}
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     inMessage={false}
     level={3}
     style={
@@ -91,9 +82,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
     }
   >
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -111,9 +99,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       A 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -131,9 +116,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       simple 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -151,9 +133,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       ordered 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -171,9 +150,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       list
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -191,9 +167,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       : 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -211,9 +184,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       1
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -231,9 +201,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       . 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -251,9 +218,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       Vue 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -271,9 +235,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       2
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -291,9 +252,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       . 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -311,9 +269,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       React 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -331,9 +286,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       3
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -351,9 +303,6 @@ exports[`Markdown list should render ordered list correctly 1`] = `
       . 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -387,9 +336,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
     }
   >
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -407,9 +353,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       A 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -427,9 +370,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       simple 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -447,9 +387,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       unordered 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -467,9 +404,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       list
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -487,9 +421,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       : 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -507,9 +438,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -527,9 +455,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       * 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -547,9 +472,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       Vue 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -567,9 +489,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -587,9 +506,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       * 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -607,9 +523,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       React 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -627,9 +540,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -647,9 +557,6 @@ exports[`Markdown list should render unordered list correctly 1`] = `
       * 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -683,9 +590,6 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
     }
   >
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -703,9 +607,6 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       A 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -723,9 +624,6 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       simple 
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={
@@ -743,9 +641,6 @@ exports[`Markdown paragraph should render paragraph correctly 1`] = `
       paragraph
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       inMessage={false}
       markdown={true}
       style={

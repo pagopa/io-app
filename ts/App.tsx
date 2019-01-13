@@ -15,7 +15,7 @@ import theme from "./theme";
 //   // tslint:disable-next-line:no-empty
 //   .catch(() => {});
 
-const { store, persistor } = configureStoreAndPersistor();
+export const { store, persistor } = configureStoreAndPersistor();
 
 /**
  * Main component of the application
@@ -27,7 +27,7 @@ export const App: React.SFC<never> = () => (
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>
         <MenuProvider>
-          <RootContainer store={store} />
+          <RootContainer />
         </MenuProvider>
       </PersistGate>
     </Provider>

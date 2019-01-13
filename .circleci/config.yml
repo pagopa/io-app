@@ -80,7 +80,7 @@ jobs:
       - run: yarn tsc:noemit
 
       # Run tests
-      - run: yarn test
+      - run: yarn test --runInBand
       - run: 'bash <(curl -s https://codecov.io/bash)'
 
       # Run DangerJS
@@ -232,6 +232,18 @@ jobs:
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
 
+      # Remove watchman from node global packages
+      - run:
+          name: Remove watchman from node global packages
+          command: npm r -g watchman
+
+      # Install watchman with brew
+      - run:
+          name: Install watchman
+          command: |
+            brew update
+            brew install watchman || exit 0
+
       # Install bundle dependencies
       - run:
           name: Bundle Install
@@ -274,6 +286,18 @@ jobs:
       # https://github.com/GeekyAnts/NativeBase/issues/1957
       - run: '[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils'
       - run: '[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils'
+
+      # Remove watchman from node global packages
+      - run:
+          name: Remove watchman from node global packages
+          command: npm r -g watchman
+
+      # Install watchman with brew
+      - run:
+          name: Install watchman
+          command: |
+            brew update
+            brew install watchman || exit 0
 
       # Install bundle dependencies
       - run:

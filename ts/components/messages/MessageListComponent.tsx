@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 
@@ -5,15 +6,16 @@ import {
   MessagesUIStatesByIdState,
   withDefaultMessageUIStates
 } from "../../store/reducers/entities/messages/messagesUIStatesById";
+import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import * as pot from "../../types/pot";
 import { MessageListItemComponent } from "./MessageListItemComponent";
 
 type OwnProps = {
   messages: ReadonlyArray<MessageWithContentPO>;
   messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
+  paymentByRptId: PaymentByRptIdState;
   refreshing: boolean;
   onRefresh: () => void;
   onListItemPress?: (messageId: string) => void;
@@ -23,7 +25,7 @@ type Props = OwnProps;
 
 const keyExtractor = (message: MessageWithContentPO) => message.id;
 
-class MessageListComponent extends React.PureComponent<Props> {
+class MessageListComponent extends React.Component<Props> {
   private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
     const message = info.item;
     const messageUIStates = withDefaultMessageUIStates(
@@ -34,6 +36,7 @@ class MessageListComponent extends React.PureComponent<Props> {
     return (
       <MessageListItemComponent
         message={message}
+        paymentByRptId={this.props.paymentByRptId}
         messageUIStates={messageUIStates}
         service={service !== undefined ? service : pot.none}
         onItemPress={this.props.onListItemPress}
@@ -47,7 +50,8 @@ class MessageListComponent extends React.PureComponent<Props> {
       messagesUIStatesById,
       servicesById,
       refreshing,
-      onRefresh
+      onRefresh,
+      paymentByRptId
     } = this.props;
 
     const refreshControl = (
@@ -58,7 +62,7 @@ class MessageListComponent extends React.PureComponent<Props> {
       <FlatList
         scrollEnabled={true}
         data={messages}
-        extraData={{ servicesById, messagesUIStatesById }}
+        extraData={{ servicesById, messagesUIStatesById, paymentByRptId }}
         keyExtractor={keyExtractor}
         renderItem={this.renderItem}
         refreshControl={refreshControl}

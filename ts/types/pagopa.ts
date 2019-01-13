@@ -1,11 +1,10 @@
 import * as t from "io-ts";
-import { tag } from "italia-ts-commons/lib/types";
-
 import {
   ReplaceProp1,
   replaceProp1 as repP,
-  requiredProp1 as reqP
-} from "../types/utils";
+  requiredProp1 as reqP,
+  tag
+} from "italia-ts-commons/lib/types";
 
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
@@ -141,6 +140,16 @@ export const Transaction = repP(
 );
 
 export type Transaction = t.TypeOf<typeof Transaction>;
+
+export const isCompletedTransaction = (tx: Transaction) => tx.idStatus === 3;
+
+/**
+ * accountingStatus === 1 means the transaction has been
+ * confirmed and the payment has been successfully
+ * completed
+ */
+export const isSuccessTransaction = (tx: Transaction) =>
+  tx.accountingStatus === 1;
 
 /**
  * A refined TransactionListResponse

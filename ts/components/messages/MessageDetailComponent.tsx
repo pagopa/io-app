@@ -1,12 +1,13 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { H1, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import * as pot from "../../types/pot";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -17,6 +18,7 @@ import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 
 type OwnProps = {
   message: MessageWithContentPO;
+  paymentByRptId: PaymentByRptIdState;
   service: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
@@ -55,10 +57,9 @@ const styles = StyleSheet.create({
 /**
  * A component to render the message detail.
  */
-class MessageDetailComponent extends React.PureComponent<Props> {
+export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
-    const { message, service, onServiceLinkPress } = this.props;
-
+    const { message, paymentByRptId, service, onServiceLinkPress } = this.props;
     return (
       <View>
         <View style={styles.headerContainer}>
@@ -97,6 +98,7 @@ class MessageDetailComponent extends React.PureComponent<Props> {
 
         <MessageCTABar
           message={message}
+          paymentByRptId={paymentByRptId}
           service={service}
           containerStyle={styles.ctaBarContainer}
         />
@@ -113,5 +115,3 @@ class MessageDetailComponent extends React.PureComponent<Props> {
     );
   }
 }
-
-export default MessageDetailComponent;

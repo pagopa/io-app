@@ -304,6 +304,13 @@ wallet:
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
     identificationMessage: "Conferma l'operazione inserendo il tuo PIN"
+    transactionSuccess: Il pagamento è stato completato!
+    transactionFailure: Si è verificato un errore durante il pagamento, riprova!
+    transactionTimeout: Non è stato possibile recuperare l'esito del pagamento!
+    confirmCancelTitle: Vuoi annullare il pagamento?
+    confirmCancelPayment: Annulla il pagamento
+    confirmContinuePayment: Continua con il pagamento
+    cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
@@ -438,14 +445,15 @@ messages:
   yesterday: ieri
   cta:
     pay: Paga € {{amount}}
+    paid: Pagato € {{amount}}
     reminder: Promemoria
     reminderTitle: "Promemoria per: {{subject}}"
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
 messageDetails:
   headerTitle: Messaggio
-  invalidText: Parametri non validi!
-  loadingText: Caricamento dei dettagli del messagio in corso...
+  emptyMessage: Nessun contenuto
+  loadingText: Caricamento dei dettagli del messaggio in corso...
   errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
   retryText: Riprova
   rawInfoLink:
@@ -503,3 +511,5 @@ identification:
   message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
   resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
+  biometric:
+    failure: Identificazione fallita

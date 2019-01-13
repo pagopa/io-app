@@ -1,6 +1,6 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import * as pot from "../../../types/pot";
 import { PotFromActions } from "../../../types/utils";
 import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
@@ -25,6 +25,11 @@ import {
   paymentVerificaRequest,
   paymentVerificaSuccess
 } from "../../actions/wallet/payment";
+import {
+  pollTransactionSagaCompleted,
+  pollTransactionSagaTimeout,
+  runPollTransactionSaga
+} from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
 
 // TODO: instead of keeping one single state, it would me more correct to keep
@@ -52,6 +57,10 @@ export type PaymentState = Readonly<{
     typeof paymentExecutePaymentSuccess,
     typeof paymentExecutePaymentFailure
   >;
+  confirmedTransaction: PotFromActions<
+    typeof pollTransactionSagaCompleted,
+    false
+  >;
 }>;
 
 /**
@@ -69,7 +78,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   paymentId: pot.none,
   check: pot.none,
   psps: pot.none,
-  transaction: pot.none
+  transaction: pot.none,
+  confirmedTransaction: pot.none
 };
 
 /**
@@ -80,6 +90,7 @@ const reducer = (
   action: Action
 ): PaymentState => {
   switch (action.type) {
+    // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
 
@@ -199,6 +210,25 @@ const reducer = (
       return {
         ...state,
         transaction: pot.noneError(action.payload)
+      };
+
+    //
+    // confirmed transaction
+    //
+    case getType(runPollTransactionSaga):
+      return {
+        ...state,
+        confirmedTransaction: pot.noneLoading
+      };
+    case getType(pollTransactionSagaCompleted):
+      return {
+        ...state,
+        confirmedTransaction: pot.some(action.payload)
+      };
+    case getType(pollTransactionSagaTimeout):
+      return {
+        ...state,
+        confirmedTransaction: pot.noneError<false>(false)
       };
   }
   return state;

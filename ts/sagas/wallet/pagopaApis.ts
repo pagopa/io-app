@@ -1,4 +1,4 @@
-import { RptIdFromString } from "italia-ts-commons/lib/pagopa";
+import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -16,6 +16,9 @@ import {
   paymentCheckFailure,
   paymentCheckRequest,
   paymentCheckSuccess,
+  paymentDeletePaymentFailure,
+  paymentDeletePaymentRequest,
+  paymentDeletePaymentSuccess,
   paymentExecutePaymentFailure,
   paymentExecutePaymentRequest,
   paymentExecutePaymentSuccess,
@@ -33,8 +36,11 @@ import {
   paymentVerificaSuccess
 } from "../../store/actions/wallet/payment";
 import {
+  fetchTransactionFailure,
+  fetchTransactionRequest,
   fetchTransactionsFailure,
-  fetchTransactionsSuccess
+  fetchTransactionsSuccess,
+  fetchTransactionSuccess
 } from "../../store/actions/wallet/transactions";
 import {
   addWalletCreditCardFailure,
@@ -100,6 +106,31 @@ export function* fetchTransactionsRequestHandler(
     }
   } catch {
     yield put(fetchTransactionsFailure(new Error("Generic error")));
+  }
+}
+
+/**
+ * Handles fetchTransactionRequest
+ */
+export function* fetchTransactionRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchTransactionRequest>
+): Iterator<Effect> {
+  const getTransaction = (pagoPaToken: PaymentManagerToken) =>
+    pagoPaClient.getTransaction(pagoPaToken, action.payload);
+  const request = pmSessionManager.withRefresh(getTransaction);
+  try {
+    const response: SagaCallReturnType<typeof request> | undefined = yield call(
+      request
+    );
+    if (response !== undefined && response.status === 200) {
+      yield put(fetchTransactionSuccess(response.value.data));
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(fetchTransactionFailure(new Error("Generic error")));
   }
 }
 
@@ -422,6 +453,30 @@ export function* paymentExecutePaymentRequestHandler(
     }
   } catch {
     yield put(paymentExecutePaymentFailure(Error("GENERIC_ERROR")));
+  }
+}
+
+/**
+ * Handles paymentDeletePaymentRequest
+ */
+export function* paymentDeletePaymentRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof paymentDeletePaymentRequest>
+): Iterator<Effect> {
+  const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
+    pagoPaClient.deletePayment(pagoPaToken, action.payload.paymentId);
+  const request = pmSessionManager.withRefresh(apiPostPayment);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+
+    if (response !== undefined && response.status === 200) {
+      yield put(paymentDeletePaymentSuccess());
+    } else {
+      throw Error();
+    }
+  } catch {
+    yield put(paymentDeletePaymentFailure());
   }
 }
 

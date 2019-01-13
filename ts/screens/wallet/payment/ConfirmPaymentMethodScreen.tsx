@@ -3,8 +3,10 @@ import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
   RptId
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import {
+  ActionSheet,
   Body,
   Button,
   Container,
@@ -40,17 +42,32 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToTransactionDetailsScreen
+  navigateToTransactionDetailsScreen,
+  navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentExecutePaymentRequest } from "../../../store/actions/wallet/payment";
-import { fetchTransactionsRequest } from "../../../store/actions/wallet/transactions";
+import {
+  paymentCompletedFailure,
+  paymentCompletedSuccess,
+  paymentExecutePaymentRequest,
+  paymentInitializeState,
+  runDeleteActivePaymentSaga
+} from "../../../store/actions/wallet/payment";
+import {
+  fetchTransactionsRequest,
+  runPollTransactionSaga
+} from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
-import { Psp, Wallet } from "../../../types/pagopa";
-import * as pot from "../../../types/pot";
+import {
+  isCompletedTransaction,
+  isSuccessTransaction,
+  Psp,
+  Transaction,
+  Wallet
+} from "../../../types/pagopa";
 import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
+import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -279,7 +296,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
-  isLoading: pot.isLoading(wallet.payment.transaction),
+  isLoading:
+    pot.isLoading(wallet.payment.transaction) ||
+    pot.isLoading(wallet.payment.confirmedTransaction),
   error: pot.isError(wallet.payment.transaction)
     ? some(wallet.payment.transaction.error.message)
     : none
@@ -289,6 +308,67 @@ const mapDispatchToProps = (
   dispatch: Dispatch,
   props: OwnProps
 ): ReduxMappedDispatchProps => {
+  const onTransactionTimeout = () => {
+    dispatch(navigateToWalletHome());
+    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
+  };
+
+  const onTransactionValid = (tx: Transaction) => {
+    if (isSuccessTransaction(tx)) {
+      // on success:
+      dispatch(
+        navigateToTransactionDetailsScreen({
+          isPaymentCompletedTransaction: true,
+          transaction: tx
+        })
+      );
+      // signal success
+      dispatch(
+        paymentCompletedSuccess({
+          transaction: tx,
+          rptId: props.navigation.getParam("rptId"),
+          kind: "COMPLETED"
+        })
+      );
+      // reset the payment state
+      dispatch(paymentInitializeState());
+      // update the transactions state
+      dispatch(fetchTransactionsRequest());
+      // navigate to the resulting transaction details
+      showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
+    } else {
+      // on failure:
+      // navigate to the wallet home
+      dispatch(navigateToWalletHome());
+      // signal faliure
+      dispatch(paymentCompletedFailure());
+      // delete the active payment from PagoPA
+      dispatch(runDeleteActivePaymentSaga());
+      // reset the payment state
+      dispatch(paymentInitializeState());
+      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
+    }
+  };
+
+  const onIdentificationSuccess = () => {
+    dispatch(
+      paymentExecutePaymentRequest({
+        wallet: props.navigation.getParam("wallet"),
+        idPayment: props.navigation.getParam("idPayment"),
+        onSuccess: action => {
+          dispatch(
+            runPollTransactionSaga({
+              id: action.payload.id,
+              isValid: isCompletedTransaction,
+              onTimeout: onTransactionTimeout,
+              onValid: onTransactionValid
+            })
+          );
+        }
+      })
+    );
+  };
+
   const runAuthorizationAndPayment = () =>
     dispatch(
       identificationRequest(
@@ -300,25 +380,7 @@ const mapDispatchToProps = (
           onCancel: () => undefined
         },
         {
-          onSuccess: () => {
-            dispatch(
-              paymentExecutePaymentRequest({
-                wallet: props.navigation.getParam("wallet"),
-                idPayment: props.navigation.getParam("idPayment"),
-                onSuccess: action => {
-                  // on success, update the transactions and navigate to
-                  // the resulting transaciton details
-                  dispatch(fetchTransactionsRequest());
-                  dispatch(
-                    navigateToTransactionDetailsScreen({
-                      isPaymentCompletedTransaction: true,
-                      transaction: action.payload
-                    })
-                  );
-                }
-              })
-            );
-          }
+          onSuccess: onIdentificationSuccess
         }
       )
     );
@@ -343,13 +405,34 @@ const mapDispatchToProps = (
           wallet: props.navigation.getParam("wallet")
         })
       ),
-    onCancel: () =>
-      dispatch(
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount")
-        })
-      ),
+    onCancel: () => {
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            // on cancel:
+            // navigate to the wallet home
+            dispatch(navigateToWalletHome());
+            // delete the active payment from PagoPA
+            dispatch(runDeleteActivePaymentSaga());
+            // reset the payment state
+            dispatch(paymentInitializeState());
+            showToast(
+              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              "success"
+            );
+          }
+        }
+      );
+    },
     runAuthorizationAndPayment,
     onRetry: runAuthorizationAndPayment
   };

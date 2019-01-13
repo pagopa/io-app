@@ -47,6 +47,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 
+  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
+
 end
 
 # Fix a open bug in react-native-config

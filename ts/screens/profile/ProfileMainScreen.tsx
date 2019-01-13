@@ -7,11 +7,12 @@ import {
   List,
   ListItem,
   Right,
+  Switch,
   Text,
   Toast
 } from "native-base";
 import * as React from "react";
-import { Clipboard, StyleSheet } from "react-native";
+import { Clipboard, StyleSheet, View } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -21,6 +22,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { logoutRequest } from "../../store/actions/authentication";
 import { FetchRequestActions } from "../../store/actions/constants";
+import { setDebugModeEnabled } from "../../store/actions/debug";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -41,12 +43,14 @@ type ReduxMappedStateProps = {
   walletToken?: string;
   notificationId: string;
   notificationToken?: string;
+  isDebugModeEnabled: boolean;
 };
 
 type ReduxMappedDispatchProps = {
   resetPin: () => void;
   logout: () => void;
   clearCache: typeof clearCache;
+  setDebugModeEnabled: (enabled: boolean) => void;
 };
 
 type OwnProps = Readonly<{
@@ -54,6 +58,13 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
+
+const copyToClipboardWithFeedback = (text: string) => {
+  Clipboard.setString(text);
+  Toast.show({
+    text: "Copied to clipboard"
+  });
+};
 
 const styles = StyleSheet.create({
   itemLeft: {
@@ -152,7 +163,20 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <Text>Touch code to copy to clipboard.</Text>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between"
+                }}
+              >
+                <Text>Debug mode</Text>
+                <Switch
+                  value={this.props.isDebugModeEnabled}
+                  onValueChange={this.props.setDebugModeEnabled}
+                />
+              </View>
             </ListItem>
 
             {sessionToken && (
@@ -160,7 +184,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 <Button
                   info={true}
                   small={true}
-                  onPress={() => Clipboard.setString(sessionToken)}
+                  onPress={() => copyToClipboardWithFeedback(sessionToken)}
                 >
                   <Text>{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
                 </Button>
@@ -171,7 +195,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 <Button
                   info={true}
                   small={true}
-                  onPress={() => Clipboard.setString(walletToken)}
+                  onPress={() => copyToClipboardWithFeedback(walletToken)}
                 >
                   <Text>{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
                 </Button>
@@ -182,7 +206,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               <Button
                 info={true}
                 small={true}
-                onPress={() => Clipboard.setString(notificationId)}
+                onPress={() => copyToClipboardWithFeedback(notificationId)}
               >
                 <Text>{`Notification ID ${notificationId.slice(0, 6)}`}</Text>
               </Button>
@@ -193,7 +217,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 <Button
                   info={true}
                   small={true}
-                  onPress={() => Clipboard.setString(notificationToken)}
+                  onPress={() => copyToClipboardWithFeedback(notificationToken)}
                 >
                   <Text>{`Notification token ${notificationToken.slice(
                     0,
@@ -205,7 +229,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <Button
-                info={true}
+                danger={true}
                 small={true}
                 onPress={this.handleClearCachePress}
               >
@@ -229,13 +253,16 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
     ? state.authentication.sessionInfo.walletToken
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
-  notificationToken: notificationsInstallationSelector(state).token
+  notificationToken: notificationsInstallationSelector(state).token,
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
   resetPin: () => dispatch(startPinReset()),
   logout: () => dispatch(logoutRequest()),
-  clearCache: () => dispatch(clearCache())
+  clearCache: () => dispatch(clearCache()),
+  setDebugModeEnabled: (enabled: boolean) =>
+    dispatch(setDebugModeEnabled(enabled))
 });
 
 export default connect(

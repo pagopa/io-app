@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>76</string>
+	<string>92</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -70,6 +70,8 @@
 	<string>The app needs NSMotionUsageDescription permission</string>
 	<key>NSContactsUsageDescription</key>
 	<string>IO needs access to your contacts to let you add them in calendar events</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Enable Face ID for a faster identification.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>
@@ -122,6 +124,10 @@
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>io-icon-font.ttf</string>
 		<string>RobotoMono-Regular.ttf</string>
+		<string>AntDesign.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

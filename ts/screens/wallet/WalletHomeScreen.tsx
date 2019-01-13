@@ -3,6 +3,7 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -32,7 +33,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Transaction } from "../../types/pagopa";
-import * as pot from "../../types/pot";
 
 type ReduxMappedStateProps = Readonly<{
   potWallets: ReturnType<typeof walletsSelector>;

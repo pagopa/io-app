@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Grid, Left, ListItem, Right, Row, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -12,7 +13,6 @@ import { ProfileState } from "../../store/reducers/profile";
 
 import H4 from "../../components/ui/H4";
 import variables from "../../theme/variables";
-import * as pot from "../../types/pot";
 
 import { getEnabledChannelsForService } from "../../screens/preferences/common";
 

@@ -12,7 +12,8 @@ import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Body, Container, Content, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
@@ -31,11 +32,12 @@ import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryCo
 
 import I18n from "../../../i18n";
 
-import * as pot from "../../../types/pot";
-
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentCompletedSuccess,
+  paymentInitializeState,
   paymentVerificaRequest,
+  runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -85,6 +87,7 @@ type ReduxMappedDispatchProps = Readonly<{
     potVerifica: ReduxMappedStateProps["potVerifica"],
     maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
   ) => void;
+  onDuplicatedPayment: () => void;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -135,9 +138,20 @@ const formatMdInfoRpt = (r: RptId): string =>
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
-      // on component mount, if we haven't fetch the payment summary if we
-      // haven't already
+      // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    const { error } = this.props;
+    // in case the verifica returns an error indicating the payment has been
+    // already completed for this notice, we update the payment state so that
+    // the notice result paid
+    if (error.toUndefined() !== prevProps.error.toUndefined()) {
+      error
+        .filter(_ => _ === "PAYMENT_DUPLICATED")
+        .map(_ => this.props.onDuplicatedPayment());
     }
   }
 
@@ -355,8 +369,20 @@ const mapDispatchToProps = (
   return {
     dispatchPaymentVerificaRequest,
     startOrResumePayment,
-    goBack: () => props.navigation.goBack(),
-    onCancel: () => dispatch(navigateToWalletHome()),
+    goBack: () => {
+      props.navigation.goBack();
+      // reset the payment state
+      dispatch(paymentInitializeState());
+    },
+    onCancel: () => {
+      // on cancel:
+      // navigate to the wallet home
+      dispatch(navigateToWalletHome());
+      // delete the active payment from PagoPA
+      dispatch(runDeleteActivePaymentSaga());
+      // reset the payment state
+      dispatch(paymentInitializeState());
+    },
     onRetryWithPotVerifica: (
       potVerifica: ReduxMappedStateProps["potVerifica"],
       maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
@@ -366,7 +392,14 @@ const mapDispatchToProps = (
       } else {
         dispatchPaymentVerificaRequest();
       }
-    }
+    },
+    onDuplicatedPayment: () =>
+      dispatch(
+        paymentCompletedSuccess({
+          rptId: props.navigation.getParam("rptId"),
+          kind: "DUPLICATED"
+        })
+      )
   };
 };
 

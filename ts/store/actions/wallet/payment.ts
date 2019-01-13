@@ -1,5 +1,8 @@
-import { RptId } from "italia-ts-commons/lib/pagopa";
-import { TypeofApiResponse } from "italia-ts-commons/lib/requests";
+import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import {
+  OmitStatusFromResponse,
+  TypeofApiResponse
+} from "italia-ts-commons/lib/requests";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
@@ -8,7 +11,7 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
 
 import { Psp, Transaction, Wallet } from "../../../types/pagopa";
-import { OmitStatusFromResponse, PayloadForAction } from "../../../types/utils";
+import { PayloadForAction } from "../../../types/utils";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -173,6 +176,54 @@ export const paymentExecutePaymentFailure = createStandardAction(
 )<Error>();
 
 //
+// Signal the completion of a payment
+//
+
+type PaymentCompletedSuccessPayload = Readonly<
+  | {
+      kind: "COMPLETED";
+      transaction: Transaction;
+      rptId: RptId;
+    }
+  | {
+      kind: "DUPLICATED";
+      rptId: RptId;
+    }
+>;
+
+export const paymentCompletedSuccess = createStandardAction(
+  "PAYMENT_COMPLETED_SUCCESS"
+)<PaymentCompletedSuccessPayload>();
+
+export const paymentCompletedFailure = createStandardAction(
+  "PAYMENT_COMPLETED_FAILURE"
+)();
+
+//
+// delete an ongoing payment
+//
+
+type PaymentDeletePaymentRequestPayload = Readonly<{
+  paymentId: string;
+}>;
+
+export const paymentDeletePaymentRequest = createStandardAction(
+  "PAYMENT_DELETE_PAYMENT_REQUEST"
+)<PaymentDeletePaymentRequestPayload>();
+
+export const paymentDeletePaymentSuccess = createStandardAction(
+  "PAYMENT_DELETE_PAYMENT_SUCCESS"
+)();
+
+export const paymentDeletePaymentFailure = createStandardAction(
+  "PAYMENT_DELETE_PAYMENT_FAILURE"
+)();
+
+export const runDeleteActivePaymentSaga = createStandardAction(
+  "PAYMENT_RUN_DELETE_ACTIVE_PAYMENT_SAGA"
+)();
+
+//
 // run startOrResumePaymentSaga
 //
 
@@ -212,4 +263,10 @@ export type PaymentActions =
   | ActionType<typeof paymentExecutePaymentRequest>
   | ActionType<typeof paymentExecutePaymentSuccess>
   | ActionType<typeof paymentExecutePaymentFailure>
+  | ActionType<typeof paymentCompletedSuccess>
+  | ActionType<typeof paymentCompletedFailure>
+  | ActionType<typeof paymentDeletePaymentRequest>
+  | ActionType<typeof paymentDeletePaymentSuccess>
+  | ActionType<typeof paymentDeletePaymentFailure>
+  | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>;

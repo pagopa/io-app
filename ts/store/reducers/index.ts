@@ -3,7 +3,6 @@
  */
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
-import { FormStateMap, reducer as formReducer } from "redux-form";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
@@ -14,6 +13,7 @@ import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import contentReducer from "./content";
+import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import errorReducer from "./error";
@@ -59,13 +59,13 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   deepLink: deepLinkReducer,
   loading: loadingReducer,
   error: errorReducer,
-  form: formReducer as Reducer<FormStateMap, Action>,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
   content: contentReducer,
   preferences: preferencesReducer,
   pinlogin: pinloginReducer,
   identification: identificationReducer,
+  navigationHistory: navigationHistoryReducer,
 
   //
   // persisted state
@@ -82,7 +82,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  navigationHistory: navigationHistoryReducer
+  debug: debugReducer
 });
 
 export function createRootReducer(

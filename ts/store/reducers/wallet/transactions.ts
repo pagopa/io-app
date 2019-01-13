@@ -1,13 +1,12 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
-
+import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { Transaction } from "../../../types/pagopa";
-import * as pot from "../../../types/pot";
+import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,
@@ -35,7 +34,9 @@ const getTransactions = (state: GlobalState) =>
   pot.map(
     state.wallet.transactions.transactions,
     txs =>
-      values(txs).filter(_ => _ !== undefined) as ReadonlyArray<Transaction>
+      values(txs).filter(
+        _ => _ !== undefined && isSuccessTransaction(_)
+      ) as ReadonlyArray<Transaction>
   );
 
 export const getWalletTransactionsCreator = (idWallet: number) => (

@@ -3,11 +3,10 @@
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
-
+import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import * as pot from "../../../../types/pot";
 import { clearCache } from "../../../actions/profile";
 import {
   loadServiceFailure,

@@ -1,5 +1,4 @@
 import { fromEither, Option } from "fp-ts/lib/Option";
-
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -7,7 +6,7 @@ import {
   RptId,
   rptIdFromPaymentNoticeQrCode,
   RptIdFromString
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
@@ -105,7 +104,15 @@ export function walletHasFavoriteAvailablePsp(
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 export const cleanTransactionDescription = (description: string): string => {
-  if (!description.startsWith("/RF")) {
+  // detect description in pagopa format - note that we also check for cases
+  // without the leading slash since some services don't add it (mistake on
+  // their side)
+  if (
+    !description.startsWith("/RFA/") &&
+    !description.startsWith("/RFB/") &&
+    !description.startsWith("RFA/") &&
+    !description.startsWith("RFB/")
+  ) {
     // not a description in the pagopa format, return the description unmodified
     return description;
   }

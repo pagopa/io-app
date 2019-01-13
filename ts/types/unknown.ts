@@ -1,4 +1,4 @@
-import { AmountInEuroCents } from "italia-ts-commons/lib/pagopa";
+import { AmountInEuroCents } from "italia-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { Amount } from "../types/pagopa";
 import { Wallet } from "../types/pagopa";

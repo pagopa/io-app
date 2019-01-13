@@ -2,7 +2,8 @@ import * as t from "io-ts";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
-} from "italia-ts-commons/lib/pagopa";
+} from "italia-pagopa-commons/lib/pagopa";
+
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 
 export const AmountToImporto = new t.Type<

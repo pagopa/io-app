@@ -294,6 +294,13 @@ wallet:
     changeMethod: Change the payment method
     change: Change method
     identificationMessage: Confirm the transaction with your PIN code
+    transactionSuccess: The payment has completed!
+    transactionFailure: There was an error with the payment, please retry!
+    transactionTimeout: I couldn't retrieve the result of the payment!
+    confirmCancelTitle: Do you want to cancel this payment?
+    confirmCancelPayment: Cancel this payment
+    confirmContinuePayment: Continue with the payment
+    cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
   payWith:
     noWallets:
       title: No payment methods found
@@ -428,13 +435,14 @@ messages:
   yesterday: yesterday
   cta:
     pay: Pay € {{amount}}
+    paid: Paid € {{amount}}
     reminder: Reminder
     reminderTitle: "Reminder for: {{subject}}"
   unknownSender: Unknown sender
   noContent: Content not available
 messageDetails:
   headerTitle: Message
-  invalidText: Invalid parameters!
+  emptyMessage: No content
   loadingText: Loading message details in progress...
   errorText: An error occurred while loading the message details.
   retryText: Retry
@@ -491,3 +499,5 @@ identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.
   resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
+  biometric:
+    failure: Identification failed

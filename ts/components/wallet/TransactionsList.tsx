@@ -1,7 +1,7 @@
 /**
  * This component displays a list of transactions
  */
-
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   Content,
@@ -20,7 +20,6 @@ import * as React from "react";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
-import * as pot from "../../types/pot";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";

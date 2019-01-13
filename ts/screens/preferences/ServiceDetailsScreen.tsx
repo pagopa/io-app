@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
   },
   badgeLogo: {
     width: 150,
-    height: 50
+    height: 50,
+    alignSelf: "flex-start"
   }
 });
 
@@ -85,7 +86,9 @@ function renderInformationRow(
     <View style={styles.infoItem}>
       <Text>{label}</Text>
       <Button primary={true} small={true} onPress={onPress}>
-        <Text>{info}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1}>
+          {info}
+        </Text>
       </Button>
     </View>
   );
@@ -361,7 +364,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     Linking.openURL(web_url).then(() => 0, () => 0)
                   }
                 >
-                  <Text>{web_url}</Text>
+                  <Text ellipsizeMode="tail" numberOfLines={1}>
+                    {web_url}
+                  </Text>
                 </Button>
               </View>
             )}
@@ -375,7 +380,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 >
                   <Image
                     style={styles.badgeLogo}
-                    alignSelf="flex-start"
                     resizeMode="contain"
                     source={require("../../../img/badges/app-store-badge.png")}
                   />

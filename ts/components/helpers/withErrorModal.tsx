@@ -1,10 +1,11 @@
 import { Option } from "fp-ts/lib/Option";
 import { Button, H2, Text } from "native-base";
 import * as React from "react";
-import { Image, Modal, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import { Overlay } from "../ui/Overlay";
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -68,23 +69,29 @@ export function withErrorModal<
       const errorMessage = error.fold("", e => errorMapping(e));
 
       return (
-        <React.Fragment>
+        <Overlay
+          opacity={1}
+          foreground={
+            error.isSome() ? this.renderContent(errorMessage) : undefined
+          }
+        >
           <WrappedComponent {...this.props} />
-          <Modal visible={error.isSome()} onRequestClose={() => undefined}>
-            <View style={styles.contentWrapper}>
-              <View style={styles.imageAndMessageContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../../img/error.png")}
-                />
-                <H2>{errorMessage}</H2>
-              </View>
-              {this.renderButtons()}
-            </View>
-          </Modal>
-        </React.Fragment>
+        </Overlay>
       );
     }
+
+    private renderContent = (errorMessage: string) => (
+      <View style={styles.contentWrapper}>
+        <View style={styles.imageAndMessageContainer}>
+          <Image
+            style={styles.image}
+            source={require("../../../img/error.png")}
+          />
+          <H2>{errorMessage}</H2>
+        </View>
+        {this.renderButtons()}
+      </View>
+    );
 
     private renderButtons = () => {
       return (

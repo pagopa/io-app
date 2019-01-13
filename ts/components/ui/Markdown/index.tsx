@@ -97,6 +97,35 @@ export class Markdown extends React.PureComponent<Props, State> {
     }
   };
 
+  private renderLazy = (
+    lazyOptions: Lazy,
+    children: Props["children"],
+    dispatch: Dispatch,
+    initialState?: Props["initialState"]
+  ) => {
+    this.setState({
+      renderedMarkdown: undefined
+    });
+    // Render the markdown string asynchronously.
+    const cancelRender = InteractionManager.runAfterInteractions(() => {
+      if (lazyOptions.animated) {
+        // animate the layout change
+        // see https://facebook.github.io/react-native/docs/layoutanimation.html
+        if (UIManager.setLayoutAnimationEnabledExperimental) {
+          UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      }
+      const renderedMarkdown = renderMarkdown(children, dispatch, initialState);
+      this.setState({
+        renderedMarkdown
+      });
+    }).cancel;
+    this.setState({
+      cancelRender
+    });
+  };
+
   constructor(props: Props) {
     super(props);
 
@@ -108,23 +137,24 @@ export class Markdown extends React.PureComponent<Props, State> {
   public componentDidMount() {
     const { lazyOptions, children, initialState, dispatch } = this.props;
     if (lazyOptions && lazyOptions.lazy) {
-      // Render the markdown string asynchronously.
-      const cancelRender = InteractionManager.runAfterInteractions(() => {
-        if (lazyOptions.animated) {
-          // animate the layout change
-          // see https://facebook.github.io/react-native/docs/layoutanimation.html
-          if (UIManager.setLayoutAnimationEnabledExperimental) {
-            UIManager.setLayoutAnimationEnabledExperimental(true);
-          }
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        }
-        this.setState({
-          renderedMarkdown: renderMarkdown(children, dispatch, initialState)
-        });
-      }).cancel;
-      this.setState({
-        cancelRender
-      });
+      this.renderLazy(lazyOptions, children, dispatch, initialState);
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    const { lazyOptions, children, initialState, dispatch } = this.props;
+    const { children: prevChildren } = prevProps;
+    const isContentChanged = prevChildren !== children;
+    if (isContentChanged && lazyOptions && lazyOptions.lazy) {
+      // we got new content that we are going to render lazily
+
+      if (this.state.cancelRender) {
+        // if we're still rendering the previous content, cancel the rendering
+        this.state.cancelRender();
+      }
+
+      // render the new content
+      this.renderLazy(lazyOptions, children, dispatch, initialState);
     }
   }
 
@@ -145,7 +175,6 @@ export class Markdown extends React.PureComponent<Props, State> {
           </View>
         );
       }
-
       return <View>{this.state.renderedMarkdown}</View>;
     }
 

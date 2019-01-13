@@ -1,5 +1,4 @@
 import { NavigationState } from "react-navigation";
-import { FormStateMap } from "redux-form";
 import { PersistPartial } from "redux-persist";
 
 import { Action } from "../actions/types";
@@ -7,6 +6,7 @@ import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
 import { ContentState } from "./content";
+import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { ErrorState } from "./error";
@@ -32,7 +32,6 @@ export type GlobalState = Readonly<{
   deepLink: DeepLinkState;
   entities: EntitiesState;
   error: ErrorState;
-  form: FormStateMap;
   loading: LoadingState;
   nav: NavigationState;
   network: NetworkState;
@@ -45,6 +44,7 @@ export type GlobalState = Readonly<{
   content: ContentState;
   navigationHistory: NavigationHistoryState;
   identification: IdentificationState;
+  debug: DebugState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
