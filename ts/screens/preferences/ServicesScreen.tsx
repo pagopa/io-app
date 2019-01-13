@@ -27,7 +27,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ServiceListItem } from "../../components/services/ServiceListItem";
 import Markdown from "../../components/ui/Markdown";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import { loadVisibleServicesRequest } from "../../store/actions/services";
+import { loadVisibleServices } from "../../store/actions/services";
 import variables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
@@ -175,7 +175,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadVisibleServices: () => dispatch(loadVisibleServicesRequest()),
+  loadVisibleServices: () => dispatch(loadVisibleServices.request()),
   contentServiceLoad: (serviceId: ServiceId) =>
     dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (

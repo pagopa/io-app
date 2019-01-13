@@ -2,7 +2,11 @@
  * Action types and action creator related to Services.
  */
 
-import { ActionType, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import { ServiceList } from "../../../definitions/backend/ServiceList";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -11,17 +15,11 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 // load visible services
 //
 
-export const loadVisibleServicesRequest = createStandardAction(
-  "SERVICES_VISIBLE_LOAD_REQUEST"
-)();
-
-export const loadVisibleServicesSuccess = createStandardAction(
-  "SERVICES_VISIBLE_LOAD_SUCCESS"
-)<ServiceList["items"]>();
-
-export const loadVisibleServicesFailure = createStandardAction(
+export const loadVisibleServices = createAsyncAction(
+  "SERVICES_VISIBLE_LOAD_REQUEST",
+  "SERVICES_VISIBLE_LOAD_SUCCESS",
   "SERVICES_VISIBLE_LOAD_FAILURE"
-)();
+)<void, ServiceList["items"], void>();
 
 //
 // load single service
@@ -41,9 +39,7 @@ export const loadServiceFailure = createStandardAction("SERVICE_LOAD_FAILURE")<
 
 export type ServicesActions = ActionType<
   // tslint:disable-next-line:max-union-size
-  | typeof loadVisibleServicesRequest
-  | typeof loadVisibleServicesSuccess
-  | typeof loadVisibleServicesFailure
+  | typeof loadVisibleServices
   | typeof loadServiceRequest
   | typeof loadServiceSuccess
   | typeof loadServiceFailure

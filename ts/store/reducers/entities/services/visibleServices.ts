@@ -8,11 +8,7 @@ import { getType } from "typesafe-actions";
 
 import { ServiceList } from "../../../../../definitions/backend/ServiceList";
 import { clearCache } from "../../../actions/profile";
-import {
-  loadVisibleServicesFailure,
-  loadVisibleServicesRequest,
-  loadVisibleServicesSuccess
-} from "../../../actions/services";
+import { loadVisibleServices } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 export type VisibleServicesState = pot.Pot<ServiceList["items"], Error>;
@@ -24,13 +20,13 @@ export const visibleServicesReducer = (
   action: Action
 ): VisibleServicesState => {
   switch (action.type) {
-    case getType(loadVisibleServicesRequest):
+    case getType(loadVisibleServices.request):
       return pot.toLoading(state);
 
-    case getType(loadVisibleServicesSuccess):
+    case getType(loadVisibleServices.success):
       return pot.some(action.payload);
 
-    case getType(loadVisibleServicesFailure):
+    case getType(loadVisibleServices.failure):
       return pot.toError(state, Error());
 
     case getType(clearCache):

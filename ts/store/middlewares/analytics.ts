@@ -55,9 +55,7 @@ import {
   loadServiceFailure,
   loadServiceRequest,
   loadServiceSuccess,
-  loadVisibleServicesFailure,
-  loadVisibleServicesRequest,
-  loadVisibleServicesSuccess
+  loadVisibleServices
 } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
@@ -258,9 +256,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessageFailure):
     case getType(setMessageReadState):
     // services
-    case getType(loadVisibleServicesRequest):
-    case getType(loadVisibleServicesSuccess):
-    case getType(loadVisibleServicesFailure):
+    case getType(loadVisibleServices.request):
+    case getType(loadVisibleServices.success):
+    case getType(loadVisibleServices.failure):
     case getType(loadServiceRequest):
     case getType(loadServiceSuccess):
     case getType(loadServiceFailure):

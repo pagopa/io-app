@@ -29,7 +29,7 @@ import { clearNotificationPendingMessage } from "../store/actions/notifications"
 import { resetProfileState } from "../store/actions/profile";
 import {
   loadServiceRequest,
-  loadVisibleServicesRequest
+  loadVisibleServices
 } from "../store/actions/services";
 import {
   idpSelector,
@@ -219,7 +219,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   );
 
   yield takeEvery(
-    getType(loadVisibleServicesRequest),
+    getType(loadVisibleServices.request),
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );

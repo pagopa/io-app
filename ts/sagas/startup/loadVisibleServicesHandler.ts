@@ -7,8 +7,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadServiceRequest,
-  loadVisibleServicesFailure,
-  loadVisibleServicesSuccess
+  loadVisibleServices
 } from "../../store/actions/services";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
@@ -40,7 +39,7 @@ export function* loadVisibleServicesRequestHandler(
 
     if (response !== undefined && response.status === 200) {
       const { items } = response.value;
-      yield put(loadVisibleServicesSuccess(items));
+      yield put(loadVisibleServices.success(items));
       // Parallel fetch of those services that we haven't loaded yet
       const servicesById: GlobalState["entities"]["services"]["byId"] = yield select<
         GlobalState
@@ -58,6 +57,6 @@ export function* loadVisibleServicesRequestHandler(
       throw Error();
     }
   } catch {
-    yield put(loadVisibleServicesFailure());
+    yield put(loadVisibleServices.failure());
   }
 }
