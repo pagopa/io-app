@@ -8,11 +8,7 @@ import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { clearCache } from "../../../actions/profile";
-import {
-  loadServiceFailure,
-  loadServiceRequest,
-  loadServiceSuccess
-} from "../../../actions/services";
+import { loadService } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -27,21 +23,21 @@ const reducer = (
   action: Action
 ): ServicesByIdState => {
   switch (action.type) {
-    case getType(loadServiceRequest):
+    case getType(loadService.request):
       // Use the ID as object key
       return {
         ...state,
         [action.payload]: pot.noneLoading
       };
 
-    case getType(loadServiceSuccess):
+    case getType(loadService.success):
       // Use the ID as object key
       return {
         ...state,
         [action.payload.service_id]: pot.some(action.payload)
       };
 
-    case getType(loadServiceFailure):
+    case getType(loadService.failure):
       // Use the ID as object key
       return {
         ...state,

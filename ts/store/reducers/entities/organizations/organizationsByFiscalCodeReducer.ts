@@ -5,7 +5,7 @@
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
-import { loadServiceSuccess } from "../../../actions/services";
+import { loadService } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 /**
@@ -22,7 +22,7 @@ export function servicesByOrganizationFiscalCodeReducer(
   action: Action
 ): OrganizationNamesByFiscalCodeState {
   switch (action.type) {
-    case getType(loadServiceSuccess):
+    case getType(loadService.success):
       return {
         ...state,
         [action.payload.organization_fiscal_code]:

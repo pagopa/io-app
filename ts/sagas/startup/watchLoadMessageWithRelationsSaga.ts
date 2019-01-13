@@ -11,7 +11,7 @@ import {
   loadMessageWithRelationsFailureAction,
   loadMessageWithRelationsSuccessAction
 } from "../../store/actions/messages";
-import { loadServiceRequest } from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
@@ -59,6 +59,6 @@ export function* loadMessageWithRelationsSaga(
     potService === undefined ||
     (!pot.isSome(potService) && !pot.isLoading(potService))
   ) {
-    yield put(loadServiceRequest(message.sender_service_id));
+    yield put(loadService.request(message.sender_service_id));
   }
 }

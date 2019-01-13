@@ -10,7 +10,7 @@ import {
   loadMessagesSuccess,
   loadMessageSuccess
 } from "../../../store/actions/messages";
-import { loadServiceRequest } from "../../../store/actions/services";
+import { loadService } from "../../../store/actions/services";
 import { messagesByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
@@ -150,7 +150,7 @@ describe("messages", () => {
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next({ status: 200, value: testMessages })
-        .all([put(loadServiceRequest("5a563817fcc896087002ea46c49a"))])
+        .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
         .next({ status: 200, value: testServicePublic })
         .all([
           call(loadMessage, getMessage, testMessageId1),

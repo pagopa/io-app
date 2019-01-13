@@ -3,11 +3,7 @@ import { call, Effect, put } from "redux-saga/effects";
 
 import { ActionType } from "typesafe-actions";
 import { GetServiceT } from "../../../definitions/backend/requestTypes";
-import {
-  loadServiceFailure,
-  loadServiceRequest,
-  loadServiceSuccess
-} from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -19,7 +15,7 @@ import { SagaCallReturnType } from "../../types/utils";
  */
 export function* loadServiceRequestHandler(
   getService: TypeofApiCall<GetServiceT>,
-  action: ActionType<typeof loadServiceRequest>
+  action: ActionType<typeof loadService["request"]>
 ): IterableIterator<Effect> {
   try {
     const response: SagaCallReturnType<typeof getService> = yield call(
@@ -28,11 +24,11 @@ export function* loadServiceRequestHandler(
     );
 
     if (response !== undefined && response.status === 200) {
-      yield put(loadServiceSuccess(response.value));
+      yield put(loadService.success(response.value));
     } else {
       throw Error();
     }
   } catch {
-    yield put(loadServiceFailure(action.payload));
+    yield put(loadService.failure(action.payload));
   }
 }

@@ -2,11 +2,7 @@
  * Action types and action creator related to Services.
  */
 
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 
 import { ServiceList } from "../../../definitions/backend/ServiceList";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -25,22 +21,12 @@ export const loadVisibleServices = createAsyncAction(
 // load single service
 //
 
-export const loadServiceRequest = createStandardAction("SERVICE_LOAD_REQUEST")<
-  string
->();
-
-export const loadServiceSuccess = createStandardAction("SERVICE_LOAD_SUCCESS")<
-  ServicePublic
->();
-
-export const loadServiceFailure = createStandardAction("SERVICE_LOAD_FAILURE")<
-  string
->();
+export const loadService = createAsyncAction(
+  "SERVICE_LOAD_REQUEST",
+  "SERVICE_LOAD_SUCCESS",
+  "SERVICE_LOAD_FAILURE"
+)<string, ServicePublic, string>();
 
 export type ServicesActions = ActionType<
-  // tslint:disable-next-line:max-union-size
-  | typeof loadVisibleServices
-  | typeof loadServiceRequest
-  | typeof loadServiceSuccess
-  | typeof loadServiceFailure
+  typeof loadVisibleServices | typeof loadService
 >;

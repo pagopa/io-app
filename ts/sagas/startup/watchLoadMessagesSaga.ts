@@ -32,7 +32,7 @@ import {
   loadMessagesSuccess,
   loadMessageSuccess
 } from "../../store/actions/messages";
-import { loadServiceRequest } from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import {
   messageByIdSelector,
   messagesByIdSelector
@@ -154,7 +154,7 @@ export function* loadMessages(
       // Fetch the services detail in parallel
       // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
       // We fetch services first because to show messages you need the related service info
-      yield all(newServicesIds.map(id => put(loadServiceRequest(id))));
+      yield all(newServicesIds.map(id => put(loadService.request(id))));
 
       // Fetch the messages detail in parallel
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,

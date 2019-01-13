@@ -27,10 +27,7 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
-import {
-  loadServiceRequest,
-  loadVisibleServices
-} from "../store/actions/services";
+import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -213,7 +210,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // this parent saga gets restarted.
 
   yield takeEvery(
-    getType(loadServiceRequest),
+    getType(loadService.request),
     loadServiceRequestHandler,
     backendClient.getService
   );

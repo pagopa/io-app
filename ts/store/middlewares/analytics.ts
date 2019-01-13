@@ -51,12 +51,7 @@ import {
   profileUpsertFailure,
   profileUpsertSuccess
 } from "../actions/profile";
-import {
-  loadServiceFailure,
-  loadServiceRequest,
-  loadServiceSuccess,
-  loadVisibleServices
-} from "../actions/services";
+import { loadService, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   paymentAttivaFailure,
@@ -259,9 +254,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
     case getType(loadVisibleServices.failure):
-    case getType(loadServiceRequest):
-    case getType(loadServiceSuccess):
-    case getType(loadServiceFailure):
+    case getType(loadService.request):
+    case getType(loadService.success):
+    case getType(loadService.failure):
     // content
     case getType(contentServiceLoad.success):
     // wallet

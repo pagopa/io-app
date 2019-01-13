@@ -5,10 +5,7 @@ import { all, call, Effect, put, select } from "redux-saga/effects";
 import { GetVisibleServicesT } from "../../../definitions/backend/requestTypes";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { sessionExpired } from "../../store/actions/authentication";
-import {
-  loadServiceRequest,
-  loadVisibleServices
-} from "../../store/actions/services";
+import { loadService, loadVisibleServices } from "../../store/actions/services";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { isDefined } from "../../utils/guards";
@@ -48,7 +45,7 @@ export function* loadVisibleServicesRequestHandler(
       const newServiceIds = serviceIds.filter(
         id => !isServiceLoaded(servicesById[id])
       );
-      yield all(newServiceIds.map(id => put(loadServiceRequest(id))));
+      yield all(newServiceIds.map(id => put(loadService.request(id))));
     } else if (response !== undefined && response.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
