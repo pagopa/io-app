@@ -12,9 +12,8 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentFetchPspsForPaymentIdRequest,
-  paymentUpdateWalletPspRequest,
-  paymentUpdateWalletPspSuccess
+  paymentFetchPspsForPaymentId,
+  paymentUpdateWalletPsp
 } from "../../../store/actions/wallet/payment";
 import { Psp, Wallet } from "../../../types/pagopa";
 import {
@@ -36,17 +35,19 @@ export const dispatchUpdatePspForWalletAndConfirm = (dispatch: Dispatch) => (
   onFailure: () => void
 ) =>
   dispatch(
-    paymentUpdateWalletPspRequest({
+    paymentUpdateWalletPsp.request({
       idPsp,
       wallet,
-      onSuccess: (action: ActionType<typeof paymentUpdateWalletPspSuccess>) =>
+      onSuccess: (
+        action: ActionType<typeof paymentUpdateWalletPsp["success"]>
+      ) =>
         dispatch(
           navigateToPaymentConfirmPaymentMethodScreen({
             rptId,
             initialAmount,
             verifica,
             idPayment,
-            wallet: action.meta, // the updated wallet
+            wallet: action.payload.updatedWallet, // the updated wallet
             psps
           })
         ),
@@ -80,7 +81,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
     // there's no need to ask to select a wallet - we can ask pagopa for the
     // PSPs that we can use with this wallet.
     dispatch(
-      paymentFetchPspsForPaymentIdRequest({
+      paymentFetchPspsForPaymentId.request({
         idPayment,
         // provide the idWallet to the getPsps request only if the wallet has
         // a preferred PSP

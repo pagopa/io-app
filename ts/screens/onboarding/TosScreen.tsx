@@ -11,10 +11,7 @@ import ActivityIndicator from "../../components/ui/ActivityIndicator";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { FetchRequestActions } from "../../store/actions/constants";
-import {
-  abortOnboarding,
-  tosAcceptRequest
-} from "../../store/actions/onboarding";
+import { abortOnboarding, tosAccept } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { createErrorSelector } from "../../store/reducers/error";
 import { createLoadingSelector } from "../../store/reducers/loading";
@@ -102,7 +99,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               block={true}
               primary={true}
               disabled={isAcceptingTos}
-              onPress={() => dispatch(tosAcceptRequest())}
+              onPress={() => dispatch(tosAccept.request())}
             >
               <Text>{I18n.t("onboarding.tos.continue")}</Text>
             </Button>

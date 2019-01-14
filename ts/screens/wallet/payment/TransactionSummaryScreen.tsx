@@ -36,7 +36,7 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentCompletedSuccess,
   paymentInitializeState,
-  paymentVerificaRequest,
+  paymentVerifica,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
@@ -332,7 +332,7 @@ const mapDispatchToProps = (
   const initialAmount = props.navigation.getParam("initialAmount");
 
   const dispatchPaymentVerificaRequest = () =>
-    dispatch(paymentVerificaRequest(rptId));
+    dispatch(paymentVerifica.request(rptId));
 
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,

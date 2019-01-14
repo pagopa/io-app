@@ -5,25 +5,13 @@ import { PotFromActions } from "../../../types/utils";
 import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
 import {
-  paymentAttivaFailure,
-  paymentAttivaRequest,
-  paymentAttivaSuccess,
-  paymentCheckFailure,
-  paymentCheckRequest,
-  paymentCheckSuccess,
-  paymentExecutePaymentFailure,
-  paymentExecutePaymentRequest,
-  paymentExecutePaymentSuccess,
-  paymentFetchPspsForPaymentIdFailure,
-  paymentFetchPspsForPaymentIdRequest,
-  paymentFetchPspsForPaymentIdSuccess,
-  paymentIdPollingFailure,
-  paymentIdPollingRequest,
-  paymentIdPollingSuccess,
+  paymentAttiva,
+  paymentCheck,
+  paymentExecutePayment,
+  paymentFetchPspsForPaymentId,
+  paymentIdPolling,
   paymentInitializeState,
-  paymentVerificaFailure,
-  paymentVerificaRequest,
-  paymentVerificaSuccess
+  paymentVerifica
 } from "../../actions/wallet/payment";
 import {
   pollTransactionSagaCompleted,
@@ -37,25 +25,28 @@ import { GlobalState } from "../types";
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
   verifica: PotFromActions<
-    typeof paymentVerificaSuccess,
-    typeof paymentVerificaFailure
+    typeof paymentVerifica["success"],
+    typeof paymentVerifica["failure"]
   >;
   attiva: PotFromActions<
-    typeof paymentAttivaSuccess,
-    typeof paymentAttivaFailure
+    typeof paymentAttiva["success"],
+    typeof paymentAttiva["failure"]
   >;
   paymentId: PotFromActions<
-    typeof paymentIdPollingSuccess,
-    typeof paymentIdPollingFailure
+    typeof paymentIdPolling["success"],
+    typeof paymentIdPolling["failure"]
   >;
-  check: PotFromActions<typeof paymentCheckSuccess, typeof paymentCheckFailure>;
+  check: PotFromActions<
+    typeof paymentCheck["success"],
+    typeof paymentCheck["failure"]
+  >;
   psps: PotFromActions<
-    typeof paymentFetchPspsForPaymentIdSuccess,
-    typeof paymentFetchPspsForPaymentIdFailure
+    typeof paymentFetchPspsForPaymentId["success"],
+    typeof paymentFetchPspsForPaymentId["failure"]
   >;
   transaction: PotFromActions<
-    typeof paymentExecutePaymentSuccess,
-    typeof paymentExecutePaymentFailure
+    typeof paymentExecutePayment["success"],
+    typeof paymentExecutePayment["failure"]
   >;
   confirmedTransaction: PotFromActions<
     typeof pollTransactionSagaCompleted,
@@ -97,7 +88,7 @@ const reducer = (
     //
     // verifica
     //
-    case getType(paymentVerificaRequest):
+    case getType(paymentVerifica.request):
       return {
         // a verifica operation will generate a new codice contesto pagamento
         // effectively starting a new payment session, thus we also invalidate
@@ -105,12 +96,12 @@ const reducer = (
         ...PAYMENT_INITIAL_STATE,
         verifica: pot.noneLoading
       };
-    case getType(paymentVerificaSuccess):
+    case getType(paymentVerifica.success):
       return {
         ...state,
         verifica: pot.some(action.payload)
       };
-    case getType(paymentVerificaFailure):
+    case getType(paymentVerifica.failure):
       return {
         ...state,
         verifica: pot.noneError(action.payload)
@@ -119,17 +110,17 @@ const reducer = (
     //
     // attiva
     //
-    case getType(paymentAttivaRequest):
+    case getType(paymentAttiva.request):
       return {
         ...state,
         attiva: pot.noneLoading
       };
-    case getType(paymentAttivaSuccess):
+    case getType(paymentAttiva.success):
       return {
         ...state,
         attiva: pot.some(action.payload)
       };
-    case getType(paymentAttivaFailure):
+    case getType(paymentAttiva.failure):
       return {
         ...state,
         attiva: pot.noneError(action.payload)
@@ -138,17 +129,17 @@ const reducer = (
     //
     // payment ID polling
     //
-    case getType(paymentIdPollingRequest):
+    case getType(paymentIdPolling.request):
       return {
         ...state,
         paymentId: pot.noneLoading
       };
-    case getType(paymentIdPollingSuccess):
+    case getType(paymentIdPolling.success):
       return {
         ...state,
         paymentId: pot.some(action.payload)
       };
-    case getType(paymentIdPollingFailure):
+    case getType(paymentIdPolling.failure):
       return {
         ...state,
         paymentId: pot.noneError(action.payload)
@@ -157,17 +148,17 @@ const reducer = (
     //
     // check payment
     //
-    case getType(paymentCheckRequest):
+    case getType(paymentCheck.request):
       return {
         ...state,
         check: pot.noneLoading
       };
-    case getType(paymentCheckSuccess):
+    case getType(paymentCheck.success):
       return {
         ...state,
         check: pot.some<true>(true)
       };
-    case getType(paymentCheckFailure):
+    case getType(paymentCheck.failure):
       return {
         ...state,
         check: pot.noneError(action.payload)
@@ -176,18 +167,18 @@ const reducer = (
     //
     // fetch available psps
     //
-    case getType(paymentFetchPspsForPaymentIdRequest):
+    case getType(paymentFetchPspsForPaymentId.request):
       return {
         ...state,
         psps: pot.noneLoading
       };
-    case getType(paymentFetchPspsForPaymentIdSuccess):
+    case getType(paymentFetchPspsForPaymentId.success):
       // before storing the PSPs, filter only the PSPs for the current locale
       return {
         ...state,
         psps: pot.some(pspsForLocale(action.payload))
       };
-    case getType(paymentFetchPspsForPaymentIdFailure):
+    case getType(paymentFetchPspsForPaymentId.failure):
       return {
         ...state,
         psps: pot.noneError(action.payload)
@@ -196,17 +187,17 @@ const reducer = (
     //
     // execute payment
     //
-    case getType(paymentExecutePaymentRequest):
+    case getType(paymentExecutePayment.request):
       return {
         ...state,
         transaction: pot.noneLoading
       };
-    case getType(paymentExecutePaymentSuccess):
+    case getType(paymentExecutePayment.success):
       return {
         ...state,
         transaction: pot.some(action.payload)
       };
-    case getType(paymentExecutePaymentFailure):
+    case getType(paymentExecutePayment.failure):
       return {
         ...state,
         transaction: pot.noneError(action.payload)

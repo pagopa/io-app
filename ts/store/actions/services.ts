@@ -2,7 +2,7 @@
  * Action types and action creator related to Services.
  */
 
-import { ActionType, createStandardAction } from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 
 import { ServiceList } from "../../../definitions/backend/ServiceList";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -11,40 +11,22 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 // load visible services
 //
 
-export const loadVisibleServicesRequest = createStandardAction(
-  "SERVICES_VISIBLE_LOAD_REQUEST"
-)();
-
-export const loadVisibleServicesSuccess = createStandardAction(
-  "SERVICES_VISIBLE_LOAD_SUCCESS"
-)<ServiceList["items"]>();
-
-export const loadVisibleServicesFailure = createStandardAction(
+export const loadVisibleServices = createAsyncAction(
+  "SERVICES_VISIBLE_LOAD_REQUEST",
+  "SERVICES_VISIBLE_LOAD_SUCCESS",
   "SERVICES_VISIBLE_LOAD_FAILURE"
-)();
+)<void, ServiceList["items"], void>();
 
 //
 // load single service
 //
 
-export const loadServiceRequest = createStandardAction("SERVICE_LOAD_REQUEST")<
-  string
->();
-
-export const loadServiceSuccess = createStandardAction("SERVICE_LOAD_SUCCESS")<
-  ServicePublic
->();
-
-export const loadServiceFailure = createStandardAction("SERVICE_LOAD_FAILURE")<
-  string
->();
+export const loadService = createAsyncAction(
+  "SERVICE_LOAD_REQUEST",
+  "SERVICE_LOAD_SUCCESS",
+  "SERVICE_LOAD_FAILURE"
+)<string, ServicePublic, string>();
 
 export type ServicesActions = ActionType<
-  // tslint:disable-next-line:max-union-size
-  | typeof loadVisibleServicesRequest
-  | typeof loadVisibleServicesSuccess
-  | typeof loadVisibleServicesFailure
-  | typeof loadServiceRequest
-  | typeof loadServiceSuccess
-  | typeof loadServiceFailure
+  typeof loadVisibleServices | typeof loadService
 >;

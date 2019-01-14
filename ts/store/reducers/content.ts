@@ -8,7 +8,7 @@
 import { getType } from "typesafe-actions";
 
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
-import { contentServiceLoadSuccess } from "../actions/content";
+import { contentServiceLoad } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 
@@ -35,7 +35,7 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(contentServiceLoadSuccess):
+    case getType(contentServiceLoad.success):
       return {
         ...state,
         servicesMetadata: {

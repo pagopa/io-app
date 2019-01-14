@@ -10,30 +10,14 @@ import {
 } from "../../../definitions/backend/requestTypes";
 import { PaymentManagerClient } from "../../api/pagopa";
 import {
-  paymentAttivaFailure,
-  paymentAttivaRequest,
-  paymentAttivaSuccess,
-  paymentCheckFailure,
-  paymentCheckRequest,
-  paymentCheckSuccess,
-  paymentDeletePaymentFailure,
-  paymentDeletePaymentRequest,
-  paymentDeletePaymentSuccess,
-  paymentExecutePaymentFailure,
-  paymentExecutePaymentRequest,
-  paymentExecutePaymentSuccess,
-  paymentFetchPspsForPaymentIdFailure,
-  paymentFetchPspsForPaymentIdRequest,
-  paymentFetchPspsForPaymentIdSuccess,
-  paymentIdPollingFailure,
-  paymentIdPollingRequest,
-  paymentIdPollingSuccess,
-  paymentUpdateWalletPspFailure,
-  paymentUpdateWalletPspRequest,
-  paymentUpdateWalletPspSuccess,
-  paymentVerificaFailure,
-  paymentVerificaRequest,
-  paymentVerificaSuccess
+  paymentAttiva,
+  paymentCheck,
+  paymentDeletePayment,
+  paymentExecutePayment,
+  paymentFetchPspsForPaymentId,
+  paymentIdPolling,
+  paymentUpdateWalletPsp,
+  paymentVerifica
 } from "../../store/actions/wallet/payment";
 import {
   fetchTransactionFailure,
@@ -172,7 +156,7 @@ export function* setFavouriteWalletRequestHandler(
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentUpdateWalletPspRequest>
+  action: ActionType<typeof paymentUpdateWalletPsp["request"]>
 ) {
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
@@ -207,10 +191,10 @@ export function* updateWalletPspRequestHandler(
         );
         if (updatedWallet !== undefined) {
           // the wallet is still there, we can proceed
-          const successAction = paymentUpdateWalletPspSuccess(
-            getResponse.value.data,
-            response.value.data
-          );
+          const successAction = paymentUpdateWalletPsp.success({
+            wallets: getResponse.value.data,
+            updatedWallet: response.value.data
+          });
           yield put(successAction);
           if (action.payload.onSuccess) {
             // signal the callee if requested
@@ -227,7 +211,9 @@ export function* updateWalletPspRequestHandler(
       throw Error();
     }
   } catch {
-    const failureAction = paymentUpdateWalletPspFailure(Error("Generic error"));
+    const failureAction = paymentUpdateWalletPsp.failure(
+      Error("Generic error")
+    );
     yield put(failureAction);
     if (action.payload.onFailure) {
       // signal the callee if requested
@@ -354,7 +340,7 @@ export function* payCreditCardVerificationRequestHandler(
 export function* paymentFetchPspsForWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentFetchPspsForPaymentIdRequest>
+  action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
 ) {
   const apiGetPspList = (pagoPaToken: PaymentManagerToken) =>
     pagoPaClient.getPspList(
@@ -368,7 +354,7 @@ export function* paymentFetchPspsForWalletRequestHandler(
       typeof getPspListWithRefresh
     > = yield call(getPspListWithRefresh);
     if (response !== undefined && response.status === 200) {
-      const successAction = paymentFetchPspsForPaymentIdSuccess(
+      const successAction = paymentFetchPspsForPaymentId.success(
         response.value.data
       );
       yield put(successAction);
@@ -379,7 +365,7 @@ export function* paymentFetchPspsForWalletRequestHandler(
       throw Error();
     }
   } catch {
-    const failureAction = paymentFetchPspsForPaymentIdFailure(
+    const failureAction = paymentFetchPspsForPaymentId.failure(
       Error("GENERIC_ERROR")
     );
     yield put(failureAction);
@@ -395,7 +381,7 @@ export function* paymentFetchPspsForWalletRequestHandler(
 export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentCheckRequest>
+  action: ActionType<typeof paymentCheck["request"]>
 ): Iterator<Effect> {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
@@ -414,12 +400,12 @@ export function* paymentCheckRequestHandler(
       // TODO: remove the cast of response.status to number as soon as the
       //       paymentmanager specs include the 422 status.
       //       https://www.pivotaltracker.com/story/show/161053093
-      yield put(paymentCheckSuccess(true));
+      yield put(paymentCheck.success(true));
     } else {
-      yield put(paymentCheckFailure(response));
+      yield put(paymentCheck.failure(response));
     }
   } catch {
-    yield put(paymentCheckFailure(undefined));
+    yield put(paymentCheck.failure(undefined));
   }
 }
 
@@ -429,7 +415,7 @@ export function* paymentCheckRequestHandler(
 export function* paymentExecutePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentExecutePaymentRequest>
+  action: ActionType<typeof paymentExecutePayment["request"]>
 ): Iterator<Effect> {
   const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
     pagoPaClient.postPayment(pagoPaToken, action.payload.idPayment, {
@@ -443,16 +429,16 @@ export function* paymentExecutePaymentRequestHandler(
 
     if (response !== undefined && response.status === 200) {
       const newTransaction = response.value.data;
-      const successAction = paymentExecutePaymentSuccess(newTransaction);
+      const successAction = paymentExecutePayment.success(newTransaction);
       yield put(successAction);
       if (action.payload.onSuccess) {
         action.payload.onSuccess(successAction);
       }
     } else {
-      yield put(paymentExecutePaymentFailure(Error("GENERIC_ERROR")));
+      yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
     }
   } catch {
-    yield put(paymentExecutePaymentFailure(Error("GENERIC_ERROR")));
+    yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
   }
 }
 
@@ -462,7 +448,7 @@ export function* paymentExecutePaymentRequestHandler(
 export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentDeletePaymentRequest>
+  action: ActionType<typeof paymentDeletePayment["request"]>
 ): Iterator<Effect> {
   const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
     pagoPaClient.deletePayment(pagoPaToken, action.payload.paymentId);
@@ -471,12 +457,12 @@ export function* paymentDeletePaymentRequestHandler(
     const response: SagaCallReturnType<typeof request> = yield call(request);
 
     if (response !== undefined && response.status === 200) {
-      yield put(paymentDeletePaymentSuccess());
+      yield put(paymentDeletePayment.success());
     } else {
       throw Error();
     }
   } catch {
-    yield put(paymentDeletePaymentFailure());
+    yield put(paymentDeletePayment.failure());
   }
 }
 
@@ -489,7 +475,7 @@ export function* paymentDeletePaymentRequestHandler(
  */
 export function* paymentVerificaRequestHandler(
   getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
-  action: ActionType<typeof paymentVerificaRequest>
+  action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
@@ -500,18 +486,18 @@ export function* paymentVerificaRequestHandler(
     );
     if (response !== undefined && response.status === 200) {
       // Verifica succeeded
-      yield put(paymentVerificaSuccess(response.value));
+      yield put(paymentVerifica.success(response.value));
     } else if (response !== undefined && response.status === 500) {
       // Verifica failed with a 500, that usually means there was an error
       // interacting with Pagopa that we can interpret
-      yield put(paymentVerificaFailure(response.value.detail));
+      yield put(paymentVerifica.failure(response.value.detail));
     } else {
       // unknown error
       throw Error();
     }
   } catch {
     // Probably a timeout
-    yield put(paymentVerificaFailure(undefined));
+    yield put(paymentVerifica.failure(undefined));
   }
 }
 
@@ -520,7 +506,7 @@ export function* paymentVerificaRequestHandler(
  */
 export function* paymentAttivaRequestHandler(
   postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
-  action: ActionType<typeof paymentAttivaRequest>
+  action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
@@ -537,16 +523,16 @@ export function* paymentAttivaRequestHandler(
     );
     if (response !== undefined && response.status === 200) {
       // Attiva succeeded
-      yield put(paymentAttivaSuccess(response.value));
+      yield put(paymentAttiva.success(response.value));
     } else if (response !== undefined && response.status === 500) {
       // Attiva failed
-      yield put(paymentAttivaFailure(response.value.detail));
+      yield put(paymentAttiva.failure(response.value.detail));
     } else {
       throw Error();
     }
   } catch {
     // Probably a timeout
-    yield put(paymentAttivaFailure(undefined));
+    yield put(paymentAttiva.failure(undefined));
   }
 }
 
@@ -557,7 +543,7 @@ export function* paymentAttivaRequestHandler(
  */
 export function* paymentIdPollingRequestHandler(
   getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
-  action: ActionType<typeof paymentIdPollingRequest>
+  action: ActionType<typeof paymentIdPolling["request"]>
 ) {
   // successfully request the payment activation
   // now poll until a paymentId is made available
@@ -571,14 +557,14 @@ export function* paymentIdPollingRequestHandler(
     );
     if (response !== undefined && response.status === 200) {
       // Attiva succeeded
-      yield put(paymentIdPollingSuccess(response.value.idPagamento));
+      yield put(paymentIdPolling.success(response.value.idPagamento));
     } else if (response !== undefined && response.status === 400) {
       // Attiva failed
-      yield put(paymentIdPollingFailure("PAYMENT_ID_TIMEOUT"));
+      yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
     } else {
       throw Error();
     }
   } catch {
-    yield put(paymentIdPollingFailure(undefined));
+    yield put(paymentIdPolling.failure(undefined));
   }
 }
