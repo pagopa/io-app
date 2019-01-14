@@ -10,7 +10,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { FetchRequestActions } from "../../store/actions/constants";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
   loadMessageWithRelationsAction,
@@ -24,8 +23,6 @@ import {
   MessageUIStates
 } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { createErrorSelector } from "../../store/reducers/error";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";

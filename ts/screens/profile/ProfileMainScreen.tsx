@@ -21,7 +21,6 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { logoutRequest } from "../../store/actions/authentication";
-import { FetchRequestActions } from "../../store/actions/constants";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
@@ -30,8 +29,6 @@ import {
   isLoggedIn,
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
-import { createErrorSelector } from "../../store/reducers/error";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";

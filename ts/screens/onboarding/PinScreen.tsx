@@ -29,7 +29,6 @@ import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { createPin } from "../../store/actions/pinset";
 import { ReduxProps } from "../../store/actions/types";
-import { createErrorSelector } from "../../store/reducers/error";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";

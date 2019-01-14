@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import MessageListComponent from "../../components/messages/MessageListComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import { FetchRequestActions } from "../../store/actions/constants";
 import { loadMessagesRequest } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
@@ -20,7 +19,6 @@ import {
   servicesByIdSelector,
   ServicesByIdState
 } from "../../store/reducers/entities/services/servicesById";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";

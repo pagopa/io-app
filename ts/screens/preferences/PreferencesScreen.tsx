@@ -10,10 +10,7 @@ import { untag } from "italia-ts-commons/lib/types";
 
 import I18n from "../../i18n";
 
-import { FetchRequestActions } from "../../store/actions/constants";
 import { ReduxProps } from "../../store/actions/types";
-import { createErrorSelector } from "../../store/reducers/error";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
