@@ -2,7 +2,7 @@
  * A screen that allow the user to set the PIN.
  */
 
-import { Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   Button,
@@ -27,21 +27,17 @@ import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
-import { createPin } from "../../store/actions/pinset";
+import { createPinSuccess } from "../../store/actions/pinset";
 import { ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
-
-type ReduxMappedStateProps = {
-  pinSaveError: Option<string>;
-};
+import { setPin } from "../../utils/keychain";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxMappedStateProps & ReduxProps & OwnProps;
+type Props = ReduxProps & OwnProps;
 
 type PinUnselected = {
   state: "PinUnselected";
@@ -60,7 +56,13 @@ type PinConfirmed = {
   isConfirmationPinMatch: boolean;
 };
 
-type PinState = PinUnselected | PinSelected | PinConfirmed;
+type PinSaved = {
+  state: "PinSaved";
+  pin: PinString;
+  savedPin: pot.Pot<PinString, string>;
+};
+
+type PinState = PinUnselected | PinSelected | PinConfirmed | PinSaved;
 
 type State = {
   pinState: PinState;
@@ -211,7 +213,7 @@ class PinScreen extends React.Component<Props, State> {
       const { pin, isConfirmationPinMatch } = pinState;
 
       if (isConfirmationPinMatch) {
-        const onPress = () => this.props.dispatch(createPin(pin));
+        const onPress = () => this.setPin(pin);
         return (
           <React.Fragment>
             <Button
@@ -283,6 +285,37 @@ class PinScreen extends React.Component<Props, State> {
     );
   }
 
+  private setPin = (pin: PinString) => {
+    this.setState({
+      pinState: {
+        state: "PinSaved",
+        pin,
+        savedPin: pot.noneLoading
+      }
+    });
+    setPin(pin).then(
+      _ => {
+        this.setState({
+          pinState: {
+            state: "PinSaved",
+            pin,
+            savedPin: pot.some(pin)
+          }
+        });
+        this.props.dispatch(createPinSuccess(pin));
+      },
+      _ =>
+        // TODO: show toast
+        this.setState({
+          pinState: {
+            state: "PinSaved",
+            pin,
+            savedPin: pot.noneError("error")
+          }
+        })
+    );
+  };
+
   private handleGoBack = () =>
     this.setState({ showAbortOnboardingModal: true });
 
@@ -295,9 +328,4 @@ class PinScreen extends React.Component<Props, State> {
   };
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  // Checks from the store whether there was an error while creating the PIN (e.g. saving into the Keystore)
-  pinSaveError: createErrorSelector(["PIN_CREATE"])(state)
-});
-
-export default connect(mapStateToProps)(PinScreen);
+export default connect()(PinScreen);
