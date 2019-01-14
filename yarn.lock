@@ -870,11 +870,12 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
 
-abort-controller@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-1.0.2.tgz#d326cbea17af071f5313b1eca3f4f3df4eb54431"
+abort-controller@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-2.0.0.tgz#649f2e9793e3510e8a4c7f97f0bf2f5652286620"
+  integrity sha512-+4RmySoSV9PRMNqFOQSNfEt9jmXZnETmtBCH7oWBWhHxVPBqVSyYf57K7FK2s/eZC1LSmg421mettynmCDX45g==
   dependencies:
-    event-target-shim "^3.0.0"
+    event-target-shim "^4.0.3"
 
 absolute-path@^0.0.0:
   version "0.0.0"
@@ -2975,9 +2976,10 @@ event-target-shim@^1.0.5:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
 
-event-target-shim@^3.0.0:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-3.0.2.tgz#af25bb55a97c670bbeba985c82647fb64d892153"
+event-target-shim@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-4.0.3.tgz#758cd632cd4241f5a73ceec64f93f0d7b0ae77d6"
+  integrity sha512-YXVJDPGzU0yhSzrXGoEFAByEaLnZXSlJDHXkq4Hp6WrlnV66tADiZugYf1utTaCP/dsYRcLndAhecbq9mnbbqg==
 
 eventemitter3@^3.0.0:
   version "3.0.1"
