@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -10,7 +11,7 @@ import {
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
 import Markdown from "../../components/ui/Markdown";
@@ -21,9 +22,6 @@ import I18n from "../../i18n";
 
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
-import { ContentState } from "../../store/reducers/content";
-import { ServicesState } from "../../store/reducers/entities/services";
-import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 import {
@@ -44,16 +42,9 @@ type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
-type ReduxMappedProps = Readonly<{
-  services: ServicesState;
-  content: ContentState;
-  profile: ProfileState;
-  profileUpsertError: Option<string>;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 interface State {
   uiEnabledChannels: EnabledChannels;
@@ -111,7 +102,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 
   public componentWillReceiveProps(nextProps: Props) {
-    if (this.props.profileUpsertError !== nextProps.profileUpsertError) {
+    if (pot.isError(this.props.profile) !== pot.isError(nextProps.profile)) {
       // in case of new or resolved errors while updating the profile, we reset
       // the UI to match the state of the profile preferences
       this.setState({
@@ -178,7 +169,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     } = serviceMetadata;
 
     // whether last attempt to save the preferences failed
-    const profileVersion = fromNullable(this.props.profile)
+    const profileVersion = pot
+      .toOption(this.props.profile)
       .mapNullable(_ => (_.has_profile ? _.version : null))
       .getOrElse(0 as NonNegativeInteger);
 
@@ -440,11 +432,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   services: state.entities.services,
   content: state.content,
-  profile: state.profile,
-  profileUpsertError: state.error.PROFILE_UPSERT
+  profile: state.profile
 });
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
