@@ -11,8 +11,13 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { MessageListItemComponent } from "./MessageListItemComponent";
 
+type MessageWithId = {
+  messageId: string;
+  message: pot.Pot<MessageWithContentPO, string>;
+};
+
 type OwnProps = {
-  messages: ReadonlyArray<MessageWithContentPO>;
+  messages: ReadonlyArray<MessageWithId>;
   messagesUIStatesById: MessagesUIStatesByIdState;
   servicesById: ServicesByIdState;
   paymentByRptId: PaymentByRptIdState;
@@ -23,18 +28,23 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const keyExtractor = (message: MessageWithContentPO) => message.id;
+const keyExtractor = (_: MessageWithId) => _.messageId;
 
 class MessageListComponent extends React.Component<Props> {
-  private renderItem = (info: ListRenderItemInfo<MessageWithContentPO>) => {
-    const message = info.item;
+  private renderItem = (info: ListRenderItemInfo<MessageWithId>) => {
+    const { messageId, message } = info.item;
+
     const messageUIStates = withDefaultMessageUIStates(
-      this.props.messagesUIStatesById[message.id]
+      this.props.messagesUIStatesById[messageId]
     );
-    const service = this.props.servicesById[message.sender_service_id];
+    const service = pot.getOrElse(
+      pot.map(message, m => this.props.servicesById[m.sender_service_id]),
+      pot.none
+    );
 
     return (
       <MessageListItemComponent
+        messageId={messageId}
         message={message}
         paymentByRptId={this.props.paymentByRptId}
         messageUIStates={messageUIStates}

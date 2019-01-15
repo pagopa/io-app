@@ -10,7 +10,7 @@ import PushNotification from "react-native-push-notification";
 import { store } from "../App";
 import { debugRemotePushNotification, gcmSenderId } from "../config";
 import {
-  loadMessagesRequest,
+  loadMessages,
   loadMessageWithRelationsAction
 } from "../store/actions/messages";
 import {
@@ -55,7 +55,7 @@ function configurePushNotifications() {
         // We just received a push notification about a new message
         if (notification.foreground) {
           // The App is in foreground so just refresh the messages list
-          store.dispatch(loadMessagesRequest());
+          store.dispatch(loadMessages.request());
         } else {
           // The App was closed/in background and has been now opened clicking
           // on the push notification.
@@ -75,7 +75,7 @@ function configurePushNotifications() {
 
           // finally, refresh the message list in case other messages have been
           // sent to the user
-          store.dispatch(loadMessagesRequest());
+          store.dispatch(loadMessages.request());
         }
       });
 

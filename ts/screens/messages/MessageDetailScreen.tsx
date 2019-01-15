@@ -18,10 +18,7 @@ import {
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageByIdSelector } from "../../store/reducers/entities/messages/messagesById";
-import {
-  makeMessageUIStatesByIdSelector,
-  MessageUIStates
-} from "../../store/reducers/entities/messages/messagesUIStatesById";
+import { makeMessageUIStatesByIdSelector } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
@@ -34,13 +31,6 @@ type MessageDetailScreenNavigationParams = {
 
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
 
-type ReduxMappedStateProps = Readonly<{
-  potMessage: pot.Pot<MessageWithContentPO, Error>;
-  messageUIStates: MessageUIStates;
-  potService: pot.Pot<ServicePublic, Error>;
-  paymentByRptId: GlobalState["entities"]["paymentByRptId"];
-}>;
-
 type ReduxMappedDispatchProps = Readonly<{
   contentServiceLoad: (serviceId: ServiceId) => void;
   loadMessageWithRelations: () => void;
@@ -51,7 +41,7 @@ type ReduxMappedDispatchProps = Readonly<{
 }>;
 
 type Props = OwnProps &
-  ReduxMappedStateProps &
+  ReturnType<typeof mapStateToProps> &
   ReduxMappedDispatchProps &
   ReduxProps;
 
@@ -194,33 +184,17 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   }
 }
 
-const messageWithRelationsLoadLoadingSelector = createLoadingSelector([
-  FetchRequestActions.MESSAGE_WITH_RELATIONS_LOAD
-]);
-
-const messageWithRelationsLoadErrorSelector = createErrorSelector([
-  FetchRequestActions.MESSAGE_WITH_RELATIONS_LOAD
-]);
-
-const mapStateToProps = (
-  state: GlobalState,
-  ownProps: OwnProps
-): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
 
-  const isLoading = messageWithRelationsLoadLoadingSelector(state);
-  const hasError = messageWithRelationsLoadErrorSelector(state).isSome();
-  const maybeMessage = messageByIdSelector(messageId)(state);
+  const maybePotMessage = messageByIdSelector(messageId)(state);
 
-  const potMessage =
-    maybeMessage !== undefined
-      ? pot.some(maybeMessage)
-      : isLoading
-        ? pot.noneLoading
-        : hasError
-          ? pot.noneError(Error())
-          : pot.none;
+  // In case maybePotMessage is undefined we fallback to an empty message.
+  // This mens we navigated to the message screen with a non-existing message
+  // ID (should never happen!).
+  const potMessage = maybePotMessage !== undefined ? maybePotMessage : pot.none;
 
+  // Map the potential message to the potential service
   const potService = pot
     .toOption(potMessage)
     .mapNullable(message =>

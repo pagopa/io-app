@@ -6,8 +6,7 @@ import { CreatedMessageWithContent } from "../../../../definitions/backend/Creat
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
   loadMessageFailure,
-  loadMessagesFailure,
-  loadMessagesSuccess,
+  loadMessages as loadMessagesAction,
   loadMessageSuccess
 } from "../../../store/actions/messages";
 import { loadService } from "../../../store/actions/services";
@@ -129,7 +128,7 @@ describe("messages", () => {
         .call(getMessages, {})
         // Return an error message as getMessages response
         .next({ status: 500, value: { title: "Backend error" } })
-        .put(loadMessagesFailure(Error("Backend error")))
+        .put(loadMessagesAction.failure("Backend error"))
         .next()
         .next()
         .isDone();
@@ -157,7 +156,7 @@ describe("messages", () => {
           call(loadMessage, getMessage, testMessageId2)
         ])
         .next()
-        .put(loadMessagesSuccess());
+        .put(loadMessagesAction.success([]));
     });
 
     it("should not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
@@ -184,7 +183,7 @@ describe("messages", () => {
         .next()
         .all([])
         .next()
-        .put(loadMessagesSuccess());
+        .put(loadMessagesAction.success([]));
     });
   });
 });

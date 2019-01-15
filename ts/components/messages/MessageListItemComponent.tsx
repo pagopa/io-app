@@ -16,7 +16,8 @@ import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
-  message: MessageWithContentPO;
+  messageId: string;
+  message: pot.Pot<MessageWithContentPO, string>;
   messageUIStates: MessageUIStates;
   paymentByRptId: GlobalState["entities"]["paymentByRptId"];
   service: pot.Pot<ServicePublic, Error>;
@@ -86,7 +87,14 @@ const styles = StyleSheet.create({
 
 export class MessageListItemComponent extends React.Component<Props> {
   public shouldComponentUpdate(nextProps: Props) {
-    const { payment_data } = this.props.message.content;
+    if (this.props.message.kind !== nextProps.message.kind) {
+      return true;
+    }
+    if (pot.isNone(this.props.message)) {
+      return false;
+    }
+    const message = this.props.message.value;
+    const { payment_data } = message.content;
     const rptId =
       payment_data !== undefined
         ? pot.getOrElse(
@@ -110,6 +118,7 @@ export class MessageListItemComponent extends React.Component<Props> {
 
   public render() {
     const {
+      messageId,
       message,
       paymentByRptId,
       messageUIStates,
@@ -126,16 +135,24 @@ export class MessageListItemComponent extends React.Component<Props> {
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
     // TODO: Extract this to external file
-    const uiCreatedAt = DateFromISOString.decode(message.created_at)
-      .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-      .getOrElse(message.created_at);
+    const uiCreatedAt = pot.map(message, m =>
+      DateFromISOString.decode(m.created_at)
+        .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
+        .getOrElse(m.created_at)
+    );
 
-    const onItemPressHandler = onItemPress
-      ? () => onItemPress(message.id)
-      : undefined;
+    const onItemPressHandler =
+      onItemPress && pot.isSome(message)
+        ? () => onItemPress(message.value.id)
+        : undefined;
+
+    const subject = pot.getOrElse(
+      pot.map(message, _ => _.content.subject),
+      null
+    );
 
     return (
-      <TouchableOpacity key={message.id} onPress={onItemPressHandler}>
+      <TouchableOpacity key={messageId} onPress={onItemPressHandler}>
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
@@ -169,7 +186,7 @@ export class MessageListItemComponent extends React.Component<Props> {
             </Row>
             <Row style={styles.subjectRow}>
               <Col size={11}>
-                <Text leftAlign={true}>{message.content.subject}</Text>
+                <Text leftAlign={true}>{subject}</Text>
               </Col>
               <Col size={1} style={styles.iconContainer}>
                 <IconFont
@@ -180,12 +197,14 @@ export class MessageListItemComponent extends React.Component<Props> {
               </Col>
             </Row>
             <Row>
-              <MessageCTABar
-                message={message}
-                paymentByRptId={paymentByRptId}
-                service={service}
-                containerStyle={styles.ctaBarContainer}
-              />
+              {pot.isSome(message) && (
+                <MessageCTABar
+                  message={message.value}
+                  paymentByRptId={paymentByRptId}
+                  service={service}
+                  containerStyle={styles.ctaBarContainer}
+                />
+              )}
             </Row>
           </Grid>
         </View>

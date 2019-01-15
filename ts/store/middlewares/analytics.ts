@@ -33,9 +33,8 @@ import {
 } from "../actions/identification";
 import {
   loadMessageFailure,
+  loadMessages,
   loadMessagesCancel,
-  loadMessagesRequest,
-  loadMessagesSuccess,
   loadMessageSuccess,
   setMessageReadState
 } from "../actions/messages";
@@ -226,8 +225,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.success):
     case getType(profileUpsert.failure):
     // messages
-    case getType(loadMessagesRequest):
-    case getType(loadMessagesSuccess):
+    case getType(loadMessages.request):
+    case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessageSuccess):
     case getType(loadMessageFailure):

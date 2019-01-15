@@ -26,10 +26,8 @@ import {
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessageFailure,
+  loadMessages as loadMessagesAction,
   loadMessagesCancel,
-  loadMessagesFailure,
-  loadMessagesRequest,
-  loadMessagesSuccess,
   loadMessageSuccess
 } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
@@ -127,14 +125,17 @@ export function* loadMessages(
      * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
      */
     if (!response || response.status !== 200) {
-      const error: Error =
-        response && response.status === 500
-          ? Error(response.value.title)
-          : Error();
+      // TODO: provide status code along with message in error
+      const error =
+        response && response.status === 500 ? response.value.title : undefined;
 
       // Dispatch failure action
-      yield put(loadMessagesFailure(error));
+      yield put(loadMessagesAction.failure(error || ""));
     } else {
+      yield put(
+        loadMessagesAction.success(response.value.items.map(_ => _.id))
+      );
+
       // Filter messages already in the store
       const newMessagesWithoutContent = response.value.items.filter(
         message => !cachedMessagesById.hasOwnProperty(message.id)
@@ -160,12 +161,10 @@ export function* loadMessages(
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
       // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
       yield all(newMessagesIds.map(id => call(loadMessage, getMessage, id)));
-
-      yield put(loadMessagesSuccess());
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesFailure(error));
+    yield put(loadMessagesAction.failure(error.message));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a cancel message
@@ -191,9 +190,9 @@ export function* watchMessagesLoadOrCancelSaga(
     // FIXME: why not takeLatest?
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
     const action:
-      | ActionType<typeof loadMessagesRequest>
+      | ActionType<typeof loadMessagesAction["request"]>
       | ActionType<typeof loadMessagesCancel> = yield take([
-      getType(loadMessagesRequest),
+      getType(loadMessagesAction.request),
       getType(loadMessagesCancel)
     ]);
     if (lastTask.isSome()) {
@@ -204,7 +203,7 @@ export function* watchMessagesLoadOrCancelSaga(
 
     // If the action received is a MESSAGES_LOAD_REQUEST send the request
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
-    if (isActionOf(loadMessagesRequest, action)) {
+    if (isActionOf(loadMessagesAction.request, action)) {
       // Call the generator to load messages
       lastTask = some(yield fork(loadMessages, getMessages, getMessage));
     }
