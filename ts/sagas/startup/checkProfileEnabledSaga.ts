@@ -4,11 +4,7 @@ import { ActionType, getType } from "typesafe-actions";
 
 import { UserProfileUnion } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
-import {
-  profileUpsertFailure,
-  profileUpsertRequest,
-  profileUpsertSuccess
-} from "../../store/actions/profile";
+import { profileUpsert } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
   profile: UserProfileUnion
@@ -27,20 +23,20 @@ export function* checkProfileEnabledSaga(
 
     // Upsert the user profile to enable inbox and webhook
     yield put(
-      profileUpsertRequest({
+      profileUpsert.request({
         is_inbox_enabled: true,
         is_webhook_enabled: true,
         email: profile.spid_email
       })
     );
     const action:
-      | ActionType<typeof profileUpsertSuccess>
-      | ActionType<typeof profileUpsertFailure> = yield take([
-      getType(profileUpsertSuccess),
-      getType(profileUpsertFailure)
+      | ActionType<typeof profileUpsert["success"]>
+      | ActionType<typeof profileUpsert["failure"]> = yield take([
+      getType(profileUpsert.success),
+      getType(profileUpsert.failure)
     ]);
     // We got an error
-    if (action.type === getType(profileUpsertFailure)) {
+    if (action.type === getType(profileUpsert.failure)) {
       // Restart the initialization loop to let the user retry.
       // FIXME: show an error message
       yield put(startApplicationInitialization());

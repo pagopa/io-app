@@ -48,8 +48,7 @@ import { createPinSuccess } from "../actions/pinset";
 import {
   profileLoadFailure,
   profileLoadSuccess,
-  profileUpsertFailure,
-  profileUpsertSuccess
+  profileUpsert
 } from "../actions/profile";
 import { loadService, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
@@ -224,8 +223,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(createPinSuccess):
     // profile
     case getType(profileLoadFailure):
-    case getType(profileUpsertSuccess):
-    case getType(profileUpsertFailure):
+    case getType(profileUpsert.success):
+    case getType(profileUpsert.failure):
     // messages
     case getType(loadMessagesRequest):
     case getType(loadMessagesSuccess):

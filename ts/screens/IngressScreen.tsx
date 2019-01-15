@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   CheckBox,
@@ -98,15 +99,15 @@ class IngressScreen extends React.PureComponent<Props> {
 function mapStateToProps(state: GlobalState): ReduxMappedProps {
   const maybeSessionToken = sessionTokenSelector(state);
   const maybeSessionInfo = sessionInfoSelector(state);
-  const maybeProfile = profileSelector(state);
+  const potProfile = profileSelector(state);
   return {
     hasSessionToken: maybeSessionToken !== undefined,
     hasSessionInfo: maybeSessionInfo.isSome(),
-    hasProfile: maybeProfile !== null,
+    hasProfile: potProfile !== null,
     isProfileEnabled:
-      maybeProfile !== null &&
-      maybeProfile.has_profile &&
-      maybeProfile.is_inbox_enabled
+      pot.isSome(potProfile) &&
+      potProfile.value.has_profile &&
+      potProfile.value.is_inbox_enabled
   };
 }
 

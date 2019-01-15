@@ -1,10 +1,11 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Content, List, ListItem } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 
 import { untag } from "italia-ts-commons/lib/types";
 
@@ -19,8 +20,6 @@ import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
-import { UserProfileUnion } from "../../api/backend";
-
 import { getLocalePrimary } from "../../utils/locale";
 
 const unavailableAlert = () =>
@@ -29,20 +28,11 @@ const unavailableAlert = () =>
     I18n.t("preferences.unavailable.message")
   );
 
-type ReduxMappedProps = {
-  maybeProfile: Option<UserProfileUnion>;
-  isProfileLoading: boolean;
-  isProfileLoadingError: Option<string>;
-  isProfileUpserting: boolean;
-  isProfileUpsertingError: Option<string>;
-  languages: Option<ReadonlyArray<string>>;
-};
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 /**
  * Translates the primary languages of the provided locales.
@@ -68,9 +58,9 @@ class PreferencesScreen extends React.Component<Props> {
       body: () => <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
     };
 
-    const maybeProfile = this.props.maybeProfile;
+    const { potProfile } = this.props;
 
-    const profileData = maybeProfile
+    const profileData = potProfile
       .map(_ => ({
         spid_email: untag(_.spid_email),
         spid_mobile_phone: untag(_.spid_mobile_phone)
@@ -136,21 +126,9 @@ class PreferencesScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
-  maybeProfile: fromNullable(state.profile),
-  isProfileLoading: createLoadingSelector([FetchRequestActions.PROFILE_LOAD])(
-    state
-  ),
-  isProfileLoadingError: createErrorSelector([
-    FetchRequestActions.PROFILE_LOAD
-  ])(state),
-  isProfileUpserting: createLoadingSelector([
-    FetchRequestActions.PROFILE_UPSERT
-  ])(state),
-  isProfileUpsertingError: createErrorSelector([
-    FetchRequestActions.PROFILE_UPSERT
-  ])(state)
+  potProfile: pot.toOption(state.profile)
 });
 
 export default connect(mapStateToProps)(PreferencesScreen);

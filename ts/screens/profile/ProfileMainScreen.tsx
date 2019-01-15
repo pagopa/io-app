@@ -1,4 +1,3 @@
-import { Option } from "fp-ts/lib/Option";
 import {
   Button,
   Content,
@@ -33,16 +32,6 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-type ReduxMappedStateProps = {
-  isLoggingOut: boolean;
-  logoutError: Option<string>;
-  sessionToken?: string;
-  walletToken?: string;
-  notificationId: string;
-  notificationToken?: string;
-  isDebugModeEnabled: boolean;
-};
-
 type ReduxMappedDispatchProps = {
   resetPin: () => void;
   logout: () => void;
@@ -54,7 +43,9 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedDispatchProps & ReduxMappedStateProps;
+type Props = OwnProps &
+  ReduxMappedDispatchProps &
+  ReturnType<typeof mapStateToProps>;
 
 const copyToClipboardWithFeedback = (text: string) => {
   Clipboard.setString(text);
@@ -240,9 +231,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
-  isLoggingOut: createLoadingSelector([FetchRequestActions.LOGOUT])(state),
-  logoutError: createErrorSelector([FetchRequestActions.LOGOUT])(state),
+const mapStateToProps = (state: GlobalState) => ({
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,

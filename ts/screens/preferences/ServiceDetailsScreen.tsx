@@ -19,7 +19,7 @@ import Switch from "../../components/ui/Switch";
 
 import I18n from "../../i18n";
 
-import { profileUpsertRequest } from "../../store/actions/profile";
+import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { ContentState } from "../../store/reducers/content";
 import { ServicesState } from "../../store/reducers/entities/services";
@@ -141,7 +141,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // dispatch a request to update the profile with the new
     // blocked channels
     this.props.dispatch(
-      profileUpsertRequest({
+      profileUpsert.request({
         blocked_inbox_or_channels: newblockedChannels
       })
     );

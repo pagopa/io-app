@@ -12,11 +12,7 @@ import { InitializedProfile } from "../../../../definitions/backend/InitializedP
 import { UserProfile } from "../../../../definitions/backend/UserProfile";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
-import {
-  profileUpsertFailure,
-  profileUpsertRequest,
-  profileUpsertSuccess
-} from "../../../store/actions/profile";
+import { profileUpsert } from "../../../store/actions/profile";
 
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
@@ -34,7 +30,7 @@ describe("checkProfileEnabledSaga", () => {
     version: 0 as NonNegativeInteger
   };
 
-  const upsertAction = profileUpsertRequest({
+  const upsertAction = profileUpsert.request({
     is_inbox_enabled: true,
     is_webhook_enabled: true,
     email: profile.spid_email
@@ -47,7 +43,7 @@ describe("checkProfileEnabledSaga", () => {
 
   it("should do nothing if profile is enabled", () => {
     return expectSaga(checkProfileEnabledSaga, profile)
-      .not.put.like({ action: { type: getType(profileUpsertRequest) } })
+      .not.put.like({ action: { type: getType(profileUpsert.request) } })
       .run();
   });
 
@@ -58,7 +54,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsertSuccess(updatedProfile))
+      .dispatch(profileUpsert.success(updatedProfile))
       .run();
   });
 
@@ -69,7 +65,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsertSuccess(updatedProfile))
+      .dispatch(profileUpsert.success(updatedProfile))
       .run();
   });
 
@@ -80,7 +76,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsertSuccess(updatedProfile))
+      .dispatch(profileUpsert.success(updatedProfile))
       .run();
   });
 
@@ -91,7 +87,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsertSuccess(updatedProfile))
+      .dispatch(profileUpsert.success(updatedProfile))
       .run();
   });
 
@@ -102,7 +98,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .put(startApplicationInitialization())
-      .dispatch(profileUpsertFailure(Error()))
+      .dispatch(profileUpsert.failure(Error()))
       .run();
   });
 });
