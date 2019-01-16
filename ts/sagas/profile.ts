@@ -47,6 +47,12 @@ export function* loadProfile(
       return some(response.value);
     }
 
+    if (response && response.status === 401) {
+      // in case we got an expired session while loading the profile, we reset
+      // the session
+      yield put(sessionExpired());
+    }
+
     throw response ? response.value : Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield put(profileLoadFailure(error));
