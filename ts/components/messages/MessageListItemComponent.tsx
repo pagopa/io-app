@@ -135,10 +135,13 @@ export class MessageListItemComponent extends React.Component<Props> {
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
     // TODO: Extract this to external file
-    const uiCreatedAt = pot.map(message, m =>
-      DateFromISOString.decode(m.created_at)
-        .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-        .getOrElse(m.created_at)
+    const uiCreatedAt = pot.getOrElse(
+      pot.map(message, m =>
+        DateFromISOString.decode(m.created_at)
+          .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
+          .getOrElse(m.created_at)
+      ),
+      ""
     );
 
     const onItemPressHandler =

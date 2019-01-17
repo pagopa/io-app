@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 
 import { ProfileState } from "../../store/reducers/profile";
 
@@ -25,10 +25,11 @@ const PUSH_CHANNEL = "WEBHOOK";
  * Finds out which channels are enabled in the profile for the provided service
  */
 export function getEnabledChannelsForService(
-  profileState: ProfileState,
+  potProfile: ProfileState,
   serviceId: ServiceId
 ): EnabledChannels {
-  return fromNullable(profileState)
+  return pot
+    .toOption(potProfile)
     .mapNullable(
       profile =>
         InitializedProfile.is(profile)
@@ -53,11 +54,12 @@ export function getEnabledChannelsForService(
  * enabled channels
  */
 export const getBlockedChannels = (
-  profileState: ProfileState,
+  potProfile: ProfileState,
   serviceId: ServiceId
 ) => (enabled: EnabledChannels): BlockedInboxOrChannels => {
   // get the current blocked channels from the profile
-  const profileBlockedChannels = fromNullable(profileState)
+  const profileBlockedChannels = pot
+    .toOption(potProfile)
     .mapNullable(
       profile =>
         InitializedProfile.is(profile)
