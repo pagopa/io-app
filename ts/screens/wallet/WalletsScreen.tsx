@@ -40,24 +40,13 @@ const styles = StyleSheet.create({
   headerContainer: { flexDirection: "row" }
 });
 
-type ReduxMappedStateProps = Readonly<{
-  wallets: ReadonlyArray<Wallet>;
-  isLoading: boolean;
-  favoriteWallet: ReturnType<typeof getFavoriteWalletId>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToWalletTransactionsScreen: (wallet: Wallet) => void;
-  navigateToWalletAddPaymentMethod: () => void;
-  setFavoriteWallet: (walletId?: number) => void;
-  deleteWallet: (walletId: number) => void;
-}>;
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 class WalletsScreen extends React.Component<Props> {
   private renderWallet = (info: ListRenderItemInfo<Wallet>) => {
@@ -120,7 +109,7 @@ class WalletsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState) => {
   const potWallets = walletsSelector(state);
   return {
     wallets: pot.getOrElse(potWallets, []),
@@ -129,7 +118,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>

@@ -17,11 +17,7 @@ interface OwnProps {
   color?: string;
 }
 
-type ReduxMappedProps = Readonly<{
-  isDebugModeEnabled: boolean;
-}>;
-
-type Props = ReduxMappedProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 
 class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
   private handleIBChatPress() {
@@ -54,7 +50,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 

@@ -34,7 +34,9 @@ import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
+  paymentAttiva,
   paymentCompletedSuccess,
+  paymentIdPolling,
   paymentInitializeState,
   paymentVerifica,
   runDeleteActivePaymentSaga,
@@ -48,8 +50,8 @@ import {
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
-import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
+import { PayloadForAction } from "../../../types/utils";
 import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { dispatchPickPspOrConfirm } from "./common";
@@ -65,39 +67,14 @@ type NavigationParams = Readonly<{
   initialAmount: AmountInEuroCents;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  error: Option<
-    | pot.PotErrorType<GlobalState["wallet"]["payment"]["verifica"]>
-    | "PAYMENT_ID_TIMEOUT"
-  >;
-  isLoading: boolean;
-  potVerifica: GlobalState["wallet"]["payment"]["verifica"];
-  maybeFavoriteWallet: Option<Wallet>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  dispatchPaymentVerificaRequest: () => void;
-  startOrResumePayment: (
-    verifica: PaymentRequestsGetResponse,
-    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
-  ) => void;
-  goBack: () => void;
-  onCancel: () => void;
-  onRetryWithPotVerifica: (
-    potVerifica: ReduxMappedStateProps["potVerifica"],
-    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
-  ) => void;
-  onDuplicatedPayment: () => void;
-}>;
-
 type ReduxMergedProps = Readonly<{
   onRetry?: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxMergedProps &
   OwnProps;
 
@@ -284,12 +261,18 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
 
   const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
 
-  const error = pot.isError(verifica)
+  const error: Option<
+    PayloadForAction<
+      | typeof paymentVerifica["failure"]
+      | typeof paymentAttiva["failure"]
+      | typeof paymentIdPolling["failure"]
+    >
+  > = pot.isError(verifica)
     ? some(verifica.error)
     : pot.isError(attiva)
       ? some(attiva.error)
@@ -324,10 +307,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: OwnProps
-): ReduxMappedDispatchProps => {
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
 
@@ -336,7 +316,9 @@ const mapDispatchToProps = (
 
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
-    maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+    maybeFavoriteWallet: ReturnType<
+      typeof mapStateToProps
+    >["maybeFavoriteWallet"]
   ) =>
     dispatch(
       runStartOrResumePaymentActivationSaga({
@@ -384,8 +366,10 @@ const mapDispatchToProps = (
       dispatch(paymentInitializeState());
     },
     onRetryWithPotVerifica: (
-      potVerifica: ReduxMappedStateProps["potVerifica"],
-      maybeFavoriteWallet: ReduxMappedStateProps["maybeFavoriteWallet"]
+      potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
+      maybeFavoriteWallet: ReturnType<
+        typeof mapStateToProps
+      >["maybeFavoriteWallet"]
     ) => {
       if (pot.isSome(potVerifica)) {
         startOrResumePayment(potVerifica.value, maybeFavoriteWallet);
@@ -404,8 +388,8 @@ const mapDispatchToProps = (
 };
 
 const mergeProps = (
-  stateProps: ReduxMappedStateProps,
-  dispatchProps: ReduxMappedDispatchProps,
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
   ownProps: {}
 ) => {
   // we allow to retry the operation on a temporary unavailability of the remote
@@ -437,7 +421,7 @@ const mergeProps = (
 };
 
 const mapErrorCodeToMessage = (
-  error: ReduxMappedStateProps["error"]["_A"]
+  error: ReturnType<typeof mapStateToProps>["error"]["_A"]
 ): string => {
   switch (error) {
     case "PAYMENT_DUPLICATED":
@@ -456,7 +440,7 @@ const mapErrorCodeToMessage = (
       return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
     case "PAYMENT_ID_TIMEOUT":
       return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
-    case undefined:
+    default:
       return I18n.t("wallet.errors.GENERIC_ERROR");
   }
 };

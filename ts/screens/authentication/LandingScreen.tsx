@@ -27,11 +27,11 @@ import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
 
-type ReduxMappedProps = {};
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+type Props = ReduxProps & OwnProps;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {

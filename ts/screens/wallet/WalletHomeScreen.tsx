@@ -34,25 +34,13 @@ import { latestTransactionsSelector } from "../../store/reducers/wallet/transact
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import { Transaction } from "../../types/pagopa";
 
-type ReduxMappedStateProps = Readonly<{
-  potWallets: ReturnType<typeof walletsSelector>;
-  potTransactions: ReturnType<typeof latestTransactionsSelector>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToWalletAddPaymentMethod: () => void;
-  navigateToWalletList: () => void;
-  navigateToPaymentScanQrCode: () => void;
-  navigateToTransactionDetailsScreen: (transaction: Transaction) => void;
-  loadTransactions: () => void;
-  loadWallets: () => void;
-}>;
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -242,12 +230,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: () =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),

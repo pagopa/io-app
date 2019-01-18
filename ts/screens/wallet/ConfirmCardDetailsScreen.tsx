@@ -57,30 +57,14 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  isLoading: boolean;
-  checkout3dsUrl: Option<string>;
-  error: Option<string>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  addWalletCreditCardInit: () => void;
-  creditCardCheckout3dsSuccess: () => void;
-  runStartOrResumeAddCreditCardSaga: (
-    creditCard: CreditCard,
-    setAsFavorite: boolean
-  ) => void;
-  onCancel: () => void;
-}>;
-
 type ReduxMergedProps = Readonly<{
   onRetry?: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   ReduxMergedProps &
   OwnProps;
 
@@ -219,7 +203,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState) => {
   const {
     creditCardAddWallet,
     creditCardVerification,
@@ -256,7 +240,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
 const mapDispatchToProps = (
   dispatch: Dispatch,
   props: NavigationInjectedProps<NavigationParams>
-): ReduxMappedDispatchProps => {
+) => {
   const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");
     if (inPayment.isSome()) {
@@ -328,8 +312,8 @@ const mapDispatchToProps = (
 };
 
 const mergeProps = (
-  stateProps: ReduxMappedStateProps,
-  dispatchProps: ReduxMappedDispatchProps,
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
   ownProps: OwnProps
 ) => {
   const maybeError = stateProps.error;

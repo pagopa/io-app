@@ -15,25 +15,17 @@ import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import {
   isLoggedIn,
-  isLoggedOutWithIdp,
-  LoggedInWithoutSessionInfo,
-  LoggedInWithSessionInfo,
-  LoggedOutWithIdp
+  isLoggedOutWithIdp
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { extractLoginResult } from "../../utils/login";
 
-type ReduxMappedProps = {
-  loggedOutWithIdpAuth?: LoggedOutWithIdp;
-  loggedInAuth?: LoggedInWithoutSessionInfo | LoggedInWithSessionInfo;
-};
-
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 type State = {
   isWebViewLoading: boolean;
@@ -146,7 +138,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
     ? state.authentication
     : undefined,
