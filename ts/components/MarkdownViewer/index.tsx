@@ -41,12 +41,16 @@ body {
 
 const generateHtml = (content: string, htmlBodyClasses?: string) => {
   return `
+  <!DOCTYPE html>
+  <html>
   <head>
+  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
   <head>
   <body class="${htmlBodyClasses || ""}">
   ${INLINE_CSS}
   ${content}
   </body>
+  </html>
   `;
 };
 
