@@ -33,6 +33,8 @@ document.body.onclick = function(e) {
     }
   }
 };
+
+true
 `;
 
 // Script to notify the height of the body to the react WebView component
@@ -44,4 +46,6 @@ const message = {
   }
 };
 window.postMessage(JSON.stringify(message));
+
+true
 `;
