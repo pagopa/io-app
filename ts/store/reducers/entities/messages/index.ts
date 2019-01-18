@@ -6,22 +6,23 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
+import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
 } from "./messagesAllIds";
 import messagesByIdReducer, {
-  messagesByIdSelector,
-  MessagesByIdState
+  messagesStateByIdSelector,
+  MessageStateById
 } from "./messagesById";
 import messagesUIStatesByIdReducer, {
   MessagesUIStatesByIdState
 } from "./messagesUIStatesById";
 
 export type MessagesState = Readonly<{
-  byId: MessagesByIdState;
-  allIds: MessagesAllIdsState;
+  byId: MessageStateById;
+  allIds: MessagesAllIdsState; // FIXME: is this used?
   uiStatesById: MessagesUIStatesByIdState;
 }>;
 
@@ -39,17 +40,15 @@ const reducer = combineReducers<MessagesState, Action>({
  * Note that message IDs are ULIDs (https://github.com/ulid/spec) so this
  * should return messages sorted from most to least recent.
  */
-export const orderedMessagesWithIdSelector = createSelector(
-  messagesAllIdsSelector,
-  messagesByIdSelector,
-  (potIds, messageByIdMap) =>
+export const orderedMessagesStateSelector = createSelector(
+  messagesAllIdsSelector, // FIXME: not needed, we can extract the IDs from messageStateById
+  messagesStateByIdSelector,
+  (potIds, messageStateById) =>
     pot.map(potIds, ids =>
       [...ids]
         .sort((a: string, b: string) => b.localeCompare(a))
-        .map(messageId => ({
-          messageId,
-          message: messageByIdMap[messageId] || pot.none
-        }))
+        .map(messageId => messageStateById[messageId])
+        .filter(isDefined)
     )
 );
 

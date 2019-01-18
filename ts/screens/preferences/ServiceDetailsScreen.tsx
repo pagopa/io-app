@@ -1,3 +1,4 @@
+import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
@@ -10,9 +11,6 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import { fromNullable } from "fp-ts/lib/Option";
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
@@ -151,9 +149,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
 
     // collect the service metadata
-    const serviceMetadata = fromNullable(
-      this.props.content.servicesMetadata.byId[serviceId]
-    ).getOrElse({});
+    const potServiceMetadata =
+      this.props.content.servicesMetadata.byId[serviceId] || pot.none;
+
+    const serviceMetadata = pot.getOrElse(potServiceMetadata, {} as pot.PotType<
+      typeof potServiceMetadata
+    >);
 
     const {
       description,

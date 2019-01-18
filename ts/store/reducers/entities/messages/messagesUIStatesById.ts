@@ -4,10 +4,7 @@
 
 import { getType } from "typesafe-actions";
 
-import {
-  loadMessageSuccess,
-  setMessageReadState
-} from "../../../actions/messages";
+import { loadMessage, setMessageReadState } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -31,7 +28,7 @@ const reducer = (
   action: Action
 ): MessagesUIStatesByIdState => {
   switch (action.type) {
-    case getType(loadMessageSuccess):
+    case getType(loadMessage.success):
       return {
         ...state,
         [action.payload.id]: {

@@ -9,10 +9,7 @@ import PushNotification from "react-native-push-notification";
 
 import { store } from "../App";
 import { debugRemotePushNotification, gcmSenderId } from "../config";
-import {
-  loadMessages,
-  loadMessageWithRelationsAction
-} from "../store/actions/messages";
+import { loadMessages } from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
@@ -69,12 +66,8 @@ function configurePushNotifications() {
             )
           );
 
-          // in the meantime, also load the new message so that when the message
-          // details screen is opened, the message is already there
-          store.dispatch(loadMessageWithRelationsAction(messageId));
-
-          // finally, refresh the message list in case other messages have been
-          // sent to the user
+          // finally, refresh the message list to start loading the content of
+          // the new message
           store.dispatch(loadMessages.request());
         }
       });

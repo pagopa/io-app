@@ -19,7 +19,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
-import { loadMessageWithRelationsAction } from "../store/actions/messages";
+import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
@@ -230,7 +230,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Load message and related entities (ex. the sender service)
   yield takeEvery(
-    getType(loadMessageWithRelationsAction),
+    getType(loadMessageWithRelations.request),
     loadMessageWithRelationsSaga,
     backendClient.getMessage
   );

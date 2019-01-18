@@ -7,28 +7,66 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
+import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
 import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
-import { loadMessageSuccess } from "../../../actions/messages";
+import { loadMessage } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
+export type MessageState = {
+  meta: CreatedMessageWithoutContent;
+  message: pot.Pot<MessageWithContentPO, string | undefined>;
+};
+
 // An object containing MessageWithContentPO keyed by id
-export type MessagesByIdState = Readonly<{
-  [key: string]: pot.Pot<MessageWithContentPO, string> | undefined;
+export type MessageStateById = Readonly<{
+  [key: string]: MessageState | undefined;
 }>;
 
-const INITIAL_STATE: MessagesByIdState = {};
+const INITIAL_STATE: MessageStateById = {};
 
 const reducer = (
-  state: MessagesByIdState = INITIAL_STATE,
+  state: MessageStateById = INITIAL_STATE,
   action: Action
-): MessagesByIdState => {
+): MessageStateById => {
   switch (action.type) {
-    case getType(loadMessageSuccess):
-      // Use the ID as object key
-      return { ...state, [action.payload.id]: pot.some(action.payload) };
+    case getType(loadMessage.request):
+      return {
+        ...state,
+        [action.payload.id]: {
+          meta: action.payload,
+          message: pot.noneLoading
+        }
+      };
 
+    case getType(loadMessage.success): {
+      const id = action.payload.id;
+      const prevState = state[id];
+      if (prevState === undefined) {
+        // we can't deal with a success without a request
+        return state;
+      }
+      return {
+        ...state,
+        [id]: { ...prevState, message: pot.some(action.payload) }
+      };
+    }
+    case getType(loadMessage.failure): {
+      const id = action.payload.id;
+      const prevState = state[id];
+      if (prevState === undefined) {
+        // we can't deal with a failure without a request
+        return state;
+      }
+      return {
+        ...state,
+        [id]: {
+          ...prevState,
+          message: pot.noneError(action.payload.error)
+        }
+      };
+    }
     case getType(clearCache):
       return INITIAL_STATE;
 
@@ -39,10 +77,10 @@ const reducer = (
 
 // Selectors
 
-export const messagesByIdSelector = (state: GlobalState) =>
+export const messagesStateByIdSelector = (state: GlobalState) =>
   state.entities.messages.byId;
 
-export const messageByIdSelector = (id: string) => (state: GlobalState) =>
+export const messageStateByIdSelector = (id: string) => (state: GlobalState) =>
   state.entities.messages.byId[id];
 
 export default reducer;

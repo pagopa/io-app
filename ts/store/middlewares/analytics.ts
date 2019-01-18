@@ -32,10 +32,9 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  loadMessageFailure,
+  loadMessage,
   loadMessages,
   loadMessagesCancel,
-  loadMessageSuccess,
   setMessageReadState
 } from "../actions/messages";
 import {
@@ -228,8 +227,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessages.request):
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
-    case getType(loadMessageSuccess):
-    case getType(loadMessageFailure):
+    case getType(loadMessage.success):
+    case getType(loadMessage.failure):
     case getType(setMessageReadState):
     // services
     case getType(loadVisibleServices.request):

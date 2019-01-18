@@ -7,17 +7,16 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
-  messageId: string;
-  message: pot.Pot<MessageWithContentPO, string>;
+  messageState: MessageState;
   messageUIStates: MessageUIStates;
   paymentByRptId: GlobalState["entities"]["paymentByRptId"];
   service: pot.Pot<ServicePublic, Error>;
@@ -87,13 +86,16 @@ const styles = StyleSheet.create({
 
 export class MessageListItemComponent extends React.Component<Props> {
   public shouldComponentUpdate(nextProps: Props) {
-    if (this.props.message.kind !== nextProps.message.kind) {
+    if (
+      this.props.messageState.message.kind !==
+      nextProps.messageState.message.kind
+    ) {
       return true;
     }
-    if (pot.isNone(this.props.message)) {
+    if (pot.isNone(this.props.messageState.message)) {
       return false;
     }
-    const message = this.props.message.value;
+    const message = this.props.messageState.message.value;
     const { payment_data } = message.content;
     const rptId =
       payment_data !== undefined
@@ -118,23 +120,30 @@ export class MessageListItemComponent extends React.Component<Props> {
 
   public render() {
     const {
-      messageId,
-      message,
+      messageState,
+      onItemPress,
       paymentByRptId,
       messageUIStates,
-      service,
-      onItemPress
+      service
     } = this.props;
 
+    const { message, meta } = messageState;
+
     // TODO: Extract this to external file
-    const uiService = pot.getOrElse(
-      pot.map(service, s => `${s.organization_name} - ${s.department_name}`),
-      I18n.t("messages.unknownSender")
-    );
+    const uiService = pot.isLoading(service)
+      ? ""
+      : pot.getOrElse(
+          pot.map(
+            service,
+            s => `${s.organization_name} - ${s.department_name}`
+          ),
+          I18n.t("messages.unknownSender")
+        );
 
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
-    // TODO: Extract this to external file
+    // TODO: get created_at from CreatedMessageWithoutContent to avoid waiting
+    //       for the message to load
     const uiCreatedAt = pot.getOrElse(
       pot.map(message, m =>
         DateFromISOString.decode(m.created_at)
@@ -144,18 +153,19 @@ export class MessageListItemComponent extends React.Component<Props> {
       ""
     );
 
-    const onItemPressHandler =
-      onItemPress && pot.isSome(message)
-        ? () => onItemPress(message.value.id)
-        : undefined;
+    const subject = pot.isLoading(message)
+      ? ""
+      : pot.getOrElse(
+          pot.map(message, _ => _.content.subject),
+          I18n.t("messages.noContent")
+        );
 
-    const subject = pot.getOrElse(
-      pot.map(message, _ => _.content.subject),
-      null
-    );
+    const onItemPressHandler = onItemPress
+      ? () => onItemPress(meta.id)
+      : undefined;
 
     return (
-      <TouchableOpacity key={messageId} onPress={onItemPressHandler}>
+      <TouchableOpacity key={meta.id} onPress={onItemPressHandler}>
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>

@@ -6,11 +6,7 @@ import { ActionType } from "typesafe-actions";
 
 import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
 import I18n from "../../i18n";
-import {
-  loadMessageWithRelationsAction,
-  loadMessageWithRelationsFailureAction,
-  loadMessageWithRelationsSuccessAction
-} from "../../store/actions/messages";
+import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -23,7 +19,7 @@ import { loadMessage } from "./watchLoadMessagesSaga";
 export function* loadMessageWithRelationsSaga(
   getMessage: TypeofApiCall<GetUserMessageT>,
   messageWithRelationsLoadRequest: ActionType<
-    typeof loadMessageWithRelationsAction
+    typeof loadMessageWithRelations["request"]
   >
 ): IterableIterator<Effect> {
   // Extract the message id from the action payload
@@ -37,7 +33,7 @@ export function* loadMessageWithRelationsSaga(
 
   if (messageOrError.isLeft()) {
     yield put(
-      loadMessageWithRelationsFailureAction(
+      loadMessageWithRelations.failure(
         new Error(I18n.t("global.actions.retry"))
       )
     );
@@ -45,7 +41,7 @@ export function* loadMessageWithRelationsSaga(
   }
 
   const message = messageOrError.value;
-  yield put(loadMessageWithRelationsSuccessAction());
+  yield put(loadMessageWithRelations.success());
 
   const serviceById = serviceByIdSelector(message.sender_service_id);
 

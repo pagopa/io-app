@@ -46,6 +46,7 @@ const reducer = (
 
     case getType(profileUpsert.request):
       // TODO: remove the cast after: https://www.pivotaltracker.com/story/show/160924538
+      // tslint:disable-next-line:no-useless-cast
       return pot.toUpdating(state, action.payload as any);
 
     case getType(profileUpsert.success):

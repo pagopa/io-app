@@ -11,26 +11,23 @@ import {
 
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
-export const loadMessageSuccess = createStandardAction("MESSAGE_LOAD_SUCCESS")<
-  MessageWithContentPO
+import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
+
+export const loadMessage = createAsyncAction(
+  "MESSAGE_LOAD_REQUEST",
+  "MESSAGE_LOAD_SUCCESS",
+  "MESSAGE_LOAD_FAILURE"
+)<
+  CreatedMessageWithoutContent,
+  MessageWithContentPO,
+  { id: string; error: string | undefined }
 >();
 
-export const loadMessageFailure = createStandardAction("MESSAGE_LOAD_FAILURE")<
-  Error
->();
-
-export const loadMessageWithRelationsAction = createStandardAction(
-  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST"
-)<string>();
-
-export const loadMessageWithRelationsSuccessAction = createStandardAction(
-  "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS"
-)();
-
-export const loadMessageWithRelationsFailureAction = createAction(
-  "MESSAGE_WITH_RELATIONS_LOAD_FAILURE",
-  resolve => (error: Error) => resolve(error, { error: true })
-);
+export const loadMessageWithRelations = createAsyncAction(
+  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
+  "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
+  "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
+)<CreatedMessageWithoutContent, void, Error>();
 
 export const loadMessages = createAsyncAction(
   "MESSAGES_LOAD_REQUEST",
@@ -48,11 +45,8 @@ export const setMessageReadState = createAction(
 );
 
 export type MessagesActions =
-  | ActionType<typeof loadMessageSuccess>
-  | ActionType<typeof loadMessageFailure>
-  | ActionType<typeof loadMessageWithRelationsAction>
-  | ActionType<typeof loadMessageWithRelationsSuccessAction>
-  | ActionType<typeof loadMessageWithRelationsFailureAction>
+  | ActionType<typeof loadMessage>
+  | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof loadMessages>
   | ActionType<typeof loadMessagesCancel>
   | ActionType<typeof setMessageReadState>;
