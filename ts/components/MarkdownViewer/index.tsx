@@ -1,17 +1,14 @@
 import React from "react";
-import {
-  Alert,
-  InteractionManager,
-  StyleProp,
-  View,
-  ViewStyle
-} from "react-native";
+import { InteractionManager, StyleProp, View, ViewStyle } from "react-native";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
+import { connect } from "react-redux";
 import remark from "remark";
 import remarkCustomBlocks from "remark-custom-blocks";
 import remarkHtml from "remark-html";
 
 import I18n from "../../i18n";
+import { ReduxProps } from "../../store/actions/types";
+import { handleInternalLink } from "./handlers/internalLink";
 import {
   NOTIFY_BODY_HEIGHT_SCRIPT,
   NOTIFY_INTERNAL_LINK_CLICK_SCRIPT
@@ -54,12 +51,14 @@ const generateHtml = (content: string, htmlBodyClasses?: string) => {
   `;
 };
 
-type Props = {
+type OwnProps = {
   markdown: string;
   // Space separated classes (ex. "message demo")
   htmlBodyClasses?: string;
   webViewStyle?: StyleProp<ViewStyle>;
 };
+
+type Props = OwnProps & ReduxProps;
 
 type State = {
   html: string | undefined;
@@ -134,6 +133,8 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
 
   // A function that handles message sent by the WebView component
   private handleWebViewMessage = (event: WebViewMessageEvent) => {
+    const { dispatch } = this.props;
+
     // We validate the format of the message with io-ts
     const messageOrErrors = WebViewMessage.decode(
       JSON.parse(event.nativeEvent.data)
@@ -144,7 +145,7 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
 
       switch (message.type) {
         case "LINK_MESSAGE":
-          Alert.alert("Internal link detected", message.payload.href);
+          handleInternalLink(dispatch, message.payload.href);
           break;
 
         case "RESIZE_MESSAGE":
@@ -178,4 +179,4 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   };
 }
 
-export default MarkdownViewer;
+export default connect()(MarkdownViewer);
