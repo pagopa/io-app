@@ -34,7 +34,7 @@ ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 const INLINE_CSS = `
 <style>
 body {
-  font-size: 30;
+  font-size: 16px;
 }
 </style>
 `;
