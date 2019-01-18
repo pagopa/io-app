@@ -31,11 +31,20 @@ const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 `;
 
+const INLINE_CSS = `
+<style>
+body {
+  font-size: 30;
+}
+</style>
+`;
+
 const generateHtml = (content: string, htmlBodyClasses?: string) => {
   return `
   <head>
   <head>
   <body class="${htmlBodyClasses || ""}">
+  ${INLINE_CSS}
   ${content}
   </body>
   `;
