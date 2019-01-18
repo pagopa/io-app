@@ -32,11 +32,9 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  loadMessageFailure,
+  loadMessage,
+  loadMessages,
   loadMessagesCancel,
-  loadMessagesRequest,
-  loadMessagesSuccess,
-  loadMessageSuccess,
   setMessageReadState
 } from "../actions/messages";
 import {
@@ -44,12 +42,11 @@ import {
   updateNotificationsInstallationToken
 } from "../actions/notifications";
 import { tosAccept } from "../actions/onboarding";
-import { createPinFailure, createPinSuccess } from "../actions/pinset";
+import { createPinSuccess } from "../actions/pinset";
 import {
   profileLoadFailure,
   profileLoadSuccess,
-  profileUpsertFailure,
-  profileUpsertSuccess
+  profileUpsert
 } from "../actions/profile";
 import { loadService, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
@@ -222,17 +219,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(analyticsOnboardingStarted):
     case getType(tosAccept.success):
     case getType(createPinSuccess):
-    case getType(createPinFailure):
     // profile
     case getType(profileLoadFailure):
-    case getType(profileUpsertSuccess):
-    case getType(profileUpsertFailure):
+    case getType(profileUpsert.success):
+    case getType(profileUpsert.failure):
     // messages
-    case getType(loadMessagesRequest):
-    case getType(loadMessagesSuccess):
+    case getType(loadMessages.request):
+    case getType(loadMessages.success):
     case getType(loadMessagesCancel):
-    case getType(loadMessageSuccess):
-    case getType(loadMessageFailure):
+    case getType(loadMessage.success):
+    case getType(loadMessage.failure):
     case getType(setMessageReadState):
     // services
     case getType(loadVisibleServices.request):

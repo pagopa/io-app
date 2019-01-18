@@ -9,9 +9,7 @@ import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
-import { ErrorState } from "./error";
 import { IdentificationState } from "./identification";
-import { LoadingState } from "./loading";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
@@ -31,8 +29,6 @@ export type GlobalState = Readonly<{
   backendInfo: BackendInfoState;
   deepLink: DeepLinkState;
   entities: EntitiesState;
-  error: ErrorState;
-  loading: LoadingState;
   nav: NavigationState;
   network: NetworkState;
   notifications: NotificationsState;

@@ -16,9 +16,7 @@ import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
-import errorReducer from "./error";
 import identificationReducer from "./identification";
-import loadingReducer from "./loading";
 import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
@@ -57,8 +55,6 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   network: networkReducer,
   nav: navigationReducer,
   deepLink: deepLinkReducer,
-  loading: loadingReducer,
-  error: errorReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
   content: contentReducer,

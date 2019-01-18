@@ -6,6 +6,7 @@ import { Omit } from "italia-ts-commons/lib/types";
 import {
   ActionType,
   createAction,
+  createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
@@ -27,18 +28,11 @@ export const profileLoadFailure = createAction(
 
 type ProfileUpsertPayload = Partial<Omit<ExtendedProfile, "version">>;
 
-export const profileUpsertRequest = createStandardAction(
-  "PROFILE_UPSERT_REQUEST"
-)<ProfileUpsertPayload>();
-
-export const profileUpsertSuccess = createStandardAction(
-  "PROFILE_UPSERT_SUCCESS"
-)<InitializedProfile>();
-
-export const profileUpsertFailure = createAction(
-  "PROFILE_UPSERT_FAILURE",
-  resolve => (error: Error) => resolve(error, { error: true })
-);
+export const profileUpsert = createAsyncAction(
+  "PROFILE_UPSERT_REQUEST",
+  "PROFILE_UPSERT_SUCCESS",
+  "PROFILE_UPSERT_FAILURE"
+)<ProfileUpsertPayload, InitializedProfile, Error>();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
@@ -46,7 +40,5 @@ export type ProfileActions =
   | ActionType<typeof resetProfileState>
   | ActionType<typeof profileLoadSuccess>
   | ActionType<typeof profileLoadFailure>
-  | ActionType<typeof profileUpsertRequest>
-  | ActionType<typeof profileUpsertSuccess>
-  | ActionType<typeof profileUpsertFailure>
+  | ActionType<typeof profileUpsert>
   | ActionType<typeof clearCache>;

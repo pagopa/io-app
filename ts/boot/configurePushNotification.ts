@@ -9,10 +9,7 @@ import PushNotification from "react-native-push-notification";
 
 import { store } from "../App";
 import { debugRemotePushNotification, gcmSenderId } from "../config";
-import {
-  loadMessagesRequest,
-  loadMessageWithRelationsAction
-} from "../store/actions/messages";
+import { loadMessages } from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
@@ -55,7 +52,7 @@ function configurePushNotifications() {
         // We just received a push notification about a new message
         if (notification.foreground) {
           // The App is in foreground so just refresh the messages list
-          store.dispatch(loadMessagesRequest());
+          store.dispatch(loadMessages.request());
         } else {
           // The App was closed/in background and has been now opened clicking
           // on the push notification.
@@ -69,13 +66,9 @@ function configurePushNotifications() {
             )
           );
 
-          // in the meantime, also load the new message so that when the message
-          // details screen is opened, the message is already there
-          store.dispatch(loadMessageWithRelationsAction(messageId));
-
-          // finally, refresh the message list in case other messages have been
-          // sent to the user
-          store.dispatch(loadMessagesRequest());
+          // finally, refresh the message list to start loading the content of
+          // the new message
+          store.dispatch(loadMessages.request());
         }
       });
 
