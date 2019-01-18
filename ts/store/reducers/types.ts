@@ -13,7 +13,6 @@ import { IdentificationState } from "./identification";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
-import { PinLoginState } from "./pinlogin";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { WalletState } from "./wallet";
@@ -33,7 +32,6 @@ export type GlobalState = Readonly<{
   network: NetworkState;
   notifications: NotificationsState;
   onboarding: OnboardingState;
-  pinlogin: PinLoginState;
   profile: ProfileState;
   wallet: WalletState;
   preferences: PreferencesState;

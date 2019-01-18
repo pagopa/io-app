@@ -22,7 +22,6 @@ import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
-import { PinloginActions } from "./pinlogin";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
@@ -40,7 +39,6 @@ export type Action =
   | NotificationsActions
   | PinSetActions
   | OnboardingActions
-  | PinloginActions
   | PreferencesActions
   | ProfileActions
   | ServicesActions
