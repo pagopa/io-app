@@ -19,15 +19,6 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
 
-const getCurrentRouteFromState = (route: NavigationState): NavigationState => {
-  if (route.index) {
-    const currentRoute = route.routes[route.index];
-    return getCurrentRouteFromState(currentRoute as NavigationState);
-  }
-
-  return route;
-};
-
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
     /**

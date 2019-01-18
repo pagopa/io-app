@@ -1,6 +1,4 @@
-import I18n from "../i18n";
 import { Wallet } from "../types/pagopa";
-import { convertDateToWordDistance } from "./convertDateToWordDistance";
 
 /**
  * Build a string based on the currency that
@@ -16,22 +14,6 @@ export const centsToAmount = (cents: number): number =>
 
 export const formatNumberAmount = (amount: number): string =>
   `${amount.toFixed(DISPLAYED_DIGITS)} €`;
-
-export const buildFormattedLastUsage = (w: Wallet): string => {
-  const neverString = "never";
-  const lastUsageString =
-    w.lastUsage === undefined
-      ? neverString
-      : convertDateToWordDistance(
-          w.lastUsage,
-          I18n.t("datetimes.yesterday"),
-          I18n.t("datetimes.todayAt"),
-          neverString
-        );
-  return lastUsageString === neverString
-    ? I18n.t("cardComponent.neverUsed")
-    : `${I18n.t("cardComponent.lastUsage")} ${lastUsageString}`;
-};
 
 export const buildExpirationDate = (w: Wallet): string =>
   `${w.creditCard.expireMonth}/${w.creditCard.expireYear}`;
