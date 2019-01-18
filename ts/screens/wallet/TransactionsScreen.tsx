@@ -24,15 +24,9 @@ type NavigationParams = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type ReduxMappedStateProps = Readonly<{
-  transactions: ReturnType<ReturnType<typeof getWalletTransactionsCreator>>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToTransactionDetailsScreen: (transaction: Transaction) => void;
-}>;
-
-type Props = OwnProps & ReduxMappedStateProps & ReduxMappedDispatchProps;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -75,16 +69,13 @@ class TransactionsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (
-  state: GlobalState,
-  ownProps: OwnProps
-): ReduxMappedStateProps => ({
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToTransactionDetailsScreen: (transaction: Transaction) =>
     dispatch(
       navigateToTransactionDetailsScreen({

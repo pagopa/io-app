@@ -20,20 +20,9 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { DeepLinkState } from "./store/reducers/deepLink";
-import {
-  isPinLoginValidSelector,
-  PinLoginState
-} from "./store/reducers/pinlogin";
+import { isPinLoginValidSelector } from "./store/reducers/pinlogin";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-
-type ReduxMappedProps = {
-  pinLoginState: PinLoginState;
-  deepLinkState: DeepLinkState;
-  isPinValid: boolean;
-  isDebugModeEnabled: boolean;
-};
 
 type DispatchProps = {
   applicationChangeState: typeof applicationChangeState;
@@ -42,7 +31,7 @@ type DispatchProps = {
   navigateBack: typeof navigateBack;
 };
 
-type Props = ReduxMappedProps & DispatchProps;
+type Props = ReturnType<typeof mapStateToProps> & DispatchProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator

@@ -26,14 +26,7 @@ import { GlobalState } from "../store/reducers/types";
 
 import variables from "../theme/variables";
 
-type ReduxMappedProps = {
-  hasSessionToken: boolean;
-  hasSessionInfo: boolean;
-  hasProfile: boolean;
-  isProfileEnabled: boolean;
-};
-
-type Props = ReduxProps & ReduxMappedProps;
+type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   container: {
@@ -96,7 +89,7 @@ class IngressScreen extends React.PureComponent<Props> {
 
 // <ActivityIndicator color={variables.brandPrimaryInverted} />
 
-function mapStateToProps(state: GlobalState): ReduxMappedProps {
+function mapStateToProps(state: GlobalState) {
   const maybeSessionToken = sessionTokenSelector(state);
   const maybeSessionInfo = sessionInfoSelector(state);
   const potProfile = profileSelector(state);

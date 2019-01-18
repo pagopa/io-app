@@ -32,19 +32,12 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-type ReduxMappedDispatchProps = {
-  resetPin: () => void;
-  logout: () => void;
-  clearCache: typeof clearCache;
-  setDebugModeEnabled: (enabled: boolean) => void;
-};
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
 type Props = OwnProps &
-  ReduxMappedDispatchProps &
+  ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const copyToClipboardWithFeedback = (text: string) => {
@@ -243,7 +236,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
   logout: () => dispatch(logoutRequest()),
   clearCache: () => dispatch(clearCache()),

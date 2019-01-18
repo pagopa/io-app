@@ -57,14 +57,9 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type ReduxMappedDispatchProps = Readonly<{
-  addWalletCreditCardInit: () => void;
-  navigateToConfirmCardDetailsScreen: (card: CreditCard) => void;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedDispatchProps & OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -335,10 +330,7 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: OwnProps
-): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(

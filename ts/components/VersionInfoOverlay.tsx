@@ -2,20 +2,13 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ReduxProps } from "../store/actions/types";
 import { getCurrentRouteName } from "../store/middlewares/analytics";
-import { BackendInfoState } from "../store/reducers/backendInfo";
 import { GlobalState } from "../store/reducers/types";
 
-interface ReduxMappedProps {
-  nav: NavigationState;
-  serverInfo: BackendInfoState["serverInfo"];
-}
-
-type Props = ReduxMappedProps & ReduxProps;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -59,7 +52,7 @@ const VersionInfoOverlay: React.SFC<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   nav: state.nav,
   serverInfo: state.backendInfo.serverInfo
 });

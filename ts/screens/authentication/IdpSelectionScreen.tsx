@@ -25,13 +25,12 @@ import variables from "../../theme/variables";
 
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
-interface ReduxMappedProps {
-  isSessionExpired: boolean;
-}
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
 }
-type Props = ReduxMappedProps & ReduxProps & OwnProps;
+
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+
 const idps: ReadonlyArray<IdentityProvider> = [
   {
     id: "arubaid",
