@@ -114,6 +114,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
 
         <MarkdownViewer
           markdown={message.content.markdown}
+          htmlBodyClasses={"message--detail"}
           webViewStyle={styles.webview}
         />
       </React.Fragment>
