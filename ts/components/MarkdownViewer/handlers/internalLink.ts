@@ -1,8 +1,7 @@
 /**
  * An handler for application internal links
  */
-
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 
 import ROUTES from "../../../navigation/routes";
@@ -23,29 +22,19 @@ const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
 ];
 
 function getInternalRoute(href: string): Option<string> {
-  const parsed = href.split(INTERNAL_TARGET_PREFIX);
-
-  if (parsed.length === 2 && parsed[0] === "") {
-    const routeName = parsed[1];
-
-    // Return if available the react-navigation route
-    if (ALLOWED_ROUTE_NAMES.indexOf(routeName.toUpperCase()) > -1) {
-      return some(routeName);
-    }
-  }
-
-  return none;
+  return some(href.split(INTERNAL_TARGET_PREFIX))
+    .filter(_ => _.length === 2 && _[0] === "")
+    .chain(_ =>
+      fromNullable(ALLOWED_ROUTE_NAMES.find(e => e === _[1].toUpperCase()))
+    );
 }
 
 export function handleInternalLink(dispatch: Dispatch, href: string) {
-  const maybeInternalRoute = getInternalRoute(href);
-
-  if (maybeInternalRoute.isSome()) {
-    const internalRoute = maybeInternalRoute.value;
+  getInternalRoute(href).map(routeName =>
     dispatch(
       NavigationActions.navigate({
-        routeName: internalRoute
+        routeName
       })
-    );
-  }
+    )
+  );
 }

@@ -1,5 +1,5 @@
 /**
- * Types used by the MarkdownViewer component.
+ * Types of messages sent from inside the webview.
  */
 
 import * as t from "io-ts";

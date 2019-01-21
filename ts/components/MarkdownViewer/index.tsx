@@ -1,28 +1,20 @@
+/**
+ * A component to render the message markdown as HTML inside a WebView
+ */
+import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { InteractionManager, StyleProp, View, ViewStyle } from "react-native";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
-import remark from "remark";
-import remarkCustomBlocks from "remark-custom-blocks";
-import remarkHtml from "remark-html";
 
-import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
+import { remarkProcessor } from "../../utils/markdown";
 import { handleInternalLink } from "./handlers/internalLink";
 import {
   NOTIFY_BODY_HEIGHT_SCRIPT,
   NOTIFY_INTERNAL_LINK_CLICK_SCRIPT
 } from "./script";
 import { WebViewMessage } from "./types";
-
-// Configuration fo remark-custom-blocks
-const REMARK_CUSTOM_BLOCKS_CONFIG = {
-  "IO-DEMO": {
-    classes: "io-block-demo"
-  }
-};
-
-const COMPILE_ERROR_HTML = `<p>${I18n.t("global.markdown.decodeError")}<p>`;
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
@@ -55,6 +47,7 @@ const generateHtml = (content: string, htmlBodyClasses?: string) => {
 
 type OwnProps = {
   markdown: string;
+  onError?: (error: any) => void;
   // Space separated classes (ex. "message demo")
   htmlBodyClasses?: string;
   webViewStyle?: StyleProp<ViewStyle>;
@@ -79,18 +72,18 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { markdown, htmlBodyClasses } = this.props;
+    const { markdown, onError, htmlBodyClasses } = this.props;
 
-    this.compileMarkdownAsync(markdown, htmlBodyClasses);
+    this.compileMarkdownAsync(markdown, onError, htmlBodyClasses);
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { markdown: prevMarkdown } = prevProps;
-    const { markdown, htmlBodyClasses } = this.props;
+    const { markdown, onError, htmlBodyClasses } = this.props;
 
     // If the markdown changes we need to re-compile it
     if (markdown !== prevMarkdown) {
-      this.compileMarkdownAsync(markdown, htmlBodyClasses);
+      this.compileMarkdownAsync(markdown, onError, htmlBodyClasses);
     }
   }
 
@@ -165,18 +158,17 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   // A function that uses remark to compile the markdown to html
   private compileMarkdownAsync = (
     markdown: string,
+    onError?: (error: any) => void,
     htmlBodyClasses?: string
   ) => {
     InteractionManager.runAfterInteractions(() => {
-      remark()
-        .use(remarkCustomBlocks, REMARK_CUSTOM_BLOCKS_CONFIG)
-        .use(remarkHtml)
-        .process(markdown, (error: any, file: any) => {
-          const html = error
-            ? COMPILE_ERROR_HTML
-            : generateHtml(String(file), htmlBodyClasses);
-          this.setState({ html });
-        });
+      remarkProcessor.process(markdown, (error: any, file: any) => {
+        error
+          ? fromNullable(onError).map(_ => _(error))
+          : this.setState({
+              html: generateHtml(String(file), htmlBodyClasses)
+            });
+      });
     });
   };
 }
