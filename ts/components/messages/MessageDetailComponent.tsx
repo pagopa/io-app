@@ -11,10 +11,10 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
-import Markdown from "../ui/Markdown";
 import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
+import MessageMarkdownViewer from "./MessageMarkdownViewer";
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
     marginBottom: variables.contentPadding
   },
 
-  markdownContainer: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+  webview: {
+    marginLeft: variables.contentPadding,
+    marginRight: variables.contentPadding
   }
 });
 
@@ -103,14 +103,10 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           containerStyle={styles.ctaBarContainer}
         />
 
-        <View style={styles.markdownContainer}>
-          <Markdown
-            lazyOptions={{ lazy: true }}
-            initialState={{ screen: "MESSAGE_DETAIL" }}
-          >
-            {message.content.markdown}
-          </Markdown>
-        </View>
+        <MessageMarkdownViewer
+          markdown={message.content.markdown}
+          webViewStyle={styles.webview}
+        />
       </View>
     );
   }
