@@ -135,9 +135,7 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
       JSON.parse(event.nativeEvent.data)
     );
 
-    if (messageOrErrors.isRight()) {
-      const message = messageOrErrors.value;
-
+    messageOrErrors.map(message => {
       switch (message.type) {
         case "LINK_MESSAGE":
           handleInternalLink(dispatch, message.payload.href);
@@ -149,7 +147,7 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
           });
           break;
       }
-    }
+    });
   };
 
   // A function that uses remark to compile the markdown to html
