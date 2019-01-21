@@ -103,6 +103,10 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           containerStyle={styles.ctaBarContainer}
         />
 
+        {/* 
+            The value of the htmlBodyClasses parameter is used in the `INLINE_CSS`
+            variable of the MarkdownViewer component.
+        */}
         <MarkdownViewer
           markdown={message.content.markdown}
           htmlBodyClasses={"message--detail"}

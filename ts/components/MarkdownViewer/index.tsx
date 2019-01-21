@@ -27,6 +27,10 @@ body {
   padding: 0;
   font-size: 16px;
 }
+
+body.message--detail {
+  font-size: 18px;
+}
 </style>
 `;
 
@@ -48,7 +52,20 @@ const generateHtml = (content: string, htmlBodyClasses?: string) => {
 type OwnProps = {
   markdown: string;
   onError?: (error: any) => void;
-  // Space separated classes (ex. "message demo")
+  /**
+   * Space separated classes (ex. "message demo").
+   *
+   * When you insert a class here you can use it to alter your html style.
+   * For example if you use "message-detail" for this props than in your
+   * INLINE_CSS variables you can use:
+   *
+   * ```
+   * body.message-detail {
+   *  font-size: 18px
+   * }
+   * ```
+   */
+
   htmlBodyClasses?: string;
   webViewStyle?: StyleProp<ViewStyle>;
 };
