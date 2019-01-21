@@ -16,14 +16,11 @@ import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
-import errorReducer from "./error";
 import identificationReducer from "./identification";
-import loadingReducer from "./loading";
 import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
-import pinloginReducer from "./pinlogin";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import { GlobalState } from "./types";
@@ -57,13 +54,10 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   network: networkReducer,
   nav: navigationReducer,
   deepLink: deepLinkReducer,
-  loading: loadingReducer,
-  error: errorReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
   content: contentReducer,
   preferences: preferencesReducer,
-  pinlogin: pinloginReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
 

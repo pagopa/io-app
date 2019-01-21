@@ -43,16 +43,8 @@ type NavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  wallets: pot.PotType<ReturnType<typeof getWalletsById>> | undefined;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToWalletHome: () => void;
-}>;
-
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   NavigationInjectedProps<NavigationParams> &
   ContextualHelpInjectedProps;
 
@@ -220,11 +212,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome())
 });
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   wallets: pot.toUndefined(getWalletsById(state))
 });
 

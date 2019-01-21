@@ -49,7 +49,7 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
-  paymentExecutePaymentRequest,
+  paymentExecutePayment,
   paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
@@ -79,23 +79,10 @@ type NavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  isLoading: boolean;
-  error: Option<string>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  pickPaymentMethod: () => void;
-  pickPsp: () => void;
-  onCancel: () => void;
-  onRetry: () => void;
-  runAuthorizationAndPayment: () => void;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ContextualHelpInjectedProps &
   OwnProps;
 
@@ -295,7 +282,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
+const mapStateToProps = ({ wallet }: GlobalState) => ({
   isLoading:
     pot.isLoading(wallet.payment.transaction) ||
     pot.isLoading(wallet.payment.confirmedTransaction),
@@ -304,10 +291,7 @@ const mapStateToProps = ({ wallet }: GlobalState): ReduxMappedStateProps => ({
     : none
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: OwnProps
-): ReduxMappedDispatchProps => {
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onTransactionTimeout = () => {
     dispatch(navigateToWalletHome());
     showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
@@ -352,7 +336,7 @@ const mapDispatchToProps = (
 
   const onIdentificationSuccess = () => {
     dispatch(
-      paymentExecutePaymentRequest({
+      paymentExecutePayment.request({
         wallet: props.navigation.getParam("wallet"),
         idPayment: props.navigation.getParam("idPayment"),
         onSuccess: action => {

@@ -2,6 +2,7 @@
  * A saga that manages the Profile.
  */
 import { none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
@@ -19,9 +20,7 @@ import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
   profileLoadSuccess,
-  profileUpsertFailure,
-  profileUpsertRequest,
-  profileUpsertSuccess
+  profileUpsert
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -47,6 +46,12 @@ export function* loadProfile(
       return some(response.value);
     }
 
+    if (response && response.status === 401) {
+      // in case we got an expired session while loading the profile, we reset
+      // the session
+      yield put(sessionExpired());
+    }
+
     throw response ? response.value : Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield put(profileLoadFailure(error));
@@ -57,30 +62,32 @@ export function* loadProfile(
 // A saga to update the Profile.
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
-  action: ActionType<typeof profileUpsertRequest>
+  action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield select<
     GlobalState
   >(profileSelector);
 
-  if (!profileState) {
+  if (pot.isNone(profileState)) {
     // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
     // the used didn't yet authenticated: ignore this upsert request.
     return;
   }
 
+  const currentProfile = profileState.value;
+
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
   // FIXME: perhaps this is responsibility of the caller?
-  const newProfile: ExtendedProfile = profileState.has_profile
+  const newProfile: ExtendedProfile = currentProfile.has_profile
     ? {
-        is_inbox_enabled: profileState.is_inbox_enabled,
-        is_webhook_enabled: profileState.is_webhook_enabled,
-        version: profileState.version,
-        email: profileState.email,
-        preferred_languages: profileState.preferred_languages,
-        blocked_inbox_or_channels: profileState.blocked_inbox_or_channels,
+        is_inbox_enabled: currentProfile.is_inbox_enabled,
+        is_webhook_enabled: currentProfile.is_webhook_enabled,
+        version: currentProfile.version,
+        email: currentProfile.email,
+        preferred_languages: currentProfile.preferred_languages,
+        blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         ...action.payload
       }
     : {
@@ -109,10 +116,10 @@ function* createOrUpdateProfileSaga(
       ? Error(response.value.title)
       : Error(I18n.t("profile.errors.upsert"));
 
-    yield put(profileUpsertFailure(error));
+    yield put(profileUpsert.failure(error));
   } else {
     // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-    yield put(profileUpsertSuccess(response.value));
+    yield put(profileUpsert.success(response.value));
   }
 }
 
@@ -121,7 +128,7 @@ export function* watchProfileUpsertRequestsSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>
 ): Iterator<Effect> {
   yield takeLatest(
-    getType(profileUpsertRequest),
+    getType(profileUpsert.request),
     createOrUpdateProfileSaga,
     createOrUpdateProfile
   );

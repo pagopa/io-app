@@ -1,15 +1,15 @@
 import { Option } from "fp-ts/lib/Option";
 import { Effect } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call, put, take } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
 import { getPin } from "../../utils/keychain";
 
 import { PinString } from "../../types/PinString";
-import { SagaCallReturnType } from "../../types/utils";
 
-import { configurePinSaga } from "./configurePinSaga";
+import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
+import { createPinSuccess } from "../../store/actions/pinset";
 
-// tslint:disable-next-line:cognitive-complexity
 export function* checkConfiguredPinSaga(): IterableIterator<
   Effect | PinString
 > {
@@ -21,15 +21,13 @@ export function* checkConfiguredPinSaga(): IterableIterator<
     return pinCode.value;
   }
 
-  // If a PIN has not been configured yet...
-  while (true) {
-    // Go through the PIN configuration flow until a PIN is set.
-    const configurePinResult: SagaCallReturnType<
-      typeof configurePinSaga
-    > = yield call(configurePinSaga);
-    // FIXME: handle errors
-    if (configurePinResult.isRight()) {
-      return configurePinResult.value;
-    }
-  }
+  // Go through the PIN configuration screen
+  yield put(navigateToOnboardingPinScreenAction);
+
+  // and block until a PIN is set
+  const resultAction: ActionType<typeof createPinSuccess> = yield take(
+    getType(createPinSuccess)
+  );
+
+  return resultAction.payload;
 }

@@ -22,15 +22,10 @@ import {
   identificationSuccess
 } from "./store/actions/identification";
 import { ReduxProps } from "./store/actions/types";
-import { IdentificationState } from "./store/reducers/identification";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 
-type ReduxMappedStateProps = {
-  identificationState: IdentificationState;
-};
-
-type Props = ReduxMappedStateProps & ReduxProps;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 /**
  * Type used in the local state to save the result of Pinpad PIN matching.
@@ -319,7 +314,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   identificationState: state.identification
 });
 

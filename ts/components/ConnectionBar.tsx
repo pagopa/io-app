@@ -9,11 +9,7 @@ import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
-type ReduxMappedProps = {
-  isConnected: boolean;
-};
-
-type Props = ReduxMappedProps & ReduxProps;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +57,7 @@ const ConnectionBar: React.SFC<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState): ReduxMappedProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   isConnected: state.network.isConnected
 });
 

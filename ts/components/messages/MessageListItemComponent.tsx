@@ -7,16 +7,16 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
-  message: MessageWithContentPO;
+  messageState: MessageState;
   messageUIStates: MessageUIStates;
   paymentByRptId: GlobalState["entities"]["paymentByRptId"];
   service: pot.Pot<ServicePublic, Error>;
@@ -86,7 +86,17 @@ const styles = StyleSheet.create({
 
 export class MessageListItemComponent extends React.Component<Props> {
   public shouldComponentUpdate(nextProps: Props) {
-    const { payment_data } = this.props.message.content;
+    if (
+      this.props.messageState.message.kind !==
+      nextProps.messageState.message.kind
+    ) {
+      return true;
+    }
+    if (pot.isNone(this.props.messageState.message)) {
+      return false;
+    }
+    const message = this.props.messageState.message.value;
+    const { payment_data } = message.content;
     const rptId =
       payment_data !== undefined
         ? pot.getOrElse(
@@ -110,32 +120,52 @@ export class MessageListItemComponent extends React.Component<Props> {
 
   public render() {
     const {
-      message,
+      messageState,
+      onItemPress,
       paymentByRptId,
       messageUIStates,
-      service,
-      onItemPress
+      service
     } = this.props;
 
+    const { message, meta } = messageState;
+
     // TODO: Extract this to external file
-    const uiService = pot.getOrElse(
-      pot.map(service, s => `${s.organization_name} - ${s.department_name}`),
-      I18n.t("messages.unknownSender")
-    );
+    const uiService = pot.isLoading(service)
+      ? ""
+      : pot.getOrElse(
+          pot.map(
+            service,
+            s => `${s.organization_name} - ${s.department_name}`
+          ),
+          I18n.t("messages.unknownSender")
+        );
 
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
-    // TODO: Extract this to external file
-    const uiCreatedAt = DateFromISOString.decode(message.created_at)
-      .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-      .getOrElse(message.created_at);
+    // TODO: get created_at from CreatedMessageWithoutContent to avoid waiting
+    //       for the message to load
+    const uiCreatedAt = pot.getOrElse(
+      pot.map(message, m =>
+        DateFromISOString.decode(m.created_at)
+          .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
+          .getOrElse(m.created_at)
+      ),
+      ""
+    );
+
+    const subject = pot.isLoading(message)
+      ? ""
+      : pot.getOrElse(
+          pot.map(message, _ => _.content.subject),
+          I18n.t("messages.noContent")
+        );
 
     const onItemPressHandler = onItemPress
-      ? () => onItemPress(message.id)
+      ? () => onItemPress(meta.id)
       : undefined;
 
     return (
-      <TouchableOpacity key={message.id} onPress={onItemPressHandler}>
+      <TouchableOpacity key={meta.id} onPress={onItemPressHandler}>
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
@@ -169,7 +199,7 @@ export class MessageListItemComponent extends React.Component<Props> {
             </Row>
             <Row style={styles.subjectRow}>
               <Col size={11}>
-                <Text leftAlign={true}>{message.content.subject}</Text>
+                <Text leftAlign={true}>{subject}</Text>
               </Col>
               <Col size={1} style={styles.iconContainer}>
                 <IconFont
@@ -180,12 +210,14 @@ export class MessageListItemComponent extends React.Component<Props> {
               </Col>
             </Row>
             <Row>
-              <MessageCTABar
-                message={message}
-                paymentByRptId={paymentByRptId}
-                service={service}
-                containerStyle={styles.ctaBarContainer}
-              />
+              {pot.isSome(message) && (
+                <MessageCTABar
+                  message={message.value}
+                  paymentByRptId={paymentByRptId}
+                  service={service}
+                  containerStyle={styles.ctaBarContainer}
+                />
+              )}
             </Row>
           </Grid>
         </View>

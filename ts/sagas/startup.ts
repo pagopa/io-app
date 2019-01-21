@@ -19,7 +19,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
-import { loadMessageWithRelationsAction } from "../store/actions/messages";
+import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
@@ -27,10 +27,7 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { resetProfileState } from "../store/actions/profile";
-import {
-  loadServiceRequest,
-  loadVisibleServicesRequest
-} from "../store/actions/services";
+import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -213,13 +210,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // this parent saga gets restarted.
 
   yield takeEvery(
-    getType(loadServiceRequest),
+    getType(loadService.request),
     loadServiceRequestHandler,
     backendClient.getService
   );
 
   yield takeEvery(
-    getType(loadVisibleServicesRequest),
+    getType(loadVisibleServices.request),
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
@@ -233,7 +230,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Load message and related entities (ex. the sender service)
   yield takeEvery(
-    getType(loadMessageWithRelationsAction),
+    getType(loadMessageWithRelations.request),
     loadMessageWithRelationsSaga,
     backendClient.getMessage
   );

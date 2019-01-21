@@ -55,17 +55,9 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToWalletHome: () => void;
-  navigateToTransactionSummary: (
-    rptId: RptId,
-    amount: AmountInEuroCents
-  ) => void;
-}>;
-
 type OwnProps = NavigationInjectedProps;
 
-type Props = OwnProps & ReduxMappedDispatchProps;
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = Readonly<{
   paymentNoticeNumber: Option<
@@ -258,7 +250,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToTransactionSummary: (
     rptId: RptId,

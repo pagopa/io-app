@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   CheckBox,
@@ -25,14 +26,7 @@ import { GlobalState } from "../store/reducers/types";
 
 import variables from "../theme/variables";
 
-type ReduxMappedProps = {
-  hasSessionToken: boolean;
-  hasSessionInfo: boolean;
-  hasProfile: boolean;
-  isProfileEnabled: boolean;
-};
-
-type Props = ReduxProps & ReduxMappedProps;
+type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   container: {
@@ -95,18 +89,18 @@ class IngressScreen extends React.PureComponent<Props> {
 
 // <ActivityIndicator color={variables.brandPrimaryInverted} />
 
-function mapStateToProps(state: GlobalState): ReduxMappedProps {
+function mapStateToProps(state: GlobalState) {
   const maybeSessionToken = sessionTokenSelector(state);
   const maybeSessionInfo = sessionInfoSelector(state);
-  const maybeProfile = profileSelector(state);
+  const potProfile = profileSelector(state);
   return {
     hasSessionToken: maybeSessionToken !== undefined,
     hasSessionInfo: maybeSessionInfo.isSome(),
-    hasProfile: maybeProfile !== null,
+    hasProfile: potProfile !== null,
     isProfileEnabled:
-      maybeProfile !== null &&
-      maybeProfile.has_profile &&
-      maybeProfile.is_inbox_enabled
+      pot.isSome(potProfile) &&
+      potProfile.value.has_profile &&
+      potProfile.value.is_inbox_enabled
   };
 }
 

@@ -17,7 +17,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
 import { contentServiceLoad } from "../../store/actions/content";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 import { isDefined } from "../../utils/guards";
@@ -27,30 +26,15 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ServiceListItem } from "../../components/services/ServiceListItem";
 import Markdown from "../../components/ui/Markdown";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import { loadVisibleServicesRequest } from "../../store/actions/services";
+import { loadVisibleServices } from "../../store/actions/services";
 import variables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
-type ReduxMappedStateProps = Readonly<{
-  profile: ProfileState;
-  isLoading: boolean;
-  // tslint:disable-next-line:readonly-array
-  sections: Array<SectionListData<pot.Pot<ServicePublic, Error>>>;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  loadVisibleServices: () => void;
-  contentServiceLoad: (serviceId: ServiceId) => void;
-  navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => void;
-}>;
-
 type OwnProps = NavigationInjectedProps;
 
-type Props = ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps &
   OwnProps;
 
@@ -140,7 +124,7 @@ class ServicesScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState) => {
   const { services, organizations } = state.entities;
 
   const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
@@ -174,10 +158,10 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): ReduxMappedDispatchProps => ({
-  loadVisibleServices: () => dispatch(loadVisibleServicesRequest()),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadVisibleServices: () => dispatch(loadVisibleServices.request()),
   contentServiceLoad: (serviceId: ServiceId) =>
-    dispatch(contentServiceLoad(serviceId)),
+    dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params))

@@ -50,20 +50,11 @@ type NavigationParams = Readonly<{
   idPayment: string;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  wallets: pot.PotType<ReturnType<typeof walletsSelector>>;
-  isLoading: boolean;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToTransactionSummary: () => void;
-  navigateToConfirmOrPickPsp: (wallet: Wallet) => void;
-  navigateToAddPaymentMethod: () => void;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -155,7 +146,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState) => {
   const potWallets = walletsSelector(state);
   const potPsps = state.wallet.payment.psps;
   const isLoading = pot.isLoading(potWallets) || pot.isLoading(potPsps);
@@ -165,10 +156,7 @@ const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: OwnProps
-): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToTransactionSummary: () =>
     dispatch(
       navigateToPaymentTransactionSummaryScreen({

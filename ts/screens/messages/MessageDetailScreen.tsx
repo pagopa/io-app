@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
@@ -5,27 +6,22 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { FetchRequestActions } from "../../store/actions/constants";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
-  loadMessageWithRelationsAction,
+  loadMessageWithRelations,
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { messageByIdSelector } from "../../store/reducers/entities/messages/messagesById";
-import {
-  makeMessageUIStatesByIdSelector,
-  MessageUIStates
-} from "../../store/reducers/entities/messages/messagesUIStatesById";
+import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import { makeMessageUIStatesByIdSelector } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { createErrorSelector } from "../../store/reducers/error";
-import { createLoadingSelector } from "../../store/reducers/loading";
 import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
@@ -37,25 +33,9 @@ type MessageDetailScreenNavigationParams = {
 
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
 
-type ReduxMappedStateProps = Readonly<{
-  potMessage: pot.Pot<MessageWithContentPO, Error>;
-  messageUIStates: MessageUIStates;
-  potService: pot.Pot<ServicePublic, Error>;
-  paymentByRptId: GlobalState["entities"]["paymentByRptId"];
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  contentServiceLoad: (serviceId: ServiceId) => void;
-  loadMessageWithRelations: () => void;
-  setMessageReadState: (isRead: boolean) => void;
-  navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => void;
-}>;
-
 type Props = OwnProps &
-  ReduxMappedStateProps &
-  ReduxMappedDispatchProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps;
 
 const styles = StyleSheet.create({
@@ -114,12 +94,15 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * (ex. the loading of the message/service failed but we can retry)
    */
   private renderErrorState = () => {
+    const onRetry = this.props.maybeMeta
+      .map(_ => () => this.props.loadMessageWithRelations(_))
+      .toUndefined();
     return (
       <View style={styles.notFullStateContainer}>
         <Text style={styles.notFullStateMessageText}>
           {I18n.t("messageDetails.errorText")}
         </Text>
-        <Button primary={true} onPress={this.props.loadMessageWithRelations}>
+        <Button primary={true} onPress={onRetry}>
           <Text>{I18n.t("messageDetails.retryText")}</Text>
         </Button>
       </View>
@@ -197,43 +180,29 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   }
 }
 
-const messageWithRelationsLoadLoadingSelector = createLoadingSelector([
-  FetchRequestActions.MESSAGE_WITH_RELATIONS_LOAD
-]);
-
-const messageWithRelationsLoadErrorSelector = createErrorSelector([
-  FetchRequestActions.MESSAGE_WITH_RELATIONS_LOAD
-]);
-
-const mapStateToProps = (
-  state: GlobalState,
-  ownProps: OwnProps
-): ReduxMappedStateProps => {
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
 
-  const isLoading = messageWithRelationsLoadLoadingSelector(state);
-  const hasError = messageWithRelationsLoadErrorSelector(state).isSome();
-  const maybeMessage = messageByIdSelector(messageId)(state);
+  const maybeMessageState = fromNullable(
+    messageStateByIdSelector(messageId)(state)
+  );
 
-  const potMessage =
-    maybeMessage !== undefined
-      ? pot.some(maybeMessage)
-      : isLoading
-        ? pot.noneLoading
-        : hasError
-          ? pot.noneError(Error())
-          : pot.none;
+  const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const potService = pot
-    .toOption(potMessage)
-    .mapNullable(message =>
-      serviceByIdSelector(message.sender_service_id)(state)
-    )
+  // In case maybePotMessage is undefined we fallback to an empty message.
+  // This mens we navigated to the message screen with a non-existing message
+  // ID (should never happen!).
+  const potMessage = maybeMessageState.map(_ => _.message).getOrElse(pot.none);
+
+  // Map the potential message to the potential service
+  const potService = maybeMessageState
+    .mapNullable(_ => serviceByIdSelector(_.meta.sender_service_id)(state))
     .getOrElse(pot.none);
 
   const messageUIStates = makeMessageUIStatesByIdSelector(messageId)(state);
 
   return {
+    maybeMeta,
     potMessage,
     messageUIStates,
     potService,
@@ -241,16 +210,13 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  ownProps: OwnProps
-): ReduxMappedDispatchProps => {
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
     contentServiceLoad: (serviceId: ServiceId) =>
-      dispatch(contentServiceLoad(serviceId)),
-    loadMessageWithRelations: () =>
-      dispatch(loadMessageWithRelationsAction(messageId)),
+      dispatch(contentServiceLoad.request(serviceId)),
+    loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
+      dispatch(loadMessageWithRelations.request(meta)),
     setMessageReadState: (isRead: boolean) =>
       dispatch(setMessageReadState(messageId, isRead)),
     navigateToServiceDetailsScreen: (

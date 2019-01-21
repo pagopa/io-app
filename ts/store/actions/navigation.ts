@@ -63,11 +63,6 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
-export const navigateToPinLogin = NavigationActions.navigate({
-  routeName: ROUTES.PIN_LOGIN,
-  key: undefined
-});
-
 export const navigateBack = NavigationActions.back;
 
 export const navigateToMessageDetailScreenAction = (

@@ -16,14 +16,12 @@ import { BackendInfoActions } from "./backendInfo";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
-import { ErrorActions } from "./error";
 import { IdentificationActions } from "./identification";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
-import { PinloginActions } from "./pinlogin";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
@@ -36,13 +34,11 @@ export type Action =
   | AuthenticationActions
   | BackendInfoActions
   | DeepLinkActions
-  | ErrorActions
   | MessagesActions
   | NavigationActions
   | NotificationsActions
   | PinSetActions
   | OnboardingActions
-  | PinloginActions
   | PreferencesActions
   | ProfileActions
   | ServicesActions

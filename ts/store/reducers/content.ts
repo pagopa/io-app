@@ -5,10 +5,11 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 
+import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
-import { contentServiceLoadSuccess } from "../actions/content";
+import { contentServiceLoad } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 
@@ -19,7 +20,7 @@ import { Action } from "../actions/types";
 export type ContentState = Readonly<{
   servicesMetadata: {
     byId: {
-      [key: string]: ServiceMetadata | undefined;
+      [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
     };
   };
 }>;
@@ -35,17 +36,41 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(contentServiceLoadSuccess):
+    case getType(contentServiceLoad.request):
       return {
         ...state,
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: action.payload.data
+            [action.payload]: pot.toLoading(
+              state.servicesMetadata.byId[action.payload] || pot.none
+            )
           }
         }
       };
-
+    case getType(contentServiceLoad.success):
+      return {
+        ...state,
+        servicesMetadata: {
+          byId: {
+            ...state.servicesMetadata.byId,
+            [action.payload.serviceId]: pot.some(action.payload.data)
+          }
+        }
+      };
+    case getType(contentServiceLoad.failure):
+      return {
+        ...state,
+        servicesMetadata: {
+          byId: {
+            ...state.servicesMetadata.byId,
+            [action.payload]: pot.toError(
+              state.servicesMetadata.byId[action.payload] || pot.none,
+              action.payload
+            )
+          }
+        }
+      };
     case getType(clearCache):
       return {
         ...state,

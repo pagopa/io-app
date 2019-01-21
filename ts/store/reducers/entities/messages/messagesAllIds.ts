@@ -4,30 +4,32 @@
  * are managed by different global reducers.
  */
 
+import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { loadMessageSuccess } from "../../../actions/messages";
+import { loadMessages } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 // An array of messages id
-export type MessagesAllIdsState = ReadonlyArray<string>;
+export type MessagesAllIdsState = pot.Pot<ReadonlyArray<string>, string>;
 
-const INITIAL_STATE: MessagesAllIdsState = [];
+const INITIAL_STATE: MessagesAllIdsState = pot.none;
 
 const reducer = (
   state: MessagesAllIdsState = INITIAL_STATE,
   action: Action
 ): MessagesAllIdsState => {
   switch (action.type) {
-    /**
-     * A new message has been loaded from the Backend. Add the ID to the array.
-     */
-    case getType(loadMessageSuccess):
-      return state.indexOf(action.payload.id) >= 0
-        ? state
-        : [...state, action.payload.id];
+    case getType(loadMessages.request):
+      return pot.toLoading(state);
+
+    case getType(loadMessages.success):
+      return pot.some(action.payload);
+
+    case getType(loadMessages.failure):
+      return pot.toError(state, action.payload);
 
     case getType(clearCache):
       return INITIAL_STATE;

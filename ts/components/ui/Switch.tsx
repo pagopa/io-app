@@ -8,6 +8,16 @@ import variables from "../../theme/variables";
  */
 export default class Switch extends React.Component<NativeBase.Switch> {
   public render() {
-    return <NBSwitch onTintColor={variables.brandPrimary} {...this.props} />;
+    return (
+      <NBSwitch
+        trackColor={{
+          false: "#eee",
+          true: this.props.disabled
+            ? variables.brandPrimaryLight
+            : variables.brandPrimary
+        }}
+        {...this.props}
+      />
+    );
   }
 }

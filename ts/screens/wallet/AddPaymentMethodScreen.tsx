@@ -53,14 +53,9 @@ type NavigationParams = Readonly<{
   }>;
 }>;
 
-type ReduxMappedDispatchProps = Readonly<{
-  navigateToTransactionSummary: () => void;
-  navigateToAddCreditCard: () => void;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedDispatchProps & OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
@@ -129,10 +124,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: OwnProps
-): ReduxMappedDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToTransactionSummary: () => {
     const maybeInPayment = props.navigation.getParam("inPayment");
     maybeInPayment.map(inPayment =>

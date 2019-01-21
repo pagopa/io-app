@@ -20,29 +20,11 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { DeepLinkState } from "./store/reducers/deepLink";
-import {
-  isPinLoginValidSelector,
-  PinLoginState
-} from "./store/reducers/pinlogin";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-type ReduxMappedProps = {
-  pinLoginState: PinLoginState;
-  deepLinkState: DeepLinkState;
-  isPinValid: boolean;
-  isDebugModeEnabled: boolean;
-};
-
-type DispatchProps = {
-  applicationChangeState: typeof applicationChangeState;
-  setDeepLink: typeof setDeepLink;
-  navigateToDeepLink: typeof navigateToDeepLink;
-  navigateBack: typeof navigateBack;
-};
-
-type Props = ReduxMappedProps & DispatchProps;
+// tslint:disable-next-line:no-use-before-declare
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 /**
  * The main container of the application with the ConnectionBar and the Navigator
@@ -118,11 +100,10 @@ class RootContainer extends React.PureComponent<Props> {
     // FIXME: how does this logic interacts with the logic that handles the deep
     //        link in the startup saga?
     const {
-      deepLinkState: { deepLink, immediate },
-      isPinValid
+      deepLinkState: { deepLink, immediate }
     } = this.props;
 
-    if (immediate && deepLink && isPinValid) {
+    if (immediate && deepLink) {
       this.props.navigateToDeepLink(deepLink);
     }
   }
@@ -143,9 +124,7 @@ class RootContainer extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  pinLoginState: state.pinlogin,
   deepLinkState: state.deepLink,
-  isPinValid: isPinLoginValidSelector(state),
   isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 

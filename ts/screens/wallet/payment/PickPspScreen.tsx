@@ -44,18 +44,11 @@ type NavigationParams = Readonly<{
   wallet: Wallet;
 }>;
 
-type ReduxMappedStateProps = Readonly<{
-  isLoading: boolean;
-}>;
-
-type ReduxMappedDispatchProps = Readonly<{
-  pickPsp: (pspId: number) => void;
-  onCancel: () => void;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReduxMappedStateProps & ReduxMappedDispatchProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 const style = StyleSheet.create({
   listItem: {
@@ -160,14 +153,11 @@ class PickPspScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState): ReduxMappedStateProps => ({
+const mapStateToProps = (state: GlobalState) => ({
   isLoading: pot.isLoading(state.wallet.wallets.walletById)
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  props: OwnProps
-): ReduxMappedDispatchProps => {
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   return {
     pickPsp: (idPsp: number) =>
       dispatchUpdatePspForWalletAndConfirm(dispatch)(

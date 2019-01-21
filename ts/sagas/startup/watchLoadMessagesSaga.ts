@@ -4,6 +4,7 @@
 
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Task } from "redux-saga";
 import {
@@ -19,23 +20,21 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
+import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import {
   GetUserMessagesT,
   GetUserMessageT
 } from "../../../definitions/backend/requestTypes";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadMessageFailure,
-  loadMessagesCancel,
-  loadMessagesFailure,
-  loadMessagesRequest,
-  loadMessagesSuccess,
-  loadMessageSuccess
+  loadMessage as loadMessageAction,
+  loadMessages as loadMessagesAction,
+  loadMessagesCancel
 } from "../../store/actions/messages";
-import { loadServiceRequest } from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import {
-  messageByIdSelector,
-  messagesByIdSelector
+  messagesStateByIdSelector,
+  messageStateByIdSelector
 } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -44,47 +43,49 @@ import {
   toMessageWithContentPO
 } from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
+import { uniqueItem } from "../../utils/enumerables";
 
 /**
  * A generator to load the message detail from the Backend
  *
  * @param {function} getMessage - The function that makes the Backend request
- * @param {string} id - The id of the message to load
+ * @param {string} meta - The id of the message to load
  * @returns {IterableIterator<Effect | Error | MessageWithContentPO>}
  */
+// FIXME: apparently the returned value doesn't get used, can we get rid of it?
 export function* loadMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
-  id: string
+  meta: CreatedMessageWithoutContent
 ): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
   // If we already have the message in the store just return it
   const cachedMessage: ReturnType<
-    ReturnType<typeof messageByIdSelector>
-  > = yield select<GlobalState>(messageByIdSelector(id));
+    ReturnType<typeof messageStateByIdSelector>
+  > = yield select<GlobalState>(messageStateByIdSelector(meta.id));
   if (cachedMessage) {
     return right(cachedMessage);
   }
 
+  yield put(loadMessageAction.request(meta));
+
   try {
     const response: SagaCallReturnType<typeof getMessage> = yield call(
       getMessage,
-      { id }
+      { id: meta.id }
     );
 
     if (!response || response.status !== 200) {
-      const error: Error =
-        response && response.status === 500
-          ? Error(response.value.title)
-          : Error();
-      yield put(loadMessageFailure(error));
-      return left(error);
+      const error =
+        response && response.status === 500 ? response.value.title : undefined;
+      yield put(loadMessageAction.failure({ id: meta.id, error }));
+      return left(Error(error));
     }
 
     // Trigger an action to store the new message (converted to plain object) and return it
     const messageWithContentPO = toMessageWithContentPO(response.value);
-    yield put(loadMessageSuccess(messageWithContentPO));
+    yield put(loadMessageAction.success(messageWithContentPO));
     return right(messageWithContentPO);
   } catch (error) {
-    yield put(loadMessageFailure(error));
+    yield put(loadMessageAction.failure(error));
     return left(error);
   }
 }
@@ -103,8 +104,8 @@ export function* loadMessages(
   try {
     // Load already cached messages from the store
     const cachedMessagesById: ReturnType<
-      typeof messagesByIdSelector
-    > = yield select<GlobalState>(messagesByIdSelector);
+      typeof messagesStateByIdSelector
+    > = yield select<GlobalState>(messagesStateByIdSelector);
 
     // Load already cached services from the store
     const cachedServicesById: ReturnType<
@@ -127,45 +128,51 @@ export function* loadMessages(
      * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
      */
     if (!response || response.status !== 200) {
-      const error: Error =
-        response && response.status === 500
-          ? Error(response.value.title)
-          : Error();
+      // TODO: provide status code along with message in error
+      const error =
+        response && response.status === 500 ? response.value.title : undefined;
 
       // Dispatch failure action
-      yield put(loadMessagesFailure(error));
+      yield put(loadMessagesAction.failure(error || ""));
     } else {
-      // Filter messages already in the store
-      const newMessagesWithoutContent = response.value.items.filter(
-        message => !cachedMessagesById.hasOwnProperty(message.id)
+      yield put(
+        loadMessagesAction.success(response.value.items.map(_ => _.id))
       );
 
-      // Get the messages ids list
-      const newMessagesIds = newMessagesWithoutContent.map(
-        message => message.id
-      );
+      const shouldLoadMessage = (message: { id: string }) => {
+        const cached = cachedMessagesById[message.id];
+        return (
+          cached === undefined ||
+          pot.isNone(cached.message) ||
+          pot.isError(cached.message)
+        );
+      };
+
+      // Filter messages already in the store
+      const pendingMessages = response.value.items.filter(shouldLoadMessage);
+
+      const shouldLoadService = (id: string) =>
+        cachedServicesById[id] === undefined;
 
       // Filter services already in the store
-      const newServicesIds = newMessagesWithoutContent
-        .map(message => message.sender_service_id)
-        .filter(id => !cachedServicesById.hasOwnProperty(id))
-        .filter((id, index, ids) => index === ids.indexOf(id)); // Get unique ids
+      const pendingServicesIds = pendingMessages
+        .map(_ => _.sender_service_id)
+        .filter(shouldLoadService)
+        .filter(uniqueItem); // Get unique ids
 
       // Fetch the services detail in parallel
       // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
       // We fetch services first because to show messages you need the related service info
-      yield all(newServicesIds.map(id => put(loadServiceRequest(id))));
+      yield all(pendingServicesIds.map(id => put(loadService.request(id))));
 
       // Fetch the messages detail in parallel
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
       // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
-      yield all(newMessagesIds.map(id => call(loadMessage, getMessage, id)));
-
-      yield put(loadMessagesSuccess());
+      yield all(pendingMessages.map(_ => call(loadMessage, getMessage, _)));
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesFailure(error));
+    yield put(loadMessagesAction.failure(error.message));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a cancel message
@@ -191,9 +198,9 @@ export function* watchMessagesLoadOrCancelSaga(
     // FIXME: why not takeLatest?
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
     const action:
-      | ActionType<typeof loadMessagesRequest>
+      | ActionType<typeof loadMessagesAction["request"]>
       | ActionType<typeof loadMessagesCancel> = yield take([
-      getType(loadMessagesRequest),
+      getType(loadMessagesAction.request),
       getType(loadMessagesCancel)
     ]);
     if (lastTask.isSome()) {
@@ -204,7 +211,7 @@ export function* watchMessagesLoadOrCancelSaga(
 
     // If the action received is a MESSAGES_LOAD_REQUEST send the request
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
-    if (isActionOf(loadMessagesRequest, action)) {
+    if (isActionOf(loadMessagesAction.request, action)) {
       // Call the generator to load messages
       lastTask = some(yield fork(loadMessages, getMessages, getMessage));
     }

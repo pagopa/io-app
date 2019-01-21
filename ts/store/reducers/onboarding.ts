@@ -4,7 +4,7 @@
  */
 import { getType } from "typesafe-actions";
 
-import { tosAcceptSuccess } from "../actions/onboarding";
+import { tosAccept } from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -25,7 +25,7 @@ const reducer = (
   action: Action
 ): OnboardingState => {
   switch (action.type) {
-    case getType(tosAcceptSuccess):
+    case getType(tosAccept.success):
       return {
         ...state,
         isTosAccepted: true
