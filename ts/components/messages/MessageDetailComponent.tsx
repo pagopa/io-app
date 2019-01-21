@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { H1, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { Col, Grid } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -26,21 +27,11 @@ type Props = OwnProps;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection: "column",
     padding: variables.contentPadding
   },
 
   serviceContainer: {
-    flexDirection: "row",
     marginBottom: variables.contentPadding
-  },
-
-  serviceName: {
-    flex: 1
-  },
-
-  serviceLogo: {
-    width: 60
   },
 
   subjectContainer: {
@@ -70,26 +61,26 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
     const { message, paymentByRptId, service, onServiceLinkPress } = this.props;
     return (
-      <React.Fragment>
+      <View>
         <View style={styles.headerContainer}>
           {/* Service */}
           {pot.isSome(service) && (
-            <View style={styles.serviceContainer}>
-              <View style={styles.serviceName}>
+            <Grid style={styles.serviceContainer}>
+              <Col>
                 <H4>{service.value.organization_name}</H4>
                 <H6 link={true} onPress={onServiceLinkPress}>
                   {service.value.service_name}
                 </H6>
-              </View>
-              <View style={styles.serviceLogo}>
+              </Col>
+              <Col style={{ width: 60 }}>
                 <TouchableOpacity onPress={onServiceLinkPress}>
                   <MultiImage
                     style={{ width: 60, height: 60 }}
                     source={logosForService(service.value)}
                   />
                 </TouchableOpacity>
-              </View>
-            </View>
+              </Col>
+            </Grid>
           )}
 
           {/* Subject */}
@@ -117,7 +108,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           htmlBodyClasses={"message--detail"}
           webViewStyle={styles.webview}
         />
-      </React.Fragment>
+      </View>
     );
   }
 }
