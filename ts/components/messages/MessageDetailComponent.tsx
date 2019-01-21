@@ -9,12 +9,12 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { logosForService } from "../../utils/services";
-import MarkdownViewer from "../MarkdownViewer";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
+import MessageMarkdownViewer from "./MessageMarkdownViewer";
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -103,13 +103,8 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           containerStyle={styles.ctaBarContainer}
         />
 
-        {/* 
-            The value of the htmlBodyClasses parameter is used in the `INLINE_CSS`
-            variable of the MarkdownViewer component.
-        */}
-        <MarkdownViewer
+        <MessageMarkdownViewer
           markdown={message.content.markdown}
-          htmlBodyClasses={"message--detail"}
           webViewStyle={styles.webview}
         />
       </View>

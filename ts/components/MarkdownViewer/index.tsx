@@ -20,29 +20,32 @@ const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 `;
 
-const INLINE_CSS = `
+const GLOBAL_CSS = `
 <style>
 body {
   margin: 0;
   padding: 0;
   font-size: 16px;
 }
-
-body.message--detail {
-  font-size: 18px;
-}
 </style>
 `;
 
-const generateHtml = (content: string, htmlBodyClasses?: string) => {
+const generateInlineCss = (cssStyle: string) => {
+  return `<style>
+  ${cssStyle}
+  </style>`;
+};
+
+const generateHtml = (content: string, cssStyle?: string) => {
   return `
   <!DOCTYPE html>
   <html>
   <head>
   <meta name="viewport" content="initial-scale=1.0, width=device-width" />
   <head>
-  <body class="${htmlBodyClasses || ""}">
-  ${INLINE_CSS}
+  <body>
+  ${GLOBAL_CSS}
+  ${cssStyle ? generateInlineCss(cssStyle) : ""}
   ${content}
   </body>
   </html>
@@ -53,20 +56,11 @@ type OwnProps = {
   markdown: string;
   onError?: (error: any) => void;
   /**
-   * Space separated classes (ex. "message demo").
-   *
-   * When you insert a class here you can use it to alter your html style.
-   * For example if you use "message-detail" for this props than in your
-   * INLINE_CSS variables you can use:
-   *
-   * ```
-   * body.message-detail {
-   *  font-size: 18px
-   * }
-   * ```
+   * The code will be inserted in the html body between
+   * <script> and </script> tags.
    */
 
-  htmlBodyClasses?: string;
+  cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
 };
 
@@ -89,18 +83,18 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { markdown, onError, htmlBodyClasses } = this.props;
+    const { markdown, onError, cssStyle } = this.props;
 
-    this.compileMarkdownAsync(markdown, onError, htmlBodyClasses);
+    this.compileMarkdownAsync(markdown, onError, cssStyle);
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { markdown: prevMarkdown } = prevProps;
-    const { markdown, onError, htmlBodyClasses } = this.props;
+    const { markdown, onError, cssStyle } = this.props;
 
     // If the markdown changes we need to re-compile it
     if (markdown !== prevMarkdown) {
-      this.compileMarkdownAsync(markdown, onError, htmlBodyClasses);
+      this.compileMarkdownAsync(markdown, onError, cssStyle);
     }
   }
 
@@ -171,18 +165,20 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   private compileMarkdownAsync = (
     markdown: string,
     onError?: (error: any) => void,
-    htmlBodyClasses?: string
+    cssStyle?: string
   ) => {
     InteractionManager.runAfterInteractions(() => {
       remarkProcessor.process(markdown, (error: any, file: any) => {
         error
           ? fromNullable(onError).map(_ => _(error))
           : this.setState({
-              html: generateHtml(String(file), htmlBodyClasses)
+              html: generateHtml(String(file), cssStyle)
             });
       });
     });
   };
 }
+
+export type MarkdownViewerProps = OwnProps;
 
 export default connect()(MarkdownViewer);
