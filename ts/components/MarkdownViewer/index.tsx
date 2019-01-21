@@ -148,9 +148,6 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
             htmlBodyHeight: message.payload.height
           });
           break;
-
-        default:
-          break;
       }
     }
   };
