@@ -87,3 +87,6 @@ definitions
 **/*.p12
 **/*.pem
 **/*.pkey
+
+# rn-nodeify
+shim.js
