@@ -4,8 +4,8 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
-import Markdown from "../../components/Markdown";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccept } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";

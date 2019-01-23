@@ -5,7 +5,7 @@
 import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
 
-import Markdown, { MarkdownProps } from "../Markdown";
+import Markdown, { MarkdownProps } from "../ui/Markdown";
 
 type Props = Omit<MarkdownProps, "cssStyle">;
 

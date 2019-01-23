@@ -7,9 +7,9 @@ import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import Markdown from "../../components/Markdown";
 import PreferenceItem from "../../components/PreferenceItem";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";

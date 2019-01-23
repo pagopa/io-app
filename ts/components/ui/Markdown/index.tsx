@@ -15,8 +15,8 @@ import {
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 
-import { ReduxProps } from "../../store/actions/types";
-import { remarkProcessor } from "../../utils/markdown";
+import { ReduxProps } from "../../../store/actions/types";
+import { remarkProcessor } from "../../../utils/markdown";
 import { handleInternalLink } from "./handlers/internalLink";
 import {
   NOTIFY_BODY_HEIGHT_SCRIPT,

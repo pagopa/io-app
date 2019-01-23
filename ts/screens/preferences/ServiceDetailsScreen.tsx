@@ -13,9 +13,9 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import Markdown from "../../components/Markdown";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
+import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
