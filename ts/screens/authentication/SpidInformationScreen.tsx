@@ -17,10 +17,10 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Linking, StyleSheet } from "react-native";
+import { Linking } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
 import GoBackButton from "../../components/GoBackButton";
 import {
