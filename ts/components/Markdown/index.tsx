@@ -92,18 +92,18 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { children: markdown, animated, onError, cssStyle } = this.props;
+    const { children, animated, onError, cssStyle } = this.props;
 
-    this.compileMarkdownAsync(markdown, animated, onError, cssStyle);
+    this.compileMarkdownAsync(children, animated, onError, cssStyle);
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { children: prevMarkdown } = prevProps;
-    const { children: markdown, animated, onError, cssStyle } = this.props;
+    const { children: prevChildren } = prevProps;
+    const { children, animated, onError, cssStyle } = this.props;
 
-    // If the markdown changes we need to re-compile it
-    if (markdown !== prevMarkdown) {
-      this.compileMarkdownAsync(markdown, animated, onError, cssStyle);
+    // If the children changes we need to re-compile it
+    if (children !== prevChildren) {
+      this.compileMarkdownAsync(children, animated, onError, cssStyle);
     }
   }
 
