@@ -1,3 +1,7 @@
+/**
+ * A specialized Markdown component that sets a specific CSS style
+ */
+
 import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
 
