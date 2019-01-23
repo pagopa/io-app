@@ -1,25 +1,19 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { untag } from "italia-ts-commons/lib/types";
 import { Content, List, ListItem } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { fromNullable } from "fp-ts/lib/Option";
-
-import { untag } from "italia-ts-commons/lib/types";
-
-import I18n from "../../i18n";
-
-import { ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-
+import Markdown from "../../components/Markdown";
 import PreferenceItem from "../../components/PreferenceItem";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import Markdown from "../../components/ui/Markdown";
-
+import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-
+import { ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 import { getLocalePrimary } from "../../utils/locale";
 
 const unavailableAlert = () =>

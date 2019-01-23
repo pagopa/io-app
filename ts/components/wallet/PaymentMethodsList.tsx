@@ -4,21 +4,21 @@
  * TODO: replace the contextual help with the appropriate
  *  component @https://www.pivotaltracker.com/story/show/157874540
  */
-
 import color from "color";
 import { Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
+
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../helpers/withContextualHelp";
+import Markdown from "../Markdown";
 import { WalletStyles } from "../styles/wallet";
 import IconFont from "../ui/IconFont";
-import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;

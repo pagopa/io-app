@@ -1,5 +1,5 @@
 /**
- * This file contains all the JS scripts used by the MarkdownViewer component.
+ * This file contains all the JS scripts used by the Markdown component.
  */
 
 // Javascript to detect link click and generate window message for internal links

@@ -12,29 +12,23 @@ import {
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import Markdown from "../../components/ui/Markdown";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import Markdown from "../../components/Markdown";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import H4 from "../../components/ui/H4";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
-
 import I18n from "../../i18n";
-
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-
+import customVariables from "../../theme/variables";
+import { logosForService } from "../../utils/services";
 import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
 } from "./common";
-
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import H4 from "../../components/ui/H4";
-import customVariables from "../../theme/variables";
-
-import { logosForService } from "../../utils/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -319,11 +313,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} large={true} />
-            {description && (
-              <Markdown lazyOptions={{ lazy: true, animated: true }}>
-                {description}
-              </Markdown>
-            )}
+            {description && <Markdown>{description}</Markdown>}
             {description && <View spacer={true} large={true} />}
             {tos_url && (
               <TouchableOpacity

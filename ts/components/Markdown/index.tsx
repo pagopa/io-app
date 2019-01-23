@@ -3,7 +3,13 @@
  */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
-import { InteractionManager, StyleProp, View, ViewStyle } from "react-native";
+import {
+  InteractionManager,
+  ScrollView,
+  StyleProp,
+  View,
+  ViewStyle
+} from "react-native";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 
@@ -53,7 +59,7 @@ const generateHtml = (content: string, cssStyle?: string) => {
 };
 
 type OwnProps = {
-  markdown: string;
+  children: string;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
@@ -71,7 +77,7 @@ type State = {
   htmlBodyHeight: number;
 };
 
-class MarkdownViewer extends React.PureComponent<Props, State> {
+class Markdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
 
   constructor(props: Props) {
@@ -83,14 +89,14 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { markdown, onError, cssStyle } = this.props;
+    const { children: markdown, onError, cssStyle } = this.props;
 
     this.compileMarkdownAsync(markdown, onError, cssStyle);
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { markdown: prevMarkdown } = prevProps;
-    const { markdown, onError, cssStyle } = this.props;
+    const { children: prevMarkdown } = prevProps;
+    const { children: markdown, onError, cssStyle } = this.props;
 
     // If the markdown changes we need to re-compile it
     if (markdown !== prevMarkdown) {
@@ -102,32 +108,38 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
     const { webViewStyle } = this.props;
     const { html, htmlBodyHeight } = this.state;
 
-    // Hide the WebView until we have the htmlBodyHeight
-    const containerStyle: ViewStyle =
-      htmlBodyHeight === 0
-        ? {
-            height: 0
-          }
-        : {
-            height: htmlBodyHeight
-          };
+    if (html) {
+      // Hide the WebView until we have the htmlBodyHeight
+      const containerStyle: ViewStyle =
+        htmlBodyHeight === 0
+          ? {
+              height: 0
+            }
+          : {
+              height: htmlBodyHeight
+            };
 
-    return (
-      <View style={containerStyle}>
-        <WebView
-          ref={this.webViewRef}
-          scrollEnabled={false}
-          overScrollMode={"never"}
-          style={webViewStyle}
-          originWhitelist={["*"]}
-          source={{ html, baseUrl: "" }}
-          javaScriptEnabled={true}
-          injectedJavaScript={INJECTED_JAVASCRIPT}
-          onLoadEnd={this.handleLoadEnd}
-          onMessage={this.handleWebViewMessage}
-        />
-      </View>
-    );
+      return (
+        <ScrollView nestedScrollEnabled={false} style={containerStyle}>
+          <View style={containerStyle}>
+            <WebView
+              ref={this.webViewRef}
+              scrollEnabled={false}
+              overScrollMode={"never"}
+              style={webViewStyle}
+              originWhitelist={["*"]}
+              source={{ html, baseUrl: "" }}
+              javaScriptEnabled={true}
+              injectedJavaScript={INJECTED_JAVASCRIPT}
+              onLoadEnd={this.handleLoadEnd}
+              onMessage={this.handleWebViewMessage}
+            />
+          </View>
+        </ScrollView>
+      );
+    }
+
+    return null;
   }
 
   // When the injected html is loaded inject the script to notify the height
@@ -179,6 +191,6 @@ class MarkdownViewer extends React.PureComponent<Props, State> {
   };
 }
 
-export type MarkdownViewerProps = OwnProps;
+export type MarkdownProps = OwnProps;
 
-export default connect()(MarkdownViewer);
+export default connect()(Markdown);

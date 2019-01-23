@@ -32,9 +32,9 @@ import {
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
+import Markdown from "../../../components/Markdown";
 import { WalletStyles } from "../../../components/styles/wallet";
 import AppHeader from "../../../components/ui/AppHeader";
-import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -432,10 +432,6 @@ export default connect(
       (_: string) => _
     ),
     I18n.t("wallet.whyAFee.title"),
-    () => (
-      <Markdown lazyOptions={{ lazy: true }}>
-        {I18n.t("wallet.whyAFee.text")}
-      </Markdown>
-    )
+    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
   )
 );

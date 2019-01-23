@@ -6,7 +6,6 @@
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
-
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
@@ -20,18 +19,20 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
-
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import GoBackButton from "../../../components/GoBackButton";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { InstabugButtons } from "../../../components/InstabugButtons";
+import Markdown from "../../../components/Markdown";
 import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
-
 import I18n from "../../../i18n";
-
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToWalletHome
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentAttiva,
@@ -43,12 +44,6 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToWalletHome
-} from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { PayloadForAction } from "../../../types/utils";

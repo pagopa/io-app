@@ -17,10 +17,10 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Linking } from "react-native";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
 import GoBackButton from "../../components/GoBackButton";
 import {
@@ -28,8 +28,8 @@ import {
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
 import { InstabugButtons } from "../../components/InstabugButtons";
+import Markdown from "../../components/Markdown";
 import AppHeader from "../../components/ui/AppHeader";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 

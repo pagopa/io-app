@@ -23,9 +23,9 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import Markdown from "../../components/Markdown";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
-import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";

@@ -8,10 +8,10 @@ import TouchID, {
 } from "react-native-touch-id";
 import { connect } from "react-redux";
 
+import Markdown from "./components/Markdown";
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
-import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
@@ -46,9 +46,7 @@ type State = {
 const contextualHelp = {
   title: I18n.t("pin_login.unlock_screen.help.title"),
   body: () => (
-    <Markdown lazyOptions={{ lazy: true }}>
-      {I18n.t("pin_login.unlock_screen.help.content")}
-    </Markdown>
+    <Markdown>{I18n.t("pin_login.unlock_screen.help.content")}</Markdown>
   )
 };
 

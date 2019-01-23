@@ -31,14 +31,6 @@ import viewTheme from "./components/View";
 import { Theme } from "./types";
 import variables from "./variables";
 
-import markdownBlockQuoteTheme from "./components/markdown/MarkdownBlockQuote";
-import markdownBrTheme from "./components/markdown/MarkdownBr";
-import markdownDemoTheme from "./components/markdown/MarkdownDemo";
-import markdownHeadingTheme from "./components/markdown/MarkdownHeading";
-import markdownListTheme from "./components/markdown/MarkdownList";
-import markdownParagraphTheme from "./components/markdown/MarkdownParagraph";
-import markdownTextTheme from "./components/markdown/MarkdownText";
-
 const theme = (): Theme => {
   const nbTheme = getTheme(variables);
   const overrides = {
@@ -110,28 +102,6 @@ const theme = (): Theme => {
     },
     "UIComponent.MaskedInput": {
       ...maskedInputTheme()
-    },
-    // Markdown
-    "UIComponent.MarkdownBlockQuote": {
-      ...markdownBlockQuoteTheme()
-    },
-    "UIComponent.MarkdownBr": {
-      ...markdownBrTheme()
-    },
-    "UIComponent.MarkdownDemo": {
-      ...markdownDemoTheme()
-    },
-    "UIComponent.MarkdownHeading": {
-      ...markdownHeadingTheme()
-    },
-    "UIComponent.MarkdownList": {
-      ...markdownListTheme()
-    },
-    "UIComponent.MarkdownParagraph": {
-      ...markdownParagraphTheme()
-    },
-    "UIComponent.MarkdownText": {
-      ...markdownTextTheme()
     }
   };
 
