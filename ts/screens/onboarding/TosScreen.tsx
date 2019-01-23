@@ -47,9 +47,7 @@ class TosScreen extends React.PureComponent<Props, State> {
       >
         <Content noPadded={true}>
           <View content={true}>
-            <Markdown lazyOptions={{ lazy: true }}>
-              {I18n.t("profile.main.privacy.text")}
-            </Markdown>
+            <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
           </View>
         </Content>
         {isProfile === false && (

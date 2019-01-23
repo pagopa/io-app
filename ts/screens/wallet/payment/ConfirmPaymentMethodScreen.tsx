@@ -432,10 +432,6 @@ export default connect(
       (_: string) => _
     ),
     I18n.t("wallet.whyAFee.title"),
-    () => (
-      <Markdown lazyOptions={{ lazy: true }}>
-        {I18n.t("wallet.whyAFee.text")}
-      </Markdown>
-    )
+    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
   )
 );

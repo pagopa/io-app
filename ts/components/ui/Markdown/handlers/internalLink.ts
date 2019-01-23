@@ -4,8 +4,8 @@
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 
-import ROUTES from "../../../navigation/routes";
-import { Dispatch } from "../../../store/actions/types";
+import ROUTES from "../../../../navigation/routes";
+import { Dispatch } from "../../../../store/actions/types";
 
 // Prefix to match uri like `ioit://PROFILE_MAIN`
 const INTERNAL_TARGET_PREFIX = "ioit://";

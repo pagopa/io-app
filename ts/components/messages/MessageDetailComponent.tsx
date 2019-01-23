@@ -14,7 +14,7 @@ import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
-import MessageMarkdownViewer from "./MessageMarkdownViewer";
+import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -103,10 +103,9 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           containerStyle={styles.ctaBarContainer}
         />
 
-        <MessageMarkdownViewer
-          markdown={message.content.markdown}
-          webViewStyle={styles.webview}
-        />
+        <MessageMarkdown webViewStyle={styles.webview}>
+          {message.content.markdown}
+        </MessageMarkdown>
       </View>
     );
   }

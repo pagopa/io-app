@@ -46,9 +46,7 @@ type State = {
 const contextualHelp = {
   title: I18n.t("pin_login.unlock_screen.help.title"),
   body: () => (
-    <Markdown lazyOptions={{ lazy: true }}>
-      {I18n.t("pin_login.unlock_screen.help.content")}
-    </Markdown>
+    <Markdown>{I18n.t("pin_login.unlock_screen.help.content")}</Markdown>
   )
 };
 
