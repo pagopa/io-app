@@ -5,8 +5,10 @@ import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import {
   InteractionManager,
+  LayoutAnimation,
   ScrollView,
   StyleProp,
+  UIManager,
   View,
   ViewStyle
 } from "react-native";
@@ -60,6 +62,7 @@ const generateHtml = (content: string, cssStyle?: string) => {
 
 type OwnProps = {
   children: string;
+  animated?: boolean;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
@@ -89,18 +92,18 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { children: markdown, onError, cssStyle } = this.props;
+    const { children: markdown, animated, onError, cssStyle } = this.props;
 
-    this.compileMarkdownAsync(markdown, onError, cssStyle);
+    this.compileMarkdownAsync(markdown, animated, onError, cssStyle);
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { children: prevMarkdown } = prevProps;
-    const { children: markdown, onError, cssStyle } = this.props;
+    const { children: markdown, animated, onError, cssStyle } = this.props;
 
     // If the markdown changes we need to re-compile it
     if (markdown !== prevMarkdown) {
-      this.compileMarkdownAsync(markdown, onError, cssStyle);
+      this.compileMarkdownAsync(markdown, animated, onError, cssStyle);
     }
   }
 
@@ -176,10 +179,19 @@ class Markdown extends React.PureComponent<Props, State> {
   // A function that uses remark to compile the markdown to html
   private compileMarkdownAsync = (
     markdown: string,
+    animated?: boolean,
     onError?: (error: any) => void,
     cssStyle?: string
   ) => {
     InteractionManager.runAfterInteractions(() => {
+      if (animated) {
+        // Animate the layout change
+        // See https://facebook.github.io/react-native/docs/layoutanimation.html
+        if (UIManager.setLayoutAnimationEnabledExperimental) {
+          UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      }
       remarkProcessor.process(markdown, (error: any, file: any) => {
         error
           ? fromNullable(onError).map(_ => _(error))
