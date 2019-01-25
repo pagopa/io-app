@@ -11,6 +11,10 @@
   <uses-permission android:name="it.teamdigitale.app.italiaapp.permission.C2D_MESSAGE" />
   <uses-permission android:name="android.permission.VIBRATE"/>
 
+  <!-- Required by react-native-calendar-events -->
+  <uses-permission android:name="android.permission.READ_CALENDAR" />
+  <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
   <!-- Required by react-native-touch-id -->
   <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 

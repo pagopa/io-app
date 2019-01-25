@@ -162,6 +162,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-calendar-events')
     compile project(':react-native-webview')
     compile project(':react-native-touch-id')
     compile project(':react-native-background-timer')

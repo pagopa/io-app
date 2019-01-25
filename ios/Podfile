@@ -51,6 +51,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
+  pod 'react-native-calendar-events', :path => '../node_modules/react-native-calendar-events'
+
 end
 
 # Fix a open bug in react-native-config

@@ -9,6 +9,7 @@ import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.calendarevents.CalendarEventsPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
@@ -42,7 +43,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new RNCWebViewPackage(),
+        new CalendarEventsPackage(),
+        new RNCWebViewPackage(),
         new FingerprintAuthPackage(),
         new BackgroundTimerPackage(),
         new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)

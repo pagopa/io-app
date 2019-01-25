@@ -4,29 +4,27 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
-import * as AddCalendarEvent from "react-native-add-calendar-event";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import { ReduxProps } from "../../store/actions/types";
-
 import { navigateToPaymentTransactionSummaryScreen } from "../../store/actions/navigation";
+import { ReduxProps } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import {
-  formatDateAsDay,
-  formatDateAsMonth,
-  formatDateAsReminder
-} from "../../utils/dates";
+import { checkAndRequestPermission } from "../../utils/calendar";
+import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   formatPaymentAmount,
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../../utils/payment";
+import { showToast } from "../../utils/showToast";
 import CalendarIconComponent from "../CalendarIconComponent";
+import SelectCalendarModal from "../SelectCalendarModal";
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -36,6 +34,10 @@ type OwnProps = {
 };
 
 type Props = OwnProps & ReduxProps;
+
+type State = {
+  isSelectCalendarModalOpen: boolean;
+};
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -64,21 +66,29 @@ const styles = StyleSheet.create({
   }
 });
 
-class MessageCTABar extends React.PureComponent<Props> {
+class MessageCTABar extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isSelectCalendarModalOpen: false
+    };
+  }
+
   private renderReminderCTA(
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
     subject: string
   ) {
     // Create an action that open the Calendar to let the user add an event
-    const onPressHandler = () =>
-      AddCalendarEvent.presentEventCreatingDialog({
-        title: I18n.t("messages.cta.reminderTitle", {
-          subject
-        }),
-        startDate: formatDateAsReminder(dueDate),
-        endDate: formatDateAsReminder(dueDate),
-        allDay: true
-      }).catch(_ => undefined);
+    const onPressHandler = () => {
+      // Check the autorization status
+      checkAndRequestPermission().then(hasPermission => {
+        if (hasPermission) {
+          this.setState({
+            isSelectCalendarModalOpen: true
+          });
+        }
+      });
+    };
 
     return (
       <View style={styles.reminderContainer}>
@@ -154,12 +164,19 @@ class MessageCTABar extends React.PureComponent<Props> {
 
   public render() {
     const { message, service, containerStyle, paymentByRptId } = this.props;
+    const { isSelectCalendarModalOpen } = this.state;
 
     const { due_date, payment_data } = message.content;
 
     if (due_date !== undefined || payment_data !== undefined) {
       return (
         <View style={[styles.mainContainer, containerStyle]}>
+          {isSelectCalendarModalOpen && (
+            <SelectCalendarModal
+              onCancel={this.onSelectCalendarCancel}
+              onCalendarSelected={this.onCalendarSelected}
+            />
+          )}
           {due_date !== undefined &&
             this.renderReminderCTA(due_date, message.content.subject)}
 
@@ -176,6 +193,34 @@ class MessageCTABar extends React.PureComponent<Props> {
 
     return null;
   }
+
+  private onSelectCalendarCancel = () => {
+    this.setState({
+      isSelectCalendarModalOpen: false
+    });
+  };
+
+  private onCalendarSelected = (calendar: Calendar) => {
+    const title = "My super event";
+    this.setState({
+      isSelectCalendarModalOpen: false
+    });
+    RNCalendarEvents.saveEvent(title, {
+      title,
+      calendarId: calendar.id,
+      startDate: new Date().toISOString(),
+      endDate: new Date().toISOString(),
+      allDay: true,
+      alarms: []
+    })
+      .then(_ =>
+        showToast(
+          `Event "${title}" saved in calendar "${calendar.title}".`,
+          "success"
+        )
+      )
+      .catch(_ => showToast(`Error saving reminder`, "danger"));
+  };
 }
 
 export default connect()(MessageCTABar);
