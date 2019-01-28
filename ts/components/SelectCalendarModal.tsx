@@ -3,6 +3,7 @@ import { Button, Container, Content, Text } from "native-base";
 import React from "react";
 import { FlatList, ListRenderItem, Modal } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import I18n from "../i18n";
 
 type CalendarItemProps = {
   calendar: Calendar;
@@ -68,7 +69,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
               </React.Fragment>
             )}
             <Button onPress={this.props.onCancel}>
-              <Text>Cancel</Text>
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </Content>
         </Container>
@@ -86,7 +87,10 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
       .then(calendars => this.setState({ calendars: pot.some(calendars) }))
       .catch(_ => {
         this.setState({
-          calendars: pot.toError(pot.none, Error("Error fetching calendars"))
+          calendars: pot.toError(
+            pot.none,
+            Error(I18n.t("messages.cta.errors.fetchCalendars"))
+          )
         });
       });
   }
