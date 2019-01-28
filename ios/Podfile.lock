@@ -2,8 +2,6 @@ PODS:
   - Mixpanel (3.3.3)
   - React (0.57.8):
     - React/Core (= 0.57.8)
-  - react-native-add-calendar-event (2.1.0):
-    - React
   - react-native-background-timer (2.1.1):
     - React
   - react-native-calendar-events (1.6.4):
@@ -78,7 +76,6 @@ PODS:
   - yoga (0.57.8.React)
 
 DEPENDENCIES:
-  - react-native-add-calendar-event (from `../node_modules/react-native-add-calendar-event`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-calendar-events (from `../node_modules/react-native-calendar-events`)
   - react-native-camera (from `../node_modules/react-native-camera`)
@@ -116,8 +113,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
-  react-native-add-calendar-event:
-    :path: "../node_modules/react-native-add-calendar-event"
   react-native-background-timer:
     :path: "../node_modules/react-native-background-timer"
   react-native-calendar-events:
@@ -154,7 +149,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-add-calendar-event: e3415a2d8a782e06899be6fb59427199eba1ab82
   react-native-background-timer: bb7a98c8e97fc7c290de2d423dd09ddb73dcbcbb
   react-native-calendar-events: fe6fbc8ed337a7423c98f2c9012b25f20444de09
   react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
@@ -172,6 +166,6 @@ SPEC CHECKSUMS:
   TouchID: b0640fedb86fa2db2fe1df15b61594ad49e76288
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 3420f375b6748c54a69b7fe467d9e763037fea5c
+PODFILE CHECKSUM: 6e7facfa374c5b47e3f591190cdfcaa8e6e1f1f7
 
 COCOAPODS: 1.5.3
