@@ -27,6 +27,7 @@ class CalendarItem extends React.PureComponent<CalendarItemProps> {
 type Props = {
   onCancel: () => void;
   onCalendarSelected: (calendar: Calendar) => void;
+  header?: React.ReactNode;
 };
 
 type State = {
@@ -57,11 +58,14 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
             {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
             {pot.isError(calendars) && <Text>{calendars.error.message}</Text>}
             {pot.isSome(calendars) && (
-              <FlatList
-                data={calendars.value}
-                keyExtractor={calendarKeyExtractor}
-                renderItem={this.calendarRenderItem}
-              />
+              <React.Fragment>
+                {this.props.header || null}
+                <FlatList
+                  data={calendars.value}
+                  keyExtractor={calendarKeyExtractor}
+                  renderItem={this.calendarRenderItem}
+                />
+              </React.Fragment>
             )}
             <Button onPress={this.props.onCancel}>
               <Text>Cancel</Text>

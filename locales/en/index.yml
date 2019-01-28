@@ -437,7 +437,10 @@ messages:
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
-    reminderTitle: "Reminder for: {{subject}}"
+    reminderCalendarSelect: Select the calendar where you want to add the reminder
+    reminderTitle: "Reminder for: {{title}}"
+    reminderAddSuccess: "Reminder added"
+    reminderAddFailure: "Error adding reminder"
   unknownSender: Unknown sender
   noContent: Content not available
 messageDetails:

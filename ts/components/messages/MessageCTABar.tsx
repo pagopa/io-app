@@ -16,7 +16,11 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { checkAndRequestPermission } from "../../utils/calendar";
-import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
+import {
+  formatDateAsDay,
+  formatDateAsMonth,
+  formatDateAsReminder
+} from "../../utils/dates";
 import {
   formatPaymentAmount,
   getAmountFromPaymentAmount,
@@ -66,6 +70,10 @@ const styles = StyleSheet.create({
   }
 });
 
+const SelectCalendarModalHeader = (
+  <Text>{I18n.t("messages.cta.reminderCalendarSelect")}</Text>
+);
+
 class MessageCTABar extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -75,19 +83,21 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderReminderCTA(
-    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
-    subject: string
+    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>
   ) {
     // Create an action that open the Calendar to let the user add an event
     const onPressHandler = () => {
       // Check the autorization status
-      checkAndRequestPermission().then(hasPermission => {
-        if (hasPermission) {
-          this.setState({
-            isSelectCalendarModalOpen: true
-          });
-        }
-      });
+      checkAndRequestPermission()
+        .then(hasPermission => {
+          if (hasPermission) {
+            this.setState({
+              isSelectCalendarModalOpen: true
+            });
+          }
+        })
+        // No permission to add the reminder
+        .catch();
     };
 
     return (
@@ -171,14 +181,20 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     if (due_date !== undefined || payment_data !== undefined) {
       return (
         <View style={[styles.mainContainer, containerStyle]}>
-          {isSelectCalendarModalOpen && (
-            <SelectCalendarModal
-              onCancel={this.onSelectCalendarCancel}
-              onCalendarSelected={this.onCalendarSelected}
-            />
+          {due_date !== undefined && (
+            <React.Fragment>
+              {isSelectCalendarModalOpen && (
+                <SelectCalendarModal
+                  onCancel={this.onSelectCalendarCancel}
+                  onCalendarSelected={(calendar: Calendar) =>
+                    this.addReminderToCalendar(message, calendar, due_date)
+                  }
+                  header={SelectCalendarModalHeader}
+                />
+              )}
+              {this.renderReminderCTA(due_date)}
+            </React.Fragment>
           )}
-          {due_date !== undefined &&
-            this.renderReminderCTA(due_date, message.content.subject)}
 
           {due_date !== undefined &&
             payment_data !== undefined && (
@@ -200,26 +216,37 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     });
   };
 
-  private onCalendarSelected = (calendar: Calendar) => {
-    const title = "My super event";
+  private addReminderToCalendar = (
+    message: MessageWithContentPO,
+    calendar: Calendar,
+    dueDate: Date
+  ) => {
+    const title = I18n.t("messages.cta.reminderTitle", {
+      title: message.content.subject
+    });
     this.setState({
       isSelectCalendarModalOpen: false
     });
     RNCalendarEvents.saveEvent(title, {
       title,
       calendarId: calendar.id,
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
+      startDate: formatDateAsReminder(dueDate),
+      endDate: formatDateAsReminder(dueDate),
       allDay: true,
       alarms: []
     })
       .then(_ =>
         showToast(
-          `Event "${title}" saved in calendar "${calendar.title}".`,
+          I18n.t("messages.cta.reminderAddSuccess", {
+            title,
+            calendarTitle: calendar.title
+          }),
           "success"
         )
       )
-      .catch(_ => showToast(`Error saving reminder`, "danger"));
+      .catch(_ =>
+        showToast(I18n.t("messages.cta.reminderAddFailure"), "danger")
+      );
   };
 }
 

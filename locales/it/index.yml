@@ -447,7 +447,10 @@ messages:
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria
-    reminderTitle: "Promemoria per: {{subject}}"
+    reminderCalendarSelect: Seleziona il calendario in cui aggiungere il promemoria
+    reminderTitle: "Promemoria per: {{title}}"
+    reminderAddSuccess: "Promemoria aggiunto"
+    reminderAddFailure: "Errore durante l'aggiunta del promemoria"
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
 messageDetails:
