@@ -35,7 +35,6 @@ type State = {
 
 type FetchError = {
   kind: "FETCH_ERROR";
-  error: Error;
 };
 
 type ResourceError = FetchError;
@@ -118,20 +117,17 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
   private fetchCalendars = () => {
     this.setState({ calendars: pot.toLoading(pot.none) });
-    /**
-     * Fetch user calendars.
-     * The needed permissions are already checked/asked by the MessageCTABar component.
-     */
+    // Fetch user calendars.
+    // The needed permissions are already checked/asked by the MessageCTABar component.
     RNCalendarEvents.findCalendars()
       .then(calendars =>
         // Filter only the calendars that allow modifications
         calendars.filter(calendar => calendar.allowsModifications)
       )
       .then(calendars => this.setState({ calendars: pot.some(calendars) }))
-      .catch((error: Error) => {
+      .catch(_ => {
         const fetchError: FetchError = {
-          kind: "FETCH_ERROR",
-          error
+          kind: "FETCH_ERROR"
         };
         this.setState({
           calendars: pot.toError(pot.none, fetchError)
