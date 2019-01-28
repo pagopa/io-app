@@ -87,7 +87,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   ) {
     // Create an action that open the Calendar to let the user add an event
     const onPressHandler = () => {
-      // Check the autorization status
+      // Check the authorization status
       checkAndRequestPermission()
         .then(hasPermission => {
           if (hasPermission) {
@@ -186,9 +186,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
               {isSelectCalendarModalOpen && (
                 <SelectCalendarModal
                   onCancel={this.onSelectCalendarCancel}
-                  onCalendarSelected={(calendar: Calendar) =>
-                    this.addReminderToCalendar(message, calendar, due_date)
-                  }
+                  onCalendarSelected={this.addReminderToCalendar(
+                    message,
+                    due_date
+                  )}
                   header={SelectCalendarModalHeader}
                 />
               )}
@@ -218,9 +219,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
   private addReminderToCalendar = (
     message: MessageWithContentPO,
-    calendar: Calendar,
     dueDate: Date
-  ) => {
+  ) => (calendar: Calendar) => {
     const title = I18n.t("messages.cta.reminderTitle", {
       title: message.content.subject
     });

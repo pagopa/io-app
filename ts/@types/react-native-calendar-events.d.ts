@@ -1,4 +1,5 @@
 declare module "react-native-calendar-events" {
+  // More here @https://github.com/wmcmahan/react-native-calendar-events#authorizationstatus
   export type AuthorizationStatus =
     | "denied"
     | "restricted"

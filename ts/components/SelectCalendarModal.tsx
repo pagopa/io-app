@@ -11,19 +11,17 @@ type CalendarItemProps = {
 };
 
 /**
- * A component to render a Calendar as FlatList item
+ * A function to render a Calendar as FlatList item
  */
-class CalendarItem extends React.PureComponent<CalendarItemProps> {
-  public render() {
-    return <Text onPress={this.onPress}>{this.props.calendar.title}</Text>;
-  }
-
-  private onPress = () => {
-    const { calendar, onPress } = this.props;
+const CalendarItem: React.SFC<CalendarItemProps> = props => {
+  const handleOnPress = () => {
+    const { calendar, onPress } = props;
 
     onPress(calendar);
   };
-}
+
+  return <Text onPress={handleOnPress}>{props.calendar.title}</Text>;
+};
 
 type Props = {
   onCancel: () => void;
@@ -35,12 +33,11 @@ type State = {
   calendars: pot.Pot<ReadonlyArray<Calendar>, Error>;
 };
 
-const calendarKeyExtractor = (item: Calendar, _: number) => item.id;
+const calendarKeyExtractor = (item: Calendar) => item.id;
 
 /**
  * A modal that allow the user to select one of the device available Calendars
  */
-// tslint:disable-next-line:max-classes-per-file
 class SelectCalendarModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -57,7 +54,14 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
         <Container>
           <Content>
             {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
-            {pot.isError(calendars) && <Text>{calendars.error.message}</Text>}
+            {pot.isError(calendars) && (
+              <React.Fragment>
+                <Text>{calendars.error.message}</Text>
+                <Button onPress={this.fetchCalendars}>
+                  <Text>{I18n.t("global.buttons.retry")}</Text>
+                </Button>
+              </React.Fragment>
+            )}
             {pot.isSome(calendars) && (
               <React.Fragment>
                 {this.props.header || null}
@@ -68,7 +72,10 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                 />
               </React.Fragment>
             )}
-            <Button onPress={this.props.onCancel}>
+            <Button
+              disabled={pot.isLoading(calendars)}
+              onPress={this.props.onCancel}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </Content>
@@ -78,7 +85,24 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
+    this.fetchCalendars();
+  }
+
+  private calendarRenderItem: ListRenderItem<Calendar> = info => {
+    return (
+      <CalendarItem
+        calendar={info.item}
+        onPress={this.props.onCalendarSelected}
+      />
+    );
+  };
+
+  private fetchCalendars = () => {
     this.setState({ calendars: pot.toLoading(pot.none) });
+    /**
+     * Fetch user calendars.
+     * The needed permissions are already checked/asked by the MessageCTABar component.
+     */
     RNCalendarEvents.findCalendars()
       .then(calendars =>
         // Filter only the calendars that allow modifications
@@ -93,15 +117,6 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
           )
         });
       });
-  }
-
-  private calendarRenderItem: ListRenderItem<Calendar> = info => {
-    return (
-      <CalendarItem
-        calendar={info.item}
-        onPress={this.props.onCalendarSelected}
-      />
-    );
   };
 }
 
