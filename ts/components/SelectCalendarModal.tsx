@@ -30,10 +30,29 @@ type Props = {
 };
 
 type State = {
-  calendars: pot.Pot<ReadonlyArray<Calendar>, Error>;
+  calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>;
 };
 
+type FetchError = {
+  kind: "FETCH_ERROR";
+  error: Error;
+};
+
+type ResourceError = FetchError;
+
 const calendarKeyExtractor = (item: Calendar) => item.id;
+
+const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
+  switch (resourceError.kind) {
+    case "FETCH_ERROR":
+      return I18n.t("messages.cta.errors.fetchCalendars");
+
+    default: {
+      // Exaustive check
+      return ((): never => resourceError.kind)();
+    }
+  }
+};
 
 /**
  * A modal that allow the user to select one of the device available Calendars
@@ -56,7 +75,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
             {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
             {pot.isError(calendars) && (
               <React.Fragment>
-                <Text>{calendars.error.message}</Text>
+                <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
                 <Button onPress={this.fetchCalendars}>
                   <Text>{I18n.t("global.buttons.retry")}</Text>
                 </Button>
@@ -109,12 +128,13 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
         calendars.filter(calendar => calendar.allowsModifications)
       )
       .then(calendars => this.setState({ calendars: pot.some(calendars) }))
-      .catch(_ => {
+      .catch((error: Error) => {
+        const fetchError: FetchError = {
+          kind: "FETCH_ERROR",
+          error
+        };
         this.setState({
-          calendars: pot.toError(
-            pot.none,
-            Error(I18n.t("messages.cta.errors.fetchCalendars"))
-          )
+          calendars: pot.toError(pot.none, fetchError)
         });
       });
   };
