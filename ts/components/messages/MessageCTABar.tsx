@@ -1,7 +1,7 @@
 import { isSome, none } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Text, View } from "native-base";
+import { Button, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 });
 
 const SelectCalendarModalHeader = (
-  <Text>{I18n.t("messages.cta.reminderCalendarSelect")}</Text>
+  <H1>{I18n.t("messages.cta.reminderCalendarSelect")}</H1>
 );
 
 class MessageCTABar extends React.PureComponent<Props, State> {
