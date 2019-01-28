@@ -14,7 +14,6 @@ import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
-import com.vonovak.AddCalendarEventPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -51,7 +50,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
           .setInvocationEvent("none")
           .setPrimaryColor("#0073E6")
           .build(),
-        new AddCalendarEventPackage(),
         new SvgPackage(),
         new RNTextInputMaskPackage(),
         new SplashScreenReactPackage(),
