@@ -1,16 +1,17 @@
 /**
- * Implements a "lite" Modal using Context API
+ * Provides a mechanism to display non-native modals (i.e. overlays)
+ * on top of the root component.
  */
 
 import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-interface LightModalContextInterface {
+type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
   hideModal: () => void;
-}
+}>;
 
 export const LightModalContext = React.createContext<
   LightModalContextInterface
