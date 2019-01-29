@@ -1,8 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Container, Content, Text } from "native-base";
 import React from "react";
-import { FlatList, ListRenderItem, Modal } from "react-native";
+import { Modal } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+
 import I18n from "../i18n";
 
 type CalendarItemProps = {
@@ -38,8 +39,6 @@ type FetchError = {
 };
 
 type ResourceError = FetchError;
-
-const calendarKeyExtractor = (item: Calendar) => item.id;
 
 const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
   switch (resourceError.kind) {
@@ -83,11 +82,13 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
             {pot.isSome(calendars) && (
               <React.Fragment>
                 {this.props.header || null}
-                <FlatList
-                  data={calendars.value}
-                  keyExtractor={calendarKeyExtractor}
-                  renderItem={this.calendarRenderItem}
-                />
+                {calendars.value.map(calendar => (
+                  <CalendarItem
+                    key={calendar.id}
+                    calendar={calendar}
+                    onPress={this.props.onCalendarSelected}
+                  />
+                ))}
               </React.Fragment>
             )}
             <Button
@@ -105,15 +106,6 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
   public componentDidMount() {
     this.fetchCalendars();
   }
-
-  private calendarRenderItem: ListRenderItem<Calendar> = info => {
-    return (
-      <CalendarItem
-        calendar={info.item}
-        onPress={this.props.onCalendarSelected}
-      />
-    );
-  };
 
   private fetchCalendars = () => {
     this.setState({ calendars: pot.toLoading(pot.none) });
