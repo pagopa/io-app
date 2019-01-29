@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
+import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
 
@@ -26,9 +27,11 @@ export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>
-        <MenuProvider>
-          <RootContainer />
-        </MenuProvider>
+        <LightModalProvider>
+          <MenuProvider>
+            <RootContainer />
+          </MenuProvider>
+        </LightModalProvider>
       </PersistGate>
     </Provider>
   </StyleProvider>

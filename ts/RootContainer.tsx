@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
+import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
@@ -118,6 +119,7 @@ class RootContainer extends React.PureComponent<Props> {
         {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
         <Navigation />
         <IdentificationModal />
+        <LightModalRoot />
       </Root>
     );
   }
