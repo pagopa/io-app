@@ -26,7 +26,6 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
-import LightModalTestButton from "../../components/ui/LightModalTestButton";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -87,7 +86,6 @@ const LandingScreen: React.SFC<Props> = props => {
         <View spacer={true} large={true} />
         <HorizontalScroll cards={cardComponents} />
         <View spacer={true} />
-        <LightModalTestButton />
       </Content>
 
       <View footer={true}>
