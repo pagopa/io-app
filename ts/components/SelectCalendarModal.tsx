@@ -1,7 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Container, Content, Text } from "native-base";
 import React from "react";
-import { Modal } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
 import I18n from "../i18n";
@@ -67,39 +66,37 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     const { calendars } = this.state;
 
     return (
-      <Modal visible={true} onRequestClose={this.props.onCancel}>
-        <Container>
-          <Content>
-            {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
-            {pot.isError(calendars) && (
-              <React.Fragment>
-                <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-                <Button onPress={this.fetchCalendars}>
-                  <Text>{I18n.t("global.buttons.retry")}</Text>
-                </Button>
-              </React.Fragment>
-            )}
-            {pot.isSome(calendars) && (
-              <React.Fragment>
-                {this.props.header || null}
-                {calendars.value.map(calendar => (
-                  <CalendarItem
-                    key={calendar.id}
-                    calendar={calendar}
-                    onPress={this.props.onCalendarSelected}
-                  />
-                ))}
-              </React.Fragment>
-            )}
-            <Button
-              disabled={pot.isLoading(calendars)}
-              onPress={this.props.onCancel}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-          </Content>
-        </Container>
-      </Modal>
+      <Container>
+        <Content>
+          {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
+          {pot.isError(calendars) && (
+            <React.Fragment>
+              <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
+              <Button onPress={this.fetchCalendars}>
+                <Text>{I18n.t("global.buttons.retry")}</Text>
+              </Button>
+            </React.Fragment>
+          )}
+          {pot.isSome(calendars) && (
+            <React.Fragment>
+              {this.props.header || null}
+              {calendars.value.map(calendar => (
+                <CalendarItem
+                  key={calendar.id}
+                  calendar={calendar}
+                  onPress={this.props.onCalendarSelected}
+                />
+              ))}
+            </React.Fragment>
+          )}
+          <Button
+            disabled={pot.isLoading(calendars)}
+            onPress={this.props.onCancel}
+          >
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 

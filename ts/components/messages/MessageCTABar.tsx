@@ -28,7 +28,9 @@ import {
 } from "../../utils/payment";
 import { showToast } from "../../utils/showToast";
 import CalendarIconComponent from "../CalendarIconComponent";
+import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
+import { LightModalContextInterface } from "../ui/LightModal";
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -37,11 +39,7 @@ type OwnProps = {
   paymentByRptId: PaymentByRptIdState;
 };
 
-type Props = OwnProps & ReduxProps;
-
-type State = {
-  isSelectCalendarModalOpen: boolean;
-};
+type Props = OwnProps & LightModalContextInterface & ReduxProps;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -74,26 +72,27 @@ const SelectCalendarModalHeader = (
   <H1>{I18n.t("messages.cta.reminderCalendarSelect")}</H1>
 );
 
-class MessageCTABar extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isSelectCalendarModalOpen: false
-    };
-  }
-
+class MessageCTABar extends React.PureComponent<Props> {
   private renderReminderCTA(
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>
   ) {
+    const { message, showModal } = this.props;
     // Create an action that open the Calendar to let the user add an event
     const onPressHandler = () => {
       // Check the authorization status
       checkAndRequestPermission()
         .then(hasPermission => {
           if (hasPermission) {
-            this.setState({
-              isSelectCalendarModalOpen: true
-            });
+            showModal(
+              <SelectCalendarModal
+                onCancel={this.onSelectCalendarCancel}
+                onCalendarSelected={this.addReminderToCalendar(
+                  message,
+                  dueDate
+                )}
+                header={SelectCalendarModalHeader}
+              />
+            );
           }
         })
         // No permission to add the reminder
@@ -174,28 +173,13 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
   public render() {
     const { message, service, containerStyle, paymentByRptId } = this.props;
-    const { isSelectCalendarModalOpen } = this.state;
 
     const { due_date, payment_data } = message.content;
 
     if (due_date !== undefined || payment_data !== undefined) {
       return (
         <View style={[styles.mainContainer, containerStyle]}>
-          {due_date !== undefined && (
-            <React.Fragment>
-              {isSelectCalendarModalOpen && (
-                <SelectCalendarModal
-                  onCancel={this.onSelectCalendarCancel}
-                  onCalendarSelected={this.addReminderToCalendar(
-                    message,
-                    due_date
-                  )}
-                  header={SelectCalendarModalHeader}
-                />
-              )}
-              {this.renderReminderCTA(due_date)}
-            </React.Fragment>
-          )}
+          {due_date !== undefined && this.renderReminderCTA(due_date)}
 
           {due_date !== undefined &&
             payment_data !== undefined && (
@@ -212,9 +196,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private onSelectCalendarCancel = () => {
-    this.setState({
-      isSelectCalendarModalOpen: false
-    });
+    this.props.hideModal();
   };
 
   private addReminderToCalendar = (
@@ -224,9 +206,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const title = I18n.t("messages.cta.reminderTitle", {
       title: message.content.subject
     });
-    this.setState({
-      isSelectCalendarModalOpen: false
-    });
+    this.props.hideModal();
     RNCalendarEvents.saveEvent(title, {
       title,
       calendarId: calendar.id,
@@ -250,4 +230,4 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   };
 }
 
-export default connect()(MessageCTABar);
+export default connect()(withLightModalContext(MessageCTABar));

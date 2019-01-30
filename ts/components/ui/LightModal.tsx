@@ -7,7 +7,7 @@ import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-type LightModalContextInterface = Readonly<{
+export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
   hideModal: () => void;
