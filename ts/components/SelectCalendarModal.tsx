@@ -11,7 +11,7 @@ type CalendarItemProps = {
 };
 
 /**
- * A function to render a Calendar as FlatList item
+ * Renders a Calendar as FlatList item
  */
 const CalendarItem: React.SFC<CalendarItemProps> = props => {
   const handleOnPress = () => {
@@ -45,7 +45,7 @@ const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
       return I18n.t("messages.cta.errors.fetchCalendars");
 
     default: {
-      // Exaustive check
+      // Exhaustive check
       return ((): never => resourceError.kind)();
     }
   }
