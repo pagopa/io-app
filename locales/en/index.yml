@@ -190,6 +190,12 @@ onboarding:
     confirmInvalid: the two pins do not match
   resetConfirm: Are you sure you want to interrupt the IO activation?
     You can do this again at any time logging in with your SPID account.
+  fingerprint:
+    headerTitle: Activation
+    body:
+      enrolled: From this moment on you can access this app also using {{biometryType}}. You can disable this function from security preference pane of this app.
+      notEnrolled: No enabled biometric access has been found. If you want you can enable it on this device and then emable it from security preference pane of this app.
+    continue: Continue
 pin_login:
   pin:
     pinInfo: Enter the PIN
