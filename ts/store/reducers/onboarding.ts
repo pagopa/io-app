@@ -26,7 +26,6 @@ export const isTosAcceptedSelector = (state: GlobalState): boolean =>
 export const isFingerprintAcceptedSelector = (state: GlobalState): boolean =>
   state.onboarding.isFingerprintAccepted;
 
-
 const reducer = (
   state: OnboardingState = INITIAL_STATE,
   action: Action

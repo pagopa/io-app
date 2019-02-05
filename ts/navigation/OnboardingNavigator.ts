@@ -1,8 +1,8 @@
 import { createStackNavigator } from "react-navigation";
 
+import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
-import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import ROUTES from "./routes";
 
 /**
