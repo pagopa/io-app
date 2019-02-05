@@ -22,6 +22,7 @@ import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import { FingerprintScreen } from '../../screens/onboarding/FingerprintScreen';
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -56,6 +57,13 @@ export const navigateToMainNavigatorAction = StackActions.reset({
 export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
+});
+
+export const navigateToOnboardingFingerprintScreenAction = (
+  params: InferNavigationParams<typeof FingerprintScreen>
+) => NavigationActions.navigate({ 
+  routeName: ROUTES.ONBOARDING_FINGERPRINT,
+  params
 });
 
 export const navigateToTosScreen = NavigationActions.navigate({
