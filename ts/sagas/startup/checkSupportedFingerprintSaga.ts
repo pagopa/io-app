@@ -7,10 +7,17 @@ import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 
 import TouchID, { IsSupportedConfig } from "react-native-touch-id";
 
+export type BiometrySimpleType =
+  | "Fingerprint"
+  | "FaceID"
+  | "TouchID"
+  | "Not Enrolled"
+  | "Unavailable";
+
 export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
   // We check whether the user has already created a PIN by trying to retrieve
   // it from the Keychain
-  const biometryTypeOrUnsupportedReason: string = yield call(
+  const biometryTypeOrUnsupportedReason: BiometrySimpleType = yield call(
     getFingerprintSettings
   );
 
@@ -37,18 +44,17 @@ const isSupportedConfig: IsSupportedConfig = {
 /**
  * Retrieves fingerpint settings from the base system
  */
-async function getFingerprintSettings(): Promise<string> {
+async function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
     TouchID.isSupported(isSupportedConfig)
       .then(biometryType => {
         resolve(biometryType === true ? "Fingerprint" : biometryType);
       })
       .catch(reason => {
-        resolve(
-          reason.code === "NOT_ENROLLED" || reason.code === "NOT_AVAILABLE"
-            ? "NotEnrolled"
-            : "Unavailable"
-        );
+        resolve((typeof reason.code === "string" &&
+        reason.code === "NOT_ENROLLED"
+          ? "NotEnrolled"
+          : "Unavailable") as BiometrySimpleType);
       });
   });
 }

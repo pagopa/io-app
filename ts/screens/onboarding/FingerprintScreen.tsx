@@ -1,11 +1,8 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 
-import {
-  NavigationScreenProp,
-  NavigationScreenProps,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
+
 import { connect } from "react-redux";
 
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
@@ -18,9 +15,10 @@ import {
 } from "../../store/actions/onboarding";
 
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { BiometrySimpleType } from "../../sagas/startup/checkSupportedFingerprintSaga";
 
 type FingerprintScreenNavigationParams = {
-  biometryType: string;
+  biometryType: BiometrySimpleType;
 };
 
 type OwnProps = NavigationScreenProps<FingerprintScreenNavigationParams>;
@@ -34,7 +32,7 @@ type Props = OwnProps &
 
 type State = {
   showAbortOnboardingModal: boolean;
-  biometryType?: string;
+  biometryType?: BiometrySimpleType;
 };
 
 /**
@@ -110,13 +108,14 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
 
   private handleModalConfirm = () => {
     this.handleModalClose();
-    this.props.dispatch(abortOnboarding());
+    this.props.abortOnboarding();
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fingerprintAcknowledgeRequest: () =>
-    dispatch(fingerprintAcknowledge.request())
+    dispatch(fingerprintAcknowledge.request()),
+  abortOnboarding: () => dispatch(abortOnboarding())
 });
 
 export default connect(
