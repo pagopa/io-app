@@ -42,16 +42,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  // public componentWillMount() {
-  //   TouchID.isSupported(isSupportedConfig)
-  //     .then(
-  //       biometryType => (biometryType === true ? "Fingerprint" : biometryType),
-  //       _ => undefined
-  //     )
-  //     .then(biometryType => this.setState({ biometryType }), _ => 0);
-  // }
-
-  // The Body of the Screen
+  // The Body of this view
   public renderBody(biometryType: BiometrySimpleType | undefined) {
     if (biometryType === "NotEnrolled") {
       return <Text>{I18n.t("onboarding.fingerprint.body.notEnrolled")}</Text>;

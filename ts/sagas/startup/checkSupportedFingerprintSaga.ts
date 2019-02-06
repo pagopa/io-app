@@ -15,8 +15,6 @@ export type BiometrySimpleType =
   | "Unavailable";
 
 export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
-  // We check whether the user has already created a PIN by trying to retrieve
-  // it from the Keychain
   const biometryTypeOrUnsupportedReason: BiometrySimpleType = yield call(
     getFingerprintSettings
   );
@@ -28,11 +26,8 @@ export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
       })
     );
 
-    // Here we wait the user accept the ToS
     yield take(getType(fingerprintAcknowledge.request));
 
-    // We're done with accepting the ToS, dispatch the action that updates
-    // the redux state.
     yield put(fingerprintAcknowledge.success());
   }
 }
