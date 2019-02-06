@@ -32,7 +32,7 @@ export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
   }
 }
 
-const isSupportedConfig: IsSupportedConfig = {
+const isTouchIdSupportedConfig: IsSupportedConfig = {
   unifiedErrors: true
 };
 
@@ -41,7 +41,7 @@ const isSupportedConfig: IsSupportedConfig = {
  */
 async function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
-    TouchID.isSupported(isSupportedConfig)
+    TouchID.isSupported(isTouchIdSupportedConfig)
       .then(biometryType => {
         resolve(biometryType === true ? "Fingerprint" : biometryType);
       })
