@@ -7,21 +7,15 @@ import I18n from "../i18n";
 
 type CalendarItemProps = {
   calendar: Calendar;
-  onPress: (calendar: Calendar) => void;
+  onPress: () => void;
 };
 
 /**
  * Renders a Calendar as FlatList item
  */
-const CalendarItem: React.SFC<CalendarItemProps> = props => {
-  const handleOnPress = () => {
-    const { calendar, onPress } = props;
-
-    onPress(calendar);
-  };
-
-  return <Text onPress={handleOnPress}>{props.calendar.title}</Text>;
-};
+const CalendarItem: React.SFC<CalendarItemProps> = props => (
+  <Text onPress={props.onPress}>{props.calendar.title}</Text>
+);
 
 type Props = {
   onCancel: () => void;
@@ -84,7 +78,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                 <CalendarItem
                   key={calendar.id}
                   calendar={calendar}
-                  onPress={this.props.onCalendarSelected}
+                  onPress={() => this.props.onCalendarSelected(calendar)}
                 />
               ))}
             </React.Fragment>
