@@ -14,8 +14,8 @@ import {
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
 
-import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { BiometrySimpleType } from "../../sagas/startup/checkSupportedFingerprintSaga";
+import { Dispatch } from "../../store/actions/types";
 
 type FingerprintScreenNavigationParams = {
   biometryType: BiometrySimpleType;
@@ -23,12 +23,7 @@ type FingerprintScreenNavigationParams = {
 
 type OwnProps = NavigationScreenProps<FingerprintScreenNavigationParams>;
 
-type OnBoardingProps = NavigationScreenProp<NavigationState>;
-
-type Props = OwnProps &
-  ReturnType<typeof mapDispatchToProps> &
-  ReduxProps &
-  OnBoardingProps;
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   showAbortOnboardingModal: boolean;
