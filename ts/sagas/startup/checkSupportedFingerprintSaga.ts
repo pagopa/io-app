@@ -11,7 +11,7 @@ export type BiometrySimpleType =
   | "Fingerprint"
   | "FaceID"
   | "TouchID"
-  | "Not Enrolled"
+  | "NotEnrolled"
   | "Unavailable";
 
 export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {

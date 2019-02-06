@@ -52,7 +52,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
   // }
 
   // The Body of the Screen
-  public renderBody(biometryType: string | undefined) {
+  public renderBody(biometryType: BiometrySimpleType | undefined) {
     if (biometryType === "NotEnrolled") {
       return <Text>{I18n.t("onboarding.fingerprint.body.notEnrolled")}</Text>;
     } else {
