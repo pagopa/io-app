@@ -72,7 +72,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
             primary={true}
             onPress={() => this.props.fingerprintAcknowledgeRequest()}
           >
-            <Text>{I18n.t("onboarding.fingerprint.continue")}</Text>
+            <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
         </View>
 
