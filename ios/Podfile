@@ -43,13 +43,14 @@ target 'ItaliaApp' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
-  pod 'react-native-add-calendar-event', :path => '../node_modules/react-native-add-calendar-event'
 
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 
   pod 'TouchID', :path => '../node_modules/react-native-touch-id'
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
+  pod 'react-native-calendar-events', :path => '../node_modules/react-native-calendar-events'
 
 end
 
