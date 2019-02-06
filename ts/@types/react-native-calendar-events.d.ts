@@ -17,15 +17,19 @@ declare module "react-native-calendar-events" {
   };
 
   export type StructuredLocation = {
-    title: string,
-    proximity: string,
-    radius: number,
-  }
+    title: string;
+    proximity: string;
+    radius: number;
+  };
 
   export type Alarm = {
-    date: Date | number,
-    structuredLocation: StructuredLocation
-  }
+    date: Date | number;
+    structuredLocation: StructuredLocation;
+  };
+
+  export type Event = {
+    id: string;
+  };
 
   export type SaveEventDetails = {
     id?: string;
@@ -34,7 +38,7 @@ declare module "react-native-calendar-events" {
     startDate: string;
     endDate: string;
     allDay: boolean;
-    alarms?: Array<Alarm>
+    alarms?: Array<Alarm>;
   };
 
   export type SaveEventOptions = {
@@ -51,6 +55,8 @@ declare module "react-native-calendar-events" {
       details: SaveEventDetails,
       options?: SaveEventOptions
     ): Promise<string>;
+    findEventById(id: string): Promise<Event | null>;
+    removeEvent(id: string): Promise<void>;
   };
 
   export default RNCalendarEvents;
