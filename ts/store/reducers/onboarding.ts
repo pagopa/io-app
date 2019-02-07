@@ -11,20 +11,21 @@ import { GlobalState } from "./types";
 
 export type OnboardingState = Readonly<{
   isTosAccepted: boolean;
-  isFingerprintAccepted: boolean;
+  isFingerprintAcknowledged: boolean;
 }>;
 
 const INITIAL_STATE: OnboardingState = {
   isTosAccepted: false,
-  isFingerprintAccepted: false
+  isFingerprintAcknowledged: false
 };
 
 // Selectors
 export const isTosAcceptedSelector = (state: GlobalState): boolean =>
   state.onboarding.isTosAccepted;
 
-export const isFingerprintAcceptedSelector = (state: GlobalState): boolean =>
-  state.onboarding.isFingerprintAccepted;
+export const isFingerprintAcknowledgedSelector = (
+  state: GlobalState
+): boolean => state.onboarding.isFingerprintAcknowledged;
 
 const reducer = (
   state: OnboardingState = INITIAL_STATE,
@@ -39,7 +40,7 @@ const reducer = (
     case getType(fingerprintAcknowledge.success):
       return {
         ...state,
-        isFingerprintAccepted: true
+        isFingerprintAcknowledged: true
       };
 
     default:

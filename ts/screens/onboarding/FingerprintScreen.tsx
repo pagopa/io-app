@@ -14,7 +14,7 @@ import {
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
 
-import { BiometrySimpleType } from "../../sagas/startup/checkSupportedFingerprintSaga";
+import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { Dispatch } from "../../store/actions/types";
 
 type NavigationParams = {
@@ -40,14 +40,29 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  // The Body of this view
-  public renderBody(biometryType: BiometrySimpleType | undefined) {
-    if (biometryType === "NotEnrolled") {
+  private renderBiometryType(
+    biometryType: BiometrySimpleType
+  ): string | undefined {
+    switch (biometryType) {
+      case "FINGERPRINT":
+        return "Fingerprint";
+      case "FACE_ID":
+        return "FaceID";
+      case "TOUCH_ID":
+        return "TouchID";
+    }
+    return;
+  }
+
+  public renderBody(biometryType: BiometrySimpleType) {
+    if (biometryType === "NOT_ENROLLED") {
       return <Text>{I18n.t("onboarding.fingerprint.body.notEnrolled")}</Text>;
     } else {
       return (
         <Text>
-          {I18n.t("onboarding.fingerprint.body.enrolled", { biometryType })}
+          {I18n.t("onboarding.fingerprint.body.enrolled", {
+            biometryType: this.renderBiometryType(biometryType)
+          })}
         </Text>
       );
     }
@@ -55,6 +70,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
 
   public render() {
     const { showAbortOnboardingModal } = this.state;
+    const biometryType = this.props.navigation.getParam("biometryType");
 
     return (
       <BaseScreenComponent
@@ -63,7 +79,13 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
       >
         <Content noPadded={true}>
           <View content={true}>
-            {this.renderBody(this.props.navigation.getParam("biometryType"))}
+            <Text>
+              {biometryType === "NOT_ENROLLED"
+                ? I18n.t("onboarding.fingerprint.body.notEnrolled")
+                : I18n.t("onboarding.fingerprint.body.enrolled", {
+                    biometryType: this.renderBiometryType(biometryType)
+                  })}
+            </Text>
           </View>
         </Content>
         <View footer={true}>
