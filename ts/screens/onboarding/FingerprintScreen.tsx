@@ -26,7 +26,7 @@ type OwnProps = NavigationScreenProps<NavigationParams>;
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  showAbortOnboardingModal: boolean;
+  isAbortOnboardingModalVisible: boolean;
 };
 
 /**
@@ -36,7 +36,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showAbortOnboardingModal: false
+      isAbortOnboardingModalVisible: false
     };
   }
 
@@ -69,7 +69,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { showAbortOnboardingModal } = this.state;
+    const { isAbortOnboardingModalVisible } = this.state;
     const biometryType = this.props.navigation.getParam("biometryType");
 
     return (
@@ -92,13 +92,13 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.fingerprintAcknowledgeRequest()}
+            onPress={this.props.fingerprintAcknowledgeRequest}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
         </View>
 
-        {showAbortOnboardingModal && (
+        {isAbortOnboardingModalVisible && (
           <AbortOnboardingModal
             onClose={this.handleModalClose}
             onConfirm={this.handleModalConfirm}
@@ -109,10 +109,10 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
   }
 
   private handleGoBack = () =>
-    this.setState({ showAbortOnboardingModal: true });
+    this.setState({ isAbortOnboardingModalVisible: true });
 
   private handleModalClose = () =>
-    this.setState({ showAbortOnboardingModal: false });
+    this.setState({ isAbortOnboardingModalVisible: false });
 
   private handleModalConfirm = () => {
     this.handleModalClose();
