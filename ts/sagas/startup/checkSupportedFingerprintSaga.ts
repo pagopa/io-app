@@ -45,17 +45,14 @@ const isTouchIdSupportedConfig: IsSupportedConfig = {
 /**
  * Retrieves fingerpint settings from the base system
  */
-async function getFingerprintSettings(): Promise<BiometrySimpleType> {
+function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
     TouchID.isSupported(isTouchIdSupportedConfig)
       .then(biometryType => {
         resolve(biometryType === true ? "Fingerprint" : biometryType);
       })
       .catch(reason => {
-        resolve((typeof reason.code === "string" &&
-        reason.code === "NOT_ENROLLED"
-          ? "NotEnrolled"
-          : "Unavailable") as BiometrySimpleType);
+        resolve(reason.code === "NOT_ENROLLED" ? "NotEnrolled" : "Unavailable");
       });
   });
 }

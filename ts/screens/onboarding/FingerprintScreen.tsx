@@ -17,28 +17,26 @@ import {
 import { BiometrySimpleType } from "../../sagas/startup/checkSupportedFingerprintSaga";
 import { Dispatch } from "../../store/actions/types";
 
-type FingerprintScreenNavigationParams = {
+type NavigationParams = {
   biometryType: BiometrySimpleType;
 };
 
-type OwnProps = NavigationScreenProps<FingerprintScreenNavigationParams>;
+type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   showAbortOnboardingModal: boolean;
-  biometryType?: BiometrySimpleType;
 };
 
 /**
- * A screen to show the if the fingerprint is supported to the user.
+ * A screen to show if the fingerprint is supported to the user.
  */
 export class FingerprintScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showAbortOnboardingModal: false,
-      biometryType: props.navigation.getParam("biometryType")
+      showAbortOnboardingModal: false
     };
   }
 
@@ -56,7 +54,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { showAbortOnboardingModal, biometryType } = this.state;
+    const { showAbortOnboardingModal } = this.state;
 
     return (
       <BaseScreenComponent
@@ -64,7 +62,9 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
       >
         <Content noPadded={true}>
-          <View content={true}>{this.renderBody(biometryType)}</View>
+          <View content={true}>
+            {this.renderBody(this.props.navigation.getParam("biometryType"))}
+          </View>
         </Content>
         <View footer={true}>
           <Button
