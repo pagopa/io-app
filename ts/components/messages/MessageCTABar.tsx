@@ -54,6 +54,7 @@ type Props = OwnProps &
   ReduxProps;
 
 type State = {
+  // Store if the event is in the device calendar
   isEventInCalendar: boolean;
 };
 
@@ -112,7 +113,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { message, calendarEvent, showModal } = this.props;
     const { isEventInCalendar } = this.state;
 
-    // Create an action that open the Calendar to let the user add an event
+    // Create an action to add or remove the event
     const onPressHandler = () => {
       // Check the authorization status
       checkAndRequestPermission()
