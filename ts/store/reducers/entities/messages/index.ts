@@ -16,20 +16,15 @@ import messagesByIdReducer, {
   messagesStateByIdSelector,
   MessageStateById
 } from "./messagesById";
-import messagesUIStatesByIdReducer, {
-  MessagesUIStatesByIdState
-} from "./messagesUIStatesById";
 
 export type MessagesState = Readonly<{
   byId: MessageStateById;
   allIds: MessagesAllIdsState; // FIXME: is this used?
-  uiStatesById: MessagesUIStatesByIdState;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,
-  allIds: messagesAllIdsReducer,
-  uiStatesById: messagesUIStatesByIdReducer
+  allIds: messagesAllIdsReducer
 });
 
 // Selectors

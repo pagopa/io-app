@@ -40,6 +40,9 @@ const testMessageMeta1: MessageState = {
     created_at: new Date(),
     sender_service_id: testMessageWithContent1.sender_service_id
   },
+  uiStates: {
+    read: false
+  },
   message: pot.some(toMessageWithContentPO(testMessageWithContent1))
 };
 
@@ -60,6 +63,9 @@ const testMessageMeta2: MessageState = {
     fiscal_code: testMessageWithContent2.fiscal_code,
     created_at: new Date(),
     sender_service_id: testMessageWithContent2.sender_service_id
+  },
+  uiStates: {
+    read: false
   },
   message: pot.some(toMessageWithContentPO(testMessageWithContent2))
 };
