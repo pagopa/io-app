@@ -451,6 +451,8 @@ messages:
     reminderTitle: "Promemoria per: {{title}}"
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
+    reminderRemoveSuccess: "Promemoria eliminato"
+    reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
   unknownSender: Mittente sconosciuto

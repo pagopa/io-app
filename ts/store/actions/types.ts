@@ -13,6 +13,7 @@ import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
+import { CalendarEventsActions } from "./calendarEvents";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
@@ -46,7 +47,8 @@ export type Action =
   | ContentActions
   | NavigationHistoryActions
   | IdentificationActions
-  | DebugActions;
+  | DebugActions
+  | CalendarEventsActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
