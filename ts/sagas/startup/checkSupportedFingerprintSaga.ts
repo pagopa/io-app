@@ -15,25 +15,28 @@ export type BiometrySimpleType =
   | "Unavailable";
 
 export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
-  // We check whether the user's device has biometric recognition
-  // capabilities by trying to retrieve it from TouchID library
+  // Check if user device has biometric recognition feature by trying to
+  // query data from TouchID library
   const biometryTypeOrUnsupportedReason: BiometrySimpleType = yield call(
     getFingerprintSettings
   );
 
   if (biometryTypeOrUnsupportedReason !== "Unavailable") {
-    // Navigate to the Fingerprint Screen
+    // If biometric recognition is available, navigate to the Fingerprint
+    // Screen and wait for the user to press "Continue". Otherwise the whole
+    // step is bypassed
     yield put(
       navigateToOnboardingFingerprintScreenAction({
         biometryType: biometryTypeOrUnsupportedReason
       })
     );
 
-    // Here we wait for the user to acknowledge the system communication
+    // Wait for the user to press "Continue" button after having read the
+    // informative text
     yield take(getType(fingerprintAcknowledge.request));
 
-    // We're done with receiving successfully the acknowledgement, dispatch
-    // the action that updates the redux state.
+    // Receive the acknowledgement, then update system state that flags this
+    // screen as "Read"
     yield put(fingerprintAcknowledge.success());
   }
 }
