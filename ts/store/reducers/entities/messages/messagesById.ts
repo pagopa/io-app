@@ -14,13 +14,9 @@ import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
-export type MessageUIStates = {
-  read: boolean;
-};
-
 export type MessageState = {
   meta: CreatedMessageWithoutContent;
-  uiStates: MessageUIStates;
+  read: boolean;
   message: pot.Pot<MessageWithContentPO, string | undefined>;
 };
 
@@ -28,10 +24,6 @@ export type MessageState = {
 export type MessageStateById = Readonly<{
   [key: string]: MessageState | undefined;
 }>;
-
-const INITIAL_UI_STATES: MessageUIStates = {
-  read: false
-};
 
 const INITIAL_STATE: MessageStateById = {};
 
@@ -45,8 +37,8 @@ const reducer = (
         ...state,
         [action.payload.id]: {
           meta: action.payload,
-          message: pot.noneLoading,
-          uiStates: INITIAL_UI_STATES
+          read: false,
+          message: pot.noneLoading
         }
       };
 
@@ -84,15 +76,11 @@ const reducer = (
         // we can't deal with a set read state without a request
         return state;
       }
-      const prevUIStates = prevState.uiStates;
       return {
         ...state,
         [id]: {
           ...prevState,
-          uiStates: {
-            ...prevUIStates,
-            read
-          }
+          read
         }
       };
     }

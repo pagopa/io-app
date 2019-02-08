@@ -151,13 +151,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   private setMessageReadState = () => {
-    const { potMessage, maybeUIStates } = this.props;
+    const { potMessage, maybeRead } = this.props;
 
-    if (
-      pot.isSome(potMessage) &&
-      maybeUIStates.isSome() &&
-      !maybeUIStates.value.read
-    ) {
+    if (pot.isSome(potMessage) && !maybeRead.getOrElse(true)) {
       // Set the message read state to TRUE
       this.props.setMessageReadState(true);
     }
@@ -192,7 +188,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const maybeUIStates = maybeMessageState.map(_ => _.uiStates);
+  const maybeRead = maybeMessageState.map(_ => _.read);
 
   // In case maybePotMessage is undefined we fallback to an empty message.
   // This mens we navigated to the message screen with a non-existing message
@@ -206,7 +202,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   return {
     maybeMeta,
-    maybeUIStates,
+    maybeRead,
     potMessage,
     potService,
     paymentByRptId: state.entities.paymentByRptId
