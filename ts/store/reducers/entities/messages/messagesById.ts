@@ -9,13 +9,14 @@ import { getType } from "typesafe-actions";
 
 import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
 import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
-import { loadMessage } from "../../../actions/messages";
+import { loadMessage, setMessageReadState } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type MessageState = {
   meta: CreatedMessageWithoutContent;
+  isRead: boolean;
   message: pot.Pot<MessageWithContentPO, string | undefined>;
 };
 
@@ -36,6 +37,7 @@ const reducer = (
         ...state,
         [action.payload.id]: {
           meta: action.payload,
+          isRead: false,
           message: pot.noneLoading
         }
       };
@@ -64,6 +66,21 @@ const reducer = (
         [id]: {
           ...prevState,
           message: pot.noneError(action.payload.error)
+        }
+      };
+    }
+    case getType(setMessageReadState): {
+      const { id, read } = action.payload;
+      const prevState = state[id];
+      if (prevState === undefined) {
+        // we can't deal with a set read state without a request
+        return state;
+      }
+      return {
+        ...state,
+        [id]: {
+          ...prevState,
+          isRead: read
         }
       };
     }
