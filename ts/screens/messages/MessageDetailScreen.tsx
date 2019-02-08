@@ -155,7 +155,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
     if (
       pot.isSome(potMessage) &&
-      maybeUIStates.fold(false, uiStates => !uiStates.read)
+      maybeUIStates.isSome() &&
+      !maybeUIStates.value.read
     ) {
       // Set the message read state to TRUE
       this.props.setMessageReadState(true);
