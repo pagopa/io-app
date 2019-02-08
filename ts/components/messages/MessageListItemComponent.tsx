@@ -110,7 +110,7 @@ export class MessageListItemComponent extends React.Component<Props> {
         : undefined;
     return (
       this.props.service.kind !== nextProps.service.kind ||
-      this.props.messageState.read !== nextProps.messageState.read ||
+      this.props.messageState.isRead !== nextProps.messageState.isRead ||
       (rptId !== undefined &&
         this.props.paymentByRptId[rptId] !== nextProps.paymentByRptId[rptId])
     );
@@ -161,7 +161,7 @@ export class MessageListItemComponent extends React.Component<Props> {
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
-              {!messageState.read && (
+              {!messageState.isRead && (
                 <Col style={styles.readCol}>
                   <IconFont
                     name="io-new"
@@ -175,7 +175,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                 <Text
                   style={[
                     styles.serviceText,
-                    !messageState.read ? styles.serviceTextNew : undefined
+                    !messageState.isRead ? styles.serviceTextNew : undefined
                   ]}
                   leftAlign={true}
                   bold={true}

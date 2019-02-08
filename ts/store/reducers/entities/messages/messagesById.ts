@@ -16,7 +16,7 @@ import { GlobalState } from "../../types";
 
 export type MessageState = {
   meta: CreatedMessageWithoutContent;
-  read: boolean;
+  isRead: boolean;
   message: pot.Pot<MessageWithContentPO, string | undefined>;
 };
 
@@ -37,7 +37,7 @@ const reducer = (
         ...state,
         [action.payload.id]: {
           meta: action.payload,
-          read: false,
+          isRead: false,
           message: pot.noneLoading
         }
       };
@@ -80,7 +80,7 @@ const reducer = (
         ...state,
         [id]: {
           ...prevState,
-          read
+          isRead: read
         }
       };
     }

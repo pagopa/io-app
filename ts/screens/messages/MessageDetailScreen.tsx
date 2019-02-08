@@ -188,7 +188,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const maybeRead = maybeMessageState.map(_ => _.read);
+  const maybeRead = maybeMessageState.map(_ => _.isRead);
 
   // In case maybePotMessage is undefined we fallback to an empty message.
   // This mens we navigated to the message screen with a non-existing message
