@@ -1,5 +1,5 @@
 /**
- * Notifications reducer
+ * Messages combined reducer
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
@@ -30,20 +30,27 @@ const reducer = combineReducers<MessagesState, Action>({
 // Selectors
 
 /**
- * Returns messages inversely lexically sorted by ID.
- *
- * Note that message IDs are ULIDs (https://github.com/ulid/spec) so this
- * should return messages sorted from most to least recent.
+ * Returns array of messages IDs inversely lexically ordered.
  */
-export const orderedMessagesStateSelector = createSelector(
-  messagesAllIdsSelector, // FIXME: not needed, we can extract the IDs from messageStateById
+export const lexicallyOrderedMessagesIds = createSelector(
+  messagesAllIdsSelector,
+  potIds =>
+    pot.map(potIds, ids =>
+      [...ids].sort((a: string, b: string) => b.localeCompare(a))
+    )
+);
+
+/**
+ * A selector that using the inversely lexically ordered messages IDs
+ * returned by lexicallyOrderedMessagesIds returns an array of the
+ * mapped/related messages.
+ */
+export const lexicallyOrderedMessagesStateSelector = createSelector(
+  lexicallyOrderedMessagesIds,
   messagesStateByIdSelector,
   (potIds, messageStateById) =>
     pot.map(potIds, ids =>
-      [...ids]
-        .sort((a: string, b: string) => b.localeCompare(a))
-        .map(messageId => messageStateById[messageId])
-        .filter(isDefined)
+      ids.map(messageId => messageStateById[messageId]).filter(isDefined)
     )
 );
 
