@@ -11,7 +11,7 @@ import I18n from "../../i18n";
 import { loadMessages } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
-import { orderedMessagesStateSelector as sortedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -95,7 +95,7 @@ class MessageListScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  potMessages: sortedMessagesStateSelector(state),
+  potMessages: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentByRptId: state.entities.paymentByRptId
 });
