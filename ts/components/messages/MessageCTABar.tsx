@@ -1,5 +1,4 @@
-import { isSome, none } from "fp-ts/lib/Option";
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import { isSome, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
@@ -20,7 +19,7 @@ import {
   CalendarEvent,
   calendarEventByMessageIdSelector
 } from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
+import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
@@ -43,9 +42,9 @@ import { LightModalContextInterface } from "../ui/LightModal";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service: pot.Pot<ServicePublic, Error>;
+  potService: pot.Pot<ServicePublic, Error>;
+  maybePaidReason: Option<PaidReason>;
   containerStyle?: ViewStyle;
-  paymentByRptId: PaymentByRptIdState;
 };
 
 type Props = OwnProps &
@@ -166,7 +165,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderPaymentCTA(
     paymentData: NonNullable<MessageWithContentPO["content"]["payment_data"]>,
     potService: pot.Pot<ServicePublic, Error>,
-    paymentByRptId: PaymentByRptIdState
+    maybePaidReason: Option<PaidReason>
   ) {
     const amount = getAmountFromPaymentAmount(paymentData.amount);
 
@@ -180,10 +179,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       none
     );
 
-    const isPaid = rptId
-      .map(RptIdFromString.encode)
-      .map(_ => paymentByRptId[_] !== undefined)
-      .getOrElse(false);
+    const isPaid = maybePaidReason.isSome();
 
     const onPaymentCTAPress =
       !isPaid && isSome(amount) && isSome(rptId)
@@ -216,7 +212,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { message, service, containerStyle, paymentByRptId } = this.props;
+    const { message, potService, maybePaidReason, containerStyle } = this.props;
 
     const { due_date, payment_data } = message.content;
 
@@ -231,7 +227,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             )}
 
           {payment_data !== undefined &&
-            this.renderPaymentCTA(payment_data, service, paymentByRptId)}
+            this.renderPaymentCTA(payment_data, potService, maybePaidReason)}
         </View>
       );
     }

@@ -16,7 +16,7 @@ import IconFont from "../ui/IconFont";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service: pot.Pot<ServicePublic, Error>;
+  potService: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
 
@@ -56,7 +56,7 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const isOpen = this.state.isOpen;
-    const { message, service, onServiceLinkPress } = this.props;
+    const { message, potService, onServiceLinkPress } = this.props;
 
     if (isOpen) {
       return (
@@ -76,27 +76,27 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
               </Text>
               {format(message.created_at, "dddd D MMMM YYYY")}
             </Text>
-            {pot.isSome(service) && (
+            {pot.isSome(potService) && (
               <React.Fragment>
                 <Text>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.organizationName"
                   )}: `}</Text>
-                  {service.value.organization_name}
+                  {potService.value.organization_name}
                 </Text>
 
                 <Text>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.departmentName"
                   )}: `}</Text>
-                  {service.value.department_name}
+                  {potService.value.department_name}
                 </Text>
 
                 <Text link={true} onPress={onServiceLinkPress}>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.serviceName"
                   )}: `}</Text>
-                  {service.value.service_name}
+                  {potService.value.service_name}
                 </Text>
 
                 <Text>

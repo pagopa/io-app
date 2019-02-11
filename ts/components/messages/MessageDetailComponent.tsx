@@ -1,3 +1,4 @@
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { H1, View } from "native-base";
 import * as React from "react";
@@ -5,7 +6,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
+import { PaidReason } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { logosForService } from "../../utils/services";
@@ -18,8 +19,8 @@ import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  paymentByRptId: PaymentByRptIdState;
-  service: pot.Pot<ServicePublic, Error>;
+  potService: pot.Pot<ServicePublic, Error>;
+  maybePaidReason: Option<PaidReason>;
   onServiceLinkPress?: () => void;
 };
 
@@ -59,24 +60,29 @@ const styles = StyleSheet.create({
  */
 export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
-    const { message, paymentByRptId, service, onServiceLinkPress } = this.props;
+    const {
+      message,
+      potService,
+      maybePaidReason,
+      onServiceLinkPress
+    } = this.props;
     return (
       <View>
         <View style={styles.headerContainer}>
           {/* Service */}
-          {pot.isSome(service) && (
+          {pot.isSome(potService) && (
             <Grid style={styles.serviceContainer}>
               <Col>
-                <H4>{service.value.organization_name}</H4>
+                <H4>{potService.value.organization_name}</H4>
                 <H6 link={true} onPress={onServiceLinkPress}>
-                  {service.value.service_name}
+                  {potService.value.service_name}
                 </H6>
               </Col>
               <Col style={{ width: 60 }}>
                 <TouchableOpacity onPress={onServiceLinkPress}>
                   <MultiImage
                     style={{ width: 60, height: 60 }}
-                    source={logosForService(service.value)}
+                    source={logosForService(potService.value)}
                   />
                 </TouchableOpacity>
               </Col>
@@ -91,15 +97,15 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           {/* RawInfo */}
           <MessageDetailRawInfoComponent
             message={message}
-            service={service}
+            potService={potService}
             onServiceLinkPress={onServiceLinkPress}
           />
         </View>
 
         <MessageCTABar
           message={message}
-          paymentByRptId={paymentByRptId}
-          service={service}
+          potService={potService}
+          maybePaidReason={maybePaidReason}
           containerStyle={styles.ctaBarContainer}
         />
 

@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
@@ -20,6 +20,7 @@ import {
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
@@ -113,18 +114,35 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    */
   private renderFullState = (
     message: MessageWithContentPO,
-    service: pot.Pot<ServicePublic, Error>,
-    paymentByRptId: Props["paymentByRptId"]
+    potService: pot.Pot<ServicePublic, Error>,
+    paymentsByRptId: Props["paymentsByRptId"]
   ) => {
+    // Get the RptId from the payment_data and the service (if available)
+    const rptId = fromNullable(message.content.payment_data)
+      .map(pd =>
+        pot.getOrElse(
+          pot.map(
+            potService,
+            s => `${s.organization_fiscal_code}${pd.notice_number}`
+          ),
+          undefined
+        )
+      )
+      .getOrElse(undefined);
+
+    // Get the payment state from the redux store
+    const maybePaidReason =
+      rptId !== undefined ? fromNullable(paymentsByRptId[rptId]) : none;
+
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
           message={message}
-          paymentByRptId={paymentByRptId}
-          service={service}
+          potService={potService}
+          maybePaidReason={maybePaidReason}
           onServiceLinkPress={
-            pot.isSome(service)
-              ? () => this.onServiceLinkPressHandler(service.value)
+            pot.isSome(potService)
+              ? () => this.onServiceLinkPressHandler(potService.value)
               : undefined
           }
         />
@@ -134,10 +152,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const { potMessage, potService, paymentByRptId } = this.props;
+    const { potMessage, potService, paymentsByRptId } = this.props;
 
     if (pot.isSome(potMessage)) {
-      return this.renderFullState(potMessage.value, potService, paymentByRptId);
+      return this.renderFullState(
+        potMessage.value,
+        potService,
+        paymentsByRptId
+      );
     }
     if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
@@ -205,7 +227,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     maybeRead,
     potMessage,
     potService,
-    paymentByRptId: state.entities.paymentByRptId
+    paymentsByRptId: paymentsByRptIdSelector(state)
   };
 };
 
