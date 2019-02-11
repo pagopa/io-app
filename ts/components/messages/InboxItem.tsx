@@ -86,6 +86,10 @@ type Props = {
   onLongPress: (id: string) => void;
 };
 
+/**
+ * A component to render a single Inbox item.
+ * It extends PureComponent to avoid unnecessary re-renders.
+ */
 class InboxItem extends React.PureComponent<Props> {
   public render() {
     const {
