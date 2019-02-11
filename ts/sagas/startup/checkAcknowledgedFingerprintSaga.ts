@@ -1,14 +1,15 @@
 import { Effect } from "redux-saga";
+
+import TouchID, { IsSupportedConfig } from "react-native-touch-id";
+
 import { call, put, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 
-import TouchID, { IsSupportedConfig } from "react-native-touch-id";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
-
 export type BiometrySimpleType =
   | "FINGERPRINT"
   | "FACE_ID"
@@ -16,7 +17,16 @@ export type BiometrySimpleType =
   | "NOT_ENROLLED"
   | "UNAVAILABLE";
 
-export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
+/**
+ * Query TouchID library to retrieve availability information. The ONLY cases
+ * taken in consideration are:
+ * * TouchID/FaceID
+ * * Unavailable: Not Enrolled
+ *
+ * All other cases are treaten as a single umbrella case "Unavailable: Not
+ * supported/Others".
+ */
+function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
   const biometryTypeOrUnsupportedReason: BiometrySimpleType = yield call(
@@ -43,16 +53,22 @@ export function* checkSupportedFingerprintSaga(): IterableIterator<Effect> {
   }
 }
 
+/**
+ * Query system state to check if Finterprint information screen has already
+ * been displayed. In negative case it launches the saga that prompts it. It
+ * ends the process otherwise. Consider that, like ToS, this should happen at
+ * first launch of the app ONLY.
+ */
 export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
   // Query system state and check whether the user has already acknowledged biometric
-  // recognition Screen. Consider that like ToS, this should be displayed once.
+  // recognition Screen. Consider that, like ToS, this should be displayed once.
   const isFingerprintAcknowledged: ReturnType<
     typeof isFingerprintAcknowledgedSelector
   > = yield select<GlobalState>(isFingerprintAcknowledgedSelector);
 
   if (!isFingerprintAcknowledged) {
     // Navigate to the FingerprintScreen
-    yield call(checkSupportedFingerprintSaga);
+    yield call(onboardFingerprintIfAvailableSaga);
   }
 }
 
@@ -61,7 +77,14 @@ const isTouchIdSupportedConfig: IsSupportedConfig = {
 };
 
 /**
- * Retrieves fingerpint settings from the base system
+ * Retrieve fingerpint settings from the base system. This function wraps the basic
+ * method "isSupported" of TouchID library and simplifies the possible returned values in
+ * function of its usage:
+ * * FaceID/TouchID/Fingerprint: in case of biometric recognition supported.
+ * * Not Enrolled: in case of biometric recognition supported but no data registered.
+ * * Unavailable: for all other negative cases.
+ *
+ * More info about library can be found here: https://github.com/naoufal/react-native-touch-id
  */
 function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
