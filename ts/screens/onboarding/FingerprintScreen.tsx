@@ -40,9 +40,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  private renderBiometryType(
-    biometryType: BiometrySimpleType
-  ): string | undefined {
+  private renderBiometryType(biometryType: BiometrySimpleType): string {
     switch (biometryType) {
       case "FINGERPRINT":
         return "Fingerprint";
@@ -50,21 +48,10 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
         return "FaceID";
       case "TOUCH_ID":
         return "TouchID";
-    }
-    return;
-  }
-
-  public renderBody(biometryType: BiometrySimpleType) {
-    if (biometryType === "NOT_ENROLLED") {
-      return <Text>{I18n.t("onboarding.fingerprint.body.notEnrolled")}</Text>;
-    } else {
-      return (
-        <Text>
-          {I18n.t("onboarding.fingerprint.body.enrolled", {
-            biometryType: this.renderBiometryType(biometryType)
-          })}
-        </Text>
-      );
+      case "NOT_ENROLLED":
+        return "Not Enrolled";
+      default:
+        return "Unavailable";
     }
   }
 
@@ -80,11 +67,11 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
         <Content noPadded={true}>
           <View content={true}>
             <Text>
-              {biometryType === "NOT_ENROLLED"
-                ? I18n.t("onboarding.fingerprint.body.notEnrolled")
-                : I18n.t("onboarding.fingerprint.body.enrolled", {
+              {biometryType !== "NOT_ENROLLED"
+                ? I18n.t("onboarding.fingerprint.body.enrolled", {
                     biometryType: this.renderBiometryType(biometryType)
-                  })}
+                  })
+                : I18n.t("onboarding.fingerprint.body.notEnrolled")}
             </Text>
           </View>
         </Content>
