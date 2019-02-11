@@ -113,7 +113,12 @@ class Inbox extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { messagesStateInfo, servicesById, refreshMessages } = this.props;
+    const {
+      messagesStateInfo,
+      servicesById,
+      paymentsByRptId,
+      refreshMessages
+    } = this.props;
     const { filteredMessageStates: filteredMessagesState } = this.state;
     const isLoading = pot.isLoading(messagesStateInfo.potMessageState);
 
@@ -138,11 +143,12 @@ class Inbox extends React.PureComponent<Props, State> {
         )}
         <FlatList
           data={filteredMessagesState}
-          extraData={{ servicesById, state: this.state }}
+          extraData={{ servicesById, paymentsByRptId, state: this.state }}
           renderItem={this.renderItem}
           keyExtractor={inboxItemKeyExtractor}
           refreshing={isLoading}
           onRefresh={refreshMessages}
+          removeClippedSubviews={true}
         />
       </View>
     );
