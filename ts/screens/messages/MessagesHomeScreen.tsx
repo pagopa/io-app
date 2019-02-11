@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A screen that contains all the Tabs related to messages.
+ */
 class MessagesHomeScreen extends React.Component<Props, never> {
   public componentDidMount() {
     this.refreshMessages();
