@@ -11,8 +11,7 @@ import I18n from "../../i18n";
 import { loadMessages } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
-import { orderedMessagesStateSelector as sortedMessagesStateSelector } from "../../store/reducers/entities/messages";
-import { messagesUIStatesByIdSelector } from "../../store/reducers/entities/messages/messagesUIStatesById";
+import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -46,12 +45,7 @@ class MessageListScreen extends React.Component<Props, never> {
   }
 
   public render() {
-    const {
-      potMessages,
-      messagesUIStatesById,
-      servicesById,
-      paymentByRptId
-    } = this.props;
+    const { potMessages, servicesById, paymentByRptId } = this.props;
 
     const isLoading = pot.isLoading(potMessages);
 
@@ -64,7 +58,6 @@ class MessageListScreen extends React.Component<Props, never> {
           ? this.renderFullState(
               isLoading,
               potMessages.value,
-              messagesUIStatesById,
               servicesById,
               paymentByRptId
             )
@@ -87,13 +80,11 @@ class MessageListScreen extends React.Component<Props, never> {
   private renderFullState = (
     isLoading: boolean,
     messages: pot.PotType<Props["potMessages"]>,
-    messagesUIStatesById: Props["messagesUIStatesById"],
     servicesById: Props["servicesById"],
     paymentByRptId: Props["paymentByRptId"]
   ) => (
     <MessageListComponent
       messages={messages}
-      messagesUIStatesById={messagesUIStatesById}
       servicesById={servicesById}
       paymentByRptId={paymentByRptId}
       refreshing={isLoading}
@@ -104,8 +95,7 @@ class MessageListScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  potMessages: sortedMessagesStateSelector(state),
-  messagesUIStatesById: messagesUIStatesByIdSelector(state),
+  potMessages: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentByRptId: state.entities.paymentByRptId
 });

@@ -442,7 +442,14 @@ messages:
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
-    reminderTitle: "Reminder for: {{subject}}"
+    reminderCalendarSelect: In which calendar you want to add the reminder?
+    reminderTitle: "Reminder for: {{title}}"
+    reminderAddSuccess: "Reminder added"
+    reminderAddFailure: "Error adding reminder, please retry"
+    reminderRemoveSuccess: "Reminder removed"
+    reminderRemoveFailure: "Error removing reminder, please retry"
+    errors:
+      fetchCalendars: Error fetching calendars
   unknownSender: Unknown sender
   noContent: Content not available
 messageDetails:

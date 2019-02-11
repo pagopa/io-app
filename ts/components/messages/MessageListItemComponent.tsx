@@ -8,7 +8,6 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import { MessageUIStates } from "../../store/reducers/entities/messages/messagesUIStatesById";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
@@ -17,7 +16,6 @@ import MessageCTABar from "./MessageCTABar";
 
 type OwnProps = {
   messageState: MessageState;
-  messageUIStates: MessageUIStates;
   paymentByRptId: GlobalState["entities"]["paymentByRptId"];
   service: pot.Pot<ServicePublic, Error>;
   onItemPress?: (messageId: string) => void;
@@ -112,20 +110,14 @@ export class MessageListItemComponent extends React.Component<Props> {
         : undefined;
     return (
       this.props.service.kind !== nextProps.service.kind ||
-      this.props.messageUIStates.read !== nextProps.messageUIStates.read ||
+      this.props.messageState.isRead !== nextProps.messageState.isRead ||
       (rptId !== undefined &&
         this.props.paymentByRptId[rptId] !== nextProps.paymentByRptId[rptId])
     );
   }
 
   public render() {
-    const {
-      messageState,
-      onItemPress,
-      paymentByRptId,
-      messageUIStates,
-      service
-    } = this.props;
+    const { messageState, onItemPress, paymentByRptId, service } = this.props;
 
     const { message, meta } = messageState;
 
@@ -169,7 +161,7 @@ export class MessageListItemComponent extends React.Component<Props> {
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
-              {!messageUIStates.read && (
+              {!messageState.isRead && (
                 <Col style={styles.readCol}>
                   <IconFont
                     name="io-new"
@@ -183,7 +175,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                 <Text
                   style={[
                     styles.serviceText,
-                    !messageUIStates.read ? styles.serviceTextNew : undefined
+                    !messageState.isRead ? styles.serviceTextNew : undefined
                   ]}
                   leftAlign={true}
                   bold={true}

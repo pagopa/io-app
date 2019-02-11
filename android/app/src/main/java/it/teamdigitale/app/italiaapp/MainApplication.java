@@ -9,11 +9,11 @@ import com.rnfs.RNFSPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.calendarevents.CalendarEventsPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
-import com.vonovak.AddCalendarEventPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -42,14 +42,14 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new RNCWebViewPackage(),
+        new CalendarEventsPackage(),
+        new RNCWebViewPackage(),
         new FingerprintAuthPackage(),
         new BackgroundTimerPackage(),
         new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
           .setInvocationEvent("none")
           .setPrimaryColor("#0073E6")
           .build(),
-        new AddCalendarEventPackage(),
         new SvgPackage(),
         new RNTextInputMaskPackage(),
         new SplashScreenReactPackage(),

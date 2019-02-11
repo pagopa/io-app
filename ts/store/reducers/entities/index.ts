@@ -4,6 +4,7 @@
 import { combineReducers } from "redux";
 
 import { Action } from "../../actions/types";
+import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import {
   OrganizationNamesByFiscalCodeState,
@@ -17,13 +18,15 @@ export type EntitiesState = Readonly<{
   services: ServicesState;
   organizations: OrganizationNamesByFiscalCodeState;
   paymentByRptId: PaymentByRptIdState;
+  calendarEvents: CalendarEventsState;
 }>;
 
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,
   services: servicesReducer,
   organizations: servicesByOrganizationFiscalCodeReducer,
-  paymentByRptId: paymentByRptIdReducer
+  paymentByRptId: paymentByRptIdReducer,
+  calendarEvents: calendarEventsReducer
 });
 
 export default reducer;
