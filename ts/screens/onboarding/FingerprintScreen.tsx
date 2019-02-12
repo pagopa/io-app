@@ -17,8 +17,6 @@ import {
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { Dispatch } from "../../store/actions/types";
 
-import { TranslationKeys } from "../../../locales/locales";
-
 type NavigationParams = {
   biometryType: BiometrySimpleType;
 };
@@ -51,13 +49,14 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
   private renderBiometryType(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
   ): string {
-    return I18n.t(`onboarding.fingerprint.body.enrolledType.${
-      biometryPrintableSimpleType === "FINGERPRINT"
-        ? "fingerprint"
-        : biometryPrintableSimpleType === "FACE_ID"
-          ? "faceId"
-          : "touchId"
-    }` as TranslationKeys);
+    switch (biometryPrintableSimpleType) {
+      case "FINGERPRINT":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
+      case "FACE_ID":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
+      case "TOUCH_ID":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
+    }
   }
 
   public render() {

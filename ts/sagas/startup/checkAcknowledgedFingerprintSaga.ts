@@ -52,7 +52,7 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
 }
 
 /**
- * Retrieve from system state information about whether Finterprint screen has
+ * Retrieve from system state information about whether Fingerprint screen has
  * already been displayed or not. If yes, it ends the process. It launches the
  * saga that prompts it, otherwise. Consider that, like ToS, this should happen
  * at first launch of the app ONLY.
