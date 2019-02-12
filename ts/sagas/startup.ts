@@ -48,6 +48,7 @@ import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
+import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
@@ -166,6 +167,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
     yield call(checkAcceptedTosSaga);
     storedPin = yield call(checkConfiguredPinSaga);
+    yield call(checkAcknowledgedFingerprintSaga);
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
   } else {

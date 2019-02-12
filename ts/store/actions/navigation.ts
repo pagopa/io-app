@@ -11,7 +11,10 @@ import { InferNavigationParams } from "../../types/react";
 
 import ROUTES from "../../navigation/routes";
 
+import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
+
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
+
 import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -57,6 +60,14 @@ export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
 });
+
+export const navigateToOnboardingFingerprintScreenAction = (
+  params: InferNavigationParams<typeof FingerprintScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_FINGERPRINT,
+    params
+  });
 
 export const navigateToTosScreen = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,

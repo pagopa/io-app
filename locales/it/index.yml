@@ -196,6 +196,15 @@ onboarding:
     confirmInvalid: i due pin non coincidono
   resetConfirm: Sei sicuro di interrompere l'attivazione di IO?
     Potrai riprenderla in ogni momento facendo di nuovo login con SPID.
+  fingerprint:
+    headerTitle: Attivazione
+    body:
+      enrolledText: Da questo momento in poi puoi accedere all'app anche attraverso {{biometryType}}. Puoi disattivare questa funzionalità dalle preferenze di sicurezza dell'app.
+      enrolledType:
+        fingerprint: Impronta digitale
+        faceId: FaceID
+        touchId: TouchID
+      notEnrolledText: È stato rilevato che non c'è un accesso biometrico attivato. Se vuoi attivarlo puoi impostarlo sul tuo dispositivo e poi attivarlo nelle preferenze di sicurezza dell'app. 
 pin_login:
   pin:
     pinInfo: Inserisci il PIN
