@@ -133,26 +133,16 @@ class MessagesInboxItem extends React.PureComponent<Props> {
         <View style={[styles.itemContainer]}>
           <Grid style={styles.itemGrid}>
             <Row style={styles.serviceRow}>
-              {isSelectionModeEnabled && (
-                <Col>
-                  <CheckBox
-                    onPress={this.handleLongPress}
-                    checked={isSelected}
-                    style={styles.selectionCheckbox}
+              {!isRead && (
+                <Col style={styles.readCol}>
+                  <IconFont
+                    name="io-new"
+                    color={variables.contentPrimaryBackground}
+                    size={24}
+                    style={styles.readIcon}
                   />
                 </Col>
               )}
-              {!isSelectionModeEnabled &&
-                !isRead && (
-                  <Col style={styles.readCol}>
-                    <IconFont
-                      name="io-new"
-                      color={variables.contentPrimaryBackground}
-                      size={24}
-                      style={styles.readIcon}
-                    />
-                  </Col>
-                )}
               <Col size={10}>
                 <Text
                   style={[
@@ -176,11 +166,19 @@ class MessagesInboxItem extends React.PureComponent<Props> {
                 <Text leftAlign={true}>{uiSubject}</Text>
               </Col>
               <Col size={1} style={styles.iconContainer}>
-                <IconFont
-                  name="io-right"
-                  size={24}
-                  color={variables.contentPrimaryBackground}
-                />
+                {isSelectionModeEnabled ? (
+                  <CheckBox
+                    onPress={this.handleLongPress}
+                    checked={isSelected}
+                    style={styles.selectionCheckbox}
+                  />
+                ) : (
+                  <IconFont
+                    name="io-right"
+                    size={24}
+                    color={variables.contentPrimaryBackground}
+                  />
+                )}
               </Col>
             </Row>
             <Row>
