@@ -9,7 +9,7 @@ import { lexicallyOrderedMessagesStateInfoSelector } from "../../store/reducers/
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import InboxItem from "./InboxItem";
+import MessagesInboxItem from "./MessagesInboxItem";
 
 export const styles = StyleSheet.create({
   listWrapper: {
@@ -77,7 +77,7 @@ const generateFilteredMessageStates = (
  * A component to render a list of not archived messages.
  * The component allows messages selection and archiving.
  */
-class Inbox extends React.PureComponent<Props, State> {
+class MessagesInbox extends React.PureComponent<Props, State> {
   /**
    * The function is used to update the filteredMessageStates only when necessary.
    */
@@ -195,7 +195,7 @@ class Inbox extends React.PureComponent<Props, State> {
       onLongPress: this.handleOnLongPressItem
     };
 
-    return <InboxItem {...itemProps} />;
+    return <MessagesInboxItem {...itemProps} />;
   };
 
   private handleOnLongPressItem = (id: string) => {
@@ -222,4 +222,4 @@ class Inbox extends React.PureComponent<Props, State> {
   };
 }
 
-export default Inbox;
+export default MessagesInbox;

@@ -90,7 +90,7 @@ type Props = {
  * A component to render a single Inbox item.
  * It extends PureComponent to avoid unnecessary re-renders.
  */
-class InboxItem extends React.PureComponent<Props> {
+class MessagesInboxItem extends React.PureComponent<Props> {
   public render() {
     const {
       messageState,
@@ -213,4 +213,4 @@ class InboxItem extends React.PureComponent<Props> {
   };
 }
 
-export default InboxItem;
+export default MessagesInboxItem;

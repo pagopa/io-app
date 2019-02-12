@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import Inbox from "../../components/messages/Inbox";
+import MessagesInbox from "../../components/messages/MessagesInbox";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
 import {
@@ -62,7 +62,7 @@ class MessagesHomeScreen extends React.Component<Props, never> {
           tabBarBackgroundColor={"transparent"}
         >
           <Tab heading={I18n.t("messages.tab.inbox")}>
-            <Inbox
+            <MessagesInbox
               messagesStateInfo={lexicallyOrderedMessagesStateInfo}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
