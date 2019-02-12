@@ -1,7 +1,5 @@
-import { Effect } from "redux-saga";
-
 import TouchID, { IsSupportedConfig } from "react-native-touch-id";
-
+import { Effect } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
@@ -23,7 +21,7 @@ export type BiometrySimpleType =
  * * TouchID/FaceID
  * * Unavailable: Not Enrolled
  *
- * All other cases are treaten as a single umbrella case "Unavailable: Not
+ * All other cases are treated as a single umbrella case "Unavailable: Not
  * supported/Others".
  */
 function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
@@ -54,10 +52,10 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
 }
 
 /**
- * Query system state to check if Finterprint information screen has already
- * been displayed. In negative case it launches the saga that prompts it. It
- * ends the process otherwise. Consider that, like ToS, this should happen at
- * first launch of the app ONLY.
+ * Retrieve from system state information about whether Finterprint screen has
+ * already been displayed or not. If yes, it ends the process. It launches the
+ * saga that prompts it, otherwise. Consider that, like ToS, this should happen
+ * at first launch of the app ONLY.
  */
 export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
   // Query system state and check whether the user has already acknowledged biometric

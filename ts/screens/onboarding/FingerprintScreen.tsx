@@ -17,9 +17,13 @@ import {
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { Dispatch } from "../../store/actions/types";
 
+import { TranslationKeys } from "../../../locales/locales";
+
 type NavigationParams = {
   biometryType: BiometrySimpleType;
 };
+
+type BiometryPrintableSimpleType = "FINGERPRINT" | "TOUCH_ID" | "FACE_ID";
 
 type OwnProps = NavigationScreenProps<NavigationParams>;
 
@@ -40,19 +44,20 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  private renderBiometryType(biometryType: BiometrySimpleType): string {
-    switch (biometryType) {
-      case "FINGERPRINT":
-        return "Fingerprint";
-      case "FACE_ID":
-        return "FaceID";
-      case "TOUCH_ID":
-        return "TouchID";
-      case "NOT_ENROLLED":
-        return "Not Enrolled";
-      default:
-        return "Unavailable";
-    }
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(
+    biometryPrintableSimpleType: BiometryPrintableSimpleType
+  ): string {
+    return I18n.t(`onboarding.fingerprint.body.enrolledType.${
+      biometryPrintableSimpleType === "FINGERPRINT"
+        ? "fingerprint"
+        : biometryPrintableSimpleType === "FACE_ID"
+          ? "faceId"
+          : "touchId"
+    }` as TranslationKeys);
   }
 
   public render() {
@@ -68,10 +73,12 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
           <View content={true}>
             <Text>
               {biometryType !== "NOT_ENROLLED"
-                ? I18n.t("onboarding.fingerprint.body.enrolled", {
-                    biometryType: this.renderBiometryType(biometryType)
+                ? I18n.t("onboarding.fingerprint.body.enrolledText", {
+                    biometryType: this.renderBiometryType(
+                      biometryType as BiometryPrintableSimpleType
+                    )
                   })
-                : I18n.t("onboarding.fingerprint.body.notEnrolled")}
+                : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
             </Text>
           </View>
         </Content>
