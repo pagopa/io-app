@@ -51,7 +51,7 @@ type State = {
   lastMessageStatesUpdate: number;
   filteredMessageStates: ReturnType<typeof generateFilteredMessageStates>;
   isSelectionModeEnabled: boolean;
-  selected: Map<string, true>;
+  selectedMessageIds: Map<string, true>;
 };
 
 const inboxItemKeyExtractor = (messageState: MessageState) =>
@@ -63,18 +63,16 @@ const inboxItemKeyExtractor = (messageState: MessageState) =>
  */
 const generateFilteredMessageStates = (
   potMessageStates: pot.Pot<ReadonlyArray<MessageState>, string>
-): ReadonlyArray<MessageState> => {
-  if (pot.isSome(potMessageStates)) {
-    return potMessageStates.value.filter(
-      messageState => !messageState.isArchived
-    );
-  }
-
-  return [];
-};
+): ReadonlyArray<MessageState> =>
+  pot.getOrElse(
+    pot.map(potMessageStates, _ =>
+      _.filter(messageState => !messageState.isArchived)
+    ),
+    []
+  );
 
 /**
- * A component to render a list of not archived messages.
+ * A component to render a list of visible (not yet archived) messages.
  * The component allows messages selection and archiving.
  */
 class MessagesInbox extends React.PureComponent<Props, State> {
@@ -108,7 +106,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       lastMessageStatesUpdate: 0,
       filteredMessageStates: [],
       isSelectionModeEnabled: false,
-      selected: new Map()
+      selectedMessageIds: new Map()
     };
   }
 
@@ -119,7 +117,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       paymentsByRptId,
       refreshMessages
     } = this.props;
-    const { filteredMessageStates: filteredMessagesState } = this.state;
+    const { filteredMessageStates } = this.state;
     const isLoading = pot.isLoading(messagesStateInfo.potMessageState);
 
     return (
@@ -129,7 +127,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             <Button
               onPress={this.archiveMessages}
               style={styles.buttonBarButton}
-              disabled={this.state.selected.size === 0}
+              disabled={this.state.selectedMessageIds.size === 0}
             >
               <Text>{I18n.t("messages.cta.archive")}</Text>
             </Button>
@@ -142,7 +140,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
           </View>
         )}
         <FlatList
-          data={filteredMessagesState}
+          data={filteredMessageStates}
           extraData={{ servicesById, paymentsByRptId, state: this.state }}
           renderItem={this.renderItem}
           keyExtractor={inboxItemKeyExtractor}
@@ -157,7 +155,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   public renderItem: ListRenderItem<MessageState> = info => {
     const { meta } = info.item;
     const { servicesById, paymentsByRptId, onPressItem } = this.props;
-    const { isSelectionModeEnabled, selected } = this.state;
+    const { isSelectionModeEnabled, selectedMessageIds: selected } = this.state;
 
     const potService = fromNullable(
       servicesById[meta.sender_service_id]
@@ -200,16 +198,18 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   private handleOnLongPressItem = (id: string) => {
     this.setState(prevState => {
-      const selected = new Map(prevState.selected);
-      selected.get(id) ? selected.delete(id) : selected.set(id, true);
-      return { isSelectionModeEnabled: true, selected };
+      const selectedMessageIds = new Map(prevState.selectedMessageIds);
+      selectedMessageIds.get(id)
+        ? selectedMessageIds.delete(id)
+        : selectedMessageIds.set(id, true);
+      return { isSelectionModeEnabled: true, selectedMessageIds };
     });
   };
 
   private archiveMessages = () => {
     this.resetSelection();
     this.props.setMessagesArchivedState(
-      Array.from(this.state.selected.keys()),
+      Array.from(this.state.selectedMessageIds.keys()),
       true
     );
   };
@@ -217,7 +217,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   private resetSelection = () => {
     this.setState({
       isSelectionModeEnabled: false,
-      selected: new Map()
+      selectedMessageIds: new Map()
     });
   };
 }
