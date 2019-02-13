@@ -23,8 +23,6 @@ import maskedInputTheme from "./components/MaskedInput";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import preferenceItemTheme from "./components/PreferenceItem";
 import screenHeaderTheme from "./components/ScreenHeader";
-import tabContainerTheme from "./components/TabContainer";
-import tabHeadingTheme from "./components/TabHeading";
 import textTheme from "./components/Text";
 import textWithIconTheme from "./components/TextWithIcon";
 import viewTheme from "./components/View";
@@ -75,12 +73,6 @@ const theme = (): Theme => {
     },
     "NativeBase.ViewNB": {
       ...viewTheme()
-    },
-    "NativeBase.TabHeading": {
-      ...tabHeadingTheme()
-    },
-    "NativeBase.TabContainer": {
-      ...tabContainerTheme()
     },
     "UIComponent.MessageDetailsInfoComponent": {
       ...messageDetailsInfoComponentTheme()

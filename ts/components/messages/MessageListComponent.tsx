@@ -14,7 +14,10 @@ type OwnProps = {
   paymentByRptId: PaymentByRptIdState;
   refreshing: boolean;
   onRefresh: () => void;
-  onListItemPress?: (messageId: string) => void;
+  onPressItem: (id: string) => void;
+  onLongPressItem: (id: string) => void;
+  isSelectionModeEnabled: boolean;
+  selectedMessageIds: Map<string, true>;
 };
 
 type Props = OwnProps;
@@ -32,7 +35,10 @@ class MessageListComponent extends React.Component<Props> {
         messageState={info.item}
         paymentByRptId={this.props.paymentByRptId}
         service={service !== undefined ? service : pot.none}
-        onItemPress={this.props.onListItemPress}
+        onPress={this.props.onPressItem}
+        onLongPress={this.props.onLongPressItem}
+        isSelectionModeEnabled={this.props.isSelectionModeEnabled}
+        isSelected={!!this.props.selectedMessageIds.get(info.item.meta.id)}
       />
     );
   };

@@ -446,13 +446,16 @@ messages:
     one: Hai 1 messaggio
     other: Hai {{count}} messaggi
   tab:
-    all: Tutti
+    inbox: Ricevuti
     deadlines: Scadenze
+    archive: Archivio
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
   yesterday: ieri
   cta:
+    archive: Archivia
+    unarchive: Disarchivia
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria

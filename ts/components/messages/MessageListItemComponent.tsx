@@ -1,6 +1,6 @@
 import { DateFromISOString } from "io-ts-types";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { CheckBox, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -18,7 +18,10 @@ type OwnProps = {
   messageState: MessageState;
   paymentByRptId: GlobalState["entities"]["paymentByRptId"];
   service: pot.Pot<ServicePublic, Error>;
-  onItemPress?: (messageId: string) => void;
+  onPress: (id: string) => void;
+  onLongPress: (id: string) => void;
+  isSelectionModeEnabled: boolean;
+  isSelected: boolean;
 };
 
 type Props = OwnProps;
@@ -79,6 +82,10 @@ const styles = StyleSheet.create({
 
   ctaBarContainer: {
     marginBottom: 16
+  },
+
+  selectionCheckbox: {
+    left: 0
   }
 });
 
@@ -112,12 +119,20 @@ export class MessageListItemComponent extends React.Component<Props> {
       this.props.service.kind !== nextProps.service.kind ||
       this.props.messageState.isRead !== nextProps.messageState.isRead ||
       (rptId !== undefined &&
-        this.props.paymentByRptId[rptId] !== nextProps.paymentByRptId[rptId])
+        this.props.paymentByRptId[rptId] !== nextProps.paymentByRptId[rptId]) ||
+      this.props.isSelectionModeEnabled !== nextProps.isSelectionModeEnabled ||
+      this.props.isSelected !== nextProps.isSelected
     );
   }
 
   public render() {
-    const { messageState, onItemPress, paymentByRptId, service } = this.props;
+    const {
+      messageState,
+      paymentByRptId,
+      service,
+      isSelectionModeEnabled,
+      isSelected
+    } = this.props;
 
     const { message, meta } = messageState;
 
@@ -152,12 +167,12 @@ export class MessageListItemComponent extends React.Component<Props> {
           I18n.t("messages.noContent")
         );
 
-    const onItemPressHandler = onItemPress
-      ? () => onItemPress(meta.id)
-      : undefined;
-
     return (
-      <TouchableOpacity key={meta.id} onPress={onItemPressHandler}>
+      <TouchableOpacity
+        key={meta.id}
+        onPress={this.handlePress}
+        onLongPress={this.handleLongPress}
+      >
         <View style={styles.itemContainer}>
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
@@ -194,11 +209,19 @@ export class MessageListItemComponent extends React.Component<Props> {
                 <Text leftAlign={true}>{subject}</Text>
               </Col>
               <Col size={1} style={styles.iconContainer}>
-                <IconFont
-                  name="io-right"
-                  size={24}
-                  color={variables.contentPrimaryBackground}
-                />
+                {isSelectionModeEnabled ? (
+                  <CheckBox
+                    onPress={this.handleLongPress}
+                    checked={isSelected}
+                    style={styles.selectionCheckbox}
+                  />
+                ) : (
+                  <IconFont
+                    name="io-right"
+                    size={24}
+                    color={variables.contentPrimaryBackground}
+                  />
+                )}
               </Col>
             </Row>
             <Row>
@@ -216,4 +239,12 @@ export class MessageListItemComponent extends React.Component<Props> {
       </TouchableOpacity>
     );
   }
+
+  private handlePress = () => {
+    this.props.onPress(this.props.messageState.meta.id);
+  };
+
+  private handleLongPress = () => {
+    this.props.onLongPress(this.props.messageState.meta.id);
+  };
 }

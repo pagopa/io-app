@@ -9,7 +9,11 @@ import { getType } from "typesafe-actions";
 
 import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
 import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
-import { loadMessage, setMessageReadState } from "../../../actions/messages";
+import {
+  loadMessage,
+  setMessageReadState,
+  setMessagesArchivedState
+} from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -17,6 +21,7 @@ import { GlobalState } from "../../types";
 export type MessageState = {
   meta: CreatedMessageWithoutContent;
   isRead: boolean;
+  isArchived: boolean;
   message: pot.Pot<MessageWithContentPO, string | undefined>;
 };
 
@@ -38,6 +43,7 @@ const reducer = (
         [action.payload.id]: {
           meta: action.payload,
           isRead: false,
+          isArchived: false,
           message: pot.noneLoading
         }
       };
@@ -82,6 +88,28 @@ const reducer = (
           ...prevState,
           isRead: read
         }
+      };
+    }
+    case getType(setMessagesArchivedState): {
+      const { ids, archived } = action.payload;
+      const updatedMessageStates = ids.reduce<{ [key: string]: MessageState }>(
+        (accumulator, id) => {
+          const prevState = state[id];
+          if (prevState !== undefined) {
+            // tslint:disable-next-line:no-object-mutation
+            accumulator[id] = {
+              ...prevState,
+              isArchived: archived
+            };
+          }
+          return accumulator;
+        },
+        {}
+      );
+
+      return {
+        ...state,
+        ...updatedMessageStates
       };
     }
     case getType(clearCache):
