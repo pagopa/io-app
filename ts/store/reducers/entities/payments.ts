@@ -12,7 +12,7 @@ import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 
-export type PaidReason = Readonly<
+type PaidReason = Readonly<
   | {
       kind: "COMPLETED";
       transactionId: number;
