@@ -6,12 +6,17 @@ import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateInfoSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
+import {
+  InjectedWithMessagesSelectionProps,
+  withMessagesSelection
+} from "../helpers/withMessagesSelection";
 import MessageListComponent from "./MessageListComponent";
 
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
+
   buttonBar: {
     position: "absolute",
     left: 0,
@@ -24,7 +29,6 @@ const styles = StyleSheet.create({
     padding: 10,
     opacity: 0.75
   },
-
   buttonBarButton: {
     opacity: 1
   }
@@ -45,13 +49,12 @@ type Props = Pick<
   ComponentProps<typeof MessageListComponent>,
   "servicesById" | "paymentByRptId" | "onRefresh"
 > &
-  OwnProps;
+  OwnProps &
+  InjectedWithMessagesSelectionProps;
 
 type State = {
   lastMessageStatesUpdate: number;
   filteredMessageStates: ReturnType<typeof generateFilteredMessagesState>;
-  isSelectionModeEnabled: boolean;
-  selectedMessageIds: Map<string, true>;
 };
 
 const generateFilteredMessagesState = (
@@ -93,9 +96,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       lastMessageStatesUpdate: 0,
-      filteredMessageStates: [],
-      isSelectionModeEnabled: false,
-      selectedMessageIds: new Map()
+      filteredMessageStates: []
     };
   }
 
@@ -103,23 +104,24 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     const isLoading = pot.isLoading(
       this.props.messagesStateInfo.potMessagesState
     );
-    const { isSelectionModeEnabled, selectedMessageIds } = this.state;
+    const {
+      isSelectionModeEnabled,
+      selectedMessageIds,
+      resetSelection
+    } = this.props;
 
     return (
       <View style={styles.listWrapper}>
-        {this.state.isSelectionModeEnabled && (
+        {isSelectionModeEnabled && (
           <View style={styles.buttonBar}>
             <Button
-              onPress={this.archiveMessages}
               style={styles.buttonBarButton}
-              disabled={this.state.selectedMessageIds.size === 0}
+              disabled={selectedMessageIds.size === 0}
+              onPress={this.archiveMessages}
             >
               <Text>{I18n.t("messages.cta.archive")}</Text>
             </Button>
-            <Button
-              onPress={this.resetSelection}
-              style={styles.buttonBarButton}
-            >
+            <Button onPress={resetSelection} style={styles.buttonBarButton}>
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
@@ -127,9 +129,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
         <MessageListComponent
           {...this.props}
           messages={this.state.filteredMessageStates}
-          refreshing={isLoading}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
+          refreshing={isLoading}
           isSelectionModeEnabled={isSelectionModeEnabled}
           selectedMessageIds={selectedMessageIds}
         />
@@ -138,7 +140,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   }
 
   private handleOnPressItem = (id: string) => {
-    if (this.state.isSelectionModeEnabled) {
+    if (this.props.isSelectionModeEnabled) {
       this.handleOnLongPressItem(id);
     } else {
       this.props.navigateToMessageDetail(id);
@@ -146,29 +148,16 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.setState(prevState => {
-      const selectedMessageIds = new Map(prevState.selectedMessageIds);
-      selectedMessageIds.get(id)
-        ? selectedMessageIds.delete(id)
-        : selectedMessageIds.set(id, true);
-      return { isSelectionModeEnabled: true, selectedMessageIds };
-    });
+    this.props.toggleMessageSelection(id);
   };
 
   private archiveMessages = () => {
-    this.resetSelection();
+    this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      Array.from(this.state.selectedMessageIds.keys()),
+      Array.from(this.props.selectedMessageIds.keys()),
       true
     );
   };
-
-  private resetSelection = () => {
-    this.setState({
-      isSelectionModeEnabled: false,
-      selectedMessageIds: new Map()
-    });
-  };
 }
 
-export default MessagesInbox;
+export default withMessagesSelection(MessagesInbox);
