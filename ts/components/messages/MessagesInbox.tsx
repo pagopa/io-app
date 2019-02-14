@@ -57,6 +57,9 @@ type State = {
   filteredMessageStates: ReturnType<typeof generateFilteredMessagesState>;
 };
 
+/**
+ * Filter only the messages that are not archived.
+ */
 const generateFilteredMessagesState = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
 ): ReadonlyArray<MessageState> =>
@@ -67,6 +70,10 @@ const generateFilteredMessagesState = (
     []
   );
 
+/**
+ * A component to render a list of visible (not yet archived) messages.
+ * The component allows messages selection and archiving.
+ */
 class MessagesInbox extends React.PureComponent<Props, State> {
   /**
    * The function is used to update the filteredMessageStates only when necessary.

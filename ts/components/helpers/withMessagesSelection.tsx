@@ -14,6 +14,9 @@ export type InjectedWithMessagesSelectionProps = {
   resetSelection: () => void;
 };
 
+/**
+ * An HOC to maintain and manipulate the messages selection.
+ */
 export function withMessagesSelection<
   P extends InjectedWithMessagesSelectionProps
 >(WrappedComponent: React.ComponentType<P>) {
