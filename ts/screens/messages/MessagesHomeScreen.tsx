@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -71,7 +72,16 @@ class MessagesHomeScreen extends React.Component<Props, never> {
               navigateToMessageDetail={this.navigateToMessageDetail}
             />
           </Tab>
-          <Tab heading={I18n.t("messages.tab.archive")} />
+          <Tab heading={I18n.t("messages.tab.archive")}>
+            <MessagesArchive
+              messagesStateInfo={lexicallyOrderedMessagesStateInfo}
+              servicesById={servicesById}
+              paymentByRptId={paymentsByRptId}
+              onRefresh={this.refreshMessages}
+              setMessagesArchivedState={this.setMessagesArchivedState}
+              navigateToMessageDetail={this.navigateToMessageDetail}
+            />
+          </Tab>
         </Tabs>
       </TopScreenComponent>
     );
