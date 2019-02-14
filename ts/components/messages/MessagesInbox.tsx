@@ -72,7 +72,8 @@ const generateFilteredMessagesState = (
 
 /**
  * A component to render a list of visible (not yet archived) messages.
- * The component allows messages selection and archiving.
+ * It acts like a wrapper for the MessageListComponent, filtering the messages
+ * and adding the messages selection and archiving management.
  */
 class MessagesInbox extends React.PureComponent<Props, State> {
   /**

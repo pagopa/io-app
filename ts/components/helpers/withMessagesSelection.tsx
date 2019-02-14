@@ -31,6 +31,7 @@ export function withMessagesSelection<
         selectedMessageIds: new Map()
       };
     }
+
     public render() {
       const { isSelectionModeEnabled, selectedMessageIds } = this.state;
 
