@@ -112,19 +112,15 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     const isLoading = pot.isLoading(
       this.props.messagesStateInfo.potMessagesState
     );
-    const {
-      isSelectionModeEnabled,
-      selectedMessageIds,
-      resetSelection
-    } = this.props;
+    const { selectedMessageIds, resetSelection } = this.props;
 
     return (
       <View style={styles.listWrapper}>
-        {isSelectionModeEnabled && (
+        {selectedMessageIds.isSome() && (
           <View style={styles.buttonBar}>
             <Button
               style={styles.buttonBarButton}
-              disabled={selectedMessageIds.size === 0}
+              disabled={selectedMessageIds.value.size === 0}
               onPress={this.unarchiveMessages}
             >
               <Text>{I18n.t("messages.cta.unarchive")}</Text>
@@ -140,7 +136,6 @@ class MessagesArchive extends React.PureComponent<Props, State> {
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
           refreshing={isLoading}
-          isSelectionModeEnabled={isSelectionModeEnabled}
           selectedMessageIds={selectedMessageIds}
         />
       </View>
@@ -148,7 +143,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
   }
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.isSelectionModeEnabled) {
+    if (this.props.selectedMessageIds.isSome()) {
       this.handleOnLongPressItem(id);
     } else {
       this.props.navigateToMessageDetail(id);
@@ -162,7 +157,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
   private unarchiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      Array.from(this.props.selectedMessageIds.keys()),
+      this.props.selectedMessageIds.map(_ => Array.from(_)).getOrElse([]),
       false
     );
   };

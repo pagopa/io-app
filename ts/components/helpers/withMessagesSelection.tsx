@@ -1,15 +1,14 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
 
 type State = {
-  isSelectionModeEnabled: boolean;
-  selectedMessageIds: Map<string, true>;
+  selectedMessageIds: Option<Set<string>>;
 };
 
 export type InjectedWithMessagesSelectionProps = {
-  isSelectionModeEnabled: boolean;
-  selectedMessageIds: Map<string, true>;
+  selectedMessageIds: Option<Set<string>>;
   toggleMessageSelection: (id: string) => void;
   resetSelection: () => void;
 };
@@ -27,39 +26,44 @@ export function withMessagesSelection<
     constructor(props: Omit<P, keyof InjectedWithMessagesSelectionProps>) {
       super(props);
       this.state = {
-        isSelectionModeEnabled: false,
-        selectedMessageIds: new Map()
+        selectedMessageIds: none
       };
     }
 
     public render() {
-      const { isSelectionModeEnabled, selectedMessageIds } = this.state;
+      const { selectedMessageIds } = this.state;
 
-      const mergedProps = {
-        ...this.props,
-        isSelectionModeEnabled,
-        selectedMessageIds,
-        toggleMessageSelection: this.toggleMessageSelection,
-        resetSelection: this.resetSelection
-      } as P;
-
-      return <WrappedComponent {...mergedProps} />;
+      return (
+        <WrappedComponent
+          {...this.props as P}
+          selectedMessageIds={selectedMessageIds}
+          toggleMessageSelection={this.toggleMessageSelection}
+          resetSelection={this.resetSelection}
+        />
+      );
     }
 
+    // A function to add/remove an id from the selectedMessageIds Set.
     private toggleMessageSelection = (id: string) => {
-      this.setState(prevState => {
-        const selectedMessageIds = new Map(prevState.selectedMessageIds);
-        selectedMessageIds.get(id)
-          ? selectedMessageIds.delete(id)
-          : selectedMessageIds.set(id, true);
-        return { isSelectionModeEnabled: true, selectedMessageIds };
+      this.setState(({ selectedMessageIds }) => {
+        return selectedMessageIds
+          .map(_ => {
+            const newSelectedMessageIds = new Set(_);
+            newSelectedMessageIds.has(id)
+              ? newSelectedMessageIds.delete(id)
+              : newSelectedMessageIds.add(id);
+
+            return {
+              selectedMessageIds: some(newSelectedMessageIds)
+            };
+          })
+          .getOrElse({ selectedMessageIds: some(new Set().add(id)) });
       });
     };
 
     private resetSelection = () => {
       this.setState({
-        isSelectionModeEnabled: false,
-        selectedMessageIds: new Map()
+        selectedMessageIds: none
       });
     };
   }
