@@ -10,6 +10,7 @@ import { getType } from "typesafe-actions";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
+import { GlobalState } from "../types";
 
 type PaidReason = Readonly<
   | {
@@ -58,3 +59,8 @@ export const paymentByRptIdReducer = (
       return state;
   }
 };
+
+// Selectors
+
+export const paymentsByRptIdSelector = (state: GlobalState) =>
+  state.entities.paymentByRptId;

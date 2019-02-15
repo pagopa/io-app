@@ -2,6 +2,8 @@
 global:
   localization:
     decimalSeparator: ","
+  dateFormats:
+    dayAndMonth: "dddd D MMMM"
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -446,13 +448,16 @@ messages:
     one: Hai 1 messaggio
     other: Hai {{count}} messaggi
   tab:
-    all: Tutti
+    inbox: Ricevuti
     deadlines: Scadenze
+    archive: Archivio
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
   yesterday: ieri
   cta:
+    archive: Archivia
+    unarchive: Disarchivia
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria

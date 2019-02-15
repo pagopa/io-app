@@ -6,7 +6,7 @@ import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMess
  * A plain object representation of a MessageWithContent useful to avoid problems with the redux store.
  * The create_at date object is transformed in a string.
  */
-const MessageWithContentPO = t.exact(
+export const MessageWithContentPO = t.exact(
   t.intersection(
     [
       t.type({
