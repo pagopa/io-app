@@ -43,19 +43,15 @@ export const lexicallyOrderedMessagesIds = createSelector(
 /**
  * A selector that using the inversely lexically ordered messages IDs
  * returned by lexicallyOrderedMessagesIds returns an array of the
- * mapped/related messages and a timestamp of the last calculation.
- * The timestamp is used inside components to filter messages states
- * only when a change occured.
+ * mapped/related messages.
  */
-export const lexicallyOrderedMessagesStateInfoSelector = createSelector(
+export const lexicallyOrderedMessagesStateSelector = createSelector(
   lexicallyOrderedMessagesIds,
   messagesStateByIdSelector,
-  (potIds, messageStateById) => ({
-    potMessagesState: pot.map(potIds, ids =>
+  (potIds, messageStateById) =>
+    pot.map(potIds, ids =>
       ids.map(messageId => messageStateById[messageId]).filter(isDefined)
-    ),
-    lastUpdate: Date.now()
-  })
+    )
 );
 
 export default reducer;

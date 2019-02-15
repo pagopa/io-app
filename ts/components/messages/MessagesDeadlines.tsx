@@ -5,7 +5,7 @@ import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
-import { lexicallyOrderedMessagesStateInfoSelector } from "../../store/reducers/entities/messages";
+import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   isMessageWithContentAndDueDatePO,
@@ -36,9 +36,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
-  messagesStateInfo: ReturnType<
-    typeof lexicallyOrderedMessagesStateInfoSelector
-  >;
+  messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
 };
 
@@ -131,10 +129,10 @@ const generateSections = (
  */
 class MessagesDeadlines extends React.PureComponent<Props, never> {
   public render() {
-    const { messagesStateInfo, onRefresh } = this.props;
-    const isLoading = pot.isLoading(messagesStateInfo.potMessagesState);
+    const { messagesState, onRefresh } = this.props;
+    const isLoading = pot.isLoading(messagesState);
 
-    const sections = generateSections(messagesStateInfo.potMessagesState);
+    const sections = generateSections(messagesState);
 
     return (
       <View style={styles.listWrapper}>

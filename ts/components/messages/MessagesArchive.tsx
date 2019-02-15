@@ -4,7 +4,7 @@ import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
-import { lexicallyOrderedMessagesStateInfoSelector } from "../../store/reducers/entities/messages";
+import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithMessagesSelectionProps,
@@ -35,9 +35,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
-  messagesStateInfo: ReturnType<
-    typeof lexicallyOrderedMessagesStateInfoSelector
-  >;
+  messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
     ids: ReadonlyArray<string>,
@@ -53,7 +51,7 @@ type Props = Pick<
   InjectedWithMessagesSelectionProps;
 
 type State = {
-  lastMessageStatesUpdate: number;
+  lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
 };
 
@@ -83,16 +81,16 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     nextProps: Props,
     prevState: State
   ): Partial<State> | null {
-    const { lastMessageStatesUpdate } = prevState;
+    const { lastMessagesState } = prevState;
 
-    if (lastMessageStatesUpdate !== nextProps.messagesStateInfo.lastUpdate) {
+    if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
       return {
         filteredMessageStates: generateMessagesStateArchivedArray(
-          nextProps.messagesStateInfo.potMessagesState
+          nextProps.messagesState
         ),
-        lastMessageStatesUpdate: nextProps.messagesStateInfo.lastUpdate
+        lastMessagesState: nextProps.messagesState
       };
     }
 
@@ -103,15 +101,13 @@ class MessagesArchive extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      lastMessageStatesUpdate: 0,
+      lastMessagesState: pot.none,
       filteredMessageStates: []
     };
   }
 
   public render() {
-    const isLoading = pot.isLoading(
-      this.props.messagesStateInfo.potMessagesState
-    );
+    const isLoading = pot.isLoading(this.props.messagesState);
     const { selectedMessageIds, resetSelection } = this.props;
 
     return (

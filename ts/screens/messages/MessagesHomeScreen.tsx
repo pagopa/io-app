@@ -15,7 +15,7 @@ import {
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { lexicallyOrderedMessagesStateInfoSelector } from "../../store/reducers/entities/messages";
+import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -46,7 +46,7 @@ class MessagesHomeScreen extends React.Component<Props, never> {
 
   public render() {
     const {
-      lexicallyOrderedMessagesStateInfo,
+      lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
       refreshMessages,
@@ -68,7 +68,7 @@ class MessagesHomeScreen extends React.Component<Props, never> {
         >
           <Tab heading={I18n.t("messages.tab.inbox")}>
             <MessagesInbox
-              messagesStateInfo={lexicallyOrderedMessagesStateInfo}
+              messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentByRptId={paymentsByRptId}
               onRefresh={refreshMessages}
@@ -78,14 +78,14 @@ class MessagesHomeScreen extends React.Component<Props, never> {
           </Tab>
           <Tab heading={I18n.t("messages.tab.deadlines")}>
             <MessagesDeadlines
-              messagesStateInfo={lexicallyOrderedMessagesStateInfo}
+              messagesState={lexicallyOrderedMessagesState}
               onRefresh={refreshMessages}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
           <Tab heading={I18n.t("messages.tab.archive")}>
             <MessagesArchive
-              messagesStateInfo={lexicallyOrderedMessagesStateInfo}
+              messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentByRptId={paymentsByRptId}
               onRefresh={refreshMessages}
@@ -100,9 +100,7 @@ class MessagesHomeScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  lexicallyOrderedMessagesStateInfo: lexicallyOrderedMessagesStateInfoSelector(
-    state
-  ),
+  lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state)
 });
