@@ -1,13 +1,21 @@
+import * as t from "io-ts";
+import {
+  replaceProp1 as repP,
+  requiredProp1 as reqP
+} from "italia-ts-commons/lib/types";
+
 import { MessageContent } from "../../definitions/backend/MessageContent";
 import { MessageWithContentPO } from "./MessageWithContentPO";
 
-type MessageContentWithDueDate = MessageContent & {
-  due_date: NonNullable<MessageContent["due_date"]>;
-};
+export const MessageWithContentAndDueDatePO = repP(
+  MessageWithContentPO,
+  "content",
+  reqP(MessageContent, "due_date")
+);
 
-export type MessageWithContentAndDueDatePO = MessageWithContentPO & {
-  content: MessageContentWithDueDate;
-};
+export type MessageWithContentAndDueDatePO = t.TypeOf<
+  typeof MessageWithContentAndDueDatePO
+>;
 
 export const isMessageWithContentAndDueDatePO = (
   message: MessageWithContentPO

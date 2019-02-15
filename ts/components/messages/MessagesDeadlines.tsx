@@ -140,7 +140,7 @@ class MessagesDeadlines extends React.PureComponent<Props, never> {
       <View style={styles.listWrapper}>
         <MessageAgenda
           sections={sections}
-          refreshing={isLoading}
+          isRefreshing={isLoading}
           onRefresh={onRefresh}
           onPressItem={this.handleOnPressItem}
         />

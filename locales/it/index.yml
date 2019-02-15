@@ -469,6 +469,8 @@ messages:
       fetchCalendars: Errore durante il recupero dei calendari
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
+  agenda:
+    sectionDate: "dddd D MMMM"
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto

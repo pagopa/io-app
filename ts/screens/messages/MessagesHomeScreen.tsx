@@ -14,7 +14,7 @@ import {
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateInfoSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -23,7 +23,7 @@ import customVariables from "../../theme/variables";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
-  ReduxProps;
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   tabContainer: {
@@ -41,14 +41,17 @@ const styles = StyleSheet.create({
  */
 class MessagesHomeScreen extends React.Component<Props, never> {
   public componentDidMount() {
-    this.refreshMessages();
+    this.props.refreshMessages();
   }
 
   public render() {
     const {
       lexicallyOrderedMessagesStateInfo,
       servicesById,
-      paymentsByRptId
+      paymentsByRptId,
+      refreshMessages,
+      navigateToMessageDetail,
+      updateMessagesArchivedState
     } = this.props;
 
     return (
@@ -68,16 +71,16 @@ class MessagesHomeScreen extends React.Component<Props, never> {
               messagesStateInfo={lexicallyOrderedMessagesStateInfo}
               servicesById={servicesById}
               paymentByRptId={paymentsByRptId}
-              onRefresh={this.refreshMessages}
-              setMessagesArchivedState={this.setMessagesArchivedState}
-              navigateToMessageDetail={this.navigateToMessageDetail}
+              onRefresh={refreshMessages}
+              setMessagesArchivedState={updateMessagesArchivedState}
+              navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
           <Tab heading={I18n.t("messages.tab.deadlines")}>
             <MessagesDeadlines
               messagesStateInfo={lexicallyOrderedMessagesStateInfo}
-              onRefresh={this.refreshMessages}
-              navigateToMessageDetail={this.navigateToMessageDetail}
+              onRefresh={refreshMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
           <Tab heading={I18n.t("messages.tab.archive")}>
@@ -85,26 +88,15 @@ class MessagesHomeScreen extends React.Component<Props, never> {
               messagesStateInfo={lexicallyOrderedMessagesStateInfo}
               servicesById={servicesById}
               paymentByRptId={paymentsByRptId}
-              onRefresh={this.refreshMessages}
-              setMessagesArchivedState={this.setMessagesArchivedState}
-              navigateToMessageDetail={this.navigateToMessageDetail}
+              onRefresh={refreshMessages}
+              setMessagesArchivedState={updateMessagesArchivedState}
+              navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
         </Tabs>
       </TopScreenComponent>
     );
   }
-
-  private refreshMessages = () => this.props.dispatch(loadMessages.request());
-
-  private navigateToMessageDetail = (messageId: string) => {
-    this.props.dispatch(navigateToMessageDetailScreenAction({ messageId }));
-  };
-
-  private setMessagesArchivedState = (
-    ids: ReadonlyArray<string>,
-    archived: boolean
-  ) => this.props.dispatch(setMessagesArchivedState(ids, archived));
 }
 
 const mapStateToProps = (state: GlobalState) => ({
@@ -115,4 +107,17 @@ const mapStateToProps = (state: GlobalState) => ({
   paymentsByRptId: paymentsByRptIdSelector(state)
 });
 
-export default connect(mapStateToProps)(MessagesHomeScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  refreshMessages: () => dispatch(loadMessages.request()),
+  navigateToMessageDetail: (messageId: string) =>
+    dispatch(navigateToMessageDetailScreenAction({ messageId })),
+  updateMessagesArchivedState: (
+    ids: ReadonlyArray<string>,
+    archived: boolean
+  ) => dispatch(setMessagesArchivedState(ids, archived))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessagesHomeScreen);

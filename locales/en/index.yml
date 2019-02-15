@@ -459,6 +459,8 @@ messages:
       fetchCalendars: Error fetching calendars
   unknownSender: Unknown sender
   noContent: Content not available
+  agenda:
+    sectionDate: "dddd D MMMM"
 messageDetails:
   headerTitle: Message
   emptyMessage: No content

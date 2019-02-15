@@ -54,13 +54,15 @@ type Props = Pick<
 
 type State = {
   lastMessageStatesUpdate: number;
-  filteredMessageStates: ReturnType<typeof generateFilteredMessagesState>;
+  filteredMessageStates: ReturnType<
+    typeof generateMessagesStateNotArchivedArray
+  >;
 };
 
 /**
  * Filter only the messages that are not archived.
  */
-const generateFilteredMessagesState = (
+const generateMessagesStateNotArchivedArray = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
 ): ReadonlyArray<MessageState> =>
   pot.getOrElse(
@@ -77,7 +79,7 @@ const generateFilteredMessagesState = (
  */
 class MessagesInbox extends React.PureComponent<Props, State> {
   /**
-   * The function is used to update the filteredMessageStates only when necessary.
+   * Updates the filteredMessageStates only when necessary.
    */
   public static getDerivedStateFromProps(
     nextProps: Props,
@@ -89,7 +91,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
       return {
-        filteredMessageStates: generateFilteredMessagesState(
+        filteredMessageStates: generateMessagesStateNotArchivedArray(
           nextProps.messagesStateInfo.potMessagesState
         ),
         lastMessageStatesUpdate: nextProps.messagesStateInfo.lastUpdate
@@ -144,6 +146,8 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   private handleOnPressItem = (id: string) => {
     if (this.props.selectedMessageIds.isSome()) {
+      // Is the selection mode is active a simple "press" must act as
+      // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
     } else {
       this.props.navigateToMessageDetail(id);

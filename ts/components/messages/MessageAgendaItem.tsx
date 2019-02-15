@@ -26,6 +26,10 @@ type Props = {
   onPress: (id: string) => void;
 };
 
+/**
+ * A component to render a single Agenda item.
+ * Extends PureComponent to avoid unnecessary re-renders.
+ */
 class MessageAgendaItem extends React.PureComponent<Props> {
   public render() {
     const { subject, due_date } = this.props;

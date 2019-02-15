@@ -8,6 +8,7 @@ import {
   StyleSheet
 } from "react-native";
 
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
 import H5 from "../ui/H5";
@@ -38,7 +39,7 @@ type Props = {
   // typescript definition.
   // tslint:disable-next-line:readonly-array
   sections: MessageAgendaSection[];
-  refreshing: boolean;
+  isRefreshing: boolean;
   onRefresh: () => void;
   onPressItem: (id: string) => void;
 };
@@ -48,7 +49,7 @@ type Props = {
  */
 class MessageAgenda extends React.PureComponent<Props> {
   public render() {
-    const { sections, refreshing, onRefresh } = this.props;
+    const { sections, isRefreshing, onRefresh } = this.props;
     return (
       <SectionList
         sections={sections}
@@ -56,7 +57,7 @@ class MessageAgenda extends React.PureComponent<Props> {
         stickySectionHeadersEnabled={true}
         alwaysBounceVertical={false}
         ItemSeparatorComponent={ItemSeparatorComponent}
-        refreshing={refreshing}
+        refreshing={isRefreshing}
         onRefresh={onRefresh}
         renderSectionHeader={this.renderSectionHeader}
         renderItem={this.renderItem}
@@ -67,7 +68,10 @@ class MessageAgenda extends React.PureComponent<Props> {
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     return (
       <H5 style={styles.sectionHeader}>
-        {format(info.section.title, "dddd D MMMM").toUpperCase()}
+        {format(
+          info.section.title,
+          I18n.t("messages.agenda.sectionDate")
+        ).toUpperCase()}
       </H5>
     );
   };
