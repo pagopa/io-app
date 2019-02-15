@@ -70,7 +70,7 @@ class MessageAgenda extends React.PureComponent<Props> {
       <H5 style={styles.sectionHeader}>
         {format(
           info.section.title,
-          I18n.t("messages.agenda.sectionDate")
+          I18n.t("global.dateFormats.dayAndMonth")
         ).toUpperCase()}
       </H5>
     );
