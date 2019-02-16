@@ -29,7 +29,7 @@ function retryingFetch(
   const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
 
   // configure retry logic with default exponential backoff
-  // @see https://github.com/teamdigitale/italia-ts-commons/blob/master/src/backoff.ts
+  // @see https://github.com/teamdigitale/io-ts-commons/blob/master/src/backoff.ts
   const exponentialBackoff = calculateExponentialBackoffInterval();
   const retryLogic = withRetries<Error, Response>(
     maxRetries,
@@ -79,7 +79,7 @@ export const constantPollingFetch = (
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
   // makes the retry logic map 404s to transient errors (by default only
   // timeouts are transient)
-  // see also https://github.com/teamdigitale/italia-ts-commons/blob/master/src/fetch.ts#L103
+  // see also https://github.com/teamdigitale/io-ts-commons/blob/master/src/fetch.ts#L103
   const retryWithTransient404s: typeof retryLogic = (t, shouldAbort?) =>
     retryLogic(
       // when the result of the task is a Response with status 404,

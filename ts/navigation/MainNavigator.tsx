@@ -47,7 +47,7 @@ const ROUTE_ICON: RouteIconMap = {
 
 const getLabel = (routeName: string): string => {
   const fallbackLabel = "unknown"; // fallback label
-  // "routeName as Routes" is assumed to be safe as explained @https://github.com/teamdigitale/italia-app/pull/193#discussion_r192347234
+  // "routeName as Routes" is assumed to be safe as explained @https://github.com/teamdigitale/io-app/pull/193#discussion_r192347234
   // adding fallback anyway -- better safe than sorry
   const label = ROUTE_LABEL[routeName as Routes];
   return label === undefined ? fallbackLabel : label;

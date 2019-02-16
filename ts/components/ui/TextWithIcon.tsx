@@ -13,7 +13,7 @@ interface Props extends ComponentProps<View> {
 /**
  * A simple wrapper where you can put an Icon and a Text components that will be rendered side-by-side.
  *
- * More @https://github.com/teamdigitale/italia-app#textwithicon
+ * More @https://github.com/teamdigitale/io-app#textwithicon
  */
 export default connectStyle(
   "UIComponent.TextWithIcon",

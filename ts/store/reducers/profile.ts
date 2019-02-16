@@ -62,7 +62,7 @@ const reducer = (
         // the updated version in the existing profile.
         // Note: we cannot just assign the "updated" profile to the
         // cached one since they have two different types.
-        // FIXME: one gets merged https://github.com/teamdigitale/italia-backend/pull/322
+        // FIXME: one gets merged https://github.com/teamdigitale/io-backend/pull/322
         return pot.some({
           ...state.value,
           email: updated.email,

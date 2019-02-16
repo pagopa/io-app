@@ -19,7 +19,7 @@ export function* checkProfileEnabledSaga(
     // active in the API.
     // FIXME: the `version` field has the same meaning at the `has_profile`
     //        field, we should get rid of `has_profile`.
-    //        see https://github.com/teamdigitale/italia-backend/blob/v0.0.48/src/types/profile.ts#L33
+    //        see https://github.com/teamdigitale/io-backend/blob/v0.0.48/src/types/profile.ts#L33
 
     // Upsert the user profile to enable inbox and webhook
     yield put(

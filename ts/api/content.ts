@@ -1,6 +1,6 @@
 /**
  * This module implements the types and a client for retrieving the static
- * content published at https://github.com/teamdigitale/italia-services-metadata
+ * content published at https://github.com/teamdigitale/io-services-metadata
  */
 
 import {

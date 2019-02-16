@@ -1,12 +1,12 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4bfe698a793a4270b9bac004515225a3)](https://www.codacy.com/app/cloudify/italia-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teamdigitale/italia-app&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4bfe698a793a4270b9bac004515225a3)](https://www.codacy.com/app/cloudify/italia-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teamdigitale/io-app&amp;utm_campaign=Badge_Grade)
 
-[![dependencies](https://david-dm.org/teamdigitale/italia-app/status.svg)](https://david-dm.org/teamdigitale/italia-app)
+[![dependencies](https://david-dm.org/teamdigitale/io-app/status.svg)](https://david-dm.org/teamdigitale/io-app)
 
-[![CircleCI](https://circleci.com/gh/teamdigitale/italia-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/italia-app)
+[![CircleCI](https://circleci.com/gh/teamdigitale/io-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/io-app)
 
-[![codecov](https://codecov.io/gh/teamdigitale/italia-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/italia-app)
+[![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/d813b789c3a2085bd8f4/maintainability)](https://codeclimate.com/github/teamdigitale/italia-app/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d813b789c3a2085bd8f4/maintainability)](https://codeclimate.com/github/teamdigitale/io-app/maintainability)
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_shield)
 
@@ -50,7 +50,7 @@ When the app will achieve the appropriate level of quality and usefulness, it wi
 
 ### How can I help you?
 
-[Reporting bugs](https://github.com/teamdigitale/italia-app/issues), bug fixes, [translations](https://github.com/teamdigitale/italia-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/teamdigitale/italia-app/pulls)!
+[Reporting bugs](https://github.com/teamdigitale/io-app/issues), bug fixes, [translations](https://github.com/teamdigitale/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/teamdigitale/io-app/pulls)!
 
 If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico@teamdigitale.governo.it).
 
@@ -192,7 +192,7 @@ To release a new alpha:
 $ bundle exec fastlane alpha
 ```
 
-_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/teamdigitale/italia-app) on each by merge to the master branch._
+_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/teamdigitale/io-app) on each by merge to the master branch._
 
 ### Installation on physical devices (development)
 
@@ -210,7 +210,7 @@ To develop the application on your machine using the Backend App and an IDP test
 
 #### Installazione di App Backend e IDP di test
 
-Follow the documentation of the repository [italia-backend](https://github.com/teamdigitale/italia-backend).
+Follow the documentation of the repository [italia-backend](https://github.com/teamdigitale/io-backend).
 
 #### WebView, HTTPS and self-signed certificates
 
