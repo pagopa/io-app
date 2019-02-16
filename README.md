@@ -66,7 +66,7 @@ If you have some time to spare and wish to get involved on a regular basis, [con
 
 ### SPID Authentication
 
-The application relies on a [backend](https://github.com/teamdigitale/ItaliaApp-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/digital-citizenship).
+The application relies on a [backend](https://github.com/teamdigitale/io-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/io).
 
 The backend implements a SAML2 Service Provider that deals with user authentication with the SPID Identity Providers (IdP).
 
