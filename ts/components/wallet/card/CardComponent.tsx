@@ -3,7 +3,7 @@
  * with different appearences based on
  * the props passed
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";

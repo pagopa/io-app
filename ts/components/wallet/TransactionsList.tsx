@@ -1,7 +1,7 @@
 /**
  * This component displays a list of transactions
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import {
   Body,
   Content,

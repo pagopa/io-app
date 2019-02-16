@@ -3,7 +3,7 @@ import {
   BasicResponseType,
   createFetchRequestForApi,
   IGetApiRequestType
-} from "italia-ts-commons/lib/requests";
+} from "io-ts-commons/lib/requests";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";

@@ -4,7 +4,7 @@
  * are managed by different global reducers.
  */
 
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { loadMessages } from "../../../actions/messages";

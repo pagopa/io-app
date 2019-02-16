@@ -4,7 +4,7 @@ import {
   replaceProp1 as repP,
   requiredProp1 as reqP,
   tag
-} from "italia-ts-commons/lib/types";
+} from "io-ts-commons/lib/types";
 
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";

@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import { PatternString } from "italia-ts-commons/lib/strings";
+import { PatternString } from "io-ts-commons/lib/strings";
 
 const MIN_PAN_DIGITS = 15;
 const MAX_PAN_DIGITS = 19;

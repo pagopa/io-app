@@ -3,7 +3,7 @@
  * (holder, pan, cvc, expiration date)
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "io-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import {
   Body,

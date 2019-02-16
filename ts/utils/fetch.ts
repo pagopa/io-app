@@ -5,15 +5,15 @@
 
 import { left, right } from "fp-ts/lib/Either";
 import { fromEither } from "fp-ts/lib/TaskEither";
-import { calculateExponentialBackoffInterval } from "italia-ts-commons/lib/backoff";
+import { calculateExponentialBackoffInterval } from "io-ts-commons/lib/backoff";
 import {
   AbortableFetch,
   retriableFetch,
   setFetchTimeout,
   toFetch
-} from "italia-ts-commons/lib/fetch";
-import { TransientError, withRetries } from "italia-ts-commons/lib/tasks";
-import { Millisecond } from "italia-ts-commons/lib/units";
+} from "io-ts-commons/lib/fetch";
+import { TransientError, withRetries } from "io-ts-commons/lib/tasks";
+import { Millisecond } from "io-ts-commons/lib/units";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 
 /**

@@ -1,5 +1,5 @@
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
+import { AmountInEuroCents, RptId } from "io-pagopa-commons/lib/pagopa";
+import * as pot from "io-ts-commons/lib/pot";
 import {
   Body,
   Container,

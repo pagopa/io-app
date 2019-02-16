@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { PotFromActions } from "../../../types/utils";

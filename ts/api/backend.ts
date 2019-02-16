@@ -10,7 +10,7 @@ import {
   IPostApiRequestType,
   IResponseType,
   ResponseDecoder
-} from "italia-ts-commons/lib/requests";
+} from "io-ts-commons/lib/requests";
 
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";

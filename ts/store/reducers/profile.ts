@@ -4,8 +4,8 @@
  * are managed by different global reducers.
  */
 
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
-import * as pot from "italia-ts-commons/lib/pot";
+import { NonNegativeInteger } from "io-ts-commons/lib/numbers";
+import * as pot from "io-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { UserProfileUnion } from "../../api/backend";

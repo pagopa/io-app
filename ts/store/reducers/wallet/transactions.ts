@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";

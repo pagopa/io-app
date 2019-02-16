@@ -1,4 +1,4 @@
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Tuple2 } from "io-ts-commons/lib/tuples";
 import { View } from "native-base";
 import * as React from "react";
 

@@ -2,8 +2,8 @@
 
 import * as t from "io-ts";
 
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Millisecond, Second } from "italia-ts-commons/lib/units";
+import { NonEmptyString } from "io-ts-commons/lib/strings";
+import { Millisecond, Second } from "io-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default application name to show in the header of the topmost screens

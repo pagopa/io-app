@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { Content, List, ListItem } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import { fromNullable } from "fp-ts/lib/Option";
 
-import { untag } from "italia-ts-commons/lib/types";
+import { untag } from "io-ts-commons/lib/types";
 
 import I18n from "../../i18n";
 

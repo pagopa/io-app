@@ -4,7 +4,7 @@
 import {
   TypeofApiCall,
   TypeOfApiResponseStatus
-} from "italia-ts-commons/lib/requests";
+} from "io-ts-commons/lib/requests";
 import { Platform } from "react-native";
 import { call, Effect, put, select } from "redux-saga/effects";
 

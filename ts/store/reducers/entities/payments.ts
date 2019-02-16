@@ -4,7 +4,7 @@
  * are managed by different global reducers.
  */
 
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import { RptIdFromString } from "io-pagopa-commons/lib/pagopa";
 import { getType } from "typesafe-actions";
 
 import { clearCache } from "../../actions/profile";

@@ -1,6 +1,6 @@
 // tslint:disable:readonly-array
 
-import { Pot } from "italia-ts-commons/lib/pot";
+import { Pot } from "io-ts-commons/lib/pot";
 import { Effect } from "redux-saga";
 import {
   PayloadCreator,

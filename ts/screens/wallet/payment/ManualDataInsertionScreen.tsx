@@ -17,11 +17,11 @@ import {
   AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-pagopa-commons/lib/pagopa";
+} from "io-pagopa-commons/lib/pagopa";
 import {
   NonEmptyString,
   OrganizationFiscalCode
-} from "italia-ts-commons/lib/strings";
+} from "io-ts-commons/lib/strings";
 import {
   Body,
   Container,

@@ -2,7 +2,7 @@ import * as t from "io-ts";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
-} from "italia-pagopa-commons/lib/pagopa";
+} from "io-pagopa-commons/lib/pagopa";
 
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 

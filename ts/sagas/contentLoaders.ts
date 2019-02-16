@@ -1,6 +1,6 @@
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
 
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { BasicResponseType } from "io-ts-commons/lib/requests";
 import { ActionType, getType } from "typesafe-actions";
 
 import { ContentClient } from "../api/content";

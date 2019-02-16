@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { Button, Container, Content, Text } from "native-base";
 import React from "react";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";

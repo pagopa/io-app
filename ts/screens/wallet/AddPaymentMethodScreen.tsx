@@ -12,7 +12,7 @@
  * is handled @https://www.pivotaltracker.com/story/show/157838293
  */
 import { Option } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "io-pagopa-commons/lib/pagopa";
 import {
   Body,
   Button,

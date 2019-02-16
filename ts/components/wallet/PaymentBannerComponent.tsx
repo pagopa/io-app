@@ -6,7 +6,7 @@
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
-} from "italia-pagopa-commons/lib/pagopa";
+} from "io-pagopa-commons/lib/pagopa";
 import { Button, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";

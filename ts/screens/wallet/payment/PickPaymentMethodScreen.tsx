@@ -3,8 +3,8 @@
  * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 import { some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
+import { AmountInEuroCents, RptId } from "io-pagopa-commons/lib/pagopa";
+import * as pot from "io-ts-commons/lib/pot";
 import {
   Body,
   Container,

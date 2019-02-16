@@ -3,8 +3,8 @@
  * inserted the data required to save a new card
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
+import { AmountInEuroCents, RptId } from "io-pagopa-commons/lib/pagopa";
+import * as pot from "io-ts-commons/lib/pot";
 import {
   Body,
   Container,

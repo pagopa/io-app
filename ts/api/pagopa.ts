@@ -15,7 +15,7 @@ import {
   MapResponseType,
   ReplaceRequestParams,
   TypeofApiParams
-} from "italia-ts-commons/lib/requests";
+} from "io-ts-commons/lib/requests";
 
 import {
   NullableWallet,

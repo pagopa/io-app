@@ -1,7 +1,7 @@
 import { delay } from "redux-saga";
 import { call, Effect, fork, put } from "redux-saga/effects";
 
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { BasicResponseType } from "io-ts-commons/lib/requests";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";

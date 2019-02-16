@@ -2,8 +2,8 @@
  * A saga that manages the Profile.
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import * as pot from "io-ts-commons/lib/pot";
+import { TypeofApiCall } from "io-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 

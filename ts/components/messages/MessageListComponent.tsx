@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 

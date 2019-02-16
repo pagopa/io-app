@@ -3,7 +3,7 @@
  */
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { NonEmptyString } from "io-ts-commons/lib/strings";
 import { Alert, PushNotificationIOS } from "react-native";
 import PushNotification from "react-native-push-notification";
 

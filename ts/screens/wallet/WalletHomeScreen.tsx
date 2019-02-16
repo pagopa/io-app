@@ -3,7 +3,7 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { Button, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";

@@ -1,5 +1,5 @@
 import I18n from "i18n-js";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { TypeofApiCall } from "io-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";

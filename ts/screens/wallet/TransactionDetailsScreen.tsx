@@ -11,7 +11,7 @@
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { Content, H1, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";

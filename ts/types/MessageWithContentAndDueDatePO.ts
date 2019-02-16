@@ -2,7 +2,7 @@ import * as t from "io-ts";
 import {
   replaceProp1 as repP,
   requiredProp1 as reqP
-} from "italia-ts-commons/lib/types";
+} from "io-ts-commons/lib/types";
 
 import { MessageContent } from "../../definitions/backend/MessageContent";
 import { MessageWithContentPO } from "./MessageWithContentPO";

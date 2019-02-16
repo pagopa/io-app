@@ -1,6 +1,6 @@
 import { isSome, none } from "fp-ts/lib/Option";
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
+import { RptIdFromString } from "io-pagopa-commons/lib/pagopa";
+import * as pot from "io-ts-commons/lib/pot";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";

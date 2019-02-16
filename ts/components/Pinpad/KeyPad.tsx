@@ -1,4 +1,4 @@
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { ITuple2 } from "io-ts-commons/lib/tuples";
 import { Button, Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 

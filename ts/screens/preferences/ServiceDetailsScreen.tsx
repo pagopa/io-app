@@ -1,5 +1,5 @@
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
-import * as pot from "italia-ts-commons/lib/pot";
+import { NonNegativeInteger } from "io-ts-commons/lib/numbers";
+import * as pot from "io-ts-commons/lib/pot";
 import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import {

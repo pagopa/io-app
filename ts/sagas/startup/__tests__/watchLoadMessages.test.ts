@@ -1,5 +1,5 @@
 import { left, right } from "fp-ts/lib/Either";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { call, put } from "redux-saga/effects";
 

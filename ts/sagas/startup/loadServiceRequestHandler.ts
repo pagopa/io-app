@@ -1,4 +1,4 @@
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { TypeofApiCall } from "io-ts-commons/lib/requests";
 import { call, Effect, put } from "redux-saga/effects";
 
 import { ActionType } from "typesafe-actions";

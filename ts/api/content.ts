@@ -8,7 +8,7 @@ import {
   BasicResponseType,
   createFetchRequestForApi,
   IGetApiRequestType
-} from "italia-ts-commons/lib/requests";
+} from "io-ts-commons/lib/requests";
 
 import { contentRepoUrl } from "../config";
 

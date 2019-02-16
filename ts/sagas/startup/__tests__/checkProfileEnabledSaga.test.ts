@@ -1,11 +1,11 @@
 import { expectSaga } from "redux-saga-test-plan";
 
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
+import { NonNegativeInteger } from "io-ts-commons/lib/numbers";
 import {
   EmailString,
   FiscalCode,
   NonEmptyString
-} from "italia-ts-commons/lib/strings";
+} from "io-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";

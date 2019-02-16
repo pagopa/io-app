@@ -2,7 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "io-ts-commons/lib/types";
 import {
   ActionType,
   createAction,

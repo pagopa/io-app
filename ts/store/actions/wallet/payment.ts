@@ -1,8 +1,8 @@
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { RptId } from "io-pagopa-commons/lib/pagopa";
 import {
   OmitStatusFromResponse,
   TypeofApiResponse
-} from "italia-ts-commons/lib/requests";
+} from "io-ts-commons/lib/requests";
 import {
   ActionType,
   createAsyncAction,

@@ -1,6 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "io-ts-commons/lib/types";
 import React from "react";
 
 type State = {

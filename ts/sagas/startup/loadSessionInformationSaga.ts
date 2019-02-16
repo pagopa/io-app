@@ -1,5 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { TypeofApiCall } from "io-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 

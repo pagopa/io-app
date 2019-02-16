@@ -4,8 +4,8 @@
 
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import * as pot from "io-ts-commons/lib/pot";
+import { TypeofApiCall } from "io-ts-commons/lib/requests";
 import { Task } from "redux-saga";
 import {
   all,

@@ -1,4 +1,4 @@
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "io-ts-commons/lib/types";
 import React from "react";
 import {
   Image,

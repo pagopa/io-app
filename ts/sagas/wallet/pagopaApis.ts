@@ -1,5 +1,5 @@
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { RptIdFromString } from "io-pagopa-commons/lib/pagopa";
+import { TypeofApiCall } from "io-ts-commons/lib/requests";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 

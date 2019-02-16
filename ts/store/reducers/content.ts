@@ -5,7 +5,7 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";

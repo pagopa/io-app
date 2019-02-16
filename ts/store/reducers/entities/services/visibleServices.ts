@@ -3,7 +3,7 @@
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "io-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { ServiceList } from "../../../../../definitions/backend/ServiceList";
