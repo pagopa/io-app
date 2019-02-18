@@ -13,6 +13,9 @@ import { InstabugButtons } from "../InstabugButtons";
 const styles = StyleSheet.create({
   helpButton: {
     paddingLeft: 10
+  },
+  right: {
+    flex: 0
   }
 });
 
@@ -21,13 +24,15 @@ interface OwnProps {
   goBack?: () => void;
   primary?: boolean;
   onShowHelp?: () => void;
+  // A property to set a custom AppHeader body
+  body?: React.ReactNode;
 }
 
 type Props = OwnProps;
 
 export class BaseHeader extends React.PureComponent<Props> {
   public render() {
-    const { goBack, headerTitle, onShowHelp } = this.props;
+    const { goBack, headerTitle, onShowHelp, body } = this.props;
     return (
       <AppHeader primary={this.props.primary}>
         {goBack && (
@@ -36,11 +41,13 @@ export class BaseHeader extends React.PureComponent<Props> {
           </Left>
         )}
         <Body>
-          <Text white={this.props.primary} numberOfLines={1}>
-            {headerTitle || DEFAULT_APPLICATION_NAME}
-          </Text>
+          {body || (
+            <Text white={this.props.primary} numberOfLines={1}>
+              {headerTitle || DEFAULT_APPLICATION_NAME}
+            </Text>
+          )}
         </Body>
-        <Right>
+        <Right style={styles.right}>
           <InstabugButtons />
           {onShowHelp && (
             <TouchableHighlight onPress={onShowHelp} style={styles.helpButton}>

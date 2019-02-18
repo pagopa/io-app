@@ -16,6 +16,7 @@ interface OwnProps {
   goBack?: () => void;
   contextualHelp?: ContextualHelpProps;
   primary?: boolean;
+  headerBody?: React.ReactNode;
 }
 
 type Props = OwnProps;
@@ -41,7 +42,13 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { primary, goBack, headerTitle, contextualHelp } = this.props;
+    const {
+      primary,
+      goBack,
+      headerTitle,
+      contextualHelp,
+      headerBody
+    } = this.props;
     return (
       <Container>
         <BaseHeader
@@ -49,6 +56,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           goBack={goBack}
           headerTitle={headerTitle}
           onShowHelp={contextualHelp ? this.showHelp : undefined}
+          body={headerBody}
         />
         {this.props.children}
         {contextualHelp && (

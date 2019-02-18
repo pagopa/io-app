@@ -11,7 +11,10 @@ interface OwnProps {
 
 type Props = OwnProps &
   ComponentProps<typeof TopHeader> &
-  Pick<ComponentProps<typeof BaseScreenComponent>, "goBack" | "contextualHelp">;
+  Pick<
+    ComponentProps<typeof BaseScreenComponent>,
+    "goBack" | "contextualHelp" | "headerBody"
+  >;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
@@ -26,13 +29,15 @@ class TopScreenComponent extends React.PureComponent<Props> {
       headerTitle,
       onMoreLinkPress,
       contextualHelp,
-      banner
+      banner,
+      headerBody
     } = this.props;
     return (
       <BaseScreenComponent
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
+        headerBody={headerBody}
       >
         <TopHeader
           icon={icon}
