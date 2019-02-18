@@ -1,3 +1,4 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import { Icon, Input, Item, Tab, Tabs } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -27,8 +28,7 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  searchEnabled: boolean;
-  searchText: string;
+  searchText: Option<string>;
 };
 
 const styles = StyleSheet.create({
@@ -49,8 +49,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      searchEnabled: false,
-      searchText: ""
+      searchText: none
     };
   }
 
@@ -59,18 +58,18 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   }
 
   public render() {
-    const { searchEnabled, searchText } = this.state;
+    const { searchText } = this.state;
 
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
         headerBody={
-          searchEnabled ? (
+          searchText.isSome() ? (
             <Item>
               <Input
                 placeholder={I18n.t("global.actions.search")}
-                value={searchText}
+                value={searchText.value}
                 onChangeText={this.onSearchTextChange}
               />
               <Icon name="cross" onPress={this.onSearchDisable} />
@@ -80,7 +79,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           )
         }
       >
-        {searchText === "" ? this.renderTabs() : this.renderSearch()}
+        {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );
   }
@@ -158,28 +157,26 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         paymentByRptId={paymentsByRptId}
         onRefresh={refreshMessages}
         navigateToMessageDetail={navigateToMessageDetail}
-        searchText={searchText}
+        searchText={searchText.getOrElse("")}
       />
     );
   };
 
   private onSearchEnable = () => {
     this.setState({
-      searchEnabled: true,
-      searchText: ""
+      searchText: some("")
     });
   };
 
   private onSearchTextChange = (text: string) => {
     this.setState({
-      searchText: text
+      searchText: some(text)
     });
   };
 
   private onSearchDisable = () => {
     this.setState({
-      searchEnabled: false,
-      searchText: ""
+      searchText: none
     });
   };
 }
