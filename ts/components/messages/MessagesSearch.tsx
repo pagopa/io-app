@@ -45,34 +45,37 @@ const generateMessagesStateMatchingSearchTextArray = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
   servicesById: ServicesByIdState,
   searchText: string
-): ReadonlyArray<MessageState> =>
-  pot.getOrElse(
-    pot.map(potMessagesState, _ =>
-      _.filter(messageState =>
-        pot.getOrElse(
-          pot.map(
-            messageState.message,
-            message =>
-              // Search in message properties
-              messageContainsText(message, searchText) ||
-              fromNullable(servicesById[message.sender_service_id])
-                .map(potService =>
-                  pot.getOrElse(
-                    pot.map(potService, service =>
-                      // Search in service properties
-                      serviceContainsText(service, searchText)
-                    ),
-                    false
-                  )
-                )
-                .getOrElse(false)
-          ),
-          false
-        )
-      )
-    ),
-    []
-  );
+): ReadonlyArray<MessageState> => {
+  return searchText === ""
+    ? [] // If the searchText is empty return an empty array.
+    : pot.getOrElse(
+        pot.map(potMessagesState, _ =>
+          _.filter(messageState =>
+            pot.getOrElse(
+              pot.map(
+                messageState.message,
+                message =>
+                  // Search in message properties
+                  messageContainsText(message, searchText) ||
+                  fromNullable(servicesById[message.sender_service_id])
+                    .map(potService =>
+                      pot.getOrElse(
+                        pot.map(potService, service =>
+                          // Search in service properties
+                          serviceContainsText(service, searchText)
+                        ),
+                        false
+                      )
+                    )
+                    .getOrElse(false)
+              ),
+              false
+            )
+          )
+        ),
+        []
+      );
+};
 
 /**
  * A component to render a list of messages that matches a searchText.
