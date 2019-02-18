@@ -1,4 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
+import debounce from "lodash/debounce";
 import { Icon, Input, Item, Tab, Tabs } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -29,6 +30,7 @@ type Props = NavigationScreenProps &
 
 type State = {
   searchText: Option<string>;
+  debouncedSearchText: Option<string>;
 };
 
 const styles = StyleSheet.create({
@@ -49,7 +51,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      searchText: none
+      searchText: none,
+      debouncedSearchText: none
     };
   }
 
@@ -148,7 +151,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       navigateToMessageDetail
     } = this.props;
 
-    const { searchText } = this.state;
+    const { debouncedSearchText } = this.state;
 
     return (
       <MessagesSearch
@@ -157,7 +160,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         paymentByRptId={paymentsByRptId}
         onRefresh={refreshMessages}
         navigateToMessageDetail={navigateToMessageDetail}
-        searchText={searchText.getOrElse("")}
+        searchText={debouncedSearchText.getOrElse("")}
       />
     );
   };
@@ -172,11 +175,21 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     this.setState({
       searchText: some(text)
     });
+    this.updateDebouncedSearchText(text);
   };
+
+  private updateDebouncedSearchText = debounce(
+    (text: string) =>
+      this.setState({
+        debouncedSearchText: some(text)
+      }),
+    500
+  );
 
   private onSearchDisable = () => {
     this.setState({
-      searchText: none
+      searchText: none,
+      debouncedSearchText: none
     });
   };
 }

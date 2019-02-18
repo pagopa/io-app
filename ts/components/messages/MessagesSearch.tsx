@@ -38,7 +38,7 @@ type State = {
 };
 
 /**
- * Filter only the messages that matchs the searchText.
+ * Filter only the messages that match the searchText.
  * The searchText is checked both in message and in service properties.
  */
 const generateMessagesStateMatchingSearchTextArray = (
@@ -78,7 +78,7 @@ const generateMessagesStateMatchingSearchTextArray = (
 };
 
 /**
- * A component to render a list of messages that matches a searchText.
+ * A component to render a list of messages that match a searchText.
  */
 class MessagesSearch extends React.PureComponent<Props, State> {
   /**
