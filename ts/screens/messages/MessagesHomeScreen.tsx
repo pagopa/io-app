@@ -27,6 +27,7 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
+  searchEnabled: boolean;
   searchText: string;
 };
 
@@ -48,6 +49,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      searchEnabled: false,
       searchText: ""
     };
   }
@@ -57,22 +59,25 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   }
 
   public render() {
-    const { searchText } = this.state;
+    const { searchEnabled, searchText } = this.state;
 
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
         headerBody={
-          <Item>
-            <Icon name="magnifying-glass" />
-            <Input
-              placeholder={I18n.t("global.actions.search")}
-              value={searchText}
-              onChangeText={this.onSearchTextChange}
-            />
-            <Icon name="cross" onPress={this.onSearchTextReset} />
-          </Item>
+          searchEnabled ? (
+            <Item>
+              <Input
+                placeholder={I18n.t("global.actions.search")}
+                value={searchText}
+                onChangeText={this.onSearchTextChange}
+              />
+              <Icon name="cross" onPress={this.onSearchDisable} />
+            </Item>
+          ) : (
+            <Icon name="magnifying-glass" onPress={this.onSearchEnable} />
+          )
         }
       >
         {searchText === "" ? this.renderTabs() : this.renderSearch()}
@@ -158,14 +163,22 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     );
   };
 
+  private onSearchEnable = () => {
+    this.setState({
+      searchEnabled: true,
+      searchText: ""
+    });
+  };
+
   private onSearchTextChange = (text: string) => {
     this.setState({
       searchText: text
     });
   };
 
-  private onSearchTextReset = () => {
+  private onSearchDisable = () => {
     this.setState({
+      searchEnabled: false,
       searchText: ""
     });
   };
