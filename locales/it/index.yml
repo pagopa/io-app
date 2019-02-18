@@ -28,6 +28,7 @@ global:
     profile: profilo
   actions:
     retry: Si è verificato un errore, si prega di riprovare
+    search: Cerca
   remoteStates:
     loading: In caricamento...
     notAvailable: Non disponibile

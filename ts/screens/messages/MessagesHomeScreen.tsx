@@ -67,7 +67,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           <Item>
             <Icon name="magnifying-glass" />
             <Input
-              placeholder="Search"
+              placeholder={I18n.t("global.actions.search")}
               value={searchText}
               onChangeText={this.onSearchTextChange}
             />

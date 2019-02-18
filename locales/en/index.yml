@@ -27,6 +27,7 @@ global:
     profile: profile
   actions:
     retry: An error occurred, please retry
+    search: Search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
