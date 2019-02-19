@@ -30,9 +30,9 @@ type Props = Pick<
   OwnProps;
 
 type State = {
-  isFiltering: boolean;
-  filteredMessageStates: ReturnType<
-    typeof generateMessagesStateMatchingSearchTextArray
+  potFilteredMessageStates: pot.Pot<
+    ReturnType<typeof generateMessagesStateMatchingSearchTextArray>,
+    Error
   >;
 };
 
@@ -45,8 +45,8 @@ const generateMessagesStateMatchingSearchTextArray = (
   servicesById: ServicesByIdState,
   searchText: string
 ): ReadonlyArray<MessageState> => {
-  return searchText === ""
-    ? [] // If the searchText is empty return an empty array.
+  return searchText.length < 3
+    ? [] // If the searchText is not long enough return an empty array.
     : pot.getOrElse(
         pot.map(potMessagesState, _ =>
           _.filter(messageState =>
@@ -83,16 +83,17 @@ class MessagesSearch extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isFiltering: false,
-      filteredMessageStates: []
+      potFilteredMessageStates: pot.none
     };
   }
 
   public async componentDidMount() {
     const { messagesState, servicesById, searchText } = this.props;
+    const { potFilteredMessageStates } = this.state;
+
     // Set filtering status
     this.setState({
-      isFiltering: true
+      potFilteredMessageStates: pot.toLoading(potFilteredMessageStates)
     });
 
     // Start filtering messages
@@ -106,8 +107,7 @@ class MessagesSearch extends React.PureComponent<Props, State> {
 
     // Unset filtering status
     this.setState({
-      isFiltering: false,
-      filteredMessageStates
+      potFilteredMessageStates: pot.some(filteredMessageStates)
     });
   }
 
@@ -117,11 +117,12 @@ class MessagesSearch extends React.PureComponent<Props, State> {
       searchText: prevSearchText
     } = prevProps;
     const { messagesState, servicesById, searchText } = this.props;
+    const { potFilteredMessageStates } = this.state;
 
     if (messagesState !== prevMessagesState || searchText !== prevSearchText) {
       // Set filtering status
       this.setState({
-        isFiltering: true
+        potFilteredMessageStates: pot.toLoading(potFilteredMessageStates)
       });
 
       // Start filtering messages
@@ -135,21 +136,24 @@ class MessagesSearch extends React.PureComponent<Props, State> {
 
       // Unset filtering status
       this.setState({
-        isFiltering: false,
-        filteredMessageStates
+        potFilteredMessageStates: pot.some(filteredMessageStates)
       });
     }
   }
 
   public render() {
-    const isFiltering = this.state.isFiltering;
+    const { potFilteredMessageStates } = this.state;
+
     const isLoading = pot.isLoading(this.props.messagesState);
+    const isFiltering = pot.isLoading(potFilteredMessageStates);
+
+    const filteredMessageStates = pot.getOrElse(potFilteredMessageStates, []);
 
     return (
       <View style={styles.listWrapper}>
         <MessageListComponent
           {...this.props}
-          messages={this.state.filteredMessageStates}
+          messages={filteredMessageStates}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnPressItem}
           refreshing={isLoading || isFiltering}
