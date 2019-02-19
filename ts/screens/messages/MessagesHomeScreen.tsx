@@ -67,6 +67,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
+        hideHeader={searchText.isSome()}
         headerBody={
           searchText.isSome() ? (
             <Item>

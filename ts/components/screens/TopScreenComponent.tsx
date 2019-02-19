@@ -7,6 +7,7 @@ import { TopHeader } from "./TopHeader";
 
 interface OwnProps {
   headerTitle?: string;
+  hideHeader?: boolean;
 }
 
 type Props = OwnProps &
@@ -30,7 +31,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       onMoreLinkPress,
       contextualHelp,
       banner,
-      headerBody
+      headerBody,
+      hideHeader
     } = this.props;
     return (
       <BaseScreenComponent
@@ -39,13 +41,15 @@ class TopScreenComponent extends React.PureComponent<Props> {
         contextualHelp={contextualHelp}
         headerBody={headerBody}
       >
-        <TopHeader
-          icon={icon}
-          title={title}
-          subtitle={subtitle}
-          onMoreLinkPress={onMoreLinkPress}
-          banner={banner}
-        />
+        {!hideHeader && (
+          <TopHeader
+            icon={icon}
+            title={title}
+            subtitle={subtitle}
+            onMoreLinkPress={onMoreLinkPress}
+            banner={banner}
+          />
+        )}
         {this.props.children}
       </BaseScreenComponent>
     );
