@@ -472,6 +472,8 @@ messages:
       fetchCalendars: Errore durante il recupero dei calendari
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
+  search:
+    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto

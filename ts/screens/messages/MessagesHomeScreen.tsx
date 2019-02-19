@@ -1,6 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
-import { Icon, Input, Item, Tab, Tabs } from "native-base";
+import { Icon, Input, Item, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
   },
   tabBarUnderline: {
     backgroundColor: customVariables.brandPrimary
+  },
+  noSearchBarText: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
@@ -154,15 +159,30 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
     const { debouncedSearchText } = this.state;
 
+    return debouncedSearchText
+      .map(
+        _ =>
+          _.length < 3 ? (
+            this.renderInvalidSearchBarText()
+          ) : (
+            <MessagesSearch
+              messagesState={lexicallyOrderedMessagesState}
+              servicesById={servicesById}
+              paymentByRptId={paymentsByRptId}
+              onRefresh={refreshMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
+              searchText={_}
+            />
+          )
+      )
+      .getOrElse(this.renderInvalidSearchBarText());
+  };
+
+  private renderInvalidSearchBarText = () => {
     return (
-      <MessagesSearch
-        messagesState={lexicallyOrderedMessagesState}
-        servicesById={servicesById}
-        paymentByRptId={paymentsByRptId}
-        onRefresh={refreshMessages}
-        navigateToMessageDetail={navigateToMessageDetail}
-        searchText={debouncedSearchText.getOrElse("")}
-      />
+      <View style={styles.noSearchBarText}>
+        <Text>{I18n.t("messages.search.invalidSearchBarText")}</Text>
+      </View>
     );
   };
 
