@@ -27,6 +27,7 @@ global:
     profile: profile
   actions:
     retry: An error occurred, please retry
+    search: Search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
@@ -461,6 +462,8 @@ messages:
       fetchCalendars: Error fetching calendars
   unknownSender: Unknown sender
   noContent: Content not available
+  search:
+    invalidSearchBarText: Enter at least three characters in the search bar.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
