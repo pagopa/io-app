@@ -30,48 +30,50 @@ type Props = Pick<
   OwnProps;
 
 type State = {
-  potFilteredMessageStates: pot.Pot<
-    ReturnType<typeof generateMessagesStateMatchingSearchTextArray>,
-    Error
-  >;
+  potFilteredMessageStates: pot.Pot<ReadonlyArray<MessageState>, Error>;
 };
 
 /**
  * Filter only the messages that match the searchText.
  * The searchText is checked both in message and in service properties.
  */
-const generateMessagesStateMatchingSearchTextArray = (
+const generateMessagesStateMatchingSearchTextArrayAsync = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
   servicesById: ServicesByIdState,
   searchText: string
-): ReadonlyArray<MessageState> =>
-  pot.getOrElse(
-    pot.map(potMessagesState, _ =>
-      _.filter(messageState =>
-        pot.getOrElse(
-          pot.map(
-            messageState.message,
-            message =>
-              // Search in message properties
-              messageContainsText(message, searchText) ||
-              fromNullable(servicesById[message.sender_service_id])
-                .map(potService =>
-                  pot.getOrElse(
-                    pot.map(potService, service =>
-                      // Search in service properties
-                      serviceContainsText(service, searchText)
-                    ),
-                    false
+): Promise<ReadonlyArray<MessageState>> => {
+  return new Promise(resolve => {
+    const result = pot.getOrElse(
+      pot.map(potMessagesState, _ =>
+        _.filter(messageState =>
+          pot.getOrElse(
+            pot.map(
+              messageState.message,
+              message =>
+                // Search in message properties
+                messageContainsText(message, searchText) ||
+                fromNullable(servicesById[message.sender_service_id])
+                  .map(potService =>
+                    pot.getOrElse(
+                      pot.map(potService, service =>
+                        // Search in service properties
+                        serviceContainsText(service, searchText)
+                      ),
+                      false
+                    )
                   )
-                )
-                .getOrElse(false)
-          ),
-          false
+                  .getOrElse(false)
+            ),
+            false
+          )
         )
-      )
-    ),
-    []
-  );
+      ),
+      []
+    );
+
+    resolve(result);
+  });
+};
 
 /**
  * A component to render a list of messages that match a searchText.
@@ -94,12 +96,10 @@ class MessagesSearch extends React.PureComponent<Props, State> {
     });
 
     // Start filtering messages
-    const filteredMessageStates = await Promise.resolve(
-      generateMessagesStateMatchingSearchTextArray(
-        messagesState,
-        servicesById,
-        searchText
-      )
+    const filteredMessageStates = await generateMessagesStateMatchingSearchTextArrayAsync(
+      messagesState,
+      servicesById,
+      searchText
     );
 
     // Unset filtering status
@@ -123,12 +123,10 @@ class MessagesSearch extends React.PureComponent<Props, State> {
       });
 
       // Start filtering messages
-      const filteredMessageStates = await Promise.resolve(
-        generateMessagesStateMatchingSearchTextArray(
-          messagesState,
-          servicesById,
-          searchText
-        )
+      const filteredMessageStates = await generateMessagesStateMatchingSearchTextArrayAsync(
+        messagesState,
+        servicesById,
+        searchText
       );
 
       // Unset filtering status
