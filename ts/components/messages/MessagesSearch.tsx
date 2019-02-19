@@ -1,4 +1,4 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React, { ComponentProps } from "react";
@@ -30,8 +30,7 @@ type Props = Pick<
   OwnProps;
 
 type State = {
-  lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
-  lastSearchText: Option<string>;
+  isFiltering: boolean;
   filteredMessageStates: ReturnType<
     typeof generateMessagesStateMatchingSearchTextArray
   >;
@@ -81,46 +80,69 @@ const generateMessagesStateMatchingSearchTextArray = (
  * A component to render a list of messages that match a searchText.
  */
 class MessagesSearch extends React.PureComponent<Props, State> {
-  /**
-   * Updates the filteredMessageStates only when necessary.
-   */
-  public static getDerivedStateFromProps(
-    nextProps: Props,
-    prevState: State
-  ): Partial<State> | null {
-    const { lastMessagesState, lastSearchText } = prevState;
-
-    if (
-      lastMessagesState !== nextProps.messagesState ||
-      lastSearchText.toNullable() !== nextProps.searchText
-    ) {
-      // The list was updated, we need to re-apply the filter and
-      // save the result in the state.
-      return {
-        filteredMessageStates: generateMessagesStateMatchingSearchTextArray(
-          nextProps.messagesState,
-          nextProps.servicesById,
-          nextProps.searchText
-        ),
-        lastSearchText: some(nextProps.searchText),
-        lastMessagesState: nextProps.messagesState
-      };
-    }
-
-    // The state must not be changed.
-    return null;
-  }
-
   constructor(props: Props) {
     super(props);
     this.state = {
-      lastMessagesState: pot.none,
-      lastSearchText: none,
+      isFiltering: false,
       filteredMessageStates: []
     };
   }
 
+  public async componentDidMount() {
+    const { messagesState, servicesById, searchText } = this.props;
+    // Set filtering status
+    this.setState({
+      isFiltering: true
+    });
+
+    // Start filtering messages
+    const filteredMessageStates = await Promise.resolve(
+      generateMessagesStateMatchingSearchTextArray(
+        messagesState,
+        servicesById,
+        searchText
+      )
+    );
+
+    // Unset filtering status
+    this.setState({
+      isFiltering: false,
+      filteredMessageStates
+    });
+  }
+
+  public async componentDidUpdate(prevProps: Props) {
+    const {
+      messagesState: prevMessagesState,
+      searchText: prevSearchText
+    } = prevProps;
+    const { messagesState, servicesById, searchText } = this.props;
+
+    if (messagesState !== prevMessagesState || searchText !== prevSearchText) {
+      // Set filtering status
+      this.setState({
+        isFiltering: true
+      });
+
+      // Start filtering messages
+      const filteredMessageStates = await Promise.resolve(
+        generateMessagesStateMatchingSearchTextArray(
+          messagesState,
+          servicesById,
+          searchText
+        )
+      );
+
+      // Unset filtering status
+      this.setState({
+        isFiltering: false,
+        filteredMessageStates
+      });
+    }
+  }
+
   public render() {
+    const isFiltering = this.state.isFiltering;
     const isLoading = pot.isLoading(this.props.messagesState);
 
     return (
@@ -130,7 +152,7 @@ class MessagesSearch extends React.PureComponent<Props, State> {
           messages={this.state.filteredMessageStates}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnPressItem}
-          refreshing={isLoading}
+          refreshing={isLoading || isFiltering}
           selectedMessageIds={none}
         />
       </View>
