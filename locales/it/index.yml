@@ -69,7 +69,7 @@ profile:
     screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
       dati personali, etc."
     logout: Logout/Esci
-    simulateSessionExpired: Simula sessione scaduta
+    forgetCurrentSession: Dimentica sessione corrente
     privacy:
       title: Privacy
       description: Esporta dati, cancella account

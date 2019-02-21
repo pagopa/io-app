@@ -16,8 +16,8 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 
 import {
-  idpSelected,
-  resetAuthentication
+  forgetCurrentSession,
+  idpSelected
 } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
@@ -124,7 +124,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   const goBack = props.isSessionExpired
     ? // If the session is expired, on back we need to reset the authentication state in the store
       () => {
-        props.dispatch(resetAuthentication());
+        props.dispatch(forgetCurrentSession());
       }
     : () => props.navigation.goBack();
 

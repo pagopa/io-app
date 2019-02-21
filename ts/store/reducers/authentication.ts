@@ -6,10 +6,10 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import {
+  forgetCurrentSession,
   idpSelected,
   loginSuccess,
   logoutSuccess,
-  resetAuthentication,
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid
@@ -186,7 +186,7 @@ const reducer = (
     };
   }
 
-  if (isActionOf(resetAuthentication, action)) {
+  if (isActionOf(forgetCurrentSession, action)) {
     return {
       ...INITIAL_STATE
     };

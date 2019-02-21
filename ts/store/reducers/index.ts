@@ -6,7 +6,7 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
-import { logoutSuccess, resetAuthentication } from "../actions/authentication";
+import { forgetCurrentSession, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
@@ -85,7 +85,7 @@ export function createRootReducer(
   return (state: GlobalState | undefined, action: Action): GlobalState => {
     if (
       isActionOf(logoutSuccess, action) ||
-      isActionOf(resetAuthentication, action)
+      isActionOf(forgetCurrentSession, action)
     ) {
       // Purge the stored redux-persist state
       persistConfigs.forEach(persistConfig => purgeStoredState(persistConfig));

@@ -44,9 +44,7 @@ export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 
-export const resetAuthentication = createStandardAction(
-  "AUTHENTICATION_RESET"
-)();
+export const forgetCurrentSession = createStandardAction("SESSION_FORGET")();
 
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
@@ -59,4 +57,4 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadFailure>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
-  | ActionType<typeof resetAuthentication>;
+  | ActionType<typeof forgetCurrentSession>;

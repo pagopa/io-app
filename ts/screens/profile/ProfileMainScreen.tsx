@@ -228,7 +228,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   small={true}
                   onPress={this.props.dispatchSessionExpired}
                 >
-                  <Text>{I18n.t("profile.main.simulateSessionExpired")}</Text>
+                  <Text>{I18n.t("profile.main.forgetCurrentSession")}</Text>
                 </Button>
               </ListItem>
             )}
