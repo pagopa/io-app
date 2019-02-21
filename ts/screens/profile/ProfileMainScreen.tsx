@@ -221,15 +221,17 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </Button>
             </ListItem>
 
-            <ListItem>
-              <Button
-                danger={true}
-                small={true}
-                onPress={this.props.dispatchSessionExpired}
-              >
-                <Text>{I18n.t("profile.main.simulateSessionExpired")}</Text>
-              </Button>
-            </ListItem>
+            {this.props.isDebugModeEnabled && (
+              <ListItem>
+                <Button
+                  danger={true}
+                  small={true}
+                  onPress={this.props.dispatchSessionExpired}
+                >
+                  <Text>{I18n.t("profile.main.simulateSessionExpired")}</Text>
+                </Button>
+              </ListItem>
+            )}
           </List>
         </Content>
       </TopScreenComponent>
