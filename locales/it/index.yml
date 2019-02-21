@@ -491,6 +491,10 @@ preferences:
     Amministrazione.
   moreLinkText: Per saperne di più.
   list:
+    biometric_recognition: Riconoscimento biometrico
+    biometric_recognition_status: 
+      enabled: Abilitato
+      disabled: Disabilitato
     email: Indirizzo email
     mobile_phone: Numero di telefono
     services: Elenco dei servizi
@@ -503,6 +507,13 @@ preferences:
   unavailable:
     title: Questa impostazione non è ancora disponibile
     message: Questa impostazione sarà disponibile in una versione futura
+biometric_recognition:
+  title: Riconoscimento biometrico
+  subTitle: Attiva o disattiva il riconoscimento biometrico
+  help: !include preferences_biometric_recognition_help.md
+  switchLabel: Attiva il riconoscimento biometrico
+  enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+  enroll_btnLabel: Vai alle impostazioni
 services:
   headerTitle: Servizi
   title: Elenco dei servizi

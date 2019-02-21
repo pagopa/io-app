@@ -479,6 +479,10 @@ preferences:
   subtitle: This settings will be used by all services of the Public Amministration.
   moreLinkText: Get more info.
   list:
+    biometric_recognition: Biometric recognition
+    biometric_recognition_status: 
+      enabled: Enabled
+      disabled: Disabled
     email: Email address
     mobile_phone: Mobile number
     services: List of services
@@ -491,6 +495,13 @@ preferences:
   unavailable:
     title: This setting is not available at this time
     message: This setting will be available in a future release
+biometric_recognition:
+  title: Biometric recognition
+  subTitle: Enable or disable biometric recognition
+  help: !include preferences_biometric_recognition_help.md
+  switchLabel: Enable biometric recognition
+  enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+  enroll_btnLabel: Go to settings
 services:
   headerTitle: Services
   title: Available services

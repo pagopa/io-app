@@ -52,6 +52,7 @@ function translateLocale(locale: string): string {
  * email, mobile number, preferred language and digital address.
  */
 class PreferencesScreen extends React.Component<Props> {
+
   public render() {
     const contextualHelp = {
       title: I18n.t("preferences.title"),
@@ -74,6 +75,16 @@ class PreferencesScreen extends React.Component<Props> {
       .filter(_ => _.length > 0)
       .map(_ => translateLocale(_[0]))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+    
+    // const isFingerprintEnabled = this.props.isFingerprintEnabled
+    // .chain(
+    //   isFingerprintEnabled =>
+    //     isFingerprintEnabled
+    //       ? some("Enabled")
+    //       : none
+    // )  
+    // .map(isFingerprintEnabled => isFingerprintEnabled.isSome()?
+    //   .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     return (
       <TopScreenComponent
@@ -93,6 +104,20 @@ class PreferencesScreen extends React.Component<Props> {
                 kind="action"
                 title={I18n.t("preferences.list.services")}
                 valuePreview={I18n.t("preferences.list.services_description")}
+              />
+            </ListItem>
+            <ListItem
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION)
+              }
+            >
+              <PreferenceItem
+                kind="action"
+                title={I18n.t("preferences.list.biometric_recognition")}
+                valuePreview={ this.props.isFingerprintEnabled 
+                  ? I18n.t("preferences.list.biometric_recognition_status.enabled")
+                  : I18n.t("preferences.list.biometric_recognition_status.disabled")
+                }
               />
             </ListItem>
             <ListItem onPress={unavailableAlert}>
@@ -128,7 +153,8 @@ class PreferencesScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
-  potProfile: pot.toOption(state.profile)
+  potProfile: pot.toOption(state.profile),
+  isFingerprintEnabled: state.preferences.isFingerprintEnabled
 });
 
 export default connect(mapStateToProps)(PreferencesScreen);
