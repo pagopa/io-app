@@ -41,6 +41,7 @@ const testMessageMeta1: MessageState = {
     sender_service_id: testMessageWithContent1.sender_service_id
   },
   isRead: false,
+  isArchived: false,
   message: pot.some(toMessageWithContentPO(testMessageWithContent1))
 };
 
@@ -63,6 +64,7 @@ const testMessageMeta2: MessageState = {
     sender_service_id: testMessageWithContent2.sender_service_id
   },
   isRead: false,
+  isArchived: false,
   message: pot.some(toMessageWithContentPO(testMessageWithContent2))
 };
 

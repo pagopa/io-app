@@ -1,13 +1,13 @@
 import { createStackNavigator } from "react-navigation";
 
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
-import MessageListScreen from "../screens/messages/MessageListScreen";
+import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ROUTES from "./routes";
 
 const MessagesNavigator = createStackNavigator(
   {
-    [ROUTES.MESSAGE_LIST]: {
-      screen: MessageListScreen
+    [ROUTES.MESSAGES_HOME]: {
+      screen: MessagesHomeScreen
     },
     [ROUTES.MESSAGE_DETAIL]: {
       screen: MessageDetailScreen

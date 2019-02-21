@@ -11,7 +11,7 @@ import { Dispatch } from "../../../../store/actions/types";
 const INTERNAL_TARGET_PREFIX = "ioit://";
 
 const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
-  ROUTES.MESSAGE_LIST,
+  ROUTES.MESSAGES_HOME,
   ROUTES.PREFERENCES_HOME,
   ROUTES.PREFERENCES_SERVICES,
   ROUTES.PROFILE_MAIN,

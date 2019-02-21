@@ -1,4 +1,3 @@
-import { delay } from "redux-saga";
 import { call, Effect, fork, put } from "redux-saga/effects";
 
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
@@ -11,6 +10,7 @@ import {
   backendInfoLoadSuccess
 } from "../store/actions/backendInfo";
 import { SagaCallReturnType } from "../types/utils";
+import { startTimer } from "../utils/timer";
 
 // load backend info every hour
 const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
@@ -37,11 +37,11 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
     if (backendInfoResponse && backendInfoResponse.status === 200) {
       yield put(backendInfoLoadSuccess(backendInfoResponse.value));
       // tslint:disable-next-line:saga-yield-return-type
-      yield call(delay, BACKEND_INFO_LOAD_INTERVAL);
+      yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {
       yield put(backendInfoLoadFailure(new Error("Cannot read server info")));
       // tslint:disable-next-line:saga-yield-return-type
-      yield call(delay, BACKEND_INFO_RETRY_INTERVAL);
+      yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
     }
   }
 }

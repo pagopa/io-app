@@ -44,9 +44,16 @@ export const setMessageReadState = createAction(
   resolve => (id: string, read: boolean) => resolve({ id, read }, { id, read })
 );
 
+export const setMessagesArchivedState = createAction(
+  "MESSAGES_SET_ARCHIVED",
+  resolve => (ids: ReadonlyArray<string>, archived: boolean) =>
+    resolve({ ids, archived })
+);
+
 export type MessagesActions =
   | ActionType<typeof loadMessage>
   | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof loadMessages>
   | ActionType<typeof loadMessagesCancel>
-  | ActionType<typeof setMessageReadState>;
+  | ActionType<typeof setMessageReadState>
+  | ActionType<typeof setMessagesArchivedState>;

@@ -2,6 +2,8 @@
 global:
   localization:
     decimalSeparator: ","
+  dateFormats:
+    dayAndMonth: "dddd D MMMM"
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -26,6 +28,7 @@ global:
     profile: profilo
   actions:
     retry: Si è verificato un errore, si prega di riprovare
+    search: Cerca
   remoteStates:
     loading: In caricamento...
     notAvailable: Non disponibile
@@ -66,6 +69,7 @@ profile:
     screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
       dati personali, etc."
     logout: Logout/Esci
+    forgetCurrentSession: Dimentica sessione corrente
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
@@ -446,13 +450,16 @@ messages:
     one: Hai 1 messaggio
     other: Hai {{count}} messaggi
   tab:
-    all: Tutti
+    inbox: Ricevuti
     deadlines: Scadenze
+    archive: Archivio
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
   yesterday: ieri
   cta:
+    archive: Archivia
+    unarchive: Disarchivia
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria
@@ -466,6 +473,8 @@ messages:
       fetchCalendars: Errore durante il recupero dei calendari
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
+  search:
+    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto

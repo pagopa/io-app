@@ -7,6 +7,7 @@ import { ImageURISource } from "react-native";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 
 import { contentRepoUrl } from "../config";
+import { isTextIncludedCaseInsensitive } from "./strings";
 
 /**
  * Returns an array of ImageURISource pointing to possible logos for the
@@ -25,4 +26,15 @@ export function logosForService(
   ].map(u => ({
     uri: `${logosRepoUrl}/${u}.png`
   }));
+}
+
+export function serviceContainsText(
+  service: ServicePublic,
+  searchText: string
+) {
+  return (
+    isTextIncludedCaseInsensitive(service.department_name, searchText) ||
+    isTextIncludedCaseInsensitive(service.organization_name, searchText) ||
+    isTextIncludedCaseInsensitive(service.service_name, searchText)
+  );
 }

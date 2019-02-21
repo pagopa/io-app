@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  title: string;
+  title?: string;
   message: string;
 }
 
@@ -21,9 +21,11 @@ interface Props {
  */
 export const InfoBanner: React.SFC<Props> = ({ title, message }) => (
   <View style={styles.content}>
-    <Text white={true} bold={true}>
-      {title}
-    </Text>
+    {title && (
+      <Text white={true} bold={true}>
+        {title}
+      </Text>
+    )}
     <Text white={true}>{message}</Text>
   </View>
 );

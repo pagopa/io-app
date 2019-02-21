@@ -2,6 +2,8 @@
 global:
   localization:
     decimalSeparator: "."
+  dateFormats:
+    dayAndMonth: "dddd D MMMM"
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -25,6 +27,7 @@ global:
     profile: profile
   actions:
     retry: An error occurred, please retry
+    search: Search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
@@ -64,6 +67,7 @@ profile:
     screenTitle: Profile
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
+    forgetCurrentSession: Forget current session
     privacy:
       title: Privacy
       description: Export data, delete account
@@ -436,13 +440,16 @@ messages:
     one: You have 1 message
     other: You have {{count}} messages
   tab:
-    all: All
+    inbox: Inbox
     deadlines: Deadlines
+    archive: Archive
   contentTitle: Messages
   refresh: Pull down to refresh
   loading: Loading Messages...
   yesterday: yesterday
   cta:
+    archive: Archive
+    unarchive: Unarchive
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
@@ -456,6 +463,8 @@ messages:
       fetchCalendars: Error fetching calendars
   unknownSender: Unknown sender
   noContent: Content not available
+  search:
+    invalidSearchBarText: Enter at least three characters in the search bar.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
