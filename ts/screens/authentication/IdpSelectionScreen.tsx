@@ -145,7 +145,11 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
       }
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
       title={I18n.t("authentication.idp_selection.contentTitle")}
-      subtitle={I18n.t("authentication.idp_selection.subtitle")}
+      subtitle={
+        props.isSessionExpired
+          ? undefined
+          : I18n.t("authentication.idp_selection.subtitle")
+      }
     >
       <Content noPadded={true} alternative={true}>
         <View style={styles.gridContainer} testID="idps-view">
