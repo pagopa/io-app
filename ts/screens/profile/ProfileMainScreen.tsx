@@ -19,7 +19,10 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { logoutRequest } from "../../store/actions/authentication";
+import {
+  logoutRequest,
+  sessionExpired
+} from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
@@ -217,6 +220,16 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 <Text>Clear cache</Text>
               </Button>
             </ListItem>
+
+            <ListItem>
+              <Button
+                danger={true}
+                small={true}
+                onPress={this.props.dispatchSessionExpired}
+              >
+                <Text>{I18n.t("profile.main.simulateSessionExpired")}</Text>
+              </Button>
+            </ListItem>
           </List>
         </Content>
       </TopScreenComponent>
@@ -241,7 +254,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => dispatch(logoutRequest()),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
-    dispatch(setDebugModeEnabled(enabled))
+    dispatch(setDebugModeEnabled(enabled)),
+  dispatchSessionExpired: () => dispatch(sessionExpired())
 });
 
 export default connect(

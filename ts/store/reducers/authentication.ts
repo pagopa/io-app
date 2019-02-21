@@ -9,6 +9,7 @@ import {
   idpSelected,
   loginSuccess,
   logoutSuccess,
+  resetAuthentication,
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid
@@ -182,6 +183,12 @@ const reducer = (
       reason: isActionOf(sessionExpired, action)
         ? "SESSION_EXPIRED"
         : "NOT_LOGGED_IN"
+    };
+  }
+
+  if (isActionOf(resetAuthentication, action)) {
+    return {
+      ...INITIAL_STATE
     };
   }
 
