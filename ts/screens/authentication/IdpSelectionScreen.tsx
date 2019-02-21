@@ -15,7 +15,10 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 
 import ROUTES from "../../navigation/routes";
 
-import { idpSelected } from "../../store/actions/authentication";
+import {
+  forgetCurrentSession,
+  idpSelected
+} from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
@@ -118,7 +121,12 @@ const styles = StyleSheet.create({
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen: React.SFC<Props> = props => {
-  const goBack = () => props.navigation.goBack();
+  const goBack = props.isSessionExpired
+    ? // If the session is expired, on back we need to reset the authentication state in the store
+      () => {
+        props.dispatch(forgetCurrentSession());
+      }
+    : () => props.navigation.goBack();
 
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
@@ -131,14 +139,17 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
       banner={
         props.isSessionExpired && (
           <InfoBanner
-            title={I18n.t("authentication.expiredSessionBanner.title")}
             message={I18n.t("authentication.expiredSessionBanner.message")}
           />
         )
       }
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
       title={I18n.t("authentication.idp_selection.contentTitle")}
-      subtitle={I18n.t("authentication.idp_selection.subtitle")}
+      subtitle={
+        props.isSessionExpired
+          ? undefined
+          : I18n.t("authentication.idp_selection.subtitle")
+      }
     >
       <Content noPadded={true} alternative={true}>
         <View style={styles.gridContainer} testID="idps-view">
