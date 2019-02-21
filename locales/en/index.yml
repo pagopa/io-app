@@ -519,6 +519,7 @@ services:
   contactPhone: Phone
 serviceDetail:
   headerTitle: "Service details"
+  onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
 identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.

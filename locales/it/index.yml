@@ -531,6 +531,7 @@ services:
   contactPhone: Telefono
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
+  onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
 identification:
   message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
