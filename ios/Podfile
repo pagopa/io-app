@@ -52,6 +52,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-calendar-events', :path => '../node_modules/react-native-calendar-events'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
 end
 
 # Fix a open bug in react-native-config

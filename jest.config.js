@@ -8,12 +8,15 @@ module.exports = {
     '\\.js$': '<rootDir>/node_modules/react-native/jest/preprocessor.js',
   },
   transformIgnorePatterns: [
-    "node_modules/(?!react-native|react-navigation|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
+    "node_modules/(?!(jest-)?react-native|react-navigation|@react-navigation|react-navigation-redux-helpers|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
   ],
   globals: {
     'ts-jest': {
       babelConfig: true,
     }
   },
+  setupFiles: [
+    "./jestSetup.js"
+  ],
   collectCoverage: true
 };
