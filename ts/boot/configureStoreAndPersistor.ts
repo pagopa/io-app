@@ -92,11 +92,11 @@ const sagaMiddleware = createSagaMiddleware();
  * @https://github.com/react-navigation/react-navigation/issues/3438.
  */
 const navigation = createReactNavigationReduxMiddleware(
+  // This is a selector to get the navigation state from the global state
+  (state: GlobalState): NavigationState => state.nav,
   // This is just a key to identify the Set of the listeners.
   // The same key will be used by the createReduxBoundAddListener function
-  NAVIGATION_MIDDLEWARE_LISTENERS_KEY,
-  // This is a selector to get the navigation state from the global state
-  (state: GlobalState): NavigationState => state.nav
+  NAVIGATION_MIDDLEWARE_LISTENERS_KEY
 );
 
 const navigationHistory = createNavigationHistoryMiddleware();
