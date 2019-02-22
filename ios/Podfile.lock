@@ -63,6 +63,8 @@ PODS:
     - React
   - RNFS (2.11.15):
     - React
+  - RNGestureHandler (1.0.16):
+    - React
   - RNI18n (2.0.15):
     - React
   - RNKeychain (3.0.0):
@@ -99,6 +101,7 @@ DEPENDENCIES:
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -133,6 +136,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNFS:
     :path: "../node_modules/react-native-fs"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNI18n:
     :path: "../node_modules/react-native-i18n"
   RNKeychain:
@@ -159,6 +164,7 @@ SPEC CHECKSUMS:
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
+  RNGestureHandler: afde2addc517e85cc97a25bfe119acbee779a7ce
   RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
   RNKeychain: 627c6095cef215dd3d9804a9a9cf45ab96aa3997
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
@@ -166,6 +172,6 @@ SPEC CHECKSUMS:
   TouchID: b0640fedb86fa2db2fe1df15b61594ad49e76288
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 6e7facfa374c5b47e3f591190cdfcaa8e6e1f1f7
+PODFILE CHECKSUM: 3e53393219a74cbd6532260b728732103746851b
 
 COCOAPODS: 1.5.3
