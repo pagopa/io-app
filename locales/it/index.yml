@@ -69,6 +69,7 @@ profile:
     screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
       dati personali, etc."
     logout: Logout/Esci
+    forgetCurrentSession: Dimentica sessione corrente
     privacy:
       title: Privacy
       description: Esporta dati, cancella account

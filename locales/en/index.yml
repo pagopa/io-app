@@ -67,6 +67,7 @@ profile:
     screenTitle: Profile
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
+    forgetCurrentSession: Forget current session
     privacy:
       title: Privacy
       description: Export data, delete account
