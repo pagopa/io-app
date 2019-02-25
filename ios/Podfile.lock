@@ -61,8 +61,6 @@ PODS:
     - React
   - RNDeviceInfo (0.21.5):
     - React
-  - RNFS (2.11.15):
-    - React
   - RNGestureHandler (1.0.16):
     - React
   - RNI18n (2.0.15):
@@ -100,7 +98,6 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
-  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -134,8 +131,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
-  RNFS:
-    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNI18n:
@@ -153,25 +148,24 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
-  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-background-timer: bb7a98c8e97fc7c290de2d423dd09ddb73dcbcbb
-  react-native-calendar-events: fe6fbc8ed337a7423c98f2c9012b25f20444de09
-  react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
-  react-native-config: 8c2a92aa66a6cec1a23d9eda7ba6fcf31a63ace5
-  react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
-  react-native-splash-screen: 8e3f866dc79bfe533baeffd0a38c33f7a7eae7f8
-  react-native-webview: a42108b827082f8f0333529b0772102031d5960d
-  ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
-  RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
-  RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
-  RNGestureHandler: afde2addc517e85cc97a25bfe119acbee779a7ce
-  RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
-  RNKeychain: 627c6095cef215dd3d9804a9a9cf45ab96aa3997
-  RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
-  RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
-  TouchID: b0640fedb86fa2db2fe1df15b61594ad49e76288
-  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
+  React: adbac0757ce35e92fbd447ab98c810209d27d9b0
+  react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
+  react-native-calendar-events: cafbac5457a0dc449e3fb407814b2091b7f259be
+  react-native-camera: 74c7513056d1513686286a0d54426083ca8a0088
+  react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
+  react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  react-native-splash-screen: 353334c5ae82d8c74501ea7cbb916cb7cb20c8bf
+  react-native-webview: 606ec4ef906472200a6b62d03c20be0c97a805ba
+  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
+  RNDeviceInfo: e7c5fcde13d40e161d8a27f6c5dc69c638936002
+  RNGestureHandler: 0438a761e8f29be3b809f9e7e43014f3aba4d7a6
+  RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
+  RNKeychain: 3aa3cf891a09a0d18d306862ab2bb9e106079b24
+  RNSVG: 3c037ade1c42014de732e27e3879bf2b77ea78ea
+  RNVectorIcons: a3c395829c56e2cb054a0730126298bf805a2dca
+  TouchID: b816a3db79ac3f9da547d0d0d4bd87ff6e338ca9
+  yoga: 74cdf036c30820443b25ade59916236b1e95ee93
 
-PODFILE CHECKSUM: 3e53393219a74cbd6532260b728732103746851b
+PODFILE CHECKSUM: 5994b16ad0b39aff52a3d94ba344b5cf1bad90b8
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1
