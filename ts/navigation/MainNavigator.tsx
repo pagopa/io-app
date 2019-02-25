@@ -139,30 +139,36 @@ const navigation = createBottomTabNavigator(
     }
   },
   {
-    navigationOptions: ({ navigation: nav }) => ({
+    defaultNavigationOptions: ({ navigation: nav }) => ({
       tabBarVisible: getTabBarVisibility(nav),
-      tabBarLabel: ({ tintColor }) => {
+      tabBarLabel: (options: {
+        tintColor: string | null;
+        focused: boolean;
+      }) => {
         const { routeName } = nav.state;
         // adding `color` as a separate style property since it depends on tintColor
         return (
           <Text
             style={[
               styles.labelStyle,
-              { color: tintColor === null ? undefined : tintColor }
+              {
+                color:
+                  options.tintColor === null ? undefined : options.tintColor
+              }
             ]}
           >
             {getLabel(routeName)}
           </Text>
         );
       },
-      tabBarIcon: ({ tintColor }) => {
+      tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
         return (
           <IconFont
             name={iconName}
             size={variables.iconSize3}
-            color={tintColor === null ? undefined : tintColor}
+            color={options.tintColor === null ? undefined : options.tintColor}
           />
         );
       },
