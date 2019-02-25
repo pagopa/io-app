@@ -81,9 +81,6 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           <View
             style={{
               width: "100%",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between"
             }}
           >
             <Text>{I18n.t("biometric_recognition.switchLabel")}</Text>
@@ -97,9 +94,6 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           <View
             style={{
               width: "100%",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between"
             }}
           >
             <Text>{I18n.t("biometric_recognition.enroll_cta")}</Text>
