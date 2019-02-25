@@ -6738,9 +6738,10 @@ react-native-exception-handler@2.10.0:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.0.tgz#0d828a4f2c7c4469a2929fa46d20535def726903"
   integrity sha512-MJLE1NxGFlsdoOk3jBXUMzceZyVuLLXGWjK406ABH5+mfFjbIjmxAAEm/pkvzD8E5QXNo1chUSzpwtq2wCjygA==
 
-react-native-fs@2.11.15:
-  version "2.11.15"
-  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.15.tgz#b80ac78edf124137624697b4864f834c1caf4f43"
+react-native-fs@2.13.3:
+  version "2.13.3"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.13.3.tgz#a422f0ecd8a093a7e99d8d51ff51440e090a18a8"
+  integrity sha512-B62LSSAEYQGItg7KVTzTVVCxezOYFBYp4DMVFbdoZUd1mZVFdqR2sy1HY1mye1VI/Lf3IbxSyZEQ0GmrrdwLjg==
   dependencies:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
