@@ -65,7 +65,14 @@ const rootPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
 
   // Sections of the store that must be persisted and rehydrated with this storage.
-  whitelist: ["onboarding", "notifications", "profile", "entities", "debug"]
+  whitelist: [
+    "onboarding",
+    "notifications",
+    "profile",
+    "entities",
+    "debug",
+    "preferences"
+  ]
 };
 
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
