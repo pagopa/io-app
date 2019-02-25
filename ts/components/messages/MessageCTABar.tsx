@@ -76,6 +76,10 @@ const styles = StyleSheet.create({
     flex: 12
   },
 
+  reminderButtonIcon: {
+    marginRight: 0
+  },
+
   separatorContainer: {
     width: 10
   },
@@ -108,7 +112,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderReminderCTA(
-    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>
+    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
+    small: boolean
   ) {
     const { message, calendarEvent, showModal } = this.props;
     const { isEventInCalendar } = this.state;
@@ -155,8 +160,15 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
         <View style={styles.reminderButtonContainer}>
           <Button block={true} bordered={true} onPress={onPressHandler}>
-            <Icon name={isEventInCalendar ? "minus" : "plus"} />
-            <Text>{I18n.t("messages.cta.reminder")}</Text>
+            <Icon
+              name={isEventInCalendar ? "minus" : "plus"}
+              style={styles.reminderButtonIcon}
+            />
+            <Text>
+              {I18n.t(
+                small ? "messages.cta.reminderSmall" : "messages.cta.reminder"
+              )}
+            </Text>
           </Button>
         </View>
       </View>
@@ -223,7 +235,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     if (due_date !== undefined || payment_data !== undefined) {
       return (
         <View style={[styles.mainContainer, containerStyle]}>
-          {due_date !== undefined && this.renderReminderCTA(due_date)}
+          {due_date !== undefined &&
+            this.renderReminderCTA(due_date, payment_data !== undefined)}
 
           {due_date !== undefined &&
             payment_data !== undefined && (
