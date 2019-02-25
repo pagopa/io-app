@@ -64,7 +64,7 @@ class TransactionsScreen extends React.Component<Props> {
             this.props.navigateToTransactionDetailsScreen
           }
           noTransactionsDetailsMessage={I18n.t(
-            "wallet.noTransactionsDetailsWalletSpecific"
+            "wallet.noTransactionsInTransactionsScreen"
           )}
         />
       </WalletLayout>

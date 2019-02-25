@@ -368,8 +368,8 @@ wallet:
   noTransactions: There are no transactions.
   noNewTransactions: There are no new transactions.
   noneTransactions: There are no transactions
-  noTransactionsDetails: You never used IO neither to pay nor to log in with an user registered on PagoPA, check your messages.
-  noTransactionsDetailsWalletSpecific: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
+  noTransactionsInWalletHome: You never used IO neither to pay nor to log in with an user registered on PagoPA, check your messages.
+  noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
   moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Latest transactions
