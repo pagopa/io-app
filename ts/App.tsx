@@ -9,13 +9,6 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
 
-// Configure the global js error handler
-// configureErrorHandler()
-//   // tslint:disable-next-line:no-empty
-//   .then(() => {})
-//   // tslint:disable-next-line:no-empty
-//   .catch(() => {});
-
 export const { store, persistor } = configureStoreAndPersistor();
 
 /**
