@@ -30,6 +30,7 @@ type Props = Readonly<{
   totalAmount: string;
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
+  noTransactionsDetailsMessage: string;
 }>;
 
 /**
@@ -105,7 +106,7 @@ export default class TransactionsList extends React.Component<Props> {
           <View spacer={true} />
           <H3>{I18n.t("wallet.noneTransactions")}</H3>
           <View spacer={true} />
-          <Text>{I18n.t("wallet.noTransactionsDetails")}</Text>
+          <Text>{this.props.noTransactionsDetailsMessage}</Text>
           <View spacer={true} large={true} />
         </Content>
       );

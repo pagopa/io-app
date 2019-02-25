@@ -377,7 +377,8 @@ wallet:
   noTransactions: Non ci sono operazioni.
   noNewTransactions: Non ci sono nuove operazioni.
   noneTransactions: Nessuna operazione
-  noTransactionsDetails: Non hai ancora pagato nulla con IO o utilizzato un utente registrato su PagoPA, controlla i tuoi messaggi.
+  noTransactionsInWalletHome: Non hai ancora pagato nulla con IO o utilizzato un utente registrato su PagoPA, controlla i tuoi messaggi.
+  noTransactionsInTransactionsScreen: Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.
   moreInfo: Per saperne di più
   payNotice: Paga un avviso
   latestTransactions: Ultime operazioni
