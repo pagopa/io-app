@@ -113,7 +113,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
   private renderReminderCTA(
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
-    small: boolean
+    useShortLabel: boolean
   ) {
     const { message, calendarEvent, showModal } = this.props;
     const { isEventInCalendar } = this.state;
@@ -166,7 +166,9 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             />
             <Text>
               {I18n.t(
-                small ? "messages.cta.reminderSmall" : "messages.cta.reminder"
+                useShortLabel
+                  ? "messages.cta.reminderShort"
+                  : "messages.cta.reminder"
               )}
             </Text>
           </Button>
