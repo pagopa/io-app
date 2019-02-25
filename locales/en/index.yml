@@ -453,6 +453,7 @@ messages:
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
+    reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
     reminderTitle: "Reminder for: {{title}}"
     reminderAddSuccess: "Reminder added"

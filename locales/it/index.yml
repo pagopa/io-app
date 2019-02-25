@@ -463,6 +463,7 @@ messages:
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria
+    reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
     reminderTitle: "Promemoria per: {{title}}"
     reminderAddSuccess: "Promemoria aggiunto"
