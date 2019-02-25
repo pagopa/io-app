@@ -3269,7 +3269,7 @@ fbjs@^0.8.0, fbjs@^0.8.17:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fbjs@^0.8.16, fbjs@^0.8.9:
+fbjs@^0.8.9:
   version "0.8.16"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
@@ -6561,15 +6561,7 @@ prompts@^0.1.9:
     clorox "^1.0.3"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8:
-  version "15.6.0"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
-  dependencies:
-    fbjs "^0.8.16"
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
-prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6577,13 +6569,6 @@ prop-types@^15.6.1:
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
     react-is "^16.8.1"
-
-prop-types@^15.6.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
-  dependencies:
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
 
 property-information@^5.0.0:
   version "5.0.1"
@@ -6707,12 +6692,12 @@ react-native-calendar-events@1.6.4:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-1.6.4.tgz#e1ccfe50e48b385a00847c41f9fb2a97e756e72e"
   integrity sha512-By4lgWQG9eewS9WzhzxVHAewxX40v1CzLnNYXFMOqF06fYVCNykiiTMGlLzz3UXHVwwN1Drxw9uWroQfGRFMsw==
 
-react-native-camera@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.2.0.tgz#fa93b39726d15bdbb02fac06f4a23957b0be403a"
+react-native-camera@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.12.0.tgz#64cfb95fe4ad00f4fc4d94281bb3c913025964ca"
+  integrity sha512-b9dk4QrP7lGrkUvURiX3cCW9f/oDbhFuZP72YJKwYBe10o0TbSpAGErFbRgOoGarW4KupzSsHNun1istMuCMvg==
   dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
+    prop-types "^15.6.2"
 
 react-native-config@0.11.7:
   version "0.11.7"
