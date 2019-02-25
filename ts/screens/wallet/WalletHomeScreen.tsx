@@ -223,6 +223,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
             navigateToTransactionDetails={
               this.props.navigateToTransactionDetailsScreen
             }
+            noTransactionsDetailsMessage={I18n.t(
+              "wallet.noTransactionsDetails"
+            )}
           />
         )}
       </WalletLayout>
