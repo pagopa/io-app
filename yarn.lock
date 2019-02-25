@@ -772,12 +772,6 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-background-timer/-/react-native-background-timer-2.0.0.tgz#c44c57f8fbca9d9d5521fdd72a8f55232b79381e"
 
-"@types/react-native-fs@^2.8.2":
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/@types/react-native-fs/-/react-native-fs-2.8.2.tgz#c5c466ea898d433aa9b3a8fc06ee56392ae49e06"
-  dependencies:
-    "@types/react-native" "*"
-
 "@types/react-native-i18n@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-i18n/-/react-native-i18n-2.0.0.tgz#2df92b3392d813b39530bd126aad429eedc9c3de"
@@ -1838,10 +1832,6 @@ bail@^1.0.0:
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
-
-base-64@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
 
 base64-js@1.1.2:
   version "1.1.2"
@@ -6743,13 +6733,6 @@ react-native-exception-handler@2.10.0:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.0.tgz#0d828a4f2c7c4469a2929fa46d20535def726903"
   integrity sha512-MJLE1NxGFlsdoOk3jBXUMzceZyVuLLXGWjK406ABH5+mfFjbIjmxAAEm/pkvzD8E5QXNo1chUSzpwtq2wCjygA==
 
-react-native-fs@2.11.15:
-  version "2.11.15"
-  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.15.tgz#b80ac78edf124137624697b4864f834c1caf4f43"
-  dependencies:
-    base-64 "^0.1.0"
-    utf8 "^2.1.1"
-
 react-native-gesture-handler@^1.0.16, react-native-gesture-handler@~1.0.14:
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.16.tgz#bee54981575e581857c2298e133ce2ffac240a3e"
@@ -8676,10 +8659,6 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.0.tgz#14716bf03fdfefd03040aef58d8b4b85f3a7c544"
   dependencies:
     kind-of "^6.0.2"
-
-utf8@^2.1.1:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/utf8/-/utf8-2.1.2.tgz#1fa0d9270e9be850d9b05027f63519bf46457d96"
 
 util-deprecate@~1.0.1:
   version "1.0.2"

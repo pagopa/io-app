@@ -35,8 +35,6 @@ include ':react-native-sha256'
 project(':react-native-sha256').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sha256/android')
 include ':react-native-mixpanel'
 project(':react-native-mixpanel').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mixpanel/android')
-include ':react-native-fs'
-project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
 include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-config'
