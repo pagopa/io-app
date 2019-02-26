@@ -16,18 +16,22 @@ import {
 } from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
 
-const HANDLERS_NUMBER = 5;
+// Here we set the number of handlers we want to create.
+// This means that we will have at most a number of concurrent
+// fetchs (of the message detail) equal to the number of the handlers.
+const NUMBER_OF_HANDLERS = 5;
 
 export function* watchMessageLoadRequest(
   getMessage: TypeofApiCall<GetUserMessageT>
 ) {
+  // Create the channel used for the comunication with the handlers.
   const requestsChannel: Channel<
     ActionType<typeof loadMessageAction.request>
   > = yield call(channel, buffers.expanding());
 
-  // Start handlers
+  // Start the handlers
   // tslint:disable-next-line:no-let
-  for (let i = 0; i < HANDLERS_NUMBER; i++) {
+  for (let i = 0; i < NUMBER_OF_HANDLERS; i++) {
     yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
   }
 
@@ -36,9 +40,7 @@ export function* watchMessageLoadRequest(
     // to be processed by the handlers.
     const action = yield take(getType(loadMessageAction.request));
 
-    //console.log("Dispatching loadMessage request to handlers");
-    requestsChannel.put(action);
-    //console.log("Dispatched loadMessage request to handlers");
+    yield put(requestsChannel, action);
   }
 }
 
@@ -46,18 +48,13 @@ function* handleMessageLoadRequest(
   requestsChannel: Channel<ActionType<typeof loadMessageAction.request>>,
   getMessage: TypeofApiCall<GetUserMessageT>
 ) {
-  console.log("Handler for loadMessage request started");
-
-  // Infinite loog that wait and process loadMessage request from the channel
+  // Infinite loop that wait and process loadMessage request from the channel
   while (true) {
-    console.log("Waiting for loadMessage request");
     const action: ActionType<typeof loadMessageAction.request> = yield take(
       requestsChannel
     );
-    console.log("Just arrived a loadMessage request");
 
     const meta = action.payload;
-
     yield call(loadMessage, getMessage, meta);
   }
 }
@@ -66,8 +63,6 @@ export function* loadMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
   meta: CreatedMessageWithoutContent
 ): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
-  console.log("Loading message");
-
   // If we already have the message in the store just return it
   const cachedMessage: ReturnType<
     ReturnType<typeof messageStateByIdSelector>
@@ -93,8 +88,13 @@ export function* loadMessage(
   } else {
     yield put(loadMessageAction.success(maybeMessage.value));
   }
+
+  return maybeMessage;
 }
 
+/**
+ * A saga to fetch a message from the Backend
+ */
 export function* fetchMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
   meta: CreatedMessageWithoutContent
@@ -108,13 +108,15 @@ export function* fetchMessage(
     if (!response || response.status !== 200) {
       const error =
         response && response.status === 500 ? response.value.title : undefined;
+      // Return the error
       return left(Error(error));
     }
 
-    // Trigger an action to store the new message (converted to plain object) and return it
+    // Return the new message converted to plain object
     const messageWithContentPO = toMessageWithContentPO(response.value);
     return right(messageWithContentPO);
   } catch (error) {
+    // Return the error
     return left(error);
   }
 }

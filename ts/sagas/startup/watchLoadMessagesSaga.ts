@@ -96,8 +96,7 @@ export function* loadMessage(
  * only the details of the messages and services not already in the redux store.
  */
 export function* loadMessages(
-  getMessages: TypeofApiCall<GetUserMessagesT>,
-  getMessage: TypeofApiCall<GetUserMessageT>
+  getMessages: TypeofApiCall<GetUserMessagesT>
 ): IterableIterator<Effect> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
@@ -188,8 +187,7 @@ export function* loadMessages(
  * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
  */
 export function* watchMessagesLoadOrCancelSaga(
-  getMessages: TypeofApiCall<GetUserMessagesT>,
-  getMessage: TypeofApiCall<GetUserMessageT>
+  getMessages: TypeofApiCall<GetUserMessagesT>
 ): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line:no-let
@@ -213,7 +211,7 @@ export function* watchMessagesLoadOrCancelSaga(
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
     if (isActionOf(loadMessagesAction.request, action)) {
       // Call the generator to load messages
-      lastTask = some(yield fork(loadMessages, getMessages, getMessage));
+      lastTask = some(yield fork(loadMessages, getMessages));
     }
   }
 }
