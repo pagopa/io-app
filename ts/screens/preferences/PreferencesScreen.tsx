@@ -36,11 +36,11 @@ type OwnProps = Readonly<{
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 type State = {
-  isFingerprintAvailable: boolean;
+  isFingerprintAvailable: boolean | undefined;
 };
 
 const INITIAL_STATE: State = {
-  isFingerprintAvailable: true
+  isFingerprintAvailable: undefined
 };
 
 /**
@@ -134,7 +134,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                   kind="action"
                   title={I18n.t("preferences.list.biometric_recognition")}
                   valuePreview={
-                    !!this.props.isFingerprintEnabled
+                    this.props.isFingerprintEnabled
                       ? I18n.t(
                           "preferences.list.biometric_recognition_status.enabled"
                         )
@@ -179,7 +179,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(state.profile),
-  isFingerprintEnabled: !!state.preferences.isFingerprintEnabled
+  isFingerprintEnabled: state.preferences.isFingerprintEnabled
 });
 
 export default connect(mapStateToProps)(PreferencesScreen);
