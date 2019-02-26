@@ -77,26 +77,35 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           )
         }}
       >
-        {isFingerprintAvailable && (
-          <View
-            style={{
-              width: "100%",
-            }}
-          >
-            <Text>{I18n.t("biometric_recognition.switchLabel")}</Text>
-            <Switch
-              value={this.props.isFingerprintEnabled}
-              onValueChange={this.props.setFingerprintPreference}
-            />
-          </View>
-        )}
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 25
+          }}
+        >
+          <Text>{I18n.t("biometric_recognition.switchLabel")}</Text>
+          <Switch
+            value={this.props.isFingerprintEnabled}
+            onValueChange={this.props.setFingerprintPreference}
+            disabled={!isFingerprintAvailable}
+          />
+        </View>
         {!isFingerprintAvailable && (
           <View
             style={{
-              width: "100%",
+              padding: 25
             }}
           >
-            <Text>{I18n.t("biometric_recognition.enroll_cta")}</Text>
+            <Text
+              style={{
+                marginBottom: 25
+              }}
+            >
+              {I18n.t("biometric_recognition.enroll_cta")}
+            </Text>
             <Button onPress={this.openAppSettings}>
               <Text>{I18n.t("biometric_recognition.enroll_btnLabel")}</Text>
             </Button>
