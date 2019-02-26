@@ -168,7 +168,7 @@ export function* loadMessages(
       // Fetch the messages detail in parallel
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
       // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
-      yield all(pendingMessages.map(_ => call(loadMessage, getMessage, _)));
+      yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
     }
   } catch (error) {
     // Dispatch failure action
