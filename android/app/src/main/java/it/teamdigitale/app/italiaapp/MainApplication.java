@@ -43,7 +43,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new AndroidOpenSettingsPackage(),
+        new AndroidOpenSettingsPackage(),
         new RNGestureHandlerPackage(),
         new CalendarEventsPackage(),
         new RNCWebViewPackage(),

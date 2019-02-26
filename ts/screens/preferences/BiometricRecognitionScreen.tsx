@@ -33,6 +33,18 @@ const INITIAL_STATE: State = {
   isFingerprintAvailable: true
 };
 
+/**
+ * Implements the biometric recognition preference screen where the user can
+ * opt for explicitly not using fingerprint. This class shows up two possible
+ * scenarios:
+ * * a switch to enable/disable biometric recognition. Enabled if the
+ *   fingerprint is enrolled.
+ * * the above switch (disabled) with a button below that redirects the user to
+ *   device settings otherwise.
+ *
+ * Please note that this screen must not be displayed if biometric recognition
+ * is unavailable.
+ */
 class BiometricRecognitionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
