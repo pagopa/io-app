@@ -150,6 +150,7 @@ Here is a still NOT complete table of the environment variables you can set:
 | NAME                           | DEFAULT |                                                                                                 |
 |--------------------------------|---------|-------------------------------------------------------------------------------------------------|
 | `DEBUG_BIOMETRIC_IDENTIFICATION` | NO      | If set to "YES" an Alert is rendered with the exact result code of the biometric identification. |
+| `TOT_MESSAGE_FETCH_WORKERS` | 5 | Number of workers to create for message detail fetching. This means that we will have at most a number of concurrent fetches (of the message detail) equal to the number of the workers.
 
 _Note: The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working._
 

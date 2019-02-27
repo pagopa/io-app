@@ -4,33 +4,29 @@ import { call, fork, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
+import { totMessageFetchWorkers } from "../../config";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { loadMessage } from "../messages/messages";
 
-// Here we set the number of handlers we want to create.
-// This means that we will have at most a number of concurrent
-// fetchs (of the message detail) equal to the number of the handlers.
-const NUMBER_OF_HANDLERS = 5;
-
 /**
  * This generator listen for loadMessage.request actions and forward them
- * to a poll of created handlers.
+ * to a pool of created handlers.
  *
  * @param getMessage API call to fetch the message detail
  */
 export function* watchMessageLoadSaga(
   getMessage: TypeofApiCall<GetUserMessageT>
 ) {
-  // Create the channel used for the comunication with the handlers.
+  // Create the channel used for the communication with the handlers.
+  // The channel has a default initial size of 10.
   const requestsChannel: Channel<
     ActionType<typeof loadMessageAction.request>
   > = yield call(channel, buffers.expanding());
 
   // Start the handlers
-  // tslint:disable-next-line:no-let
-  for (let i = 0; i < NUMBER_OF_HANDLERS; i++) {
-    yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
-  }
+  [...Array(totMessageFetchWorkers).keys()].forEach(
+    yield fork(handleMessageLoadRequest, requestsChannel, getMessage)
+  );
 
   while (true) {
     // Take the loadMessage request action and put back in the channel

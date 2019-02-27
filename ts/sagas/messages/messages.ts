@@ -32,7 +32,7 @@ export function* loadMessage(
   > = yield select<GlobalState>(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
-  if (cachedMessage && pot.isSome(cachedMessage.message)) {
+  if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
     return right(cachedMessage);
   }
 
@@ -70,9 +70,11 @@ export function* fetchMessage(
       { id: meta.id }
     );
 
-    if (!response || response.status !== 200) {
+    if (response === undefined || response.status !== 200) {
       const error =
-        response && response.status === 500 ? response.value.title : undefined;
+        response !== undefined && response.status === 500
+          ? response.value.title
+          : undefined;
       // Return the error
       return left(Error(error));
     }
