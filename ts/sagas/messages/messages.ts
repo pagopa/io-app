@@ -26,15 +26,17 @@ export function* loadMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
   meta: CreatedMessageWithoutContent
 ): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
-  // If we already have the message in the store just return it
+  // Load the messages already in the redux store
   const cachedMessage: ReturnType<
     ReturnType<typeof messageStateByIdSelector>
   > = yield select<GlobalState>(messageStateByIdSelector(meta.id));
 
+  // If we already have the message in the store just return it
   if (cachedMessage && pot.isSome(cachedMessage.message)) {
     return right(cachedMessage);
   }
 
+  // Fetch the message from the Backend
   const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
     fetchMessage,
     getMessage,
