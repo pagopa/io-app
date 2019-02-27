@@ -18,7 +18,7 @@ export function* watchMessageLoadSaga(
   getMessage: TypeofApiCall<GetUserMessageT>
 ) {
   // Create the channel used for the communication with the handlers.
-  // The channel has a default initial size of 10.
+  // The channel has a buffer with initial size of 10 requests.
   const requestsChannel: Channel<
     ActionType<typeof loadMessageAction.request>
   > = yield call(channel, buffers.expanding());
