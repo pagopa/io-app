@@ -11,7 +11,7 @@ import { loadService } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
-import { loadMessage } from "./watchLoadMessagesSaga";
+import { loadMessage } from "../messages/messages";
 
 /**
  * Load message with related entities (ex. the sender service).
