@@ -1,9 +1,12 @@
+/**
+ * Generators for the message entity that can be called directly
+ * without dispatching a redux action.
+ */
+
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { buffers, Channel, channel } from "redux-saga";
-import { call, Effect, fork, put, select, take } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { call, Effect, put, select } from "redux-saga/effects";
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
@@ -16,49 +19,9 @@ import {
 } from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
 
-// Here we set the number of handlers we want to create.
-// This means that we will have at most a number of concurrent
-// fetchs (of the message detail) equal to the number of the handlers.
-const NUMBER_OF_HANDLERS = 5;
-
-export function* watchMessageLoadRequest(
-  getMessage: TypeofApiCall<GetUserMessageT>
-) {
-  // Create the channel used for the comunication with the handlers.
-  const requestsChannel: Channel<
-    ActionType<typeof loadMessageAction.request>
-  > = yield call(channel, buffers.expanding());
-
-  // Start the handlers
-  // tslint:disable-next-line:no-let
-  for (let i = 0; i < NUMBER_OF_HANDLERS; i++) {
-    yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
-  }
-
-  while (true) {
-    // Take the loadMessage request action and put back in the channel
-    // to be processed by the handlers.
-    const action = yield take(getType(loadMessageAction.request));
-
-    yield put(requestsChannel, action);
-  }
-}
-
-function* handleMessageLoadRequest(
-  requestsChannel: Channel<ActionType<typeof loadMessageAction.request>>,
-  getMessage: TypeofApiCall<GetUserMessageT>
-) {
-  // Infinite loop that wait and process loadMessage request from the channel
-  while (true) {
-    const action: ActionType<typeof loadMessageAction.request> = yield take(
-      requestsChannel
-    );
-
-    const meta = action.payload;
-    yield call(loadMessage, getMessage, meta);
-  }
-}
-
+/**
+ * A saga to fetch a message from the Backend and save it in the redux store.
+ */
 export function* loadMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
   meta: CreatedMessageWithoutContent
