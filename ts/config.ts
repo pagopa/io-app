@@ -29,6 +29,9 @@ const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 // default seconds of background activity before asking the PIN login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
+// Default number of workers to fetch message.
+const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
@@ -64,6 +67,10 @@ export const backgroundActivityTimeout = t.Integer.decode(
 export const contentRepoUrl = NonEmptyString.decode(
   Config.CONTENT_REPO_URL
 ).getOrElse(DEFAULT_CONTENT_REPO_URL);
+
+export const totMessageFetchWorkers = t.Integer.decode(
+  Config.TOT_MESSAGE_FETCH_WORKERS
+).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
 
 export function isDevEnvironment() {
   return environment === "DEV";

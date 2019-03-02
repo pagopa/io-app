@@ -59,6 +59,7 @@ import { watchApplicationActivitySaga } from "./startup/watchApplicationActivity
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
+import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchWalletSaga } from "./wallet";
@@ -224,11 +225,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   );
 
   // Load messages when requested
-  yield fork(
-    watchMessagesLoadOrCancelSaga,
-    backendClient.getMessages,
-    backendClient.getMessage
-  );
+  yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);
+
+  // Load messages when requested
+  yield fork(watchMessageLoadSaga, backendClient.getMessage);
 
   // Load message and related entities (ex. the sender service)
   yield takeEvery(

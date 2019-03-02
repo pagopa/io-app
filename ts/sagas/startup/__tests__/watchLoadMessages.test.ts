@@ -1,7 +1,6 @@
-import { left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { call, put } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
@@ -16,7 +15,7 @@ import {
 } from "../../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
-import { loadMessage, loadMessages } from "../../startup/watchLoadMessagesSaga";
+import { loadMessages } from "../../startup/watchLoadMessagesSaga";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
@@ -89,73 +88,7 @@ const testMessages = {
   page_size: 2
 };
 
-describe("messages", () => {
-  describe("loadMessage test plan", () => {
-    it("should call getMessage with the right parameters", () => {
-      const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
-        .next()
-        .next()
-        .put(loadMessageAction.request({ id: testMessageId1 } as any))
-        .next()
-        .call(getMessage, { id: testMessageId1 });
-    });
-
-    it("should only return an empty error if the getMessage response is undefined (can't be decoded)", () => {
-      const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
-        .next()
-        .next()
-        .put(loadMessageAction.request({ id: testMessageId1 } as any))
-        .next()
-        // Return undefined as getMessage response
-        .next(undefined)
-        .put(
-          loadMessageAction.failure({ id: testMessageId1, error: undefined })
-        )
-        .next()
-        .returns(left(Error()));
-    });
-
-    it("should only return the error if the getMessage response status is not 200", () => {
-      const getMessage = jest.fn();
-      const error = Error("Backend error");
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
-        .next()
-        .next()
-        .put(loadMessageAction.request({ id: testMessageId1 } as any))
-        .next()
-        // Return 500 with an error message as getMessage response
-        .next({ status: 500, value: { title: error.message } })
-        .put(
-          loadMessageAction.failure({
-            id: testMessageId1,
-            error: error.message
-          })
-        )
-        .next()
-        .returns(left(error));
-    });
-
-    it("should put MESSAGE_LOAD_SUCCESS and return the message if the getMessage response status is 200", () => {
-      const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
-        .next()
-        .next()
-        .put(loadMessageAction.request({ id: testMessageId1 } as any))
-        .next()
-        // Return 200 with a valid message as getMessage response
-        .next({ status: 200, value: testMessageWithContent1 })
-        .put(
-          loadMessageAction.success(
-            toMessageWithContentPO(testMessageWithContent1)
-          )
-        )
-        .next()
-        .returns(right(toMessageWithContentPO(testMessageWithContent1)));
-    });
-  });
-
+describe("watchLoadMessages", () => {
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
       const getMessages = jest.fn();
@@ -198,8 +131,8 @@ describe("messages", () => {
         .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
         .next({ status: 200, value: testServicePublic })
         .all([
-          call(loadMessage, getMessage, testMessages.items[0] as any),
-          call(loadMessage, getMessage, testMessages.items[1] as any)
+          put(loadMessageAction.request(testMessages.items[0] as any)),
+          put(loadMessageAction.request(testMessages.items[1] as any))
         ]);
     });
 

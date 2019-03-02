@@ -2,7 +2,6 @@
  * Generators to manage messages and related services.
  */
 
-import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
@@ -20,11 +19,7 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
-import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
-import {
-  GetUserMessagesT,
-  GetUserMessageT
-} from "../../../definitions/backend/requestTypes";
+import { GetUserMessagesT } from "../../../definitions/backend/requestTypes";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
@@ -32,63 +27,11 @@ import {
   loadMessagesCancel
 } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
-import {
-  messagesStateByIdSelector,
-  messageStateByIdSelector
-} from "../../store/reducers/entities/messages/messagesById";
+import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  MessageWithContentPO,
-  toMessageWithContentPO
-} from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
-
-/**
- * A generator to load the message detail from the Backend
- *
- * @param {function} getMessage - The function that makes the Backend request
- * @param {string} meta - The id of the message to load
- * @returns {IterableIterator<Effect | Error | MessageWithContentPO>}
- */
-// FIXME: apparently the returned value doesn't get used, can we get rid of it?
-export function* loadMessage(
-  getMessage: TypeofApiCall<GetUserMessageT>,
-  meta: CreatedMessageWithoutContent
-): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
-  // If we already have the message in the store just return it
-  const cachedMessage: ReturnType<
-    ReturnType<typeof messageStateByIdSelector>
-  > = yield select<GlobalState>(messageStateByIdSelector(meta.id));
-  if (cachedMessage) {
-    return right(cachedMessage);
-  }
-
-  yield put(loadMessageAction.request(meta));
-
-  try {
-    const response: SagaCallReturnType<typeof getMessage> = yield call(
-      getMessage,
-      { id: meta.id }
-    );
-
-    if (!response || response.status !== 200) {
-      const error =
-        response && response.status === 500 ? response.value.title : undefined;
-      yield put(loadMessageAction.failure({ id: meta.id, error }));
-      return left(Error(error));
-    }
-
-    // Trigger an action to store the new message (converted to plain object) and return it
-    const messageWithContentPO = toMessageWithContentPO(response.value);
-    yield put(loadMessageAction.success(messageWithContentPO));
-    return right(messageWithContentPO);
-  } catch (error) {
-    yield put(loadMessageAction.failure(error));
-    return left(error);
-  }
-}
 
 /**
  * A generator to load messages from the Backend.
@@ -96,8 +39,7 @@ export function* loadMessage(
  * only the details of the messages and services not already in the redux store.
  */
 export function* loadMessages(
-  getMessages: TypeofApiCall<GetUserMessagesT>,
-  getMessage: TypeofApiCall<GetUserMessageT>
+  getMessages: TypeofApiCall<GetUserMessagesT>
 ): IterableIterator<Effect> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
@@ -168,7 +110,7 @@ export function* loadMessages(
       // Fetch the messages detail in parallel
       // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
       // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
-      yield all(pendingMessages.map(_ => call(loadMessage, getMessage, _)));
+      yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
     }
   } catch (error) {
     // Dispatch failure action
@@ -188,8 +130,7 @@ export function* loadMessages(
  * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
  */
 export function* watchMessagesLoadOrCancelSaga(
-  getMessages: TypeofApiCall<GetUserMessagesT>,
-  getMessage: TypeofApiCall<GetUserMessageT>
+  getMessages: TypeofApiCall<GetUserMessagesT>
 ): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line:no-let
@@ -213,7 +154,7 @@ export function* watchMessagesLoadOrCancelSaga(
     // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
     if (isActionOf(loadMessagesAction.request, action)) {
       // Call the generator to load messages
-      lastTask = some(yield fork(loadMessages, getMessages, getMessage));
+      lastTask = some(yield fork(loadMessages, getMessages));
     }
   }
 }
