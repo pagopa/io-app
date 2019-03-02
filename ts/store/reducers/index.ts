@@ -21,6 +21,7 @@ import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
+import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import { GlobalState } from "./types";
@@ -58,6 +59,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   backendInfo: backendInfoReducer,
   content: contentReducer,
   preferences: preferencesReducer,
+  persistedPreferences: persistedPreferencesReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
 

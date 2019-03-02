@@ -71,7 +71,7 @@ const rootPersistConfig: PersistConfig = {
     "profile",
     "entities",
     "debug",
-    "preferences"
+    "persistedPreferences"
   ]
 };
 

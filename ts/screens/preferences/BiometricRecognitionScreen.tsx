@@ -16,7 +16,7 @@ import { GlobalState } from "../../store/reducers/types";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
-import { preferenceFingerprintIsEnabledSave } from "../../store/actions/preferences";
+import { preferenceFingerprintIsEnabledSave } from "../../store/actions/persistedPreferences";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -129,7 +129,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isFingerprintEnabled: state.preferences.isFingerprintEnabled
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -71,7 +71,8 @@ class PreferencesScreen extends React.Component<Props, State> {
       biometryTypeOrUnsupportedReason => {
         this.setState({
           isFingerprintAvailable:
-            biometryTypeOrUnsupportedReason !== "UNAVAILABLE"
+            biometryTypeOrUnsupportedReason !== "UNAVAILABLE" &&
+            biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
         });
       },
       _ => undefined
@@ -179,7 +180,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(state.profile),
-  isFingerprintEnabled: state.preferences.isFingerprintEnabled
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
 });
 
 export default connect(mapStateToProps)(PreferencesScreen);

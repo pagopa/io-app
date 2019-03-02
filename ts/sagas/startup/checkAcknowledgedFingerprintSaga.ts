@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
-import { preferenceFingerprintIsEnabledSave } from "../../store/actions/preferences";
+import { preferenceFingerprintIsEnabledSave } from "../../store/actions/persistedPreferences";
 
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
