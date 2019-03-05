@@ -1,6 +1,6 @@
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { buffers, Channel, channel } from "redux-saga";
-import { all, call, fork, take } from "redux-saga/effects";
+import { call, fork, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
@@ -24,11 +24,10 @@ export function* watchMessageLoadSaga(
   > = yield call(channel, buffers.expanding());
 
   // Start the handlers
-  yield all(
-    Array(totMessageFetchWorkers).map(_ =>
-      fork(handleMessageLoadRequest, requestsChannel, getMessage)
-    )
-  );
+  // tslint:disable-next-line:no-let
+  for (let i = 0; i < totMessageFetchWorkers; i++) {
+    yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
+  }
 
   while (true) {
     // Take the loadMessage request action and put back in the channel
