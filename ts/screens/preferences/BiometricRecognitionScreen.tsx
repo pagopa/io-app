@@ -16,7 +16,7 @@ import { GlobalState } from "../../store/reducers/types";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
-import { preferenceFingerprintIsEnabledSave } from "../../store/actions/persistedPreferences";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -134,7 +134,11 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setFingerprintPreference: (fingerprintPreference: boolean) =>
-    dispatch(preferenceFingerprintIsEnabledSave(fingerprintPreference))
+    dispatch(
+      preferenceFingerprintIsEnabledSaveSuccess({
+        isFingerprintEnabled: fingerprintPreference
+      })
+    )
 });
 
 export default connect(

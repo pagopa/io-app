@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
-import { preferenceFingerprintIsEnabledSave } from "../../store/actions/persistedPreferences";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
@@ -52,13 +52,15 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
 
     // Set Fingerprint usage system preferences to true if available and enrolled
     yield put(
-      preferenceFingerprintIsEnabledSave(
-        biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
-      )
+      preferenceFingerprintIsEnabledSaveSuccess({
+        isFingerprintEnabled: biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
+      })
     );
   } else {
     // Set Fingerprint usage system preference to false otherwise
-    yield put(preferenceFingerprintIsEnabledSave(false));
+    yield put(preferenceFingerprintIsEnabledSaveSuccess({
+      isFingerprintEnabled: false
+    }));
   }
 }
 

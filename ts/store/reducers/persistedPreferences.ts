@@ -1,6 +1,6 @@
 import { isActionOf } from "typesafe-actions";
 
-import { preferenceFingerprintIsEnabledSave } from "../actions/persistedPreferences";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 
 export type PersistedPreferencesState = Readonly<{
@@ -15,10 +15,10 @@ export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
 ): PersistedPreferencesState {
-  if (isActionOf(preferenceFingerprintIsEnabledSave, action)) {
+  if (isActionOf(preferenceFingerprintIsEnabledSaveSuccess, action)) {
     return {
       ...state,
-      isFingerprintEnabled: action.payload
+      isFingerprintEnabled: action.payload.isFingerprintEnabled
     };
   }
 

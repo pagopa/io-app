@@ -1,9 +1,9 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const preferenceFingerprintIsEnabledSave = createStandardAction(
+export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"
-)<boolean>();
+)<{ isFingerprintEnabled: boolean }>();
 
 export type PersistedPreferencesActions = ActionType<
-  typeof preferenceFingerprintIsEnabledSave
+  typeof preferenceFingerprintIsEnabledSaveSuccess
 >;
