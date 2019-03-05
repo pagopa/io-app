@@ -58,9 +58,11 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
     );
   } else {
     // Set Fingerprint usage system preference to false otherwise
-    yield put(preferenceFingerprintIsEnabledSaveSuccess({
-      isFingerprintEnabled: false
-    }));
+    yield put(
+      preferenceFingerprintIsEnabledSaveSuccess({
+        isFingerprintEnabled: false
+      })
+    );
   }
 }
 
