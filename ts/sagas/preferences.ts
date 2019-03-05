@@ -13,5 +13,6 @@ export function* loadSystemPreferencesSaga(): IterableIterator<Effect> {
     getLanguages,
     {}
   );
+
   yield put(preferencesLanguagesLoadSuccess(languages));
 }

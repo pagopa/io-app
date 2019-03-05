@@ -5,6 +5,7 @@ import { getType } from "typesafe-actions";
 
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
@@ -48,6 +49,20 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
     // Receive the acknowledgement, then update system state that flags this
     // screen as "Read"
     yield put(fingerprintAcknowledge.success());
+
+    // Set Fingerprint usage system preferences to true if available and enrolled
+    yield put(
+      preferenceFingerprintIsEnabledSaveSuccess({
+        isFingerprintEnabled: biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
+      })
+    );
+  } else {
+    // Set Fingerprint usage system preference to false otherwise
+    yield put(
+      preferenceFingerprintIsEnabledSaveSuccess({
+        isFingerprintEnabled: false
+      })
+    );
   }
 }
 
@@ -84,7 +99,7 @@ const isTouchIdSupportedConfig: IsSupportedConfig = {
  *
  * More info about library can be found here: https://github.com/naoufal/react-native-touch-id
  */
-function getFingerprintSettings(): Promise<BiometrySimpleType> {
+export function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
     TouchID.isSupported(isTouchIdSupportedConfig)
       .then(biometryType => {

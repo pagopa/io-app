@@ -13,6 +13,7 @@ import { IdentificationState } from "./identification";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
+import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { WalletState } from "./wallet";
@@ -35,6 +36,7 @@ export type GlobalState = Readonly<{
   profile: ProfileState;
   wallet: WalletState;
   preferences: PreferencesState;
+  persistedPreferences: PersistedPreferencesState;
   content: ContentState;
   navigationHistory: NavigationHistoryState;
   identification: IdentificationState;

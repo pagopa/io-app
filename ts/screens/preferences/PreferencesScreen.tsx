@@ -20,6 +20,7 @@ import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
+import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
 
 const unavailableAlert = () =>
@@ -33,6 +34,14 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+
+type State = {
+  isFingerprintAvailable: boolean | undefined;
+};
+
+const INITIAL_STATE: State = {
+  isFingerprintAvailable: undefined
+};
 
 /**
  * Translates the primary languages of the provided locales.
@@ -49,9 +58,27 @@ function translateLocale(locale: string): string {
 
 /**
  * Implements the preferences screen where the user can see and update his
- * email, mobile number, preferred language and digital address.
+ * email, mobile number, preferred language, biometric recognition usage and digital address.
  */
-class PreferencesScreen extends React.Component<Props> {
+class PreferencesScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = INITIAL_STATE;
+  }
+
+  public componentWillMount() {
+    getFingerprintSettings().then(
+      biometryTypeOrUnsupportedReason => {
+        this.setState({
+          isFingerprintAvailable:
+            biometryTypeOrUnsupportedReason !== "UNAVAILABLE" &&
+            biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
+        });
+      },
+      _ => undefined
+    );
+  }
+
   public render() {
     const contextualHelp = {
       title: I18n.t("preferences.title"),
@@ -59,6 +86,7 @@ class PreferencesScreen extends React.Component<Props> {
     };
 
     const { potProfile } = this.props;
+    const { isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
       .map(_ => ({
@@ -95,6 +123,29 @@ class PreferencesScreen extends React.Component<Props> {
                 valuePreview={I18n.t("preferences.list.services_description")}
               />
             </ListItem>
+            {isFingerprintAvailable && (
+              <ListItem
+                onPress={() =>
+                  this.props.navigation.navigate(
+                    ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
+                  )
+                }
+              >
+                <PreferenceItem
+                  kind="action"
+                  title={I18n.t("preferences.list.biometric_recognition")}
+                  valuePreview={
+                    this.props.isFingerprintEnabled
+                      ? I18n.t(
+                          "preferences.list.biometric_recognition_status.enabled"
+                        )
+                      : I18n.t(
+                          "preferences.list.biometric_recognition_status.disabled"
+                        )
+                  }
+                />
+              </ListItem>
+            )}
             <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
@@ -128,7 +179,8 @@ class PreferencesScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
-  potProfile: pot.toOption(state.profile)
+  potProfile: pot.toOption(state.profile),
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
 });
 
 export default connect(mapStateToProps)(PreferencesScreen);

@@ -8,6 +8,7 @@ import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.calendarevents.CalendarEventsPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -42,6 +43,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new AndroidOpenSettingsPackage(),
         new RNGestureHandlerPackage(),
         new CalendarEventsPackage(),
         new RNCWebViewPackage(),
