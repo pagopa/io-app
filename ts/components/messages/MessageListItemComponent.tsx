@@ -231,6 +231,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                   paymentByRptId={paymentByRptId}
                   service={service}
                   containerStyle={styles.ctaBarContainer}
+                  disabled={isSelectionModeEnabled}
                 />
               )}
             </Row>
