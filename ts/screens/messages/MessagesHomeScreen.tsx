@@ -11,6 +11,7 @@ import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -85,7 +86,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <Icon name="magnifying-glass" onPress={this.onSearchEnable} />
+            <IconFont name="io-search" onPress={this.onSearchEnable} />
           )
         }
       >
