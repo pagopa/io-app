@@ -46,6 +46,7 @@ type OwnProps = {
   service: pot.Pot<ServicePublic, Error>;
   containerStyle?: ViewStyle;
   paymentByRptId: PaymentByRptIdState;
+  disabled?: boolean;
 };
 
 type Props = OwnProps &
@@ -115,7 +116,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
     useShortLabel: boolean
   ) {
-    const { message, calendarEvent, showModal } = this.props;
+    const { message, calendarEvent, showModal, disabled } = this.props;
     const { isEventInCalendar } = this.state;
 
     // Create an action to add or remove the event
@@ -159,7 +160,12 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         />
 
         <View style={styles.reminderButtonContainer}>
-          <Button block={true} bordered={true} onPress={onPressHandler}>
+          <Button
+            block={true}
+            bordered={true}
+            onPress={onPressHandler}
+            disabled={disabled}
+          >
             <Icon
               name={isEventInCalendar ? "minus" : "plus"}
               style={styles.reminderButtonIcon}
@@ -182,6 +188,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     potService: pot.Pot<ServicePublic, Error>,
     paymentByRptId: PaymentByRptIdState
   ) {
+    const { disabled } = this.props;
     const amount = getAmountFromPaymentAmount(paymentData.amount);
 
     const rptId = pot.getOrElse(
@@ -217,7 +224,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <Button
           block={true}
           onPress={onPaymentCTAPress}
-          disabled={onPaymentCTAPress === undefined || isPaid}
+          disabled={disabled || onPaymentCTAPress === undefined || isPaid}
         >
           <Text>
             {I18n.t(isPaid ? "messages.cta.paid" : "messages.cta.pay", {
