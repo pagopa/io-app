@@ -131,8 +131,8 @@ describe("watchLoadMessages", () => {
         .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
         .next({ status: 200, value: testServicePublic })
         .all([
-          put(loadMessageAction.request(testMessages.items[0] as any)),
-          put(loadMessageAction.request(testMessages.items[1] as any))
+          put(loadMessageAction.request(testMessages.items[1] as any)),
+          put(loadMessageAction.request(testMessages.items[0] as any))
         ]);
     });
 
