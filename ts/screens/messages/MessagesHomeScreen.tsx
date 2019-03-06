@@ -11,6 +11,7 @@ import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -23,6 +24,9 @@ import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments"
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+
+// Used to disable the Deadlines tab
+const DEADLINES_TAB_ENABLED = false;
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -80,11 +84,12 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 placeholder={I18n.t("global.actions.search")}
                 value={searchText.value}
                 onChangeText={this.onSearchTextChange}
+                autoFocus={true}
               />
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <Icon name="magnifying-glass" onPress={this.onSearchEnable} />
+            <IconFont name="io-search" onPress={this.onSearchEnable} />
           )
         }
       >
@@ -124,13 +129,16 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             navigateToMessageDetail={navigateToMessageDetail}
           />
         </Tab>
-        <Tab heading={I18n.t("messages.tab.deadlines")}>
-          <MessagesDeadlines
-            messagesState={lexicallyOrderedMessagesState}
-            onRefresh={refreshMessages}
-            navigateToMessageDetail={navigateToMessageDetail}
-          />
-        </Tab>
+        {DEADLINES_TAB_ENABLED && (
+          <Tab heading={I18n.t("messages.tab.deadlines")}>
+            <MessagesDeadlines
+              messagesState={lexicallyOrderedMessagesState}
+              onRefresh={refreshMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
+            />
+          </Tab>
+        )}
+
         <Tab heading={I18n.t("messages.tab.archive")}>
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
@@ -204,7 +212,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       this.setState({
         debouncedSearchText: some(text)
       }),
-    500
+    300
   );
 
   private onSearchDisable = () => {

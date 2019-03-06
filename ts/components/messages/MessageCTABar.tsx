@@ -39,6 +39,7 @@ import { showToast } from "../../utils/showToast";
 import CalendarIconComponent from "../CalendarIconComponent";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
+import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 
 type OwnProps = {
@@ -72,13 +73,20 @@ const styles = StyleSheet.create({
     flex: 6,
     alignItems: "center"
   },
+
   reminderButtonContainer: {
     marginLeft: 10,
     flex: 12
   },
 
   reminderButtonIcon: {
-    marginRight: 0
+    marginLeft: 0,
+    marginRight: 5
+  },
+
+  reminderButtonText: {
+    paddingLeft: 0,
+    paddingRight: 0
   },
 
   separatorContainer: {
@@ -87,11 +95,17 @@ const styles = StyleSheet.create({
 
   paymentContainer: {
     flex: 6
+  },
+
+  selectCalendaModalHeader: {
+    marginBottom: 25
   }
 });
 
 const SelectCalendarModalHeader = (
-  <H1>{I18n.t("messages.cta.reminderCalendarSelect")}</H1>
+  <H1 style={styles.selectCalendaModalHeader}>
+    {I18n.t("messages.cta.reminderCalendarSelect")}
+  </H1>
 );
 
 class MessageCTABar extends React.PureComponent<Props, State> {
@@ -166,11 +180,20 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             onPress={onPressHandler}
             disabled={disabled}
           >
-            <Icon
-              name={isEventInCalendar ? "minus" : "plus"}
-              style={styles.reminderButtonIcon}
-            />
-            <Text>
+            {isEventInCalendar ? (
+              <IconFont
+                name="io-tick-big"
+                style={styles.reminderButtonIcon}
+                color={variables.contentPrimaryBackground}
+              />
+            ) : (
+              <Icon
+                name={"plus"}
+                style={styles.reminderButtonIcon}
+                color={variables.contentPrimaryBackground}
+              />
+            )}
+            <Text style={styles.reminderButtonText}>
               {I18n.t(
                 useShortLabel
                   ? "messages.cta.reminderShort"

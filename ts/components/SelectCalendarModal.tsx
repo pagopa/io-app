@@ -1,9 +1,32 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Container, Content, Text } from "native-base";
 import React from "react";
+import {
+  Platform,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity
+} from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
+import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
+import customVariables from "../theme/variables";
+import FooterWithButtons from "./ui/FooterWithButtons";
+
+const styles = StyleSheet.create({
+  calendarItemWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: customVariables.brandLightGray,
+    color: customVariables.contentPrimaryBackground
+  }
+});
+
+const TouchableComponent =
+  Platform.OS === "ios" ? TouchableHighlight : TouchableOpacity;
 
 type CalendarItemProps = {
   calendar: Calendar;
@@ -14,7 +37,16 @@ type CalendarItemProps = {
  * Renders a Calendar as FlatList item
  */
 const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <Text onPress={props.onPress}>{props.calendar.title}</Text>
+  <TouchableComponent
+    onPress={props.onPress}
+    style={styles.calendarItemWrapper}
+  >
+    <Text link={true}>{props.calendar.title}</Text>
+    <IconFont
+      name="io-right"
+      color={customVariables.contentPrimaryBackground}
+    />
+  </TouchableComponent>
 );
 
 type Props = {
@@ -83,13 +115,17 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
               ))}
             </React.Fragment>
           )}
-          <Button
-            disabled={pot.isLoading(calendars)}
-            onPress={this.props.onCancel}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
         </Content>
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={{
+            disabled: pot.isLoading(calendars),
+            bordered: true,
+            onPress: this.props.onCancel,
+            title: I18n.t("global.buttons.cancel"),
+            block: true
+          }}
+        />
       </Container>
     );
   }
