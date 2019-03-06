@@ -81,6 +81,11 @@ export function* loadMessages(
         loadMessagesAction.success(response.value.items.map(_ => _.id))
       );
 
+      // The Backend returns the items from the oldest to the latest
+      // but we want to process them from latest to oldest so we
+      // reverse the order.
+      const reversedItems = [...response.value.items].reverse();
+
       const shouldLoadMessage = (message: { id: string }) => {
         const cached = cachedMessagesById[message.id];
         return (
@@ -91,7 +96,7 @@ export function* loadMessages(
       };
 
       // Filter messages already in the store
-      const pendingMessages = response.value.items.filter(shouldLoadMessage);
+      const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
       const shouldLoadService = (id: string) =>
         cachedServicesById[id] === undefined;
