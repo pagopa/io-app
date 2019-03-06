@@ -95,11 +95,17 @@ const styles = StyleSheet.create({
 
   paymentContainer: {
     flex: 6
+  },
+
+  selectCalendaModalHeader: {
+    marginBottom: 25
   }
 });
 
 const SelectCalendarModalHeader = (
-  <H1>{I18n.t("messages.cta.reminderCalendarSelect")}</H1>
+  <H1 style={styles.selectCalendaModalHeader}>
+    {I18n.t("messages.cta.reminderCalendarSelect")}
+  </H1>
 );
 
 class MessageCTABar extends React.PureComponent<Props, State> {
