@@ -139,25 +139,28 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   public componentDidUpdate() {
     const { identificationState, isFingerprintEnabled } = this.props;
-    
+
     if (identificationState.kind !== "started") {
       return null;
     }
 
     // Check for global properties about isFingerprint enabled
-    if(isFingerprintEnabled) {
+    if (isFingerprintEnabled) {
       TouchID.isSupported(isSupportedConfig)
-      .then(
-        biometryType => (biometryType === true ? "Fingerprint" : biometryType),
-        _ => undefined
-      )
-      .then(() => 
-        {
-          this.onFingerprintRequest(
-            this.onIdentificationSuccessHandler,
-            this.onIdentificationFailureHandler
-          )
-        }, _ => 0);
+        .then(
+          biometryType =>
+            biometryType === true ? "Fingerprint" : biometryType,
+          _ => undefined
+        )
+        .then(
+          () => {
+            this.onFingerprintRequest(
+              this.onIdentificationSuccessHandler,
+              this.onIdentificationFailureHandler
+            );
+          },
+          _ => 0
+        );
     }
   }
 
@@ -170,7 +173,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     // The identification state is started we need to show the modal
     const { identificationSuccessData } = identificationState;
-  
+
     if (identificationSuccessData) {
       identificationSuccessData.onSuccess();
     }
@@ -240,7 +243,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                       this.onIdentificationFailureHandler
                     )
                   }
-                  disabled={!isFingerprintEnabled} 
+                  disabled={!isFingerprintEnabled}
                 >
                   <Text>{biometryType}</Text>
                 </Button>
