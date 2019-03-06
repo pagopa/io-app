@@ -25,6 +25,9 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
+// Used to disable the Deadlines tab
+const DEADLINES_TAB_ENABLED = false;
+
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -126,13 +129,16 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             navigateToMessageDetail={navigateToMessageDetail}
           />
         </Tab>
-        <Tab heading={I18n.t("messages.tab.deadlines")}>
-          <MessagesDeadlines
-            messagesState={lexicallyOrderedMessagesState}
-            onRefresh={refreshMessages}
-            navigateToMessageDetail={navigateToMessageDetail}
-          />
-        </Tab>
+        {DEADLINES_TAB_ENABLED && (
+          <Tab heading={I18n.t("messages.tab.deadlines")}>
+            <MessagesDeadlines
+              messagesState={lexicallyOrderedMessagesState}
+              onRefresh={refreshMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
+            />
+          </Tab>
+        )}
+
         <Tab heading={I18n.t("messages.tab.archive")}>
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
