@@ -137,8 +137,53 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       .then(biometryType => this.setState({ biometryType }), _ => 0);
   }
 
-  public render() {
+  public componentDidUpdate() {
+    const { identificationState, isFingerprintEnabled } = this.props;
+    
+    if (identificationState.kind !== "started") {
+      return null;
+    }
+
+    // Check for global properties about isFingerprint enabled
+    if(isFingerprintEnabled) {
+      TouchID.isSupported(isSupportedConfig)
+      .then(
+        biometryType => (biometryType === true ? "Fingerprint" : biometryType),
+        _ => undefined
+      )
+      .then(() => 
+        {
+          this.onFingerprintRequest(
+            this.onIdentificationSuccessHandler,
+            this.onIdentificationFailureHandler
+          )
+        }, _ => 0);
+    }
+  }
+
+  private onIdentificationSuccessHandler = () => {
     const { identificationState, dispatch } = this.props;
+
+    if (identificationState.kind !== "started") {
+      return null;
+    }
+
+    // The identification state is started we need to show the modal
+    const { identificationSuccessData } = identificationState;
+  
+    if (identificationSuccessData) {
+      identificationSuccessData.onSuccess();
+    }
+    dispatch(identificationSuccess());
+  };
+
+  private onIdentificationFailureHandler = () => {
+    const { dispatch } = this.props;
+    dispatch(identificationFailure());
+  };
+
+  public render() {
+    const { identificationState, isFingerprintEnabled, dispatch } = this.props;
 
     if (identificationState.kind !== "started") {
       return null;
@@ -148,8 +193,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const {
       pin,
       identificationGenericData,
-      identificationCancelData,
-      identificationSuccessData
+      identificationCancelData
     } = identificationState;
 
     const {
@@ -173,17 +217,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       dispatch(identificationCancel());
     };
 
-    const onIdentificationSuccessHandler = () => {
-      if (identificationSuccessData) {
-        identificationSuccessData.onSuccess();
-      }
-      dispatch(identificationSuccess());
-    };
-
-    const onIdentificationFailureHandler = () => {
-      dispatch(identificationFailure());
-    };
-
     const onPinResetHandler = () => {
       dispatch(identificationPinReset());
     };
@@ -203,10 +236,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   primary={true}
                   onPress={() =>
                     this.onFingerprintRequest(
-                      onIdentificationSuccessHandler,
-                      onIdentificationFailureHandler
+                      this.onIdentificationSuccessHandler,
+                      this.onIdentificationFailureHandler
                     )
                   }
+                  disabled={!isFingerprintEnabled} 
                 >
                   <Text>{biometryType}</Text>
                 </Button>
@@ -230,8 +264,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                 this.onPinFullfill(
                   _,
                   __,
-                  onIdentificationSuccessHandler,
-                  onIdentificationFailureHandler
+                  this.onIdentificationSuccessHandler,
+                  this.onIdentificationFailureHandler
                 )
               }
               clearOnInvalid={true}
@@ -313,7 +347,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  identificationState: state.identification
+  identificationState: state.identification,
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
 });
 
 export default connect(mapStateToProps)(IdentificationModal);
