@@ -60,6 +60,16 @@ const generateHtml = (content: string, cssStyle?: string) => {
   `;
 };
 
+/**
+ * Covert the old demo markdown tag with the new one.
+ */
+const OLD_DEMO_TAG_MARKDOWN_REGEX = /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/;
+const convertOldDemoMarkdownTag = (markdown: string) =>
+  markdown.replace(
+    OLD_DEMO_TAG_MARKDOWN_REGEX,
+    (_, g1: string) => `[[IO-DEMO]]\n| ${g1}\n`
+  );
+
 type OwnProps = {
   children: string;
   animated?: boolean;
@@ -192,13 +202,16 @@ class Markdown extends React.PureComponent<Props, State> {
         }
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       }
-      remarkProcessor.process(markdown, (error: any, file: any) => {
-        error
-          ? fromNullable(onError).map(_ => _(error))
-          : this.setState({
-              html: generateHtml(String(file), cssStyle)
-            });
-      });
+      remarkProcessor.process(
+        convertOldDemoMarkdownTag(markdown),
+        (error: any, file: any) => {
+          error
+            ? fromNullable(onError).map(_ => _(error))
+            : this.setState({
+                html: generateHtml(String(file), cssStyle)
+              });
+        }
+      );
     });
   };
 }
