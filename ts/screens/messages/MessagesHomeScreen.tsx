@@ -80,6 +80,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 placeholder={I18n.t("global.actions.search")}
                 value={searchText.value}
                 onChangeText={this.onSearchTextChange}
+                autoFocus={true}
               />
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
@@ -204,7 +205,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       this.setState({
         debouncedSearchText: some(text)
       }),
-    500
+    300
   );
 
   private onSearchDisable = () => {
