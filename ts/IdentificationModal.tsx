@@ -1,6 +1,13 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
+import {
+  Alert,
+  AppState,
+  AppStateStatus,
+  Modal,
+  StatusBar,
+  StyleSheet
+} from "react-native";
 import TouchID, {
   AuthenticateConfig,
   AuthenticationError,
@@ -41,6 +48,10 @@ type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
   biometryType?: string;
+};
+
+type updateBiometrySupportPropType = {
+  updateBiometrySupportProp: boolean;
 };
 
 const contextualHelp = {
@@ -128,29 +139,69 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  public componentWillMount() {
-    TouchID.isSupported(isSupportedConfig)
-      .then(
-        biometryType => (biometryType === true ? "Fingerprint" : biometryType),
-        _ => undefined
-      )
-      .then(biometryType => this.setState({ biometryType }), _ => 0);
+  public componentDidMount() {
+    AppState.addEventListener("change", this.appStateChangeListener.bind(this));
   }
 
-  public componentDidUpdate() {
-    const { identificationState, isFingerprintEnabled } = this.props;
+  public componentDidUnMount() {
+    AppState.removeEventListener(
+      "change",
+      this.appStateChangeListener.bind(this)
+    );
+  }
 
-    if (identificationState.kind !== "started") {
-      return null;
-    }
+  public componentWillMount() {
+    const { isFingerprintEnabled } = this.props;
 
-    // Check for global properties about isFingerprint enabled
     if (isFingerprintEnabled) {
       TouchID.isSupported(isSupportedConfig)
         .then(
           biometryType =>
             biometryType === true ? "Fingerprint" : biometryType,
           _ => undefined
+        )
+        .then(biometryType => this.setState({ biometryType }), _ => 0);
+    }
+  }
+
+  /**
+   * Check if fingerprint login can be prompted by looking at two parameters in
+   * serie:
+   * 1. `isFingerprintEnabled` coming from global state persisted preferences
+   * 2. The current status of biometry recognition support provided by querying
+   * the library in charge.
+   *
+   * It gets `updateBiometrySupportProp` as a boolean because it can be run
+   * from several contexts. When getting called while the app is returning
+   * foreground from background, biometry support has to be updated if system
+   * preferences changes happened.
+   *
+   * @param updateBiometrySupportProp
+   */
+  private maybeTriggerFingerprintRequest(
+    updateBiometrySupportProp?: updateBiometrySupportPropType
+  ) {
+    const { identificationState, isFingerprintEnabled } = this.props;
+
+    if (identificationState.kind !== "started") {
+      return;
+    }
+
+    // Check for global properties to know if biometric recognition is enabled
+    if (isFingerprintEnabled) {
+      TouchID.isSupported(isSupportedConfig)
+        .then(
+          biometryType =>
+            biometryType === true ? "Fingerprint" : biometryType,
+          _ => undefined
+        )
+        .then(
+          biometryType => {
+            if (updateBiometrySupportProp) {
+              this.setState({ biometryType });
+            }
+          },
+          _ => 0
         )
         .then(
           () => {
@@ -164,11 +215,22 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   }
 
+  private appStateChangeListener(newState: AppStateStatus) {
+    if (newState === "active") {
+      // updating biometrytype prop
+      this.maybeTriggerFingerprintRequest({ updateBiometrySupportProp: true });
+    }
+  }
+
+  public componentDidUpdate() {
+    this.maybeTriggerFingerprintRequest();
+  }
+
   private onIdentificationSuccessHandler = () => {
     const { identificationState, dispatch } = this.props;
 
     if (identificationState.kind !== "started") {
-      return null;
+      return;
     }
 
     // The identification state is started we need to show the modal
@@ -232,24 +294,24 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
-            {biometryType && (
-              <React.Fragment>
-                <Button
-                  block={true}
-                  primary={true}
-                  onPress={() =>
-                    this.onFingerprintRequest(
-                      this.onIdentificationSuccessHandler,
-                      this.onIdentificationFailureHandler
-                    )
-                  }
-                  disabled={!isFingerprintEnabled}
-                >
-                  <Text>{biometryType}</Text>
-                </Button>
-                <View spacer={true} />
-              </React.Fragment>
-            )}
+            {isFingerprintEnabled &&
+              biometryType && (
+                <React.Fragment>
+                  <Button
+                    block={true}
+                    primary={true}
+                    onPress={() =>
+                      this.onFingerprintRequest(
+                        this.onIdentificationSuccessHandler,
+                        this.onIdentificationFailureHandler
+                      )
+                    }
+                  >
+                    <Text>{biometryType}</Text>
+                  </Button>
+                  <View spacer={true} />
+                </React.Fragment>
+              )}
             <View spacer={true} />
             <Text
               bold={true}
