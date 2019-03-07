@@ -4,6 +4,11 @@
  * types that make the build pass.
  */
 
+// TODO: Add proper Props typing
+declare module "native-base" {
+  export class DefaultTabBar extends React.Component<any, any> {}
+}
+
 declare module "native-base-shoutem-theme" {
   export interface IConnectStyleOptions {
     withRef?: boolean;

@@ -1,6 +1,15 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
-import { Icon, Input, Item, Tab, Tabs, Text, View } from "native-base";
+import {
+  DefaultTabBar,
+  Icon,
+  Input,
+  Item,
+  Tab,
+  Tabs,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -38,20 +47,46 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  tabContainer: {
-    elevation: 0,
-    borderBottomWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-  tabBarUnderline: {
-    backgroundColor: customVariables.brandPrimary
+  tabContainerStyle: {
+    elevation: 0
   },
   noSearchBarText: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  shadowContainer: {
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: customVariables.contentPadding
+  },
+  shadow: {
+    width: "100%",
+    height: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: customVariables.brandGray,
+    // iOS shadow
+    shadowColor: customVariables.footerShadowColor,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1,
+    // Android shadow
+    elevation: 5
   }
 });
+
+const renderTabBar = (props: any) => {
+  return (
+    <React.Fragment>
+      <DefaultTabBar {...props} />
+      <View style={styles.shadowContainer}>
+        <View style={styles.shadow} />
+      </View>
+    </React.Fragment>
+  );
+};
 
 /**
  * A screen that contains all the Tabs related to messages.
@@ -113,11 +148,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
     return (
       <Tabs
-        tabContainerStyle={styles.tabContainer}
-        tabBarUnderlineStyle={styles.tabBarUnderline}
-        tabBarActiveTextColor={"red"}
-        tabBarInactiveTextColor={"red"}
-        tabBarBackgroundColor={"transparent"}
+        renderTabBar={renderTabBar}
+        tabContainerStyle={styles.tabContainerStyle}
       >
         <Tab heading={I18n.t("messages.tab.inbox")}>
           <MessagesInbox
