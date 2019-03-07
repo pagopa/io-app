@@ -62,8 +62,6 @@ const styles = StyleSheet.create({
   shadow: {
     width: "100%",
     height: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandGray,
     // iOS shadow
     shadowColor: customVariables.footerShadowColor,
     shadowOffset: {
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     // Android shadow
-    elevation: 1
+    elevation: 5
   }
 });
 
