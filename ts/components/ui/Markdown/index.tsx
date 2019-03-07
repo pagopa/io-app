@@ -13,6 +13,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import * as RNFS from "react-native-fs";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 
@@ -25,6 +26,8 @@ import {
   NOTIFY_INTERNAL_LINK_CLICK_SCRIPT
 } from "./script";
 import { WebViewMessage } from "./types";
+
+console.log(RNFS.MainBundlePath);
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
