@@ -222,7 +222,9 @@ const customVariables = Object.assign(materialVariables, {
   borderRadiusBase: 4,
 
   // Tabs
-  tabDefaultBg: "#0066CC"
+  tabDefaultBg: "#FFFFFF",
+  topTabBarTextColor: "#5C6F82",
+  topTabBarActiveTextColor: "#0066CC"
 });
 
 export default customVariables;
