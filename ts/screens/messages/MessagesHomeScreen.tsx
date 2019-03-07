@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
   shadow: {
     width: "100%",
     height: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: customVariables.brandGray,
     // iOS shadow
     shadowColor: customVariables.footerShadowColor,
     shadowOffset: {
