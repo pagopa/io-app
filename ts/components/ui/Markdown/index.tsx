@@ -6,6 +6,7 @@ import React from "react";
 import {
   InteractionManager,
   LayoutAnimation,
+  Platform,
   ScrollView,
   StyleProp,
   UIManager,
@@ -29,13 +30,18 @@ const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 `;
 
+const IO_ICON_FONT_PATH =
+  Platform.OS === "android"
+    ? "file:///android_asset/fonts/io-icon-font.ttf"
+    : "./assets/fonts/io-icon-font/io-icon-font.ttf";
+
 const GLOBAL_CSS = `
 <style>
 @font-face {
   font-family: 'io-icon-font';
   font-weight: normal;
   font-style: normal;
-  src: url('file:///android_asset/fonts/io-icon-font.ttf');
+  src: url('${IO_ICON_FONT_PATH}');
 }
 
 body {
