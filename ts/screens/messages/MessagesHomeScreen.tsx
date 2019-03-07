@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   shadowContainer: {
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: customVariables.contentPadding
   },
   shadow: {
@@ -66,11 +67,11 @@ const styles = StyleSheet.create({
     // iOS shadow
     shadowColor: customVariables.footerShadowColor,
     shadowOffset: {
-      width: customVariables.footerShadowOffsetWidth,
-      height: customVariables.footerShadowOffsetHeight
+      width: 0,
+      height: 2
     },
-    shadowOpacity: customVariables.footerShadowOpacity,
-    shadowRadius: customVariables.footerShadowRadius,
+    shadowRadius: 5,
+    shadowOpacity: 1,
     // Android shadow
     elevation: 1
   }
@@ -79,12 +80,7 @@ const styles = StyleSheet.create({
 const renderTabBar = (props: any) => {
   return (
     <React.Fragment>
-      <DefaultTabBar
-        {...props}
-        tabsContainerStyle={{
-          backgroundColor: "yello"
-        }}
-      />
+      <DefaultTabBar {...props} />
       <View style={styles.shadowContainer}>
         <View style={styles.shadow} />
       </View>
@@ -128,8 +124,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <IconFont name="io-search" onPress={this.onSearchEnable} />
-          )
+              <IconFont name="io-search" onPress={this.onSearchEnable} />
+            )
         }
       >
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
@@ -209,15 +205,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           _.length < 3 ? (
             this.renderInvalidSearchBarText()
           ) : (
-            <MessagesSearch
-              messagesState={lexicallyOrderedMessagesState}
-              servicesById={servicesById}
-              paymentByRptId={paymentsByRptId}
-              onRefresh={refreshMessages}
-              navigateToMessageDetail={navigateToMessageDetail}
-              searchText={_}
-            />
-          )
+              <MessagesSearch
+                messagesState={lexicallyOrderedMessagesState}
+                servicesById={servicesById}
+                paymentByRptId={paymentsByRptId}
+                onRefresh={refreshMessages}
+                navigateToMessageDetail={navigateToMessageDetail}
+                searchText={_}
+              />
+            )
       )
       .getOrElse(this.renderInvalidSearchBarText());
   };
