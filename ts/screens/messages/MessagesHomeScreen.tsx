@@ -122,8 +122,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-              <IconFont name="io-search" onPress={this.onSearchEnable} />
-            )
+            <IconFont name="io-search" onPress={this.onSearchEnable} />
+          )
         }
       >
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
@@ -203,15 +203,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           _.length < 3 ? (
             this.renderInvalidSearchBarText()
           ) : (
-              <MessagesSearch
-                messagesState={lexicallyOrderedMessagesState}
-                servicesById={servicesById}
-                paymentByRptId={paymentsByRptId}
-                onRefresh={refreshMessages}
-                navigateToMessageDetail={navigateToMessageDetail}
-                searchText={_}
-              />
-            )
+            <MessagesSearch
+              messagesState={lexicallyOrderedMessagesState}
+              servicesById={servicesById}
+              paymentByRptId={paymentsByRptId}
+              onRefresh={refreshMessages}
+              navigateToMessageDetail={navigateToMessageDetail}
+              searchText={_}
+            />
+          )
       )
       .getOrElse(this.renderInvalidSearchBarText());
   };
