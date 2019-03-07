@@ -21,7 +21,10 @@ type NavigationParams = {
   biometryType: BiometrySimpleType;
 };
 
-type BiometryPrintableSimpleType = "FINGERPRINT" | "TOUCH_ID" | "FACE_ID";
+export type BiometryPrintableSimpleType =
+  | "FINGERPRINT"
+  | "TOUCH_ID"
+  | "FACE_ID";
 
 type OwnProps = NavigationScreenProps<NavigationParams>;
 

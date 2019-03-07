@@ -10,8 +10,7 @@ import {
 } from "react-native";
 import TouchID, {
   AuthenticateConfig,
-  AuthenticationError,
-  IsSupportedConfig
+  AuthenticationError
 } from "react-native-touch-id";
 import { connect } from "react-redux";
 
@@ -32,6 +31,13 @@ import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 
+import {
+  BiometrySimpleType,
+  getFingerprintSettings
+} from "./sagas/startup/checkAcknowledgedFingerprintSaga";
+
+import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 /**
@@ -47,11 +53,7 @@ type IdentificationByBiometryState = "unstarted" | "failure";
 type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
-  biometryType?: string;
-};
-
-type updateBiometrySupportPropType = {
-  updateBiometrySupportProp: boolean;
+  biometryType?: BiometrySimpleType;
 };
 
 const contextualHelp = {
@@ -98,10 +100,6 @@ const renderIdentificationByBiometryState = (
 };
 
 const onRequestCloseHandler = () => undefined;
-
-const isSupportedConfig: IsSupportedConfig = {
-  unifiedErrors: true
-};
 
 const authenticateConfig: AuthenticateConfig = {
   unifiedErrors: true
@@ -154,33 +152,36 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const { isFingerprintEnabled } = this.props;
 
     if (isFingerprintEnabled) {
-      TouchID.isSupported(isSupportedConfig)
-        .then(
-          biometryType =>
-            biometryType === true ? "Fingerprint" : biometryType,
-          _ => undefined
-        )
-        .then(biometryType => this.setState({ biometryType }), _ => 0);
+      getFingerprintSettings().then(
+        biometryType =>
+          this.setState({
+            biometryType:
+              biometryType !== "NOT_ENROLLED" && biometryType !== "UNAVAILABLE"
+                ? biometryType
+                : undefined
+          }),
+        _ => 0
+      );
     }
   }
 
   /**
-   * Check if fingerprint login can be prompted by looking at two parameters in
+   * Check if fingerprint login can be prompted by looking at three parameters in
    * serie:
-   * 1. `isFingerprintEnabled` coming from global state persisted preferences
-   * 2. The current status of biometry recognition support provided by querying
+   * 1. The current state of identification process
+   * 2. `isFingerprintEnabled` whose value comes from app preferences
+   * 3. Current status of biometry recognition system, provided by querying
    * the library in charge.
    *
-   * It gets `updateBiometrySupportProp` as a boolean because it can be run
-   * from several contexts. When getting called while the app is returning
-   * foreground from background, biometry support has to be updated if system
-   * preferences changes happened.
-   *
-   * @param updateBiometrySupportProp
+   * @param {boolean} updateBiometrySupportProp – This flag is needed because
+   * this funciton can be run from several contexts: when it is called while
+   * the app is returning foreground from background, biometry support status
+   * has to be updated in case of system preferences changes.
    */
-  private maybeTriggerFingerprintRequest(
-    updateBiometrySupportProp?: updateBiometrySupportPropType
-  ) {
+  private maybeTriggerFingerprintRequest(updateBiometrySupportProp?: {
+    updateBiometrySupportProp: boolean;
+  }) {
+    // check if the state of identification process is correct
     const { identificationState, isFingerprintEnabled } = this.props;
 
     if (identificationState.kind !== "started") {
@@ -189,16 +190,17 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     // Check for global properties to know if biometric recognition is enabled
     if (isFingerprintEnabled) {
-      TouchID.isSupported(isSupportedConfig)
-        .then(
-          biometryType =>
-            biometryType === true ? "Fingerprint" : biometryType,
-          _ => undefined
-        )
+      getFingerprintSettings()
         .then(
           biometryType => {
             if (updateBiometrySupportProp) {
-              this.setState({ biometryType });
+              this.setState({
+                biometryType:
+                  biometryType !== "NOT_ENROLLED" &&
+                  biometryType !== "UNAVAILABLE"
+                    ? biometryType
+                    : undefined
+              });
             }
           },
           _ => undefined
@@ -248,6 +250,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const { dispatch } = this.props;
     dispatch(identificationFailure());
   };
+
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(
+    biometryPrintableSimpleType: BiometryPrintableSimpleType
+  ): string {
+    switch (biometryPrintableSimpleType) {
+      case "FINGERPRINT":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
+      case "FACE_ID":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
+      case "TOUCH_ID":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
+    }
+  }
 
   public render() {
     const { identificationState, isFingerprintEnabled, dispatch } = this.props;
@@ -309,7 +328,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                       )
                     }
                   >
-                    <Text>{biometryType}</Text>
+                    <Text>
+                      {this.renderBiometryType(
+                        biometryType as BiometryPrintableSimpleType
+                      )}
+                    </Text>
                   </Button>
                   <View spacer={true} />
                 </React.Fragment>
