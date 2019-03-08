@@ -1,13 +1,6 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  AppState,
-  AppStateStatus,
-  Modal,
-  StatusBar,
-  StyleSheet
-} from "react-native";
+import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, {
   AuthenticateConfig,
   AuthenticationError
@@ -31,10 +24,7 @@ import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 
-import {
-  BiometrySimpleType,
-  getFingerprintSettings
-} from "./sagas/startup/checkAcknowledgedFingerprintSaga";
+import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
@@ -53,7 +43,7 @@ type IdentificationByBiometryState = "unstarted" | "failure";
 type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
-  biometryType?: BiometrySimpleType;
+  biometryType?: BiometryPrintableSimpleType;
 };
 
 const contextualHelp = {
@@ -137,17 +127,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  public componentDidMount() {
-    AppState.addEventListener("change", this.appStateChangeListener.bind(this));
-  }
-
-  public componentDidUnMount() {
-    AppState.removeEventListener(
-      "change",
-      this.appStateChangeListener.bind(this)
-    );
-  }
-
   public componentWillMount() {
     const { isFingerprintEnabled } = this.props;
 
@@ -219,15 +198,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   }
 
-  private appStateChangeListener(newState: AppStateStatus) {
-    if (newState === "active") {
-      // updating biometrytype prop
-      this.maybeTriggerFingerprintRequest({ updateBiometrySupportProp: true });
-    }
-  }
-
   public componentDidUpdate() {
-    this.maybeTriggerFingerprintRequest();
+    // When app becomes active from background the state of TouchID support
+    // must be updated, because it might be switched off.
+    this.maybeTriggerFingerprintRequest({
+      updateBiometrySupportProp: this.props.appState === "active"
+    });
   }
 
   private onIdentificationSuccessHandler = () => {
@@ -328,11 +304,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                       )
                     }
                   >
-                    <Text>
-                      {this.renderBiometryType(
-                        biometryType as BiometryPrintableSimpleType
-                      )}
-                    </Text>
+                    <Text>{this.renderBiometryType(biometryType)}</Text>
                   </Button>
                   <View spacer={true} />
                 </React.Fragment>
@@ -438,7 +410,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   identificationState: state.identification,
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
+  appState: state.appState.appState
 });
 
 export default connect(mapStateToProps)(IdentificationModal);
