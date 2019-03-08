@@ -6,16 +6,19 @@ import React from "react";
 import {
   InteractionManager,
   LayoutAnimation,
+  Platform,
   ScrollView,
   StyleProp,
   UIManager,
   View,
   ViewStyle
 } from "react-native";
+import * as RNFS from "react-native-fs";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 
 import { ReduxProps } from "../../../store/actions/types";
+import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
 import { handleInternalLink } from "./handlers/internalLink";
 import {
@@ -28,12 +31,50 @@ const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 `;
 
+const IO_ICON_FONT_PATH =
+  Platform.OS === "android"
+    ? "file:///android_asset/fonts/io-icon-font.ttf"
+    : `${RNFS.MainBundlePath}/io-icon-font.ttf`;
+
 const GLOBAL_CSS = `
 <style>
+@font-face {
+  font-family: 'io-icon-font';
+  font-weight: normal;
+  font-style: normal;
+  src: url('${IO_ICON_FONT_PATH}');
+}
+
 body {
   margin: 0;
   padding: 0;
+  color: ${customVariables.textColor};
   font-size: 16px;
+}
+
+div.custom-block.io-demo-block {
+  background-color: #c1f4f2;
+  border-radius: 8px;
+  margin-bottom: 50px;
+  padding: 10px;
+}
+
+div.custom-block.io-demo-block .custom-block-body {
+  position: relative;
+  padding-right: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+}
+
+div.custom-block.io-demo-block .custom-block-body::after {
+  position: absolute;
+  right: 0;
+  font-family: 'io-icon-font';
+  font-size: ${customVariables.iconSize6}px;
+  font-weight: normal;
+  content: "\\50";
 }
 </style>
 `;

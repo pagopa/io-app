@@ -53,6 +53,8 @@ target 'ItaliaApp' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
 end
 
 # Fix a open bug in react-native-config

@@ -28,7 +28,6 @@
     <ImageView
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:src="@mipmap/splash_logo_agid"
         android:layout_gravity="center"
         android:layout_weight="1" />
     
