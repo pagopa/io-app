@@ -477,6 +477,8 @@ messages:
   noContent: Contenuto non disponibile
   search:
     invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+  archive:
+    emptyMessage: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto

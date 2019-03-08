@@ -467,6 +467,8 @@ messages:
   noContent: Content not available
   search:
     invalidSearchBarText: Enter at least three characters in the search bar.
+  archive:
+    emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will still be retained and will be available in search results.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content

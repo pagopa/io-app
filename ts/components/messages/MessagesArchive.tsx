@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
+import customVariables from "../../theme/variables";
 import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
@@ -15,6 +16,13 @@ import MessageListComponent from "./MessageListComponent";
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
+  },
+
+  emptyMessageWrapper: {
+    flex: 1,
+    padding: customVariables.contentPadding,
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   buttonBar: {
@@ -54,6 +62,12 @@ type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
 };
+
+const ListEmptyComponent = (
+  <View style={styles.emptyMessageWrapper}>
+    <Text>{I18n.t("messages.archive.emptyMessage")}</Text>
+  </View>
+);
 
 /**
  * Filter only the messages that are archived.
@@ -133,6 +147,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
           onLongPressItem={this.handleOnLongPressItem}
           refreshing={isLoading}
           selectedMessageIds={selectedMessageIds}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </View>
     );
