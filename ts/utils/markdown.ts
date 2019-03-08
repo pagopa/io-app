@@ -5,7 +5,7 @@ import remarkHtml from "remark-html";
 // Configuration fo remark-custom-blocks
 const REMARK_CUSTOM_BLOCKS_CONFIG = {
   "IO-DEMO": {
-    classes: "io-block-demo"
+    classes: "io-demo-block"
   }
 };
 
