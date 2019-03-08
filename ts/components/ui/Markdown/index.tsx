@@ -183,7 +183,6 @@ class Markdown extends React.PureComponent<Props, State> {
               style={webViewStyle}
               originWhitelist={["*"]}
               source={{ html, baseUrl: "" }}
-              allowFileAccess={true}
               javaScriptEnabled={true}
               injectedJavaScript={INJECTED_JAVASCRIPT}
               onLoadEnd={this.handleLoadEnd}
