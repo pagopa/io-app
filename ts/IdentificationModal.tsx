@@ -3,8 +3,7 @@ import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, {
   AuthenticateConfig,
-  AuthenticationError,
-  IsSupportedConfig
+  AuthenticationError
 } from "react-native-touch-id";
 import { connect } from "react-redux";
 
@@ -25,6 +24,10 @@ import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 
+import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
+
+import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 /**
@@ -40,7 +43,7 @@ type IdentificationByBiometryState = "unstarted" | "failure";
 type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
-  biometryType?: string;
+  biometryType?: BiometryPrintableSimpleType;
 };
 
 const contextualHelp = {
@@ -88,10 +91,6 @@ const renderIdentificationByBiometryState = (
 
 const onRequestCloseHandler = () => undefined;
 
-const isSupportedConfig: IsSupportedConfig = {
-  unifiedErrors: true
-};
-
 const authenticateConfig: AuthenticateConfig = {
   unifiedErrors: true
 };
@@ -129,16 +128,124 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   public componentWillMount() {
-    TouchID.isSupported(isSupportedConfig)
-      .then(
-        biometryType => (biometryType === true ? "Fingerprint" : biometryType),
-        _ => undefined
-      )
-      .then(biometryType => this.setState({ biometryType }), _ => 0);
+    const { isFingerprintEnabled } = this.props;
+
+    if (isFingerprintEnabled) {
+      getFingerprintSettings().then(
+        biometryType =>
+          this.setState({
+            biometryType:
+              biometryType !== "NOT_ENROLLED" && biometryType !== "UNAVAILABLE"
+                ? biometryType
+                : undefined
+          }),
+        _ => 0
+      );
+    }
+  }
+
+  /**
+   * Check if fingerprint login can be prompted by looking at three parameters in
+   * serie:
+   * 1. The current state of identification process
+   * 2. `isFingerprintEnabled` whose value comes from app preferences
+   * 3. Current status of biometry recognition system, provided by querying
+   * the library in charge.
+   *
+   * @param {boolean} updateBiometrySupportProp – This flag is needed because
+   * this funciton can be run from several contexts: when it is called while
+   * the app is returning foreground from background, biometry support status
+   * has to be updated in case of system preferences changes.
+   */
+  private maybeTriggerFingerprintRequest(updateBiometrySupportProp?: {
+    updateBiometrySupportProp: boolean;
+  }) {
+    // check if the state of identification process is correct
+    const { identificationState, isFingerprintEnabled } = this.props;
+
+    if (identificationState.kind !== "started") {
+      return;
+    }
+
+    // Check for global properties to know if biometric recognition is enabled
+    if (isFingerprintEnabled) {
+      getFingerprintSettings()
+        .then(
+          biometryType => {
+            if (updateBiometrySupportProp) {
+              this.setState({
+                biometryType:
+                  biometryType !== "NOT_ENROLLED" &&
+                  biometryType !== "UNAVAILABLE"
+                    ? biometryType
+                    : undefined
+              });
+            }
+          },
+          _ => undefined
+        )
+        .then(
+          () => {
+            if (this.state.biometryType) {
+              this.onFingerprintRequest(
+                this.onIdentificationSuccessHandler,
+                this.onIdentificationFailureHandler
+              );
+            }
+          },
+          _ => undefined
+        );
+    }
+  }
+
+  public componentDidUpdate() {
+    // When app becomes active from background the state of TouchID support
+    // must be updated, because it might be switched off.
+    this.maybeTriggerFingerprintRequest({
+      updateBiometrySupportProp: this.props.appState === "active"
+    });
+  }
+
+  private onIdentificationSuccessHandler = () => {
+    const { identificationState, dispatch } = this.props;
+
+    if (identificationState.kind !== "started") {
+      return;
+    }
+
+    // The identification state is started we need to show the modal
+    const { identificationSuccessData } = identificationState;
+
+    if (identificationSuccessData) {
+      identificationSuccessData.onSuccess();
+    }
+    dispatch(identificationSuccess());
+  };
+
+  private onIdentificationFailureHandler = () => {
+    const { dispatch } = this.props;
+    dispatch(identificationFailure());
+  };
+
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(
+    biometryPrintableSimpleType: BiometryPrintableSimpleType
+  ): string {
+    switch (biometryPrintableSimpleType) {
+      case "FINGERPRINT":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
+      case "FACE_ID":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
+      case "TOUCH_ID":
+        return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
+    }
   }
 
   public render() {
-    const { identificationState, dispatch } = this.props;
+    const { identificationState, isFingerprintEnabled, dispatch } = this.props;
 
     if (identificationState.kind !== "started") {
       return null;
@@ -148,8 +255,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const {
       pin,
       identificationGenericData,
-      identificationCancelData,
-      identificationSuccessData
+      identificationCancelData
     } = identificationState;
 
     const {
@@ -173,17 +279,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       dispatch(identificationCancel());
     };
 
-    const onIdentificationSuccessHandler = () => {
-      if (identificationSuccessData) {
-        identificationSuccessData.onSuccess();
-      }
-      dispatch(identificationSuccess());
-    };
-
-    const onIdentificationFailureHandler = () => {
-      dispatch(identificationFailure());
-    };
-
     const onPinResetHandler = () => {
       dispatch(identificationPinReset());
     };
@@ -196,23 +291,24 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
-            {biometryType && (
-              <React.Fragment>
-                <Button
-                  block={true}
-                  primary={true}
-                  onPress={() =>
-                    this.onFingerprintRequest(
-                      onIdentificationSuccessHandler,
-                      onIdentificationFailureHandler
-                    )
-                  }
-                >
-                  <Text>{biometryType}</Text>
-                </Button>
-                <View spacer={true} />
-              </React.Fragment>
-            )}
+            {isFingerprintEnabled &&
+              biometryType && (
+                <React.Fragment>
+                  <Button
+                    block={true}
+                    primary={true}
+                    onPress={() =>
+                      this.onFingerprintRequest(
+                        this.onIdentificationSuccessHandler,
+                        this.onIdentificationFailureHandler
+                      )
+                    }
+                  >
+                    <Text>{this.renderBiometryType(biometryType)}</Text>
+                  </Button>
+                  <View spacer={true} />
+                </React.Fragment>
+              )}
             <View spacer={true} />
             <Text
               bold={true}
@@ -230,8 +326,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                 this.onPinFullfill(
                   _,
                   __,
-                  onIdentificationSuccessHandler,
-                  onIdentificationFailureHandler
+                  this.onIdentificationSuccessHandler,
+                  this.onIdentificationFailureHandler
                 )
               }
               clearOnInvalid={true}
@@ -313,7 +409,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  identificationState: state.identification
+  identificationState: state.identification,
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
+  appState: state.appState.appState
 });
 
 export default connect(mapStateToProps)(IdentificationModal);
