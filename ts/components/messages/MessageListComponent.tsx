@@ -17,10 +17,9 @@ type OwnProps = {
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
   selectedMessageIds: Option<Set<string>>;
-  ListEmptyComponent?:
-    | React.ComponentType<any>
-    | React.ReactElement<any>
-    | null;
+  ListEmptyComponent?: React.ComponentProps<
+    typeof FlatList
+  >["ListEmptyComponent"];
 };
 
 type Props = OwnProps;
