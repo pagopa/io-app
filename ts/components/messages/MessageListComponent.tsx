@@ -17,6 +17,9 @@ type OwnProps = {
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
   selectedMessageIds: Option<Set<string>>;
+  ListEmptyComponent?: React.ComponentProps<
+    typeof FlatList
+  >["ListEmptyComponent"];
 };
 
 type Props = OwnProps;
@@ -50,7 +53,8 @@ class MessageListComponent extends React.Component<Props> {
       servicesById,
       refreshing,
       onRefresh,
-      paymentByRptId
+      paymentByRptId,
+      ListEmptyComponent
     } = this.props;
 
     const refreshControl = (
@@ -65,6 +69,7 @@ class MessageListComponent extends React.Component<Props> {
         keyExtractor={keyExtractor}
         renderItem={this.renderItem}
         refreshControl={refreshControl}
+        ListEmptyComponent={ListEmptyComponent}
       />
     );
   }
