@@ -47,6 +47,16 @@ export default (): Theme => {
       }
     },
 
+    ".bordered": {
+      ".disabled": {
+        "NativeBase.Icon": {
+          color: variables.btnDisabledBg
+        },
+
+        backgroundColor: variables.colorWhite
+      }
+    },
+
     ".white": { backgroundColor: "#FFFFFF" },
     ".cancel": {
       backgroundColor: variables.brandDarkGray,

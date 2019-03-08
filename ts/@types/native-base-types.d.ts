@@ -42,6 +42,7 @@ declare module "native-base/src/theme/components" {
 
 declare module "native-base/src/theme/variables/material" {
   export default {
+    btnDisabledBg: number,
     borderWidth: number,
     inputBorderColor: string,
 

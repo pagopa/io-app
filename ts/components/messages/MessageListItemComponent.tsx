@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
 
   selectionCheckbox: {
     left: 0
+  },
+
+  itemSelected: {
+    backgroundColor: "#E7F3FF"
   }
 });
 
@@ -173,7 +177,12 @@ export class MessageListItemComponent extends React.Component<Props> {
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
       >
-        <View style={styles.itemContainer}>
+        <View
+          style={[
+            styles.itemContainer,
+            isSelected ? styles.itemSelected : undefined
+          ]}
+        >
           <Grid style={styles.grid}>
             <Row style={styles.serviceRow}>
               {!messageState.isRead && (
