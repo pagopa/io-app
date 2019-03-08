@@ -25,12 +25,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
-    backgroundColor: "#ddd",
+    backgroundColor: "#fefefe",
     padding: 10,
-    opacity: 0.75
+    opacity: 1
   },
   buttonBarButton: {
     opacity: 1
+  },
+  buttonBarPrimaryButton: {
+    flex: 3,
+    marginLeft: 10
+  },
+  buttonBarSecondaryButton: {
+    flex: 1
   }
 });
 
@@ -117,13 +124,19 @@ class MessagesInbox extends React.PureComponent<Props, State> {
         {selectedMessageIds.isSome() && (
           <View style={styles.buttonBar}>
             <Button
-              style={styles.buttonBarButton}
+              block={true}
+              bordered={true}
+              style={[styles.buttonBarButton, styles.buttonBarSecondaryButton]}
               disabled={selectedMessageIds.value.size === 0}
               onPress={this.archiveMessages}
             >
               <Text>{I18n.t("messages.cta.archive")}</Text>
             </Button>
-            <Button onPress={resetSelection} style={styles.buttonBarButton}>
+            <Button
+              block={true}
+              onPress={resetSelection}
+              style={[styles.buttonBarButton, styles.buttonBarPrimaryButton]}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
           </View>
