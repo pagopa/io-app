@@ -27,8 +27,6 @@ import {
 } from "./script";
 import { WebViewMessage } from "./types";
 
-console.log(RNFS.MainBundlePath);
-
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 `;
@@ -36,7 +34,7 @@ ${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
 const IO_ICON_FONT_PATH =
   Platform.OS === "android"
     ? "file:///android_asset/fonts/io-icon-font.ttf"
-    : "./assets/fonts/io-icon-font/io-icon-font.ttf";
+    : `${RNFS.MainBundlePath}/io-icon-font.ttf`;
 
 const GLOBAL_CSS = `
 <style>
