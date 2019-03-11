@@ -504,7 +504,7 @@ preferences:
     digitalDomicile: Digital domicile
     preferred_calendar:
       title: Default Calendar
-      no: Not selected
+      not_selected: Not selected
   empty:
     default: No preference set
   preferencesHelp: !include preferences_home_help.md

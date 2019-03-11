@@ -516,7 +516,7 @@ preferences:
     digitalDomicile: Domicilio digitale
     preferred_calendar:
       title: Calendario preferito
-      none: Non Selezionato
+      not_selected: Non Selezionato
   empty:
     default: Nessuna preferenza impostata
   preferencesHelp: !include preferences_home_help.md

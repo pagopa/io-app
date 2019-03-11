@@ -172,7 +172,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                     this.props.preferredCalendar
                       ? this.props.preferredCalendar.title
                       : I18n.t(
-                          "preferences.list.preferred_calendar.none"
+                          "preferences.list.preferred_calendar.not_selected"
                         )
                   }
                 />
