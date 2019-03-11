@@ -37,11 +37,11 @@ const styles = StyleSheet.create({
     padding: 10
   },
   buttonBarPrimaryButton: {
-    flex: 3,
+    flex: 8,
     marginLeft: 10
   },
   buttonBarSecondaryButton: {
-    flex: 1
+    flex: 4
   }
 });
 
