@@ -22,7 +22,6 @@ import ROUTES from "../../navigation/routes";
 
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
-import { stat } from 'fs';
 import { checkPermission } from '../../utils/calendar';
 
 const unavailableAlert = () =>
@@ -39,12 +38,12 @@ type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 type State = {
   isFingerprintAvailable: boolean | undefined;
-  calendarHasGrant: boolean | undefined;
+  calendarHasPermission: boolean | undefined;
 };
 
 const INITIAL_STATE: State = {
   isFingerprintAvailable: undefined,
-  calendarHasGrant: undefined
+  calendarHasPermission: undefined
 };
 
 /**
@@ -84,7 +83,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
     checkPermission().then(hasPermission =>
       this.setState({
-        calendarHasGrant: hasPermission
+        calendarHasPermission: hasPermission
       })
     );
   }
@@ -96,7 +95,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     };
 
     const { potProfile } = this.props;
-    const { calendarHasGrant, isFingerprintAvailable } = this.state;
+    const { calendarHasPermission, isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
       .map(_ => ({
@@ -156,14 +155,13 @@ class PreferencesScreen extends React.Component<Props, State> {
                 />
               </ListItem>
             )}
-            {calendarHasGrant && (
+            {calendarHasPermission && (
               <ListItem
-                // onPress={() =>
-                //   this.props.navigation.navigate(
-                //     ROUTES.PREFERENCES_PREFERRED_CALENDAR
-                //   )
-                // }
-                onPress={unavailableAlert}
+                onPress={() =>
+                  this.props.navigation.navigate(
+                    ROUTES.PREFERENCES_DEFAULT_CALENDAR
+                  )
+                }
               >
                 <PreferenceItem
                   kind="action"
