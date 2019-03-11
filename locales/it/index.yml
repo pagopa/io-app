@@ -473,6 +473,7 @@ messages:
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
+    helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   search:

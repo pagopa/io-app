@@ -13,6 +13,8 @@ import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import { GlobalState } from '../store/reducers/types';
+import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
   calendarItemWrapper: {
@@ -53,6 +55,7 @@ type Props = {
   onCancel: () => void;
   onCalendarSelected: (calendar: Calendar) => void;
   header?: React.ReactNode;
+  defaultCalendar?: Calendar | undefined;
 };
 
 type State = {
@@ -113,6 +116,11 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                   onPress={() => this.props.onCalendarSelected(calendar)}
                 />
               ))}
+              {!this.props.defaultCalendar && (
+                <Text>{
+                  I18n.t("messages.cta.helper")
+                }</Text>
+              )}
             </React.Fragment>
           )}
         </Content>
@@ -155,4 +163,8 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
   };
 }
 
-export default SelectCalendarModal;
+const mapStateToProps = (state: GlobalState) => ({
+  preferredCalendar: state.persistedPreferences.preferredCalendar
+});
+
+export default connect(mapStateToProps)(SelectCalendarModal);

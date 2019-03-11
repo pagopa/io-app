@@ -463,6 +463,7 @@ messages:
     reminderRemoveFailure: "Error removing reminder, please retry"
     errors:
       fetchCalendars: Error fetching calendars
+    helper: "IO will remember your choice from this moment on: you can change it from app preference pane."
   unknownSender: Unknown sender
   noContent: Content not available
   search:
