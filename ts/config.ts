@@ -72,6 +72,9 @@ export const totMessageFetchWorkers = t.Integer.decode(
   Config.TOT_MESSAGE_FETCH_WORKERS
 ).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
 
+export const displayVersionInfoOverlay =
+  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
+
 export function isDevEnvironment() {
   return environment === "DEV";
 }

@@ -29,6 +29,13 @@ export const initialiseInstabug = () => {
   );
 };
 
+export const setInstabugUserAttribute = (
+  attributeKey: string,
+  attributeValue: string
+) => {
+  Instabug.setUserAttribute(attributeKey, attributeValue);
+};
+
 export const setInstabugProfileAttributes = (
   profile: UserProfile,
   maybeIdp: Option<IdentityProvider>
@@ -38,9 +45,9 @@ export const setInstabugProfileAttributes = (
     `${profile.name} ${profile.family_name}`
   );
 
-  Instabug.setUserAttribute("fiscalcode", profile.fiscal_code);
+  setInstabugUserAttribute("fiscalcode", profile.fiscal_code);
 
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
-    Instabug.setUserAttribute("identityProvider", idp.entityID)
+    setInstabugUserAttribute("identityProvider", idp.entityID)
   );
 };

@@ -11,7 +11,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   app:
-    version: Version
+    version: App Version
   buttons:
     delete: Delete
     cancel: Cancel
@@ -542,3 +542,5 @@ identification:
   resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
   biometric:
     failure: Identification failed
+backend:
+  version: Backend Version

@@ -13,6 +13,7 @@ import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
+import { displayVersionInfoOverlay } from "./config";
 import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
 import {
@@ -116,7 +117,7 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
-        {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
+        {displayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
         <IdentificationModal />
         <LightModalRoot />

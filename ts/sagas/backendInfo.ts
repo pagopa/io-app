@@ -4,6 +4,7 @@ import { BasicResponseType } from "italia-ts-commons/lib/requests";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
+import { setInstabugUserAttribute } from "../boot/configureInstabug";
 import { apiUrlPrefix } from "../config";
 import {
   backendInfoLoadFailure,
@@ -36,6 +37,10 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
 
     if (backendInfoResponse && backendInfoResponse.status === 200) {
       yield put(backendInfoLoadSuccess(backendInfoResponse.value));
+      setInstabugUserAttribute(
+        "backendVersion",
+        backendInfoResponse.value.version
+      );
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {
