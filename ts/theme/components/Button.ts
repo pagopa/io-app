@@ -9,6 +9,7 @@ declare module "native-base" {
     interface Button extends TouchableOpacityProperties, BsStyle {
       white?: boolean;
       cancel?: boolean;
+      xsmall?: boolean;
     }
   }
 }
@@ -31,6 +32,11 @@ export default (): Theme => {
         display: "flex",
         justifyContent: "flex-start"
       }
+    },
+
+    ".xsmall": {
+      height: variables.btnXSmallHeight,
+      "NativeBase.Text": { fontSize: variables.btnSmallFontSize }
     },
 
     ".small": {

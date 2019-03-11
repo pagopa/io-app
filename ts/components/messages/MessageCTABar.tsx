@@ -165,8 +165,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return (
       <View style={styles.reminderContainer}>
         <CalendarIconComponent
-          height="48"
-          width="48"
+          height="32"
+          width="32"
           month={formatDateAsMonth(dueDate)}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
@@ -176,6 +176,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <View style={styles.reminderButtonContainer}>
           <Button
             block={true}
+            xsmall={true}
             bordered={true}
             onPress={onPressHandler}
             disabled={disabled}
@@ -246,6 +247,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       <View style={styles.paymentContainer}>
         <Button
           block={true}
+          xsmall={true}
           onPress={onPaymentCTAPress}
           disabled={disabled || onPaymentCTAPress === undefined || isPaid}
         >
