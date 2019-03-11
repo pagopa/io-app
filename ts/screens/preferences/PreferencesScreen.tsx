@@ -22,8 +22,8 @@ import ROUTES from "../../navigation/routes";
 
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
-import { checkAndRequestPermission } from '../../utils/calendar';
 import { stat } from 'fs';
+import { checkPermission } from '../../utils/calendar';
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -82,7 +82,7 @@ class PreferencesScreen extends React.Component<Props, State> {
       _ => undefined
     );
 
-    checkAndRequestPermission().then(hasPermission =>
+    checkPermission().then(hasPermission =>
       this.setState({
         calendarHasGrant: hasPermission
       })
