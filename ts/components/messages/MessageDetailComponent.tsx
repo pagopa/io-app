@@ -38,10 +38,6 @@ const styles = StyleSheet.create({
     marginBottom: variables.contentPadding
   },
 
-  subjectText: {
-    lineHeight: 40
-  },
-
   ctaBarContainer: {
     backgroundColor: variables.contentAlternativeBackground,
     padding: variables.contentPadding,
@@ -85,7 +81,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
 
           {/* Subject */}
           <View style={styles.subjectContainer}>
-            <H1 style={styles.subjectText}>{message.content.subject}</H1>
+            <H1>{message.content.subject}</H1>
           </View>
 
           {/* RawInfo */}

@@ -64,7 +64,7 @@ const style = StyleSheet.create({
 
   feeText: {
     color: variables.brandDarkGray,
-    fontSize: variables.fontSize2
+    fontSize: variables.fontSizeSmall
   },
 
   flexStart: {

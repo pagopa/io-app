@@ -36,6 +36,11 @@ const TITILLIUM_WEB_FONT_PATH =
     ? "file:///android_asset/fonts/TitilliumWeb-Regular.ttf"
     : `${RNFS.MainBundlePath}/TitilliumWeb-Regular.ttf`;
 
+const TITILLIUM_WEB_BOLD_FONT_PATH =
+  Platform.OS === "android"
+    ? "file:///android_asset/fonts/TitilliumWeb-Bold.ttf"
+    : `${RNFS.MainBundlePath}/TitilliumWeb-Bold.ttf`;
+
 const IO_ICON_FONT_PATH =
   Platform.OS === "android"
     ? "file:///android_asset/fonts/io-icon-font.ttf"
@@ -48,6 +53,12 @@ const GLOBAL_CSS = `
   font-style: normal;
   font-weight: normal;
   src: url('${TITILLIUM_WEB_FONT_PATH}');
+}
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: bold;
+  src: url('${TITILLIUM_WEB_BOLD_FONT_PATH}');
 }
 
 @font-face {
@@ -75,14 +86,14 @@ a {
 
 div.custom-block.io-demo-block {
   background-color: #c1f4f2;
-  border-radius: 8px;
-  margin-bottom: 50px;
-  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 32px;
+  padding: 8px;
 }
 
 div.custom-block.io-demo-block .custom-block-body {
   position: relative;
-  padding-right: 50px;
+  padding-right: 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;

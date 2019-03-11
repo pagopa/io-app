@@ -37,12 +37,12 @@ export const WalletStyles = StyleSheet.create({
     color: variables.brandGray
   },
   payLayoutTitle: {
-    fontSize: variables.fontSize6,
+    fontSize: variables.fontSize4,
     color: variables.brandGray
   },
   payLayoutSubtitleLeft: {
     fontWeight: "bold",
-    fontSize: variables.fontSize4,
+    fontSize: variables.fontSize3,
     color: variables.brandGray
   },
   whyLink: {

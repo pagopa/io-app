@@ -15,25 +15,43 @@ body {
   lineHeight: ${customVariables.lineHeightBase}px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
 h1 {
-  font-size: ${customVariables.fontSize6}px;
-  line-height: 36px;
-  margin-bottom: ${customVariables.fontSizeBase * 0.75}px;
-  margin-top: ${customVariables.fontSizeBase * 2}px;
+  font-size: ${customVariables.fontSizeBase * 2.5}px;
+  line-height: ${customVariables.lineHeightBase * 2}px;
 }
 
 h2 {
-  font-size: ${customVariables.fontSize5}px;
-  line-height: 32px;
-  margin-bottom: ${customVariables.fontSizeBase * 0.5}px;
-  margin-top: ${customVariables.fontSizeBase * 1.75}px;
+  font-size: ${customVariables.fontSizeBase * 2}px;
+  line-height: ${customVariables.lineHeightBase * 1.6666}px;
 }
 
 h3 {
-  font-size: ${customVariables.fontSize4}px;
-  line-height: 24px;
-  margin-bottom: ${customVariables.fontSizeBase * 0.5}px;
-  margin-top: ${customVariables.fontSizeBase * 1.5}px;
+  font-size: ${customVariables.fontSizeBase * 1.75}px;
+  line-height: ${customVariables.lineHeightBase * 1.3333}px;
+}
+
+h4 {
+  font-size: ${customVariables.fontSizeBase * 1.5}px;
+  line-height: ${customVariables.lineHeightBase * 1.1666}px;
+}
+
+h5 {
+  font-size: ${customVariables.fontSizeBase * 1.25}px;
+  line-height: ${customVariables.lineHeightBase}px;
+}
+
+h6 {
+  font-size: ${customVariables.fontSizeBase}px;
+  line-height: ${customVariables.lineHeightBase}px;
+}
+
+img {
+  max-width: 100%;
 }
 `;
 
