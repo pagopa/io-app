@@ -41,6 +41,7 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
+import { preferredCalendarSaveSuccess } from '../../store/actions/persistedPreferences';
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -130,8 +131,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
     useShortLabel: boolean
   ) {
-    const { message, calendarEvent, showModal, disabled } = this.props;
-    const { isEventInCalendar } = this.state;
+    const { message, calendarEvent, showModal, disabled, preferredCalendar } = this.props;
+    const { isEventInCalendar} = this.state;
 
     // Create an action to add or remove the event
     const onPressHandler = () => {
@@ -142,6 +143,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             if (calendarEvent && isEventInCalendar) {
               // If the event is in the calendar remove it
               this.removeReminderFromCalendar(calendarEvent);
+            } else if (preferredCalendar) {
+              this.addReminderToCalendar(
+                message,
+                dueDate
+              )(preferredCalendar);
             } else {
               // The event need to be added
               // Show a modal to let the user select a calendar
@@ -165,8 +171,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return (
       <View style={styles.reminderContainer}>
         <CalendarIconComponent
-          height="32"
-          width="32"
+          height="48"
+          width="48"
           month={formatDateAsMonth(dueDate)}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
@@ -176,7 +182,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <View style={styles.reminderButtonContainer}>
           <Button
             block={true}
-            xsmall={true}
             bordered={true}
             onPress={onPressHandler}
             disabled={disabled}
@@ -247,7 +252,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       <View style={styles.paymentContainer}>
         <Button
           block={true}
-          xsmall={true}
           onPress={onPaymentCTAPress}
           disabled={disabled || onPaymentCTAPress === undefined || isPaid}
         >
@@ -327,7 +331,17 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const title = I18n.t("messages.cta.reminderTitle", {
       title: message.content.subject
     });
+    const { preferredCalendar } = this.props;
+
     this.props.hideModal();
+
+    if (!preferredCalendar)
+      this.props.dispatch(
+        preferredCalendarSaveSuccess({
+          preferredCalendar: calendar
+        })
+      );
+
     RNCalendarEvents.saveEvent(title, {
       title,
       calendarId: calendar.id,
@@ -378,7 +392,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
-  calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state)
+  calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state),
+  preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
 export default connect(mapStateToProps)(withLightModalContext(MessageCTABar));

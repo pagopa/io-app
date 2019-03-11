@@ -502,6 +502,9 @@ preferences:
     services_description: Enable/disable your services on IO
     language: Language
     digitalDomicile: Digital domicile
+    preferred_calendar:
+      title: Default Calendar
+      no: Not selected
   empty:
     default: No preference set
   preferencesHelp: !include preferences_home_help.md

@@ -514,6 +514,9 @@ preferences:
     services_description: Attiva/disattiva i tuoi servizi di IO
     language: Lingua
     digitalDomicile: Domicilio digitale
+    preferred_calendar:
+      title: Calendario preferito
+      none: Non Selezionato
   empty:
     default: Nessuna preferenza impostata
   preferencesHelp: !include preferences_home_help.md

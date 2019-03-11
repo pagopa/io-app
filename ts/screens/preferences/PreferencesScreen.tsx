@@ -22,6 +22,8 @@ import ROUTES from "../../navigation/routes";
 
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
+import { checkAndRequestPermission } from '../../utils/calendar';
+import { stat } from 'fs';
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -37,10 +39,12 @@ type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 type State = {
   isFingerprintAvailable: boolean | undefined;
+  calendarHasGrant: boolean | undefined;
 };
 
 const INITIAL_STATE: State = {
-  isFingerprintAvailable: undefined
+  isFingerprintAvailable: undefined,
+  calendarHasGrant: undefined
 };
 
 /**
@@ -77,6 +81,12 @@ class PreferencesScreen extends React.Component<Props, State> {
       },
       _ => undefined
     );
+
+    checkAndRequestPermission().then(hasPermission =>
+      this.setState({
+        calendarHasGrant: hasPermission
+      })
+    );
   }
 
   public render() {
@@ -86,7 +96,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     };
 
     const { potProfile } = this.props;
-    const { isFingerprintAvailable } = this.state;
+    const { calendarHasGrant, isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
       .map(_ => ({
@@ -146,6 +156,28 @@ class PreferencesScreen extends React.Component<Props, State> {
                 />
               </ListItem>
             )}
+            {calendarHasGrant && (
+              <ListItem
+                // onPress={() =>
+                //   this.props.navigation.navigate(
+                //     ROUTES.PREFERENCES_PREFERRED_CALENDAR
+                //   )
+                // }
+                onPress={unavailableAlert}
+              >
+                <PreferenceItem
+                  kind="action"
+                  title={I18n.t("preferences.list.preferred_calendar.title")}
+                  valuePreview={
+                    this.props.preferredCalendar
+                      ? this.props.preferredCalendar.title
+                      : I18n.t(
+                          "preferences.list.preferred_calendar.none"
+                        )
+                  }
+                />
+              </ListItem>
+            )}
             <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
@@ -180,7 +212,8 @@ class PreferencesScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(state.profile),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
+  preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
 export default connect(mapStateToProps)(PreferencesScreen);
