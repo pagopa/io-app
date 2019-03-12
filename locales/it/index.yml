@@ -11,8 +11,6 @@ global:
   markdown:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
-  app:
-    version: Versione App
   buttons:
     delete: Elimina
     cancel: Annulla
@@ -94,6 +92,8 @@ profile:
           un formato aperto
     developersSectionHeader: Sviluppatori
     accountSectionHeader: Account
+    appVersion:  Versione App
+    backendVersion: Versione Backend
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -554,5 +554,3 @@ identification:
   resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
   biometric:
     failure: Identificazione fallita
-backend:
-  version: Versione Backend

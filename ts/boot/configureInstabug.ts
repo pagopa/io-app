@@ -11,6 +11,12 @@ import variables from "../theme/variables";
 
 type InstabugLocales = { [k in Locales]: LocaleKey };
 
+type InstabugUserAttributeKeys =
+  | "backendVersion"
+  | "activeScreen"
+  | "fiscalcode"
+  | "identityProvider";
+
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
   it: Instabug.locale.italian
@@ -30,7 +36,7 @@ export const initialiseInstabug = () => {
 };
 
 export const setInstabugUserAttribute = (
-  attributeKey: string,
+  attributeKey: InstabugUserAttributeKeys,
   attributeValue: string
 ) => {
   Instabug.setUserAttribute(attributeKey, attributeValue);

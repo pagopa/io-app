@@ -174,7 +174,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 }
               >
                 <Text>
-                  {`${I18n.t("global.app.version")} ${DeviceInfo.getVersion()}`}
+                  {`${I18n.t(
+                    "profile.main.appVersion"
+                  )} ${DeviceInfo.getVersion()}`}
                 </Text>
               </Button>
             </ListItem>
@@ -188,7 +190,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   }
                 >
                   <Text>
-                    {`${I18n.t("backend.version")} ${backendInfo.version}`}
+                    {`${I18n.t("profile.main.backendVersion")} ${
+                      backendInfo.version
+                    }`}
                   </Text>
                 </Button>
               </ListItem>
