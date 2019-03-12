@@ -13,7 +13,7 @@ import { untag } from "italia-ts-commons/lib/types";
 
 import I18n from "../../i18n";
 
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
@@ -33,6 +33,7 @@ import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPrefe
 
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import SelectCalendarModal from "../../components/SelectCalendarModal";
+import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -47,16 +48,17 @@ type OwnProps = Readonly<{
 type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps;
 
 type State = {
-  isFingerprintAvailable: boolean | undefined;
-  hasCalendarPermission: boolean | undefined;
+  isFingerprintAvailable: boolean;
+  hasCalendarPermission: boolean;
 };
 
 const INITIAL_STATE: State = {
-  isFingerprintAvailable: undefined,
-  hasCalendarPermission: undefined
+  isFingerprintAvailable: false,
+  hasCalendarPermission: false
 };
 
 const styles = StyleSheet.create({
@@ -188,9 +190,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             {isFingerprintAvailable && (
               <ListItem
                 onPress={() =>
-                  this.props.navigation.navigate(
-                    ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
-                  )
+                  this.props.navigateToFingerprintPreferenceScreen()
                 }
               >
                 <PreferenceItem
@@ -261,6 +261,12 @@ const mapStateToProps = (state: GlobalState) => ({
   preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
-export default connect(mapStateToProps)(
-  withLightModalContext(PreferencesScreen)
-);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToFingerprintPreferenceScreen: () =>
+    dispatch(navigateToFingerprintPreferenceScreen())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(PreferencesScreen));

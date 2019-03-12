@@ -30,7 +30,7 @@ export async function checkAndRequestPermission() {
 }
 
 /**
- * A function that checks if the user has already permission to read/write to Calendars.
+ * Checks whether the app is authorized to read/write to system calendars.
  */
 export async function checkCalendarPermission() {
   try {

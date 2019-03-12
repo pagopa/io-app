@@ -1,5 +1,9 @@
 import { isSome, none } from "fp-ts/lib/Option";
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  RptId,
+  RptIdFromString
+} from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
@@ -11,10 +15,11 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import {
   addCalendarEvent,
-  removeCalendarEvent
+  removeCalendarEvent,
+  RemoveCalendarEventPayload
 } from "../../store/actions/calendarEvents";
 import { navigateToPaymentTransactionSummaryScreen } from "../../store/actions/navigation";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import {
   CalendarEvent,
@@ -55,6 +60,7 @@ type OwnProps = {
 type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps;
 
 type State = {
@@ -243,12 +249,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const onPaymentCTAPress =
       !isPaid && isSome(amount) && isSome(rptId)
         ? () => {
-            this.props.dispatch(paymentInitializeState());
-            this.props.dispatch(
-              navigateToPaymentTransactionSummaryScreen({
-                rptId: rptId.value,
-                initialAmount: amount.value
-              })
+            this.props.paymentInitializeState();
+            this.props.navigateToPaymentTransactionSummaryScreen(
+              rptId.value,
+              amount.value
             );
           }
         : undefined;
@@ -317,7 +321,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
               } else {
                 // The event is in the store but not in the device calendar.
                 // Remove it from store too
-                this.props.dispatch(removeCalendarEvent(calendarEvent));
+                this.props.removeCalendarEvent(calendarEvent);
               }
             })
             .catch();
@@ -342,11 +346,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     this.props.hideModal();
 
     if (preferredCalendar !== undefined) {
-      this.props.dispatch(
-        preferredCalendarSaveSuccess({
-          preferredCalendar: calendar
-        })
-      );
+      this.props.savePreferredCalendar(calendar);
     }
 
     RNCalendarEvents.saveEvent(title, {
@@ -385,9 +385,9 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     RNCalendarEvents.removeEvent(calendarEvent.eventId)
       .then(_ => {
         showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
-        this.props.dispatch(
-          removeCalendarEvent({ messageId: calendarEvent.messageId })
-        );
+        this.props.removeCalendarEvent({
+          messageId: calendarEvent.messageId
+        });
         this.setState({
           isEventInCalendar: false
         });
@@ -403,4 +403,29 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
-export default connect(mapStateToProps)(withLightModalContext(MessageCTABar));
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  paymentInitializeState: () => dispatch(paymentInitializeState()),
+  navigateToPaymentTransactionSummaryScreen: (
+    rptId: RptId,
+    amount: AmountInEuroCents
+  ) =>
+    dispatch(
+      navigateToPaymentTransactionSummaryScreen({
+        rptId,
+        initialAmount: amount
+      })
+    ),
+  removeCalendarEvent: (calendarEvent: RemoveCalendarEventPayload) =>
+    dispatch(removeCalendarEvent(calendarEvent)),
+  savePreferredCalendar: (calendar: Calendar | undefined) =>
+    dispatch(
+      preferredCalendarSaveSuccess({
+        preferredCalendar: calendar
+      })
+    )
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(MessageCTABar));
