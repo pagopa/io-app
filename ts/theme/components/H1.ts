@@ -9,6 +9,7 @@ export default (): Theme => {
     ...makeFontStyleObject(Platform.select, variables.h1FontWeight),
     color: variables.h1Color,
     fontSize: variables.h1FontSize,
-    lineHeight: variables.h1LineHeight
+    lineHeight: variables.h1LineHeight,
+    letterSpacing: variables.h1LetterSpacing
   };
 };

@@ -5,7 +5,7 @@ import variables from "../../../theme/variables";
 export const CreditCardStyles = StyleSheet.create({
   largeTextStyle: {
     ...makeFontStyleObject(Platform.select, undefined, false, "RobotoMono"),
-    fontSize: variables.fontSize4
+    fontSize: variables.fontSize3
   },
   rowStyle: {
     alignItems: "center"
@@ -15,7 +15,7 @@ export const CreditCardStyles = StyleSheet.create({
     color: variables.cardFontColor
   },
   smallTextStyle: {
-    fontSize: variables.fontSize2,
+    fontSize: variables.fontSizeSmall,
     color: variables.brandDarkGray
   }
 });

@@ -44,7 +44,7 @@ const AddMethodStyle = StyleSheet.create({
     height: 75
   },
   transactionText: {
-    fontSize: variables.fontSize1,
+    fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
       .darken(0.35)
       .string()
