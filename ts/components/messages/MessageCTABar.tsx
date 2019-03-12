@@ -79,6 +79,10 @@ const styles = StyleSheet.create({
     flex: 12
   },
 
+  reminderButton: {
+    backgroundColor: variables.colorWhite
+  },
+
   reminderButtonIcon: {
     marginLeft: 0,
     marginRight: 5
@@ -180,6 +184,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             bordered={true}
             onPress={onPressHandler}
             disabled={disabled}
+            style={styles.reminderButton}
           >
             {isEventInCalendar ? (
               <IconFont
