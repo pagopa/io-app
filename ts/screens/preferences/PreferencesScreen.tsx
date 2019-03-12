@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, List, ListItem } from "native-base";
+import { Content, List, ListItem, H1 } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -23,6 +23,13 @@ import ROUTES from "../../navigation/routes";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
 import { checkPermission } from '../../utils/calendar';
+import { LightModalContextInterface } from '../../components/ui/LightModal';
+import { preferredCalendarSaveSuccess } from '../../store/actions/persistedPreferences';
+import { Calendar } from 'react-native-calendar-events';
+import SelectCalendarModal from '../../components/SelectCalendarModal';
+
+import { StyleSheet } from "react-native";
+import { withLightModalContext } from '../../components/helpers/withLightModalContext';
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -34,7 +41,10 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+type Props = OwnProps &
+  LightModalContextInterface &
+  ReturnType<typeof mapStateToProps> &
+  ReduxProps;
 
 type State = {
   isFingerprintAvailable: boolean | undefined;
@@ -45,6 +55,18 @@ const INITIAL_STATE: State = {
   isFingerprintAvailable: undefined,
   calendarHasPermission: undefined
 };
+
+const styles = StyleSheet.create({
+  selectCalendaModalHeader: {
+    marginBottom: 25
+  }
+});
+
+const SelectCalendarModalHeader = (
+  <H1 style={styles.selectCalendaModalHeader}>
+    {I18n.t("messages.cta.preferenceCalendarSelect")}
+  </H1>
+);
 
 /**
  * Translates the primary languages of the provided locales.
@@ -88,6 +110,32 @@ class PreferencesScreen extends React.Component<Props, State> {
     );
   }
 
+  private onCalendarSelected = (calendar: Calendar) => {
+    this.props.hideModal();
+
+    this.props.dispatch(
+      preferredCalendarSaveSuccess({
+        preferredCalendar: calendar
+      }));
+  
+  };
+  
+  private onSelectCalendarCancel = () => {
+    this.props.hideModal();
+  };
+
+  private renderDefaultCalendarPreference = () => {
+    const { showModal } = this.props;
+    // Show a modal to let the user select a calendar
+    showModal(
+      <SelectCalendarModal
+        onCancel={this.onSelectCalendarCancel}
+        onCalendarSelected={this.onCalendarSelected}
+        header={SelectCalendarModalHeader}
+      />
+    );
+  };
+  
   public render() {
     const contextualHelp = {
       title: I18n.t("preferences.title"),
@@ -157,11 +205,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             )}
             {calendarHasPermission && (
               <ListItem
-                onPress={() =>
-                  this.props.navigation.navigate(
-                    ROUTES.PREFERENCES_DEFAULT_CALENDAR
-                  )
-                }
+                onPress={this.renderDefaultCalendarPreference}
               >
                 <PreferenceItem
                   kind="action"
@@ -214,4 +258,4 @@ const mapStateToProps = (state: GlobalState) => ({
   preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
-export default connect(mapStateToProps)(PreferencesScreen);
+export default connect(mapStateToProps)(withLightModalContext(PreferencesScreen));

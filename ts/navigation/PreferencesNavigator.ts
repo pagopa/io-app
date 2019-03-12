@@ -19,9 +19,6 @@ const PreferencesNavigator = createStackNavigator(
     [ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION]: {
       screen: BiometricRecognitionScreen
     },
-    [ROUTES.PREFERENCES_DEFAULT_CALENDAR]: {
-      screen: DefaultCalendarSelectScreen
-    },
     [ROUTES.PREFERENCES_SERVICE_DETAIL]: {
       screen: ServiceDetailsScreen
     }

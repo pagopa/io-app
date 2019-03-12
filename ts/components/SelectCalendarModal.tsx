@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Container, Content, Text } from "native-base";
+import { Button, Container, Content, Text, View } from "native-base";
 import React from "react";
 import {
   Platform,
@@ -24,6 +24,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: customVariables.brandLightGray,
     color: customVariables.contentPrimaryBackground
+  },
+  separator: {
+    height: 10,
+    width: "100%"
   }
 });
 
@@ -116,10 +120,13 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                   onPress={() => this.props.onCalendarSelected(calendar)}
                 />
               ))}
-              {!this.props.defaultCalendar && (
-                <Text>{
-                  I18n.t("messages.cta.helper")
-                }</Text>
+              {this.props.defaultCalendar === undefined && (
+                <View>
+                  <View style={styles.separator}></View>
+                  <Text>{
+                    I18n.t("messages.cta.helper")
+                  }</Text>
+                </View>
               )}
             </React.Fragment>
           )}
@@ -164,7 +171,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  preferredCalendar: state.persistedPreferences.preferredCalendar
+  defaultCalendar: state.persistedPreferences.preferredCalendar
 });
 
 export default connect(mapStateToProps)(SelectCalendarModal);
