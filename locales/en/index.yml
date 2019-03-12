@@ -10,8 +10,6 @@ global:
   markdown:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
-  app:
-    version: Version
   buttons:
     delete: Delete
     cancel: Cancel
@@ -90,6 +88,8 @@ profile:
         description: send to your email all your account’s data in an open format
     developersSectionHeader: Developers
     accountSectionHeader: Account
+    appVersion: App Version
+    backendVersion: Backend Version
 navigation:
   messages: Messages
   profile: Profile
