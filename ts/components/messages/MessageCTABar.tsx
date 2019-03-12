@@ -150,7 +150,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             if (calendarEvent && isEventInCalendar) {
               // If the event is in the calendar remove it
               this.removeReminderFromCalendar(calendarEvent);
-            } else if (preferredCalendar) {
+            } else if (preferredCalendar !== undefined) {
               this.addReminderToCalendar(message, dueDate)(preferredCalendar);
             } else {
               // The event need to be added
@@ -341,7 +341,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     this.props.hideModal();
 
-    if (!preferredCalendar) {
+    if (preferredCalendar !== undefined) {
       this.props.dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar

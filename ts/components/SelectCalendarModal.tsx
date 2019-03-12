@@ -60,7 +60,7 @@ type Props = {
   onCancel: () => void;
   onCalendarSelected: (calendar: Calendar) => void;
   header?: React.ReactNode;
-  defaultCalendar?: Calendar | undefined;
+  defaultCalendar?: Calendar;
 };
 
 type State = {
