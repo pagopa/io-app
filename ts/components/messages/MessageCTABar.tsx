@@ -135,8 +135,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { isEventInCalendar } = this.state;
 
     const calendarIconComponentSize = this.props.small
-      ? { width: "32", height: "32" }
-      : { width: "48", height: "48" };
+      ? "32" : "48";
 
     // Create an action to add or remove the event
     const onPressHandler = () => {
@@ -170,8 +169,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return (
       <View style={styles.reminderContainer}>
         <CalendarIconComponent
-          height={calendarIconComponentSize.height}
-          width={calendarIconComponentSize.width}
+          height={calendarIconComponentSize}
+          width={calendarIconComponentSize}
           month={formatDateAsMonth(dueDate)}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
