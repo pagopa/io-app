@@ -464,7 +464,7 @@ messages:
     preferenceCalendarSelect: "Select a default calendar"
     errors:
       fetchCalendars: Error fetching calendars
-    helper: "IO will remember your choice from this moment on: you can change it from app preference pane."
+    helper: "IO will remember this choice, you can change it from the preference pane."
   unknownSender: Unknown sender
   noContent: Content not available
   search:
