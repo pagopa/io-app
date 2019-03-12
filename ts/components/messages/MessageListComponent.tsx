@@ -1,7 +1,12 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleSheet
+} from "react-native";
 
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -23,6 +28,12 @@ type OwnProps = {
 };
 
 type Props = OwnProps;
+
+const styles = StyleSheet.create({
+  contentContainerStyle: {
+    paddingBottom: 100
+  }
+});
 
 const keyExtractor = (_: MessageState) => _.meta.id;
 
@@ -63,6 +74,7 @@ class MessageListComponent extends React.Component<Props> {
 
     return (
       <FlatList
+        contentContainerStyle={styles.contentContainerStyle}
         scrollEnabled={true}
         data={messages}
         extraData={{ servicesById, paymentByRptId }}
