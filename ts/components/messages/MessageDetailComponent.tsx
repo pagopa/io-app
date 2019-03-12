@@ -26,6 +26,10 @@ type OwnProps = {
 type Props = OwnProps;
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    paddingBottom: 100
+  },
+
   headerContainer: {
     padding: variables.contentPadding
   },
@@ -61,7 +65,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
     const { message, paymentByRptId, service, onServiceLinkPress } = this.props;
     return (
-      <View>
+      <View style={styles.mainWrapper}>
         <View style={styles.headerContainer}>
           {/* Service */}
           {pot.isSome(service) && (
