@@ -51,12 +51,12 @@ type Props = OwnProps &
 
 type State = {
   isFingerprintAvailable: boolean | undefined;
-  calendarHasPermission: boolean | undefined;
+  hasCalendarPermission: boolean | undefined;
 };
 
 const INITIAL_STATE: State = {
   isFingerprintAvailable: undefined,
-  calendarHasPermission: undefined
+  hasCalendarPermission: undefined
 };
 
 const styles = StyleSheet.create({
@@ -109,7 +109,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     checkCalendarPermission().then(
       hasPermission =>
         this.setState({
-          calendarHasPermission: hasPermission
+          hasCalendarPermission: hasPermission
         }),
       _ => undefined
     );
@@ -148,7 +148,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     };
 
     const { potProfile } = this.props;
-    const { calendarHasPermission, isFingerprintAvailable } = this.state;
+    const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
       .map(_ => ({
@@ -208,7 +208,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                 />
               </ListItem>
             )}
-            {calendarHasPermission && (
+            {hasCalendarPermission && (
               <ListItem onPress={this.renderDefaultCalendarPreference}>
                 <PreferenceItem
                   kind="action"
