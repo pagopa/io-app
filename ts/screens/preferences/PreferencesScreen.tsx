@@ -23,7 +23,7 @@ import Markdown from "../../components/ui/Markdown";
 import ROUTES from "../../navigation/routes";
 
 import { Calendar } from "react-native-calendar-events";
-import { checkPermission } from "../../utils/calendar";
+import { checkCalendarPermission } from "../../utils/calendar";
 
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
@@ -106,7 +106,7 @@ class PreferencesScreen extends React.Component<Props, State> {
       _ => undefined
     );
 
-    checkPermission().then(
+    checkCalendarPermission().then(
       hasPermission =>
         this.setState({
           calendarHasPermission: hasPermission

@@ -33,7 +33,7 @@ export async function checkAndRequestPermission() {
  * A function that checks if the user has already permission to read/write to Calendars.
  */
 
-export async function checkPermission() {
+export async function checkCalendarPermission() {
   try {
     const status = await RNCalendarEvents.authorizationStatus();
     // If the permission is already granted return true
