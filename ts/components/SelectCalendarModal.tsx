@@ -9,12 +9,13 @@ import {
 } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
+import { connect } from "react-redux";
+import { GlobalState } from "../store/reducers/types";
+
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { GlobalState } from '../store/reducers/types';
-import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
   calendarItemWrapper: {
@@ -122,10 +123,8 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
               ))}
               {this.props.defaultCalendar === undefined && (
                 <View>
-                  <View style={styles.separator}></View>
-                  <Text>{
-                    I18n.t("messages.cta.helper")
-                  }</Text>
+                  <View style={styles.separator} />
+                  <Text>{I18n.t("messages.cta.helper")}</Text>
                 </View>
               )}
             </React.Fragment>

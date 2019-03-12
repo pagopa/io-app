@@ -1,11 +1,11 @@
-import { isActionOf } from "typesafe-actions";
+import { Calendar } from "react-native-calendar-events";
+import { Action } from "../actions/types";
 
+import { isActionOf } from "typesafe-actions";
 import {
   preferenceFingerprintIsEnabledSaveSuccess,
   preferredCalendarSaveSuccess
 } from "../actions/persistedPreferences";
-import { Action } from "../actions/types";
-import { Calendar } from 'react-native-calendar-events';
 
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled: boolean | undefined;

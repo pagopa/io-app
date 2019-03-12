@@ -36,10 +36,8 @@ export async function checkAndRequestPermission() {
 export async function checkPermission() {
   try {
     const status = await RNCalendarEvents.authorizationStatus();
-    
     // If the permission is already granted return true
     return status === "authorized";
-    
   } catch (error) {
     return false;
   }

@@ -41,7 +41,8 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
-import { preferredCalendarSaveSuccess } from '../../store/actions/persistedPreferences';
+
+import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 
 type OwnProps = {
   message: MessageWithContentPO;
@@ -131,8 +132,14 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
     useShortLabel: boolean
   ) {
-    const { message, calendarEvent, showModal, disabled, preferredCalendar } = this.props;
-    const { isEventInCalendar} = this.state;
+    const {
+      message,
+      calendarEvent,
+      disabled,
+      preferredCalendar,
+      showModal
+    } = this.props;
+    const { isEventInCalendar } = this.state;
 
     // Create an action to add or remove the event
     const onPressHandler = () => {
@@ -144,10 +151,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
               // If the event is in the calendar remove it
               this.removeReminderFromCalendar(calendarEvent);
             } else if (preferredCalendar) {
-              this.addReminderToCalendar(
-                message,
-                dueDate
-              )(preferredCalendar);
+              this.addReminderToCalendar(message, dueDate)(preferredCalendar);
             } else {
               // The event need to be added
               // Show a modal to let the user select a calendar
@@ -337,12 +341,13 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     this.props.hideModal();
 
-    if (!preferredCalendar)
+    if (!preferredCalendar) {
       this.props.dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar
         })
       );
+    }
 
     RNCalendarEvents.saveEvent(title, {
       title,

@@ -3,7 +3,6 @@ import { createStackNavigator } from "react-navigation";
 import ROUTES from "./routes";
 
 import BiometricRecognitionScreen from "../screens/preferences/BiometricRecognitionScreen";
-import DefaultCalendarSelectScreen from "../screens/preferences/DefaultCalendarSelectScreen";
 import PreferencesScreen from "../screens/preferences/PreferencesScreen";
 import ServiceDetailsScreen from "../screens/preferences/ServiceDetailsScreen";
 import ServicesScreen from "../screens/preferences/ServicesScreen";

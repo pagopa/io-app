@@ -1,7 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, List, ListItem, H1 } from "native-base";
+import { Content, H1, List, ListItem } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+
+import { Alert, StyleSheet } from "react-native";
+
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -20,16 +22,17 @@ import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
+import { Calendar } from "react-native-calendar-events";
+import { checkPermission } from "../../utils/calendar";
+
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
-import { checkPermission } from '../../utils/calendar';
-import { LightModalContextInterface } from '../../components/ui/LightModal';
-import { preferredCalendarSaveSuccess } from '../../store/actions/persistedPreferences';
-import { Calendar } from 'react-native-calendar-events';
-import SelectCalendarModal from '../../components/SelectCalendarModal';
 
-import { StyleSheet } from "react-native";
-import { withLightModalContext } from '../../components/helpers/withLightModalContext';
+import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
+
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import SelectCalendarModal from "../../components/SelectCalendarModal";
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -103,10 +106,12 @@ class PreferencesScreen extends React.Component<Props, State> {
       _ => undefined
     );
 
-    checkPermission().then(hasPermission =>
-      this.setState({
-        calendarHasPermission: hasPermission
-      })
+    checkPermission().then(
+      hasPermission =>
+        this.setState({
+          calendarHasPermission: hasPermission
+        }),
+      _ => undefined
     );
   }
 
@@ -116,10 +121,10 @@ class PreferencesScreen extends React.Component<Props, State> {
     this.props.dispatch(
       preferredCalendarSaveSuccess({
         preferredCalendar: calendar
-      }));
-  
+      })
+    );
   };
-  
+
   private onSelectCalendarCancel = () => {
     this.props.hideModal();
   };
@@ -135,7 +140,7 @@ class PreferencesScreen extends React.Component<Props, State> {
       />
     );
   };
-  
+
   public render() {
     const contextualHelp = {
       title: I18n.t("preferences.title"),
@@ -204,9 +209,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               </ListItem>
             )}
             {calendarHasPermission && (
-              <ListItem
-                onPress={this.renderDefaultCalendarPreference}
-              >
+              <ListItem onPress={this.renderDefaultCalendarPreference}>
                 <PreferenceItem
                   kind="action"
                   title={I18n.t("preferences.list.preferred_calendar.title")}
@@ -258,4 +261,6 @@ const mapStateToProps = (state: GlobalState) => ({
   preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
-export default connect(mapStateToProps)(withLightModalContext(PreferencesScreen));
+export default connect(mapStateToProps)(
+  withLightModalContext(PreferencesScreen)
+);
