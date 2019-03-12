@@ -241,6 +241,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                   service={service}
                   containerStyle={styles.ctaBarContainer}
                   disabled={isSelectionModeEnabled}
+                  small={true}
                 />
               )}
             </Row>
