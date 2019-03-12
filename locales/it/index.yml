@@ -11,8 +11,6 @@ global:
   markdown:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
-  app:
-    version: Versione
   buttons:
     delete: Elimina
     cancel: Annulla
@@ -94,6 +92,8 @@ profile:
           un formato aperto
     developersSectionHeader: Sviluppatori
     accountSectionHeader: Account
+    appVersion:  Versione App
+    backendVersion: Versione Backend
 navigation:
   messages: Messaggi
   profile: Profilo

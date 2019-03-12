@@ -8,7 +8,7 @@ export type DebugState = Readonly<{
 }>;
 
 const initialDebugState: DebugState = {
-  isDebugModeEnabled: true
+  isDebugModeEnabled: false
 };
 
 export function debugReducer(

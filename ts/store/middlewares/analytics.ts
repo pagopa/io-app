@@ -5,6 +5,7 @@ import { getType } from "typesafe-actions";
 
 import { mixpanel } from "../../mixpanel";
 
+import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted,
@@ -347,6 +348,9 @@ export function screenTracking(
       const nextScreen = getCurrentRouteName(store.getState().nav);
 
       if (nextScreen !== currentScreen && mixpanel) {
+        if (nextScreen) {
+          setInstabugUserAttribute("activeScreen", nextScreen);
+        }
         mixpanel
           .track("SCREEN_CHANGE", {
             SCREEN_NAME: nextScreen

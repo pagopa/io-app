@@ -11,6 +11,12 @@ import variables from "../theme/variables";
 
 type InstabugLocales = { [k in Locales]: LocaleKey };
 
+type InstabugUserAttributeKeys =
+  | "backendVersion"
+  | "activeScreen"
+  | "fiscalcode"
+  | "identityProvider";
+
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
   it: Instabug.locale.italian
@@ -29,6 +35,13 @@ export const initialiseInstabug = () => {
   );
 };
 
+export const setInstabugUserAttribute = (
+  attributeKey: InstabugUserAttributeKeys,
+  attributeValue: string
+) => {
+  Instabug.setUserAttribute(attributeKey, attributeValue);
+};
+
 export const setInstabugProfileAttributes = (
   profile: UserProfile,
   maybeIdp: Option<IdentityProvider>
@@ -38,9 +51,9 @@ export const setInstabugProfileAttributes = (
     `${profile.name} ${profile.family_name}`
   );
 
-  Instabug.setUserAttribute("fiscalcode", profile.fiscal_code);
+  setInstabugUserAttribute("fiscalcode", profile.fiscal_code);
 
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
-    Instabug.setUserAttribute("identityProvider", idp.entityID)
+    setInstabugUserAttribute("identityProvider", idp.entityID)
   );
 };
