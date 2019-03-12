@@ -76,10 +76,16 @@ body {
   font-family: 'Titillium Web';
 }
 
+ul, ol {
+  padding-left: 32px;
+}
+
 a {
   border-radius: ${customVariables.borderRadiusBase}px;
-  padding: 4px;
+  font-weight: 600;
+  padding: 0 8px;
   background-color: ${customVariables.textLinkColor};
+  box-shadow: inset 0 1px 0 1px ${customVariables.colorWhite};
   color: ${customVariables.colorWhite};
   text-decoration: none;
 }
@@ -88,7 +94,7 @@ div.custom-block.io-demo-block {
   background-color: #c1f4f2;
   border-radius: 4px;
   margin-bottom: 32px;
-  padding: 8px;
+  padding: 4px 8px;
 }
 
 div.custom-block.io-demo-block .custom-block-body {
