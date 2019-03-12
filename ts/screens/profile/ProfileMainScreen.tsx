@@ -12,6 +12,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { Clipboard, StyleSheet, View } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -74,6 +75,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       navigation,
       resetPin,
       logout,
+      backendInfo,
       sessionToken,
       walletToken,
       notificationToken,
@@ -163,6 +165,38 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </View>
             </ListItem>
 
+            <ListItem>
+              <Button
+                info={true}
+                small={true}
+                onPress={() =>
+                  copyToClipboardWithFeedback(DeviceInfo.getVersion())
+                }
+              >
+                <Text>
+                  {`${I18n.t(
+                    "profile.main.appVersion"
+                  )} ${DeviceInfo.getVersion()}`}
+                </Text>
+              </Button>
+            </ListItem>
+            {backendInfo && (
+              <ListItem>
+                <Button
+                  info={true}
+                  small={true}
+                  onPress={() =>
+                    copyToClipboardWithFeedback(backendInfo.version)
+                  }
+                >
+                  <Text>
+                    {`${I18n.t("profile.main.backendVersion")} ${
+                      backendInfo.version
+                    }`}
+                  </Text>
+                </Button>
+              </ListItem>
+            )}
             {sessionToken && (
               <ListItem>
                 <Button
@@ -240,6 +274,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  backendInfo: state.backendInfo.serverInfo,
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,

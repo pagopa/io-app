@@ -149,6 +149,7 @@ Here is a still NOT complete table of the environment variables you can set:
 
 | NAME                           | DEFAULT |                                                                                                 |
 |--------------------------------|---------|-------------------------------------------------------------------------------------------------|
+| `DISPLAY_VERSION_INFO_OVERLAY` | NO | If set to "YES" the app version, backend version and current screen name are rendered in an overlay view. |
 | `DEBUG_BIOMETRIC_IDENTIFICATION` | NO      | If set to "YES" an Alert is rendered with the exact result code of the biometric identification. |
 | `TOT_MESSAGE_FETCH_WORKERS` | 5 | Number of workers to create for message detail fetching. This means that we will have at most a number of concurrent fetches (of the message detail) equal to the number of the workers.
 
