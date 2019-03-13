@@ -15,6 +15,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import {
   addCalendarEvent,
+  AddCalendarEventPayload,
   removeCalendarEvent,
   RemoveCalendarEventPayload
 } from "../../store/actions/calendarEvents";
@@ -366,12 +367,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           "success"
         );
         // Add the calendar event to the store
-        this.props.dispatch(
-          addCalendarEvent({
-            messageId: message.id,
-            eventId
-          })
-        );
+        this.props.addCalendarEvent({
+          messageId: message.id,
+          eventId
+        });
+
         this.setState({
           isEventInCalendar: true
         });
@@ -415,6 +415,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         initialAmount: amount
       })
     ),
+  addCalendarEvent: (calendarEvent: AddCalendarEventPayload) =>
+    dispatch(addCalendarEvent(calendarEvent)),
   removeCalendarEvent: (calendarEvent: RemoveCalendarEventPayload) =>
     dispatch(removeCalendarEvent(calendarEvent)),
   savePreferredCalendar: (calendar: Calendar | undefined) =>

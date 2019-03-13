@@ -120,11 +120,7 @@ class PreferencesScreen extends React.Component<Props, State> {
   private onCalendarSelected = (calendar: Calendar) => {
     this.props.hideModal();
 
-    this.props.dispatch(
-      preferredCalendarSaveSuccess({
-        preferredCalendar: calendar
-      })
-    );
+    this.props.preferredCalendarSaveSuccess(calendar);
   };
 
   private onSelectCalendarCancel = () => {
@@ -263,7 +259,13 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
-    dispatch(navigateToFingerprintPreferenceScreen())
+    dispatch(navigateToFingerprintPreferenceScreen()),
+  preferredCalendarSaveSuccess: (calendar: Calendar) =>
+    dispatch(
+      preferredCalendarSaveSuccess({
+        preferredCalendar: calendar
+      })
+    )
 });
 
 export default connect(
