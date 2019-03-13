@@ -33,7 +33,7 @@ export default (): Theme => {
         ...makeFontStyleObject(Platform.select, variables.headerBodyFontWeight),
         backgroundColor: "transparent",
         color: variables.toolbarTextColor,
-        fontSize: variables.headerBodyFontSize
+        fontSize: variables.appHeaderBodyFontSize
       },
       marginLeft: 10
     },
@@ -49,7 +49,7 @@ export default (): Theme => {
 
     borderBottomWidth: variables.headerBorderBottomWidth,
     elevation: 0,
-    paddingHorizontal: variables.headerPaddingHorizontal,
+    paddingHorizontal: variables.appHeaderPaddingHorizontal,
     shadowColor: undefined,
     shadowOffset: undefined,
     shadowOpacity: undefined,
