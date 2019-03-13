@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Container, Content, Text } from "native-base";
+import { Button, Container, Content, Text, View } from "native-base";
 import React from "react";
 import {
   Platform,
@@ -37,15 +37,14 @@ type CalendarItemProps = {
  * Renders a Calendar as FlatList item
  */
 const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <TouchableComponent
-    onPress={props.onPress}
-    style={styles.calendarItemWrapper}
-  >
-    <Text link={true}>{props.calendar.title}</Text>
-    <IconFont
-      name="io-right"
-      color={customVariables.contentPrimaryBackground}
-    />
+  <TouchableComponent onPress={props.onPress}>
+    <View style={styles.calendarItemWrapper}>
+      <Text link={true}>{props.calendar.title}</Text>
+      <IconFont
+        name="io-right"
+        color={customVariables.contentPrimaryBackground}
+      />
+    </View>
   </TouchableComponent>
 );
 
