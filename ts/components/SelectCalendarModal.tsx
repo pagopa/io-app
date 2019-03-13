@@ -15,6 +15,10 @@ import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 const styles = StyleSheet.create({
+  content: {
+    padding: customVariables.contentPadding,
+    paddingTop: 48
+  },
   calendarItemWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -92,7 +96,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
     return (
       <Container>
-        <Content>
+        <Content style={styles.content}>
           {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
           {pot.isError(calendars) && (
             <React.Fragment>
