@@ -46,26 +46,29 @@ const customVariables = Object.assign(materialVariables, {
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
-  get fontSize1(): number {
+  get fontSizeSmaller(): number {
     return this.fontSizeBase * 0.75;
   },
-  get fontSize2(): number {
+  get fontSizeSmall(): number {
     return this.fontSizeBase * 0.875;
   },
+  get fontSize1(): number {
+    return this.fontSizeBase;
+  },
+  get fontSize2(): number {
+    return this.fontSizeBase * 1.25;
+  },
   get fontSize3(): number {
-    return this.fontSizeBase * 1;
-  },
-  get fontSize4(): number {
-    return this.fontSizeBase * 1.125;
-  },
-  get fontSize5(): number {
     return this.fontSizeBase * 1.5;
   },
-  get fontSize6(): number {
+  get fontSize4(): number {
     return this.fontSizeBase * 1.75;
   },
-  get fontSize7(): number {
+  get fontSize5(): number {
     return this.fontSizeBase * 2;
+  },
+  get fontSize6(): number {
+    return this.fontSizeBase * 2.5;
   },
   lineHeightBase: 24,
   get lineHeightFontSizeRatio(): number {
@@ -77,6 +80,18 @@ const customVariables = Object.assign(materialVariables, {
   // LineHeigth = 26 for the icon font in message details component
   get lineHeight2(): number {
     return this.lineHeightBase * (26 / 24);
+  },
+  get lineHeightH1(): number {
+    return this.lineHeightBase * (48 / 24);
+  },
+  get lineHeightH2(): number {
+    return this.lineHeightBase * (40 / 24);
+  },
+  get lineHeightH3(): number {
+    return this.lineHeightBase * (32 / 24);
+  },
+  get lineHeightH4(): number {
+    return this.lineHeightBase * (28 / 24);
   },
 
   // Icon
@@ -127,61 +142,62 @@ const customVariables = Object.assign(materialVariables, {
   // H1
   h1Color: "#17324D",
   h1FontWeight: "700" as FontWeight,
+  h1LetterSpacing: -1,
   get h1FontSize(): number {
-    return this.fontSize7;
+    return this.fontSize6;
   },
   get h1LineHeight(): number {
-    return this.fontSize7 * this.lineHeightFontSizeRatio;
+    return this.lineHeightH1;
   },
 
   // H2
   h2Color: "#17324D",
   h2FontWeight: "700" as FontWeight,
   get h2FontSize(): number {
-    return this.fontSize6;
+    return this.fontSize5;
   },
   get h2LineHeight(): number {
-    return this.fontSize6 * this.lineHeightFontSizeRatio;
+    return this.lineHeightH2;
   },
 
   // H3
   h3Color: "#17324D",
   h3FontWeight: "700" as FontWeight,
   get h3FontSize(): number {
-    return this.fontSize5;
+    return this.fontSize4;
   },
   get h3LineHeight(): number {
-    return this.fontSize5 * this.lineHeightFontSizeRatio;
+    return this.lineHeightH3;
   },
 
   // H4
   h4Color: "#17324D",
   h4FontWeight: "600" as FontWeight,
   get h4FontSize(): number {
-    return this.fontSize4;
+    return this.fontSize3;
   },
   get h4LineHeight(): number {
-    return this.fontSize4 * this.lineHeightFontSizeRatio;
+    return this.lineHeightH4;
   },
 
   // H5
   h5Color: "#17324D",
   h5FontWeight: "600" as FontWeight,
   get h5FontSize(): number {
-    return this.fontSize3;
+    return this.fontSize2;
   },
   get h5LineHeight(): number {
-    return this.fontSize3 * this.lineHeightFontSizeRatio;
+    return this.lineHeightBase;
   },
 
   // H6
   h6Color: "#17324D",
   h6FontWeight: "600" as FontWeight,
   get h6FontSize(): number {
-    return this.fontSize2;
+    return this.fontSize1;
   },
   get h6LineHeight(): number {
-    return this.fontSize2 * this.lineHeightFontSizeRatio;
+    return this.lineHeightBase;
   },
 
   // Header

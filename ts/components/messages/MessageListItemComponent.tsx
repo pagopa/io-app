@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 
   serviceText: {
-    fontSize: variables.fontSize3,
+    fontSize: variables.fontSize1,
     lineHeight: 20,
     paddingRight: 5
   },
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
   dateText: {
     color: variables.brandDarkGray,
-    fontSize: variables.fontSize2,
+    fontSize: variables.fontSizeSmall,
     lineHeight: 16
   },
 
