@@ -36,7 +36,16 @@ export default (): Theme => {
 
     ".xsmall": {
       height: variables.btnXSmallHeight,
-      "NativeBase.Text": { fontSize: variables.btnSmallFontSize }
+      "NativeBase.Text": {
+        fontSize: variables.btnSmallFontSize,
+        lineHeight: variables.btnXSmallLineHeight
+      },
+      "NativeBase.Icon": {
+        fontSize: variables.btnSmallFontSize
+      },
+      "UIComponent.IconFont": {
+        fontSize: variables.btnSmallFontSize
+      }
     },
 
     ".small": {
