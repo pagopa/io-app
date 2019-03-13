@@ -1,7 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, List, ListItem } from "native-base";
+import { Content, H1, List, ListItem } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+
+import { Alert, StyleSheet } from "react-native";
+
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -11,7 +13,7 @@ import { untag } from "italia-ts-commons/lib/types";
 
 import I18n from "../../i18n";
 
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
@@ -20,8 +22,18 @@ import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
+import { Calendar } from "react-native-calendar-events";
+import { checkCalendarPermission } from "../../utils/calendar";
+
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
+
+import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
+
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import SelectCalendarModal from "../../components/SelectCalendarModal";
+import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -33,15 +45,33 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+type Props = OwnProps &
+  LightModalContextInterface &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  ReduxProps;
 
 type State = {
-  isFingerprintAvailable: boolean | undefined;
+  isFingerprintAvailable: boolean;
+  hasCalendarPermission: boolean;
 };
 
 const INITIAL_STATE: State = {
-  isFingerprintAvailable: undefined
+  isFingerprintAvailable: false,
+  hasCalendarPermission: false
 };
+
+const styles = StyleSheet.create({
+  selectCalendarModalHeader: {
+    marginBottom: 25
+  }
+});
+
+const SelectCalendarModalHeader = (
+  <H1 style={styles.selectCalendarModalHeader}>
+    {I18n.t("messages.cta.preferenceCalendarSelect")}
+  </H1>
+);
 
 /**
  * Translates the primary languages of the provided locales.
@@ -77,7 +107,37 @@ class PreferencesScreen extends React.Component<Props, State> {
       },
       _ => undefined
     );
+
+    checkCalendarPermission().then(
+      hasPermission =>
+        this.setState({
+          hasCalendarPermission: hasPermission
+        }),
+      _ => undefined
+    );
   }
+
+  private onCalendarSelected = (calendar: Calendar) => {
+    this.props.hideModal();
+
+    this.props.preferredCalendarSaveSuccess(calendar);
+  };
+
+  private onSelectCalendarCancel = () => {
+    this.props.hideModal();
+  };
+
+  private renderDefaultCalendarPreference = () => {
+    const { showModal } = this.props;
+    // Show a modal to let the user select a calendar
+    showModal(
+      <SelectCalendarModal
+        onCancel={this.onSelectCalendarCancel}
+        onCalendarSelected={this.onCalendarSelected}
+        header={SelectCalendarModalHeader}
+      />
+    );
+  };
 
   public render() {
     const contextualHelp = {
@@ -86,7 +146,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     };
 
     const { potProfile } = this.props;
-    const { isFingerprintAvailable } = this.state;
+    const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
       .map(_ => ({
@@ -126,9 +186,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             {isFingerprintAvailable && (
               <ListItem
                 onPress={() =>
-                  this.props.navigation.navigate(
-                    ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
-                  )
+                  this.props.navigateToFingerprintPreferenceScreen()
                 }
               >
                 <PreferenceItem
@@ -141,6 +199,21 @@ class PreferencesScreen extends React.Component<Props, State> {
                         )
                       : I18n.t(
                           "preferences.list.biometric_recognition_status.disabled"
+                        )
+                  }
+                />
+              </ListItem>
+            )}
+            {hasCalendarPermission && (
+              <ListItem onPress={this.renderDefaultCalendarPreference}>
+                <PreferenceItem
+                  kind="action"
+                  title={I18n.t("preferences.list.preferred_calendar.title")}
+                  valuePreview={
+                    this.props.preferredCalendar
+                      ? this.props.preferredCalendar.title
+                      : I18n.t(
+                          "preferences.list.preferred_calendar.not_selected"
                         )
                   }
                 />
@@ -180,7 +253,22 @@ class PreferencesScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(state.profile),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
+  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
+  preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
-export default connect(mapStateToProps)(PreferencesScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToFingerprintPreferenceScreen: () =>
+    dispatch(navigateToFingerprintPreferenceScreen()),
+  preferredCalendarSaveSuccess: (calendar: Calendar) =>
+    dispatch(
+      preferredCalendarSaveSuccess({
+        preferredCalendar: calendar
+      })
+    )
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(PreferencesScreen));

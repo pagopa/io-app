@@ -92,6 +92,16 @@ export const navigateToServiceDetailsScreen = (
     params
   });
 
+export const navigateToFingerprintPreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
+  });
+
+export const navigateToServicesPreferencesScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PREFERENCES_SERVICES
+  });
+
 export const navigateToPaymentTransactionSummaryScreen = (
   params: InferNavigationParams<typeof TransactionSummaryScreen>
 ) =>

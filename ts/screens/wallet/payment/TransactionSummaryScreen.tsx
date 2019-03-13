@@ -62,7 +62,7 @@ const basePrimaryButtonProps = {
   title: I18n.t("wallet.continue")
 };
 
-type NavigationParams = Readonly<{
+export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
 }>;
