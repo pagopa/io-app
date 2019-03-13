@@ -62,13 +62,13 @@ const INITIAL_STATE: State = {
 };
 
 const styles = StyleSheet.create({
-  selectCalendaModalHeader: {
+  selectCalendarModalHeader: {
     marginBottom: 25
   }
 });
 
 const SelectCalendarModalHeader = (
-  <H1 style={styles.selectCalendaModalHeader}>
+  <H1 style={styles.selectCalendarModalHeader}>
     {I18n.t("messages.cta.preferenceCalendarSelect")}
   </H1>
 );
