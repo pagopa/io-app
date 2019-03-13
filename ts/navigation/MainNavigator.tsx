@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   labelStyle: {
     ...makeFontStyleObject(Platform.select),
     textAlign: "center",
-    fontSize: variables.fontSize1
+    fontSize: variables.fontSizeSmaller
   },
   tabBarStyle: {
     height: 64,

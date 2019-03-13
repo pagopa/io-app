@@ -18,6 +18,10 @@ import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 const styles = StyleSheet.create({
+  content: {
+    padding: customVariables.contentPadding,
+    paddingTop: 48
+  },
   calendarItemWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -44,15 +48,14 @@ type CalendarItemProps = {
  * Renders a Calendar as FlatList item
  */
 const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <TouchableComponent
-    onPress={props.onPress}
-    style={styles.calendarItemWrapper}
-  >
-    <Text link={true}>{props.calendar.title}</Text>
-    <IconFont
-      name="io-right"
-      color={customVariables.contentPrimaryBackground}
-    />
+  <TouchableComponent onPress={props.onPress}>
+    <View style={styles.calendarItemWrapper}>
+      <Text link={true}>{props.calendar.title}</Text>
+      <IconFont
+        name="io-right"
+        color={customVariables.contentPrimaryBackground}
+      />
+    </View>
   </TouchableComponent>
 );
 
@@ -101,7 +104,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
     return (
       <Container>
-        <Content>
+        <Content style={styles.content}>
           {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
           {pot.isError(calendars) && (
             <React.Fragment>
