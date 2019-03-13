@@ -48,6 +48,7 @@ type OwnProps = {
   containerStyle?: ViewStyle;
   paymentByRptId: PaymentByRptIdState;
   disabled?: boolean;
+  small?: boolean;
 };
 
 type Props = OwnProps &
@@ -157,6 +158,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { message, calendarEvent, showModal, disabled } = this.props;
     const { isEventInCalendar } = this.state;
 
+    const calendarIconComponentSize = this.props.small ? "32" : "48";
+
     // Create an action to add or remove the event
     const onPressHandler = () => {
       // Check the authorization status
@@ -189,8 +192,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return (
       <View style={styles.reminderContainer}>
         <CalendarIconComponent
-          height="32"
-          width="32"
+          height={calendarIconComponentSize}
+          width={calendarIconComponentSize}
           month={formatDateAsMonth(dueDate)}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
@@ -200,7 +203,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <View style={styles.reminderButtonContainer}>
           <Button
             block={true}
-            xsmall={true}
+            xsmall={this.props.small}
             bordered={true}
             onPress={onPressHandler}
             disabled={disabled}
@@ -272,7 +275,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       <View style={styles.paymentContainer}>
         <Button
           block={true}
-          xsmall={true}
+          xsmall={this.props.small}
           onPress={onPaymentCTAPress}
           disabled={disabled || onPaymentCTAPress === undefined || isPaid}
           style={isPaid ? styles.paymentButtonPaid : undefined}
