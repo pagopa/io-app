@@ -158,8 +158,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { message, calendarEvent, showModal, disabled } = this.props;
     const { isEventInCalendar } = this.state;
 
-    const calendarIconComponentSize = this.props.small
-      ? "32" : "48";
+    const calendarIconComponentSize = this.props.small ? "32" : "48";
 
     // Create an action to add or remove the event
     const onPressHandler = () => {
