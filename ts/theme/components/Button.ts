@@ -36,7 +36,16 @@ export default (): Theme => {
 
     ".xsmall": {
       height: variables.btnXSmallHeight,
-      "NativeBase.Text": { fontSize: variables.btnSmallFontSize }
+      "NativeBase.Text": {
+        fontSize: variables.btnSmallFontSize,
+        lineHeight: variables.btnXSmallLineHeight
+      },
+      "NativeBase.Icon": {
+        fontSize: variables.btnSmallFontSize
+      },
+      "UIComponent.IconFont": {
+        fontSize: variables.btnSmallFontSize
+      }
     },
 
     ".small": {
@@ -79,9 +88,8 @@ export default (): Theme => {
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,
     elevation: 0,
-    shadowColor: undefined,
-    shadowOffset: undefined,
-    shadowRadius: undefined,
-    shadowOpacity: undefined
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 0,
+    shadowOpacity: 0
   };
 };
