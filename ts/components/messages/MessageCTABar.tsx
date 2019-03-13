@@ -101,6 +101,26 @@ const styles = StyleSheet.create({
     flex: 6
   },
 
+  paymentButtonPaid: {
+    backgroundColor: variables.colorWhite,
+    borderWidth: 1,
+    borderColor: "#00C5CA"
+  },
+
+  paymentButtonText: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+
+  paymentButtonPaidText: {
+    color: "#00C5CA"
+  },
+
+  paymentButtonIcon: {
+    marginLeft: 0,
+    marginRight: 5
+  },
+
   selectCalendaModalHeader: {
     marginBottom: 25
   }
@@ -255,8 +275,21 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           xsmall={true}
           onPress={onPaymentCTAPress}
           disabled={disabled || onPaymentCTAPress === undefined || isPaid}
+          style={isPaid ? styles.paymentButtonPaid : undefined}
         >
-          <Text>
+          {isPaid && (
+            <IconFont
+              name="io-tick-big"
+              style={styles.paymentButtonIcon}
+              color={"#00C5CA"}
+            />
+          )}
+          <Text
+            style={[
+              styles.paymentButtonText,
+              isPaid ? styles.paymentButtonPaidText : undefined
+            ]}
+          >
             {I18n.t(isPaid ? "messages.cta.paid" : "messages.cta.pay", {
               amount: formatPaymentAmount(paymentData.amount)
             })}
