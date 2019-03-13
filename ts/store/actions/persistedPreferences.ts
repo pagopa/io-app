@@ -7,7 +7,7 @@ export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
 
 export const preferredCalendarSaveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_SAVE_SUCCESS"
-)<{ preferredCalendar: Calendar | undefined }>();
+)<{ preferredCalendar: Calendar }>();
 
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess

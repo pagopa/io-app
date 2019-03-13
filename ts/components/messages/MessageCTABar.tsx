@@ -1,9 +1,5 @@
 import { isSome, none } from "fp-ts/lib/Option";
-import {
-  AmountInEuroCents,
-  RptId,
-  RptIdFromString
-} from "italia-pagopa-commons/lib/pagopa";
+import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
@@ -20,7 +16,7 @@ import {
   RemoveCalendarEventPayload
 } from "../../store/actions/calendarEvents";
 import { navigateToPaymentTransactionSummaryScreen } from "../../store/actions/navigation";
-import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import {
   CalendarEvent,
@@ -48,6 +44,7 @@ import SelectCalendarModal from "../SelectCalendarModal";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 
+import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 
 type OwnProps = {
@@ -61,8 +58,7 @@ type OwnProps = {
 type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   // Store if the event is in the device calendar
@@ -276,10 +272,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       !isPaid && isSome(amount) && isSome(rptId)
         ? () => {
             this.props.paymentInitializeState();
-            this.props.navigateToPaymentTransactionSummaryScreen(
-              rptId.value,
-              amount.value
-            );
+            this.props.navigateToPaymentTransactionSummaryScreen({
+              rptId: rptId.value,
+              initialAmount: amount.value
+            });
           }
         : undefined;
 
@@ -384,7 +380,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     this.props.hideModal();
 
-    if (preferredCalendar !== undefined) {
+    if (preferredCalendar === undefined) {
       this.props.savePreferredCalendar(calendar);
     }
 
@@ -443,21 +439,13 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   paymentInitializeState: () => dispatch(paymentInitializeState()),
-  navigateToPaymentTransactionSummaryScreen: (
-    rptId: RptId,
-    amount: AmountInEuroCents
-  ) =>
-    dispatch(
-      navigateToPaymentTransactionSummaryScreen({
-        rptId,
-        initialAmount: amount
-      })
-    ),
+  navigateToPaymentTransactionSummaryScreen: (params: NavigationParams) =>
+    dispatch(navigateToPaymentTransactionSummaryScreen(params)),
   addCalendarEvent: (calendarEvent: AddCalendarEventPayload) =>
     dispatch(addCalendarEvent(calendarEvent)),
   removeCalendarEvent: (calendarEvent: RemoveCalendarEventPayload) =>
     dispatch(removeCalendarEvent(calendarEvent)),
-  savePreferredCalendar: (calendar: Calendar | undefined) =>
+  savePreferredCalendar: (calendar: Calendar) =>
     dispatch(
       preferredCalendarSaveSuccess({
         preferredCalendar: calendar
