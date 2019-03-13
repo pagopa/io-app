@@ -88,9 +88,8 @@ export default (): Theme => {
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,
     elevation: 0,
-    shadowColor: undefined,
-    shadowOffset: undefined,
-    shadowRadius: undefined,
-    shadowOpacity: undefined
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 0,
+    shadowOpacity: 0
   };
 };
