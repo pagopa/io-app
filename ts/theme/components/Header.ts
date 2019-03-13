@@ -33,7 +33,7 @@ export default (): Theme => {
         ...makeFontStyleObject(Platform.select, variables.headerBodyFontWeight),
         backgroundColor: "transparent",
         color: variables.toolbarTextColor,
-        fontSize: variables.appHeaderBodyFontSize
+        fontSize: variables.headerBodyFontSize
       },
       marginLeft: 10
     },
