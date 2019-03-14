@@ -24,7 +24,10 @@ export default (): Theme => {
         width: variables.iconSizeBase * 2
       },
       paddingLeft: 0,
-      marginLeft: -((variables.iconSizeBase * 3) / 4),
+      marginLeft:
+        -((variables.iconSizeBase * 3) / 4) +
+        variables.appHeaderPaddingHorizontal,
+      marginRight: -((variables.iconSizeBase * 3) / 4),
       flex: 0.17
     },
 
