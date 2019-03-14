@@ -461,8 +461,10 @@ messages:
     reminderAddFailure: "Error adding reminder, please retry"
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
+    preferenceCalendarSelect: "Select a default calendar"
     errors:
       fetchCalendars: Error fetching calendars
+    helper: "IO will remember this choice, you can change it from the preference pane."
   unknownSender: Unknown sender
   noContent: Content not available
   search:
@@ -502,6 +504,9 @@ preferences:
     services_description: Enable/disable your services on IO
     language: Language
     digitalDomicile: Digital domicile
+    preferred_calendar:
+      title: Default Calendar
+      not_selected: Not selected
   empty:
     default: No preference set
   preferencesHelp: !include preferences_home_help.md

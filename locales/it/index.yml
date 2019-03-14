@@ -471,8 +471,10 @@ messages:
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
     reminderRemoveSuccess: "Promemoria eliminato"
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
+    preferenceCalendarSelect: "Seleziona un calendario predefinito"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
+    helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   search:
@@ -514,6 +516,9 @@ preferences:
     services_description: Attiva/disattiva i tuoi servizi di IO
     language: Lingua
     digitalDomicile: Domicilio digitale
+    preferred_calendar:
+      title: Calendario preferito
+      not_selected: Non Selezionato
   empty:
     default: Nessuna preferenza impostata
   preferencesHelp: !include preferences_home_help.md

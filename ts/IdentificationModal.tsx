@@ -198,12 +198,19 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   }
 
-  public componentDidUpdate() {
+  public componentDidUpdate(prevProps: Props) {
     // When app becomes active from background the state of TouchID support
     // must be updated, because it might be switched off.
-    this.maybeTriggerFingerprintRequest({
-      updateBiometrySupportProp: this.props.appState === "active"
-    });
+    if (
+      (prevProps.appState === "background" &&
+        this.props.appState === "active") ||
+      (prevProps.identificationState.kind !== "started" &&
+        this.props.identificationState.kind === "started")
+    ) {
+      this.maybeTriggerFingerprintRequest({
+        updateBiometrySupportProp: this.props.appState === "active"
+      });
+    }
   }
 
   private onIdentificationSuccessHandler = () => {
@@ -398,7 +405,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("Biometric identification", `KO: ${error.code}`);
         }
-        if (error.code !== "USER_CANCELED") {
+        if (
+          error.code !== "USER_CANCELED" &&
+          error.code !== "SYSTEM_CANCELED"
+        ) {
           this.setState({
             identificationByBiometryState: "failure"
           });

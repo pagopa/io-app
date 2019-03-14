@@ -9,6 +9,9 @@ import {
 } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
+import { connect } from "react-redux";
+import { GlobalState } from "../store/reducers/types";
+
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
@@ -26,6 +29,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: customVariables.brandLightGray,
     color: customVariables.contentPrimaryBackground
+  },
+  separator: {
+    height: 10,
+    width: "100%"
   }
 });
 
@@ -56,6 +63,7 @@ type Props = {
   onCancel: () => void;
   onCalendarSelected: (calendar: Calendar) => void;
   header?: React.ReactNode;
+  defaultCalendar?: Calendar;
 };
 
 type State = {
@@ -116,6 +124,12 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                   onPress={() => this.props.onCalendarSelected(calendar)}
                 />
               ))}
+              {this.props.defaultCalendar === undefined && (
+                <View>
+                  <View style={styles.separator} />
+                  <Text>{I18n.t("messages.cta.helper")}</Text>
+                </View>
+              )}
             </React.Fragment>
           )}
         </Content>
@@ -158,4 +172,8 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
   };
 }
 
-export default SelectCalendarModal;
+const mapStateToProps = (state: GlobalState) => ({
+  defaultCalendar: state.persistedPreferences.preferredCalendar
+});
+
+export default connect(mapStateToProps)(SelectCalendarModal);
