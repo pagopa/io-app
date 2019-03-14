@@ -92,6 +92,12 @@ const renderIdentificationByBiometryState = (
 const onRequestCloseHandler = () => undefined;
 
 const authenticateConfig: AuthenticateConfig = {
+  title: I18n.t("identification.biometric.popup.title"),
+  sensorDescription: I18n.t("identification.biometric.popup.sensorDescription"),
+  cancelText: I18n.t("global.buttons.cancel"),
+  fallbackLabel: I18n.t("identification.biometric.popup.fallbackLabel"),
+  imageColor: "#0073E6",
+  imageErrorColor: "#CC3333",
   unifiedErrors: true
 };
 
@@ -394,7 +400,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     onIdentificationSuccessHandler: () => void,
     onIdentificationFailureHandler: () => void
   ) => {
-    TouchID.authenticate("Identification", authenticateConfig)
+    TouchID.authenticate(
+      I18n.t("identification.biometric.popup.reason"),
+      authenticateConfig
+    )
       .then(() => {
         this.setState({
           identificationByBiometryState: "unstarted"
