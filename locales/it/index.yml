@@ -559,3 +559,8 @@ identification:
   resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
   biometric:
     failure: Identificazione fallita
+    popup:
+      reason: Identificazione
+      title: Identificazione richiesta
+      sensorDescription: Tocca il sensore
+      fallbackLabel: Usa il PIN

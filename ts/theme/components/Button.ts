@@ -41,10 +41,12 @@ export default (): Theme => {
         lineHeight: variables.btnXSmallLineHeight
       },
       "NativeBase.Icon": {
-        fontSize: variables.btnSmallFontSize
+        fontSize: variables.btnSmallFontSize,
+        paddingTop: 1
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnSmallFontSize
+        fontSize: variables.btnSmallFontSize,
+        paddingTop: 1
       }
     },
 
