@@ -64,7 +64,10 @@ export class ContextualHelp extends React.Component<Props, State> {
         <Container>
           <AppHeader>
             <Right>
-              <TouchableHighlight onPress={onClose}>
+              <TouchableHighlight
+                onPress={onClose}
+                underlayColor={"transparent"}
+              >
                 <IconFont name="io-close" />
               </TouchableHighlight>
             </Right>
