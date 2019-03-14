@@ -5,16 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
-import {
-  Body,
-  Container,
-  Content,
-  Item,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import {
   FlatList,
@@ -28,11 +19,12 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import GoBackButton from "../../components/GoBackButton";
-import { InstabugButtons } from "../../components/InstabugButtons";
+
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
-import AppHeader from "../../components/ui/AppHeader";
+
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
@@ -186,19 +178,10 @@ class AddCardScreen extends React.Component<Props, State> {
     };
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("wallet.addCardTitle")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("wallet.addCardTitle")}
+      >
         <ScrollView
           bounces={false}
           style={WalletStyles.whiteBg}
@@ -325,7 +308,7 @@ class AddCardScreen extends React.Component<Props, State> {
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonPropsFromState(this.state)}
         />
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

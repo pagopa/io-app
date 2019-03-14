@@ -8,8 +8,7 @@ import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
   button: {
-    paddingLeft: 10,
-    paddingRight: 10
+    padding: 8
   }
 });
 

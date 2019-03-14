@@ -31,6 +31,9 @@ import IconFont from "../ui/IconFont";
 const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
+  },
+  noalias: {
+    marginRight: 0
   }
 });
 
@@ -49,7 +52,7 @@ export default class WalletLayout extends React.Component<Props> {
         <AppHeader style={styles.darkGrayBg}>
           {this.props.allowGoBack && (
             <Left>
-              <GoBackButton white={true} />
+              <GoBackButton white={true} style={styles.noalias} />
             </Left>
           )}
           <Body>

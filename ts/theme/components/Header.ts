@@ -24,7 +24,10 @@ export default (): Theme => {
         width: variables.iconSizeBase * 2
       },
       paddingLeft: 0,
-      marginLeft: -((variables.iconSizeBase * 3) / 4),
+      marginLeft:
+        -((variables.iconSizeBase * 3) / 4) +
+        variables.appHeaderPaddingHorizontal,
+      marginRight: -((variables.iconSizeBase * 3) / 4) / 2,
       flex: 0.17
     },
 
@@ -49,7 +52,7 @@ export default (): Theme => {
 
     borderBottomWidth: variables.headerBorderBottomWidth,
     elevation: 0,
-    paddingHorizontal: variables.headerPaddingHorizontal,
+    paddingHorizontal: variables.appHeaderPaddingHorizontal,
     shadowColor: undefined,
     shadowOffset: undefined,
     shadowOpacity: undefined,

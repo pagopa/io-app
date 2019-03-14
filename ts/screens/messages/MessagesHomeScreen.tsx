@@ -11,7 +11,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableHighlight } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -74,6 +74,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     // Android shadow
     elevation: 5
+  },
+  buttonLeft: {
+    padding: 8,
+    marginLeft: -10
   }
 });
 
@@ -124,7 +128,12 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <IconFont name="io-search" onPress={this.onSearchEnable} />
+            <TouchableHighlight
+              onPress={this.onSearchEnable}
+              style={styles.buttonLeft}
+            >
+              <IconFont name="io-search" />
+            </TouchableHighlight>
           )
         }
       >

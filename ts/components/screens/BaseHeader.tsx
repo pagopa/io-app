@@ -12,7 +12,7 @@ import { InstabugButtons } from "../InstabugButtons";
 
 const styles = StyleSheet.create({
   helpButton: {
-    paddingLeft: 10
+    padding: 8
   },
   right: {
     flex: 0
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
 interface OwnProps {
   headerTitle?: string;
-  goBack?: () => void;
+  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
@@ -37,7 +37,7 @@ export class BaseHeader extends React.PureComponent<Props> {
       <AppHeader primary={this.props.primary}>
         {goBack && (
           <Left>
-            <GoBackButton onPress={goBack} />
+            <GoBackButton testID="back-button" onPress={goBack} />
           </Left>
         )}
         <Body>
@@ -50,7 +50,11 @@ export class BaseHeader extends React.PureComponent<Props> {
         <Right style={styles.right}>
           <InstabugButtons />
           {onShowHelp && (
-            <TouchableHighlight onPress={onShowHelp} style={styles.helpButton}>
+            <TouchableHighlight
+              onPress={onShowHelp}
+              style={styles.helpButton}
+              underlayColor={"transparent"}
+            >
               <IconFont name="io-question" />
             </TouchableHighlight>
           )}

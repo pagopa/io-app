@@ -1,13 +1,11 @@
-import { Body, Container, Left, Right, Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { NavState, StyleSheet, WebView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import GoBackButton from "../../components/GoBackButton";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
-import { InstabugButtons } from "../../components/InstabugButtons";
-import AppHeader from "../../components/ui/AppHeader";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -107,22 +105,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
     };
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton testID="back-button" />
-          </Left>
-          <Body>
-            <Text>
-              {`${I18n.t("authentication.idp_login.headerTitle")} - ${
-                loggedOutWithIdpAuth.idp.name
-              }`}
-            </Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
+          loggedOutWithIdpAuth.idp.name
+        }`}
+      >
         <WebView
           source={{ uri: loginUri }}
           javaScriptEnabled={true}
@@ -133,7 +121,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             <RefreshIndicator />
           </View>
         )}
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

@@ -3,26 +3,16 @@
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Button, Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
-import GoBackButton from "../../components/GoBackButton";
-import { InstabugButtons } from "../../components/InstabugButtons";
+
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+
 import Pinpad from "../../components/Pinpad";
-import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
@@ -260,18 +250,10 @@ class PinScreen extends React.Component<Props, State> {
     const { pinState } = this.state;
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton onPress={this.handleGoBack} />
-          </Left>
-          <Body>
-            <Text>{I18n.t("onboarding.tos.headerTitle")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
+      <BaseScreenComponent
+        goBack={this.handleGoBack}
+        headerTitle={I18n.t("onboarding.tos.headerTitle")}
+      >
         {this.renderContent(pinState)}
         {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
 
@@ -281,7 +263,7 @@ class PinScreen extends React.Component<Props, State> {
             onConfirm={this.handleModalConfirm}
           />
         )}
-      </Container>
+      </BaseScreenComponent>
     );
   }
 

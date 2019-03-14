@@ -22,28 +22,16 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
-import {
-  Body,
-  Container,
-  Content,
-  Form,
-  H1,
-  Input,
-  Item,
-  Label,
-  Left,
-  Right,
-  Text
-} from "native-base";
+import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import GoBackButton from "../../../components/GoBackButton";
-import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
-import AppHeader from "../../../components/ui/AppHeader";
+
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 import I18n from "../../../i18n";
@@ -147,19 +135,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     };
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("wallet.insertManually.header")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("wallet.insertManually.header")}
+      >
         <ScrollView
           style={WalletStyles.whiteBg}
           keyboardShouldPersistTaps="handled"
@@ -245,7 +224,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
         />
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

@@ -1,27 +1,17 @@
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  Container,
-  Content,
-  H1,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import GoBackButton from "../../../components/GoBackButton";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
-import AppHeader from "../../../components/ui/AppHeader";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -83,19 +73,10 @@ class PickPspScreen extends React.Component<Props> {
     const availablePsps = this.props.navigation.getParam("psps");
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("saveCard.saveCard")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("saveCard.saveCard")}
+      >
         <Content>
           <H1>{I18n.t("wallet.pickPsp.title")}</H1>
           <View spacer={true} />
@@ -148,7 +129,7 @@ class PickPspScreen extends React.Component<Props> {
             )}
           />
         </Content>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }
