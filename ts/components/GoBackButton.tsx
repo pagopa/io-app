@@ -1,6 +1,6 @@
 import { Button } from "native-base";
 import * as React from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
 
 import variables from "../theme/variables";
@@ -11,6 +11,12 @@ interface OwnProps {
   onPress?: () => void;
   white?: boolean;
 }
+
+const styles = StyleSheet.create({
+  headerLeftMostButton: {
+    marginLeft: variables.appHeaderPaddingHorizontal
+  }
+});
 
 type Props = NavigationInjectedProps & OwnProps;
 
@@ -50,7 +56,7 @@ class GoBackButton extends React.PureComponent<Props> {
     };
 
     return (
-      <Button {...buttonProps}>
+      <Button {...buttonProps} style={styles.headerLeftMostButton}>
         <IconFont
           name="io-back"
           style={{ color: white ? variables.colorWhite : undefined }}
