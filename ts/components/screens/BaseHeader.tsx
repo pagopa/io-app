@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
 interface OwnProps {
   headerTitle?: string;
-  goBack?: (() => void) | boolean;
+  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
