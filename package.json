@@ -57,7 +57,7 @@
     "react-native-qrcode-scanner": "^1.1.0",
     "react-native-sha256": "1.2.3",
     "react-native-splash-screen": "^3.1.1",
-    "react-native-svg": "^6.5.2",
+    "react-native-svg": "^9.3.3",
     "react-native-text-input-mask": "^0.8.0",
     "react-native-touch-id": "git://github.com/naoufal/react-native-touch-id#d2ff356f5dbed4ad647b26110f5053ed41f522a4",
     "react-native-vector-icons": "^4.6.0",
