@@ -547,3 +547,8 @@ identification:
   resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
   biometric:
     failure: Identification failed
+    popup:
+      reason: Identification
+      title: Identification required
+      sensorDescription: Touch sensor
+      fallbackLabel: Use the PIN
