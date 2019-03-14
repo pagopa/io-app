@@ -5,16 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  Container,
-  Content,
-  H1,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { Modal, Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -23,12 +14,10 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import Checkout3DsComponent from "../../components/Checkout3DsComponent";
-import GoBackButton from "../../components/GoBackButton";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { InstabugButtons } from "../../components/InstabugButtons";
 import NoticeBox from "../../components/NoticeBox";
-import AppHeader from "../../components/ui/AppHeader";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
@@ -129,22 +118,14 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     };
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>
-              {isInPayment
-                ? I18n.t("wallet.saveCardInPayment.header")
-                : I18n.t("wallet.saveCard.header")}
-            </Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={
+          isInPayment
+            ? I18n.t("wallet.saveCardInPayment.header")
+            : I18n.t("wallet.saveCard.header")
+        }
+      >
         <Content>
           <H1>
             {isInPayment
@@ -198,7 +179,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             />
           )}
         </Modal>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

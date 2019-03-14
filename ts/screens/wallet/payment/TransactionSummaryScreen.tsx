@@ -14,18 +14,15 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Body, Container, Content, Left, Right, Text, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 
-import GoBackButton from "../../../components/GoBackButton";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { InstabugButtons } from "../../../components/InstabugButtons";
-import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
@@ -43,6 +40,8 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
+
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
@@ -187,19 +186,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
     const { potVerifica } = this.props;
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("wallet.firstTransactionSummary.header")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
+      >
         <Content noPadded={true}>
           {pot.isSome(potVerifica) ? (
             <PaymentSummaryComponent
@@ -256,7 +246,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
               ? this.renderFooterSingleButton()
               : this.renderFooterButtons()
         )}
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

@@ -2,16 +2,12 @@
  * A screen where the user can know more about spid and access to spid.gov.it
  */
 import {
-  Body,
   Button,
   Col,
-  Container,
   Content,
   Grid,
   H1,
   H2,
-  Left,
-  Right,
   Row,
   Text,
   View
@@ -22,13 +18,11 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
-import GoBackButton from "../../components/GoBackButton";
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
-import { InstabugButtons } from "../../components/InstabugButtons";
-import AppHeader from "../../components/ui/AppHeader";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -73,19 +67,10 @@ class SpidInformationScreen extends React.Component<Props, never> {
 
   public render() {
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("authentication.spid_information.headerTitle")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("authentication.spid_information.headerTitle")}
+      >
         <Content>
           <DefaultSubscreenHeader
             screenTitle={I18n.t("authentication.spid_information.contentTitle")}
@@ -139,7 +124,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
           </Button>
         </View>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

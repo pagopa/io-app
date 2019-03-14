@@ -5,18 +5,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  ActionSheet,
-  Body,
-  Button,
-  Container,
-  Content,
-  H1,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { ActionSheet, Button, Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -24,16 +13,16 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import GoBackButton from "../../../components/GoBackButton";
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../../components/helpers/withContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
-import AppHeader from "../../../components/ui/AppHeader";
+
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -134,19 +123,10 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     const recipient = verifica.enteBeneficiario;
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("wallet.ConfirmPayment.header")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
-
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("wallet.ConfirmPayment.header")}
+      >
         <Content noPadded={true}>
           <PaymentBannerComponent
             currentAmount={currentAmount}
@@ -277,7 +257,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             </Button>
           </View>
         </View>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

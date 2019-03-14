@@ -4,16 +4,13 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Body, Container, Left, Right, Text, Toast, View } from "native-base";
+import { Container, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import GoBackButton from "../../../components/GoBackButton";
-import { InstabugButtons } from "../../../components/InstabugButtons";
-import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 
@@ -23,6 +20,7 @@ import { Dispatch } from "../../../store/actions/types";
 
 import variables from "../../../theme/variables";
 
+import { BaseHeader } from "../../../components/screens/BaseHeader";
 import { ComponentProps } from "../../../types/react";
 
 import { decodePagoPaQrCode } from "../../../utils/payment";
@@ -163,17 +161,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           onDidFocus={this.handleDidFocus}
           onWillBlur={this.handleWillBlur}
         />
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("wallet.QRtoPay.byCameraTitle")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
+        <BaseHeader
+          goBack={true}
+          headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
+        />
         <ScrollView bounces={false}>
           {this.state.isFocused && (
             <QRCodeScanner

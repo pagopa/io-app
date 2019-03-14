@@ -5,27 +5,17 @@
 import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  Container,
-  Content,
-  H1,
-  Left,
-  List,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Content, H1, List, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import GoBackButton from "../../../components/GoBackButton";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { InstabugButtons } from "../../../components/InstabugButtons";
 import { WalletStyles } from "../../../components/styles/wallet";
-import AppHeader from "../../../components/ui/AppHeader";
+
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -82,18 +72,10 @@ class PickPaymentMethodScreen extends React.Component<Props> {
     };
 
     return (
-      <Container>
-        <AppHeader>
-          <Left>
-            <GoBackButton />
-          </Left>
-          <Body>
-            <Text>{I18n.t("wallet.payWith.header")}</Text>
-          </Body>
-          <Right>
-            <InstabugButtons />
-          </Right>
-        </AppHeader>
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("wallet.payWith.header")}
+      >
         <Content noPadded={true}>
           <PaymentBannerComponent
             paymentReason={paymentReason}
@@ -141,7 +123,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
         />
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }
