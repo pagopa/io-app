@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
 interface OwnProps {
   headerTitle?: string;
-  goBack?: () => void;
+  goBack?: (() => void) | boolean;
   primary?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
@@ -37,7 +37,7 @@ export class BaseHeader extends React.PureComponent<Props> {
       <AppHeader primary={this.props.primary}>
         {goBack && (
           <Left>
-            <GoBackButton onPress={goBack} />
+            <GoBackButton testID="back-button" onPress={goBack} />
           </Left>
         )}
         <Body>

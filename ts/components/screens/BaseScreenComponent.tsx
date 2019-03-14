@@ -13,7 +13,7 @@ interface ContextualHelpProps {
 
 interface OwnProps {
   headerTitle?: string;
-  goBack?: () => void;
+  goBack?: (() => void) | boolean;
   contextualHelp?: ContextualHelpProps;
   primary?: boolean;
   headerBody?: React.ReactNode;
