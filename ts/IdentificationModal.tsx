@@ -96,8 +96,8 @@ const authenticateConfig: AuthenticateConfig = {
   sensorDescription: I18n.t("identification.biometric.popup.sensorDescription"),
   cancelText: I18n.t("global.buttons.cancel"),
   fallbackLabel: I18n.t("identification.biometric.popup.fallbackLabel"),
-  imageColor: "#0073E6",
-  imageErrorColor: "#CC3333",
+  imageColor: variables.contentPrimaryBackground,
+  imageErrorColor: variables.brandDanger,
   unifiedErrors: true
 };
 
