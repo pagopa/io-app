@@ -27,7 +27,7 @@ export default (): Theme => {
       marginLeft:
         -((variables.iconSizeBase * 3) / 4) +
         variables.appHeaderPaddingHorizontal,
-      marginRight: -((variables.iconSizeBase * 3) / 4) /2,
+      marginRight: -((variables.iconSizeBase * 3) / 4) / 2,
       flex: 0.17
     },
 
