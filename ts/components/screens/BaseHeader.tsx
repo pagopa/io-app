@@ -1,6 +1,6 @@
-import { Body, Left, Right, Text } from "native-base";
+import { Body, Button, Left, Right, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet } from "react-native";
 
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
@@ -50,13 +50,13 @@ export class BaseHeader extends React.PureComponent<Props> {
         <Right style={styles.right}>
           <InstabugButtons />
           {onShowHelp && (
-            <TouchableHighlight
+            <Button
               onPress={onShowHelp}
               style={styles.helpButton}
-              underlayColor={"transparent"}
+              transparent={true}
             >
               <IconFont name="io-question" />
-            </TouchableHighlight>
+            </Button>
           )}
         </Right>
       </AppHeader>

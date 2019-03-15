@@ -1,6 +1,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
 import {
+  Button,
   DefaultTabBar,
   Icon,
   Input,
@@ -11,7 +12,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -74,10 +75,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     // Android shadow
     elevation: 5
-  },
-  buttonLeft: {
-    padding: 8,
-    marginLeft: -10
   }
 });
 
@@ -128,12 +125,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <TouchableHighlight
-              onPress={this.onSearchEnable}
-              style={styles.buttonLeft}
-            >
+            <Button onPress={this.onSearchEnable} transparent={true}>
               <IconFont name="io-search" />
-            </TouchableHighlight>
+            </Button>
           )
         }
       >

@@ -5,9 +5,9 @@
  * needed)
  */
 
-import { Container, Content, H1, Right, View } from "native-base";
+import { Button, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, TouchableHighlight } from "react-native";
+import { InteractionManager, Modal, StyleSheet } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
 import ActivityIndicator from "./ui/ActivityIndicator";
@@ -25,6 +25,14 @@ type Props = Readonly<{
 type State = Readonly<{
   content: React.ReactNode | null;
 }>;
+
+const styles = StyleSheet.create({
+  rightOnly: {
+    // The following property is needed to avoid the <Right> component to be
+    // put in the middle of the header
+    flex: 1
+  }
+});
 
 export class ContextualHelp extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -62,14 +70,11 @@ export class ContextualHelp extends React.Component<Props, State> {
         onRequestClose={onClose}
       >
         <Container>
-          <AppHeader>
-            <Right>
-              <TouchableHighlight
-                onPress={onClose}
-                underlayColor={"transparent"}
-              >
+          <AppHeader noLeft={true}>
+            <Right style={styles.rightOnly}>
+              <Button onPress={onClose} transparent={true}>
                 <IconFont name="io-close" />
-              </TouchableHighlight>
+              </Button>
             </Right>
           </AppHeader>
 
