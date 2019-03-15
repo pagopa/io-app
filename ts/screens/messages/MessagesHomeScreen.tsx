@@ -75,6 +75,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     // Android shadow
     elevation: 5
+  },
+  ioSearch: {
+    // Corrects the position of the font icon inside the button
+    paddingHorizontal: 2
   }
 });
 
@@ -125,7 +129,11 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               <Icon name="cross" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <Button onPress={this.onSearchEnable} transparent={true}>
+            <Button
+              onPress={this.onSearchEnable}
+              transparent={true}
+              style={styles.ioSearch}
+            >
               <IconFont name="io-search" />
             </Button>
           )
