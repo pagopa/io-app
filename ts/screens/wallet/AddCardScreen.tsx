@@ -17,6 +17,7 @@ import {
   StyleSheet
 } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
+import TextInputMask from "react-native-text-input-mask";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -133,6 +134,7 @@ function getCardFromState(state: State): Option<CreditCard> {
 }
 
 class AddCardScreen extends React.Component<Props, State> {
+  private panRef: React.RefObject<TextInputMask> = React.createRef();
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
@@ -222,6 +224,7 @@ class AddCardScreen extends React.Component<Props, State> {
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
               inputMaskProps={{
+                ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 placeholder: I18n.t("wallet.dummyCard.values.pan"),
                 keyboardType: "numeric",
@@ -326,6 +329,9 @@ class AddCardScreen extends React.Component<Props, State> {
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
     if (nextAppStateStatus !== "active") {
+      if (this.panRef.current) {
+        this.panRef.current.clear();
+      }
       this.setState(INITIAL_STATE);
     }
   };
