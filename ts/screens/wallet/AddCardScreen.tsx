@@ -8,6 +8,8 @@ import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import {
+  AppState,
+  AppStateStatus,
   FlatList,
   Image,
   Keyboard,
@@ -82,6 +84,13 @@ const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
 const EMPTY_CARD_SECURITY_CODE = "";
 
+const INITIAL_STATE: State = {
+  pan: none,
+  expirationDate: none,
+  securityCode: none,
+  holder: none
+};
+
 function getCardFromState(state: State): Option<CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
@@ -126,12 +135,15 @@ function getCardFromState(state: State): Option<CreditCard> {
 class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      pan: none,
-      expirationDate: none,
-      securityCode: none,
-      holder: none
-    };
+    this.state = INITIAL_STATE;
+  }
+
+  public componentDidMount() {
+    AppState.addEventListener("change", this.handleAppStateChange);
+  }
+
+  public componentWillUnmount() {
+    AppState.removeEventListener("change", this.handleAppStateChange);
   }
 
   public render(): React.ReactNode {
@@ -311,6 +323,12 @@ class AddCardScreen extends React.Component<Props, State> {
       </BaseScreenComponent>
     );
   }
+
+  private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
+    if (nextAppStateStatus !== "active") {
+      this.setState(INITIAL_STATE);
+    }
+  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
