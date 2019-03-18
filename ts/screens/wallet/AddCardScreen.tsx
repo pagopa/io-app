@@ -233,10 +233,11 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
-                onChangeText: (_, value) =>
+                onChangeText: (_, value) => {
                   this.setState({
-                    pan: value !== EMPTY_CARD_PAN ? some(value) : none
-                  })
+                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
+                  });
+                }
               }}
             />
 
@@ -260,7 +261,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     onChangeText: (_, value) =>
                       this.setState({
                         expirationDate:
-                          value !== EMPTY_CARD_EXPIRATION_DATE
+                          value && value !== EMPTY_CARD_EXPIRATION_DATE
                             ? some(value)
                             : none
                       })
@@ -286,7 +287,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     onChangeText: (_, value) =>
                       this.setState({
                         securityCode:
-                          value !== EMPTY_CARD_SECURITY_CODE
+                          value && value !== EMPTY_CARD_SECURITY_CODE
                             ? some(value)
                             : none
                       })
@@ -334,10 +335,8 @@ class AddCardScreen extends React.Component<Props, State> {
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
     if (nextAppStateStatus !== "active") {
-      // Clear all the inputs
-      this.setState(INITIAL_STATE);
       // For a bug in the `react-native-text-input-mask` library we have to
-      // reset the TextInputMask components value calling the clear function,
+      // reset the TextInputMask components value calling the clear function.
       if (this.panRef.current) {
         this.panRef.current._root.clear();
       }
@@ -347,6 +346,7 @@ class AddCardScreen extends React.Component<Props, State> {
       if (this.securityCodeRef.current) {
         this.securityCodeRef.current._root.clear();
       }
+      this.setState(INITIAL_STATE);
     }
   };
 }
