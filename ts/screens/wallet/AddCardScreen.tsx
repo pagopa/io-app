@@ -17,7 +17,6 @@ import {
   StyleSheet
 } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import TextInputMask from "react-native-text-input-mask";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -25,6 +24,7 @@ import { PaymentRequestsGetResponse } from "../../../definitions/backend/Payment
 
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
+import MaskedInput from "../../components/ui/MaskedInput";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
@@ -134,7 +134,10 @@ function getCardFromState(state: State): Option<CreditCard> {
 }
 
 class AddCardScreen extends React.Component<Props, State> {
-  private panRef: React.RefObject<TextInputMask> = React.createRef();
+  private panRef = React.createRef<typeof MaskedInput>();
+  private expirationDateRef = React.createRef<typeof MaskedInput>();
+  private securityCodeRef = React.createRef<typeof MaskedInput>();
+
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
@@ -245,6 +248,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
                   inputMaskProps={{
+                    ref: this.expirationDateRef,
                     value: this.state.expirationDate.getOrElse(
                       EMPTY_CARD_EXPIRATION_DATE
                     ),
@@ -270,6 +274,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
                   inputMaskProps={{
+                    ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
                       EMPTY_CARD_SECURITY_CODE
                     ),
@@ -329,10 +334,19 @@ class AddCardScreen extends React.Component<Props, State> {
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
     if (nextAppStateStatus !== "active") {
-      if (this.panRef.current) {
-        this.panRef.current.clear();
-      }
+      // Clear all the inputs
       this.setState(INITIAL_STATE);
+      // For a bug in the `react-native-text-input-mask` library we have to
+      // reset the TextInputMask components value calling the clear function,
+      if (this.panRef.current) {
+        this.panRef.current._root.clear();
+      }
+      if (this.expirationDateRef.current) {
+        this.expirationDateRef.current._root.clear();
+      }
+      if (this.securityCodeRef.current) {
+        this.securityCodeRef.current._root.clear();
+      }
     }
   };
 }

@@ -19,12 +19,18 @@ declare module "native-base-shoutem-theme" {
     props: P
   ) => ReadonlyArray<string>;
 
-  export function connectStyle(
+  /**
+   * The connectStyle function do not use forwardRef.
+   * To get a ref to the wrapped component you have to use _root.
+   * 
+   * RT = _root Type
+   */
+  export function connectStyle<RT = {}>(
     componentStyleName: string,
     componentStyle = {},
     mapPropsToStyleNames: MapPropsToStyleNames,
     options?: IConnectStyleOptions
-  ): <C, O = C>(c: C) => O;
+  ): <C, O = C>(c: C) => O & { _root: RT };
 }
 
 declare module "native-base/src/utils/mapPropsToStyleNames" {
