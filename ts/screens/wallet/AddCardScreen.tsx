@@ -239,11 +239,10 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
-                onChangeText: (_, value) => {
+                onChangeText: (_, value) =>
                   this.setState({
                     pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
-                  });
-                }
+                  })
               }}
             />
 
