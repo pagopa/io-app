@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
@@ -49,7 +50,11 @@ export default (): Theme => {
         }
       }
     },
-
+    minHeight:
+      variables.appHeaderHeight +
+      (isIphoneX()
+        ? variables.iOSiPhoneXStatusBarHeight
+        : getStatusBarHeight()),
     borderBottomWidth: variables.headerBorderBottomWidth,
     elevation: 0,
     paddingHorizontal: variables.appHeaderPaddingHorizontal,
