@@ -144,6 +144,12 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 
   public componentDidMount() {
+    // The AppState change is also stored and notified by our redux store but
+    // we are using the event lister directly because we want to clear the
+    // input fileds as soon as possible before going in background (remember
+    // Android does not have a "inactive" intermediate state).
+    // This prevent the input fields to be cleared only when the application
+    // is back to active state.
     AppState.addEventListener("change", this.handleAppStateChange);
   }
 
