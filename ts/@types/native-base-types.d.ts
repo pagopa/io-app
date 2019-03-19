@@ -20,7 +20,7 @@ declare module "native-base-shoutem-theme" {
   ) => ReadonlyArray<string>;
 
   /**
-   * The connectStyle function do not use forwardRef.
+   * The connectStyle function does not use forwardRef.
    * To get a ref to the wrapped component you have to use _root.
    * 
    * RT = _root Type

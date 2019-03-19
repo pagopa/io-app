@@ -145,11 +145,13 @@ class AddCardScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     // The AppState change is also stored and notified by our redux store but
-    // we are using the event lister directly because we want to clear the
-    // input fileds as soon as possible before going in background (remember
-    // Android does not have a "inactive" intermediate state).
-    // This prevent the input fields to be cleared only when the application
-    // is back to active state.
+    // we are using the event listener directly because we want to clear the
+    // input fields as soon as possible before going to background (remember
+    // Android does not have an "inactive" intermediate state).
+    // If we wait the AppState change from the store sometimes when we reopen
+    // the app the input values are still present and after some milliseconds
+    // get cleared.
+
     AppState.addEventListener("change", this.handleAppStateChange);
   }
 
@@ -340,8 +342,8 @@ class AddCardScreen extends React.Component<Props, State> {
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
     if (nextAppStateStatus !== "active") {
-      // For a bug in the `react-native-text-input-mask` library we have to
-      // reset the TextInputMask components value calling the clear function.
+      // Due to a bug in the `react-native-text-input-mask` library we have to
+      // reset the value in the TextInputMask components by calling the "clear" method.
       if (this.panRef.current) {
         this.panRef.current._root.clear();
       }
