@@ -1,0 +1,11 @@
+patch-package
+--- a/node_modules/@types/react-native-text-input-mask/index.d.ts
++++ b/node_modules/@types/react-native-text-input-mask/index.d.ts
+@@ -223,4 +223,6 @@ export interface TextInputMaskProps extends ReactNative.ViewProps, ReactNative.T
+     value?: string;
+ }
+ 
+-export default class TextInputMask extends React.Component<TextInputMaskProps> { }
++export default class TextInputMask extends React.Component<TextInputMaskProps> {
++  clear: () => void;
++}

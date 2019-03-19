@@ -1,0 +1,44 @@
+patch-package
+--- a/node_modules/react-native-text-input-mask/index.js
++++ b/node_modules/react-native-text-input-mask/index.js
+@@ -10,6 +10,7 @@ import {
+ const mask = NativeModules.RNTextInputMask.mask
+ const unmask = NativeModules.RNTextInputMask.unmask
+ const setMask = NativeModules.RNTextInputMask.setMask
++const setText = NativeModules.RNTextInputMask.setText
+ export { mask, unmask, setMask }
+ 
+ export default class TextInputMask extends Component {
+@@ -68,4 +69,13 @@ export default class TextInputMask extends Component {
+       }}
+     />);
+   }
++
++  clear() {
++    if (Platform.OS === 'ios') {
++      setText(findNodeHandle(this.input), '');
++    } else {
++      this.input.setNativeProps({ text: '' });
++    }
++    this.props.onChangeText('');
++  }
+ }
+--- a/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
++++ b/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
+@@ -59,6 +59,16 @@ RCT_EXPORT_METHOD(setMask:(nonnull NSNumber *)reactNode mask:(NSString *)mask) {
+     }];
+ }
+ 
++RCT_EXPORT_METHOD(setText:(nonnull NSNumber *)reactNode text:(NSString *)text){
++    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, RCTSinglelineTextInputView *> *viewRegistry ) {
++        dispatch_async(dispatch_get_main_queue(), ^{
++            RCTSinglelineTextInputView *view = viewRegistry[reactNode];
++            UIView<RCTBackedTextInputViewProtocol>  *textView = [view backedTextInputView];
++            [textView setAttributedText:[[NSAttributedString alloc] initWithString:text]];
++        });
++    }];
++}
++
+ - (void)textField:(RCTUITextField *)textField didFillMandatoryCharacters:(BOOL)complete didExtractValue:(NSString *)value
+ {
+     [self.bridge.eventDispatcher sendTextEventWithType:RCTTextEventTypeChange
