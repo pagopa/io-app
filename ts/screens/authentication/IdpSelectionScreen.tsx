@@ -59,7 +59,7 @@ const idps: ReadonlyArray<IdentityProvider> = [
   {
     id: "lepidaid",
     name: "Lepida ID",
-    logo: require("../../../img/spid-idp-lepida.png"),
+    logo: require("../../../img/spid-idp-lepidaid.png"),
     entityID: "lepidaid",
     profileUrl: "https://id.lepida.it/"
   },
