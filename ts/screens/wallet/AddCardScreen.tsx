@@ -8,6 +8,8 @@ import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import {
+  AppState,
+  AppStateStatus,
   FlatList,
   Image,
   Keyboard,
@@ -22,6 +24,7 @@ import { PaymentRequestsGetResponse } from "../../../definitions/backend/Payment
 
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
+import MaskedInput from "../../components/ui/MaskedInput";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
@@ -82,6 +85,13 @@ const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
 const EMPTY_CARD_SECURITY_CODE = "";
 
+const INITIAL_STATE: State = {
+  pan: none,
+  expirationDate: none,
+  securityCode: none,
+  holder: none
+};
+
 function getCardFromState(state: State): Option<CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
@@ -124,14 +134,29 @@ function getCardFromState(state: State): Option<CreditCard> {
 }
 
 class AddCardScreen extends React.Component<Props, State> {
+  private panRef = React.createRef<typeof MaskedInput>();
+  private expirationDateRef = React.createRef<typeof MaskedInput>();
+  private securityCodeRef = React.createRef<typeof MaskedInput>();
+
   constructor(props: Props) {
     super(props);
-    this.state = {
-      pan: none,
-      expirationDate: none,
-      securityCode: none,
-      holder: none
-    };
+    this.state = INITIAL_STATE;
+  }
+
+  public componentDidMount() {
+    // The AppState change is also stored and notified by our redux store but
+    // we are using the event listener directly because we want to clear the
+    // input fields as soon as possible before going to background (remember
+    // Android does not have an "inactive" intermediate state).
+    // If we wait the AppState change from the store sometimes when we reopen
+    // the app the input values are still present and after some milliseconds
+    // get cleared.
+
+    AppState.addEventListener("change", this.handleAppStateChange);
+  }
+
+  public componentWillUnmount() {
+    AppState.removeEventListener("change", this.handleAppStateChange);
   }
 
   public render(): React.ReactNode {
@@ -210,6 +235,7 @@ class AddCardScreen extends React.Component<Props, State> {
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
               inputMaskProps={{
+                ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 placeholder: I18n.t("wallet.dummyCard.values.pan"),
                 keyboardType: "numeric",
@@ -217,7 +243,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 mask: "[0000] [0000] [0000] [0000] [999]",
                 onChangeText: (_, value) =>
                   this.setState({
-                    pan: value !== EMPTY_CARD_PAN ? some(value) : none
+                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
                   })
               }}
             />
@@ -230,6 +256,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
                   inputMaskProps={{
+                    ref: this.expirationDateRef,
                     value: this.state.expirationDate.getOrElse(
                       EMPTY_CARD_EXPIRATION_DATE
                     ),
@@ -241,7 +268,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     onChangeText: (_, value) =>
                       this.setState({
                         expirationDate:
-                          value !== EMPTY_CARD_EXPIRATION_DATE
+                          value && value !== EMPTY_CARD_EXPIRATION_DATE
                             ? some(value)
                             : none
                       })
@@ -255,6 +282,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
                   inputMaskProps={{
+                    ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
                       EMPTY_CARD_SECURITY_CODE
                     ),
@@ -266,7 +294,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     onChangeText: (_, value) =>
                       this.setState({
                         securityCode:
-                          value !== EMPTY_CARD_SECURITY_CODE
+                          value && value !== EMPTY_CARD_SECURITY_CODE
                             ? some(value)
                             : none
                       })
@@ -311,6 +339,23 @@ class AddCardScreen extends React.Component<Props, State> {
       </BaseScreenComponent>
     );
   }
+
+  private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
+    if (nextAppStateStatus !== "active") {
+      // Due to a bug in the `react-native-text-input-mask` library we have to
+      // reset the value in the TextInputMask components by calling the "clear" method.
+      if (this.panRef.current) {
+        this.panRef.current._root.clear();
+      }
+      if (this.expirationDateRef.current) {
+        this.expirationDateRef.current._root.clear();
+      }
+      if (this.securityCodeRef.current) {
+        this.securityCodeRef.current._root.clear();
+      }
+      this.setState(INITIAL_STATE);
+    }
+  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
