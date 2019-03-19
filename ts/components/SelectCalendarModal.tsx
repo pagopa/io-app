@@ -100,6 +100,13 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     };
   }
 
+  private onBackPress = () => {
+    this.props.onCancel();
+    // Returning true is mandatory to avoid the default press action to be
+    // triggered as if the modal was not visible
+    return true;
+  };
+
   public render() {
     const { calendars } = this.state;
 
@@ -150,11 +157,11 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     this.fetchCalendars();
-    BackHandler.addEventListener("hardwareBackPress", this.props.onCancel);
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.props.onCancel);
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 
   private fetchCalendars = () => {
