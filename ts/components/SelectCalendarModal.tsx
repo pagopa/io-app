@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Container, Content, Text, View } from "native-base";
 import React from "react";
 import {
+  BackHandler,
   Platform,
   StyleSheet,
   TouchableHighlight,
@@ -149,6 +150,11 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     this.fetchCalendars();
+    BackHandler.addEventListener("hardwareBackPress", this.props.onCancel);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.props.onCancel);
   }
 
   private fetchCalendars = () => {
