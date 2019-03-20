@@ -202,6 +202,7 @@ const customVariables = Object.assign(materialVariables, {
   },
 
   // Header
+  appHeaderHeight: 40,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
