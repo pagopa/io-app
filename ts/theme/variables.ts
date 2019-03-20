@@ -216,7 +216,6 @@ const customVariables = Object.assign(materialVariables, {
     return this.textColor;
   },
   androidStatusBarColor: "#FFFFFF",
-  iOSiPhoneXStatusBarHeight: 40,
 
   // Modal
   modalMargin: 0,
