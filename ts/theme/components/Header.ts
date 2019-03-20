@@ -55,8 +55,7 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3,
         padding: variables.iconSizeBase / 4
-      },
-      flex: 0
+      }
     },
 
     ".primary": {

@@ -8,12 +8,7 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
-  contentContainer: { flex: 1, justifyContent: "center" },
-  rightOnly: {
-    // The following property is needed to avoid the <Right> component to be
-    // put in the middle of the header
-    flex: 1
-  }
+  contentContainer: { flex: 1, justifyContent: "center" }
 });
 
 type Props = {
@@ -27,7 +22,7 @@ class AbortOnboardingModal extends React.PureComponent<Props> {
       <Modal visible={true} onRequestClose={this.props.onClose}>
         <Container>
           <AppHeader noLeft={true}>
-            <Right style={styles.rightOnly}>
+            <Right>
               <Button transparent={true} onPress={this.props.onClose}>
                 <IconFont name="io-close" />
               </Button>
