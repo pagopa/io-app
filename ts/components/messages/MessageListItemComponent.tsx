@@ -182,7 +182,7 @@ export class MessageListItemComponent extends React.Component<Props> {
         width="100%"
         firstLineWidth="100%"
         lastLineWidth="75%"
-        animate="shine"
+        animate="fade"
         onReady={!pot.isLoading(message)}
       >
         <Text leftAlign={true}>{subject}</Text>
