@@ -4,6 +4,7 @@ import { CheckBox, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
+import Placeholder from "rn-placeholder";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
   },
 
   subjectRow: {
+    alignItems: "center",
     marginBottom: 16
   },
 
@@ -171,6 +173,22 @@ export class MessageListItemComponent extends React.Component<Props> {
           I18n.t("messages.noContent")
         );
 
+    const subjectComponent = (
+      <Placeholder.Paragraph
+        lineNumber={2}
+        textSize={variables.fontSizeBase}
+        lineSpacing={5}
+        color={variables.brandLightGray}
+        width="100%"
+        firstLineWidth="100%"
+        lastLineWidth="75%"
+        animate="fade"
+        onReady={!pot.isLoading(message)}
+      >
+        <Text leftAlign={true}>{subject}</Text>
+      </Placeholder.Paragraph>
+    );
+
     return (
       <TouchableOpacity
         key={meta.id}
@@ -214,9 +232,7 @@ export class MessageListItemComponent extends React.Component<Props> {
               </Col>
             </Row>
             <Row style={styles.subjectRow}>
-              <Col size={11}>
-                <Text leftAlign={true}>{subject}</Text>
-              </Col>
+              <Col size={11}>{subjectComponent}</Col>
               <Col size={1} style={styles.iconContainer}>
                 {isSelectionModeEnabled ? (
                   <CheckBox
