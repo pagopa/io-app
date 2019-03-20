@@ -102,8 +102,6 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
   private onBackPress = () => {
     this.props.onCancel();
-    // Returning true is mandatory to avoid the default press action to be
-    // triggered as if the modal was not visible
     return true;
   };
 

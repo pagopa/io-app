@@ -21,7 +21,6 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-// imp\ort Markdown from "../../components/ui/Markdown";
 
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 
