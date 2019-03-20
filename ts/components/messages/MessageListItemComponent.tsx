@@ -153,6 +153,27 @@ export class MessageListItemComponent extends React.Component<Props> {
           I18n.t("messages.unknownSender")
         );
 
+    const serviceComponent = (
+      <Placeholder.Line
+        textSize={variables.fontSizeBase}
+        color={variables.brandLightGray}
+        width="100%"
+        animate="fade"
+        onReady={!pot.isLoading(service)}
+      >
+        <Text
+          style={[
+            styles.serviceText,
+            !messageState.isRead ? styles.serviceTextNew : undefined
+          ]}
+          leftAlign={true}
+          bold={true}
+        >
+          {uiService}
+        </Text>
+      </Placeholder.Line>
+    );
+
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
     // TODO: get created_at from CreatedMessageWithoutContent to avoid waiting
@@ -213,18 +234,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                   />
                 </Col>
               )}
-              <Col size={10}>
-                <Text
-                  style={[
-                    styles.serviceText,
-                    !messageState.isRead ? styles.serviceTextNew : undefined
-                  ]}
-                  leftAlign={true}
-                  bold={true}
-                >
-                  {uiService}
-                </Text>
-              </Col>
+              <Col size={10}>{serviceComponent}</Col>
               <Col size={2}>
                 <Text style={styles.dateText} rightAlign={true}>
                   {uiCreatedAt}
