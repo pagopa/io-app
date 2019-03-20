@@ -1,6 +1,6 @@
-import { Container, Content, Right, Text } from "native-base";
+import { Button, Container, Content, Right, Text } from "native-base";
 import * as React from "react";
-import { Modal, StyleSheet, TouchableHighlight } from "react-native";
+import { Modal, StyleSheet } from "react-native";
 
 import I18n from "../i18n";
 import AppHeader from "./ui/AppHeader";
@@ -21,11 +21,11 @@ class AbortOnboardingModal extends React.PureComponent<Props> {
     return (
       <Modal visible={true} onRequestClose={this.props.onClose}>
         <Container>
-          <AppHeader>
+          <AppHeader noLeft={true}>
             <Right>
-              <TouchableHighlight onPress={this.props.onClose}>
+              <Button transparent={true} onPress={this.props.onClose}>
                 <IconFont name="io-close" />
-              </TouchableHighlight>
+              </Button>
             </Right>
           </AppHeader>
 

@@ -5,9 +5,9 @@
  * needed)
  */
 
-import { Container, Content, H1, Right, View } from "native-base";
+import { Button, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, TouchableHighlight } from "react-native";
+import { InteractionManager, Modal } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
 import ActivityIndicator from "./ui/ActivityIndicator";
@@ -62,14 +62,11 @@ export class ContextualHelp extends React.Component<Props, State> {
         onRequestClose={onClose}
       >
         <Container>
-          <AppHeader>
+          <AppHeader noLeft={true}>
             <Right>
-              <TouchableHighlight
-                onPress={onClose}
-                underlayColor={"transparent"}
-              >
+              <Button onPress={onClose} transparent={true}>
                 <IconFont name="io-close" />
-              </TouchableHighlight>
+              </Button>
             </Right>
           </AppHeader>
 

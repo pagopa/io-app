@@ -6,8 +6,6 @@ import * as React from "react";
 import { ContextualHelp } from "../ContextualHelp";
 import { BaseHeader } from "./BaseHeader";
 
-import GoBackButton from "../GoBackButton";
-
 interface ContextualHelpProps {
   title: string;
   body: () => React.ReactNode;
@@ -15,7 +13,7 @@ interface ContextualHelpProps {
 
 interface OwnProps {
   headerTitle?: string;
-  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
+  goBack?: React.ComponentProps<typeof BaseHeader>["goBack"];
   contextualHelp?: ContextualHelpProps;
   primary?: boolean;
   headerBody?: React.ReactNode;

@@ -1,6 +1,6 @@
-import { Body, Left, Right, Text } from "native-base";
+import { Body, Button, Left, Right, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet } from "react-native";
 
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
@@ -13,9 +13,6 @@ import { InstabugButtons } from "../InstabugButtons";
 const styles = StyleSheet.create({
   helpButton: {
     padding: 8
-  },
-  right: {
-    flex: 0
   }
 });
 
@@ -34,7 +31,7 @@ export class BaseHeader extends React.PureComponent<Props> {
   public render() {
     const { goBack, headerTitle, onShowHelp, body } = this.props;
     return (
-      <AppHeader primary={this.props.primary}>
+      <AppHeader primary={this.props.primary} noLeft={goBack !== true}>
         {goBack && (
           <Left>
             <GoBackButton testID="back-button" onPress={goBack} />
@@ -47,16 +44,16 @@ export class BaseHeader extends React.PureComponent<Props> {
             </Text>
           )}
         </Body>
-        <Right style={styles.right}>
+        <Right>
           <InstabugButtons />
           {onShowHelp && (
-            <TouchableHighlight
+            <Button
               onPress={onShowHelp}
               style={styles.helpButton}
-              underlayColor={"transparent"}
+              transparent={true}
             >
               <IconFont name="io-question" />
-            </TouchableHighlight>
+            </Button>
           )}
         </Right>
       </AppHeader>

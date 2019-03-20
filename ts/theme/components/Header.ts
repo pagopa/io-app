@@ -21,14 +21,12 @@ export default (): Theme => {
         },
         padding: 0,
         justifyContent: "center",
-        width: variables.iconSizeBase * 2
+        width: (variables.iconSizeBase * 5) / 3,
+        height: (variables.iconSizeBase * 5) / 3
       },
       paddingLeft: 0,
-      marginLeft:
-        -((variables.iconSizeBase * 3) / 4) +
-        variables.appHeaderPaddingHorizontal,
-      marginRight: -((variables.iconSizeBase * 3) / 4) / 2,
-      flex: 0.17
+      flex: 0,
+      minWidth: 40
     },
 
     "NativeBase.Body": {
@@ -38,14 +36,44 @@ export default (): Theme => {
         color: variables.toolbarTextColor,
         fontSize: variables.headerBodyFontSize
       },
-      marginLeft: 10
+      "NativeBase.Button": {
+        minWidth: 40,
+        alignSelf: "flex-start",
+        justifyContent: "center",
+        width: (variables.iconSizeBase * 5) / 3,
+        height: (variables.iconSizeBase * 5) / 3
+      }
+    },
+
+    "NativeBase.Right": {
+      "NativeBase.Button": {
+        minWidth: 40,
+        ".transparent": {
+          marginRight: 0,
+          padding: variables.iconSizeBase / 4
+        },
+        width: (variables.iconSizeBase * 5) / 3,
+        height: (variables.iconSizeBase * 5) / 3,
+        padding: variables.iconSizeBase / 4
+      }
     },
 
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground,
       "NativeBase.Right": {
-        "UIComponent.IconFont": {
-          color: variables.brandPrimaryInverted
+        "NativeBase.Button": {
+          "UIComponent.IconFont": {
+            color: variables.brandPrimaryInverted
+          }
+        }
+      }
+    },
+
+    ".noLeft": {
+      "NativeBase.Body": {
+        marginLeft: variables.appHeaderPaddingHorizontal,
+        "NativeBase.Button": {
+          marginLeft: -variables.appHeaderPaddingHorizontal
         }
       }
     },

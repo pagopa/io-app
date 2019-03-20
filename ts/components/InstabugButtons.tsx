@@ -1,16 +1,10 @@
 import Instabug, { invocationMode } from "instabug-reactnative";
 import * as React from "react";
-import { StyleSheet, TouchableHighlight } from "react-native";
 import { connect } from "react-redux";
 
+import { Button } from "native-base";
 import { GlobalState } from "../store/reducers/types";
 import IconFont from "./ui/IconFont";
-
-const styles = StyleSheet.create({
-  button: {
-    padding: 8
-  }
-});
 
 interface OwnProps {
   color?: string;
@@ -31,18 +25,12 @@ class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
     return (
       this.props.isDebugModeEnabled && (
         <React.Fragment>
-          <TouchableHighlight
-            onPress={this.handleIBChatPress}
-            style={styles.button}
-          >
+          <Button onPress={this.handleIBChatPress} transparent={true}>
             <IconFont name="io-chat" color={this.props.color} />
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this.handleIBBugPress}
-            style={styles.button}
-          >
+          </Button>
+          <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont name="io-bug" color={this.props.color} />
-          </TouchableHighlight>
+          </Button>
         </React.Fragment>
       )
     );

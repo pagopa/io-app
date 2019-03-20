@@ -49,7 +49,7 @@ export default class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
       <Container>
-        <AppHeader style={styles.darkGrayBg}>
+        <AppHeader style={styles.darkGrayBg} noLeft={!this.props.allowGoBack}>
           {this.props.allowGoBack && (
             <Left>
               <GoBackButton white={true} style={styles.noalias} />
