@@ -106,19 +106,7 @@ const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
 };
 
 /**
- * Implements the biometric recognition preference screen where the user can
- * opt for explicitly not using fingerprint. This class shows up two possible
- * scenarios:
- * * a switch to enable/disable biometric recognition. Enabled if the
- *   fingerprint is enrolled.
- * * the above switch (disabled) with a button below that redirects the user to
- *   device settings otherwise.
- *
- * Please note that this screen must not be displayed if biometric recognition
- * is unavailable.
- */
-/**
- * A modal that allow the user to select one of the device available Calendars
+ * Allows the user to select one of the device available Calendars
  */
 class CalendarScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -187,7 +175,6 @@ class CalendarScreen extends React.PureComponent<Props, State> {
   private fetchCalendars = () => {
     this.setState({ calendars: pot.toLoading(pot.none) });
     // Fetch user calendars.
-    // The needed permissions are already checked/asked by the MessageCTABar component.
     RNCalendarEvents.findCalendars()
       .then(calendars =>
         // Filter only the calendars that allow modifications
