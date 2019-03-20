@@ -2,10 +2,8 @@
  * This file contains all the JS scripts used by the Markdown component.
  */
 
-// Javascript to detect link click and generate window message for internal links
-export const NOTIFY_INTERNAL_LINK_CLICK_SCRIPT = `
-const IO_INTERNAL_LINK_PREFIX = "ioit://";
-
+// Javascript to detect link click and generate window LINK_MESSAGE
+export const NOTIFY_LINK_CLICK_SCRIPT = `
 function findParent(tagname, el) {
   while (el) {
     if ((el.nodeName || el.tagName).toLowerCase() === tagname.toLowerCase()) {
@@ -21,16 +19,14 @@ document.body.onclick = function(e) {
   const from = findParent("a", e.target || e.srcElement);
   if (from) {
     const href = from.href;
-    if (href.startsWith(IO_INTERNAL_LINK_PREFIX)) {
-      const message = {
-        type: "LINK_MESSAGE",
-        payload: {
-          href
-        }
-      };
-      window.postMessage(JSON.stringify(message));
-      return false;
-    }
+    const message = {
+      type: "LINK_MESSAGE",
+      payload: {
+        href
+      }
+    };
+    window.postMessage(JSON.stringify(message));
+    return false;
   }
 };
 
