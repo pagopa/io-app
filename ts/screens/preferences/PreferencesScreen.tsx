@@ -48,6 +48,7 @@ type Props = OwnProps &
 type State = {
   isFingerprintAvailable: boolean;
   hasCalendarPermission: boolean;
+  checkCalendarPermissionAndUpdateStateListener?: any;
 };
 
 const INITIAL_STATE: State = {
@@ -90,6 +91,24 @@ class PreferencesScreen extends React.Component<Props, State> {
       _ => undefined
     );
 
+    this.setState({
+      checkCalendarPermissionAndUpdateStateListener: this.props.navigation.addListener(
+        "willFocus",
+        this.checkCalendarPermissionAndUpdateState
+      )
+    });
+  }
+
+  public componentWillUnmount() {
+    if (
+      typeof this.state.checkCalendarPermissionAndUpdateStateListener !==
+      "undefined"
+    ) {
+      this.state.checkCalendarPermissionAndUpdateStateListener.remove();
+    }
+  }
+
+  private checkCalendarPermissionAndUpdateState = () => {
     checkCalendarPermission().then(
       hasPermission =>
         this.setState({
@@ -97,7 +116,7 @@ class PreferencesScreen extends React.Component<Props, State> {
         }),
       _ => undefined
     );
-  }
+  };
 
   public render() {
     const contextualHelp = {
