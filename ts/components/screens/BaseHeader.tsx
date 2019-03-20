@@ -31,10 +31,7 @@ export class BaseHeader extends React.PureComponent<Props> {
   public render() {
     const { goBack, headerTitle, onShowHelp, body } = this.props;
     return (
-      <AppHeader
-        primary={this.props.primary}
-        noLeft={typeof goBack === "undefined" || goBack === false}
-      >
+      <AppHeader primary={this.props.primary} noLeft={goBack !== true}>
         {goBack && (
           <Left>
             <GoBackButton testID="back-button" onPress={goBack} />
