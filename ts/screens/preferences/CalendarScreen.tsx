@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import { NavigationInjectedProps } from "react-navigation";
 
+import * as pot from "italia-ts-commons/lib/pot";
+import { Button, Text } from "native-base";
 import {
   Platform,
   StyleSheet,
@@ -10,24 +12,14 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-
-import { Button, Text } from "native-base";
-
-import * as pot from "italia-ts-commons/lib/pot";
-
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-
-import IconFont from "../../../ts/components/ui/IconFont";
-
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-
 import customVariables from "../../theme/variables";
 
 const styles = StyleSheet.create({
