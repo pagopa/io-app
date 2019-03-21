@@ -8,7 +8,7 @@ import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 
 // Prefix to match uri like `ioit://PROFILE_MAIN`
-const INTERNAL_TARGET_PREFIX = "ioit://";
+export const IO_INTERNAL_LINK_PREFIX = "ioit://";
 
 const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
   ROUTES.MESSAGES_HOME,
@@ -22,7 +22,7 @@ const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
 ];
 
 function getInternalRoute(href: string): Option<string> {
-  return some(href.split(INTERNAL_TARGET_PREFIX))
+  return some(href.split(IO_INTERNAL_LINK_PREFIX))
     .filter(_ => _.length === 2 && _[0] === "")
     .chain(_ =>
       fromNullable(ALLOWED_ROUTE_NAMES.find(e => e === _[1].toUpperCase()))
