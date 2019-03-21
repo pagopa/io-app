@@ -1,12 +1,18 @@
 import { Content, View } from "native-base";
 import * as React from "react";
-import { InteractionManager } from "react-native";
+import { InteractionManager, StyleSheet } from "react-native";
 
 import themeVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import ActivityIndicator from "../ui/ActivityIndicator";
 import Markdown from "../ui/Markdown";
 import BaseScreenComponent from "./BaseScreenComponent";
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    paddingBottom: 100
+  }
+});
 
 interface OwnProps {
   readonly markdown: string;
@@ -47,7 +53,11 @@ export class MarkdownScreenComponent extends React.PureComponent<Props, State> {
             <ActivityIndicator color={themeVariables.brandPrimaryLight} />
           </View>
         )}
-        {this.state.content && <Content>{this.state.content}</Content>}
+        {this.state.content && (
+          <Content contentContainerStyle={styles.contentContainer}>
+            {this.state.content}
+          </Content>
+        )}
       </BaseScreenComponent>
     );
   }
