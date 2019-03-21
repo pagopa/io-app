@@ -166,11 +166,13 @@ class CalendarScreen extends React.PureComponent<Props, State> {
     this.setState({ calendars: pot.noneLoading });
     // Fetch user calendars.
     RNCalendarEvents.findCalendars()
-      .then(calendars =>
-        // Filter only the calendars that allow modifications
-        calendars.filter(calendar => calendar.allowsModifications)
-      )
-      .then(calendars => this.setState({ calendars: pot.some(calendars) }))
+      .then(calendars => {
+        // Filter out only calendars that allow modifications
+        const editableCalendars = calendars.filter(
+          calendar => calendar.allowsModifications
+        );
+        this.setState({ calendars: pot.some(editableCalendars) });
+      })
       .catch(_ => {
         const fetchError: FetchError = {
           kind: "FETCH_ERROR"
