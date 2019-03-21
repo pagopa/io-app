@@ -100,7 +100,7 @@ const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
 /**
  * Allows the user to select one of the device available Calendars
  */
-class CalendarScreen extends React.PureComponent<Props, State> {
+class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
@@ -200,4 +200,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CalendarScreen);
+)(CalendarsPreferencesScreen);

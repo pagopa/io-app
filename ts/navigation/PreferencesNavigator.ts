@@ -3,7 +3,7 @@ import { createStackNavigator } from "react-navigation";
 import ROUTES from "./routes";
 
 import BiometricRecognitionScreen from "../screens/preferences/BiometricRecognitionScreen";
-import CalendarScreen from "../screens/preferences/CalendarScreen";
+import CalendarsPreferencesScreen from "../screens/preferences/CalendarsPreferencesScreen";
 import PreferencesScreen from "../screens/preferences/PreferencesScreen";
 import ServiceDetailsScreen from "../screens/preferences/ServiceDetailsScreen";
 import ServicesScreen from "../screens/preferences/ServicesScreen";
@@ -20,7 +20,7 @@ const PreferencesNavigator = createStackNavigator(
       screen: BiometricRecognitionScreen
     },
     [ROUTES.PREFERENCES_CALENDAR]: {
-      screen: CalendarScreen
+      screen: CalendarsPreferencesScreen
     },
     [ROUTES.PREFERENCES_SERVICE_DETAIL]: {
       screen: ServiceDetailsScreen
