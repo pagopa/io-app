@@ -156,9 +156,9 @@ export class MessageListItemComponent extends React.Component<Props> {
     const serviceComponent = (
       <Placeholder.Line
         textSize={variables.fontSizeBase}
-        color={variables.brandLightGray}
+        color={variables.shineColor}
         width="100%"
-        animate="fade"
+        animate="shine"
         onReady={!pot.isLoading(service)}
       >
         <Text
@@ -199,11 +199,11 @@ export class MessageListItemComponent extends React.Component<Props> {
         lineNumber={2}
         textSize={variables.fontSizeBase}
         lineSpacing={5}
-        color={variables.brandLightGray}
+        color={variables.shineColor}
         width="100%"
         firstLineWidth="100%"
         lastLineWidth="75%"
-        animate="fade"
+        animate="shine"
         onReady={!pot.isLoading(message)}
       >
         <Text leftAlign={true}>{subject}</Text>
