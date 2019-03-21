@@ -106,12 +106,10 @@ class CalendarScreen extends React.PureComponent<Props, State> {
     this.state = INITIAL_STATE;
   }
 
-  private goBack = () => this.props.navigation.goBack();
-
   private onCalendarSelected = (calendar: Calendar) => {
     this.props.preferredCalendarSaveSuccess(calendar);
 
-    this.goBack();
+    this.props.navigation.goBack();
   };
 
   public render() {
@@ -121,7 +119,7 @@ class CalendarScreen extends React.PureComponent<Props, State> {
       <TopScreenComponent
         headerTitle={I18n.t("preferences.title")}
         title={I18n.t("preferences.list.preferred_calendar.title")}
-        goBack={this.goBack}
+        goBack={this.props.navigation.goBack}
         subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
       >
         <View
