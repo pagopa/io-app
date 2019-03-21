@@ -20,15 +20,12 @@ import { connect } from "react-redux";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
-import { handleInternalLink } from "./handlers/internalLink";
-import {
-  NOTIFY_BODY_HEIGHT_SCRIPT,
-  NOTIFY_INTERNAL_LINK_CLICK_SCRIPT
-} from "./script";
+import { handleLinkMessage } from "./handlers/link";
+import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
 
 const INJECTED_JAVASCRIPT = `
-${NOTIFY_INTERNAL_LINK_CLICK_SCRIPT}
+${NOTIFY_LINK_CLICK_SCRIPT}
 `;
 
 const TITILLIUM_WEB_FONT_PATH =
@@ -253,7 +250,7 @@ class Markdown extends React.PureComponent<Props, State> {
     messageOrErrors.map(message => {
       switch (message.type) {
         case "LINK_MESSAGE":
-          handleInternalLink(dispatch, message.payload.href);
+          handleLinkMessage(dispatch, message.payload.href);
           break;
 
         case "RESIZE_MESSAGE":
