@@ -48,7 +48,9 @@ type Props = OwnProps &
 type State = {
   isFingerprintAvailable: boolean;
   hasCalendarPermission: boolean;
-  checkCalendarPermissionAndUpdateStateListener?: any;
+  checkCalendarPermissionAndUpdateStateSubscription?: ReturnType<
+    NavigationScreenProp<NavigationState>["addListener"]
+  >;
 };
 
 const INITIAL_STATE: State = {
@@ -92,7 +94,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     );
 
     this.setState({
-      checkCalendarPermissionAndUpdateStateListener: this.props.navigation.addListener(
+      checkCalendarPermissionAndUpdateStateSubscription: this.props.navigation.addListener(
         "willFocus",
         this.checkCalendarPermissionAndUpdateState
       )
@@ -101,10 +103,9 @@ class PreferencesScreen extends React.Component<Props, State> {
 
   public componentWillUnmount() {
     if (
-      typeof this.state.checkCalendarPermissionAndUpdateStateListener !==
-      "undefined"
+      this.state.checkCalendarPermissionAndUpdateStateSubscription !== undefined
     ) {
-      this.state.checkCalendarPermissionAndUpdateStateListener.remove();
+      this.state.checkCalendarPermissionAndUpdateStateSubscription.remove();
     }
   }
 
@@ -164,9 +165,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             </ListItem>
             {isFingerprintAvailable && (
               <ListItem
-                onPress={() =>
-                  this.props.navigateToFingerprintPreferenceScreen()
-                }
+                onPress={this.props.navigateToFingerprintPreferenceScreen}
               >
                 <PreferenceItem
                   kind="action"
@@ -184,9 +183,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               </ListItem>
             )}
             {hasCalendarPermission && (
-              <ListItem
-                onPress={() => this.props.navigateToCalendarPreferenceScreen()}
-              >
+              <ListItem onPress={this.props.navigateToCalendarPreferenceScreen}>
                 <PreferenceItem
                   kind="action"
                   title={I18n.t("preferences.list.preferred_calendar.title")}
