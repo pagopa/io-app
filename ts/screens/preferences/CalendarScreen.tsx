@@ -163,7 +163,7 @@ class CalendarScreen extends React.PureComponent<Props, State> {
   }
 
   private fetchCalendars = () => {
-    this.setState({ calendars: pot.toLoading(pot.none) });
+    this.setState({ calendars: pot.noneLoading });
     // Fetch user calendars.
     RNCalendarEvents.findCalendars()
       .then(calendars =>
