@@ -4,6 +4,7 @@ import { CheckBox, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
+import Placeholder from "rn-placeholder";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
   },
 
   subjectRow: {
+    alignItems: "center",
     marginBottom: 16
   },
 
@@ -151,6 +153,27 @@ export class MessageListItemComponent extends React.Component<Props> {
           I18n.t("messages.unknownSender")
         );
 
+    const serviceComponent = (
+      <Placeholder.Line
+        textSize={variables.fontSizeBase}
+        color={variables.shineColor}
+        width="100%"
+        animate="shine"
+        onReady={!pot.isLoading(service)}
+      >
+        <Text
+          style={[
+            styles.serviceText,
+            !messageState.isRead ? styles.serviceTextNew : undefined
+          ]}
+          leftAlign={true}
+          bold={true}
+        >
+          {uiService}
+        </Text>
+      </Placeholder.Line>
+    );
+
     // Try to convert createdAt to a human representation, fall back to original
     // value if createdAt cannot be converted to a Date
     // TODO: get created_at from CreatedMessageWithoutContent to avoid waiting
@@ -170,6 +193,22 @@ export class MessageListItemComponent extends React.Component<Props> {
           pot.map(message, _ => _.content.subject),
           I18n.t("messages.noContent")
         );
+
+    const subjectComponent = (
+      <Placeholder.Paragraph
+        lineNumber={2}
+        textSize={variables.fontSizeBase}
+        lineSpacing={5}
+        color={variables.shineColor}
+        width="100%"
+        firstLineWidth="100%"
+        lastLineWidth="75%"
+        animate="shine"
+        onReady={!pot.isLoading(message)}
+      >
+        <Text leftAlign={true}>{subject}</Text>
+      </Placeholder.Paragraph>
+    );
 
     return (
       <TouchableOpacity
@@ -195,18 +234,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                   />
                 </Col>
               )}
-              <Col size={10}>
-                <Text
-                  style={[
-                    styles.serviceText,
-                    !messageState.isRead ? styles.serviceTextNew : undefined
-                  ]}
-                  leftAlign={true}
-                  bold={true}
-                >
-                  {uiService}
-                </Text>
-              </Col>
+              <Col size={10}>{serviceComponent}</Col>
               <Col size={2}>
                 <Text style={styles.dateText} rightAlign={true}>
                   {uiCreatedAt}
@@ -214,9 +242,7 @@ export class MessageListItemComponent extends React.Component<Props> {
               </Col>
             </Row>
             <Row style={styles.subjectRow}>
-              <Col size={11}>
-                <Text leftAlign={true}>{subject}</Text>
-              </Col>
+              <Col size={11}>{subjectComponent}</Col>
               <Col size={1} style={styles.iconContainer}>
                 {isSelectionModeEnabled ? (
                   <CheckBox
