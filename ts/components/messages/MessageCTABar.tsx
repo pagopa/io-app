@@ -6,6 +6,7 @@ import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -207,7 +208,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <CalendarIconComponent
           height={calendarIconComponentSize}
           width={calendarIconComponentSize}
-          month={formatDateAsMonth(dueDate)}
+          month={_.capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
           textColor={variables.colorWhite}

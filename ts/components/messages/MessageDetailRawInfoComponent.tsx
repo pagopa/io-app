@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -13,6 +12,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import IconFont from "../ui/IconFont";
+import { format } from "../../utils/dates";
 
 type OwnProps = {
   message: MessageWithContentPO;
