@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
+import customVariables from "../../theme/variables";
 import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
-    backgroundColor: "#fefefe",
+    backgroundColor: customVariables.brandLightGray,
     padding: 10
   },
   buttonBarPrimaryButton: {
