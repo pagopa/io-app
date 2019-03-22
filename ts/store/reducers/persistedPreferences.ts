@@ -8,12 +8,12 @@ import {
 } from "../actions/persistedPreferences";
 
 export type PersistedPreferencesState = Readonly<{
-  isFingerprintEnabled: boolean | undefined;
+  isFingerprintEnabled: boolean;
   preferredCalendar: Calendar | undefined;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
-  isFingerprintEnabled: undefined,
+  isFingerprintEnabled: true,
   preferredCalendar: undefined
 };
 
