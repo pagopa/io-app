@@ -7,12 +7,12 @@ export type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
 }>;
 
-const initialDebugState: DebugState = {
-  isDebugModeEnabled: false
+const INITIAL_STATE: DebugState = {
+  isDebugModeEnabled: true
 };
 
 export function debugReducer(
-  state: DebugState = initialDebugState,
+  state: DebugState = INITIAL_STATE,
   action: Action
 ): DebugState {
   switch (action.type) {
