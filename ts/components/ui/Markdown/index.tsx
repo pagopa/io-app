@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
+import ActivityIndicator from "../ActivityIndicator";
 import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
@@ -228,7 +229,7 @@ class Markdown extends React.PureComponent<Props, State> {
       );
     }
 
-    return null;
+    return <ActivityIndicator />;
   }
 
   // When the injected html is loaded inject the script to notify the height
