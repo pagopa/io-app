@@ -14,7 +14,8 @@ import {
   ViewStyle
 } from "react-native";
 import * as RNFS from "react-native-fs";
-import { WebView, WebViewMessageEvent } from "react-native-webview";
+import { WebView } from "react-native-webview";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 
 import { ReduxProps } from "../../../store/actions/types";
@@ -223,6 +224,7 @@ class Markdown extends React.PureComponent<Props, State> {
               injectedJavaScript={INJECTED_JAVASCRIPT}
               onLoadEnd={this.handleLoadEnd}
               onMessage={this.handleWebViewMessage}
+              showsVerticalScrollIndicator={false}
             />
           </View>
         </ScrollView>
