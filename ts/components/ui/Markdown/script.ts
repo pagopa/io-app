@@ -41,7 +41,7 @@ const message = {
     height: document.body.scrollHeight
   }
 };
-window.postMessage(JSON.stringify(message));
+window.ReactNativeWebView.postMessage(JSON.stringify(message));
 
 true
 `;
