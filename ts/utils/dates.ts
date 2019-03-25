@@ -1,16 +1,13 @@
 import { format as dateFnsFormat } from "date-fns";
-import it from "date-fns/locale/it";
 import en from "date-fns/locale/en";
+import it from "date-fns/locale/it";
 import I18n from "../i18n";
 
 type Locales = {
-  [index: string]: Object;
+  [index: string]: object;
 };
 
-const locales: Locales = {
-  it: it,
-  en: en
-};
+const locales: Locales = { it, en };
 
 /**
  * Extract language from locale coming from I18n library.
@@ -34,8 +31,11 @@ export function formatDateAsReminder(date: Date): string {
   });
 }
 
-export function format(date: string | number | Date, format?: string): string {
-  return dateFnsFormat(date, format, {
+export function format(
+  date: string | number | Date,
+  dateFormat?: string
+): string {
+  return dateFnsFormat(date, dateFormat, {
     locale: locales[I18n.currentLocale()]
   });
 }

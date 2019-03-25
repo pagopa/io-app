@@ -6,13 +6,13 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback
 } from "react-native";
+import { format } from "../../utils/dates";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import IconFont from "../ui/IconFont";
-import { format } from "../../utils/dates";
 
 type OwnProps = {
   message: MessageWithContentPO;
