@@ -1,10 +1,10 @@
 import { createTransform } from "redux-persist";
 
-import { resetPotStatus } from "../../utils/pot";
+import { potToSomeOrNone } from "../../utils/pot";
 import { GlobalState } from "../reducers/types";
 
 /**
- * A redux-persist transformer that reset the status of the pots
+ * A redux-persist transformer that resets the status of the pots
  */
 export const PotTransform = createTransform(
   // We only care about rehydrated so we do not apply any transformation
@@ -15,7 +15,7 @@ export const PotTransform = createTransform(
       const entitiesState = { ...(outboundState as GlobalState["entities"]) };
 
       // Reset pots status for messages
-      const messagesAllIds = resetPotStatus(entitiesState.messages.allIds);
+      const messagesAllIds = potToSomeOrNone(entitiesState.messages.allIds);
       const messagesById = { ...entitiesState.messages.byId };
       Object.keys(messagesById).forEach(k => {
         const oldMessageState = messagesById[k];
@@ -25,7 +25,7 @@ export const PotTransform = createTransform(
             ...oldMessageState,
             meta: { ...oldMessageState.meta },
             // Reset the pot status
-            message: resetPotStatus(oldMessageState.message)
+            message: potToSomeOrNone(oldMessageState.message)
           };
         }
       });
@@ -43,7 +43,7 @@ export const PotTransform = createTransform(
         if (oldPotServicePublic) {
           // Reset the pot status
           // tslint:disable-next-line: no-object-mutation
-          servicesById[k] = resetPotStatus(oldPotServicePublic);
+          servicesById[k] = potToSomeOrNone(oldPotServicePublic);
         }
       });
       // tslint:disable-next-line: no-object-mutation
