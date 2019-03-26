@@ -21,7 +21,7 @@ export function logosForService(
   logosRepoUrl: string = `${contentRepoUrl}/logos`
 ): ReadonlyArray<ImageURISource> {
   return [
-    `services/${service.service_id}`,
+    `services/${service.service_id.toLowerCase()}`,
     `organizations/${service.organization_fiscal_code.replace(/^0+/, "")}`
   ].map(u => ({
     uri: `${logosRepoUrl}/${u}.png`
