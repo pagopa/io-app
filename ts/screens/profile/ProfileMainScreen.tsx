@@ -58,6 +58,12 @@ const styles = StyleSheet.create({
   },
   itemLeftText: {
     alignSelf: "flex-start"
+  },
+  debugModeSection: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   }
 });
 
@@ -149,14 +155,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View
-                style={{
-                  width: "100%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}
-              >
+              <View style={styles.debugModeSection}>
                 <Text>Debug mode</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}
@@ -165,106 +164,113 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </View>
             </ListItem>
 
-            <ListItem>
-              <Button
-                info={true}
-                small={true}
-                onPress={() =>
-                  copyToClipboardWithFeedback(DeviceInfo.getVersion())
-                }
-              >
-                <Text>
-                  {`${I18n.t(
-                    "profile.main.appVersion"
-                  )} ${DeviceInfo.getVersion()}`}
-                </Text>
-              </Button>
-            </ListItem>
-            {backendInfo && (
-              <ListItem>
-                <Button
-                  info={true}
-                  small={true}
-                  onPress={() =>
-                    copyToClipboardWithFeedback(backendInfo.version)
-                  }
-                >
-                  <Text>
-                    {`${I18n.t("profile.main.backendVersion")} ${
-                      backendInfo.version
-                    }`}
-                  </Text>
-                </Button>
-              </ListItem>
-            )}
-            {sessionToken && (
-              <ListItem>
-                <Button
-                  info={true}
-                  small={true}
-                  onPress={() => copyToClipboardWithFeedback(sessionToken)}
-                >
-                  <Text>{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
-                </Button>
-              </ListItem>
-            )}
-            {walletToken && (
-              <ListItem>
-                <Button
-                  info={true}
-                  small={true}
-                  onPress={() => copyToClipboardWithFeedback(walletToken)}
-                >
-                  <Text>{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
-                </Button>
-              </ListItem>
-            )}
-
-            <ListItem>
-              <Button
-                info={true}
-                small={true}
-                onPress={() => copyToClipboardWithFeedback(notificationId)}
-              >
-                <Text>{`Notification ID ${notificationId.slice(0, 6)}`}</Text>
-              </Button>
-            </ListItem>
-
-            {notificationToken && (
-              <ListItem>
-                <Button
-                  info={true}
-                  small={true}
-                  onPress={() => copyToClipboardWithFeedback(notificationToken)}
-                >
-                  <Text>{`Notification token ${notificationToken.slice(
-                    0,
-                    6
-                  )}`}</Text>
-                </Button>
-              </ListItem>
-            )}
-
-            <ListItem>
-              <Button
-                danger={true}
-                small={true}
-                onPress={this.handleClearCachePress}
-              >
-                <Text>Clear cache</Text>
-              </Button>
-            </ListItem>
-
             {this.props.isDebugModeEnabled && (
-              <ListItem>
-                <Button
-                  danger={true}
-                  small={true}
-                  onPress={this.props.dispatchSessionExpired}
-                >
-                  <Text>{I18n.t("profile.main.forgetCurrentSession")}</Text>
-                </Button>
-              </ListItem>
+              <React.Fragment>
+                <ListItem>
+                  <Button
+                    info={true}
+                    small={true}
+                    onPress={() =>
+                      copyToClipboardWithFeedback(DeviceInfo.getVersion())
+                    }
+                  >
+                    <Text>
+                      {`${I18n.t(
+                        "profile.main.appVersion"
+                      )} ${DeviceInfo.getVersion()}`}
+                    </Text>
+                  </Button>
+                </ListItem>
+                {backendInfo && (
+                  <ListItem>
+                    <Button
+                      info={true}
+                      small={true}
+                      onPress={() =>
+                        copyToClipboardWithFeedback(backendInfo.version)
+                      }
+                    >
+                      <Text>
+                        {`${I18n.t("profile.main.backendVersion")} ${
+                          backendInfo.version
+                        }`}
+                      </Text>
+                    </Button>
+                  </ListItem>
+                )}
+                {sessionToken && (
+                  <ListItem>
+                    <Button
+                      info={true}
+                      small={true}
+                      onPress={() => copyToClipboardWithFeedback(sessionToken)}
+                    >
+                      <Text>{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
+                    </Button>
+                  </ListItem>
+                )}
+                {walletToken && (
+                  <ListItem>
+                    <Button
+                      info={true}
+                      small={true}
+                      onPress={() => copyToClipboardWithFeedback(walletToken)}
+                    >
+                      <Text>{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
+                    </Button>
+                  </ListItem>
+                )}
+
+                <ListItem>
+                  <Button
+                    info={true}
+                    small={true}
+                    onPress={() => copyToClipboardWithFeedback(notificationId)}
+                  >
+                    <Text>{`Notification ID ${notificationId.slice(
+                      0,
+                      6
+                    )}`}</Text>
+                  </Button>
+                </ListItem>
+
+                {notificationToken && (
+                  <ListItem>
+                    <Button
+                      info={true}
+                      small={true}
+                      onPress={() =>
+                        copyToClipboardWithFeedback(notificationToken)
+                      }
+                    >
+                      <Text>{`Notification token ${notificationToken.slice(
+                        0,
+                        6
+                      )}`}</Text>
+                    </Button>
+                  </ListItem>
+                )}
+
+                <ListItem>
+                  <Button
+                    danger={true}
+                    small={true}
+                    onPress={this.handleClearCachePress}
+                  >
+                    <Text>Clear cache</Text>
+                  </Button>
+                </ListItem>
+
+                <ListItem>
+                  <Button
+                    danger={true}
+                    small={true}
+                    onPress={this.props.dispatchSessionExpired}
+                  >
+                    <Text>{I18n.t("profile.main.forgetCurrentSession")}</Text>
+                  </Button>
+                </ListItem>
+              </React.Fragment>
             )}
           </List>
         </Content>

@@ -423,9 +423,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               renderInformationRow("Web", web_url, () =>
                 Linking.openURL(web_url).then(() => 0, () => 0)
               )}
-            {renderInformationRow("ID", service.service_id, () =>
-              Clipboard.setString(service.service_id)
-            )}
+            {this.props.isDebugModeEnabled &&
+              renderInformationRow("ID", service.service_id, () =>
+                Clipboard.setString(service.service_id)
+              )}
             <View spacer={true} large={true} />
           </Grid>
         </Content>
@@ -437,7 +438,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   services: state.entities.services,
   content: state.content,
-  profile: state.profile
+  profile: state.profile,
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
