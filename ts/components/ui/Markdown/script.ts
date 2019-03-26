@@ -25,7 +25,7 @@ document.body.onclick = function(e) {
         href
       }
     };
-    window.postMessage(JSON.stringify(message));
+    window.ReactNativeWebView.postMessage(JSON.stringify(message));
     return false;
   }
 };
