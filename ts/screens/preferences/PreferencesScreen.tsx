@@ -1,8 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, List, ListItem } from "native-base";
+import { Content, List, ListItem } from "native-base";
 import * as React from "react";
 
-import { Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -22,18 +22,13 @@ import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
-import { Calendar } from "react-native-calendar-events";
 import { checkCalendarPermission } from "../../utils/calendar";
 
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
 
-import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import SelectCalendarModal from "../../components/SelectCalendarModal";
 import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
+import { navigateToCalendarPreferenceScreen } from "../../store/actions/navigation";
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -46,7 +41,6 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps &
-  LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   ReduxProps;
@@ -54,24 +48,15 @@ type Props = OwnProps &
 type State = {
   isFingerprintAvailable: boolean;
   hasCalendarPermission: boolean;
+  checkCalendarPermissionAndUpdateStateSubscription?: ReturnType<
+    NavigationScreenProp<NavigationState>["addListener"]
+  >;
 };
 
 const INITIAL_STATE: State = {
   isFingerprintAvailable: false,
   hasCalendarPermission: false
 };
-
-const styles = StyleSheet.create({
-  selectCalendarModalHeader: {
-    marginBottom: 25
-  }
-});
-
-const SelectCalendarModalHeader = (
-  <H1 style={styles.selectCalendarModalHeader}>
-    {I18n.t("messages.cta.preferenceCalendarSelect")}
-  </H1>
-);
 
 /**
  * Translates the primary languages of the provided locales.
@@ -108,34 +93,29 @@ class PreferencesScreen extends React.Component<Props, State> {
       _ => undefined
     );
 
+    this.setState({
+      checkCalendarPermissionAndUpdateStateSubscription: this.props.navigation.addListener(
+        "willFocus",
+        this.checkCalendarPermissionAndUpdateState
+      )
+    });
+  }
+
+  public componentWillUnmount() {
+    if (
+      this.state.checkCalendarPermissionAndUpdateStateSubscription !== undefined
+    ) {
+      this.state.checkCalendarPermissionAndUpdateStateSubscription.remove();
+    }
+  }
+
+  private checkCalendarPermissionAndUpdateState = () => {
     checkCalendarPermission().then(
       hasPermission =>
         this.setState({
           hasCalendarPermission: hasPermission
         }),
       _ => undefined
-    );
-  }
-
-  private onCalendarSelected = (calendar: Calendar) => {
-    this.props.hideModal();
-
-    this.props.preferredCalendarSaveSuccess(calendar);
-  };
-
-  private onSelectCalendarCancel = () => {
-    this.props.hideModal();
-  };
-
-  private renderDefaultCalendarPreference = () => {
-    const { showModal } = this.props;
-    // Show a modal to let the user select a calendar
-    showModal(
-      <SelectCalendarModal
-        onCancel={this.onSelectCalendarCancel}
-        onCalendarSelected={this.onCalendarSelected}
-        header={SelectCalendarModalHeader}
-      />
     );
   };
 
@@ -185,9 +165,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             </ListItem>
             {isFingerprintAvailable && (
               <ListItem
-                onPress={() =>
-                  this.props.navigateToFingerprintPreferenceScreen()
-                }
+                onPress={this.props.navigateToFingerprintPreferenceScreen}
               >
                 <PreferenceItem
                   kind="action"
@@ -205,7 +183,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               </ListItem>
             )}
             {hasCalendarPermission && (
-              <ListItem onPress={this.renderDefaultCalendarPreference}>
+              <ListItem onPress={this.props.navigateToCalendarPreferenceScreen}>
                 <PreferenceItem
                   kind="action"
                   title={I18n.t("preferences.list.preferred_calendar.title")}
@@ -260,15 +238,11 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
-  preferredCalendarSaveSuccess: (calendar: Calendar) =>
-    dispatch(
-      preferredCalendarSaveSuccess({
-        preferredCalendar: calendar
-      })
-    )
+  navigateToCalendarPreferenceScreen: () =>
+    dispatch(navigateToCalendarPreferenceScreen())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(PreferencesScreen));
+)(PreferencesScreen);

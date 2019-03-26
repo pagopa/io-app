@@ -1,22 +1,26 @@
+import * as React from "react";
+import { connect } from "react-redux";
+
+import { NavigationInjectedProps } from "react-navigation";
+
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Container, Content, Text, View } from "native-base";
-import React from "react";
+import { Button, Text } from "native-base";
 import {
-  BackHandler,
   Platform,
   StyleSheet,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import IconFont from "../../components/ui/IconFont";
+import I18n from "../../i18n";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 
-import { connect } from "react-redux";
-import { GlobalState } from "../store/reducers/types";
-
-import IconFont from "../components/ui/IconFont";
-import I18n from "../i18n";
-import customVariables from "../theme/variables";
-import FooterWithButtons from "./ui/FooterWithButtons";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
+import customVariables from "../../theme/variables";
 
 const styles = StyleSheet.create({
   content: {
@@ -32,7 +36,7 @@ const styles = StyleSheet.create({
     color: customVariables.contentPrimaryBackground
   },
   separator: {
-    height: 10,
+    paddingTop: 25,
     width: "100%"
   }
 });
@@ -60,15 +64,19 @@ const CalendarItem: React.SFC<CalendarItemProps> = props => (
   </TouchableComponent>
 );
 
-type Props = {
-  onCancel: () => void;
-  onCalendarSelected: (calendar: Calendar) => void;
-  header?: React.ReactNode;
-  defaultCalendar?: Calendar;
-};
+type OwnProps = NavigationInjectedProps;
+
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  ReduxProps &
+  OwnProps;
 
 type State = {
   calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>;
+};
+
+const INITIAL_STATE: State = {
+  calendars: pot.none
 };
 
 type FetchError = {
@@ -90,29 +98,40 @@ const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
 };
 
 /**
- * A modal that allow the user to select one of the device available Calendars
+ * Allows the user to select one of the device available Calendars
  */
-class SelectCalendarModal extends React.PureComponent<Props, State> {
+class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      calendars: pot.none
-    };
+    this.state = INITIAL_STATE;
   }
 
-  private onBackPress = () => {
-    this.props.onCancel();
-    // Returning true is mandatory to avoid the default press action to be
-    // triggered as if the modal was not visible
-    return true;
+  private onCalendarSelected = (calendar: Calendar) => {
+    this.props.preferredCalendarSaveSuccess(calendar);
+
+    this.props.navigation.goBack();
   };
 
   public render() {
     const { calendars } = this.state;
 
     return (
-      <Container>
-        <Content style={styles.content}>
+      <TopScreenComponent
+        headerTitle={I18n.t("preferences.title")}
+        title={I18n.t("preferences.list.preferred_calendar.title")}
+        goBack={this.props.navigation.goBack}
+        subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
+      >
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 25
+          }}
+        />
+        <View style={styles.content}>
           {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
           {pot.isError(calendars) && (
             <React.Fragment>
@@ -124,56 +143,36 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
           )}
           {pot.isSome(calendars) && (
             <React.Fragment>
-              {this.props.header || null}
               {calendars.value.map(calendar => (
                 <CalendarItem
                   key={calendar.id}
                   calendar={calendar}
-                  onPress={() => this.props.onCalendarSelected(calendar)}
+                  onPress={() => this.onCalendarSelected(calendar)}
                 />
               ))}
-              {this.props.defaultCalendar === undefined && (
-                <View>
-                  <View style={styles.separator} />
-                  <Text>{I18n.t("messages.cta.helper")}</Text>
-                </View>
-              )}
             </React.Fragment>
           )}
-        </Content>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={{
-            disabled: pot.isLoading(calendars),
-            bordered: true,
-            onPress: this.props.onCancel,
-            title: I18n.t("global.buttons.cancel"),
-            block: true
-          }}
-        />
-      </Container>
+          <Text style={styles.separator}>{I18n.t("messages.cta.helper")}</Text>
+        </View>
+      </TopScreenComponent>
     );
   }
 
   public componentDidMount() {
     this.fetchCalendars();
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 
   private fetchCalendars = () => {
-    this.setState({ calendars: pot.toLoading(pot.none) });
+    this.setState({ calendars: pot.noneLoading });
     // Fetch user calendars.
-    // The needed permissions are already checked/asked by the MessageCTABar component.
     RNCalendarEvents.findCalendars()
-      .then(calendars =>
-        // Filter only the calendars that allow modifications
-        calendars.filter(calendar => calendar.allowsModifications)
-      )
-      .then(calendars => this.setState({ calendars: pot.some(calendars) }))
+      .then(calendars => {
+        // Filter out only calendars that allow modifications
+        const editableCalendars = calendars.filter(
+          calendar => calendar.allowsModifications
+        );
+        this.setState({ calendars: pot.some(editableCalendars) });
+      })
       .catch(_ => {
         const fetchError: FetchError = {
           kind: "FETCH_ERROR"
@@ -189,4 +188,16 @@ const mapStateToProps = (state: GlobalState) => ({
   defaultCalendar: state.persistedPreferences.preferredCalendar
 });
 
-export default connect(mapStateToProps)(SelectCalendarModal);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  preferredCalendarSaveSuccess: (calendar: Calendar) =>
+    dispatch(
+      preferredCalendarSaveSuccess({
+        preferredCalendar: calendar
+      })
+    )
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CalendarsPreferencesScreen);
