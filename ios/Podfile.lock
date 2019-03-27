@@ -21,7 +21,7 @@ PODS:
     - React
   - react-native-splash-screen (3.1.1):
     - React
-  - react-native-webview (3.1.2):
+  - react-native-webview (5.4.2):
     - React
   - React/ART (0.57.8):
     - React/Core
@@ -160,7 +160,7 @@ SPEC CHECKSUMS:
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   react-native-splash-screen: 353334c5ae82d8c74501ea7cbb916cb7cb20c8bf
-  react-native-webview: 606ec4ef906472200a6b62d03c20be0c97a805ba
+  react-native-webview: 84a2f3b7d1db70f43a58ce492b9449c15827e0ad
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNDeviceInfo: e7c5fcde13d40e161d8a27f6c5dc69c638936002
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
