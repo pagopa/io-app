@@ -9,24 +9,12 @@ type DFNSLocales = { [index in Locales]: object };
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en };
 
-export function formatDateAsMonth(
-  date: Date
-): ReturnType<typeof dateFnsFormat> {
-  const localePrimary = getLocalePrimary(I18n.currentLocale());
-
-  return dateFnsFormat(
-    date,
-    "MMM",
-    localePrimary.isSome() && locales.hasOwnProperty(localePrimary.value)
-      ? {
-          locale: locales[localePrimary.value as Locales]
-        }
-      : undefined
-  );
+export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
+  return format(date, "MMM");
 }
 
-export function formatDateAsDay(date: Date): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, "DD", { locale: locales[I18n.currentLocale()] });
+export function formatDateAsDay(date: Date): ReturnType<typeof format> {
+  return format(date, "DD");
 }
 
 export function formatDateAsReminder(
@@ -39,7 +27,14 @@ export function format(
   date: string | number | Date,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, dateFormat, {
-    locale: locales[I18n.currentLocale()]
-  });
+  const localePrimary = getLocalePrimary(I18n.currentLocale());
+
+  return dateFnsFormat(
+    date,
+    dateFormat,
+    localePrimary
+      .mapNullable(lp => locales[lp as Locales]) // becomes empty if locales[lp] is undefined
+      .map(locale => ({ locale }))
+      .toUndefined() // if some returns the value, if empty return undefined
+  );
 }
