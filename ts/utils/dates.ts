@@ -1,24 +1,28 @@
 import { format as dateFnsFormat } from "date-fns";
-import en from "date-fns/locale/en";
-import it from "date-fns/locale/it";
+import dfns_en from "date-fns/locale/en";
+import dfns_it from "date-fns/locale/it";
+import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
+import { getLocalePrimary } from "./locale";
 
-type Locales = {
-  [index: string]: object;
-};
+type DFNSLocales = { [index in Locales]: object };
 
-const locales: Locales = { it, en };
+const locales: DFNSLocales = { it: dfns_it, en: dfns_en };
 
-/**
- * Extract language from locale coming from I18n library.
- * @param locale string - has format: "language"_"country"
- */
-const getLanguage = (locale: string) => locale.slice(0, 2);
+export function formatDateAsMonth(
+  date: Date
+): ReturnType<typeof dateFnsFormat> {
+  const localePrimary = getLocalePrimary(I18n.currentLocale());
 
-export function formatDateAsMonth(date: Date): string {
-  return dateFnsFormat(date, "MMM", {
-    locale: locales[getLanguage(I18n.currentLocale())]
-  });
+  return dateFnsFormat(
+    date,
+    "MMM",
+    localePrimary.isSome() && locales.hasOwnProperty(localePrimary.value)
+      ? {
+          locale: locales[localePrimary.value as Locales]
+        }
+      : undefined
+  );
 }
 
 export function formatDateAsDay(date: Date): ReturnType<typeof dateFnsFormat> {
