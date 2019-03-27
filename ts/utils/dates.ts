@@ -21,20 +21,20 @@ export function formatDateAsMonth(date: Date): string {
   });
 }
 
-export function formatDateAsDay(date: Date): string {
+export function formatDateAsDay(date: Date): ReturnType<typeof dateFnsFormat> {
   return dateFnsFormat(date, "DD", { locale: locales[I18n.currentLocale()] });
 }
 
-export function formatDateAsReminder(date: Date): string {
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", {
-    locale: locales[I18n.currentLocale()]
-  });
+export function formatDateAsReminder(
+  date: Date
+): ReturnType<typeof dateFnsFormat> {
+  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
 export function format(
   date: string | number | Date,
   dateFormat?: string
-): string {
+): ReturnType<typeof dateFnsFormat> {
   return dateFnsFormat(date, dateFormat, {
     locale: locales[I18n.currentLocale()]
   });
