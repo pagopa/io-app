@@ -2,3 +2,4 @@
 "NSCalendarsUsageDescription" = "IO ha necessità di accedere ai tuoi calendari per permetterti di ricordare le scadenze";
 "NSContactsUsageDescription" = "IO ha necessità di accedere ai tuoi contatti per permetterti di aggiungerli come partecipanti alle scadenze";
 "NSFaceIDUsageDescription" = "IO ha necessità di accedere a Face ID per permetterti di effettuare un'autenticazione più veloce";
+"NSLocationAlwaysUsageDescription" = "IO vuole sapere la tua posizione anche quando si trova in background";
