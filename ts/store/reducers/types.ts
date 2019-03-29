@@ -10,6 +10,7 @@ import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { IdentificationState } from "./identification";
+import { InstallationState } from "./installation";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
@@ -40,6 +41,7 @@ export type GlobalState = Readonly<{
   content: ContentState;
   navigationHistory: NavigationHistoryState;
   identification: IdentificationState;
+  installation: InstallationState;
   debug: DebugState;
 }>;
 
