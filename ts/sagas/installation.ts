@@ -4,7 +4,6 @@
 import { call, Effect, put, select } from "redux-saga/effects";
 
 import { sessionInvalid } from "../store/actions/authentication";
-import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
 import { GlobalState } from "../store/reducers/types";
 import { deletePin } from "../utils/keychain";
@@ -26,7 +25,5 @@ export function* previousInstallationDataDeleteSaga(): IterableIterator<
     yield call(deletePin);
     // invalidate the session
     yield put(sessionInvalid());
-
-    yield put(previousInstallationDataDeleteSuccess());
   }
 }

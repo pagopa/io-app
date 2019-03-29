@@ -20,6 +20,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
+import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
@@ -79,6 +80,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   if (Platform.OS === "ios") {
     yield call(previousInstallationDataDeleteSaga);
   }
+  yield put(previousInstallationDataDeleteSuccess());
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
