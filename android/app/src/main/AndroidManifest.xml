@@ -9,7 +9,6 @@
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
   <uses-permission android:name="it.teamdigitale.app.italiaapp.permission.C2D_MESSAGE" />
-  <uses-permission android:name="android.permission.VIBRATE"/>
 
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
