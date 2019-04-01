@@ -15,6 +15,9 @@ const PIN_KEY = "PIN";
 
 /**
  * Wrapper that sets default accessible option.
+ *
+ * More about accessibility options:
+ * https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlock
  */
 export async function setGenericPasswordWithDefaultAccessibleOption(
   username: string,
