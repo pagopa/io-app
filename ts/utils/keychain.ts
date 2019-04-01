@@ -17,7 +17,9 @@ const PIN_KEY = "PIN";
  * Saves the provided PIN in the Keychain
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  return await Keychain.setGenericPassword(PIN_KEY, pin);
+  return await Keychain.setGenericPassword(PIN_KEY, pin, {
+    accessible: Keychain.SecAccessible.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+  });
 }
 
 /**

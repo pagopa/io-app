@@ -21,7 +21,10 @@ export default function createSecureStorage(): Storage {
     },
 
     setItem: async (key, value) =>
-      await Keychain.setGenericPassword(USERNAME, value, { service: key }),
+      await Keychain.setGenericPassword(USERNAME, value, {
+        service: key,
+        accessible: Keychain.SecAccessible.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+      }),
 
     removeItem: async key =>
       await Keychain.resetGenericPassword({ service: key })
