@@ -11,14 +11,14 @@ class FlagSecureComponent extends React.PureComponent<Props> {
   }
 
   public componentDidMount() {
+    // Enable FLAG_SECURE when requested.
     if (this.props.isFlagSecureEnabled) {
-      // Activate FLAG_SECURE only when debug mode is disabled.
       FlagSecure.activate();
     }
   }
 
   public componentDidUpdate() {
-    // Activate FLAG_SECURE only when debug mode is disabled.
+    // When isFlagSecureEnabled property changes we need update FLAG_SECURE.
     this.props.isFlagSecureEnabled
       ? FlagSecure.activate()
       : FlagSecure.deactivate();
