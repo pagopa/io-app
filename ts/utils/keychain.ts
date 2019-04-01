@@ -26,6 +26,10 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
 ) {
   return Keychain.setGenericPassword(username, password, {
     ...options,
+    // The data in the keychain item can be accessed only while the device is unlocked by the user.
+    // This is recommended for items that need to be accessible only while the application is in the foreground. Items
+    // with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device,
+    // these items will not be present.
     accessible: Keychain.SecAccessible.WHEN_UNLOCKED_THIS_DEVICE_ONLY
   });
 }
