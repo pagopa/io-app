@@ -7,6 +7,7 @@ import {
   Platform,
   StatusBar
 } from "react-native";
+import FlagSecure from "react-native-flag-secure-android";
 import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
@@ -64,6 +65,11 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   public componentDidMount() {
+    if (!this.props.isDebugModeEnabled) {
+      // Activate FLAG_SECURE only when debug mode is disabled.
+      FlagSecure.activate();
+    }
+
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (Platform.OS === "android") {
@@ -91,7 +97,7 @@ class RootContainer extends React.PureComponent<Props> {
   //   return false;
   // }
 
-  public componentDidUpdate() {
+  public componentDidUpdate(prevProps: Props) {
     // FIXME: the logic here is a bit weird: there is an event handler
     //        (navigateToUrlHandler) that will dispatch a redux action for
     //        setting a "deep link" in the redux state - in turn, the update
@@ -102,8 +108,17 @@ class RootContainer extends React.PureComponent<Props> {
     // FIXME: how does this logic interacts with the logic that handles the deep
     //        link in the startup saga?
     const {
+      isDebugModeEnabled,
       deepLinkState: { deepLink, immediate }
     } = this.props;
+
+    const { isDebugModeEnabled: prevIsDebugModeEnabled } = prevProps;
+
+    // Check if debugMode changed and activate/deactivate the FLAG_SECURE.
+    if (isDebugModeEnabled !== prevIsDebugModeEnabled) {
+      // Activate FLAG_SECURE only when debug mode is disabled.
+      isDebugModeEnabled ? FlagSecure.deactivate() : FlagSecure.activate();
+    }
 
     if (immediate && deepLink) {
       this.props.navigateToDeepLink(deepLink);

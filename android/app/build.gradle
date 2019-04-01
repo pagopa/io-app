@@ -162,6 +162,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-flag-secure-android')
     compile project(':react-native-fs')
     compile project(':react-native-android-open-settings')
     compile project(':react-native-gesture-handler')
