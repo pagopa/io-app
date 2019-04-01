@@ -1,17 +1,21 @@
-import { compareAsc, differenceInCalendarMonths, startOfDay } from 'date-fns';
-import { none, Option, some } from 'fp-ts/lib/Option';
-import * as pot from 'italia-ts-commons/lib/pot';
-import { View } from 'native-base';
-import React, { ComponentProps } from 'react';
-import { StyleSheet } from 'react-native';
+import { compareAsc, startOfDay, startOfMonth } from "date-fns";
+import { none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { View } from "native-base";
+import React, { ComponentProps } from "react";
+import { StyleSheet } from "react-native";
 
-import { lexicallyOrderedMessagesStateSelector } from '../../store/reducers/entities/messages';
-import { MessageState } from '../../store/reducers/entities/messages/messagesById';
+import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   isMessageWithContentAndDueDatePO,
-  MessageWithContentAndDueDatePO,
-} from '../../types/MessageWithContentAndDueDatePO';
-import MessageAgenda, { MessageAgendaSection } from './MessageAgenda';
+  MessageWithContentAndDueDatePO
+} from "../../types/MessageWithContentAndDueDatePO";
+import MessageAgenda, {
+  ItemLayout,
+  MessageAgendaSection,
+  Sections
+} from "./MessageAgenda";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -43,11 +47,10 @@ type OwnProps = {
 type Props = Pick<ComponentProps<typeof MessageAgenda>, "onRefresh"> & OwnProps;
 
 type State = {
-  isProcessing: boolean;
-  // How many months back to consider when showing the messages with deadline
-  monthsBack: number;
-  sections: ReturnType<typeof generateSections>;
-  sectionsToRender: ReturnType<typeof generateSections>;
+  sections: Sections;
+  sectionsToRender: Sections;
+  itemLayouts: ReadonlyArray<ItemLayout>;
+  currentTimeLimit: number;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
 };
 
@@ -56,7 +59,7 @@ type State = {
  */
 const generateSections = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
-) =>
+): Sections =>
   pot.getOrElse(
     pot.map(
       potMessagesState,
@@ -133,146 +136,180 @@ const generateSections = (
     []
   );
 
-const calculateInitialSectionsToRender = (
-  sections: ReturnType<typeof generateSections>,
-  monthsBack: number
-) => {
-  // Get the current date
-  const currentDate = new Date();
+const sectionsFromTimeLimit = (
+  sections: Sections,
+  timeLimit: number
+): Sections => {
+  const initialIndex = sections.findIndex(
+    section => new Date(section.title).getTime() >= timeLimit
+  );
 
-  // Find the first section with a date that is `monthsBack` back.
-  const initialSectionsIndex = sections.findIndex(section => {
-    const months = differenceInCalendarMonths(
-      currentDate,
-      new Date(section.title)
-    );
-    return months <= monthsBack;
-  });
-
-  return initialSectionsIndex < 0 ? [] : sections.slice(initialSectionsIndex);
+  return initialIndex < 0 ? [] : sections.slice(initialIndex);
 };
 
-const calculateNewSectionsToRenderWithNewMonthsBack = (
-  sections: ReturnType<typeof generateSections>,
-  initialMonthsBack: number
-) => {
-  const currentDate = new Date();
-
+const generateItemLayouts = (sections: Sections) => {
   // tslint:disable-next-line: no-let
-  let newInitialSectionIndex = -1;
+  let offset = 0;
   // tslint:disable-next-line: no-let
-  let newMonthsBack = initialMonthsBack;
-
-  if (
-    differenceInCalendarMonths(currentDate, new Date(sections[0].title)) <
-    newMonthsBack
-  ) {
-    return none;
-  }
-
-  while (newInitialSectionIndex < 0) {
-    // Find the first section with a date that is `monthsBack` back.
-    newInitialSectionIndex = sections.findIndex(section => {
-      const months = differenceInCalendarMonths(
-        currentDate,
-        new Date(section.title)
-      );
-      return months <= newMonthsBack;
+  let index = 0;
+  // tslint:disable-next-line: readonly-array
+  const itemLayouts: ItemLayout[] = [];
+  sections.forEach(section => {
+    itemLayouts.push({
+      length: 50,
+      offset,
+      index
     });
-    newMonthsBack++;
-  }
 
-  return some({
-    newSectionsToRender: sections.slice(newInitialSectionIndex),
-    newMonthsBack: newMonthsBack + 1
+    offset += 50;
+    index++;
+
+    section.data.forEach(_ => {
+      itemLayouts.push({
+        length: 100,
+        offset,
+        index
+      });
+
+      offset += 100;
+      index++;
+    });
+
+    itemLayouts.push({
+      length: 0,
+      offset,
+      index
+    });
+
+    offset += 0;
+    index++;
   });
+
+  return itemLayouts;
 };
 
 /**
  * A component to show the messages with a due_date.
  */
 class MessagesDeadlines extends React.PureComponent<Props, State> {
+  private scrollToSectionsIndex: Option<number> = none;
+  private messageAgendaRef = React.createRef<any>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
-      isProcessing: false,
-      monthsBack: 0,
       sections: [],
-      sectionsToRender: []
+      sectionsToRender: [],
+      itemLayouts: [],
+      currentTimeLimit: startOfMonth(new Date()).getTime()
     };
   }
 
-  public static getDerivedStateFromProps(
+  public static getDerivedStateFromProps = (
     nextProps: Props,
     prevState: State
-  ): Partial<State> | null {
-    // Calculate sections only if messagesState is changed
-    const sections =
-      nextProps.messagesState !== prevState.lastMessagesState
-        ? generateSections(nextProps.messagesState)
-        : prevState.sections;
+  ): Partial<State> | null => {
+    const { lastMessagesState, currentTimeLimit } = prevState;
+    const { messagesState } = nextProps;
 
-    const sectionsToRender =
-      sections !== prevState.sections
-        ? calculateInitialSectionsToRender(sections, prevState.monthsBack)
-        : prevState.sectionsToRender;
+    if (lastMessagesState !== messagesState) {
+      const sections = generateSections(messagesState);
+      const sectionsToRender = sectionsFromTimeLimit(
+        sections,
+        currentTimeLimit
+      );
+      const itemLayouts = generateItemLayouts(sectionsToRender);
 
-    return {
-      sections,
-      sectionsToRender,
-      lastMessagesState: nextProps.messagesState
-    };
-  }
+      return {
+        sections,
+        sectionsToRender,
+        itemLayouts
+      };
+    }
+
+    return null;
+  };
 
   public render() {
+    console.log("MessagesDeadlines::render", this.props, this.state);
     const { messagesState } = this.props;
-    const { isProcessing, sectionsToRender } = this.state;
+    const { sectionsToRender } = this.state;
 
-    const isLoading = pot.isLoading(messagesState) || isProcessing;
+    const isRefreshing = pot.isLoading(messagesState);
 
     return (
       <View style={styles.listWrapper}>
         <MessageAgenda
-          isRefreshing={isLoading}
+          ref={this.messageAgendaRef}
+          onContentSizeChange={this.onContentSizeChange}
           sections={sectionsToRender}
+          refreshing={isRefreshing}
           onRefresh={this.onRefresh}
+          getItemLayout={this.getItemLayout}
           onPressItem={this.handleOnPressItem}
         />
       </View>
     );
   }
 
+  public componentDidMount = () => {
+    console.log("After mount");
+  };
+
+  private getItemLayout = (_: Sections | null, index: number) =>
+    this.state.itemLayouts[index];
+
   private onRefresh = () => {
-    this.setState({
-      isProcessing: true
-    });
-    this.loadPreviousData().then(
-      _ => {
-        this.setState({
-          isProcessing: false,
-          monthsBack: _.newMonthsBack,
-          sectionsToRender: _.newSectionsToRender
-        });
-      },
-      _ => this.setState({ isProcessing: false, monthsBack: _.newMonthsBack })
-    );
+    this.loadNewSectionsToRender()
+      .then(newSectionsToRender =>
+        this.setState(prevState => {
+          const { sectionsToRender } = prevState;
+          // tslint:disable-next-line: no-object-mutation
+          this.scrollToSectionsIndex = some(
+            newSectionsToRender.length - sectionsToRender.length
+          );
+          return {
+            sectionsToRender: newSectionsToRender,
+            itemLayouts: generateItemLayouts(newSectionsToRender),
+            currentTimeLimit: startOfMonth(
+              newSectionsToRender[0].title
+            ).getTime()
+          };
+        })
+      )
+      .catch(_ => 0);
   };
 
   private handleOnPressItem = (id: string) => {
     this.props.navigateToMessageDetail(id);
   };
 
-  private loadPreviousData = (): Promise<any> => {
-    return new Promise((resolve, reject) => {
-      const { monthsBack, sections } = this.state;
-      const maybeNewSectionsToRenderWithNewMonthsBack = calculateNewSectionsToRenderWithNewMonthsBack(
-        sections,
-        monthsBack + 1
-      );
-      if (maybeNewSectionsToRenderWithNewMonthsBack.isSome()) {
-        resolve(maybeNewSectionsToRenderWithNewMonthsBack.value);
+  private onContentSizeChange = () => {
+    if (this.scrollToSectionsIndex.isSome()) {
+      if (this.messageAgendaRef.current) {
+        this.messageAgendaRef.current.scrollToSectionsIndex(
+          this.scrollToSectionsIndex.value
+        );
       }
-      reject({ newMonthsBack: monthsBack + 1 });
+      // tslint:disable-next-line: no-object-mutation
+      this.scrollToSectionsIndex = none;
+    }
+  };
+
+  private loadNewSectionsToRender = (): Promise<Sections> => {
+    return new Promise((resolve, reject) => {
+      const { sections, sectionsToRender } = this.state;
+
+      // We are already rendering all the sections
+      if (sections.length === sectionsToRender.length) {
+        reject();
+      }
+
+      const newTimeLimit = startOfMonth(
+        sections[sections.length - sectionsToRender.length - 1].title
+      ).getTime();
+
+      resolve(sectionsFromTimeLimit(sections, newTimeLimit));
     });
   };
 }

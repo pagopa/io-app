@@ -8,6 +8,7 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 const styles = StyleSheet.create({
   container: {
+    height: 100,
     padding: customVariables.contentPadding,
     flexDirection: "row"
   },

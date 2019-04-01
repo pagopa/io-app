@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { View } from "native-base";
-import React from "react";
+import React, { ComponentProps } from "react";
 import {
   SectionList,
   SectionListData,
@@ -16,6 +16,7 @@ import MessageAgendaItem from "./MessageAgendaItem";
 
 const styles = StyleSheet.create({
   sectionHeader: {
+    height: 50,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: customVariables.contentPadding / 2,
     backgroundColor: customVariables.brandLightGray
@@ -28,37 +29,70 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (_: MessageWithContentAndDueDatePO) => _.id;
 
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
-
 export type MessageAgendaSection = SectionListData<
   MessageWithContentAndDueDatePO
 >;
 
-type Props = {
-  // Can't use ReadonlyArray because of the SectionList section prop
-  // typescript definition.
-  // tslint:disable-next-line:readonly-array
-  sections: MessageAgendaSection[];
-  isRefreshing: boolean;
-  onRefresh: () => void;
+// tslint:disable-next-line: readonly-array
+export type Sections = MessageAgendaSection[];
+
+export type ItemLayout = {
+  length: number;
+  offset: number;
+  index: number;
+};
+
+type SelectedSectionListProps = Pick<
+  ComponentProps<SectionList<MessageAgendaSection>>,
+  "refreshing" | "onRefresh" | "onContentSizeChange"
+>;
+
+type OwnProps = {
+  sections: Sections;
+  getItemLayout: (data: Sections | null, index: number) => ItemLayout;
   onPressItem: (id: string) => void;
 };
+
+type Props = OwnProps & SelectedSectionListProps;
 
 /**
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props> {
+  private sectionListRef = React.createRef<any>();
+
+  public scrollToSectionsIndex = (sectionsIndex: number) => {
+    if (this.sectionListRef.current !== null) {
+      this.sectionListRef.current.scrollToLocation({
+        sectionIndex: sectionsIndex,
+        itemIndex: 0,
+        viewOffset: 50,
+        viewPosition: 1,
+        animated: true
+      });
+    }
+  };
+
   public render() {
-    const { sections, isRefreshing, onRefresh } = this.props;
+    const {
+      sections,
+      refreshing,
+      onRefresh,
+      getItemLayout,
+      onContentSizeChange
+    } = this.props;
     return (
       <SectionList
+        ref={this.sectionListRef}
+        // Forwarded props
         sections={sections}
-        keyExtractor={keyExtractor}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        getItemLayout={getItemLayout}
+        onContentSizeChange={onContentSizeChange}
         stickySectionHeadersEnabled={true}
         alwaysBounceVertical={false}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        refreshing={isRefreshing}
-        onRefresh={onRefresh}
+        keyExtractor={keyExtractor}
         renderSectionHeader={this.renderSectionHeader}
         renderItem={this.renderItem}
       />
@@ -67,12 +101,14 @@ class MessageAgenda extends React.PureComponent<Props> {
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     return (
-      <H5 style={styles.sectionHeader}>
-        {format(
-          info.section.title,
-          I18n.t("global.dateFormats.dayAndMonth")
-        ).toUpperCase()}
-      </H5>
+      <View style={styles.sectionHeader}>
+        <H5>
+          {format(
+            info.section.title,
+            I18n.t("global.dateFormats.dayAndMonth")
+          ).toUpperCase()}
+        </H5>
+      </View>
     );
   };
 
