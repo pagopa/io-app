@@ -1,6 +1,8 @@
 import * as Keychain from "react-native-keychain";
 import { Storage } from "redux-persist";
 
+import { setGenericPasswordWithDefaultAccessibleOption } from "../../utils/keychain";
+
 /**
  * A storage to save/restore values from/to the Keychain.
  * The react-native-keychain library do not support storing multiple key/value so we
@@ -21,9 +23,8 @@ export default function createSecureStorage(): Storage {
     },
 
     setItem: async (key, value) =>
-      await Keychain.setGenericPassword(USERNAME, value, {
-        service: key,
-        accessible: Keychain.SecAccessible.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+      await setGenericPasswordWithDefaultAccessibleOption(USERNAME, value, {
+        service: key
       }),
 
     removeItem: async key =>

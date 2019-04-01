@@ -14,12 +14,24 @@ import { PinString } from "../types/PinString";
 const PIN_KEY = "PIN";
 
 /**
+ * Wrapper that sets default accessible option.
+ */
+export async function setGenericPasswordWithDefaultAccessibleOption(
+  username: string,
+  password: string,
+  options?: Options
+) {
+  return Keychain.setGenericPassword(username, password, {
+    ...options,
+    accessible: Keychain.SecAccessible.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+  });
+}
+
+/**
  * Saves the provided PIN in the Keychain
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  return await Keychain.setGenericPassword(PIN_KEY, pin, {
-    accessible: Keychain.SecAccessible.WHEN_UNLOCKED_THIS_DEVICE_ONLY
-  });
+  return await setGenericPasswordWithDefaultAccessibleOption(PIN_KEY, pin);
 }
 
 /**

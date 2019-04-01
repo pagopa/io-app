@@ -17,6 +17,8 @@ type Options = {
 const keychainDB: KeychainDB = {};
 
 module.exports = {
+  SecAccessible: jest.fn(),
+
   getGenericPassword: jest.fn(
     (options: Options) =>
       keychainDB[options.service]
