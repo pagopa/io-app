@@ -1,6 +1,7 @@
 import {
   Button,
   Content,
+  H1,
   H3,
   Left,
   List,
@@ -16,11 +17,15 @@ import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import SelectLogoutMethod from "../../components/SelectLogoutMethod";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
+  logoutMethod,
   logoutRequest,
   sessionExpired
 } from "../../store/actions/authentication";
@@ -41,6 +46,7 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps &
+  LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -64,6 +70,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
+  },
+  modalHeader: {
+    marginBottom: 25
   }
 });
 
@@ -76,11 +85,30 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     Toast.show({ text: "The cache has been cleared." });
   };
 
+  private logout = (keepUserData: logoutMethod) => {
+    this.props.logout(keepUserData);
+
+    this.props.hideModal();
+  };
+
+  private onLogoutPress = () => {
+    // Show a modal to let the user select a calendar
+    this.props.showModal(
+      <SelectLogoutMethod
+        onCancel={this.props.hideModal}
+        onMethodSelected={this.logout}
+        header={
+          <H1 style={styles.modalHeader}>
+            {I18n.t("profile.logout.cta.header")}
+          </H1>
+        }
+      />
+    );
+  };
   public render() {
     const {
       navigation,
       resetPin,
-      logout,
       backendInfo,
       sessionToken,
       walletToken,
@@ -135,11 +163,11 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             {/* Logout/Exit */}
-            <ListItem onPress={logout}>
+            <ListItem onPress={this.onLogoutPress}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.logout")}</H3>
                 <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.logout")}
+                  {I18n.t("profile.logout.menulabel")}
                 </Text>
               </Left>
               <Right>
@@ -294,7 +322,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: () => dispatch(logoutRequest()),
+  logout: (keepUserData: logoutMethod) => dispatch(logoutRequest(keepUserData)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
@@ -304,4 +332,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileMainScreen);
+)(withLightModalContext(ProfileMainScreen));

@@ -58,7 +58,16 @@ profile:
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
-  logout: Esci da questa identità SPID
+  logout: 
+    menulabel: Esci da questa identità SPID
+    cta: 
+      header: Come vuoi uscire dall'app?
+      keepData: 
+        title: Esci ma conserva i miei dati
+        description: Per poter usare IO dovrai nuovamente accedere con la tua identità SPID, ma tutti i tuoi dati verranno conservati nell'applicazione (stato di lettura, etc.) e saranno immediatamente disponibili quando lanci l'app.
+      resetData: 
+        title: Esci e resetta l'applicazione
+        description: "L'app IO verrà ripristinata al suo stato iniziale, come fosse appena installata: se vuoi accedere con una diversa identità, o pensi di non volere più utilizzare l'app IO, puoi scegliere questa opzione. Tutti i dati che IO ha salvato sul tuo dispositivo verranno cancellati."
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
