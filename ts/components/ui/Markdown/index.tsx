@@ -75,6 +75,10 @@ body {
   font-family: 'Titillium Web';
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3333em;
+}
+
 ul, ol {
   padding-left: 32px;
 }
