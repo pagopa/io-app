@@ -18,6 +18,7 @@ import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
 import { IdentificationActions } from "./identification";
+import { InstallationActions } from "./installation";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
@@ -49,6 +50,7 @@ export type Action =
   | ContentActions
   | NavigationHistoryActions
   | IdentificationActions
+  | InstallationActions
   | DebugActions
   | CalendarEventsActions;
 

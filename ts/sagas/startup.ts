@@ -1,4 +1,5 @@
 import { isNone, Option } from "fp-ts/lib/Option";
+import { Platform } from "react-native";
 import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
 import {
@@ -19,6 +20,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
+import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
@@ -44,6 +46,7 @@ import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
 } from "./identification";
+import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
@@ -69,6 +72,16 @@ import { watchWalletSaga } from "./wallet";
  */
 // tslint:disable-next-line:cognitive-complexity no-big-function
 function* initializeApplicationSaga(): IterableIterator<Effect> {
+  // FIXME: Workaround for iOS only. Below iOS version 12.3 Keychain is not
+  //        cleared between one installation and another, so it is needed to
+  //        manually clear previous installation user info in order to force
+  //        the user to choose PIN and run through onboarding every new
+  //        installation.
+  if (Platform.OS === "ios") {
+    yield call(previousInstallationDataDeleteSaga);
+  }
+  yield put(previousInstallationDataDeleteSuccess());
+
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield put(resetProfileState());
