@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -7,6 +6,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback
 } from "react-native";
+import { format } from "../../utils/dates";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";

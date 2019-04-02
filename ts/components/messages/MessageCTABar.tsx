@@ -1,9 +1,10 @@
 import { isSome, none } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
+import { capitalize } from "lodash";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { Alert, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 
@@ -178,8 +179,26 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         .then(hasPermission => {
           if (hasPermission) {
             if (calendarEvent && isEventInCalendar) {
-              // If the event is in the calendar remove it
-              this.removeReminderFromCalendar(calendarEvent);
+              // If the event is in the calendar prompt an alert and ask for confirmation
+              Alert.alert(
+                I18n.t("messages.cta.reminderRemoveRequest.title"),
+                undefined,
+                [
+                  {
+                    text: I18n.t("messages.cta.reminderRemoveRequest.cancel"),
+                    style: "cancel"
+                  },
+                  {
+                    text: I18n.t("messages.cta.reminderRemoveRequest.ok"),
+                    style: "destructive",
+                    onPress: () => {
+                      // after confirmation remove it
+                      this.removeReminderFromCalendar(calendarEvent);
+                    }
+                  }
+                ],
+                { cancelable: false }
+              );
             } else if (preferredCalendar !== undefined) {
               this.addReminderToCalendar(message, dueDate)(preferredCalendar);
             } else {
@@ -207,7 +226,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <CalendarIconComponent
           height={calendarIconComponentSize}
           width={calendarIconComponentSize}
-          month={formatDateAsMonth(dueDate)}
+          month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
           textColor={variables.colorWhite}

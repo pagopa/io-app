@@ -469,6 +469,10 @@ messages:
     reminderTitle: "Promemoria per: {{title}}"
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
+    reminderRemoveRequest: 
+      title: Sei sicuro di voler rimuovere il promemoria?
+      ok: Rimuovi promemoria
+      cancel: Annulla l'operazione
     reminderRemoveSuccess: "Promemoria eliminato"
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
@@ -523,8 +527,8 @@ preferences:
     default: Nessuna preferenza impostata
   preferencesHelp: !include preferences_home_help.md
   unavailable:
-    title: Questa impostazione non è ancora disponibile
-    message: Questa impostazione sarà disponibile in una versione futura
+    title: Questa preferenza è impostata nel tuo profilo SPID
+    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nell profilo SPID del tuo identity provider, e poi dovrai nuovamente loggarti nell'app
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico

@@ -459,6 +459,10 @@ messages:
     reminderTitle: "Reminder for: {{title}}"
     reminderAddSuccess: "Reminder added"
     reminderAddFailure: "Error adding reminder, please retry"
+    reminderRemoveRequest: 
+      title: Are you sure you want to remove this reminder?
+      ok: Remove reminder
+      cancel: Cancel the operation
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
@@ -511,8 +515,8 @@ preferences:
     default: No preference set
   preferencesHelp: !include preferences_home_help.md
   unavailable:
-    title: This setting is not available at this time
-    message: This setting will be available in a future release
+    title: This setting is set up on your SPID profile
+    message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
