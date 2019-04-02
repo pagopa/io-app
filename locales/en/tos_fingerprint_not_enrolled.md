@@ -1,0 +1,1 @@
+No enabled biometric authorization method has been found. If you want you can formerly enable it on this device from settings section, and then enable it from this app security preference pane.
