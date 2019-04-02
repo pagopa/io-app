@@ -1,6 +1,7 @@
 import { isSome, none } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
+import { capitalize } from "lodash";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet, ViewStyle } from "react-native";
@@ -225,7 +226,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <CalendarIconComponent
           height={calendarIconComponentSize}
           width={calendarIconComponentSize}
-          month={formatDateAsMonth(dueDate)}
+          month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
           backgroundColor={variables.brandDarkGray}
           textColor={variables.colorWhite}
