@@ -1,0 +1,26 @@
+patch-package
+--- a/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/scroll/ReactScrollView.java
++++ b/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/scroll/ReactScrollView.java
+@@ -49,7 +49,7 @@ public class ReactScrollView extends ScrollView implements ReactClippingViewGrou
+   private static boolean sTriedToGetScrollerField = false;
+ 
+   private final OnScrollDispatchHelper mOnScrollDispatchHelper = new OnScrollDispatchHelper();
+-  private final @Nullable OverScroller mScroller;
++  private @Nullable OverScroller mScroller;
+   private final VelocityHelper mVelocityHelper = new VelocityHelper();
+   private final Rect mRect = new Rect(); // for reuse to avoid allocation
+ 
+@@ -320,6 +320,12 @@ public class ReactScrollView extends ScrollView implements ReactClippingViewGrou
+       // as there is content. See #onOverScrolled() to see the second part of this change which properly
+       // aborts the scroller animation when we get to the bottom of the ScrollView content.
+ 
++      OverScroller scroller = getOverScrollerFromParent();
++
++      if (mScroller != scroller) {
++        mScroller = scroller;
++      }
++
+       int scrollWindowHeight = getHeight() - getPaddingBottom() - getPaddingTop();
+ 
+       mScroller.fling(
+ 
