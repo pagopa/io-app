@@ -6,7 +6,7 @@ type Props = {
 };
 
 /**
- * Used to enable/disable FLAG_SECURE at runtime.
+ * On Android, it enables or disables FLAG_SECURE based on the isFlagSecureEnabled prop.
  */
 class FlagSecureComponent extends React.PureComponent<Props> {
   public render() {
