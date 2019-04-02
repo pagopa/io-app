@@ -71,7 +71,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
       case "TOUCH_ID":
       case "NOT_ENROLLED":
       case "UNAVAILABLE":
-        return require("../../../img/icons/faceid-onboarding-icon.png");
+        return require("../../../img/icons/fingerprint-onboarding-icon.png");
     }
   }
 
