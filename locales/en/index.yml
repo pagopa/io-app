@@ -459,6 +459,10 @@ messages:
     reminderTitle: "Reminder for: {{title}}"
     reminderAddSuccess: "Reminder added"
     reminderAddFailure: "Error adding reminder, please retry"
+    reminderRemoveRequest: 
+      title: Are you sure you want to remove this reminder?
+      ok: Remove reminder
+      cancel: Cancel the operation
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"

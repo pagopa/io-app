@@ -469,6 +469,10 @@ messages:
     reminderTitle: "Promemoria per: {{title}}"
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
+    reminderRemoveRequest: 
+      title: Sei sicuro di voler rimuovere il promemoria?
+      ok: Rimuovi promemoria
+      cancel: Annulla l'operazione
     reminderRemoveSuccess: "Promemoria eliminato"
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
