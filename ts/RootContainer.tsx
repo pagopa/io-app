@@ -118,9 +118,11 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
-        <FlagSecureComponent
-          isFlagSecureEnabled={!this.props.isDebugModeEnabled}
-        />
+        {Platform.OS === "android" && (
+          <FlagSecureComponent
+            isFlagSecureEnabled={!this.props.isDebugModeEnabled}
+          />
+        )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
         <IdentificationModal />
