@@ -21,15 +21,35 @@ export const cardIcons: { [key in CreditCardType]: any } = {
   UNKNOWN: require("../../../../img/wallet/cards-icons/unknown.png")
 };
 
-// PagoPA's "brandLogo" is not a string that
-// allows for the identification of a logo,
-// but rather a link to the card logo image
-// As a temporary fix, the "unknown" card will be
-// shown for all cards -- a future story will take
-// care of switching the images to the actual logos
-// @https://www.pivotaltracker.com/story/show/159651239
-const getCardIconFromBrandLogo = (_: Wallet) => {
-  return require("../../../../img/wallet/cards-icons/unknown.png");
+const cardMapIcon: { [key in string]: any } = {
+  carta_mc: require("../../../../img/wallet/cards-icons/mastercard.png"),
+  carta_visa: require("../../../../img/wallet/cards-icons/visa.png"),
+  carta_amex: require("../../../../img/wallet/cards-icons/amex.png"),
+  carta_diners: require("../../../../img/wallet/cards-icons/diners.png"),
+  carta_visaelectron: require("../../../../img/wallet/cards-icons/visa-electron.png"),
+  carta_poste: require("../../../../img/wallet/cards-icons/postepay.png")
+};
+
+/**
+ * Return the base name of a remote resource from a give path
+ * @param resourceUrl the remote resource Url
+ */
+const getImageNameFromUrl = (resourceUrl?: string): string | undefined => {
+  if (!resourceUrl) return undefined;
+  let splitted = resourceUrl.split("/");
+  return splitted[splitted.length - 1].toLowerCase().split(".")[0];
+};
+
+// PagoPA's "brandLogo" field contains an url to an image
+// From the given url it will check if there is a matching and an icon will be returned
+// If there is NO matching a default card icon will be returned
+// Consider to evaluate the field "brand" instead of "brandLogo"
+// because it should be contain only the name of the credit card type
+const getCardIconFromBrandLogo = (wallet: Wallet) => {
+  let defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
+  let imageName = getImageNameFromUrl(wallet.creditCard.brandLogo);
+  if (imageName && cardMapIcon[imageName]) return cardMapIcon[imageName];
+  return defaultCardIcon;
 };
 
 const styles = StyleSheet.create({
