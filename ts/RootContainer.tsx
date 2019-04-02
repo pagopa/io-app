@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
+import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
@@ -117,6 +118,11 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
+        {Platform.OS === "android" && (
+          <FlagSecureComponent
+            isFlagSecureEnabled={!this.props.isDebugModeEnabled}
+          />
+        )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
         <IdentificationModal />
