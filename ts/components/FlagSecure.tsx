@@ -5,6 +5,9 @@ type Props = {
   isFlagSecureEnabled: boolean;
 };
 
+/**
+ * Used to enable/disable FLAG_SECURE at runtime.
+ */
 class FlagSecureComponent extends React.PureComponent<Props> {
   public render() {
     return null;
