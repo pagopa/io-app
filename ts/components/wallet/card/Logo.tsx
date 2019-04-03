@@ -6,6 +6,7 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Wallet } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
+import { getResourceNameFromUrl } from "../../../utils/url";
 
 export const cardIcons: { [key in CreditCardType]: any } = {
   MASTERCARD: require("../../../../img/wallet/cards-icons/mastercard.png"),
@@ -31,25 +32,21 @@ const cardMapIcon: { [key in string]: any } = {
 };
 
 /**
- * Return the base name of a remote resource from a give path
- * @param resourceUrl the remote resource Url
+ * PagoPA's "brandLogo" field contains an url to an image
+   From the given url it will check if there is a matching and an icon will be returned
+   If there is NO matching a default card icon will be returned
+   Consider to evaluate the field "brand" instead of "brandLogo"
+   because it should contain only the name of the credit card type
+   for more info check https://www.pivotaltracker.com/story/show/165067615
+ * @param wallet the wallet objects from which retrieve the credit card icon
  */
-const getImageNameFromUrl = (resourceUrl?: string): string | undefined => {
-  if (!resourceUrl) return undefined;
-  let splitted = resourceUrl.split("/");
-  return splitted[splitted.length - 1].toLowerCase().split(".")[0];
-};
-
-// PagoPA's "brandLogo" field contains an url to an image
-// From the given url it will check if there is a matching and an icon will be returned
-// If there is NO matching a default card icon will be returned
-// Consider to evaluate the field "brand" instead of "brandLogo"
-// because it should be contain only the name of the credit card type
 const getCardIconFromBrandLogo = (wallet: Wallet) => {
   let defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
-  let imageName = getImageNameFromUrl(wallet.creditCard.brandLogo);
-  if (imageName && cardMapIcon[imageName]) return cardMapIcon[imageName];
-  return defaultCardIcon;
+  if (!wallet.creditCard.brandLogo) return defaultCardIcon;
+  let imageName = getResourceNameFromUrl(wallet.creditCard.brandLogo);
+  return imageName && cardMapIcon[imageName]
+    ? cardMapIcon[imageName]
+    : defaultCardIcon;
 };
 
 const styles = StyleSheet.create({
