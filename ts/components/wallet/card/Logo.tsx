@@ -33,17 +33,19 @@ const cardMapIcon: { [key in string]: any } = {
 
 /**
  * PagoPA's "brandLogo" field contains an url to an image
-   From the given url it will check if there is a matching and an icon will be returned
-   If there is NO matching a default card icon will be returned
-   Consider to evaluate the field "brand" instead of "brandLogo"
-   because it should contain only the name of the credit card type
-   for more info check https://www.pivotaltracker.com/story/show/165067615
+ * From the given url it will check if there is a matching and an icon will be returned
+ * If there is NO matching a default card icon will be returned
+ * Consider to evaluate the field "brand" instead of "brandLogo"
+ * because it should contain only the name of the credit card type
+ * for more info check https://www.pivotaltracker.com/story/show/165067615
  * @param wallet the wallet objects from which retrieve the credit card icon
  */
 const getCardIconFromBrandLogo = (wallet: Wallet) => {
-  let defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
-  if (!wallet.creditCard.brandLogo) return defaultCardIcon;
-  let imageName = getResourceNameFromUrl(wallet.creditCard.brandLogo);
+  const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
+  if (!wallet.creditCard.brandLogo) {
+    return defaultCardIcon;
+  }
+  const imageName = getResourceNameFromUrl(wallet.creditCard.brandLogo);
   return imageName && cardMapIcon[imageName]
     ? cardMapIcon[imageName]
     : defaultCardIcon;

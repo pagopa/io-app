@@ -11,7 +11,7 @@ export function getResourceNameFromUrl(
   resourceUrl: string,
   includeExt: boolean = false
 ): string {
-  let splitted = resourceUrl.split("/");
-  let resourceName = splitted[splitted.length - 1].toLowerCase();
+  const splitted = resourceUrl.split("/");
+  const resourceName = splitted[splitted.length - 1].toLowerCase();
   return includeExt ? resourceName : resourceName.split(".")[0];
 }
