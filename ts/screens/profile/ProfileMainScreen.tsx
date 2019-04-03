@@ -25,7 +25,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
-  logoutMethod,
+  LogoutMethod,
   logoutRequest,
   sessionExpired
 } from "../../store/actions/authentication";
@@ -85,8 +85,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     Toast.show({ text: "The cache has been cleared." });
   };
 
-  private logout = (keepUserData: logoutMethod) => {
-    this.props.logout(keepUserData);
+  private logout = (logoutMethod: LogoutMethod) => {
+    this.props.logout(logoutMethod);
 
     this.props.hideModal();
   };
@@ -322,7 +322,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: (keepUserData: logoutMethod) => dispatch(logoutRequest(keepUserData)),
+  logout: (logoutMethod: LogoutMethod) => dispatch(logoutRequest(logoutMethod)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

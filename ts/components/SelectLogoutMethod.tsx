@@ -6,7 +6,8 @@ import {
   List,
   ListItem,
   Right,
-  Text
+  Text,
+  View
 } from "native-base";
 import React from "react";
 import { BackHandler, StyleSheet } from "react-native";
@@ -16,7 +17,7 @@ import I18n from "../i18n";
 import variables from "../theme/variables";
 
 import IconFont from "../components/ui/IconFont";
-import { logoutMethod } from "../store/actions/authentication";
+import { LogoutMethod } from "../store/actions/authentication";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 const styles = StyleSheet.create({
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     paddingTop: 48
   },
   separator: {
-    height: 10,
+    height: 40,
     width: "100%"
   },
   itemLeft: {
@@ -39,12 +40,12 @@ const styles = StyleSheet.create({
 
 type Props = {
   onCancel: () => void;
-  onMethodSelected: (_: logoutMethod) => void;
+  onMethodSelected: (_: LogoutMethod) => void;
   header?: React.ReactNode;
 };
 
 /**
- * A modal that allow the user to select one of the device available Calendars
+ * A modal that allow the user to select the logout method of choice
  */
 class SelectLogoutMethod extends React.PureComponent<Props> {
   private onBackPress = () => {
@@ -98,6 +99,7 @@ class SelectLogoutMethod extends React.PureComponent<Props> {
               </Right>
             </ListItem>
           </List>
+          <View style={styles.separator} />
         </Content>
         <FooterWithButtons
           type="SingleButton"
