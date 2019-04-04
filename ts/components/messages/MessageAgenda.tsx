@@ -67,6 +67,15 @@ type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
 };
 
+/**
+ * Generate item layouts from sections.
+ * The VirtualizedSectionList react-native component create cells for:
+ * - SECTION_HEADER
+ * - ITEM + ITEM_SEPARATOR (NOTE: A single cell for both)
+ * - SECTION_FOOTER
+ *
+ * Here we calculate the ItemLayout for each cell.
+ */
 const generateItemLayouts = (sections: Sections) => {
   // tslint:disable-next-line: no-let
   let offset = 0;
@@ -75,6 +84,7 @@ const generateItemLayouts = (sections: Sections) => {
   // tslint:disable-next-line: readonly-array
   const itemLayouts: ItemLayout[] = [];
   sections.forEach(section => {
+    // Push the info about the SECTION_HEADER cell.
     itemLayouts.push({
       length: SECTION_HEADER_HEIGHT,
       offset,
@@ -85,6 +95,7 @@ const generateItemLayouts = (sections: Sections) => {
     index++;
 
     section.data.forEach((_, dataIndex, data) => {
+      // Push the info about the ITEM + ITEM_SEPARATOR cell.
       const heightAndOffset =
         dataIndex === data.length - 1
           ? ITEM_HEIGHT
@@ -99,8 +110,8 @@ const generateItemLayouts = (sections: Sections) => {
       index++;
     });
 
-    // Add section footer data
-    // NOTE: Also if not rendered the SectionList component create a cell.
+    // Push the info about the SECTION_FOOTER cell.
+    // NOTE: Also if not rendered the VirtualizedSectionList component create a cell.
     itemLayouts.push({
       length: 0,
       offset,
