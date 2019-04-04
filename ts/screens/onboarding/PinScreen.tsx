@@ -236,7 +236,7 @@ class PinScreen extends React.Component<Props, State> {
             <Button
               block={true}
               bordered={true}
-              onPress={_ => this.onPinReset()}
+              onPress={() => this.onPinReset()}
             >
               <Text>{I18n.t("onboarding.pin.reset")}</Text>
             </Button>

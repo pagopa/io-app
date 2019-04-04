@@ -251,7 +251,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              onPress={_ => this.props.pickPaymentMethod()}
+              onPress={() => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </Button>
