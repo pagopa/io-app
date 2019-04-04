@@ -1,7 +1,7 @@
 PODS:
   - Mixpanel (3.3.3)
-  - React (0.57.8):
-    - React/Core (= 0.57.8)
+  - React (0.59.3):
+    - React/Core (= 0.59.3)
   - react-native-background-timer (2.1.1):
     - React
   - react-native-calendar-events (1.6.4):
@@ -23,37 +23,37 @@ PODS:
     - React
   - react-native-webview (5.4.2):
     - React
-  - React/ART (0.57.8):
+  - React/ART (0.59.3):
     - React/Core
-  - React/Core (0.57.8):
-    - yoga (= 0.57.8.React)
-  - React/DevSupport (0.57.8):
+  - React/Core (0.59.3):
+    - yoga (= 0.59.3.React)
+  - React/DevSupport (0.59.3):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.57.8)
-  - React/RCTActionSheet (0.57.8):
+  - React/fishhook (0.59.3)
+  - React/RCTActionSheet (0.59.3):
     - React/Core
-  - React/RCTAnimation (0.57.8):
+  - React/RCTAnimation (0.59.3):
     - React/Core
-  - React/RCTBlob (0.57.8):
+  - React/RCTBlob (0.59.3):
     - React/Core
-  - React/RCTCameraRoll (0.57.8):
+  - React/RCTCameraRoll (0.59.3):
     - React/Core
     - React/RCTImage
-  - React/RCTGeolocation (0.57.8):
+  - React/RCTGeolocation (0.59.3):
     - React/Core
-  - React/RCTImage (0.57.8):
+  - React/RCTImage (0.59.3):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.57.8):
+  - React/RCTNetwork (0.59.3):
     - React/Core
-  - React/RCTPushNotification (0.57.8):
+  - React/RCTPushNotification (0.59.3):
     - React/Core
-  - React/RCTText (0.57.8):
+  - React/RCTText (0.59.3):
     - React/Core
-  - React/RCTVibration (0.57.8):
+  - React/RCTVibration (0.59.3):
     - React/Core
-  - React/RCTWebSocket (0.57.8):
+  - React/RCTWebSocket (0.59.3):
     - React/Core
     - React/fishhook
     - React/RCTBlob
@@ -69,13 +69,13 @@ PODS:
     - React
   - RNKeychain (3.0.0):
     - React
-  - RNSVG (6.5.2):
+  - RNSVG (6.5.3):
     - React
   - RNVectorIcons (6.4.2):
     - React
   - TouchID (4.3.0):
     - React
-  - yoga (0.57.8.React)
+  - yoga (0.59.3.React)
 
 DEPENDENCIES:
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
@@ -153,7 +153,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
-  React: adbac0757ce35e92fbd447ab98c810209d27d9b0
+  React: b52fdb80565505b7e4592b313a38868f5df51641
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
   react-native-calendar-events: cafbac5457a0dc449e3fb407814b2091b7f259be
   react-native-camera: 74c7513056d1513686286a0d54426083ca8a0088
@@ -167,10 +167,10 @@ SPEC CHECKSUMS:
   RNGestureHandler: 0438a761e8f29be3b809f9e7e43014f3aba4d7a6
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 3aa3cf891a09a0d18d306862ab2bb9e106079b24
-  RNSVG: 3c037ade1c42014de732e27e3879bf2b77ea78ea
+  RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
   RNVectorIcons: 6607bd3a30291d0edb56f9bbe7ae411ee2b928b0
   TouchID: b816a3db79ac3f9da547d0d0d4bd87ff6e338ca9
-  yoga: 74cdf036c30820443b25ade59916236b1e95ee93
+  yoga: 1a492113f66a35e9e583bb0434f4b8cc668dd839
 
 PODFILE CHECKSUM: e13dd0f5f428906e121ffa04f63d8b20f9054baa
 
