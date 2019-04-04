@@ -29,6 +29,14 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (_: MessageWithContentAndDueDatePO) => _.id;
 
+const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
+
+const SECTION_HEADER_HEIGHT = 50;
+
+const ITEM_SEPARATOR_HEIGHT = 1;
+
+const ITEM_HEIGHT = 100;
+
 export type MessageAgendaSection = SectionListData<
   MessageWithContentAndDueDatePO
 >;
@@ -49,38 +57,94 @@ type SelectedSectionListProps = Pick<
 
 type OwnProps = {
   sections: Sections;
-  getItemLayout: (data: Sections | null, index: number) => ItemLayout;
   onPressItem: (id: string) => void;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
 
+type State = {
+  prevSections?: Sections;
+  itemLayouts: ReadonlyArray<ItemLayout>;
+};
+
+const generateItemLayouts = (sections: Sections) => {
+  // tslint:disable-next-line: no-let
+  let offset = 0;
+  // tslint:disable-next-line: no-let
+  let index = 0;
+  // tslint:disable-next-line: readonly-array
+  const itemLayouts: ItemLayout[] = [];
+  sections.forEach(section => {
+    itemLayouts.push({
+      length: SECTION_HEADER_HEIGHT,
+      offset,
+      index
+    });
+
+    offset += SECTION_HEADER_HEIGHT;
+    index++;
+
+    section.data.forEach((_, dataIndex, data) => {
+      const heightAndOffset =
+        dataIndex === data.length - 1
+          ? ITEM_HEIGHT
+          : ITEM_HEIGHT + ITEM_SEPARATOR_HEIGHT;
+      itemLayouts.push({
+        length: heightAndOffset,
+        offset,
+        index
+      });
+
+      offset += heightAndOffset;
+      index++;
+    });
+
+    // Add section footer data
+    // NOTE: Also if not rendered the SectionList component create a cell.
+    itemLayouts.push({
+      length: 0,
+      offset,
+      index
+    });
+
+    offset += 0;
+    index++;
+  });
+
+  return itemLayouts;
+};
+
 /**
  * A component to render messages with due_date in a agenda like form.
  */
-class MessageAgenda extends React.PureComponent<Props> {
+class MessageAgenda extends React.PureComponent<Props, State> {
   private sectionListRef = React.createRef<any>();
 
-  public scrollToSectionsIndex = (sectionsIndex: number) => {
-    if (this.sectionListRef.current !== null) {
-      this.sectionListRef.current.scrollToLocation({
-        sectionIndex: sectionsIndex,
-        itemIndex: 0,
-        viewOffset: 50,
-        viewPosition: 1,
-        animated: true
-      });
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      itemLayouts: []
+    };
+  }
+
+  public static getDerivedStateFromProps(
+    nextProps: Props,
+    prevState: State
+  ): Partial<State> | null {
+    const { sections } = nextProps;
+    const { prevSections } = prevState;
+    if (sections !== prevSections) {
+      return {
+        prevSections: sections,
+        itemLayouts: generateItemLayouts(sections)
+      };
     }
-  };
+
+    return null;
+  }
 
   public render() {
-    const {
-      sections,
-      refreshing,
-      onRefresh,
-      getItemLayout,
-      onContentSizeChange
-    } = this.props;
+    const { sections, refreshing, onRefresh, onContentSizeChange } = this.props;
     return (
       <SectionList
         ref={this.sectionListRef}
@@ -88,13 +152,14 @@ class MessageAgenda extends React.PureComponent<Props> {
         sections={sections}
         refreshing={refreshing}
         onRefresh={onRefresh}
-        getItemLayout={getItemLayout}
         onContentSizeChange={onContentSizeChange}
         stickySectionHeadersEnabled={true}
         alwaysBounceVertical={false}
         keyExtractor={keyExtractor}
+        ItemSeparatorComponent={ItemSeparatorComponent}
         renderSectionHeader={this.renderSectionHeader}
         renderItem={this.renderItem}
+        getItemLayout={this.getItemLayout}
       />
     );
   }
@@ -124,6 +189,21 @@ class MessageAgenda extends React.PureComponent<Props> {
         onPress={this.props.onPressItem}
       />
     );
+  };
+
+  private getItemLayout = (_: Sections | null, index: number) =>
+    this.state.itemLayouts[index];
+
+  public scrollToSectionsIndex = (sectionsIndex: number) => {
+    if (this.sectionListRef.current !== null) {
+      this.sectionListRef.current.scrollToLocation({
+        sectionIndex: sectionsIndex,
+        itemIndex: 0,
+        viewOffset: 50,
+        viewPosition: 1,
+        animated: true
+      });
+    }
   };
 }
 

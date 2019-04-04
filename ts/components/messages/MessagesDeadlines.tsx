@@ -2,7 +2,7 @@ import { compareAsc, startOfDay, startOfMonth } from "date-fns";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
-import React, { ComponentProps } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
@@ -11,11 +11,8 @@ import {
   isMessageWithContentAndDueDatePO,
   MessageWithContentAndDueDatePO
 } from "../../types/MessageWithContentAndDueDatePO";
-import MessageAgenda, {
-  ItemLayout,
-  MessageAgendaSection,
-  Sections
-} from "./MessageAgenda";
+import { ComponentProps } from "../../types/react";
+import MessageAgenda, { MessageAgendaSection, Sections } from "./MessageAgenda";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -48,8 +45,9 @@ type Props = Pick<ComponentProps<typeof MessageAgenda>, "onRefresh"> & OwnProps;
 
 type State = {
   sections: Sections;
+  // Here we save the sections to render.
+  // We only want to render sections starting from a specific time limit.
   sectionsToRender: Sections;
-  itemLayouts: ReadonlyArray<ItemLayout>;
   currentTimeLimit: number;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
 };
@@ -136,6 +134,11 @@ const generateSections = (
     []
   );
 
+/**
+ * Return sections from a specific timeLimit.
+ *
+ * NOTE: Each section represent a calendar day.
+ */
 const sectionsFromTimeLimit = (
   sections: Sections,
   timeLimit: number
@@ -147,60 +150,19 @@ const sectionsFromTimeLimit = (
   return initialIndex < 0 ? [] : sections.slice(initialIndex);
 };
 
-const generateItemLayouts = (sections: Sections) => {
-  // tslint:disable-next-line: no-let
-  let offset = 0;
-  // tslint:disable-next-line: no-let
-  let index = 0;
-  // tslint:disable-next-line: readonly-array
-  const itemLayouts: ItemLayout[] = [];
-  sections.forEach(section => {
-    itemLayouts.push({
-      length: 50,
-      offset,
-      index
-    });
-
-    offset += 50;
-    index++;
-
-    section.data.forEach(_ => {
-      itemLayouts.push({
-        length: 100,
-        offset,
-        index
-      });
-
-      offset += 100;
-      index++;
-    });
-
-    itemLayouts.push({
-      length: 0,
-      offset,
-      index
-    });
-
-    offset += 0;
-    index++;
-  });
-
-  return itemLayouts;
-};
-
 /**
  * A component to show the messages with a due_date.
  */
 class MessagesDeadlines extends React.PureComponent<Props, State> {
   private scrollToSectionsIndex: Option<number> = none;
-  private messageAgendaRef = React.createRef<any>();
+  private messageAgendaRef = React.createRef<MessageAgenda>();
 
   constructor(props: Props) {
     super(props);
     this.state = {
       sections: [],
       sectionsToRender: [],
-      itemLayouts: [],
+      // The initial time limit is the start of the current month.
       currentTimeLimit: startOfMonth(new Date()).getTime()
     };
   }
@@ -212,26 +174,25 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { lastMessagesState, currentTimeLimit } = prevState;
     const { messagesState } = nextProps;
 
+    // If the messagesState is changed we need to recalculate sections and sectionsToRender.
     if (lastMessagesState !== messagesState) {
       const sections = generateSections(messagesState);
       const sectionsToRender = sectionsFromTimeLimit(
         sections,
         currentTimeLimit
       );
-      const itemLayouts = generateItemLayouts(sectionsToRender);
 
       return {
         sections,
-        sectionsToRender,
-        itemLayouts
+        sectionsToRender
       };
     }
 
+    // Return null to not update the store.
     return null;
   };
 
   public render() {
-    console.log("MessagesDeadlines::render", this.props, this.state);
     const { messagesState } = this.props;
     const { sectionsToRender } = this.state;
 
@@ -245,32 +206,27 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           sections={sectionsToRender}
           refreshing={isRefreshing}
           onRefresh={this.onRefresh}
-          getItemLayout={this.getItemLayout}
           onPressItem={this.handleOnPressItem}
         />
       </View>
     );
   }
 
-  public componentDidMount = () => {
-    console.log("After mount");
-  };
-
-  private getItemLayout = (_: Sections | null, index: number) =>
-    this.state.itemLayouts[index];
-
+  /**
+   * On refresh we need to load more "previous" data.
+   */
   private onRefresh = () => {
     this.loadNewSectionsToRender()
       .then(newSectionsToRender =>
         this.setState(prevState => {
           const { sectionsToRender } = prevState;
+          // Save the sectionIndex we want to scroll to onContentSizeChange.
           // tslint:disable-next-line: no-object-mutation
           this.scrollToSectionsIndex = some(
             newSectionsToRender.length - sectionsToRender.length
           );
           return {
             sectionsToRender: newSectionsToRender,
-            itemLayouts: generateItemLayouts(newSectionsToRender),
             currentTimeLimit: startOfMonth(
               newSectionsToRender[0].title
             ).getTime()
@@ -284,18 +240,25 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     this.props.navigateToMessageDetail(id);
   };
 
+  /**
+   * Used to maintain the same ScrollView position when loading
+   * "previous" data.
+   */
   private onContentSizeChange = () => {
-    if (this.scrollToSectionsIndex.isSome()) {
-      if (this.messageAgendaRef.current) {
-        this.messageAgendaRef.current.scrollToSectionsIndex(
-          this.scrollToSectionsIndex.value
-        );
-      }
+    if (this.messageAgendaRef.current && this.scrollToSectionsIndex.isSome()) {
+      // Scroll to the sectionIndex we was before the content size change.
+      this.messageAgendaRef.current.scrollToSectionsIndex(
+        this.scrollToSectionsIndex.value
+      );
+      // Reset the value to none.
       // tslint:disable-next-line: no-object-mutation
       this.scrollToSectionsIndex = none;
     }
   };
 
+  /**
+   * Loads new section from the "previous" data.
+   */
   private loadNewSectionsToRender = (): Promise<Sections> => {
     return new Promise((resolve, reject) => {
       const { sections, sectionsToRender } = this.state;
@@ -305,10 +268,13 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         reject();
       }
 
+      // Get the month of the first section not already rendered and
+      // calculate the initiam month time.
       const newTimeLimit = startOfMonth(
         sections[sections.length - sectionsToRender.length - 1].title
       ).getTime();
 
+      // Get and return all the section from the new time limit.
       resolve(sectionsFromTimeLimit(sections, newTimeLimit));
     });
   };
