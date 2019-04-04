@@ -188,7 +188,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       };
     }
 
-    // Return null to not update the store.
+    // Return null to not update the state.
     return null;
   };
 
@@ -220,7 +220,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       .then(newSectionsToRender =>
         this.setState(prevState => {
           const { sectionsToRender } = prevState;
-          // Save the sectionIndex we want to scroll to onContentSizeChange.
+          // Save the sectionIndex we want to scroll-to onContentSizeChange.
           // tslint:disable-next-line: no-object-mutation
           this.scrollToSectionsIndex = some(
             newSectionsToRender.length - sectionsToRender.length
