@@ -31,10 +31,9 @@ const keyExtractor = (_: MessageWithContentAndDueDatePO) => _.id;
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
+// Used to calculate the cell item layouts.
 const SECTION_HEADER_HEIGHT = 50;
-
 const ITEM_SEPARATOR_HEIGHT = 1;
-
 const ITEM_HEIGHT = 100;
 
 export type MessageAgendaSection = SectionListData<
@@ -111,7 +110,8 @@ const generateItemLayouts = (sections: Sections) => {
     });
 
     // Push the info about the SECTION_FOOTER cell.
-    // NOTE: Also if not rendered the VirtualizedSectionList component create a cell.
+    // NOTE: VirtualizedSectionList component creates a cell instance for
+    // the SECTION_FOOTER even when not rendered.
     itemLayouts.push({
       length: 0,
       offset,
