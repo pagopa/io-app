@@ -59,7 +59,7 @@ class SelectLogoutMethod extends React.PureComponent<Props> {
     return (
       <Container>
         <Content style={styles.content}>
-          <React.Fragment>{this.props.header || null}</React.Fragment>
+          {this.props.header || null}
           <List>
             <ListItem
               first={true}
