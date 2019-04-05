@@ -23,16 +23,4 @@ patch-package
        int scrollWindowHeight = getHeight() - getPaddingBottom() - getPaddingTop();
  
        mScroller.fling(
-similarity index 100%
-copy from node_modules/react-native/scripts/react-native-xcode.sh
-copy to node_modules/react-native/scripts/react-native-xcode.back.sh
---- a/node_modules/react-native/scripts/react-native-xcode.sh
-+++ b/node_modules/react-native/scripts/react-native-xcode.sh
-@@ -125,6 +125,7 @@ BUNDLE_FILE="$DEST/main.jsbundle"
-   --dev $DEV \
-   --reset-cache \
-   --bundle-output "$BUNDLE_FILE" \
-+  --sourcemap-output "$BUNDLE_FILE.map" \
-   --assets-dest "$DEST" \
-   $EXTRA_PACKAGER_ARGS
  
