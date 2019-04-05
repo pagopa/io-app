@@ -2,10 +2,7 @@
 
 import { Pot } from "italia-ts-commons/lib/pot";
 import { Effect } from "redux-saga";
-import {
-  PayloadCreator,
-  PayloadMetaCreator
-} from "typesafe-actions/dist/types";
+import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
 export type SagaCallReturnType<
   T extends (...args: any[]) => any,
@@ -19,9 +16,9 @@ export type SagaCallReturnType<
 /**
  * Extracts the type of the payload of a typesafe action
  */
-export type PayloadForAction<A> = A extends PayloadCreator<any, infer P>
+export type PayloadForAction<A> = A extends PayloadAC<any, infer P>
   ? P
-  : A extends PayloadMetaCreator<any, infer P1, any> ? P1 : A;
+  : A extends PayloadMetaAC<any, infer P1, any> ? P1 : A;
 
 /**
  * Converts the types of a success and failure actions to a Pot type
