@@ -55,7 +55,9 @@
 		970B9925E6A24B5A968EB50B /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D68CFF4CE94441DCBDEF2862 /* MaterialIcons.ttf */; };
 		9CEB940791A144ADB7055A38 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B90FCB80955444628625FED0 /* FontAwesome5_Solid.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		B0FB3D49E5CE77110DC71130 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C94683EA8FE46C9BBC374C4C /* libPods-ItaliaApp.a */; };
+    ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
+    B0FB3D49E5CE77110DC71130 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C94683EA8FE46C9BBC374C4C /* libPods-ItaliaApp.a */; };
 		BCC6A5BE7EA743388104A040 /* libreact-native-sha256.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7BF3EEAED4436F8DD575A5 /* libreact-native-sha256.a */; };
 		C9E0B677D93444E8BD1FC5CB /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D9DAC32BFB74BB1AA623021 /* TitilliumWeb-ExtraLight.ttf */; };
 		D2D6291C42E54A3899924F25 /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EEA222FBF70B4D0385257B7E /* TitilliumWeb-ExtraLightItalic.ttf */; };
@@ -463,7 +465,9 @@
 		99D99E64C09749BDA8C0EF04 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		A4827A715541433A928083C5 /* RNTextInputMask.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextInputMask.xcodeproj; path = "../node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		B59B6238889E4208B49E5C9D /* libRNInstabug.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNInstabug.a; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+    B59B6238889E4208B49E5C9D /* libRNInstabug.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNInstabug.a; sourceTree = "<group>"; };
 		B7670B65AD2A4A4A901AD6F7 /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
 		B8E08A6E16B44DE3B0E33574 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		B90FCB80955444628625FED0 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -495,6 +499,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+        ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				13302F94209B35E500C9B38F /* libRCTPushNotification.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -1618,7 +1623,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 109;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = BC8NKY5TF7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1659,7 +1664,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 109;
 				DEVELOPMENT_TEAM = BC8NKY5TF7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
