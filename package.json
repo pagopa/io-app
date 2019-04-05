@@ -50,7 +50,7 @@
     "react-native-fs": "^2.13.3",
     "react-native-gesture-handler": "^1.0.16",
     "react-native-i18n": "^2.0.15",
-    "react-native-keychain": "^3.0.0",
+    "react-native-keychain": "^3.1.1",
     "react-native-mixpanel": "^1.1.1",
     "react-native-offline": "3.11.0",
     "react-native-popup-menu": "^0.14.0",
