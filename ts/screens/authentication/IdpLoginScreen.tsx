@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
@@ -23,11 +23,19 @@ import { extractLoginResult } from "../../utils/login";
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
+import * as t from "io-ts";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
+const RequestState = t.union([
+  t.literal("loading"),
+  t.literal("completed"),
+  t.literal("hasError")
+]);
+type RequestState = t.TypeOf<typeof RequestState>;
+
 type State = {
-  isWebViewLoading: boolean;
+  requestState: RequestState;
 };
 
 const LOGIN_BASE_URL = `${
@@ -41,6 +49,12 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000
+  },
+  errorsContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000
@@ -76,13 +90,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      isWebViewLoading: true
+      requestState: "hasError"
     };
   }
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
-    const { isWebViewLoading } = this.state;
 
     if (loggedInAuth) {
       return <IdpSuccessfulAuthentication />;
@@ -94,9 +107,19 @@ class IdpLoginScreen extends React.Component<Props, State> {
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
 
+    const handleOnError = (): void => {
+      this.setState({
+        requestState: "loading"
+      });
+    };
+
+    const hasRequestState = (requestState: RequestState): boolean => {
+      return this.state.requestState === requestState;
+    };
+
     const handleNavigationStateChange = (event: NavState): void => {
       this.setState({
-        isWebViewLoading: event.loading ? event.loading : false
+        requestState: event.loading ? "loading" : "completed"
       });
 
       onNavigationStateChange(
@@ -112,14 +135,22 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        <WebView
-          source={{ uri: loginUri }}
-          javaScriptEnabled={true}
-          onNavigationStateChange={handleNavigationStateChange}
-        />
-        {isWebViewLoading && (
+        {
+          <WebView
+            source={{ uri: loginUri }}
+            onError={handleOnError}
+            javaScriptEnabled={true}
+            onNavigationStateChange={handleNavigationStateChange}
+          />
+        }
+        {hasRequestState("loading") && (
           <View style={styles.refreshIndicatorContainer}>
             <RefreshIndicator />
+          </View>
+        )}
+        {hasRequestState("hasError") && (
+          <View style={styles.errorsContainer}>
+            <Text>ERROR</Text>
           </View>
         )}
       </BaseScreenComponent>
