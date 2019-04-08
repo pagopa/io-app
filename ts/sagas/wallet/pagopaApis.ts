@@ -60,7 +60,7 @@ export function* fetchWalletsRequestHandler(
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
-    if (getResponse !== undefined && getResponse.value.status === 200) {
+    if (getResponse !== undefined && getResponse.status === 200) {
       yield put(fetchWalletsSuccess(getResponse.value.data));
     } else {
       // FIXME: show relevant error
@@ -83,7 +83,7 @@ export function* fetchTransactionsRequestHandler(
     const response: SagaCallReturnType<typeof request> | undefined = yield call(
       request
     );
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       yield put(fetchTransactionsSuccess(response.value.data));
     } else {
       yield put(fetchTransactionsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)
@@ -108,7 +108,7 @@ export function* fetchTransactionRequestHandler(
     const response: SagaCallReturnType<typeof request> | undefined = yield call(
       request
     );
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       yield put(fetchTransactionSuccess(response.value.data));
     } else {
       throw Error();
@@ -137,7 +137,7 @@ export function* setFavouriteWalletRequestHandler(
   const request = pmSessionManager.withRefresh(setFavouriteWallet);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       yield put(setFavouriteWalletSuccess(response.value.data));
     } else {
       throw Error();
@@ -180,11 +180,11 @@ export function* updateWalletPspRequestHandler(
       typeof updateWalletPspWithRefresh
     > = yield call(updateWalletPspWithRefresh);
 
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       const getResponse: SagaCallReturnType<
         typeof getWalletsWithRefresh
       > = yield call(getWalletsWithRefresh);
-      if (getResponse !== undefined && getResponse.value.status === 200) {
+      if (getResponse !== undefined && getResponse.status === 200) {
         // look for the updated wallet
         const updatedWallet = getResponse.value.data.find(
           _ => _.idWallet === wallet.idWallet
@@ -244,11 +244,11 @@ export function* deleteWalletRequestHandler(
     const deleteResponse: SagaCallReturnType<
       typeof deleteWalletWithRefresh
     > = yield call(deleteWalletWithRefresh);
-    if (deleteResponse !== undefined && deleteResponse.value.status === 200) {
+    if (deleteResponse !== undefined && deleteResponse.status === 200) {
       const getResponse: SagaCallReturnType<
         typeof getWalletsWithRefresh
       > = yield call(getWalletsWithRefresh);
-      if (getResponse !== undefined && getResponse.value.status === 200) {
+      if (getResponse !== undefined && getResponse.status === 200) {
         const successAction = deleteWalletSuccess(getResponse.value.data);
         yield put(successAction);
         if (action.payload.onSuccess) {
@@ -288,11 +288,11 @@ export function* addWalletCreditCardRequestHandler(
       typeof boardCreditCardWithRefresh
     > = yield call(boardCreditCardWithRefresh);
 
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       yield put(addWalletCreditCardSuccess(response.value));
     } else if (
       response !== undefined &&
-      response.value.status === 422 &&
+      response.status === 422 &&
       response.value.message === "creditcard.already_exists"
     ) {
       yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
@@ -324,7 +324,7 @@ export function* payCreditCardVerificationRequestHandler(
       boardPayWithRefresh
     );
 
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       yield put(payCreditCardVerificationSuccess(response.value));
     } else {
       throw Error();
@@ -353,7 +353,7 @@ export function* paymentFetchPspsForWalletRequestHandler(
     const response: SagaCallReturnType<
       typeof getPspListWithRefresh
     > = yield call(getPspListWithRefresh);
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       const successAction = paymentFetchPspsForPaymentId.success(
         response.value.data
       );
@@ -395,15 +395,14 @@ export function* paymentCheckRequestHandler(
     > = yield call(checkPaymentWithRefresh);
     if (
       response !== undefined &&
-      (response.value.status === 200 ||
-        (response.value.status as number) === 422)
+      (response.status === 200 || (response.status as number) === 422)
     ) {
       // TODO: remove the cast of response.status to number as soon as the
       //       paymentmanager specs include the 422 status.
       //       https://www.pivotaltracker.com/story/show/161053093
       yield put(paymentCheck.success(true));
     } else {
-      yield put(paymentCheck.failure(response.isLeft() ? response : undefined));
+      yield put(paymentCheck.failure(response));
     }
   } catch {
     yield put(paymentCheck.failure(undefined));
@@ -428,7 +427,7 @@ export function* paymentExecutePaymentRequestHandler(
       typeof postPaymentWithRefresh
     > = yield call(postPaymentWithRefresh);
 
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       const newTransaction = response.value.data;
       const successAction = paymentExecutePayment.success(newTransaction);
       yield put(successAction);
@@ -457,7 +456,7 @@ export function* paymentDeletePaymentRequestHandler(
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
 
-    if (response !== undefined && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       yield put(paymentDeletePayment.success());
     } else {
       throw Error();
@@ -485,13 +484,13 @@ export function* paymentVerificaRequestHandler(
         rptId: RptIdFromString.encode(action.payload)
       }
     );
-    if (response.isRight() && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       // Verifica succeeded
-      yield put(paymentVerifica.success(response.value.value));
-    } else if (response.isRight() && response.value.status === 500) {
+      yield put(paymentVerifica.success(response.value));
+    } else if (response !== undefined && response.status === 500) {
       // Verifica failed with a 500, that usually means there was an error
       // interacting with Pagopa that we can interpret
-      yield put(paymentVerifica.failure(response.value.value.detail));
+      yield put(paymentVerifica.failure(response.value.detail));
     } else {
       // unknown error
       throw Error();
@@ -522,12 +521,12 @@ export function* paymentAttivaRequestHandler(
         }
       }
     );
-    if (response.isRight() && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       // Attiva succeeded
-      yield put(paymentAttiva.success(response.value.value));
-    } else if (response.isRight() && response.value.status === 500) {
+      yield put(paymentAttiva.success(response.value));
+    } else if (response !== undefined && response.status === 500) {
       // Attiva failed
-      yield put(paymentAttiva.failure(response.value.value.detail));
+      yield put(paymentAttiva.failure(response.value.detail));
     } else {
       throw Error();
     }
@@ -556,10 +555,10 @@ export function* paymentIdPollingRequestHandler(
         codiceContestoPagamento: action.payload.codiceContestoPagamento
       }
     );
-    if (response.isRight() && response.value.status === 200) {
+    if (response !== undefined && response.status === 200) {
       // Attiva succeeded
-      yield put(paymentIdPolling.success(response.value.value.idPagamento));
-    } else if (response.isRight() && response.value.status === 400) {
+      yield put(paymentIdPolling.success(response.value.idPagamento));
+    } else if (response !== undefined && response.status === 400) {
       // Attiva failed
       yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
     } else {

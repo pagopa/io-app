@@ -29,16 +29,16 @@ export function* loadSessionInformationSaga(
     {}
   );
 
-  if (response && response.status === 200) {
+  if (response.isRight() && response.value.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-    yield put(sessionInformationLoadSuccess(response.value));
+    yield put(sessionInformationLoadSuccess(response.value.value));
     return some(response.value);
   }
 
   // We got a error, send a SESSION_LOAD_FAILURE action
   const error: Error =
-    response && response.status === 500
-      ? Error(response.value.title)
+    response.isRight() && response.value.status === 500
+      ? Error(response.value.value.title)
       : Error("Invalid server response");
   yield put(sessionInformationLoadFailure(error));
   return none;

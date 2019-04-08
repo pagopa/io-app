@@ -70,17 +70,17 @@ export function* fetchMessage(
       { id: meta.id }
     );
 
-    if (response === undefined || response.status !== 200) {
+    if (response.isLeft() || response.value.status !== 200) {
       const error =
-        response !== undefined && response.status === 500
-          ? response.value.title
+        response.isRight() && response.value.status === 500
+          ? response.value.value.title
           : undefined;
       // Return the error
       return left(Error(error));
     }
 
     // Return the new message converted to plain object
-    const messageWithContentPO = toMessageWithContentPO(response.value);
+    const messageWithContentPO = toMessageWithContentPO(response.value.value);
     return right(messageWithContentPO);
   } catch (error) {
     // Return the error

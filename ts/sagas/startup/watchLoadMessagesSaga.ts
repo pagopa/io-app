@@ -60,7 +60,7 @@ export function* loadMessages(
       {}
     );
 
-    if (response && response.status === 401) {
+    if (response.isRight() && response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
       return;
@@ -69,22 +69,24 @@ export function* loadMessages(
     /**
      * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
      */
-    if (!response || response.status !== 200) {
+    if (response.isLeft() || response.value.status !== 200) {
       // TODO: provide status code along with message in error
       const error =
-        response && response.status === 500 ? response.value.title : undefined;
+        response.isRight() && response.value.status === 500
+          ? response.value.value.title
+          : undefined;
 
       // Dispatch failure action
       yield put(loadMessagesAction.failure(error || ""));
     } else {
       yield put(
-        loadMessagesAction.success(response.value.items.map(_ => _.id))
+        loadMessagesAction.success(response.value.value.items.map(_ => _.id))
       );
 
       // The Backend returns the items from the oldest to the latest
       // but we want to process them from latest to oldest so we
       // reverse the order.
-      const reversedItems = [...response.value.items].reverse();
+      const reversedItems = [...response.value.value.items].reverse();
 
       const shouldLoadMessage = (message: { id: string }) => {
         const cached = cachedMessagesById[message.id];
