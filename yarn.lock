@@ -4422,20 +4422,22 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-io-ts-types@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.4.0.tgz#c1f349b7f83543cc1c7b68f6176a8f2bd9f555d6"
-  integrity sha512-hXgxda7l9bOhuLPZ6ylP7GpA2R06c7ohmPFc954hKa1GFXFaZqD13YCDEmPPMWV+TVWLmxM4EaahsSqQiUMQ5g==
-  dependencies:
-    fp-ts "^1.0.0"
-    io-ts "^1.1.4"
-    monocle-ts "^1.0.0"
-    newtype-ts "^0.2.1"
+io-ts-types@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.4.6.tgz#39780e377c995e825502d0cf0a4145a7f3a319cd"
+  integrity sha512-OwkIkovgBnmf9TLBZ2jo0IscCA68SBAH5l9Ch7ifSZBPCwomUCtaWB7KhIiRcRAfbj8hksCMFChS4qggrhku4w==
 
 io-ts@1.4.2, io-ts@^1.1.4, io-ts@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.4.2.tgz#d3cb1ef7d7ba68d59af85d839a728aad7f4b1c28"
   integrity sha512-U4uw8jjj8jYZip7zHgBj40GW0DpYdVi1i0J3anezp2ytYHDg7+cKc7iIFlIyCh+NLwMxzwu6OQ/b9S61KUjPGg==
+  dependencies:
+    fp-ts "^1.0.0"
+
+io-ts@^1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.8.5.tgz#2e102f7f518abe17b0f7e7ede0db54a4c4ddc188"
+  integrity sha512-4HzDeg7mTygFjFIKh7ajBSanoVaFryYSFI0ocdwndSWl3eWQXhg3wVR0WI+Li5Vq11TIsoIngQszVbN4dy//9A==
   dependencies:
     fp-ts "^1.0.0"
 
@@ -4853,13 +4855,13 @@ italia-ts-commons@^3.1.1:
     validator "^10.1.0"
     winston "^3.0.0"
 
-italia-ts-commons@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-3.1.2.tgz#571535b518732b9f59e18255ddf6d43a108786bb"
-  integrity sha512-BUYMrXBnue2nJtlXSU80qLsdUGIHxMfy31v9KSgG6g7yA1m5MCnNzQi0xtFE/ypaBbOKdVPc2jtAOZbRmeMTIw==
+italia-ts-commons@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.0.0.tgz#da42234b5abe525a8d0b912bd75850b2d88aba87"
+  integrity sha512-JgNtC95GpPOTmTiNknnIVpXd0n9xUw/mvNOd2DTpKyUqioDQXVTNDXWVpJz24zNX0LrSrcder2UhLXbuYxrWzg==
   dependencies:
     fp-ts "^1.6.2"
-    io-ts "^1.4.2"
+    io-ts "^1.8.5"
     json-set-map "^1.0.2"
     validator "^10.1.0"
 
@@ -6310,12 +6312,6 @@ mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-monocle-ts@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-1.2.0.tgz#6009deaee379243a1e28651b01a054502258c782"
-  dependencies:
-    fp-ts "^1.0.0"
-
 morgan@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
@@ -6410,13 +6406,6 @@ neo-async@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
-
-newtype-ts@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/newtype-ts/-/newtype-ts-0.2.1.tgz#9a88a721b2bf3bb4f2ab34db733be359190a634d"
-  dependencies:
-    fp-ts "^1.0.0"
-    monocle-ts "^1.0.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
