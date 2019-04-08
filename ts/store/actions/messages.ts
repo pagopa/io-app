@@ -20,7 +20,7 @@ export const loadMessage = createAsyncAction(
 )<
   CreatedMessageWithoutContent,
   MessageWithContentPO,
-  { id: string; error: string | undefined }
+  { id: string; error?: string }
 >();
 
 export const loadMessageWithRelations = createAsyncAction(

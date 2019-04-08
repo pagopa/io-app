@@ -42,34 +42,37 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         // Timer fired we need to identify the user
         yield put(identificationRequest());
       });
-    } else if (lastState !== "active" && newApplicationState === "active") {
+    } else if (
+      lastState !== "active" &&
+      newApplicationState === "active" &&
+      identificationBackgroundTimer
+    ) {
       // Cancel the background timer if running
-      if (identificationBackgroundTimer) {
-        yield cancel(identificationBackgroundTimer);
-        identificationBackgroundTimer = undefined;
 
-        // Check if there is a payment ongoing
-        const isPaymentOngoing: ReturnType<
-          typeof isPaymentOngoingSelector
-        > = yield select<GlobalState>(isPaymentOngoingSelector);
+      yield cancel(identificationBackgroundTimer);
+      identificationBackgroundTimer = undefined;
 
-        // Check if we have a pending notification message
-        const pendingMessageState: ReturnType<
-          typeof pendingMessageStateSelector
-        > = yield select<GlobalState>(pendingMessageStateSelector);
+      // Check if there is a payment ongoing
+      const isPaymentOngoing: ReturnType<
+        typeof isPaymentOngoingSelector
+      > = yield select<GlobalState>(isPaymentOngoingSelector);
 
-        // We only navigate to the new message from a push if we're not in a
-        // payment flow
-        if (!isPaymentOngoing && pendingMessageState) {
-          // We have a pending notification message to handle
-          const messageId = pendingMessageState.id;
+      // Check if we have a pending notification message
+      const pendingMessageState: ReturnType<
+        typeof pendingMessageStateSelector
+      > = yield select<GlobalState>(pendingMessageStateSelector);
 
-          // Remove the pending message from the notification state
-          yield put(clearNotificationPendingMessage());
+      // We only navigate to the new message from a push if we're not in a
+      // payment flow
+      if (!isPaymentOngoing && pendingMessageState) {
+        // We have a pending notification message to handle
+        const messageId = pendingMessageState.id;
 
-          // Navigate to message details screen
-          yield put(navigateToMessageDetailScreenAction({ messageId }));
-        }
+        // Remove the pending message from the notification state
+        yield put(clearNotificationPendingMessage());
+
+        // Navigate to message details screen
+        yield put(navigateToMessageDetailScreenAction({ messageId }));
       }
     }
 

@@ -12,7 +12,7 @@ import {
 } from "../actions/backendInfo";
 
 export type BackendInfoState = Readonly<{
-  serverInfo: ServerInfo | undefined;
+  serverInfo?: ServerInfo;
 }>;
 
 const initialBackendInfoState: BackendInfoState = {

@@ -11,7 +11,7 @@ import { GlobalState } from "../types";
 
 export type InstallationState = Readonly<{
   id: string;
-  token: string | undefined;
+  token?: string;
 }>;
 
 export function getInitialState(): InstallationState {

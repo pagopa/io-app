@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
 
 class ScanQrCodeScreen extends React.Component<Props, State> {
-  private scannerReactivateTimeoutHandler: number | undefined;
+  private scannerReactivateTimeoutHandler?: number;
 
   /**
    * Handles valid PagoPA QR codes
