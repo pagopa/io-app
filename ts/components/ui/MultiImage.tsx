@@ -12,7 +12,7 @@ interface Props extends Omit<ImageProps, "source"> {
 }
 
 type State = Readonly<{
-  sourceIndex: number | undefined;
+  sourceIndex?: number;
 }>;
 
 /**
