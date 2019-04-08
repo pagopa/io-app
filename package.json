@@ -142,7 +142,7 @@
     "tslint-react": "^3.6.0",
     "tslint-sonarts": "^1.7.0",
     "typescript": "3.4.1",
-    "typestrict": "^1.0.0"
+    "typestrict": "^1.0.2"
   },
   "resolutions": {
     "@types/react": "16.7.18",

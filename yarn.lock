@@ -9036,9 +9036,10 @@ tslint-react@^3.6.0:
   dependencies:
     tsutils "^2.13.1"
 
-tslint-sonarts@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/tslint-sonarts/-/tslint-sonarts-1.7.0.tgz#1bcaf9f524c86b8d4cf9a2afae736edffd2e0dea"
+tslint-sonarts@^1.7.0, tslint-sonarts@^1.8.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/tslint-sonarts/-/tslint-sonarts-1.9.0.tgz#feb593e92db328c0328b430b838adbe65d504de9"
+  integrity sha512-CJWt+IiYI8qggb2O/JPkS6CkC5DY1IcqRsm9EHJ+AxoWK70lvtP7jguochyNDMP2vIz/giGdWCfEM39x/I/Vnw==
   dependencies:
     immutable "^3.8.2"
 
@@ -9111,12 +9112,13 @@ typescript@3.4.1:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
   integrity sha512-3NSMb2VzDQm8oBTLH6Nj55VVtUEpe/rgkIzMir0qVoLyjDZlnMBva0U6vDiV3IH+sl/Yu6oP5QwsAQtHPmDd2Q==
 
-typestrict@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/typestrict/-/typestrict-1.0.0.tgz#8545c45a319de4d399e192353d1d87928befa964"
+typestrict@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/typestrict/-/typestrict-1.0.2.tgz#7167559a128508162920614ce58af6ac6b5ba29a"
+  integrity sha512-4wEr84NPc0ldINrgwgSBTmbWPiGVbwO3c9xumM0ujp0DlzhTs3jUT0NtVBOd5UXneSXcStNJWj80zerbW2YR6Q==
   dependencies:
     tslint-microsoft-contrib "^5.0.3"
-    tslint-sonarts "^1.7.0"
+    tslint-sonarts "^1.8.0"
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.9:
   version "0.7.18"
