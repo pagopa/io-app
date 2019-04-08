@@ -34,8 +34,8 @@ export function* loadVisibleServicesRequestHandler(
       {}
     );
 
-    if (response !== undefined && response.status === 200) {
-      const { items } = response.value;
+    if (response.isRight() && response.value.status === 200) {
+      const { items } = response.value.value;
       yield put(loadVisibleServices.success(items));
       // Parallel fetch of those services that we haven't loaded yet
       const servicesById: GlobalState["entities"]["services"]["byId"] = yield select<
@@ -46,7 +46,7 @@ export function* loadVisibleServicesRequestHandler(
         id => !isServiceLoaded(servicesById[id])
       );
       yield all(newServiceIds.map(id => put(loadService.request(id))));
-    } else if (response !== undefined && response.status === 401) {
+    } else if (response.isRight() && response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
       return;

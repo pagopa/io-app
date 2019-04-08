@@ -23,8 +23,8 @@ export function* loadServiceRequestHandler(
       { service_id: action.payload }
     );
 
-    if (response !== undefined && response.status === 200) {
-      yield put(loadService.success(response.value));
+    if (response.isRight() && response.value.status === 200) {
+      yield put(loadService.success(response.value.value));
     } else {
       throw Error();
     }

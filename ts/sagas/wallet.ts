@@ -509,8 +509,8 @@ export function* watchWalletSaga(
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
-      if (response !== undefined && response.status === 200) {
-        return some(response.value.data.sessionToken);
+      if (response.isRight() && response.value.status === 200) {
+        return some(response.value.value.data.sessionToken);
       }
       return none;
     } catch {

@@ -51,9 +51,9 @@ export function* updateInstallationSaga(
   /**
    * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
    */
-  if (response === undefined || response.status !== 200) {
+  if (response.isRight() && response.value.status !== 200) {
     yield put(updateNotificationInstallationFailure());
   }
 
-  return response === undefined ? undefined : response.status;
+  return response.isLeft() ? undefined : response.value.status;
 }

@@ -37,16 +37,16 @@ export function* loadProfile(
       {}
     );
 
-    if (response && response.status === 200) {
+    if (response.isRight() && response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
-      yield put(profileLoadSuccess(response.value as UserProfileUnion));
+      yield put(profileLoadSuccess(response.value.value as UserProfileUnion));
       return some(response.value);
     }
 
-    if (response && response.status === 401) {
+    if (response.isRight() && response.value.status === 401) {
       // in case we got an expired session while loading the profile, we reset
       // the session
       yield put(sessionExpired());
@@ -104,22 +104,26 @@ function* createOrUpdateProfileSaga(
     }
   );
 
-  if (response && response.status === 401) {
-    // on 401, expire the current session and restart the authentication flow
-    yield put(sessionExpired());
-    return;
-  }
-
-  if (!response || response.status !== 200) {
-    // We got a error, send a SESSION_UPSERT_FAILURE action
-    const error: Error = response
-      ? Error(response.value.title)
-      : Error(I18n.t("profile.errors.upsert"));
-
-    yield put(profileUpsert.failure(error));
+  if (response.isRight()) {
+    if (response.value.status === 401) {
+      // on 401, expire the current session and restart the authentication flow
+      yield put(sessionExpired());
+      return;
+    }
+    if (response.value.status !== 200) {
+      // We got a error, send a SESSION_UPSERT_FAILURE action
+      const error: Error = response.value.value.title
+        ? Error(response.value.value.title)
+        : Error(I18n.t("profile.errors.upsert"));
+      yield put(profileUpsert.failure(error));
+    } else {
+      // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
+      yield put(profileUpsert.success(response.value.value));
+    }
   } else {
-    // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-    yield put(profileUpsert.success(response.value));
+    // request has been failed
+    const error: Error = Error(I18n.t("profile.errors.upsert"));
+    yield put(profileUpsert.failure(error));
   }
 }
 
