@@ -1,11 +1,10 @@
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
 
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { ActionType, getType } from "typesafe-actions";
 
 import { ContentClient } from "../api/content";
 
-import { Either } from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { contentServiceLoad } from "../store/actions/content";
 
@@ -19,14 +18,11 @@ const contentClient = ContentClient();
  */
 function getServiceMetadata(
   serviceId: ServiceId
-): Promise<Either<Error, BasicResponseType<ServiceMetadata>>> {
+): Promise<t.Validation<ServiceMetadata | undefined>> {
   return new Promise((resolve, _) =>
-    contentClient.getService({ serviceId }).then(
-      x => {
-        return x;
-      },
-      () => resolve(undefined)
-    )
+    contentClient
+      .getService({ serviceId })
+      .then(resolve, () => resolve(undefined))
   );
 }
 
@@ -47,7 +43,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       serviceId
     );
 
-    if (response.isRight() && response.value.status === 200) {
+    if (response.isRight() && response.value) {
       yield put(
         contentServiceLoad.success({ serviceId, data: response.value })
       );

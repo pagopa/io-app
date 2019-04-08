@@ -1,7 +1,7 @@
-import { Either } from "fp-ts/lib/Either";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
 
+import * as t from "io-ts";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
 import { setInstabugUserAttribute } from "../boot/configureInstabug";
@@ -23,15 +23,12 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
   function getServerInfo(): Promise<
-    Either<Error, BasicResponseType<ServerInfo>>
+    t.Validation<BasicResponseType<ServerInfo> | undefined>
   > {
     return new Promise((resolve, _) =>
-      backendPublicClient.getServerInfo({}).then(
-        x => {
-          return x;
-        },
-        () => resolve(undefined)
-      )
+      backendPublicClient
+        .getServerInfo({})
+        .then(resolve, () => resolve(undefined))
     );
   }
 
@@ -42,6 +39,7 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
 
     if (
       backendInfoResponse.isRight() &&
+      backendInfoResponse.value &&
       backendInfoResponse.value.status === 200
     ) {
       yield put(backendInfoLoadSuccess(backendInfoResponse.value.value));
