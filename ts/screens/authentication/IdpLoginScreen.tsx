@@ -5,6 +5,7 @@ import WebView from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import * as t from "io-ts";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -23,7 +24,6 @@ import { extractLoginResult } from "../../utils/login";
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
-import * as t from "io-ts";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
@@ -90,12 +90,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      requestState: "hasError"
+      requestState: "loading"
     };
   }
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
+    const hasError = this.state.requestState === "hasError";
 
     if (loggedInAuth) {
       return <IdpSuccessfulAuthentication />;
@@ -109,12 +110,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     const handleOnError = (): void => {
       this.setState({
-        requestState: "loading"
+        requestState: "hasError"
       });
-    };
-
-    const hasRequestState = (requestState: RequestState): boolean => {
-      return this.state.requestState === requestState;
     };
 
     const handleNavigationStateChange = (event: NavState): void => {
@@ -128,6 +125,25 @@ class IdpLoginScreen extends React.Component<Props, State> {
       )(event);
     };
 
+    const renderMask = () => {
+      switch (this.state.requestState) {
+        case "hasError":
+          return (
+            <View style={styles.errorsContainer}>
+              <Text>ERROR</Text>
+            </View>
+          );
+        case "loading":
+          return (
+            <View style={styles.refreshIndicatorContainer}>
+              <RefreshIndicator />
+            </View>
+          );
+        default:
+          return null;
+      }
+    };
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -135,24 +151,15 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {
+        {!hasError && (
           <WebView
             source={{ uri: loginUri }}
             onError={handleOnError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}
           />
-        }
-        {hasRequestState("loading") && (
-          <View style={styles.refreshIndicatorContainer}>
-            <RefreshIndicator />
-          </View>
         )}
-        {hasRequestState("hasError") && (
-          <View style={styles.errorsContainer}>
-            <Text>ERROR</Text>
-          </View>
-        )}
+        {renderMask()}
       </BaseScreenComponent>
     );
   }
