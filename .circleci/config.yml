@@ -20,8 +20,9 @@ defaults_android: &defaults_android
     - image: circleci/android:api-23-node8-alpha
   environment:
     - TERM: "dumb"
-    - ANDROID_SDK_BUILD_TOOLS_REVISION: "27.0.3"
-    - ANDROID_SDK_BUILD_API_LEVEL: "27"
+    - ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
+    - ANDROID_SDK_BUILD_API_LEVEL: "28"
+    - ANDROID_GOOGLE_API_LEVEL: "23"
     - REACT_NATIVE_MAX_WORKERS: 1
     - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"'
 

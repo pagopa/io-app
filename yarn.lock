@@ -7291,10 +7291,10 @@ react-native-background-timer@2.1.1:
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.1.1.tgz#9a2489681ab2f8033c213c73272e9d4c47572cd5"
   integrity sha512-cuXIIv+dcG8a8qkTD8pMzeqOEZCO+UGKglZWIe1osve+yJslmCowYQff+bI9xa7NOt2w+Vtd4L3d9JonlSqODg==
 
-react-native-calendar-events@1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-1.6.4.tgz#e1ccfe50e48b385a00847c41f9fb2a97e756e72e"
-  integrity sha512-By4lgWQG9eewS9WzhzxVHAewxX40v1CzLnNYXFMOqF06fYVCNykiiTMGlLzz3UXHVwwN1Drxw9uWroQfGRFMsw==
+react-native-calendar-events@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-1.7.1.tgz#177dcac0a3c711f1190ce107f6299e47aabba645"
+  integrity sha512-Kixqf4Evu+keQa5H6T1Pq2Hu5JPQLGxNp9NA4nf75QjT3tAT6naZX9RIltlnUX9+va2cWbJ5hoTQ6VXax1CRNA==
 
 react-native-camera@1.2.0:
   version "1.2.0"
