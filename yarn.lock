@@ -7333,9 +7333,9 @@ react-native-exception-handler@2.10.0:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.0.tgz#0d828a4f2c7c4469a2929fa46d20535def726903"
   integrity sha512-MJLE1NxGFlsdoOk3jBXUMzceZyVuLLXGWjK406ABH5+mfFjbIjmxAAEm/pkvzD8E5QXNo1chUSzpwtq2wCjygA==
 
-"react-native-flag-secure-android@git://github.com/teamdigitale/react-native-flag-secure-android.git#8904c847ae321eb2c18408ef75424230b3760c88":
+"react-native-flag-secure-android@git://github.com/teamdigitale/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795":
   version "1.0.0"
-  resolved "git://github.com/teamdigitale/react-native-flag-secure-android.git#8904c847ae321eb2c18408ef75424230b3760c88"
+  resolved "git://github.com/teamdigitale/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795"
 
 react-native-fs@^2.13.3:
   version "2.13.3"
@@ -7425,9 +7425,10 @@ react-native-sha256@1.2.3:
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.2.3.tgz#59eaa2c260882ed1e4de94c88e0383726cddc40c"
   integrity sha512-3KQBrAKnB8BAhQuyIBg4p1vsCU6A4LPCTjdNDhFomIaCaDLswEyb4GZoyGWPooTPyKVGd8aCR4pd7/Js9o1ySQ==
 
-react-native-splash-screen@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.1.1.tgz#1a4e46c9fdce53ff52af2a2cb4181788c4e30b30"
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
 
 react-native-svg@^6.5.3:
   version "6.5.3"
@@ -7445,9 +7446,10 @@ react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-text-input-mask@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-text-input-mask/-/react-native-text-input-mask-0.8.0.tgz#30f0de0215644db10719c4b1d29610605fb57262"
+react-native-text-input-mask@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-text-input-mask/-/react-native-text-input-mask-0.9.0.tgz#0dc51ed1a3f3008dfb109ce9babf30b06acf7ee2"
+  integrity sha512-VUzGyYjJ1HQFzYzAo3psYvEljMZ9/cgspdRQH6m849+7FU8koLaHI+BNLyMnYdhivNRq64FTfrqgQ6NP1u10ZQ==
 
 "react-native-touch-id@git://github.com/naoufal/react-native-touch-id#d2ff356f5dbed4ad647b26110f5053ed41f522a4":
   version "4.3.0"
