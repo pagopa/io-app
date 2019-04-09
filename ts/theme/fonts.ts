@@ -45,8 +45,8 @@ type FontStyleObject = {
 const makeFontFamilyName = (
   osSelect: PlatformSelectType,
   font: FontFamily,
-  weight: FontWeight | undefined,
-  isItalic: boolean | undefined
+  weight?: FontWeight,
+  isItalic: boolean = false
 ): string =>
   osSelect({
     android: `${fonts[font]}-${fontWeights[weight || "400"]}${

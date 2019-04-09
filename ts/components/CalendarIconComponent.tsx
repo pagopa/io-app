@@ -2,8 +2,8 @@ import * as React from "react";
 import { G, Path, Svg, Text } from "react-native-svg";
 
 type Props = {
-  height: string;
-  width: string;
+  height: number;
+  width: number;
   month: string;
   day: string;
   backgroundColor: string;

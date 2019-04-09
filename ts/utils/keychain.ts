@@ -14,10 +14,31 @@ import { PinString } from "../types/PinString";
 const PIN_KEY = "PIN";
 
 /**
+ * Wrapper that sets default accessible option.
+ *
+ * More about accessibility options:
+ * https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlock
+ */
+export async function setGenericPasswordWithDefaultAccessibleOption(
+  username: string,
+  password: string,
+  options?: Options
+) {
+  return Keychain.setGenericPassword(username, password, {
+    ...options,
+    // The data in the keychain item can be accessed only while the device is unlocked by the user.
+    // This is recommended for items that need to be accessible only while the application is in the foreground. Items
+    // with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device,
+    // these items will not be present.
+    accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+  });
+}
+
+/**
  * Saves the provided PIN in the Keychain
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  return await Keychain.setGenericPassword(PIN_KEY, pin);
+  return await setGenericPasswordWithDefaultAccessibleOption(PIN_KEY, pin);
 }
 
 /**
