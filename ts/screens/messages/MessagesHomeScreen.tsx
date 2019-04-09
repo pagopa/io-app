@@ -119,7 +119,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         hideHeader={searchText.isSome()}
         headerBody={
           searchText.isSome() ? (
-            <Item>
+            <Item style={{ width: "150%" }}>
               <Input
                 placeholder={I18n.t("global.actions.search")}
                 value={searchText.value}
