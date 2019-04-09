@@ -19,7 +19,7 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
-  - react-native-splash-screen (3.1.1):
+  - react-native-splash-screen (3.2.0):
     - React
   - react-native-webview (5.4.2):
     - React
@@ -159,7 +159,7 @@ SPEC CHECKSUMS:
   react-native-camera: 74c7513056d1513686286a0d54426083ca8a0088
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  react-native-splash-screen: 353334c5ae82d8c74501ea7cbb916cb7cb20c8bf
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: 84a2f3b7d1db70f43a58ce492b9449c15827e0ad
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNDeviceInfo: e7c5fcde13d40e161d8a27f6c5dc69c638936002
