@@ -11,7 +11,7 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Clipboard, StyleSheet, View } from "react-native";
+import { Alert, Clipboard, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -76,10 +76,27 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     Toast.show({ text: "The cache has been cleared." });
   };
 
+  private confirmResetAlert = () =>
+    Alert.alert(
+      I18n.t("profile.main.resetPin.confirmTitle"),
+      I18n.t("profile.main.resetPin.confirmMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: this.props.resetPin
+        }
+      ],
+      { cancelable: false }
+    );
+
   public render() {
     const {
       navigation,
-      resetPin,
       logout,
       backendInfo,
       sessionToken,
@@ -119,7 +136,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             {/* Reset PIN */}
-            <ListItem onPress={resetPin}>
+            <ListItem onPress={this.confirmResetAlert}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
                 <Text style={styles.itemLeftText}>

@@ -18,6 +18,7 @@ global:
     continue: Continua
     retry: Riprova
     back: Indietro
+    confirm: Conferma
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -68,6 +69,9 @@ profile:
       dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
+    resetPin:
+      confirmTitle: Sei sicuro di voler reimpostare il PIN?
+      confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
