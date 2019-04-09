@@ -249,7 +249,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   ): string {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
+        return I18n.t("identification.biometric.fingerprintType");
       case "FACE_ID":
         return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
       case "TOUCH_ID":

@@ -1,21 +1,18 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-
 import { NavigationScreenProps } from "react-navigation";
-
 import { connect } from "react-redux";
 
-import AbortOnboardingModal from "../../components/AbortOnboardingModal";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import I18n from "../../i18n";
+import { Dispatch } from "../../store/actions/types";
+
+import AbortOnboardingModal from "../../components/AbortOnboardingModal";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
-
-import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
-import { Dispatch } from "../../store/actions/types";
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
@@ -62,14 +59,32 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
     }
   }
 
+  /**
+   * Print the icon according to current biometry status
+   * @param biometrySimplePrintableType
+   */
+  private renderIcon(biometryType: BiometrySimpleType) {
+    switch (biometryType) {
+      case "FACE_ID":
+        return require("../../../img/icons/faceid-onboarding-icon.png");
+      case "FINGERPRINT":
+      case "TOUCH_ID":
+      case "NOT_ENROLLED":
+      case "UNAVAILABLE":
+        return require("../../../img/icons/fingerprint-onboarding-icon.png");
+    }
+  }
+
   public render() {
     const { isAbortOnboardingModalVisible } = this.state;
     const biometryType = this.props.navigation.getParam("biometryType");
 
     return (
-      <BaseScreenComponent
+      <TopScreenComponent
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
+        title={I18n.t("onboarding.fingerprint.title")}
+        icon={this.renderIcon(biometryType)}
       >
         <Content noPadded={true}>
           <View content={true}>
@@ -100,7 +115,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
             onConfirm={this.handleModalConfirm}
           />
         )}
-      </BaseScreenComponent>
+      </TopScreenComponent>
     );
   }
 
