@@ -4,7 +4,7 @@ PODS:
     - React/Core (= 0.59.3)
   - react-native-background-timer (2.1.1):
     - React
-  - react-native-calendar-events (1.6.4):
+  - react-native-calendar-events (1.7.1):
     - React
   - react-native-camera (1.2.0):
     - React
@@ -155,7 +155,7 @@ SPEC CHECKSUMS:
   Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
   React: b52fdb80565505b7e4592b313a38868f5df51641
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
-  react-native-calendar-events: cafbac5457a0dc449e3fb407814b2091b7f259be
+  react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
   react-native-camera: 74c7513056d1513686286a0d54426083ca8a0088
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
