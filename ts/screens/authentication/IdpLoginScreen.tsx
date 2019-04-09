@@ -27,12 +27,11 @@ type OwnProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
-const RequestState = t.union([
-  t.literal("loading"),
-  t.literal("completed"),
-  t.literal("hasError")
-]);
-type RequestState = t.TypeOf<typeof RequestState>;
+// web request state can be viewed in one of these states:
+// 'loading' is the initial state, cause the webview receive the end point url directly from props
+// 'completed' means the request has been sucessfully
+// 'error' means the request got an error (end point unrechable, http errors (404,500...))
+type RequestState = "loading" | "completed" | "error";
 
 type State = {
   requestState: RequestState;
@@ -96,7 +95,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
-    const hasError = this.state.requestState === "hasError";
+    const hasError = this.state.requestState === "error";
 
     if (loggedInAuth) {
       return <IdpSuccessfulAuthentication />;
@@ -110,7 +109,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     const handleOnError = (): void => {
       this.setState({
-        requestState: "hasError"
+        requestState: "error"
       });
     };
 
@@ -127,7 +126,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     const renderMask = () => {
       switch (this.state.requestState) {
-        case "hasError":
+        case "error":
           return (
             <View style={styles.errorsContainer}>
               <Text>ERROR</Text>
