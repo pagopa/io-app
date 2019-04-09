@@ -2,4 +2,4 @@ Potrai usare {{biometryType}} al posto del PIN per accedere all'app e autorizzar
 
 Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
 
-Potrai disattivare il metodo di autenticazione biometrico in qualunuque momento dalle preferenze dell'applicatzione
+Potrai disattivare il metodo di autenticazione biometrico in qualunque momento dalle preferenze dell'applicazione
