@@ -1,4 +1,4 @@
-import  { BugReporting, Chats } from "instabug-reactnative";
+import { BugReporting, Chats } from "instabug-reactnative";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -13,13 +13,14 @@ interface OwnProps {
 type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 
 class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
-
   private handleIBChatPress() {
     Chats.show();
   }
 
   private handleIBBugPress() {
-    BugReporting.showWithOptions(BugReporting.reportType.bug, [BugReporting.option.commentFieldRequired]);
+    BugReporting.showWithOptions(BugReporting.reportType.bug, [
+      BugReporting.option.commentFieldRequired
+    ]);
   }
 
   public render() {
