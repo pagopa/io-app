@@ -75,6 +75,10 @@ body {
   font-family: 'Titillium Web';
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3333em;
+}
+
 ul, ol {
   padding-left: 32px;
 }
@@ -164,7 +168,7 @@ type OwnProps = {
 type Props = OwnProps & ReduxProps;
 
 type State = {
-  html: string | undefined;
+  html?: string;
   htmlBodyHeight: number;
 };
 
@@ -268,7 +272,7 @@ class Markdown extends React.PureComponent<Props, State> {
   // A function that uses remark to compile the markdown to html
   private compileMarkdownAsync = (
     markdown: string,
-    animated?: boolean,
+    animated: boolean = false,
     onError?: (error: any) => void,
     cssStyle?: string
   ) => {

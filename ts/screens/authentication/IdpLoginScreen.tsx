@@ -1,6 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
-import { NavState, StyleSheet, WebView } from "react-native";
+import { NavState, StyleSheet } from "react-native";
+import WebView from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 

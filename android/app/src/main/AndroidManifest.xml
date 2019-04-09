@@ -3,7 +3,6 @@
   <permission android:name="it.teamdigitale.app.italiaapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="android.permission.VIBRATE" />
@@ -17,7 +16,7 @@
   <!-- Required by react-native-touch-id -->
   <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
-  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:allowBackup="false" android:theme="@style/AppTheme">
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
 
     <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name" android:value="@string/notification_channel_name"/>
     <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description" android:value="@string/notification_channel_description"/>
