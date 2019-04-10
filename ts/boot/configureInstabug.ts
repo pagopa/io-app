@@ -1,7 +1,7 @@
-import Instabug, { LocaleKey } from "instabug-reactnative";
+import { Option } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import { processColor } from "react-native";
 
-import { Option } from "fp-ts/lib/Option";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
@@ -9,7 +9,7 @@ import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 
-type InstabugLocales = { [k in Locales]: LocaleKey };
+type InstabugLocales = { [k in Locales]: Instabug.locale };
 
 type InstabugUserAttributeKeys =
   | "backendVersion"
@@ -30,8 +30,12 @@ export const initialiseInstabug = () => {
   Instabug.setPrimaryColor(processColor(variables.contentPrimaryBackground));
 
   Instabug.setColorTheme(Instabug.colorTheme.light);
+
+  // Set the language for Instabug ui/screens
   Instabug.setLocale(
-    instabugLocales[I18n.currentLocale().startsWith("it") ? "it" : "en"]
+    I18n.currentLocale().startsWith("it")
+      ? instabugLocales.it
+      : instabugLocales.en
   );
 };
 
