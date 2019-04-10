@@ -5,9 +5,9 @@ import WebView from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import * as t from "io-ts";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -27,10 +27,12 @@ type OwnProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
-// web request state can be viewed in one of these states:
-// 'loading' is the initial state, cause the webview receive the end point url directly from props
-// 'completed' means the request has been sucessfully
-// 'error' means the request got an error (end point unrechable, http errors (404,500...))
+/**
+ * web request state can be viewed in one of these states:
+ * 'loading' is the initial state, cause the webview receive the end point url directly from props
+ * 'completed' means the request has been sucessfully
+ * 'error' means the request got an error (end point unrechable, timeout, http errors (404,500...))
+ */
 type RequestState = "loading" | "completed" | "error";
 
 type State = {
@@ -52,11 +54,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
-  errorsContainer: {
+  errorContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1000
+    zIndex: 1000,
+    backgroundColor: "red"
   }
 });
 
@@ -126,10 +129,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     const renderMask = () => {
       switch (this.state.requestState) {
+        case "completed":
+          return null;
         case "error":
           return (
-            <View style={styles.errorsContainer}>
-              <Text>ERROR</Text>
+            <View style={styles.errorContainer} content={true}>
+              <Text>Error</Text>
+              <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
             </View>
           );
         case "loading":
@@ -138,8 +144,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
               <RefreshIndicator />
             </View>
           );
-        default:
-          return null;
       }
     };
 
@@ -152,7 +156,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       >
         {!hasError && (
           <WebView
-            source={{ uri: loginUri }}
+            source={{ uri: "http://doesntexist.ne" }}
             onError={handleOnError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}
