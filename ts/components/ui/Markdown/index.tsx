@@ -79,6 +79,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.3333em;
 }
 
+p {
+  margin-block-start: 0;
+}
+
 ul, ol {
   padding-left: 32px;
 }
