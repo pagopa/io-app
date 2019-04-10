@@ -33,18 +33,18 @@ export class BaseHeader extends React.PureComponent<Props> {
     return (
       <AppHeader primary={this.props.primary} noLeft={goBack !== true}>
         {goBack && (
-          <Left>
+          <Left style={{ flex: 0 }}>
             <GoBackButton testID="back-button" onPress={goBack} />
           </Left>
         )}
-        <Body>
+        <Body style={{ flex: 1 }}>
           {body || (
             <Text white={this.props.primary} numberOfLines={1}>
               {headerTitle || DEFAULT_APPLICATION_NAME}
             </Text>
           )}
         </Body>
-        <Right>
+        <Right style={{ flex: 0 }}>
           <InstabugButtons />
           {onShowHelp && (
             <Button
