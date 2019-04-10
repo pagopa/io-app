@@ -189,7 +189,14 @@ jobs:
           key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
       # Set Ruby Version for chruby
-      - run: echo "ruby-2.4" > .ruby-version
+      - run: echo "ruby-2.6.2" > .ruby-version
+
+      - run:
+        name: Configure Bundler
+        command: |
+          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+          source $BASH_ENV
+          gem install bundler
 
       # Install bundle dependencies
       - run:
@@ -288,7 +295,14 @@ jobs:
             - ruby-
 
       # Set Ruby Version for chruby
-      - run: echo "ruby-2.4" > .ruby-version
+      - run: echo "ruby-2.6.2" > .ruby-version
+
+      - run:
+        name: Configure Bundler
+        command: |
+          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+          source $BASH_ENV
+          gem install bundler
 
       # TODO: possibly remove this after the following issue has been fixed:
       # https://github.com/GeekyAnts/NativeBase/issues/1957
