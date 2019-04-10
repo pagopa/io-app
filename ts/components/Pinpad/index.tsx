@@ -8,7 +8,7 @@ import { ComponentProps } from "../../types/react";
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
 
-import { Animated, Easing } from "react-native";
+import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { KeyPad } from "./KeyPad";
 import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
@@ -25,7 +25,7 @@ interface Props {
 
 interface State {
   value: string;
-  disabled: boolean;
+  isDisabled: boolean;
 }
 
 /**
@@ -33,8 +33,7 @@ interface State {
  */
 class Pinpad extends React.PureComponent<Props, State> {
   private onFulfillTimeoutId?: number;
-  private animatedValue: Animated.Value;
-
+  private shakeAnimationRef = React.createRef<ShakeAnimation>();
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
@@ -75,33 +74,12 @@ class Pinpad extends React.PureComponent<Props, State> {
     ]
   ];
 
-  private shake() {
-    // disable click keypad
-    this.setState({
-      disabled: true
-    });
-    // enable after 1 second
-    setTimeout(() => {
-      this.setState({
-        disabled: false
-      });
-    }, 1000);
-    this.animatedValue.setValue(0);
-    // start animation
-    Animated.timing(this.animatedValue, {
-      toValue: 1,
-      duration: 600,
-      easing: Easing.linear
-    }).start();
-  }
-
   constructor(props: Props) {
     super(props);
-    this.animatedValue = new Animated.Value(0);
 
     this.state = {
       value: "",
-      disabled: false
+      isDisabled: false
     };
 
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
@@ -122,8 +100,20 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       if (!isValid && this.props.clearOnInvalid) {
         this.clear();
+        // disable click keypad
+        this.setState({
+          isDisabled: true
+        });
+        // enable after 1 second
+        setTimeout(() => {
+          this.setState({
+            isDisabled: false
+          });
+        }, 1000);
         // start animation 'shake'
-        this.shake();
+        if (this.shakeAnimationRef.current) {
+          this.shakeAnimationRef.current.shake();
+        }
       }
 
       // Fire the callback asynchronously, otherwise this component
@@ -152,26 +142,19 @@ class Pinpad extends React.PureComponent<Props, State> {
   public clear = () => this.setState({ value: "" });
 
   public render() {
-    // animation interpolate from top to down and the other way around
-    const marginTopDown = this.animatedValue.interpolate({
-      inputRange: [0, 0.2, 0.4, 0.6, 0.8, 0.9, 1],
-      outputRange: [0, -10, 10, -10, 10, -10, 0]
-    });
     return (
       <React.Fragment>
-        <Animated.View
-          style={{ marginTop: marginTopDown, marginDown: marginTopDown }}
-        >
-          <View style={styles.placeholderContainer}>
-            {this.placeholderPositions.map(this.renderPlaceholder)}
-          </View>
-          <View spacer={true} extralarge={true} />
+        <View style={styles.placeholderContainer}>
+          {this.placeholderPositions.map(this.renderPlaceholder)}
+        </View>
+        <View spacer={true} extralarge={true} />
+        <ShakeAnimation ref={this.shakeAnimationRef}>
           <KeyPad
             digits={this.pinPadDigits}
             buttonType={this.props.buttonType}
-            disabled={this.state.disabled}
+            isDisabled={this.state.isDisabled}
           />
-        </Animated.View>
+        </ShakeAnimation>
       </React.Fragment>
     );
   }
