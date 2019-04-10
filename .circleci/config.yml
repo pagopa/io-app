@@ -231,7 +231,14 @@ jobs:
             - ruby-
 
       # Set Ruby Version for chruby
-      - run: echo "ruby-2.4" > .ruby-version
+      - run: echo "ruby-2.6.2" > .ruby-version
+
+      - run:
+        name: Configure Bundler
+        command: |
+          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+          source $BASH_ENV
+          gem install bundler
 
       # Remove watchman from node global packages
       - run:
