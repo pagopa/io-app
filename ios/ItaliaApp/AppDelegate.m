@@ -81,6 +81,9 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
 }
 
+
+// Code used to replace the main view with a blank one when application is in background.
+// Taken from @https://pinkstone.co.uk/how-to-control-the-preview-screenshot-in-the-ios-multitasking-switcher/
 - (void)applicationWillResignActive:(UIApplication *)application {
 
      // Fill screen with our own colour
