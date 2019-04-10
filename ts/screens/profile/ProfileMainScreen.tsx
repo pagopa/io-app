@@ -94,10 +94,27 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       { cancelable: false }
     );
 
+  private confirmLogout = () =>
+    Alert.alert(
+      I18n.t("profile.main.logoutApp.title"),
+      I18n.t("profile.main.logoutApp.text"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: this.props.logout
+        }
+      ],
+      { cancelable: false }
+    );
+
   public render() {
     const {
       navigation,
-      logout,
       backendInfo,
       sessionToken,
       walletToken,
@@ -152,7 +169,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             {/* Logout/Exit */}
-            <ListItem onPress={logout}>
+            <ListItem onPress={this.confirmLogout}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.logout")}</H3>
                 <Text style={styles.itemLeftText}>

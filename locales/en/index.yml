@@ -66,6 +66,9 @@ profile:
     screenTitle: Profile
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
+    logoutApp:
+      title: Are you sure you want to log out?
+      text: To use the app you will need to enter your Spid credentials again.
     forgetCurrentSession: Forget current session
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?

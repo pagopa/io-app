@@ -68,6 +68,9 @@ profile:
     screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
       dati personali, etc."
     logout: Logout/Esci
+    logoutApp:
+      title: Sei sicuro di voler uscire?
+      text: Per usare l'app dovrai di nuovo inserire le tue credenziali Spid.
     forgetCurrentSession: Dimentica sessione corrente
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
