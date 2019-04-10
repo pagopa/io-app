@@ -26,8 +26,8 @@ export default (): Theme => {
         height: (variables.iconSizeBase * 5) / 3
       },
       paddingLeft: 0,
-      flex: 0,
-      minWidth: 40
+      minWidth: 40,
+      flex: 0
     },
 
     "NativeBase.Body": {
@@ -43,7 +43,8 @@ export default (): Theme => {
         justifyContent: "center",
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
-      }
+      },
+      flex: 1
     },
 
     "NativeBase.Right": {
@@ -56,7 +57,8 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3,
         padding: variables.iconSizeBase / 4
-      }
+      },
+      flex: 0
     },
 
     ".primary": {
