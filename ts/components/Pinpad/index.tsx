@@ -15,7 +15,7 @@ import { Baseline, Bullet } from "./Placeholders";
 
 interface Props {
   activeColor: string;
-  delayEnable: number;
+  delayOnFailureMillis: number;
   clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
@@ -34,6 +34,7 @@ interface State {
  */
 class Pinpad extends React.PureComponent<Props, State> {
   private onFulfillTimeoutId?: number;
+  private onDelayOnFailureTimeoutId?: number;
   private shakeAnimationRef = React.createRef<ShakeAnimation>();
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
@@ -89,6 +90,8 @@ class Pinpad extends React.PureComponent<Props, State> {
   public componentWillUnmount() {
     if (this.onFulfillTimeoutId) {
       clearTimeout(this.onFulfillTimeoutId);
+    } else if (this.onDelayOnFailureTimeoutId) {
+      clearTimeout(this.onDelayOnFailureTimeoutId);
     }
   }
 
@@ -105,12 +108,13 @@ class Pinpad extends React.PureComponent<Props, State> {
         this.setState({
           isDisabled: true
         });
-        // enable after 1 second
-        setTimeout(() => {
+        // re-enable after delayOnFailureMillis milliseconds
+        // tslint:disable-next-line: no-object-mutation
+        this.onDelayOnFailureTimeoutId = setTimeout(() => {
           this.setState({
             isDisabled: false
           });
-        }, this.props.delayEnable);
+        }, this.props.delayOnFailureMillis);
         // start animation 'shake'
         if (this.shakeAnimationRef.current) {
           this.shakeAnimationRef.current.shake();

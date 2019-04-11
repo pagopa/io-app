@@ -335,7 +335,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               activeColor={"white"}
               inactiveColor={"white"}
               buttonType="primary"
-              delayEnable={1000}
+              delayOnFailureMillis={1000}
               onFulfill={(_: string, __: boolean) =>
                 this.onPinFullfill(
                   _,
