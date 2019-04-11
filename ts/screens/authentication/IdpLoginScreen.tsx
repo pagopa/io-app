@@ -102,6 +102,71 @@ class IdpLoginScreen extends React.Component<Props, State> {
     };
   }
 
+  private handleOnError = (): void =>
+    this.setState({
+      requestState: pot.noneError("error")
+    });
+
+  private goBack = this.props.navigation.goBack;
+
+  private setRequestStateToLoading = () =>
+    this.setState({ requestState: pot.noneLoading });
+
+  private handleNavigationStateChange = (event: NavState): void => {
+    this.setState({
+      requestState: event.loading
+        ? pot.someLoading("loading")
+        : pot.some("loading complete")
+    });
+
+    onNavigationStateChange(
+      () => this.props.dispatch(loginFailure()),
+      token => this.props.dispatch(loginSuccess(token))
+    )(event);
+  };
+
+  public renderMask = () => {
+    if (pot.isLoading(this.state.requestState)) {
+      return (
+        <View style={styles.refreshIndicatorContainer}>
+          <RefreshIndicator />
+        </View>
+      );
+    } else if (pot.isError(this.state.requestState)) {
+      return (
+        <View style={styles.errorContainer}>
+          <Image source={brokenLinkImage} resizeMode="contain" />
+          <Text style={styles.errorTitle} bold={true}>
+            {I18n.t("authentication.errors.network.title")}
+          </Text>
+          <Text style={styles.errorBody}>
+            {I18n.t("authentication.errors.network.body")}
+          </Text>
+          <View style={styles.errorButtonsContainer}>
+            <Button
+              onPress={this.goBack}
+              style={{ flex: 1 }}
+              block={true}
+              light={true}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </Button>
+            <Button
+              onPress={this.setRequestStateToLoading}
+              style={{ flex: 2 }}
+              block={true}
+              primary={true}
+            >
+              <Text>{I18n.t("global.buttons.retry")}</Text>
+            </Button>
+          </View>
+        </View>
+      );
+    }
+    // loading complete, no mask needed
+    return null;
+  };
+
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
     const hasError = pot.isError(this.state.requestState);
@@ -116,70 +181,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
 
-    const handleOnError = (): void =>
-      this.setState({
-        requestState: pot.noneError("error")
-      });
-
-    const goBack = this.props.navigation.goBack;
-    const setRequestStateToLoading = () =>
-      this.setState({ requestState: pot.noneLoading });
-
-    const handleNavigationStateChange = (event: NavState): void => {
-      this.setState({
-        requestState: event.loading
-          ? pot.noneLoading
-          : pot.some("loading complete")
-      });
-
-      onNavigationStateChange(
-        () => this.props.dispatch(loginFailure()),
-        token => this.props.dispatch(loginSuccess(token))
-      )(event);
-    };
-
-    const renderMask = () => {
-      if (pot.isLoading(this.state.requestState)) {
-        return (
-          <View style={styles.refreshIndicatorContainer}>
-            <RefreshIndicator />
-          </View>
-        );
-      } else if (pot.isError(this.state.requestState)) {
-        return (
-          <View style={styles.errorContainer}>
-            <Image source={brokenLinkImage} resizeMode="contain" />
-            <Text style={styles.errorTitle} bold={true}>
-              {I18n.t("authentication.errors.network.title")}
-            </Text>
-            <Text style={styles.errorBody}>
-              {I18n.t("authentication.errors.network.body")}
-            </Text>
-            <View style={styles.errorButtonsContainer}>
-              <Button
-                onPress={goBack}
-                style={{ flex: 1 }}
-                block={true}
-                light={true}
-              >
-                <Text>{I18n.t("global.buttons.cancel")}</Text>
-              </Button>
-              <Button
-                onPress={setRequestStateToLoading}
-                style={{ flex: 2 }}
-                block={true}
-                primary={true}
-              >
-                <Text>{I18n.t("global.buttons.retry")}</Text>
-              </Button>
-            </View>
-          </View>
-        );
-      }
-      // loading complete, no mask needed
-      return null;
-    };
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -190,12 +191,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             source={{ uri: loginUri }}
-            onError={handleOnError}
+            onError={this.handleOnError}
             javaScriptEnabled={true}
-            onNavigationStateChange={handleNavigationStateChange}
+            onNavigationStateChange={this.handleNavigationStateChange}
           />
         )}
-        {renderMask()}
+        {this.renderMask()}
       </BaseScreenComponent>
     );
   }
