@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -28,12 +27,12 @@ type OwnProps = {
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 /**
- * web request state can be viewed in one of these states:
- * 'loading' is the initial state, cause the webview receive the end point url directly from props
- * 'completed' means the request has been sucessfully
- * 'error' means the request got an error (end point unrechable, timeout, http errors (404,500...))
+ * web request can be viewed in one of these states:
+ * 'loading' is the initial state, the webview receives the url directly from props so it starts to load
+ * 'completed' means the request has been successfully executed
+ * 'error' means the request got an error (endpoint unreachable, timeout, http errors (404,500...))
  */
-type RequestState = "loading" | "completed" | "error";
+type RequestState = "LOADING" | "COMPLETED" | "ERROR";
 
 type State = {
   requestState: RequestState;
@@ -57,20 +56,22 @@ const styles = StyleSheet.create({
     zIndex: 1000
   },
   errorContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000
-  },
-  errorButtonsContainer: {
+    padding: 20,
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 10
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  errorTitle: {
+    fontSize: 20,
+    marginTop: 10,
+    fontWeight: "bold"
+  },
+  errorBody: { marginTop: 10, marginBottom: 10, textAlign: "center" },
+  errorButtonsContainer: {
+    position: "absolute",
+    bottom: 30,
+    flex: 1,
+    flexDirection: "row"
   }
 });
 
@@ -103,13 +104,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      requestState: "loading"
+      requestState: "LOADING"
     };
   }
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
-    const hasError = this.state.requestState === "error";
+    const hasError = this.state.requestState === "ERROR";
 
     if (loggedInAuth) {
       return <IdpSuccessfulAuthentication />;
@@ -123,15 +124,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     const handleOnError = (): void => {
       this.setState({
-        requestState: "error"
+        requestState: "ERROR"
       });
     };
 
     const goBack = () => this.props.navigation.goBack();
+    const refresh = () => this.setState({ requestState: "LOADING" });
 
     const handleNavigationStateChange = (event: NavState): void => {
       this.setState({
-        requestState: event.loading ? "loading" : "completed"
+        requestState: event.loading ? "LOADING" : "COMPLETED"
       });
 
       onNavigationStateChange(
@@ -142,26 +144,18 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     const renderMask = () => {
       switch (this.state.requestState) {
-        case "completed":
+        case "COMPLETED":
           return null;
-        case "error":
+        case "ERROR":
           return (
-            <View
-              style={{
-                margin: 10,
-                flexDirection: "column"
-              }}
-            >
-              <Image
-                source={brokenLinkImage}
-                resizeMode="contain"
-                style={{
-                  alignSelf: "center"
-                }}
-              />
-              <Markdown webViewStyle={{ alignContent: "center" }}>
-                {I18n.t("authentication.errors.network")}
-              </Markdown>
+            <View style={styles.errorContainer}>
+              <Image source={brokenLinkImage} resizeMode="contain" />
+              <Text style={styles.errorTitle}>
+                {I18n.t("authentication.errors.network.title")}
+              </Text>
+              <Text style={styles.errorBody}>
+                {I18n.t("authentication.errors.network.body")}
+              </Text>
               <View style={styles.errorButtonsContainer}>
                 <Button
                   onPress={goBack}
@@ -169,15 +163,20 @@ class IdpLoginScreen extends React.Component<Props, State> {
                   block={true}
                   light={true}
                 >
-                  <Text>undo</Text>
+                  <Text>{I18n.t("global.buttons.cancel")}</Text>
                 </Button>
-                <Button style={{ flex: 2 }} block={true} primary={true}>
-                  <Text>test retry</Text>
+                <Button
+                  onPress={refresh}
+                  style={{ flex: 2 }}
+                  block={true}
+                  primary={true}
+                >
+                  <Text>{I18n.t("global.buttons.retry")}</Text>
                 </Button>
               </View>
             </View>
           );
-        case "loading":
+        case "LOADING":
           return (
             <View style={styles.refreshIndicatorContainer}>
               <RefreshIndicator />
@@ -195,7 +194,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       >
         {!hasError && (
           <WebView
-            source={{ uri: "http://somedomain.doesnt.exists" }}
+            source={{ uri: loginUri }}
             onError={handleOnError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}

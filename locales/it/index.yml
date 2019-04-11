@@ -180,7 +180,11 @@ authentication:
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
-    network: !include spid_login_request_error.md
+    network: 
+      title: Problema di accesso
+      body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. 
+            Se disponi di un altra identità SPID scegli un provider alternativo.
+            Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
