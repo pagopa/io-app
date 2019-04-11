@@ -9,6 +9,7 @@ type Digit = ITuple2<string, () => void> | undefined;
 type Props = Readonly<{
   digits: ReadonlyArray<ReadonlyArray<Digit>>;
   buttonType: "primary" | "light";
+  isDisabled: boolean;
 }>;
 
 const renderPinCol = (
@@ -16,12 +17,14 @@ const renderPinCol = (
   handler: () => void,
   style: "digit" | "label",
   key: string,
-  buttonType: "primary" | "light"
+  buttonType: "primary" | "light",
+  isDisabled: boolean
 ) => {
   return (
     <Col key={key}>
       <Button
         onPress={handler}
+        disabled={isDisabled}
         style={style === "digit" ? styles.roundButton : {}}
         transparent={style === "label"}
         block={style === "label"}
@@ -49,7 +52,8 @@ const renderPinCol = (
 const renderPinRow = (
   digits: ReadonlyArray<Digit>,
   key: string,
-  buttonType: "primary" | "light"
+  buttonType: "primary" | "light",
+  isDisabled: boolean
 ) => (
   <Row key={key}>
     {digits.map(
@@ -60,7 +64,8 @@ const renderPinRow = (
             el.e2,
             el.e1.length === 1 ? "digit" : "label",
             `pinpad-digit-${el.e2}`,
-            buttonType
+            buttonType,
+            isDisabled
           )
         ) : (
           <Col key={`pinpad-empty-${i}`} />
@@ -79,7 +84,12 @@ export class KeyPad extends React.PureComponent<Props> {
     return (
       <Grid>
         {this.props.digits.map((r, i) =>
-          renderPinRow(r, `pinpad-row-${i}`, this.props.buttonType)
+          renderPinRow(
+            r,
+            `pinpad-row-${i}`,
+            this.props.buttonType,
+            this.props.isDisabled
+          )
         )}
       </Grid>
     );

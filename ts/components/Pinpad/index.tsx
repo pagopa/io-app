@@ -8,12 +8,14 @@ import { ComponentProps } from "../../types/react";
 import { PinString } from "../../types/PinString";
 import { PIN_LENGTH } from "../../utils/constants";
 
+import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { KeyPad } from "./KeyPad";
 import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
 
 interface Props {
   activeColor: string;
+  delayOnFailureMillis?: number;
   clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
@@ -24,6 +26,7 @@ interface Props {
 
 interface State {
   value: string;
+  isDisabled: boolean;
 }
 
 /**
@@ -31,7 +34,8 @@ interface State {
  */
 class Pinpad extends React.PureComponent<Props, State> {
   private onFulfillTimeoutId?: number;
-
+  private onDelayOnFailureTimeoutId?: number;
+  private shakeAnimationRef = React.createRef<ShakeAnimation>();
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
@@ -76,7 +80,8 @@ class Pinpad extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      value: ""
+      value: "",
+      isDisabled: false
     };
 
     this.placeholderPositions = [...new Array(PIN_LENGTH)];
@@ -85,6 +90,8 @@ class Pinpad extends React.PureComponent<Props, State> {
   public componentWillUnmount() {
     if (this.onFulfillTimeoutId) {
       clearTimeout(this.onFulfillTimeoutId);
+    } else if (this.onDelayOnFailureTimeoutId) {
+      clearTimeout(this.onDelayOnFailureTimeoutId);
     }
   }
 
@@ -97,6 +104,24 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       if (!isValid && this.props.clearOnInvalid) {
         this.clear();
+        if (this.props.delayOnFailureMillis) {
+          // disable click keypad
+          this.setState({
+            isDisabled: true
+          });
+
+          // re-enable after delayOnFailureMillis milliseconds
+          // tslint:disable-next-line: no-object-mutation
+          this.onDelayOnFailureTimeoutId = setTimeout(() => {
+            this.setState({
+              isDisabled: false
+            });
+          }, this.props.delayOnFailureMillis);
+          // start animation 'shake'
+          if (this.shakeAnimationRef.current) {
+            this.shakeAnimationRef.current.shake();
+          }
+        }
       }
 
       // Fire the callback asynchronously, otherwise this component
@@ -131,7 +156,13 @@ class Pinpad extends React.PureComponent<Props, State> {
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} extralarge={true} />
-        <KeyPad digits={this.pinPadDigits} buttonType={this.props.buttonType} />
+        <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
+          <KeyPad
+            digits={this.pinPadDigits}
+            buttonType={this.props.buttonType}
+            isDisabled={this.state.isDisabled}
+          />
+        </ShakeAnimation>
       </React.Fragment>
     );
   }
