@@ -3,7 +3,7 @@ import { formatDateAsLocal } from "./dates";
 
 /**
  * This function converts the distance from now to date in :
- * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YY (or DD/MM/YY) depending on user geography
+ * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YY (or DD/MM/YY) depending on the system locale
  */
 export function convertDateToWordDistance(
   date: Date,
