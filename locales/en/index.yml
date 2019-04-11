@@ -58,7 +58,16 @@ profile:
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
-  logout: Logout from this SPID identity
+  logout:
+    menulabel: Logout from this SPID identity
+    cta: 
+      header: How do you want to quit the app?
+      keepData: 
+        title: Quit keeping all data
+        description: In order to use IO, you will log in with you SPID identity again, but any data will be conserved by this app (reading status, etc.) and will be immediately available at next launch.
+      resetData: 
+        title: Quit and reset this app
+        description: "IO app will be restored to its initial state, as if it would just be installed: if you want log in with a different identity, or if you are into not using IO app anymore, you should choose this option. All data saved by IO on this device will be deleted."
   errors:
     load: Error loading the profile
     upsert: Error creating or updating the profile

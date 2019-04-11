@@ -98,11 +98,14 @@ export function createRootReducer(
        * We can't return undefined for nested persist reducer, we need to return
        * the basic redux persist content.
        */
-      state = state
-        ? ({
-            authentication: { _persist: state.authentication._persist }
-          } as GlobalState)
-        : undefined;
+      state =
+        state &&
+        isActionOf(logoutSuccess, action) &&
+        !action.payload.keepUserData
+          ? ({
+              authentication: { _persist: state.authentication._persist }
+            } as GlobalState)
+          : state;
     }
 
     return appReducer(state, action);
