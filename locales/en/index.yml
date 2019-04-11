@@ -176,7 +176,7 @@ authentication:
     logout: Error on logout
     network: 
       title: Access problem
-      body: The identity provider chosen is not available at this time, you can try again later.
+      body: The selected identity provider is not available at this time, you can try again later.
             If you have another SPID, choose an alternative provider.
             You can report the problem with the bug icon at the top right of the screen.
   expiredSessionBanner:
