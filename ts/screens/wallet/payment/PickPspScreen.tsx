@@ -41,6 +41,11 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const style = StyleSheet.create({
+  contentContainerStyle: {
+    flex: 1,
+    padding: variables.contentPadding
+  },
+
   listItem: {
     marginLeft: 0,
     flex: 1,
@@ -77,7 +82,10 @@ class PickPspScreen extends React.Component<Props> {
         goBack={true}
         headerTitle={I18n.t("saveCard.saveCard")}
       >
-        <Content>
+        <Content
+          contentContainerStyle={style.contentContainerStyle}
+          noPadded={true}
+        >
           <H1>{I18n.t("wallet.pickPsp.title")}</H1>
           <View spacer={true} />
           <Text>
