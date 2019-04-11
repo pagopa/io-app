@@ -12,7 +12,7 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 
-export type LogoutMethod = {
+export type LogoutOption = {
   keepUserData: boolean;
 };
 
@@ -27,11 +27,11 @@ export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
 export const loginFailure = createStandardAction("LOGIN_FAILURE")();
 
 export const logoutRequest = createStandardAction("LOGOUT_REQUEST")<
-  LogoutMethod
+  LogoutOption
 >();
 
 export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")<
-  LogoutMethod
+  LogoutOption
 >();
 
 export const logoutFailure = createAction(

@@ -19,13 +19,13 @@ import { connect } from "react-redux";
 
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import SelectLogoutMethod from "../../components/SelectLogoutMethod";
+import SelectLogoutOption from "../../components/SelectLogoutOption";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
-  LogoutMethod,
+  LogoutOption,
   logoutRequest,
   sessionExpired
 } from "../../store/actions/authentication";
@@ -85,8 +85,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     Toast.show({ text: "The cache has been cleared." });
   };
 
-  private logout = (logoutMethod: LogoutMethod) => {
-    this.props.logout(logoutMethod);
+  private logout = (logoutOption: LogoutOption) => {
+    this.props.logout(logoutOption);
 
     this.props.hideModal();
   };
@@ -94,9 +94,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   private onLogoutPress = () => {
     // Show a modal to let the user select a calendar
     this.props.showModal(
-      <SelectLogoutMethod
+      <SelectLogoutOption
         onCancel={this.props.hideModal}
-        onMethodSelected={this.logout}
+        onOptionSelected={this.logout}
         header={
           <H1 style={styles.modalHeader}>
             {I18n.t("profile.logout.cta.header")}
@@ -340,7 +340,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: (logoutMethod: LogoutMethod) => dispatch(logoutRequest(logoutMethod)),
+  logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

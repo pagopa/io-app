@@ -11,14 +11,13 @@ import {
 } from "native-base";
 import React from "react";
 import { BackHandler, StyleSheet } from "react-native";
-import { connect } from "react-redux";
 
 import I18n from "../i18n";
 import variables from "../theme/variables";
 
-import IconFont from "../components/ui/IconFont";
-import { LogoutMethod } from "../store/actions/authentication";
+import { LogoutOption } from "../store/actions/authentication";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
   content: {
@@ -40,14 +39,14 @@ const styles = StyleSheet.create({
 
 type Props = {
   onCancel: () => void;
-  onMethodSelected: (_: LogoutMethod) => void;
+  onOptionSelected: (_: LogoutOption) => void;
   header?: React.ReactNode;
 };
 
 /**
  * A modal that allow the user to select the logout method of choice
  */
-class SelectLogoutMethod extends React.PureComponent<Props> {
+class SelectLogoutOption extends React.PureComponent<Props> {
   private onBackPress = () => {
     this.props.onCancel();
     // Returning true is mandatory to avoid the default press action to be
@@ -64,7 +63,7 @@ class SelectLogoutMethod extends React.PureComponent<Props> {
             <ListItem
               first={true}
               onPress={() =>
-                this.props.onMethodSelected({ keepUserData: true })
+                this.props.onOptionSelected({ keepUserData: true })
               }
             >
               <Left style={styles.itemLeft}>
@@ -82,7 +81,7 @@ class SelectLogoutMethod extends React.PureComponent<Props> {
             </ListItem>
             <ListItem
               onPress={() =>
-                this.props.onMethodSelected({ keepUserData: false })
+                this.props.onOptionSelected({ keepUserData: false })
               }
             >
               <Left style={styles.itemLeft}>
@@ -123,4 +122,4 @@ class SelectLogoutMethod extends React.PureComponent<Props> {
   }
 }
 
-export default connect()(SelectLogoutMethod);
+export default SelectLogoutOption;
