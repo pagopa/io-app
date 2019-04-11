@@ -28,7 +28,7 @@ describe("convertDateToWordDistance test plan", () => {
     const nowDate = new Date();
     const testDate = addHours(nowDate, -48);
     expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
-      format(testDate, "DD/MM")
+      format(testDate, "MM/DD")
     );
   });
 
@@ -45,11 +45,11 @@ describe("convertDateToWordDistance test plan", () => {
     ).toBe(customInvalidString);
   });
 
-  it("should compare now date with last year date, expected DD/MM/YY", () => {
+  it("should compare now date with last year date, expected MM/DD/YY", () => {
     const nowDate = new Date();
     const testDate = addYears(nowDate, -1);
     expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
-      format(testDate, "DD/MM/YY")
+      format(testDate, "MM/DD/YY")
     );
   });
 });

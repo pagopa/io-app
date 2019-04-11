@@ -2,9 +2,8 @@ import { differenceInCalendarDays, format } from "date-fns";
 import { formatDateAsLocal } from "./dates";
 
 /**
- * This function converts the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM
- *  TODO: Make date consistent with the timezone
- *  https://www.pivotaltracker.com/story/show/158389284
+ * This function converts the distance from now to date in :
+ * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YY (or DD/MM/YY) depending on user geography
  */
 export function convertDateToWordDistance(
   date: Date,
