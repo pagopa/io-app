@@ -1,6 +1,5 @@
 import { differenceInCalendarDays, format } from "date-fns";
-import I18n from "i18n-js";
-import { formatDateAsLocal } from './dates';
+import { formatDateAsLocal } from "./dates";
 
 /**
  * This function converts the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM

@@ -23,12 +23,26 @@ export function formatDateAsReminder(
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
+export function formatDateAsLocal(
+  date: Date,
+  includeYear: boolean = false
+): ReturnType<typeof dateFnsFormat> {
+  enum LocaleFormat {
+    "" = "MM/DD",
+    "en" = "MM/DD",
+    "it" = "DD/MM"
+  }
+  const locale = I18n.currentLocale();
+  return includeYear
+    ? format(date, LocaleFormat[locale]) + "/" + format(date, "YY")
+    : format(date, LocaleFormat[locale]);
+}
+
 export function format(
   date: string | number | Date,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
   const localePrimary = getLocalePrimary(I18n.currentLocale());
-
   return dateFnsFormat(
     date,
     dateFormat,
