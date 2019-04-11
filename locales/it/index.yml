@@ -180,6 +180,7 @@ authentication:
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
+    network: !include spid_login_request_error.md
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!

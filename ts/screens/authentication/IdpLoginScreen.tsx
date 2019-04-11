@@ -1,6 +1,6 @@
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { NavState, StyleSheet } from "react-native";
+import { Image, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -43,6 +43,8 @@ const LOGIN_BASE_URL = `${
   config.apiUrlPrefix
 }/login?authLevel=SpidL2&entityID=`;
 
+const brokenLinkImage = require("../../../img/broken-link.png");
+
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
     position: "absolute",
@@ -55,11 +57,20 @@ const styles = StyleSheet.create({
     zIndex: 1000
   },
   errorContainer: {
-    flex: 1,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1000,
-    backgroundColor: "red"
+    zIndex: 1000
+  },
+  errorButtonsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 10
   }
 });
 
@@ -116,6 +127,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
       });
     };
 
+    const goBack = () => this.props.navigation.goBack();
+
     const handleNavigationStateChange = (event: NavState): void => {
       this.setState({
         requestState: event.loading ? "loading" : "completed"
@@ -133,9 +146,35 @@ class IdpLoginScreen extends React.Component<Props, State> {
           return null;
         case "error":
           return (
-            <View style={styles.errorContainer} content={true}>
-              <Text>Error</Text>
-              <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
+            <View
+              style={{
+                margin: 10,
+                flexDirection: "column"
+              }}
+            >
+              <Image
+                source={brokenLinkImage}
+                resizeMode="contain"
+                style={{
+                  alignSelf: "center"
+                }}
+              />
+              <Markdown webViewStyle={{ alignContent: "center" }}>
+                {I18n.t("authentication.errors.network")}
+              </Markdown>
+              <View style={styles.errorButtonsContainer}>
+                <Button
+                  onPress={goBack}
+                  style={{ flex: 1 }}
+                  block={true}
+                  light={true}
+                >
+                  <Text>undo</Text>
+                </Button>
+                <Button style={{ flex: 2 }} block={true} primary={true}>
+                  <Text>test retry</Text>
+                </Button>
+              </View>
             </View>
           );
         case "loading":
@@ -156,7 +195,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       >
         {!hasError && (
           <WebView
-            source={{ uri: "http://doesntexist.ne" }}
+            source={{ uri: "http://somedomain.doesnt.exists" }}
             onError={handleOnError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}
