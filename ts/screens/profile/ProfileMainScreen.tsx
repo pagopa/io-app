@@ -124,6 +124,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       { cancelable: false }
     );
 
+  // tslint:disable-next-line: no-big-function
   public render() {
     const {
       navigation,
@@ -251,7 +252,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       small={true}
                       onPress={() => copyToClipboardWithFeedback(sessionToken)}
                     >
-                      <Text>{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                      >{`Session Token ${sessionToken}`}</Text>
                     </Button>
                   </ListItem>
                 )}
@@ -262,7 +266,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       small={true}
                       onPress={() => copyToClipboardWithFeedback(walletToken)}
                     >
-                      <Text>{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                      >{`Wallet token ${walletToken}`}</Text>
                     </Button>
                   </ListItem>
                 )}
