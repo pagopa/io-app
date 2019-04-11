@@ -12,6 +12,7 @@ export function convertDateToWordDistance(
   todayAtLabel?: string,
   invalidDateLabel?: string
 ): string {
+  
   const distance = differenceInCalendarDays(new Date(), date);
   // 0 days, distance < one day
   if (distance < 1) {
