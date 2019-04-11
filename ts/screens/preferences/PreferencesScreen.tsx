@@ -120,11 +120,6 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const contextualHelp = {
-      title: I18n.t("preferences.title"),
-      body: () => <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
-    };
-
     const { potProfile } = this.props;
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
@@ -148,7 +143,6 @@ class PreferencesScreen extends React.Component<Props, State> {
         title={I18n.t("preferences.title")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("preferences.subtitle")}
-        contextualHelp={contextualHelp}
       >
         <Content noPadded={true}>
           <List withContentLateralPadding={true}>
