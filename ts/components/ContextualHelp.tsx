@@ -5,7 +5,7 @@
  * needed)
  */
 
-import { Button, Container, Content, H1, Right, View } from "native-base";
+import { Button, Container, Content, H1, Right, View, Body } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 
@@ -69,6 +69,7 @@ export class ContextualHelp extends React.Component<Props, State> {
       >
         <Container>
           <AppHeader noLeft={true}>
+            <Body />
             <Right>
               <Button onPress={onClose} transparent={true}>
                 <IconFont name="io-close" />
