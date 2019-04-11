@@ -5,7 +5,7 @@
  * needed)
  */
 
-import { Button, Container, Content, H1, Right, View, Body } from "native-base";
+import { Body, Button, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 
