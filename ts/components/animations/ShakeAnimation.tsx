@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Animated, Easing } from "react-native";
 
-type Props = Readonly<{}>;
+type Props = Readonly<{
+  duration: number;
+}>;
 /**
  *
  * This component create a custom animation called 'shake'
@@ -19,7 +21,7 @@ export class ShakeAnimation extends React.PureComponent<Props> {
     // start animation
     Animated.timing(this.animatedValue, {
       toValue: 1,
-      duration: 600,
+      duration: this.props.duration,
       useNativeDriver: true,
       easing: Easing.linear
     }).start();

@@ -15,6 +15,7 @@ import { Baseline, Bullet } from "./Placeholders";
 
 interface Props {
   activeColor: string;
+  delayEnable: number;
   clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
@@ -109,7 +110,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           this.setState({
             isDisabled: false
           });
-        }, 1000);
+        }, this.props.delayEnable);
         // start animation 'shake'
         if (this.shakeAnimationRef.current) {
           this.shakeAnimationRef.current.shake();
@@ -148,7 +149,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} extralarge={true} />
-        <ShakeAnimation ref={this.shakeAnimationRef}>
+        <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
           <KeyPad
             digits={this.pinPadDigits}
             buttonType={this.props.buttonType}
