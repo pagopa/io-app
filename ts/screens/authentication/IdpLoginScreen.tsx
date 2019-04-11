@@ -1,10 +1,11 @@
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Image, NavState, StyleSheet } from "react-native";
-import WebView from "react-native-webview";
+import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -26,13 +27,7 @@ type OwnProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
-/**
- * web request can be viewed in one of these states:
- * 'loading' is the initial state, the webview receives the url directly from props so it starts to load
- * 'completed' means the request has been successfully executed
- * 'error' means the request got an error (endpoint unreachable, timeout, http errors (404,500...))
- */
-type RequestState = "LOADING" | "COMPLETED" | "ERROR";
+type RequestState = pot.Pot<string, string>;
 
 type State = {
   requestState: RequestState;
@@ -63,8 +58,7 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     fontSize: 20,
-    marginTop: 10,
-    fontWeight: "bold"
+    marginTop: 10
   },
   errorBody: { marginTop: 10, marginBottom: 10, textAlign: "center" },
   errorButtonsContainer: {
@@ -104,13 +98,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      requestState: "LOADING"
+      requestState: pot.noneLoading
     };
   }
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
-    const hasError = this.state.requestState === "ERROR";
+    const hasError = pot.isError(this.state.requestState);
 
     if (loggedInAuth) {
       return <IdpSuccessfulAuthentication />;
@@ -122,18 +116,20 @@ class IdpLoginScreen extends React.Component<Props, State> {
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
 
-    const handleOnError = (): void => {
+    const handleOnError = (): void =>
       this.setState({
-        requestState: "ERROR"
+        requestState: pot.noneError("error")
       });
-    };
 
-    const goBack = () => this.props.navigation.goBack();
-    const refresh = () => this.setState({ requestState: "LOADING" });
+    const goBack = this.props.navigation.goBack;
+    const setRequestStateToLoading = () =>
+      this.setState({ requestState: pot.noneLoading });
 
     const handleNavigationStateChange = (event: NavState): void => {
       this.setState({
-        requestState: event.loading ? "LOADING" : "COMPLETED"
+        requestState: event.loading
+          ? pot.noneLoading
+          : pot.some("loading complete")
       });
 
       onNavigationStateChange(
@@ -143,46 +139,45 @@ class IdpLoginScreen extends React.Component<Props, State> {
     };
 
     const renderMask = () => {
-      switch (this.state.requestState) {
-        case "COMPLETED":
-          return null;
-        case "ERROR":
-          return (
-            <View style={styles.errorContainer}>
-              <Image source={brokenLinkImage} resizeMode="contain" />
-              <Text style={styles.errorTitle}>
-                {I18n.t("authentication.errors.network.title")}
-              </Text>
-              <Text style={styles.errorBody}>
-                {I18n.t("authentication.errors.network.body")}
-              </Text>
-              <View style={styles.errorButtonsContainer}>
-                <Button
-                  onPress={goBack}
-                  style={{ flex: 1 }}
-                  block={true}
-                  light={true}
-                >
-                  <Text>{I18n.t("global.buttons.cancel")}</Text>
-                </Button>
-                <Button
-                  onPress={refresh}
-                  style={{ flex: 2 }}
-                  block={true}
-                  primary={true}
-                >
-                  <Text>{I18n.t("global.buttons.retry")}</Text>
-                </Button>
-              </View>
+      if (pot.isLoading(this.state.requestState)) {
+        return (
+          <View style={styles.refreshIndicatorContainer}>
+            <RefreshIndicator />
+          </View>
+        );
+      } else if (pot.isError(this.state.requestState)) {
+        return (
+          <View style={styles.errorContainer}>
+            <Image source={brokenLinkImage} resizeMode="contain" />
+            <Text style={styles.errorTitle} bold={true}>
+              {I18n.t("authentication.errors.network.title")}
+            </Text>
+            <Text style={styles.errorBody}>
+              {I18n.t("authentication.errors.network.body")}
+            </Text>
+            <View style={styles.errorButtonsContainer}>
+              <Button
+                onPress={goBack}
+                style={{ flex: 1 }}
+                block={true}
+                light={true}
+              >
+                <Text>{I18n.t("global.buttons.cancel")}</Text>
+              </Button>
+              <Button
+                onPress={setRequestStateToLoading}
+                style={{ flex: 2 }}
+                block={true}
+                primary={true}
+              >
+                <Text>{I18n.t("global.buttons.retry")}</Text>
+              </Button>
             </View>
-          );
-        case "LOADING":
-          return (
-            <View style={styles.refreshIndicatorContainer}>
-              <RefreshIndicator />
-            </View>
-          );
+          </View>
+        );
       }
+      // loading complete, no mask needed
+      return null;
     };
 
     return (
