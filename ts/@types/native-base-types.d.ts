@@ -22,7 +22,7 @@ declare module "native-base-shoutem-theme" {
   /**
    * The connectStyle function does not use forwardRef.
    * To get a ref to the wrapped component you have to use _root.
-   *
+   * 
    * RT = _root Type
    */
   export function connectStyle<RT = {}>(
