@@ -4,6 +4,7 @@ global:
     decimalSeparator: ","
   dateFormats:
     dayAndMonth: "dddd D MMMM"
+    dayMonth: "DD/MM"
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
