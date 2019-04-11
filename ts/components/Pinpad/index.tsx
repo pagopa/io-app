@@ -15,7 +15,7 @@ import { Baseline, Bullet } from "./Placeholders";
 
 interface Props {
   activeColor: string;
-  delayOnFailureMillis: number;
+  delayOnFailureMillis?: number;
   clearOnInvalid?: boolean;
   compareWithCode?: string;
   inactiveColor: string;
@@ -104,20 +104,23 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       if (!isValid && this.props.clearOnInvalid) {
         this.clear();
-        // disable click keypad
-        this.setState({
-          isDisabled: true
-        });
-        // re-enable after delayOnFailureMillis milliseconds
-        // tslint:disable-next-line: no-object-mutation
-        this.onDelayOnFailureTimeoutId = setTimeout(() => {
+        if (this.props.delayOnFailureMillis) {
+          // disable click keypad
           this.setState({
-            isDisabled: false
+            isDisabled: true
           });
-        }, this.props.delayOnFailureMillis);
-        // start animation 'shake'
-        if (this.shakeAnimationRef.current) {
-          this.shakeAnimationRef.current.shake();
+
+          // re-enable after delayOnFailureMillis milliseconds
+          // tslint:disable-next-line: no-object-mutation
+          this.onDelayOnFailureTimeoutId = setTimeout(() => {
+            this.setState({
+              isDisabled: false
+            });
+          }, this.props.delayOnFailureMillis);
+          // start animation 'shake'
+          if (this.shakeAnimationRef.current) {
+            this.shakeAnimationRef.current.shake();
+          }
         }
       }
 
