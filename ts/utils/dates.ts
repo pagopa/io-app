@@ -25,7 +25,7 @@ export function formatDateAsReminder(
 
 /**
  *
- * It provides the format of the date depending on the geography (DD/MM or MM/DD as default)
+ * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
  * @param date
  * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
  */
