@@ -32,7 +32,6 @@
     "prettier": true,
     "saga-yield-return-type": true,
     "no-tslint-disable-all": true,
-    "no-big-function": false,
 
     // Disallows use of the null keyword literal.
     // "no-null-keyword": true,

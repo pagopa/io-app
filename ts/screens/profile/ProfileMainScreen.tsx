@@ -94,6 +94,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       { cancelable: false }
     );
 
+  // tslint:disable-next-line: no-big-function
   public render() {
     const {
       navigation,
