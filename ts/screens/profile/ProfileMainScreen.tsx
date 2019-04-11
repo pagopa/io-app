@@ -1,6 +1,7 @@
 import {
   Button,
   Content,
+  H1,
   H3,
   Left,
   List,
@@ -11,16 +12,20 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Clipboard, StyleSheet, View } from "react-native";
+import { Alert, Clipboard, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import SelectLogoutOption from "../../components/SelectLogoutOption";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
+  LogoutOption,
   logoutRequest,
   sessionExpired
 } from "../../store/actions/authentication";
@@ -41,6 +46,7 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps &
+  LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -64,6 +70,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
+  },
+  modalHeader: {
+    marginBottom: 25
   }
 });
 
@@ -76,11 +85,48 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     Toast.show({ text: "The cache has been cleared." });
   };
 
+  private logout = (logoutOption: LogoutOption) => {
+    this.props.logout(logoutOption);
+
+    this.props.hideModal();
+  };
+
+  private onLogoutPress = () => {
+    // Show a modal to let the user select a calendar
+    this.props.showModal(
+      <SelectLogoutOption
+        onCancel={this.props.hideModal}
+        onOptionSelected={this.logout}
+        header={
+          <H1 style={styles.modalHeader}>
+            {I18n.t("profile.logout.cta.header")}
+          </H1>
+        }
+      />
+    );
+  };
+
+  private confirmResetAlert = () =>
+    Alert.alert(
+      I18n.t("profile.main.resetPin.confirmTitle"),
+      I18n.t("profile.main.resetPin.confirmMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: this.props.resetPin
+        }
+      ],
+      { cancelable: false }
+    );
+
   public render() {
     const {
       navigation,
-      resetPin,
-      logout,
       backendInfo,
       sessionToken,
       walletToken,
@@ -119,7 +165,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             {/* Reset PIN */}
-            <ListItem onPress={resetPin}>
+            <ListItem onPress={this.confirmResetAlert}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
                 <Text style={styles.itemLeftText}>
@@ -135,11 +181,11 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             {/* Logout/Exit */}
-            <ListItem onPress={logout}>
+            <ListItem onPress={this.onLogoutPress}>
               <Left style={styles.itemLeft}>
                 <H3>{I18n.t("profile.main.logout")}</H3>
                 <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.logout")}
+                  {I18n.t("profile.logout.menulabel")}
                 </Text>
               </Left>
               <Right>
@@ -294,7 +340,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: () => dispatch(logoutRequest()),
+  logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
@@ -304,4 +350,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileMainScreen);
+)(withLightModalContext(ProfileMainScreen));

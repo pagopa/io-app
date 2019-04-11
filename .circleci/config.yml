@@ -20,8 +20,9 @@ defaults_android: &defaults_android
     - image: circleci/android:api-23-node8-alpha
   environment:
     - TERM: "dumb"
-    - ANDROID_SDK_BUILD_TOOLS_REVISION: "27.0.3"
-    - ANDROID_SDK_BUILD_API_LEVEL: "27"
+    - ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
+    - ANDROID_SDK_BUILD_API_LEVEL: "28"
+    - ANDROID_GOOGLE_API_LEVEL: "23"
     - REACT_NATIVE_MAX_WORKERS: 1
     - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
@@ -60,8 +61,8 @@ jobs:
       # Restore dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
+          - v1.1-dependencies-{{ checksum "yarn.lock" }}
+          - v1.1-dependencies-
 
       # Install node dependencies
       - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
@@ -70,7 +71,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1.1-dependencies-{{ checksum "yarn.lock" }}
 
       # Run linter
       - run: yarn lint
@@ -190,6 +191,13 @@ jobs:
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
 
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
       # Install bundle dependencies
       - run:
           name: Bundle Install
@@ -231,6 +239,13 @@ jobs:
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
 
       # Remove watchman from node global packages
       - run:
@@ -281,6 +296,13 @@ jobs:
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
 
       # TODO: possibly remove this after the following issue has been fixed:
       # https://github.com/GeekyAnts/NativeBase/issues/1957

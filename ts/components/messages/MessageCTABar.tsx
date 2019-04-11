@@ -407,7 +407,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     }
 
     RNCalendarEvents.saveEvent(title, {
-      title,
       calendarId: calendar.id,
       startDate: formatDateAsReminder(dueDate),
       endDate: formatDateAsReminder(dueDate),

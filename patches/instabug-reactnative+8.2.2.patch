@@ -1,0 +1,21 @@
+patch-package
+--- a/node_modules/instabug-reactnative/index.d.ts
++++ b/node_modules/instabug-reactnative/index.d.ts
+@@ -87,7 +87,7 @@ export namespace FeatureRequests {
+ }
+ export namespace Replies {
+   function setEnabled(isEnabled: boolean): void;
+-  function hasChats(callback: () => void): void;
++  function hasChats(callback: (previousChats : boolean) => void): void;
+   function show(): void;
+   function setOnNewReplyReceivedCallback(onNewReplyReceivedCallback: () => void): void;
+   function getUnreadRepliesCount(messageCountCallback: () => void): void;
+@@ -136,7 +136,7 @@ export function setFloatingButtonEdge(
+   ): void;
+ export function setLocale(locale: locale): void;
+ export function setColorTheme(colorTheme: colorTheme): void;
+-export function setPrimaryColor(setPrimaryColor: string): void;
++export function setPrimaryColor(setPrimaryColor: number): void;
+ export function appendTags(tags: string[]): void;
+ export function resetTags(): void;
+ export function getTags(tagsCallback: () => void): void;

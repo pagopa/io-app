@@ -1,0 +1,4 @@
+tslint:
+  enabled: true
+  config_file: tslint.json
+
