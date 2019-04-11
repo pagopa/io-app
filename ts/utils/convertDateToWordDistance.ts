@@ -1,5 +1,6 @@
 import { differenceInCalendarDays, format } from "date-fns";
 import I18n from "i18n-js";
+import { formatDateAsLocal } from './dates';
 
 /**
  * This function converts the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM
@@ -22,17 +23,12 @@ export function convertDateToWordDistance(
     return lastDayLabel;
   } // 1 day < distance < 365 days, current year
   else if (distance > 1 && distance < 365) {
-    const locale = I18n.currentLocale();
-    if (locale == "it") {
-      return format(date, "DD/MM");
-    } else {
-      return format(date, "MM/DD");
-    }
+    return formatDateAsLocal(date);
   } // the original date is invalid (distance is NaN)
   else if (isNaN(distance)) {
     return invalidDateLabel ? invalidDateLabel : format(date);
   } else {
     // distance > current year
-    return format(date, "DD/MM/YY");
+    return formatDateAsLocal(date, true);
   }
 }
