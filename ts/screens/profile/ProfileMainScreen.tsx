@@ -225,7 +225,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       <Text
                         ellipsizeMode="tail"
                         numberOfLines={1}
-                      >{`Session Token ${sessionToken.slice(0, 6)}`}</Text>
+                      >{`Session Token ${sessionToken}`}</Text>
                     </Button>
                   </ListItem>
                 )}
@@ -239,7 +239,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       <Text
                         ellipsizeMode="tail"
                         numberOfLines={1}
-                      >{`Wallet token ${walletToken.slice(0, 6)}`}</Text>
+                      >{`Wallet token ${walletToken}`}</Text>
                     </Button>
                   </ListItem>
                 )}
