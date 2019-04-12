@@ -5,7 +5,10 @@ import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { constNull } from "fp-ts/lib/function";
+
 import * as pot from "italia-ts-commons/lib/pot";
+import { mixpanel } from "../../../ts/mixpanel";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -26,8 +29,52 @@ type OwnProps = {
 };
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
-
 type RequestState = pot.Pot<string, string>;
+
+/**
+ * authentication phase can be viewed in one of these states:
+ * - IDPL_START: the user lands into the login screen
+ * - IDPL_URL_CHANGED: the user interacts with the login form and makes http requests
+ * - IDPL_SUCCESS: the authentication completed successfully
+ * - IDPL_FAILURE: the authentication failed (wrong credential, account suspended etc etc)
+ * - IDPL_ERROR: a network request fails
+ * - IDPL_END: the user leaves the login screen
+ */
+type AuthState =
+  | "IDPL_START"
+  | "IDPL_URL_CHANGED"
+  | "IDPL_SUCCESS"
+  | "IDPL_FAILURE"
+  | "IDPL_ERROR"
+  | "IDPL_END";
+
+/**
+ * AuthPhase represents the payload sent to mixpanel
+ * It has a state and a detail description
+ */
+type AuthPhase = {
+  state: AuthState;
+  detail: string;
+};
+
+/**
+ * function to send authStep details to mixpanel
+ * @param authStep the payload to sent to mixpanel
+ */
+const trackAuth = (authPhase: AuthPhase) => {
+  if (!mixpanel) {
+    return;
+  }
+  // if the state is session boundary, we need to keep track of elapsed time
+  if (authPhase.state === "IDPL_START" || authPhase.state === "IDPL_END") {
+    mixpanel.timeEvent("IDPL_SESSION").then(constNull, constNull);
+  }
+  mixpanel
+    .track(authPhase.state, {
+      details: authPhase.detail
+    })
+    .then(constNull, constNull);
+};
 
 type State = {
   requestState: RequestState;
@@ -96,16 +143,34 @@ const onNavigationStateChange = (
 class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
     this.state = {
       requestState: pot.noneLoading
     };
   }
 
-  private handleOnError = (): void =>
+  private traceInOut(boundaryState: AuthState) {
+    trackAuth({
+      state: boundaryState,
+      detail: this.props.loggedOutWithIdpAuth
+        ? this.props.loggedOutWithIdpAuth.idp.entityID
+        : "idp n/a"
+    });
+  }
+
+  public componentWillUnmount() {
+    this.traceInOut("IDPL_START");
+  }
+
+  public componentDidMount() {
+    this.traceInOut("IDPL_END");
+  }
+
+  private handleOnError = (): void => {
+    trackAuth({ state: "IDPL_ERROR", detail: "request network error" });
     this.setState({
       requestState: pot.noneError("error")
     });
+  };
 
   private goBack = this.props.navigation.goBack;
 
@@ -113,15 +178,36 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
+    if (
+      pot.isSome(this.state.requestState) &&
+      event.url &&
+      event.url !== this.state.requestState.value
+    ) {
+      trackAuth({ state: "IDPL_URL_CHANGED", detail: event.url });
+    }
+
+    const eventUrl = event.url ? event.url : "";
     this.setState({
       requestState: event.loading
-        ? pot.someLoading("loading")
-        : pot.some("loading complete")
+        ? pot.someLoading(eventUrl)
+        : pot.some(eventUrl)
     });
 
     onNavigationStateChange(
-      () => this.props.dispatch(loginFailure()),
-      token => this.props.dispatch(loginSuccess(token))
+      () => {
+        trackAuth({
+          state: "IDPL_FAILURE",
+          detail: "login failure"
+        });
+        this.props.dispatch(loginFailure());
+      },
+      token => {
+        trackAuth({
+          state: "IDPL_SUCCESS",
+          detail: "login success"
+        });
+        this.props.dispatch(loginSuccess(token));
+      }
     )(event);
   };
 
