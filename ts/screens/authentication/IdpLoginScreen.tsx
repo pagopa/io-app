@@ -5,10 +5,14 @@ import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { constNull } from "fp-ts/lib/function";
+import {
+  idpLoginEnd,
+  idpLoginRequestError,
+  idpLoginStart,
+  idpLoginUrlChanged
+} from "../../store/actions/authentication";
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { mixpanel } from "../../../ts/mixpanel";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -31,53 +35,10 @@ type OwnProps = {
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 type RequestState = pot.Pot<string, string>;
 
-/**
- * authentication phase can be viewed in one of these states:
- * - IDPL_START: the user lands into the login screen
- * - IDPL_URL_CHANGED: the user interacts with the login form and makes http requests
- * - IDPL_SUCCESS: the authentication completed successfully
- * - IDPL_FAILURE: the authentication failed (wrong credential, account suspended etc etc)
- * - IDPL_ERROR: a network request fails
- * - IDPL_END: the user leaves the login screen
- */
-type AuthState =
-  | "IDPL_START"
-  | "IDPL_URL_CHANGED"
-  | "IDPL_SUCCESS"
-  | "IDPL_FAILURE"
-  | "IDPL_ERROR"
-  | "IDPL_END";
-
-/**
- * AuthPhase represents the payload sent to mixpanel
- * It has a state and a detail description
- */
-type AuthPhase = {
-  state: AuthState;
-  detail: string;
-};
-
-/**
- * function to send authStep details to mixpanel
- * @param authStep the payload to sent to mixpanel
- */
-const trackAuth = (authPhase: AuthPhase) => {
-  if (!mixpanel) {
-    return;
-  }
-  // if the state is session boundary, we need to keep track of elapsed time
-  if (authPhase.state === "IDPL_START" || authPhase.state === "IDPL_END") {
-    mixpanel.timeEvent("IDPL_SESSION").then(constNull, constNull);
-  }
-  mixpanel
-    .track(authPhase.state, {
-      details: authPhase.detail
-    })
-    .then(constNull, constNull);
-};
-
 type State = {
   requestState: RequestState;
+  requestUrl?: string;
+  startingMs: number;
 };
 
 const LOGIN_BASE_URL = `${
@@ -144,29 +105,32 @@ class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      requestState: pot.noneLoading
+      requestState: pot.noneLoading,
+      startingMs: new Date().getTime()
     };
   }
 
-  private traceInOut(boundaryState: AuthState) {
-    trackAuth({
-      state: boundaryState,
-      detail: this.props.loggedOutWithIdpAuth
-        ? this.props.loggedOutWithIdpAuth.idp.entityID
-        : "idp n/a"
-    });
-  }
-
-  public componentWillUnmount() {
-    this.traceInOut("IDPL_START");
-  }
+  private getSpidId = (): string =>
+    this.props.loggedOutWithIdpAuth
+      ? this.props.loggedOutWithIdpAuth.idp.entityID
+      : "idpID n/a";
 
   public componentDidMount() {
-    this.traceInOut("IDPL_END");
+    this.props.dispatch(
+      idpLoginStart({
+        id: this.getSpidId(),
+        detail: "start"
+      })
+    );
   }
 
   private handleOnError = (): void => {
-    trackAuth({ state: "IDPL_ERROR", detail: "request network error" });
+    this.props.dispatch(
+      idpLoginRequestError({
+        id: this.getSpidId(),
+        detail: "network request error"
+      })
+    );
     this.setState({
       requestState: pot.noneError("error")
     });
@@ -174,39 +138,49 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private goBack = this.props.navigation.goBack;
 
-  private setRequestStateToLoading = () =>
+  private setRequestStateToLoading = (): void =>
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    if (
-      pot.isSome(this.state.requestState) &&
-      event.url &&
-      event.url !== this.state.requestState.value
-    ) {
-      trackAuth({ state: "IDPL_URL_CHANGED", detail: event.url });
+    if (event.url && event.url !== this.state.requestUrl) {
+      this.props.dispatch(
+        idpLoginUrlChanged({
+          id: this.getSpidId(),
+          detail: event.url.split("?")[0]
+        })
+      );
     }
 
-    const eventUrl = event.url ? event.url : "";
     this.setState({
       requestState: event.loading
-        ? pot.someLoading(eventUrl)
-        : pot.some(eventUrl)
+        ? pot.someLoading("loading")
+        : pot.some("loading complete"),
+      requestUrl: event.url
     });
 
+    const elapsed = Math.round(
+      (new Date().getTime() - this.state.startingMs) / 1000
+    );
     onNavigationStateChange(
       () => {
-        trackAuth({
-          state: "IDPL_FAILURE",
-          detail: "login failure"
-        });
         this.props.dispatch(loginFailure());
+        this.props.dispatch(
+          idpLoginEnd({
+            id: this.getSpidId(),
+            duration: elapsed,
+            success: false
+          })
+        );
       },
       token => {
-        trackAuth({
-          state: "IDPL_SUCCESS",
-          detail: "login success"
-        });
         this.props.dispatch(loginSuccess(token));
+        this.props.dispatch(
+          idpLoginEnd({
+            id: this.getSpidId(),
+            duration: elapsed,
+            success: true
+          })
+        );
       }
     )(event);
   };
@@ -266,7 +240,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return null;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
-
     return (
       <BaseScreenComponent
         goBack={true}

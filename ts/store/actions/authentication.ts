@@ -10,6 +10,7 @@ import {
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
+import { IdplLoginPhase, IdpLoginEnd } from "../../models/IdplLoginPhase";
 import { SessionToken } from "../../types/SessionToken";
 
 export type LogoutOption = {
@@ -20,6 +21,20 @@ export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
 
+export const idpLoginStart = createStandardAction("IDPL_START")<
+  IdplLoginPhase
+>();
+
+//
+// Action abund IDP Login phase
+//
+export const idpLoginEnd = createStandardAction("IDPL_END")<IdpLoginEnd>();
+export const idpLoginRequestError = createStandardAction("IDPL_REQUEST_ERROR")<
+  IdplLoginPhase
+>();
+export const idpLoginUrlChanged = createStandardAction("IDPL_URL_CHANGED")<
+  IdplLoginPhase
+>();
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
   SessionToken
 >();
@@ -56,6 +71,10 @@ export const forgetCurrentSession = createStandardAction("SESSION_FORGET")();
 
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
+  | ActionType<typeof idpLoginStart>
+  | ActionType<typeof idpLoginEnd>
+  | ActionType<typeof idpLoginRequestError>
+  | ActionType<typeof idpLoginUrlChanged>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>
