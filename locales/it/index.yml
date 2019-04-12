@@ -181,9 +181,6 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
-    subtitle: "I diversi Identity Provider permettono diverse modalità di
-      riconoscimento e offrono insieme a SPID servizi diversi: scopri i
-      dettagli di ciascuno"
   idp_login:
     headerTitle: Accedi
   errors:

@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
 import { InfoBanner } from "../../components/InfoBanner";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { TopHeader } from "../../components/screens/TopHeader";
 
 import * as config from "../../config";
 
@@ -25,8 +27,6 @@ import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 
 import variables from "../../theme/variables";
-
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -141,24 +141,21 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   };
 
   return (
-    <TopScreenComponent
+    <BaseScreenComponent
       goBack={goBack}
-      banner={
-        props.isSessionExpired && (
-          <InfoBanner
-            message={I18n.t("authentication.expiredSessionBanner.message")}
-          />
-        )
-      }
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-      title={I18n.t("authentication.idp_selection.contentTitle")}
-      subtitle={
-        props.isSessionExpired
-          ? undefined
-          : I18n.t("authentication.idp_selection.subtitle")
-      }
     >
       <Content noPadded={true} alternative={true}>
+        <TopHeader
+          title={I18n.t("authentication.idp_selection.contentTitle")}
+          banner={
+            props.isSessionExpired && (
+              <InfoBanner
+                message={I18n.t("authentication.expiredSessionBanner.message")}
+              />
+            )
+          }
+        />
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
@@ -167,7 +164,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           </Button>
         </View>
       </Content>
-    </TopScreenComponent>
+    </BaseScreenComponent>
   );
 };
 

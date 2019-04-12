@@ -175,9 +175,6 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
-    subtitle: "The Identity Providers provide several authentication methods
-      and, toghether with SPID, they provide several services: find out more
-      at each one's website."
   idp_login:
     headerTitle: Login
   errors:
