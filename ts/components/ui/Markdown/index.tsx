@@ -206,40 +206,35 @@ class Markdown extends React.PureComponent<Props, State> {
   public render() {
     const { webViewStyle } = this.props;
     const { html, htmlBodyHeight } = this.state;
+    const containerStyle: ViewStyle = {
+      height: htmlBodyHeight
+    };
 
-    if (html) {
-      // Hide the WebView until we have the htmlBodyHeight
-      const containerStyle: ViewStyle =
-        htmlBodyHeight === 0
-          ? {
-              height: 0
-            }
-          : {
-              height: htmlBodyHeight
-            };
-
-      return (
-        <ScrollView nestedScrollEnabled={false} style={containerStyle}>
-          <View style={containerStyle}>
-            <WebView
-              ref={this.webViewRef}
-              scrollEnabled={false}
-              overScrollMode={"never"}
-              style={webViewStyle}
-              originWhitelist={["*"]}
-              source={{ html, baseUrl: "" }}
-              javaScriptEnabled={true}
-              injectedJavaScript={INJECTED_JAVASCRIPT}
-              onLoadEnd={this.handleLoadEnd}
-              onMessage={this.handleWebViewMessage}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-        </ScrollView>
-      );
-    }
-
-    return <ActivityIndicator />;
+    return (
+      <React.Fragment>
+        {/* Hide the WebView until we have the htmlBodyHeight */}
+        {!html && <ActivityIndicator />}
+        {html && (
+          <ScrollView nestedScrollEnabled={false} style={containerStyle}>
+            <View style={containerStyle}>
+              <WebView
+                ref={this.webViewRef}
+                scrollEnabled={false}
+                overScrollMode={"never"}
+                style={webViewStyle}
+                originWhitelist={["*"]}
+                source={{ html, baseUrl: "" }}
+                javaScriptEnabled={true}
+                injectedJavaScript={INJECTED_JAVASCRIPT}
+                onLoadEnd={this.handleLoadEnd}
+                onMessage={this.handleWebViewMessage}
+                showsVerticalScrollIndicator={false}
+              />
+            </View>
+          </ScrollView>
+        )}
+      </React.Fragment>
+    );
   }
 
   // When the injected html is loaded inject the script to notify the height
