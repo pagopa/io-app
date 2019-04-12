@@ -1,10 +1,11 @@
-import { View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { NavState, StyleSheet } from "react-native";
-import WebView from "react-native-webview";
+import { Image, NavState, StyleSheet } from "react-native";
+import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -26,13 +27,17 @@ type OwnProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
+type RequestState = pot.Pot<string, string>;
+
 type State = {
-  isWebViewLoading: boolean;
+  requestState: RequestState;
 };
 
 const LOGIN_BASE_URL = `${
   config.apiUrlPrefix
 }/login?authLevel=SpidL2&entityID=`;
+
+const brokenLinkImage = require("../../../img/broken-link.png");
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -44,6 +49,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000
+  },
+  errorContainer: {
+    padding: 20,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  errorTitle: {
+    fontSize: 20,
+    marginTop: 10
+  },
+  errorBody: { marginTop: 10, marginBottom: 10, textAlign: "center" },
+  errorButtonsContainer: {
+    position: "absolute",
+    bottom: 30,
+    flex: 1,
+    flexDirection: "row"
   }
 });
 
@@ -76,13 +98,78 @@ class IdpLoginScreen extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      isWebViewLoading: true
+      requestState: pot.noneLoading
     };
   }
 
+  private handleOnError = (): void =>
+    this.setState({
+      requestState: pot.noneError("error")
+    });
+
+  private goBack = this.props.navigation.goBack;
+
+  private setRequestStateToLoading = () =>
+    this.setState({ requestState: pot.noneLoading });
+
+  private handleNavigationStateChange = (event: NavState): void => {
+    this.setState({
+      requestState: event.loading
+        ? pot.someLoading("loading")
+        : pot.some("loading complete")
+    });
+
+    onNavigationStateChange(
+      () => this.props.dispatch(loginFailure()),
+      token => this.props.dispatch(loginSuccess(token))
+    )(event);
+  };
+
+  private renderMask = () => {
+    if (pot.isLoading(this.state.requestState)) {
+      return (
+        <View style={styles.refreshIndicatorContainer}>
+          <RefreshIndicator />
+        </View>
+      );
+    } else if (pot.isError(this.state.requestState)) {
+      return (
+        <View style={styles.errorContainer}>
+          <Image source={brokenLinkImage} resizeMode="contain" />
+          <Text style={styles.errorTitle} bold={true}>
+            {I18n.t("authentication.errors.network.title")}
+          </Text>
+          <Text style={styles.errorBody}>
+            {I18n.t("authentication.errors.network.body")}
+          </Text>
+          <View style={styles.errorButtonsContainer}>
+            <Button
+              onPress={this.goBack}
+              style={{ flex: 1 }}
+              block={true}
+              light={true}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </Button>
+            <Button
+              onPress={this.setRequestStateToLoading}
+              style={{ flex: 2 }}
+              block={true}
+              primary={true}
+            >
+              <Text>{I18n.t("global.buttons.retry")}</Text>
+            </Button>
+          </View>
+        </View>
+      );
+    }
+    // loading complete, no mask needed
+    return null;
+  };
+
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
-    const { isWebViewLoading } = this.state;
+    const hasError = pot.isError(this.state.requestState);
 
     if (loggedInAuth) {
       return <IdpSuccessfulAuthentication />;
@@ -94,17 +181,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
 
-    const handleNavigationStateChange = (event: NavState): void => {
-      this.setState({
-        isWebViewLoading: event.loading ? event.loading : false
-      });
-
-      onNavigationStateChange(
-        () => this.props.dispatch(loginFailure()),
-        token => this.props.dispatch(loginSuccess(token))
-      )(event);
-    };
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -112,16 +188,15 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        <WebView
-          source={{ uri: loginUri }}
-          javaScriptEnabled={true}
-          onNavigationStateChange={handleNavigationStateChange}
-        />
-        {isWebViewLoading && (
-          <View style={styles.refreshIndicatorContainer}>
-            <RefreshIndicator />
-          </View>
+        {!hasError && (
+          <WebView
+            source={{ uri: loginUri }}
+            onError={this.handleOnError}
+            javaScriptEnabled={true}
+            onNavigationStateChange={this.handleNavigationStateChange}
+          />
         )}
+        {this.renderMask()}
       </BaseScreenComponent>
     );
   }
