@@ -125,7 +125,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     )(event);
   };
 
-  public renderMask = () => {
+  private renderMask = () => {
     if (pot.isLoading(this.state.requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
