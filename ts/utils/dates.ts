@@ -23,12 +23,28 @@ export function formatDateAsReminder(
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
+/**
+ *
+ * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
+ * @param date
+ * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
+ */
+export function formatDateAsLocal(
+  date: Date,
+  includeYear: boolean = false
+): ReturnType<typeof dateFnsFormat> {
+  return includeYear
+    ? format(date, I18n.t("global.dateFormats.dayMonth")) +
+        "/" +
+        format(date, "YY")
+    : format(date, I18n.t("global.dateFormats.dayMonth"));
+}
+
 export function format(
   date: string | number | Date,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
   const localePrimary = getLocalePrimary(I18n.currentLocale());
-
   return dateFnsFormat(
     date,
     dateFormat,

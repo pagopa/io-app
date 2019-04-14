@@ -1,8 +1,9 @@
 import { differenceInCalendarDays, format } from "date-fns";
+import { formatDateAsLocal } from "./dates";
+
 /**
- * This function converts the distance from now to date in : H.mm, yesterday, D/MM/YY and DD/MM
- *  TODO: Make date consistent with the timezone
- *  https://www.pivotaltracker.com/story/show/158389284
+ * This function converts the distance from now to date in :
+ * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YY (or DD/MM/YY) depending on the system locale
  */
 export function convertDateToWordDistance(
   date: Date,
@@ -20,12 +21,12 @@ export function convertDateToWordDistance(
     return lastDayLabel;
   } // 1 day < distance < 365 days, current year
   else if (distance > 1 && distance < 365) {
-    return format(date, "DD/MM");
+    return formatDateAsLocal(date);
   } // the original date is invalid (distance is NaN)
   else if (isNaN(distance)) {
     return invalidDateLabel ? invalidDateLabel : format(date);
   } else {
     // distance > current year
-    return format(date, "DD/MM/YY");
+    return formatDateAsLocal(date, true);
   }
 }
