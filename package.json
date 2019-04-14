@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall:darwin:linux": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
-    "postinstall": "patch-package && rn-nodeify --install path,buffer",
+    "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest",
     "prettify": "prettier --write \"ts/**/*.ts*\"",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
@@ -13,17 +12,12 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
-    "generate:pagopa-api-definitions:darwin:linux": "rimraf definitions/pagopa && mkdir -p definitions/pagopa && gen-api-models --api-spec https://acardste.vaservices.eu:443/pp-restapi-CD/v2/api-docs --out-dir ./definitions/pagopa --request-types --response-decoders --default-error-type Error",
-    "generate:api-definitions:darwin:linux": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.5.0/api_proxy.yaml --out-dir ./definitions/backend --request-types --response-decoders  && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.5.0/api_public.yaml --out-dir ./definitions/backend",
-    "generate:content-definitions:darwin:linux": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-services-metadata/master/definitions.yml --out-dir ./definitions/content",
-    "generate:pagopa-api-definitions": "rimraf definitions/pagopa && mkdir definitions\\pagopa && gen-api-models --api-spec https://acardste.vaservices.eu:443/pp-restapi-CD/v2/api-docs --out-dir ./definitions/pagopa --request-types --response-decoders --default-error-type Error",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir definitions\\backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.5.0/api_proxy.yaml --out-dir ./definitions/backend --request-types --response-decoders  && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.5.0/api_public.yaml --out-dir ./definitions/backend",
-    "generate:content-definitions": "rimraf definitions/content && mkdir definitions\\content && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-services-metadata/master/definitions.yml --out-dir ./definitions/content",
+    "generate:pagopa-api-definitions": "rimraf definitions/pagopa && mkdir -p definitions/pagopa && gen-api-models --api-spec https://wisp2.pagopa.gov.it/pp-restapi-CD/v2/api-docs --out-dir ./definitions/pagopa --request-types --response-decoders --default-error-type Error",
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.5.0/api_proxy.yaml --out-dir ./definitions/backend --request-types --response-decoders  && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v0.5.0/api_public.yaml --out-dir ./definitions/backend",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-    "generate:locales:darwin:linux": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
-    "generate:locales": "ts-node --skip-project -O {\"\"\"lib\"\"\":[\"\"\"es2015\"\"\"]} scripts/make-locales.ts",
-    "generate:all": "npm-run-all generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:locales",
-    "generate:all:darwin:linux": "npm-run-all generate:api-definitions:darwin:linux generate:pagopa-api-definitions:darwin:linux generate:content-definitions:darwin:linux generate:locales:darwin:linux"
+    "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
+    "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-services-metadata/master/definitions.yml --out-dir ./definitions/content",
+    "generate:all": "npm-run-all generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:locales"
   },
   "dependencies": {
     "abort-controller": "^1.0.2",
