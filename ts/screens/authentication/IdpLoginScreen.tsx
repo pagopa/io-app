@@ -5,13 +5,6 @@ import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import {
-  idpLoginEnd,
-  idpLoginRequestError,
-  idpLoginStart,
-  idpLoginUrlChanged
-} from "../../store/actions/authentication";
-
 import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -33,12 +26,11 @@ type OwnProps = {
 };
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+
 type RequestState = pot.Pot<string, string>;
 
 type State = {
   requestState: RequestState;
-  requestUrl?: string;
-  startingMs: number;
 };
 
 const LOGIN_BASE_URL = `${
@@ -104,84 +96,32 @@ const onNavigationStateChange = (
 class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
     this.state = {
-      requestState: pot.noneLoading,
-      startingMs: new Date().getTime()
+      requestState: pot.noneLoading
     };
   }
 
-  private getSpidId = (): string =>
-    this.props.loggedOutWithIdpAuth
-      ? this.props.loggedOutWithIdpAuth.idp.entityID
-      : "idpID n/a";
-
-  public componentDidMount() {
-    this.props.dispatch(
-      idpLoginStart({
-        id: this.getSpidId(),
-        detail: "start"
-      })
-    );
-  }
-
-  private handleOnError = (): void => {
-    this.props.dispatch(
-      idpLoginRequestError({
-        id: this.getSpidId(),
-        detail: "network request error"
-      })
-    );
+  private handleOnError = (): void =>
     this.setState({
       requestState: pot.noneError("error")
     });
-  };
 
   private goBack = this.props.navigation.goBack;
 
-  private setRequestStateToLoading = (): void =>
+  private setRequestStateToLoading = () =>
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    if (event.url && event.url !== this.state.requestUrl) {
-      this.props.dispatch(
-        idpLoginUrlChanged({
-          id: this.getSpidId(),
-          detail: event.url.split("?")[0]
-        })
-      );
-    }
-
     this.setState({
       requestState: event.loading
         ? pot.someLoading("loading")
-        : pot.some("loading complete"),
-      requestUrl: event.url
+        : pot.some("loading complete")
     });
 
-    const elapsed = Math.round(
-      (new Date().getTime() - this.state.startingMs) / 1000
-    );
     onNavigationStateChange(
-      () => {
-        this.props.dispatch(loginFailure());
-        this.props.dispatch(
-          idpLoginEnd({
-            id: this.getSpidId(),
-            duration: elapsed,
-            success: false
-          })
-        );
-      },
-      token => {
-        this.props.dispatch(loginSuccess(token));
-        this.props.dispatch(
-          idpLoginEnd({
-            id: this.getSpidId(),
-            duration: elapsed,
-            success: true
-          })
-        );
-      }
+      () => this.props.dispatch(loginFailure()),
+      token => this.props.dispatch(loginSuccess(token))
     )(event);
   };
 
@@ -240,6 +180,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return null;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+
     return (
       <BaseScreenComponent
         goBack={true}
