@@ -13,7 +13,7 @@ import { applicationChangeState } from "../actions/application";
 import {
   idpLoginEnd,
   idpLoginRequestError,
-  idpLoginStart,
+  idpLoginSession,
   idpLoginUrlChanged,
   idpSelected,
   loginFailure,
@@ -122,19 +122,24 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //
     // Authentication login actions (with properties)
     //
-    case getType(idpLoginStart):
     case getType(idpLoginRequestError):
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
-        SPID_IDP_ID: action.payload.id,
-        SPID_LOGIN_DETAIL: action.payload.detail,
-        SPID_DT: action.payload.duration
+        SPID_IDP_ID: action.payload.idpId,
+        SPID_DT: action.payload.durationMillis,
+        SPID_URL: action.payload.url
       });
     case getType(idpLoginEnd):
       return mp.track(action.type, {
-        SPID_IDP_ID: action.payload.id,
-        SPID_LOGIN_DURATION: action.payload.duration,
+        SPID_IDP_ID: action.payload.idpId,
         SPID_LOGIN_SUCCESS: action.payload.success
+      });
+    case getType(idpLoginSession):
+      if (action.payload.started) {
+        return mp.timeEvent(action.type);
+      }
+      return mp.track(action.type, {
+        SPID_IDP_ID: action.payload.idpId
       });
     //
     // Content actions (with properties)
@@ -185,7 +190,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           kind: action.payload.kind
         });
       }
-
     //
     // Wallet / payment failure actions (reason in the payload)
     //
@@ -300,7 +304,6 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   }
   return next(action);
 };
-
 // gets the current screen from navigation state
 // TODO: Need to be fixed
 export function getCurrentRouteName(navNode: any): string | undefined {
@@ -340,11 +343,9 @@ export function screenTracking(
       ) {
         return next(action);
       }
-
       const currentScreen = getCurrentRouteName(store.getState().nav);
       const result = next(action);
       const nextScreen = getCurrentRouteName(store.getState().nav);
-
       if (nextScreen !== currentScreen && mixpanel) {
         if (nextScreen) {
           setInstabugUserAttribute("activeScreen", nextScreen);

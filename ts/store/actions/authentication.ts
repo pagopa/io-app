@@ -8,10 +8,27 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
-import { IdplLoginPhase, IdpLoginEnd } from "../../models/IdplLoginPhase";
 import { SessionToken } from "../../types/SessionToken";
+
+type IdpLoginBase = {
+  idpId: string;
+};
+
+type IdpLoginSession = {
+  started: boolean;
+} & IdpLoginBase;
+
+type IdplLoginPhase = {
+  url?: string;
+  durationMillis: Millisecond;
+} & IdpLoginBase;
+
+type IdpLoginEnd = {
+  success: boolean;
+} & IdpLoginBase;
 
 export type LogoutOption = {
   keepUserData: boolean;
@@ -21,18 +38,17 @@ export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
 
-export const idpLoginStart = createStandardAction("IDPL_START")<
-  IdplLoginPhase
+//
+// Action about IDP Login phase
+//
+export const idpLoginSession = createStandardAction("IDPL_SESSION")<
+  IdpLoginSession
 >();
-
-//
-// Action abund IDP Login phase
-//
 export const idpLoginEnd = createStandardAction("IDPL_END")<IdpLoginEnd>();
 export const idpLoginRequestError = createStandardAction("IDPL_REQUEST_ERROR")<
   IdplLoginPhase
 >();
-export const idpLoginUrlChanged = createStandardAction("IDPL_URL_CHANGED")<
+export const idpLoginUrlChanged = createStandardAction("IDPL_NAVIGATION")<
   IdplLoginPhase
 >();
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
@@ -71,7 +87,7 @@ export const forgetCurrentSession = createStandardAction("SESSION_FORGET")();
 
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
-  | ActionType<typeof idpLoginStart>
+  | ActionType<typeof idpLoginSession>
   | ActionType<typeof idpLoginEnd>
   | ActionType<typeof idpLoginRequestError>
   | ActionType<typeof idpLoginUrlChanged>

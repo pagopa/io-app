@@ -8,11 +8,14 @@ import { connect } from "react-redux";
 import {
   idpLoginEnd,
   idpLoginRequestError,
-  idpLoginStart,
+  idpLoginSession,
   idpLoginUrlChanged
 } from "../../store/actions/authentication";
 
+import { Action, Dispatch } from "../../store/actions/types";
+
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -32,8 +35,11 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
-type RequestState = pot.Pot<string, string>;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReduxProps &
+  OwnProps &
+  ReturnType<typeof mapDispatchToProps>;
+type RequestState = pot.Pot<"LOADING" | "LOADING_COMPLETE", string>;
 
 /**
  * state keeps track:
@@ -46,8 +52,8 @@ type RequestState = pot.Pot<string, string>;
 type State = {
   requestState: RequestState;
   requestUrl?: string;
-  startingMs: number;
-  deltaMs: number;
+  startingMillis: Millisecond;
+  deltaMillis: Millisecond;
 };
 
 const LOGIN_BASE_URL = `${
@@ -116,38 +122,37 @@ class IdpLoginScreen extends React.Component<Props, State> {
     const nowMs = new Date().getTime();
     this.state = {
       requestState: pot.noneLoading,
-      startingMs: nowMs,
-      deltaMs: nowMs
+      startingMillis: nowMs as Millisecond,
+      deltaMillis: nowMs as Millisecond
     };
   }
 
-  private getSpidId = (): string =>
+  private getIdpId = (): string =>
     this.props.loggedOutWithIdpAuth
       ? this.props.loggedOutWithIdpAuth.idp.entityID
       : "idpID n/a";
 
   public componentDidMount() {
-    this.props.dispatch(
-      idpLoginStart({
-        id: this.getSpidId(),
-        detail: "start"
+    this.props.dispatchAction(
+      idpLoginSession({
+        idpId: this.getIdpId(),
+        started: true
       })
     );
   }
 
   private handleOnError = (): void => {
     const now = new Date().getTime();
-    const deltaDuration = Math.round((now - this.state.deltaMs) / 1000);
-    this.props.dispatch(
+    const deltaDuration = Math.round((now - this.state.deltaMillis) / 1000);
+    this.props.dispatchAction(
       idpLoginRequestError({
-        id: this.getSpidId(),
-        detail: "network request error",
-        duration: deltaDuration
+        idpId: this.getIdpId(),
+        durationMillis: deltaDuration as Millisecond
       })
     );
     this.setState({
       requestState: pot.noneError("error"),
-      deltaMs: now
+      deltaMillis: now as Millisecond
     });
   };
 
@@ -159,42 +164,45 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleNavigationStateChange = (event: NavState): void => {
     const now = new Date().getTime();
     if (event.url && event.url !== this.state.requestUrl) {
-      const deltaDuration = Math.round((now - this.state.deltaMs) / 1000);
-      this.props.dispatch(
+      const deltaDuration = Math.round((now - this.state.deltaMillis) / 1000);
+      this.props.dispatchAction(
         idpLoginUrlChanged({
-          id: this.getSpidId(),
-          detail: event.url.split("?")[0],
-          duration: deltaDuration
+          idpId: this.getIdpId(),
+          url: event.url.split("?")[0],
+          durationMillis: deltaDuration as Millisecond
         })
       );
     }
 
     this.setState({
       requestState: event.loading
-        ? pot.someLoading("loading")
-        : pot.some("loading complete"),
+        ? pot.someLoading("LOADING")
+        : pot.some("LOADING_COMPLETE"),
       requestUrl: event.url,
-      deltaMs: now
+      deltaMillis: now as Millisecond
     });
 
-    const elapsed = Math.round((now - this.state.startingMs) / 1000);
+    const idpSessionEnd = idpLoginSession({
+      idpId: this.getIdpId(),
+      started: false
+    });
     onNavigationStateChange(
       () => {
-        this.props.dispatch(loginFailure());
-        this.props.dispatch(
+        this.props.dispatchAction(loginFailure());
+        this.props.dispatchAction(idpSessionEnd);
+        this.props.dispatchAction(
           idpLoginEnd({
-            id: this.getSpidId(),
-            duration: elapsed,
+            idpId: this.getIdpId(),
             success: false
           })
         );
       },
       token => {
-        this.props.dispatch(loginSuccess(token));
-        this.props.dispatch(
+        this.props.dispatchAction(loginSuccess(token));
+        this.props.dispatchAction(idpSessionEnd);
+        this.props.dispatchAction(
           idpLoginEnd({
-            id: this.getSpidId(),
-            duration: elapsed,
+            idpId: this.getIdpId(),
             success: true
           })
         );
@@ -287,4 +295,11 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined
 });
 
-export default connect(mapStateToProps)(IdpLoginScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchAction: (action: Action) => dispatch(action)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IdpLoginScreen);
