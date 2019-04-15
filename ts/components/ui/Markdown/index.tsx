@@ -4,6 +4,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import {
+  ActivityIndicator,
   InteractionManager,
   LayoutAnimation,
   Platform,
@@ -21,7 +22,6 @@ import { connect } from "react-redux";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
-import ActivityIndicator from "../ActivityIndicator";
 import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
@@ -212,8 +212,14 @@ class Markdown extends React.PureComponent<Props, State> {
 
     return (
       <React.Fragment>
+        <ActivityIndicator
+          size="large"
+          color={customVariables.brandPrimary}
+          animating={
+            html === undefined || (html !== "" && htmlBodyHeight === 0)
+          }
+        />
         {/* Hide the WebView until we have the htmlBodyHeight */}
-        {!html && <ActivityIndicator />}
         {html && (
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>

@@ -324,7 +324,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} large={true} />
-            {description && <Markdown animated={false}>{description}</Markdown>}
+            {description && <Markdown animated={true}>{description}</Markdown>}
             {description && <View spacer={true} large={true} />}
             {tos_url && (
               <TouchableOpacity
