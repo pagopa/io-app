@@ -22,7 +22,6 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
-import { ReduxProps } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedOutWithIdp
@@ -36,7 +35,6 @@ type OwnProps = {
 };
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReduxProps &
   OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 type RequestState = pot.Pot<"LOADING" | "LOADING_COMPLETE", string>;
@@ -51,8 +49,10 @@ type RequestState = pot.Pot<"LOADING" | "LOADING_COMPLETE", string>;
 
 type State = {
   requestState: RequestState;
+};
+
+type LoginTrace = {
   requestUrl?: string;
-  startingMillis: Millisecond;
   deltaMillis: Millisecond;
 };
 
@@ -117,13 +117,24 @@ const onNavigationStateChange = (
  * The IDP page is opened in a WebView
  */
 class IdpLoginScreen extends React.Component<Props, State> {
+  private loginTrace: LoginTrace;
+
   constructor(props: Props) {
     super(props);
     const nowMs = new Date().getTime();
-    this.state = {
-      requestState: pot.noneLoading,
-      startingMillis: nowMs as Millisecond,
+    this.loginTrace = {
       deltaMillis: nowMs as Millisecond
+    };
+    this.state = {
+      requestState: pot.noneLoading
+    };
+  }
+
+  private updateLoginTrace(delta: Millisecond, url?: string): void {
+    // tslint:disable-next-line: no-object-mutation
+    this.loginTrace = {
+      deltaMillis: delta,
+      requestUrl: url || this.loginTrace.requestUrl
     };
   }
 
@@ -143,7 +154,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleOnError = (): void => {
     const now = new Date().getTime();
-    const deltaDuration = Math.round((now - this.state.deltaMillis) / 1000);
+    const deltaDuration = Math.round(
+      (now - this.loginTrace.deltaMillis) / 1000
+    );
     this.props.dispatchAction(
       idpLoginRequestError({
         idpId: this.getIdpId(),
@@ -151,9 +164,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
       })
     );
     this.setState({
-      requestState: pot.noneError("error"),
-      deltaMillis: now as Millisecond
+      requestState: pot.noneError("error")
     });
+    this.updateLoginTrace(now as Millisecond);
   };
 
   private goBack = this.props.navigation.goBack;
@@ -163,8 +176,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleNavigationStateChange = (event: NavState): void => {
     const now = new Date().getTime();
-    if (event.url && event.url !== this.state.requestUrl) {
-      const deltaDuration = Math.round((now - this.state.deltaMillis) / 1000);
+    if (event.url && event.url !== this.loginTrace.requestUrl) {
+      const deltaDuration = Math.round(
+        (now - this.loginTrace.deltaMillis) / 1000
+      );
       this.props.dispatchAction(
         idpLoginUrlChanged({
           idpId: this.getIdpId(),
@@ -173,13 +188,11 @@ class IdpLoginScreen extends React.Component<Props, State> {
         })
       );
     }
-
+    this.updateLoginTrace(now as Millisecond, event.url);
     this.setState({
       requestState: event.loading
         ? pot.someLoading("LOADING")
-        : pot.some("LOADING_COMPLETE"),
-      requestUrl: event.url,
-      deltaMillis: now as Millisecond
+        : pot.some("LOADING_COMPLETE")
     });
 
     const idpSessionEnd = idpLoginSession({

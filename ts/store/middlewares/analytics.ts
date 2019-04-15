@@ -119,9 +119,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         mp.track(action.type).then(constNull, constNull),
         identify.then(constNull, constNull)
       ]);
-    //
-    // Authentication login actions (with properties)
-    //
     case getType(idpLoginRequestError):
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
