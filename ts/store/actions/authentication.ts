@@ -70,9 +70,6 @@ export const forgetCurrentSession = createStandardAction("SESSION_FORGET")();
 
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
-  | ActionType<typeof idpLoginSession>
-  | ActionType<typeof idpLoginEnd>
-  | ActionType<typeof idpLoginRequestError>
   | ActionType<typeof idpLoginUrlChanged>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
