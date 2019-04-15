@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     marginRight: customVariables.fontSizeBase / 2
   },
   text: {
+    fontFamily: "RobotoMono-Regular",
     textAlign: "center",
     color: customVariables.colorWhite,
     fontWeight: "bold"
