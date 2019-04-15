@@ -10,7 +10,6 @@ import { idpLoginUrlChanged } from "../../store/actions/authentication";
 import { Action, Dispatch } from "../../store/actions/types";
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -35,11 +34,6 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   requestState: pot.Pot<true, string>;
-};
-
-type LoginTrace = {
-  requestUrl?: string;
-  previousTime: Millisecond;
 };
 
 const LOGIN_BASE_URL = `${
@@ -103,41 +97,24 @@ const onNavigationStateChange = (
  * The IDP page is opened in a WebView
  */
 class IdpLoginScreen extends React.Component<Props, State> {
-  private loginTrace: LoginTrace;
+  private loginTrace?: string;
 
   constructor(props: Props) {
     super(props);
-    const now = new Date().getTime() as Millisecond;
-    this.loginTrace = {
-      previousTime: now
-    };
     this.state = {
       requestState: pot.noneLoading
     };
   }
 
-  private updateLoginTrace = (
-    previousTime: Millisecond,
-    url?: string
-  ): void => {
+  private updateLoginTrace = (url: string): void => {
     // tslint:disable-next-line: no-object-mutation
-    this.loginTrace = {
-      previousTime,
-      requestUrl: url || this.loginTrace.requestUrl
-    };
+    this.loginTrace = url;
   };
 
-  private getIdpId = (): string =>
-    this.props.loggedOutWithIdpAuth
-      ? this.props.loggedOutWithIdpAuth.idp.entityID
-      : "UNDEFINED_IDP";
-
   private handleOnError = (): void => {
-    const now = new Date().getTime() as Millisecond;
     this.setState({
       requestState: pot.noneError("error")
     });
-    this.updateLoginTrace(now);
   };
 
   private goBack = this.props.navigation.goBack;
@@ -146,30 +123,22 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    const now = new Date().getTime() as Millisecond;
-    if (event.url && event.url !== this.loginTrace.requestUrl) {
-      const deltaDuration = Math.round(
-        (now - this.loginTrace.previousTime) / 1000
-      ) as Second;
-      this.props.dispatchAction(
-        idpLoginUrlChanged({
-          idpId: this.getIdpId(),
-          url: event.url.split("?")[0],
-          duration: deltaDuration
-        })
+    if (event.url && event.url !== this.loginTrace) {
+      this.props.dispatchUrlChanged(
+        idpLoginUrlChanged({ url: event.url.split("?")[0] })
       );
+      this.updateLoginTrace(event.url);
     }
-    this.updateLoginTrace(now, event.url);
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
 
     onNavigationStateChange(
       () => {
-        this.props.dispatchAction(loginFailure());
+        this.props.dispatchLoginFailed(loginFailure());
       },
       token => {
-        this.props.dispatchAction(loginSuccess(token));
+        this.props.dispatchLoginSuccess(loginSuccess(token));
       }
     )(event);
   };
@@ -260,7 +229,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchAction: (action: Action) => dispatch(action)
+  dispatchUrlChanged: (action: Action) => dispatch(action),
+  dispatchLoginSuccess: (action: Action) => dispatch(action),
+  dispatchLoginFailed: (action: Action) => dispatch(action)
 });
 
 export default connect(

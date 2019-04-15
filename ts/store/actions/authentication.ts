@@ -8,16 +8,9 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { Second } from "italia-ts-commons/lib/units";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
-
-type IdplLoginPhase = {
-  idpId: string;
-  url?: string;
-  duration: Second;
-};
 
 export type LogoutOption = {
   keepUserData: boolean;
@@ -31,9 +24,9 @@ export const idpSelected = createStandardAction("IDP_SELECTED")<
 // Action about IDP Login phase
 //
 
-export const idpLoginUrlChanged = createStandardAction("IDPL_NAVIGATION")<
-  IdplLoginPhase
->();
+export const idpLoginUrlChanged = createStandardAction(
+  "AUTHENTICATION_WEBVIEW_URL_CHANGED"
+)<{ url: string }>();
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
   SessionToken
 >();
