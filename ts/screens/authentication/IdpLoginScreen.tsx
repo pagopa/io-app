@@ -5,17 +5,12 @@ import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import {
-  idpLoginEnd,
-  idpLoginRequestError,
-  idpLoginSession,
-  idpLoginUrlChanged
-} from "../../store/actions/authentication";
+import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
 import { Action, Dispatch } from "../../store/actions/types";
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -37,23 +32,14 @@ type OwnProps = {
 type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
   ReturnType<typeof mapDispatchToProps>;
-type RequestState = pot.Pot<"LOADING" | "LOADING_COMPLETE", string>;
-
-/**
- * state keeps track:
- * - the state of request
- * - the last requestUrl requested to the provider
- * - the time (in milliseconds) when the login session started
- * - the delta time (in milliseconds) elapsed from a step to the next one
- */
 
 type State = {
-  requestState: RequestState;
+  requestState: pot.Pot<true, string>;
 };
 
 type LoginTrace = {
   requestUrl?: string;
-  deltaMillis: Millisecond;
+  previousTime: Millisecond;
 };
 
 const LOGIN_BASE_URL = `${
@@ -121,52 +107,37 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const nowMs = new Date().getTime();
+    const now = new Date().getTime() as Millisecond;
     this.loginTrace = {
-      deltaMillis: nowMs as Millisecond
+      previousTime: now
     };
     this.state = {
       requestState: pot.noneLoading
     };
   }
 
-  private updateLoginTrace(delta: Millisecond, url?: string): void {
+  private updateLoginTrace = (
+    previousTime: Millisecond,
+    url?: string
+  ): void => {
     // tslint:disable-next-line: no-object-mutation
     this.loginTrace = {
-      deltaMillis: delta,
+      previousTime,
       requestUrl: url || this.loginTrace.requestUrl
     };
-  }
+  };
 
   private getIdpId = (): string =>
     this.props.loggedOutWithIdpAuth
       ? this.props.loggedOutWithIdpAuth.idp.entityID
-      : "idpID n/a";
-
-  public componentDidMount() {
-    this.props.dispatchAction(
-      idpLoginSession({
-        idpId: this.getIdpId(),
-        started: true
-      })
-    );
-  }
+      : "UNDEFINED_IDP";
 
   private handleOnError = (): void => {
-    const now = new Date().getTime();
-    const deltaDuration = Math.round(
-      (now - this.loginTrace.deltaMillis) / 1000
-    );
-    this.props.dispatchAction(
-      idpLoginRequestError({
-        idpId: this.getIdpId(),
-        durationMillis: deltaDuration as Millisecond
-      })
-    );
+    const now = new Date().getTime() as Millisecond;
     this.setState({
       requestState: pot.noneError("error")
     });
-    this.updateLoginTrace(now as Millisecond);
+    this.updateLoginTrace(now);
   };
 
   private goBack = this.props.navigation.goBack;
@@ -175,50 +146,30 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    const now = new Date().getTime();
+    const now = new Date().getTime() as Millisecond;
     if (event.url && event.url !== this.loginTrace.requestUrl) {
       const deltaDuration = Math.round(
-        (now - this.loginTrace.deltaMillis) / 1000
-      );
+        (now - this.loginTrace.previousTime) / 1000
+      ) as Second;
       this.props.dispatchAction(
         idpLoginUrlChanged({
           idpId: this.getIdpId(),
           url: event.url.split("?")[0],
-          durationMillis: deltaDuration as Millisecond
+          duration: deltaDuration
         })
       );
     }
-    this.updateLoginTrace(now as Millisecond, event.url);
+    this.updateLoginTrace(now, event.url);
     this.setState({
-      requestState: event.loading
-        ? pot.someLoading("LOADING")
-        : pot.some("LOADING_COMPLETE")
+      requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
 
-    const idpSessionEnd = idpLoginSession({
-      idpId: this.getIdpId(),
-      started: false
-    });
     onNavigationStateChange(
       () => {
         this.props.dispatchAction(loginFailure());
-        this.props.dispatchAction(idpSessionEnd);
-        this.props.dispatchAction(
-          idpLoginEnd({
-            idpId: this.getIdpId(),
-            success: false
-          })
-        );
       },
       token => {
         this.props.dispatchAction(loginSuccess(token));
-        this.props.dispatchAction(idpSessionEnd);
-        this.props.dispatchAction(
-          idpLoginEnd({
-            idpId: this.getIdpId(),
-            success: true
-          })
-        );
       }
     )(event);
   };

@@ -11,9 +11,6 @@ import {
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
-  idpLoginEnd,
-  idpLoginRequestError,
-  idpLoginSession,
   idpLoginUrlChanged,
   idpSelected,
   loginFailure,
@@ -119,24 +116,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         mp.track(action.type).then(constNull, constNull),
         identify.then(constNull, constNull)
       ]);
-    case getType(idpLoginRequestError):
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
         SPID_IDP_ID: action.payload.idpId,
-        SPID_DT: action.payload.durationMillis,
+        SPID_DT: action.payload.duration,
         SPID_URL: action.payload.url
-      });
-    case getType(idpLoginEnd):
-      return mp.track(action.type, {
-        SPID_IDP_ID: action.payload.idpId,
-        SPID_LOGIN_SUCCESS: action.payload.success
-      });
-    case getType(idpLoginSession):
-      if (action.payload.started) {
-        return mp.timeEvent(action.type);
-      }
-      return mp.track(action.type, {
-        SPID_IDP_ID: action.payload.idpId
       });
     //
     // Content actions (with properties)
