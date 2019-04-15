@@ -35,10 +35,19 @@ type OwnProps = {
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 type RequestState = pot.Pot<string, string>;
 
+/**
+ * state keeps track:
+ * - the state of request
+ * - the last requestUrl requested to the provider
+ * - the time (in milliseconds) when the login session started
+ * - the delta time (in milliseconds) elapsed from a step to the next one
+ */
+
 type State = {
   requestState: RequestState;
   requestUrl?: string;
   startingMs: number;
+  deltaMs: number;
 };
 
 const LOGIN_BASE_URL = `${
@@ -104,9 +113,11 @@ const onNavigationStateChange = (
 class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    const nowMs = new Date().getTime();
     this.state = {
       requestState: pot.noneLoading,
-      startingMs: new Date().getTime()
+      startingMs: nowMs,
+      deltaMs: nowMs
     };
   }
 
@@ -125,14 +136,18 @@ class IdpLoginScreen extends React.Component<Props, State> {
   }
 
   private handleOnError = (): void => {
+    const now = new Date().getTime();
+    const deltaDuration = Math.round((now - this.state.deltaMs) / 1000);
     this.props.dispatch(
       idpLoginRequestError({
         id: this.getSpidId(),
-        detail: "network request error"
+        detail: "network request error",
+        duration: deltaDuration
       })
     );
     this.setState({
-      requestState: pot.noneError("error")
+      requestState: pot.noneError("error"),
+      deltaMs: now
     });
   };
 
@@ -142,11 +157,14 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
+    const now = new Date().getTime();
     if (event.url && event.url !== this.state.requestUrl) {
+      const deltaDuration = Math.round((now - this.state.deltaMs) / 1000);
       this.props.dispatch(
         idpLoginUrlChanged({
           id: this.getSpidId(),
-          detail: event.url.split("?")[0]
+          detail: event.url.split("?")[0],
+          duration: deltaDuration
         })
       );
     }
@@ -155,12 +173,11 @@ class IdpLoginScreen extends React.Component<Props, State> {
       requestState: event.loading
         ? pot.someLoading("loading")
         : pot.some("loading complete"),
-      requestUrl: event.url
+      requestUrl: event.url,
+      deltaMs: now
     });
 
-    const elapsed = Math.round(
-      (new Date().getTime() - this.state.startingMs) / 1000
-    );
+    const elapsed = Math.round((now - this.state.startingMs) / 1000);
     onNavigationStateChange(
       () => {
         this.props.dispatch(loginFailure());

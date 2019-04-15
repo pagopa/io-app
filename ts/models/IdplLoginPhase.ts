@@ -1,10 +1,12 @@
-export type IdplLoginPhase = {
+type IdpLoginBase = {
   id: string;
-  detail: string;
+  duration?: number;
 };
 
+export type IdplLoginPhase = {
+  detail: string;
+} & IdpLoginBase;
+
 export type IdpLoginEnd = {
-  id: string;
-  duration: number;
   success: boolean;
-};
+} & IdpLoginBase;

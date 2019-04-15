@@ -127,7 +127,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
         SPID_IDP_ID: action.payload.id,
-        SPID_LOGIN_DETAIL: action.payload.detail
+        SPID_LOGIN_DETAIL: action.payload.detail,
+        SPID_DT: action.payload.duration
       });
     case getType(idpLoginEnd):
       return mp.track(action.type, {
