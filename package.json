@@ -133,7 +133,7 @@
     "redux-saga-test-plan": "^3.7.0",
     "rn-nodeify": "^10.0.1",
     "ts-jest": "24.0.1",
-    "ts-node": "^7.0.1",
+    "ts-node": "^8.1.0",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-eslint-rules": "^5.4.0",
