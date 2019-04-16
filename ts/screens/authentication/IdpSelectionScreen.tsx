@@ -1,6 +1,6 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -121,7 +121,8 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     padding: variables.contentPadding,
-    flex: 1
+    flex: 1,
+    backgroundColor: variables.contentAlternativeBackground
   }
 });
 /**
@@ -145,7 +146,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
       goBack={goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <Content noPadded={true} alternative={true}>
+      <ScrollView overScrollMode="never" bounces={false}>
         <TopHeader
           title={I18n.t("authentication.idp_selection.contentTitle")}
           banner={
@@ -163,7 +164,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
-      </Content>
+      </ScrollView>
     </BaseScreenComponent>
   );
 };
