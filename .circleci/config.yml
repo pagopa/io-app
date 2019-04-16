@@ -9,13 +9,14 @@ defaults: &defaults
 # nodejs builds
 defaults_js: &defaults_js
   <<: *defaults
-  parallelism: 2
+  parallelism: 8
   docker:
     - image: circleci/node:8
 
 # android builds
 defaults_android: &defaults_android
   <<: *defaults
+  parallelism: 4
   docker:
     - image: circleci/android:api-23-node8-alpha
   environment:
@@ -29,6 +30,7 @@ defaults_android: &defaults_android
 # macos builds
 defaults_macos: &defaults_macos
   <<: *defaults
+  parallelism: 4
   macos:
     xcode: "9.3.1"
   working_directory: /Users/distiller/italia-app
