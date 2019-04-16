@@ -95,7 +95,7 @@ export default class CardComponent extends React.Component<Props> {
     }
   };
 
-  private handleOnFooterPress = () => {
+  private handleOnCardPress = () => {
     if (
       (this.props.type === "Full" || this.props.type === "Picking") &&
       this.props.mainAction
@@ -242,7 +242,6 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
-        onPress={this.handleOnFooterPress}
       >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
@@ -263,6 +262,7 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+        onTouchStart={this.handleOnCardPress}
       >
         <View style={styles.cardInner}>
           <View style={styles.columns}>
