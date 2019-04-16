@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/splash_bg">
+    android:background="@mipmap/splash_bg"
+    android:paddingBottom="48px">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,6 +72,4 @@
             android:layout_gravity="center"
             android:layout_weight="1"/>
     </LinearLayout>
-
-
 </LinearLayout>
