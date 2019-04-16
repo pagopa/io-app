@@ -55,6 +55,8 @@ jobs:
   test-js-node-8:
     <<: *defaults_js
 
+    resource_class: large
+
     steps:
       - checkout
 
@@ -97,6 +99,8 @@ jobs:
   build-android-bundle:
     <<: *defaults_js
 
+    resource_class: large
+
     steps:
       # Restore workflow workspace
       - attach_workspace:
@@ -118,6 +122,8 @@ jobs:
   # Run test on android
   test-android:
     <<: *defaults_android
+
+    resource_class: xlarge
 
     steps:
       # Restore workflow workspace
@@ -168,6 +174,8 @@ jobs:
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
     <<: *defaults_android
+
+    resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -226,6 +234,8 @@ jobs:
   test-ios:
     <<: *defaults_macos
 
+    resource_class: large
+
     steps:
       # Restore workflow workspace
       - attach_workspace:
@@ -282,6 +292,8 @@ jobs:
   # Prepare build for end-to-end iOS tests
   test-ios-e2e-build:
     <<: *defaults_macos
+
+    resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -361,6 +373,8 @@ jobs:
   # Run end-to-end iOS tests
   test-ios-e2e-run:
     <<: *defaults_macos
+
+    resource_class: large
 
     steps:
       # Restore workflow workspace
