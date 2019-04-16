@@ -124,15 +124,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleNavigationStateChange = (event: NavState): void => {
     if (event.url && event.url !== this.loginTrace) {
       const urlChanged = event.url.split("?")[0];
-      this.props.dispatchUrlChanged(urlChanged);
+      this.props.dispatchIdpLoginUrlChanged(urlChanged);
       this.updateLoginTrace(urlChanged);
     }
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
 
-    onNavigationStateChange(this.props.dispatchLoginFailed, token =>
-      this.props.dispatchLoginSuccess(token)
+    onNavigationStateChange(
+      this.props.dispatchLoginFailure,
+      this.props.dispatchLoginSuccess
     )(event);
   };
 
@@ -222,9 +223,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchUrlChanged: (url: string) => dispatch(idpLoginUrlChanged({ url })),
+  dispatchIdpLoginUrlChanged: (url: string) =>
+    dispatch(idpLoginUrlChanged({ url })),
   dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
-  dispatchLoginFailed: () => dispatch(loginFailure())
+  dispatchLoginFailure: () => dispatch(loginFailure())
 });
 
 export default connect(
