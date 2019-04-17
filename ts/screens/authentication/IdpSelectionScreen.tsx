@@ -1,13 +1,13 @@
-import { Button, Text, View } from "native-base";
+import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
 import { InfoBanner } from "../../components/InfoBanner";
+import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { TopHeader } from "../../components/screens/TopHeader";
 
 import * as config from "../../config";
 
@@ -146,15 +146,18 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
       goBack={goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <ScrollView overScrollMode="never" bounces={false}>
-        <TopHeader
-          title={I18n.t("authentication.idp_selection.contentTitle")}
-          banner={
-            props.isSessionExpired && (
-              <InfoBanner
-                message={I18n.t("authentication.expiredSessionBanner.message")}
-              />
-            )
+      <Content noPadded={true} overScrollMode="never" bounces={false}>
+        {props.isSessionExpired && (
+          <React.Fragment>
+            <InfoBanner
+              message={I18n.t("authentication.expiredSessionBanner.message")}
+            />
+            <View spacer={true} />
+          </React.Fragment>
+        )}
+        <ScreenHeader
+          heading={
+            <H2>{I18n.t("authentication.idp_selection.contentTitle")}</H2>
           }
         />
         <View style={styles.gridContainer} testID="idps-view">
@@ -164,7 +167,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
-      </ScrollView>
+      </Content>
     </BaseScreenComponent>
   );
 };
