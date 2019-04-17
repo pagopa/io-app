@@ -7,8 +7,6 @@ import { connect } from "react-redux";
 
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
-import { Action, Dispatch } from "../../store/actions/types";
-
 import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -16,6 +14,7 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
+import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedOutWithIdp
@@ -124,22 +123,17 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleNavigationStateChange = (event: NavState): void => {
     if (event.url && event.url !== this.loginTrace) {
-      this.props.dispatchUrlChanged(
-        idpLoginUrlChanged({ url: event.url.split("?")[0] })
-      );
-      this.updateLoginTrace(event.url);
+      const urlChanged = event.url.split("?")[0];
+      this.props.dispatchIdpLoginUrlChanged(urlChanged);
+      this.updateLoginTrace(urlChanged);
     }
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
 
     onNavigationStateChange(
-      () => {
-        this.props.dispatchLoginFailed(loginFailure());
-      },
-      token => {
-        this.props.dispatchLoginSuccess(loginSuccess(token));
-      }
+      this.props.dispatchLoginFailure,
+      this.props.dispatchLoginSuccess
     )(event);
   };
 
@@ -229,9 +223,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchUrlChanged: (action: Action) => dispatch(action),
-  dispatchLoginSuccess: (action: Action) => dispatch(action),
-  dispatchLoginFailed: (action: Action) => dispatch(action)
+  dispatchIdpLoginUrlChanged: (url: string) =>
+    dispatch(idpLoginUrlChanged({ url })),
+  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  dispatchLoginFailure: () => dispatch(loginFailure())
 });
 
 export default connect(
