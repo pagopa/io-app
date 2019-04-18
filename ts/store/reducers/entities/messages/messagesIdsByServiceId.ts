@@ -1,7 +1,10 @@
+// A reducer to store messages ids by service id
+
 import { getType } from "typesafe-actions";
 
 import { loadMessage } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 export type MessagesIdsByServiceId = Readonly<{
   [key: string]: ReadonlyArray<string> | undefined;
@@ -32,5 +35,8 @@ const messagesIdsByServiceIdReducer = (
       return state;
   }
 };
+
+export const messagesIdsByServiceIdSelector = (state: GlobalState) =>
+  state.entities.messages.idsByServiceId;
 
 export default messagesIdsByServiceIdReducer;

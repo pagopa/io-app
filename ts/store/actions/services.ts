@@ -2,7 +2,12 @@
  * Action types and action creator related to Services.
  */
 
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import { ServiceList } from "../../../definitions/backend/ServiceList";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -27,6 +32,11 @@ export const loadService = createAsyncAction(
   "SERVICE_LOAD_FAILURE"
 )<string, ServicePublic, string>();
 
+// Remove services passing a list of tuples with serviceId and organizationFiscalCode
+export const removeServiceTuples = createStandardAction("SERVICES_REMOVE")<
+  ReadonlyArray<ITuple2<string, string | undefined>>
+>();
+
 export type ServicesActions = ActionType<
-  typeof loadVisibleServices | typeof loadService
+  typeof loadVisibleServices | typeof loadService | typeof removeServiceTuples
 >;
