@@ -5,13 +5,14 @@ import {
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageListItemComponent } from "./MessageListItemComponent";
+import { NavigationEvents } from "react-navigation";
 
 type OwnProps = {
   messages: ReadonlyArray<MessageState>;
@@ -58,6 +59,8 @@ class MessageListComponent extends React.Component<Props> {
     );
   };
 
+  flatListRef: FlatList<MessageState> | null | undefined;
+
   public render() {
     const {
       messages,
@@ -72,17 +75,30 @@ class MessageListComponent extends React.Component<Props> {
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     );
 
+    const scrollToTop = () => {
+      {
+        this.flatListRef &&
+          this.flatListRef.scrollToIndex({ animated: false, index: 0 });
+      }
+    };
+
     return (
-      <FlatList
-        contentContainerStyle={styles.contentContainerStyle}
-        scrollEnabled={true}
-        data={messages}
-        extraData={{ servicesById, paymentByRptId }}
-        keyExtractor={keyExtractor}
-        renderItem={this.renderItem}
-        refreshControl={refreshControl}
-        ListEmptyComponent={ListEmptyComponent}
-      />
+      <View>
+        <NavigationEvents onWillFocus={() => scrollToTop()} />
+        <FlatList
+          contentContainerStyle={styles.contentContainerStyle}
+          scrollEnabled={true}
+          data={messages}
+          extraData={{ servicesById, paymentByRptId }}
+          keyExtractor={keyExtractor}
+          renderItem={this.renderItem}
+          refreshControl={refreshControl}
+          ListEmptyComponent={ListEmptyComponent}
+          ref={ref => {
+            this.flatListRef = ref;
+          }}
+        />
+      </View>
     );
   }
 }
