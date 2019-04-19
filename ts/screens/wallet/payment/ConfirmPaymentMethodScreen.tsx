@@ -5,7 +5,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Button, Content, H1, Text, View } from "native-base";
+import { ActionSheet, Button, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -23,6 +23,7 @@ import { WalletStyles } from "../../../components/styles/wallet";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
+import ScreenContent from "../../../components/shared/ScreenContent";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -58,7 +59,6 @@ import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
-import ScreenContent from '../../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   rptId: RptId;

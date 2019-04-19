@@ -5,7 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
-import { Content, Item, Text, View } from "native-base";
+import { Item, Text, View } from "native-base";
 import * as React from "react";
 import {
   AppState,
@@ -28,6 +28,7 @@ import MaskedInput from "../../components/ui/MaskedInput";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
+import ScreenContent from "../../components/shared/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
@@ -42,7 +43,6 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../../utils/input";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   inPayment: Option<{

@@ -13,7 +13,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import { Button, Content, H1, Text, View } from "native-base";
+import { Button, H1, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -24,6 +24,7 @@ import { WalletStyles } from "../../components/styles/wallet";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
+import ScreenContent from "../../components/shared/ScreenContent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
@@ -34,7 +35,6 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { AmountToImporto } from "../../utils/amounts";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   inPayment: Option<{

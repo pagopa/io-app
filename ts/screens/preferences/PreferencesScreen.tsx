@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, List, ListItem } from "native-base";
+import { List, ListItem } from "native-base";
 import * as React from "react";
 
 import { Alert } from "react-native";
@@ -26,9 +26,9 @@ import { checkCalendarPermission } from "../../utils/calendar";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
 
+import ScreenContent from "../../components/shared/ScreenContent";
 import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
 import { navigateToCalendarPreferenceScreen } from "../../store/actions/navigation";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 const unavailableAlert = () =>
   Alert.alert(

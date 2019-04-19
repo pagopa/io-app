@@ -5,7 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { Modal, Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -18,6 +18,7 @@ import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import ScreenContent from "../../components/shared/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
@@ -35,7 +36,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   creditCard: CreditCard;

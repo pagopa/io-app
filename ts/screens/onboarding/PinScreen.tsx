@@ -3,7 +3,7 @@
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H1, Text, View } from "native-base";
+import { Button, H1, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
 import Pinpad from "../../components/Pinpad";
+import ScreenContent from "../../components/shared/ScreenContent";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
@@ -22,7 +23,6 @@ import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setPin } from "../../utils/keychain";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

@@ -1,13 +1,13 @@
-import { Content, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { InteractionManager, StyleSheet } from "react-native";
 
 import themeVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import ScreenContent from "../shared/ScreenContent";
 import ActivityIndicator from "../ui/ActivityIndicator";
 import Markdown from "../ui/Markdown";
 import BaseScreenComponent from "./BaseScreenComponent";
-import ScreenContent from '../shared/ScreenContent';
 
 const styles = StyleSheet.create({
   contentContainer: {

@@ -1,6 +1,5 @@
 import {
   Container,
-  Content,
   H3,
   Left,
   List,
@@ -16,9 +15,9 @@ import I18n from "../i18n";
 import variables from "../theme/variables";
 
 import { LogoutOption } from "../store/actions/authentication";
+import ScreenContent from "./shared/ScreenContent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
-import ScreenContent from './shared/ScreenContent';
 
 const styles = StyleSheet.create({
   content: {

@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -11,6 +11,7 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import ScreenContent from "../../components/shared/ScreenContent";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
@@ -25,7 +26,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;

@@ -1,4 +1,4 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -8,12 +8,12 @@ import { Dispatch } from "../../store/actions/types";
 
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import ScreenContent from "../../components/shared/ScreenContent";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;

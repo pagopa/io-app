@@ -1,12 +1,12 @@
-import { Button, Container, Content, Right, Text } from "native-base";
+import { Button, Container, Right, Text } from "native-base";
 import * as React from "react";
 import { Modal, StyleSheet } from "react-native";
 
 import I18n from "../i18n";
+import ScreenContent from "./shared/ScreenContent";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
-import ScreenContent from './shared/ScreenContent';
 
 const styles = StyleSheet.create({
   contentContainer: { flex: 1, justifyContent: "center" }

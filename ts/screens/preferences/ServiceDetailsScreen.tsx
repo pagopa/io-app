@@ -1,6 +1,6 @@
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
+import { Button, Col, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
   Clipboard,
@@ -34,9 +34,9 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
 import customVariables from "../../theme/variables";
 
+import ScreenContent from "../../components/shared/ScreenContent";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   service: ServicePublic;

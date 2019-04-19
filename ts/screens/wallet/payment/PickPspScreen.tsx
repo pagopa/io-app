@@ -11,6 +11,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import ScreenContent from "../../../components/shared/ScreenContent";
 import { WalletStyles } from "../../../components/styles/wallet";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
@@ -24,7 +25,6 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
-import ScreenContent from "../../../components/shared/ScreenContent";
 
 type NavigationParams = Readonly<{
   rptId: RptId;

@@ -14,7 +14,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -44,6 +44,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import ScreenContent from "../../../components/shared/ScreenContent";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToWalletHome
@@ -54,7 +55,6 @@ import { PayloadForAction } from "../../../types/utils";
 import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { dispatchPickPspOrConfirm } from "./common";
-import ScreenContent from '../../../components/shared/ScreenContent';
 
 const basePrimaryButtonProps = {
   block: true,

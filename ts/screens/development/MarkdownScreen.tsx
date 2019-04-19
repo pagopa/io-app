@@ -1,10 +1,10 @@
-import { Button, Container, Content, Text, View } from "native-base";
+import { Button, Container, Text, View } from "native-base";
 import * as React from "react";
 import { TextInput } from "react-native";
 
+import ScreenContent from "../../components/shared/ScreenContent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 const MARKDOWN_REFERENCE = I18n.t("global.markdown.reference");
 

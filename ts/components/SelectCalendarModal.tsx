@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Container, Content, Text, View } from "native-base";
+import { Button, Container, Text, View } from "native-base";
 import React from "react";
 import {
   BackHandler,
@@ -16,8 +16,8 @@ import { GlobalState } from "../store/reducers/types";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import ScreenContent from "./shared/ScreenContent";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import ScreenContent from './shared/ScreenContent';
 
 const styles = StyleSheet.create({
   content: {

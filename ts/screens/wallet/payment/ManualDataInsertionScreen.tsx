@@ -22,7 +22,7 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
-import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
+import { Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -36,13 +36,13 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 import I18n from "../../../i18n";
 
+import ScreenContent from "../../../components/shared/ScreenContent";
 import {
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import ScreenContent from '../../../components/shared/ScreenContent';
 
 type OwnProps = NavigationInjectedProps;
 

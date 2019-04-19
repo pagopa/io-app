@@ -5,7 +5,7 @@
 import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, List, Text, View } from "native-base";
+import { H1, List, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -16,6 +16,7 @@ import { WalletStyles } from "../../../components/styles/wallet";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
+import ScreenContent from "../../../components/shared/ScreenContent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -32,7 +33,6 @@ import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
-import ScreenContent from '../../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   rptId: RptId;

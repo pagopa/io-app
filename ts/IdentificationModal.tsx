@@ -1,4 +1,4 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, {
@@ -26,8 +26,8 @@ import variables from "./theme/variables";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
+import ScreenContent from "./components/shared/ScreenContent";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
-import ScreenContent from './components/shared/ScreenContent';
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 

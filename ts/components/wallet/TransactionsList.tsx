@@ -4,7 +4,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
-  Content,
   Grid,
   H3,
   Left,
@@ -22,9 +21,9 @@ import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import ScreenContent from "../shared/ScreenContent";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import ScreenContent from '../shared/ScreenContent';
 
 type Props = Readonly<{
   title: string;

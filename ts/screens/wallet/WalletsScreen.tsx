@@ -4,7 +4,7 @@
  */
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Left, Right, Text, View } from "native-base";
+import { Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -15,6 +15,7 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import ScreenContent from "../../components/shared/ScreenContent";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import {
@@ -35,7 +36,6 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 const styles = StyleSheet.create({
   headerContainer: { flexDirection: "row" }

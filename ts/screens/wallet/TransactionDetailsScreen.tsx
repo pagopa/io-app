@@ -12,7 +12,7 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, H3, Text, View } from "native-base";
+import { H1, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -23,6 +23,7 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import ScreenContent from "../../components/shared/ScreenContent";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
@@ -37,7 +38,6 @@ import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;

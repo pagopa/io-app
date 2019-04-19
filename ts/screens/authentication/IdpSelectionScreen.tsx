@@ -1,4 +1,4 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -27,7 +27,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import ScreenContent from '../../components/shared/ScreenContent';
+import ScreenContent from "../../components/shared/ScreenContent";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;

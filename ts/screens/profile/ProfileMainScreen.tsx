@@ -1,6 +1,5 @@
 import {
   Button,
-  Content,
   H1,
   H3,
   Left,
@@ -20,6 +19,7 @@ import { connect } from "react-redux";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
+import ScreenContent from "../../components/shared/ScreenContent";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
@@ -40,7 +40,6 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;

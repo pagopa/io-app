@@ -1,17 +1,7 @@
 /**
  * A screen where the user can know more about spid and access to spid.gov.it
  */
-import {
-  Button,
-  Col,
-  Content,
-  Grid,
-  H1,
-  H2,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { Button, Col, Grid, H1, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
@@ -23,10 +13,10 @@ import {
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import ScreenContent from "../../components/shared/ScreenContent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

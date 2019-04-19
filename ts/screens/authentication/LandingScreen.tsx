@@ -3,7 +3,7 @@
  * It includes a carousel with highlights on the app functionalities
  */
 
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -26,7 +26,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
-import ScreenContent from '../../components/shared/ScreenContent';
+import ScreenContent from "../../components/shared/ScreenContent";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

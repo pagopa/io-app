@@ -1,14 +1,4 @@
-import {
-  Body,
-  Content,
-  H1,
-  H3,
-  List,
-  ListItem,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Body, H1, H3, List, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -20,8 +10,8 @@ import I18n from "../../i18n";
 
 import ROUTES from "../../navigation/routes";
 
+import ScreenContent from "../../components/shared/ScreenContent";
 import variables from "../../theme/variables";
-import ScreenContent from '../../components/shared/ScreenContent';
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 

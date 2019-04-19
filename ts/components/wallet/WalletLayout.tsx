@@ -7,16 +7,7 @@
  * wrapped in a ScrollView, and optionally a
  * footer with a button for starting a new payment
  */
-import {
-  Body,
-  Button,
-  Container,
-  Content,
-  Left,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Body, Button, Container, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
@@ -24,10 +15,10 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
+import ScreenContent from "../shared/ScreenContent";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
-import ScreenContent from '../shared/ScreenContent';
 
 const styles = StyleSheet.create({
   darkGrayBg: {
