@@ -252,10 +252,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       small={true}
                       onPress={() => copyToClipboardWithFeedback(sessionToken)}
                     >
-                      <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >{`Session Token ${sessionToken}`}</Text>
+                      <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {`Session Token ${sessionToken}`}
+                      </Text>
                     </Button>
                   </ListItem>
                 )}
@@ -266,10 +265,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       small={true}
                       onPress={() => copyToClipboardWithFeedback(walletToken)}
                     >
-                      <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >{`Wallet token ${walletToken}`}</Text>
+                      <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {`Wallet token ${walletToken}`}
+                      </Text>
                     </Button>
                   </ListItem>
                 )}
