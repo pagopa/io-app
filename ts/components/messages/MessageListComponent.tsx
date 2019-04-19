@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
 const keyExtractor = (_: MessageState) => _.meta.id;
 
 class MessageListComponent extends React.Component<Props> {
+  private FlatListRef = React.createRef<FlatList<MessageState>>();
+
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
     const { meta } = info.item;
 
@@ -59,7 +61,12 @@ class MessageListComponent extends React.Component<Props> {
     );
   };
 
-  flatListRef: FlatList<MessageState> | null | undefined;
+  private scrollToTop = () => {
+    {
+      this.FlatListRef.current &&
+        this.FlatListRef.current.scrollToIndex({ animated: false, index: 0 });
+    }
+  };
 
   public render() {
     const {
@@ -75,16 +82,9 @@ class MessageListComponent extends React.Component<Props> {
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     );
 
-    const scrollToTop = () => {
-      {
-        this.flatListRef &&
-          this.flatListRef.scrollToIndex({ animated: false, index: 0 });
-      }
-    };
-
     return (
       <View>
-        <NavigationEvents onWillFocus={() => scrollToTop()} />
+        <NavigationEvents onWillFocus={this.scrollToTop} />
         <FlatList
           contentContainerStyle={styles.contentContainerStyle}
           scrollEnabled={true}
@@ -94,9 +94,7 @@ class MessageListComponent extends React.Component<Props> {
           renderItem={this.renderItem}
           refreshControl={refreshControl}
           ListEmptyComponent={ListEmptyComponent}
-          ref={ref => {
-            this.flatListRef = ref;
-          }}
+          ref={this.FlatListRef}
         />
       </View>
     );
