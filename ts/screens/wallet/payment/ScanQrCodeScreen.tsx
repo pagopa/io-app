@@ -4,9 +4,16 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Container, Text, Toast, View } from "native-base";
+import { Button, Container, Text, Toast, View } from "native-base";
 import * as React from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Linking,
+  Platform,
+  ScrollView,
+  StyleSheet
+} from "react-native";
+
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -14,6 +21,7 @@ import { connect } from "react-redux";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 
+import AndroidOpenSettings from "react-native-android-open-settings";
 import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
@@ -140,6 +148,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
+  private openAppSettings = () => {
+    if (Platform.OS === "ios") {
+      Linking.openURL("app-settings://notification/IO").catch(_ => undefined);
+    } else {
+      AndroidOpenSettings.appDetailsSettings();
+    }
+  };
+
   public render(): React.ReactNode {
     const primaryButtonProps = {
       block: true,
@@ -191,6 +207,43 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 </View>
               }
               cameraProps={{ ratio: "1:1" }}
+              checkAndroid6Permissions={true}
+              permissionDialogTitle={I18n.t(
+                "wallet.QRtoPay.cameraUsagePerissionInfobox.title"
+              )}
+              permissionDialogMessage={I18n.t(
+                "wallet.QRtoPay.cameraUsagePerissionInfobox.message"
+              )}
+              notAuthorizedView={
+                <View
+                  style={{
+                    padding: variables.contentPadding,
+                    flex: 1,
+                    alignItems: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "justify",
+                      marginBottom: 25
+                    }}
+                  >
+                    {I18n.t("wallet.QRtoPay.enroll_cta")}
+                  </Text>
+
+                  <Button
+                    onPress={this.openAppSettings}
+                    style={{
+                      flex: 1,
+                      alignSelf: "center"
+                    }}
+                  >
+                    <Text>
+                      {I18n.t("biometric_recognition.enroll_btnLabel")}
+                    </Text>
+                  </Button>
+                </View>
+              }
             />
           )}
         </ScrollView>
