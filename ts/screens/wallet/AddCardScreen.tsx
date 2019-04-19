@@ -133,6 +133,15 @@ function getCardFromState(state: State): Option<CreditCard> {
   return some(card);
 }
 
+// list of cards to be displayed
+const displayedCards: { [key: string]: any } = {
+  MASTERCARD: cardIcons.MASTERCARD,
+  MAESTRO: cardIcons.MAESTRO,
+  VISA: cardIcons.VISA,
+  VISAELECTRON: cardIcons.VISAELECTRON,
+  POSTEPAY: cardIcons.POSTEPAY
+};
+
 class AddCardScreen extends React.Component<Props, State> {
   private panRef = React.createRef<typeof MaskedInput>();
   private expirationDateRef = React.createRef<typeof MaskedInput>();
@@ -160,15 +169,6 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 
   public render(): React.ReactNode {
-    // list of cards to be displayed
-    const displayedCards: { [key: string]: any } = {
-      MASTERCARD: cardIcons.MASTERCARD,
-      MAESTRO: cardIcons.MAESTRO,
-      VISA: cardIcons.VISA,
-      VISAELECTRON: cardIcons.VISAELECTRON,
-      POSTEPAY: cardIcons.POSTEPAY
-    };
-
     const primaryButtonPropsFromState = (
       state: State
     ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
@@ -201,6 +201,14 @@ class AddCardScreen extends React.Component<Props, State> {
       onPress: () => this.props.navigation.goBack(),
       title: I18n.t("global.buttons.back")
     };
+
+    const paddedDisplayedCards = entries(displayedCards).concat(
+      // padding with empty items so as to have a # of cols
+      // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
+      range(
+        CARD_LOGOS_COLUMNS - (size(displayedCards) % CARD_LOGOS_COLUMNS)
+      ).map(_ => ["", undefined])
+    );
 
     return (
       <BaseScreenComponent
@@ -310,14 +318,7 @@ class AddCardScreen extends React.Component<Props, State> {
             <Item last={true} style={styles.noBottomLine}>
               <FlatList
                 numColumns={CARD_LOGOS_COLUMNS}
-                data={entries(displayedCards).concat(
-                  // padding with empty items so as to have a # of cols
-                  // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
-                  range(
-                    CARD_LOGOS_COLUMNS -
-                      (size(displayedCards) % CARD_LOGOS_COLUMNS)
-                  ).map((__): [string, any] => ["", undefined])
-                )}
+                data={paddedDisplayedCards}
                 renderItem={({ item }) => (
                   <View style={{ flex: 1, flexDirection: "row" }}>
                     {item[1] && (
