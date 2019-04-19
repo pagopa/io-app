@@ -33,9 +33,9 @@ export const loadService = createAsyncAction(
 )<string, ServicePublic, string>();
 
 // Remove services passing a list of tuples with serviceId and organizationFiscalCode
-export const removeServiceTuples = createStandardAction("SERVICES_REMOVE")<
-  ReadonlyArray<ITuple2<string, string | undefined>>
->();
+export const removeServiceTuples = createStandardAction(
+  "SERVICES_REMOVE_TUPLES"
+)<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
 export type ServicesActions = ActionType<
   typeof loadVisibleServices | typeof loadService | typeof removeServiceTuples

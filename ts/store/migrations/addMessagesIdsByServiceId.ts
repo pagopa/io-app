@@ -5,6 +5,10 @@ import { messagesStateByIdSelector } from "../reducers/entities/messages/message
 import { MessagesIdsByServiceId } from "../reducers/entities/messages/messagesIdsByServiceId";
 import { PersistedGlobalState } from "../reducers/types";
 
+/**
+ * A redux-persist migration that using the already stored messages create
+ * the new messagesIdsByServiceId section.
+ */
 export const addMessagesIdsByServiceId = (
   state: PersistedGlobalState
 ): PersistedGlobalState => {

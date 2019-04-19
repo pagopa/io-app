@@ -84,12 +84,11 @@ export function* loadVisibleServicesRequestHandler(
 
         if (storedPotService !== undefined) {
           // If the service detail is also loaded get the organization fiscal code
-          const organizationFiscalCode = pot.getOrElse(
-            pot.map(storedPotService, _ => _.organization_fiscal_code),
-            undefined
+          const organizationFiscalCode = pot.toUndefined(
+            pot.map(storedPotService, _ => _.organization_fiscal_code)
           );
 
-          return accumulator.concat(Tuple2(serviceId, organizationFiscalCode));
+          return [...accumulator, Tuple2(serviceId, organizationFiscalCode)];
         }
 
         return accumulator;
@@ -97,25 +96,24 @@ export function* loadVisibleServicesRequestHandler(
       // Dispatch action to remove the services from the redux store
       yield put(removeServiceTuples(serviceTuplesToRemove));
 
-      // Load only services that are not already stored or are outdated (we have a new version).
-      const serviceIdsToLoad = Object.keys(visibleServiceVersionById).filter(
-        _ => {
-          const visibleServiceVersion = visibleServiceVersionById[_];
+      const serviceIdsToLoad = visibleServices
+        .filter(service => {
+          const serviceId = service.service_id;
+          const storedService = storedServicesById[serviceId];
 
-          if (visibleServiceVersion === undefined) {
-            return false;
-          }
-
-          const storedService = storedServicesById[_];
           return (
+            // The service:
+            // - is not in the redux store
             storedService === undefined ||
+            // - is in the redux store as PotNone and not loading
             (pot.isNone(storedService) && !pot.isLoading(storedService)) ||
+            // - is in the redux store as PotSome, is not updating and is outdated
             (pot.isSome(storedService) &&
               !pot.isUpdating(storedService) &&
-              storedService.value.version < visibleServiceVersion)
+              storedService.value.version < service.version)
           );
-        }
-      );
+        })
+        .map(_ => _.service_id);
 
       // Parallel fetch of those services that we haven't loaded yet or need to be updated
       yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
