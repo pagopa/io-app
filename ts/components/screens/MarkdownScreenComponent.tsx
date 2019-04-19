@@ -7,6 +7,7 @@ import { ComponentProps } from "../../types/react";
 import ActivityIndicator from "../ui/ActivityIndicator";
 import Markdown from "../ui/Markdown";
 import BaseScreenComponent from "./BaseScreenComponent";
+import ScreenContent from '../shared/ScreenContent';
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -54,9 +55,9 @@ export class MarkdownScreenComponent extends React.PureComponent<Props, State> {
           </View>
         )}
         {this.state.content && (
-          <Content contentContainerStyle={styles.contentContainer}>
+          <ScreenContent contentContainerStyle={styles.contentContainer}>
             {this.state.content}
-          </Content>
+          </ScreenContent>
         )}
       </BaseScreenComponent>
     );

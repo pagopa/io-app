@@ -18,6 +18,7 @@ import variables from "../theme/variables";
 import { LogoutOption } from "../store/actions/authentication";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
+import ScreenContent from './shared/ScreenContent';
 
 const styles = StyleSheet.create({
   content: {
@@ -57,7 +58,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
   public render() {
     return (
       <Container>
-        <Content style={styles.content}>
+        <ScreenContent style={styles.content}>
           {this.props.header || null}
           <List>
             <ListItem
@@ -99,7 +100,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
             </ListItem>
           </List>
           <View style={styles.separator} />
-        </Content>
+        </ScreenContent>
         <FooterWithButtons
           type="SingleButton"
           leftButton={{

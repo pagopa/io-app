@@ -26,6 +26,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -82,11 +83,11 @@ const LandingScreen: React.SFC<Props> = props => {
     <BaseScreenComponent>
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
 
-      <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
+      <ScreenContent contentContainerStyle={{ flex: 1 }} noPadded={true}>
         <View spacer={true} large={true} />
         <HorizontalScroll cards={cardComponents} />
         <View spacer={true} />
-      </Content>
+      </ScreenContent>
 
       <View footer={true}>
         <Button

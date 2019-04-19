@@ -42,6 +42,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../../utils/input";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -220,7 +221,7 @@ class AddCardScreen extends React.Component<Props, State> {
           style={WalletStyles.whiteBg}
           keyboardShouldPersistTaps="handled"
         >
-          <Content scrollEnabled={false}>
+          <ScreenContent scrollEnabled={false}>
             <LabelledItem
               type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
@@ -329,7 +330,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyExtractor={item => item[0]}
               />
             </Item>
-          </Content>
+          </ScreenContent>
         </ScrollView>
 
         <FooterWithButtons

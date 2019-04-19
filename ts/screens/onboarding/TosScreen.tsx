@@ -9,6 +9,7 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccept } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -45,11 +46,11 @@ class TosScreen extends React.PureComponent<Props, State> {
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
-        <Content noPadded={true}>
+        <ScreenContent noPadded={true}>
           <View content={true}>
             <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
           </View>
-        </Content>
+        </ScreenContent>
         {isProfile === false && (
           <View footer={true}>
             <Button

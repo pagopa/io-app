@@ -35,6 +35,7 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 const styles = StyleSheet.create({
   headerContainer: { flexDirection: "row" }
@@ -95,7 +96,7 @@ class WalletsScreen extends React.Component<Props> {
         headerContents={headerContents}
         allowGoBack={true}
       >
-        <Content style={[WalletStyles.padded, WalletStyles.header]}>
+        <ScreenContent style={[WalletStyles.padded, WalletStyles.header]}>
           <FlatList
             removeClippedSubviews={false}
             data={this.props.wallets as any[]} // tslint:disable-line
@@ -103,7 +104,7 @@ class WalletsScreen extends React.Component<Props> {
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
           />
-        </Content>
+        </ScreenContent>
       </WalletLayout>
     );
   }

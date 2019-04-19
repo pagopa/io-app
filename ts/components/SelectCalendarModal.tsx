@@ -17,6 +17,7 @@ import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import ScreenContent from './shared/ScreenContent';
 
 const styles = StyleSheet.create({
   content: {
@@ -112,7 +113,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
 
     return (
       <Container>
-        <Content style={styles.content}>
+        <ScreenContent style={styles.content}>
           {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
           {pot.isError(calendars) && (
             <React.Fragment>
@@ -140,7 +141,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
               )}
             </React.Fragment>
           )}
-        </Content>
+        </ScreenContent>
         <FooterWithButtons
           type="SingleButton"
           leftButton={{

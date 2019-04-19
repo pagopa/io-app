@@ -28,6 +28,7 @@ import { getLocalePrimary } from "../../utils/locale";
 
 import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
 import { navigateToCalendarPreferenceScreen } from "../../store/actions/navigation";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -143,7 +144,7 @@ class PreferencesScreen extends React.Component<Props, State> {
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("preferences.subtitle")}
       >
-        <Content noPadded={true}>
+        <ScreenContent noPadded={true}>
           <List withContentLateralPadding={true}>
             <ListItem
               onPress={() =>
@@ -215,7 +216,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               />
             </ListItem>
           </List>
-        </Content>
+        </ScreenContent>
       </TopScreenComponent>
     );
   }

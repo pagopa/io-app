@@ -5,15 +5,16 @@
  * needed)
  */
 
-import { Body, Button, Container, Content, H1, Right, View } from "native-base";
+import { Body, Button, Container, H1, Right, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, StyleSheet } from "react-native";
+import { InteractionManager, Modal } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";
+import ScreenContent from "./shared/ScreenContent";
 
 type Props = Readonly<{
   title: string;
@@ -25,12 +26,6 @@ type Props = Readonly<{
 type State = Readonly<{
   content: React.ReactNode | null;
 }>;
-
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: themeVariables.contentPadding
-  }
-});
 
 export class ContextualHelp extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -83,13 +78,10 @@ export class ContextualHelp extends React.Component<Props, State> {
             </View>
           )}
           {this.state.content && (
-            <Content
-              contentContainerStyle={styles.contentContainerStyle}
-              noPadded={true}
-            >
+            <ScreenContent>
               <H1>{this.props.title}</H1>
               {this.state.content}
-            </Content>
+            </ScreenContent>
           )}
         </Container>
       </Modal>

@@ -4,6 +4,7 @@ import { TextInput } from "react-native";
 
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 const MARKDOWN_REFERENCE = I18n.t("global.markdown.reference");
 
@@ -68,7 +69,7 @@ class MarkdownScreen extends React.Component<Props, State> {
   public render() {
     return (
       <Container>
-        <Content>
+        <ScreenContent>
           <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
@@ -107,7 +108,7 @@ class MarkdownScreen extends React.Component<Props, State> {
           />
           <View spacer={true} />
           <Markdown>{this.state.markdown}</Markdown>
-        </Content>
+        </ScreenContent>
       </Container>
     );
   }

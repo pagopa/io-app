@@ -58,6 +58,7 @@ import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
+import ScreenContent from '../../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -127,7 +128,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         goBack={true}
         headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       >
-        <Content noPadded={true}>
+        <ScreenContent noPadded={true}>
           <PaymentBannerComponent
             currentAmount={currentAmount}
             paymentReason={paymentReason}
@@ -225,7 +226,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               </Row>
             </Grid>
           </View>
-        </Content>
+        </ScreenContent>
 
         <View footer={true}>
           <Button

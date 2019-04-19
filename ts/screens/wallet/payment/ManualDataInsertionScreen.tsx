@@ -42,6 +42,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import ScreenContent from '../../../components/shared/ScreenContent';
 
 type OwnProps = NavigationInjectedProps;
 
@@ -143,7 +144,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           style={WalletStyles.whiteBg}
           keyboardShouldPersistTaps="handled"
         >
-          <Content scrollEnabled={false}>
+          <ScreenContent scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
             <Form>
@@ -216,7 +217,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
             </Form>
-          </Content>
+          </ScreenContent>
         </ScrollView>
 
         <FooterWithButtons

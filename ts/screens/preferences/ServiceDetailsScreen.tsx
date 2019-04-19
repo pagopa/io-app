@@ -36,6 +36,7 @@ import customVariables from "../../theme/variables";
 
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -198,7 +199,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         goBack={this.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
       >
-        <Content>
+        <ScreenContent>
           <Grid>
             <Row>
               <Col>
@@ -422,7 +423,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             <View spacer={true} large={true} />
           </Grid>
-        </Content>
+        </ScreenContent>
       </BaseScreenComponent>
     );
   }

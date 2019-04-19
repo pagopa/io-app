@@ -16,13 +16,9 @@ export default (): Theme => {
     ".alternative": {
       backgroundColor: variables.contentAlternativeBackground
     },
-    ".noPadded": {
-      padding: 0
-    },
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground
     },
-    padding: variables.contentPadding,
     backgroundColor: variables.contentBackground
   };
 };

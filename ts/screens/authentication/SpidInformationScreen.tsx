@@ -26,6 +26,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -71,7 +72,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
         goBack={true}
         headerTitle={I18n.t("authentication.spid_information.headerTitle")}
       >
-        <Content>
+        <ScreenContent>
           <DefaultSubscreenHeader
             screenTitle={I18n.t("authentication.spid_information.contentTitle")}
             icon={require("../../../img/icons/digital-id.png")}
@@ -117,7 +118,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
             )}
           </Grid>
           <View spacer={true} extralarge={true} />
-        </Content>
+        </ScreenContent>
 
         <View footer={true}>
           <Button block={true} primary={true} onPress={this.browseToLink}>

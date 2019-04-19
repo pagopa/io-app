@@ -54,6 +54,7 @@ import { PayloadForAction } from "../../../types/utils";
 import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { dispatchPickPspOrConfirm } from "./common";
+import ScreenContent from '../../../components/shared/ScreenContent';
 
 const basePrimaryButtonProps = {
   block: true,
@@ -190,7 +191,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         goBack={true}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
-        <Content noPadded={true}>
+        <ScreenContent noPadded={true}>
           {pot.isSome(potVerifica) ? (
             <PaymentSummaryComponent
               hasVerificaResponse={true}
@@ -237,7 +238,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
             <Markdown>{formatMdInfoRpt(rptId)}</Markdown>
             <View spacer={true} />
           </View>
-        </Content>
+        </ScreenContent>
 
         {this.props.error.fold(
           this.renderFooterButtons(),

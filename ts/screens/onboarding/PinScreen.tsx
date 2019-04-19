@@ -22,6 +22,7 @@ import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setPin } from "../../utils/keychain";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -178,12 +179,12 @@ class PinScreen extends React.Component<Props, State> {
   // The Content of the Screen
   public renderContent(pinState: PinState) {
     return (
-      <Content>
+      <ScreenContent>
         {this.renderContentHeader(pinState)}
         {this.renderCodeInput(pinState)}
         <View spacer={true} extralarge={true} />
         {this.renderDescription(pinState)}
-      </Content>
+      </ScreenContent>
     );
   }
 

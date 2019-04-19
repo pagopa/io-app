@@ -35,6 +35,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -126,7 +127,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             : I18n.t("wallet.saveCard.header")
         }
       >
-        <Content>
+        <ScreenContent>
           <H1>
             {isInPayment
               ? I18n.t("wallet.saveCardInPayment.title")
@@ -161,7 +162,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
               />
             </Col>
           </Grid>
-        </Content>
+        </ScreenContent>
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}

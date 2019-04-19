@@ -37,6 +37,7 @@ import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -157,7 +158,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         }
         allowGoBack={!isPaymentCompletedTransaction}
       >
-        <Content
+        <ScreenContent
           scrollEnabled={false}
           style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
         >
@@ -206,7 +207,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
               transaction.created.toLocaleTimeString()
             )}
           </Grid>
-        </Content>
+        </ScreenContent>
       </WalletLayout>
     );
   }

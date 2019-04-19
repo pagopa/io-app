@@ -13,6 +13,7 @@ import {
   abortOnboarding,
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
@@ -86,7 +87,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
         title={I18n.t("onboarding.fingerprint.title")}
         icon={this.renderIcon(biometryType)}
       >
-        <Content noPadded={true}>
+        <ScreenContent noPadded={true}>
           <View content={true}>
             <Text>
               {biometryType !== "NOT_ENROLLED"
@@ -98,7 +99,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
                 : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
             </Text>
           </View>
-        </Content>
+        </ScreenContent>
         <View footer={true}>
           <Button
             block={true}

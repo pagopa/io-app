@@ -40,6 +40,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -140,7 +141,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
       >
-        <Content noPadded={true}>
+        <ScreenContent noPadded={true}>
           <List withContentLateralPadding={true}>
             {/* Privacy */}
             <ListItem
@@ -324,7 +325,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </React.Fragment>
             )}
           </List>
-        </Content>
+        </ScreenContent>
       </TopScreenComponent>
     );
   }

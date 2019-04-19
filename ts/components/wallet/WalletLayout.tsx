@@ -27,6 +27,7 @@ import { InstabugButtons } from "../InstabugButtons";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
+import ScreenContent from '../shared/ScreenContent';
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -64,13 +65,13 @@ export default class WalletLayout extends React.Component<Props> {
         </AppHeader>
 
         <ScrollView bounces={false} style={WalletStyles.whiteBg}>
-          <Content
+          <ScreenContent
             scrollEnabled={false}
             style={[styles.darkGrayBg, WalletStyles.noBottomPadding]}
           >
             {this.props.headerContents}
             {this.props.displayedWallets}
-          </Content>
+          </ScreenContent>
           {this.props.children}
         </ScrollView>
         {this.props.onNewPaymentPress && (

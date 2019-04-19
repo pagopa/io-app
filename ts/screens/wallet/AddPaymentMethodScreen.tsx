@@ -34,6 +34,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { AmountToImporto } from "../../utils/amounts";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -61,7 +62,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
         }
       >
         {inPayment.isSome() ? (
-          <Content noPadded={true}>
+          <ScreenContent noPadded={true}>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
               currentAmount={AmountToImporto.encode(
@@ -80,13 +81,13 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
                 navigateToAddCreditCard={this.props.navigateToAddCreditCard}
               />
             </View>
-          </Content>
+          </ScreenContent>
         ) : (
-          <Content>
+          <ScreenContent>
             <PaymentMethodsList
               navigateToAddCreditCard={this.props.navigateToAddCreditCard}
             />
-          </Content>
+          </ScreenContent>
         )}
         <View footer={true}>
           <Button

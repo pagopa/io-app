@@ -1,6 +1,6 @@
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -24,6 +24,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
+import ScreenContent from "../../../components/shared/ScreenContent";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -41,11 +42,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const style = StyleSheet.create({
-  contentContainerStyle: {
-    flex: 1,
-    padding: variables.contentPadding
-  },
-
   listItem: {
     marginLeft: 0,
     flex: 1,
@@ -82,10 +78,7 @@ class PickPspScreen extends React.Component<Props> {
         goBack={true}
         headerTitle={I18n.t("saveCard.saveCard")}
       >
-        <Content
-          contentContainerStyle={style.contentContainerStyle}
-          noPadded={true}
-        >
+        <ScreenContent>
           <H1>{I18n.t("wallet.pickPsp.title")}</H1>
           <View spacer={true} />
           <Text>
@@ -136,7 +129,7 @@ class PickPspScreen extends React.Component<Props> {
               </TouchableOpacity>
             )}
           />
-        </Content>
+        </ScreenContent>
       </BaseScreenComponent>
     );
   }

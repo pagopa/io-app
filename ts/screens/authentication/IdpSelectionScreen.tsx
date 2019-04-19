@@ -27,6 +27,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -158,7 +159,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           : I18n.t("authentication.idp_selection.subtitle")
       }
     >
-      <Content noPadded={true} alternative={true}>
+      <ScreenContent noPadded={true} alternative={true}>
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
@@ -166,7 +167,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
-      </Content>
+      </ScreenContent>
     </TopScreenComponent>
   );
 };

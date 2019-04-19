@@ -27,6 +27,7 @@ import variables from "./theme/variables";
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+import ScreenContent from './components/shared/ScreenContent';
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -303,7 +304,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={true}>
+          <ScreenContent primary={true}>
             {isFingerprintEnabled &&
               biometryType && (
                 <React.Fragment>
@@ -371,7 +372,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             </Text>
 
             <View spacer={true} extralarge={true} />
-          </Content>
+          </ScreenContent>
         </BaseScreenComponent>
       </Modal>
     );

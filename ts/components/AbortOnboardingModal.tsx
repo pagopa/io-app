@@ -6,6 +6,7 @@ import I18n from "../i18n";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
+import ScreenContent from './shared/ScreenContent';
 
 const styles = StyleSheet.create({
   contentContainer: { flex: 1, justifyContent: "center" }
@@ -29,9 +30,9 @@ class AbortOnboardingModal extends React.PureComponent<Props> {
             </Right>
           </AppHeader>
 
-          <Content contentContainerStyle={styles.contentContainer}>
+          <ScreenContent contentContainerStyle={styles.contentContainer}>
             <Text>{I18n.t("onboarding.resetConfirm")}</Text>
-          </Content>
+          </ScreenContent>
 
           <FooterWithButtons
             type="TwoButtonsInlineHalf"

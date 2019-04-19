@@ -24,6 +24,7 @@ import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
+import ScreenContent from '../shared/ScreenContent';
 
 type Props = Readonly<{
   title: string;
@@ -99,7 +100,7 @@ export default class TransactionsList extends React.Component<Props> {
 
     if (transactions.length === 0) {
       return (
-        <Content
+        <ScreenContent
           scrollEnabled={false}
           style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
         >
@@ -108,12 +109,12 @@ export default class TransactionsList extends React.Component<Props> {
           <View spacer={true} />
           <Text>{this.props.noTransactionsDetailsMessage}</Text>
           <View spacer={true} large={true} />
-        </Content>
+        </ScreenContent>
       );
     }
     // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
     return (
-      <Content
+      <ScreenContent
         scrollEnabled={false}
         style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
       >
@@ -135,7 +136,7 @@ export default class TransactionsList extends React.Component<Props> {
             />
           </Row>
         </Grid>
-      </Content>
+      </ScreenContent>
     );
   }
 }

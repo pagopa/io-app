@@ -21,6 +21,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
 import variables from "../../theme/variables";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
@@ -45,7 +46,7 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
     goBack={() => props.navigation.goBack()}
     headerTitle={I18n.t("profile.main.screenTitle")}
   >
-    <Content noPadded={true}>
+    <ScreenContent noPadded={true}>
       <View content={true}>
         <H1>{I18n.t("profile.main.mainPrivacy.screenTitle")}</H1>
         <Text>{I18n.t("profile.main.mainPrivacy.screenSubtitle")}</Text>
@@ -113,6 +114,6 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
           </ListItem>
         </List>
       </View>
-    </Content>
+    </ScreenContent>
   </BaseScreenComponent>
 );

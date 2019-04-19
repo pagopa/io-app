@@ -25,6 +25,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
+import ScreenContent from '../../components/shared/ScreenContent';
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -117,7 +118,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     paymentByRptId: Props["paymentByRptId"]
   ) => {
     return (
-      <Content noPadded={true}>
+      <ScreenContent noPadded={true}>
         <MessageDetailComponent
           message={message}
           paymentByRptId={paymentByRptId}
@@ -128,7 +129,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               : undefined
           }
         />
-      </Content>
+      </ScreenContent>
     );
   };
 
