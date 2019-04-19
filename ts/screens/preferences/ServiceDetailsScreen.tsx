@@ -34,7 +34,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
 import customVariables from "../../theme/variables";
 
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 

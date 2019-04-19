@@ -26,7 +26,7 @@ import { checkCalendarPermission } from "../../utils/calendar";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
 
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
 import { navigateToCalendarPreferenceScreen } from "../../store/actions/navigation";
 

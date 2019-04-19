@@ -7,8 +7,8 @@ import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
 
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import ScreenContent from "../../components/shared/ScreenContent";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,

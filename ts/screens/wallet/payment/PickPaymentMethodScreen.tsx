@@ -16,7 +16,7 @@ import { WalletStyles } from "../../../components/styles/wallet";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
-import ScreenContent from "../../../components/shared/ScreenContent";
+import ScreenContent from "../../../components/screens/ScreenContent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";

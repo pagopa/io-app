@@ -11,7 +11,7 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import {

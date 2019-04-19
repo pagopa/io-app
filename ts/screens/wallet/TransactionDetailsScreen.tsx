@@ -23,7 +23,7 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";

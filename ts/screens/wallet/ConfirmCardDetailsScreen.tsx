@@ -18,7 +18,7 @@ import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";

@@ -11,7 +11,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import ScreenContent from "../../../components/shared/ScreenContent";
+import ScreenContent from "../../../components/screens/ScreenContent";
 import { WalletStyles } from "../../../components/styles/wallet";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";

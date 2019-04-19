@@ -10,11 +10,11 @@ import * as React from "react";
 import { InteractionManager, Modal } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
+import ScreenContent from "./screens/ScreenContent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";
-import ScreenContent from "./shared/ScreenContent";
 
 type Props = Readonly<{
   title: string;

@@ -36,7 +36,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 import I18n from "../../../i18n";
 
-import ScreenContent from "../../../components/shared/ScreenContent";
+import ScreenContent from "../../../components/screens/ScreenContent";
 import {
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome

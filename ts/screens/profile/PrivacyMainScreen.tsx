@@ -10,7 +10,7 @@ import I18n from "../../i18n";
 
 import ROUTES from "../../navigation/routes";
 
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import variables from "../../theme/variables";
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));

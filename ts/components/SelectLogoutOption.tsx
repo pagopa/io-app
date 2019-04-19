@@ -15,7 +15,7 @@ import I18n from "../i18n";
 import variables from "../theme/variables";
 
 import { LogoutOption } from "../store/actions/authentication";
-import ScreenContent from "./shared/ScreenContent";
+import ScreenContent from "./screens/ScreenContent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 

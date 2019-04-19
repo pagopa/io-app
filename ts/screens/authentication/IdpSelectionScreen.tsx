@@ -26,8 +26,8 @@ import { GlobalState } from "../../store/reducers/types";
 
 import variables from "../../theme/variables";
 
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import ScreenContent from "../../components/shared/ScreenContent";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;

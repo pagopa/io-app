@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import ScreenContent from "./components/screens/ScreenContent";
 import IconFont from "./components/ui/IconFont";
 import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
@@ -26,7 +27,6 @@ import variables from "./theme/variables";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
-import ScreenContent from "./components/shared/ScreenContent";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;

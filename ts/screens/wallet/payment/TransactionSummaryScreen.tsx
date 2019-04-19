@@ -44,7 +44,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import ScreenContent from "../../../components/shared/ScreenContent";
+import ScreenContent from "../../../components/screens/ScreenContent";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToWalletHome

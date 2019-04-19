@@ -13,7 +13,7 @@ import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
 import Pinpad from "../../components/Pinpad";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";

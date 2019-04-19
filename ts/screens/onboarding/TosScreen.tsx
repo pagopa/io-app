@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccept } from "../../store/actions/onboarding";

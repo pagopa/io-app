@@ -26,7 +26,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;

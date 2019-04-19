@@ -16,7 +16,7 @@ import { GlobalState } from "../store/reducers/types";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
-import ScreenContent from "./shared/ScreenContent";
+import ScreenContent from "./screens/ScreenContent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 const styles = StyleSheet.create({

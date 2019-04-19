@@ -15,7 +15,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
-import ScreenContent from "../shared/ScreenContent";
+import ScreenContent from "../screens/ScreenContent";
 import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";

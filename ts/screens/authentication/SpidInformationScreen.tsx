@@ -13,7 +13,7 @@ import {
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";

@@ -28,7 +28,7 @@ import MaskedInput from "../../components/ui/MaskedInput";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
-import ScreenContent from "../../components/shared/ScreenContent";
+import ScreenContent from "../../components/screens/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";

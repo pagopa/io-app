@@ -3,7 +3,7 @@ import * as React from "react";
 import { Modal, StyleSheet } from "react-native";
 
 import I18n from "../i18n";
-import ScreenContent from "./shared/ScreenContent";
+import ScreenContent from "./screens/ScreenContent";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
