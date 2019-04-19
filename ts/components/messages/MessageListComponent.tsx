@@ -8,11 +8,12 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
+import { NavigationEvents } from "react-navigation";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageListItemComponent } from "./MessageListItemComponent";
-import { NavigationEvents } from "react-navigation";
 
 type OwnProps = {
   messages: ReadonlyArray<MessageState>;
@@ -39,8 +40,6 @@ const styles = StyleSheet.create({
 const keyExtractor = (_: MessageState) => _.meta.id;
 
 class MessageListComponent extends React.Component<Props> {
-  private FlatListRef = React.createRef<FlatList<MessageState>>();
-
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
     const { meta } = info.item;
 
@@ -61,10 +60,10 @@ class MessageListComponent extends React.Component<Props> {
     );
   };
 
+  private FlatListRef = React.createRef<FlatList<MessageState>>();
   private scrollToTop = () => {
-    {
-      this.FlatListRef.current &&
-        this.FlatListRef.current.scrollToIndex({ animated: false, index: 0 });
+    if (this.FlatListRef.current) {
+      this.FlatListRef.current.scrollToIndex({ animated: false, index: 0 });
     }
   };
 
