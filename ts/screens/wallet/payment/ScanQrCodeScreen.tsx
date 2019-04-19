@@ -13,32 +13,26 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-
+import AndroidOpenSettings from "react-native-android-open-settings";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { CameraMarker } from "../../../components/wallet/CameraMarker";
-
-import AndroidOpenSettings from "react-native-android-open-settings";
 import I18n from "../../../i18n";
-
 import { Dispatch } from "../../../store/actions/types";
-
-import variables from "../../../theme/variables";
-
-import { BaseHeader } from "../../../components/screens/BaseHeader";
 import { ComponentProps } from "../../../types/react";
 
-import { decodePagoPaQrCode } from "../../../utils/payment";
-
+import { BaseHeader } from "../../../components/screens/BaseHeader";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import variables from "../../../theme/variables";
+import { decodePagoPaQrCode } from "../../../utils/payment";
 
 type OwnProps = NavigationInjectedProps;
 
