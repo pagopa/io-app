@@ -41,6 +41,10 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   private handleBackButton = () => {
+    if (this.props.navigation.index === 0) {
+      BackHandler.exitApp();
+      return false;
+    }
     this.props.navigateBack();
     return true;
   };
@@ -134,7 +138,8 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  navigation: state.nav
 });
 
 const mapDispatchToProps = {
