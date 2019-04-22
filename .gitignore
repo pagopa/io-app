@@ -46,6 +46,9 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# Ignore package-lock since we use yarn
+package-lock.json
+
 # Test js
 /coverage
 
