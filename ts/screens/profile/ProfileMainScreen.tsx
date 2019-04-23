@@ -50,7 +50,7 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const copyToClipboardWithFeedback = (text: string) => {
+export const copyToClipboardWithFeedback = (text: string) => {
   Clipboard.setString(text);
   Toast.show({
     text: "Copied to clipboard"

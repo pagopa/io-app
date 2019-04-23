@@ -20,6 +20,7 @@ global:
     retry: Riprova
     back: Indietro
     confirm: Conferma
+    copy: Copia
   navigator:
     messages: messaggi
     wallet: portafoglio

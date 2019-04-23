@@ -19,6 +19,7 @@ global:
     retry: Retry
     back: Back
     confirm: Confirm
+    copy: Copy
   navigator:
     messages: messages
     wallet: wallet

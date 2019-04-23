@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
+import { MessageDetail } from "../../components/messages/MessageDetail";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
@@ -118,7 +118,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   ) => {
     return (
       <Content noPadded={true}>
-        <MessageDetailComponent
+        <MessageDetail
           message={message}
           paymentByRptId={paymentByRptId}
           service={service}

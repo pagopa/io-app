@@ -1,11 +1,15 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { H1, View } from "native-base";
+import { Button, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
+import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
+import { copyToClipboardWithFeedback } from "../../screens/profile/ProfileMainScreen";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { logosForService } from "../../utils/services";
@@ -23,7 +27,7 @@ type OwnProps = {
   onServiceLinkPress?: () => void;
 };
 
-type Props = OwnProps;
+type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   mainWrapper: {
@@ -51,15 +55,43 @@ const styles = StyleSheet.create({
   webview: {
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding
+  },
+  messageIDContainerText: {
+    fontSize: variables.fontSizeSmaller,
+    display: "flex",
+    alignItems: "center"
+  },
+  messageIDLabelContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row"
+  },
+  messageIDLabelText: {
+    fontSize: variables.fontSizeSmall
+  },
+  messageIDBtnContainer: {
+    width: 70,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    flexDirection: "row"
+  },
+  messageIDBtnText: {
+    fontSize: variables.btnSmallFontSize
   }
 });
 
 /**
  * A component to render the message detail.
  */
-export default class MessageDetailComponent extends React.PureComponent<Props> {
+class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
-    const { message, paymentByRptId, service, onServiceLinkPress } = this.props;
+    const {
+      message,
+      paymentByRptId,
+      service,
+      onServiceLinkPress,
+      isDebugModeEnabled
+    } = this.props;
     return (
       <View style={styles.mainWrapper}>
         <View style={styles.headerContainer}>
@@ -88,6 +120,24 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
             <H1>{message.content.subject}</H1>
           </View>
 
+          {isDebugModeEnabled && (
+            <Grid>
+              <Col style={styles.messageIDLabelContainer}>
+                <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
+              </Col>
+              <Col style={styles.messageIDBtnContainer}>
+                <Button
+                  small={true}
+                  onPress={() => copyToClipboardWithFeedback(message.id)}
+                >
+                  <Text style={styles.messageIDBtnText}>
+                    {I18n.t("global.buttons.copy")}
+                  </Text>
+                </Button>
+              </Col>
+            </Grid>
+          )}
+
           {/* RawInfo */}
           <MessageDetailRawInfoComponent
             message={message}
@@ -110,3 +160,9 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => ({
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
+});
+
+export const MessageDetail = connect(mapStateToProps)(MessageDetailComponent);
