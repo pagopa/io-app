@@ -5,6 +5,8 @@ import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { idpLoginUrlChanged } from "../../store/actions/authentication";
+
 import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -12,7 +14,7 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedOutWithIdp
@@ -25,12 +27,12 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
-
-type RequestState = pot.Pot<string, string>;
+type Props = ReturnType<typeof mapStateToProps> &
+  OwnProps &
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  requestState: RequestState;
+  requestState: pot.Pot<true, string>;
 };
 
 const LOGIN_BASE_URL = `${
@@ -94,34 +96,44 @@ const onNavigationStateChange = (
  * The IDP page is opened in a WebView
  */
 class IdpLoginScreen extends React.Component<Props, State> {
+  private loginTrace?: string;
+
   constructor(props: Props) {
     super(props);
-
     this.state = {
       requestState: pot.noneLoading
     };
   }
 
-  private handleOnError = (): void =>
+  private updateLoginTrace = (url: string): void => {
+    // tslint:disable-next-line: no-object-mutation
+    this.loginTrace = url;
+  };
+
+  private handleOnError = (): void => {
     this.setState({
       requestState: pot.noneError("error")
     });
+  };
 
   private goBack = this.props.navigation.goBack;
 
-  private setRequestStateToLoading = () =>
+  private setRequestStateToLoading = (): void =>
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
+    if (event.url && event.url !== this.loginTrace) {
+      const urlChanged = event.url.split("?")[0];
+      this.props.dispatchIdpLoginUrlChanged(urlChanged);
+      this.updateLoginTrace(urlChanged);
+    }
     this.setState({
-      requestState: event.loading
-        ? pot.someLoading("loading")
-        : pot.some("loading complete")
+      requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
 
     onNavigationStateChange(
-      () => this.props.dispatch(loginFailure()),
-      token => this.props.dispatch(loginSuccess(token))
+      this.props.dispatchLoginFailure,
+      this.props.dispatchLoginSuccess
     )(event);
   };
 
@@ -180,7 +192,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return null;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -211,4 +222,14 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined
 });
 
-export default connect(mapStateToProps)(IdpLoginScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchIdpLoginUrlChanged: (url: string) =>
+    dispatch(idpLoginUrlChanged({ url })),
+  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  dispatchLoginFailure: () => dispatch(loginFailure())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IdpLoginScreen);

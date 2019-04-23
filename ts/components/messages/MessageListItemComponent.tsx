@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
   },
 
   selectionCheckbox: {
-    left: 0
+    left: 0,
+    paddingBottom: 1
   },
 
   itemSelected: {
@@ -235,7 +236,7 @@ export class MessageListItemComponent extends React.Component<Props> {
                 </Col>
               )}
               <Col size={10}>{serviceComponent}</Col>
-              <Col size={2}>
+              <Col size={3}>
                 <Text style={styles.dateText} rightAlign={true}>
                   {uiCreatedAt}
                 </Text>

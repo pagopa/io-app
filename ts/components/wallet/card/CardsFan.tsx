@@ -1,11 +1,11 @@
 import * as React from "react";
 import { TouchableOpacity } from "react-native";
 
-import { Wallet } from "../../../types/pagopa";
+import { ComponentProps } from "../../../types/react";
 import { RotatedCards } from "./RotatedCards";
 
 type Props = Readonly<{
-  wallets: [Wallet] | [Wallet, Wallet];
+  wallets: ComponentProps<typeof RotatedCards>["wallets"];
   navigateToWalletList: () => void;
 }>;
 
