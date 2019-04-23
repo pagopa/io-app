@@ -12,7 +12,7 @@
 import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TextInputProps } from "react-native";
+import { StyleSheet, TextInputProps, Alert } from "react-native";
 import { TextInputMaskProps } from "react-native-text-input-mask";
 import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
@@ -33,12 +33,14 @@ type Props =
       label: string;
       icon: string;
       inputMaskProps: TextInputMaskProps;
+      isValid?: boolean | undefined;
     }>
   | Readonly<{
       type: "text";
       label: string;
       icon: string;
       inputProps: TextInputProps;
+      isValid?: boolean | undefined;
     }>;
 
 export class LabelledItem extends React.Component<Props> {
@@ -48,7 +50,10 @@ export class LabelledItem extends React.Component<Props> {
         <Item style={styles.noBottomLine}>
           <Text>{this.props.label}</Text>
         </Item>
-        <Item style={styles.bottomLine}>
+        <Item 
+          style={styles.bottomLine}
+          error={this.props.isValid === undefined ? false : !this.props.isValid }
+          success={this.props.isValid === undefined ? false : this.props.isValid }>
           <IconFont
             size={variables.iconSize3}
             color={variables.brandDarkGray}
@@ -69,6 +74,7 @@ export class LabelledItem extends React.Component<Props> {
                 .string()}
               underlineColorAndroid="transparent"
               {...this.props.inputProps}
+              
             />
           )}
         </Item>

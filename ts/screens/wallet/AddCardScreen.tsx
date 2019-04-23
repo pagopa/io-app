@@ -61,6 +61,10 @@ type State = Readonly<{
   expirationDate: Option<string>;
   securityCode: Option<string>;
   holder: Option<string>;
+  isValidHolder: boolean | undefined;
+  isValidPan: boolean | undefined;
+  isValidExpirationDate: boolean | undefined;
+  isValidSecurityCode: boolean | undefined;
 }>;
 
 const styles = StyleSheet.create({
@@ -89,8 +93,26 @@ const INITIAL_STATE: State = {
   pan: none,
   expirationDate: none,
   securityCode: none,
-  holder: none
+  holder: none,
+  isValidHolder: undefined,
+  isValidPan: undefined,
+  isValidExpirationDate: undefined,
+  isValidSecurityCode: undefined
 };
+
+function isExpirationDateValid(expirationDate: string): boolean {
+  const [expirationMonth, expirationYear] = expirationDate.split("/");
+  return (
+    CreditCardExpirationMonth.is(expirationMonth) && CreditCardExpirationYear.is(expirationYear)) ? true : false;
+}
+
+function isSecurityCodeValid(securityCode: string): boolean {
+  return (!CreditCardCVC.is(securityCode)) ? false : true;
+}
+
+function isPanValid(pan: string): boolean {
+  return CreditCardPan.is(pan)
+}
 
 function getCardFromState(state: State): Option<CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
@@ -225,13 +247,15 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
+              isValid={this.state.isValidHolder}
               inputProps={{
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
                 onChangeText: (value: string) =>
                   this.setState({
-                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none,
+                    isValidHolder: value === "" ?  undefined : true
                   })
               }}
             />
@@ -242,6 +266,7 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
+              isValid={this.state.isValidPan}
               inputMaskProps={{
                 ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
@@ -251,7 +276,8 @@ class AddCardScreen extends React.Component<Props, State> {
                 mask: "[0000] [0000] [0000] [0000] [999]",
                 onChangeText: (_, value) =>
                   this.setState({
-                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
+                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none,
+                    isValidPan: value === "" ?  undefined : isPanValid(value)
                   })
               }}
             />
@@ -263,6 +289,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
+                  isValid={this.state.isValidExpirationDate}
                   inputMaskProps={{
                     ref: this.expirationDateRef,
                     value: this.state.expirationDate.getOrElse(
@@ -278,7 +305,8 @@ class AddCardScreen extends React.Component<Props, State> {
                         expirationDate:
                           value && value !== EMPTY_CARD_EXPIRATION_DATE
                             ? some(value)
-                            : none
+                            : none,
+                        isValidExpirationDate: value === "" ?  undefined : isExpirationDateValid(value)
                       })
                   }}
                 />
@@ -289,6 +317,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
+                  isValid={this.state.isValidSecurityCode}
                   inputMaskProps={{
                     ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
@@ -304,7 +333,8 @@ class AddCardScreen extends React.Component<Props, State> {
                         securityCode:
                           value && value !== EMPTY_CARD_SECURITY_CODE
                             ? some(value)
-                            : none
+                            : none,
+                        isValidSecurityCode: value === "" ?  undefined : isSecurityCodeValid(value)
                       })
                   }}
                 />
