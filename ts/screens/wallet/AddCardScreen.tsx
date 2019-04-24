@@ -58,10 +58,6 @@ type State = Readonly<{
   expirationDate: Option<string>;
   securityCode: Option<string>;
   holder: Option<string>;
-  isValidHolder?: boolean;
-  isValidPan?: boolean;
-  isValidExpirationDate?: boolean;
-  isValidSecurityCode?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -90,28 +86,8 @@ const INITIAL_STATE: State = {
   pan: none,
   expirationDate: none,
   securityCode: none,
-  holder: none,
-  isValidHolder: undefined,
-  isValidPan: undefined,
-  isValidExpirationDate: undefined,
-  isValidSecurityCode: undefined
+  holder: none
 };
-
-function isPanValid(pan: string): boolean {
-  return CreditCardPan.is(pan);
-}
-
-function isExpirationDateValid(expirationDate: string): boolean {
-  const [expirationMonth, expirationYear] = expirationDate.split("/");
-  return (
-    CreditCardExpirationMonth.is(expirationMonth) &&
-    CreditCardExpirationYear.is(expirationYear)
-  );
-}
-
-function isSecurityCodeValid(securityCode: string): boolean {
-  return CreditCardCVC.is(securityCode);
-}
 
 function getCardFromState(state: State): Option<CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
@@ -126,26 +102,30 @@ function getCardFromState(state: State): Option<CreditCard> {
 
   const [expirationMonth, expirationYear] = expirationDate.value.split("/");
 
-  if (!isPanValid(pan.value)) {
+  if (!CreditCardPan.is(pan.value)) {
     // invalid pan
     return none;
   }
-  if (!isExpirationDateValid(expirationDate.value)) {
+
+  if (
+    !CreditCardExpirationMonth.is(expirationMonth) ||
+    !CreditCardExpirationYear.is(expirationYear)
+  ) {
     // invalid date
     return none;
   }
 
-  if (!isSecurityCodeValid(securityCode.value)) {
+  if (!CreditCardCVC.is(securityCode.value)) {
     // invalid cvc
     return none;
   }
 
   const card: CreditCard = {
-    pan: pan.value as CreditCardPan,
+    pan: pan.value,
     holder: holder.value,
-    expireMonth: expirationMonth as CreditCardExpirationMonth,
-    expireYear: expirationYear as CreditCardExpirationYear,
-    securityCode: securityCode.value as CreditCardCVC
+    expireMonth: expirationMonth,
+    expireYear: expirationYear,
+    securityCode: securityCode.value
   };
 
   return some(card);
@@ -243,13 +223,19 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
-              isValid={this.state.isValidHolder}
+              isValid={
+                this.state.holder.getOrElse(EMPTY_CARD_HOLDER) === ""
+                  ? undefined
+                  : true
+              }
               inputProps={{
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
                 onChangeText: (value: string) =>
-                  this.handleStateChangeOnHolder(value)
+                  this.setState({
+                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+                  })
               }}
             />
 
@@ -259,7 +245,11 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
-              isValid={this.state.isValidPan}
+              isValid={
+                this.state.pan.isSome()
+                  ? CreditCardPan.is(this.state.pan.value)
+                  : undefined
+              }
               inputMaskProps={{
                 ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
@@ -267,7 +257,11 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
-                onChangeText: (_, value) => this.handleStateChangeOnPan(value)
+                onChangeText: (_, value) => {
+                  this.setState({
+                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
+                  });
+                }
               }}
             />
 
@@ -278,7 +272,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
-                  isValid={this.state.isValidExpirationDate}
+                  isValid={this.isValidExpirationDate()}
                   inputMaskProps={{
                     ref: this.expirationDateRef,
                     value: this.state.expirationDate.getOrElse(
@@ -290,7 +284,12 @@ class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric",
                     mask: "[00]{/}[00]",
                     onChangeText: (_, value) =>
-                      this.handleStateChangeOnExpirationDate(value)
+                      this.setState({
+                        expirationDate:
+                          value && value !== EMPTY_CARD_EXPIRATION_DATE
+                            ? some(value)
+                            : none
+                      })
                   }}
                 />
               </Col>
@@ -300,7 +299,11 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
-                  isValid={this.state.isValidSecurityCode}
+                  isValid={
+                    this.state.securityCode.isSome()
+                      ? CreditCardCVC.is(this.state.securityCode.value)
+                      : undefined
+                  }
                   inputMaskProps={{
                     ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
@@ -312,7 +315,12 @@ class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true,
                     mask: "[0009]",
                     onChangeText: (_, value) =>
-                      this.handleStateChangeOnSecurityCode(value)
+                      this.setState({
+                        securityCode:
+                          value && value !== EMPTY_CARD_SECURITY_CODE
+                            ? some(value)
+                            : none
+                      })
                   }}
                 />
               </Col>
@@ -348,36 +356,20 @@ class AddCardScreen extends React.Component<Props, State> {
     );
   }
 
-  private handleStateChangeOnHolder = (value: string) => {
-    this.setState({
-      holder: value !== EMPTY_CARD_HOLDER ? some(value) : none,
-      isValidHolder: value === "" ? undefined : true
-    });
-  };
-
-  private handleStateChangeOnPan = (value: string) => {
-    this.setState({
-      pan: value && value !== EMPTY_CARD_PAN ? some(value) : none,
-      isValidPan: value === "" ? undefined : isPanValid(value)
-    });
-  };
-
-  private handleStateChangeOnExpirationDate = (value: string) => {
-    this.setState({
-      expirationDate:
-        value && value !== EMPTY_CARD_EXPIRATION_DATE ? some(value) : none,
-      isValidExpirationDate:
-        value === "" ? undefined : isExpirationDateValid(value)
-    });
-  };
-
-  private handleStateChangeOnSecurityCode = (value: string) => {
-    this.setState({
-      securityCode:
-        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none,
-      isValidSecurityCode: value === "" ? undefined : isSecurityCodeValid(value)
-    });
-  };
+  private isValidExpirationDate() {
+    if (this.state.expirationDate.isSome()) {
+      const [
+        expirationMonth,
+        expirationYear
+      ] = this.state.expirationDate.value.split("/");
+      return (
+        CreditCardExpirationMonth.is(expirationMonth) &&
+        CreditCardExpirationYear.is(expirationYear)
+      );
+    } else {
+      return undefined;
+    }
+  }
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
     if (nextAppStateStatus !== "active") {
