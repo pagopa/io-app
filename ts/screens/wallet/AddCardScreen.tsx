@@ -126,29 +126,26 @@ function getCardFromState(state: State): Option<CreditCard> {
 
   const [expirationMonth, expirationYear] = expirationDate.value.split("/");
 
-  if (!CreditCardPan.is(pan.value)) {
+  if (!isPanValid(pan.value)) {
     // invalid pan
     return none;
   }
-  if (
-    !CreditCardExpirationMonth.is(expirationMonth) ||
-    !CreditCardExpirationYear.is(expirationYear)
-  ) {
+  if (!isExpirationDateValid(expirationDate.value)) {
     // invalid date
     return none;
   }
 
-  if (!CreditCardCVC.is(securityCode.value)) {
+  if (!isSecurityCodeValid(securityCode.value)) {
     // invalid cvc
     return none;
   }
 
   const card: CreditCard = {
-    pan: pan.value,
+    pan: pan.value as CreditCardPan,
     holder: holder.value,
-    expireMonth: expirationMonth,
-    expireYear: expirationYear,
-    securityCode: securityCode.value
+    expireMonth: expirationMonth as CreditCardExpirationMonth,
+    expireYear: expirationYear as CreditCardExpirationYear,
+    securityCode: securityCode.value as CreditCardCVC
   };
 
   return some(card);
