@@ -51,7 +51,6 @@
 -dontwarn com.facebook.react.**
 
 # okhttp
-
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class okhttp3.** { *; }
@@ -59,18 +58,21 @@
 -dontwarn okhttp3.**
 
 # okio
-
 -keep class sun.misc.Unsafe { *; }
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
 
 # devsupport
-
 -keep class com.facebook.react.devsupport.** { *; }
 -dontwarn com.facebook.react.devsupport.**
 
 # MixPanel
-
 -keep class com.kevinejohn.RNMixpanel.** { *; }
 -dontwarn com.kevinejohn.RNMixpanel.**
+
+# React Native Config must referencing to BuildConfig
+-keep class it.teamdigitale.app.italiaapp.BuildConfig { *; }
+
+# React-native svg
+-keep public class com.horcrux.svg.** {*;}
