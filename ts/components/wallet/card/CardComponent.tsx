@@ -96,9 +96,10 @@ export default class CardComponent extends React.Component<Props> {
   };
 
   private handleOnCardPress = () => {
+    
     if (
       (this.props.type === "Full" || this.props.type === "Picking") &&
-      this.props.mainAction
+      this.props.mainAction 
     ) {
       this.props.mainAction(this.props.wallet);
     }
@@ -131,7 +132,7 @@ export default class CardComponent extends React.Component<Props> {
                     ? variables.brandDarkGray
                     : variables.brandPrimary
                 }
-                style={styles.paddedIcon}
+
                 onPress={this.handleFavoritePress}
               />
             )}
@@ -195,7 +196,10 @@ export default class CardComponent extends React.Component<Props> {
     const expirationDate = buildExpirationDate(wallet);
 
     return (
-      <View style={[styles.columns, styles.marginTop]}>
+      <View 
+          style={[styles.columns,styles.paddedTop]} 
+          onTouchEnd={this.handleOnCardPress}
+      >
         <View>
           <Text
             style={[
@@ -260,19 +264,20 @@ export default class CardComponent extends React.Component<Props> {
       this.props.type === "Preview" || this.props.type === "Header";
 
     return (
-      <View
-        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
-        onTouchStart={this.handleOnCardPress}
-      >
-        <View style={styles.cardInner}>
-          <View style={styles.columns}>
-            <View style={[styles.cardNumber]}>
+      <View style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}>
+        <View style={[styles.cardInner]}>
+          <View style={[styles.row]} >
+            <View style={[styles.cardNumber]} onTouchEnd={this.handleOnCardPress}>
+             
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
+
               <Text style={[CreditCardStyles.largeTextStyle]}>
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
+
+              <View style={{borderWidth:3, borderColor:"yellow",width:"35%"}}></View>
             </View>
 
             <View style={styles.topRightCornerContainer}>
