@@ -40,7 +40,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { copyToClipboardWithFeedback } from "../../utils/clipboard";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -212,7 +212,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      copyToClipboardWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(DeviceInfo.getVersion())
                     }
                   >
                     <Text>
@@ -228,7 +228,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(backendInfo.version)
+                        clipboardSetStringWithFeedback(backendInfo.version)
                       }
                     >
                       <Text>
@@ -244,7 +244,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(sessionToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(sessionToken)
+                      }
                     >
                       <Text ellipsizeMode="tail" numberOfLines={1}>
                         {`Session Token ${sessionToken}`}
@@ -257,7 +259,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(walletToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(walletToken)
+                      }
                     >
                       <Text ellipsizeMode="tail" numberOfLines={1}>
                         {`Wallet token ${walletToken}`}
@@ -270,7 +274,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   <Button
                     info={true}
                     small={true}
-                    onPress={() => copyToClipboardWithFeedback(notificationId)}
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(notificationId)
+                    }
                   >
                     <Text>{`Notification ID ${notificationId.slice(
                       0,
@@ -285,7 +291,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(notificationToken)
+                        clipboardSetStringWithFeedback(notificationToken)
                       }
                     >
                       <Text>{`Notification token ${notificationToken.slice(

@@ -25,7 +25,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
-import { copyToClipboardWithFeedback } from "../../utils/clipboard";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
@@ -173,7 +173,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               <Button
                 xsmall={true}
                 bordered={true}
-                onPress={() => copyToClipboardWithFeedback(messageId)}
+                onPress={() => clipboardSetStringWithFeedback(messageId)}
               >
                 <Text>{I18n.t("clipboard.copyText")}</Text>
               </Button>
