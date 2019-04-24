@@ -125,7 +125,7 @@ class ServicesScreen extends React.Component<Props, State> {
       <ServiceSectionListComponent
         sections={sections}
         profile={this.props.profile}
-        refreshing={this.props.isLoading}
+        isRefreshing={this.props.isLoading}
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
       />

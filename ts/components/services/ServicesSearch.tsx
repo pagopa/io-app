@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import React, { ComponentProps } from "react";
+import React from "react";
 
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -16,11 +16,7 @@ type OwnProps = {
   navigateToServiceDetail: (service: ServicePublic) => void;
 };
 
-type Props = Pick<
-  ComponentProps<typeof ServiceSectionListComponent>,
-  "onRefresh"
-> &
-  OwnProps;
+type Props = OwnProps;
 
 type State = {
   potFilteredServiceSectionsStates: pot.Pot<
