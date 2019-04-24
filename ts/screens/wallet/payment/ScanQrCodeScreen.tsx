@@ -71,6 +71,20 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: screenWidth,
     width: screenWidth
+  },
+
+  notAuthorizedContainer: {
+    padding: variables.contentPadding,
+    flex: 1,
+    alignItems: "center"
+  },
+  notAuthorizedText: {
+    textAlign: "justify",
+    marginBottom: 25
+  },
+  notAuthorizedBtn: {
+    flex: 1,
+    alignSelf: "center"
   }
 });
 
@@ -217,28 +231,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               // granted if they appear in the manifest, so message customization would
               // be impossible.
               notAuthorizedView={
-                <View
-                  style={{
-                    padding: variables.contentPadding,
-                    flex: 1,
-                    alignItems: "center"
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "justify",
-                      marginBottom: 25
-                    }}
-                  >
+                <View style={styles.notAuthorizedContainer}>
+                  <Text style={styles.notAuthorizedText}>
                     {I18n.t("wallet.QRtoPay.enroll_cta")}
                   </Text>
 
                   <Button
                     onPress={this.openAppSettings}
-                    style={{
-                      flex: 1,
-                      alignSelf: "center"
-                    }}
+                    style={styles.notAuthorizedBtn}
                   >
                     <Text>
                       {I18n.t("biometric_recognition.enroll_btnLabel")}
