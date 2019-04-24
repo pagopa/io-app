@@ -4,7 +4,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import { IPatternStringTag } from "italia-ts-commons/lib/strings";
 import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
