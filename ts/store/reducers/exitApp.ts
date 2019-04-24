@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Second } from "italia-ts-commons/lib/units";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import {
   navigationHistoryEmpty,
   navigationHistoryPush
@@ -9,7 +9,7 @@ import {
 import { Action } from "../actions/types";
 
 export type ExitAppState = Readonly<{
-  exitRequestTime: Option<Second>;
+  exitRequestTime: Option<Millisecond>;
 }>;
 
 const INITIAL_STATE: ExitAppState = {
@@ -22,9 +22,9 @@ export function exitAppReducer(
 ): ExitAppState {
   switch (action.type) {
     // when the history is empty the app is eligible to exit
-    // exitRequestTime contains the current time value in seconds
+    // exitRequestTime contains the current time value in milliseconds
     case getType(navigationHistoryEmpty): {
-      const now = (new Date().getTime() / 1000) as Second;
+      const now = new Date().getTime() as Millisecond;
       return {
         ...state,
         exitRequestTime: some(now)

@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Second } from "italia-ts-commons/lib/units";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import I18n from "../i18n";
 import { GlobalState } from "../store/reducers/types";
 import { showToast } from "../utils/showToast";
@@ -12,19 +12,19 @@ interface OwnProps {
 }
 type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 type State = {
-  lastExitRequestTime: Option<Second>;
+  lastExitRequestTime: Option<Millisecond>;
   canExit: Option<boolean>;
 };
 
 /**
- * if the user presses back button twice in a time window of exitConfirmThreshold seconds
+ * if the user presses back button twice in a time window of exitConfirmThreshold milliseconds
  * then exitApp event will be raised
  */
-const exitConfirmThreshold = 2 as Second;
+const exitConfirmThreshold = 2000 as Millisecond;
 
 /**
  * Implements a component that show a toast if the app can be closed
- * If the user presses back again in exitConfirmThreshold seconds, exitApp will be executed
+ * If the user presses back again in exitConfirmThreshold milliseconds, exitApp will be executed
  */
 class ExitAppComponent extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -52,20 +52,20 @@ class ExitAppComponent extends React.Component<Props, State> {
     // if no time is set, it is not eligible to exit
     // invert canExit if it is set
     if (nextProps.lastExitRequestTime.isNone()) {
-      if (prevState.canExit.isSome()) {
-        return { ...prevState, canExit: none };
-      }
-      // update nothing
-      return null;
+      return prevState.canExit
+        .map(_ => ({ ...prevState, canExit: none }))
+        .toNullable();
     }
     // canExit is true when there is a previous back pressed
-    // and the new one is at least exitConfirmThreshold second distant
+    // and the new one is at least exitConfirmThreshold milliseconds distant
     const canExit = some(
-      prevState.lastExitRequestTime.isSome() &&
-        nextProps.lastExitRequestTime.isSome() &&
-        nextProps.lastExitRequestTime.value -
-          prevState.lastExitRequestTime.value <
-          exitConfirmThreshold
+      prevState.lastExitRequestTime
+        .chain(prev =>
+          nextProps.lastExitRequestTime.map(
+            next => next - prev < exitConfirmThreshold
+          )
+        )
+        .getOrElse(false)
     );
 
     // update the status
@@ -80,13 +80,12 @@ class ExitAppComponent extends React.Component<Props, State> {
    * we need another back (closed in time) to fire the event
    */
   public componentDidUpdate() {
-    if (this.state.canExit.isSome()) {
-      if (!this.state.canExit.value) {
-        showToast(I18n.t("exit.pressAgain"), "success");
-      } else {
-        this.props.exitApp();
-      }
-    }
+    this.state.canExit.map(
+      canExit =>
+        canExit
+          ? this.props.exitApp()
+          : showToast(I18n.t("exit.pressAgain"), "success")
+    );
   }
 }
 

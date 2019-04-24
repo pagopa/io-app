@@ -117,9 +117,7 @@ class RootContainer extends React.PureComponent<Props> {
    * navigation history is empty. Remember BackHandler.exitApp() works
    * on Android platforms (and others) but not on iOS platforms
    */
-  private exitApp = () => {
-    BackHandler.exitApp();
-  };
+  private exitApp = () => BackHandler.exitApp();
 
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
