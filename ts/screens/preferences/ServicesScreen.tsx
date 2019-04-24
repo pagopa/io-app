@@ -25,7 +25,6 @@ import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
-import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import variables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
