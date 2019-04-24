@@ -542,6 +542,9 @@ preferences:
   unavailable:
     title: This setting is set up on your SPID profile
     message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+  language: 
+    title: This setting is set up in system preferences
+    message: IO inherits language from the operating system of this device
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
