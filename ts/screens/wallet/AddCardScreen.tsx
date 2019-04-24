@@ -4,6 +4,7 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { IPatternStringTag } from "italia-ts-commons/lib/strings";
 import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
@@ -21,13 +22,10 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-
 import { LabelledItem } from "../../components/LabelledItem";
 import { WalletStyles } from "../../components/styles/wallet";
 import MaskedInput from "../../components/ui/MaskedInput";
-
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
@@ -61,10 +59,10 @@ type State = Readonly<{
   expirationDate: Option<string>;
   securityCode: Option<string>;
   holder: Option<string>;
-  isValidHolder: boolean | undefined;
-  isValidPan: boolean | undefined;
-  isValidExpirationDate: boolean | undefined;
-  isValidSecurityCode: boolean | undefined;
+  isValidHolder?: boolean;
+  isValidPan?: boolean;
+  isValidExpirationDate?: boolean;
+  isValidSecurityCode?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -103,15 +101,17 @@ const INITIAL_STATE: State = {
 function isExpirationDateValid(expirationDate: string): boolean {
   const [expirationMonth, expirationYear] = expirationDate.split("/");
   return (
-    CreditCardExpirationMonth.is(expirationMonth) && CreditCardExpirationYear.is(expirationYear)) ? true : false;
+    CreditCardExpirationMonth.is(expirationMonth) &&
+    CreditCardExpirationYear.is(expirationYear)
+  );
 }
 
 function isSecurityCodeValid(securityCode: string): boolean {
-  return (!CreditCardCVC.is(securityCode)) ? false : true;
+  return !CreditCardCVC.is(securityCode);
 }
 
 function isPanValid(pan: string): boolean {
-  return CreditCardPan.is(pan)
+  return CreditCardPan.is(pan);
 }
 
 function getCardFromState(state: State): Option<CreditCard> {
@@ -255,7 +255,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 onChangeText: (value: string) =>
                   this.setState({
                     holder: value !== EMPTY_CARD_HOLDER ? some(value) : none,
-                    isValidHolder: value === "" ?  undefined : true
+                    isValidHolder: value === "" ? undefined : true
                   })
               }}
             />
@@ -277,7 +277,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 onChangeText: (_, value) =>
                   this.setState({
                     pan: value && value !== EMPTY_CARD_PAN ? some(value) : none,
-                    isValidPan: value === "" ?  undefined : isPanValid(value)
+                    isValidPan: value === "" ? undefined : isPanValid(value)
                   })
               }}
             />
@@ -306,7 +306,10 @@ class AddCardScreen extends React.Component<Props, State> {
                           value && value !== EMPTY_CARD_EXPIRATION_DATE
                             ? some(value)
                             : none,
-                        isValidExpirationDate: value === "" ?  undefined : isExpirationDateValid(value)
+                        isValidExpirationDate:
+                          value === ""
+                            ? undefined
+                            : isExpirationDateValid(value)
                       })
                   }}
                 />
@@ -334,7 +337,8 @@ class AddCardScreen extends React.Component<Props, State> {
                           value && value !== EMPTY_CARD_SECURITY_CODE
                             ? some(value)
                             : none,
-                        isValidSecurityCode: value === "" ?  undefined : isSecurityCodeValid(value)
+                        isValidSecurityCode:
+                          value === "" ? undefined : isSecurityCodeValid(value)
                       })
                   }}
                 />
