@@ -550,6 +550,9 @@ preferences:
   unavailable:
     title: Questa preferenza è impostata nel tuo profilo SPID
     message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nell profilo SPID del tuo identity provider, e poi dovrai nuovamente loggarti nell'app
+  language:
+    title: Questa preferenza è impostata nelle preferenze di sistema
+    message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
