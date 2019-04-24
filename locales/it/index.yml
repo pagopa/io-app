@@ -38,6 +38,8 @@ locales:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
+exit:
+  pressAgain: premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.

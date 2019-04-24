@@ -37,6 +37,8 @@ locales:
 connection:
   status:
     offline: Offline! Some features will not work.
+exit:
+  pressAgain: press again to exit
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.

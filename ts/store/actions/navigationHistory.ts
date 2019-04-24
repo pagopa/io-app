@@ -13,8 +13,12 @@ export const navigationHistoryPop = createStandardAction(
   "NAVIGATION_HISTORY_POP"
 )();
 
-export type NavigationHistoryActions = ActionType<
-  | typeof navigationHistoryPush
-  | typeof navigationHistoryReset
-  | typeof navigationHistoryPop
->;
+export const navigationHistoryEmpty = createStandardAction(
+  "NAVIGATION_HISTORY_EMPTY"
+)();
+
+export type NavigationHistoryActions =
+  | ActionType<typeof navigationHistoryPush>
+  | ActionType<typeof navigationHistoryReset>
+  | ActionType<typeof navigationHistoryPop>
+  | ActionType<typeof navigationHistoryEmpty>;
