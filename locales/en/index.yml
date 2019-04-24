@@ -186,6 +186,9 @@ authentication:
       body: The selected identity provider is not available at this time, you can try again later.
             If you have another SPID, choose an alternative provider.
             You can report the problem with the bug icon at the top right of the screen.
+    login:
+      title: Login error
+      body: There was an error with the login, please retry!
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
