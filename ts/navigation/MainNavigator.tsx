@@ -1,6 +1,7 @@
+import { Badge, Right } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { Badge } from "react-native-elements";
+
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -8,6 +9,7 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
+import MessageListComponent from "../components/messages/MessageListComponent";
 
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
@@ -82,10 +84,25 @@ const styles = StyleSheet.create({
     elevation: variables.footerElevation
   },
   textBadgeStyle: {
-    textAlign: "center",
     fontSize: 10,
     fontFamily: "Titillium Web",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "white",
+    flex: 1,
+    position: "absolute",
+    height: 19,
+    width: 19,
+    paddingLeft: 2
+  },
+  badgeStyle: {
+    backgroundColor: variables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    position: "absolute",
+    elevation: 0.1,
+    shadowColor: "white",
+    height: 19,
+    width: 19
   }
 });
 
@@ -111,7 +128,6 @@ const getTabBarVisibility = (
   if (NoTabBarRoutes.indexOf(routeName) !== -1) {
     return false;
   }
-
   return true;
 };
 
@@ -166,27 +182,13 @@ const navigation = createBottomTabNavigator(
         const iconName: string = getIcon(routeName);
         return (
           <View>
-            <View>
-              <Badge
-                textStyle={styles.textBadgeStyle}
-                status="primary"
-                badgeStyle={{
-                  backgroundColor: variables.brandPrimary,
-                  width: 15,
-                  height: 15,
-                  maxWidth: 19,
-                  maxHeight: 19
-                }}
-                value={9}
-                containerStyle={{
-                  position: "absolute",
-                  top: -4,
-                  right: -8,
-                  borderWidth: 2,
-                  borderColor: "red"
-                }}
-              />
-            </View>
+            {routeName === ROUTES.MESSAGES_NAVIGATOR ? (
+              <Right>
+                <Badge style={styles.badgeStyle}>
+                  <Text style={styles.textBadgeStyle}>99</Text>
+                </Badge>
+              </Right>
+            ) : null}
             <IconFont
               name={iconName}
               size={variables.iconSize3}
