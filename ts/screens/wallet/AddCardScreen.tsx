@@ -97,6 +97,10 @@ const INITIAL_STATE: State = {
   isValidSecurityCode: undefined
 };
 
+function isPanValid(pan: string): boolean {
+  return CreditCardPan.is(pan);
+}
+
 function isExpirationDateValid(expirationDate: string): boolean {
   const [expirationMonth, expirationYear] = expirationDate.split("/");
   return (
@@ -106,11 +110,7 @@ function isExpirationDateValid(expirationDate: string): boolean {
 }
 
 function isSecurityCodeValid(securityCode: string): boolean {
-  return !CreditCardCVC.is(securityCode);
-}
-
-function isPanValid(pan: string): boolean {
-  return CreditCardPan.is(pan);
+  return CreditCardCVC.is(securityCode);
 }
 
 function getCardFromState(state: State): Option<CreditCard> {
@@ -252,10 +252,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
                 onChangeText: (value: string) =>
-                  this.setState({
-                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none,
-                    isValidHolder: value === "" ? undefined : true
-                  })
+                  this.handleStateChangeOnHolder(value)
               }}
             />
 
@@ -273,11 +270,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
-                onChangeText: (_, value) =>
-                  this.setState({
-                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none,
-                    isValidPan: value === "" ? undefined : isPanValid(value)
-                  })
+                onChangeText: (_, value) => this.handleStateChangeOnPan(value)
               }}
             />
 
@@ -300,16 +293,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric",
                     mask: "[00]{/}[00]",
                     onChangeText: (_, value) =>
-                      this.setState({
-                        expirationDate:
-                          value && value !== EMPTY_CARD_EXPIRATION_DATE
-                            ? some(value)
-                            : none,
-                        isValidExpirationDate:
-                          value === ""
-                            ? undefined
-                            : isExpirationDateValid(value)
-                      })
+                      this.handleStateChangeOnExpirationDate(value)
                   }}
                 />
               </Col>
@@ -331,14 +315,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true,
                     mask: "[0009]",
                     onChangeText: (_, value) =>
-                      this.setState({
-                        securityCode:
-                          value && value !== EMPTY_CARD_SECURITY_CODE
-                            ? some(value)
-                            : none,
-                        isValidSecurityCode:
-                          value === "" ? undefined : isSecurityCodeValid(value)
-                      })
+                      this.handleStateChangeOnSecurityCode(value)
                   }}
                 />
               </Col>
@@ -373,6 +350,37 @@ class AddCardScreen extends React.Component<Props, State> {
       </BaseScreenComponent>
     );
   }
+
+  private handleStateChangeOnHolder = (value: string) => {
+    this.setState({
+      holder: value !== EMPTY_CARD_HOLDER ? some(value) : none,
+      isValidHolder: value === "" ? undefined : true
+    });
+  };
+
+  private handleStateChangeOnPan = (value: string) => {
+    this.setState({
+      pan: value && value !== EMPTY_CARD_PAN ? some(value) : none,
+      isValidPan: value === "" ? undefined : isPanValid(value)
+    });
+  };
+
+  private handleStateChangeOnExpirationDate = (value: string) => {
+    this.setState({
+      expirationDate:
+        value && value !== EMPTY_CARD_EXPIRATION_DATE ? some(value) : none,
+      isValidExpirationDate:
+        value === "" ? undefined : isExpirationDateValid(value)
+    });
+  };
+
+  private handleStateChangeOnSecurityCode = (value: string) => {
+    this.setState({
+      securityCode:
+        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none,
+      isValidSecurityCode: value === "" ? undefined : isSecurityCodeValid(value)
+    });
+  };
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
     if (nextAppStateStatus !== "active") {
