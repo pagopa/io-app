@@ -31,6 +31,8 @@ global:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
+  search:
+    invalidSearchBarText: Enter at least three characters in the search bar.
 locales:
   it: Italian
   en: English
@@ -485,8 +487,6 @@ messages:
     helper: "IO will remember this choice, you can change it from the preference pane."
   unknownSender: Unknown sender
   noContent: Content not available
-  search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
     emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
 messageDetails:
@@ -556,8 +556,6 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
-  search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."

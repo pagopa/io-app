@@ -32,6 +32,8 @@ global:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
+  search:
+    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
 locales:
   it: Italiano
   en: Inglese
@@ -495,8 +497,6 @@ messages:
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
-  search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
   archive:
     emptyMessage: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
 messageDetails:
@@ -568,8 +568,6 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
-  search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."

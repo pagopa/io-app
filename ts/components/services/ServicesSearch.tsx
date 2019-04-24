@@ -33,47 +33,48 @@ type State = {
 /**
  * Filter only the services that match the searchText.
  */
-const generateSectionsServicesStateMatchingSearchTextArrayAsync = (
-  potServicesState: pot.Pot<
-    // tslint:disable-next-line: readonly-array
-    Array<SectionListData<pot.Pot<ServicePublic, Error>>>,
-    Error
-  >,
+const generateSectionsServicesStateMatchingSearchTextArray = (
+  // tslint:disable-next-line: readonly-array
+  servicesState: Array<SectionListData<pot.Pot<ServicePublic, Error>>>,
   searchText: string
   // tslint:disable-next-line: readonly-array
-): Promise<Array<SectionListData<pot.Pot<ServicePublic, Error>>>> => {
-  return new Promise(resolve => {
-    const result = pot.getOrElse(
-      pot.map(potServicesState, _ =>
-        _.filter(sectionList =>
-          sectionDataContainsText(sectionList, searchText)
-        )
-      ),
-      []
+): Array<SectionListData<pot.Pot<ServicePublic, Error>>> => {
+  // tslint:disable-next-line: readonly-array prefer-const no-var-keyword
+  var result: Array<SectionListData<pot.Pot<ServicePublic, Error>>> = [];
+  servicesState.forEach(sectionList => {
+    const filtered = filterSectionListDataMatchingSearchText(
+      sectionList,
+      searchText
     );
-
-    resolve(result);
+    if (filtered != null) {
+      result.push(filtered);
+    }
   });
+  return result;
 };
 
-function sectionDataContainsText(
+function filterSectionListDataMatchingSearchText(
   sectionListData: SectionListData<pot.Pot<ServicePublic, Error>>,
   searchText: string
 ) {
-  const sectionData = sectionListData.data;
-  return sectionData.map(potService =>
-    pot.getOrElse(
-      pot.map(potService, servicePublic =>
+  const filteredData = sectionListData.data
+    .map(potService =>
+      pot.filter(potService, servicePublic =>
         // Search in service properties
         serviceContainsText(servicePublic, searchText)
-      ),
-      false
+      )
     )
-  );
+    .filter(pot.isSome);
+
+  const sectionListDataFiltered = {
+    title: sectionListData.title,
+    data: filteredData
+  };
+  return filteredData.length > 0 ? sectionListDataFiltered : null;
 }
 
 /**
- * A component to render a list of services that match a searchText.
+ * A component that renders a list of services that match a search text.
  */
 class ServicesSearch extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -83,7 +84,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     };
   }
 
-  public async componentDidMount() {
+  public componentDidMount() {
     const { sectionsState, searchText } = this.props;
     const { potFilteredServiceSectionsStates } = this.state;
 
@@ -95,8 +96,8 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     });
 
     // Start filtering services
-    const filteredServiceSectionsStates = await generateSectionsServicesStateMatchingSearchTextArrayAsync(
-      pot.some(sectionsState),
+    const filteredServiceSectionsStates = generateSectionsServicesStateMatchingSearchTextArray(
+      sectionsState,
       searchText
     );
 
@@ -106,7 +107,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     });
   }
 
-  public async componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props) {
     const {
       sectionsState: prevServicesState,
       searchText: prevSearchText
@@ -123,8 +124,8 @@ class ServicesSearch extends React.PureComponent<Props, State> {
       });
 
       // Start filtering services
-      const filteredServiceSectionsStates = await generateSectionsServicesStateMatchingSearchTextArrayAsync(
-        pot.some(sectionsState),
+      const filteredServiceSectionsStates = generateSectionsServicesStateMatchingSearchTextArray(
+        sectionsState,
         searchText
       );
 
@@ -153,7 +154,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         {...this.props}
         sections={filteredServiceSectionsStates}
         profile={this.props.profile}
-        refreshing={isFiltering}
+        isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
       />

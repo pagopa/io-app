@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   ioSearch: {
-    // Corrects the position of the font icon inside the button
-    paddingHorizontal: 2
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
   }
 });
 
@@ -95,7 +95,7 @@ class ServicesScreen extends React.Component<Props, State> {
         }}
       >
         {searchText.isSome() ? (
-          <Item>
+          <Item style={styles.ioSearch}>
             <Input
               placeholder={I18n.t("global.actions.search")}
               value={searchText.value}
@@ -161,7 +161,7 @@ class ServicesScreen extends React.Component<Props, State> {
   private renderInvalidSearchBarText = () => {
     return (
       <View style={styles.noSearchBarText}>
-        <Text>{I18n.t("services.search.invalidSearchBarText")}</Text>
+        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
       </View>
     );
   };

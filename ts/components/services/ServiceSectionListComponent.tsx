@@ -20,7 +20,7 @@ type OwnProps = {
   // tslint:disable-next-line:readonly-array
   sections: Array<SectionListData<pot.Pot<ServicePublic, Error>>>;
   profile: ProfileState;
-  refreshing: boolean;
+  isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
 };
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A component to render a list of services grouped for organization.
+ * A component to render a list of services grouped by organization.
  */
 class ServiceSectionListComponent extends React.Component<Props> {
   private renderServiceItem = (
@@ -63,17 +63,17 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactElement<any> | null => (
+  }): React.ReactNode => (
     <ListItem itemHeader={true} style={styles.listItem}>
       <H3>{info.section.title}</H3>
     </ListItem>
   );
 
   public render() {
-    const { sections, refreshing, onRefresh } = this.props;
+    const { sections, isRefreshing, onRefresh } = this.props;
 
     const refreshControl = (
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
     );
 
     return (
