@@ -432,6 +432,10 @@ wallet:
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codive ente/azienda).
     setManually: Inserisci i dati manualmente
+    enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+    cameraUsagePerissionInfobox:
+      title: "Permesso per utilizzare la fotocamera da parte di IO"
+      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md

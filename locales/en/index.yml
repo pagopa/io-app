@@ -423,6 +423,10 @@ wallet:
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
+    enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+    cameraUsagePerissionInfobox:
+      title: "IO Camera usage permission"
+      message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md
