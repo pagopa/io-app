@@ -145,8 +145,7 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  navigation: state.nav
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 
 const mapDispatchToProps = {
