@@ -1,12 +1,6 @@
-/**
- * Main navigator, handling the navigation within
- * the app *after* the login has occurred. This takes
- * care of displaying a tab navigator with the
- * appropriate icons
- */
-
 import * as React from "react";
-import { Platform, StyleSheet, Text } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
+import { Badge } from "react-native-elements";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -86,6 +80,12 @@ const styles = StyleSheet.create({
     shadowRadius: variables.footerShadowRadius,
     // Android shadow
     elevation: variables.footerElevation
+  },
+  textBadgeStyle: {
+    textAlign: "center",
+    fontSize: 10,
+    fontFamily: "Titillium Web",
+    fontWeight: "bold"
   }
 });
 
@@ -165,11 +165,34 @@ const navigation = createBottomTabNavigator(
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
         return (
-          <IconFont
-            name={iconName}
-            size={variables.iconSize3}
-            color={options.tintColor === null ? undefined : options.tintColor}
-          />
+          <View>
+            <View>
+              <Badge
+                textStyle={styles.textBadgeStyle}
+                status="primary"
+                badgeStyle={{
+                  backgroundColor: variables.brandPrimary,
+                  width: 15,
+                  height: 15,
+                  maxWidth: 19,
+                  maxHeight: 19
+                }}
+                value={9}
+                containerStyle={{
+                  position: "absolute",
+                  top: -4,
+                  right: -8,
+                  borderWidth: 2,
+                  borderColor: "red"
+                }}
+              />
+            </View>
+            <IconFont
+              name={iconName}
+              size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          </View>
         );
       },
       tabBarOnPress: options => {

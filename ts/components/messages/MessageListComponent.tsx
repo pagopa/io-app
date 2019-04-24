@@ -71,7 +71,6 @@ class MessageListComponent extends React.Component<Props> {
     const refreshControl = (
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     );
-
     return (
       <FlatList
         contentContainerStyle={styles.contentContainerStyle}
