@@ -123,7 +123,9 @@ class MessageDetailComponent extends React.PureComponent<Props> {
           {isDebugModeEnabled && (
             <Grid>
               <Col style={styles.messageIDLabelContainer}>
-                <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
+                <Text style={styles.messageIDLabelText} numberOfLines={1}>
+                  ID: {message.id}
+                </Text>
               </Col>
               <Col style={styles.messageIDBtnContainer}>
                 <Button
