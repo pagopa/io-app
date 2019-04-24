@@ -9,8 +9,6 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
-import MessageListComponent from "../components/messages/MessageListComponent";
-
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";

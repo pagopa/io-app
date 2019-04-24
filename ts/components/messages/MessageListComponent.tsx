@@ -72,7 +72,7 @@ class MessageListComponent extends React.Component<Props> {
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     );
 
-    messagesToRead = messages.filter(obj => !obj.isRead).length
+    messagesToRead = messages.filter(obj => !obj.isRead).length;
     alert(messagesToRead);
 
     return (
