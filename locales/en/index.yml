@@ -504,7 +504,7 @@ messageDetails:
   emptyMessage: No content
   loadingText: Loading message details in progress...
   errorText: We were unable to load the details of your message
-  retryText: It's probably a temporary error ... please try again!
+  retryText: It's probably a temporary error... please try again!
   submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
   rawInfoLink:
     showLabel: Details of the message
