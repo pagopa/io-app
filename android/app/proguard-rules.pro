@@ -16,6 +16,9 @@
 #   public *;
 #}
 
+# [Lines 23-67] Official Proguard by Facebook
+# See https://github.com/facebook/react-native/blob/master/ReactAndroid/proguard-rules.pro
+
 # Disabling obfuscation is useful if you collect stack traces from production crashes
 # (unless you are using a system that supports de-obfuscate the stack traces).
 #-dontobfuscate
@@ -63,6 +66,8 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
 
+# Additional rules
+
 # devsupport
 -keep class com.facebook.react.devsupport.** { *; }
 -dontwarn com.facebook.react.devsupport.**
@@ -76,3 +81,4 @@
 
 # React-native svg
 -keep public class com.horcrux.svg.** {*;}
+-dontwarn com.horcrux.svg.**
