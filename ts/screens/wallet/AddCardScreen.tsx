@@ -22,10 +22,10 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
-import { WalletStyles } from "../../components/styles/wallet";
-import MaskedInput from "../../components/ui/MaskedInput";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { WalletStyles } from "../../components/styles/wallet";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
