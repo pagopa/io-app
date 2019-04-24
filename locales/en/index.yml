@@ -35,6 +35,9 @@ global:
 locales:
   it: Italian
   en: English
+clipboard:
+  copyFeedback: Copied to clipboard
+  copyText: copy
 connection:
   status:
     offline: Offline! Some features will not work.
@@ -503,8 +506,9 @@ messageDetails:
   headerTitle: Message
   emptyMessage: No content
   loadingText: Loading message details in progress...
-  errorText: An error occurred while loading the message details.
-  retryText: Retry
+  errorText: We were unable to load the details of your message
+  retryText: It's probably a temporary error... please try again!
+  submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
   rawInfoLink:
     showLabel: Details of the message
     hideLabel: Close details

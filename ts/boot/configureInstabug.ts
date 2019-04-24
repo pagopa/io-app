@@ -15,7 +15,8 @@ type InstabugUserAttributeKeys =
   | "backendVersion"
   | "activeScreen"
   | "fiscalcode"
-  | "identityProvider";
+  | "identityProvider"
+  | "lastSeenMessageID";
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,

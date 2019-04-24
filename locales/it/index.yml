@@ -36,6 +36,9 @@ global:
 locales:
   it: Italiano
   en: Inglese
+clipboard:
+  copyFeedback: Copiato negli appunti
+  copyText: copia
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
@@ -513,8 +516,9 @@ messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...
-  errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
-  retryText: Riprova
+  errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
+  retryText: Probabilmente è un errore temporaneo... riprova per piacere!
+  submitBugText: Se il problema non si risolve segnalacelo con l'icona della coccinella in alto a destra, grazie!
   rawInfoLink:
     showLabel: Dettagli del messaggio
     hideLabel: Chiudi dettagli
