@@ -10,6 +10,7 @@ import { ServiceList } from "../../../../../definitions/backend/ServiceList";
 import { clearCache } from "../../../actions/profile";
 import { loadVisibleServices } from "../../../actions/services";
 import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 export type VisibleServicesState = pot.Pot<ServiceList["items"], Error>;
 
@@ -35,4 +36,11 @@ export const visibleServicesReducer = (
     default:
       return state;
   }
+};
+
+// Selectors
+export const visibleServicesSelector = (
+  state: GlobalState
+): VisibleServicesState => {
+  return state.entities.services.visible;
 };
