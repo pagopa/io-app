@@ -20,7 +20,6 @@ global:
     retry: Riprova
     back: Indietro
     confirm: Conferma
-    copy: Copia
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -37,6 +36,9 @@ global:
 locales:
   it: Italiano
   en: Inglese
+clipboard:
+  copyFeedback: Copiato negli appunti
+  copyText: Copia
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.

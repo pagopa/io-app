@@ -12,7 +12,7 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, Clipboard, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -40,6 +40,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { copyToClipboardWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -49,13 +50,6 @@ type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-export const copyToClipboardWithFeedback = (text: string) => {
-  Clipboard.setString(text);
-  Toast.show({
-    text: "Copied to clipboard"
-  });
-};
 
 const styles = StyleSheet.create({
   itemLeft: {

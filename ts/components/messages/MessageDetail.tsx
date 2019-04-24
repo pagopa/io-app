@@ -7,11 +7,11 @@ import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import { copyToClipboardWithFeedback } from "../../screens/profile/ProfileMainScreen";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import { copyToClipboardWithFeedback } from "../../utils/clipboard";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -133,7 +133,7 @@ class MessageDetailComponent extends React.PureComponent<Props> {
                   onPress={() => copyToClipboardWithFeedback(message.id)}
                 >
                   <Text style={styles.messageIDBtnText}>
-                    {I18n.t("global.buttons.copy")}
+                    {I18n.t("clipboard.copyText")}
                   </Text>
                 </Button>
               </Col>
