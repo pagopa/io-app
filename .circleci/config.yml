@@ -55,6 +55,20 @@ defaults_macos: &defaults_macos
     BUNDLE_PATH: vendor/bundle
   shell: /bin/bash --login -o pipefail
 
+restore_node_cache: &restore_node_cache
+  restore_cache:
+    keys:
+      - *node_cache_key
+
+save_node_cache: &save_node_cache
+  save_cache:
+    paths:
+      - node_modules
+    key: *node_cache_key
+
+install_node_modules: &install_node_modules
+  run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
+
 #
 # Build pipeline
 #
@@ -68,21 +82,9 @@ jobs:
 
     steps:
       - checkout
-
-      # Restore dependencies
-      - restore_cache:
-          keys:
-            - *node_cache_key
-
-
-      # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
-
-      # Save node cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: *node_cache_key
+      - *restore_node_cache
+      - *install_node_modules
+      - *save_node_cache
 
       # Build app
       - run: yarn generate:all
@@ -103,16 +105,10 @@ jobs:
 
     steps:
       - checkout
+      - *restore_node_cache
+      - *install_node_modules
 
-      # Restore dependencies
-      - restore_cache:
-          keys:
-            - *node_cache_key
-
-      # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
-
-      # Build app
+      # Generate models and locales
       - run: yarn generate:all
 
       # Run tests
@@ -125,14 +121,8 @@ jobs:
 
     steps:
       - checkout
-
-      # Restore dependencies
-      - restore_cache:
-          keys:
-            - *node_cache_key
-
-      # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
+      - *restore_node_cache
+      - *install_node_modules
 
       # Run linter
       - run: yarn lint
@@ -143,14 +133,8 @@ jobs:
 
     steps:
       - checkout
-
-      # Restore dependencies
-      - restore_cache:
-          keys:
-            - *node_cache_key
-
-      # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
+      - *restore_node_cache
+      - *install_node_modules
 
       # Run DangerJS
       - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
