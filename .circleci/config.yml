@@ -278,7 +278,7 @@ jobs:
   test-ios:
     <<: *defaults_macos
 
-    resource_class: xlarge
+    resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -336,7 +336,7 @@ jobs:
   test-ios-e2e-build:
     <<: *defaults_macos
 
-    resource_class: xlarge
+    resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -416,7 +416,7 @@ jobs:
   test-ios-e2e-run:
     <<: *defaults_macos
 
-    resource_class: xlarge
+    resource_class: large
 
     steps:
       # Restore workflow workspace
