@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+import RNExitApp from "react-native-exit-app";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import ExitAppComponent from "./components/ExitAppComponent";
@@ -117,7 +118,7 @@ class RootContainer extends React.PureComponent<Props> {
    * navigation history is empty. Remember BackHandler.exitApp() works
    * on Android platforms (and others) but not on iOS platforms
    */
-  private exitApp = () => BackHandler.exitApp();
+  private exitApp = () => RNExitApp.exitApp();
 
   public render() {
     // FIXME: perhaps instead of navigating to a "background"

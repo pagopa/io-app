@@ -163,6 +163,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-exit-app')
     compile project(':react-native-flag-secure-android')
     compile project(':react-native-fs')
     compile project(':react-native-android-open-settings')
@@ -185,6 +186,7 @@ dependencies {
     compile project(':react-native-mixpanel')
     compile project(':react-native-device-info')
     compile project(':react-native-config')
+    compile project(':react-native-exit-app')
     compile "com.google.android.gms:play-services-gcm:8.1.0"
     compile "com.android.support:multidex:1.0.3"
     implementation fileTree(dir: "libs", include: ["*.jar"])
