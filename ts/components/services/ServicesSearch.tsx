@@ -35,8 +35,8 @@ const generateSectionsServicesStateMatchingSearchTextArray = (
   searchText: string
   // tslint:disable-next-line: readonly-array
 ): Array<SectionListData<pot.Pot<ServicePublic, Error>>> => {
-  // tslint:disable-next-line: readonly-array prefer-const no-var-keyword
-  var result: Array<SectionListData<pot.Pot<ServicePublic, Error>>> = [];
+  // tslint:disable-next-line: readonly-array
+  const result: Array<SectionListData<pot.Pot<ServicePublic, Error>>> = [];
   servicesState.forEach(sectionList => {
     const filtered = filterSectionListDataMatchingSearchText(
       sectionList,
@@ -76,7 +76,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      potFilteredServiceSectionsStates: pot.none
+      potFilteredServiceSectionsStates: pot.noneLoading
     };
   }
 
