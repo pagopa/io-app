@@ -177,6 +177,7 @@ jobs:
   alpha-release-android:
     <<: *defaults_android
 
+    parallelism: 1
     resource_class: large
 
     steps:
