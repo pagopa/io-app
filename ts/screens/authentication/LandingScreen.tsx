@@ -25,7 +25,10 @@ import variables from "../../theme/variables";
 
 import { ComponentProps } from "../../types/react";
 
+import { addSeconds } from "date-fns";
+import PushNotification from "react-native-push-notification";
 import { DevScreenButton } from "../../components/DevScreenButton";
+import { LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID } from "../../utils/constants";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -66,6 +69,21 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   }
 ];
 
+/*
+ * Schedule a local notification to remind the user to authenticate with spid
+ */
+function configureLocalNotificationForFirstAccessSpid() {
+  const nowDate = new Date();
+  const scheduledDate = addSeconds(nowDate, 20);
+
+  PushNotification.localNotificationSchedule({
+    title: "My Notification Title",
+    message: "My Notification Message",
+    date: scheduledDate,
+    id: LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID
+  });
+}
+
 const LandingScreen: React.SFC<Props> = props => {
   const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
   const navigateToIdpSelection = () =>
@@ -77,6 +95,8 @@ const LandingScreen: React.SFC<Props> = props => {
   const cardComponents = cardProps.map(p => (
     <LandingCardComponent key={`card-${p.id}`} {...p} />
   ));
+
+  configureLocalNotificationForFirstAccessSpid();
 
   return (
     <BaseScreenComponent>

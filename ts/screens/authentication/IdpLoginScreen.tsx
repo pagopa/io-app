@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
 import * as pot from "italia-ts-commons/lib/pot";
+import PushNotification from "react-native-push-notification";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -21,6 +22,7 @@ import {
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
+import { LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID } from "../../utils/constants";
 import { extractLoginResult } from "../../utils/login";
 
 type OwnProps = {
@@ -83,6 +85,10 @@ const onNavigationStateChange = (
       if (loginResult.success) {
         // In case of successful login
         onSuccess(loginResult.token);
+        // Remove the scheduled local notification to remind the user to authenticate with spid
+        PushNotification.cancelLocalNotifications({
+          id: LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID
+        });
       } else {
         // In case of login failure
         onFailure();
