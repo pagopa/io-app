@@ -22,8 +22,6 @@ import { buildExpirationDate } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
 import Logo from "./Logo";
 
-// TODO: the "*" character renders differently (i.e. a larger circle) on
-// some devices @https://www.pivotaltracker.com/story/show/159231780
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
