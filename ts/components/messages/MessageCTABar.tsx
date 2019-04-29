@@ -24,7 +24,7 @@ import {
   CalendarEvent,
   calendarEventByMessageIdSelector
 } from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { PaidReason } from "../../store/reducers/entities/payments";
+import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { checkAndRequestPermission } from "../../utils/calendar";
