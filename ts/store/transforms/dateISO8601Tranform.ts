@@ -1,11 +1,13 @@
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { MessageState } from "../reducers/entities/messages/messagesById";
 
-// If value is a date object it will be converted to a string simplified extended ISO format (ISO 8601)
+// check if the value is a date object, if yes it will be converted in a string
+// simplified extended ISO format (ISO 8601), otherwise it returns the value
 const replacer = (_: string, value: any): string | any =>
   value instanceof Date ? value.toISOString() : value;
 
-// If the stored string is a date in the ISO8601 format it will be converted to a Date object
+// check if the stored value is a string respecting the ISO 8101 representation
+// if yes it will be converted in a Date object, otherwise it returns the value
 const reviver = (_: string, value: any): Date | any =>
   typeof value === "string" &&
   value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)
