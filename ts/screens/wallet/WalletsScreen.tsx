@@ -37,7 +37,9 @@ import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 
 const styles = StyleSheet.create({
-  headerContainer: { flexDirection: "row" }
+  headerContainer: {
+    flexDirection: "row"
+  }
 });
 
 type OwnProps = Readonly<{

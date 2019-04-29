@@ -51,10 +51,6 @@ const AddMethodStyle = StyleSheet.create({
   },
   centeredContents: {
     alignItems: "center"
-  },
-  containedImage: {
-    width: "100%",
-    resizeMode: "contain"
   }
 });
 

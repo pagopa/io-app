@@ -47,14 +47,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between"
   },
+
   inLineSpace: {
     lineHeight: 20
-  },
-  refreshBox: {
-    height: 100,
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center"
   }
 });
 

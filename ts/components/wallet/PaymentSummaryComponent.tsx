@@ -42,29 +42,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
 
-  strikeThrough: {
-    textDecorationLine: "line-through",
-    textDecorationStyle: "solid"
-  },
-
-  toAlignCenter: {
-    flexDirection: "row",
-    alignItems: "baseline"
-  },
-
   toAlignColumnstart: {
     flexDirection: "column",
     alignItems: "flex-start"
-  },
-
-  underlined: {
-    textDecorationLine: "underline",
-    color: variables.brandLight
-  },
-
-  iconMargin: {
-    marginBottom: 3,
-    marginLeft: 3
   },
 
   noBottomLine: Platform.select({

@@ -9,7 +9,6 @@ export default StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
     elevation: 3,
-
     backgroundColor: variables.brandGray,
     borderRadius: 8,
     marginBottom: -1,
