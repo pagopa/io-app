@@ -4,10 +4,10 @@
  */
 import { Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { WalletStyles } from "../../components/styles/wallet";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -16,6 +16,7 @@ import { navigateToTransactionDetailsScreen } from "../../store/actions/navigati
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
@@ -28,15 +29,25 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const styles = StyleSheet.create({
+  walletBannerText: {
+    height: 50,
+    alignItems: "flex-end",
+    flexDirection: "row"
+  },
+
+  white: {
+    color: variables.colorWhite
+  }
+});
+
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
     const headerContents = (
       <View>
-        <View style={WalletStyles.walletBannerText}>
-          <Text style={WalletStyles.white}>
-            {I18n.t("wallet.creditDebitCards")}
-          </Text>
+        <View style={styles.walletBannerText}>
+          <Text style={styles.white}>{I18n.t("wallet.creditDebitCards")}</Text>
         </View>
         <View spacer={true} />
       </View>

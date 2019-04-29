@@ -11,12 +11,8 @@ import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 
-import { WalletStyles } from "../../components/styles/wallet";
-
 import I18n from "../../i18n";
-
 import variables from "../../theme/variables";
-
 import { formatNumberAmount } from "../../utils/stringBuilder";
 
 type Props =
@@ -67,14 +63,31 @@ const styles = StyleSheet.create({
 
   updateInfoRow: {
     marginTop: variables.fontSizeBase / 2
+  },
+
+  header: {
+    backgroundColor: variables.brandDarkGray
+  },
+
+  alignCenter: {
+    alignItems: "center"
+  },
+
+  flexRow: {
+    flex: 1,
+    flexDirection: "row"
+  },
+
+  white: {
+    color: variables.colorWhite
   }
 });
 
 class PaymentSummaryComponent extends React.Component<Props> {
   private labelValueRow(label: React.ReactNode, value: React.ReactNode) {
     return (
-      <Row style={WalletStyles.alignCenter}>
-        <Col size={2} style={[WalletStyles.flexRow, WalletStyles.alignCenter]}>
+      <Row style={styles.alignCenter}>
+        <Col size={2} style={[styles.flexRow, styles.alignCenter]}>
           {label}
         </Col>
         <Col style={{ flexDirection: "row", justifyContent: "flex-end" }}>
@@ -98,14 +111,14 @@ class PaymentSummaryComponent extends React.Component<Props> {
       this.props.hasVerificaResponse &&
       this.props.amount !== this.props.updatedAmount;
     return (
-      <Grid style={[WalletStyles.header, styles.padded]}>
+      <Grid style={[styles.header, styles.padded]}>
         <View spacer={true} large={true} />
         <Row>
           <Col size={5}>
-            <H3 style={WalletStyles.white}>
+            <H3 style={styles.white}>
               {I18n.t("wallet.firstTransactionSummary.title")}
             </H3>
-            <H1 style={WalletStyles.white}>
+            <H1 style={styles.white}>
               {paymentReason !== undefined ? paymentReason : "..."}
             </H1>
           </Col>
@@ -121,7 +134,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
         <View spacer={true} large={true} />
 
         {this.labelValueRow(
-          <View style={[WalletStyles.flexRow, WalletStyles.alignCenter]}>
+          <View style={[styles.flexRow, styles.alignCenter]}>
             <Text style={styles.amountLabel}>
               {I18n.t(
                 amountIsUpdated
@@ -131,13 +144,13 @@ class PaymentSummaryComponent extends React.Component<Props> {
             </Text>
             {amountIsUpdated && (
               <Icon
-                style={[WalletStyles.white, styles.iconStyle]}
+                style={[styles.white, styles.iconStyle]}
                 name="alert-circle"
                 type="Feather"
               />
             )}
           </View>,
-          <H3 style={WalletStyles.white}>
+          <H3 style={styles.white}>
             {amountIsUpdated && updatedAmount
               ? formatNumberAmount(updatedAmount)
               : fromNullable(amount).fold("...", formatNumberAmount)}
@@ -145,7 +158,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
         )}
 
         <Row style={[styles.toAlignColumnstart, styles.updateInfoRow]}>
-          <Text style={WalletStyles.white}>
+          <Text style={styles.white}>
             {I18n.t("wallet.firstTransactionSummary.updateInfo")}
           </Text>
         </Row>
@@ -153,10 +166,10 @@ class PaymentSummaryComponent extends React.Component<Props> {
         {false && // tslint:disable-line no-redundant-boolean
           // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(
-            <H3 style={[WalletStyles.white, styles.noBottomLine]}>
+            <H3 style={[styles.white, styles.noBottomLine]}>
               {I18n.t("wallet.firstTransactionSummary.expireDate")}
             </H3>,
-            <H1 style={WalletStyles.white}>
+            <H1 style={styles.white}>
               {new Date("2018-07-11T09:52:05.228Z").toLocaleDateString()}
             </H1>
           )}
@@ -164,10 +177,10 @@ class PaymentSummaryComponent extends React.Component<Props> {
         {false && // tslint:disable-line no-redundant-boolean
           // TODO: gotta define where this information is coming from @https://www.pivotaltracker.com/story/show/159229285
           this.labelValueRow(
-            <H3 style={[WalletStyles.white, styles.noBottomLine]}>
+            <H3 style={[styles.white, styles.noBottomLine]}>
               {I18n.t("wallet.firstTransactionSummary.tranche")}
             </H3>,
-            <H1 style={WalletStyles.white}>{"unica"}</H1>
+            <H1 style={styles.white}>{"unica"}</H1>
           )}
         <View spacer={true} />
       </Grid>

@@ -14,12 +14,29 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
+import variables from "../../theme/variables";
 import { formatNumberAmount } from "../../utils/stringBuilder";
-import { WalletStyles } from "../styles/wallet";
 
 const styles = StyleSheet.create({
   rightButtonText: {
     paddingRight: 0
+  },
+
+  topContainer: {
+    backgroundColor: variables.brandDarkGray
+  },
+
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  },
+
+  white: {
+    color: variables.colorWhite
+  },
+
+  textRight: {
+    textAlign: "right"
   }
 });
 
@@ -36,34 +53,31 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
   );
 
   return (
-    <Grid style={[WalletStyles.topContainer, WalletStyles.paddedLR]}>
+    <Grid style={[styles.topContainer, styles.paddedLR]}>
       <Row>
         <Col size={2}>
           <View spacer={true} />
-          <Text bold={true} style={WalletStyles.white}>
+          <Text bold={true} style={styles.white}>
             {props.paymentReason}
           </Text>
         </Col>
         <Col size={1}>
           <View spacer={true} />
-          <Text
-            bold={true}
-            style={[WalletStyles.white, WalletStyles.textRight]}
-          >
+          <Text bold={true} style={[styles.white, styles.textRight]}>
             {currentAmount}
           </Text>
         </Col>
       </Row>
       <Row>
         <Col size={2}>
-          <Text style={WalletStyles.white}>
+          <Text style={styles.white}>
             {props.recipient.denominazioneBeneficiario}
           </Text>
           <View spacer={true} />
         </Col>
         <Right>
           <Button small={true} transparent={true} onPress={props.onCancel}>
-            <Text style={[WalletStyles.white, styles.rightButtonText]}>
+            <Text style={[styles.white, styles.rightButtonText]}>
               {I18n.t("global.buttons.cancel").toUpperCase()}
             </Text>
           </Button>

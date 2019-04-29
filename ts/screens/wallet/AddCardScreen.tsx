@@ -21,19 +21,16 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-
 import { LabelledItem } from "../../components/LabelledItem";
-import { WalletStyles } from "../../components/styles/wallet";
-import MaskedInput from "../../components/ui/MaskedInput";
-
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
+import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -67,15 +64,21 @@ const styles = StyleSheet.create({
   noBottomLine: {
     borderBottomWidth: 0
   },
+
   addCardImage: {
     width: 60,
     height: 45,
     resizeMode: "contain",
     marginTop: 5
   },
+
   verticalSpacing: {
     width: 16,
     flex: 0
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
   }
 });
 
@@ -217,7 +220,7 @@ class AddCardScreen extends React.Component<Props, State> {
       >
         <ScrollView
           bounces={false}
-          style={WalletStyles.whiteBg}
+          style={styles.whiteBg}
           keyboardShouldPersistTaps="handled"
         >
           <Content scrollEnabled={false}>
