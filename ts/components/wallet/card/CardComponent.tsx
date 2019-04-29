@@ -6,7 +6,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, Platform, StyleSheet } from "react-native";
 import {
   Menu,
   MenuOption,
@@ -15,12 +15,11 @@ import {
 } from "react-native-popup-menu";
 
 import I18n from "../../../i18n";
-
+import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
-import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
 
@@ -60,6 +59,90 @@ interface PickingProps extends BaseProps {
 }
 
 type Props = FullProps | HeaderProps | PreviewProps | PickingProps;
+
+const styles = StyleSheet.create({
+  card: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.5,
+    elevation: 3,
+    backgroundColor: variables.brandGray,
+    borderRadius: 8,
+    marginBottom: -1,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 20
+  },
+
+  cardInner: {
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 22
+  },
+
+  cardNumber: {
+    flexDirection: "row",
+    justifyContent: "flex-start"
+  },
+
+  columns: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+
+  topRightCornerContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end"
+  },
+
+  cardLogo: {
+    alignSelf: "flex-end",
+    height: 30,
+    width: 48
+  },
+
+  footerButton: {
+    borderRadius: 6,
+    paddingRight: variables.fontSizeBase,
+    justifyContent: "space-between",
+    margin: 2
+  },
+
+  transactions: {
+    backgroundColor: variables.colorWhite
+  },
+
+  transactionsText: {
+    color: variables.brandPrimary
+  },
+  pickPayment: {
+    backgroundColor: variables.brandPrimary
+  },
+  pickPaymentText: {
+    color: variables.colorWhite
+  },
+
+  marginTop: {
+    marginTop: variables.fontSizeBase
+  },
+
+  flatBottom: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+
+  blueText: {
+    color: variables.brandPrimary,
+    textAlign: "center",
+    ...makeFontStyleObject(Platform.select)
+  },
+
+  paddedIcon: {
+    paddingLeft: 10
+  }
+});
 
 /**
  * Credit card component
