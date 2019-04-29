@@ -26,6 +26,7 @@ import {
 } from "../store/reducers";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
+import { DateTransform } from "../store/transforms/dateTranform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
 /**
@@ -80,7 +81,8 @@ const rootPersistConfig: PersistConfig = {
     "debug",
     "persistedPreferences",
     "installation"
-  ]
+  ],
+  transforms: [DateTransform]
 };
 
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<

@@ -3,8 +3,8 @@ import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import customVariables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 type Props = {
   id: string;
   subject: string;
-  due_date: NonNullable<MessageWithContentPO["content"]["due_date"]>;
+  due_date: NonNullable<CreatedMessageWithContent["content"]["due_date"]>;
   onPress: (id: string) => void;
 };
 
