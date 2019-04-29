@@ -39,6 +39,14 @@ const styles = StyleSheet.create({
   emptyListWrapper: {
     padding: customVariables.contentPadding,
     alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding
+  },
+  emptyListContentSubtitle: {
+    textAlign: "center",
+    paddingTop: customVariables.contentPadding,
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -80,9 +88,16 @@ const generateMessagesStateNotArchivedArray = (
 
 const ListEmptyComponent = (
   <View style={styles.emptyListWrapper}>
+    <View spacer={true} />
     <Image
       source={require("../../../img/messages/empty-message-list-icon.png")}
     />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("messages.inbox.emptyMessage.title")}
+    </Text>
+    <Text style={styles.emptyListContentSubtitle}>
+      {I18n.t("messages.inbox.emptyMessage.subtitle")}
+    </Text>
   </View>
 );
 

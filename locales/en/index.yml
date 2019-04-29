@@ -496,6 +496,10 @@ messages:
     invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
     emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+  inbox:
+    emptyMessage: 
+      title: Your message list is empty.
+      subtitle: Refresh to check for any new messages.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
