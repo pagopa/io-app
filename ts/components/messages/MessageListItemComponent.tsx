@@ -181,9 +181,9 @@ export class MessageListItemComponent extends React.Component<Props> {
     //       for the message to load
     const uiCreatedAt = pot.getOrElse(
       pot.map(message, m =>
-        DateFromISOString.decode(m.created_at)
+        DateFromISOString.decode(m.created_at.toISOString())
           .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-          .getOrElse(m.created_at)
+          .getOrElse(m.created_at.toISOString())
       ),
       ""
     );

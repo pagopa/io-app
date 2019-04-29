@@ -8,6 +8,7 @@ import { Alert, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import {
@@ -26,7 +27,6 @@ import {
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   formatDateAsDay,
@@ -49,7 +49,7 @@ import { NavigationParams } from "../../screens/wallet/payment/TransactionSummar
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 
 type OwnProps = {
-  message: MessageWithContentPO;
+  message: CreatedMessageWithContent;
   service: pot.Pot<ServicePublic, Error>;
   containerStyle?: ViewStyle;
   paymentByRptId: PaymentByRptIdState;
@@ -158,7 +158,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderReminderCTA(
-    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
+    dueDate: NonNullable<CreatedMessageWithContent["content"]["due_date"]>,
     useShortLabel: boolean
   ) {
     const {
@@ -268,7 +268,9 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderPaymentCTA(
-    paymentData: NonNullable<MessageWithContentPO["content"]["payment_data"]>,
+    paymentData: NonNullable<
+      CreatedMessageWithContent["content"]["payment_data"]
+    >,
     potService: pot.Pot<ServicePublic, Error>,
     paymentByRptId: PaymentByRptIdState
   ) {
@@ -392,7 +394,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   };
 
   private addReminderToCalendar = (
-    message: MessageWithContentPO,
+    message: CreatedMessageWithContent,
     dueDate: Date
   ) => (calendar: Calendar) => {
     const title = I18n.t("messages.cta.reminderTitle", {

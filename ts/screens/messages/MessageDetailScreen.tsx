@@ -6,6 +6,7 @@ import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -23,7 +24,6 @@ import { messageStateByIdSelector } from "../../store/reducers/entities/messages
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
@@ -212,7 +212,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Used when we have all data to properly render the content of the screen.
    */
   private renderFullState = (
-    message: MessageWithContentPO,
+    message: CreatedMessageWithContent,
     service: pot.Pot<ServicePublic, Error>,
     paymentByRptId: Props["paymentByRptId"]
   ) => {

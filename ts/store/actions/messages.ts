@@ -9,7 +9,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 
@@ -19,7 +19,7 @@ export const loadMessage = createAsyncAction(
   "MESSAGE_LOAD_FAILURE"
 )<
   CreatedMessageWithoutContent,
-  MessageWithContentPO,
+  CreatedMessageWithContent,
   { id: string; error?: string }
 >();
 

@@ -139,14 +139,16 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             </Button>
           </View>
         )}
-        <MessageListComponent
-          {...this.props}
-          messages={this.state.filteredMessageStates}
-          onPressItem={this.handleOnPressItem}
-          onLongPressItem={this.handleOnLongPressItem}
-          refreshing={isLoading}
-          selectedMessageIds={selectedMessageIds}
-        />
+        {
+          <MessageListComponent
+            {...this.props}
+            messages={this.state.filteredMessageStates}
+            onPressItem={this.handleOnPressItem}
+            onLongPressItem={this.handleOnLongPressItem}
+            refreshing={isLoading}
+            selectedMessageIds={selectedMessageIds}
+          />
+        }
       </View>
     );
   }
