@@ -99,7 +99,6 @@
     "@types/react": "16.8.10",
     "@types/react-native": "0.57.42",
     "@types/react-native-background-timer": "^2.0.0",
-    "@types/react-native-elements": "^0.18.0",
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-loading-spinner-overlay": "^0.5.1",
     "@types/react-native-push-notification": "^3.0.2",

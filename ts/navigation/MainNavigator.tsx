@@ -1,7 +1,6 @@
-import { Badge, Right } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -9,6 +8,7 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
+import MessageListComponent from "../components/messages/MessageListComponent";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -100,7 +100,9 @@ const styles = StyleSheet.create({
     elevation: 0.1,
     shadowColor: "white",
     height: 19,
-    width: 19
+    width: 19,
+    left: 12,
+    bottom: 10
   }
 });
 
@@ -178,20 +180,27 @@ const navigation = createBottomTabNavigator(
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
+        const messagesToRead = MessageListComponent.prototype.getMessagesToRead();
         return (
           <View>
-            {routeName === ROUTES.MESSAGES_NAVIGATOR ? (
-              <Right>
-                <Badge style={styles.badgeStyle}>
-                  <Text style={styles.textBadgeStyle}>99</Text>
-                </Badge>
-              </Right>
-            ) : null}
             <IconFont
               name={iconName}
               size={variables.iconSize3}
               color={options.tintColor === null ? undefined : options.tintColor}
             />
+            {routeName === ROUTES.MESSAGES_NAVIGATOR ? (
+              Platform.OS === "ios" ? (
+                <Badge style={styles.badgeStyle}>
+                  <Text style={[styles.textBadgeStyle, { top: 0 }]}>
+                    {messagesToRead}
+                  </Text>
+                </Badge>
+              ) : (
+                <Badge style={styles.badgeStyle}>
+                  <Text style={styles.textBadgeStyle}>{messagesToRead}</Text>
+                </Badge>
+              )
+            ) : null}
           </View>
         );
       },

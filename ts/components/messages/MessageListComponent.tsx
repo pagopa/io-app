@@ -12,8 +12,8 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageListItemComponent } from "./MessageListItemComponent";
-// tslint:disable-next-line: no-var-keyword
-var messagesToRead = 0;
+// tslint:disable-next-line:no-let
+let messagesToRead = 0;
 type OwnProps = {
   messages: ReadonlyArray<MessageState>;
   servicesById: ServicesByIdState;
@@ -73,8 +73,6 @@ class MessageListComponent extends React.Component<Props> {
     );
 
     messagesToRead = messages.filter(obj => !obj.isRead).length;
-    alert(messagesToRead);
-
     return (
       <FlatList
         contentContainerStyle={styles.contentContainerStyle}
@@ -87,6 +85,13 @@ class MessageListComponent extends React.Component<Props> {
         ListEmptyComponent={ListEmptyComponent}
       />
     );
+  }
+
+  public getMessagesToRead() {
+    if (messagesToRead > 99) {
+      return 99;
+    }
+    return messagesToRead;
   }
 }
 
