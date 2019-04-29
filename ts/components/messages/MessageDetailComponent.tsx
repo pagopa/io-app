@@ -4,11 +4,11 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
@@ -19,7 +19,7 @@ import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
-  message: MessageWithContentPO;
+  message: CreatedMessageWithContent;
   potService: pot.Pot<ServicePublic, Error>;
   paymentsByRptId: PaymentByRptIdState;
   onServiceLinkPress?: () => void;
