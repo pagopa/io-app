@@ -43,6 +43,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -52,13 +53,6 @@ type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-const copyToClipboardWithFeedback = (text: string) => {
-  Clipboard.setString(text);
-  Toast.show({
-    text: "Copied to clipboard"
-  });
-};
 
 const styles = StyleSheet.create({
   itemLeft: {
@@ -229,7 +223,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      copyToClipboardWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(DeviceInfo.getVersion())
                     }
                   >
                     <Text>
@@ -245,7 +239,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(backendInfo.version)
+                        clipboardSetStringWithFeedback(backendInfo.version)
                       }
                     >
                       <Text>
@@ -261,12 +255,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(sessionToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(sessionToken)
+                      }
                     >
-                      <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >{`Session Token ${sessionToken}`}</Text>
+                      <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {`Session Token ${sessionToken}`}
+                      </Text>
                     </Button>
                   </ListItem>
                 )}
@@ -275,12 +270,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(walletToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(walletToken)
+                      }
                     >
-                      <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >{`Wallet token ${walletToken}`}</Text>
+                      <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {`Wallet token ${walletToken}`}
+                      </Text>
                     </Button>
                   </ListItem>
                 )}
@@ -289,7 +285,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   <Button
                     info={true}
                     small={true}
-                    onPress={() => copyToClipboardWithFeedback(notificationId)}
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(notificationId)
+                    }
                   >
                     <Text>{`Notification ID ${notificationId.slice(
                       0,
@@ -304,7 +302,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(notificationToken)
+                        clipboardSetStringWithFeedback(notificationToken)
                       }
                     >
                       <Text>{`Notification token ${notificationToken.slice(
