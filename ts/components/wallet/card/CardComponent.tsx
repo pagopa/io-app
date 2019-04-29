@@ -21,7 +21,6 @@ import { Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
 import Logo from "./Logo";
-import { CreditCardStyles } from "./style";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
 // some devices @https://www.pivotaltracker.com/story/show/159231780
@@ -141,6 +140,21 @@ const styles = StyleSheet.create({
 
   paddedIcon: {
     paddingLeft: 10
+  },
+
+  largeTextStyle: {
+    ...makeFontStyleObject(Platform.select, undefined, false, "RobotoMono"),
+    fontSize: variables.fontSizeBase * 1.125 // 18
+  },
+
+  textStyle: {
+    fontFamily: variables.fontFamily,
+    color: variables.cardFontColor
+  },
+
+  smallTextStyle: {
+    fontSize: variables.fontSizeSmall,
+    color: variables.brandDarkGray
   }
 });
 
@@ -280,16 +294,11 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View style={[styles.columns, styles.marginTop]}>
         <View>
-          <Text
-            style={[
-              CreditCardStyles.textStyle,
-              CreditCardStyles.smallTextStyle
-            ]}
-          >
+          <Text style={[styles.textStyle, styles.smallTextStyle]}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </Text>
 
-          <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
+          <Text style={[styles.textStyle, styles.marginTop]}>
             {wallet.creditCard.holder.toUpperCase()}
           </Text>
         </View>
@@ -350,10 +359,10 @@ export default class CardComponent extends React.Component<Props> {
         <View style={styles.cardInner}>
           <View style={styles.columns}>
             <View style={[styles.cardNumber]}>
-              <Text style={[CreditCardStyles.smallTextStyle]}>
+              <Text style={[styles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
-              <Text style={[CreditCardStyles.largeTextStyle]}>
+              <Text style={[styles.largeTextStyle]}>
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
             </View>
