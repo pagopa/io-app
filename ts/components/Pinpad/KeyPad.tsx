@@ -1,8 +1,7 @@
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
-
-import { styles } from "./Pinpad.style";
+import { StyleSheet } from "react-native";
 
 type Digit = ITuple2<string, () => void> | undefined;
 
@@ -11,6 +10,40 @@ type Props = Readonly<{
   buttonType: "primary" | "light";
   isDisabled: boolean;
 }>;
+
+// TODO: make it variable based on screen width
+const radius = 20;
+
+const styles = StyleSheet.create({
+  roundButton: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    marginBottom: 16,
+    alignSelf: "center",
+    justifyContent: "center",
+    width: (radius + 10) * 2,
+    height: (radius + 10) * 2,
+    borderRadius: radius + 10,
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    elevation: 0
+  },
+
+  buttonTextBase: {
+    margin: 0,
+    paddingTop: Math.round(radius / 2) + 4,
+    lineHeight: radius + 10,
+    fontWeight: "200"
+  },
+
+  buttonTextDigit: {
+    fontSize: radius + 10
+  },
+
+  buttonTextLabel: {
+    fontSize: radius
+  }
+});
 
 const renderPinCol = (
   label: string,
