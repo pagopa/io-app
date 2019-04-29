@@ -10,7 +10,7 @@ import {
 
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
+import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import H5 from "../ui/H5";
 import MessageAgendaItem from "./MessageAgendaItem";
 
@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (_: MessageWithContentAndDueDatePO) => _.id;
+const keyExtractor = (_: CreatedMessageWithContentAndDueDate) => _.id;
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 export type MessageAgendaSection = SectionListData<
-  MessageWithContentAndDueDatePO
+  CreatedMessageWithContentAndDueDate
 >;
 
 type Props = {
@@ -77,7 +77,7 @@ class MessageAgenda extends React.PureComponent<Props> {
   };
 
   private renderItem: SectionListRenderItem<
-    MessageWithContentAndDueDatePO
+    CreatedMessageWithContentAndDueDate
   > = info => {
     const message = info.item;
     return (

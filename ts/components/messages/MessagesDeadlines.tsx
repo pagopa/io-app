@@ -8,9 +8,9 @@ import { StyleSheet } from "react-native";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
-  isMessageWithContentAndDueDatePO,
-  MessageWithContentAndDueDatePO
-} from "../../types/MessageWithContentAndDueDatePO";
+  CreatedMessageWithContentAndDueDate,
+  isMessageWithContentAndDueDatePO
+} from "../../types/CreatedMessageWithContentAndDueDate";
 import MessageAgenda, { MessageAgendaSection } from "./MessageAgenda";
 
 const styles = StyleSheet.create({
@@ -53,7 +53,7 @@ const generateSections = (
       potMessagesState,
       _ =>
         // tslint:disable-next-line:readonly-array
-        _.reduce<MessageWithContentAndDueDatePO[]>(
+        _.reduce<CreatedMessageWithContentAndDueDate[]>(
           (accumulator, messageState) => {
             const message = messageState.message;
             if (

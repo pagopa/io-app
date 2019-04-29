@@ -3,21 +3,19 @@ import {
   replaceProp1 as repP,
   requiredProp1 as reqP
 } from "italia-ts-commons/lib/types";
-
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { MessageContent } from "../../definitions/backend/MessageContent";
 
-export const MessageWithContentAndDueDatePO = repP(
+const CreatedMessageWithContentAndDueDate = repP(
   CreatedMessageWithContent,
   "content",
   reqP(MessageContent, "due_date")
 );
 
-export type MessageWithContentAndDueDatePO = t.TypeOf<
-  typeof MessageWithContentAndDueDatePO
+export type CreatedMessageWithContentAndDueDate = t.TypeOf<
+  typeof CreatedMessageWithContentAndDueDate
 >;
 
 export const isMessageWithContentAndDueDatePO = (
-  message: CreatedMessageWithContent
-): message is MessageWithContentAndDueDatePO =>
-  message.content.due_date !== undefined;
+  _: CreatedMessageWithContent
+): _ is CreatedMessageWithContentAndDueDate => _.content.due_date !== undefined;

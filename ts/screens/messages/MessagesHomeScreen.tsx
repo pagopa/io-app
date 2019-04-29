@@ -36,7 +36,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
 // Used to disable the Deadlines tab
-const DEADLINES_TAB_ENABLED = true;
+const DEADLINES_TAB_ENABLED = false;
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
