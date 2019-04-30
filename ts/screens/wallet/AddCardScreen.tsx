@@ -12,7 +12,6 @@ import {
   AppStateStatus,
   FlatList,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet
 } from "react-native";
@@ -179,7 +178,6 @@ class AddCardScreen extends React.Component<Props, State> {
       };
       const maybeCard = getCardFromState(state);
       if (maybeCard.isSome()) {
-        Keyboard.dismiss();
         return {
           ...baseButtonProps,
           disabled: false,
