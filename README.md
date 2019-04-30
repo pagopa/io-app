@@ -488,3 +488,4 @@ $ detox test
 ```
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
+

@@ -130,17 +130,19 @@ const mapStateToProps = (state: GlobalState) => {
   const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
 
   // tslint:disable-next-line:readonly-array
-  const sections = orgfiscalCodes.map(fiscalCode => {
-    const title = organizations[fiscalCode] || fiscalCode;
-    const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
-    const data = serviceIdsForOrg
-      .map(id => services.byId[id])
-      .filter(isDefined);
-    return {
-      title,
-      data
-    };
-  });
+  const sections = orgfiscalCodes
+    .map(fiscalCode => {
+      const title = organizations[fiscalCode] || fiscalCode;
+      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+      const data = serviceIdsForOrg
+        .map(id => services.byId[id])
+        .filter(isDefined);
+      return {
+        title,
+        data
+      };
+    })
+    .filter(_ => _.data.length > 0);
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {

@@ -10,10 +10,10 @@ export const MessageWithContentPO = t.exact(
   t.intersection(
     [
       t.type({
-        ...CreatedMessageWithContent.type.types[0].props,
+        ...CreatedMessageWithContent.types[0].props,
         created_at: t.string
       }),
-      CreatedMessageWithContent.type.types[1]
+      CreatedMessageWithContent.types[1]
     ],
     "MessageWithContentPO"
   )
