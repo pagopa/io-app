@@ -7,7 +7,7 @@ import { tosAccept } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import {
   isTosAcceptedSelector,
-  isTosAcceptedVersion
+  tosAcceptedVersion
 } from "../../store/reducers/onboarding";
 
 import { GlobalState } from "../../store/reducers/types";
@@ -36,11 +36,11 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
 }
 
 export function* checkAcceptedTosSagaVersion(): IterableIterator<Effect> {
-  const tosAcceptedVersion: ReturnType<
-    typeof isTosAcceptedVersion
-  > = yield select<GlobalState>(isTosAcceptedVersion);
+  const userTosAcceptedVersion: ReturnType<
+    typeof tosAcceptedVersion
+  > = yield select<GlobalState>(tosAcceptedVersion);
 
-  if (tosAcceptedVersion < TOS_VERSION) {
+  if (userTosAcceptedVersion < TOS_VERSION) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
 
@@ -51,8 +51,12 @@ export function* checkAcceptedTosSagaVersion(): IterableIterator<Effect> {
     // the redux state.
     yield put(tosAccept.success());
 
-    yield take(getType(profileUpsert.request));
-    yield put(profileUpsert.request());
-
+    console.log("dispatch the ToS to backend");
+    // TODO: dispatch the ToS to backend
+    yield put(
+      profileUpsert.request({
+        accepted_tos_version: TOS_VERSION
+      })
+    );
   }
 }

@@ -26,7 +26,7 @@ const INITIAL_STATE: OnboardingState = {
 export const isTosAcceptedSelector = (state: GlobalState): boolean =>
   state.onboarding.isTosAccepted;
 
-export const isTosAcceptedVersion = (state: GlobalState): number =>
+export const tosAcceptedVersion = (state: GlobalState): number =>
   state.onboarding.acceptedTosVersion;
 
 export const isFingerprintAcknowledgedSelector = (
