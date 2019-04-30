@@ -1,6 +1,7 @@
 import color from "color";
+import { Text } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
 import I18n from "../i18n";

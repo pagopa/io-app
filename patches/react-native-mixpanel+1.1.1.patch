@@ -1,0 +1,12 @@
+patch-package
+--- a/node_modules/react-native-mixpanel/android/src/main/java/com/kevinejohn/RNMixpanel/RNMixpanelModule.java
++++ b/node_modules/react-native-mixpanel/android/src/main/java/com/kevinejohn/RNMixpanel/RNMixpanelModule.java
+@@ -199,6 +199,8 @@ public class RNMixpanelModule extends ReactContextBaseJavaModule implements Life
+         synchronized(instance) {
+             instance.identify(user_id);
+             instance.getPeople().identify(user_id);
++            // A tmp fix to register all user properties on Android
++            instance.getPeople().set("Fix bug", "True");
+         }
+         promise.resolve(null);
+     }
