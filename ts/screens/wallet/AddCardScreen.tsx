@@ -230,10 +230,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
-                onChangeText: (value: string) =>
-                  this.setState({
-                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-                  })
+                onChangeText: (value: string) => this.updateHolderState(value)
               }}
             />
 
@@ -243,11 +240,7 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
-              isValid={
-                this.state.pan.isSome()
-                  ? CreditCardPan.is(this.state.pan.value)
-                  : undefined
-              }
+              isValid={this.isValidPan()}
               inputMaskProps={{
                 ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
@@ -256,9 +249,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
                 onChangeText: (_, value) => {
-                  this.setState({
-                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
-                  });
+                  this.updatePanState(value);
                 }
               }}
             />
@@ -282,12 +273,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric",
                     mask: "[00]{/}[00]",
                     onChangeText: (_, value) =>
-                      this.setState({
-                        expirationDate:
-                          value && value !== EMPTY_CARD_EXPIRATION_DATE
-                            ? some(value)
-                            : none
-                      })
+                      this.updateExpirationDateState(value)
                   }}
                 />
               </Col>
@@ -297,11 +283,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
-                  isValid={
-                    this.state.securityCode.isSome()
-                      ? CreditCardCVC.is(this.state.securityCode.value)
-                      : undefined
-                  }
+                  isValid={this.isValidSecurityCode()}
                   inputMaskProps={{
                     ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
@@ -313,12 +295,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true,
                     mask: "[0009]",
                     onChangeText: (_, value) =>
-                      this.setState({
-                        securityCode:
-                          value && value !== EMPTY_CARD_SECURITY_CODE
-                            ? some(value)
-                            : none
-                      })
+                      this.updateSecurityCodeState(value)
                   }}
                 />
               </Col>
@@ -354,28 +331,58 @@ class AddCardScreen extends React.Component<Props, State> {
     );
   }
 
+  private isValidPan() {
+    return this.state.pan
+      .map(pan => {
+        return CreditCardPan.is(pan);
+      })
+      .toUndefined();
+  }
+
   private isValidExpirationDate() {
-    this.state.expirationDate.map(expirationDate => {
-      const [
-        expirationMonth,
-        expirationYear
-      ] = this.state.expirationDate.value.split("/");
-      return (
-        CreditCardExpirationMonth.is(expirationMonth) &&
-        CreditCardExpirationYear.is(expirationYear)
-      );
-    }).toUndefined()
-      const [
-        expirationMonth,
-        expirationYear
-      ] = this.state.expirationDate.value.split("/");
-      return (
-        CreditCardExpirationMonth.is(expirationMonth) &&
-        CreditCardExpirationYear.is(expirationYear)
-      );
-    } else {
-      return undefined;
-    }
+    return this.state.expirationDate
+      .map(expirationDate => {
+        const [expirationMonth, expirationYear] = expirationDate.split("/");
+        return (
+          CreditCardExpirationMonth.is(expirationMonth) &&
+          CreditCardExpirationYear.is(expirationYear)
+        );
+      })
+      .toUndefined();
+  }
+
+  private isValidSecurityCode() {
+    return this.state.securityCode
+      .map(securityCode => {
+        return CreditCardCVC.is(securityCode);
+      })
+      .toUndefined();
+  }
+
+  private updateHolderState(value: string) {
+    this.setState({
+      holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+    });
+  }
+
+  private updatePanState(value: string) {
+    this.setState({
+      pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
+    });
+  }
+
+  private updateExpirationDateState(value: string) {
+    this.setState({
+      expirationDate:
+        value && value !== EMPTY_CARD_EXPIRATION_DATE ? some(value) : none
+    });
+  }
+
+  private updateSecurityCodeState(value: string) {
+    this.setState({
+      securityCode:
+        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
+    });
   }
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
