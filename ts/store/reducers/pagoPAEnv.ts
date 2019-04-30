@@ -4,6 +4,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../actions/types";
 import { setPagoPAEnvironmentAsQa } from '../actions/pagoPAEnv';
+import { GlobalState } from "./types";
 
 export type PagoPAEnvState = Readonly<{
   isPagoPAQAEnabled: boolean;
@@ -28,3 +29,6 @@ export function pagoPAEnvReducer(
   return state;
 }
 
+// Selectors
+export const isPagoPAQAEnabledSelector = (state: GlobalState): boolean =>
+  state.pagoPAEnv.isPagoPAQAEnabled;
