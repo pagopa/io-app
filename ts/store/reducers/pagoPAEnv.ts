@@ -2,8 +2,8 @@
  * A reducer for persisted preferences. Used to handle PagoPA environment.
  */
 import { getType } from "typesafe-actions";
+import { setPagoPAEnvironmentAsQa } from "../actions/pagoPAEnv";
 import { Action } from "../actions/types";
-import { setPagoPAEnvironmentAsQa } from '../actions/pagoPAEnv';
 import { GlobalState } from "./types";
 
 export type PagoPAEnvState = Readonly<{
