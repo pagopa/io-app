@@ -24,13 +24,13 @@ import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { SetPagoPAEnvironmentAsQa } from "./pagoPAEnv";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { WalletActions } from "./wallet";
-import { SetPagoPAEnvironmentAsQa } from './pagoPAEnv';
 
 export type Action =
   | AnalyticsActions
