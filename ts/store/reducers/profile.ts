@@ -52,6 +52,9 @@ const reducer = (
     case getType(profileUpsert.success):
       const updated = action.payload;
       const newVersion = updated.version;
+      // 163190244 - start
+      const tosVersion = updated.accepted_tos_version;
+      // 163190244 - end
       if (
         pot.isSome(state) &&
         newVersion !== undefined &&
@@ -72,7 +75,10 @@ const reducer = (
           blocked_inbox_or_channels: updated.blocked_inbox_or_channels,
           // FIXME: remove the cast after the following bug has been fixed:
           //        https://www.pivotaltracker.com/story/show/159802090
-          version: newVersion as NonNegativeInteger // tslint:disable-line:no-useless-cast
+          version: newVersion as NonNegativeInteger, // tslint:disable-line:no-useless-cast
+          // 163190244 - start
+          accepted_tos_version: tosVersion as NonNegativeInteger
+          // 163190244 - end
         });
       } else {
         // We can't merge an updated profile if we haven't loaded a full

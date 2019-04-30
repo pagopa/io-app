@@ -84,6 +84,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
+  console.log("Reset Profile on startup");
   yield put(resetProfileState());
 
   // Whether the user is currently logged in.
@@ -185,6 +186,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
   } else {
+    console.log("Pin ok inizia il resto");
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
       // The user was previously logged in, so no onboarding is needed
@@ -197,6 +199,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         // If we are here the user had chosen to reset the PIN
         yield put(startApplicationInitialization());
         return;
+      } else {
+        // chiamata saga check versione tos
+        console.log("Qui otrei inserire la chiamata al TosChecker");
+        yield call(checkAcceptedTosSagaVersion);
       }
     }
   }
