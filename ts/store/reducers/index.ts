@@ -27,7 +27,7 @@ import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
-import pagoPAEnvReducer from './pagoPAEnv';
+import { pagoPAEnvReducer } from './pagoPAEnv';
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {

@@ -30,6 +30,7 @@ import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { ServicesActions } from "./services";
 import { WalletActions } from "./wallet";
+import { SetPagoPAEnvironmentAsQa } from './pagoPAEnv';
 
 export type Action =
   | AnalyticsActions
@@ -52,7 +53,8 @@ export type Action =
   | IdentificationActions
   | InstallationActions
   | DebugActions
-  | CalendarEventsActions;
+  | CalendarEventsActions
+  | SetPagoPAEnvironmentAsQa;
 
 export type Dispatch = DispatchAPI<Action>;
 

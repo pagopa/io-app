@@ -1,29 +1,30 @@
 /**
  * A reducer for persisted preferences. Used to handle PagoPA environment.
  */
-import { isActionOf } from "typesafe-actions";
-import { setPagoPAEnvironmentAsQa } from "../actions/pagoPAEnv";
-
+import { getType } from "typesafe-actions";
 import { Action } from "../actions/types";
+import { setPagoPAEnvironmentAsQa } from '../actions/pagoPAEnv';
 
 export type PagoPAEnvState = Readonly<{
-  isPagoPAQAEnabled?: boolean;
+  isPagoPAQAEnabled: boolean;
 }>;
 
-const initialPagoPAEnvState: PagoPAEnvState = {
+const INITIAL_STATE: PagoPAEnvState = {
   isPagoPAQAEnabled: false
 };
 
-export default function pagoPAEnvReducer(
-  state: PagoPAEnvState = initialPagoPAEnvState,
+export function pagoPAEnvReducer(
+  state: PagoPAEnvState = INITIAL_STATE,
   action: Action
 ): PagoPAEnvState {
-  if (isActionOf(setPagoPAEnvironmentAsQa, action)) {
-    return {
-      ...state,
-      isPagoPAQAEnabled: action.payload
-    };
+  switch (action.type) {
+    case getType(setPagoPAEnvironmentAsQa):
+      return {
+        ...state,
+        isPagoPAQAEnabled: action.payload
+      };
   }
 
   return state;
 }
+
