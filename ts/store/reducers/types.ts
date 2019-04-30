@@ -14,6 +14,7 @@ import { InstallationState } from "./installation";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
+import { PagoPAEnvState } from "./pagoPAEnv";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
@@ -43,6 +44,7 @@ export type GlobalState = Readonly<{
   identification: IdentificationState;
   installation: InstallationState;
   debug: DebugState;
+  pagoPAEnv: PagoPAEnvState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
