@@ -27,6 +27,7 @@ import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
+import pagoPAEnvReducer from './pagoPAEnv';
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -80,7 +81,8 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  debug: debugReducer
+  debug: debugReducer,
+  pagoPAEnv: pagoPAEnvReducer
 });
 
 export function createRootReducer(
