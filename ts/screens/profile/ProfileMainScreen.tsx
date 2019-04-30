@@ -1,6 +1,5 @@
 import {
   Button,
-  Content,
   H1,
   H3,
   Left,
@@ -12,9 +11,13 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationEvents,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -118,6 +121,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       { cancelable: false }
     );
 
+  private ServiceListRef = React.createRef<ScrollView>();
+  private scrollToTop = () => {
+    if (this.ServiceListRef.current) {
+      this.ServiceListRef.current.scrollTo({ x: 0, y: 0, animated: false });
+    }
+  };
+
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -134,7 +144,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
       >
-        <Content noPadded={true}>
+        <ScrollView ref={this.ServiceListRef}>
+          <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Privacy */}
             <ListItem
@@ -324,7 +335,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </React.Fragment>
             )}
           </List>
-        </Content>
+        </ScrollView>
       </TopScreenComponent>
     );
   }
