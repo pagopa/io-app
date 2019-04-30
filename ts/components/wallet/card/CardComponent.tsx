@@ -266,14 +266,14 @@ export default class CardComponent extends React.Component<Props> {
       >
         <View style={styles.cardInner}>
           <View style={styles.columns}>
-            <Text
-              style={[
-                CreditCardStyles.textStyle,
-                CreditCardStyles.largeTextStyle
-              ]}
-            >
-              {`${HIDDEN_CREDITCARD_NUMBERS}${wallet.creditCard.pan.slice(-4)}`}
-            </Text>
+            <View style={[styles.cardNumber]}>
+              <Text style={[CreditCardStyles.smallTextStyle]}>
+                {`${HIDDEN_CREDITCARD_NUMBERS}`}
+              </Text>
+              <Text style={[CreditCardStyles.largeTextStyle]}>
+                {`${wallet.creditCard.pan.slice(-4)}`}
+              </Text>
+            </View>
 
             <View style={styles.topRightCornerContainer}>
               {this.renderTopRightCorner()}
