@@ -600,3 +600,9 @@ identification:
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
       fallbackLabel: Usa il PIN
+calendarEvents:
+  calendarSelect: In quale calendario vuoi aggiungere l'evento?
+  removeRequest: 
+    title: Sei sicuro di voler rimuovere l'evento?
+    ok: Rimuovi evento
+    cancel: Annulla l'operazione

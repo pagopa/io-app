@@ -166,7 +166,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
-            paymentByRptId={paymentsByRptId}
+            paymentsByRptId={paymentsByRptId}
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}

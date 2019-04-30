@@ -588,3 +588,9 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the PIN
+calendarEvents:
+  calendarSelect: In which calendar you want to add the event?
+  removeRequest: 
+    title: Are you sure you want to remove this event?
+    ok: Remove event
+    cancel: Cancel the operation

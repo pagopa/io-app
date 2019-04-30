@@ -11,7 +11,7 @@ import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
 } from "../helpers/withMessagesSelection";
-import MessageListComponent from "./MessageListComponent";
+import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -48,8 +48,8 @@ type OwnProps = {
 };
 
 type Props = Pick<
-  ComponentProps<typeof MessageListComponent>,
-  "servicesById" | "paymentByRptId" | "onRefresh"
+  ComponentProps<typeof MessageList>,
+  "servicesById" | "paymentsByRptId" | "onRefresh"
 > &
   OwnProps &
   InjectedWithMessagesSelectionProps;
@@ -139,9 +139,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             </Button>
           </View>
         )}
-        <MessageListComponent
+        <MessageList
           {...this.props}
-          messages={this.state.filteredMessageStates}
+          messageStates={this.state.filteredMessageStates}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
           refreshing={isLoading}
