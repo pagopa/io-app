@@ -1,6 +1,5 @@
 import {
   Button,
-  Content,
   H1,
   H3,
   Left,
@@ -12,9 +11,13 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationEvents,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -40,7 +43,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { copyToClipboardWithFeedback } from "../../utils/clipboard";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -118,6 +121,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       { cancelable: false }
     );
 
+  private ServiceListRef = React.createRef<ScrollView>();
+  private scrollToTop = () => {
+    if (this.ServiceListRef.current) {
+      this.ServiceListRef.current.scrollTo({ x: 0, y: 0, animated: false });
+    }
+  };
+
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -134,7 +144,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
       >
-        <Content noPadded={true}>
+        <ScrollView ref={this.ServiceListRef}>
+          <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Privacy */}
             <ListItem
@@ -212,7 +223,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      copyToClipboardWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(DeviceInfo.getVersion())
                     }
                   >
                     <Text>
@@ -228,7 +239,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(backendInfo.version)
+                        clipboardSetStringWithFeedback(backendInfo.version)
                       }
                     >
                       <Text>
@@ -244,7 +255,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(sessionToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(sessionToken)
+                      }
                     >
                       <Text ellipsizeMode="tail" numberOfLines={1}>
                         {`Session Token ${sessionToken}`}
@@ -257,7 +270,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(walletToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(walletToken)
+                      }
                     >
                       <Text ellipsizeMode="tail" numberOfLines={1}>
                         {`Wallet token ${walletToken}`}
@@ -270,7 +285,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   <Button
                     info={true}
                     small={true}
-                    onPress={() => copyToClipboardWithFeedback(notificationId)}
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(notificationId)
+                    }
                   >
                     <Text>{`Notification ID ${notificationId.slice(
                       0,
@@ -285,7 +302,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(notificationToken)
+                        clipboardSetStringWithFeedback(notificationToken)
                       }
                     >
                       <Text>{`Notification token ${notificationToken.slice(
@@ -318,7 +335,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </React.Fragment>
             )}
           </List>
-        </Content>
+        </ScrollView>
       </TopScreenComponent>
     );
   }

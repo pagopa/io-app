@@ -38,7 +38,7 @@ locales:
   en: Inglese
 clipboard:
   copyFeedback: Copiato negli appunti
-  copyText: Copia
+  copyText: copia
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.

@@ -180,6 +180,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload
       });
+
+    case getType(setMessageReadState): {
+      if (action.payload.read === true) {
+        setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
+      }
+      return mp.track(action.type, action.payload);
+    }
+
     //
     // Actions (without properties)
     //
@@ -215,7 +223,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
     case getType(loadMessage.failure):
-    case getType(setMessageReadState):
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):

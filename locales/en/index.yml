@@ -37,7 +37,7 @@ locales:
   en: English
 clipboard:
   copyFeedback: Copied to clipboard
-  copyText: Copy
+  copyText: copy
 connection:
   status:
     offline: Offline! Some features will not work.

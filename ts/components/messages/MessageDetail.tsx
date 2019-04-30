@@ -11,7 +11,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import { copyToClipboardWithFeedback } from "../../utils/clipboard";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -130,7 +130,7 @@ class MessageDetailComponent extends React.PureComponent<Props> {
               <Col style={styles.messageIDBtnContainer}>
                 <Button
                   small={true}
-                  onPress={() => copyToClipboardWithFeedback(message.id)}
+                  onPress={() => clipboardSetStringWithFeedback(message.id)}
                 >
                   <Text style={styles.messageIDBtnText}>
                     {I18n.t("clipboard.copyText")}

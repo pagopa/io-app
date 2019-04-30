@@ -32,7 +32,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  requestState: pot.Pot<true, string>;
+  requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
 };
 
 const LOGIN_BASE_URL = `${
@@ -110,9 +110,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.loginTrace = url;
   };
 
-  private handleOnError = (): void => {
+  private handleLoadingError = (): void => {
     this.setState({
-      requestState: pot.noneError("error")
+      requestState: pot.noneError("LOADING_ERROR")
+    });
+  };
+
+  private handleLoginFailure = () => {
+    this.props.dispatchLoginFailure();
+    this.setState({
+      requestState: pot.noneError("LOGIN_ERROR")
     });
   };
 
@@ -132,7 +139,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     });
 
     onNavigationStateChange(
-      this.props.dispatchLoginFailure,
+      this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
   };
@@ -145,14 +152,23 @@ class IdpLoginScreen extends React.Component<Props, State> {
         </View>
       );
     } else if (pot.isError(this.state.requestState)) {
+      const errorType = this.state.requestState.error;
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
           <Text style={styles.errorTitle} bold={true}>
-            {I18n.t("authentication.errors.network.title")}
+            {I18n.t(
+              errorType === "LOADING_ERROR"
+                ? "authentication.errors.network.title"
+                : "authentication.errors.login.title"
+            )}
           </Text>
           <Text style={styles.errorBody}>
-            {I18n.t("authentication.errors.network.body")}
+            {I18n.t(
+              errorType === "LOADING_ERROR"
+                ? "authentication.errors.network.body"
+                : "authentication.errors.login.body"
+            )}
           </Text>
           <View style={styles.errorButtonsContainer}>
             <Button
@@ -202,7 +218,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             source={{ uri: loginUri }}
-            onError={this.handleOnError}
+            onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
           />
