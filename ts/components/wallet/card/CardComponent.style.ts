@@ -24,6 +24,12 @@ export default StyleSheet.create({
     paddingRight: 16,
     paddingTop: 22
   },
+
+  cardNumber: {
+    flexDirection: "row",
+    justifyContent: "flex-start"
+  },
+
   columns: {
     flexDirection: "row",
     justifyContent: "space-between"

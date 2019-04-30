@@ -35,6 +35,12 @@ const unavailableAlert = () =>
     I18n.t("preferences.unavailable.message")
   );
 
+const languageAlert = () =>
+  Alert.alert(
+    I18n.t("preferences.language.title"),
+    I18n.t("preferences.language.message")
+  );
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -206,7 +212,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                 valuePreview={profileData.spid_mobile_phone}
               />
             </ListItem>
-            <ListItem onPress={unavailableAlert}>
+            <ListItem onPress={languageAlert}>
               <PreferenceItem
                 kind="value"
                 title={I18n.t("preferences.list.language")}

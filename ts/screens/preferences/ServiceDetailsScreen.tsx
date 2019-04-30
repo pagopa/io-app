@@ -124,6 +124,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
    * profile with the new enabled channels
    */
   private dispatchNewEnabledChannels(newUiEnabledChannels: EnabledChannels) {
+    // if a previous update is still running, do nothing
+    // this check is to prevent user double tap on
+    // switch while its animation is running
+    if (pot.isUpdating(this.props.profile)) {
+      return;
+    }
+    this.setState({
+      uiEnabledChannels: newUiEnabledChannels
+    });
+
     const updatedBlockedChannels = getBlockedChannels(
       this.props.profile,
       this.props.navigation.getParam("service").service_id
@@ -222,7 +232,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   value={this.state.uiEnabledChannels.inbox}
                   disabled={
                     profileEnabledChannels.inbox !==
-                    this.state.uiEnabledChannels.inbox
+                      this.state.uiEnabledChannels.inbox ||
+                    pot.isUpdating(this.props.profile)
                   }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
@@ -230,15 +241,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                       ...this.state.uiEnabledChannels,
                       inbox: value
                     };
-
-                    // dispatch the update of the profile from the new prefs
                     this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
                   }}
                 />
               </Col>
@@ -263,22 +266,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.push
                   }
-                  disabled={!this.state.uiEnabledChannels.inbox}
+                  disabled={
+                    !this.state.uiEnabledChannels.inbox ||
+                    pot.isUpdating(this.props.profile)
+                  }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
                     const newUiEnabledChannels = {
                       ...this.state.uiEnabledChannels,
                       push: value
                     };
-
-                    // dispatch the update of the profile from the new prefs
                     this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
                   }}
                 />
               </Col>
@@ -299,7 +297,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               <Col size={2}>
                 <Switch
                   key={`switch-email-${profileVersion}`}
-                  disabled={!this.state.uiEnabledChannels.inbox}
+                  disabled={
+                    !this.state.uiEnabledChannels.inbox ||
+                    pot.isUpdating(this.props.profile)
+                  }
                   value={
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email
@@ -310,15 +311,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                       ...this.state.uiEnabledChannels,
                       email: value
                     };
-
-                    // dispatch the update of the profile from the new prefs
                     this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
                   }}
                 />
               </Col>
