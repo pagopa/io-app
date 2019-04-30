@@ -439,7 +439,7 @@ wallet:
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid.
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
-    PAYMENT_ONGOING: Another payment for this notice is going on, a mew payment can't be started at this time.
+    PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
     PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
