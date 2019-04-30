@@ -1,13 +1,17 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Effect } from "redux-saga";
 import { put, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccept } from "../../store/actions/onboarding";
-import { isTosAcceptedSelector } from "../../store/reducers/onboarding";
-import { profileSelector } from "../../store/reducers/profile";
+import { profileUpsert } from "../../store/actions/profile";
+import {
+  isTosAcceptedSelector,
+  isTosAcceptedVersion
+} from "../../store/reducers/onboarding";
+
 import { GlobalState } from "../../store/reducers/types";
+import { TOS_VERSION } from "../../utils/constants";
 
 export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
   // From the state we check whether the user has already accepted the ToS
@@ -32,21 +36,11 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
 }
 
 export function* checkAcceptedTosSagaVersion(): IterableIterator<Effect> {
-  // Get the current Profile from the state
-  const profileState: ReturnType<typeof profileSelector> = yield select<
-    GlobalState
-  >(profileSelector);
+  const tosAcceptedVersion: ReturnType<
+    typeof isTosAcceptedVersion
+  > = yield select<GlobalState>(isTosAcceptedVersion);
 
-  if (pot.isNone(profileState)) {
-    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
-    // the used didn't yet authenticated: ignore this upsert request.
-    return;
-  }
-
-  const currentProfile = profileState.value;
-
-  // if (currentProfile.accepted_tos_version < CURRENT_TOS_VERSION) {
-  if (currentProfile.accepted_tos_version < 1) {
+  if (tosAcceptedVersion < TOS_VERSION) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
 
@@ -56,5 +50,9 @@ export function* checkAcceptedTosSagaVersion(): IterableIterator<Effect> {
     // We're done with accepting the ToS, dispatch the action that updates
     // the redux state.
     yield put(tosAccept.success());
+
+    yield take(getType(profileUpsert.request));
+    yield put(profileUpsert.request());
+
   }
 }

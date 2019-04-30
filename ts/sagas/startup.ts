@@ -49,7 +49,7 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
-import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
+import { checkAcceptedTosSaga, checkAcceptedTosSagaVersion } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
@@ -186,7 +186,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
   } else {
-    console.log("Pin ok inizia il resto");
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
       // The user was previously logged in, so no onboarding is needed
@@ -201,7 +200,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         return;
       } else {
         // chiamata saga check versione tos
-        console.log("Qui otrei inserire la chiamata al TosChecker");
+        console.log("call checkAcceptedTosSagaVersion");
         yield call(checkAcceptedTosSagaVersion);
       }
     }

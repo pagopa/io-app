@@ -96,7 +96,7 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         ...action.payload,
         version: 0,
-        // accepted_tos_version: CURRENT_TOS_VERSION;
+        accepted_tos_version: 0
       };
 
   const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
