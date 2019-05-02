@@ -136,31 +136,6 @@ jobs:
       # Run DangerJS
       - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
 
-  # Build Android bundle
-  build-android-bundle:
-    <<: *defaults_js
-
-    resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
-
-      # Create bundles dir
-      - run: mkdir -p ./bundles
-
-      # Run bundle command for android platform
-      - run: yarn bundle:android
-
-      - persist_to_workspace:
-          root: bundles
-          paths:
-            - index.android.bundle
-
-      - store_artifacts:
-          path: bundles/index.android.bundle
-
   # Create signed Android release
   build-release:
     <<: *defaults_android
@@ -466,19 +441,14 @@ workflows:
             branches:
               ignore: master
 
-      # Build Android bundle
-      - build-android-bundle:
-          requires:
-            - compile-typescript
-            - lint-typescript
-            - run-tests
-
       # To avoid running too many (long) native builds and tests, this step
-      # waits the approval for the iOS and Android native tests.
+      # waits the approval for the Android native tests.
       - hold-android-native:
           type: approval
           requires:
-            - build-android-bundle
+            - compile-typescript
+            - run-tests
+            - lint-typescript
           filters:
             branches:
               ignore: master
