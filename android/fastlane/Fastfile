@@ -29,7 +29,7 @@ platform :android do
   lane :build_debug do
     gradle(
       task: "assemble",
-      build_type: "Debug"
+      build_type: "Debug",
       flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
