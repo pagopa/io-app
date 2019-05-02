@@ -137,7 +137,7 @@ jobs:
       - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
 
   # Create signed Android release
-  build-release:
+  android-release:
     <<: *defaults_android
 
     resource_class: xlarge
