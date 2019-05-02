@@ -33,6 +33,10 @@ global:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
+  localNotifications:
+    spidLogin:
+      title: Fai login su IO!
+      message: Accedi con la tua Identità Digitale su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese

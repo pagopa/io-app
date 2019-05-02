@@ -25,10 +25,10 @@ import variables from "../../theme/variables";
 
 import { ComponentProps } from "../../types/react";
 
-import { addSeconds } from "date-fns";
+import { addMinutes } from "date-fns";
 import PushNotification from "react-native-push-notification";
 import { DevScreenButton } from "../../components/DevScreenButton";
-import { LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID } from "../../utils/constants";
+import { LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID_TAG } from "../../utils/constants";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -70,67 +70,95 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
 ];
 
 /*
- * Schedule a local notification to remind the user to authenticate with spid
+ * Schedule a set of local notifications to remind the user to authenticate with spid
  */
 function configureLocalNotificationForFirstAccessSpid() {
   const nowDate = new Date();
-  const scheduledDate = addSeconds(nowDate, 20);
+  // Configure the dates to schedule local notifications
+  const oneDayDate = addMinutes(nowDate, 1);
+  const threeDayDate = addMinutes(oneDayDate, 1);
+  const oneWeekDate = addMinutes(threeDayDate, 1);
+  const twoWeekDate = addMinutes(oneWeekDate, 1);
+  const oneMonthDate = addMinutes(twoWeekDate, 1);
+  const twoMonthDate = addMinutes(oneMonthDate, 1);
+  const sixMonthDate = addMinutes(twoMonthDate, 1);
+  const localNotificationDates: ReadonlyArray<Date> = [
+    oneDayDate,
+    threeDayDate,
+    oneWeekDate,
+    twoWeekDate,
+    oneMonthDate,
+    twoMonthDate,
+    sixMonthDate
+  ];
 
-  PushNotification.localNotificationSchedule({
-    title: "My Notification Title",
-    message: "My Notification Message",
-    date: scheduledDate,
-    id: LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID
-  });
+  localNotificationDates.forEach((scheduledDate: Date) =>
+    PushNotification.localNotificationSchedule({
+      title: I18n.t("global.localNotifications.spidLogin.title"),
+      message: I18n.t("global.localNotifications.spidLogin.message"),
+      date: scheduledDate,
+      tag: LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID_TAG
+    })
+  );
 }
 
-const LandingScreen: React.SFC<Props> = props => {
-  const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
-  const navigateToIdpSelection = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+class LandingScreen extends React.Component<Props> {
+  public componentDidMount() {
+    configureLocalNotificationForFirstAccessSpid();
+  }
 
-  const navigateToSpidInformationRequest = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+  public render() {
+    const { navigation } = this.props;
 
-  const cardComponents = cardProps.map(p => (
-    <LandingCardComponent key={`card-${p.id}`} {...p} />
-  ));
+    const navigateToMarkdown = () => {
+      navigation.navigate(ROUTES.MARKDOWN);
+    };
+    const navigateToIdpSelection = () => {
+      navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+    };
 
-  configureLocalNotificationForFirstAccessSpid();
+    const navigateToSpidInformationRequest = () => {
+      navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+    };
 
-  return (
-    <BaseScreenComponent>
-      {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
+    const cardComponents = cardProps.map(p => (
+      <LandingCardComponent key={`card-${p.id}`} {...p} />
+    ));
 
-      <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
-        <View spacer={true} large={true} />
-        <HorizontalScroll cards={cardComponents} />
-        <View spacer={true} />
-      </Content>
+    return (
+      <BaseScreenComponent>
+        {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
 
-      <View footer={true}>
-        <Button
-          block={true}
-          primary={true}
-          iconLeft={true}
-          onPress={navigateToIdpSelection}
-          testID="landing-button-login"
-        >
-          <IconFont name="io-profilo" color={variables.colorWhite} />
-          <Text>{I18n.t("authentication.landing.login")}</Text>
-        </Button>
-        <View spacer={true} />
-        <Button
-          block={true}
-          small={true}
-          transparent={true}
-          onPress={navigateToSpidInformationRequest}
-        >
-          <Text>{I18n.t("authentication.landing.nospid")}</Text>
-        </Button>
-      </View>
-    </BaseScreenComponent>
-  );
-};
+        <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
+          <View spacer={true} large={true} />
+          <HorizontalScroll cards={cardComponents} />
+          <View spacer={true} />
+        </Content>
+
+        <View footer={true}>
+          <Button
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={navigateToIdpSelection}
+            testID="landing-button-login"
+          >
+            <IconFont name="io-profilo" color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.login")}</Text>
+          </Button>
+          <View spacer={true} />
+          <Button
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={navigateToSpidInformationRequest}
+          >
+            <Text>{I18n.t("authentication.landing.nospid")}</Text>
+          </Button>
+        </View>
+      </BaseScreenComponent>
+    );
+  }
+}
 
 export default connect()(LandingScreen);

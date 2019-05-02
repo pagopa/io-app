@@ -32,6 +32,10 @@ global:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
+  localNotifications:
+    spidLogin:
+      title: Login to IO!
+      message: Login with yours Digital Identity on IO, the public services app
 locales:
   it: Italian
   en: English

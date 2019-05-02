@@ -22,7 +22,7 @@ import {
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID } from "../../utils/constants";
+import { LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID_TAG } from "../../utils/constants";
 import { extractLoginResult } from "../../utils/login";
 
 type OwnProps = {
@@ -85,9 +85,9 @@ const onNavigationStateChange = (
       if (loginResult.success) {
         // In case of successful login
         onSuccess(loginResult.token);
-        // Remove the scheduled local notification to remind the user to authenticate with spid
+        // Remove all the scheduled local notifications to remind the user to authenticate with spid
         PushNotification.cancelLocalNotifications({
-          id: LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID
+          tag: LOCAL_NOTIFICATION_FIRST_ACCESS_SPID_ID_TAG
         });
       } else {
         // In case of login failure
