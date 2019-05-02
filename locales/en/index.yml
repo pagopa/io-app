@@ -4,6 +4,7 @@ global:
     decimalSeparator: "."
   dateFormats:
     dayAndMonth: "dddd D MMMM"
+    dayMonth: "MM/DD" 
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -17,6 +18,7 @@ global:
     continue: Continue
     retry: Retry
     back: Back
+    confirm: Confirm
   navigator:
     messages: messages
     wallet: wallet
@@ -33,6 +35,9 @@ global:
 locales:
   it: Italian
   en: English
+clipboard:
+  copyFeedback: Copied to clipboard
+  copyText: copy
 connection:
   status:
     offline: Offline! Some features will not work.
@@ -57,7 +62,16 @@ profile:
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
-  logout: Logout from this SPID identity
+  logout:
+    menulabel: Logout from this SPID identity
+    cta: 
+      header: How do you want to quit the app?
+      keepData: 
+        title: Quit keeping all data
+        description: In order to use IO, you will log in with you SPID identity again, but any data will be conserved by this app (reading status, etc.) and will be immediately available at next launch.
+      resetData: 
+        title: Quit and reset this app
+        description: "IO app will be restored to its initial state, as if it would just be installed: if you want log in with a different identity, or if you are into not using IO app anymore, you should choose this option. All data saved by IO on this device will be deleted."
   errors:
     load: Error loading the profile
     upsert: Error creating or updating the profile
@@ -66,6 +80,9 @@ profile:
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    resetPin:
+      confirmTitle: Are you sure you want to reset your PIN?
+      confirmMsg: You will be asked again to log in with SPID.
     privacy:
       title: Privacy
       description: Export data, delete account
@@ -162,14 +179,19 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
-    subtitle: "The Identity Providers provide several authentication methods
-      and, toghether with SPID, they provide several services: find out more
-      at each one's website."
   idp_login:
     headerTitle: Login
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
+    network: 
+      title: Access problem
+      body: The selected identity provider is not available at this time, you can try again later.
+            If you have another SPID, choose an alternative provider.
+            You can report the problem with the bug icon at the top right of the screen.
+    login:
+      title: Login error
+      body: There was an error with the login, please retry!
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
@@ -196,13 +218,14 @@ onboarding:
     You can do this again at any time logging in with your SPID account.
   fingerprint:
     headerTitle: Activation
+    title: Biometric authentication
     body:
-      enrolledText: From this moment on you can access this app also using {{biometryType}}. You can disable this function from security preference pane of this app.
+      enrolledText: !include tos_fingerprint_enrolled.md
       enrolledType:
-        fingerprint: Fingerprint
+        fingerprint: your fingerprint
         faceId: FaceID
         touchId: TouchID
-      notEnrolledText: No enabled biometric access has been found. If you want you can enable it on this device and then enable it from security preference pane of this app.
+      notEnrolledText: !include tos_fingerprint_not_enrolled.md
 pin_login:
   pin:
     pinInfo: Enter the PIN
@@ -406,13 +429,17 @@ wallet:
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
+    enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+    cameraUsagePerissionInfobox:
+      title: "IO Camera usage permission"
+      message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid.
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
-    PAYMENT_ONGOING: Another payment for this notice is going on, a mew payment can't be started at this time.
+    PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
     PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
@@ -475,12 +502,17 @@ messages:
     invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
     emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+  inbox:
+    emptyMessage: 
+      title: Your message list is empty.
+      subtitle: Refresh to check for any new messages.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
   loadingText: Loading message details in progress...
-  errorText: An error occurred while loading the message details.
-  retryText: Retry
+  errorText: We were unable to load the details of your message
+  retryText: It's probably a temporary error... please try again!
+  submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
   rawInfoLink:
     showLabel: Details of the message
     hideLabel: Close details
@@ -517,6 +549,9 @@ preferences:
   unavailable:
     title: This setting is set up on your SPID profile
     message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+  language: 
+    title: This setting is set up in system preferences
+    message: IO inherits language from the operating system of this device
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
@@ -545,12 +580,15 @@ services:
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
+  disableTitle: "Do you really want to disable the service?"
+  disableMsg: "Rememer, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
 identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.
   resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
   biometric:
     failure: Identification failed
+    fingerprintType: Fingerprint
     popup:
       reason: Identification
       title: Identification required

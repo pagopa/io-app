@@ -19,6 +19,7 @@ import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
+import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
 import {
   authenticationPersistConfig,
   createRootReducer
@@ -31,7 +32,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 1;
+const CURRENT_REDUX_STORE_VERSION = 2;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -54,7 +55,13 @@ const migrations: MigrationManifest = {
     ({
       ...state,
       entities: {}
-    } as PersistedState)
+    } as PersistedState),
+
+  // Version 2
+  // Adds messagesIdsByServiceId
+  "2": (state: PersistedState) => {
+    return addMessagesIdsByServiceId(state as PersistedGlobalState);
+  }
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

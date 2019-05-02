@@ -1,10 +1,13 @@
+/**
+ * A reducer for not persisted preferences.
+ */
 import { isActionOf } from "typesafe-actions";
 
 import { preferencesLanguagesLoadSuccess } from "../actions/preferences";
 import { Action } from "../actions/types";
 
 export type PreferencesState = Readonly<{
-  languages: ReadonlyArray<string> | undefined;
+  languages?: ReadonlyArray<string>;
 }>;
 
 const initialPreferencesState: PreferencesState = {

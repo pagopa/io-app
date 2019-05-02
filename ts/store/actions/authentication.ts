@@ -12,19 +12,34 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 
+export type LogoutOption = {
+  keepUserData: boolean;
+};
+
 export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
 
+//
+// Action about IDP Login phase
+//
+
+export const idpLoginUrlChanged = createStandardAction(
+  "AUTHENTICATION_WEBVIEW_URL_CHANGED"
+)<{ url: string }>();
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
   SessionToken
 >();
 
 export const loginFailure = createStandardAction("LOGIN_FAILURE")();
 
-export const logoutRequest = createStandardAction("LOGOUT_REQUEST")();
+export const logoutRequest = createStandardAction("LOGOUT_REQUEST")<
+  LogoutOption
+>();
 
-export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")();
+export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")<
+  LogoutOption
+>();
 
 export const logoutFailure = createAction(
   "LOGOUT_FAILURE",
@@ -48,6 +63,7 @@ export const forgetCurrentSession = createStandardAction("SESSION_FORGET")();
 
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
+  | ActionType<typeof idpLoginUrlChanged>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>

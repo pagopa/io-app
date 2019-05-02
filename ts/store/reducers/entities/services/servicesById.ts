@@ -8,7 +8,7 @@ import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { clearCache } from "../../../actions/profile";
-import { loadService } from "../../../actions/services";
+import { loadService, removeServiceTuples } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -43,6 +43,14 @@ const reducer = (
         ...state,
         [action.payload]: pot.noneError(Error())
       };
+
+    case getType(removeServiceTuples): {
+      const serviceTuples = action.payload;
+      const newState = { ...state };
+      // tslint:disable-next-line: no-object-mutation
+      serviceTuples.forEach(_ => delete newState[_.e1]);
+      return newState;
+    }
 
     case getType(clearCache):
       return INITIAL_STATE;

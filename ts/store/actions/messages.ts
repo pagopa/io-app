@@ -20,7 +20,7 @@ export const loadMessage = createAsyncAction(
 )<
   CreatedMessageWithoutContent,
   MessageWithContentPO,
-  { id: string; error: string | undefined }
+  { id: string; error?: string }
 >();
 
 export const loadMessageWithRelations = createAsyncAction(
@@ -37,6 +37,10 @@ export const loadMessages = createAsyncAction(
 
 export const loadMessagesCancel = createStandardAction(
   "MESSAGES_LOAD_CANCEL"
+)();
+
+export const loadMessagesCancelled = createStandardAction(
+  "MESSAGES_LOAD_CANCELLED"
 )();
 
 export const setMessageReadState = createAction(

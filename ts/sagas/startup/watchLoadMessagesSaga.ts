@@ -24,7 +24,8 @@ import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
   loadMessages as loadMessagesAction,
-  loadMessagesCancel
+  loadMessagesCancel,
+  loadMessagesCancelled
 } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
@@ -124,8 +125,8 @@ export function* loadMessages(
     yield put(loadMessagesAction.failure(error.message));
   } finally {
     if (yield cancelled()) {
-      // If the task is cancelled send a cancel message
-      yield put(loadMessagesCancel());
+      // If the task is cancelled send a loadMessagesCancelled action.
+      yield put(loadMessagesCancelled());
     }
   }
 }

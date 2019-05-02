@@ -11,7 +11,7 @@ import { delay } from "redux-saga";
  * concurrent functions that need the token and may detect expired tokens.
  */
 export class SessionManager<T> {
-  private token: T | undefined;
+  private token?: T;
   private mutex = new Mutex();
 
   /**

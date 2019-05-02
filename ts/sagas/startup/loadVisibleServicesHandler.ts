@@ -1,22 +1,28 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { all, call, Effect, put, select } from "redux-saga/effects";
 
 import { GetVisibleServicesT } from "../../../definitions/backend/requestTypes";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { sessionExpired } from "../../store/actions/authentication";
-import { loadService, loadVisibleServices } from "../../store/actions/services";
-import { GlobalState } from "../../store/reducers/types";
+import {
+  loadService,
+  loadVisibleServices,
+  removeServiceTuples
+} from "../../store/actions/services";
+import {
+  MessagesIdsByServiceId,
+  messagesIdsByServiceIdSelector
+} from "../../store/reducers/entities/messages/messagesIdsByServiceId";
+import {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
-import { isDefined } from "../../utils/guards";
 
-const isServiceLoaded = (
-  potService: pot.Pot<ServicePublic, Error> | undefined
-) =>
-  potService !== undefined &&
-  pot.isSome(potService) &&
-  !pot.isError(potService) &&
-  !pot.isLoading(potService);
+type VisibleServiceVersionById = {
+  [index: string]: number | undefined;
+};
 
 /**
  * A generator to load the service details from the Backend
@@ -25,6 +31,7 @@ const isServiceLoaded = (
  * @param {string} id - The id of the service to load
  * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
+// tslint:disable-next-line: cognitive-complexity
 export function* loadVisibleServicesRequestHandler(
   getVisibleServices: TypeofApiCall<GetVisibleServicesT>
 ): IterableIterator<Effect> {
@@ -34,19 +41,83 @@ export function* loadVisibleServicesRequestHandler(
       {}
     );
 
-    if (response.isRight() && response.value.status === 200) {
-      const { items } = response.value.value;
-      yield put(loadVisibleServices.success(items));
-      // Parallel fetch of those services that we haven't loaded yet
-      const servicesById: GlobalState["entities"]["services"]["byId"] = yield select<
-        GlobalState
-      >(_ => _.entities.services.byId);
-      const serviceIds = items.map(_ => _.service_id).filter(isDefined);
-      const newServiceIds = serviceIds.filter(
-        id => !isServiceLoaded(servicesById[id])
+    if (response !== undefined && response.status === 200) {
+      const { items: visibleServices } = response.value;
+      yield put(loadVisibleServices.success(visibleServices));
+
+      const visibleServiceVersionById = visibleServices.reduce<
+        VisibleServiceVersionById
+      >(
+        (accumulator, currentValue) => ({
+          ...accumulator,
+          [currentValue.service_id]: currentValue.version
+        }),
+        {}
       );
-      yield all(newServiceIds.map(id => put(loadService.request(id))));
-    } else if (response.isRight() && response.value.status === 401) {
+
+      const storedServicesById: ServicesByIdState = yield select(
+        servicesByIdSelector
+      );
+
+      const messagesIdsByServiceId: MessagesIdsByServiceId = yield select(
+        messagesIdsByServiceIdSelector
+      );
+
+      // Create an array of tuples containing:
+      // - serviceId (to remove service from the servicesById section of the redux store)
+      // - organizationFiscalCode (to remove service from serviceIdsByOrganizationFiscalCode
+      //   section of the redux store)
+      const serviceTuplesToRemove = Object.keys(storedServicesById).reduce<
+        ReadonlyArray<ITuple2<string, string | undefined>>
+      >((accumulator, serviceId) => {
+        // Check if this service id must be removed
+        // A service must be removed if is no more visible and not used by any loaded message.
+        const mustRemoveServiceId =
+          visibleServiceVersionById[serviceId] === undefined &&
+          messagesIdsByServiceId[serviceId] === undefined;
+
+        if (!mustRemoveServiceId) {
+          return accumulator;
+        }
+
+        const storedPotService = storedServicesById[serviceId];
+
+        if (storedPotService !== undefined) {
+          // If the service detail is also loaded get the organization fiscal code
+          const organizationFiscalCode = pot.toUndefined(
+            pot.map(storedPotService, _ => _.organization_fiscal_code)
+          );
+
+          return [...accumulator, Tuple2(serviceId, organizationFiscalCode)];
+        }
+
+        return accumulator;
+      }, []);
+      // Dispatch action to remove the services from the redux store
+      yield put(removeServiceTuples(serviceTuplesToRemove));
+
+      const serviceIdsToLoad = visibleServices
+        .filter(service => {
+          const serviceId = service.service_id;
+          const storedService = storedServicesById[serviceId];
+
+          return (
+            // The service:
+            // - is not in the redux store
+            storedService === undefined ||
+            // - is in the redux store as PotNone and not loading
+            (pot.isNone(storedService) && !pot.isLoading(storedService)) ||
+            // - is in the redux store as PotSome, is not updating and is outdated
+            (pot.isSome(storedService) &&
+              !pot.isUpdating(storedService) &&
+              storedService.value.version < service.version)
+          );
+        })
+        .map(_ => _.service_id);
+
+      // Parallel fetch of those services that we haven't loaded yet or need to be updated
+      yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
+    } else if (response !== undefined && response.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
       return;

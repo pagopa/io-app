@@ -6,10 +6,17 @@
 defaults: &defaults
   working_directory: ~/italia-app
 
+node_cache_key: &node_cache_key v1.1-dependencies-{{ checksum "yarn.lock" }}
+
+android_sdk_cache_key: &android_sdk_cache_key v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
+
+android_jars_cache_key: &android_jars_cache_key jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+
+ios_gems_cache_key: &ios_gems_cache_key ruby-{{ checksum "Gemfile.lock" }}
+
 # nodejs builds
 defaults_js: &defaults_js
   <<: *defaults
-  parallelism: 2
   docker:
     - image: circleci/node:8
 
@@ -19,11 +26,13 @@ defaults_android: &defaults_android
   docker:
     - image: circleci/android:api-23-node8-alpha
   environment:
-    - TERM: "dumb"
-    - ANDROID_SDK_BUILD_TOOLS_REVISION: "27.0.3"
-    - ANDROID_SDK_BUILD_API_LEVEL: "27"
-    - REACT_NATIVE_MAX_WORKERS: 1
-    - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"'
+    TERM: "dumb"
+    ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
+    ANDROID_SDK_BUILD_API_LEVEL: "28"
+    ANDROID_GOOGLE_API_LEVEL: "23"
+    # - REACT_NATIVE_MAX_WORKERS: 1
+    GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx8g -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"'
+    RUBY_VERSION: ruby-2.4
 
 # macos builds
 defaults_macos: &defaults_macos
@@ -39,10 +48,24 @@ defaults_macos: &defaults_macos
     # Set Fastlane output dir
     FL_OUTPUT_DIR: output
     # Make Ruby bundler a little faster
-    BUNDLE_JOBS: 3
+    BUNDLE_JOBS: 4
     BUNDLE_RETRY: 3
     BUNDLE_PATH: vendor/bundle
   shell: /bin/bash --login -o pipefail
+
+restore_node_cache: &restore_node_cache
+  restore_cache:
+    keys:
+      - *node_cache_key
+
+save_node_cache: &save_node_cache
+  save_cache:
+    paths:
+      - node_modules
+    key: *node_cache_key
+
+install_node_modules: &install_node_modules
+  run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
 #
 # Build pipeline
@@ -50,41 +73,20 @@ defaults_macos: &defaults_macos
 
 version: 2
 jobs:
-  # Runs JavaScript tests on Node 8
-  test-js-node-8:
+
+  # Compile typescript
+  compile-typescript:
     <<: *defaults_js
 
     steps:
       - checkout
-
-      # Restore dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
-
-      # Install node dependencies
-      - run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
-
-      # Save node cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-
-      # Run linter
-      - run: yarn lint
+      - *restore_node_cache
+      - *install_node_modules
+      - *save_node_cache
 
       # Build app
       - run: yarn generate:all
       - run: yarn tsc:noemit
-
-      # Run tests
-      - run: yarn test --runInBand
-      - run: 'bash <(curl -s https://codecov.io/bash)'
-
-      # Run DangerJS
-      - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
 
       # Save workspace for next jobs in the workflow
       - persist_to_workspace:
@@ -92,31 +94,54 @@ jobs:
           paths:
             - italia-app
 
-  # Build Android bundle
-  build-android-bundle:
+
+  # Runs tests
+  run-tests:
+    <<: *defaults_js
+
+    resource_class: xlarge
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+
+      # Generate models and locales
+      - run: yarn generate:all
+
+      # Run tests
+      - run: yarn test
+      - run: 'bash <(curl -s https://codecov.io/bash)'
+
+  # Runs Danger checks on PR
+  lint-typescript:
     <<: *defaults_js
 
     steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
 
-      # Create bundles dir
-      - run: mkdir -p ./bundles
+      # Run linter
+      - run: yarn lint
 
-      # Run bundle command for android platform
-      - run: yarn bundle:android
+  # Runs Danger checks on PR
+  run-danger:
+    <<: *defaults_js
 
-      - persist_to_workspace:
-          root: bundles
-          paths:
-            - index.android.bundle
-      - store_artifacts:
-          path: bundles/index.android.bundle
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
 
-  # Run test on android
-  test-android:
+      # Run DangerJS
+      - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
+
+  # Create signed Android release
+  android-release:
     <<: *defaults_android
+
+    resource_class: xlarge
 
     steps:
       # Restore workflow workspace
@@ -126,58 +151,7 @@ jobs:
       # Restore sdk cache
       - restore_cache:
           keys:
-            - v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
-            - v1-android-sdkmanager-packages-
-
-      # Install Android SDK
-      - run:
-          command: ./scripts/circleci-android-setup.sh
-
-      # Save sdk cache
-      - save_cache:
-          paths:
-            - /opt/android/sdk/system-images/android-23
-            - /opt/android/sdk/system-images/android-19
-            - /opt/android/sdk/platforms/android-26
-            - /opt/android/sdk/platforms/android-23
-            - /opt/android/sdk/platforms/android-19
-            - /opt/android/sdk/build-tools/23.0.1
-            - /opt/android/sdk/add-ons/addon-google_apis-google-2
-          key: v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
-
-      # Restore jars cache
-      - restore_cache:
-          key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
-
-      # Run gradle assembleDebug
-      - run:
-          command: cd android && ./gradlew assembleDebug
-
-      # Save APKs
-      - store_artifacts:
-          path: android/app/build/outputs/apk
-          destination: apks/release
-
-      # Save jars cache
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
-
-  # Create signed Android release and deploy a new alpha version to the Google Play Store
-  alpha-release-android:
-    <<: *defaults_android
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
-
-      # Restore sdk cache
-      - restore_cache:
-          keys:
-            - v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
-            - v1-android-sdkmanager-packages-
+            - *android_sdk_cache_key
 
       # Install Android SDK
       - run:
@@ -185,10 +159,14 @@ jobs:
 
       # Restore jars cache
       - restore_cache:
-          key: jars-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+          key: *android_jars_cache_key
 
-      # Set Ruby Version for chruby
-      - run: echo "ruby-2.4" > .ruby-version
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
 
       # Install bundle dependencies
       - run:
@@ -203,7 +181,62 @@ jobs:
       - run:
           command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode
+      # Build the js bundle in release mode	
+      - run: yarn bundle:android-release
+
+      # Run alpha lane
+      - run:
+          command: cd android && bundle exec fastlane build_release
+
+      - store_artifacts:
+          path: android/app/build/outputs/apk
+          destination: apks/release
+
+  # Create signed Android release and deploy a new alpha version to the Google Play Store
+  alpha-release-android:
+    <<: *defaults_android
+
+    resource_class: xlarge
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /home/circleci
+
+      # Restore sdk cache
+      - restore_cache:
+          keys:
+            - *android_sdk_cache_key
+
+      # Install Android SDK
+      - run:
+          command: ./scripts/circleci-android-setup.sh
+
+      # Restore jars cache
+      - restore_cache:
+          key: *android_jars_cache_key
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Recreate JSON key file (for Google Play) from ENV variable
+      - run:
+          command: ./scripts/json-key-file-setup.sh
+
+      # Recreate keystore from ENV variable
+      - run:
+          command: ./scripts/keystore-setup.sh
+
+      # Build the js bundle in release mode	
       - run: yarn bundle:android-release
 
       # Run alpha lane
@@ -218,6 +251,8 @@ jobs:
   test-ios:
     <<: *defaults_macos
 
+    resource_class: large
+
     steps:
       # Restore workflow workspace
       - attach_workspace:
@@ -226,11 +261,17 @@ jobs:
       # Restore bundle cache
       - restore_cache:
           keys:
-            - ruby-{{ checksum "Gemfile.lock" }}
-            - ruby-
+            - *ios_gems_cache_key
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
 
       # Remove watchman from node global packages
       - run:
@@ -251,7 +292,7 @@ jobs:
 
       # Store bundle cache
       - save_cache:
-          key: ruby-{{ checksum "Gemfile.lock" }}
+          key: *ios_gems_cache_key
           paths:
             - vendor/bundle
 
@@ -268,6 +309,8 @@ jobs:
   test-ios-e2e-build:
     <<: *defaults_macos
 
+    resource_class: large
+
     steps:
       # Restore workflow workspace
       - attach_workspace:
@@ -276,11 +319,17 @@ jobs:
       # Restore bundle cache
       - restore_cache:
           keys:
-            - ruby-{{ checksum "Gemfile.lock" }}
-            - ruby-
+            - *ios_gems_cache_key
 
       # Set Ruby Version for chruby
       - run: echo "ruby-2.4" > .ruby-version
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
 
       # TODO: possibly remove this after the following issue has been fixed:
       # https://github.com/GeekyAnts/NativeBase/issues/1957
@@ -306,7 +355,7 @@ jobs:
 
       # Store bundle cache
       - save_cache:
-          key: ruby-{{ checksum "Gemfile.lock" }}
+          key: *ios_gems_cache_key
           paths:
             - vendor/bundle
 
@@ -339,6 +388,8 @@ jobs:
   # Run end-to-end iOS tests
   test-ios-e2e-run:
     <<: *defaults_macos
+
+    resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -373,31 +424,40 @@ workflows:
   version: 2
   build:
     jobs:
-      # Lint ant test Javascript
-      - test-js-node-8
 
-      # Build Android bundle
-      - build-android-bundle:
-          requires:
-            - test-js-node-8
+      - compile-typescript
+
+      - run-tests
+
+      - lint-typescript
+
+      - run-danger:
+          filters:
+            branches:
+              ignore: master
 
       # To avoid running too many (long) native builds and tests, this step
-      # waits the approval for the iOS and Android native tests.
-      - hold-native-tests:
+      # waits the approval for the Android native tests.
+      - hold-android-native:
           type: approval
           requires:
-            - build-android-bundle
+            - compile-typescript
+            - run-tests
+            - lint-typescript
+          filters:
+            branches:
+              ignore: master
 
-      # Native Android tests
-      - test-android:
+      # Build Android release
+      - android-release:
           requires:
-            - hold-native-tests
+            - hold-android-native
 
       # Native iOS e2e tests
       - hold-ios-e2e-tests:
           type: approval
           requires:
-            - test-js-node-8
+            - compile-typescript
       - test-ios-e2e-build:
           requires:
             - hold-ios-e2e-tests
@@ -408,7 +468,9 @@ workflows:
       # Build Android alpha release only on master branch
       - alpha-release-android:
           requires:
-            - test-js-node-8
+            - compile-typescript
+            - run-tests
+            - lint-typescript
           filters:
             branches:
               only: master

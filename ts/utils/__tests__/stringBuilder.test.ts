@@ -11,7 +11,7 @@ describe("amountBuilder", () => {
       "102.00 €": 101.999999, // round to the appropriate 2-decimals number
       "10.50 €": 10.5001
     };
-    entries(values).forEach(([k, v]: [string, number]) =>
+    entries(values).forEach(([k, v]) =>
       expect(formatNumberAmount(v)).toEqual(k)
     );
   });

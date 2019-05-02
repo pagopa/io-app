@@ -18,7 +18,6 @@ import { GlobalState } from "../../store/reducers/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import Markdown from "../../components/ui/Markdown";
 
 import ROUTES from "../../navigation/routes";
 
@@ -34,6 +33,12 @@ const unavailableAlert = () =>
   Alert.alert(
     I18n.t("preferences.unavailable.title"),
     I18n.t("preferences.unavailable.message")
+  );
+
+const languageAlert = () =>
+  Alert.alert(
+    I18n.t("preferences.language.title"),
+    I18n.t("preferences.language.message")
   );
 
 type OwnProps = Readonly<{
@@ -120,11 +125,6 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const contextualHelp = {
-      title: I18n.t("preferences.title"),
-      body: () => <Markdown>{I18n.t("preferences.preferencesHelp")}</Markdown>
-    };
-
     const { potProfile } = this.props;
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
@@ -148,7 +148,6 @@ class PreferencesScreen extends React.Component<Props, State> {
         title={I18n.t("preferences.title")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("preferences.subtitle")}
-        contextualHelp={contextualHelp}
       >
         <Content noPadded={true}>
           <List withContentLateralPadding={true}>
@@ -213,7 +212,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                 valuePreview={profileData.spid_mobile_phone}
               />
             </ListItem>
-            <ListItem onPress={unavailableAlert}>
+            <ListItem onPress={languageAlert}>
               <PreferenceItem
                 kind="value"
                 title={I18n.t("preferences.list.language")}

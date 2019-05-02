@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding,
     paddingBottom: variables.spacerLargeHeight
+  },
+  screenHeaderHeading: {
+    flex: 1
   }
 });
 
@@ -33,7 +36,9 @@ export class TopHeader extends React.PureComponent<Props> {
           </React.Fragment>
         )}
         <ScreenHeader
-          heading={<H1>{this.props.title}</H1>}
+          heading={
+            <H1 style={styles.screenHeaderHeading}>{this.props.title}</H1>
+          }
           icon={this.props.icon}
         />
         <View style={styles.subheaderContainer}>

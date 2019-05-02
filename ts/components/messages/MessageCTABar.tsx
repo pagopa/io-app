@@ -170,7 +170,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     } = this.props;
     const { isEventInCalendar } = this.state;
 
-    const calendarIconComponentSize = this.props.small ? "32" : "48";
+    const calendarIconComponentSize = this.props.small ? 32 : 48;
 
     // Create an action to add or remove the event
     const onPressHandler = () => {
@@ -407,7 +407,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     }
 
     RNCalendarEvents.saveEvent(title, {
-      title,
       calendarId: calendar.id,
       startDate: formatDateAsReminder(dueDate),
       endDate: formatDateAsReminder(dueDate),

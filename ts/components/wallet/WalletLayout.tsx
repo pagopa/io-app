@@ -20,6 +20,7 @@ import {
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
+import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
@@ -46,6 +47,13 @@ type Props = Readonly<{
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
+  private WalletLayoutRef = React.createRef<ScrollView>();
+  private scrollToTop = () => {
+    if (this.WalletLayoutRef.current) {
+      this.WalletLayoutRef.current.scrollTo({ x: 0, y: 0, animated: false });
+    }
+  };
+
   public render(): React.ReactNode {
     return (
       <Container>
@@ -63,7 +71,12 @@ export default class WalletLayout extends React.Component<Props> {
           </Right>
         </AppHeader>
 
-        <ScrollView bounces={false} style={WalletStyles.whiteBg}>
+        <ScrollView
+          bounces={false}
+          style={WalletStyles.whiteBg}
+          ref={this.WalletLayoutRef}
+        >
+          <NavigationEvents onWillFocus={this.scrollToTop} />
           <Content
             scrollEnabled={false}
             style={[styles.darkGrayBg, WalletStyles.noBottomPadding]}

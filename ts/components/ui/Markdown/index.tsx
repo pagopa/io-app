@@ -4,6 +4,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import {
+  ActivityIndicator,
   InteractionManager,
   LayoutAnimation,
   Platform,
@@ -21,7 +22,6 @@ import { connect } from "react-redux";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
-import ActivityIndicator from "../ActivityIndicator";
 import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
@@ -77,6 +77,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.3333em;
+}
+
+p {
+  margin-block-start: 0;
 }
 
 ul, ol {
@@ -168,7 +172,7 @@ type OwnProps = {
 type Props = OwnProps & ReduxProps;
 
 type State = {
-  html: string | undefined;
+  html?: string;
   htmlBodyHeight: number;
 };
 
@@ -202,40 +206,41 @@ class Markdown extends React.PureComponent<Props, State> {
   public render() {
     const { webViewStyle } = this.props;
     const { html, htmlBodyHeight } = this.state;
+    const containerStyle: ViewStyle = {
+      height: htmlBodyHeight
+    };
 
-    if (html) {
-      // Hide the WebView until we have the htmlBodyHeight
-      const containerStyle: ViewStyle =
-        htmlBodyHeight === 0
-          ? {
-              height: 0
-            }
-          : {
-              height: htmlBodyHeight
-            };
-
-      return (
-        <ScrollView nestedScrollEnabled={false} style={containerStyle}>
-          <View style={containerStyle}>
-            <WebView
-              ref={this.webViewRef}
-              scrollEnabled={false}
-              overScrollMode={"never"}
-              style={webViewStyle}
-              originWhitelist={["*"]}
-              source={{ html, baseUrl: "" }}
-              javaScriptEnabled={true}
-              injectedJavaScript={INJECTED_JAVASCRIPT}
-              onLoadEnd={this.handleLoadEnd}
-              onMessage={this.handleWebViewMessage}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-        </ScrollView>
-      );
-    }
-
-    return <ActivityIndicator />;
+    return (
+      <React.Fragment>
+        <ActivityIndicator
+          size="large"
+          color={customVariables.brandPrimary}
+          animating={
+            html === undefined || (html !== "" && htmlBodyHeight === 0)
+          }
+        />
+        {/* Hide the WebView until we have the htmlBodyHeight */}
+        {html && (
+          <ScrollView nestedScrollEnabled={false} style={containerStyle}>
+            <View style={containerStyle}>
+              <WebView
+                ref={this.webViewRef}
+                scrollEnabled={false}
+                overScrollMode={"never"}
+                style={webViewStyle}
+                originWhitelist={["*"]}
+                source={{ html, baseUrl: "" }}
+                javaScriptEnabled={true}
+                injectedJavaScript={INJECTED_JAVASCRIPT}
+                onLoadEnd={this.handleLoadEnd}
+                onMessage={this.handleWebViewMessage}
+                showsVerticalScrollIndicator={false}
+              />
+            </View>
+          </ScrollView>
+        )}
+      </React.Fragment>
+    );
   }
 
   // When the injected html is loaded inject the script to notify the height
@@ -272,7 +277,7 @@ class Markdown extends React.PureComponent<Props, State> {
   // A function that uses remark to compile the markdown to html
   private compileMarkdownAsync = (
     markdown: string,
-    animated?: boolean,
+    animated: boolean = false,
     onError?: (error: any) => void,
     cssStyle?: string
   ) => {
