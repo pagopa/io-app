@@ -16,8 +16,14 @@ export const serviceAlertDisplayedOnceSuccess = createStandardAction(
   "SERVICE_ALERT_DISPLAYED_ONCE_SUCCESS"
 )<{ wasServiceAlertDisplayedOnce: boolean }>();
 
+export const preferencesExperimentalFeaturesSetEnabled = createStandardAction(
+  "PREFERENCES_EXPERIMENTAL_FEATURES_SET_ENABLED"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
+  // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
+  | typeof preferencesExperimentalFeaturesSetEnabled
 >;
