@@ -37,7 +37,7 @@ platform :android do
   desc "Build the App in release mode"
   lane :build_release do
     # Ensure that your git status is not dirty
-    ensure_git_status_clean
+    #ensure_git_status_clean
 
     gradle(
       task: "assemble",
