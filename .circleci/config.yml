@@ -161,8 +161,8 @@ jobs:
       - store_artifacts:
           path: bundles/index.android.bundle
 
-  # Run test on android
-  test-android:
+  # Create signed Android release
+  build-release:
     <<: *defaults_android
 
     resource_class: xlarge
@@ -181,36 +181,43 @@ jobs:
       - run:
           command: ./scripts/circleci-android-setup.sh
 
-      # Save sdk cache
-      - save_cache:
-          paths:
-            - /opt/android/sdk/system-images/android-23
-            - /opt/android/sdk/system-images/android-19
-            - /opt/android/sdk/platforms/android-26
-            - /opt/android/sdk/platforms/android-23
-            - /opt/android/sdk/platforms/android-19
-            - /opt/android/sdk/build-tools/23.0.1
-            - /opt/android/sdk/add-ons/addon-google_apis-google-2
-          key: *android_sdk_cache_key
-
       # Restore jars cache
       - restore_cache:
           key: *android_jars_cache_key
 
-      # Run gradle assembleDebug
-      - run:
-          command: cd android && ./gradlew assembleDebug
+      # Set Ruby Version for chruby
+      - run: echo "ruby-2.4" > .ruby-version
 
-      # Save APKs
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Recreate JSON key file (for Google Play) from ENV variable
+      - run:
+          command: ./scripts/json-key-file-setup.sh
+
+      # Recreate keystore from ENV variable
+      - run:
+          command: ./scripts/keystore-setup.sh
+
+      # Build the js bundle in release mode
+      - run: yarn bundle:android-release
+
+      # Run alpha lane
+      - run:
+          command: cd android && bundle exec fastlane build_release
+
       - store_artifacts:
           path: android/app/build/outputs/apk
           destination: apks/release
-
-      # Save jars cache
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: *android_jars_cache_key
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
@@ -468,15 +475,18 @@ workflows:
 
       # To avoid running too many (long) native builds and tests, this step
       # waits the approval for the iOS and Android native tests.
-      - hold-native-tests:
+      - hold-android-native:
           type: approval
           requires:
             - build-android-bundle
+          filters:
+            branches:
+              ignore: master
 
-      # Native Android tests
-      - test-android:
+      # Build Android release
+      - android-release:
           requires:
-            - hold-native-tests
+            - hold-android-native
 
       # Native iOS e2e tests
       - hold-ios-e2e-tests:
