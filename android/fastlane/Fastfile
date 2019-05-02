@@ -25,24 +25,30 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Build the app in debug mode"
-  lane :test_build do
+  desc "Build the App in debug mode"
+  lane :build_debug do
     gradle(
       task: "assemble",
-      build_type: "Debug"
+      build_type: "Debug",
+      flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
-  desc "Build the app in release mode and deploy a new alpha version to the Google Play Store"
-  lane :alpha do
+  desc "Build the App in release mode"
+  lane :build_release do
     # Ensure that your git status is not dirty
-    # ensure_git_status_clean
+    ensure_git_status_clean
 
     gradle(
       task: "assemble",
       build_type: "Release",
       flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
+  end
+
+  desc "Build the App in release mode and deploy a new alpha version to the Google Play Store"
+  lane :alpha do
+    build_release
 
     # Generate the changelog from the last commit message
     changelog_from_git_commits(
@@ -51,7 +57,6 @@ platform :android do
 
     upload_to_play_store(
       track: "alpha",
-      apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}",
       skip_upload_screenshots: true,
       skip_upload_images: true
     )

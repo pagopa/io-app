@@ -33,12 +33,14 @@ type Props =
       label: string;
       icon: string;
       inputMaskProps: TextInputMaskProps;
+      isValid?: boolean;
     }>
   | Readonly<{
       type: "text";
       label: string;
       icon: string;
       inputProps: TextInputProps;
+      isValid?: boolean;
     }>;
 
 export class LabelledItem extends React.Component<Props> {
@@ -48,7 +50,13 @@ export class LabelledItem extends React.Component<Props> {
         <Item style={styles.noBottomLine}>
           <Text>{this.props.label}</Text>
         </Item>
-        <Item style={styles.bottomLine}>
+        <Item
+          style={styles.bottomLine}
+          error={this.props.isValid === undefined ? false : !this.props.isValid}
+          success={
+            this.props.isValid === undefined ? false : this.props.isValid
+          }
+        >
           <IconFont
             size={variables.iconSize3}
             color={variables.brandDarkGray}
