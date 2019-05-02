@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
+import scheduleLocalNotifications from "./boot/scheduleLocalNotifications";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
@@ -38,6 +39,8 @@ class RootContainer extends React.PureComponent<Props> {
 
     /* Configure the application to receive push notifications */
     configurePushNotifications();
+    /* Schedule a set of local notifications */
+    scheduleLocalNotifications();
   }
 
   private handleBackButton = () => {
