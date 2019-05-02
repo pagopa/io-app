@@ -62,7 +62,11 @@ class MessageListComponent extends React.Component<Props> {
 
   private FlatListRef = React.createRef<FlatList<MessageState>>();
   private scrollToTop = () => {
-    if (this.FlatListRef.current) {
+    if (
+      this.FlatListRef.current &&
+      this.FlatListRef.current.props.data &&
+      this.FlatListRef.current.props.data.length
+    ) {
       this.FlatListRef.current.scrollToIndex({ animated: false, index: 0 });
     }
   };
