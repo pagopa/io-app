@@ -183,9 +183,6 @@ jobs:
       - run:
           command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode
-      - run: yarn bundle:android-release
-
       # Run alpha lane
       - run:
           command: cd android && bundle exec fastlane build_release
