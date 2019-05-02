@@ -244,8 +244,8 @@ jobs:
           command: cd android && bundle exec fastlane alpha
 
       - store_artifacts:
-          path: android/app/build/outputs/apk
-          destination: apks/release
+          path: android/app/build/outputs/bundle
+          destination: bundle
 
   # Test ios build
   test-ios:
