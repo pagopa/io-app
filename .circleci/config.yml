@@ -190,7 +190,7 @@ jobs:
 
       - store_artifacts:
           path: android/app/build/outputs/bundle
-          destination: bundles/release
+          destination: bundle
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
