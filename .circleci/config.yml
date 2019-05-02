@@ -139,6 +139,8 @@ jobs:
   # Create signed Android release
   android-release:
     <<: *defaults_android
+    environment:
+      RUBY_VERSION: ruby-2.4
 
     resource_class: xlarge
 
@@ -159,9 +161,6 @@ jobs:
       # Restore jars cache
       - restore_cache:
           key: *android_jars_cache_key
-
-      # Set Ruby Version for chruby
-      - run: echo "ruby-2.4" > .ruby-version
 
       - run:
           name: Configure Bundler
