@@ -1,18 +1,21 @@
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import memoizeOne from "memoize-one";
+import { Text, View } from "native-base";
 import React from "react";
-import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleSheet
+} from "react-native";
+import Placeholder from "rn-placeholder";
 
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
+import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import MessageListItem from "./MessageListItem";
-import MessageListItemError from "./MessageListItemError";
-import MessageListItemPlaceholder from "./MessageListItemPlaceholder";
-import console = require("console");
 
 type ItemLayout = {
   length: number;
@@ -42,9 +45,41 @@ type State = {
 };
 
 const ITEM_LOADING_HEIGHT = 90;
-const ITEM_ERROR_HEIGHT = 80;
+const ITEM_ERROR_HEIGHT = 56;
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
 const ITEM_WITH_CTABAR_HEIGHT = 158;
+const ITEM_SEPARATOR_HEIGHT = 1;
+
+const styles = StyleSheet.create({
+  itemLoadingContainer: {
+    height: ITEM_LOADING_HEIGHT,
+    paddingVertical: 16,
+    paddingHorizontal: customVariables.contentPadding
+  },
+
+  itemErrorContainer: {
+    height: ITEM_ERROR_HEIGHT,
+    paddingVertical: 16,
+    paddingHorizontal: customVariables.contentPadding
+  },
+
+  itemWithoutCTABarContainer: {
+    display: "flex",
+    flex: 1,
+    height: ITEM_WITHOUT_CTABAR_HEIGHT
+  },
+
+  itemWithCTABarContainer: {
+    display: "flex",
+    flex: 1,
+    height: ITEM_WITH_CTABAR_HEIGHT
+  },
+
+  itemSeparator: {
+    height: 1,
+    backgroundColor: customVariables.brandLightGray
+  }
+});
 
 const keyExtractor = (_: MessageState) => _.meta.id;
 
@@ -73,22 +108,45 @@ const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
   messageStates.forEach((messageState, index) => {
     const itemHeight = getItemHeight(messageState);
 
+    const itemHeightWithSeparator =
+      index === messageStates.length - 1
+        ? itemHeight
+        : itemHeight + ITEM_SEPARATOR_HEIGHT;
+
     itemLayouts.push({
-      length: itemHeight,
+      length: itemHeightWithSeparator,
       offset,
       index
     });
 
-    offset += itemHeight;
+    offset += itemHeightWithSeparator;
   });
 
   return itemLayouts;
 };
 
-const maybeServiceMemoized = memoizeOne(
-  (potService: pot.Pot<ServicePublic, Error> | undefined) =>
-    fromNullable(potService).chain(pot.toOption)
+const MessageListItemPlaceholder = (
+  <View style={styles.itemLoadingContainer}>
+    <Placeholder.Paragraph
+      textSize={customVariables.fontSizeBase}
+      color={customVariables.shineColor}
+      lineNumber={3}
+      lineSpacing={5}
+      width="100%"
+      firstLineWidth="100%"
+      lastLineWidth="75%"
+      onReady={false}
+    />
+  </View>
 );
+
+const MessageListItemError = (
+  <View style={styles.itemErrorContainer}>
+    <Text numberOfLines={1}>Error loading the message detail.</Text>
+  </View>
+);
+
+const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 class MessageList extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -115,37 +173,35 @@ class MessageList extends React.Component<Props, State> {
     return null;
   }
 
-  private maybeServiceMemoized = memoizeOne(
-    (potService: pot.Pot<ServicePublic, Error> | undefined) => {
-      console.log("No memoization");
-      return fromNullable(potService).chain(pot.toOption);
-    }
-  );
-
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
-    const { meta, message: potMessage } = info.item;
+    const { meta, isRead, message: potMessage } = info.item;
     const { paymentsByRptId, onPressItem, onLongPressItem } = this.props;
 
     const potService = this.props.servicesById[meta.sender_service_id];
+
+    if (info.index === 0) {
+      return MessageListItemPlaceholder;
+    }
+
+    if (info.index === 1) {
+      return MessageListItemError;
+    }
 
     if (
       potService &&
       (pot.isLoading(potService) || pot.isLoading(potMessage))
     ) {
-      return <MessageListItemPlaceholder />;
+      return MessageListItemPlaceholder;
     }
 
     if (pot.isNone(potMessage)) {
-      return <MessageListItemError />;
+      return MessageListItemError;
     }
+
     const message = potMessage.value;
 
-    const maybeService = this.maybeServiceMemoized(potService);
-
     const service =
-      potService !== undefined
-        ? pot.getOrElse(potService, undefined)
-        : undefined;
+      potService !== undefined ? pot.toUndefined(potService) : undefined;
 
     const payment =
       message.content.payment_data !== undefined && service !== undefined
@@ -157,17 +213,26 @@ class MessageList extends React.Component<Props, State> {
         : undefined;
 
     return (
-      <MessageListItem
-        message={message}
-        service={service}
-        payment={payment}
-        onPress={onPressItem}
-        onLongPress={onLongPressItem}
-        isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
-        isSelected={this.props.selectedMessageIds
-          .map(_ => _.has(info.item.meta.id))
-          .getOrElse(false)}
-      />
+      <View
+        style={
+          messageNeedsCTABar(message)
+            ? styles.itemWithCTABarContainer
+            : styles.itemWithoutCTABarContainer
+        }
+      >
+        <MessageListItem
+          isRead={isRead}
+          message={message}
+          service={service}
+          payment={payment}
+          onPress={onPressItem}
+          onLongPress={onLongPressItem}
+          isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
+          isSelected={this.props.selectedMessageIds
+            .map(_ => _.has(info.item.meta.id))
+            .getOrElse(false)}
+        />
+      </View>
     );
   };
 
@@ -195,11 +260,12 @@ class MessageList extends React.Component<Props, State> {
     return (
       <FlatList
         scrollEnabled={true}
-        data={messageStates.slice(1, 10)}
+        data={messageStates}
         extraData={{ servicesById, paymentsByRptId }}
         keyExtractor={keyExtractor}
         refreshControl={refreshControl}
         initialNumToRender={10}
+        ItemSeparatorComponent={ItemSeparatorComponent}
         ListEmptyComponent={ListEmptyComponent}
         renderItem={this.renderItem}
         getItemLayout={this.getItemLayout}

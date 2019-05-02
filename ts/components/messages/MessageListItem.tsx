@@ -1,9 +1,10 @@
-import { Option, fromNullable } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { DateFromISOString } from "io-ts-types";
 import omitBy from "lodash/omitBy";
 import { CheckBox, Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, TouchableHighlight } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -15,12 +16,12 @@ import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance
 import { messageNeedsCTABar } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
 import MessageCTABarComponent from "./MessageCTABarComponent";
-import MessageReadStatusIcon from "./MessageReadStatusIcon";
 
 type Props = {
+  isRead: boolean;
   message: MessageWithContentPO;
-  service: ServicePublic | undefined;
-  payment: PaidReason | undefined;
+  service?: ServicePublic;
+  payment?: PaidReason;
   onPress: (id: string) => void;
   onLongPress: (id: string) => void;
   isSelectionModeEnabled: boolean;
@@ -28,6 +29,10 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
+  highlight: {
+    flex: 1
+  },
+
   mainWrapper: {
     flex: 1,
     paddingVertical: 16,
@@ -44,13 +49,14 @@ const styles = StyleSheet.create({
   },
 
   headerLeft: {
-    flex: 0
+    flex: 0,
+    paddingRight: 4
   },
 
-  readStutusIcon: {
-    lineHeight: 20
+  headerCenter: {
+    flex: 1,
+    paddingRight: 32
   },
-
   serviceOrganizationName: {
     fontSize: 14,
     lineHeight: 18,
@@ -63,31 +69,25 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkGray
   },
 
+  headerRight: {
+    flex: 0
+  },
+
   messageDate: {
     ...makeFontStyleObject(Platform.select, "700", false),
     fontSize: 14,
     lineHeight: 18,
     color: customVariables.brandDarkGray
   },
-
-  headerCenter: {
-    flex: 1,
-    paddingRight: 30
-  },
-
-  headerRight: {
-    flex: 0
-  },
-
   contentWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    minHeight: 42
+    height: 42
   },
 
   contentCenter: {
     flex: 1,
-    paddingRight: 30
+    paddingRight: 32
   },
 
   messageTitle: {
@@ -116,6 +116,17 @@ const UNKNOWN_SERVICE_DATA = {
   departmentName: "Info sul servizio mancanti"
 };
 
+const MessageUnreadIcon = (
+  <Svg width={14} height={18}>
+    <Circle
+      cx="50%"
+      cy="50%"
+      r={14 / 2}
+      fill={customVariables.contentPrimaryBackground}
+    />
+  </Svg>
+);
+
 class MessageListItem extends React.PureComponent<Props> {
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
@@ -128,6 +139,7 @@ class MessageListItem extends React.PureComponent<Props> {
   public render() {
     console.log("MessageListItem::render", this.props);
     const {
+      isRead,
       message,
       service,
       payment,
@@ -148,6 +160,7 @@ class MessageListItem extends React.PureComponent<Props> {
       <TouchableHighlight
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
+        style={styles.highlight}
       >
         <View
           style={[
@@ -156,12 +169,11 @@ class MessageListItem extends React.PureComponent<Props> {
           ]}
         >
           <View style={styles.headerWrapper}>
-            <View style={styles.headerLeft}>
-              <MessageReadStatusIcon
-                isRead={false}
-                iconStyle={styles.readStutusIcon}
-              />
-            </View>
+            {!isRead && (
+              <View style={styles.headerLeft}>
+                {!isRead && MessageUnreadIcon}
+              </View>
+            )}
             <View style={styles.headerCenter}>
               <Text numberOfLines={1} style={styles.serviceOrganizationName}>
                 {uiService.organizationName}
@@ -202,8 +214,8 @@ class MessageListItem extends React.PureComponent<Props> {
             <View style={styles.footerWrapper}>
               <MessageCTABarComponent
                 message={message}
-                maybeService={maybeService}
-                maybePayment={maybePayment}
+                service={service}
+                payment={payment}
                 disabled={isSelectionModeEnabled}
                 small={true}
               />

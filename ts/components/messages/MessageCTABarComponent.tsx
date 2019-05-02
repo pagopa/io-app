@@ -47,8 +47,8 @@ import { LightModalContextInterface } from "../ui/LightModal";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  service: ServicePublic | undefined;
-  payment: PaidReason | undefined;
+  service?: ServicePublic;
+  payment?: PaidReason;
   containerStyle?: ViewStyle;
   disabled?: boolean;
   small?: boolean;
@@ -272,9 +272,9 @@ class MessageCTABarComponent extends React.PureComponent<Props, State> {
     const { disabled } = this.props;
     const amount = getAmountFromPaymentAmount(paymentData.amount);
 
-    const rptId = fromNullable(service).chain(service =>
+    const rptId = fromNullable(service).chain(_ =>
       getRptIdFromNoticeNumber(
-        service.organization_fiscal_code,
+        _.organization_fiscal_code,
         paymentData.notice_number
       )
     );
