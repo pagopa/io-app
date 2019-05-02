@@ -11,13 +11,13 @@ import pendingMessageReducer, { PendingMessageState } from "./pendingMessage";
 export type NotificationsState = {
   installation: InstallationState;
   pendingMessage: PendingMessageState;
-  sceduled: LocalScheduledState;
+  scheduled: LocalScheduledState;
 };
 
 const reducer = combineReducers<NotificationsState, Action>({
   installation: installationReducer,
   pendingMessage: pendingMessageReducer,
-  sceduled: localScheduledReducer
+  scheduled: localScheduledReducer
 });
 
 export default reducer;

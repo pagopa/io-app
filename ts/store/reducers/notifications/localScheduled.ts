@@ -12,12 +12,12 @@ import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 
 export type LocalScheduledState = Readonly<{
-  isScheduled: boolean;
+  isToSchedule: boolean;
 }>;
 
 export function getInitialState(): LocalScheduledState {
   return {
-    isScheduled: false
+    isToSchedule: true
   };
 }
 
@@ -27,7 +27,7 @@ const reducer = (
 ): LocalScheduledState => {
   switch (action.type) {
     case getType(updateLocalNotificationsScheduled):
-      return { ...state, isScheduled: action.payload };
+      return { ...state, isToSchedule: action.payload };
 
     case getType(clearLocalNotificationsScheduled):
       return getInitialState();
@@ -39,7 +39,7 @@ const reducer = (
 
 // Selectors
 export const notificationsLocalScheduledSelector = (state: GlobalState) => {
-  return state.notifications.sceduled;
+  return state.notifications.scheduled;
 };
 
 export default reducer;
