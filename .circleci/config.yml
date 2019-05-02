@@ -26,12 +26,13 @@ defaults_android: &defaults_android
   docker:
     - image: circleci/android:api-23-node8-alpha
   environment:
-    - TERM: "dumb"
-    - ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
-    - ANDROID_SDK_BUILD_API_LEVEL: "28"
-    - ANDROID_GOOGLE_API_LEVEL: "23"
+    TERM: "dumb"
+    ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
+    ANDROID_SDK_BUILD_API_LEVEL: "28"
+    ANDROID_GOOGLE_API_LEVEL: "23"
     # - REACT_NATIVE_MAX_WORKERS: 1
-    - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx8g -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"'
+    GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx8g -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"'
+    RUBY_VERSION: ruby-2.4
 
 # macos builds
 defaults_macos: &defaults_macos
@@ -139,8 +140,6 @@ jobs:
   # Create signed Android release
   android-release:
     <<: *defaults_android
-    environment:
-      RUBY_VERSION: ruby-2.4
 
     resource_class: xlarge
 
