@@ -14,7 +14,11 @@ import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
-import { apiUrlPrefix, pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../config";
+import {
+  apiUrlPrefix,
+  pagoPaApiUrlPrefix,
+  pagoPaApiUrlPrefixTest
+} from "../config";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
@@ -210,20 +214,16 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
 
-  const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
-    isPagoPAQAEnabledSelector
-  );
+  const isPagoPAQAEnabled: ReturnType<
+    typeof isPagoPAQAEnabledSelector
+  > = yield select<GlobalState>(isPagoPAQAEnabledSelector);
 
-yield fork(watchWalletSaga, sessionToken, walletToken, isPagoPAQAEnabled ? pagoPaApiUrlPrefixQa : pagoPaApiUrlPrefix);
-    yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
-  } else {
-    yield fork(
-      watchWalletSaga,
-      sessionToken,
-      walletToken,
-      pagoPaApiUrlPrefixTest
-    );
-  }
+  yield fork(
+    watchWalletSaga,
+    sessionToken,
+    walletToken,
+    isPagoPAQAEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
+  );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
