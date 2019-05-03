@@ -209,9 +209,11 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <View style={styles.debugModeSection}>
-                <Text>
-                  {"PagoPA QA ENV \nThis change require application reboot"}
-                </Text>
+                <View>
+                  <Text style={styles.itemLeftText}>PagoPA QA ENV</Text>
+                  <Text>This change require application reboot</Text>
+                </View>
+
                 <Switch
                   value={this.props.isPagoPAQAEnabled}
                   onValueChange={this.props.setPagoPAQAEnabled}
