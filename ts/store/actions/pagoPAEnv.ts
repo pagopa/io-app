@@ -7,6 +7,6 @@ export const setPagoPAEnvironmentAsQa = createStandardAction(
   "PAGOPA_ENV_AS_QA"
 )<boolean>();
 
-export type SetPagoPAEnvironmentAsQa = ActionType<
+export type PagoPAEnvironmentActions = ActionType<
   typeof setPagoPAEnvironmentAsQa
 >;
