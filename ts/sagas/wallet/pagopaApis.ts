@@ -516,7 +516,7 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
-    const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
+    const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
       isPagoPAQAEnabledSelector
     );
 
