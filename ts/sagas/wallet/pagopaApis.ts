@@ -1,6 +1,6 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
 import {
@@ -42,6 +42,8 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../../store/actions/wallet/wallets";
+import { isPagoPAQAEnabledSelector } from "../../store/reducers/pagoPAEnv";
+import { GlobalState } from "../../store/reducers/types";
 import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { SessionManager } from "../../utils/SessionManager";
@@ -478,10 +480,15 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
+    const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
+      isPagoPAQAEnabledSelector
+    );
+
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
       {
-        rptId: RptIdFromString.encode(action.payload)
+        rptId: RptIdFromString.encode(action.payload),
+        test: isPagoPAQAEnabled
       }
     );
     if (response !== undefined && response.status === 200) {
@@ -509,6 +516,10 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
+    const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
+      isPagoPAQAEnabledSelector
+    );
+
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
       {
@@ -518,7 +529,8 @@ export function* paymentAttivaRequestHandler(
             action.payload.verifica.codiceContestoPagamento,
           importoSingoloVersamento:
             action.payload.verifica.importoSingoloVersamento
-        }
+        },
+        test: isPagoPAQAEnabled
       }
     );
     if (response !== undefined && response.status === 200) {
@@ -549,10 +561,14 @@ export function* paymentIdPollingRequestHandler(
   // now poll until a paymentId is made available
 
   try {
+    const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
+      isPagoPAQAEnabledSelector
+    );
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
-        codiceContestoPagamento: action.payload.codiceContestoPagamento
+        codiceContestoPagamento: action.payload.codiceContestoPagamento,
+        test: isPagoPAQAEnabled
       }
     );
     if (response !== undefined && response.status === 200) {
