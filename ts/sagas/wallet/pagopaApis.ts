@@ -480,9 +480,9 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
-    const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
-      isPagoPAQAEnabledSelector
-    );
+    const isPagoPAQAEnabled: ReturnType<
+      typeof isPagoPAQAEnabledSelector
+    > = yield select<GlobalState>(isPagoPAQAEnabledSelector);
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -516,9 +516,9 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
-    const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
-      isPagoPAQAEnabledSelector
-    );
+    const isPagoPAQAEnabled: ReturnType<
+      typeof isPagoPAQAEnabledSelector
+    > = yield select<GlobalState>(isPagoPAQAEnabledSelector);
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
