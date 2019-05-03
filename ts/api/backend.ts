@@ -201,7 +201,7 @@ export function BackendClient(
 
   const verificaRptT: GetPaymentInfoT = {
     method: "get",
-    url: ({ rptId, test }) => `/api/v1/payment-requests/${rptId}?${test}`,
+   url: ({ rptId, test }) => `/api/v1/payment-requests/${rptId}?test=${test}`,
     headers: tokenHeaderProducer,
     query: _ => ({}),
     response_decoder: getPaymentInfoDefaultDecoder()
