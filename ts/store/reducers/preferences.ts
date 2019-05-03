@@ -1,3 +1,6 @@
+/**
+ * A reducer for not persisted preferences.
+ */
 import { isActionOf } from "typesafe-actions";
 
 import { preferencesLanguagesLoadSuccess } from "../actions/preferences";
