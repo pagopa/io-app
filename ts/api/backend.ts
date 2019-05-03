@@ -209,7 +209,7 @@ export function BackendClient(
 
   const attivaRptT: ActivatePaymentT = {
     method: "post",
-    url: ({ test }) => `/api/v1/payment-activations/${test}`,
+    url: ({ test }) => `/api/v1/payment-activations?test=${test}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: () => ({}),
     body: ({ paymentActivationsPostRequest }) =>
