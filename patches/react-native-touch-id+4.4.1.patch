@@ -1,4 +1,28 @@
 patch-package
+--- a/node_modules/react-native-touch-id/TouchID.m
++++ b/node_modules/react-native-touch-id/TouchID.m
+@@ -22,14 +22,18 @@ @implementation TouchID
+         
+         // No error found, proceed
+         callback(@[[NSNull null], [self getBiometryType:context]]);
+-    } else if ([passcodeFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
++    } //else if ([passcodeFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+         
+         // No error
+-        callback(@[[NSNull null], [self getBiometryType:context]]);
+-    }
++        //callback(@[[NSNull null], [self getBiometryType:context]]);
++    //}
+     // Device does not support FaceID / TouchID / Pin OR there was an error!
+     else {
+         if (error) {
++            if(error.code == LAErrorTouchIDNotEnrolled) {
++                callback(@[RCTMakeError(@"LAErrorTouchIDNotEnrolled", nil, nil)]);
++                return;
++            }
+             NSString *errorReason = [self getErrorReason:error];
+             NSLog(@"Authentication failed: %@", errorReason);
+             
 --- a/node_modules/react-native-touch-id/index.d.ts
 +++ b/node_modules/react-native-touch-id/index.d.ts
 @@ -2,12 +2,12 @@ declare module 'react-native-touch-id' {
