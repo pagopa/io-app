@@ -14,11 +14,7 @@ import { getType } from "typesafe-actions";
 
 import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
-import {
-  apiUrlPrefix,
-  pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixQa
-} from "../config";
+import { apiUrlPrefix, pagoPaApiUrlPrefix } from "../config";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
@@ -41,7 +37,6 @@ import {
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import { isPagoPAQAEnabledSelector } from "../store/reducers/pagoPAEnv";
 import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
@@ -214,20 +209,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
 
-  const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
-    isPagoPAQAEnabledSelector
-  );
+  yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
 
-  if (isPagoPAQAEnabled) {
-    yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
-  } else {
-    yield fork(
-      watchWalletSaga,
-      sessionToken,
-      walletToken,
-      pagoPaApiUrlPrefixQa
-    );
-  }
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
   yield fork(
