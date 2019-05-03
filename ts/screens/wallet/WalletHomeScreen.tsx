@@ -63,12 +63,11 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
 
-  addPaymentMethodButton: {
+  bordercColorBrandGray: {
     borderColor: variables.brandGray
   },
 
-  addPaymentMethodText: {
-    fontWeight: "bold",
+  colorBrandGray: {
     color: variables.brandGray
   }
 });
@@ -125,10 +124,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
             <Button
               bordered={true}
               block={true}
-              style={styles.addPaymentMethodButton}
+              style={styles.bordercColorBrandGray}
               onPress={this.props.navigateToWalletAddPaymentMethod}
             >
-              <Text style={styles.addPaymentMethodText}>
+              <Text bold={true} style={styles.colorBrandGray}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
               </Text>
             </Button>
@@ -167,7 +166,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         </Text>
         <View spacer={true} />
         <Button block={true} danger={true} onPress={this.props.loadWallets}>
-          <Text style={styles.addPaymentMethodText}>
+          <Text style={styles.colorBrandGray}>
             {I18n.t("global.buttons.retry")}
           </Text>
         </Button>

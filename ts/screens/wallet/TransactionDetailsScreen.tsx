@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   },
 
   whyLink: {
-    fontWeight: "bold",
     color: variables.textLinkColor
   },
 
@@ -203,6 +202,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
                 <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
                 <Text
                   note={true}
+                  bold={true}
                   style={styles.whyLink}
                   onPress={this.props.showHelp}
                 >
