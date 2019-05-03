@@ -79,7 +79,8 @@ const rootPersistConfig: PersistConfig = {
     "entities",
     "debug",
     "persistedPreferences",
-    "installation"
+    "installation",
+    "pagoPAEnv"
   ]
 };
 

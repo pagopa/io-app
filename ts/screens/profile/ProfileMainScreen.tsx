@@ -42,7 +42,6 @@ import {
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
-import { isPagoPAQAEnabledSelector } from "../../store/reducers/pagoPAEnv";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -130,6 +129,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     }
   };
 
+  private onSwitchChange = () => {
+    this.props.setPagoPAQAEnabled;
+  };
+
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -209,12 +212,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View style={styles.debugModeSection}>
+                <View style={styles.debugModeSection}>
                 <Text>PagoPA QA env</Text>
                 <Switch
                   value={this.props.isPagoPAQAEnabled}
-                  onValueChange={this.props.setPagoPAQAEnabled}
+                  onValueChange={this.onSwitchChange}
                 />
+              </View>
+              <View style={styles.debugModeSection}>
+                <Text>This change require application reboot</Text>
               </View>
             </ListItem>
 
@@ -364,8 +370,7 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  //isPagoPAQAEnabled: state.pagoPAEnv.isPagoPAQAEnabled
-  isPagoPAQAEnabled: isPagoPAQAEnabledSelector(state)
+  isPagoPAQAEnabled: state.pagoPAEnv.isPagoPAQAEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
