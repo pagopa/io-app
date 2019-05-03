@@ -220,7 +220,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   if (isPagoPAQAEnabled) {
     yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
-    console.log("Use QA environment");
   } else {
     yield fork(
       watchWalletSaga,
@@ -228,7 +227,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       walletToken,
       pagoPaApiUrlPrefixQa
     );
-    console.log("Use PROD environment");
   }
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
