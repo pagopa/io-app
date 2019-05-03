@@ -561,9 +561,9 @@ export function* paymentIdPollingRequestHandler(
   // now poll until a paymentId is made available
 
   try {
-    const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
-      isPagoPAQAEnabledSelector
-    );
+    const isPagoPAQAEnabled: ReturnType<
+      typeof isPagoPAQAEnabledSelector
+    > = yield select<GlobalState>(isPagoPAQAEnabledSelector);
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
