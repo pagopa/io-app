@@ -63,6 +63,12 @@ const styles = StyleSheet.create({
   itemLeftText: {
     alignSelf: "flex-start"
   },
+  experimentalFeaturesSection: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
   debugModeSection: {
     width: "100%",
     flexDirection: "row",
@@ -118,7 +124,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             text: I18n.t("global.buttons.ok"),
             style: "destructive",
             onPress: () => {
-              // after confirmation remove it
               this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
                 enabled
               );
@@ -236,7 +241,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View style={styles.debugModeSection}>
+              <View style={styles.experimentalFeaturesSection}>
                 <Text>
                   {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
                 </Text>
