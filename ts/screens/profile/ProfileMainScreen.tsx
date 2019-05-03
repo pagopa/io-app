@@ -33,6 +33,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -61,6 +62,12 @@ const styles = StyleSheet.create({
   },
   itemLeftText: {
     alignSelf: "flex-start"
+  },
+  experimentalFeaturesSection: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   debugModeSection: {
     width: "100%",
@@ -101,6 +108,33 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         }
       />
     );
+  };
+
+  private onExperimentalFeaturesToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.ok"),
+            style: "destructive",
+            onPress: () => {
+              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
+                enabled
+              );
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
+    }
   };
 
   private confirmResetAlert = () =>
@@ -204,6 +238,18 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem itemDivider={true}>
               <Text>{I18n.t("profile.main.developersSectionHeader")}</Text>
+            </ListItem>
+
+            <ListItem>
+              <View style={styles.experimentalFeaturesSection}>
+                <Text>
+                  {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
+                </Text>
+                <Switch
+                  value={this.props.isExperimentalFeaturesEnabled}
+                  onValueChange={this.onExperimentalFeaturesToggle}
+                />
+              </View>
             </ListItem>
 
             <ListItem>
@@ -351,7 +397,9 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -360,7 +408,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired())
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
+    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });
 
 export default connect(
