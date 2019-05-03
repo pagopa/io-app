@@ -214,7 +214,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     isPagoPAQAEnabledSelector
   );
 
-  if (isPagoPAQAEnabled) {
+yield fork(watchWalletSaga, sessionToken, walletToken, isPagoPAQAEnabled ? pagoPaApiUrlPrefixQa : pagoPaApiUrlPrefix);
     yield fork(watchWalletSaga, sessionToken, walletToken, pagoPaApiUrlPrefix);
   } else {
     yield fork(
