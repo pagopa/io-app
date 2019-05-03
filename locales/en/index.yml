@@ -501,7 +501,9 @@ messages:
   unknownSender: Unknown sender
   noContent: Content not available
   archive:
-    emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+    emptyMessage:
+      title: Your archive is empty.
+      subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
   inbox:
     emptyMessage: 
       title: Your message list is empty.

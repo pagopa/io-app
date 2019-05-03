@@ -511,7 +511,9 @@ messages:
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   archive:
-    emptyMessage: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+    emptyMessage:
+      title: Il tuo archivio è vuoto.
+      subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
   inbox:
     emptyMessage: 
       title: La tua lista dei messaggi è vuota.
