@@ -480,7 +480,7 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
-    const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
+    const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
       isPagoPAQAEnabledSelector
     );
 
