@@ -391,7 +391,7 @@ wallet:
   noTransactions: There are no transactions.
   noNewTransactions: There are no new transactions.
   noneTransactions: There are no transactions
-  noTransactionsInWalletHome: You never used IO neither to pay nor to log in with an user registered on PagoPA, check your messages.
+  noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
   moreInfo: Learn more
   payNotice: Pay notice
@@ -501,7 +501,9 @@ messages:
   search:
     invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
-    emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+    emptyMessage:
+      title: Your archive is empty.
+      subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
   inbox:
     emptyMessage: 
       title: Your message list is empty.

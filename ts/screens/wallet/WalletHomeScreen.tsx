@@ -4,7 +4,7 @@
  * add new ones
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, H1, Left, Right, Text, View } from "native-base";
+import { Button, Content, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -32,6 +32,7 @@ import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 
 type OwnProps = Readonly<{
@@ -55,8 +56,29 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     justifyContent: "center"
+  },
+  emptyListWrapper: {
+    padding: customVariables.contentPadding,
+    alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingBottom: customVariables.contentPadding / 2,
+    fontSize: customVariables.fontSizeSmall
   }
 });
+
+const ListEmptyComponent = (
+  <Content scrollEnabled={false} noPadded={true}>
+    <View style={styles.emptyListWrapper}>
+      <Text style={styles.emptyListContentTitle}>
+        {I18n.t("wallet.noTransactionsInWalletHome")}
+      </Text>
+      <Image
+        source={require("../../../img/messages/empty-transaction-list-icon.png")}
+      />
+    </View>
+  </Content>
+);
 
 /**
  * Wallet Home Screen
@@ -223,9 +245,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
             navigateToTransactionDetails={
               this.props.navigateToTransactionDetailsScreen
             }
-            noTransactionsDetailsMessage={I18n.t(
-              "wallet.noTransactionsInWalletHome"
-            )}
+            ListEmptyComponent={ListEmptyComponent}
           />
         )}
       </WalletLayout>
