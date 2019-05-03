@@ -33,6 +33,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -44,7 +45,6 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -107,8 +107,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   private onExperimentalFeaturesToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
-        I18n.t("profile.main.confirmEnableExperimentalFeatures"),
-        undefined,
+        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
         [
           {
             text: I18n.t("global.buttons.cancel"),
@@ -237,7 +237,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <View style={styles.debugModeSection}>
-                <Text>{I18n.t("profile.main.experimentalFeatures")}</Text>
+                <Text>
+                  {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
+                </Text>
                 <Switch
                   value={this.props.isExperimentalFeaturesEnabled}
                   onValueChange={this.onExperimentalFeaturesToggle}
