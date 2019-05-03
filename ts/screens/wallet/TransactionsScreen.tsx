@@ -2,7 +2,7 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
-import { Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -27,6 +27,19 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+const ListEmptyComponent = (
+  <Content
+    scrollEnabled={false}
+    style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+  >
+    <View spacer={true} />
+    <H3>{I18n.t("wallet.noneTransactions")}</H3>
+    <View spacer={true} />
+    <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
+    <View spacer={true} large={true} />
+  </Content>
+);
 
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -63,9 +76,7 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
-          noTransactionsDetailsMessage={I18n.t(
-            "wallet.noTransactionsInTransactionsScreen"
-          )}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </WalletLayout>
     );
