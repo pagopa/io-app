@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { Toast } from "native-base";
 import I18n from "../i18n";
 import { GlobalState } from "../store/reducers/types";
-import { showToast } from "../utils/showToast";
 
 interface OwnProps {
   exitApp: () => void;
@@ -84,7 +84,7 @@ class ExitAppComponent extends React.Component<Props, State> {
       canExit =>
         canExit
           ? this.props.exitApp()
-          : showToast(I18n.t("exit.pressAgain"), "success")
+          : Toast.show({ text: I18n.t("exit.pressAgain") })
     );
   }
 }
