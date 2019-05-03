@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  wallets: [Wallet] | [Wallet, Wallet];
+  // tslint-prettier doesn't yet support the readonly tuple syntax
+  // tslint:disable-next-line:prettier
+  wallets: readonly [Wallet] | readonly [Wallet, Wallet];
   cardType: "Preview";
 }
 

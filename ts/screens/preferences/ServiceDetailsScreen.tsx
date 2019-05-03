@@ -1,8 +1,13 @@
+/**
+ * Screen dysplaying the details of a selected service. The user
+ * can enable/disable the service and customize the notification settings.
+ */
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
+  Alert,
   Clipboard,
   Image,
   Linking,
@@ -12,30 +17,25 @@ import {
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
-
 import I18n from "../../i18n";
-
+import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-
+import customVariables from "../../theme/variables";
+import { logosForService } from "../../utils/services";
+import { showToast } from "../../utils/showToast";
 import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
 } from "./common";
-
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import H4 from "../../components/ui/H4";
-import customVariables from "../../theme/variables";
-
-import { logosForService } from "../../utils/services";
-import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -124,6 +124,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
    * profile with the new enabled channels
    */
   private dispatchNewEnabledChannels(newUiEnabledChannels: EnabledChannels) {
+    // if a previous update is still running, do nothing
+    // this check is to prevent user double tap on
+    // switch while its animation is running
+    if (pot.isUpdating(this.props.profile)) {
+      return;
+    }
+    this.setState({
+      uiEnabledChannels: newUiEnabledChannels
+    });
+
     const updatedBlockedChannels = getBlockedChannels(
       this.props.profile,
       this.props.navigation.getParam("service").service_id
@@ -140,6 +150,41 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       })
     );
   }
+
+  // show an alert describing what happen if a service is disabled on IO
+  // the alert is displayed only the first time the user disable a service
+  private showAlertOnServiceDisabling = () => {
+    Alert.alert(
+      I18n.t("serviceDetail.disableTitle"),
+      I18n.t("serviceDetail.disableMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.ok"),
+          style: "destructive",
+          onPress: () => {
+            // compute the updated map of enabled channels
+            const newUiEnabledChannels = {
+              ...this.state.uiEnabledChannels,
+              inbox: false
+            };
+            this.dispatchNewEnabledChannels(newUiEnabledChannels);
+
+            // update the persisted preferences to remember the user read the alert
+            this.props.dispatch(
+              serviceAlertDisplayedOnceSuccess({
+                wasServiceAlertDisplayedOnce: true
+              })
+            );
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
 
   // tslint:disable-next-line:cognitive-complexity no-big-function
   public render() {
@@ -222,23 +267,20 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   value={this.state.uiEnabledChannels.inbox}
                   disabled={
                     profileEnabledChannels.inbox !==
-                    this.state.uiEnabledChannels.inbox
+                      this.state.uiEnabledChannels.inbox ||
+                    pot.isUpdating(this.props.profile)
                   }
                   onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      inbox: value
-                    };
-
-                    // dispatch the update of the profile from the new prefs
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
+                    if (!value && !this.props.wasServiceAlertDisplayedOnce) {
+                      this.showAlertOnServiceDisabling();
+                    } else {
+                      // compute the updated map of enabled channels
+                      const newUiEnabledChannels = {
+                        ...this.state.uiEnabledChannels,
+                        inbox: value
+                      };
+                      this.dispatchNewEnabledChannels(newUiEnabledChannels);
+                    }
                   }}
                 />
               </Col>
@@ -263,22 +305,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.push
                   }
-                  disabled={!this.state.uiEnabledChannels.inbox}
+                  disabled={
+                    !this.state.uiEnabledChannels.inbox ||
+                    pot.isUpdating(this.props.profile)
+                  }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
                     const newUiEnabledChannels = {
                       ...this.state.uiEnabledChannels,
                       push: value
                     };
-
-                    // dispatch the update of the profile from the new prefs
                     this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
                   }}
                 />
               </Col>
@@ -299,7 +336,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               <Col size={2}>
                 <Switch
                   key={`switch-email-${profileVersion}`}
-                  disabled={!this.state.uiEnabledChannels.inbox}
+                  disabled={
+                    !this.state.uiEnabledChannels.inbox ||
+                    pot.isUpdating(this.props.profile)
+                  }
                   value={
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email
@@ -310,15 +350,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                       ...this.state.uiEnabledChannels,
                       email: value
                     };
-
-                    // dispatch the update of the profile from the new prefs
                     this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-                    // optimistically update the UI while we wait for the
-                    // profile to update
-                    this.setState({
-                      uiEnabledChannels: newUiEnabledChannels
-                    });
                   }}
                 />
               </Col>
@@ -439,7 +471,9 @@ const mapStateToProps = (state: GlobalState) => ({
   services: state.entities.services,
   content: state.content,
   profile: state.profile,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  wasServiceAlertDisplayedOnce:
+    state.persistedPreferences.wasServiceAlertDisplayedOnce
 });
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
