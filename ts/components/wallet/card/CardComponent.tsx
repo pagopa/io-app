@@ -98,7 +98,7 @@ export default class CardComponent extends React.Component<Props> {
   private handleOnCardPress = () => {
     if (
       (this.props.type === "Full" || this.props.type === "Picking") &&
-      this.props.mainAction 
+      this.props.mainAction
     ) {
       this.props.mainAction(this.props.wallet);
     }
@@ -131,7 +131,6 @@ export default class CardComponent extends React.Component<Props> {
                     ? variables.brandDarkGray
                     : variables.brandPrimary
                 }
-
                 onPress={this.handleFavoritePress}
               />
             )}
@@ -195,9 +194,9 @@ export default class CardComponent extends React.Component<Props> {
     const expirationDate = buildExpirationDate(wallet);
 
     return (
-      <View 
-          style={[styles.columns,styles.paddedTop,styles.body]} 
-          onTouchEnd={this.handleOnCardPress}
+      <View
+        style={[styles.columns, styles.paddedTop, styles.body]}
+        onTouchEnd={this.handleOnCardPress}
       >
         <View>
           <Text
@@ -263,11 +262,15 @@ export default class CardComponent extends React.Component<Props> {
       this.props.type === "Preview" || this.props.type === "Header";
 
     return (
-      <View style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}>
+      <View
+        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+      >
         <View style={[styles.cardInner]}>
-          <View style={[styles.row]} >
-            <View style={[styles.row,styles.numberArea]} onTouchEnd={this.handleOnCardPress}>
-             
+          <View style={[styles.row]}>
+            <View
+              style={[styles.row, styles.numberArea]}
+              onTouchEnd={this.handleOnCardPress}
+            >
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
@@ -275,8 +278,6 @@ export default class CardComponent extends React.Component<Props> {
               <Text style={[CreditCardStyles.largeTextStyle]}>
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
-
-              
             </View>
 
             <View style={styles.topRightCornerContainer}>

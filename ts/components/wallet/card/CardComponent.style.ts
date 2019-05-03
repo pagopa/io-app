@@ -85,15 +85,15 @@ export default StyleSheet.create({
     paddingLeft: 10
   },
   paddedTop: {
-    paddingTop:10
+    paddingTop: 10
   },
   numberArea: {
-    borderWidth:1,
-    borderColor:"transparent",
-    width:"82%"
+    borderWidth: 1,
+    borderColor: "transparent",
+    width: "82%"
   },
   body: {
-    borderWidth:1,
-    borderColor:"transparent"
+    borderWidth: 1,
+    borderColor: "transparent"
   }
 });
