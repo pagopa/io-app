@@ -7,7 +7,8 @@ import {
   RefreshControl,
   StyleSheet
 } from "react-native";
-
+import { store } from "../../App";
+import { setNumberMessagesUnread } from "../../store/actions/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
@@ -73,6 +74,10 @@ class MessageListComponent extends React.Component<Props> {
     );
 
     messagesToRead = messages.filter(obj => !obj.isRead).length;
+    store.dispatch(
+      setNumberMessagesUnread(messagesToRead < 99 ? messagesToRead : 99)
+    );
+
     return (
       <FlatList
         contentContainerStyle={styles.contentContainerStyle}
@@ -85,13 +90,6 @@ class MessageListComponent extends React.Component<Props> {
         ListEmptyComponent={ListEmptyComponent}
       />
     );
-  }
-
-  public getMessagesToRead() {
-    if (messagesToRead > 99) {
-      return 99;
-    }
-    return messagesToRead;
   }
 }
 

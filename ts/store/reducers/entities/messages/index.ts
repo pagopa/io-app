@@ -8,10 +8,12 @@ import { createSelector } from "reselect";
 
 import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
+import badgeReducer, { BadgeNumberState } from "./badge";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
 } from "./messagesAllIds";
+
 import messagesByIdReducer, {
   messagesStateByIdSelector,
   MessageStateById
@@ -20,16 +22,18 @@ import messagesByIdReducer, {
 export type MessagesState = Readonly<{
   byId: MessageStateById;
   allIds: MessagesAllIdsState; // FIXME: is this used?
+  badge: BadgeNumberState;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,
-  allIds: messagesAllIdsReducer
+  allIds: messagesAllIdsReducer,
+  badge: badgeReducer
 });
 
 // Selectors
 
-/**
+/**-
  * Returns array of messages IDs inversely lexically ordered.
  */
 export const lexicallyOrderedMessagesIds = createSelector(

@@ -8,9 +8,10 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
-import MessageListComponent from "../components/messages/MessageListComponent";
+import { store } from "../App";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
+import { badgeNumberSelector } from "../store/reducers/entities/messages/badge";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
@@ -90,7 +91,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 19,
     width: 19,
-    paddingLeft: 2
+    textAlign: "center",
+    paddingRight: 3
   },
   badgeStyle: {
     backgroundColor: variables.brandPrimary,
@@ -180,7 +182,6 @@ const navigation = createBottomTabNavigator(
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
-        const messagesToRead = MessageListComponent.prototype.getMessagesToRead();
         return (
           <View>
             <IconFont
@@ -188,16 +189,19 @@ const navigation = createBottomTabNavigator(
               size={variables.iconSize3}
               color={options.tintColor === null ? undefined : options.tintColor}
             />
-            {routeName === ROUTES.MESSAGES_NAVIGATOR ? (
+            {routeName === ROUTES.MESSAGES_NAVIGATOR &&
+            badgeNumberSelector(store.getState()).badgeCount > 0 ? (
               Platform.OS === "ios" ? (
                 <Badge style={styles.badgeStyle}>
                   <Text style={[styles.textBadgeStyle, { top: 0 }]}>
-                    {messagesToRead}
+                    {badgeNumberSelector(store.getState()).badgeCount}
                   </Text>
                 </Badge>
               ) : (
                 <Badge style={styles.badgeStyle}>
-                  <Text style={styles.textBadgeStyle}>{messagesToRead}</Text>
+                  <Text style={styles.textBadgeStyle}>
+                    {badgeNumberSelector(store.getState()).badgeCount}
+                  </Text>
                 </Badge>
               )
             ) : null}
