@@ -20,12 +20,14 @@ export function pagoPAEnvReducer(
 ): PagoPAEnvState {
   switch (action.type) {
     case getType(setPagoPAEnvironmentAsQa):
+
+      console.log("Changing PagoPA environment state:" + state.isPagoPAQAEnabled)
       return {
         ...state,
         isPagoPAQAEnabled: action.payload
       };
   }
-
+  console.log("PagoPA environment state:" + state.isPagoPAQAEnabled)
   return state;
 }
 
