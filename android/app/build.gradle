@@ -100,7 +100,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -124,6 +124,9 @@ android {
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
         resConfigs 'en', 'it'
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
     }
     signingConfigs {
         release {
@@ -166,6 +169,24 @@ android {
                 output.versionCodeOverride =
                         defaultConfig.versionCode * 10 + versionCodes.get(abi)
             }
+        }
+    }
+
+    // The Android App Bundle read this section to create different bundles
+    bundle {
+        language {
+            // Disable split by language
+            enableSplit = false
+        }
+
+        density {
+            // Disable split by density
+            enableSplit = false
+        }
+
+        abi {
+            // Enable split by abi
+            enableSplit = true
         }
     }
 }
