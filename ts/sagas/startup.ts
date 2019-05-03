@@ -210,7 +210,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
 
-  const isPagoPAQAEnabled: boolean = yield select<GlobalState>(
+  const isPagoPAQAEnabled: ReturnType<typeof isPagoPAQAEnabledSelector> = yield select<GlobalState>(
     isPagoPAQAEnabledSelector
   );
 
