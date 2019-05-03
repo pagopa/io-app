@@ -184,6 +184,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
+        isPagoPAQAEnabled={this.props.isPagoPAQAEnabled}
         displayedWallets={
           wallets.length === 0 ? null : (
             <CardsFan
@@ -235,7 +236,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
-  potTransactions: latestTransactionsSelector(state)
+  potTransactions: latestTransactionsSelector(state),
+  isPagoPAQAEnabled: state.pagoPAEnv.isPagoPAQAEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
