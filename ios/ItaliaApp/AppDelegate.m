@@ -26,22 +26,39 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"ItaliaApp"
-                                            initialProperties:nil];
-
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-
-  // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
-  [RNSplashScreen show];
-
+    if ([self isDeviceJailBroken]) {
+      self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+      UIViewController *rootViewController = [UIViewController new];
+      rootViewController.view.backgroundColor = UIColor.whiteColor;
+      self.window.rootViewController = rootViewController;
+      [self.window makeKeyAndVisible];
+      //show popup
+      UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Device rooted"
+                                    message:@"This device is rooted, you can't use this app"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+      
+      UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+      [vc presentViewController:alert animated:YES completion:nil];
+    } else {
+      //continue
+      RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+      RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                       moduleName:@"ItaliaApp"
+                                                initialProperties:nil];
+      
+      rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+      
+      self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+      UIViewController *rootViewController = [UIViewController new];
+      rootViewController.view = rootView;
+      self.window.rootViewController = rootViewController;
+      [self.window makeKeyAndVisible];
+      
+      // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
+      [RNSplashScreen show];
+    }
+  
   return YES;
 }
 
@@ -53,6 +70,7 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+
 
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
@@ -79,6 +97,46 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
+}
+
+// Check if the device is jailbroken
+-(BOOL)isDeviceJailBroken
+{
+  #if !(TARGET_IPHONE_SIMULATOR)
+    // Check 1 : existence of files that are common for jailbroken devices
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Cydia.app"] ||
+        [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/MobileSubstrate.dylib"] ||
+        [[NSFileManager defaultManager] fileExistsAtPath:@"/bin/bash"] ||
+        [[NSFileManager defaultManager] fileExistsAtPath:@"/usr/sbin/sshd"] ||
+        [[NSFileManager defaultManager] fileExistsAtPath:@"/etc/apt"] ||
+        [[NSFileManager defaultManager] fileExistsAtPath:@"/private/var/lib/apt/"] ||
+        [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]) {
+          return YES;
+    }
+    FILE *f = NULL ;
+    if ((f = fopen("/bin/bash", "r")) ||
+        (f = fopen("/Applications/Cydia.app", "r")) ||
+        (f = fopen("/Library/MobileSubstrate/MobileSubstrate.dylib", "r")) ||
+        (f = fopen("/usr/sbin/sshd", "r")) ||
+        (f = fopen("/etc/apt", "r"))) {
+          fclose(f);
+          return YES;
+    }
+    fclose(f);
+    // Check 2 : Reading and writing in system directories (sandbox violation)
+    NSError *error;
+    NSString *stringToBeWritten = @"Jailbreak Test.";
+    [stringToBeWritten writeToFile:@"/private/jailbreak.txt" atomically:YES
+                          encoding:NSUTF8StringEncoding error:&error];
+    if(error==nil){
+      //Device is jailbroken
+      return YES;
+    } else {
+      [[NSFileManager defaultManager] removeItemAtPath:@"/private/jailbreak.txt" error:nil];
+    }
+  #endif
+  return NO;
+  
 }
 
 
