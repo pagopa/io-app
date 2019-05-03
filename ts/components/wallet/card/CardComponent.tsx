@@ -96,7 +96,6 @@ export default class CardComponent extends React.Component<Props> {
   };
 
   private handleOnCardPress = () => {
-    
     if (
       (this.props.type === "Full" || this.props.type === "Picking") &&
       this.props.mainAction 
@@ -197,7 +196,7 @@ export default class CardComponent extends React.Component<Props> {
 
     return (
       <View 
-          style={[styles.columns,styles.paddedTop]} 
+          style={[styles.columns,styles.paddedTop,styles.body]} 
           onTouchEnd={this.handleOnCardPress}
       >
         <View>
@@ -267,7 +266,7 @@ export default class CardComponent extends React.Component<Props> {
       <View style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}>
         <View style={[styles.cardInner]}>
           <View style={[styles.row]} >
-            <View style={[styles.cardNumber]} onTouchEnd={this.handleOnCardPress}>
+            <View style={[styles.row,styles.numberArea]} onTouchEnd={this.handleOnCardPress}>
              
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
@@ -277,7 +276,7 @@ export default class CardComponent extends React.Component<Props> {
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
 
-              <View style={{borderWidth:3, borderColor:"yellow",width:"35%"}}></View>
+              
             </View>
 
             <View style={styles.topRightCornerContainer}>
