@@ -24,6 +24,7 @@ import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { SetPagoPAEnvironmentAsQa } from "./pagoPAEnv";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
@@ -52,7 +53,8 @@ export type Action =
   | IdentificationActions
   | InstallationActions
   | DebugActions
-  | CalendarEventsActions;
+  | CalendarEventsActions
+  | SetPagoPAEnvironmentAsQa;
 
 export type Dispatch = DispatchAPI<Action>;
 

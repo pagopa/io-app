@@ -33,6 +33,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { setPagoPAEnvironmentAsQa } from "../../store/actions/pagoPAEnv";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -208,6 +209,20 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <View style={styles.debugModeSection}>
+                <View>
+                  <Text style={styles.itemLeftText}>PagoPA QA ENV</Text>
+                  <Text>This change require application reboot</Text>
+                </View>
+
+                <Switch
+                  value={this.props.isPagoPAQAEnabled}
+                  onValueChange={this.props.setPagoPAQAEnabled}
+                />
+              </View>
+            </ListItem>
+
+            <ListItem>
+              <View style={styles.debugModeSection}>
                 <Text>Debug mode</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}
@@ -351,7 +366,8 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isPagoPAQAEnabled: state.pagoPAEnv.isPagoPAQAEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -360,7 +376,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired())
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  setPagoPAQAEnabled: (enabled: boolean) =>
+    dispatch(setPagoPAEnvironmentAsQa(enabled))
 });
 
 export default connect(

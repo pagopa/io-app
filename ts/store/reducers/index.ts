@@ -22,6 +22,7 @@ import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
+import { pagoPAEnvReducer } from "./pagoPAEnv";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
@@ -80,7 +81,8 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  debug: debugReducer
+  debug: debugReducer,
+  pagoPAEnv: pagoPAEnvReducer
 });
 
 export function createRootReducer(
