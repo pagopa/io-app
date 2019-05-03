@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
@@ -17,14 +17,6 @@ const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
-
-  emptyMessageWrapper: {
-    flex: 1,
-    padding: customVariables.contentPadding,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-
   buttonBar: {
     position: "absolute",
     left: 0,
@@ -42,6 +34,18 @@ const styles = StyleSheet.create({
   },
   buttonBarSecondaryButton: {
     flex: 4
+  },
+  emptyListWrapper: {
+    padding: customVariables.contentPadding,
+    alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding
+  },
+  emptyListContentSubtitle: {
+    textAlign: "center",
+    paddingTop: customVariables.contentPadding,
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -67,8 +71,17 @@ type State = {
 };
 
 const ListEmptyComponent = (
-  <View style={styles.emptyMessageWrapper}>
-    <Text>{I18n.t("messages.archive.emptyMessage")}</Text>
+  <View style={styles.emptyListWrapper}>
+    <View spacer={true} />
+    <Image
+      source={require("../../../img/messages/empty-archive-list-icon.png")}
+    />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("messages.archive.emptyMessage.title")}
+    </Text>
+    <Text style={styles.emptyListContentSubtitle}>
+      {I18n.t("messages.archive.emptyMessage.subtitle")}
+    </Text>
   </View>
 );
 
