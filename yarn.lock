@@ -7347,11 +7347,6 @@ react-native-exception-handler@2.10.0:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.0.tgz#0d828a4f2c7c4469a2929fa46d20535def726903"
   integrity sha512-MJLE1NxGFlsdoOk3jBXUMzceZyVuLLXGWjK406ABH5+mfFjbIjmxAAEm/pkvzD8E5QXNo1chUSzpwtq2wCjygA==
 
-react-native-exit-app@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-exit-app/-/react-native-exit-app-1.0.0.tgz#a2fbb121d902e6967cd8a365fe8453e5c4bc3172"
-  integrity sha512-2d8RlzfjA4fTJaXD3xObTt0hv+7i41bDyWDB9+zOI0zS1nGvY4mtENKhte8ceRih/3eZWQLpwkkHFP1Y8AG/5w==
-
 "react-native-flag-secure-android@git://github.com/teamdigitale/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795":
   version "1.0.0"
   resolved "git://github.com/teamdigitale/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795"
