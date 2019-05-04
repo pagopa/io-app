@@ -107,6 +107,7 @@ profile:
     experimentalFeatures:
       confirmTitle: Experimental features
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
+      bannerMessage: You are using experimental features that may be incomplete or unstable.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
