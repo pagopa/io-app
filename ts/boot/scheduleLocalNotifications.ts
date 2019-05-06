@@ -5,6 +5,8 @@ import { store } from "../App";
 import { updateLocalNotificationsScheduled } from "../store/actions/notifications";
 import { notificationsLocalScheduledSelector } from "../store/reducers/notifications/localScheduled";
 
+// this tag gets associated to all scheduled notifications and is used to cancel them
+// once the user logs in the first time 
 const FIRST_ACCESS_SPID_TAG: string = "local_notification_spid";
 
 /*
