@@ -21,9 +21,15 @@ export const pagoPaQAEnvironmentEnabledSuccess = createStandardAction(
   "PAGOPA_ENV_AS_QA"
 )<{ isPagoPAQAEnabled: boolean }>();
 
+export const preferencesExperimentalFeaturesSetEnabled = createStandardAction(
+  "PREFERENCES_EXPERIMENTAL_FEATURES_SET_ENABLED"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
+  // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
-  | typeof pagoPaQAEnvironmentEnabledSuccess // tslint:disable-line:max-union-size
+  | typeof pagoPaQAEnvironmentEnabledSuccess
+  | typeof preferencesExperimentalFeaturesSetEnabled
 >;
