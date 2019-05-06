@@ -43,7 +43,7 @@ import {
   setFavouriteWalletSuccess
 } from "../../store/actions/wallet/wallets";
 import {
-  isPagoPAQAEnabledSelector,
+  isPagoPATestEnabledSelector,
   PersistedPreferencesState
 } from "../../store/reducers/persistedPreferences";
 import { PaymentManagerToken } from "../../types/pagopa";
@@ -483,8 +483,8 @@ export function* paymentVerificaRequestHandler(
 ) {
   try {
     const isPagoPAQAEnabled: ReturnType<
-      typeof isPagoPAQAEnabledSelector
-    > = yield select<PersistedPreferencesState>(isPagoPAQAEnabledSelector);
+      typeof isPagoPATestEnabledSelector
+    > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -519,8 +519,8 @@ export function* paymentAttivaRequestHandler(
 ) {
   try {
     const isPagoPAQAEnabled: ReturnType<
-      typeof isPagoPAQAEnabledSelector
-    > = yield select<PersistedPreferencesState>(isPagoPAQAEnabledSelector);
+      typeof isPagoPATestEnabledSelector
+    > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
@@ -564,8 +564,8 @@ export function* paymentIdPollingRequestHandler(
 
   try {
     const isPagoPAQAEnabled: ReturnType<
-      typeof isPagoPAQAEnabledSelector
-    > = yield select<PersistedPreferencesState>(isPagoPAQAEnabledSelector);
+      typeof isPagoPATestEnabledSelector
+    > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {

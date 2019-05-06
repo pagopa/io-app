@@ -5,9 +5,9 @@ import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
 
 import {
-  pagoPaTestEnvironmentEnabledSuccess,
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,
+  preferencesPagoPaTestEnvironmentSetEnabled,
   preferredCalendarSaveSuccess,
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
@@ -51,7 +51,7 @@ export default function preferencesReducer(
       wasServiceAlertDisplayedOnce: action.payload.wasServiceAlertDisplayedOnce
     };
   }
-  if (isActionOf(pagoPaTestEnvironmentEnabledSuccess, action)) {
+  if (isActionOf(preferencesPagoPaTestEnvironmentSetEnabled, action)) {
     return {
       ...state,
       isPagoPATestEnabled: action.payload.isPagoPATestEnabled
