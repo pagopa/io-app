@@ -115,6 +115,11 @@ export const navigateToPaymentTransactionSummaryScreen = (
     params
   });
 
+export const navigateToPaymentTransactionErrorScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_TRANSACTION_ERROR
+  });
+
 export const navigateToPaymentPickPaymentMethodScreen = (
   params: InferNavigationParams<typeof PickPaymentMethodScreen>
 ) =>

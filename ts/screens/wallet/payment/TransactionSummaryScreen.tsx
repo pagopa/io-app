@@ -21,7 +21,6 @@ import { connect } from "react-redux";
 
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 
-import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import Markdown from "../../../components/ui/Markdown";
@@ -46,6 +45,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
@@ -128,6 +128,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
       error
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
+      if (error.isSome()) {
+        this.props.navigateToPaymentTransactionError();
+      }
     }
   }
 
@@ -304,6 +307,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
 
+  const navigateToPaymentTransactionError = () =>
+    dispatch(navigateToPaymentTransactionErrorScreen());
+
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
@@ -340,6 +346,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
 
   return {
     dispatchPaymentVerificaRequest,
+    navigateToPaymentTransactionError,
     startOrResumePayment,
     goBack: () => {
       props.navigation.goBack();
@@ -410,38 +417,8 @@ const mergeProps = (
     : baseProps;
 };
 
-const mapErrorCodeToMessage = (
-  error: ReturnType<typeof mapStateToProps>["error"]["_A"]
-): string => {
-  switch (error) {
-    case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
-    case "INVALID_AMOUNT":
-      return I18n.t("wallet.errors.INVALID_AMOUNT");
-    case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
-    case "PAYMENT_EXPIRED":
-      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
-    case "PAYMENT_UNAVAILABLE":
-      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
-    case "PAYMENT_UNKNOWN":
-      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
-    case "DOMAIN_UNKNOWN":
-      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
-    case "PAYMENT_ID_TIMEOUT":
-      return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
-    default:
-      return I18n.t("wallet.errors.GENERIC_ERROR");
-  }
-};
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(
-  withErrorModal(
-    withLoadingSpinner(TransactionSummaryScreen),
-    mapErrorCodeToMessage
-  )
-);
+)(withLoadingSpinner(TransactionSummaryScreen));
