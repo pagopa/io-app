@@ -39,6 +39,7 @@ class RootContainer extends React.PureComponent<Props> {
 
     /* Configure the application to receive push notifications */
     configurePushNotifications();
+
     /* Schedule a set of local notifications */
     scheduleLocalNotificationsAccessSpid();
   }
