@@ -35,7 +35,7 @@ global:
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
-      message: Login with yours Digital Identity on IO, the public services app
+      message: Login with your SPID identity on IO, the public services app
 locales:
   it: Italian
   en: English
