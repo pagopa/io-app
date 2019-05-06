@@ -20,6 +20,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
+import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
@@ -173,13 +174,17 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       sessionToken,
       walletToken,
       notificationToken,
-      notificationId
+      notificationId,
+      isExperimentalFeaturesEnabled
     } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
+        banner={
+          isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
+        }
       >
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
