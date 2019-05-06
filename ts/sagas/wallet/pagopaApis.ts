@@ -482,7 +482,7 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
-    const isPagoPAQAEnabled: ReturnType<
+    const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
     > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
 
@@ -490,7 +490,7 @@ export function* paymentVerificaRequestHandler(
       getVerificaRpt,
       {
         rptId: RptIdFromString.encode(action.payload),
-        test: isPagoPAQAEnabled
+        test: isPagoPATestEnabled
       }
     );
     if (response !== undefined && response.status === 200) {
@@ -518,7 +518,7 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
-    const isPagoPAQAEnabled: ReturnType<
+    const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
     > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
 
@@ -532,7 +532,7 @@ export function* paymentAttivaRequestHandler(
           importoSingoloVersamento:
             action.payload.verifica.importoSingoloVersamento
         },
-        test: isPagoPAQAEnabled
+        test: isPagoPATestEnabled
       }
     );
     if (response !== undefined && response.status === 200) {
@@ -563,14 +563,14 @@ export function* paymentIdPollingRequestHandler(
   // now poll until a paymentId is made available
 
   try {
-    const isPagoPAQAEnabled: ReturnType<
+    const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
     > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
-        test: isPagoPAQAEnabled
+        test: isPagoPATestEnabled
       }
     );
     if (response !== undefined && response.status === 200) {
