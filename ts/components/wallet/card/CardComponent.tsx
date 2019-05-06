@@ -244,6 +244,7 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
+        onPress={this.handleOnCardPress}
       >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
