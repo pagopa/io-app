@@ -17,21 +17,21 @@ export const scheduleLocalNotificationsAccessSpid = () => {
   if (!isScheduled) {
     const nowDate = new Date();
     // Configure all the dates to schedule local notifications
-    const oneDayDate = addDays(nowDate, 1);
-    const threeDayDate = addDays(oneDayDate, 3);
-    const oneWeekDate = addWeeks(threeDayDate, 1);
-    const twoWeekDate = addWeeks(oneWeekDate, 2);
-    const oneMonthDate = addMonths(twoWeekDate, 1);
-    const twoMonthDate = addMonths(oneMonthDate, 2);
-    const sixMonthDate = addMonths(twoMonthDate, 6);
+    const oneDayFromNow = addDays(nowDate, 1);
+    const threeDaysFromPrev = addDays(oneDayFromNow, 3);
+    const oneWeekFromPrev = addWeeks(threeDaysFromPrev, 1);
+    const twoWeeksFromPrev = addWeeks(oneWeekFromPrev, 2);
+    const oneMonthFromPrev = addMonths(twoWeeksFromPrev, 1);
+    const twoMonthsFromPrev = addMonths(oneMonthFromPrev, 2);
+    const sixMonthsFromPrev = addMonths(twoMonthsFromPrev, 6);
     const localNotificationDates: ReadonlyArray<Date> = [
-      oneDayDate,
-      threeDayDate,
-      oneWeekDate,
-      twoWeekDate,
-      oneMonthDate,
-      twoMonthDate,
-      sixMonthDate
+      oneDayFromNow,
+      threeDaysFromPrev,
+      oneWeekFromPrev,
+      twoWeeksFromPrev,
+      oneMonthFromPrev,
+      twoMonthsFromPrev,
+      sixMonthsFromPrev
     ];
 
     localNotificationDates.forEach((scheduledDate: Date) =>
