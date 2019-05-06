@@ -17,8 +17,8 @@ export const serviceAlertDisplayedOnceSuccess = createStandardAction(
   "SERVICE_ALERT_DISPLAYED_ONCE_SUCCESS"
 )<{ wasServiceAlertDisplayedOnce: boolean }>();
 
-export const pagoPaTestEnvironmentEnabledSuccess = createStandardAction(
-  "PAGOPA_ENV_AS_Test"
+export const preferencesPagoPaTestEnvironmentSetEnabled = createStandardAction(
+  "PREFERENCES_PAGOPA_TEST_ENVIRONMENT_SET_ENABLED"
 )<{ isPagoPATestEnabled: boolean }>();
 
 export const preferencesExperimentalFeaturesSetEnabled = createStandardAction(
@@ -30,6 +30,6 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
-  | typeof pagoPaTestEnvironmentEnabledSuccess
+  | typeof preferencesPagoPaTestEnvironmentSetEnabled
   | typeof preferencesExperimentalFeaturesSetEnabled
 >;

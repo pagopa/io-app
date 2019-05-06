@@ -34,8 +34,8 @@ import {
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
-  pagoPaTestEnvironmentEnabledSuccess,
-  preferencesExperimentalFeaturesSetEnabled
+  preferencesExperimentalFeaturesSetEnabled,
+  preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
@@ -429,9 +429,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
-  setPagoPATestEnabled: (enabled: boolean) =>
+  setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
-      pagoPaTestEnvironmentEnabledSuccess({ isPagoPATestEnabled: enabled })
+      preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
