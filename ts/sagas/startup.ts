@@ -42,7 +42,7 @@ import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
-  isPagoPAQAEnabledSelector,
+  isPagoPATestEnabledSelector,
   PersistedPreferencesState
 } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
@@ -217,15 +217,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
 
-  const isPagoPAQAEnabled: ReturnType<
-    typeof isPagoPAQAEnabledSelector
-  > = yield select<PersistedPreferencesState>(isPagoPAQAEnabledSelector);
+  const isPagoPATestEnabled: ReturnType<
+    typeof isPagoPATestEnabledSelector
+  > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
 
   yield fork(
     watchWalletSaga,
     sessionToken,
     walletToken,
-    isPagoPAQAEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
+    isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
   );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga

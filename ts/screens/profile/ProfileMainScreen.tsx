@@ -34,7 +34,7 @@ import {
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
-  pagoPaQAEnvironmentEnabledSuccess,
+  pagoPaTestEnvironmentEnabledSuccess,
   preferencesExperimentalFeaturesSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
@@ -263,8 +263,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 </View>
 
                 <Switch
-                  value={this.props.isPagoPAQAEnabled}
-                  onValueChange={this.props.setPagoPAQAEnabled}
+                  value={this.props.isPagoPATestEnabled}
+                  onValueChange={this.props.setPagoPATestEnabled}
                 />
               </View>
             </ListItem>
@@ -415,7 +415,7 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  isPagoPAQAEnabled: state.persistedPreferences.isPagoPAQAEnabled,
+  isPagoPATestEnabled: state.persistedPreferences.isPagoPATestEnabled,
   isExperimentalFeaturesEnabled:
     state.persistedPreferences.isExperimentalFeaturesEnabled
 });
@@ -427,8 +427,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
-  setPagoPAQAEnabled: (enabled: boolean) =>
-    dispatch(pagoPaQAEnvironmentEnabledSuccess({ isPagoPAQAEnabled: enabled })),
+  setPagoPATestEnabled: (enabled: boolean) =>
+    dispatch(
+      pagoPaTestEnvironmentEnabledSuccess({ isPagoPATestEnabled: enabled })
+    ),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

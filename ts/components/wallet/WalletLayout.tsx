@@ -44,7 +44,7 @@ type Props = Readonly<{
   onNewPaymentPress?: () => void;
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
-  isPagoPAQAEnabled?: boolean;
+  isPagoPATestEnabled?: boolean;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
@@ -65,7 +65,7 @@ export default class WalletLayout extends React.Component<Props> {
             </Left>
           )}
           <Body>
-            {this.props.isPagoPAQAEnabled ? (
+            {this.props.isPagoPATestEnabled ? (
               <Image
                 style={{ resizeMode: "contain", width: 60 }}
                 source={require("../../../img/wallet/logo-pagopa-test.png")}
