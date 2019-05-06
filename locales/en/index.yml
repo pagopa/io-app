@@ -274,9 +274,9 @@ wallet:
   paymentMethods: Payment methods
   paymentMethod: Payment method
   walletLoadMessage: Loading payment methods...
-  walletLoadFailure: Loading payment methods has failed!
+  walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
-  transactionsLoadFailure: Loading transactions has failed!
+  transactionsLoadFailure: Loading transactions has failed, please retry.
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time

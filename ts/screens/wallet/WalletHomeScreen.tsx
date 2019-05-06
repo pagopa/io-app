@@ -4,7 +4,7 @@
  * add new ones
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, H1, Left, Right, Text, View } from "native-base";
+import { Button, H1, Left, Right, Text, View, Content, H3 } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -202,11 +202,15 @@ class WalletHomeScreen extends React.Component<Props, never> {
         allowGoBack={false}
       >
         {pot.isError(potTransactions) ? (
-          <React.Fragment>
+          <Content
+            scrollEnabled={false}
+            style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+          >
             <View spacer={true} />
-            <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
-              {I18n.t("wallet.transactionsLoadFailure")}
-            </Text>
+            <H3>{I18n.t("wallet.transactions")}</H3>
+            <View spacer={true} />
+            <Text>{I18n.t("wallet.transactionsLoadFailure")}</Text>
+            <View spacer={true} large={true} />
             <Button
               block={true}
               danger={true}
@@ -214,7 +218,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
             >
               <Text>{I18n.t("global.buttons.retry")}</Text>
             </Button>
-          </React.Fragment>
+            <View spacer={true} large={true} />
+          </Content>
         ) : (
           <TransactionsList
             title={I18n.t("wallet.latestTransactions")}
