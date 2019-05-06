@@ -4,7 +4,7 @@
  * add new ones
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, H1, Left, Right, Text, View, Content, H3 } from "native-base";
+import { Button, Content, H1, H3, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -145,8 +145,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.header()}
-        <View spacer={true} />
+        {this.withCardsHeader()}
+        <View spacer={true} large={true}/>
         <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
@@ -172,13 +172,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
     const wallets = pot.getOrElse(potWallets, []);
-    const headerContents = pot.isLoading(potWallets)
+    const headerContents =this.errorWalletsHeader(); /**  pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
         : wallets.length > 0
           ? this.withCardsHeader()
-          : this.withoutCardsHeader();
+          : this.withoutCardsHeader(); */
 
     return (
       <WalletLayout
@@ -201,16 +201,16 @@ class WalletHomeScreen extends React.Component<Props, never> {
         }
         allowGoBack={false}
       >
-        {pot.isError(potTransactions) ? (
+        {!pot.isError(potTransactions) ? (
           <Content
             scrollEnabled={false}
             style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
           >
             <View spacer={true} />
             <H3>{I18n.t("wallet.transactions")}</H3>
-            <View spacer={true} />
-            <Text>{I18n.t("wallet.transactionsLoadFailure")}</Text>
             <View spacer={true} large={true} />
+            <Text>{I18n.t("wallet.transactionsLoadFailure")}</Text>
+            <View spacer={true} />
             <Button
               block={true}
               danger={true}
