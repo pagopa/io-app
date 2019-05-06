@@ -3,19 +3,18 @@ import I18n from "i18n-js";
 import PushNotification from "react-native-push-notification";
 import { store } from "../App";
 import { updateLocalNotificationsScheduled } from "../store/actions/notifications";
-import { notificationsLocalScheduledSelector } from "../store/reducers/notifications/localScheduled";
+import { isLocalNotificationsScheduledSelector } from "../store/reducers/notifications/localScheduled";
 
 // this tag gets associated to all scheduled notifications and is used to cancel them
-// once the user logs in the first time 
+// once the user logs in the first time
 const FIRST_ACCESS_SPID_TAG: string = "local_notification_spid";
 
 /*
  * Schedule a set of local notifications to remind the user to authenticate with spid
  */
 export const scheduleLocalNotificationsAccessSpid = () => {
-  const isToSchedule = notificationsLocalScheduledSelector(store.getState())
-    .isToSchedule;
-  if (isToSchedule) {
+  const isScheduled = isLocalNotificationsScheduledSelector(store.getState());
+  if (!isScheduled) {
     const nowDate = new Date();
     // Configure all the dates to schedule local notifications
     const oneDayDate = addDays(nowDate, 1);
@@ -44,8 +43,8 @@ export const scheduleLocalNotificationsAccessSpid = () => {
         userInfo: { tag: FIRST_ACCESS_SPID_TAG }
       })
     );
-    // Dispatch an action to save  that notifications are not to be scheduled anymore
-    store.dispatch(updateLocalNotificationsScheduled(false));
+    // Dispatch an action to remember that notifications have been scheduled
+    store.dispatch(updateLocalNotificationsScheduled(true));
   }
 };
 
