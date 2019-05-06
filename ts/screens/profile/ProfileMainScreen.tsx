@@ -33,7 +33,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { setPagoPAEnvironmentAsQa } from "../../store/actions/pagoPAEnv";
+import { pagoPaQAEnvironmentEnabledSuccess } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -367,7 +367,7 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  isPagoPAQAEnabled: state.pagoPAEnv.isPagoPAQAEnabled
+  isPagoPAQAEnabled: state.persistedPreferences.isPagoPAQAEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -378,7 +378,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPAQAEnabled: (enabled: boolean) =>
-    dispatch(setPagoPAEnvironmentAsQa(enabled))
+    dispatch(pagoPaQAEnvironmentEnabledSuccess({ isPagoPAQAEnabled: enabled }))
 });
 
 export default connect(

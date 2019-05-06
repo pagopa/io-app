@@ -5,6 +5,7 @@ import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
 
 import {
+  pagoPaQAEnvironmentEnabledSuccess,
   preferenceFingerprintIsEnabledSaveSuccess,
   preferredCalendarSaveSuccess,
   serviceAlertDisplayedOnceSuccess
@@ -15,12 +16,14 @@ export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
   preferredCalendar?: Calendar;
   wasServiceAlertDisplayedOnce?: boolean;
+  isPagoPAQAEnabled?: boolean;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
-  wasServiceAlertDisplayedOnce: false
+  wasServiceAlertDisplayedOnce: false,
+  isPagoPAQAEnabled: false
 };
 
 export default function preferencesReducer(
@@ -45,6 +48,15 @@ export default function preferencesReducer(
       wasServiceAlertDisplayedOnce: action.payload.wasServiceAlertDisplayedOnce
     };
   }
+  if (isActionOf(pagoPaQAEnvironmentEnabledSuccess, action)) {
+    return {
+      ...state,
+      isPagoPAQAEnabled: action.payload.isPagoPAQAEnabled
+    };
+  }
 
   return state;
 }
+
+export const isPagoPAQAEnabledSelector = (state: PersistedPreferencesState) =>
+  state.isPagoPAQAEnabled;

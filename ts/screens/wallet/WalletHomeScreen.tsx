@@ -237,7 +237,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
-  isPagoPAQAEnabled: state.pagoPAEnv.isPagoPAQAEnabled
+  isPagoPAQAEnabled: state.persistedPreferences.isPagoPAQAEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
