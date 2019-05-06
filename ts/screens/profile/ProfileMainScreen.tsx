@@ -258,7 +258,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <ListItem>
               <View style={styles.debugModeSection}>
                 <View>
-                  <Text style={styles.itemLeftText}>PagoPA QA ENV</Text>
+                  <Text style={styles.itemLeftText}>PagoPA Test</Text>
                   <Text>This change require application reboot</Text>
                 </View>
 
