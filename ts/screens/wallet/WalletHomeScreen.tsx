@@ -146,7 +146,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     return (
       <View>
         {this.withCardsHeader()}
-        <View spacer={true} large={true}/>
+        <View spacer={true} large={true} />
         <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
@@ -172,13 +172,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
     const wallets = pot.getOrElse(potWallets, []);
-    const headerContents =this.errorWalletsHeader(); /**  pot.isLoading(potWallets)
+    const headerContents = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
         : wallets.length > 0
           ? this.withCardsHeader()
-          : this.withoutCardsHeader(); */
+          : this.withoutCardsHeader();
 
     return (
       <WalletLayout
@@ -201,7 +201,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         }
         allowGoBack={false}
       >
-        {!pot.isError(potTransactions) ? (
+        {pot.isError(potTransactions) ? (
           <Content
             scrollEnabled={false}
             style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
