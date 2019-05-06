@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
 
   noLeft: {
-    marginLeft: variables.contentPadding - 12 // content padding - header padding
+    marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
   }
 });
 
