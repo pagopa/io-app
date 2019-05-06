@@ -42,7 +42,7 @@ export class BaseHeader extends React.PureComponent<Props> {
             <GoBackButton testID="back-button" onPress={goBack} />
           </Left>
         )}
-        <Body style={!goBack ? styles.noLeft : {}}>
+        <Body style={goBack ? {} : styles.noLeft}>
           {body || (
             <Text white={this.props.primary} numberOfLines={1}>
               {headerTitle || DEFAULT_APPLICATION_NAME}
