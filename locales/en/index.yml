@@ -34,7 +34,7 @@ global:
   notImplemented: NOT IMPLEMENTED
   localNotifications:
     spidLogin:
-      title: Login to IO!
+      title: Remember to login to IO!
       message: Login with yours Digital Identity on IO, the public services app
 locales:
   it: Italian
