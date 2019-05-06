@@ -1,10 +1,41 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
+ * instabug report type i.e bug, chat etc.
+ */
+export type InstabugReport = {
+  type: string;
+};
+
+/**
+ * instabug report dismission i.e. canceled, submit etc.
+ */
+export type InstabugDismiss = {
+  how: string;
+};
+
+/**
  * Enables or disables debug mode
  */
 export const setDebugModeEnabled = createStandardAction(
   "DEBUG_MODE_SET_ENABLED"
 )<boolean>();
 
-export type DebugActions = ActionType<typeof setDebugModeEnabled>;
+/**
+ * An Instabug report is open
+ */
+export const openInstabugReport = createStandardAction("INSTABUG_REPORT_OPEN")<
+  InstabugReport
+>();
+
+/**
+ * An Instabug report is closed
+ */
+export const closeInstabugReport = createStandardAction(
+  "INSTABUG_REPORT_CLOSED"
+)<InstabugReport & InstabugDismiss>();
+
+export type DebugActions =
+  | ActionType<typeof setDebugModeEnabled>
+  | ActionType<typeof openInstabugReport>
+  | ActionType<typeof closeInstabugReport>;
