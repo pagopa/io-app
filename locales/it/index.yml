@@ -522,6 +522,10 @@ messages:
     emptyMessage: 
       title: La tua lista dei messaggi è vuota.
       subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
+  deadlines:
+    emptyMessage: 
+      title: Non hai scadenze in programma.
+      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
