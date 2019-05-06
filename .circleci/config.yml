@@ -189,8 +189,8 @@ jobs:
           command: cd android && bundle exec fastlane build_release
 
       - store_artifacts:
-          path: android/app/build/outputs/bundle
-          destination: bundle
+          path: android/app/build/outputs/apk
+          destination: apk
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
@@ -244,8 +244,8 @@ jobs:
           command: cd android && bundle exec fastlane alpha
 
       - store_artifacts:
-          path: android/app/build/outputs/bundle
-          destination: bundle
+          path: android/app/build/outputs/apk
+          destination: apk
 
   # Test ios build
   test-ios:

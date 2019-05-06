@@ -40,7 +40,7 @@ platform :android do
     #ensure_git_status_clean
 
     gradle(
-      task: "bundle",
+      task: "assemble",
       build_type: "Release",
       flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
