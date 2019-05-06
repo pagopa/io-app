@@ -7,12 +7,17 @@ import AppHeader from "../ui/AppHeader";
 
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 
+import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 
 const styles = StyleSheet.create({
   helpButton: {
     padding: 8
+  },
+
+  noLeft: {
+    marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
   }
 });
 
@@ -31,13 +36,13 @@ export class BaseHeader extends React.PureComponent<Props> {
   public render() {
     const { goBack, headerTitle, onShowHelp, body } = this.props;
     return (
-      <AppHeader primary={this.props.primary} noLeft={goBack !== true}>
+      <AppHeader primary={this.props.primary}>
         {goBack && (
           <Left>
             <GoBackButton testID="back-button" onPress={goBack} />
           </Left>
         )}
-        <Body>
+        <Body style={goBack ? {} : styles.noLeft}>
           {body || (
             <Text white={this.props.primary} numberOfLines={1}>
               {headerTitle || DEFAULT_APPLICATION_NAME}
