@@ -35,7 +35,7 @@ global:
   notImplemented: NON IMPLEMENTATO
   localNotifications:
     spidLogin:
-      title: Fai login su IO!
+      title: Ricordati di accedere ad IO!
       message: Accedi con la tua Identità Digitale su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
