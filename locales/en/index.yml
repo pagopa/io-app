@@ -112,7 +112,7 @@ profile:
     backendVersion: Backend Version
     debugMode: Debug mode
     pagoPaEnv: PagoPA Test Environment
-    pagoPAEnvAlert: This change requires application reboot
+    pagoPAEnvAlert: This change requires app reboot
 navigation:
   messages: Messages
   profile: Profile
