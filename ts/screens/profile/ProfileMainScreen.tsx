@@ -258,8 +258,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <ListItem>
               <View style={styles.debugModeSection}>
                 <View>
-                  <Text style={styles.itemLeftText}>PagoPA Test</Text>
-                  <Text>This change require application reboot</Text>
+                  <Text style={styles.itemLeftText}>
+                    {I18n.t("profile.main.pagoPaEnv")}
+                  </Text>
+                  <Text>{I18n.t("profile.main.pagoPAEnvAlert")}</Text>
                 </View>
 
                 <Switch
@@ -271,7 +273,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <View style={styles.debugModeSection}>
-                <Text>Debug mode</Text>
+                <Text>{I18n.t("profile.main.debugMode")}</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}
                   onValueChange={this.props.setDebugModeEnabled}

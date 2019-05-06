@@ -114,6 +114,9 @@ profile:
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
+    debugMode: Modalità debug
+    pagoPaEnv: Ambiente PagoPA di Test
+    pagoPAEnvAlert: Questa modifica richiede il reboot dell'app
 navigation:
   messages: Messaggi
   profile: Profilo
