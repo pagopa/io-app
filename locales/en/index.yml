@@ -104,6 +104,10 @@ profile:
         title: Export your data
         description: send to your email all your account’s data in an open format
     developersSectionHeader: Developers
+    experimentalFeatures:
+      confirmTitle: Experimental features
+      confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
+      bannerMessage: You are using experimental features that may be incomplete or unstable.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version

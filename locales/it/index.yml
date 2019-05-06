@@ -108,6 +108,10 @@ profile:
         description: ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
+    experimentalFeatures:
+      confirmTitle: Funzionalità sperimentali
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
