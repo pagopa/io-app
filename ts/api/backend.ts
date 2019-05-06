@@ -209,7 +209,7 @@ export function BackendClient(
 
   const attivaRptT: ActivatePaymentT = {
     method: "post",
-    url: ({ test }) => `/api/v1/payment-activations?${test}`,
+    url: ({ test }) => `/api/v1/payment-activations?test=${test}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: () => ({}),
     body: ({ paymentActivationsPostRequest }) =>
@@ -220,7 +220,7 @@ export function BackendClient(
   const getPaymentIdT: GetActivationStatusT = {
     method: "get",
     url: ({ codiceContestoPagamento, test }) =>
-      `/api/v1/payment-activations/${codiceContestoPagamento}?${test}`,
+      `/api/v1/payment-activations/${codiceContestoPagamento}?test=${test}`,
     headers: tokenHeaderProducer,
     query: () => ({}),
     response_decoder: getActivationStatusDefaultDecoder()
