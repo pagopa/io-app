@@ -215,8 +215,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) {
       this.maybeTriggerFingerprintRequest({
         updateBiometrySupportProp:
-          prevProps.appState === "background" &&
-          this.props.appState === "active"
+          prevProps.appState !== "active" && this.props.appState === "active"
       });
     }
   }
