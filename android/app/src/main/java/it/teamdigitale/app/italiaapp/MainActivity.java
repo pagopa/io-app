@@ -90,7 +90,7 @@ public class MainActivity extends ReactActivity {
     }
 
     private boolean checkRootMethod2() {
-        // check 2: if /system/app/Superuser.apk or its directories are presents
+        // check 2: if /system/app/Superuser.apk or its directories are present
         String[] paths = {"/system/app/Superuser.apk", "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
                 "/system/bin/failsafe/su", "/data/local/su", "/su/bin/su"};
         for (String path : paths) {
@@ -102,7 +102,7 @@ public class MainActivity extends ReactActivity {
     private boolean checkRootMethod3() {
         Process process = null;
         try {
-            // check 3: try executing command, this operation require root
+            // check 3: try executing a command, this operation requires root privileges
             process = Runtime.getRuntime().exec(new String[]{"/system/xbin/which", "su"});
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
             if (in.readLine() != null) return true;

@@ -118,6 +118,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
         (f = fopen("/Applications/Cydia.app", "r")) ||
         (f = fopen("/Library/MobileSubstrate/MobileSubstrate.dylib", "r")) ||
         (f = fopen("/usr/sbin/sshd", "r")) ||
+        (f = fopen("/usr/bin/ssh", "r")) ||
         (f = fopen("/etc/apt", "r"))) {
           fclose(f);
           return YES;
