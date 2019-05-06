@@ -6,8 +6,8 @@ import { Button } from "native-base";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import {
-  closeInstabugReport,
-  openInstabugReport
+  instabugReportClosed,
+  instabugReportOpened
 } from "./../store/actions/debug";
 import IconFont from "./ui/IconFont";
 
@@ -20,20 +20,20 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
-  private handleIBChatPress() {
+  private handleIBChatPress = () => {
     this.props.dispatchIBReportOpen("chat");
     Chats.show();
-  }
+  };
 
-  private handleIBBugPress() {
+  private handleIBBugPress = () => {
     this.props.dispatchIBReportOpen("bug");
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
     ]);
-  }
+  };
 
   public componentDidMount() {
-    // Register to the instabug dismiss event (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
+    // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
       (dismissType: string, reportType: string): void => {
@@ -46,10 +46,10 @@ class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
     return (
       this.props.isDebugModeEnabled && (
         <React.Fragment>
-          <Button onPress={() => this.handleIBChatPress()} transparent={true}>
+          <Button onPress={this.handleIBChatPress} transparent={true}>
             <IconFont name="io-chat" color={this.props.color} />
           </Button>
-          <Button onPress={() => this.handleIBBugPress()} transparent={true}>
+          <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont name="io-bug" color={this.props.color} />
           </Button>
         </React.Fragment>
@@ -64,9 +64,9 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
-    dispatch(openInstabugReport({ type })),
+    dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
-    dispatch(closeInstabugReport({ type, how }))
+    dispatch(instabugReportClosed({ type, how }))
 });
 
 export const InstabugButtons = connect(

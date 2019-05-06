@@ -23,7 +23,7 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { contentServiceLoad } from "../actions/content";
-import { closeInstabugReport, openInstabugReport } from "../actions/debug";
+import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -190,15 +190,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     }
 
     // instabug
-    case getType(openInstabugReport):
-      return mp.track(action.type, {
-        type: action.payload.type
-      });
-    case getType(closeInstabugReport):
-      return mp.track(action.type, {
-        type: action.payload.type,
-        how: action.payload.how
-      });
+    case getType(instabugReportClosed):
+    case getType(instabugReportOpened):
+      return mp.track(action.type, action.payload);
 
     //
     // Actions (without properties)

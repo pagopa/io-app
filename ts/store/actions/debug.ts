@@ -24,18 +24,18 @@ export const setDebugModeEnabled = createStandardAction(
 /**
  * An Instabug report is open
  */
-export const openInstabugReport = createStandardAction("INSTABUG_REPORT_OPEN")<
-  InstabugReport
->();
+export const instabugReportOpened = createStandardAction(
+  "INSTABUG_REPORT_OPENED"
+)<InstabugReport>();
 
 /**
  * An Instabug report is closed
  */
-export const closeInstabugReport = createStandardAction(
+export const instabugReportClosed = createStandardAction(
   "INSTABUG_REPORT_CLOSED"
 )<InstabugReport & InstabugDismiss>();
 
 export type DebugActions =
   | ActionType<typeof setDebugModeEnabled>
-  | ActionType<typeof openInstabugReport>
-  | ActionType<typeof closeInstabugReport>;
+  | ActionType<typeof instabugReportOpened>
+  | ActionType<typeof instabugReportClosed>;
