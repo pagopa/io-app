@@ -106,7 +106,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
               <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
             </Row>
             <Row>
-              <Text style={styles.white}>{I18n.t("wallet.endPayment")}</Text>
+              <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
             </Row>
             <View spacer={true} />
           </Col>

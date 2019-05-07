@@ -31,10 +31,6 @@ const styles = StyleSheet.create({
     paddingRight: variables.contentPadding
   },
 
-  white: {
-    color: variables.colorWhite
-  },
-
   textRight: {
     textAlign: "right"
   }
@@ -57,27 +53,25 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
       <Row>
         <Col size={2}>
           <View spacer={true} />
-          <Text bold={true} style={styles.white}>
+          <Text bold={true} white={true}>
             {props.paymentReason}
           </Text>
         </Col>
         <Col size={1}>
           <View spacer={true} />
-          <Text bold={true} style={[styles.white, styles.textRight]}>
+          <Text bold={true} white={true} style={styles.textRight}>
             {currentAmount}
           </Text>
         </Col>
       </Row>
       <Row>
         <Col size={2}>
-          <Text style={styles.white}>
-            {props.recipient.denominazioneBeneficiario}
-          </Text>
+          <Text white={true}>{props.recipient.denominazioneBeneficiario}</Text>
           <View spacer={true} />
         </Col>
         <Right>
           <Button small={true} transparent={true} onPress={props.onCancel}>
-            <Text style={[styles.white, styles.rightButtonText]}>
+            <Text white={true} style={styles.rightButtonText}>
               {I18n.t("global.buttons.cancel").toUpperCase()}
             </Text>
           </Button>

@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   pickPayment: {
     backgroundColor: variables.brandPrimary
   },
-  pickPaymentText: {
+  white: {
     color: variables.colorWhite
   },
 
@@ -320,9 +320,7 @@ export default class CardComponent extends React.Component<Props> {
     const isFullCard = this.props.type === "Full";
 
     const buttonStyle = isFullCard ? styles.transactions : styles.pickPayment;
-    const footerTextStyle = isFullCard
-      ? styles.transactionsText
-      : styles.pickPaymentText;
+    const footerTextStyle = isFullCard ? styles.transactionsText : styles.white;
     const text = I18n.t(
       isFullCard ? "cardComponent.detailsAndTransactions" : "cardComponent.pick"
     );

@@ -92,7 +92,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <View spacer={true} />
         <Row>
           <Left>
-            <Text bold={true} style={styles.white}>
+            <Text bold={true} white={true}>
               {I18n.t("wallet.paymentMethods")}
             </Text>
           </Left>
@@ -112,7 +112,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         {this.header()}
         <View spacer={true} />
         <Row>
-          <Text note={true} style={[styles.white, styles.inLineSpace]}>
+          <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
           </Text>
         </Row>
@@ -147,7 +147,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <View spacer={true} />
         <BoxedRefreshIndicator
           caption={
-            <Text style={[styles.white, styles.inLineSpace]}>
+            <Text white={true} style={styles.inLineSpace}>
               {I18n.t("wallet.walletLoadMessage")}
             </Text>
           }
@@ -161,7 +161,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <View>
         {this.header()}
         <View spacer={true} />
-        <Text note={true} style={[styles.white, styles.inLineSpace]}>
+        <Text note={true} white={true} style={styles.inLineSpace}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
         <View spacer={true} />
@@ -218,7 +218,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         {pot.isError(potTransactions) ? (
           <React.Fragment>
             <View spacer={true} />
-            <Text note={true} style={[styles.white, styles.inLineSpace]}>
+            <Text note={true} white={true} style={styles.inLineSpace}>
               {I18n.t("wallet.transactionsLoadFailure")}
             </Text>
             <Button

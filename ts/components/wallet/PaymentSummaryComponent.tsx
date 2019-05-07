@@ -158,7 +158,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
         )}
 
         <Row style={[styles.toAlignColumnstart, styles.updateInfoRow]}>
-          <Text style={styles.white}>
+          <Text white={true}>
             {I18n.t("wallet.firstTransactionSummary.updateInfo")}
           </Text>
         </Row>

@@ -16,7 +16,6 @@ import { navigateToTransactionDetailsScreen } from "../../store/actions/navigati
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
-import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
@@ -34,10 +33,6 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "flex-end",
     flexDirection: "row"
-  },
-
-  white: {
-    color: variables.colorWhite
   }
 });
 
@@ -47,7 +42,7 @@ class TransactionsScreen extends React.Component<Props> {
     const headerContents = (
       <View>
         <View style={styles.walletBannerText}>
-          <Text style={styles.white}>{I18n.t("wallet.creditDebitCards")}</Text>
+          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
         </View>
         <View spacer={true} />
       </View>

@@ -46,10 +46,6 @@ const styles = StyleSheet.create({
 
   padded: {
     padding: variables.contentPadding
-  },
-
-  white: {
-    color: variables.colorWhite
   }
 });
 
@@ -90,7 +86,7 @@ class WalletsScreen extends React.Component<Props> {
     const headerContents = (
       <View style={styles.headerContainer}>
         <Left>
-          <Text style={styles.white}>{I18n.t("wallet.creditDebitCards")}</Text>
+          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
         </Left>
         <Right>
           <AddPaymentMethodButton

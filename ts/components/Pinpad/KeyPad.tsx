@@ -2,6 +2,7 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import variables from "../../theme/variables";
 
 type Digit = ITuple2<string, () => void> | undefined;
 
@@ -42,6 +43,10 @@ const styles = StyleSheet.create({
 
   buttonTextLabel: {
     fontSize: radius
+  },
+
+  white: {
+    color: variables.colorWhite
   }
 });
 
@@ -68,11 +73,7 @@ const renderPinCol = (
           style={[
             styles.buttonTextBase,
             style === "digit" ? styles.buttonTextDigit : styles.buttonTextLabel,
-            style === "label" && buttonType === "primary"
-              ? {
-                  color: "white"
-                }
-              : {}
+            style === "label" && buttonType === "primary" ? styles.white : {}
           ]}
         >
           {label}

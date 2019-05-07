@@ -77,7 +77,7 @@ export default class WalletLayout extends React.Component<Props> {
             </Left>
           )}
           <Body>
-            <Text style={styles.white}>{this.props.title}</Text>
+            <Text white={true}>{this.props.title}</Text>
           </Body>
           <Right>
             <InstabugButtons color={variables.colorWhite} />
