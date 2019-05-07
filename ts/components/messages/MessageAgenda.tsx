@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
   SectionList,
@@ -11,19 +11,28 @@ import {
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
-import H5 from "../ui/H5";
 import MessageAgendaItem from "./MessageAgendaItem";
 
 const styles = StyleSheet.create({
-  sectionHeader: {
-    height: 50,
+  sectionHeaderWrapper: {
+    height: 48,
+    paddingTop: 8 * 2.5,
     paddingHorizontal: customVariables.contentPadding,
-    paddingVertical: customVariables.contentPadding / 2,
-    backgroundColor: customVariables.brandLightGray
+    backgroundColor: customVariables.colorWhite
   },
+  sectionHeaderText: {
+    paddingBottom: 8 * 1.5,
+    fontSize: 18,
+    lineHeight: 20,
+    color: customVariables.brandDarkestGray,
+    borderBottomWidth: 1,
+    borderBottomColor: customVariables.brandLightGray
+  },
+
   itemSeparator: {
+    backgroundColor: customVariables.brandLightGray,
     height: 1,
-    backgroundColor: customVariables.brandLightGray
+    marginHorizontal: customVariables.contentPadding
   }
 });
 
@@ -154,6 +163,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return null;
   }
 
+  private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
+    return (
+      <View style={styles.sectionHeaderWrapper}>
+        <Text style={styles.sectionHeaderText}>
+          {format(info.section.title, I18n.t("global.dateFormats.dayAndMonth"))}
+        </Text>
+      </View>
+    );
+  };
+
   public render() {
     const { sections, refreshing, onRefresh, onContentSizeChange } = this.props;
     return (
@@ -174,19 +193,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       />
     );
   }
-
-  private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
-    return (
-      <View style={styles.sectionHeader}>
-        <H5>
-          {format(
-            info.section.title,
-            I18n.t("global.dateFormats.dayAndMonth")
-          ).toUpperCase()}
-        </H5>
-      </View>
-    );
-  };
 
   private renderItem: SectionListRenderItem<
     MessageWithContentAndDueDatePO
