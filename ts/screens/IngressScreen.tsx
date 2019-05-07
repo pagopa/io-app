@@ -10,7 +10,6 @@ import {
 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 
 import I18n from "../i18n";
@@ -43,9 +42,6 @@ class IngressScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     // Dispatch START_APPLICATION_INITIALIZATION to initialize the app
     this.props.dispatch(startApplicationInitialization());
-
-    // Hide splash screen
-    SplashScreen.hide();
   }
 
   public render() {
