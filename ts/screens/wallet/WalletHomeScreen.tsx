@@ -32,6 +32,7 @@ import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 
 type OwnProps = Readonly<{
@@ -48,13 +49,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   inLineSpace: {
-    lineHeight: 20
+    lineHeight: variables.btnXSmallLineHeight
   },
   refreshBox: {
     height: 100,
     flex: 1,
     alignContent: "center",
     justifyContent: "center"
+  },
+  brandDarkGray: {
+    color: variables.brandDarkGray
   }
 });
 
@@ -151,10 +155,14 @@ class WalletHomeScreen extends React.Component<Props, never> {
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
         <View spacer={true} />
-        <Button block={true} danger={true} onPress={this.props.loadWallets}>
-          <Text style={WalletStyles.addPaymentMethodText}>
-            {I18n.t("global.buttons.retry")}
-          </Text>
+        <Button
+          block={true}
+          light={true}
+          bordered={true}
+          xsmall={true}
+          onPress={this.props.loadWallets}
+        >
+          <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </Button>
         <View spacer={true} />
       </View>
@@ -209,14 +217,21 @@ class WalletHomeScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <H3>{I18n.t("wallet.transactions")}</H3>
             <View spacer={true} large={true} />
-            <Text>{I18n.t("wallet.transactionsLoadFailure")}</Text>
+            <Text
+              note={true}
+              style={[styles.inLineSpace, styles.brandDarkGray]}
+            >
+              {I18n.t("wallet.transactionsLoadFailure")}
+            </Text>
             <View spacer={true} />
             <Button
               block={true}
-              danger={true}
+              light={true}
+              bordered={true}
+              xsmall={true}
               onPress={this.props.loadTransactions}
             >
-              <Text>{I18n.t("global.buttons.retry")}</Text>
+              <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
             </Button>
             <View spacer={true} large={true} />
           </Content>

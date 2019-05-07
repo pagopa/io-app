@@ -37,8 +37,9 @@ export default (): Theme => {
     ".xsmall": {
       height: variables.btnXSmallHeight,
       "NativeBase.Text": {
-        fontSize: variables.btnSmallFontSize,
-        lineHeight: variables.btnXSmallLineHeight
+        fontSize: variables.btnXSmallFontSize,
+        lineHeight: variables.btnXSmallLineHeight,
+        ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
       },
       "NativeBase.Icon": {
         fontSize: variables.btnSmallFontSize,
