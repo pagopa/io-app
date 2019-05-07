@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "preserveConstEnums": true,
-    //"allowJs": false,
+    "allowJs": false,
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
