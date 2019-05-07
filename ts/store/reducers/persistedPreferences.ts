@@ -12,6 +12,7 @@ import {
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
@@ -68,5 +69,5 @@ export default function preferencesReducer(
   return state;
 }
 
-export const isPagoPATestEnabledSelector = (state: PersistedPreferencesState) =>
-  state.isPagoPATestEnabled;
+export const isPagoPATestEnabledSelector = () => (state: GlobalState) =>
+  state.persistedPreferences.isPagoPATestEnabled;

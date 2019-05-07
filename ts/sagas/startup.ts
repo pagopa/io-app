@@ -41,10 +41,7 @@ import {
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import {
-  isPagoPATestEnabledSelector,
-  PersistedPreferencesState
-} from "../store/reducers/persistedPreferences";
+import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
@@ -218,8 +215,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   const walletToken = maybeSessionInformation.value.walletToken;
 
   const isPagoPATestEnabled: ReturnType<
-    typeof isPagoPATestEnabledSelector
-  > = yield select<PersistedPreferencesState>(isPagoPATestEnabledSelector);
+    ReturnType<typeof isPagoPATestEnabledSelector>
+  > = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
   yield fork(
     watchWalletSaga,
