@@ -70,4 +70,6 @@ export default function preferencesReducer(
 }
 
 export const isPagoPATestEnabledSelector = () => (state: GlobalState) =>
-  state.persistedPreferences.isPagoPATestEnabled;
+  state.persistedPreferences.isPagoPATestEnabled === true
+    ? state.persistedPreferences.isPagoPATestEnabled
+    : false;
