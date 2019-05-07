@@ -26,18 +26,8 @@ export const clearNotificationPendingMessage = createStandardAction(
   "NOTIFICATIONS_PENDING_MESSAGE_CLEAR"
 )();
 
-export const updateLocalNotificationsScheduled = createStandardAction(
-  "NOTIFICATIONS_LOCAL_SCHEDULED_UPDATE"
-)<boolean>();
-
-export const clearLocalNotificationsScheduled = createStandardAction(
-  "NOTIFICATIONS_LOCAL_SCHEDULED_CLEAR"
-)();
-
 export type NotificationsActions =
   | ActionType<typeof updateNotificationsInstallationToken>
   | ActionType<typeof updateNotificationInstallationFailure>
   | ActionType<typeof updateNotificationsPendingMessage>
-  | ActionType<typeof clearNotificationPendingMessage>
-  | ActionType<typeof updateLocalNotificationsScheduled>
-  | ActionType<typeof clearLocalNotificationsScheduled>;
+  | ActionType<typeof clearNotificationPendingMessage>;

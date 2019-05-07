@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
@@ -84,8 +83,6 @@ const onNavigationStateChange = (
       if (loginResult.success) {
         // In case of successful login
         onSuccess(loginResult.token);
-        // Remove all the scheduled local notifications to remind the user to authenticate with spid
-        removeScheduledNotificationAccessSpid();
       } else {
         // In case of login failure
         onFailure();
