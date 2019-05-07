@@ -215,7 +215,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   const walletToken = maybeSessionInformation.value.walletToken;
 
   const isPagoPATestEnabled: ReturnType<
-    ReturnType<typeof isPagoPATestEnabledSelector>
+    typeof isPagoPATestEnabledSelector
   > = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
   yield fork(
