@@ -104,6 +104,10 @@ profile:
         title: Export your data
         description: send to your email all your account’s data in an open format
     developersSectionHeader: Developers
+    experimentalFeatures:
+      confirmTitle: Experimental features
+      confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
+      bannerMessage: You are using experimental features that may be incomplete or unstable.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
@@ -501,7 +505,17 @@ messages:
   search:
     invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
-    emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+    emptyMessage:
+      title: Your archive is empty.
+      subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+  inbox:
+    emptyMessage: 
+      title: Your message list is empty.
+      subtitle: Refresh to check for any new messages.
+  deadlines:
+    emptyMessage: 
+      title: You haven't any scheduled deadline.
+      subtitle:  Pull down this page to check out past deadlines.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content

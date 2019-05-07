@@ -9,7 +9,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { ServiceList } from "../../../definitions/backend/ServiceList";
+import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
 //
@@ -20,7 +20,7 @@ export const loadVisibleServices = createAsyncAction(
   "SERVICES_VISIBLE_LOAD_REQUEST",
   "SERVICES_VISIBLE_LOAD_SUCCESS",
   "SERVICES_VISIBLE_LOAD_FAILURE"
-)<void, ServiceList["items"], void>();
+)<void, PaginatedServiceTupleCollection["items"], void>();
 
 //
 // load single service
