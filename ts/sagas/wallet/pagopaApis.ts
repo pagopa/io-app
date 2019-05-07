@@ -480,9 +480,7 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
-    const isPagoPATestEnabled: ReturnType<
-      ReturnType<typeof isPagoPATestEnabledSelector>
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -516,9 +514,8 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
-    const isPagoPATestEnabled: ReturnType<
-      ReturnType<typeof isPagoPATestEnabledSelector>
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select<GlobalState>(isPagoPATestEnabledSelector);
+
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
@@ -561,9 +558,8 @@ export function* paymentIdPollingRequestHandler(
   // now poll until a paymentId is made available
 
   try {
-    const isPagoPATestEnabled: ReturnType<
-      ReturnType<typeof isPagoPATestEnabledSelector>
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select<GlobalState>(isPagoPATestEnabledSelector);
+
 
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
