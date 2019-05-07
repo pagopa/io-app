@@ -10,6 +10,7 @@ declare module "native-base" {
       white?: boolean;
       cancel?: boolean;
       xsmall?: boolean;
+      widget?: boolean;
     }
   }
 }
@@ -31,6 +32,17 @@ export default (): Theme => {
         padding: 0,
         display: "flex",
         justifyContent: "flex-start"
+      }
+    },
+
+    ".widget": {
+      height: variables.btnWidgetHeight,
+      paddingTop: 2,
+      paddingBottom: 2,
+      "NativeBase.Text": {
+        fontSize: variables.fontSizeSmaller,
+        lineHeight: variables.btnXSmallLineHeight,
+        paddingHorizontal: 8
       }
     },
 

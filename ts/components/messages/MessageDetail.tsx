@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   subjectContainer: {
-    marginBottom: variables.contentPadding
+    marginBottom: variables.spacerHeight
   },
 
   ctaBarContainer: {
@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
   webview: {
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding
+  },
+  messageIDContainer: {
+    marginBottom: 5
   },
   messageIDContainerText: {
     fontSize: variables.fontSizeSmaller,
@@ -70,13 +73,10 @@ const styles = StyleSheet.create({
     fontSize: variables.fontSizeSmall
   },
   messageIDBtnContainer: {
-    width: 70,
+    width: 45,
     justifyContent: "flex-end",
     alignItems: "center",
     flexDirection: "row"
-  },
-  messageIDBtnText: {
-    fontSize: variables.btnSmallFontSize
   }
 });
 
@@ -121,20 +121,16 @@ class MessageDetailComponent extends React.PureComponent<Props> {
           </View>
 
           {isDebugModeEnabled && (
-            <Grid>
+            <Grid style={styles.messageIDContainer}>
               <Col style={styles.messageIDLabelContainer}>
-                <Text style={styles.messageIDLabelText} numberOfLines={1}>
-                  ID: {message.id}
-                </Text>
+                <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
               </Col>
               <Col style={styles.messageIDBtnContainer}>
                 <Button
-                  small={true}
+                  widget={true}
                   onPress={() => clipboardSetStringWithFeedback(message.id)}
                 >
-                  <Text style={styles.messageIDBtnText}>
-                    {I18n.t("clipboard.copyText")}
-                  </Text>
+                  <Text>{I18n.t("clipboard.copyText")}</Text>
                 </Button>
               </Col>
             </Grid>

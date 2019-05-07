@@ -20,6 +20,7 @@ const customVariables = Object.assign(materialVariables, {
   // Button
   btnTextFontWeight: "700" as FontWeight,
   btnHeight: 48,
+  btnWidgetHeight: 24,
   btnFontSize: 16,
   btnXSmallHeight: 32,
   btnXSmallLineHeight: 20,
