@@ -104,6 +104,10 @@ profile:
         title: Export your data
         description: send to your email all your account’s data in an open format
     developersSectionHeader: Developers
+    experimentalFeatures:
+      confirmTitle: Experimental features
+      confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
+      bannerMessage: You are using experimental features that may be incomplete or unstable.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
@@ -439,7 +443,7 @@ wallet:
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid.
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
-    PAYMENT_ONGOING: Another payment for this notice is going on, a mew payment can't be started at this time.
+    PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
     PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
@@ -501,7 +505,17 @@ messages:
   search:
     invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
-    emptyMessage: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+    emptyMessage:
+      title: Your archive is empty.
+      subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+  inbox:
+    emptyMessage: 
+      title: Your message list is empty.
+      subtitle: Refresh to check for any new messages.
+  deadlines:
+    emptyMessage: 
+      title: You haven't any scheduled deadline.
+      subtitle:  Pull down this page to check out past deadlines.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
@@ -576,6 +590,8 @@ services:
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
+  disableTitle: "Do you really want to disable the service?"
+  disableMsg: "Rememer, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
 identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.
