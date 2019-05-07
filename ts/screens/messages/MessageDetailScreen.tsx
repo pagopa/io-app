@@ -1,8 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, Text, View } from "native-base";
+import { Button, Content, H3, Text, View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -22,8 +22,10 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
@@ -46,6 +48,63 @@ const styles = StyleSheet.create({
 
   notFullStateMessageText: {
     marginBottom: 10
+  },
+
+  errorStateWrapper: {
+    flex: 1,
+    paddingHorizontal: customVariables.contentPadding
+  },
+
+  errorStateContentWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  errorStateHeader: {
+    marginTop: 30,
+    textAlign: "center"
+  },
+
+  errorStateMessageData: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 26,
+    paddingHorizontal: customVariables.contentPadding
+  },
+
+  erroStateMessageDataLeft: {
+    flex: 1
+  },
+
+  erroStateMessageDataRight: {
+    flex: 0,
+    paddingLeft: 10
+  },
+
+  errorStateMessageRetry: {
+    marginTop: 16,
+    color: customVariables.brandDarkestGray
+  },
+
+  errorStateMessageSubmitBug: {
+    marginTop: 16,
+    fontSize: customVariables.fontSizeSmall
+  },
+
+  errorStateFooterWrapper: {
+    flex: 0,
+    flexDirection: "row",
+    paddingVertical: 16
+  },
+
+  errorStateCancelButton: {
+    flex: 4
+  },
+
+  errorStateRetryButton: {
+    flex: 8,
+    marginLeft: 10
   }
 });
 
@@ -93,17 +152,58 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * (ex. the loading of the message/service failed but we can retry)
    */
   private renderErrorState = () => {
+    const messageId = this.props.navigation.getParam("messageId");
     const onRetry = this.props.maybeMeta
       .map(_ => () => this.props.loadMessageWithRelations(_))
       .toUndefined();
     return (
-      <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.errorText")}
-        </Text>
-        <Button primary={true} onPress={onRetry}>
-          <Text>{I18n.t("messageDetails.retryText")}</Text>
-        </Button>
+      <View style={styles.errorStateWrapper}>
+        <View style={styles.errorStateContentWrapper}>
+          <Image
+            source={require("../../../img/messages/error-message-detail-icon.png")}
+          />
+          <H3 style={styles.errorStateHeader}>
+            {I18n.t("messageDetails.errorText")}
+          </H3>
+          <View style={styles.errorStateMessageData}>
+            <View style={styles.erroStateMessageDataLeft}>
+              <Text numberOfLines={1}>{`ID: ${messageId}`}</Text>
+            </View>
+            <View style={styles.erroStateMessageDataRight}>
+              <Button
+                xsmall={true}
+                bordered={true}
+                onPress={() => clipboardSetStringWithFeedback(messageId)}
+              >
+                <Text>{I18n.t("clipboard.copyText")}</Text>
+              </Button>
+            </View>
+          </View>
+          <Text alignCenter={true} style={styles.errorStateMessageRetry}>
+            {I18n.t("messageDetails.retryText")}
+          </Text>
+          <Text alignCenter={true} style={styles.errorStateMessageSubmitBug}>
+            {I18n.t("messageDetails.submitBugText")}
+          </Text>
+        </View>
+        <View style={styles.errorStateFooterWrapper}>
+          <Button
+            block={true}
+            cancel={true}
+            onPress={this.goBack}
+            style={styles.errorStateCancelButton}
+          >
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
+          </Button>
+          <Button
+            block={true}
+            primary={true}
+            onPress={onRetry}
+            style={styles.errorStateRetryButton}
+          >
+            <Text>{I18n.t("global.buttons.retry")}</Text>
+          </Button>
+        </View>
       </View>
     );
   };

@@ -6,12 +6,15 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { ServiceList } from "../../../../../definitions/backend/ServiceList";
+import { PaginatedServiceTupleCollection } from "../../../../../definitions/backend/PaginatedServiceTupleCollection";
 import { clearCache } from "../../../actions/profile";
 import { loadVisibleServices } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
-export type VisibleServicesState = pot.Pot<ServiceList["items"], Error>;
+export type VisibleServicesState = pot.Pot<
+  PaginatedServiceTupleCollection["items"],
+  Error
+>;
 
 const INITIAL_STATE: VisibleServicesState = pot.none;
 
