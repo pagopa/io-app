@@ -515,6 +515,10 @@ messages:
     emptyMessage: 
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
+  deadlines:
+    emptyMessage: 
+      title: You haven't any scheduled deadline.
+      subtitle:  Pull down this page to check out past deadlines.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
