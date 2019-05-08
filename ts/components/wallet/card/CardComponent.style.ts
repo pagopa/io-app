@@ -30,6 +30,10 @@ export default StyleSheet.create({
     justifyContent: "flex-start"
   },
 
+  row: {
+    flexDirection: "row"
+  },
+
   columns: {
     flexDirection: "row",
     justifyContent: "space-between"
@@ -79,5 +83,17 @@ export default StyleSheet.create({
   },
   paddedIcon: {
     paddingLeft: 10
+  },
+  paddedTop: {
+    paddingTop: 10
+  },
+  numberArea: {
+    borderWidth: 1,
+    borderColor: "transparent",
+    width: "82%"
+  },
+  body: {
+    borderWidth: 1,
+    borderColor: "transparent"
   }
 });
