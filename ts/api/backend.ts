@@ -247,7 +247,9 @@ export function BackendClient(
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
     getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
-    getVisibleServices: createFetchRequestForApi(getVisibleServicesT, options),
+    getVisibleServices: withBearerToken(
+      createFetchRequestForApi(getVisibleServicesT, options)
+    ),
     getMessages: createFetchRequestForApi(getMessagesT, options),
     getMessage: createFetchRequestForApi(getMessageT, options),
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),

@@ -1,8 +1,6 @@
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
-import { GetServiceT } from "../../../definitions/backend/requestTypes";
 import { BackendClient } from "../../api/backend";
 import { loadService } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";

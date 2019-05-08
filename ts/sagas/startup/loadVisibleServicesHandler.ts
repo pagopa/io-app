@@ -1,9 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { all, call, Effect, put, select } from "redux-saga/effects";
-
-import { GetVisibleServicesT } from "../../../definitions/backend/requestTypes";
+import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadService,
@@ -33,16 +32,18 @@ type VisibleServiceVersionById = {
  */
 // tslint:disable-next-line: cognitive-complexity
 export function* loadVisibleServicesRequestHandler(
-  getVisibleServices: TypeofApiCall<GetVisibleServicesT>
+  getVisibleServices: ReturnType<typeof BackendClient>["getVisibleServices"]
 ): IterableIterator<Effect> {
   try {
     const response: SagaCallReturnType<typeof getVisibleServices> = yield call(
       getVisibleServices,
       {}
     );
-
-    if (response !== undefined && response.status === 200) {
-      const { items: visibleServices } = response.value;
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    }
+    if (response.value.status === 200) {
+      const { items: visibleServices } = response.value.value;
       yield put(loadVisibleServices.success(visibleServices));
 
       const visibleServiceVersionById = visibleServices.reduce<
@@ -117,12 +118,10 @@ export function* loadVisibleServicesRequestHandler(
 
       // Parallel fetch of those services that we haven't loaded yet or need to be updated
       yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
-    } else if (response !== undefined && response.status === 401) {
+    } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
       return;
-    } else {
-      throw Error();
     }
   } catch {
     yield put(loadVisibleServices.failure());
