@@ -121,6 +121,10 @@ const styles = StyleSheet.create({
     color: variables.colorWhite
   },
 
+  paddedTop: {
+    paddingTop: 10
+  },
+
   marginTop: {
     marginTop: variables.fontSizeBase
   },
@@ -153,6 +157,21 @@ const styles = StyleSheet.create({
   smallTextStyle: {
     fontSize: variables.fontSizeSmall,
     color: variables.brandDarkGray
+  },
+
+  body: {
+    borderWidth: 1,
+    borderColor: "transparent"
+  },
+
+  row: {
+    flexDirection: "row"
+  },
+
+  numberArea: {
+    borderWidth: 1,
+    borderColor: "transparent",
+    width: "82%"
   }
 });
 
@@ -226,7 +245,6 @@ export default class CardComponent extends React.Component<Props> {
                     ? variables.brandDarkGray
                     : variables.brandPrimary
                 }
-                style={styles.paddedIcon}
                 onPress={this.handleFavoritePress}
               />
             )}
@@ -290,7 +308,10 @@ export default class CardComponent extends React.Component<Props> {
     const expirationDate = buildExpirationDate(wallet);
 
     return (
-      <View style={[styles.columns, styles.marginTop]}>
+      <View
+        style={[styles.columns, styles.paddedTop, styles.body]}
+        onTouchEnd={this.handleOnCardPress}
+      >
         <View>
           <Text style={[styles.textStyle, styles.smallTextStyle]}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
@@ -330,6 +351,7 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
+        onPress={this.handleOnCardPress}
       >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
@@ -350,15 +372,18 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
-        onTouchStart={this.handleOnCardPress}
       >
         <View style={styles.cardInner}>
-          <View style={styles.columns}>
-            <View style={[styles.cardNumber]}>
+          <View style={styles.row}>
+            <View
+              style={[styles.row, styles.numberArea]}
+              onTouchEnd={this.handleOnCardPress}
+            >
               <Text style={[styles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
-              <Text style={[styles.largeTextStyle]}>
+
+              <Text style={styles.largeTextStyle}>
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
             </View>

@@ -11,7 +11,7 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -20,6 +20,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
+import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
@@ -33,6 +34,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -62,6 +64,12 @@ const styles = StyleSheet.create({
   itemLeftText: {
     alignSelf: "flex-start"
   },
+  experimentalFeaturesSection: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
   debugModeSection: {
     width: "100%",
     flexDirection: "row",
@@ -72,6 +80,12 @@ const styles = StyleSheet.create({
     marginBottom: 25
   }
 });
+
+const getAppLongVersion = () => {
+  const buildNumber =
+    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
+  return `${DeviceInfo.getVersion()}${buildNumber}`;
+};
 
 /**
  * A component to show the main screen of the Profile section
@@ -101,6 +115,33 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         }
       />
     );
+  };
+
+  private onExperimentalFeaturesToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.ok"),
+            style: "destructive",
+            onPress: () => {
+              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
+                enabled
+              );
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
+    }
   };
 
   private confirmResetAlert = () =>
@@ -136,13 +177,17 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       sessionToken,
       walletToken,
       notificationToken,
-      notificationId
+      notificationId,
+      isExperimentalFeaturesEnabled
     } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
+        banner={
+          isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
+        }
       >
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
@@ -207,6 +252,18 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
+              <View style={styles.experimentalFeaturesSection}>
+                <Text>
+                  {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
+                </Text>
+                <Switch
+                  value={this.props.isExperimentalFeaturesEnabled}
+                  onValueChange={this.onExperimentalFeaturesToggle}
+                />
+              </View>
+            </ListItem>
+
+            <ListItem>
               <View style={styles.debugModeSection}>
                 <Text>Debug mode</Text>
                 <Switch
@@ -223,13 +280,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      clipboardSetStringWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(getAppLongVersion())
                     }
                   >
                     <Text>
                       {`${I18n.t(
                         "profile.main.appVersion"
-                      )} ${DeviceInfo.getVersion()}`}
+                      )} ${getAppLongVersion()}`}
                     </Text>
                   </Button>
                 </ListItem>
@@ -351,7 +408,9 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -360,7 +419,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired())
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
+    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });
 
 export default connect(
