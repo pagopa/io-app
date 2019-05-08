@@ -19,7 +19,7 @@ type Props = {
  */
 export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
   const iconName =
-    state === "INVALID" ? "times" : state === "VALID" ? "check" : undefined;
+    state === "INVALID" ? "io-close" : state === "VALID" ? "io-tick-big" : undefined;
 
   const sideLength = screenWidth / 2;
 
@@ -106,7 +106,6 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
         {iconName && (
           <View style={styles.iconContainer}>
             <Icon
-              type="FontAwesome"
               name={iconName}
               style={[
                 styles.icon,
