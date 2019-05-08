@@ -2,14 +2,14 @@
  * Generators for the message entity that can be called directly
  * without dispatching a redux action.
  */
-
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select } from "redux-saga/effects";
-
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
+import { BackendClient } from "../../api/backend";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -23,7 +23,7 @@ import { SagaCallReturnType } from "../../types/utils";
  * A saga to fetch a message from the Backend and save it in the redux store.
  */
 export function* loadMessage(
-  getMessage: TypeofApiCall<GetUserMessageT>,
+  getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
 ): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
   // Load the messages already in the redux store
@@ -61,7 +61,7 @@ export function* loadMessage(
  * A saga to fetch a message from the Backend
  */
 export function* fetchMessage(
-  getMessage: TypeofApiCall<GetUserMessageT>,
+  getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
 ): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
   try {
@@ -69,18 +69,18 @@ export function* fetchMessage(
       getMessage,
       { id: meta.id }
     );
-
-    if (response === undefined || response.status !== 200) {
+    if (response.isLeft()) {
+      throw readableReport(response.value);
+    }
+    if (response.value.status !== 200) {
       const error =
-        response !== undefined && response.status === 500
-          ? response.value.title
-          : undefined;
+        response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
       return left(Error(error));
     }
 
     // Return the new message converted to plain object
-    const messageWithContentPO = toMessageWithContentPO(response.value);
+    const messageWithContentPO = toMessageWithContentPO(response.value.value);
     return right(messageWithContentPO);
   } catch (error) {
     // Return the error

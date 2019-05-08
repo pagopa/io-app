@@ -250,7 +250,10 @@ export function BackendClient(
       createFetchRequestForApi(getVisibleServicesT, options)
     ),
     getMessages: createFetchRequestForApi(getMessagesT, options),
-    getMessage: createFetchRequestForApi(getMessageT, options),
+    getMessage: withBearerToken(
+      token,
+      createFetchRequestForApi(getMessageT, options)
+    ),
     getProfile: withBearerToken(
       token,
       createFetchRequestForApi(getProfileT, options)
