@@ -3,19 +3,17 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import {
-  GetUserProfileT,
-  UpsertProfileT
-} from "../../definitions/backend/requestTypes";
+import { UpsertProfileT } from "../../definitions/backend/requestTypes";
 import { UserProfileUnion } from "../api/backend";
 
 import I18n from "../i18n";
 
+import { BackendClient } from "../api/backend";
 import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
@@ -24,35 +22,34 @@ import {
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-
 import { SagaCallReturnType } from "../types/utils";
 
 // A saga to load the Profile.
 export function* loadProfile(
-  getProfile: TypeofApiCall<GetUserProfileT>
+  getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect | Option<UserProfileUnion>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
       {}
     );
-
-    if (response && response.status === 200) {
+    // we got an error, throw it
+    if (response.isLeft()) {
+      throw readableReport(response.value);
+    }
+    if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
-      yield put(profileLoadSuccess(response.value as UserProfileUnion));
+      yield put(profileLoadSuccess(response.value.value as UserProfileUnion));
       return some(response.value);
     }
-
-    if (response && response.status === 401) {
+    if (response.value.status === 401) {
       // in case we got an expired session while loading the profile, we reset
       // the session
       yield put(sessionExpired());
     }
-
-    throw response ? response.value : Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield put(profileLoadFailure(error));
   }
@@ -61,7 +58,9 @@ export function* loadProfile(
 
 // A saga to update the Profile.
 function* createOrUpdateProfileSaga(
-  createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
+  createOrUpdateProfile: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateProfile"],
   action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {
   // Get the current Profile from the state
@@ -104,22 +103,27 @@ function* createOrUpdateProfileSaga(
     }
   );
 
-  if (response && response.status === 401) {
+  if (response.isLeft()) {
+    yield put(profileUpsert.failure(new Error(readableReport(response.value))));
+    return;
+  }
+
+  if (response.value.status === 401) {
     // on 401, expire the current session and restart the authentication flow
     yield put(sessionExpired());
     return;
   }
 
-  if (!response || response.status !== 200) {
+  if (response.value.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
     const error: Error = response
-      ? Error(response.value.title)
+      ? Error(response.value.value.title || I18n.t("profile.errors.upsert"))
       : Error(I18n.t("profile.errors.upsert"));
 
     yield put(profileUpsert.failure(error));
   } else {
     // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-    yield put(profileUpsert.success(response.value));
+    yield put(profileUpsert.success(response.value.value));
   }
 }
 
