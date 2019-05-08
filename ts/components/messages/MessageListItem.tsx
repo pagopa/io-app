@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
   },
 
   selectionCheckbox: {
-    left: 0
+    left: 0,
+    paddingBottom: 1
   },
 
   footerWrapper: {
