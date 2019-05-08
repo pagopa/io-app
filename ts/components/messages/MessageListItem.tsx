@@ -162,6 +162,8 @@ class MessageListItem extends React.PureComponent<Props> {
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
         style={styles.highlight}
+        underlayColor={customVariables.colorWhite}
+        activeOpacity={customVariables.activeOpacity}
       >
         <View
           style={[
