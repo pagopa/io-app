@@ -6,6 +6,7 @@ import { isActionOf } from "typesafe-actions";
 
 import {
   preferenceFingerprintIsEnabledSaveSuccess,
+  preferencesExperimentalFeaturesSetEnabled,
   preferredCalendarSaveSuccess,
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
@@ -15,12 +16,14 @@ export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
   preferredCalendar?: Calendar;
   wasServiceAlertDisplayedOnce?: boolean;
+  isExperimentalFeaturesEnabled: boolean;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
-  wasServiceAlertDisplayedOnce: false
+  wasServiceAlertDisplayedOnce: false,
+  isExperimentalFeaturesEnabled: false
 };
 
 export default function preferencesReducer(
@@ -43,6 +46,12 @@ export default function preferencesReducer(
     return {
       ...state,
       wasServiceAlertDisplayedOnce: action.payload.wasServiceAlertDisplayedOnce
+    };
+  }
+  if (isActionOf(preferencesExperimentalFeaturesSetEnabled, action)) {
+    return {
+      ...state,
+      isExperimentalFeaturesEnabled: action.payload
     };
   }
 

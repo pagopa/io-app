@@ -110,6 +110,10 @@ profile:
         description: ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
+    experimentalFeatures:
+      confirmTitle: Funzionalità sperimentali
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
@@ -518,6 +522,10 @@ messages:
     emptyMessage: 
       title: La tua lista dei messaggi è vuota.
       subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
+  deadlines:
+    emptyMessage: 
+      title: Non hai scadenze in programma.
+      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
