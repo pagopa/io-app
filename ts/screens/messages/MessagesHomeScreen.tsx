@@ -186,7 +186,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
-            paymentByRptId={paymentsByRptId}
+            paymentsByRptId={paymentsByRptId}
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
@@ -219,7 +219,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             <MessagesSearch
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
-              paymentByRptId={paymentsByRptId}
+              paymentsByRptId={paymentsByRptId}
               onRefresh={refreshMessages}
               navigateToMessageDetail={navigateToMessageDetail}
               searchText={_}

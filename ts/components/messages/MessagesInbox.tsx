@@ -103,7 +103,7 @@ const ListEmptyComponent = (
 
 /**
  * A component to render a list of visible (not yet archived) messages.
- * It acts like a wrapper for the MessageListComponent, filtering the messages
+ * It acts like a wrapper for the MessageList component, filtering the messages
  * and adding the messages selection and archiving management.
  */
 class MessagesInbox extends React.PureComponent<Props, State> {
