@@ -60,7 +60,7 @@ export function* fetchWalletsRequestHandler(
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
-    if (getResponse !== undefined && getResponse.status === 200) {
+    if (getResponse && getResponse.status === 200) {
       yield put(fetchWalletsSuccess(getResponse.value.data));
     } else {
       // FIXME: show relevant error
@@ -456,7 +456,7 @@ export function* paymentDeletePaymentRequestHandler(
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
 
-    if (response !== undefined && response.status === 200) {
+    if (response && response.status === 200) {
       yield put(paymentDeletePayment.success());
     } else {
       throw Error();
