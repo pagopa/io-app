@@ -126,7 +126,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 onChangeText={this.onSearchTextChange}
                 autoFocus={true}
               />
-              <Icon name="cross" onPress={this.onSearchDisable} />
+              <IconFont name="io-close" onPress={this.onSearchDisable} />
             </Item>
           ) : (
             <Button
