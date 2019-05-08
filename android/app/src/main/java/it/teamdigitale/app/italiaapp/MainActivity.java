@@ -29,7 +29,7 @@ public class MainActivity extends ReactActivity {
     // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (isDeviceRooted()) {
+        if (!isEmulator() && isDeviceRooted()) {
             super.onCreate(savedInstanceState);
             //on rooted device show message ant stop app
             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
@@ -52,7 +52,7 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
-        if (isDeviceRooted()) {
+        if (!isEmulator() && isDeviceRooted()) {
             // on rooted device not attach main component
             return new ReactActivityDelegate(this, null);
         } else {
@@ -112,5 +112,20 @@ public class MainActivity extends ReactActivity {
         } finally {
             if (process != null) process.destroy();
         }
+    }
+
+    /**
+     * Detect when running on the emulator
+     * https://stackoverflow.com/a/21505193/2470948
+     */
+    private boolean isEmulator() {
+        return Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.startsWith("unknown")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                || "google_sdk".equals(Build.PRODUCT);
     }
 }
