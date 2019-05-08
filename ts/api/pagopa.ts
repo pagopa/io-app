@@ -28,6 +28,7 @@ import { TransactionListResponse } from "../types/pagopa";
 import { TransactionResponse } from "../types/pagopa";
 import { WalletListResponse } from "../types/pagopa";
 import { WalletResponse } from "../types/pagopa";
+import { withBearerToken } from "../utils/request";
 
 import {
   addWalletCreditCardUsingPOSTDecoder,
@@ -319,13 +320,23 @@ export function PaymentManagerClient(
       wt: string // wallet token
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
     getWallets: (pagoPaToken: PaymentManagerToken) =>
-      createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(getWallets(pagoPaToken), options)
+      ),
     getTransactions: (pagoPaToken: PaymentManagerToken) =>
-      createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(getTransactions(pagoPaToken), options)
+      ),
     getTransaction: (
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<GetTransactionUsingGETT>["id"]
-    ) => createFetchRequestForApi(getTransaction(pagoPaToken), options)({ id }),
+    ) =>
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(getTransaction(pagoPaToken), options)
+      ),
     checkPayment: (
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
@@ -338,7 +349,10 @@ export function PaymentManagerClient(
       idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
       idWallet?: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
-      createFetchRequestForApi(getPspList(pagoPaToken), options)(
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(getPspList(pagoPaToken), options)
+      )(
         idWallet
           ? {
               idPayment,
@@ -351,7 +365,10 @@ export function PaymentManagerClient(
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
     ) =>
-      createFetchRequestForApi(updateWalletPsp(pagoPaToken), options)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(updateWalletPsp(pagoPaToken), options)
+      )({
         id,
         walletRequest
       }),
@@ -359,7 +376,10 @@ export function PaymentManagerClient(
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<FavouriteWalletUsingPOSTTExtra>["id"]
     ) =>
-      createFetchRequestForApi(favouriteWallet(pagoPaToken), options)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(favouriteWallet(pagoPaToken), options)
+      )({
         id
       }),
     postPayment: (
@@ -367,7 +387,10 @@ export function PaymentManagerClient(
       id: TypeofApiParams<PayUsingPOSTT>["id"],
       payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
     ) =>
-      createFetchRequestForApi(postPayment(pagoPaToken), altOptions)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(postPayment(pagoPaToken), altOptions)
+      )({
         id,
         payRequest
       }),
@@ -375,14 +398,20 @@ export function PaymentManagerClient(
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
     ) =>
-      createFetchRequestForApi(deletePayment(pagoPaToken), options)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(deletePayment(pagoPaToken), options)
+      )({
         id
       }),
     addWalletCreditCard: (
       pagoPaToken: PaymentManagerToken,
       wallet: NullableWallet
     ) =>
-      createFetchRequestForApi(addWalletCreditCard(pagoPaToken), options)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(addWalletCreditCard(pagoPaToken), options)
+      )({
         walletRequest: { data: wallet }
       }),
     payCreditCardVerification: (
@@ -394,7 +423,10 @@ export function PaymentManagerClient(
         PayCreditCardVerificationUsingPOSTT
       >["language"]
     ) =>
-      createFetchRequestForApi(boardPay(pagoPaToken), altOptions)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(boardPay(pagoPaToken), altOptions)
+      )({
         payRequest,
         language
       }),
@@ -402,7 +434,10 @@ export function PaymentManagerClient(
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]
     ) =>
-      createFetchRequestForApi(deleteWallet(pagoPaToken), options)({
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(deleteWallet(pagoPaToken), options)
+      )({
         id
       })
   };

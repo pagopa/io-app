@@ -1,5 +1,5 @@
-import { call, Effect, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadService } from "../../store/actions/services";
