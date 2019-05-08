@@ -307,6 +307,16 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
 
+  const onCancel = () => {
+    // on cancel:
+    // navigate to the wallet home
+    dispatch(navigateToWalletHome());
+    // delete the active payment from PagoPA
+    dispatch(runDeleteActivePaymentSaga());
+    // reset the payment state
+    dispatch(paymentInitializeState());
+  };
+
   const navigateToPaymentTransactionError = (
     error: Option<
       PayloadForAction<
@@ -315,7 +325,13 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         | typeof paymentIdPolling["failure"]
       >
     >
-  ) => dispatch(navigateToPaymentTransactionErrorScreen({ error }));
+  ) =>
+    dispatch(
+      navigateToPaymentTransactionErrorScreen({
+        error,
+        onCancel
+      })
+    );
 
   // navigateToMessageDetail: (messageId: string) =>
   // dispatch(navigateToMessageDetailScreenAction({ messageId }))
@@ -363,15 +379,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       // reset the payment state
       dispatch(paymentInitializeState());
     },
-    onCancel: () => {
-      // on cancel:
-      // navigate to the wallet home
-      dispatch(navigateToWalletHome());
-      // delete the active payment from PagoPA
-      dispatch(runDeleteActivePaymentSaga());
-      // reset the payment state
-      dispatch(paymentInitializeState());
-    },
+    onCancel,
     onRetryWithPotVerifica: (
       potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
       maybeFavoriteWallet: ReturnType<

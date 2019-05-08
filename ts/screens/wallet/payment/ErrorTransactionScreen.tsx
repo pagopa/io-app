@@ -3,9 +3,9 @@
  * Inside the cancel and retry buttons are conditionally returned.
  */
 import { Option } from "fp-ts/lib/Option";
-import { Content, Text } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -17,6 +17,7 @@ import {
   paymentIdPolling,
   paymentVerifica
 } from "../../../store/actions/wallet/payment";
+import variables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 
 type NavigationParams = {
@@ -27,6 +28,7 @@ type NavigationParams = {
       | typeof paymentIdPolling["failure"]
     >
   >;
+  onCancel: () => void;
 };
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -34,6 +36,29 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = NavigationInjectedProps &
   OwnProps &
   ReturnType<typeof mapDispatchToProps>;
+
+const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: "row",
+    marginTop: "auto"
+  },
+  buttonCancel: {
+    flex: 4,
+    backgroundColor: variables.brandDarkGray
+  },
+
+  buttonCancelText: {
+    color: variables.colorWhite
+  },
+
+  separator: {
+    width: 10
+  },
+
+  buttonRetry: {
+    flex: 8
+  }
+});
 
 class ErrorTransactionScreen extends React.Component<Props> {
   public render() {
@@ -46,6 +71,8 @@ class ErrorTransactionScreen extends React.Component<Props> {
         <Content noPadded={true}>
           <Image source={this.renderErrorIcon(error)} />
           <Text>{this.renderErrorMessageType(error)}</Text>
+
+          {this.renderButtons()}
         </Content>
       </BaseScreenComponent>
     );
@@ -103,6 +130,32 @@ class ErrorTransactionScreen extends React.Component<Props> {
         return require(baseIconPath + "generic-error-icon.png");
     }
   }
+
+  private onPressCancel = () => {
+    if (this.props.navigation.state.params !== undefined) {
+      this.props.navigation.state.params.onCancel();
+    }
+  };
+
+  /**
+   * Render footer buttons, cancel and retry buttons are rendered conditionally.
+   */
+  private renderButtons = () => {
+    return (
+      <View style={styles.buttonsContainer}>
+        <Button
+          onPress={this.onPressCancel}
+          style={styles.buttonCancel}
+          light={true}
+          block={true}
+        >
+          <Text style={styles.buttonCancelText}>
+            {I18n.t("global.buttons.cancel")}
+          </Text>
+        </Button>
+      </View>
+    );
+  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

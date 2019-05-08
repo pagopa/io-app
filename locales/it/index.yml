@@ -450,13 +450,13 @@ wallet:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato.
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
-    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
 saveCard:
