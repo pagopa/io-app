@@ -24,6 +24,7 @@ import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
+import configurePushNotifications from "./boot/configurePushNotification";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -34,6 +35,9 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 class RootContainer extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
+
+    /* Configure the application to receive push notifications */
+    configurePushNotifications();
   }
 
   private handleBackButton = () => {

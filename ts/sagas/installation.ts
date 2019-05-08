@@ -3,7 +3,6 @@
  */
 import { call, Effect, put, select } from "redux-saga/effects";
 
-import configurePushNotifications from "../boot/configurePushNotification";
 import { scheduleLocalNotificationsAccessSpid } from "../boot/scheduleLocalNotifications";
 import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
@@ -27,8 +26,6 @@ export function* previousInstallationDataDeleteSaga(): IterableIterator<
     yield call(deletePin);
     // invalidate the session
     yield put(sessionInvalid());
-    // Configure the application to receive push notifications
-    yield call(configurePushNotifications);
     // Schedule a set of local notifications
     yield call(scheduleLocalNotificationsAccessSpid);
   }
