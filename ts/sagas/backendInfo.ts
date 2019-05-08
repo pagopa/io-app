@@ -1,6 +1,6 @@
-import { call, Effect, fork, put } from "redux-saga/effects";
-
+import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { call, Effect, fork, put } from "redux-saga/effects";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
@@ -22,7 +22,9 @@ const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
 function* backendInfoWatcher(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
-  function getServerInfo(): Promise<BasicResponseType<ServerInfo> | undefined> {
+  function getServerInfo(): Promise<
+    t.Validation<BasicResponseType<ServerInfo> | undefined>
+  > {
     return new Promise((resolve, _) =>
       backendPublicClient
         .getServerInfo({})
@@ -35,12 +37,14 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       typeof getServerInfo
     > = yield call(getServerInfo, {});
 
-    if (backendInfoResponse && backendInfoResponse.status === 200) {
-      yield put(backendInfoLoadSuccess(backendInfoResponse.value));
-      setInstabugUserAttribute(
-        "backendVersion",
-        backendInfoResponse.value.version
-      );
+    if (
+      backendInfoResponse.isRight() &&
+      backendInfoResponse.value &&
+      backendInfoResponse.value.status === 200
+    ) {
+      const version = backendInfoResponse.value.value.version;
+      yield put(backendInfoLoadSuccess({ version }));
+      setInstabugUserAttribute("backendVersion", version);
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {
