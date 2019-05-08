@@ -1,7 +1,6 @@
 import * as t from "io-ts";
 import {
   ApiHeaderJson,
-  AuthorizationBearerHeaderProducer,
   composeHeaderProducers,
   composeResponseDecoders as compD,
   constantResponseDecoder as constD,
@@ -9,8 +8,11 @@ import {
   ioResponseDecoder as ioD,
   IPostApiRequestType,
   IResponseType,
+  RequestHeaderProducer,
+  RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { Omit } from "italia-ts-commons/lib/types";
 
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -102,11 +104,21 @@ function baseResponseDecoder<R, O = R>(
  */
 
 export type LogoutT = IPostApiRequestType<
-  {},
+  { readonly Bearer: string },
   "Authorization" | "Content-Type",
   never,
   BaseResponseType<SuccessResponse>
 >;
+
+function ParamAuthorizationBearerHeaderProducer<
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> {
+  return (p: P): RequestHeaders<"Authorization"> => {
+    return {
+      Authorization: `Bearer ${p.Bearer}`
+    };
+  };
+}
 
 //
 // Create client
@@ -122,13 +134,13 @@ export function BackendClient(
     fetchApi
   };
 
-  const tokenHeaderProducer = AuthorizationBearerHeaderProducer(token);
+  const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
   const getSessionT: GetSessionStateT = {
     method: "get",
     url: () => "/api/v1/session",
     query: _ => ({}),
-    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    headers: tokenHeaderProducer,
     response_decoder: getSessionStateDefaultDecoder()
   };
 
@@ -226,8 +238,15 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
+  const withBearerToken = <P extends { Bearer: string }, R>(
+    f: (p: P) => Promise<R>
+  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token) }, po) as P;
+    return f(params);
+  };
+
   return {
-    getSession: createFetchRequestForApi(getSessionT, options),
+    getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
     getService: createFetchRequestForApi(getServiceT, options),
     getVisibleServices: createFetchRequestForApi(getVisibleServicesT, options),
     getMessages: createFetchRequestForApi(getMessagesT, options),
