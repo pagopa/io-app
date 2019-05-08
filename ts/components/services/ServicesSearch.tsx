@@ -29,24 +29,27 @@ type State = {
 /**
  * Filter only the services that match the searchText.
  */
-const generateSectionsServicesStateMatchingSearchTextArray = (
+const generateSectionsServicesStateMatchingSearchTextArrayAsync = (
   // tslint:disable-next-line: readonly-array
   servicesState: Array<SectionListData<pot.Pot<ServicePublic, Error>>>,
   searchText: string
   // tslint:disable-next-line: readonly-array
-): Array<SectionListData<pot.Pot<ServicePublic, Error>>> => {
-  // tslint:disable-next-line: readonly-array
-  const result: Array<SectionListData<pot.Pot<ServicePublic, Error>>> = [];
-  servicesState.forEach(sectionList => {
-    const filtered = filterSectionListDataMatchingSearchText(
-      sectionList,
-      searchText
-    );
-    if (filtered != null) {
-      result.push(filtered);
-    }
+): Promise<Array<SectionListData<pot.Pot<ServicePublic, Error>>>> => {
+  return new Promise(resolve => {
+    // tslint:disable-next-line: readonly-array
+    const result: Array<SectionListData<pot.Pot<ServicePublic, Error>>> = [];
+    servicesState.forEach(sectionList => {
+      const filtered = filterSectionListDataMatchingSearchText(
+        sectionList,
+        searchText
+      );
+      if (filtered != null) {
+        result.push(filtered);
+      }
+    });
+
+    resolve(result);
   });
-  return result;
 };
 
 function filterSectionListDataMatchingSearchText(
@@ -80,7 +83,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     };
   }
 
-  public componentDidMount() {
+  public async componentDidMount() {
     const { sectionsState, searchText } = this.props;
     const { potFilteredServiceSectionsStates } = this.state;
 
@@ -92,7 +95,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     });
 
     // Start filtering services
-    const filteredServiceSectionsStates = generateSectionsServicesStateMatchingSearchTextArray(
+    const filteredServiceSectionsStates = await generateSectionsServicesStateMatchingSearchTextArrayAsync(
       sectionsState,
       searchText
     );
@@ -103,7 +106,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     });
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  public async componentDidUpdate(prevProps: Props) {
     const {
       sectionsState: prevServicesState,
       searchText: prevSearchText
@@ -120,7 +123,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
       });
 
       // Start filtering services
-      const filteredServiceSectionsStates = generateSectionsServicesStateMatchingSearchTextArray(
+      const filteredServiceSectionsStates = await generateSectionsServicesStateMatchingSearchTextArrayAsync(
         sectionsState,
         searchText
       );
