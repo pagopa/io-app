@@ -12,7 +12,6 @@ import {
   RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
@@ -43,8 +42,8 @@ import {
 } from "../../definitions/backend/requestTypes";
 
 import { SessionToken } from "../types/SessionToken";
-
 import { defaultRetryingFetch } from "../utils/fetch";
+import { withBearerToken } from "../utils/request";
 
 /**
  * Here we have to redefine the auto-generated UserProfile type since the
@@ -237,23 +236,27 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
-  const withBearerToken = <P extends { Bearer: string }, R>(
-    f: (p: P) => Promise<R>
-  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
-    const params = Object.assign({ Bearer: String(token) }, po) as P;
-    return f(params);
-  };
-
   return {
-    getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
-    getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
+    getSession: withBearerToken(
+      token,
+      createFetchRequestForApi(getSessionT, options)
+    ),
+    getService: withBearerToken(
+      token,
+      createFetchRequestForApi(getServiceT, options)
+    ),
     getVisibleServices: withBearerToken(
+      token,
       createFetchRequestForApi(getVisibleServicesT, options)
     ),
     getMessages: createFetchRequestForApi(getMessagesT, options),
     getMessage: createFetchRequestForApi(getMessageT, options),
-    getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
+    getProfile: withBearerToken(
+      token,
+      createFetchRequestForApi(getProfileT, options)
+    ),
     createOrUpdateProfile: withBearerToken(
+      token,
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
     createOrUpdateInstallation: createFetchRequestForApi(
