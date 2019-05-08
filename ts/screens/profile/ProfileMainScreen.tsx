@@ -11,7 +11,7 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View, Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -80,6 +80,12 @@ const styles = StyleSheet.create({
     marginBottom: 25
   }
 });
+
+const getAppLongVersion = () => {
+  const buildNumber =
+    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
+  return `${DeviceInfo.getVersion()}${buildNumber}`;
+};
 
 /**
  * A component to show the main screen of the Profile section
@@ -274,13 +280,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      clipboardSetStringWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(getAppLongVersion())
                     }
                   >
                     <Text>
                       {`${I18n.t(
                         "profile.main.appVersion"
-                      )} ${DeviceInfo.getVersion()}`}
+                      )} ${getAppLongVersion()}`}
                     </Text>
                   </Button>
                 </ListItem>
