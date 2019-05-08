@@ -1,6 +1,15 @@
 patch-package
 --- a/node_modules/instabug-reactnative/index.d.ts
 +++ b/node_modules/instabug-reactnative/index.d.ts
+@@ -14,7 +14,7 @@ export namespace BugReporting {
+     ): void;
+   function onInvokeHandler(preInvocationHandler: () => void): void;
+   function onReportSubmitHandler(preSendingHandler: () => void): void;
+-  function onSDKDismissedHandler(postInvocationHandler: () => void): void;
++  function onSDKDismissedHandler(postInvocationHandler: (dismissType: string, reportType: string) => void): void;
+   function setPromptOptionsEnabled(
+     chat: boolean,
+     bug: boolean,
 @@ -87,7 +87,7 @@ export namespace FeatureRequests {
  }
  export namespace Replies {
