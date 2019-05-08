@@ -129,7 +129,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
-        this.props.navigateToPaymentTransactionError();
+        this.props.navigateToPaymentTransactionError(error);
       }
     }
   }
@@ -307,8 +307,18 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
 
-  const navigateToPaymentTransactionError = () =>
-    dispatch(navigateToPaymentTransactionErrorScreen());
+  const navigateToPaymentTransactionError = (
+    error: Option<
+      PayloadForAction<
+        | typeof paymentVerifica["failure"]
+        | typeof paymentAttiva["failure"]
+        | typeof paymentIdPolling["failure"]
+      >
+    >
+  ) => dispatch(navigateToPaymentTransactionErrorScreen({ error }));
+
+  // navigateToMessageDetail: (messageId: string) =>
+  // dispatch(navigateToMessageDetailScreenAction({ messageId }))
 
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
