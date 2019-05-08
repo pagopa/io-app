@@ -18,7 +18,7 @@ export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
   preferredCalendar?: Calendar;
   wasServiceAlertDisplayedOnce?: boolean;
-  isPagoPATestEnabled?: boolean;
+  isPagoPATestEnabled: boolean;
   isExperimentalFeaturesEnabled: boolean;
 }>;
 
@@ -70,6 +70,4 @@ export default function preferencesReducer(
 }
 
 export const isPagoPATestEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences.isPagoPATestEnabled === true
-    ? state.persistedPreferences.isPagoPATestEnabled
-    : false;
+  state.persistedPreferences.isPagoPATestEnabled;
