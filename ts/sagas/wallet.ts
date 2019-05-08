@@ -17,6 +17,7 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
+import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { PaymentManagerClient } from "../api/pagopa";
 import {
@@ -24,7 +25,6 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
-
 import {
   paymentAttiva,
   paymentCheck,
@@ -144,7 +144,7 @@ function* startOrResumeAddCreditCardSaga(
   // want to add
   const creditCardWallet: NullableWallet = {
     idWallet: null,
-    type: "CREDIT_CARD",
+    type: TypeEnum.CREDIT_CARD,
     favourite: action.payload.setAsFavorite,
     creditCard: action.payload.creditCard,
     psp: undefined
@@ -509,8 +509,8 @@ export function* watchWalletSaga(
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
-      if (response !== undefined && response.status === 200) {
-        return some(response.value.data.sessionToken);
+      if (response.isRight() && response.value.status === 200) {
+        return some(response.value.value.data.sessionToken);
       }
       return none;
     } catch {
