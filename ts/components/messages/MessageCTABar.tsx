@@ -243,13 +243,14 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           >
             {isEventInCalendar ? (
               <IconFont
-                name="io-tick-big"
+                name={"io-tick-big"}
                 style={styles.reminderButtonIcon}
                 color={variables.contentPrimaryBackground}
               />
             ) : (
-              <Icon
-                name={"plus"}
+
+              <IconFont
+                name={"io-plus"}
                 style={styles.reminderButtonIcon}
                 color={variables.contentPrimaryBackground}
               />
