@@ -6,7 +6,7 @@
 defaults: &defaults
   working_directory: ~/italia-app
 
-node_cache_key: &node_cache_key v1.1-dependencies-{{ checksum "yarn.lock" }}
+node_cache_key: &node_cache_key v1.2-dependencies-{{ checksum "yarn.lock" }}
 
 android_sdk_cache_key: &android_sdk_cache_key v1-android-sdkmanager-packages-{{ checksum "scripts/circleci-android-setup.sh" }}
 
@@ -26,12 +26,13 @@ defaults_android: &defaults_android
   docker:
     - image: circleci/android:api-23-node8-alpha
   environment:
-    - TERM: "dumb"
-    - ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
-    - ANDROID_SDK_BUILD_API_LEVEL: "28"
-    - ANDROID_GOOGLE_API_LEVEL: "23"
+    TERM: "dumb"
+    ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
+    ANDROID_SDK_BUILD_API_LEVEL: "28"
+    ANDROID_GOOGLE_API_LEVEL: "23"
     # - REACT_NATIVE_MAX_WORKERS: 1
-    - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx8g -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"'
+    GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx8g -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"'
+    RUBY_VERSION: ruby-2.4
 
 # macos builds
 defaults_macos: &defaults_macos
@@ -136,33 +137,8 @@ jobs:
       # Run DangerJS
       - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
 
-  # Build Android bundle
-  build-android-bundle:
-    <<: *defaults_js
-
-    resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
-
-      # Create bundles dir
-      - run: mkdir -p ./bundles
-
-      # Run bundle command for android platform
-      - run: yarn bundle:android
-
-      - persist_to_workspace:
-          root: bundles
-          paths:
-            - index.android.bundle
-
-      - store_artifacts:
-          path: bundles/index.android.bundle
-
-  # Run test on android
-  test-android:
+  # Create signed Android release
+  android-release:
     <<: *defaults_android
 
     resource_class: xlarge
@@ -181,36 +157,40 @@ jobs:
       - run:
           command: ./scripts/circleci-android-setup.sh
 
-      # Save sdk cache
-      - save_cache:
-          paths:
-            - /opt/android/sdk/system-images/android-23
-            - /opt/android/sdk/system-images/android-19
-            - /opt/android/sdk/platforms/android-26
-            - /opt/android/sdk/platforms/android-23
-            - /opt/android/sdk/platforms/android-19
-            - /opt/android/sdk/build-tools/23.0.1
-            - /opt/android/sdk/add-ons/addon-google_apis-google-2
-          key: *android_sdk_cache_key
-
       # Restore jars cache
       - restore_cache:
           key: *android_jars_cache_key
 
-      # Run gradle assembleDebug
       - run:
-          command: cd android && ./gradlew assembleDebug
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
 
-      # Save APKs
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Recreate JSON key file (for Google Play) from ENV variable
+      - run:
+          command: ./scripts/json-key-file-setup.sh
+
+      # Recreate keystore from ENV variable
+      - run:
+          command: ./scripts/keystore-setup.sh
+
+      # Build the js bundle in release mode	
+      - run: yarn bundle:android-release
+
+      # Run alpha lane
+      - run:
+          command: cd android && bundle exec fastlane build_release
+
       - store_artifacts:
-          path: android/app/build/outputs/apk
-          destination: apks/release
-
-      # Save jars cache
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: *android_jars_cache_key
+          path: android/app/build/outputs/bundle
+          destination: bundle
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
   alpha-release-android:
@@ -236,9 +216,6 @@ jobs:
       - restore_cache:
           key: *android_jars_cache_key
 
-      # Set Ruby Version for chruby
-      - run: echo "ruby-2.4" > .ruby-version
-
       - run:
           name: Configure Bundler
           command: |
@@ -259,7 +236,7 @@ jobs:
       - run:
           command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode
+      # Build the js bundle in release mode	
       - run: yarn bundle:android-release
 
       # Run alpha lane
@@ -267,8 +244,8 @@ jobs:
           command: cd android && bundle exec fastlane alpha
 
       - store_artifacts:
-          path: android/app/build/outputs/apk
-          destination: apks/release
+          path: android/app/build/outputs/bundle
+          destination: bundle
 
   # Test ios build
   test-ios:
@@ -459,24 +436,22 @@ workflows:
             branches:
               ignore: master
 
-      # Build Android bundle
-      - build-android-bundle:
-          requires:
-            - compile-typescript
-            - lint-typescript
-            - run-tests
-
       # To avoid running too many (long) native builds and tests, this step
-      # waits the approval for the iOS and Android native tests.
-      - hold-native-tests:
+      # waits the approval for the Android native tests.
+      - hold-android-native:
           type: approval
           requires:
-            - build-android-bundle
+            - compile-typescript
+            - run-tests
+            - lint-typescript
+          filters:
+            branches:
+              ignore: master
 
-      # Native Android tests
-      - test-android:
+      # Build Android release
+      - android-release:
           requires:
-            - hold-native-tests
+            - hold-android-native
 
       # Native iOS e2e tests
       - hold-ios-e2e-tests:

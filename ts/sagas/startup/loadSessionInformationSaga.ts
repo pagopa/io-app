@@ -37,7 +37,7 @@ export function* loadSessionInformationSaga(
 
   // We got a error, send a SESSION_LOAD_FAILURE action
   const error: Error =
-    response && response.status === 500
+    response && response.status === 400
       ? Error(response.value.title)
       : Error("Invalid server response");
   yield put(sessionInformationLoadFailure(error));

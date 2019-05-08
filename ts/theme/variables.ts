@@ -42,6 +42,7 @@ const customVariables = Object.assign(materialVariables, {
   brandDarkGray: "#5C6F82",
   brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
+  brandHighlight: "#00C5CA",
 
   cardFontColor: "#17324D",
   colorWhite: "white",
@@ -249,7 +250,10 @@ const customVariables = Object.assign(materialVariables, {
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
-  shineColor: "#C1CCD6"
+  shineColor: "#C1CCD6",
+
+  // Spacing
+  spacingBase: 8
 });
 
 export default customVariables;
