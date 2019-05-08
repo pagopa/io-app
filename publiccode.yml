@@ -1,0 +1,97 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+name: IO
+releaseDate: '2019-05-02'
+url: 'https://github.com/teamdigitale/io-app'
+applicationSuite: IO
+landingURL: 'https://io.italia.it/'
+softwareVersion: 0.1.0
+developmentStatus: beta
+softwareType: standalone/mobile
+roadmap: 'https://io.italia.it/'
+platforms:
+  - ios
+  - android
+categories:
+  - digital-citizenship
+maintenance:
+  type: internal
+  contacts:
+    - name: Federico Feroldi
+      email: federico@teamdigitale.governo.it
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Presidenza del Consiglio dei Ministri e Agenzia per l’Italia Digitale
+  repoOwner: Team per la Trasformazione Digitale - Presidenza del Consiglio dei Ministri
+  authorsFile: AUTHORS.md
+intendedAudience:
+  scope:
+    - government
+    - local-authorities
+    - welfare
+    - society
+  countries:
+    - it
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - it
+    - en
+it:
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    spid: true
+    pagopa: true
+    cie: true
+    anpr: true
+  conforme:
+    lineeGuidaDesign: true
+    modelloInteroperabilita: true
+    misureMinimeSicurezza: true
+    gdpr: true
+  riuso:
+    codiceIPA: PCM
+description:
+  it:
+    genericName: Mobile Application
+    shortDescription: IO è l'app dei servizi pubblici
+    longDescription: >
+      ### Cos'è la Cittadinanza Digitale?
+
+
+      La Cittadinanza Digitale ha l'obiettivo di portare il cittadino al  centro
+      dei servizi erogati dalle pubbliche amministrazioni italiane.
+
+
+      Il progetto si estende su due linee:
+
+
+      - la costruzione di una piattaforma di componenti che abilitano lo
+      sviluppo di servizi digitali incentrati sul cittadino
+
+      - un'interfaccia del cittadino per gestire i propri dati e il proprio
+      profilo di cittadino digitale
+
+
+      ### Cos'è l'app mobile della Cittadinanza Digitale?
+
+
+      L'app mobile della Cittadinanza Digitale è un'applicazione mobile nativa
+      per iOS e Android con duplice scopo:
+
+
+      - essere un interfaccia per il cittadino verso i propri dati e il proprio
+      profilo di cittadino digitale
+
+      - fungere da _reference implementation_ delle integrazioni con la
+      piattaforma di Cittadinanza Digitale
+    documentation: 'https://github.com/teamdigitale/io-app'
+    features:
+      - Messaggi
+      - Pagamenti
+      - Documenti
+      - Notifiche
+      - Notizie

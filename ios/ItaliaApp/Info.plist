@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>10</string>
+    <string>12</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSRequiresIPhoneOS</key>
@@ -72,8 +72,6 @@
     <string>IO needs access to your contacts to let you add them in calendar events</string>
     <key>NSFaceIDUsageDescription</key>
     <string>Enable Face ID for a faster identification.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Let IO know your location even when the it's running in background</string>
     <key>UIAppFonts</key>
     <array>
       <string>TitilliumWeb-Black.ttf</string>

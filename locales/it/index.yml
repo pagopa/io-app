@@ -112,6 +112,10 @@ profile:
         description: ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
+    experimentalFeatures:
+      confirmTitle: Funzionalità sperimentali
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
@@ -515,7 +519,17 @@ messages:
   search:
     invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
   archive:
-    emptyMessage: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+    emptyMessage:
+      title: Il tuo archivio è vuoto.
+      subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+  inbox:
+    emptyMessage: 
+      title: La tua lista dei messaggi è vuota.
+      subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
+  deadlines:
+    emptyMessage: 
+      title: Non hai scadenze in programma.
+      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
@@ -592,6 +606,8 @@ services:
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
+  disableTitle: "Vuoi davvero disattivare il servizio?"
+  disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
 identification:
   message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
