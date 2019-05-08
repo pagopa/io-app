@@ -11,7 +11,7 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet, View, Platform } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
