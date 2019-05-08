@@ -37,10 +37,10 @@ export default (): Theme => {
 
     ".widget": {
       height: variables.btnWidgetHeight,
-      paddingTop: 2,
+      paddingTop: 1,
       paddingBottom: 2,
       "NativeBase.Text": {
-        fontSize: variables.fontSizeSmaller,
+        fontSize: variables.fontSizeSmall,
         lineHeight: variables.btnXSmallLineHeight,
         paddingHorizontal: 8
       }
@@ -72,8 +72,15 @@ export default (): Theme => {
         "NativeBase.Text": { color: variables.btnLightTextColor },
         borderWidth: 1,
         borderColor: variables.btnLightBorderColor,
-        backgroundColor: variables.brandLight
-      }
+        backgroundColor: variables.brandLight,
+        ".primary": {
+          "NativeBase.Text": { color: variables.brandPrimary },
+          borderWidth: 1,
+          borderColor: variables.brandPrimary,
+          backgroundColor: variables.colorWhite
+        }
+      },
+      "NativeBase.Text": { fontWeight: variables.textNormalWeight }
     },
 
     ".bordered": {

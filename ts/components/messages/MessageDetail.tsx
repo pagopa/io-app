@@ -57,26 +57,25 @@ const styles = StyleSheet.create({
     marginRight: variables.contentPadding
   },
   messageIDContainer: {
-    marginBottom: 5
-  },
-  messageIDContainerText: {
-    fontSize: variables.fontSizeSmaller,
+    width: "100%",
+    alignContent: "space-between",
     display: "flex",
-    alignItems: "center"
+    flexDirection: "row",
+    flexWrap: "wrap"
   },
   messageIDLabelContainer: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row"
+    flex: 1,
+    height: variables.lineHeightBase,
+    marginBottom: 5
   },
   messageIDLabelText: {
-    fontSize: variables.fontSizeSmall
+    fontSize: variables.fontSizeSmaller
   },
   messageIDBtnContainer: {
-    width: 45,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    flexDirection: "row"
+    width: 48,
+    flex: 0,
+    marginBottom: 5,
+    height: variables.lineHeightBase
   }
 });
 
@@ -121,19 +120,22 @@ class MessageDetailComponent extends React.PureComponent<Props> {
           </View>
 
           {isDebugModeEnabled && (
-            <Grid style={styles.messageIDContainer}>
-              <Col style={styles.messageIDLabelContainer}>
+            <View style={styles.messageIDContainer}>
+              <View style={styles.messageIDLabelContainer}>
                 <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
-              </Col>
-              <Col style={styles.messageIDBtnContainer}>
+              </View>
+              <View style={styles.messageIDBtnContainer}>
                 <Button
                   widget={true}
+                  light={true}
+                  bordered={true}
+                  primary={true}
                   onPress={() => clipboardSetStringWithFeedback(message.id)}
                 >
                   <Text>{I18n.t("clipboard.copyText")}</Text>
                 </Button>
-              </Col>
-            </Grid>
+              </View>
+            </View>
           )}
 
           {/* RawInfo */}
