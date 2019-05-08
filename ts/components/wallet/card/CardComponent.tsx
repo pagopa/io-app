@@ -6,7 +6,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, Platform, StyleSheet } from "react-native";
 import {
   Menu,
   MenuOption,
@@ -20,12 +20,10 @@ import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import IconFont from "../../ui/IconFont";
-import styles from "./CardComponent.style";
 import Logo from "./Logo";
-import { CreditCardStyles } from "./style";
+import { makeFontStyleObject } from "../../../theme/fonts";
 
-// TODO: the "*" character renders differently (i.e. a larger circle) on
-// some devices @https://www.pivotaltracker.com/story/show/159231780
+
 const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
 const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
@@ -58,6 +56,126 @@ interface PickingProps extends BaseProps {
   type: "Picking";
   mainAction: (wallet: Wallet) => void;
 }
+
+const styles = StyleSheet.create({
+  blueText: {
+    color: variables.brandPrimary,
+    textAlign: "center",
+    ...makeFontStyleObject(Platform.select)
+  },
+
+  body: {
+    borderWidth: 1,
+    borderColor: "transparent"
+  },
+
+  card: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.5,
+    elevation: 3,
+
+    backgroundColor: variables.brandGray,
+    borderRadius: 8,
+    marginBottom: -1,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 20
+  },
+
+  cardInner: {
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 22
+  },
+
+  columns: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+
+  topRightCornerContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end"
+  },
+
+  cardLogo: {
+    alignSelf: "flex-end",
+    height: 30,
+    width: 48
+  },
+
+  largeTextStyle: {
+    ...makeFontStyleObject(Platform.select, undefined, false, "RobotoMono"),
+    fontSize: variables.fontSizeBase * 1.125 // 18
+  },
+
+  flatBottom: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+
+  footerButton: {
+    borderRadius: 6,
+    paddingRight: variables.fontSizeBase,
+    justifyContent: "space-between",
+    margin: 2
+  },
+
+  marginTop: {
+    marginTop: variables.fontSizeBase
+  },
+
+  numberArea: {
+    borderWidth: 1,
+    borderColor: "transparent",
+    width: "82%"
+  },
+
+  paddedIcon: {
+    paddingLeft: 10
+  },
+
+  paddedTop: {
+    paddingTop: 10
+  },
+
+  pickPayment: {
+    backgroundColor: variables.brandPrimary
+  },
+
+  pickPaymentText: {
+    color: variables.colorWhite
+  },
+
+  row: {
+    flexDirection: "row"
+  },
+
+  rowStyle: {
+    alignItems: "center"
+  },
+
+  smallTextStyle: {
+    fontSize: variables.fontSizeSmall,
+    color: variables.brandDarkGray
+  },
+
+  textStyle: {
+    fontFamily: variables.fontFamily,
+    color: variables.cardFontColor
+  },
+
+  transactions: {
+    backgroundColor: variables.colorWhite
+  },
+
+  transactionsText: {
+    color: variables.brandPrimary
+  }
+});
 
 type Props = FullProps | HeaderProps | PreviewProps | PickingProps;
 
@@ -201,14 +319,14 @@ export default class CardComponent extends React.Component<Props> {
         <View>
           <Text
             style={[
-              CreditCardStyles.textStyle,
-              CreditCardStyles.smallTextStyle
+              styles.textStyle,
+              styles.smallTextStyle
             ]}
           >
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </Text>
 
-          <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
+          <Text style={[styles.textStyle, styles.marginTop]}>
             {wallet.creditCard.holder.toUpperCase()}
           </Text>
         </View>
@@ -266,17 +384,17 @@ export default class CardComponent extends React.Component<Props> {
       <View
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
       >
-        <View style={[styles.cardInner]}>
-          <View style={[styles.row]}>
+        <View style={styles.cardInner}>
+          <View style={styles.row}>
             <View
               style={[styles.row, styles.numberArea]}
               onTouchEnd={this.handleOnCardPress}
             >
-              <Text style={[CreditCardStyles.smallTextStyle]}>
+              <Text style={styles.smallTextStyle}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
 
-              <Text style={[CreditCardStyles.largeTextStyle]}>
+              <Text style={styles.largeTextStyle}>
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
             </View>
