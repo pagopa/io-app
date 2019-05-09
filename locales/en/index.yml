@@ -457,6 +457,7 @@ saveCard:
   favoriteText: This payment method will be automatically proposed for the next payment
 cardComponent:
   validUntil: Valid until
+  expiredCard: CARD EXPIRED ON
   actions: Actions
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites
