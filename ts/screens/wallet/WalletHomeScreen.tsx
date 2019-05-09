@@ -151,7 +151,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <View>
         {this.withCardsHeader()}
         <View spacer={true} large={true} />
-        <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+        <Text style={[WalletStyles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
         <View spacer={true} />
@@ -159,7 +159,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           block={true}
           light={true}
           bordered={true}
-          xsmall={true}
+          small={true}
           onPress={this.props.loadWallets}
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
@@ -218,7 +218,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
             <H3>{I18n.t("wallet.transactions")}</H3>
             <View spacer={true} large={true} />
             <Text
-              note={true}
               style={[styles.inLineSpace, styles.brandDarkGray]}
             >
               {I18n.t("wallet.transactionsLoadFailure")}
@@ -228,7 +227,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
               block={true}
               light={true}
               bordered={true}
-              xsmall={true}
+              small={true}
               onPress={this.props.loadTransactions}
             >
               <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
