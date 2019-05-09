@@ -29,6 +29,7 @@ type NavigationParams = {
     >
   >;
   onCancel: () => void;
+  onRetry?: () => void;
 };
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -65,7 +66,7 @@ class ErrorTransactionScreen extends React.Component<Props> {
     const error = this.props.navigation.getParam("error");
     return (
       <BaseScreenComponent
-        goBack={true}
+        goBack={this.onPressCancel}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
         <Content noPadded={true}>
@@ -115,7 +116,9 @@ class ErrorTransactionScreen extends React.Component<Props> {
       case "PAYMENT_DUPLICATED":
         return require(baseIconPath + "payment-duplicated-icon.png");
       case "INVALID_AMOUNT":
+        return require(baseIconPath + "invalid-amount-icon.png");
       case "PAYMENT_ONGOING":
+        return require(baseIconPath + "payment-ongoing-icon.png");
       case "PAYMENT_EXPIRED":
         return require(baseIconPath + "payment-expired-icon.png");
       case "PAYMENT_UNAVAILABLE":
@@ -130,12 +133,6 @@ class ErrorTransactionScreen extends React.Component<Props> {
         return require(baseIconPath + "generic-error-icon.png");
     }
   }
-
-  private onPressCancel = () => {
-    if (this.props.navigation.state.params !== undefined) {
-      this.props.navigation.state.params.onCancel();
-    }
-  };
 
   /**
    * Render footer buttons, cancel and retry buttons are rendered conditionally.
@@ -153,8 +150,35 @@ class ErrorTransactionScreen extends React.Component<Props> {
             {I18n.t("global.buttons.cancel")}
           </Text>
         </Button>
+        <Button
+          primary={true}
+          block={true}
+          onPress={this.onPressRetry}
+          style={styles.buttonRetry}
+        >
+          <Text>{I18n.t("global.buttons.retry")}</Text>
+        </Button>
       </View>
     );
+  };
+
+  private onPressCancel = () => {
+    if (this.props.navigation.state.params !== undefined) {
+      this.props.navigation.state.params.onCancel();
+    }
+  };
+
+  private onPressRetry = () => {
+    const navigationParams = this.props.navigation.state.params;
+    if (
+      navigationParams !== undefined &&
+      navigationParams.onRetry !== undefined
+    ) {
+      // Go back in TransactionSummaryScreen
+      this.props.navigation.goBack();
+      // Retry the payment
+      navigationParams.onRetry();
+    }
   };
 }
 
