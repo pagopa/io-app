@@ -44,9 +44,9 @@ type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
 };
 
-const ITEM_LOADING_HEIGHT = 90;
 const ITEM_ERROR_HEIGHT = 56;
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
+const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
 const ITEM_WITH_CTABAR_HEIGHT = 158;
 const ITEM_SEPARATOR_HEIGHT = 1;
 
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   itemLoadingContainer: {
     height: ITEM_LOADING_HEIGHT,
     paddingVertical: 16,
-    paddingHorizontal: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding,
+    flex: 1
   },
 
   itemErrorContainer: {
@@ -78,6 +79,27 @@ const styles = StyleSheet.create({
   itemSeparator: {
     height: 1,
     backgroundColor: customVariables.brandLightGray
+  },
+
+  itemLoadingHeaderWrapper: {
+    flexDirection: "row",
+    marginBottom: 4
+  },
+
+  itemLoadingHeaderCenter: {
+    flex: 1,
+    paddingRight: 55 // Includes right header space
+  },
+
+  itemLoadingContentWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 42
+  },
+
+  itemLoadingContentCenter: {
+    flex: 1,
+    paddingRight: 32
   }
 });
 
@@ -126,17 +148,31 @@ const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
 };
 
 const MessageListItemPlaceholder = (
-  <View style={styles.itemLoadingContainer}>
-    <Placeholder.Paragraph
-      textSize={customVariables.fontSizeBase}
-      color={customVariables.shineColor}
-      lineNumber={3}
-      lineSpacing={5}
-      width="100%"
-      firstLineWidth="100%"
-      lastLineWidth="75%"
-      onReady={false}
-    />
+  <View style={[styles.itemLoadingContainer]}>
+    <View style={styles.itemLoadingHeaderWrapper}>
+      <View style={styles.itemLoadingHeaderCenter}>
+        <Placeholder.Paragraph
+          textSize={customVariables.fontSizeBase}
+          color={customVariables.shineColor}
+          lineNumber={2}
+          lineSpacing={5}
+          width="100%"
+          firstLineWidth="100%"
+          lastLineWidth="55%"
+          onReady={false}
+        />
+      </View>
+    </View>
+
+    <View style={styles.itemLoadingContentWrapper}>
+      <View style={styles.itemLoadingContentCenter}>
+        <Placeholder.Line
+          textSize={customVariables.fontSizeBase}
+          color={customVariables.shineColor}
+          width="75%"
+        />
+      </View>
+    </View>
   </View>
 );
 

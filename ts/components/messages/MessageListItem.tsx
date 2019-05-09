@@ -138,7 +138,6 @@ class MessageListItem extends React.PureComponent<Props> {
   };
 
   public render() {
-    console.log("MessageListItem::render", this.props);
     const {
       isRead,
       message,
@@ -230,11 +229,11 @@ class MessageListItem extends React.PureComponent<Props> {
   }
 
   public componentDidUpdate(prevProps: Props) {
+    // @ts-ignore
     const changedProps = omitBy(
       this.props,
       (value, key: keyof Props) => prevProps[key] === value
     );
-    console.log("MessageListItem::changedProps", changedProps);
   }
 }
 
