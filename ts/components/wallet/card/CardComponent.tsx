@@ -19,6 +19,7 @@ import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
+import { isExpiredCard } from "../../../utils/wallet";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
@@ -192,6 +193,7 @@ export default class CardComponent extends React.Component<Props> {
     }
 
     const expirationDate = buildExpirationDate(wallet);
+    const isExpired = isExpiredCard(wallet);
 
     return (
       <View
@@ -202,10 +204,14 @@ export default class CardComponent extends React.Component<Props> {
           <Text
             style={[
               CreditCardStyles.textStyle,
-              CreditCardStyles.smallTextStyle
+              !isExpired
+                ? CreditCardStyles.smallTextStyle
+                : CreditCardStyles.expiredTextStyle
             ]}
           >
-            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+            {!isExpired
+              ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
+              : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
           </Text>
 
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
