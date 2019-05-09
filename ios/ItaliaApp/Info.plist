@@ -74,17 +74,9 @@
 	<string>Enable Face ID for a faster identification.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>TitilliumWeb-Black.ttf</string>
 		<string>TitilliumWeb-Bold.ttf</string>
-		<string>TitilliumWeb-BoldItalic.ttf</string>
-		<string>TitilliumWeb-ExtraLight.ttf</string>
-		<string>TitilliumWeb-ExtraLightItalic.ttf</string>
-		<string>TitilliumWeb-Italic.ttf</string>
 		<string>TitilliumWeb-Light.ttf</string>
-		<string>TitilliumWeb-LightItalic.ttf</string>
-		<string>TitilliumWeb-Regular.ttf</string>
 		<string>TitilliumWeb-SemiBold.ttf</string>
-		<string>TitilliumWeb-SemiBoldItalic.ttf</string>
 		<string>io-icon-font.ttf</string>
 		<string>RobotoMono-Regular.ttf</string>
 		<string>Ionicons.ttf</string>
