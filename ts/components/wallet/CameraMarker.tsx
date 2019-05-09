@@ -19,7 +19,11 @@ type Props = {
  */
 export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
   const iconName =
-    state === "INVALID" ? "io-close" : state === "VALID" ? "io-tick-big" : undefined;
+    state === "INVALID"
+      ? "io-close"
+      : state === "VALID"
+        ? "io-tick-big"
+        : undefined;
 
   const sideLength = screenWidth / 2;
 

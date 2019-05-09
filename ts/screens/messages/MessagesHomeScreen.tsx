@@ -3,7 +3,6 @@ import debounce from "lodash/debounce";
 import {
   Button,
   DefaultTabBar,
-  Icon,
   Input,
   Item,
   Tab,

@@ -2,7 +2,7 @@ import { isSome, none } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { capitalize } from "lodash";
-import { Button, H1, Icon, Text, View } from "native-base";
+import { Button, H1, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
@@ -248,7 +248,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                 color={variables.contentPrimaryBackground}
               />
             ) : (
-
               <IconFont
                 name={"io-plus"}
                 style={styles.reminderButtonIcon}
