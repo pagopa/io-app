@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   inLineSpace: {
-    lineHeight: variables.btnXSmallLineHeight
+    lineHeight: 20
   },
   refreshBox: {
     height: 100,
