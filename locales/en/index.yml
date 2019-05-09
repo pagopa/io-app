@@ -32,6 +32,8 @@ global:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
+  search:
+    invalidSearchBarText: Enter at least three characters in the search bar.
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -506,8 +508,6 @@ messages:
     helper: "IO will remember this choice, you can change it from the preference pane."
   unknownSender: Unknown sender
   noContent: Content not available
-  search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
     emptyMessage:
       title: Your archive is empty.
