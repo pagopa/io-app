@@ -1,5 +1,6 @@
 package it.teamdigitale.app.italiaapp;
 
+import android.support.annotation.Keep;
 import android.support.multidex.MultiDexApplication;
 
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -33,6 +34,7 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+@Keep
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {

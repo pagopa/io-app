@@ -16,7 +16,7 @@
 #   public *;
 #}
 
-# [Lines 23-67] Official Proguard by Facebook
+# [Lines 26-67] Official Proguard by Facebook
 # See https://github.com/facebook/react-native/blob/master/ReactAndroid/proguard-rules.pro
 
 # Disabling obfuscation is useful if you collect stack traces from production crashes
@@ -82,3 +82,6 @@
 # React-native svg
 -keep public class com.horcrux.svg.** {*;}
 -dontwarn com.horcrux.svg.**
+
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**
