@@ -23,7 +23,6 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
-import { WalletStyles } from "../../components/styles/wallet";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -58,11 +57,35 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row"
   },
+
   align: {
     textAlign: "right"
   },
+
   titleRow: {
     justifyContent: "space-between"
+  },
+
+  whyLink: {
+    color: variables.textLinkColor
+  },
+
+  alignCenter: {
+    alignItems: "center"
+  },
+
+  white: {
+    color: variables.colorWhite
+  },
+
+  whiteContent: {
+    backgroundColor: variables.colorWhite,
+    flex: 1
+  },
+
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
   }
 });
 
@@ -77,15 +100,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
       <View>
         <Grid>
           <Col size={1} />
-          <Col size={5} style={WalletStyles.alignCenter}>
+          <Col size={5} style={styles.alignCenter}>
             <View spacer={true} />
             <Row>
-              <H1 style={WalletStyles.white}>{I18n.t("wallet.thanks")}</H1>
+              <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
             </Row>
             <Row>
-              <Text style={WalletStyles.white}>
-                {I18n.t("wallet.endPayment")}
-              </Text>
+              <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
             </Row>
             <View spacer={true} />
           </Col>
@@ -159,7 +180,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
       >
         <Content
           scrollEnabled={false}
-          style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+          style={[styles.noBottomPadding, styles.whiteContent]}
         >
           <Grid>
             <Row style={styles.titleRow}>
@@ -181,7 +202,8 @@ class TransactionDetailsScreen extends React.Component<Props> {
                 <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
                 <Text
                   note={true}
-                  style={WalletStyles.whyLink}
+                  bold={true}
+                  style={styles.whyLink}
                   onPress={this.props.showHelp}
                 >
                   {I18n.t("wallet.why")}

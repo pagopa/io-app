@@ -67,7 +67,7 @@ GEM
     faraday_middleware (0.13.1)
       faraday (>= 0.7.4, < 1.0)
     fastimage (2.1.5)
-    fastlane (2.121.1)
+    fastlane (2.122.0)
       CFPropertyList (>= 2.3, < 4.0.0)
       addressable (>= 2.3, < 3.0.0)
       babosa (>= 1.0.2, < 2.0.0)
@@ -188,7 +188,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
-    unicode-display_width (1.5.0)
+    unicode-display_width (1.6.0)
     word_wrap (1.0.0)
     xcodeproj (1.8.2)
       CFPropertyList (>= 2.3.3, < 4.0)
@@ -206,7 +206,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (= 1.6.1)
-  fastlane (~> 2.121.1)
+  fastlane (~> 2.122.0)
 
 BUNDLED WITH
    2.0.1

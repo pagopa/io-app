@@ -7,15 +7,13 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, List, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { WalletStyles } from "../../../components/styles/wallet";
-
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -27,6 +25,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
+import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
@@ -45,6 +44,13 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
+
+const styles = StyleSheet.create({
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  }
+});
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -84,7 +90,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             onCancel={this.props.navigateToTransactionSummary}
           />
 
-          <View style={WalletStyles.paddedLR}>
+          <View style={styles.paddedLR}>
             <View spacer={true} />
             <H1>
               {I18n.t(

@@ -34,6 +34,10 @@ global:
   notImplemented: NOT IMPLEMENTED
   search:
     invalidSearchBarText: Enter at least three characters in the search bar.
+  localNotifications:
+    spidLogin:
+      title: Remember to login to IO!
+      message: Login with your SPID identity on IO, the public services app
 locales:
   it: Italian
   en: English

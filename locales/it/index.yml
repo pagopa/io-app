@@ -35,6 +35,10 @@ global:
   notImplemented: NON IMPLEMENTATO
   search:
     invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+  localNotifications:
+    spidLogin:
+      title: Ricordati di accedere ad IO!
+      message: Accedi con la tua identità SPID su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese
