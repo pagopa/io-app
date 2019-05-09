@@ -16,7 +16,8 @@ export const isExpiredCard = (w: Wallet) => {
     10
   );
   return (
-    parseInt(w.creditCard.expireMonth, 10) > cmpM &&
-    parseInt(w.creditCard.expireYear, 10) <= cmpY
+    parseInt(w.creditCard.expireYear, 10) < cmpY ||
+    (parseInt(w.creditCard.expireYear, 10) === cmpY &&
+      parseInt(w.creditCard.expireMonth, 10) < cmpM)
   );
 };
