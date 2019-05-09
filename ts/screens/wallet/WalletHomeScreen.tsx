@@ -217,9 +217,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
             <View spacer={true} />
             <H3>{I18n.t("wallet.transactions")}</H3>
             <View spacer={true} large={true} />
-            <Text
-              style={[styles.inLineSpace, styles.brandDarkGray]}
-            >
+            <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
               {I18n.t("wallet.transactionsLoadFailure")}
             </Text>
             <View spacer={true} />
