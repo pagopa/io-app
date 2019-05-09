@@ -5,10 +5,8 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
-import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
 import { BackendClient } from "../../api/backend";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
@@ -70,7 +68,7 @@ export function* fetchMessage(
       { id: meta.id }
     );
     if (response.isLeft()) {
-      throw readableReport(response.value);
+      throw Error(readableReport(response.value));
     }
     if (response.value.status !== 200) {
       const error =

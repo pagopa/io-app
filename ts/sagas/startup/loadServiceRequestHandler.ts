@@ -23,7 +23,7 @@ export function* loadServiceRequestHandler(
     );
 
     if (response.isLeft()) {
-      throw readableReport(response.value);
+      throw Error(readableReport(response.value));
     }
 
     if (response.value.status === 200) {
