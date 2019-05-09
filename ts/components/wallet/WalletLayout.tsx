@@ -18,7 +18,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
@@ -57,6 +57,7 @@ type Props = Readonly<{
   onNewPaymentPress?: () => void;
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
+  backgroundColor?: StyleProp<ViewStyle>;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
@@ -86,7 +87,11 @@ export default class WalletLayout extends React.Component<Props> {
 
         <ScrollView
           bounces={false}
-          style={styles.whiteBg}
+          style={
+            this.props.backgroundColor
+              ? this.props.backgroundColor
+              : styles.whiteBg
+          }
           ref={this.WalletLayoutRef}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
