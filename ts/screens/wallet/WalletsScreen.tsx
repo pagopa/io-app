@@ -111,13 +111,6 @@ class WalletsScreen extends React.Component<Props> {
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
           />
-          <FlatList
-            removeClippedSubviews={false}
-            data={this.props.wallets as any[]} // tslint:disable-line
-            renderItem={this.renderWallet}
-            keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
-            extraData={{ favoriteWallet }}
-          />
         </Content>
       </WalletLayout>
     );
