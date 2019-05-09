@@ -32,6 +32,12 @@ global:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
+  search:
+    invalidSearchBarText: Enter at least three characters in the search bar.
+  localNotifications:
+    spidLogin:
+      title: Remember to login to IO!
+      message: Login with your SPID identity on IO, the public services app
 locales:
   it: Italian
   en: English
@@ -457,6 +463,7 @@ saveCard:
   favoriteText: This payment method will be automatically proposed for the next payment
 cardComponent:
   validUntil: Valid until
+  expiredCard: CARD EXPIRED ON
   actions: Actions
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites
@@ -502,8 +509,6 @@ messages:
     helper: "IO will remember this choice, you can change it from the preference pane."
   unknownSender: Unknown sender
   noContent: Content not available
-  search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
   archive:
     emptyMessage:
       title: Your archive is empty.
@@ -512,6 +517,10 @@ messages:
     emptyMessage: 
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
+  deadlines:
+    emptyMessage: 
+      title: You haven't any scheduled deadline.
+      subtitle:  Pull down this page to check out past deadlines.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
