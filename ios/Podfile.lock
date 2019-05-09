@@ -40,8 +40,6 @@ PODS:
   - React/RCTCameraRoll (0.59.3):
     - React/Core
     - React/RCTImage
-  - React/RCTGeolocation (0.59.3):
-    - React/Core
   - React/RCTImage (0.59.3):
     - React/Core
     - React/RCTNetwork
@@ -91,7 +89,6 @@ DEPENDENCIES:
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
   - React/RCTCameraRoll (from `../node_modules/react-native`)
-  - React/RCTGeolocation (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTPushNotification (from `../node_modules/react-native`)
@@ -172,6 +169,6 @@ SPEC CHECKSUMS:
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 1a492113f66a35e9e583bb0434f4b8cc668dd839
 
-PODFILE CHECKSUM: e13dd0f5f428906e121ffa04f63d8b20f9054baa
+PODFILE CHECKSUM: 77b3090be684e5673461a6f6d7a5eafdc4659a35
 
 COCOAPODS: 1.6.1
