@@ -1,6 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
 import {
   FlatList,
@@ -10,10 +11,12 @@ import {
 } from "react-native";
 import Placeholder from "rn-placeholder";
 
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables from "../../theme/variables";
+import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { messageNeedsCTABar } from "../../utils/messages";
 import MessageListItem from "./MessageListItem";
 
@@ -176,12 +179,6 @@ const MessageListItemPlaceholder = (
   </View>
 );
 
-const MessageListItemError = (
-  <View style={styles.itemErrorContainer}>
-    <Text numberOfLines={1}>Error loading the message detail.</Text>
-  </View>
-);
-
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 class MessageList extends React.Component<Props, State> {
@@ -215,14 +212,6 @@ class MessageList extends React.Component<Props, State> {
 
     const potService = this.props.servicesById[meta.sender_service_id];
 
-    if (info.index === 0) {
-      return MessageListItemPlaceholder;
-    }
-
-    if (info.index === 1) {
-      return MessageListItemError;
-    }
-
     if (
       potService &&
       (pot.isLoading(potService) || pot.isLoading(potMessage))
@@ -230,14 +219,25 @@ class MessageList extends React.Component<Props, State> {
       return MessageListItemPlaceholder;
     }
 
-    if (pot.isNone(potMessage)) {
-      return MessageListItemError;
-    }
-
-    const message = potMessage.value;
+    const message = pot.isNone(potMessage)
+      ? ({
+          content: {
+            subject: I18n.t("messages.errorLoading.details")
+          }
+        } as MessageWithContentPO)
+      : potMessage.value;
 
     const service =
-      potService !== undefined ? pot.toUndefined(potService) : undefined;
+      potService !== undefined
+        ? pot.isNone(potService)
+          ? ({
+              // service_id: "1",
+              // service_name: "1",
+              organization_name: I18n.t("messages.errorLoading.senderService"),
+              department_name: I18n.t("messages.errorLoading.senderInfo")
+            } as ServicePublic)
+          : pot.toUndefined(potService)
+        : undefined;
 
     const payment =
       message.content.payment_data !== undefined && service !== undefined

@@ -479,6 +479,10 @@ messages:
   refresh: Pull down to refresh
   loading: Loading Messages...
   yesterday: yesterday
+  errorLoading:
+    details: Error loading message details
+    senderService:  Sender service unknown
+    senderInfo: Service info unknown
   cta:
     archive: Archive
     unarchive: Unarchive

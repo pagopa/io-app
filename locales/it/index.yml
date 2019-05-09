@@ -489,6 +489,10 @@ messages:
   refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
   yesterday: ieri
+  errorLoading:
+    details: Impossibile caricare i dettagli del messaggio
+    senderService:  Mittente sconosciuto
+    senderInfo: Info sul servizio mancanti
   cta:
     archive: Archivia
     unarchive: Disarchivia

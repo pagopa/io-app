@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { DateFromISOString } from "io-ts-types";
-import omitBy from "lodash/omitBy";
 import { CheckBox, Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, TouchableHighlight } from "react-native";
@@ -225,14 +224,6 @@ class MessageListItem extends React.PureComponent<Props> {
           )}
         </View>
       </TouchableHighlight>
-    );
-  }
-
-  public componentDidUpdate(prevProps: Props) {
-    // @ts-ignore
-    const changedProps = omitBy(
-      this.props,
-      (value, key: keyof Props) => prevProps[key] === value
     );
   }
 }
