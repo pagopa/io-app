@@ -175,15 +175,11 @@ export class MessageListItemComponent extends React.Component<Props> {
       </Placeholder.Line>
     );
 
-    // Try to convert createdAt to a human representation, fall back to original
-    // value if createdAt cannot be converted to a Date
     // TODO: get created_at from CreatedMessageWithoutContent to avoid waiting
     //       for the message to load
     const uiCreatedAt = pot.getOrElse(
       pot.map(message, m =>
-        DateFromISOString.decode(m.created_at.toISOString())
-          .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-          .getOrElse(m.created_at.toISOString())
+        convertDateToWordDistance(m.created_at, I18n.t("messages.yesterday"))
       ),
       ""
     );
