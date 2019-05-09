@@ -93,3 +93,6 @@ definitions
 
 # rn-nodeify
 shim.js
+
+# Google services definition
+android/app/google-services.json
