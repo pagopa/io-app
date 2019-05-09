@@ -3,6 +3,7 @@
  */
 import { call, Effect, put, select } from "redux-saga/effects";
 
+import { scheduleLocalNotificationsAccessSpid } from "../boot/scheduleLocalNotifications";
 import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
 import { GlobalState } from "../store/reducers/types";
@@ -25,5 +26,7 @@ export function* previousInstallationDataDeleteSaga(): IterableIterator<
     yield call(deletePin);
     // invalidate the session
     yield put(sessionInvalid());
+    // Schedule a set of local notifications
+    yield call(scheduleLocalNotificationsAccessSpid);
   }
 }

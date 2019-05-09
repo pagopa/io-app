@@ -231,7 +231,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   private renderInvalidSearchBarText = () => {
     return (
       <View style={styles.noSearchBarText}>
-        <Text>{I18n.t("messages.search.invalidSearchBarText")}</Text>
+        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
       </View>
     );
   };
