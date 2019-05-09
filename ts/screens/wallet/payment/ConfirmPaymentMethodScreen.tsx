@@ -19,10 +19,7 @@ import {
 } from "../../../components/helpers/withContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { WalletStyles } from "../../../components/styles/wallet";
-
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -47,6 +44,7 @@ import {
   runPollTransactionSaga
 } from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
+import variables from "../../../theme/variables";
 import {
   isCompletedTransaction,
   isSuccessTransaction,
@@ -80,11 +78,31 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center"
   },
+
   childTwice: {
     flex: 2
   },
+
   parent: {
     flexDirection: "row"
+  },
+
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  },
+
+  textRight: {
+    textAlign: "right"
+  },
+
+  divider: {
+    borderTopWidth: 1,
+    borderTopColor: variables.brandGray
+  },
+
+  textCenter: {
+    textAlign: "center"
   }
 });
 
@@ -134,7 +152,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             recipient={recipient || UNKNOWN_RECIPIENT}
             onCancel={this.props.onCancel}
           />
-          <View style={WalletStyles.paddedLR}>
+          <View style={styles.paddedLR}>
             <View spacer={true} extralarge={true} />
             <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
             <View spacer={true} />
@@ -144,7 +162,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Text>{I18n.t("wallet.ConfirmPayment.partialAmount")}</Text>
                 </Col>
                 <Col>
-                  <Text bold={true} style={WalletStyles.textRight}>
+                  <Text bold={true} style={styles.textRight}>
                     {formatNumberAmount(
                       AmountInEuroCentsFromNumber.encode(currentAmount)
                     )}
@@ -163,21 +181,21 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   </Col>
 
                   <Col size={1}>
-                    <Text bold={true} style={WalletStyles.textRight}>
+                    <Text bold={true} style={styles.textRight}>
                       {formatNumberAmount(maybeWalletFee.value)}
                     </Text>
                   </Col>
                 </Row>
               )}
               <View spacer={true} large={true} />
-              <Row style={WalletStyles.divider}>
+              <Row style={styles.divider}>
                 <Col>
                   <View spacer={true} large={true} />
                   <H1>{I18n.t("wallet.ConfirmPayment.totalAmount")}</H1>
                 </Col>
                 <Col>
                   <View spacer={true} large={true} />
-                  <H1 style={WalletStyles.textRight}>
+                  <H1 style={styles.textRight}>
                     {formatNumberAmount(totalAmount)}
                   </H1>
                 </Col>
@@ -197,7 +215,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col size={1} />
                 <Col size={9}>
                   <View spacer={true} large={true} />
-                  <Text style={WalletStyles.textCenter}>
+                  <Text style={styles.textCenter}>
                     {wallet.psp !== undefined
                       ? `${I18n.t("payment.currentPsp")} ${
                           wallet.psp.businessName
@@ -211,12 +229,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col size={1} />
               </Row>
-              <Row style={WalletStyles.divider}>
+              <Row style={styles.divider}>
                 <Col size={1} />
                 <Col size={9}>
                   <View spacer={true} />
 
-                  <Text style={WalletStyles.textCenter}>
+                  <Text style={styles.textCenter}>
                     {I18n.t("wallet.ConfirmPayment.info")}
                   </Text>
                   <View spacer={true} extralarge={true} />

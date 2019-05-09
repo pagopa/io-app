@@ -16,22 +16,6 @@ import MessageAgenda, { MessageAgendaSection } from "./MessageAgenda";
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
-  },
-
-  buttonBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    backgroundColor: "#ddd",
-    padding: 10,
-    opacity: 0.75
-  },
-  buttonBarButton: {
-    opacity: 1
   }
 });
 
