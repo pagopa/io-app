@@ -9,7 +9,6 @@ import {
   View
 } from "react-native";
 
-import { NavigationEvents } from "react-navigation";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
