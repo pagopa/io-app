@@ -5,14 +5,6 @@
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
-  <!-- START Required by react-native-push-notification -->
-  <!-->
-  <uses-permission android:name="android.permission.WAKE_LOCK" />
-  <permission android:name="it.teamdigitale.app.italiaapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-  <uses-permission android:name="it.teamdigitale.app.italiaapp.permission.C2D_MESSAGE" />
-  -->
-  <!-- END Required by react-native-push-notification -->
-
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
   <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -26,15 +18,6 @@
     <meta-data android:name="com.dieam.reactnativepushnotification.notification_channel_name" android:value="@string/notification_channel_name"/>
     <meta-data android:name="com.dieam.reactnativepushnotification.notification_channel_description" android:value="@string/notification_channel_description"/>
 
-    <!-->
-    <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
-      <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        <category android:name="it.teamdigitale.app.italiaapp" />
-      </intent-filter>
-    </receiver>
-    <-->
-
     <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
     <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
       <intent-filter>
@@ -42,14 +25,6 @@
       </intent-filter>
     </receiver>
     <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
-
-    <!-->
-    <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerServiceGcm" android:exported="false">
-      <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-      </intent-filter>
-    </service>
-    <-->
 
     <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService" android:exported="false">
       <intent-filter>
