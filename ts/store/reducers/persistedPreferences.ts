@@ -1,20 +1,29 @@
+/**
+ * A reducer for persisted preferences.
+ */
 import { Calendar } from "react-native-calendar-events";
-import { Action } from "../actions/types";
-
 import { isActionOf } from "typesafe-actions";
+
 import {
   preferenceFingerprintIsEnabledSaveSuccess,
-  preferredCalendarSaveSuccess
+  preferencesExperimentalFeaturesSetEnabled,
+  preferredCalendarSaveSuccess,
+  serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
+import { Action } from "../actions/types";
 
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
   preferredCalendar?: Calendar;
+  wasServiceAlertDisplayedOnce?: boolean;
+  isExperimentalFeaturesEnabled: boolean;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
-  preferredCalendar: undefined
+  preferredCalendar: undefined,
+  wasServiceAlertDisplayedOnce: false,
+  isExperimentalFeaturesEnabled: false
 };
 
 export default function preferencesReducer(
@@ -31,6 +40,18 @@ export default function preferencesReducer(
     return {
       ...state,
       preferredCalendar: action.payload.preferredCalendar
+    };
+  }
+  if (isActionOf(serviceAlertDisplayedOnceSuccess, action)) {
+    return {
+      ...state,
+      wasServiceAlertDisplayedOnce: action.payload.wasServiceAlertDisplayedOnce
+    };
+  }
+  if (isActionOf(preferencesExperimentalFeaturesSetEnabled, action)) {
+    return {
+      ...state,
+      isExperimentalFeaturesEnabled: action.payload
     };
   }
 

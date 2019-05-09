@@ -1,7 +1,8 @@
 import { format } from "date-fns";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
 import {
+  Image,
   SectionList,
   SectionListData,
   SectionListRenderItem,
@@ -23,6 +24,18 @@ const styles = StyleSheet.create({
   itemSeparator: {
     height: 1,
     backgroundColor: customVariables.brandLightGray
+  },
+  emptyListWrapper: {
+    padding: customVariables.contentPadding,
+    alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding
+  },
+  emptyListContentSubtitle: {
+    textAlign: "center",
+    paddingTop: customVariables.contentPadding,
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -44,6 +57,21 @@ type Props = {
   onPressItem: (id: string) => void;
 };
 
+const ListEmptyComponent = (
+  <View style={styles.emptyListWrapper}>
+    <View spacer={true} />
+    <Image
+      source={require("../../../img/messages/empty-due-date-list-icon.png")}
+    />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("messages.deadlines.emptyMessage.title")}
+    </Text>
+    <Text style={styles.emptyListContentSubtitle}>
+      {I18n.t("messages.deadlines.emptyMessage.subtitle")}
+    </Text>
+  </View>
+);
+
 /**
  * A component to render messages with due_date in a agenda like form.
  */
@@ -61,6 +89,7 @@ class MessageAgenda extends React.PureComponent<Props> {
         onRefresh={onRefresh}
         renderSectionHeader={this.renderSectionHeader}
         renderItem={this.renderItem}
+        ListEmptyComponent={ListEmptyComponent}
       />
     );
   }

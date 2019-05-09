@@ -11,6 +11,7 @@ type Props = {
 };
 
 const itemWidth = 10; // Radius of the indicators
+const noWidth = 0;
 const screenWidth = Dimensions.get("screen").width;
 
 const styles = StyleSheet.create({
@@ -21,16 +22,19 @@ const styles = StyleSheet.create({
     height: itemWidth,
     borderRadius: itemWidth / 2
   },
+
   bar: {
     backgroundColor: variables.brandPrimary,
     width: itemWidth,
     height: itemWidth
   },
+
   scrollView: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
   },
+
   barContainer: {
     zIndex: itemWidth,
     flexDirection: "row"
@@ -53,7 +57,7 @@ export const HorizontalScroll: React.SFC<Props> = props => {
         style={[
           styles.track,
           {
-            marginLeft: i === 0 ? 0 : itemWidth
+            marginLeft: i === 0 ? noWidth : itemWidth
           }
         ]}
       >

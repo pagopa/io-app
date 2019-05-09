@@ -12,7 +12,6 @@ import {
   AppStateStatus,
   FlatList,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet
 } from "react-native";
@@ -21,19 +20,16 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-
 import { LabelledItem } from "../../components/LabelledItem";
-import { WalletStyles } from "../../components/styles/wallet";
-import MaskedInput from "../../components/ui/MaskedInput";
-
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
+import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
@@ -67,15 +63,21 @@ const styles = StyleSheet.create({
   noBottomLine: {
     borderBottomWidth: 0
   },
+
   addCardImage: {
     width: 60,
     height: 45,
     resizeMode: "contain",
     marginTop: 5
   },
+
   verticalSpacing: {
     width: 16,
     flex: 0
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
   }
 });
 
@@ -109,6 +111,7 @@ function getCardFromState(state: State): Option<CreditCard> {
     // invalid pan
     return none;
   }
+
   if (
     !CreditCardExpirationMonth.is(expirationMonth) ||
     !CreditCardExpirationYear.is(expirationYear)
@@ -179,7 +182,6 @@ class AddCardScreen extends React.Component<Props, State> {
       };
       const maybeCard = getCardFromState(state);
       if (maybeCard.isSome()) {
-        Keyboard.dismiss();
         return {
           ...baseButtonProps,
           disabled: false,
@@ -217,7 +219,7 @@ class AddCardScreen extends React.Component<Props, State> {
       >
         <ScrollView
           bounces={false}
-          style={WalletStyles.whiteBg}
+          style={styles.whiteBg}
           keyboardShouldPersistTaps="handled"
         >
           <Content scrollEnabled={false}>
@@ -225,14 +227,16 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
+              isValid={
+                this.state.holder.getOrElse(EMPTY_CARD_HOLDER) === ""
+                  ? undefined
+                  : true
+              }
               inputProps={{
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
-                onChangeText: (value: string) =>
-                  this.setState({
-                    holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-                  })
+                onChangeText: (value: string) => this.updateHolderState(value)
               }}
             />
 
@@ -242,6 +246,7 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon="io-carta"
+              isValid={this.isValidPan()}
               inputMaskProps={{
                 ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
@@ -249,10 +254,9 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
-                onChangeText: (_, value) =>
-                  this.setState({
-                    pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
-                  })
+                onChangeText: (_, value) => {
+                  this.updatePanState(value);
+                }
               }}
             />
 
@@ -263,6 +267,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
+                  isValid={this.isValidExpirationDate()}
                   inputMaskProps={{
                     ref: this.expirationDateRef,
                     value: this.state.expirationDate.getOrElse(
@@ -274,12 +279,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     keyboardType: "numeric",
                     mask: "[00]{/}[00]",
                     onChangeText: (_, value) =>
-                      this.setState({
-                        expirationDate:
-                          value && value !== EMPTY_CARD_EXPIRATION_DATE
-                            ? some(value)
-                            : none
-                      })
+                      this.updateExpirationDateState(value)
                   }}
                 />
               </Col>
@@ -289,6 +289,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
                   icon="io-lucchetto"
+                  isValid={this.isValidSecurityCode()}
                   inputMaskProps={{
                     ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
@@ -300,12 +301,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     secureTextEntry: true,
                     mask: "[0009]",
                     onChangeText: (_, value) =>
-                      this.setState({
-                        securityCode:
-                          value && value !== EMPTY_CARD_SECURITY_CODE
-                            ? some(value)
-                            : none
-                      })
+                      this.updateSecurityCodeState(value)
                   }}
                 />
               </Col>
@@ -339,6 +335,60 @@ class AddCardScreen extends React.Component<Props, State> {
         />
       </BaseScreenComponent>
     );
+  }
+
+  private isValidPan() {
+    return this.state.pan
+      .map(pan => {
+        return CreditCardPan.is(pan);
+      })
+      .toUndefined();
+  }
+
+  private isValidExpirationDate() {
+    return this.state.expirationDate
+      .map(expirationDate => {
+        const [expirationMonth, expirationYear] = expirationDate.split("/");
+        return (
+          CreditCardExpirationMonth.is(expirationMonth) &&
+          CreditCardExpirationYear.is(expirationYear)
+        );
+      })
+      .toUndefined();
+  }
+
+  private isValidSecurityCode() {
+    return this.state.securityCode
+      .map(securityCode => {
+        return CreditCardCVC.is(securityCode);
+      })
+      .toUndefined();
+  }
+
+  private updateHolderState(value: string) {
+    this.setState({
+      holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
+    });
+  }
+
+  private updatePanState(value: string) {
+    this.setState({
+      pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
+    });
+  }
+
+  private updateExpirationDateState(value: string) {
+    this.setState({
+      expirationDate:
+        value && value !== EMPTY_CARD_EXPIRATION_DATE ? some(value) : none
+    });
+  }
+
+  private updateSecurityCodeState(value: string) {
+    this.setState({
+      securityCode:
+        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
+    });
   }
 
   private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {

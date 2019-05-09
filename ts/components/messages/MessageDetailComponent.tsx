@@ -51,6 +51,15 @@ const styles = StyleSheet.create({
   webview: {
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding
+  },
+
+  serviceCol: {
+    width: 60
+  },
+
+  serviceMultiImage: {
+    width: 60,
+    height: 60
   }
 });
 
@@ -72,10 +81,10 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                   {service.value.service_name}
                 </H6>
               </Col>
-              <Col style={{ width: 60 }}>
+              <Col style={styles.serviceCol}>
                 <TouchableOpacity onPress={onServiceLinkPress}>
                   <MultiImage
-                    style={{ width: 60, height: 60 }}
+                    style={styles.serviceMultiImage}
                     source={logosForService(service.value)}
                   />
                 </TouchableOpacity>

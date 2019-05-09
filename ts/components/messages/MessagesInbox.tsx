@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
@@ -35,6 +35,18 @@ const styles = StyleSheet.create({
   },
   buttonBarSecondaryButton: {
     flex: 4
+  },
+  emptyListWrapper: {
+    padding: customVariables.contentPadding,
+    alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding
+  },
+  emptyListContentSubtitle: {
+    textAlign: "center",
+    paddingTop: customVariables.contentPadding,
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -73,6 +85,21 @@ const generateMessagesStateNotArchivedArray = (
     ),
     []
   );
+
+const ListEmptyComponent = (
+  <View style={styles.emptyListWrapper}>
+    <View spacer={true} />
+    <Image
+      source={require("../../../img/messages/empty-message-list-icon.png")}
+    />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("messages.inbox.emptyMessage.title")}
+    </Text>
+    <Text style={styles.emptyListContentSubtitle}>
+      {I18n.t("messages.inbox.emptyMessage.subtitle")}
+    </Text>
+  </View>
+);
 
 /**
  * A component to render a list of visible (not yet archived) messages.
@@ -146,6 +173,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
           onLongPressItem={this.handleOnLongPressItem}
           refreshing={isLoading}
           selectedMessageIds={selectedMessageIds}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </View>
     );
