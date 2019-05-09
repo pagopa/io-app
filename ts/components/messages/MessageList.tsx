@@ -47,7 +47,6 @@ type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
 };
 
-const ITEM_ERROR_HEIGHT = 56;
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
 const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
 const ITEM_WITH_CTABAR_HEIGHT = 158;
@@ -59,12 +58,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: customVariables.contentPadding,
     flex: 1
-  },
-
-  itemErrorContainer: {
-    height: ITEM_ERROR_HEIGHT,
-    paddingVertical: 16,
-    paddingHorizontal: customVariables.contentPadding
   },
 
   itemWithoutCTABarContainer: {
@@ -115,13 +108,9 @@ const getItemHeight = (messageState: MessageState): number => {
     return ITEM_LOADING_HEIGHT;
   }
 
-  if (pot.isSome(message)) {
-    return messageNeedsCTABar(message.value)
-      ? ITEM_WITH_CTABAR_HEIGHT
-      : ITEM_WITHOUT_CTABAR_HEIGHT;
-  }
-
-  return ITEM_ERROR_HEIGHT;
+  return pot.isSome(message) && messageNeedsCTABar(message.value)
+    ? ITEM_WITH_CTABAR_HEIGHT
+    : ITEM_WITHOUT_CTABAR_HEIGHT;
 };
 
 const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
@@ -231,8 +220,6 @@ class MessageList extends React.Component<Props, State> {
       potService !== undefined
         ? pot.isNone(potService)
           ? ({
-              // service_id: "1",
-              // service_name: "1",
               organization_name: I18n.t("messages.errorLoading.senderService"),
               department_name: I18n.t("messages.errorLoading.senderInfo")
             } as ServicePublic)
