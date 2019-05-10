@@ -20,6 +20,7 @@ global:
     retry: Riprova
     back: Indietro
     confirm: Conferma
+    close: Chiudi
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -380,6 +381,8 @@ wallet:
     updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     moreInfo: Per saperne di più
+  errorTransaction:
+    submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
     title: Inserisci i dati dell'avviso

@@ -67,7 +67,7 @@ export type NavigationParams = Readonly<{
 }>;
 
 type ReduxMergedProps = Readonly<{
-  onRetry?: () => void;
+  onRetry: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -362,7 +362,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         | typeof paymentIdPolling["failure"]
       >
     >,
-    onRetry?: () => void
+    onRetry: () => void
   ) =>
     dispatch(
       navigateToPaymentTransactionErrorScreen({

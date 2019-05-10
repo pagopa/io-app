@@ -3,11 +3,11 @@ import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
-import ErrorTransactionScreen from "../screens/wallet/payment/ErrorTransactionScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
+import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
@@ -52,7 +52,7 @@ const WalletNavigator = createStackNavigator(
       screen: TransactionSummaryScreen
     },
     [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
-      screen: ErrorTransactionScreen
+      screen: TransactionErrorScreen
     },
     [ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD]: {
       screen: ConfirmPaymentMethodScreen

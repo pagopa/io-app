@@ -19,6 +19,7 @@ global:
     retry: Retry
     back: Back
     confirm: Confirm
+    close: Close
   navigator:
     messages: messages
     wallet: wallet
@@ -379,6 +380,8 @@ wallet:
     entityCode: Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
+  errorTransaction:
+    submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
   total: Total
   payAmount: Amount to pay
