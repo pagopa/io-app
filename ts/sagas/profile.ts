@@ -4,11 +4,9 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UpsertProfileT } from "../../definitions/backend/requestTypes";
 import { UserProfileUnion } from "../api/backend";
 
 import I18n from "../i18n";
@@ -129,7 +127,9 @@ function* createOrUpdateProfileSaga(
 
 // This function listens for Profile related requests and calls the needed saga.
 export function* watchProfileUpsertRequestsSaga(
-  createOrUpdateProfile: TypeofApiCall<UpsertProfileT>
+  createOrUpdateProfile: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateProfile"]
 ): Iterator<Effect> {
   yield takeLatest(
     getType(profileUpsert.request),
