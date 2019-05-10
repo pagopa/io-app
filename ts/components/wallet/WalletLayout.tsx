@@ -57,7 +57,7 @@ type Props = Readonly<{
   onNewPaymentPress?: () => void;
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
-  backgroundColor?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
@@ -88,8 +88,8 @@ export default class WalletLayout extends React.Component<Props> {
         <ScrollView
           bounces={false}
           style={
-            this.props.backgroundColor
-              ? this.props.backgroundColor
+            this.props.contentStyle
+              ? this.props.contentStyle
               : styles.whiteBg
           }
           ref={this.WalletLayoutRef}
