@@ -10,7 +10,7 @@ import {
 } from "typesafe-actions";
 
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
-import { detailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
+import { DetailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
 

@@ -249,7 +249,10 @@ export function BackendClient(
       token,
       createFetchRequestForApi(getVisibleServicesT, options)
     ),
-    getMessages: createFetchRequestForApi(getMessagesT, options),
+    getMessages: withBearerToken(
+      token,
+      createFetchRequestForApi(getMessagesT, options)
+    ),
     getMessage: withBearerToken(
       token,
       createFetchRequestForApi(getMessageT, options)
@@ -262,11 +265,11 @@ export function BackendClient(
       token,
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
-    createOrUpdateInstallation: createFetchRequestForApi(
-      createOrUpdateInstallationT,
-      options
+    createOrUpdateInstallation: withBearerToken(
+      token,
+      createFetchRequestForApi(createOrUpdateInstallationT, options)
     ),
-    logout: createFetchRequestForApi(logoutT, options),
+    logout: withBearerToken(token, createFetchRequestForApi(logoutT, options)),
     getVerificaRpt: createFetchRequestForApi(verificaRptT, options),
     postAttivaRpt: createFetchRequestForApi(attivaRptT, options),
     getPaymentId: createFetchRequestForApi(getPaymentIdT, options)

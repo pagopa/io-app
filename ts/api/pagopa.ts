@@ -320,7 +320,10 @@ export function PaymentManagerClient(
       wt: string // wallet token
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
     getWallets: (pagoPaToken: PaymentManagerToken) =>
-      createFetchRequestForApi(getWallets(pagoPaToken), options),
+      withBearerToken(
+        walletToken,
+        createFetchRequestForApi(getWallets(pagoPaToken), options)
+      ),
     getTransactions: (pagoPaToken: PaymentManagerToken) =>
       withBearerToken(
         walletToken,
@@ -330,10 +333,10 @@ export function PaymentManagerClient(
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<GetTransactionUsingGETT>["id"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(getTransaction(pagoPaToken), options)
-      ),
+      //      withBearerToken(
+      //        walletToken,
+      createFetchRequestForApi(getTransaction(pagoPaToken), options),
+    //      ),
     checkPayment: (
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]

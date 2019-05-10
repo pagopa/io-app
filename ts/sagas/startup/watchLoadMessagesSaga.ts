@@ -18,7 +18,9 @@ import {
   take
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { BackendClient } from "../../api/backend";
 
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { GetUserMessagesT } from "../../../definitions/backend/requestTypes";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
@@ -40,7 +42,7 @@ import { uniqueItem } from "../../utils/enumerables";
  * only the details of the messages and services not already in the redux store.
  */
 export function* loadMessages(
-  getMessages: TypeofApiCall<GetUserMessagesT>
+  getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): IterableIterator<Effect> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
@@ -61,62 +63,60 @@ export function* loadMessages(
       {}
     );
 
-    if (response && response.status === 401) {
-      // on 401, expire the current session and restart the authentication flow
-      yield put(sessionExpired());
-      return;
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
     }
 
-    /**
-     * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
-     */
-    if (!response || response.status !== 200) {
-      // TODO: provide status code along with message in error
-      const error =
-        response && response.status === 500 ? response.value.title : undefined;
-
-      // Dispatch failure action
-      yield put(loadMessagesAction.failure(error || ""));
-    } else {
-      yield put(
-        loadMessagesAction.success(response.value.items.map(_ => _.id))
-      );
-
-      // The Backend returns the items from the oldest to the latest
-      // but we want to process them from latest to oldest so we
-      // reverse the order.
-      const reversedItems = [...response.value.items].reverse();
-
-      const shouldLoadMessage = (message: { id: string }) => {
-        const cached = cachedMessagesById[message.id];
-        return (
-          cached === undefined ||
-          pot.isNone(cached.message) ||
-          pot.isError(cached.message)
+    if (response.isRight()) {
+      if (response.value.status === 401) {
+        // on 401, expire the current session and restart the authentication flow
+        yield put(sessionExpired());
+        return;
+      } else if (response.value.status !== 200) {
+        // TODO: provide status code along with message in error
+        const error = response.value.value.title || undefined;
+        yield put(loadMessagesAction.failure(error || ""));
+      } else {
+        // 200
+        yield put(
+          loadMessagesAction.success(response.value.value.items.map(_ => _.id))
         );
-      };
+        // The Backend returns the items from the oldest to the latest
+        // but we want to process them from latest to oldest so we
+        // reverse the order.
+        const reversedItems = [...response.value.value.items].reverse();
 
-      // Filter messages already in the store
-      const pendingMessages = reversedItems.filter(shouldLoadMessage);
+        const shouldLoadMessage = (message: { id: string }) => {
+          const cached = cachedMessagesById[message.id];
+          return (
+            cached === undefined ||
+            pot.isNone(cached.message) ||
+            pot.isError(cached.message)
+          );
+        };
 
-      const shouldLoadService = (id: string) =>
-        cachedServicesById[id] === undefined;
+        // Filter messages already in the store
+        const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
-      // Filter services already in the store
-      const pendingServicesIds = pendingMessages
-        .map(_ => _.sender_service_id)
-        .filter(shouldLoadService)
-        .filter(uniqueItem); // Get unique ids
+        const shouldLoadService = (id: string) =>
+          cachedServicesById[id] === undefined;
 
-      // Fetch the services detail in parallel
-      // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
-      // We fetch services first because to show messages you need the related service info
-      yield all(pendingServicesIds.map(id => put(loadService.request(id))));
+        // Filter services already in the store
+        const pendingServicesIds = pendingMessages
+          .map(_ => _.sender_service_id)
+          .filter(shouldLoadService)
+          .filter(uniqueItem); // Get unique ids
 
-      // Fetch the messages detail in parallel
-      // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
-      // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
-      yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
+        // Fetch the services detail in parallel
+        // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
+        // We fetch services first because to show messages you need the related service info
+        yield all(pendingServicesIds.map(id => put(loadService.request(id))));
+
+        // Fetch the messages detail in parallel
+        // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
+        // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
+        yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
+      }
     }
   } catch (error) {
     // Dispatch failure action
@@ -136,7 +136,7 @@ export function* loadMessages(
  * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
  */
 export function* watchMessagesLoadOrCancelSaga(
-  getMessages: TypeofApiCall<GetUserMessagesT>
+  getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): IterableIterator<Effect> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line:no-let

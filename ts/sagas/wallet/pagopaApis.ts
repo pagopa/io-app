@@ -105,6 +105,7 @@ export function* fetchTransactionRequestHandler(
 ): Iterator<Effect> {
   const getTransaction = (pagoPaToken: PaymentManagerToken) =>
     pagoPaClient.getTransaction(pagoPaToken, action.payload);
+
   const request = pmSessionManager.withRefresh(getTransaction);
   try {
     const response: SagaCallReturnType<typeof request> | undefined = yield call(
@@ -139,8 +140,8 @@ export function* setFavouriteWalletRequestHandler(
   const request = pmSessionManager.withRefresh(setFavouriteWallet);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
-    if (response !== undefined && response.status === 200) {
-      yield put(setFavouriteWalletSuccess(response.value.data));
+    if (response.isRight() && response.value.status === 200) {
+      yield put(setFavouriteWalletSuccess(response.value.value.data));
     } else {
       throw Error();
     }
@@ -290,16 +291,19 @@ export function* addWalletCreditCardRequestHandler(
       typeof boardCreditCardWithRefresh
     > = yield call(boardCreditCardWithRefresh);
 
-    if (response !== undefined && response.status === 200) {
-      yield put(addWalletCreditCardSuccess(response.value));
-    } else if (
-      response !== undefined &&
-      response.status === 422 &&
-      response.value.message === "creditcard.already_exists"
-    ) {
-      yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(addWalletCreditCardSuccess(response.value.value));
+      } else if (
+        response.value.status === 422 &&
+        response.value.value.message === "creditcard.already_exists"
+      ) {
+        yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+      } else {
+        throw Error();
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(addWalletCreditCardFailure("GENERIC_ERROR"));
@@ -326,10 +330,10 @@ export function* payCreditCardVerificationRequestHandler(
       boardPayWithRefresh
     );
 
-    if (response !== undefined && response.status === 200) {
-      yield put(payCreditCardVerificationSuccess(response.value));
+    if (response.isRight() && response.value.status === 200) {
+      yield put(payCreditCardVerificationSuccess(response.value.value));
     } else {
-      throw Error();
+      throw Error(response.isLeft() ? readableReport(response.value) : "");
     }
   } catch {
     yield put(payCreditCardVerificationFailure(Error("GENERIC_ERROR")));
@@ -355,16 +359,18 @@ export function* paymentFetchPspsForWalletRequestHandler(
     const response: SagaCallReturnType<
       typeof getPspListWithRefresh
     > = yield call(getPspListWithRefresh);
-    if (response !== undefined && response.status === 200) {
-      const successAction = paymentFetchPspsForPaymentId.success(
-        response.value.data
-      );
-      yield put(successAction);
-      if (action.payload.onSuccess) {
-        action.payload.onSuccess(successAction);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const successAction = paymentFetchPspsForPaymentId.success(
+          response.value.value.data
+        );
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
+        }
       }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     const failureAction = paymentFetchPspsForPaymentId.failure(
@@ -395,16 +401,20 @@ export function* paymentCheckRequestHandler(
     const response: SagaCallReturnType<
       typeof checkPaymentWithRefresh
     > = yield call(checkPaymentWithRefresh);
-    if (
-      response !== undefined &&
-      (response.status === 200 || (response.status as number) === 422)
-    ) {
-      // TODO: remove the cast of response.status to number as soon as the
-      //       paymentmanager specs include the 422 status.
-      //       https://www.pivotaltracker.com/story/show/161053093
-      yield put(paymentCheck.success(true));
+    if (response.isRight()) {
+      if (
+        response.value.status === 200 ||
+        (response.value.status as number) === 422
+      ) {
+        // TODO: remove the cast of response.status to number as soon as the
+        //       paymentmanager specs include the 422 status.
+        //       https://www.pivotaltracker.com/story/show/161053093
+        yield put(paymentCheck.success(true));
+      } else {
+        yield put(paymentCheck.failure(response.value));
+      }
     } else {
-      yield put(paymentCheck.failure(response));
+      yield put(paymentCheck.failure(undefined));
     }
   } catch {
     yield put(paymentCheck.failure(undefined));
