@@ -12,7 +12,6 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { none } from "fp-ts/lib/Option";
-import { WalletStyles } from "../../components/styles/wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
@@ -33,6 +32,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 
 type OwnProps = Readonly<{
@@ -48,14 +48,28 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between"
   },
+
   inLineSpace: {
     lineHeight: 20
   },
-  refreshBox: {
-    height: 100,
+
+  white: {
+    color: variables.colorWhite
+  },
+
+  container: {
     flex: 1,
-    alignContent: "center",
-    justifyContent: "center"
+    alignItems: "flex-start",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+
+  bordercColorBrandGray: {
+    borderColor: variables.brandGray
+  },
+
+  colorBrandGray: {
+    color: variables.brandGray
   }
 });
 
@@ -66,7 +80,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private header() {
     return (
       <Row style={styles.flex}>
-        <H1 style={WalletStyles.white}>{I18n.t("wallet.wallet")}</H1>
+        <H1 style={styles.white}>{I18n.t("wallet.wallet")}</H1>
         <Image source={require("../../../img/wallet/bank.png")} />
       </Row>
     );
@@ -79,7 +93,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <View spacer={true} />
         <Row>
           <Left>
-            <Text bold={true} style={WalletStyles.white}>
+            <Text bold={true} white={true}>
               {I18n.t("wallet.paymentMethods")}
             </Text>
           </Left>
@@ -99,7 +113,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         {this.header()}
         <View spacer={true} />
         <Row>
-          <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+          <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
           </Text>
         </Row>
@@ -107,14 +121,14 @@ class WalletHomeScreen extends React.Component<Props, never> {
           <View spacer={true} />
         </Row>
         <Row>
-          <View style={WalletStyles.container}>
+          <View style={styles.container}>
             <Button
               bordered={true}
               block={true}
-              style={WalletStyles.addPaymentMethodButton}
+              style={styles.bordercColorBrandGray}
               onPress={this.props.navigateToWalletAddPaymentMethod}
             >
-              <Text style={WalletStyles.addPaymentMethodText}>
+              <Text bold={true} style={styles.colorBrandGray}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
               </Text>
             </Button>
@@ -134,7 +148,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <View spacer={true} />
         <BoxedRefreshIndicator
           caption={
-            <Text style={[WalletStyles.white, styles.inLineSpace]}>
+            <Text white={true} style={styles.inLineSpace}>
               {I18n.t("wallet.walletLoadMessage")}
             </Text>
           }
@@ -148,12 +162,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <View>
         {this.header()}
         <View spacer={true} />
-        <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+        <Text note={true} white={true} style={styles.inLineSpace}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
         <View spacer={true} />
         <Button block={true} danger={true} onPress={this.props.loadWallets}>
-          <Text style={WalletStyles.addPaymentMethodText}>
+          <Text style={styles.colorBrandGray}>
             {I18n.t("global.buttons.retry")}
           </Text>
         </Button>
@@ -206,7 +220,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         {pot.isError(potTransactions) ? (
           <React.Fragment>
             <View spacer={true} />
-            <Text note={true} style={[WalletStyles.white, styles.inLineSpace]}>
+            <Text note={true} white={true} style={styles.inLineSpace}>
               {I18n.t("wallet.transactionsLoadFailure")}
             </Text>
             <Button

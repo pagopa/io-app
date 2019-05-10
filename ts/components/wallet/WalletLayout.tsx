@@ -25,7 +25,6 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
-import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
 
@@ -33,8 +32,22 @@ const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
+
   noalias: {
     marginRight: 0
+  },
+
+  white: {
+    color: variables.colorWhite
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  },
+
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
   }
 });
 
@@ -84,13 +97,13 @@ export default class WalletLayout extends React.Component<Props> {
 
         <ScrollView
           bounces={false}
-          style={WalletStyles.whiteBg}
+          style={styles.whiteBg}
           ref={this.WalletLayoutRef}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <Content
             scrollEnabled={false}
-            style={[styles.darkGrayBg, WalletStyles.noBottomPadding]}
+            style={[styles.darkGrayBg, styles.noBottomPadding]}
           >
             {this.props.headerContents}
             {this.props.displayedWallets}

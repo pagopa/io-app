@@ -33,6 +33,12 @@ global:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
+  search:
+    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+  localNotifications:
+    spidLogin:
+      title: Ricordati di accedere ad IO!
+      message: Accedi con la tua identità SPID su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese
@@ -470,6 +476,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
   unsetFavourite: Rimuovi dai preferiti
@@ -515,8 +522,6 @@ messages:
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
-  search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
   archive:
     emptyMessage:
       title: Il tuo archivio è vuoto.

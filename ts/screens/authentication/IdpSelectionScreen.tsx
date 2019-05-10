@@ -111,14 +111,6 @@ const testIdp = {
 const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps;
 
 const styles = StyleSheet.create({
-  spidLogo: {
-    width: 80,
-    height: 30
-  },
-  subheader: {
-    backgroundColor: "#FFFFFF",
-    padding: 24
-  },
   gridContainer: {
     padding: variables.contentPadding,
     flex: 1,

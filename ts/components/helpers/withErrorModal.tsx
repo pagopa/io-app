@@ -33,10 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: variables.brandDarkGray
   },
 
-  buttonCancelText: {
-    color: variables.colorWhite
-  },
-
   separator: {
     width: 10
   },
@@ -102,9 +98,7 @@ export function withErrorModal<
             light={true}
             block={true}
           >
-            <Text style={styles.buttonCancelText}>
-              {I18n.t("global.buttons.cancel")}
-            </Text>
+            <Text white={true}>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
           {this.props.onRetry && <View style={styles.separator} />}
           {this.props.onRetry && (
