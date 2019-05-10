@@ -1,14 +1,16 @@
 import * as React from "react";
-import { connect } from "react-redux";
-
 import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
+import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 
 import { Linking, Platform, Switch, View } from "react-native";
 
 import { Button, Text } from "native-base";
+import TouchID, { AuthenticationError } from "react-native-touch-id";
 
 import AndroidOpenSettings from "react-native-android-open-settings";
 import I18n from "../../i18n";
+import { showToast } from "../../utils/showToast";
 
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
@@ -17,6 +19,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
+import { authenticateConfig } from "../../utils/biometric";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -74,6 +77,25 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
     }
   };
 
+  private setBiometricPreference = (biometricPreference: boolean): void => {
+    if (biometricPreference) {
+      // if user asks to enable biometric then call enable action directly
+      this.props.setFingerprintPreference(biometricPreference);
+      return;
+    }
+    // if user asks to disable biometric recnognition is required to proceed
+    TouchID.authenticate(
+      I18n.t("identification.biometric.popup.reason"),
+      authenticateConfig
+    )
+      .then(() => this.props.setFingerprintPreference(biometricPreference))
+      .catch((_: AuthenticationError) =>
+        // this toast will be show either if recognition fails (mismatch or user aborts)
+        // or if meanwhile user disables biometric recognition in OS settings
+        showToast(I18n.t("biometric_recognition.needed_to_disable"), "danger")
+      );
+  };
+
   public render() {
     const { isFingerprintAvailable } = this.state;
 
@@ -101,7 +123,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           <Text>{I18n.t("biometric_recognition.switchLabel")}</Text>
           <Switch
             value={this.props.isFingerprintEnabled}
-            onValueChange={this.props.setFingerprintPreference}
+            onValueChange={this.setBiometricPreference}
             disabled={!isFingerprintAvailable}
           />
         </View>
@@ -138,7 +160,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: fingerprintPreference
       })
-    )
+    ),
+  fingerprintAcknowledgeRequest: () =>
+    dispatch(fingerprintAcknowledge.request())
 });
 
 export default connect(
