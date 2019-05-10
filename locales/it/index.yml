@@ -476,6 +476,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
   unsetFavourite: Rimuovi dai preferiti

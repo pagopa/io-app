@@ -173,6 +173,10 @@ jobs:
           name: Bundle Install
           command: bundle check || bundle install
 
+      # Recreate google-services.json from ENV variable
+      - run:
+          command: ./scripts/google-services-json-file-setup.sh ./android/app
+
       # Recreate JSON key file (for Google Play) from ENV variable
       - run:
           command: ./scripts/json-key-file-setup.sh
@@ -227,6 +231,10 @@ jobs:
       - run:
           name: Bundle Install
           command: bundle check || bundle install
+
+      # Recreate google-services.json from ENV variable
+      - run:
+          command: ./scripts/google-services-json-file-setup.sh ./android/app
 
       # Recreate JSON key file (for Google Play) from ENV variable
       - run:
