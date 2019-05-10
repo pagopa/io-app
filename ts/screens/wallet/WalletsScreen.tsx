@@ -101,7 +101,7 @@ class WalletsScreen extends React.Component<Props> {
         title={I18n.t("wallet.paymentMethods")}
         headerContents={headerContents}
         allowGoBack={true}
-        backgroundColor={styles.brandDarkGrayBg}
+        contentStyle={styles.brandDarkGrayBg}
       >
         <Content style={[styles.padded, styles.brandDarkGrayBg]}>
           <FlatList
