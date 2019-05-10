@@ -1,4 +1,6 @@
+import { isLeft } from "fp-ts/lib/Either";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -427,8 +429,8 @@ export function* paymentExecutePaymentRequestHandler(
       typeof postPaymentWithRefresh
     > = yield call(postPaymentWithRefresh);
 
-    if (response !== undefined && response.status === 200) {
-      const newTransaction = response.value.data;
+    if (response && response.isRight() && response.value.status === 200) {
+      const newTransaction = response.value.value.data;
       const successAction = paymentExecutePayment.success(newTransaction);
       yield put(successAction);
       if (action.payload.onSuccess) {
@@ -456,10 +458,14 @@ export function* paymentDeletePaymentRequestHandler(
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
 
-    if (response && response.status === 200) {
+    if (response.isRight() && response.value.status === 200) {
       yield put(paymentDeletePayment.success());
     } else {
-      throw Error();
+      if (response.isLeft()) {
+        throw Error(readableReport(response.value));
+      } else {
+        throw Error();
+      }
     }
   } catch {
     yield put(paymentDeletePayment.failure());
@@ -481,19 +487,21 @@ export function* paymentVerificaRequestHandler(
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
       {
-        rptId: RptIdFromString.encode(action.payload)
+        rptId: RptIdFromString.encode(action.payload),
+        Bearer: ""
       }
     );
-    if (response !== undefined && response.status === 200) {
-      // Verifica succeeded
-      yield put(paymentVerifica.success(response.value));
-    } else if (response !== undefined && response.status === 500) {
-      // Verifica failed with a 500, that usually means there was an error
-      // interacting with Pagopa that we can interpret
-      yield put(paymentVerifica.failure(response.value.detail));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        // Verifica succeeded
+        yield put(paymentVerifica.success(response.value.value));
+      } else if (response.value.status === 500) {
+        // Verifica failed with a 500, that usually means there was an error
+        // interacting with Pagopa that we can interpret
+        yield put(paymentVerifica.failure(response.value.value.detail));
+      }
     } else {
-      // unknown error
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     // Probably a timeout
@@ -518,17 +526,20 @@ export function* paymentAttivaRequestHandler(
             action.payload.verifica.codiceContestoPagamento,
           importoSingoloVersamento:
             action.payload.verifica.importoSingoloVersamento
-        }
+        },
+        Bearer: ""
       }
     );
-    if (response !== undefined && response.status === 200) {
-      // Attiva succeeded
-      yield put(paymentAttiva.success(response.value));
-    } else if (response !== undefined && response.status === 500) {
-      // Attiva failed
-      yield put(paymentAttiva.failure(response.value.detail));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        // Attiva succeeded
+        yield put(paymentAttiva.success(response.value.value));
+      } else if (response.value.status === 500) {
+        // Attiva failed
+        yield put(paymentAttiva.failure(response.value.value.detail));
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     // Probably a timeout
@@ -552,17 +563,20 @@ export function* paymentIdPollingRequestHandler(
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
-        codiceContestoPagamento: action.payload.codiceContestoPagamento
+        codiceContestoPagamento: action.payload.codiceContestoPagamento,
+        Bearer: ""
       }
     );
-    if (response !== undefined && response.status === 200) {
+    if (response.isRight()) {
       // Attiva succeeded
-      yield put(paymentIdPolling.success(response.value.idPagamento));
-    } else if (response !== undefined && response.status === 400) {
-      // Attiva failed
-      yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
+      if (response.value.status === 200) {
+        yield put(paymentIdPolling.success(response.value.value.idPagamento));
+      } else if (response.value.status === 400) {
+        // Attiva failed
+        yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(paymentIdPolling.failure(undefined));
