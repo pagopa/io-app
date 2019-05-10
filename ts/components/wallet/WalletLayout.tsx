@@ -88,9 +88,7 @@ export default class WalletLayout extends React.Component<Props> {
         <ScrollView
           bounces={false}
           style={
-            this.props.contentStyle
-              ? this.props.contentStyle
-              : styles.whiteBg
+            this.props.contentStyle ? this.props.contentStyle : styles.whiteBg
           }
           ref={this.WalletLayoutRef}
         >
