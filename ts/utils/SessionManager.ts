@@ -3,7 +3,6 @@
 import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { IResponseType } from "italia-ts-commons/lib/requests";
 import { delay } from "redux-saga";
 
 /**

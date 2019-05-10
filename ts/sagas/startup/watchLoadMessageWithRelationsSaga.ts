@@ -1,10 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Effect } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-
-import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
+import { BackendClient } from "../../api/backend";
 import I18n from "../../i18n";
 import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
@@ -17,7 +15,7 @@ import { loadMessage } from "../messages/messages";
  * Load message with related entities (ex. the sender service).
  */
 export function* loadMessageWithRelationsSaga(
-  getMessage: TypeofApiCall<GetUserMessageT>,
+  getMessage: ReturnType<typeof BackendClient>["getMessage"],
   messageWithRelationsLoadRequest: ActionType<
     typeof loadMessageWithRelations["request"]
   >
