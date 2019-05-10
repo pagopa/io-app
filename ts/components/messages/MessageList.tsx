@@ -11,12 +11,13 @@ import {
 } from "react-native";
 import Placeholder from "rn-placeholder";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { messageNeedsCTABar } from "../../utils/messages";
 import MessageListItem from "./MessageListItem";
 
@@ -210,13 +211,18 @@ class MessageList extends React.Component<Props, State> {
       return MessageListItemPlaceholder;
     }
 
+    // Error messages have the same charateristics of normal messages.
+    // The idea is to fill data with error strings to have it printed as shown
+    // in mockups.
     const message = pot.isNone(potMessage)
-      ? ({
-          id: meta.id,
-          content: {
-            subject: I18n.t("messages.errorLoading.details")
-          }
-        } as MessageWithContentPO)
+      ? toMessageWithContentPO({
+          ...meta,
+          created_at: new Date(meta.created_at),
+          content: { subject: I18n.t("messages.errorLoading.details") }
+          // CreatedMessageWithContent cast is needed because of the lack of
+          // "markdown" required property. It is not passed because it's not
+          // needed for giving feedback in the messsage list
+        } as CreatedMessageWithContent)
       : potMessage.value;
 
     const service =
