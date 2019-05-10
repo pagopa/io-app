@@ -151,6 +151,7 @@ const MessageListItemPlaceholder = (
           width="100%"
           firstLineWidth="100%"
           lastLineWidth="55%"
+          animate="shine"
           onReady={false}
         />
       </View>
@@ -162,6 +163,7 @@ const MessageListItemPlaceholder = (
           textSize={customVariables.fontSizeBase}
           color={customVariables.shineColor}
           width="75%"
+          animate="shine"
         />
       </View>
     </View>
