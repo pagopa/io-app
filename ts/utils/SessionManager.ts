@@ -60,7 +60,7 @@ export class SessionManager<T> {
    * the first one, the token, that gets provided by the interal logic.
    */
   public withRefresh<R>(
-    f: Function1<T, Promise<IResponseType<401, any> | undefined | R>>
+    f: Function1<T, Promise<R>>
   ): Lazy<ReturnType<typeof f>> {
     return async () => {
       let count = 0;
