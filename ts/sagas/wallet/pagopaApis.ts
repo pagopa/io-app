@@ -1,4 +1,3 @@
-import { isLeft } from "fp-ts/lib/Either";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
