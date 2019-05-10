@@ -4,7 +4,6 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { Task } from "redux-saga";
 import {
   all,
@@ -21,7 +20,6 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { GetUserMessagesT } from "../../../definitions/backend/requestTypes";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,

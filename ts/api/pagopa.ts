@@ -332,11 +332,7 @@ export function PaymentManagerClient(
     getTransaction: (
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<GetTransactionUsingGETT>["id"]
-    ) =>
-      //      withBearerToken(
-      //        walletToken,
-      createFetchRequestForApi(getTransaction(pagoPaToken), options),
-    //      ),
+    ) => createFetchRequestForApi(getTransaction(pagoPaToken), options),
     checkPayment: (
       pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
