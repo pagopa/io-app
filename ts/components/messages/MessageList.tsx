@@ -212,6 +212,7 @@ class MessageList extends React.Component<Props, State> {
 
     const message = pot.isNone(potMessage)
       ? ({
+          id: meta.id,
           content: {
             subject: I18n.t("messages.errorLoading.details")
           }
