@@ -5,8 +5,6 @@ import { StyleSheet } from "react-native";
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
 
-import { DEFAULT_APPLICATION_NAME } from "../../config";
-
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
@@ -43,10 +41,17 @@ export class BaseHeader extends React.PureComponent<Props> {
           </Left>
         )}
         <Body style={goBack ? {} : styles.noLeft}>
-          {body || (
+          {body ? (
+            body
+          ) : headerTitle ? (
             <Text white={this.props.primary} numberOfLines={1}>
-              {headerTitle || DEFAULT_APPLICATION_NAME}
+              {headerTitle}
             </Text>
+          ) : (
+            <IconFont
+              name="io-logo"
+              color={this.props.primary ? "white" : variables.brandPrimary}
+            />
           )}
         </Body>
         <Right>

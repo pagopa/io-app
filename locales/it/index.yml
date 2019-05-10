@@ -34,6 +34,12 @@ global:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
+  search:
+    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+  localNotifications:
+    spidLogin:
+      title: Ricordati di accedere ad IO!
+      message: Accedi con la tua identità SPID su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese
@@ -515,8 +521,6 @@ messages:
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
-  search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
   archive:
     emptyMessage:
       title: Il tuo archivio è vuoto.
@@ -525,6 +529,10 @@ messages:
     emptyMessage: 
       title: La tua lista dei messaggi è vuota.
       subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
+  deadlines:
+    emptyMessage: 
+      title: Non hai scadenze in programma.
+      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
