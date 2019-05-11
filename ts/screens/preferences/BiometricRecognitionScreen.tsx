@@ -1,7 +1,6 @@
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 
 import { Linking, Platform, Switch, View } from "react-native";
 
