@@ -160,9 +160,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: fingerprintPreference
       })
-    ),
-  fingerprintAcknowledgeRequest: () =>
-    dispatch(fingerprintAcknowledge.request())
+    )
 });
 
 export default connect(
