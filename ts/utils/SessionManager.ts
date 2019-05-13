@@ -3,6 +3,8 @@
 import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
 import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import { IResponseType } from "italia-ts-commons/lib/requests";
 import { delay } from "redux-saga";
 
 /**
@@ -59,7 +61,7 @@ export class SessionManager<T> {
    * the first one, the token, that gets provided by the interal logic.
    */
   public withRefresh<R>(
-    f: Function1<T, Promise<R>>
+    f: Function1<T, Promise<t.Validation<IResponseType<401, any> | R>>>
   ): Lazy<ReturnType<typeof f>> {
     return async () => {
       let count = 0;
@@ -74,7 +76,9 @@ export class SessionManager<T> {
           continue;
         }
         const response = await f(this.token);
-        if (response !== undefined && (response as any).status === 401) {
+        // BEWARE: we can cast to any only because we know for sure that f will
+        // always return a Promise<IResponseType<A, B>>
+        if (response.isRight() && (response.value as any).status === 401) {
           // our token is expired, reset it
           // tslint:disable-next-line:no-object-mutation
           this.token = undefined;
