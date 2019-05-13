@@ -21,7 +21,7 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (5.4.2):
+  - react-native-webview (5.7.2):
     - React
   - React/ART (0.59.3):
     - React/Core
@@ -40,8 +40,6 @@ PODS:
   - React/RCTCameraRoll (0.59.3):
     - React/Core
     - React/RCTImage
-  - React/RCTGeolocation (0.59.3):
-    - React/Core
   - React/RCTImage (0.59.3):
     - React/Core
     - React/RCTNetwork
@@ -73,7 +71,7 @@ PODS:
     - React
   - RNVectorIcons (6.4.2):
     - React
-  - TouchID (4.3.0):
+  - TouchID (4.4.1):
     - React
   - yoga (0.59.3.React)
 
@@ -91,7 +89,6 @@ DEPENDENCIES:
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
   - React/RCTCameraRoll (from `../node_modules/react-native`)
-  - React/RCTGeolocation (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTPushNotification (from `../node_modules/react-native`)
@@ -160,7 +157,7 @@ SPEC CHECKSUMS:
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-webview: 84a2f3b7d1db70f43a58ce492b9449c15827e0ad
+  react-native-webview: 8360713396efdaee1528d0afcaaaa844b14fd2f2
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNDeviceInfo: e7c5fcde13d40e161d8a27f6c5dc69c638936002
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
@@ -169,9 +166,9 @@ SPEC CHECKSUMS:
   RNKeychain: 1a121521011702409f5a1009eb8a1effa81000f3
   RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
   RNVectorIcons: 6607bd3a30291d0edb56f9bbe7ae411ee2b928b0
-  TouchID: b816a3db79ac3f9da547d0d0d4bd87ff6e338ca9
+  TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 1a492113f66a35e9e583bb0434f4b8cc668dd839
 
-PODFILE CHECKSUM: e13dd0f5f428906e121ffa04f63d8b20f9054baa
+PODFILE CHECKSUM: 77b3090be684e5673461a6f6d7a5eafdc4659a35
 
 COCOAPODS: 1.6.1

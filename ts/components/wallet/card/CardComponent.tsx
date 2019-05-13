@@ -19,6 +19,7 @@ import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
+import { isExpiredCard } from "../../../utils/wallet";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
@@ -95,7 +96,7 @@ export default class CardComponent extends React.Component<Props> {
     }
   };
 
-  private handleOnFooterPress = () => {
+  private handleOnCardPress = () => {
     if (
       (this.props.type === "Full" || this.props.type === "Picking") &&
       this.props.mainAction
@@ -131,7 +132,6 @@ export default class CardComponent extends React.Component<Props> {
                     ? variables.brandDarkGray
                     : variables.brandPrimary
                 }
-                style={styles.paddedIcon}
                 onPress={this.handleFavoritePress}
               />
             )}
@@ -193,17 +193,25 @@ export default class CardComponent extends React.Component<Props> {
     }
 
     const expirationDate = buildExpirationDate(wallet);
+    const isExpired = isExpiredCard(wallet);
 
     return (
-      <View style={[styles.columns, styles.marginTop]}>
+      <View
+        style={[styles.columns, styles.paddedTop, styles.body]}
+        onTouchEnd={this.handleOnCardPress}
+      >
         <View>
           <Text
             style={[
               CreditCardStyles.textStyle,
-              CreditCardStyles.smallTextStyle
+              !isExpired
+                ? CreditCardStyles.smallTextStyle
+                : CreditCardStyles.expiredTextStyle
             ]}
           >
-            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+            {!isExpired
+              ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
+              : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
           </Text>
 
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
@@ -242,7 +250,7 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
-        onPress={this.handleOnFooterPress}
+        onPress={this.handleOnCardPress}
       >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
@@ -264,16 +272,20 @@ export default class CardComponent extends React.Component<Props> {
       <View
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
       >
-        <View style={styles.cardInner}>
-          <View style={styles.columns}>
-            <Text
-              style={[
-                CreditCardStyles.textStyle,
-                CreditCardStyles.largeTextStyle
-              ]}
+        <View style={[styles.cardInner]}>
+          <View style={[styles.row]}>
+            <View
+              style={[styles.row, styles.numberArea]}
+              onTouchEnd={this.handleOnCardPress}
             >
-              {`${HIDDEN_CREDITCARD_NUMBERS}${wallet.creditCard.pan.slice(-4)}`}
-            </Text>
+              <Text style={[CreditCardStyles.smallTextStyle]}>
+                {`${HIDDEN_CREDITCARD_NUMBERS}`}
+              </Text>
+
+              <Text style={[CreditCardStyles.largeTextStyle]}>
+                {`${wallet.creditCard.pan.slice(-4)}`}
+              </Text>
+            </View>
 
             <View style={styles.topRightCornerContainer}>
               {this.renderTopRightCorner()}

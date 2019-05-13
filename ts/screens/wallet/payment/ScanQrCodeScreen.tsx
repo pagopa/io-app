@@ -4,33 +4,35 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Container, Text, Toast, View } from "native-base";
+import { Button, Container, Text, Toast, View } from "native-base";
 import * as React from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Linking,
+  Platform,
+  ScrollView,
+  StyleSheet
+} from "react-native";
+import AndroidOpenSettings from "react-native-android-open-settings";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { CameraMarker } from "../../../components/wallet/CameraMarker";
-
 import I18n from "../../../i18n";
-
 import { Dispatch } from "../../../store/actions/types";
-
-import variables from "../../../theme/variables";
-
-import { BaseHeader } from "../../../components/screens/BaseHeader";
 import { ComponentProps } from "../../../types/react";
 
-import { decodePagoPaQrCode } from "../../../utils/payment";
-
+import { BaseHeader } from "../../../components/screens/BaseHeader";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import variables from "../../../theme/variables";
+import { decodePagoPaQrCode } from "../../../utils/payment";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -69,6 +71,20 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: screenWidth,
     width: screenWidth
+  },
+
+  notAuthorizedContainer: {
+    padding: variables.contentPadding,
+    flex: 1,
+    alignItems: "center"
+  },
+  notAuthorizedText: {
+    textAlign: "justify",
+    marginBottom: 25
+  },
+  notAuthorizedBtn: {
+    flex: 1,
+    alignSelf: "center"
   }
 });
 
@@ -140,6 +156,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
+  private openAppSettings = () => {
+    if (Platform.OS === "ios") {
+      Linking.openURL("app-settings://notification/IO").catch(_ => undefined);
+    } else {
+      AndroidOpenSettings.appDetailsSettings();
+    }
+  };
+
   public render(): React.ReactNode {
     const primaryButtonProps = {
       block: true,
@@ -191,6 +215,37 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 </View>
               }
               cameraProps={{ ratio: "1:1" }}
+              // "checkAndroid6Permissions" property enables permission checking for
+              // Android versions greater than 6.0 (23+).
+              checkAndroid6Permissions={true}
+              permissionDialogTitle={I18n.t(
+                "wallet.QRtoPay.cameraUsagePerissionInfobox.title"
+              )}
+              permissionDialogMessage={I18n.t(
+                "wallet.QRtoPay.cameraUsagePerissionInfobox.message"
+              )}
+              // "notAuthorizedView" is by defatult available on iOS systems ONLY.
+              // In order to make Android systems act the same as iOSs you MUST
+              // enable "checkAndroid6Permissions" property as well.
+              // On devices before SDK version 23, the permissions are automatically
+              // granted if they appear in the manifest, so message customization would
+              // be impossible.
+              notAuthorizedView={
+                <View style={styles.notAuthorizedContainer}>
+                  <Text style={styles.notAuthorizedText}>
+                    {I18n.t("wallet.QRtoPay.enroll_cta")}
+                  </Text>
+
+                  <Button
+                    onPress={this.openAppSettings}
+                    style={styles.notAuthorizedBtn}
+                  >
+                    <Text>
+                      {I18n.t("biometric_recognition.enroll_btnLabel")}
+                    </Text>
+                  </Button>
+                </View>
+              }
             />
           )}
         </ScrollView>

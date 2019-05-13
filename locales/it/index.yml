@@ -33,9 +33,18 @@ global:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
+  search:
+    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+  localNotifications:
+    spidLogin:
+      title: Ricordati di accedere ad IO!
+      message: Accedi con la tua identità SPID su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese
+clipboard:
+  copyFeedback: Copiato negli appunti
+  copyText: copia
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
@@ -105,6 +114,10 @@ profile:
         description: ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
+    experimentalFeatures:
+      confirmTitle: Funzionalità sperimentali
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
@@ -182,9 +195,6 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
-    subtitle: "I diversi Identity Provider permettono diverse modalità di
-      riconoscimento e offrono insieme a SPID servizi diversi: scopri i
-      dettagli di ciascuno"
   idp_login:
     headerTitle: Accedi
   errors:
@@ -195,6 +205,9 @@ authentication:
       body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. 
             Se disponi di un altra identità SPID scegli un provider alternativo.
             Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
+    login:
+      title: Errore nel login
+      body: Si è verificato un errore durante il login, si prega di riprovare!
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
@@ -435,6 +448,10 @@ wallet:
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codive ente/azienda).
     setManually: Inserisci i dati manualmente
+    enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+    cameraUsagePerissionInfobox:
+      title: "Permesso per utilizzare la fotocamera da parte di IO"
+      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md
@@ -456,6 +473,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
   unsetFavourite: Rimuovi dai preferiti
@@ -480,7 +498,7 @@ messages:
   yesterday: ieri
   cta:
     archive: Archivia
-    unarchive: Disarchivia
+    unarchive: Ripristina
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria
@@ -501,16 +519,25 @@ messages:
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
-  search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
   archive:
-    emptyMessage: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+    emptyMessage:
+      title: Il tuo archivio è vuoto.
+      subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
+  inbox:
+    emptyMessage: 
+      title: La tua lista dei messaggi è vuota.
+      subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
+  deadlines:
+    emptyMessage: 
+      title: Non hai scadenze in programma.
+      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...
-  errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
-  retryText: Riprova
+  errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
+  retryText: Probabilmente è un errore temporaneo... riprova per piacere!
+  submitBugText: Se il problema non si risolve segnalacelo con l'icona della coccinella in alto a destra, grazie!
   rawInfoLink:
     showLabel: Dettagli del messaggio
     hideLabel: Chiudi dettagli
@@ -549,6 +576,9 @@ preferences:
   unavailable:
     title: Questa preferenza è impostata nel tuo profilo SPID
     message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nell profilo SPID del tuo identity provider, e poi dovrai nuovamente loggarti nell'app
+  language:
+    title: Questa preferenza è impostata nelle preferenze di sistema
+    message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
@@ -577,6 +607,8 @@ services:
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
+  disableTitle: "Vuoi davvero disattivare il servizio?"
+  disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
 identification:
   message: "Inserisci il PIN"
   resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.

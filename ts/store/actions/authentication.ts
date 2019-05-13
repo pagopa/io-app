@@ -20,6 +20,13 @@ export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
 
+//
+// Action about IDP Login phase
+//
+
+export const idpLoginUrlChanged = createStandardAction(
+  "AUTHENTICATION_WEBVIEW_URL_CHANGED"
+)<{ url: string }>();
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
   SessionToken
 >();
@@ -56,6 +63,7 @@ export const forgetCurrentSession = createStandardAction("SESSION_FORGET")();
 
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
+  | ActionType<typeof idpLoginUrlChanged>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>

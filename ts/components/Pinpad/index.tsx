@@ -1,16 +1,14 @@
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
-import { ComponentProps } from "../../types/react";
-
 import { PinString } from "../../types/PinString";
+import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH } from "../../utils/constants";
-
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { KeyPad } from "./KeyPad";
-import { styles } from "./Pinpad.style";
 import { Baseline, Bullet } from "./Placeholders";
 
 interface Props {
@@ -28,6 +26,13 @@ interface State {
   value: string;
   isDisabled: boolean;
 }
+
+const styles = StyleSheet.create({
+  placeholderContainer: {
+    flexDirection: "row",
+    justifyContent: "center"
+  }
+});
 
 /**
  * A customized CodeInput component.

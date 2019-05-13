@@ -1,5 +1,5 @@
 import { Effect } from "redux-saga";
-import { put, select, take } from "redux-saga/effects";
+import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import {
@@ -10,6 +10,7 @@ import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 
 import { NavigationActions } from "react-navigation";
+import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import ROUTES from "../../navigation/routes";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
@@ -45,6 +46,10 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   const action: ActionType<typeof loginSuccess> = yield take(
     getType(loginSuccess)
   );
+
+  // User logged in successfully, remove all the scheduled local notifications
+  // to remind the user to authenticate with spid
+  yield call(removeScheduledNotificationAccessSpid);
 
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and

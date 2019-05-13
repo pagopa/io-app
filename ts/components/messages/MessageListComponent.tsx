@@ -5,8 +5,10 @@ import {
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
@@ -56,6 +58,13 @@ class MessageListComponent extends React.Component<Props> {
     );
   };
 
+  private FlatListRef = React.createRef<FlatList<MessageState>>();
+  private scrollToTop = () => {
+    if (this.FlatListRef.current && this.props.messages.length > 0) {
+      this.FlatListRef.current.scrollToIndex({ animated: false, index: 0 });
+    }
+  };
+
   public render() {
     const {
       messages,
@@ -70,16 +79,20 @@ class MessageListComponent extends React.Component<Props> {
     );
 
     return (
-      <FlatList
-        contentContainerStyle={styles.contentContainerStyle}
-        scrollEnabled={true}
-        data={messages}
-        extraData={{ servicesById, paymentByRptId }}
-        keyExtractor={keyExtractor}
-        renderItem={this.renderItem}
-        refreshControl={refreshControl}
-        ListEmptyComponent={ListEmptyComponent}
-      />
+      <View>
+        <NavigationEvents onWillFocus={this.scrollToTop} />
+        <FlatList
+          contentContainerStyle={styles.contentContainerStyle}
+          scrollEnabled={true}
+          data={messages}
+          extraData={{ servicesById, paymentByRptId }}
+          keyExtractor={keyExtractor}
+          renderItem={this.renderItem}
+          refreshControl={refreshControl}
+          ListEmptyComponent={ListEmptyComponent}
+          ref={this.FlatListRef}
+        />
+      </View>
     );
   }
 }

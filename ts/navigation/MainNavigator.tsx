@@ -8,6 +8,7 @@ import {
   StackActions
 } from "react-navigation";
 import MessagesTabIcon from "../components/MessagesTabIcon";
+import ProfileTabIcon from "../components/ProfileTabIcon";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -183,6 +184,14 @@ const navigation = createBottomTabNavigator(
         if (routeName === ROUTES.MESSAGES_NAVIGATOR) {
           return (
             <MessagesTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
+        if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
+          return (
+            <ProfileTabIcon
+              size={variables.iconSize3}
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );

@@ -1,34 +1,32 @@
+/**
+ * Screen displaying the list of available services. The user can
+ * access the service detail by pressing on the related list item.
+ */
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { H3, ListItem } from "native-base";
+import debounce from "lodash/debounce";
+import { Button, Icon, Input, Item, Text, View } from "native-base";
 import * as React from "react";
-import {
-  ListRenderItemInfo,
-  RefreshControl,
-  SectionList,
-  SectionListData,
-  StyleSheet
-} from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import I18n from "../../i18n";
-
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-
-import { contentServiceLoad } from "../../store/actions/content";
-import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-
-import { isDefined } from "../../utils/guards";
-
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { ServiceListItem } from "../../components/services/ServiceListItem";
+import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
+import ServicesSearch from "../../components/services/ServicesSearch";
+import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
+import I18n from "../../i18n";
+import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
+import { isDefined } from "../../utils/guards";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -38,36 +36,36 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   OwnProps;
 
+type State = {
+  searchText: Option<string>;
+  debouncedSearchText: Option<string>;
+};
+
 const styles = StyleSheet.create({
   listItem: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  },
+  noSearchBarText: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  ioSearch: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
   }
 });
 
-class ServicesScreen extends React.Component<Props> {
+class ServicesScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      searchText: none,
+      debouncedSearchText: none
+    };
+  }
   private goBack = () => this.props.navigation.goBack();
-
-  private getServiceKey = (
-    potService: pot.Pot<ServicePublic, Error>,
-    index: number
-  ): string => {
-    return pot.getOrElse(
-      pot.map(
-        potService,
-        service => `${service.service_id}-${service.version || 0}`
-      ),
-      `service-pot-${index}`
-    );
-  };
-
-  private renderServiceSectionHeader = (info: {
-    section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactElement<any> | null => (
-    <ListItem itemHeader={true} style={styles.listItem}>
-      <H3>{info.section.title}</H3>
-    </ListItem>
-  );
 
   private onServiceSelect = (service: ServicePublic) => {
     // when a service gets selected, before navigating to the service detail
@@ -78,22 +76,14 @@ class ServicesScreen extends React.Component<Props> {
     });
   };
 
-  private renderServiceItem = (
-    itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
-  ) => (
-    <ServiceListItem
-      item={itemInfo.item}
-      profile={this.props.profile}
-      onSelect={this.onServiceSelect}
-    />
-  );
-
   public componentDidMount() {
     // on mount, update visible services
-    this.props.loadVisibleServices();
+    this.props.refreshServices();
   }
 
   public render() {
+    const { searchText } = this.state;
+
     return (
       <TopScreenComponent
         title={I18n.t("services.title")}
@@ -104,24 +94,105 @@ class ServicesScreen extends React.Component<Props> {
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
       >
-        <SectionList
-          sections={this.props.sections}
-          renderItem={this.renderServiceItem}
-          renderSectionHeader={this.renderServiceSectionHeader}
-          keyExtractor={this.getServiceKey}
-          stickySectionHeadersEnabled={false}
-          alwaysBounceVertical={false}
-          refreshing={this.props.isLoading}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.isLoading}
-              onRefresh={this.props.loadVisibleServices}
+        {searchText.isSome() ? (
+          <Item style={styles.ioSearch}>
+            <Input
+              placeholder={I18n.t("global.actions.search")}
+              value={searchText.value}
+              onChangeText={this.onSearchTextChange}
+              autoFocus={true}
             />
-          }
-        />
+            <Icon name="cross" onPress={this.onSearchDisable} />
+          </Item>
+        ) : (
+          <Button
+            onPress={this.onSearchEnable}
+            transparent={true}
+            style={styles.ioSearch}
+          >
+            <IconFont name="io-search" />
+          </Button>
+        )}
+
+        {searchText.isSome() ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
     );
   }
+
+  private renderList = () => {
+    const { sections } = this.props;
+    return (
+      <ServiceSectionListComponent
+        sections={sections}
+        profile={this.props.profile}
+        isRefreshing={this.props.isLoading}
+        onRefresh={this.props.refreshServices}
+        onSelect={this.onServiceSelect}
+      />
+    );
+  };
+
+  /**
+   * Render ServicesSearch component.
+   */
+  private renderSearch = () => {
+    const { refreshServices, sections } = this.props;
+
+    const { debouncedSearchText } = this.state;
+
+    return debouncedSearchText
+      .map(
+        _ =>
+          _.length < 3 ? (
+            this.renderInvalidSearchBarText()
+          ) : (
+            <ServicesSearch
+              sectionsState={sections}
+              profile={this.props.profile}
+              onRefresh={refreshServices}
+              navigateToServiceDetail={this.onServiceSelect}
+              searchText={_}
+            />
+          )
+      )
+      .getOrElse(this.renderInvalidSearchBarText());
+  };
+
+  private renderInvalidSearchBarText = () => {
+    return (
+      <View style={styles.noSearchBarText}>
+        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
+      </View>
+    );
+  };
+
+  private onSearchEnable = () => {
+    this.setState({
+      searchText: some("")
+    });
+  };
+
+  private onSearchTextChange = (text: string) => {
+    this.setState({
+      searchText: some(text)
+    });
+    this.updateDebouncedSearchText(text);
+  };
+
+  private updateDebouncedSearchText = debounce(
+    (text: string) =>
+      this.setState({
+        debouncedSearchText: some(text)
+      }),
+    300
+  );
+
+  private onSearchDisable = () => {
+    this.setState({
+      searchText: none,
+      debouncedSearchText: none
+    });
+  };
 }
 
 const mapStateToProps = (state: GlobalState) => {
@@ -130,17 +201,19 @@ const mapStateToProps = (state: GlobalState) => {
   const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
 
   // tslint:disable-next-line:readonly-array
-  const sections = orgfiscalCodes.map(fiscalCode => {
-    const title = organizations[fiscalCode] || fiscalCode;
-    const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
-    const data = serviceIdsForOrg
-      .map(id => services.byId[id])
-      .filter(isDefined);
-    return {
-      title,
-      data
-    };
-  });
+  const sections = orgfiscalCodes
+    .map(fiscalCode => {
+      const title = organizations[fiscalCode] || fiscalCode;
+      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+      const data = serviceIdsForOrg
+        .map(id => services.byId[id])
+        .filter(isDefined);
+      return {
+        title,
+        data
+      };
+    })
+    .filter(_ => _.data.length > 0);
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
@@ -159,7 +232,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadVisibleServices: () => dispatch(loadVisibleServices.request()),
+  refreshServices: () => dispatch(loadVisibleServices.request()),
   contentServiceLoad: (serviceId: ServiceId) =>
     dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (
