@@ -502,7 +502,7 @@ messages:
   yesterday: ieri
   cta:
     archive: Archivia
-    unarchive: Disarchivia
+    unarchive: Ripristina
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria

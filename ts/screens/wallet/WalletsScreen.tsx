@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
 
-  header: {
+  brandDarkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
 
@@ -101,8 +101,9 @@ class WalletsScreen extends React.Component<Props> {
         title={I18n.t("wallet.paymentMethods")}
         headerContents={headerContents}
         allowGoBack={true}
+        contentStyle={styles.brandDarkGrayBg}
       >
-        <Content style={[styles.padded, styles.header]}>
+        <Content style={[styles.padded, styles.brandDarkGrayBg]}>
           <FlatList
             removeClippedSubviews={false}
             data={this.props.wallets as any[]} // tslint:disable-line
