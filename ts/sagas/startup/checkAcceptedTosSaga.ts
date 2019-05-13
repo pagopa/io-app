@@ -5,7 +5,10 @@ import { getType } from "typesafe-actions";
 
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccept } from "../../store/actions/onboarding";
-import { isTosAcceptedSelector } from "../../store/reducers/onboarding";
+import {
+  isTosAcceptedSelector,
+  tosAcceptedVersionSelector
+} from "../../store/reducers/onboarding";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
@@ -32,27 +35,17 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
 }
 
 export function* checkAcceptedTosVersionSaga(): IterableIterator<Effect> {
+
   console.log("Verifico la versione accettata");
 
-  const profileState: ReturnType<typeof profileSelector> = yield select<
-    GlobalState
-  >(profileSelector);
+  const tosVersion: ReturnType<
+    typeof tosAcceptedVersionSelector
+  > = yield select<GlobalState>(tosAcceptedVersionSelector);
 
-  if (pot.isNone(profileState)) {
-    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
-    // the used didn't yet authenticated: ignore this upsert request.
-    return;
-  }
+  console.log(tosVersion);
 
-  const currentProfile = profileState.value;
 
-  console.log(currentProfile);
-
-  const isTosAccepted: ReturnType<typeof isTosAcceptedSelector> = yield select<
-    GlobalState
-  >(isTosAcceptedSelector);
-
-  if (!isTosAccepted) {
+  if (tosVersion <  ) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
 
