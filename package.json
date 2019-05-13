@@ -63,7 +63,7 @@
     "react-native-text-input-mask": "^0.9.0",
     "react-native-touch-id": "^4.4.1",
     "react-native-vector-icons": "^6.4.2",
-    "react-native-webview": "^5.7.2",
+    "react-native-webview": "^5.8.1",
     "react-navigation": "^3.3.0",
     "react-navigation-redux-helpers": "^3.0.0",
     "react-redux": "6.0.0",
