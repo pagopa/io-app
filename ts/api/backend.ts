@@ -271,7 +271,10 @@ export function BackendClient(
     ),
     logout: withBearerToken(token, createFetchRequestForApi(logoutT, options)),
     getVerificaRpt: createFetchRequestForApi(verificaRptT, options),
-    postAttivaRpt: createFetchRequestForApi(attivaRptT, options),
+    postAttivaRpt: withBearerToken(
+      token,
+      createFetchRequestForApi(attivaRptT, options)
+    ),
     getPaymentId: createFetchRequestForApi(getPaymentIdT, options)
   };
 }
