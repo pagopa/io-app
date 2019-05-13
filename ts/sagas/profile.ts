@@ -82,6 +82,7 @@ function* createOrUpdateProfileSaga(
   // FIXME: perhaps this is responsibility of the caller?
   const newProfile: ExtendedProfile = currentProfile.has_profile
     ? {
+        accepted_tos_version: currentProfile.accepted_tos_version,
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
         version: currentProfile.version,

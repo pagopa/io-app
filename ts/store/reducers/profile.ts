@@ -72,7 +72,8 @@ const reducer = (
           blocked_inbox_or_channels: updated.blocked_inbox_or_channels,
           // FIXME: remove the cast after the following bug has been fixed:
           //        https://www.pivotaltracker.com/story/show/159802090
-          version: newVersion as NonNegativeInteger // tslint:disable-line:no-useless-cast
+          version: newVersion as NonNegativeInteger, // tslint:disable-line:no-useless-cast
+          accepted_tos_version: updated.accepted_tos_version
         });
       } else {
         // We can't merge an updated profile if we haven't loaded a full
