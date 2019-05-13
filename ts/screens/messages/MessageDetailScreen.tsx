@@ -5,7 +5,6 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -15,7 +14,8 @@ import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
   loadMessageWithRelations,
-  setMessageReadState
+  setMessageReadState,
+  setNumberMessagesUnread
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -28,6 +28,7 @@ import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
+  badgeNumber: number;
 };
 
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
@@ -156,6 +157,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     if (pot.isSome(potMessage) && !maybeRead.getOrElse(true)) {
       // Set the message read state to TRUE
       this.props.setMessageReadState(true);
+      this.props.updateBadgeNumber();
     }
   };
 
@@ -181,7 +183,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-
   const maybeMessageState = fromNullable(
     messageStateByIdSelector(messageId)(state)
   );
@@ -211,6 +212,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
+  const badgeNumber = ownProps.navigation.getParam("badgeNumber");
   return {
     contentServiceLoad: (serviceId: ServiceId) =>
       dispatch(contentServiceLoad.request(serviceId)),
@@ -220,7 +222,10 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
       dispatch(setMessageReadState(messageId, isRead)),
     navigateToServiceDetailsScreen: (
       params: InferNavigationParams<typeof ServiceDetailsScreen>
-    ) => dispatch(navigateToServiceDetailsScreen(params))
+    ) => dispatch(navigateToServiceDetailsScreen(params)),
+    updateBadgeNumber: () => {
+      dispatch(setNumberMessagesUnread(badgeNumber - 1));
+    }
   };
 };
 

@@ -6,30 +6,29 @@ import { setNumberMessagesUnread } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
-export type BadgeNumberState = Readonly<{
-  badgeCount: number;
-}>;
+export type BadgeNumberState = {
+  count: number;
+};
 
 export function getInitialState(): BadgeNumberState {
   return {
-    badgeCount: 0
+    count: 0
   };
 }
 
-const reducer = (
+const badgeReducer = (
   state: BadgeNumberState = getInitialState(),
   action: Action
 ): BadgeNumberState => {
   switch (action.type) {
     case getType(setNumberMessagesUnread):
-      return { ...state, badgeCount: action.payload };
+      return { ...state, count: action.payload };
     default:
       return state;
   }
 };
 
-export default reducer;
+export const badgeSelector = (state: GlobalState) =>
+  state.entities.messages.badge.count;
 
-// Selector
-export const badgeNumberSelector = (state: GlobalState) =>
-  state.entities.messages.badge;
+export default badgeReducer;

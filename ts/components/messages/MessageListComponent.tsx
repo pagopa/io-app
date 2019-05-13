@@ -7,14 +7,11 @@ import {
   RefreshControl,
   StyleSheet
 } from "react-native";
-import { store } from "../../App";
-import { setNumberMessagesUnread } from "../../store/actions/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { MessageListItemComponent } from "./MessageListItemComponent";
-// tslint:disable-next-line:no-let
-let messagesToRead = 0;
+
 type OwnProps = {
   messages: ReadonlyArray<MessageState>;
   servicesById: ServicesByIdState;
@@ -42,7 +39,6 @@ const keyExtractor = (_: MessageState) => _.meta.id;
 class MessageListComponent extends React.Component<Props> {
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
     const { meta } = info.item;
-
     const service = this.props.servicesById[meta.sender_service_id];
 
     return (
@@ -71,11 +67,6 @@ class MessageListComponent extends React.Component<Props> {
     } = this.props;
     const refreshControl = (
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    );
-
-    messagesToRead = messages.filter(obj => !obj.isRead).length;
-    store.dispatch(
-      setNumberMessagesUnread(messagesToRead < 99 ? messagesToRead : 99)
     );
 
     return (

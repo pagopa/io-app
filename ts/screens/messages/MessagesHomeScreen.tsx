@@ -1,4 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import debounce from "lodash/debounce";
 import {
   Button,
@@ -15,7 +16,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
@@ -25,11 +25,13 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import {
   loadMessages,
-  setMessagesArchivedState
+  setMessagesArchivedState,
+  setNumberMessagesUnread
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -37,7 +39,8 @@ import customVariables from "../../theme/variables";
 
 // Used to disable the Deadlines tab
 const DEADLINES_TAB_ENABLED = false;
-
+// tslint:disable-next-line:no-let
+let badgeNumber = 0;
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -94,6 +97,18 @@ const renderTabBar = (props: any) => {
 };
 
 /**
+ * Filter only the messages that are unreaded.
+ */
+const generateMessagesStateUnreadedArray = (
+  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+): ReadonlyArray<MessageState> =>
+  pot.getOrElse(
+    pot.map(potMessagesState, _ =>
+      _.filter(messageState => !messageState.isRead)
+    ),
+    []
+  );
+/**
  * A screen that contains all the Tabs related to messages.
  */
 class MessagesHomeScreen extends React.Component<Props, State> {
@@ -107,6 +122,19 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     this.props.refreshMessages();
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    const badgeNumberPrev = generateMessagesStateUnreadedArray(
+      prevProps.lexicallyOrderedMessagesState
+    ).filter(obj => !obj.isRead).length;
+    badgeNumber = generateMessagesStateUnreadedArray(
+      this.props.lexicallyOrderedMessagesState
+    ).filter(obj => !obj.isRead).length;
+
+    if (badgeNumberPrev !== badgeNumber) {
+      this.props.updateBadgeNumber(badgeNumber);
+    }
   }
 
   public render() {
@@ -273,13 +301,17 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshMessages: () => dispatch(loadMessages.request()),
+  refreshMessages: () => {
+    dispatch(loadMessages.request());
+  },
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageDetailScreenAction({ messageId })),
+    dispatch(navigateToMessageDetailScreenAction({ messageId, badgeNumber })),
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived))
+  ) => dispatch(setMessagesArchivedState(ids, archived)),
+  updateBadgeNumber: (messagesUnread: number) =>
+    dispatch(setNumberMessagesUnread(messagesUnread))
 });
 
 export default connect(

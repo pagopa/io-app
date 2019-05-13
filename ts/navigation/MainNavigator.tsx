@@ -1,6 +1,5 @@
-import { Badge } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -8,10 +7,9 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
-import { store } from "../App";
+import MessagesTabIcon from "../components/MessagesTabIcon";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
-import { badgeNumberSelector } from "../store/reducers/entities/messages/badge";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
@@ -182,31 +180,21 @@ const navigation = createBottomTabNavigator(
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
-        return (
-          <View>
+        if (routeName === ROUTES.MESSAGES_NAVIGATOR) {
+          return (
+            <MessagesTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        } else {
+          return (
             <IconFont
               name={iconName}
               size={variables.iconSize3}
               color={options.tintColor === null ? undefined : options.tintColor}
             />
-            {routeName === ROUTES.MESSAGES_NAVIGATOR &&
-            badgeNumberSelector(store.getState()).badgeCount > 0 ? (
-              Platform.OS === "ios" ? (
-                <Badge style={styles.badgeStyle}>
-                  <Text style={[styles.textBadgeStyle, { top: 0 }]}>
-                    {badgeNumberSelector(store.getState()).badgeCount}
-                  </Text>
-                </Badge>
-              ) : (
-                <Badge style={styles.badgeStyle}>
-                  <Text style={styles.textBadgeStyle}>
-                    {badgeNumberSelector(store.getState()).badgeCount}
-                  </Text>
-                </Badge>
-              )
-            ) : null}
-          </View>
-        );
+          );
+        }
       },
       tabBarOnPress: options => {
         if (options.navigation.state.index > 0) {

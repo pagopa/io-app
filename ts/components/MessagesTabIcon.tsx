@@ -1,0 +1,76 @@
+import { Badge, View } from "native-base";
+import React from "react";
+import { Platform, StyleSheet, Text } from "react-native";
+import { connect } from "react-redux";
+import { badgeSelector } from "../store/reducers/entities/messages/badge";
+import { GlobalState } from "../store/reducers/types";
+import variables from "../theme/variables";
+import IconFont from "./ui/IconFont";
+
+type OwnProps = {
+  color?: string;
+};
+
+const styles = StyleSheet.create({
+  textBadgeStyle: {
+    fontSize: 10,
+    fontFamily: "Titillium Web",
+    fontWeight: "bold",
+    color: "white",
+    flex: 1,
+    position: "absolute",
+    height: 19,
+    width: 19,
+    textAlign: "center",
+    paddingRight: 3
+  },
+  badgeStyle: {
+    backgroundColor: variables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    position: "absolute",
+    elevation: 0.1,
+    shadowColor: "white",
+    height: 19,
+    width: 19,
+    left: 12,
+    bottom: 10
+  }
+});
+
+type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+
+/**
+ * Message icon add badge.
+ */
+class MessagesTabIcon extends React.PureComponent<Props> {
+  public render() {
+    const { color, badge } = this.props;
+    return (
+      <View>
+        <IconFont
+          name={"io-messaggi"}
+          size={variables.iconSize3}
+          color={color}
+        />
+        {badge > 0 ? (
+          Platform.OS === "ios" ? (
+            <Badge style={styles.badgeStyle}>
+              <Text style={[styles.textBadgeStyle, { top: 0 }]}>{badge}</Text>
+            </Badge>
+          ) : (
+            <Badge style={styles.badgeStyle}>
+              <Text style={styles.textBadgeStyle}>{badge}</Text>
+            </Badge>
+          )
+        ) : null}
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = (state: GlobalState) => ({
+  badge: badgeSelector(state)
+});
+
+export default connect(mapStateToProps)(MessagesTabIcon);
