@@ -148,8 +148,8 @@
     "assets": [
       "./assets/fonts/TitilliumWeb",
       "./assets/fonts/io-icon-font",
-      "./assets/fonts/RobotoMono",
-      "./assets/fonts/Ionicons"
+      "./assets/fonts/Ionicons",
+      "./assets/fonts/RobotoMono"
     ]
   },
   "detox": {
