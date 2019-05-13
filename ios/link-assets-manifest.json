@@ -1,0 +1,65 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Black.ttf",
+      "sha1": "921818b27376916a4b5c965a185a085e8cfb290b"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf",
+      "sha1": "3bc9a271126cdbaac7cc6b1ba1337be0b85ed3e7"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf",
+      "sha1": "ecb7c2de90d29ec3d4498ccffd679d5b7a98f953"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf",
+      "sha1": "2e8b93d715296e8af8cf40f29bbd2b063d5f8452"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf",
+      "sha1": "0cdb18ed1e51ef5e45b064738b68419408012c42"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf",
+      "sha1": "534f2382ef0dfe384bedfc8788ca2c06c49c2d22"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Light.ttf",
+      "sha1": "9886dd5e4d6c1f3c2f78c993f081538da95d477e"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf",
+      "sha1": "be2d84e6477962a7ebe835b04d0fd0abd43ba1b6"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Regular.ttf",
+      "sha1": "ab1daa57ce1ccf444bf82dcef734aa8b0231a872"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf",
+      "sha1": "fe68c5b8eb5862de863d4969c679ac145f0eb796"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf",
+      "sha1": "f81d3a5f38c6bda1fb3547bf91fe0b68b54066c5"
+    },
+    {
+      "path": "assets/fonts/io-icon-font/.DS_Store",
+      "sha1": "df2fbeb1400acda0909a32c1cf6bf492f1121e07"
+    },
+    {
+      "path": "assets/fonts/io-icon-font/io-icon-font.ttf",
+      "sha1": "d7400c6281103fe59ad56afc656167c05e3f6d1c"
+    },
+    {
+      "path": "assets/fonts/RobotoMono/LICENSE.txt",
+      "sha1": "47b573e3824cd5e02a1a3ae99e2735b49e0256e4"
+    },
+    {
+      "path": "assets/fonts/RobotoMono/RobotoMono-Regular.ttf",
+      "sha1": "69a65c2b797d2fa124b4c709097e761b7857a035"
+    }
+  ]
+}
