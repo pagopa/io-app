@@ -5,7 +5,9 @@ import {
   SectionList,
   SectionListData,
   SectionListRenderItem,
-  StyleSheet
+  StyleSheet,
+  NativeSyntheticEvent,
+  NativeScrollEvent
 } from "react-native";
 
 import I18n from "../../i18n";
@@ -73,6 +75,7 @@ type Props = OwnProps & SelectedSectionListProps;
 type State = {
   prevSections?: Sections;
   itemLayouts: ReadonlyArray<ItemLayout>;
+  isRefreshButtonVisible: boolean;
 };
 
 /**
@@ -139,13 +142,42 @@ const generateItemLayouts = (sections: Sections) => {
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
   private sectionListRef = React.createRef<any>();
+  private canShowRefreshButton = false;
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      itemLayouts: []
+      itemLayouts: [],
+      isRefreshButtonVisible: false
     };
   }
+
+  private handleScrollBeginDrag = (
+    event: NativeSyntheticEvent<NativeScrollEvent>
+  ) => {
+    this.canShowRefreshButton = true;
+  };
+
+  private handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    this.canShowRefreshButton = false;
+    const { isRefreshButtonVisible } = this.state;
+
+    if (
+      isRefreshButtonVisible &&
+      event.nativeEvent.velocity &&
+      event.nativeEvent.velocity.y > 0
+    ) {
+      this.setState({
+        isRefreshButtonVisible: false
+      });
+    }
+  };
+
+  private handleMomentumScrollBegin = () => {
+    if (this.canShowRefreshButton) {
+      this.setState({ isRefreshButtonVisible: true });
+    }
+  };
 
   public static getDerivedStateFromProps(
     nextProps: Props,
@@ -175,22 +207,29 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   public render() {
     const { sections, refreshing, onRefresh, onContentSizeChange } = this.props;
+    const { isRefreshButtonVisible } = this.state;
     return (
-      <SectionList
-        ref={this.sectionListRef}
-        // Forwarded props
-        sections={sections}
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-        onContentSizeChange={onContentSizeChange}
-        stickySectionHeadersEnabled={true}
-        alwaysBounceVertical={false}
-        keyExtractor={keyExtractor}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        renderSectionHeader={this.renderSectionHeader}
-        renderItem={this.renderItem}
-        getItemLayout={this.getItemLayout}
-      />
+      <View>
+        {isRefreshButtonVisible && <Text>Refresh</Text>}
+        <SectionList
+          ref={this.sectionListRef}
+          scrollEventThrottle={16}
+          onScrollBeginDrag={this.handleScrollBeginDrag}
+          onScroll={this.handleOnScroll}
+          onMomentumScrollBegin={this.handleMomentumScrollBegin}
+          // Forwarded props
+          sections={sections}
+          refreshing={refreshing}
+          onContentSizeChange={onContentSizeChange}
+          stickySectionHeadersEnabled={true}
+          keyExtractor={keyExtractor}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderItem}
+          getItemLayout={this.getItemLayout}
+          overScrollMode="always"
+        />
+      </View>
     );
   }
 
