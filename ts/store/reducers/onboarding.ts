@@ -3,6 +3,7 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
+import { TOS_VERSION } from "../../utils/constants";
 
 import { tosAccept } from "../actions/onboarding";
 import { fingerprintAcknowledge } from "../actions/onboarding";
@@ -12,16 +13,21 @@ import { GlobalState } from "./types";
 export type OnboardingState = Readonly<{
   isTosAccepted: boolean;
   isFingerprintAcknowledged: boolean;
+  acceptedTosVersion: number;
 }>;
 
 const INITIAL_STATE: OnboardingState = {
   isTosAccepted: false,
-  isFingerprintAcknowledged: false
+  isFingerprintAcknowledged: false,
+  acceptedTosVersion: 0
 };
 
 // Selectors
 export const isTosAcceptedSelector = (state: GlobalState): boolean =>
   state.onboarding.isTosAccepted;
+
+export const tosAcceptedVersion = (state: GlobalState): number =>
+  state.onboarding.acceptedTosVersion;
 
 export const isFingerprintAcknowledgedSelector = (
   state: GlobalState
@@ -35,7 +41,8 @@ const reducer = (
     case getType(tosAccept.success):
       return {
         ...state,
-        isTosAccepted: true
+        isTosAccepted: true,
+        acceptedTosVersion: TOS_VERSION
       };
     case getType(fingerprintAcknowledge.success):
       return {
