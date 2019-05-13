@@ -2,11 +2,12 @@
  * A reducer to store the serviceIds by organization fiscal codes
  */
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { clearCache } from "../../../actions/profile";
-import { loadService } from "../../../actions/services";
+import { loadService, removeServiceTuples } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 /**
@@ -46,6 +47,34 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
         ...state,
         [organization_fiscal_code]: updatedServicesForOrganization
       };
+
+    case getType(removeServiceTuples): {
+      const serviceTuples = action.payload;
+
+      // Remove service id fromt the array keyed by organizationFiscalCode
+      const stateUpdate = serviceTuples.reduce<
+        ServiceIdsByOrganizationFiscalCodeState
+      >((accumulator, tuple) => {
+        const serviceId = tuple.e1;
+        const organizationFiscalCode = tuple.e2;
+        const ids = fromNullable(organizationFiscalCode)
+          .map(_ => (accumulator[_] !== undefined ? accumulator[_] : state[_]))
+          .toNullable();
+        if (organizationFiscalCode && ids) {
+          const filteredIds = ids.filter(id => id !== serviceId);
+          return {
+            ...accumulator,
+            [organizationFiscalCode]: filteredIds
+          };
+        }
+        return accumulator;
+      }, {});
+
+      return {
+        ...state,
+        ...stateUpdate
+      };
+    }
 
     case getType(clearCache):
       return INITIAL_STATE;

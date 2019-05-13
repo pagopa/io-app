@@ -7,6 +7,8 @@ declare module "native-base" {
       alternative?: boolean;
       noPadded?: boolean;
       primary?: boolean;
+      overScrollMode?: "never" | "always" | "auto";
+      bounces?: boolean;
     }
   }
 }

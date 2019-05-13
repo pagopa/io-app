@@ -1,6 +1,5 @@
 import {
   Button,
-  Content,
   H1,
   H3,
   Left,
@@ -12,11 +11,16 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, Clipboard, StyleSheet, View } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationEvents,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
 import { connect } from "react-redux";
 
+import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
@@ -30,6 +34,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -40,6 +45,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -50,13 +56,6 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const copyToClipboardWithFeedback = (text: string) => {
-  Clipboard.setString(text);
-  Toast.show({
-    text: "Copied to clipboard"
-  });
-};
-
 const styles = StyleSheet.create({
   itemLeft: {
     flexDirection: "column",
@@ -64,6 +63,12 @@ const styles = StyleSheet.create({
   },
   itemLeftText: {
     alignSelf: "flex-start"
+  },
+  experimentalFeaturesSection: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   debugModeSection: {
     width: "100%",
@@ -75,6 +80,12 @@ const styles = StyleSheet.create({
     marginBottom: 25
   }
 });
+
+const getAppLongVersion = () => {
+  const buildNumber =
+    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
+  return `${DeviceInfo.getVersion()}${buildNumber}`;
+};
 
 /**
  * A component to show the main screen of the Profile section
@@ -106,6 +117,33 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
+  private onExperimentalFeaturesToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.ok"),
+            style: "destructive",
+            onPress: () => {
+              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
+                enabled
+              );
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
+    }
+  };
+
   private confirmResetAlert = () =>
     Alert.alert(
       I18n.t("profile.main.resetPin.confirmTitle"),
@@ -124,6 +162,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       { cancelable: false }
     );
 
+  private ServiceListRef = React.createRef<ScrollView>();
+  private scrollToTop = () => {
+    if (this.ServiceListRef.current) {
+      this.ServiceListRef.current.scrollTo({ x: 0, y: 0, animated: false });
+    }
+  };
+
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -132,15 +177,20 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       sessionToken,
       walletToken,
       notificationToken,
-      notificationId
+      notificationId,
+      isExperimentalFeaturesEnabled
     } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("profile.main.screenSubtitle")}
+        banner={
+          isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
+        }
       >
-        <Content noPadded={true}>
+        <ScrollView ref={this.ServiceListRef}>
+          <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Privacy */}
             <ListItem
@@ -202,6 +252,18 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
+              <View style={styles.experimentalFeaturesSection}>
+                <Text>
+                  {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
+                </Text>
+                <Switch
+                  value={this.props.isExperimentalFeaturesEnabled}
+                  onValueChange={this.onExperimentalFeaturesToggle}
+                />
+              </View>
+            </ListItem>
+
+            <ListItem>
               <View style={styles.debugModeSection}>
                 <Text>Debug mode</Text>
                 <Switch
@@ -218,13 +280,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      copyToClipboardWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(getAppLongVersion())
                     }
                   >
                     <Text>
                       {`${I18n.t(
                         "profile.main.appVersion"
-                      )} ${DeviceInfo.getVersion()}`}
+                      )} ${getAppLongVersion()}`}
                     </Text>
                   </Button>
                 </ListItem>
@@ -234,7 +296,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(backendInfo.version)
+                        clipboardSetStringWithFeedback(backendInfo.version)
                       }
                     >
                       <Text>
@@ -250,12 +312,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(sessionToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(sessionToken)
+                      }
                     >
-                      <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >{`Session Token ${sessionToken}`}</Text>
+                      <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {`Session Token ${sessionToken}`}
+                      </Text>
                     </Button>
                   </ListItem>
                 )}
@@ -264,12 +327,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     <Button
                       info={true}
                       small={true}
-                      onPress={() => copyToClipboardWithFeedback(walletToken)}
+                      onPress={() =>
+                        clipboardSetStringWithFeedback(walletToken)
+                      }
                     >
-                      <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                      >{`Wallet token ${walletToken}`}</Text>
+                      <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {`Wallet token ${walletToken}`}
+                      </Text>
                     </Button>
                   </ListItem>
                 )}
@@ -278,7 +342,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   <Button
                     info={true}
                     small={true}
-                    onPress={() => copyToClipboardWithFeedback(notificationId)}
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(notificationId)
+                    }
                   >
                     <Text>{`Notification ID ${notificationId.slice(
                       0,
@@ -293,7 +359,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                       info={true}
                       small={true}
                       onPress={() =>
-                        copyToClipboardWithFeedback(notificationToken)
+                        clipboardSetStringWithFeedback(notificationToken)
                       }
                     >
                       <Text>{`Notification token ${notificationToken.slice(
@@ -326,7 +392,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </React.Fragment>
             )}
           </List>
-        </Content>
+        </ScrollView>
       </TopScreenComponent>
     );
   }
@@ -342,7 +408,9 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -351,7 +419,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired())
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
+    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });
 
 export default connect(

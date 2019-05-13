@@ -9,6 +9,12 @@
  *  - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
+import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
+import * as React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
+
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import { NumberFromString } from "io-ts-types";
@@ -22,26 +28,17 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
-import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
-import * as React from "react";
-import { ScrollView } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
-
-import { WalletStyles } from "../../../components/styles/wallet";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-
 import I18n from "../../../i18n";
-
 import {
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import variables from "../../../theme/variables";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -58,6 +55,12 @@ type State = Readonly<{
     ReturnType<typeof AmountInEuroCentsFromString.decode>
   >;
 }>;
+
+const styles = StyleSheet.create({
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  }
+});
 
 const AmountInEuroCentsFromString = NumberFromString.pipe(
   AmountInEuroCentsFromNumber
@@ -139,10 +142,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         goBack={true}
         headerTitle={I18n.t("wallet.insertManually.header")}
       >
-        <ScrollView
-          style={WalletStyles.whiteBg}
-          keyboardShouldPersistTaps="handled"
-        >
+        <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>

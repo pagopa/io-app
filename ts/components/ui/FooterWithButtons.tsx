@@ -68,7 +68,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
               : styles.button
           }
         >
-          <Text>{rightButtonTitle}</Text>
+          <Text numberOfLines={1}>{rightButtonTitle}</Text>
         </Button>
       </React.Fragment>
     );

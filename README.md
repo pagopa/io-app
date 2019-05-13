@@ -210,7 +210,7 @@ react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
 
 To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
 
-#### Installazione di App Backend e IDP di test
+#### App Backend and test IDP installation
 
 Follow the documentation of the repository [italia-backend](https://github.com/teamdigitale/italia-backend).
 
@@ -488,3 +488,4 @@ $ detox test
 ```
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
+

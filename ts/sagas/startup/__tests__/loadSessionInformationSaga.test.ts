@@ -28,7 +28,7 @@ describe("loadSessionInformationSaga", () => {
       .provide([
         [
           matchers.call.fn(getSession),
-          { status: 500, value: { title: "Error" } }
+          { status: 400, value: { title: "Error" } }
         ]
       ])
       .put(sessionInformationLoadFailure(Error("Error")))

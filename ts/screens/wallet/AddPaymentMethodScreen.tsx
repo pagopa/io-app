@@ -15,15 +15,12 @@ import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Button, Content, H1, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-
-import { WalletStyles } from "../../components/styles/wallet";
-
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
@@ -32,6 +29,7 @@ import {
   navigateToWalletAddCreditCard
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import variables from "../../theme/variables";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { AmountToImporto } from "../../utils/amounts";
 
@@ -47,6 +45,13 @@ type NavigationParams = Readonly<{
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
+
+const styles = StyleSheet.create({
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
+  }
+});
 
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
@@ -72,7 +77,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
               }
               onCancel={this.props.navigateToTransactionSummary}
             />
-            <View style={WalletStyles.paddedLR}>
+            <View style={styles.paddedLR}>
               <View spacer={true} large={true} />
               <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />

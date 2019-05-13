@@ -39,6 +39,10 @@ export const loadMessagesCancel = createStandardAction(
   "MESSAGES_LOAD_CANCEL"
 )();
 
+export const loadMessagesCancelled = createStandardAction(
+  "MESSAGES_LOAD_CANCELLED"
+)();
+
 export const setMessageReadState = createAction(
   "MESSAGES_SET_READ",
   resolve => (id: string, read: boolean) => resolve({ id, read }, { id, read })
