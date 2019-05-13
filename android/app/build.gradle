@@ -226,3 +226,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+// Add the following line to the bottom of the file:
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
