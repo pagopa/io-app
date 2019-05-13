@@ -4,6 +4,7 @@ import { ComponentProps } from "../../types/react";
 
 import BaseScreenComponent from "./BaseScreenComponent";
 import { TopHeader } from "./TopHeader";
+import { Content } from "native-base";
 
 interface OwnProps {
   headerTitle?: string;
@@ -41,16 +42,18 @@ class TopScreenComponent extends React.PureComponent<Props> {
         contextualHelp={contextualHelp}
         headerBody={headerBody}
       >
-        {!hideHeader && (
-          <TopHeader
-            icon={icon}
-            title={title}
-            subtitle={subtitle}
-            onMoreLinkPress={onMoreLinkPress}
-            banner={banner}
-          />
-        )}
-        {this.props.children}
+        <Content noPadded={true}>
+          {!hideHeader && (
+            <TopHeader
+              icon={icon}
+              title={title}
+              subtitle={subtitle}
+              onMoreLinkPress={onMoreLinkPress}
+              banner={banner}
+            />
+          )}
+          {this.props.children}
+        </Content>
       </BaseScreenComponent>
     );
   }

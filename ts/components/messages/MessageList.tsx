@@ -303,7 +303,7 @@ class MessageList extends React.Component<Props, State> {
         <NavigationEvents onWillFocus={this.scrollToTop} />
         <FlatList
           ref={this.flatListRef}
-          scrollEnabled={true}
+          scrollEnabled={false}
           data={messageStates}
           extraData={{ servicesById, paymentsByRptId }}
           keyExtractor={keyExtractor}
