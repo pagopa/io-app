@@ -19,6 +19,7 @@ import {
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { badgeSelector } from "../../store/reducers/entities/messages/badge";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -28,9 +29,9 @@ import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
-  badgeNumber: number;
 };
-
+// tslint:disable-next-line: no-let
+let badgeNumber = 0;
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
 
 type Props = OwnProps &
@@ -182,6 +183,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  badgeNumber = badgeSelector(state);
   const messageId = ownProps.navigation.getParam("messageId");
   const maybeMessageState = fromNullable(
     messageStateByIdSelector(messageId)(state)
@@ -212,7 +214,6 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-  const badgeNumber = ownProps.navigation.getParam("badgeNumber");
   return {
     contentServiceLoad: (serviceId: ServiceId) =>
       dispatch(contentServiceLoad.request(serviceId)),

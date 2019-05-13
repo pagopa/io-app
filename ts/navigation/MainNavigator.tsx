@@ -17,7 +17,6 @@ import PreferencesNavigator from "./PreferencesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import WalletNavigator from "./WalletNavigator";
-
 type Routes = keyof typeof ROUTES;
 
 type RouteLabelMap = { [key in Routes]?: string };

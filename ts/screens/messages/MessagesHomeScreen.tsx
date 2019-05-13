@@ -39,8 +39,6 @@ import customVariables from "../../theme/variables";
 
 // Used to disable the Deadlines tab
 const DEADLINES_TAB_ENABLED = false;
-// tslint:disable-next-line:no-let
-let badgeNumber = 0;
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -128,7 +126,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     const badgeNumberPrev = generateMessagesStateUnreadedArray(
       prevProps.lexicallyOrderedMessagesState
     ).filter(obj => !obj.isRead).length;
-    badgeNumber = generateMessagesStateUnreadedArray(
+    const badgeNumber = generateMessagesStateUnreadedArray(
       this.props.lexicallyOrderedMessagesState
     ).filter(obj => !obj.isRead).length;
 
@@ -305,7 +303,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadMessages.request());
   },
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageDetailScreenAction({ messageId, badgeNumber })),
+    dispatch(navigateToMessageDetailScreenAction({ messageId })),
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
