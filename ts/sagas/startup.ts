@@ -49,7 +49,10 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
-import { checkAcceptedTosSaga, checkAcceptedTosVersionSaga } from "./startup/checkAcceptedTosSaga";
+import {
+  checkAcceptedTosSaga,
+  checkAcceptedTosVersionSaga
+} from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
@@ -200,9 +203,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       }
     }
   }
-  console.log("Call tos version checker")
+
   yield call(checkAcceptedTosVersionSaga);
-  console.log("Call tos version checker.. Completed")
+
   //
   // User is autenticated, session token is valid
   //

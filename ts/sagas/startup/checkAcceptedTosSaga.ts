@@ -1,15 +1,15 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Effect } from "redux-saga";
 import { put, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
+import { tosVersion } from "../../config";
 
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccept } from "../../store/actions/onboarding";
+import { profileUpsert } from "../../store/actions/profile";
 import {
   isTosAcceptedSelector,
   tosAcceptedVersionSelector
 } from "../../store/reducers/onboarding";
-import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
@@ -35,17 +35,11 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
 }
 
 export function* checkAcceptedTosVersionSaga(): IterableIterator<Effect> {
-
-  console.log("Verifico la versione accettata");
-
-  const tosVersion: ReturnType<
+  const acceptedToSVersion: ReturnType<
     typeof tosAcceptedVersionSelector
   > = yield select<GlobalState>(tosAcceptedVersionSelector);
 
-  console.log(tosVersion);
-
-
-  if (tosVersion <  ) {
+  if (acceptedToSVersion < tosVersion) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
 
@@ -55,5 +49,12 @@ export function* checkAcceptedTosVersionSaga(): IterableIterator<Effect> {
     // We're done with accepting the ToS, dispatch the action that updates
     // the redux state.
     yield put(tosAccept.success());
+
+    // Upsert the user profile
+    yield put(
+      profileUpsert.request({
+        accepted_tos_version: tosVersion
+      })
+    );
   }
 }
