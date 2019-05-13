@@ -3,7 +3,7 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
-import { TOS_VERSION } from "../../utils/constants";
+import { tosVersion } from "../../config";
 
 import { tosAccept } from "../actions/onboarding";
 import { fingerprintAcknowledge } from "../actions/onboarding";
@@ -42,7 +42,7 @@ const reducer = (
       return {
         ...state,
         isTosAccepted: true,
-        acceptedTosVersion: TOS_VERSION
+        acceptedTosVersion: tosVersion
       };
     case getType(fingerprintAcknowledge.success):
       return {
