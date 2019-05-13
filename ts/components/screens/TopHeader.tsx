@@ -5,6 +5,7 @@ import { ImageSourcePropType, StyleSheet } from "react-native";
 
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
+import customVariables from "../../theme/variables";
 
 type Props = Readonly<{
   title: string;
@@ -21,7 +22,10 @@ const styles = StyleSheet.create({
     paddingBottom: variables.spacerLargeHeight
   },
   screenHeaderHeading: {
-    flex: 1
+    flex: 1,
+    fontSize: customVariables.fontSize4,
+    lineHeight: 40,
+    marginRight: customVariables.contentPadding
   }
 });
 
