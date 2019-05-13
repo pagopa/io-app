@@ -60,6 +60,10 @@
     {
       "path": "assets/fonts/RobotoMono/RobotoMono-Regular.ttf",
       "sha1": "69a65c2b797d2fa124b4c709097e761b7857a035"
+    },
+    {
+      "path": "assets/fonts/Ionicons/Ionicons.ttf",
+      "sha1": "991bb7fac9709cd58da37901770efd4703c542ed"
     }
   ]
 }

@@ -69,8 +69,6 @@ PODS:
     - React
   - RNSVG (6.5.3):
     - React
-  - RNVectorIcons (6.4.2):
-    - React
   - TouchID (4.3.0):
     - React
   - yoga (0.59.3.React)
@@ -102,7 +100,6 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TouchID (from `../node_modules/react-native-touch-id`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -141,8 +138,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   TouchID:
     :path: "../node_modules/react-native-touch-id"
   yoga:
@@ -165,10 +160,9 @@ SPEC CHECKSUMS:
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 1a121521011702409f5a1009eb8a1effa81000f3
   RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
-  RNVectorIcons: 6607bd3a30291d0edb56f9bbe7ae411ee2b928b0
   TouchID: b816a3db79ac3f9da547d0d0d4bd87ff6e338ca9
   yoga: 1a492113f66a35e9e583bb0434f4b8cc668dd839
 
-PODFILE CHECKSUM: 77b3090be684e5673461a6f6d7a5eafdc4659a35
+PODFILE CHECKSUM: 8fc0e56ac41f6c3342d76d9358c1778f86ad9873
 
 COCOAPODS: 1.6.1
