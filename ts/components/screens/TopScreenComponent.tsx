@@ -1,22 +1,24 @@
+import { Content } from "native-base";
 import * as React from "react";
 
 import { ComponentProps } from "../../types/react";
-
 import BaseScreenComponent from "./BaseScreenComponent";
 import { TopHeader } from "./TopHeader";
-import { Content } from "native-base";
 
 interface OwnProps {
   headerTitle?: string;
   hideHeader?: boolean;
 }
 
+type BaseScreenComponentProps =
+  | "appLogo"
+  | "goBack"
+  | "contextualHelp"
+  | "headerBody";
+
 type Props = OwnProps &
   ComponentProps<typeof TopHeader> &
-  Pick<
-    ComponentProps<typeof BaseScreenComponent>,
-    "goBack" | "contextualHelp" | "headerBody"
-  >;
+  Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
