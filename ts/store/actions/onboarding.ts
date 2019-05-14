@@ -8,11 +8,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-export const tosAccept = createAsyncAction(
-  "TOS_ACCEPT_REQUEST",
-  "TOS_ACCEPT_SUCCESS",
-  "TOS_ACCEPT_FAILURE"
-)<void, void, void>();
+export const tosAccept = createStandardAction("TOS_ACCEPT")();
 
 export const fingerprintAcknowledge = createAsyncAction(
   "FINGERPRINT_ACKNOWLEDGE_REQUEST",

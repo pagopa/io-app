@@ -13,9 +13,7 @@ import {
   UpsertProfileT
 } from "../../definitions/backend/requestTypes";
 import { UserProfileUnion } from "../api/backend";
-
 import I18n from "../i18n";
-
 import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
@@ -24,7 +22,6 @@ import {
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-
 import { SagaCallReturnType } from "../types/utils";
 
 // A saga to load the Profile.
@@ -60,7 +57,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
-function* createOrUpdateProfileSaga(
+export function* createOrUpdateProfileSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
   action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {

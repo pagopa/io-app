@@ -49,10 +49,7 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
-import {
-  checkAcceptedTosSaga,
-  checkAcceptedTosVersionSaga
-} from "./startup/checkAcceptedTosSaga";
+import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
@@ -182,7 +179,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
     // Start the watchAbortOnboardingSaga
     const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
-    yield call(checkAcceptedTosSaga);
+
+    // Ask user to accept ToS
+    yield call(checkAcceptedTosSaga, backendClient.createOrUpdateProfile);
+
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
     // Stop the watchAbortOnboardingSaga
@@ -201,10 +201,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
         return;
       }
+      // Check if the user accepted ToS. If true, check if they are the last ToS version
+      // and evenly ask to accept the new version of ToS
+      yield call(checkAcceptedTosSaga, backendClient.createOrUpdateProfile);
     }
   }
-
-  yield call(checkAcceptedTosVersionSaga);
 
   //
   // User is autenticated, session token is valid

@@ -55,7 +55,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             <Button
               block={true}
               primary={true}
-              onPress={() => dispatch(tosAccept.request())}
+              onPress={() => dispatch(tosAccept())}
             >
               <Text>{I18n.t("onboarding.tos.continue")}</Text>
             </Button>
