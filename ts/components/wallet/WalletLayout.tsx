@@ -18,7 +18,13 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
@@ -58,6 +64,7 @@ type Props = Readonly<{
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
+  isPagoPATestEnabled?: boolean;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
@@ -78,7 +85,17 @@ export default class WalletLayout extends React.Component<Props> {
             </Left>
           )}
           <Body>
-            <Text white={true}>{this.props.title}</Text>
+            {this.props.isPagoPATestEnabled ? (
+              <Image
+                style={{ resizeMode: "contain", width: 60 }}
+                source={require("../../../img/wallet/logo-pagopa-test.png")}
+              />
+            ) : (
+              <Image
+                style={{ resizeMode: "contain", width: 40 }}
+                source={require("../../../img/wallet/logo-pagopa.png")}
+              />
+            )}
           </Body>
           <Right>
             <InstabugButtons color={variables.colorWhite} />
