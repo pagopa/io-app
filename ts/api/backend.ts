@@ -201,7 +201,7 @@ export function BackendClient(
 
   const verificaRptT: GetPaymentInfoT = {
     method: "get",
-    url: ({ rptId }) => `/api/v1/payment-requests/${rptId}`,
+    url: ({ rptId, test }) => `/api/v1/payment-requests/${rptId}?test=${test}`,
     headers: tokenHeaderProducer,
     query: _ => ({}),
     response_decoder: getPaymentInfoDefaultDecoder()
@@ -209,7 +209,7 @@ export function BackendClient(
 
   const attivaRptT: ActivatePaymentT = {
     method: "post",
-    url: () => "/api/v1/payment-activations",
+    url: ({ test }) => `/api/v1/payment-activations?test=${test}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: () => ({}),
     body: ({ paymentActivationsPostRequest }) =>
@@ -219,8 +219,8 @@ export function BackendClient(
 
   const getPaymentIdT: GetActivationStatusT = {
     method: "get",
-    url: ({ codiceContestoPagamento }) =>
-      `/api/v1/payment-activations/${codiceContestoPagamento}`,
+    url: ({ codiceContestoPagamento, test }) =>
+      `/api/v1/payment-activations/${codiceContestoPagamento}?test=${test}`,
     headers: tokenHeaderProducer,
     query: () => ({}),
     response_decoder: getActivationStatusDefaultDecoder()
