@@ -10,13 +10,11 @@ import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { WalletStyles } from "../../components/styles/wallet";
-import WalletLayout from "../../components/wallet/WalletLayout";
-import I18n from "../../i18n";
-
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardComponent from "../../components/wallet/card/CardComponent";
+import WalletLayout from "../../components/wallet/WalletLayout";
+import I18n from "../../i18n";
 import {
   navigateToWalletAddPaymentMethod,
   navigateToWalletHome,
@@ -33,11 +31,22 @@ import {
   getFavoriteWalletId,
   walletsSelector
 } from "../../store/reducers/wallet/wallets";
+import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 
 const styles = StyleSheet.create({
-  headerContainer: { flexDirection: "row" }
+  headerContainer: {
+    flexDirection: "row"
+  },
+
+  brandDarkGrayBg: {
+    backgroundColor: variables.brandDarkGray
+  },
+
+  padded: {
+    padding: variables.contentPadding
+  }
 });
 
 type OwnProps = Readonly<{
@@ -77,9 +86,7 @@ class WalletsScreen extends React.Component<Props> {
     const headerContents = (
       <View style={styles.headerContainer}>
         <Left>
-          <Text style={WalletStyles.white}>
-            {I18n.t("wallet.creditDebitCards")}
-          </Text>
+          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
         </Left>
         <Right>
           <AddPaymentMethodButton
@@ -94,8 +101,9 @@ class WalletsScreen extends React.Component<Props> {
         title={I18n.t("wallet.paymentMethods")}
         headerContents={headerContents}
         allowGoBack={true}
+        contentStyle={styles.brandDarkGrayBg}
       >
-        <Content style={[WalletStyles.padded, WalletStyles.header]}>
+        <Content style={[styles.padded, styles.brandDarkGrayBg]}>
           <FlatList
             removeClippedSubviews={false}
             data={this.props.wallets as any[]} // tslint:disable-line

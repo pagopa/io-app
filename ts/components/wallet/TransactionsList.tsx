@@ -15,13 +15,14 @@ import {
   Text
 } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import { WalletStyles } from "../styles/wallet";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 
 type Props = Readonly<{
@@ -31,6 +32,29 @@ type Props = Readonly<{
   navigateToTransactionDetails: (transaction: Transaction) => void;
   ListEmptyComponent?: React.ReactNode;
 }>;
+
+const styles = StyleSheet.create({
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
+  },
+
+  newIconStyle: {
+    marginTop: 6,
+    fontSize: variables.fontSize1,
+    color: variables.brandPrimary
+  },
+
+  listItem: {
+    marginLeft: 0,
+    paddingRight: 0
+  },
+
+  whiteContent: {
+    backgroundColor: variables.colorWhite,
+    flex: 1
+  }
+});
 
 /**
  * Transactions List component
@@ -44,9 +68,7 @@ export default class TransactionsList extends React.Component<Props> {
       <Row>
         <Left>
           <Text>
-            {isNew && (
-              <IconFont name="io-new" style={WalletStyles.newIconStyle} />
-            )}
+            {isNew && <IconFont name="io-new" style={styles.newIconStyle} />}
             <Text note={true}>{isNew ? `  ${datetime}` : datetime}</Text>
           </Text>
         </Left>
@@ -60,7 +82,7 @@ export default class TransactionsList extends React.Component<Props> {
     const recipient = item.merchant;
     return (
       <ListItem
-        style={WalletStyles.listItem}
+        style={styles.listItem}
         onPress={() => this.props.navigateToTransactionDetails(item)}
       >
         <Body>
@@ -104,7 +126,7 @@ export default class TransactionsList extends React.Component<Props> {
       // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
       <Content
         scrollEnabled={false}
-        style={[WalletStyles.noBottomPadding, WalletStyles.whiteContent]}
+        style={[styles.noBottomPadding, styles.whiteContent]}
       >
         <Grid>
           <Row>
