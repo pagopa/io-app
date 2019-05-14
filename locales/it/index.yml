@@ -121,6 +121,9 @@ profile:
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
+    debugMode: Modalità debug
+    pagoPaEnv: Ambiente PagoPA di Test
+    pagoPAEnvAlert: La modifica richiede il reboot dell'app
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -287,9 +290,9 @@ wallet:
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
   walletLoadMessage: Carico i metodi di pagamento...
-  walletLoadFailure: Non è stato possibile caricare i metodi di pagamento.
+  walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
-  transactionsLoadFailure: Non è stato possibile caricare lo storico delle transazioni.
+  transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
