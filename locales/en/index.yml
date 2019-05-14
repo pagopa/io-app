@@ -192,9 +192,6 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
-    subtitle: "The Identity Providers provide several authentication methods
-      and, toghether with SPID, they provide several services: find out more
-      at each one's website."
   idp_login:
     headerTitle: Login
   errors:
@@ -205,6 +202,9 @@ authentication:
       body: The selected identity provider is not available at this time, you can try again later.
             If you have another SPID, choose an alternative provider.
             You can report the problem with the bug icon at the top right of the screen.
+    login:
+      title: Login error
+      body: There was an error with the login, please retry!
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
@@ -442,6 +442,10 @@ wallet:
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
+    enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+    cameraUsagePerissionInfobox:
+      title: "IO Camera usage permission"
+      message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md
@@ -524,8 +528,9 @@ messageDetails:
   headerTitle: Message
   emptyMessage: No content
   loadingText: Loading message details in progress...
-  errorText: An error occurred while loading the message details.
-  retryText: Retry
+  errorText: We were unable to load the details of your message
+  retryText: It's probably a temporary error... please try again!
+  submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
   rawInfoLink:
     showLabel: Details of the message
     hideLabel: Close details
@@ -562,6 +567,9 @@ preferences:
   unavailable:
     title: This setting is set up on your SPID profile
     message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+  language: 
+    title: This setting is set up in system preferences
+    message: IO inherits language from the operating system of this device
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition

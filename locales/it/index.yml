@@ -198,9 +198,6 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
-    subtitle: "I diversi Identity Provider permettono diverse modalità di
-      riconoscimento e offrono insieme a SPID servizi diversi: scopri i
-      dettagli di ciascuno"
   idp_login:
     headerTitle: Accedi
   errors:
@@ -211,6 +208,9 @@ authentication:
       body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. 
             Se disponi di un altra identità SPID scegli un provider alternativo.
             Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
+    login:
+      title: Errore nel login
+      body: Si è verificato un errore durante il login, si prega di riprovare!
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
@@ -451,6 +451,10 @@ wallet:
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codive ente/azienda).
     setManually: Inserisci i dati manualmente
+    enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+    cameraUsagePerissionInfobox:
+      title: "Permesso per utilizzare la fotocamera da parte di IO"
+      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md
@@ -534,8 +538,9 @@ messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...
-  errorText: Si è verificato un errore durante il caricamento dei dettagli del messaggio.
-  retryText: Riprova
+  errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
+  retryText: Probabilmente è un errore temporaneo... riprova per piacere!
+  submitBugText: Se il problema non si risolve segnalacelo con l'icona della coccinella in alto a destra, grazie!
   rawInfoLink:
     showLabel: Dettagli del messaggio
     hideLabel: Chiudi dettagli
@@ -574,6 +579,9 @@ preferences:
   unavailable:
     title: Questa preferenza è impostata nel tuo profilo SPID
     message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nell profilo SPID del tuo identity provider, e poi dovrai nuovamente loggarti nell'app
+  language:
+    title: Questa preferenza è impostata nelle preferenze di sistema
+    message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
