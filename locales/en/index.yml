@@ -283,9 +283,9 @@ wallet:
   paymentMethods: Payment methods
   paymentMethod: Payment method
   walletLoadMessage: Loading payment methods...
-  walletLoadFailure: Loading payment methods has failed!
+  walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
-  transactionsLoadFailure: Loading transactions has failed!
+  transactionsLoadFailure: Loading your transactions has failed, please retry.
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -379,6 +379,10 @@ wallet:
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '
     moreInfo: More details
+    loadingMessage:
+      activation: I'm alerting the entity, wait a few seconds..
+      verification: I am checking the status and the amount of your notice..
+      generic: I am finishing the verification operations of your notice, wait a few seconds..
   insertManually:
     header: Insert notice data
     title: Insert the notice data
