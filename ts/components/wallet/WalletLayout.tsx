@@ -18,7 +18,13 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Image, ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
