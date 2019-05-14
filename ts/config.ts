@@ -33,8 +33,7 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
 export const environment: string = Config.ENVIRONMENT;
-export const apiUrlPrefix: string =
-  "https://app-backend-rc.k8s.test.cd.teamdigitale.it";
+export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
