@@ -18,14 +18,19 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
-import { WalletStyles } from "../styles/wallet";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
 
@@ -33,8 +38,22 @@ const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
+
   noalias: {
     marginRight: 0
+  },
+
+  white: {
+    color: variables.colorWhite
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  },
+
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
   }
 });
 
@@ -44,6 +63,8 @@ type Props = Readonly<{
   onNewPaymentPress?: () => void;
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
+  contentStyle?: StyleProp<ViewStyle>;
+  isPagoPATestEnabled?: boolean;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
@@ -64,7 +85,17 @@ export default class WalletLayout extends React.Component<Props> {
             </Left>
           )}
           <Body>
-            <Text style={WalletStyles.white}>{this.props.title}</Text>
+            {this.props.isPagoPATestEnabled ? (
+              <Image
+                style={{ resizeMode: "contain", width: 60 }}
+                source={require("../../../img/wallet/logo-pagopa-test.png")}
+              />
+            ) : (
+              <Image
+                style={{ resizeMode: "contain", width: 40 }}
+                source={require("../../../img/wallet/logo-pagopa.png")}
+              />
+            )}
           </Body>
           <Right>
             <InstabugButtons color={variables.colorWhite} />
@@ -73,13 +104,15 @@ export default class WalletLayout extends React.Component<Props> {
 
         <ScrollView
           bounces={false}
-          style={WalletStyles.whiteBg}
+          style={
+            this.props.contentStyle ? this.props.contentStyle : styles.whiteBg
+          }
           ref={this.WalletLayoutRef}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <Content
             scrollEnabled={false}
-            style={[styles.darkGrayBg, WalletStyles.noBottomPadding]}
+            style={[styles.darkGrayBg, styles.noBottomPadding]}
           >
             {this.props.headerContents}
             {this.props.displayedWallets}

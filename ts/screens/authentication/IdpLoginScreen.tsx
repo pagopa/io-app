@@ -52,17 +52,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
+
   errorContainer: {
     padding: 20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
+
   errorTitle: {
     fontSize: 20,
     marginTop: 10
   },
-  errorBody: { marginTop: 10, marginBottom: 10, textAlign: "center" },
+
+  errorBody: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  },
+
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,

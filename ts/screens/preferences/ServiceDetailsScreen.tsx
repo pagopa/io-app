@@ -450,7 +450,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               renderInformationRow("EMail", email, () =>
                 Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
               )}
-            {pec && renderInformationRow("PEC", pec)}
+            {pec &&
+              renderInformationRow("PEC", pec, () =>
+                Linking.openURL(`mailto:${pec}`).then(() => 0, () => 0)
+              )}
             {web_url &&
               renderInformationRow("Web", web_url, () =>
                 Linking.openURL(web_url).then(() => 0, () => 0)
