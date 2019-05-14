@@ -24,6 +24,7 @@ interface OwnProps {
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean;
+  appLogo?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
@@ -33,32 +34,36 @@ type Props = OwnProps;
 
 export class BaseHeader extends React.PureComponent<Props> {
   public render() {
-    const { goBack, headerTitle, onShowHelp, body } = this.props;
+    const { appLogo, goBack, headerTitle, onShowHelp, body } = this.props;
     return (
       <AppHeader primary={this.props.primary}>
-        {goBack && (
+        {appLogo ? (
           <Left>
-            <GoBackButton
+            <IconFont
+              name="io-logo"
+              color={this.props.primary ? "white" : variables.brandPrimary}
+            />
+          </Left>
+        ) : (
+          goBack && (
+            <Left>
+              <GoBackButton
               testID="back-button"
               onPress={goBack}
               accessible={true}
               accessibilityLabel={I18n.t("global.buttons.back")}
             />
-          </Left>
+            </Left>
+          )
         )}
         <Body style={goBack ? {} : styles.noLeft}>
-          {body ? (
-            body
-          ) : headerTitle ? (
-            <Text white={this.props.primary} numberOfLines={1}>
-              {headerTitle}
-            </Text>
-          ) : (
-            <IconFont
-              name="io-logo"
-              color={this.props.primary ? "white" : variables.brandPrimary}
-            />
-          )}
+          {body
+            ? body
+            : headerTitle && (
+                <Text white={this.props.primary} numberOfLines={1}>
+                  {headerTitle}
+                </Text>
+              )}
         </Body>
         <Right>
           <InstabugButtons />

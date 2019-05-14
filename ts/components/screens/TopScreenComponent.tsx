@@ -26,6 +26,7 @@ type Props = OwnProps &
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
     const {
+      appLogo,
       goBack,
       icon,
       title,
@@ -39,6 +40,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
     } = this.props;
     return (
       <BaseScreenComponent
+        appLogo={appLogo}
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}

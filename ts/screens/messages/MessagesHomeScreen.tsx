@@ -87,9 +87,21 @@ const styles = StyleSheet.create({
     // Android shadow
     elevation: 5
   },
+  ioSearchContainer: {
+    width: "100%",
+    flex: 1
+  },
   ioSearch: {
-    // Corrects the position of the font icon inside the button
-    paddingHorizontal: 2
+    paddingHorizontal: 6,
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: 40,
+    height: 40,
+    minWidth: 40
+  },
+  searchDisableIcon: {
+    color: customVariables.headerFontColor
   }
 });
 
@@ -122,6 +134,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
+        appLogo={true}
         hideHeader={searchText.isSome()}
         headerBody={
           searchText.isSome() ? (
@@ -132,18 +145,22 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 onChangeText={this.onSearchTextChange}
                 autoFocus={true}
               />
-              <Icon name="cross" onPress={this.onSearchDisable} />
+              <Button onPress={this.onSearchDisable} transparent={true}>
+                <Icon style={styles.searchDisableIcon} name="cross" />
+              </Button>
             </Item>
           ) : (
-            <Button
-              onPress={this.onSearchEnable}
-              transparent={true}
-              style={styles.ioSearch}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.actions.search")}
-            >
-              <IconFont name="io-search" />
-            </Button>
+            <View style={styles.ioSearchContainer}>
+              <Button
+                onPress={this.onSearchEnable}
+                transparent={true}
+                style={styles.ioSearch}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.actions.search")}
+              >
+                <IconFont name="io-search" />
+              </Button>
+            </View>
           )
         }
       >

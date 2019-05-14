@@ -25,7 +25,7 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      paddingLeft: 0,
+      paddingLeft: variables.iconSizeBase / 2,
       minWidth: 40,
       flex: 0
     },
@@ -44,7 +44,25 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      flex: 1
+      "NativeBase.Item": {
+        "NativeBase.Input": {
+          height: 40
+        },
+        borderBottomWidth: 0,
+        "NativeBase.Button": {
+          minWidth: 40,
+          alignSelf: "flex-start",
+          justifyContent: "center",
+          width: (variables.iconSizeBase * 5) / 3,
+          height: (variables.iconSizeBase * 5) / 3,
+          padding: variables.iconSizeBase / 4,
+          "NativeBase.Icon": {
+            marginHorizontal: 0
+          }
+        }
+      },
+      flex: 1,
+      height: 40
     },
 
     "NativeBase.Right": {
