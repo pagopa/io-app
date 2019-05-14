@@ -1,7 +1,7 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
-import { call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
 import {
@@ -43,6 +43,8 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../../store/actions/wallet/wallets";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../store/reducers/types";
 import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { SessionManager } from "../../utils/SessionManager";
@@ -535,10 +537,15 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
+    const isPagoPATestEnabled: ReturnType<
+      typeof isPagoPATestEnabledSelector
+    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
       {
         rptId: RptIdFromString.encode(action.payload),
+        test: isPagoPATestEnabled,
         Bearer: ""
       }
     );
@@ -568,6 +575,10 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
+    const isPagoPATestEnabled: ReturnType<
+      typeof isPagoPATestEnabledSelector
+    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
       {
@@ -577,7 +588,8 @@ export function* paymentAttivaRequestHandler(
             action.payload.verifica.codiceContestoPagamento,
           importoSingoloVersamento:
             action.payload.verifica.importoSingoloVersamento
-        }
+        },
+        test: isPagoPATestEnabled
       }
     );
     if (response.isRight()) {
@@ -610,10 +622,15 @@ export function* paymentIdPollingRequestHandler(
   // now poll until a paymentId is made available
 
   try {
+    const isPagoPATestEnabled: ReturnType<
+      typeof isPagoPATestEnabledSelector
+    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+
     const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
+        test: isPagoPATestEnabled,
         Bearer: ""
       }
     );
