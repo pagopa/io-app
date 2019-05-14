@@ -17,7 +17,6 @@ import { connect } from "react-redux";
 
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
-import { NumberFromString } from "io-ts-types";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -52,7 +51,7 @@ type State = Readonly<{
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
   delocalizedAmount: Option<
-    ReturnType<typeof AmountInEuroCentsFromString.decode>
+    ReturnType<typeof AmountInEuroCentsFromNumber.decode>
   >;
 }>;
 
@@ -210,7 +209,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                         value.replace(this.decimalSeparatorRe, ".")
                       )
                         .filter(NonEmptyString.is)
-                        .map(_ => AmountInEuroCentsFromString.decode(_))
+                        .map(_ => AmountInEuroCentsFromNumber.decode(_))
                     })
                   }
                 />

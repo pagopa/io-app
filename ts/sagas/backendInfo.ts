@@ -20,6 +20,7 @@ const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
 
 function* backendInfoWatcher(): IterableIterator<Effect> {
+  console.warn(apiUrlPrefix);
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
   function getServerInfo(): Promise<
@@ -36,8 +37,9 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
     const backendInfoResponse: SagaCallReturnType<
       typeof getServerInfo
     > = yield call(getServerInfo, {});
-
+    console.warn(apiUrlPrefix);
     if (
+      backendInfoResponse !== undefined &&
       backendInfoResponse.isRight() &&
       backendInfoResponse.value &&
       backendInfoResponse.value.status === 200
