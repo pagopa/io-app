@@ -76,6 +76,13 @@ const styles = StyleSheet.create({
     flex: 0,
     marginBottom: 5,
     height: variables.lineHeightBase
+  },
+  serviceCol: {
+    width: 60
+  },
+  serviceMultiImage: {
+    width: 60,
+    height: 60
   }
 });
 
@@ -103,10 +110,10 @@ class MessageDetailComponent extends React.PureComponent<Props> {
                   {service.value.service_name}
                 </H6>
               </Col>
-              <Col style={{ width: 60 }}>
+              <Col style={styles.serviceCol}>
                 <TouchableOpacity onPress={onServiceLinkPress}>
                   <MultiImage
-                    style={{ width: 60, height: 60 }}
+                    style={styles.serviceMultiImage}
                     source={logosForService(service.value)}
                   />
                 </TouchableOpacity>
