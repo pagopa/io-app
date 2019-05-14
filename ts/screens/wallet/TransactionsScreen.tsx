@@ -12,11 +12,11 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import variables from "../../theme/variables";
 import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
