@@ -16,7 +16,6 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../helpers/withContextualHelp";
-import { WalletStyles } from "../styles/wallet";
 import IconFont from "../ui/IconFont";
 import Markdown from "../ui/Markdown";
 
@@ -32,6 +31,13 @@ type IPaymentMethod = Readonly<{
   maxFee: string;
   icon: any;
 }>;
+
+const styles = StyleSheet.create({
+  listItem: {
+    marginLeft: 0,
+    paddingRight: 0
+  }
+});
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -51,10 +57,6 @@ const AddMethodStyle = StyleSheet.create({
   },
   centeredContents: {
     alignItems: "center"
-  },
-  containedImage: {
-    width: "100%",
-    resizeMode: "contain"
   }
 });
 
@@ -90,7 +92,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
           keyExtractor={item => item.name}
           renderItem={itemInfo => (
             <ListItem
-              style={[AddMethodStyle.paymentMethodEntry, WalletStyles.listItem]}
+              style={[AddMethodStyle.paymentMethodEntry, styles.listItem]}
               onPress={itemInfo.item.onPress}
             >
               <Left>

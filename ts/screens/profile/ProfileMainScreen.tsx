@@ -11,7 +11,7 @@ import {
   Toast
 } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -34,7 +34,10 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
+import {
+  preferencesExperimentalFeaturesSetEnabled,
+  preferencesPagoPaTestEnvironmentSetEnabled
+} from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -43,6 +46,7 @@ import {
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -80,6 +84,12 @@ const styles = StyleSheet.create({
     marginBottom: 25
   }
 });
+
+const getAppLongVersion = () => {
+  const buildNumber =
+    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
+  return `${DeviceInfo.getVersion()}${buildNumber}`;
+};
 
 /**
  * A component to show the main screen of the Profile section
@@ -259,7 +269,23 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <View style={styles.debugModeSection}>
-                <Text>Debug mode</Text>
+                <View>
+                  <Text style={styles.itemLeftText}>
+                    {I18n.t("profile.main.pagoPaEnv")}
+                  </Text>
+                  <Text>{I18n.t("profile.main.pagoPAEnvAlert")}</Text>
+                </View>
+
+                <Switch
+                  value={this.props.isPagoPATestEnabled}
+                  onValueChange={this.props.setPagoPATestEnabled}
+                />
+              </View>
+            </ListItem>
+
+            <ListItem>
+              <View style={styles.debugModeSection}>
+                <Text>{I18n.t("profile.main.debugMode")}</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}
                   onValueChange={this.props.setDebugModeEnabled}
@@ -274,13 +300,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     info={true}
                     small={true}
                     onPress={() =>
-                      clipboardSetStringWithFeedback(DeviceInfo.getVersion())
+                      clipboardSetStringWithFeedback(getAppLongVersion())
                     }
                   >
                     <Text>
                       {`${I18n.t(
                         "profile.main.appVersion"
-                      )} ${DeviceInfo.getVersion()}`}
+                      )} ${getAppLongVersion()}`}
                     </Text>
                   </Button>
                 </ListItem>
@@ -403,6 +429,7 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
     state.persistedPreferences.isExperimentalFeaturesEnabled
 });
@@ -414,6 +441,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
+  setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
+    dispatch(
+      preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
+    ),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });
