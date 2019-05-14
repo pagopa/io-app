@@ -202,6 +202,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         banner={
           isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
         }
+        appLogo={true}
       >
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />

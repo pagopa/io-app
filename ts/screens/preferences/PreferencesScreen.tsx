@@ -148,6 +148,7 @@ class PreferencesScreen extends React.Component<Props, State> {
         title={I18n.t("preferences.title")}
         icon={require("../../../img/icons/gears.png")}
         subtitle={I18n.t("preferences.subtitle")}
+        appLogo={true}
       >
         <Content noPadded={true}>
           <List withContentLateralPadding={true}>
