@@ -17,7 +17,7 @@ export default (): Theme => ({
     },
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "center",
     backgroundColor: variables.contentBackground
   }
 });
