@@ -12,12 +12,13 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
+    "generate:mock-google-services-json": "cp mock-google-services.json ./android/app/google-services.json",
     "generate:pagopa-api-definitions": "rimraf definitions/pagopa && mkdir -p definitions/pagopa && gen-api-models --api-spec https://wisp2.pagopa.gov.it/pp-restapi-CD/v2/api-docs --out-dir ./definitions/pagopa --no-strict --request-types --response-decoders --default-error-type Error",
-    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v1.0.0/api_backend.yaml --out-dir ./definitions/backend --no-strict --request-types --response-decoders  && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v1.0.0/api_public.yaml --out-dir ./definitions/backend",
+    "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v1.0.1/api_backend.yaml --out-dir ./definitions/backend --no-strict --request-types --response-decoders  && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-backend/v1.0.1/api_public.yaml --out-dir ./definitions/backend",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec https://raw.githubusercontent.com/teamdigitale/italia-services-metadata/master/definitions.yml --out-dir ./definitions/content",
-    "generate:all": "npm-run-all generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:locales"
+    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:locales"
   },
   "dependencies": {
     "abort-controller": "^1.0.2",
