@@ -1,4 +1,4 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 
 import IdpsGrid from "../../components/IdpsGrid";
 import { InfoBanner } from "../../components/InfoBanner";
+import ScreenHeader from "../../components/ScreenHeader";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
 import * as config from "../../config";
 
@@ -25,8 +27,6 @@ import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 
 import variables from "../../theme/variables";
-
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -111,17 +111,10 @@ const testIdp = {
 const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps;
 
 const styles = StyleSheet.create({
-  spidLogo: {
-    width: 80,
-    height: 30
-  },
-  subheader: {
-    backgroundColor: "#FFFFFF",
-    padding: 24
-  },
   gridContainer: {
     padding: variables.contentPadding,
-    flex: 1
+    flex: 1,
+    backgroundColor: variables.contentAlternativeBackground
   }
 });
 /**
@@ -141,24 +134,24 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   };
 
   return (
-    <TopScreenComponent
+    <BaseScreenComponent
       goBack={goBack}
-      banner={
-        props.isSessionExpired && (
-          <InfoBanner
-            message={I18n.t("authentication.expiredSessionBanner.message")}
-          />
-        )
-      }
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-      title={I18n.t("authentication.idp_selection.contentTitle")}
-      subtitle={
-        props.isSessionExpired
-          ? undefined
-          : I18n.t("authentication.idp_selection.subtitle")
-      }
     >
-      <Content noPadded={true} alternative={true}>
+      <Content noPadded={true} overScrollMode="never" bounces={false}>
+        {props.isSessionExpired && (
+          <React.Fragment>
+            <InfoBanner
+              message={I18n.t("authentication.expiredSessionBanner.message")}
+            />
+            <View spacer={true} />
+          </React.Fragment>
+        )}
+        <ScreenHeader
+          heading={
+            <H2>{I18n.t("authentication.idp_selection.contentTitle")}</H2>
+          }
+        />
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
@@ -167,7 +160,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           </Button>
         </View>
       </Content>
-    </TopScreenComponent>
+    </BaseScreenComponent>
   );
 };
 

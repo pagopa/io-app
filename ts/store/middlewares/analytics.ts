@@ -23,6 +23,7 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { contentServiceLoad } from "../actions/content";
+import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -180,6 +181,19 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload
       });
+
+    case getType(setMessageReadState): {
+      if (action.payload.read === true) {
+        setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
+      }
+      return mp.track(action.type, action.payload);
+    }
+
+    // instabug
+    case getType(instabugReportClosed):
+    case getType(instabugReportOpened):
+      return mp.track(action.type, action.payload);
+
     //
     // Actions (without properties)
     //
@@ -215,7 +229,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
     case getType(loadMessage.failure):
-    case getType(setMessageReadState):
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):

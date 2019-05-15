@@ -12,6 +12,7 @@ import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
+// tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
   // Android
   btnUppercaseAndroidText: false,
@@ -40,7 +41,9 @@ const customVariables = Object.assign(materialVariables, {
   brandDarkGray: "#5C6F82",
   brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
+  brandHighlight: "#00C5CA",
 
+  cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
   colorWhite: "white",
 
@@ -247,7 +250,10 @@ const customVariables = Object.assign(materialVariables, {
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
-  shineColor: "#C1CCD6"
+  shineColor: "#C1CCD6",
+
+  // Spacing
+  spacingBase: 8
 });
 
 export default customVariables;

@@ -13,6 +13,7 @@ import { isSessionExpiredSelector } from "../../../store/reducers/authentication
 import { SessionToken } from "../../../types/SessionToken";
 
 import { NavigationActions } from "react-navigation";
+import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
 import ROUTES from "../../../navigation/routes";
 import { authenticationSaga } from "../authenticationSaga";
 
@@ -30,6 +31,8 @@ describe("authenticationSaga", () => {
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
+      .call(removeScheduledNotificationAccessSpid)
+      .next()
       .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);
@@ -50,6 +53,8 @@ describe("authenticationSaga", () => {
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
+      .call(removeScheduledNotificationAccessSpid)
+      .next()
       .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);

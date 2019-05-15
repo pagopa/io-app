@@ -7,11 +7,9 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import { WalletStyles } from "../../../components/styles/wallet";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -67,6 +65,11 @@ const style = StyleSheet.create({
     justifyContent: "flex-start",
     width: 100,
     height: 50
+  },
+
+  bottomBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: variables.brandGray
   }
 });
 
@@ -96,9 +99,7 @@ class PickPspScreen extends React.Component<Props> {
           </Text>
           <View spacer={true} />
           <FlatList
-            ItemSeparatorComponent={() => (
-              <View style={WalletStyles.bottomBorder} />
-            )}
+            ItemSeparatorComponent={() => <View style={style.bottomBorder} />}
             removeClippedSubviews={false}
             numColumns={1}
             data={availablePsps}

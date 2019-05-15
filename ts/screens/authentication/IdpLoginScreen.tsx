@@ -7,8 +7,6 @@ import { connect } from "react-redux";
 
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
-import { Action, Dispatch } from "../../store/actions/types";
-
 import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -16,6 +14,7 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
+import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedOutWithIdp
@@ -33,7 +32,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  requestState: pot.Pot<true, string>;
+  requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
 };
 
 const LOGIN_BASE_URL = `${
@@ -53,17 +52,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
+
   errorContainer: {
     padding: 20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
+
   errorTitle: {
     fontSize: 20,
     marginTop: 10
   },
-  errorBody: { marginTop: 10, marginBottom: 10, textAlign: "center" },
+
+  errorBody: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  },
+
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
@@ -111,9 +118,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.loginTrace = url;
   };
 
-  private handleOnError = (): void => {
+  private handleLoadingError = (): void => {
     this.setState({
-      requestState: pot.noneError("error")
+      requestState: pot.noneError("LOADING_ERROR")
+    });
+  };
+
+  private handleLoginFailure = () => {
+    this.props.dispatchLoginFailure();
+    this.setState({
+      requestState: pot.noneError("LOGIN_ERROR")
     });
   };
 
@@ -124,22 +138,17 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleNavigationStateChange = (event: NavState): void => {
     if (event.url && event.url !== this.loginTrace) {
-      this.props.dispatchUrlChanged(
-        idpLoginUrlChanged({ url: event.url.split("?")[0] })
-      );
-      this.updateLoginTrace(event.url);
+      const urlChanged = event.url.split("?")[0];
+      this.props.dispatchIdpLoginUrlChanged(urlChanged);
+      this.updateLoginTrace(urlChanged);
     }
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
 
     onNavigationStateChange(
-      () => {
-        this.props.dispatchLoginFailed(loginFailure());
-      },
-      token => {
-        this.props.dispatchLoginSuccess(loginSuccess(token));
-      }
+      this.handleLoginFailure,
+      this.props.dispatchLoginSuccess
     )(event);
   };
 
@@ -151,14 +160,23 @@ class IdpLoginScreen extends React.Component<Props, State> {
         </View>
       );
     } else if (pot.isError(this.state.requestState)) {
+      const errorType = this.state.requestState.error;
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
           <Text style={styles.errorTitle} bold={true}>
-            {I18n.t("authentication.errors.network.title")}
+            {I18n.t(
+              errorType === "LOADING_ERROR"
+                ? "authentication.errors.network.title"
+                : "authentication.errors.login.title"
+            )}
           </Text>
           <Text style={styles.errorBody}>
-            {I18n.t("authentication.errors.network.body")}
+            {I18n.t(
+              errorType === "LOADING_ERROR"
+                ? "authentication.errors.network.body"
+                : "authentication.errors.login.body"
+            )}
           </Text>
           <View style={styles.errorButtonsContainer}>
             <Button
@@ -208,7 +226,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             source={{ uri: loginUri }}
-            onError={this.handleOnError}
+            onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
           />
@@ -229,9 +247,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchUrlChanged: (action: Action) => dispatch(action),
-  dispatchLoginSuccess: (action: Action) => dispatch(action),
-  dispatchLoginFailed: (action: Action) => dispatch(action)
+  dispatchIdpLoginUrlChanged: (url: string) =>
+    dispatch(idpLoginUrlChanged({ url })),
+  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  dispatchLoginFailure: () => dispatch(loginFailure())
 });
 
 export default connect(
