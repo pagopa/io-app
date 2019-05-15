@@ -1,4 +1,12 @@
-import { compareAsc, startOfDay, startOfMonth } from "date-fns";
+import {
+  compareAsc,
+  endOfMonth,
+  startOfDay,
+  startOfMonth,
+  subDays,
+  startOfYesterday,
+  endOfYesterday
+} from "date-fns";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
@@ -11,8 +19,11 @@ import {
   isMessageWithContentAndDueDatePO,
   MessageWithContentAndDueDatePO
 } from "../../types/MessageWithContentAndDueDatePO";
-import { ComponentProps } from "../../types/react";
+import { format } from "../../utils/dates";
 import MessageAgenda, { MessageAgendaSection, Sections } from "./MessageAgenda";
+
+// How many past months to load in batch
+const PAST_DATA_MONTHS = 3;
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -41,7 +52,7 @@ type OwnProps = {
   navigateToMessageDetail: (id: string) => void;
 };
 
-type Props = Pick<ComponentProps<typeof MessageAgenda>, "onRefresh"> & OwnProps;
+type Props = OwnProps;
 
 type State = {
   sections: Sections;
@@ -134,6 +145,28 @@ const generateSections = (
     []
   );
 
+  const filterSectionsWithTimeLimit = (
+    sections: Sections,
+    fromTimeLimit: number,
+    toTimeLimit: number
+  ): Sections => {
+    const filteredSections: Sections = [];
+
+    for(const section of sections) {
+      if(section.title > toTimeLimit) {
+        break;
+      }
+
+      
+    }
+
+    const initialIndex = sections.findIndex(
+      section => new Date(section.title).getTime() >= timeLimit
+    );
+  
+    return initialIndex < 0 ? [] : sections.slice(initialIndex);
+  };
+
 /**
  * Return sections from a specific timeLimit.
  *
@@ -151,11 +184,72 @@ const sectionsFromTimeLimit = (
 };
 
 /**
+ * Return the section of the specified month.
+ *
+ * @param sections The whole sections to search in
+ * @param startOfMonthTime The start of month time
+ */
+const getSectionsForMonth = (sections: Sections, startOfMonthTime: number) => {
+  const monthSections: Sections = [];
+
+  const endOfMonthTime = endOfMonth(startOfMonthTime).getTime();
+
+  for (const section of sections) {
+    const sectionTime = new Date(section.title).getTime();
+
+    // Is the sectionTime is after the endOfMonthTime we can break the loop.
+    if (sectionTime > endOfMonthTime) {
+      break;
+    }
+
+    if (sectionTime >= startOfMonthTime && sectionTime <= endOfMonthTime) {
+      monthSections.push(section);
+    }
+  }
+
+  // If we have no sections for this month create an ad-hoc empty section
+  if (monthSections.length === 0) {
+    const emptySection: MessageAgendaSection = {
+      title: format(startOfMonthTime, "MM"),
+      data: []
+    };
+    monthSections.push(emptySection);
+  }
+
+  return monthSections;
+};
+
+/**
  * A component to show the messages with a due_date.
  */
 class MessagesDeadlines extends React.PureComponent<Props, State> {
   private scrollToSectionsIndex: Option<number> = none;
   private messageAgendaRef = React.createRef<MessageAgenda>();
+
+  private onPastDataRequest = () => {
+    const lastLoadedStartOfMonthTime = none;
+
+    this.loadPastMonthsDataAsync(lastLoadedStartOfMonthTime)
+      .then(() => 0)
+      .catch(() => 0);
+  };
+
+  private loadPastMonthsDataAsync(
+    lastLoadedStartOfMonthTime: Option<number>
+  ): Promise<Sections> {
+    return new Promise((resolve, reject) => {
+      if (lastLoadedStartOfMonthTime.isNone()) {
+        // If it is the first time we oad past data load
+        // remaning current month data first
+
+        const startOfCurrentMonthTime = startOfMonth(new Date()).getTime();
+        const endOfYesterdayTime = endOfYesterday().getTime;
+
+
+      }
+      resolve([]);
+    });
+  }
 
   constructor(props: Props) {
     super(props);
@@ -205,8 +299,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           onContentSizeChange={this.onContentSizeChange}
           sections={sectionsToRender}
           refreshing={isRefreshing}
-          onRefresh={this.onRefresh}
           onPressItem={this.handleOnPressItem}
+          onPastDataRequest={this.onPastDataRequest}
         />
       </View>
     );

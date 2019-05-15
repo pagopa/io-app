@@ -1,21 +1,33 @@
 import { format } from "date-fns";
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Platform,
   SectionList,
   SectionListData,
   SectionListRenderItem,
-  StyleSheet,
-  NativeSyntheticEvent,
-  NativeScrollEvent
+  StyleSheet
 } from "react-native";
 
 import I18n from "../../i18n";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
 import MessageAgendaItem from "./MessageAgendaItem";
 
 const styles = StyleSheet.create({
+  listHeaderWrapper: {
+    paddingHorizontal: customVariables.contentPadding,
+    paddingTop: 24,
+    paddingBottom: 8
+  },
+
+  listHeaderButtonText: {
+    ...makeFontStyleObject(Platform.select)
+  },
+
   sectionHeaderWrapper: {
     height: 48,
     paddingTop: 8 * 2.5,
@@ -68,6 +80,7 @@ type SelectedSectionListProps = Pick<
 type OwnProps = {
   sections: Sections;
   onPressItem: (id: string) => void;
+  onPastDataRequest: () => void;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -195,6 +208,20 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return null;
   }
 
+  private renderListHeader = () => {
+    const { isRefreshButtonVisible } = this.state;
+
+    return (
+      <View style={styles.listHeaderWrapper}>
+        <Button block={true} primary={true} small={true}>
+          <Text style={styles.listHeaderButtonText}>
+            carica le scadenze del periodo precedente
+          </Text>
+        </Button>
+      </View>
+    );
+  };
+
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     return (
       <View style={styles.sectionHeaderWrapper}>
@@ -204,34 +231,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       </View>
     );
   };
-
-  public render() {
-    const { sections, refreshing, onRefresh, onContentSizeChange } = this.props;
-    const { isRefreshButtonVisible } = this.state;
-    return (
-      <View>
-        {isRefreshButtonVisible && <Text>Refresh</Text>}
-        <SectionList
-          ref={this.sectionListRef}
-          scrollEventThrottle={16}
-          onScrollBeginDrag={this.handleScrollBeginDrag}
-          onScroll={this.handleOnScroll}
-          onMomentumScrollBegin={this.handleMomentumScrollBegin}
-          // Forwarded props
-          sections={sections}
-          refreshing={refreshing}
-          onContentSizeChange={onContentSizeChange}
-          stickySectionHeadersEnabled={true}
-          keyExtractor={keyExtractor}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          renderSectionHeader={this.renderSectionHeader}
-          renderItem={this.renderItem}
-          getItemLayout={this.getItemLayout}
-          overScrollMode="always"
-        />
-      </View>
-    );
-  }
 
   private renderItem: SectionListRenderItem<
     MessageWithContentAndDueDatePO
@@ -249,6 +248,33 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   private getItemLayout = (_: Sections | null, index: number) =>
     this.state.itemLayouts[index];
+
+  public render() {
+    const { sections, refreshing, onRefresh, onContentSizeChange } = this.props;
+    return (
+      <View>
+        <SectionList
+          ref={this.sectionListRef}
+          scrollEventThrottle={16}
+          onScrollBeginDrag={this.handleScrollBeginDrag}
+          onScroll={this.handleOnScroll}
+          onMomentumScrollBegin={this.handleMomentumScrollBegin}
+          // Forwarded props
+          sections={sections}
+          refreshing={refreshing}
+          onContentSizeChange={onContentSizeChange}
+          stickySectionHeadersEnabled={true}
+          keyExtractor={keyExtractor}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderItem}
+          getItemLayout={this.getItemLayout}
+          overScrollMode="always"
+          ListHeaderComponent={this.renderListHeader}
+        />
+      </View>
+    );
+  }
 
   public scrollToSectionsIndex = (sectionsIndex: number) => {
     if (this.sectionListRef.current !== null) {
