@@ -18,7 +18,7 @@ const contentClient = ContentClient();
  */
 function getServiceMetadata(
   serviceId: ServiceId
-): Promise<t.Validation<ServiceMetadata> | undefined> {
+): Promise<t.Validation<ServiceMetadata>> {
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
@@ -43,7 +43,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       serviceId
     );
 
-    if (response && response.isRight()) {
+    if (response.isRight()) {
       yield put(
         contentServiceLoad.success({ serviceId, data: response.value })
       );

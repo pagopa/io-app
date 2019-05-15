@@ -33,7 +33,7 @@ export function* loadProfile(
     );
     // we got an error, throw it
     if (response.isLeft()) {
-      throw readableReport(response.value);
+      throw Error(readableReport(response.value));
     }
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
@@ -48,6 +48,7 @@ export function* loadProfile(
       // the session
       yield put(sessionExpired());
     }
+    throw Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield put(profileLoadFailure(error));
   }
@@ -114,9 +115,9 @@ function* createOrUpdateProfileSaga(
 
   if (response.value.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
-    const error: Error = response
-      ? Error(response.value.value.title || I18n.t("profile.errors.upsert"))
-      : Error(I18n.t("profile.errors.upsert"));
+    const error: Error = Error(
+      response.value.value.title || I18n.t("profile.errors.upsert")
+    );
 
     yield put(profileUpsert.failure(error));
   } else {
