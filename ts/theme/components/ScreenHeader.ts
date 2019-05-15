@@ -9,6 +9,10 @@ export default (): Theme => ({
     "NativeBase.H2": {
       marginLeft: variables.titleHeaderPaddingHorizontal
     },
+    "NativeBase.H3": {
+      marginHorizontal: variables.titleHeaderPaddingHorizontal,
+      lineHeight: 40
+    },
     "NativeBase.ViewNB": {
       // margin to align icon to the baseline of the title
       marginBottom: 0,

@@ -85,6 +85,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
         title={I18n.t("onboarding.fingerprint.title")}
         icon={this.renderIcon(biometryType)}
+        fixedHeader={true}
       >
         <Content noPadded={true}>
           <View content={true}>

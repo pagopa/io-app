@@ -8,6 +8,7 @@ import { TopHeader } from "./TopHeader";
 interface OwnProps {
   headerTitle?: string;
   hideHeader?: boolean;
+  fixedHeader?: boolean;
 }
 
 type BaseScreenComponentProps =
@@ -24,20 +25,40 @@ type Props = OwnProps &
  * Wraps a BaseScreenComponent with a title and a subtitle
  */
 class TopScreenComponent extends React.PureComponent<Props> {
+  private renderTopHeader() {
+    const {
+      hideHeader,
+      icon,
+      title,
+      subtitle,
+      onMoreLinkPress,
+      banner
+    } = this.props;
+
+    return (
+      !hideHeader && (
+        <TopHeader
+          icon={icon}
+          title={title}
+          subtitle={subtitle}
+          onMoreLinkPress={onMoreLinkPress}
+          banner={banner}
+        />
+      )
+    );
+  }
+
   public render() {
     const {
       appLogo,
       goBack,
-      icon,
       title,
-      subtitle,
       headerTitle,
-      onMoreLinkPress,
       contextualHelp,
-      banner,
       headerBody,
-      hideHeader
+      fixedHeader
     } = this.props;
+
     return (
       <BaseScreenComponent
         appLogo={appLogo}
@@ -46,18 +67,17 @@ class TopScreenComponent extends React.PureComponent<Props> {
         contextualHelp={contextualHelp}
         headerBody={headerBody}
       >
-        <Content noPadded={true}>
-          {!hideHeader && (
-            <TopHeader
-              icon={icon}
-              title={title}
-              subtitle={subtitle}
-              onMoreLinkPress={onMoreLinkPress}
-              banner={banner}
-            />
-          )}
-          {this.props.children}
-        </Content>
+        {fixedHeader ? (
+          <React.Fragment>
+            {this.renderTopHeader()}
+            {this.props.children}
+          </React.Fragment>
+        ) : (
+          <Content noPadded={true}>
+            {this.renderTopHeader()}
+            {this.props.children}
+          </Content>
+        )}
       </BaseScreenComponent>
     );
   }
