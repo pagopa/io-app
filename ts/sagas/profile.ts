@@ -41,7 +41,7 @@ export function* loadProfile(
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
       yield put(profileLoadSuccess(response.value.value as UserProfileUnion));
-      return some(response.value);
+      return some(response.value.value);
     }
     if (response.value.status === 401) {
       // in case we got an expired session while loading the profile, we reset
