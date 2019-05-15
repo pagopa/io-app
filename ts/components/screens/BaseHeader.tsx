@@ -1,4 +1,4 @@
-import { Body, Button, Left, Right, Text } from "native-base";
+import { Body, Button, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -39,10 +39,12 @@ export class BaseHeader extends React.PureComponent<Props> {
       <AppHeader primary={this.props.primary}>
         {appLogo ? (
           <Left>
-            <IconFont
-              name="io-logo"
-              color={this.props.primary ? "white" : variables.brandPrimary}
-            />
+            <View>
+              <IconFont
+                name="io-logo"
+                color={this.props.primary ? "white" : variables.brandPrimary}
+              />
+            </View>
           </Left>
         ) : (
           goBack && (

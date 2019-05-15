@@ -25,7 +25,14 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      paddingLeft: variables.iconSizeBase / 2,
+      "NativeBase.ViewNB": {
+        padding: 0,
+        paddingLeft: variables.iconSizeBase / 2,
+        justifyContent: "center",
+        width: (variables.iconSizeBase * 5) / 3,
+        height: (variables.iconSizeBase * 5) / 3
+      },
+      padding: 0,
       minWidth: 40,
       flex: 0
     },
@@ -62,7 +69,8 @@ export default (): Theme => {
         }
       },
       flex: 1,
-      height: 40
+      height: 40,
+      justifyContent: "center"
     },
 
     "NativeBase.Right": {
