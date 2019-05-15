@@ -218,22 +218,20 @@ type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
-const addWalletCreditCard: (
-  pagoPaToken: PaymentManagerToken
-) => AddWalletCreditCardUsingPOSTTExtra = pagoPaToken => ({
+const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/wallet/cc",
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ParamAuthorizationBearerHeaderProducer,
     ApiHeaderJson
   ),
   response_decoder: composeResponseDecoders(
     addWalletCreditCardUsingPOSTDecoder(WalletResponse),
     ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
   )
-});
+};
 
 type PayUsingPOSTTExtra = MapResponseType<
   PayUsingPOSTT,
@@ -270,31 +268,27 @@ type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   TransactionResponse
 >;
 
-const boardPay: (
-  pagoPaToken: PaymentManagerToken
-) => PayCreditCardVerificationUsingPOSTTExtra = pagoPaToken => ({
+const boardPay: PayCreditCardVerificationUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/payments/cc/actions/pay",
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
   headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ParamAuthorizationBearerHeaderProducer,
     ApiHeaderJson
   ),
   response_decoder: payCreditCardVerificationUsingPOSTDecoder(
     TransactionResponse
   )
-});
+};
 
-const deleteWallet: (
-  pagoPaToken: PaymentManagerToken
-) => DeleteWalletUsingDELETET = pagoPaToken => ({
+const deleteWallet: DeleteWalletUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeaderProducer,
   response_decoder: constantEmptyDecoder
-});
+};
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
@@ -401,18 +395,15 @@ export function PaymentManagerClient(
       )({
         id
       }),
-    addWalletCreditCard: (
-      pagoPaToken: PaymentManagerToken,
-      wallet: NullableWallet
-    ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(addWalletCreditCard(pagoPaToken), options)
+    addWalletCreditCard: (wallet: NullableWallet) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addWalletCreditCard, options)
+        )
       )({
         walletRequest: { data: wallet }
       }),
     payCreditCardVerification: (
-      pagoPaToken: PaymentManagerToken,
       payRequest: TypeofApiParams<
         PayCreditCardVerificationUsingPOSTT
       >["payRequest"],
@@ -420,20 +411,15 @@ export function PaymentManagerClient(
         PayCreditCardVerificationUsingPOSTT
       >["language"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(boardPay(pagoPaToken), altOptions)
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(boardPay, altOptions))
       )({
         payRequest,
         language
       }),
-    deleteWallet: (
-      pagoPaToken: PaymentManagerToken,
-      id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]
-    ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(deleteWallet(pagoPaToken), options)
+    deleteWallet: (id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
       )({
         id
       })

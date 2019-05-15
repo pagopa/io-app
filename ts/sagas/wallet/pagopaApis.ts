@@ -268,8 +268,7 @@ export function* deleteWalletRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteWalletRequest>
 ): Iterator<Effect> {
-  const deleteWalletApi = (token: PaymentManagerToken) =>
-    pagoPaClient.deleteWallet(token, action.payload.walletId);
+  const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
   const getWalletsWithRefresh = pmSessionManager.withRefresh(
@@ -321,8 +320,9 @@ export function* addWalletCreditCardRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof addWalletCreditCardRequest>
 ) {
-  const boardCreditCard = (token: PaymentManagerToken) =>
-    pagoPaClient.addWalletCreditCard(token, action.payload.creditcard);
+  const boardCreditCard = pagoPaClient.addWalletCreditCard(
+    action.payload.creditcard
+  );
   const boardCreditCardWithRefresh = pmSessionManager.withRefresh(
     boardCreditCard
   );
@@ -359,12 +359,10 @@ export function* payCreditCardVerificationRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof payCreditCardVerificationRequest>
 ) {
-  const boardPay = (token: PaymentManagerToken) =>
-    pagoPaClient.payCreditCardVerification(
-      token,
-      action.payload.payRequest,
-      action.payload.language
-    );
+  const boardPay = pagoPaClient.payCreditCardVerification(
+    action.payload.payRequest,
+    action.payload.language
+  );
   const boardPayWithRefresh = pmSessionManager.withRefresh(boardPay);
   try {
     const response: SagaCallReturnType<typeof boardPayWithRefresh> = yield call(
