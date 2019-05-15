@@ -45,10 +45,11 @@ export function* loadSessionInformationSaga(
 
   // we got a valid response but its status code is describing an error
   const errorMsgDefault = "Invalid server response";
-  const error: string =
+  const error = Error(
     response.value.status === 400
       ? response.value.value.title || errorMsgDefault
-      : errorMsgDefault;
+      : errorMsgDefault
+  );
   yield put(sessionInformationLoadFailure(error));
   return none;
 }

@@ -4,10 +4,7 @@ import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
-import {
-  GetActivationStatusT,
-  GetPaymentInfoT
-} from "../../../definitions/backend/requestTypes";
+import { GetPaymentInfoT } from "../../../definitions/backend/requestTypes";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import {

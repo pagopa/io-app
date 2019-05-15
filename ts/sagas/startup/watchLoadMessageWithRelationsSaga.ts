@@ -9,7 +9,6 @@ import { serviceByIdSelector } from "../../store/reducers/entities/services/serv
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "../messages/messages";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 
 /**
  * Load message with related entities (ex. the sender service).
