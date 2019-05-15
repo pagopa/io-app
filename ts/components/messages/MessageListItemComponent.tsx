@@ -11,6 +11,7 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { DateFromISOString } from "../../utils/dates";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
@@ -178,7 +179,7 @@ export class MessageListItemComponent extends React.Component<Props> {
     // value if createdAt cannot be converted to a Date
     // TODO: get created_at from CreatedMessageWithoutContent to avoid waiting
     //       for the message to load
-    /*
+
     const uiCreatedAt = pot.getOrElse(
       pot.map(message, m =>
         DateFromISOString.decode(m.created_at)
@@ -187,7 +188,6 @@ export class MessageListItemComponent extends React.Component<Props> {
       ),
       ""
     );
-    */
 
     const subject = pot.isLoading(message)
       ? ""
@@ -239,7 +239,7 @@ export class MessageListItemComponent extends React.Component<Props> {
               <Col size={10}>{serviceComponent}</Col>
               <Col size={3}>
                 <Text style={styles.dateText} rightAlign={true}>
-                  {""}
+                  {uiCreatedAt}
                 </Text>
               </Col>
             </Row>

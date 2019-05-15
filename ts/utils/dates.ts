@@ -1,6 +1,7 @@
 import { format as dateFnsFormat } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
+import * as t from "io-ts";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
 import { getLocalePrimary } from "./locale";
@@ -54,3 +55,31 @@ export function format(
       .toUndefined() // if some returns the value, if empty return undefined
   );
 }
+
+/* 
+* this code is pasted from gcanti repository https://github.com/gcanti/io-ts-types/blob/06b29a2e74c64b21ee2f2477cabf98616a7af35f/src/Date/DateFromISOString.ts
+* this because to avoid node modules conflicts given from using io-ts-types
+* DateFromISOStringType is a codec to encode (date -> string) and decode (string -> date) a date in iso format
+*/
+export class DateFromISOStringType extends t.Type<Date, string, unknown> {
+  readonly _tag: "DateFromISOStringType" = "DateFromISOStringType";
+  constructor() {
+    super(
+      "DateFromISOString",
+      (u): u is Date => u instanceof Date,
+      (u, c) => {
+        const validation = t.string.validate(u, c);
+        if (validation.isLeft()) {
+          return validation as any;
+        } else {
+          const s = validation.value;
+          const d = new Date(s);
+          return isNaN(d.getTime()) ? t.failure(s, c) : t.success(d);
+        }
+      },
+      a => a.toISOString()
+    );
+  }
+}
+
+export const DateFromISOString: DateFromISOStringType = new DateFromISOStringType();
